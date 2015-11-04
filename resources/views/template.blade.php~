@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+        <title>Montserrat Retreat House Database</title>
+
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+        <style>
+            html, body {
+                height: 100%;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                display: table;
+                font-weight: 100;
+                font-family: 'Lato';
+                background: buttonshadow none repeat scroll 0 0;
+            }
+
+            .container {
+                text-align: center;
+                display: table-cell;
+                vertical-align: middle;
+            }
+
+            .content {
+                text-align: center;
+                display: inline-block;
+            }
+
+            .title {
+                font-size: 96px;
+            }
+            td {
+                align: center;
+                }
+        </style>
+    </head>
+    
+<body>
+<a href='/learning-laravel-5/public'><img src='/learning-laravel-5/img/mrhlogo.png'></a>
+@yield('content')
+<hr />
+<table>
+<tr>
+<td><a href='retreat'><img src='/learning-laravel-5/img/retreat.png'><br>Retreat</a></td>
+<td><a href='reservation'><img src='/learning-laravel-5/img/reservation.png'><br>Reservation</a></td>
+</tr>
+<tr>
+<td><a href='room'><img src='/learning-laravel-5/img/room.png'></a></td>
+<td><a href='housekeeping'><img src='/learning-laravel-5/img/housekeeping.png'></a></td>
+</tr>
+<tr>
+<td><a href='maintenance'><img src='/learning-laravel-5/img/maintenance.png'></a></td>
+<td><a href='grounds'><img src='/learning-laravel-5/img/grounds.png'></a></td>
+</tr>
+<tr>
+<td><a href='kitchen'><img src='/learning-laravel-5/img/kitchen.png'></a></td>
+</tr>
+<tr>
+<td><a href='donation'><img src='/learning-laravel-5/img/donation.png'></a></td>
+<td><a href='bookstore'><img src='/learning-laravel-5/img/bookstore.png'></a></td>
+</tr>
+<tr>
+<td><a href='users'><img src='/learning-laravel-5/img/users.png'></a></td>
+<td><a href='support'><img src='/learning-laravel-5/img/support.png'></a></td>
+</tr>
+</table>
+<hr />
+<nav class="navbar navbar-default" role="navigation">
+<div class="navbar-header">
+<ul class="nav navbar-nav">
+<li class="active"><a href="./">Home</a></li>
+<li><a href="./about">About</a></li>
+<li><a href="./contact">Contact</a></li>
+</ul>
+</div>
+</nav>
+</body>
+</html>

@@ -1,0 +1,5 @@
+@extends('template')
+@section('content')
+<h1>Welcome</h1>
+<p>Welcome to the Montserrat Retreat House Database!</p>
+@stop
