@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
-
+use Illuminate\Support\Facades\Redirect;
+use Input;
 
 class RetreatsController extends Controller
 {
@@ -30,6 +30,8 @@ class RetreatsController extends Controller
      */
     public function create()
     {
+        // var_dump($retreats);
+        return view('retreats.create');   //
         //
     }
 
@@ -52,7 +54,8 @@ class RetreatsController extends Controller
      */
     public function show($id)
     {
-        //
+        $ret = \App\Retreat::find($id);
+       return view('retreats.edit',compact('ret'));//
     }
 
     /**
@@ -61,10 +64,15 @@ class RetreatsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
+    //public function edit($id)
+    //{
+    //   $retreats = \App\Retreat::();
+    //   return view('retreats.edit',compact('retreats'));
+    //  }
+public function edit($id)
+    { $ret = \App\Retreat::find($id);
+       return view('retreats.edit',compact('ret'));
+      }
 
     /**
      * Update the specified resource in storage.
@@ -86,6 +94,28 @@ class RetreatsController extends Controller
      */
     public function destroy($id)
     {
-        //
+       \App\Retreat::destroy($id);
+       return Redirect::action('RetreatsController@index');
+       //
+    }
+    public function saveCreate()
+    {
+        $input = Input::all();
+        $retreat = new \App\Retreat;
+        $retreat->idnumber = $input['idnumber'];
+        $retreat->title = $input['title'];
+        $retreat->description = $input['description'];
+        $retreat->start = $input['start'];
+        $retreat->end = $input['end'];
+        $retreat->type = $input['type'];
+        $retreat->silent = $input['silent'];
+        $retreat->amount = $input['amount'];
+        $retreat->year = $input['year'];
+        $retreat->directorid = $input['directorid'];
+        $retreat->innkeeperid = $input['innkeeperid'];
+        $retreat->assistantid = $input['assistantid'];
+        $retreat->save();
+        
+    return Redirect::action('RetreatsController@index');
     }
 }

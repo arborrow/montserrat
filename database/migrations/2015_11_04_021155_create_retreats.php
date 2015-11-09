@@ -18,8 +18,8 @@ class CreateRetreats extends Migration
             $table->integer('idnumber');
             $table->string('title');
             $table->string('description');
-            $table->bigInteger('start');
-            $table->bigInteger('end');
+            $table->timestamp('start');
+            $table->timestamp('end');
             $table->string('type');
             $table->boolean('silent');
             $table->decimal('amount',6,2);

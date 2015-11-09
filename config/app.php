@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'url' => 'http://localhost',
+    'url' => 'http://localhost/montserrat/public',
 
     /*
     |--------------------------------------------------------------------------

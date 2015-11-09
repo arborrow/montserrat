@@ -3,54 +3,18 @@
     <head>
         <meta charset="UTF-8">
         <title>Montserrat Retreat House Database</title>
-
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
         <script src="https://code.jquery.com/jquery.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-        <style>
-            html, body {
-                height: 100%;
-            }
-
-            body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                display: table;
-                font-weight: 100;
-                font-family: 'Lato';
-                background: buttonshadow none repeat scroll 0 0;
-            }
-
-            .container {
-                text-align: center;
-                display: table-cell;
-                vertical-align: middle;
-            }
-
-            .content {
-                text-align: center;
-                display: inline-block;
-            }
-            .footer {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 96px;
-            }
-            td {
-                align: center;
-                }
-        </style>
+        
     </head>
     
     <body>
     <header>
-           <a href={{ route('welcome') }}>{!! Html::image('img/mrhlogoblack.png','Home',array('title'=>'Home')) !!}</a>
-        
-
+        <div>
+            <a href={{ route('welcome') }}>{!! Html::image('img/mrhlogoblack.png','Home',array('title'=>'Home','class'=>'logo')) !!}</a>
+        </div>
         <nav class="navbar navbar-default" role="navigation">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -65,7 +29,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-left">
-                <li class="active"><a href={{ route('retreat') }}>{!! Html::image('img/retreat.png', 'Retreat',array('title'=>"Retreat")) !!}</a></li>
+                <li><a href={{ route('retreats') }}>{!! Html::image('img/retreat.png', 'Retreat',array('title'=>"Retreats")) !!}</a></li>
                 <li><a href={{ route('reservation') }}>{!! Html::image('img/reservation.png', 'Reservation',array('title'=>"Reservation")) !!}</a></li>
                 <li><a href={{ route('room') }}>{!! Html::image('img/room.png', 'Room',array('title'=>"Room")) !!}</a></li>
                 <li><a href={{ route('housekeeping') }}>{!! Html::image('img/housekeeping.png', 'Housekeeping',array('title'=>"Housekeeping")) !!}</a></li>

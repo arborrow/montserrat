@@ -20,8 +20,6 @@
                             <th>Starts</th>
                             <th>Ends</th>
                             <th>Silent</th>
-<th>Edit</th>
-<th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,12 +30,6 @@
                             <td>{{ date('F d, Y', strtotime($retreat->start)) }}</td>
                             <td>{{ date('F d, Y', strtotime($retreat->end)) }}</td>
                             <td>{{ $retreat->silent ? 'Yes' : 'No'}}</td>
-<td>{!! Form::open(['method' => 'GET', 'route' => ['retreat.edit', $retreat->id]]) !!}
-    {!! Form::submit('Edit', ['class' => 'btn btn-danger']) !!}
-{!! Form::close() !!}</td>
-<td>{!! Form::open(['method' => 'DELETE', 'route' => ['retreat.destroy', $retreat->id]]) !!}
-    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-{!! Form::close() !!}</td>
                         </tr>
                         @endforeach
                     </tbody>
