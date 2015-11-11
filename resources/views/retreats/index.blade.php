@@ -7,7 +7,7 @@
                 <div class="panel-heading">
                     <h1>
                     <span class="grey">MRH Retreat Index</span> 
-                    </h1>
+                    <span class="create"><a href={{ action('RetreatsController@create') }}>{!! Html::image('img/create.png', 'Create a Retreat',array('title'=>"Create Retreat",'class' => 'btn btn-primary')) !!}</a></span></h1>
                 </div>
                 @if ($retreats->isEmpty())
                     <p> Currently, there are no retreats!</p>
@@ -19,25 +19,28 @@
                             <th>Title</th>
                             <th>Starts</th>
                             <th>Ends</th>
+                            <th>Director</th>
+                            <th># Attending</th>
                             <th>Silent</th>
-<th>Edit</th>
-<th>Delete</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($retreats as $retreat)
                         <tr>
-                            <td>{{ $retreat->idnumber}}</td>
+                            <td><a href="retreat/{{ $retreat->id}}">{{ $retreat->idnumber}}</a></td>
                             <td>{{ $retreat->title }}</td>
                             <td>{{ date('F d, Y', strtotime($retreat->start)) }}</td>
                             <td>{{ date('F d, Y', strtotime($retreat->end)) }}</td>
+                            <td>{{ $retreat->directorid }}</td>
+                            <td>{{ $retreat->attending}}</td>
                             <td>{{ $retreat->silent ? 'Yes' : 'No'}}</td>
-<td>{!! Form::open(['method' => 'GET', 'route' => ['retreat.edit', $retreat->id]]) !!}
-    {!! Form::submit('Edit', ['class' => 'btn btn-danger']) !!}
-{!! Form::close() !!}</td>
+                            <td><a href="{{ action('RetreatsController@edit', $retreat->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></td>
 <td>{!! Form::open(['method' => 'DELETE', 'route' => ['retreat.destroy', $retreat->id]]) !!}
-    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-{!! Form::close() !!}</td>
+ {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger']) !!} 
+{!! Form::close() !!}
+</td>
                         </tr>
                         @endforeach
                     </tbody>

@@ -4,9 +4,9 @@
     <section class="section-padding">
         <div class="jumbotron text-left">
             <h2><strong>Add A Retreat</strong></h2>
-            {!! Form::open(['url'=> 'retreat/create', 'class' => 'form']) !!}
+            {!! Form::open(['url' => 'retreat', 'method' => 'post', 'class' => 'form-horizontal panel']) !!}
             <div class="form-group">
-                {!! Form::label('id', 'ID#: ') !!}
+                {!! Form::label('idnumber', 'ID#: ') !!}
                 {!! Form::text('idnumber', null, ['class'=>'form-control']) !!}
             </div>
             <div class="form-group">

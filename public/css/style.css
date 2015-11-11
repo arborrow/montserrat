@@ -83,3 +83,7 @@ td {
 a {
     color: mediumblue;
 }
+
+.create {
+    text-align: right;
+}

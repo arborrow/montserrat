@@ -43,7 +43,21 @@ class RetreatsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $retreat = new \App\Retreat;
+        $retreat->idnumber = $request->input('idnumber');
+        $retreat->start = $request->input('start');
+        $retreat->end = $request->input('end');
+        $retreat->title = $request->input('title');
+        $retreat->description = $request->input('description');
+        $retreat->type = $request->input('type');
+        $retreat->silent = $request->input('silent');
+        $retreat->amount = $request->input('amount');
+        $retreat->year = $request->input('year');
+        $retreat->directorid = $request->input('directorid');
+        $retreat->innkeeperid = $request->input('innkeeperid');
+        $retreat->assistantid = $request->input('assistantid');
+        $retreat->save();
+return Redirect::action('RetreatsController@index');//
     }
 
     /**
@@ -55,7 +69,7 @@ class RetreatsController extends Controller
     public function show($id)
     {
         $ret = \App\Retreat::find($id);
-       return view('retreats.edit',compact('ret'));//
+       return view('retreats.show',compact('ret'));//
     }
 
     /**
@@ -70,8 +84,8 @@ class RetreatsController extends Controller
     //   return view('retreats.edit',compact('retreats'));
     //  }
 public function edit($id)
-    { $ret = \App\Retreat::find($id);
-       return view('retreats.edit',compact('ret'));
+    { $retreat = \App\Retreat::find($id);
+       return view('retreats.edit',compact('retreat'));
       }
 
     /**
@@ -84,6 +98,23 @@ public function edit($id)
     public function update(Request $request, $id)
     {
         //
+      
+        $retreat = \App\Retreat::findOrFail($request->input('id'));
+        $retreat->idnumber = $request->input('idnumber');
+        $retreat->start = $request->input('start');
+        $retreat->end = $request->input('end');
+        $retreat->title = $request->input('title');
+        $retreat->description = $request->input('description');
+        $retreat->type = $request->input('type');
+        $retreat->silent = $request->input('silent');
+        $retreat->amount = $request->input('amount');
+        $retreat->year = $request->input('year');
+        $retreat->directorid = $request->input('directorid');
+        $retreat->innkeeperid = $request->input('innkeeperid');
+        $retreat->assistantid = $request->input('assistantid');
+        $retreat->save();
+
+return Redirect::action('RetreatsController@index');
     }
 
     /**
@@ -117,5 +148,10 @@ public function edit($id)
         $retreat->save();
         
     return Redirect::action('RetreatsController@index');
+    }
+    
+    public function getdirectorname($id) {
+        $director = \App\User::find($id);
+        return $director['firstname'].' '.$director['lastname'];
     }
 }

@@ -17,13 +17,14 @@ class CreateRetreats extends Migration
             $table->increments('id');
             $table->integer('idnumber');
             $table->string('title');
-            $table->string('description');
+            $table->mediumtext('description');
             $table->timestamp('start');
             $table->timestamp('end');
             $table->string('type');
             $table->boolean('silent');
             $table->decimal('amount',6,2);
             $table->integer('year');
+            $table->integer('attending');
             $table->integer('directorid');
             $table->integer('innkeeperid');
             $table->integer('assistantid');
