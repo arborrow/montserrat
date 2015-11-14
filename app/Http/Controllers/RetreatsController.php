@@ -18,7 +18,9 @@ class RetreatsController extends Controller
     public function index()
     {
         
-        $retreats = \App\Retreat::all();
+        $retreats = \App\Retreat::whereDate('end', '>=', date('Y-m-d'))->orderBy('start','asc')->get();
+        $oldretreats = \App\Retreat::whereDate('end', '<', date('Y-m-d'))->orderBy('start','desc')->get();
+        
         foreach ($retreats as $retreat) {
             $director = \App\Retreat::find($retreat->id)->director;
             $innkeeper = \App\Retreat::find($retreat->id)->innkeeper;
@@ -41,7 +43,30 @@ class RetreatsController extends Controller
             }
             
         }
-        return view('retreats.index',compact('retreats'));   //
+        foreach ($oldretreats as $oldretreat) {
+            $director = \App\Retreat::find($oldretreat->id)->director;
+            $innkeeper = \App\Retreat::find($oldretreat->id)->innkeeper;
+            $assistant = \App\Retreat::find($oldretreat->id)->assistant;
+            //dd($director);
+            if (empty($director)) {
+                $oldretreat->directorname = 'Not assigned';
+            } else {
+                $oldretreat->directorname = $director->firstname.' '.$director->lastname;
+            }
+            if (empty($innkeeper)) {
+                $oldretreat->innkeepername = 'Not assigned';
+            } else {
+                $oldretreat->innkeepername = $innkeeper->firstname.' '.$innkeeper->lastname;
+            }
+            if (empty($assistant)) {
+                $oldretreat->assistantname = 'Not assigned';
+            } else {
+                $oldretreat->assistantname = $assistant->firstname.' '.$assistant->lastname;
+            }
+            
+        }
+        
+        return view('retreats.index',compact('retreats','oldretreats'));   //
     }
     
     
