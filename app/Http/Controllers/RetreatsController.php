@@ -19,9 +19,31 @@ class RetreatsController extends Controller
     {
         
         $retreats = \App\Retreat::all();
-        // var_dump($retreats);
+        foreach ($retreats as $retreat) {
+            $director = \App\Retreat::find($retreat->id)->director;
+            $innkeeper = \App\Retreat::find($retreat->id)->innkeeper;
+            $assistant = \App\Retreat::find($retreat->id)->assistant;
+            //dd($director);
+            if (empty($director)) {
+                $retreat->directorname = 'Not assigned';
+            } else {
+                $retreat->directorname = $director->firstname.' '.$director->lastname;
+            }
+            if (empty($innkeeper)) {
+                $retreat->innkeepername = 'Not assigned';
+            } else {
+                $retreat->innkeepername = $innkeeper->firstname.' '.$innkeeper->lastname;
+            }
+            if (empty($assistant)) {
+                $retreat->assistantname = 'Not assigned';
+            } else {
+                $retreat->assistantname = $assistant->firstname.' '.$assistant->lastname;
+            }
+            
+        }
         return view('retreats.index',compact('retreats'));   //
     }
+    
     
     /**
      * Show the form for creating a new resource.
@@ -42,7 +64,7 @@ class RetreatsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    { // dd($request);
         $retreat = new \App\Retreat;
         $retreat->idnumber = $request->input('idnumber');
         $retreat->start = $request->input('start');
@@ -52,6 +74,7 @@ class RetreatsController extends Controller
         $retreat->type = $request->input('type');
         $retreat->silent = $request->input('silent');
         $retreat->amount = $request->input('amount');
+        $retreat->attending = $request->input('attending');
         $retreat->year = $request->input('year');
         $retreat->directorid = $request->input('directorid');
         $retreat->innkeeperid = $request->input('innkeeperid');
@@ -68,8 +91,27 @@ return Redirect::action('RetreatsController@index');//
      */
     public function show($id)
     {
-        $ret = \App\Retreat::find($id);
-       return view('retreats.show',compact('ret'));//
+        $retreat = \App\Retreat::find($id);
+        $director = \App\Retreat::find($id)->director;
+        $innkeeper = \App\Retreat::find($id)->innkeeper;
+        $assistant = \App\Retreat::find($id)->assistant;
+         if (empty($director)) {
+                $retreat->directorname = 'Not assigned';
+            } else {
+                $retreat->directorname = $director->firstname.' '.$director->lastname;
+            }
+            if (empty($innkeeper)) {
+                $retreat->innkeepername = 'Not assigned';
+            } else {
+            $retreat->innkeepername = $innkeeper->firstname.' '.$innkeeper->lastname;
+            }
+            if (empty($assistant)) {
+                $retreat->assistantname = 'Not assigned';
+            } else {
+                $retreat->assistantname = $assistant->firstname.' '.$assistant->lastname;
+            }
+        
+       return view('retreats.show',compact('retreat','director'));//
     }
 
     /**
@@ -85,7 +127,8 @@ return Redirect::action('RetreatsController@index');//
     //  }
 public function edit($id)
     { $retreat = \App\Retreat::find($id);
-       return view('retreats.edit',compact('retreat'));
+      
+       return view('retreats.edit',compact('retreat','director'));
       }
 
     /**
@@ -98,7 +141,7 @@ public function edit($id)
     public function update(Request $request, $id)
     {
         //
-      
+      // dd($request);
         $retreat = \App\Retreat::findOrFail($request->input('id'));
         $retreat->idnumber = $request->input('idnumber');
         $retreat->start = $request->input('start');
@@ -108,6 +151,7 @@ public function edit($id)
         $retreat->type = $request->input('type');
         $retreat->silent = $request->input('silent');
         $retreat->amount = $request->input('amount');
+        $retreat->attending = $request->input('attending');
         $retreat->year = $request->input('year');
         $retreat->directorid = $request->input('directorid');
         $retreat->innkeeperid = $request->input('innkeeperid');
@@ -141,6 +185,7 @@ return Redirect::action('RetreatsController@index');
         $retreat->type = $input['type'];
         $retreat->silent = $input['silent'];
         $retreat->amount = $input['amount'];
+        $retreat->attending = $input['attending'];
         $retreat->year = $input['year'];
         $retreat->directorid = $input['directorid'];
         $retreat->innkeeperid = $input['innkeeperid'];
@@ -150,8 +195,4 @@ return Redirect::action('RetreatsController@index');
     return Redirect::action('RetreatsController@index');
     }
     
-    public function getdirectorname($id) {
-        $director = \App\User::find($id);
-        return $director['firstname'].' '.$director['lastname'];
-    }
 }

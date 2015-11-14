@@ -32,11 +32,18 @@
     <div class="clearfix"> </div>
     <div class="form-group">
         {!! Form::label('directorid', 'Director:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('directorid', $retreat->directorid, ['class' => 'col-md-2']) !!}
+        {!! Form::select('directorid', array('0' => 'Not assigned', '3' => 'Ron Boudreaux', '1' => 'Anthony Borrow', '4' => 'John Payne'), $retreat->directorid, ['class' => 'col-md-2']) !!}
         {!! Form::label('innkeeperid', 'Innkeeper:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('innkeeperid', $retreat->innkeeperid, ['class' => 'col-md-2']) !!}
+        {!! Form::select('innkeeperid', array('0' => 'Not assigned', '3' => 'Ron Boudreaux', '1' => 'Anthony Borrow', '4' => 'John Payne'), $retreat->innkeeperid, ['class' => 'col-md-2']) !!}
         {!! Form::label('assistantid', 'Assistant:', ['class' => 'col-md-1']) !!}
+        {!! Form::select('assistantid', array('0' => 'Not assigned', '3' => 'Ron Boudreaux', '1' => 'Anthony Borrow', '4' => 'John Payne'), $retreat->assistantid, ['class' => 'col-md-2']) !!}
+
+       <!-- 
+        {!! Form::text('directorid', $retreat->directorid, ['class' => 'col-md-2']) !!}
+        {!! Form::text('innkeeperid', $retreat->innkeeperid, ['class' => 'col-md-2']) !!}
         {!! Form::text('assistantid', $retreat->assistantid, ['class' => 'col-md-2']) !!}
+         -->
+
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">

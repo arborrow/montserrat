@@ -20,10 +20,12 @@
                             <th>Starts</th>
                             <th>Ends</th>
                             <th>Director</th>
+                            <th>Innkeeper</th>
+                            <th>Assistant</th>
                             <th># Attending</th>
-                            <th>Silent</th>
+                            <!--<th>Silent</th>
                             <th>Edit</th>
-                            <th>Delete</th>
+                            <th>Delete</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -33,14 +35,16 @@
                             <td>{{ $retreat->title }}</td>
                             <td>{{ date('F d, Y', strtotime($retreat->start)) }}</td>
                             <td>{{ date('F d, Y', strtotime($retreat->end)) }}</td>
-                            <td>{{ $retreat->directorid }}</td>
+                            <td>{{ $retreat->directorname }}</td>
+                            <td>{{ $retreat->innkeepername }}</td>
+                            <td>{{ $retreat->assistantname }}</td>
                             <td>{{ $retreat->attending}}</td>
-                            <td>{{ $retreat->silent ? 'Yes' : 'No'}}</td>
+                            <!--<td>{{ $retreat->silent ? 'Yes' : 'No'}}</td>
                             <td><a href="{{ action('RetreatsController@edit', $retreat->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></td>
 <td>{!! Form::open(['method' => 'DELETE', 'route' => ['retreat.destroy', $retreat->id]]) !!}
- {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger']) !!} 
+ {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
 {!! Form::close() !!}
-</td>
+</td>-->
                         </tr>
                         @endforeach
                     </tbody>

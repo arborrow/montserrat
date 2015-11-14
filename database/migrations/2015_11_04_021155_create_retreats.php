@@ -15,7 +15,7 @@ class CreateRetreats extends Migration
      Schema::create('retreats', function (Blueprint $table) 
         {
             $table->increments('id');
-            $table->integer('idnumber');
+            $table->integer('idnumber')->unsigned;
             $table->string('title');
             $table->mediumtext('description');
             $table->timestamp('start');
@@ -23,11 +23,11 @@ class CreateRetreats extends Migration
             $table->string('type');
             $table->boolean('silent');
             $table->decimal('amount',6,2);
-            $table->integer('year');
-            $table->integer('attending');
-            $table->integer('directorid');
-            $table->integer('innkeeperid');
-            $table->integer('assistantid');
+            $table->integer('year')->unsigned;
+            $table->integer('attending')->unsigned;
+            $table->integer('directorid')->unsigned;
+            $table->integer('innkeeperid')->unsigned;
+            $table->integer('assistantid')->unsigned;
             $table->timestamps();
            
         //

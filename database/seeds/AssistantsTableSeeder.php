@@ -1,26 +1,21 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
-use \App\Innkeeper;
-class DatabaseSeeder extends Seeder
+use \App\Assistant;
+// composer require laracasts/testdummy
+use Laracasts\TestDummy\Factory as TestDummy;
+
+class {{class}} extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
-        Model::unguard();
-
-        // $this->call(UserTableSeeder::class);
-          Innkeeper::create([
+        // TestDummy::times(20)->create('App\Post');
+         Assistant::create([
 			'title' => 'Fr.',
                         'firstname' => 'Ron',
                         'lastname' => 'Boudreaux',
                         'suffix' => 'S.J.',
-                        'address1' => 'Montserrat Retreat House',
+                        'address' => 'Montserrat Retreat House',
                         'address2' => '600 N. Shady Shores Road',
                         'city' => 'Lake Dallas',
                         'state' => 'TX',
@@ -35,12 +30,12 @@ class DatabaseSeeder extends Seeder
 			'password' => bcrypt('admin')
 		]);
         
-         Innkeeper::create([
+         Assistant::create([
 			'title' => 'Fr.',
                         'firstname' => 'Anthony',
                         'lastname' => 'Borrow',
                         'suffix' => 'S.J.',
-                        'address1' => 'Montserrat Retreat House',
+                        'address' => 'Montserrat Retreat House',
                         'address2' => '600 N. Shady Shores Road',
                         'city' => 'Lake Dallas',
                         'state' => 'TX',
@@ -56,12 +51,12 @@ class DatabaseSeeder extends Seeder
 			'password' => bcrypt('admin')
 		]);
          
-            Innkeeper::create([
+            Assistant::create([
 			'title' => 'Fr.',
                         'firstname' => 'John',
                         'lastname' => 'Payne',
                         'suffix' => 'S.J.',
-                        'address1' => 'Montserrat Retreat House',
+                        'address' => 'Montserrat Retreat House',
                         'address2' => '600 N. Shady Shores Road',
                         'city' => 'Lake Dallas',
                         'state' => 'TX',
@@ -75,7 +70,5 @@ class DatabaseSeeder extends Seeder
 			'email' => 'john.payne@montserratretreat.org',
 			'password' => bcrypt('admin')
 		]);
-
-        Model::reguard();
     }
 }
