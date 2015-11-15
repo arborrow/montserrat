@@ -2,10 +2,11 @@
 
 use Illuminate\Database\Seeder;
 use \App\Assistant;
+use \App\Retreatant;
 // composer require laracasts/testdummy
 use Laracasts\TestDummy\Factory as TestDummy;
 
-class {{class}} extends Seeder
+class AssistantsTableSeeder extends Seeder
 {
     public function run()
     {
@@ -70,5 +71,7 @@ class {{class}} extends Seeder
 			'email' => 'john.payne@montserratretreat.org',
 			'password' => bcrypt('admin')
 		]);
+            
+            
     }
 }

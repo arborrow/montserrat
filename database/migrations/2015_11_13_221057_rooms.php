@@ -13,6 +13,20 @@ class Rooms extends Migration
     public function up()
     {
         //
+         Schema::create('rooms', function (Blueprint $table) {
+            $table->bigIncrements('id')->unsigned;
+            $table->integer('building_id')->unsigned;
+            $table->string('name');
+            $table->text('description');
+            $table->mediumText('notes');
+            $table->string('access');
+            $table->string('type');
+            $table->string('occupancy');
+            $table->string('status');
+            $table->rememberToken();
+            $table->timestamps();
+        });
+    
     }
 
     /**
@@ -23,5 +37,6 @@ class Rooms extends Migration
     public function down()
     {
         //
+         Schema::drop('rooms');
     }
 }

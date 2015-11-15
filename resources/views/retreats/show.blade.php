@@ -5,7 +5,7 @@
         <div class="jumbotron text-left">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span><h1>Retreat #{!! $retreat->id !!}</span>
+                    <span><h2>Retreat Details for #{!! $retreat->idnumber !!}</span>
                     <span class="back"><a href={{ action('RetreatsController@index') }}>{!! Html::image('img/retreat.png', 'Retreat Index',array('title'=>"Retreat Index",'class' => 'btn btn-primary')) !!}</a></span></h1>
                 </div>
                 <div class='row'>
@@ -40,23 +40,41 @@
                     <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['retreat.destroy', $retreat->id]]) !!}
                     {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
                     {!! Form::close() !!}</div><div class="clearfix"> </div>
-                </div><hr /><h2>Registrations</h2>
-
+                </div>
+            </div>
+            <div class="panel panel-default">  
+            <div class="panel-heading">
+                <h2>Retreatants Registered</h2>
+            </div>
+                @if ($registrations->isEmpty())
+                    <p> Currently, there are no registrations for this retreats</p>
+                @else
                 <table class="table">
                     <thead>
                         <tr>
                             <th>Name</th>
-                            
                             <th>Date Registered</th>
-                            
                             <th>Deposit</th>
-                            
-                            <th>Phone</th>
+                            <th>Mobile Phone</th>
                             <th>Parish</th>
-</tr>
-</thead>
-
-</table>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($registrations as $registration)
+                        <tr>
+                            <td>{{ $registration->retreatantname}}</td>
+                            <td>{{ date('F d, Y', strtotime($registration->register)) }}</td>
+                            <td>{{ $registration->deposit }}</td>
+                            <td>{{ $registration->retreatantmobilephone}}</td>
+                            <td>{{ $registration->retreatantparish}}</td>
+                            <td>{{ $registration->notes }}</td>
+                            
+                            
+                        </tr>
+                        @endforeach
+                </tbody>
+</table>@endif
             </div>
         </div>
     </section>

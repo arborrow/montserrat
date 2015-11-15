@@ -120,6 +120,22 @@ return Redirect::action('RetreatsController@index');//
         $director = \App\Retreat::find($id)->director;
         $innkeeper = \App\Retreat::find($id)->innkeeper;
         $assistant = \App\Retreat::find($id)->assistant;
+        $registrations = \App\Retreat::find($id)->registrations;
+        foreach ($registrations as $registration) {
+            $retreatant = \App\Registration::find($registration->id)->retreatant;
+            //dd($director);
+            if (empty($retreatant)) {
+                $registration->retreatantname = 'Unknown retreatant';
+                $registration->retreatantphone = 'Not available';
+                $registration->retreatantparish = 'Unknown';
+            } else {
+                $registration->retreatantname = $retreatant->firstname.' '.$retreatant->lastname;
+                $registration->retreatantmobilephone = $retreatant->mobilephone;
+                $registration->retreatantparish = $retreatant->parish;
+            }
+            
+        }
+        // dd($registrations);
          if (empty($director)) {
                 $retreat->directorname = 'Not assigned';
             } else {
@@ -136,7 +152,7 @@ return Redirect::action('RetreatsController@index');//
                 $retreat->assistantname = $assistant->firstname.' '.$assistant->lastname;
             }
         
-       return view('retreats.show',compact('retreat','director'));//
+       return view('retreats.show',compact('retreat','director','registrations'));//
     }
 
     /**

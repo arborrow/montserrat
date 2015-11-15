@@ -36,4 +36,8 @@ class Retreat extends Model
     public function assistant() {
         return $this->belongsTo('\App\User','assistantid','id');
     }
+    
+    public function registrations() {
+        return $this->hasMany('\App\Registration','retreat_id','id');
+    }
 }
