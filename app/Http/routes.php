@@ -36,20 +36,10 @@ Route::resource('retreat','RetreatsController');
 // Route::model('retreat','Retreat');
 //Route::get('retreat/edit/{retreat}', ['as' => 'retreat/edit','uses' =>'RetreatsController@edit']);
 // Route::get('/edit/{retreat}','RetreatsController@edit');
-Route::get('addretreat', function()
-{
-$retreat = new App\Retreat;
-$retreat->idnumber = 46;
-$retreat->title = 'Women\'s Retreat';
-$retreat->description = 'A retreat for women';
-$retreat->start = strtotime("11/05/2015");
-$retreat->end = strtotime("11/08/2015");
-$retreat->type = 'Women';
-$retreat->silent = 1;
-$retreat->amount = 390;
-$retreat->year = 2015;
-$retreat->directorid = 1;
-$retreat->innkeeperid = 2;
-$retreat->assistantid = 3;
-$retreat->save();
-});
+// Authentication routes...
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
+// Registration routes...
+Route::get('auth/register', 'Auth\AuthController@getRegister');
+Route::post('auth/register', 'Auth\AuthController@postRegister');
