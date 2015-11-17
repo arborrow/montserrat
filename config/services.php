@@ -39,6 +39,6 @@ return [
         'client_id' => '303763231335-tmeibj3k65bq13sjro6r3nk0e8uiblb6.apps.googleusercontent.com',
         'client_secret' => '4LGoqfplvDmk6rODXddCkXTO',
         'scope'         => ['userinfo_email', 'userinfo_profile'],
-        'redirect' => 'http://your-callback-url',
+        'redirect' => 'http://app.montserratretreat.org/auth/google/callback',
 ],
 ];

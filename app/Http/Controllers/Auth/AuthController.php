@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Socialite;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -78,9 +79,9 @@ class AuthController extends Controller
      *
      * @return Response
      */
-    public function handleProviderCallback()
+    public function handleProviderCallback(Request $request)
     {
-        $user = Socialite::driver('google')->user();
+        $user = Socialite::with('google')->user();
 
         // $user->token;
     }
