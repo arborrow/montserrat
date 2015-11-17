@@ -1,6 +1,5 @@
 @extends('template')
 @section('content')
-
     <section class="section-padding">
         <div class="jumbotron text-left">
             <h2><strong>Add A Retreat</strong></h2>

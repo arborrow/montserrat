@@ -90,6 +90,19 @@ class RetreatsController extends Controller
      */
     public function store(Request $request)
     { // dd($request);
+        $this->validate($request, [
+            'idnumber' => 'required|unique:retreats',
+            'start' => 'required|date',
+            'end' => 'required|date',
+            'title' => 'required',
+            'directorid' => 'integer',
+            'innkeeperid' => 'integer',
+            'assistantid' => 'integer',
+            'year' => 'integer|min:1990|max:2020',
+            'amount' => 'numeric',
+            'attending' => 'integer',
+            'silent' => 'boolean'
+        ]);
         $retreat = new \App\Retreat;
         $retreat->idnumber = $request->input('idnumber');
         $retreat->start = $request->input('start');
@@ -183,6 +196,19 @@ public function edit($id)
     {
         //
       // dd($request);
+        $this->validate($request, [
+            'idnumber' => 'required|unique:retreats,idnumber,'.$id,
+            'start' => 'required|date',
+            'end' => 'required|date',
+            'title' => 'required',
+            'directorid' => 'integer',
+            'innkeeperid' => 'integer',
+            'assistantid' => 'integer',
+            'year' => 'integer|min:1990|max:2020',
+            'amount' => 'numeric',
+            'attending' => 'integer',
+            'silent' => 'boolean'
+        ]);
         $retreat = \App\Retreat::findOrFail($request->input('id'));
         $retreat->idnumber = $request->input('idnumber');
         $retreat->start = $request->input('start');

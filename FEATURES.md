@@ -1,0 +1,11 @@
+- Retreats - Create, edit, view and delete
+- Registrations (Retreat) - (add, edit, view and delete) 
+- Retreatants - (add, edit, view and delete)
+- Rooms - (add, edit, view and delete) 
+- Donors - (add, edit, view and delete)
+- Innkeepers - (add, edit, view and delete)
+- Assistants - (add, edit, view and delete)
+- Captains - (add, edit, view and delete)
+- Board of Trustees - (add, edit, view and delete)
+- Locations (Buildings) - (add, edit, view and delete)
+- Reservation (of Rooms) - (add, edit, view and delete)
