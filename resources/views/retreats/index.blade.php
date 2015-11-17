@@ -52,7 +52,7 @@
                 @endif
 <hr>
                 @if ($oldretreats->isEmpty())
-                    <p> Currently, there are previous retreats!</p>
+                    <p> Currently, there are no previous retreats!</p>
                 @else
                 <table class="table"><caption><h2>Previous retreats</h2></caption>
                     <thead>

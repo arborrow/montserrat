@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="jumbotron text-left">
-    <h1>Edit Retreat {!! $retreat->id !!}</h1>
+    <h1>Edit Retreat {!! $retreat->idnumber !!}</h1>
     {!! Form::open(['method' => 'PUT', 'route' => ['retreat.update', $retreat->id]]) !!}
     {!! Form::hidden('id', $retreat->id) !!}
     <div class="form-group">
@@ -49,8 +49,8 @@
     <div class="form-group">
         {!! Form::label('type', 'Type:', ['class' => 'col-md-1']) !!}
         {!! Form::text('type', $retreat->type, ['class' => 'col-md-1']) !!}
-    <div class='left-checkbox'>    {!! Form::label('silent', 'Silent:', ['class' => 'col-md-1']) !!}
-      {!! Form::checkbox('silent', 1, $retreat->silent, ['class' => 'col-md-1']) !!} </div>
+    <!--<div class='left-checkbox'>    {!! Form::label('silent', 'Silent:', ['class' => 'col-md-1']) !!} -->
+    <label class="col-md-1" for="silent">Silent:  {!! Form::checkbox('silent', 1, $retreat->silent, ['class' => 'col-md-1']) !!}</label> <!--</div>-->
         {!! Form::label('amount', 'Donation:', ['class' => 'col-md-1']) !!}
         {!! Form::text('amount', $retreat->amount, ['class' => 'col-md-1']) !!}
     </div>
