@@ -92,15 +92,15 @@ class RetreatsController extends Controller
     { // dd($request);
         $this->validate($request, [
             'idnumber' => 'required|unique:retreats',
-            'start' => 'required|date',
-            'end' => 'required|date',
+            'start' => 'required|date|before:end',
+            'end' => 'required|date|after:start',
             'title' => 'required',
-            'directorid' => 'integer',
-            'innkeeperid' => 'integer',
-            'assistantid' => 'integer',
+            'directorid' => 'integer|min:0',
+            'innkeeperid' => 'integer|min:0',
+            'assistantid' => 'integer|min:0',
             'year' => 'integer|min:1990|max:2020',
-            'amount' => 'numeric',
-            'attending' => 'integer',
+            'amount' => 'numeric|min:0|max:100000',
+            'attending' => 'integer|min:0|max:150',
             'silent' => 'boolean'
         ]);
         $retreat = new \App\Retreat;
@@ -198,15 +198,15 @@ public function edit($id)
       // dd($request);
         $this->validate($request, [
             'idnumber' => 'required|unique:retreats,idnumber,'.$id,
-            'start' => 'required|date',
-            'end' => 'required|date',
+            'start' => 'required|date|before:end',
+            'end' => 'required|date|after:start',
             'title' => 'required',
-            'directorid' => 'integer',
-            'innkeeperid' => 'integer',
-            'assistantid' => 'integer',
+            'directorid' => 'integer|min:0',
+            'innkeeperid' => 'integer|min:0',
+            'assistantid' => 'integer|min:0',
             'year' => 'integer|min:1990|max:2020',
-            'amount' => 'numeric',
-            'attending' => 'integer',
+            'amount' => 'numeric|min:0|max:100000',
+            'attending' => 'integer|min:0|max:150',
             'silent' => 'boolean'
         ]);
         $retreat = \App\Retreat::findOrFail($request->input('id'));

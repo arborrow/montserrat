@@ -28,6 +28,7 @@ class CreateRetreats extends Migration
             $table->integer('directorid')->unsigned;
             $table->integer('innkeeperid')->unsigned;
             $table->integer('assistantid')->unsigned;
+            $table->softDeletes();
             $table->timestamps();
            
         //

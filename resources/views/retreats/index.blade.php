@@ -81,12 +81,6 @@
                             <td>{{ $oldretreat->innkeepername }}</td>
                             <td>{{ $oldretreat->assistantname }}</td>
                             <td>{{ $oldretreat->attending}}</td>
-                            <!--<td>{{ $retreat->silent ? 'Yes' : 'No'}}</td>
-                            <td><a href="{{ action('RetreatsController@edit', $retreat->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></td>
-<td>{!! Form::open(['method' => 'DELETE', 'route' => ['retreat.destroy', $retreat->id]]) !!}
- {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
-{!! Form::close() !!}
-</td>-->
                         </tr>
                         @endforeach
                     </tbody>

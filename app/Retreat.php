@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Retreat extends Model
 {
@@ -12,11 +13,12 @@ class Retreat extends Model
 	 *
 	 * @var string
 	 */
-	protected $table = 'retreats';
-
+    use SoftDeletes;
     
-  protected $dates = ['start', 'end', 'created_at', 'updated_at', 'disabled_at'];  //
-  
+    protected $table = 'retreats';
+
+    protected $dates = ['start', 'end', 'created_at', 'updated_at', 'disabled_at', 'deleted_at'];  //
+    
     public function setStartAttribute($date) {
       $this->attributes['start'] = Carbon::parse($date);
     }
