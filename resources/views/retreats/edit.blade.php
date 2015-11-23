@@ -12,9 +12,11 @@
     
     <div class="form-group">
         {!! Form::label('start', 'Starts:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('start', $retreat->start, ['class' => 'col-md-2']) !!} 
+        {!! Form::text('start', $retreat->start, ['id' => 'startdate', 'class' => 'col-md-2']) !!}
+        <!--{!! Form::text('start', $retreat->start, ['class' => 'col-md-2']) !!} -->
         {!! Form::label('end', 'Ends:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('end', $retreat->end, ['class' => 'col-md-2']) !!} 
+        {!! Form::text('end', $retreat->end, ['id' => 'enddate', 'class' => 'col-md-2']) !!}
+        <!--{!! Form::text('end', $retreat->end, ['class' => 'col-md-2']) !!} -->
     </div>
     <div class="clearfix"> </div>
 

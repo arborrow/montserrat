@@ -1,5 +1,6 @@
 @extends('template')
 @section('content')
+
     <section class="section-padding">
         <div class="jumbotron text-left">
             <h2><strong>Add A Retreat</strong></h2>
@@ -7,12 +8,15 @@
             <div class="form-group">
                 {!! Form::label('idnumber', 'ID#: ', ['class' => 'col-md-1']) !!}
                 {!! Form::text('idnumber', null, ['class' => 'col-md-1']) !!}
+                
             </div><div class="clearfix"> </div>
             <div class="form-group">
-                {!! Form::label('start', 'Start date: (12-25-2015)', ['class' => 'col-md-2']) !!}
-                {!! Form::input('date', 'start', date('Y-m-d'), ['class'=>'col-md-2']) !!}
-                {!! Form::label('end', 'End date: (2015-12-11)', ['class' => 'col-md-2']) !!}
-                {!! Form::input('date', 'end', Carbon\Carbon::now()->addDays(3)->format('Y-m-d'), ['class'=>'col-md-2']) !!}
+                {!! Form::label('start', 'Starts: ', ['class' => 'col-md-1']) !!}
+                {!! Form::text('start', null, ['id' => 'startdate', 'class' => 'col-md-2']) !!}
+                <!-- {!! Form::input('date', 'start', date('Y-m-d'), ['class'=>'col-md-2']) !!} -->
+                {!! Form::label('end', 'Ends: ', ['class' => 'col-md-1']) !!}
+                {!! Form::text('end', null, ['id' => 'enddate', 'class' => 'col-md-2','data-provide'=>'datepicker']) !!}
+                <!-- {!! Form::input('date', 'end', Carbon\Carbon::now()->addDays(3)->format('Y-m-d'), ['class'=>'col-md-2']) !!} -->
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('title', 'Title:', ['class' => 'col-md-1']) !!}
