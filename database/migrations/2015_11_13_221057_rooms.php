@@ -23,6 +23,7 @@ class Rooms extends Migration
             $table->string('type');
             $table->string('occupancy');
             $table->string('status');
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });

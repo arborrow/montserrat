@@ -28,13 +28,14 @@
                 {!! Form::label('description', 'Description:', ['class' => 'col-md-1']) !!}
                 {!! Form::textarea('description', null, ['class'=>'col-md-5', 'rows'=>'3']) !!}
             </div><div class="clearfix"> </div>
-            <div class="form-group">
+            <div class="form-group"> 
                 {!! Form::label('directorid', 'Director ID:', ['class' => 'col-md-1']) !!}
-                {!! Form::select('directorid', array('0' => 'Not assigned', '3' => 'Ron Boudreaux', '1' => 'Anthony Borrow', '4' => 'John Payne'), 0, ['class' => 'col-md-2']) !!}
+                <!-- {!! Form::select('directorid', array('0' => 'Not assigned', '3' => 'Ron Boudreaux', '1' => 'Anthony Borrow', '4' => 'John Payne'), 0, ['class' => 'col-md-2']) !!} -->
+                {!! Form::select('directorid', $d, 0, ['class' => 'col-md-2']) !!} 
                 {!! Form::label('innkeeperid', 'Innkeeper ID:', ['class' => 'col-md-1']) !!}
-                {!! Form::select('innkeeperid', array('0' => 'Not assigned', '3' => 'Ron Boudreaux', '1' => 'Anthony Borrow', '4' => 'John Payne'), 0, ['class' => 'col-md-2']) !!}
+                {!! Form::select('innkeeperid', $i, 0, ['class' => 'col-md-2']) !!}
                 {!! Form::label('assistantid', 'Assistant ID:', ['class' => 'col-md-1']) !!}
-                {!! Form::select('assistantid', array('0' => 'Not assigned', '3' => 'Ron Boudreaux', '1' => 'Anthony Borrow', '4' => 'John Payne'), 0, ['class' => 'col-md-2']) !!}
+                {!! Form::select('assistantid', $a, 0, ['class' => 'col-md-2']) !!}
             </div><div class="clearfix"> </div>
             
             <div class="form-group">

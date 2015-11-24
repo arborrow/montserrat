@@ -77,9 +77,26 @@ class RetreatsController extends Controller
      */
     public function create()
     {
-        // var_dump($retreats);
-        return view('retreats.create');   //
-        //
+        $directors = \App\Director::where('active','1')->select('id','title','firstname','lastname','suffix')->orderBy('lastname')->get();
+        $innkeepers = \App\Innkeeper::where('active','1')->select('id','title','firstname','lastname','suffix')->orderBy('lastname')->get();
+        $assistants = \App\Assistant::where('active','1')->select('id','title','firstname','lastname','suffix')->orderBy('lastname')->get();
+            
+        // dd($directors);
+        $d=array();
+        foreach ($directors as $director) {
+            $d[$director->id] = $director->lastname.', '.$director->firstname;
+        }
+        $i=array();
+        foreach ($innkeepers as $innkeeper) {
+            $i[$innkeeper->id] = $innkeeper->lastname.', '.$innkeeper->firstname;
+        }
+        $a=array();
+        foreach ($assistants as $assistant) {
+            $a[$assistant->id] = $assistant->lastname.', '.$assistant->firstname;
+        }
+        // dd($d);
+        
+        return view('retreats.create',compact('d','i','a'));  
     }
 
     /**
@@ -182,7 +199,24 @@ return Redirect::action('RetreatsController@index');//
 public function edit($id)
     { $retreat = \App\Retreat::find($id);
       
-       return view('retreats.edit',compact('retreat','director'));
+        $directors = \App\Director::where('active','1')->select('id','title','firstname','lastname','suffix')->orderBy('lastname')->get();
+        $innkeepers = \App\Innkeeper::where('active','1')->select('id','title','firstname','lastname','suffix')->orderBy('lastname')->get();
+        $assistants = \App\Assistant::where('active','1')->select('id','title','firstname','lastname','suffix')->orderBy('lastname')->get();
+            
+        // dd($directors);
+        $d=array();
+        foreach ($directors as $director) {
+            $d[$director->id] = $director->lastname.', '.$director->firstname;
+        }
+        $i=array();
+        foreach ($innkeepers as $innkeeper) {
+            $i[$innkeeper->id] = $innkeeper->lastname.', '.$innkeeper->firstname;
+        }
+        $a=array();
+        foreach ($assistants as $assistant) {
+            $a[$assistant->id] = $assistant->lastname.', '.$assistant->firstname;
+        }
+       return view('retreats.edit',compact('retreat','d','i','a'));
       }
 
     /**
@@ -239,27 +273,6 @@ return Redirect::action('RetreatsController@index');
        \App\Retreat::destroy($id);
        return Redirect::action('RetreatsController@index');
        //
-    }
-    public function saveCreate()
-    {
-        $input = Input::all();
-        $retreat = new \App\Retreat;
-        $retreat->idnumber = $input['idnumber'];
-        $retreat->title = $input['title'];
-        $retreat->description = $input['description'];
-        $retreat->start = $input['start'];
-        $retreat->end = $input['end'];
-        $retreat->type = $input['type'];
-        $retreat->silent = $input['silent'];
-        $retreat->amount = $input['amount'];
-        $retreat->attending = $input['attending'];
-        $retreat->year = $input['year'];
-        $retreat->directorid = $input['directorid'];
-        $retreat->innkeeperid = $input['innkeeperid'];
-        $retreat->assistantid = $input['assistantid'];
-        $retreat->save();
-        
-    return Redirect::action('RetreatsController@index');
     }
     
 }

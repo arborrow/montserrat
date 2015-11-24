@@ -25,6 +25,7 @@ class Registrations extends Migration
             $table->string('confirmedby');
             $table->text('notes');
             $table->decimal('deposit',7,2);
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });

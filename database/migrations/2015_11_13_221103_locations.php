@@ -22,6 +22,7 @@ class Buildings extends Migration
             $table->string('access');
             $table->string('type');
             $table->string('occupancy');
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });

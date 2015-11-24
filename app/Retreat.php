@@ -28,15 +28,15 @@ class Retreat extends Model
     }
   
     public function director() {
-        return $this->belongsTo('\App\User','directorid','id');
+        return $this->belongsTo('\App\Director','directorid','id');
     }
     
     public function innkeeper() {
-        return $this->belongsTo('\App\User','innkeeperid','id');
+        return $this->belongsTo('\App\Innkeeper','innkeeperid','id');
     }
     
     public function assistant() {
-        return $this->belongsTo('\App\User','assistantid','id');
+        return $this->belongsTo('\App\Assistant','assistantid','id');
     }
     
     public function registrations() {

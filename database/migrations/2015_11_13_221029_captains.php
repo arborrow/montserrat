@@ -15,7 +15,7 @@ class Captains extends Migration
         //
              Schema::create('captains', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('user_id');
+            $table->bigInteger('user_id')->default('0');
             $table->string('title');
             $table->string('firstname');
             $table->string('middlename');
@@ -42,6 +42,8 @@ class Captains extends Migration
             $table->mediumText('note1');
             $table->string('email')->unique();
             $table->string('password', 60);
+            $table->boolean('active')->default('1');
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });

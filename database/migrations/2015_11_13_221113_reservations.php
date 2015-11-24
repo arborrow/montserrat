@@ -21,6 +21,7 @@ class Reservations extends Migration
             $table->dateTime('start');
             $table->dateTime('end');
             $table->text('notes');
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });

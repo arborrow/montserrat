@@ -29,10 +29,10 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-left">
-                <li><a href={{ route('retreat.index') }}>{!! Html::image('img/retreat.png', 'Retreat',array('title'=>"Retreat")) !!}</a></li>
-                <li><a href={{ route('reservation') }}>{!! Html::image('img/reservation.png', 'Reservation',array('title'=>"Reservation")) !!}</a></li>
-                <li><a href={{ route('room') }}>{!! Html::image('img/room.png', 'Room',array('title'=>"Room")) !!}</a></li>
-                <li><a href={{ route('housekeeping') }}>{!! Html::image('img/housekeeping.png', 'Housekeeping',array('title'=>"Housekeeping")) !!}</a></li>
+                <li><a href={{ route('retreat.index') }}> {!! Html::image('img/retreat.png', 'Retreat',array('title'=>"Retreat")) !!}</a></li>
+                <li><a href={{ route('reservation') }}> {!! Html::image('img/reservation.png', 'Reservation',array('title'=>"Reservation")) !!}</a></li>
+                <li><a href={{ route('room.index') }}> {!! Html::image('img/room.png', 'Room',array('title'=>"Room")) !!}</a></li>
+                <li><a href={{ route('housekeeping') }}> {!! Html::image('img/housekeeping.png', 'Housekeeping',array('title'=>"Housekeeping")) !!}</a></li>
                 <li class="divider"></li>
                 <li><a href={{ route('maintenance') }}>{!! Html::image('img/maintenance.png', 'Maintenance',array('title'=>"Maintenance")) !!}</a></li>
                 <li><a href={{ route('grounds') }}>{!! Html::image('img/grounds.png', 'Grounds',array('title'=>"Grounds")) !!}</a></li>

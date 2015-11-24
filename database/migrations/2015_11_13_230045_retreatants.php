@@ -46,6 +46,7 @@ class Retreatants extends Migration
             $table->Text('roompreference');
             $table->mediumText('notes');
             $table->string('password', 60);
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });
