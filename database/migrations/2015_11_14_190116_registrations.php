@@ -15,8 +15,8 @@ class Registrations extends Migration
         //
           Schema::create('registrations', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned;
-            $table->integer('retreatant_id');
-            $table->integer('retreat_id');
+            $table->integer('retreatant_id')->unsigned();
+            $table->integer('retreat_id')->unsigned();
             $table->timestamp('start');
             $table->timestamp('end');
             $table->timestamp('register');

@@ -3,7 +3,7 @@
 
     <section class="section-padding">
         <div class="jumbotron text-left">
-            <h2><strong>Add A Retreat</strong></h2>
+            <h2><strong>Create Retreat</strong></h2>
             {!! Form::open(['url' => 'retreat', 'method' => 'post', 'class' => 'form-horizontal panel']) !!}
             <div class="form-group">
                 {!! Form::label('idnumber', 'ID#: ', ['class' => 'col-md-1']) !!}
