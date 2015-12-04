@@ -8,7 +8,7 @@
            <div class="form-group">
 
                 {!! Form::label('building_id', 'Location:', ['class' => 'col-md-1']) !!}
-                {!! Form::select('building_id', $loc, 0, ['class' => 'col-md-2']) !!}
+                {!! Form::select('building_id', $locations, 0, ['class' => 'col-md-2']) !!}
                 
             </div><div class="clearfix"> </div>
             <div class="form-group">

@@ -19,11 +19,13 @@ class RoomsController extends Controller
     {
         //
         
-        $rooms = \montserrat\Room::orderBy('building_id', 'asc','name')->get();
+        $rooms = \montserrat\Room::orderBy('building_id', 'asc','name','asc')->get();
          foreach ($rooms as $room) {
             $room->building = \montserrat\Location::find($room->building_id)->name;
            
          }
+         $rooms = $rooms->sortBy(function($building) {
+         return sprintf('%-12s%s',$building->building,$building->name);});
           //dd($rooms);      
         return view('rooms.index',compact('rooms'));   //
     
@@ -38,13 +40,8 @@ class RoomsController extends Controller
     public function create()
     {
         //
-        $locations = \montserrat\Location::select('id','name')->orderby('name')->get();
-        $loc=array();
-        
-        foreach ($locations as $location) {
-          $loc[$location->id] = $location->name;
-        }
-        return view('rooms.create',compact('loc'));  
+        $locations = \montserrat\Location::orderby('name')->lists('name','id');
+        return view('rooms.create',compact('locations'));  
     
     }
 
@@ -102,15 +99,10 @@ return Redirect::action('RoomsController@index');
     public function edit($id)
     {
         //
-        $locations = \montserrat\Location::select('id','name')->orderby('name')->get();
-        $loc=array();
-        foreach ($locations as $location) {
-          $loc[$location->id] = $location->name;
-        }
-     
+        $locations = \montserrat\Location::orderby('name')->lists('name','id');
         $room= \montserrat\Room::find($id);
       
-       return view('rooms.edit',compact('room','loc'));
+       return view('rooms.edit',compact('room','locations'));
     }
 
     /**

@@ -7,7 +7,7 @@
     {!! Form::hidden('id', $room->id) !!}
     <div class="form-group">
         {!! Form::label('building_id', 'Building ID:', ['class' => 'col-md-1'])  !!}
-        {!! Form::select('building_id', $loc, $room->building_id, ['class' => 'col-md-2']) !!}
+        {!! Form::select('building_id', $locations, $room->building_id, ['class' => 'col-md-2']) !!}
     </div><div class="clearfix"> </div>
 
     <div class="form-group">
