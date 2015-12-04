@@ -16,6 +16,7 @@ class Retreatants extends Migration
         
         Schema::create('retreatants', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned;
+            $table->bigInteger('person_id')->unsigned;
             $table->string('title')->nullable();
             $table->string('firstname');
             $table->string('middlename')->nullable();
@@ -39,6 +40,7 @@ class Retreatants extends Migration
             $table->string('email')->unique();
             $table->string('gender')->nullable();
             $table->integer('parish_id')->nullable()->unsigned();
+            $table->string('religion')->default('Catholic')->nullable();
             $table->string('ethnicity')->default('Caucasian')->nullable();
             $table->string('languages')->default('English')->nullable();
             $table->Text('dietary')->nullable();

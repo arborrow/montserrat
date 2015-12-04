@@ -12,7 +12,7 @@
 */
 
 Route::get('/',['as' => 'welcome','uses' => 'PagesController@welcome']);
-Route::get('retreats',['as' => 'retreats','uses' => 'PagesController@retreat']);
+Route::get('retreats',['as' => 'retreats','uses' => 'PagesController@retreat','middleware' => 'auth']);
 Route::get('reservation',['as' => 'reservation','uses' => 'PagesController@reservation']);
 //Route::get('room',['as' => 'room','uses' => 'PagesController@room']);
 Route::get('housekeeping',['as' => 'housekeeping','uses' => 'PagesController@housekeeping']);

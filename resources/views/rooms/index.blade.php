@@ -17,18 +17,16 @@
                 <table class="table"><caption><h2>Rooms</h2></caption>
                     <thead>
                         <tr>
-                            <th>ID#</th>
-                            <th>Building</th>
                             <th>Room</th> 
+                            <th>Building</th>
                             <th>Status</th> 
                        </tr>
                     </thead>
                     <tbody>
                         @foreach($rooms as $room)
                         <tr>
-                            <td><a href="room/{{$room->id}}">{{$room->id}}</a></td>
-                            <td>{{ $room->building_id}}</td>
-                            <td>{{ $room->name }}</td>
+                            <td><a href="room/{{$room->id}}">{{ $room->name }}</a></td>
+                            <td>{{ $room->building}}</td>
                             <td>{{ $room->status }}</td>
                         </tr>
                         @endforeach

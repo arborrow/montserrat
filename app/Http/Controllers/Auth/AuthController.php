@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace montserrat\Http\Controllers\Auth;
 
-use App\User;
+use montserrat\User;
 use Validator;
-use App\Http\Controllers\Controller;
+use montserrat\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Socialite;
@@ -82,6 +82,7 @@ class AuthController extends Controller
     public function handleProviderCallback(Request $request)
     {
         $user = Socialite::with('google')->user();
+        echo 'You are logged in';
 
         // $user->token;
     }

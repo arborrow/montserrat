@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace montserrat;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,6 +14,6 @@ class Retreatant extends Model
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];  //
 
     public function registrations() {
-        return $this->hasMany('\App\Registration','id','retreat_id');
+        return $this->hasMany('\montserrat\Registration','id','retreat_id');
     }  //
 }

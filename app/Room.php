@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace montserrat;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,5 +14,9 @@ class Room extends Model
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];  //
 
+    public function location() {
+        return $this->belongsTo('\montserrat\Location','building_id','id');
+    }
     
+        
 }

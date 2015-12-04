@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace montserrat;
 
 use Illuminate\Database\Eloquent\Model;
 

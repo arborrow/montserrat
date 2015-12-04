@@ -2,9 +2,9 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
-use \App\Innkeeper;
-use \App\Retreat;
-use \App\Retreatant;
+use \montserrat\Innkeeper;
+use \montserrat\Retreat;
+use \montserrat\Retreatant;
 class DatabaseSeeder extends Seeder
 {
     /**

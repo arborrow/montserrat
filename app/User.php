@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace montserrat;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
@@ -38,12 +38,12 @@ class User extends Model implements AuthenticatableContract,
     protected $hidden = ['password', 'remember_token'];
     
     public function directing() {
-        return $this->hasMany('\App\Retreat','id','directorid');
+        return $this->hasMany('\montserrat\Retreat','id','directorid');
     }
     public function innkeeping() {
-        return $this->hasMany('\App\Retreat','id','innkeeperid');
+        return $this->hasMany('\montserrat\Retreat','id','innkeeperid');
     }
     public function assisting() {
-        return $this->hasMany('\App\Retreat','id','assistantid');
+        return $this->hasMany('\montserrat\Retreat','id','assistantid');
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace montserrat\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use montserrat\Http\Requests;
+use montserrat\Http\Controllers\Controller;
 
 class DirectorsController extends Controller
 {

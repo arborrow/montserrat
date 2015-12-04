@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace montserrat;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,10 +11,10 @@ class Registration extends Model
 
     public function retreat()
     {
-        return $this->belongsTo('App\Retreat','id','retreat_id');
+        return $this->belongsTo('montserrat\Retreat','id','retreat_id');
     }
     public function retreatant()
     {
-        return $this->belongsTo('App\Retreatant','retreatant_id','id');
+        return $this->belongsTo('montserrat\Retreatant','retreatant_id','id');
     }
 }

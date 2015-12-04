@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace montserrat;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
@@ -28,18 +28,18 @@ class Retreat extends Model
     }
   
     public function director() {
-        return $this->belongsTo('\App\Director','directorid','id');
+        return $this->belongsTo('\montserrat\Director','directorid','id');
     }
     
     public function innkeeper() {
-        return $this->belongsTo('\App\Innkeeper','innkeeperid','id');
+        return $this->belongsTo('\montserrat\Innkeeper','innkeeperid','id');
     }
     
     public function assistant() {
-        return $this->belongsTo('\App\Assistant','assistantid','id');
+        return $this->belongsTo('\montserrat\Assistant','assistantid','id');
     }
     
     public function registrations() {
-        return $this->hasMany('\App\Registration','retreat_id','id');
+        return $this->hasMany('\montserrat\Registration','retreat_id','id');
     }
 }

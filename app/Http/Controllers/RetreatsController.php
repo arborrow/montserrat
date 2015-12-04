@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace montserrat\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use montserrat\Http\Requests;
+use montserrat\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Input;
 
@@ -18,13 +18,13 @@ class RetreatsController extends Controller
     public function index()
     {
         
-        $retreats = \App\Retreat::whereDate('end', '>=', date('Y-m-d'))->orderBy('start','asc')->get();
-        $oldretreats = \App\Retreat::whereDate('end', '<', date('Y-m-d'))->orderBy('start','desc')->get();
+        $retreats = \montserrat\Retreat::whereDate('end', '>=', date('Y-m-d'))->orderBy('start','asc')->get();
+        $oldretreats = \montserrat\Retreat::whereDate('end', '<', date('Y-m-d'))->orderBy('start','desc')->get();
         
         foreach ($retreats as $retreat) {
-            $director = \App\Retreat::find($retreat->id)->director;
-            $innkeeper = \App\Retreat::find($retreat->id)->innkeeper;
-            $assistant = \App\Retreat::find($retreat->id)->assistant;
+            $director = \montserrat\Retreat::find($retreat->id)->director;
+            $innkeeper = \montserrat\Retreat::find($retreat->id)->innkeeper;
+            $assistant = \montserrat\Retreat::find($retreat->id)->assistant;
             //dd($director);
             if (empty($director)) {
                 $retreat->directorname = 'Not assigned';
@@ -44,9 +44,9 @@ class RetreatsController extends Controller
             
         }
         foreach ($oldretreats as $oldretreat) {
-            $director = \App\Retreat::find($oldretreat->id)->director;
-            $innkeeper = \App\Retreat::find($oldretreat->id)->innkeeper;
-            $assistant = \App\Retreat::find($oldretreat->id)->assistant;
+            $director = \montserrat\Retreat::find($oldretreat->id)->director;
+            $innkeeper = \montserrat\Retreat::find($oldretreat->id)->innkeeper;
+            $assistant = \montserrat\Retreat::find($oldretreat->id)->assistant;
             //dd($director);
             if (empty($director)) {
                 $oldretreat->directorname = 'Not assigned';
@@ -77,9 +77,9 @@ class RetreatsController extends Controller
      */
     public function create()
     {
-        $directors = \App\Director::where('active','1')->select('id','title','firstname','lastname','suffix')->orderBy('lastname')->get();
-        $innkeepers = \App\Innkeeper::where('active','1')->select('id','title','firstname','lastname','suffix')->orderBy('lastname')->get();
-        $assistants = \App\Assistant::where('active','1')->select('id','title','firstname','lastname','suffix')->orderBy('lastname')->get();
+        $directors = \montserrat\Director::where('active','1')->select('id','title','firstname','lastname','suffix')->orderBy('lastname')->get();
+        $innkeepers = \montserrat\Innkeeper::where('active','1')->select('id','title','firstname','lastname','suffix')->orderBy('lastname')->get();
+        $assistants = \montserrat\Assistant::where('active','1')->select('id','title','firstname','lastname','suffix')->orderBy('lastname')->get();
             
         // dd($directors);
         $d=array();
@@ -120,7 +120,7 @@ class RetreatsController extends Controller
             'attending' => 'integer|min:0|max:150',
             'silent' => 'boolean'
         ]);
-        $retreat = new \App\Retreat;
+        $retreat = new \montserrat\Retreat;
         $retreat->idnumber = $request->input('idnumber');
         $retreat->start = $request->input('start');
         $retreat->end = $request->input('end');
@@ -146,13 +146,13 @@ return Redirect::action('RetreatsController@index');//
      */
     public function show($id)
     {
-        $retreat = \App\Retreat::find($id);
-        $director = \App\Retreat::find($id)->director;
-        $innkeeper = \App\Retreat::find($id)->innkeeper;
-        $assistant = \App\Retreat::find($id)->assistant;
-        $registrations = \App\Retreat::find($id)->registrations;
+        $retreat = \montserrat\Retreat::find($id);
+        $director = \montserrat\Retreat::find($id)->director;
+        $innkeeper = \montserrat\Retreat::find($id)->innkeeper;
+        $assistant = \montserrat\Retreat::find($id)->assistant;
+        $registrations = \montserrat\Retreat::find($id)->registrations;
         foreach ($registrations as $registration) {
-            $retreatant = \App\Registration::find($registration->id)->retreatant;
+            $retreatant = \montserrat\Registration::find($registration->id)->retreatant;
             //dd($director);
             if (empty($retreatant)) {
                 $registration->retreatantname = 'Unknown retreatant';
@@ -193,15 +193,15 @@ return Redirect::action('RetreatsController@index');//
      */
     //public function edit($id)
     //{
-    //   $retreats = \App\Retreat::();
+    //   $retreats = \montserrat\Retreat::();
     //   return view('retreats.edit',compact('retreats'));
     //  }
 public function edit($id)
-    { $retreat = \App\Retreat::find($id);
+    { $retreat = \montserrat\Retreat::find($id);
       
-        $directors = \App\Director::where('active','1')->select('id','title','firstname','lastname','suffix')->orderBy('lastname')->get();
-        $innkeepers = \App\Innkeeper::where('active','1')->select('id','title','firstname','lastname','suffix')->orderBy('lastname')->get();
-        $assistants = \App\Assistant::where('active','1')->select('id','title','firstname','lastname','suffix')->orderBy('lastname')->get();
+        $directors = \montserrat\Director::where('active','1')->select('id','title','firstname','lastname','suffix')->orderBy('lastname')->get();
+        $innkeepers = \montserrat\Innkeeper::where('active','1')->select('id','title','firstname','lastname','suffix')->orderBy('lastname')->get();
+        $assistants = \montserrat\Assistant::where('active','1')->select('id','title','firstname','lastname','suffix')->orderBy('lastname')->get();
             
         // dd($directors);
         $d=array();
@@ -243,7 +243,7 @@ public function edit($id)
             'attending' => 'integer|min:0|max:150',
             'silent' => 'boolean'
         ]);
-        $retreat = \App\Retreat::findOrFail($request->input('id'));
+        $retreat = \montserrat\Retreat::findOrFail($request->input('id'));
         $retreat->idnumber = $request->input('idnumber');
         $retreat->start = $request->input('start');
         $retreat->end = $request->input('end');
@@ -270,7 +270,7 @@ return Redirect::action('RetreatsController@index');
      */
     public function destroy($id)
     {
-       \App\Retreat::destroy($id);
+       \montserrat\Retreat::destroy($id);
        return Redirect::action('RetreatsController@index');
        //
     }

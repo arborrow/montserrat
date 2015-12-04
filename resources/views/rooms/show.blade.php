@@ -9,7 +9,7 @@
                     <span class="back"><a href={{ action('RoomsController@index') }}>{!! Html::image('img/room.png', 'Room Index',array('title'=>"Room Index",'class' => 'btn btn-primary')) !!}</a></span></h1>
                 </div>
                 <div class='row'>
-                    <div class='col-md-2'><strong>Building ID#: </strong>{{ $room->building_id}}</div>
+                    <div class='col-md-2'><strong>Building: </strong>{{ $room->building}}</div>
                 </div><div class="clearfix"> </div>
                 <div class='row'>
                     <div class='col-md-3'><strong>Name: </strong>{{ $room->name}}</div>

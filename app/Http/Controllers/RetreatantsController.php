@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace montserrat\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use montserrat\Http\Requests;
+use montserrat\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Input;
 
@@ -19,7 +19,7 @@ class RetreatantsController extends Controller
     public function index()
     {
         //
-          $retreatants = \App\Retreatant::orderBy('lastname', 'asc','firstname', 'asc')->get();
+          $retreatants = \montserrat\Retreatant::orderBy('lastname', 'asc','firstname', 'asc')->get();
           
         return view('retreatants.index',compact('retreatants'));   //
     }
@@ -53,7 +53,7 @@ class RetreatantsController extends Controller
             'gender' => 'in:Male,Female,Other'
         ]);
         
-        $retreatant = new \App\Retreatant;
+        $retreatant = new \montserrat\Retreatant;
         $retreatant->title = $request->input('title');
         $retreatant->firstname = $request->input('firstname');
         $retreatant->middlename = $request->input('middlename');
@@ -97,7 +97,7 @@ class RetreatantsController extends Controller
     public function show($id)
     {
         //
-          $retreatant = \App\Retreatant::find($id);
+          $retreatant = \montserrat\Retreatant::find($id);
         
        return view('retreatants.show',compact('retreatant'));//
     }
@@ -111,7 +111,7 @@ class RetreatantsController extends Controller
     public function edit($id)
     {
         //
-        $retreatant = \App\Retreatant::find($id);
+        $retreatant = \montserrat\Retreatant::find($id);
       
        return view('retreatants.edit',compact('retreatant'));
     }
@@ -133,7 +133,7 @@ class RetreatantsController extends Controller
             'parish_id' => 'integer|min:0',
             'gender' => 'in:Male,Female,Other'
         ]);
-        $retreatant = \App\Retreatant::findOrFail($request->input('id'));
+        $retreatant = \montserrat\Retreatant::findOrFail($request->input('id'));
         $retreatant->title = $request->input('title');
         $retreatant->firstname = $request->input('firstname');
         $retreatant->middlename = $request->input('middlename');
@@ -178,7 +178,7 @@ class RetreatantsController extends Controller
     public function destroy($id)
     {
         //
-        \App\Retreatant::destroy($id);
+        \montserrat\Retreatant::destroy($id);
        return Redirect::action('RetreatantsController@index');
     }
 }

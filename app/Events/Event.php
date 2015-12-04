@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace montserrat\Events;
 
 abstract class Event
 {

@@ -141,10 +141,10 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        montserrat\Providers\AppServiceProvider::class,
+        montserrat\Providers\AuthServiceProvider::class,
+        montserrat\Providers\EventServiceProvider::class,
+        montserrat\Providers\RouteServiceProvider::class,
         
         // Other service providers..
         

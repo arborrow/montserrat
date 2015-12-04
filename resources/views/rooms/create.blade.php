@@ -6,8 +6,9 @@
             <h2><strong>Add A Room</strong></h2>
             {!! Form::open(['url' => 'room', 'method' => 'post', 'class' => 'form-horizontal panel']) !!}
            <div class="form-group">
-                {!! Form::label('building_id', 'BuildingID#: ', ['class' => 'col-md-1']) !!}
-                {!! Form::text('building_id', null, ['class' => 'col-md-1']) !!}
+
+                {!! Form::label('building_id', 'Location:', ['class' => 'col-md-1']) !!}
+                {!! Form::select('building_id', $loc, 0, ['class' => 'col-md-2']) !!}
                 
             </div><div class="clearfix"> </div>
             <div class="form-group">

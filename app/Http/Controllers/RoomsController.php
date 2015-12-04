@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace montserrat\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use montserrat\Http\Requests;
+use montserrat\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
-
+use Input;
 
 class RoomsController extends Controller
 {
@@ -20,7 +19,11 @@ class RoomsController extends Controller
     {
         //
         
-        $rooms = \App\Room::orderBy('building_id','name')->get();
+        $rooms = \montserrat\Room::orderBy('building_id', 'asc','name')->get();
+         foreach ($rooms as $room) {
+            $room->building = \montserrat\Location::find($room->building_id)->name;
+           
+         }
           //dd($rooms);      
         return view('rooms.index',compact('rooms'));   //
     
@@ -35,7 +38,13 @@ class RoomsController extends Controller
     public function create()
     {
         //
-        return view('rooms.create');  
+        $locations = \montserrat\Location::select('id','name')->orderby('name')->get();
+        $loc=array();
+        
+        foreach ($locations as $location) {
+          $loc[$location->id] = $location->name;
+        }
+        return view('rooms.create',compact('loc'));  
     
     }
 
@@ -53,7 +62,7 @@ class RoomsController extends Controller
             'building_id' => 'integer|min:0',
             'occupancy' => 'integer|min:0'
         ]);
-        $room = new \App\Room;
+        $room = new \montserrat\Room;
         $room->building_id = $request->input('building_id');
         $room->name = $request->input('name');
         $room->description = $request->input('description');
@@ -76,7 +85,9 @@ return Redirect::action('RoomsController@index');
     {
         //
         
-        $room = \App\Room::find($id);
+        $room = \montserrat\Room::find($id);
+        $building =  \montserrat\Room::find($id)->location;
+        $room->building = $building->name;
         
        return view('rooms.show',compact('room'));//
     
@@ -91,9 +102,15 @@ return Redirect::action('RoomsController@index');
     public function edit($id)
     {
         //
-        $room= \App\Room::find($id);
+        $locations = \montserrat\Location::select('id','name')->orderby('name')->get();
+        $loc=array();
+        foreach ($locations as $location) {
+          $loc[$location->id] = $location->name;
+        }
+     
+        $room= \montserrat\Room::find($id);
       
-       return view('rooms.edit',compact('room'));
+       return view('rooms.edit',compact('room','loc'));
     }
 
     /**
@@ -112,7 +129,7 @@ return Redirect::action('RoomsController@index');
             'occupancy' => 'integer|min:0'
         ]);
            
-        $room = \App\Room::findOrFail($request->input('id'));
+        $room = \montserrat\Room::findOrFail($request->input('id'));
         $room->building_id = $request->input('building_id');
         $room->name = $request->input('name');
         $room->description = $request->input('description');
@@ -135,7 +152,7 @@ return Redirect::action('RoomsController@index');
     public function destroy($id)
     {
         //
-        \App\Room::destroy($id);
+        \montserrat\Room::destroy($id);
         return Redirect::action('RoomsController@index');
     }
 }

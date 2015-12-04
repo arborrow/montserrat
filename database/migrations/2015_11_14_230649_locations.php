@@ -13,6 +13,16 @@ class Locations extends Migration
     public function up()
     {
         //
+            Schema::create('locations', function (Blueprint $table) {
+            $table->bigIncrements('id')->unsigned;
+            $table->string('name')->unique();
+            $table->text('description')->nullable();
+            $table->integer('occupancy')->nullable();
+            $table->mediumText('notes')->nullable();
+            $table->softDeletes();
+            $table->rememberToken();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,5 +33,6 @@ class Locations extends Migration
     public function down()
     {
         //
+        Schema::drop('locations');
     }
 }

@@ -8,7 +8,7 @@
             <div class="form-group">
                 {!! Form::label('idnumber', 'ID#: ', ['class' => 'col-md-1']) !!}
                 {!! Form::text('idnumber', null, ['class' => 'col-md-1']) !!}
-                
+             
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('start', 'Starts: ', ['class' => 'col-md-1']) !!}
