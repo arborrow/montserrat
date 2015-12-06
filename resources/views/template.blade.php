@@ -33,6 +33,8 @@
                 <li><a href={{ route('retreatant.index') }}> {!! Html::image('img/retreatant.png', 'Retreatant',array('title'=>"Retreatant")) !!}</a></li>
                 <li><a href={{ route('reservation') }}> {!! Html::image('img/reservation.png', 'Reservation',array('title'=>"Reservation")) !!}</a></li>
                 <li><a href={{ route('room.index') }}> {!! Html::image('img/room.png', 'Room',array('title'=>"Room")) !!}</a></li>
+                <li><a href={{ route('parish.index') }}> {!! Html::image('img/parish.png', 'Room',array('title'=>"Parish")) !!}</a></li>
+                <li><a href={{ route('diocese.index') }}> {!! Html::image('img/diocese.png', 'Room',array('title'=>"Diocese")) !!}</a></li>
 <!--                <li><a href={{ route('housekeeping') }}> {!! Html::image('img/housekeeping.png', 'Housekeeping',array('title'=>"Housekeeping")) !!}</a></li>
                 <li class="divider"></li>
                 <li><a href={{ route('maintenance') }}>{!! Html::image('img/maintenance.png', 'Maintenance',array('title'=>"Maintenance")) !!}</a></li>
@@ -76,6 +78,9 @@
   $(function() {
     $( "#startdate" ).datepicker();
     $( "#enddate" ).datepicker();
+    $( "#register" ).datepicker();
+    $( "#confirmregister" ).datepicker();
+    $( "#confirmattend" ).datepicker();
   });
   </script>
     </body>

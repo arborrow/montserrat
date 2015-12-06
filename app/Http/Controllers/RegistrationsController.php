@@ -27,6 +27,10 @@ class RegistrationsController extends Controller
     public function create()
     {
         //
+        $retreats = \montserrat\Retreat::where('end','>',\Carbon\Carbon::today())->lists('title','id');
+        $retreatants = \montserrat\Retreatant::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->orderBy('fullname')->lists('fullname','id');
+        return view('registrations.create',compact('retreats','retreatants')); 
+        //dd($retreatants);
     }
 
     /**

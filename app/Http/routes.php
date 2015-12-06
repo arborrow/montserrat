@@ -33,6 +33,8 @@ Route::resource('room','RoomsController');
 Route::resource('director','DirectorsController');
 Route::resource('innkeeper','InnkeepersController');
 Route::resource('assistant','AssistantsController');
+Route::resource('parish','ParishesController');
+Route::resource('diocese','DiocesesController');
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');

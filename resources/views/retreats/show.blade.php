@@ -34,17 +34,18 @@
             </div><div class="clearfix"> </div>
             <div class='row'>
                 <div class='col-md-2'><strong>Year: </strong>{{ $retreat->year}}</div>
-            </div><div class="clearfix"> </div>
+            </div><div class="clearfix"> </div></div>
             <div class='row'>
                 <div class='col-md-1'><a href="{{ action('RetreatsController@edit', $retreat->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
                 <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['retreat.destroy', $retreat->id]]) !!}
                 {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
                 {!! Form::close() !!}</div><div class="clearfix"> </div>
-            </div>
-        </div>
+            </div><br />
         <div class="panel panel-default">  
         <div class="panel-heading">
             <h2>Retreatants Registered</h2>
+            <span class="create"><a href={{ action('RegistrationsController@create') }}>{!! Html::image('img/create.png', 'Create Registration',array('title'=>"Create Registration",'class' => 'btn btn-primary')) !!}</a></span></h1>
+                
         </div>
             @if ($registrations->isEmpty())
                 <p> Currently, there are no registrations for this retreats</p>
@@ -63,8 +64,8 @@
                 <tbody>
                 @foreach($registrations as $registration)
                     <tr>
-                        <td>{{ $registration->retreatantname}}</td>
-                        <td>{{ date('F d, Y', strtotime($registration->register)) }}</td>
+                        <td><a href="{{action('RetreatantsController@show', $registration->retreatant_id)}}">{{ $registration->retreatantname}}</a></td>
+                        <td><a href="{{action('RegistrationsController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register)) }}</a></td>
                         <td>{{ $registration->deposit }}</td>
                         <td>{{ $registration->retreatantmobilephone}}</td>
                         <td>{{ $registration->retreatantparish}}</td>
@@ -76,6 +77,7 @@
             </tbody>
 </table>@endif
         </div>
-    </div>
+    </div>        </div>
+
 </section>
 @stop

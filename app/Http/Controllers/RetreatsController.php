@@ -158,11 +158,17 @@ return Redirect::action('RetreatsController@index');//
             //dd($director);
             if (empty($retreatant)) {
                 $registration->retreatantname = 'Unknown retreatant';
-                $registration->retreatantphone = 'Not available';
-                $registration->retreatantparish = 'Unknown';
             } else {
                 $registration->retreatantname = $retreatant->firstname.' '.$retreatant->lastname;
-                $registration->retreatantmobilephone = $retreatant->mobilephone;
+            }
+            if (empty($registration->retreatantmobilephone)) {
+                $registration->retreatantmobilephone = 'N/A';
+            } else {
+               $registration->retreatantmobilephone = $retreatant->mobilephone;
+             }
+            if (empty($registration->retreatantparish)) {
+                $registration->retreatantparish = 'Unknown';
+            } else {
                 $registration->retreatantparish = $retreatant->parish;
             }
             
