@@ -29,7 +29,7 @@
                     <tbody>
                         @foreach($parishes as $parish)
                         <tr>
-                            <td><a href="diocese/{{$parish->diocese_id}}">{{ $parish->diocese_id }}</a></td>
+                            <td><a href="diocese/{{$parish->diocese_id}}">{{ $parish->diocese }}</a></td>
                             <td><a href="parish/{{$parish->id}}">{{ $parish->name }}</a></td>
                             <td>{{ $parish->pastor_id }}</td>
                             <td>{{ $parish->address1 }}</td>

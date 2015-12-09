@@ -37,6 +37,7 @@ class Persons extends Migration
             $table->string('emergencycontactphone2')->nullable();
             $table->string('email')->unique();
             $table->string('gender')->nullable();
+            $table->date('dob')->nullable();
             $table->integer('parish_id')->nullable()->unsigned();
             $table->string('ethnicity')->default('Caucasian')->nullable();
             $table->string('languages')->default('English')->nullable();
@@ -44,6 +45,17 @@ class Persons extends Migration
             $table->Text('medical')->nullable();
             $table->Text('roompreference')->nullable();
             $table->mediumText('notes')->nullable();
+            $table->boolean('is_donor')->default('1');
+            $table->boolean('is_retreatant')->default('1');
+            $table->boolean('is_director')->default('0');
+            $table->boolean('is_innkeeper')->default('0');
+            $table->boolean('is_assistant')->default('0');
+            $table->boolean('is_captain')->default('0');
+            $table->boolean('is_staff')->default('0');
+            $table->boolean('is_volunteer')->default('0');
+            $table->boolean('is_pastor')->default('0');
+            $table->boolean('is_bishop')->default('0');
+            $table->boolean('is_catholic')->default('1');
             $table->string('password', 60);
             $table->softDeletes();
             $table->rememberToken();

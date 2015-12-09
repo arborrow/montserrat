@@ -69,16 +69,16 @@ td {
 }
 
 .jumbotron {
-    //background-color: transparent;
+    /* background-color: transparent; */
     line-height: 1.5;
 }
 
 .navbar-default {
-    //background-color: transparent;
+    /* background-color: transparent; */
 }
 
 .navbar {
-    //border: 0px solid transparent;
+    /* border: 0px solid transparent; */
 }
 
 a {

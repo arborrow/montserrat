@@ -22,8 +22,10 @@ class ParishesController extends Controller
         $parishes = \montserrat\Parish::orderBy('name', 'asc')->get();
          foreach ($parishes as $parish) {
             $parish->diocese = \montserrat\Diocese::find($parish->diocese_id)->name;
-         }
-         
+        }
+        $parishes = $parishes->sortBy(function($parish) {
+            return sprintf('%-12s%s',$parish->diocese,$parish->name);
+        }); 
         return view('parishes.index',compact('parishes'));   //
     
     }
@@ -87,11 +89,12 @@ return Redirect::action('ParishesController@index');
     public function show($id)
     {
         //
-        $parish = \montserrat\Parish::find($id);
+        $parish = \montserrat\Parish::findOrFail($id);
         $diocese =  \montserrat\Parish::find($id)->diocese;
         $parish->diocese = $diocese->name;
-        
-       return view('parishes.show',compact('parish'));//
+        $parishioners = \montserrat\Retreatant::where('parish_id',$id)->orderBy('lastname')->get();
+        //dd($parishioners);
+       return view('parishes.show',compact('parish','parishioners'));//
     
     }
 

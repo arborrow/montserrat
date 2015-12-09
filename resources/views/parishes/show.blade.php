@@ -5,7 +5,7 @@
         <div class="jumbotron text-left">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span><h2>Parish: {!! $parish->name !!} (<a href="../diocese/{{$parish->diocese_id}}">{{ $parish->diocese}}</a>)  </span>
+                    <span><h2>{!! $parish->name !!} (<a href="../diocese/{{$parish->diocese_id}}">{{ $parish->diocese}}</a>)</span>
                     <span class="back"><a href={{ action('ParishesController@index') }}>{!! Html::image('img/parish.png', 'Parish Index',array('title'=>"Parish Index",'class' => 'btn btn-primary')) !!}</a></span></h1>
                 </div>
                 <div class='row'>
@@ -48,6 +48,42 @@
                 <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['parish.destroy', $parish->id]]) !!}
                 {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
                 {!! Form::close() !!}</div><div class="clearfix"> </div>
+            </div>
+            <hr />
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2><span class="grey">Parishioner Index</span></h2> 
+                </div>
+                @if ($parishioners->isEmpty())
+                    <p>No parishioners are currently registered in the database.</p>
+                @else
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th> 
+                            <th>Address</th>
+                            <th>City</th>
+                            <th>Zip</th> 
+                            <th>Phone</th> 
+                            <th>Mobile</th> 
+                            <th>Email</th> 
+                       </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($parishioners as $parishioner)
+                        <tr>
+                            <td><a href="../retreatant/{{$parishioner->id}}">{{ $parishioner->lastname }}, {{ $parishioner->firstname }}</a></td>
+                            <td>{{ $parishioner->address1 }}</td>
+                            <td>{{ $parishioner->city }}</td>
+                            <td>{{ $parishioner->zip }}</td>
+                            <td>{{ $parishioner->phone }}</td>
+                            <td>{{ $parishioner->mobile }}</td>
+                            <td>{{ $parishioner->email }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                @endif
             </div>
         </div>
     </section>
