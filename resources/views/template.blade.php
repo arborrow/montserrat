@@ -14,6 +14,7 @@
     <header>
         <div>
             <a href={{ route('welcome') }}>{!! Html::image('img/mrhlogoblack.png','Home',array('title'=>'Home','class'=>'logo')) !!}</a>
+        <a href="login/google">Login with Google</a>
         </div>
         <nav class="navbar navbar-default" role="navigation">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -25,7 +26,7 @@
                 <span class="icon-bar"></span>
             </button>
         </div>
-
+        
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-left">

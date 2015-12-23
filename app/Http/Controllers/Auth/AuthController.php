@@ -3,6 +3,7 @@
 namespace montserrat\Http\Controllers\Auth;
 
 use montserrat\User;
+use montserrat\AuthenticateUser;
 use Validator;
 use montserrat\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -85,5 +86,17 @@ class AuthController extends Controller
         echo 'You are logged in';
 
         // $user->token;
+    }
+    
+    public function login(AuthenticateUser $authenticateUser, Request $request, $provider = null) 
+    {
+        
+       return $authenticateUser->execute($request->all(), $this, $provider);
+    }
+    
+    public function userHasLoggedIn($user) 
+    {
+    \Session::flash('message', 'Welcome, ' . $user->username);
+    return redirect('/dashboard');
     }
 }
