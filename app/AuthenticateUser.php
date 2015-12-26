@@ -2,7 +2,8 @@
 // AuthenticateUser.php 
 use Illuminate\Contracts\Auth\Guard; 
 use Laravel\Socialite\Contracts\Factory as Socialite; 
-use montserrat\UserRepository; use Request; 
+use montserrat\UserRepository; 
+use Request; 
 
 class AuthenticateUser {     
 
@@ -17,6 +18,7 @@ class AuthenticateUser {
     }
 
     public function execute($request, $listener, $provider) {
+       
        if (!$request) return $this->getAuthorizationFirst($provider);
        $user = $this->users->findByUserNameOrCreate($this->getSocialUser($provider));
 

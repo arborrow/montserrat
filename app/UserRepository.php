@@ -6,6 +6,7 @@ use montserrat\User;
 
 class UserRepository {
     public function findByUserNameOrCreate($userData) {
+        //dd($userData);
         $user = User::where('provider_id', '=', $userData->id)->first();
         if(!$user) {
             $user = User::create([

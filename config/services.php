@@ -36,9 +36,9 @@ return [
     ],
     
     'google' => [
-        'client_id' => '303763231335-tmeibj3k65bq13sjro6r3nk0e8uiblb6.apps.googleusercontent.com',
-        'client_secret' => '4LGoqfplvDmk6rODXddCkXTO',
+        'client_id' => '818593163469-e7uuepfhl4snogfd6hd1hc47nhe0rvla.apps.googleusercontent.com',
+        'client_secret' => 'Ar8H-q2othLFOyQr07sX7QPq',
         'scope'         => ['userinfo_email', 'userinfo_profile'],
-        'redirect' => 'http://app.montserratretreat.org/auth/google/callback',
+        'redirect' => 'http://localhost/montserrat/public/index.php/auth/google/callback',
 ],
 ];

@@ -4,6 +4,7 @@ namespace montserrat\Http\Controllers\Auth;
 
 use montserrat\User;
 use montserrat\AuthenticateUser;
+use montserrat\UserRepository; 
 use Validator;
 use montserrat\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -82,8 +83,21 @@ class AuthController extends Controller
      */
     public function handleProviderCallback(Request $request)
     {
-        $user = Socialite::with('google')->user();
-        echo 'You are logged in';
+        try {
+            $user = Socialite::driver('google')->user();
+        } catch (Exception $e) {
+            return Redirect::to('login/google');
+        }
+
+        // dd($user);
+        $authuser = new \montserrat\UserRepository;
+        $currentuser = $authuser->findByUserNameOrCreate($user);
+        dd($currentuser);
+       $this->auth->login($user, true);
+        Auth::login($user, true);
+       return $listener->userHasLoggedIn($user);
+        // return redirect('/');
+        // echo $user->name.' ('.$user->email.') is logged in';
 
         // $user->token;
     }
