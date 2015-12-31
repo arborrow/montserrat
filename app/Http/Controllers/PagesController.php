@@ -8,6 +8,10 @@ use montserrat\Http\Controllers\Controller;
 
 class PagesController extends Controller
 {
+     public function __construct()
+    {
+        //$this->middleware('auth');
+    }
      /**
      * Display a listing of the resource.
      *
@@ -59,6 +63,10 @@ class PagesController extends Controller
     public function user()
     {
      return view('pages.user');   //
+    }
+    public function restricted()
+    {
+     return view('pages.restricted');   //
     }
     public function support()
     {

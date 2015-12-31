@@ -12,10 +12,23 @@
     
     <body>
     <header>
-        <div>
+        <div class="col-md-10">
             <a href={{ route('welcome') }}>{!! Html::image('img/mrhlogoblack.png','Home',array('title'=>'Home','class'=>'logo')) !!}</a>
-        <a href="login/google">Login with Google</a>
         </div>
+        <div class="col-md-2">
+        @if (isset(Auth::User()->avatar))
+        <!-- <a href='user/'> -->
+            {!! Html::image(Auth::User()->avatar, Auth::User()->name,array('title'=>Auth::User()->name)) !!}
+            
+        <!-- </a> -->
+        
+        <a href={{ route('logout') }}>{!! Html::image('img/logout.png', 'Logout',array('title'=>"Logout")) !!}</a>
+         
+         @else
+        <a href="login/google">{!! Html::image('img/login.png', 'Login',array('title'=>"Login")) !!}</a>
+         @endif
+        </div>
+        <div class="clearfix"> </div>
         <nav class="navbar navbar-default" role="navigation">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -48,6 +61,13 @@
                 <li><a href={{ route('users') }}>{!! Html::image('img/users.png', 'Users',array('title'=>"Users")) !!}</a></li>
 -->                <li><a href={{ route('support') }}>{!! Html::image('img/support.png', 'Support',array('title'=>"Support")) !!}</a></li>
                 <li><a href={{ route('about') }}>{!! Html::image('img/about.png', 'About',array('title' => 'About')) !!}</a></li>
+                <!-- @if (isset(Auth::User()->email))
+                     <li><a href={{ route('logout') }}>{!! Html::image('img/logout.png', 'Logout',array('title' => 'Logout')) !!}</a></li>
+                @else
+                <li><a href='login/google'>{!! Html::image('img/login.png', 'Login',array('title' => 'Login')) !!}</a></li>
+                @endif
+                -->
+        
             </ul>
         </div><!-- /.navbar-collapse -->
         </nav>

@@ -6,10 +6,20 @@ use montserrat\User;
 
 class UserRepository {
     public function findByUserNameOrCreate($userData) {
-        //dd($userData);
+        //dd(isset($userData->user['domain']));
+        if (isset($userData->user['domain'])) {
+            // dd($userData->user['domain']=="iccabq.org");
+            if (!$userData->user['domain']=="montserratretreat.org") {
+                
+                redirect('/restricted');
+        }}
+          else {
+           redirect('/restricted');
+        }
         $user = User::where('provider_id', '=', $userData->id)->first();
         if(!$user) {
             $user = User::create([
+                'provider' => 'google',
                 'provider_id' => $userData->id,
                 'name' => $userData->name,
                 'username' => $userData->nickname,
@@ -20,6 +30,7 @@ class UserRepository {
         }
 
         $this->checkIfUserNeedsUpdating($userData, $user);
+        //dd($user);
         return $user;
     }
 

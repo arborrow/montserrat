@@ -7,7 +7,7 @@ use montserrat\Http\Requests;
 use montserrat\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Input;
-
+use Auth;
 class RetreatsController extends Controller
 {
      public function __construct()
@@ -22,7 +22,7 @@ class RetreatsController extends Controller
      */
     public function index()
     {
-        
+        //dd(Auth::User());
         $retreats = \montserrat\Retreat::whereDate('end', '>=', date('Y-m-d'))->orderBy('start','asc')->get();
         $oldretreats = \montserrat\Retreat::whereDate('end', '<', date('Y-m-d'))->orderBy('start','desc')->get();
         

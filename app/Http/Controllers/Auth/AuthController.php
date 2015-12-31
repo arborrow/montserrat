@@ -11,6 +11,8 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Socialite;
 use Illuminate\Http\Request;
+use Auth; 
+use Session;
 
 class AuthController extends Controller
 {
@@ -34,7 +36,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'getLogout']);
+        // $this->middleware('guest', ['except' => 'getLogout']);
     }
 
     /**
@@ -89,28 +91,34 @@ class AuthController extends Controller
             return Redirect::to('login/google');
         }
 
-        // dd($user);
+        //dd($user);
         $authuser = new \montserrat\UserRepository;
         $currentuser = $authuser->findByUserNameOrCreate($user);
-        dd($currentuser);
-       $this->auth->login($user, true);
-        Auth::login($user, true);
-       return $listener->userHasLoggedIn($user);
+        //dd($currentuser);
+       //$this->auth->login($user, true);
+       Auth::login($currentuser, true);
+       return $this->userHasLoggedIn($currentuser);
         // return redirect('/');
         // echo $user->name.' ('.$user->email.') is logged in';
 
         // $user->token;
     }
     
-    public function login(AuthenticateUser $authenticateUser, Request $request, $provider = null) 
+    public function login(AuthenticateUser $authenticateUser, Request $request, $provider = 'google') 
     {
-        
+       //dd($provider); 
        return $authenticateUser->execute($request->all(), $this, $provider);
+    }
+    public function logout(AuthenticateUser $authenticateUser, Request $request, $provider = 'google') 
+    {
+        Auth::logout();
+        return redirect('/');
     }
     
     public function userHasLoggedIn($user) 
     {
-    \Session::flash('message', 'Welcome, ' . $user->username);
-    return redirect('/dashboard');
+    //    dd($user);
+    Session::flash('message', 'Welcome, ' . $user->username);
+    return redirect('/');
     }
 }

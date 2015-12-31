@@ -36,9 +36,9 @@ return [
     ],
     
     'google' => [
-        'client_id' => '818593163469-e7uuepfhl4snogfd6hd1hc47nhe0rvla.apps.googleusercontent.com',
-        'client_secret' => 'Ar8H-q2othLFOyQr07sX7QPq',
+        'client_id' => getenv('GOOGLE_CLIENT_ID'),
+        'client_secret' => getenv('GOOGLE_CLIENT_SECRET'),
         'scope'         => ['userinfo_email', 'userinfo_profile'],
-        'redirect' => 'http://localhost/montserrat/public/index.php/auth/google/callback',
+        'redirect' => getenv('GOOGLE_REDIRECT'),
 ],
 ];

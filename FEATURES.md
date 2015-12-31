@@ -9,3 +9,5 @@
 - Board of Trustees - (add, edit, view and delete)
 - Locations (Buildings) - (add, edit, view and delete)
 - Reservation (of Rooms) - (add, edit, view and delete)
+- Dioceses (add, edit, view and delete)
+- Parishes (add, edit, view and delete)
