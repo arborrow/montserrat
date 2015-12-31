@@ -13,6 +13,7 @@ use Socialite;
 use Illuminate\Http\Request;
 use Auth; 
 use Session;
+use Redirect;
 
 class AuthController extends Controller
 {
@@ -91,7 +92,16 @@ class AuthController extends Controller
             return Redirect::to('login/google');
         }
 
-        //dd($user);
+        if (isset($user->user['domain'])) { 
+            $domain = $user->user['domain'];
+            //dd(!($domain == "montserratretreat.org"));
+            if (!($domain == "montserratretreat.org")) {
+                return Redirect::to('restricted');
+            }
+        } else {
+            return Redirect::to('restricted');
+        }
+            
         $authuser = new \montserrat\UserRepository;
         $currentuser = $authuser->findByUserNameOrCreate($user);
         //dd($currentuser);
