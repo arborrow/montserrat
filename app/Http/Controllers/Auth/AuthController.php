@@ -129,6 +129,6 @@ class AuthController extends Controller
     {
     //    dd($user);
     Session::flash('message', 'Welcome, ' . $user->username);
-    return redirect('/');
+    return redirect('index.php');
     }
 }
