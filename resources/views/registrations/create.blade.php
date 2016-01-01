@@ -18,15 +18,15 @@
                 
             </div><div class="clearfix"> </div>
             <div class="form-group">
-                {!! Form::label('register', 'Date Registered:', ['class' => 'col-md-2']) !!}
+                {!! Form::label('register', 'Registered:', ['class' => 'col-md-2']) !!}
                 {!! Form::text('register', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
-                {!! Form::label('confirmregister', 'Date Confirmation Sent:', ['class' => 'col-md-2']) !!}
+                {!! Form::label('confirmregister', 'Registration Confirmed:', ['class' => 'col-md-2']) !!}
                 {!! Form::text('confirmregister', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
-                {!! Form::label('confirmattend', 'Date Registration Confirmed:', ['class' => 'col-md-2']) !!}
+                {!! Form::label('confirmattend', 'Attendance Confirmed:', ['class' => 'col-md-2']) !!}
                 {!! Form::text('confirmattend', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">

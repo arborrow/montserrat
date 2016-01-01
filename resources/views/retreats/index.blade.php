@@ -17,8 +17,7 @@
                         <tr>
                             <th>ID#</th>
                             <th>Title</th>
-                            <th>Starts</th>
-                            <th>Ends</th>
+                            <th>Starts - Ends</th>
                             <th>Director</th>
                             <th>Innkeeper</th>
                             <th>Assistant</th>
@@ -33,8 +32,7 @@
                         <tr>
                             <td><a href="retreat/{{ $retreat->id}}">{{ $retreat->idnumber}}</a></td>
                             <td>{{ $retreat->title }}</td>
-                            <td>{{ date('F d, Y', strtotime($retreat->start)) }}</td>
-                            <td>{{ date('F d, Y', strtotime($retreat->end)) }}</td>
+                            <td>{{ date('F d, Y', strtotime($retreat->start)) }} - {{ date('F d, Y', strtotime($retreat->end)) }}</td>
                             <td>{{ $retreat->directorname }}</td>
                             <td>{{ $retreat->innkeepername }}</td>
                             <td>{{ $retreat->assistantname }}</td>
@@ -59,8 +57,7 @@
                         <tr>
                             <th>ID#</th>
                             <th>Title</th>
-                            <th>Starts</th>
-                            <th>Ends</th>
+                            <th>Starts - Ends</th>
                             <th>Director</th>
                             <th>Innkeeper</th>
                             <th>Assistant</th>
@@ -75,8 +72,7 @@
                         <tr>
                             <td><a href="retreat/{{ $oldretreat->id}}">{{ $oldretreat->idnumber}}</a></td>
                             <td>{{ $oldretreat->title }}</td>
-                            <td>{{ date('F d, Y', strtotime($oldretreat->start)) }}</td>
-                            <td>{{ date('F d, Y', strtotime($oldretreat->end)) }}</td>
+                            <td>{{ date('F d, Y', strtotime($oldretreat->start)) }} - {{ date('F d, Y', strtotime($oldretreat->end)) }}</td>
                             <td>{{ $oldretreat->directorname }}</td>
                             <td>{{ $oldretreat->innkeepername }}</td>
                             <td>{{ $oldretreat->assistantname }}</td>
