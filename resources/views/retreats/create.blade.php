@@ -48,7 +48,7 @@
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('year', 'Year:', ['class' => 'col-md-1']) !!}
-                {!! Form::text('year', 2015, ['class'=>'col-md-1']) !!}
+                {!! Form::text('year', date('Y'), ['class'=>'col-md-1']) !!}
             </div><div class="clearfix"> </div>
             <div class="col-md-1"><div class="form-group">
                 {!! Form::submit('Add Retreat', ['class'=>'btn btn-primary']) !!}
