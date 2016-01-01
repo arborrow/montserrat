@@ -9,22 +9,17 @@
                     <span class="back"><a href={{ action('RegistrationsController@index') }}>{!! Html::image('img/registration.png', 'Registration Index',array('title'=>"Registration Index",'class' => 'btn btn-primary')) !!}</a></span></h1>
                 </div>
                 <div class='row'>
-                    <div class='col-md-3'><strong>Retreat: </strong>{{ $retreat->title}} ({{ $retreat->idnumber}})</div>
-                </div><div class="clearfix"> </div>
-                <div class='row'>
                     <div class='col-md-3'><strong>Retreatant: </strong><a href="../retreatant/{{ $retreatant->id}}">{{ $retreatant->lastname}},{{ $retreatant->firstname}}</a></div>
                 </div><div class="clearfix"> </div>
-                <div class='row'>
-                    <div class='col-md-3'><strong>Start: </strong>{{ date('F d, Y', strtotime($registration->start))}}</div>
-                </div><div class="clearfix"> </div>
-                <div class='row'>
-                    <div class='col-md-3'><strong>End: </strong>{{ date('F d, Y', strtotime($registration->end))}}</div>
+                         <div class='row'>
+                    <div class='col-md-3'><strong>Retreat: </strong><a href="../retreat/{{ $registration->retreat_id}}">{{ $retreat->title}} ({{ $retreat->idnumber}})</a></div>
+                <div class='col-md-3'><strong>Retreat Dates: </strong>{{ date('F d, Y', strtotime($registration->start))}} - {{ date('F d, Y', strtotime($registration->end))}}</div>
                 </div><div class="clearfix"> </div> 
                 <div class='row'>
-                    <div class='col-md-3'><strong>Registered on: </strong>{{ date('F d, Y', strtotime($registration->register))}}</div>
+                    <div class='col-md-3'><strong>Registered: </strong>{{ date('F d, Y', strtotime($registration->register))}}</div>
                 </div><div class="clearfix"> </div>
                 <div class='row'>
-                    <div class='col-md-3'><strong>Registration Confirmation: </strong>{{ date('F d, Y', strtotime($registration->confirmregister))}}</div>
+                    <div class='col-md-3'><strong>Registration Confirmed: </strong>{{ date('F d, Y', strtotime($registration->confirmregister))}}</div>
                 </div><div class="clearfix"> </div>
                 <div class='row'>
                     <div class='col-md-3'><strong>Attendance Confirmed: </strong>{{ date('F d, Y', strtotime($registration->confirmattend))}}</div>

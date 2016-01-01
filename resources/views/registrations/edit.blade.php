@@ -2,43 +2,50 @@
 @section('content')
 
 <div class="jumbotron text-left">
-    <h1>Edit Room {!! $room->id !!}</h1>
-    {!! Form::open(['method' => 'PUT', 'route' => ['room.update', $room->id]]) !!}
-    {!! Form::hidden('id', $room->id) !!}
-    <div class="form-group">
-        {!! Form::label('building_id', 'Building ID:', ['class' => 'col-md-1'])  !!}
-        {!! Form::select('building_id', $locations, $room->building_id, ['class' => 'col-md-2']) !!}
-    </div><div class="clearfix"> </div>
+    <h1>Edit Registration #{!! $registration->id !!}</h1>
+    {!! Form::open(['method' => 'PUT', 'route' => ['registration.update', $registration->id]]) !!}
+    {!! Form::hidden('id', $registration->id) !!}
+            <div class="form-group">
+     
+                {!! Form::label('retreatant_id', 'Retreatant:', ['class' => 'col-md-2']) !!}
+                {!! Form::select('retreatant_id', $retreatants, $registration->retreatant_id, ['class' => 'col-md-2']) !!}
+                
+                
+            </div><div class="clearfix"> </div>
+           <div class="form-group">
 
-    <div class="form-group">
-        {!! Form::label('name', 'Name:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('name', $room->name, ['class' => 'col-md-2']) !!}
-    </div>
-    <div class="clearfix"> </div>
-    <div class="form-group">
-        {!! Form::label('description', 'Description:', ['class' => 'col-md-1']) !!}
-        {!! Form::textarea('description', $room->desription, ['class' => 'col-md-5', 'rows'=>'3']) !!}
-    </div>
-    <div class="form-group">
-        {!! Form::label('notes', 'Notes:', ['class' => 'col-md-1']) !!}
-        {!! Form::textarea('notes', $room->notes, ['class' => 'col-md-5', 'rows'=>'3']) !!}
-    </div>
-    <div class="clearfix"> </div>
-    <div class="form-group">
-        {!! Form::label('access', 'Access:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('access', $room->access, ['class' => 'col-md-1']) !!}
-
-        {!! Form::label('type', 'Type:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('type', $room->type, ['class' => 'col-md-1']) !!}
-
-        {!! Form::label('occupancy', 'Occupancy:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('occupancy', $room->occupancy, ['class' => 'col-md-1']) !!}
-    
-        {!! Form::label('status', 'Status:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('status', $room->status, ['class' => 'col-md-1']) !!}
-    </div>
-    <div class="clearfix"> </div>
-    
+                {!! Form::label('retreat_id', 'Retreat:', ['class' => 'col-md-2']) !!}
+                {!! Form::select('retreat_id', $retreats, $registration->retreat_id, ['class' => 'col-md-2']) !!}
+                {!! Form::label('start', 'Retreat Dates: '.date('F d, Y', strtotime($registration->start)).' - '.date('F d, Y', strtotime($registration->end)), ['class' => 'col-md-6']) !!}
+              
+                
+            </div><div class="clearfix"> </div>
+            <div class="form-group">
+                {!! Form::label('register', 'Registered:', ['class' => 'col-md-2']) !!}
+                {!! Form::text('register', date('F d, Y', strtotime($registration->register)), ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+            </div><div class="clearfix"> </div>
+            <div class="form-group">
+                {!! Form::label('confirmregister', 'Registration Confirmed:', ['class' => 'col-md-2']) !!}
+                {!! Form::text('confirmregister', date('F d, Y', strtotime($registration->confirmregister)), ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+            </div><div class="clearfix"> </div>
+            <div class="form-group">
+                {!! Form::label('confirmattend', 'Attendance Confirmed:', ['class' => 'col-md-2']) !!}
+                {!! Form::text('confirmattend', date('F d, Y', strtotime($registration->confirmattend)), ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+            </div><div class="clearfix"> </div>
+            <div class="form-group">
+                {!! Form::label('confirmedby', 'Confirmed by:', ['class' => 'col-md-2']) !!}
+                {!! Form::text('confirmedby', $registration->confirmedby, ['class'=>'col-md-2']) !!}
+            </div><div class="clearfix"> </div>
+            <div class="form-group">
+                {!! Form::label('deposit', 'Deposit:', ['class' => 'col-md-2']) !!}
+                {!! Form::text('deposit', $registration->deposit, ['class'=>'col-md-2']) !!}
+            </div><div class="clearfix"> </div>
+            
+            <div class="form-group">
+                {!! Form::label('notes', 'Notes:', ['class' => 'col-md-2']) !!}
+                {!! Form::textarea('notes', $registration->notes, ['class'=>'col-md-5', 'rows'=>'3']) !!}
+            </div><div class="clearfix"> </div>
+     
     <div class="form-group">
         {!! Form::image('img/save.png','btnSave',['class' => 'btn btn-primary']) !!}
     </div>

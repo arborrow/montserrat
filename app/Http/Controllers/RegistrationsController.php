@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use montserrat\Http\Requests;
 use montserrat\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
-
+use Input;
 
 class RegistrationsController extends Controller
 {
@@ -59,8 +59,8 @@ class RegistrationsController extends Controller
         //
         //$retreats = \montserrat\Retreat::where('end','>',\Carbon\Carbon::today())->lists('idnumber','title','id');
         $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start,"%m-%d-%Y"),")") as description'), 'id')->where("end",">",\Carbon\Carbon::today())->orderBy('start')->lists('description','id');
-
         $retreatants = \montserrat\Retreatant::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->orderBy('fullname')->lists('fullname','id');
+
         return view('registrations.create',compact('retreats','retreatants')); 
         //dd($retreatants);
     }
@@ -125,6 +125,14 @@ class RegistrationsController extends Controller
     public function edit($id)
     {
         //
+        $registration= \montserrat\Registration::findOrFail($id);
+//        $retreat = \montserrat\Retreat::findOrFail($registration->retreat_id);
+//        $retreatant = \montserrat\Retreatant::findOrFail($registration->retreatant_id);
+        $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start,"%m-%d-%Y"),")") as description'), 'id')->where("end",">",\Carbon\Carbon::today())->orderBy('start')->lists('description','id');
+        $retreatants = \montserrat\Retreatant::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->orderBy('fullname')->lists('fullname','id');
+
+        
+        return view('registrations.edit',compact('registration','retreats','retreatants'));
     }
 
     /**
@@ -137,6 +145,34 @@ class RegistrationsController extends Controller
     public function update(Request $request, $id)
     {
         //
+        
+    $this->validate($request, [
+        'register' => 'required|date',
+        'confirmattend' => 'date',
+        'confirmregister' => 'date',
+        'retreat_id' => 'required|integer|min:0',
+        'retreatant_id' => 'required|integer|min:0',
+        'deposit' => 'required|numeric|min:0|max:1000',
+        ]);
+
+
+    $registration = \montserrat\Registration::findOrFail($request->input('id'));
+    $retreat = \montserrat\Retreat::findOrFail($request->input('retreat_id'));
+
+    $registration->retreat_id= $request->input('retreat_id');
+    $registration->start = $retreat->start;
+    $registration->end = $retreat->end;
+    $registration->retreatant_id= $request->input('retreatant_id');
+    $registration->register = Carbon::parse($request->input('register'));
+    $registration->confirmattend = Carbon::parse($request->input('confirmattend'));
+    $registration->confirmregister = Carbon::parse($request->input('confirmregister'));
+    $registration->confirmedby = $request->input('confirmedby');
+    $registration->deposit = $request->input('deposit');
+    $registration->notes = $request->input('notes');
+    $registration->save();
+    
+    return Redirect::action('RegistrationsController@index');
+    
     }
 
     /**

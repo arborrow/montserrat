@@ -53,8 +53,8 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Name</th>
                         <th>Date Registered</th>
+                        <th>Name</th>
                         <th>Deposit</th>
                         <th>Mobile Phone</th>
                         <th>Parish</th>
@@ -64,8 +64,8 @@
                 <tbody>
                 @foreach($registrations as $registration)
                     <tr>
-                        <td><a href="{{action('RetreatantsController@show', $registration->retreatant_id)}}">{{ $registration->retreatantname}}</a></td>
                         <td><a href="{{action('RegistrationsController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register)) }}</a></td>
+                        <td><a href="{{action('RetreatantsController@show', $registration->retreatant_id)}}">{{ $registration->retreatantname}}</a></td>
                         <td>{{ $registration->deposit }}</td>
                         <td>{{ $registration->retreatantmobilephone}}</td>
                         <td>{{ $registration->retreatantparish}}</td>

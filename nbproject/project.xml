@@ -5,5 +5,10 @@
         <data xmlns="http://www.netbeans.org/ns/php-project/1">
             <name>montserrat</name>
         </data>
+        <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
+            <word>confirmattend</word>
+            <word>confirmedby</word>
+            <word>confirmregister</word>
+        </spellchecker-wordlist>
     </configuration>
 </project>

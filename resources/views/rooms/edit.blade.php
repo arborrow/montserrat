@@ -17,7 +17,7 @@
     <div class="clearfix"> </div>
     <div class="form-group">
         {!! Form::label('description', 'Description:', ['class' => 'col-md-1']) !!}
-        {!! Form::textarea('description', $room->desription, ['class' => 'col-md-5', 'rows'=>'3']) !!}
+        {!! Form::textarea('description', $room->description, ['class' => 'col-md-5', 'rows'=>'3']) !!}
     </div>
     <div class="form-group">
         {!! Form::label('notes', 'Notes:', ['class' => 'col-md-1']) !!}
