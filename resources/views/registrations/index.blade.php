@@ -8,26 +8,32 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                    <span class="grey">Room Index</span> 
-                    <span class="create"><a href={{ action('RoomsController@create') }}>{!! Html::image('img/create.png', 'Create a Room',array('title'=>"Create Room",'class' => 'btn btn-primary')) !!}</a></span></h1>
+                    <span class="grey">Registration Index</span> 
+                    <span class="create"><a href={{ action('RegistrationsController@create') }}>{!! Html::image('img/create.png', 'Create a Registration',array('title'=>"Create a Registration",'class' => 'btn btn-primary')) !!}</a></span></h1>
                 </div>
-                @if ($rooms->isEmpty())
-                    <p> Yikes, there are no rooms at this retreat house!</p>
+                @if ($registrations->isEmpty())
+                    <p> Yikes, there are no registrations!</p>
                 @else
-                <table class="table"><caption><h2>Rooms</h2></caption>
+                <table class="table"><caption><h2>Registrations</h2></caption>
                     <thead>
                         <tr>
-                            <th>Room</th> 
-                            <th>Building</th>
-                            <th>Status</th> 
-                       </tr>
+                            <th>Retreat</th> 
+                            <th>Retreatant</th>
+                            <th>Retreat Start Date</th>
+                            <th>Registered On</th> 
+                            <th>Attendance Confirmed On</th> 
+                            <th>Deposit</th> 
+                        </tr>
                     </thead>
                     <tbody>
-                        @foreach($rooms as $room)
+                        @foreach($registrations as $registration)
                         <tr>
-                            <td><a href="room/{{$room->id}}">{{ $room->name }}</a></td>
-                            <td>{{ $room->building}}</td>
-                            <td>{{ $room->status }}</td>
+                            <td><a href="retreat/{{$registration->retreat_id}}">{{ $registration->retreat->title }} ({{$registration->retreat->idnumber}})</a></td>
+                            <td><a href="retreatant/{{$registration->retreatant_id}}">{{ $registration->retreatant->lastname}}, {{ $registration->retreatant->firstname}}</a></td>
+                            <td>{{ date('F d, Y', strtotime($registration->start)) }}</td>
+                            <td><a href="registration/{{$registration->id}}">{{ date('F d, Y', strtotime($registration->register)) }}</a></td>
+                            <td>{{ date('F d, Y', strtotime($registration->confirmattend)) }}</td>
+                            <td>${{ $registration->deposit }}</td>
                         </tr>
                         @endforeach
                     </tbody>

@@ -5,30 +5,41 @@
         <div class="jumbotron text-left">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span><h2>Room Details for #{!! $room->id !!}</span>
-                    <span class="back"><a href={{ action('RoomsController@index') }}>{!! Html::image('img/room.png', 'Room Index',array('title'=>"Room Index",'class' => 'btn btn-primary')) !!}</a></span></h1>
+                    <span><h2>Details for Registration #{!! $registration->id !!}</span>
+                    <span class="back"><a href={{ action('RegistrationsController@index') }}>{!! Html::image('img/registration.png', 'Registration Index',array('title'=>"Registration Index",'class' => 'btn btn-primary')) !!}</a></span></h1>
                 </div>
                 <div class='row'>
-                    <div class='col-md-2'><strong>Building: </strong>{{ $room->building}}</div>
+                    <div class='col-md-3'><strong>Retreat: </strong>{{ $retreat->title}} ({{ $retreat->idnumber}})</div>
                 </div><div class="clearfix"> </div>
                 <div class='row'>
-                    <div class='col-md-3'><strong>Name: </strong>{{ $room->name}}</div>
+                    <div class='col-md-3'><strong>Retreatant: </strong><a href="../retreatant/{{ $retreatant->id}}">{{ $retreatant->lastname}},{{ $retreatant->firstname}}</a></div>
                 </div><div class="clearfix"> </div>
                 <div class='row'>
-                    <div class='col-md-6'><strong>Description: </strong>{{ $room->description}}</div>
+                    <div class='col-md-3'><strong>Start: </strong>{{ date('F d, Y', strtotime($registration->start))}}</div>
                 </div><div class="clearfix"> </div>
                 <div class='row'>
-                    <div class='col-md-6'><strong>Notes: </strong>{{ $room->notes}}</div>
+                    <div class='col-md-3'><strong>End: </strong>{{ date('F d, Y', strtotime($registration->end))}}</div>
+                </div><div class="clearfix"> </div> 
+                <div class='row'>
+                    <div class='col-md-3'><strong>Registered on: </strong>{{ date('F d, Y', strtotime($registration->register))}}</div>
                 </div><div class="clearfix"> </div>
                 <div class='row'>
-                    <div class='col-md-3'><strong>Access: </strong>{{ $room->access}}</div>
-                    <div class='col-md-3'><strong>Type: </strong>{{ $room->type}}</div>
-                    <div class='col-md-3'><strong>Occupancy: </strong>{{ $room->occupancy}}</div>
-                    <div class='col-md-3'><strong>Status: </strong>{{ $room->status}}</div>
+                    <div class='col-md-3'><strong>Registration Confirmation: </strong>{{ date('F d, Y', strtotime($registration->confirmregister))}}</div>
                 </div><div class="clearfix"> </div>
                 <div class='row'>
-                    <div class='col-md-1'><a href="{{ action('RoomsController@edit', $room->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
-                    <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['room.destroy', $room->id]]) !!}
+                    <div class='col-md-3'><strong>Attendance Confirmed: </strong>{{ date('F d, Y', strtotime($registration->confirmattend))}}</div>
+                    <div class='col-md-3'><strong>Confirmed by: </strong>{{ $registration->confirmedby}}</div>
+                </div><div class="clearfix"> </div>
+               
+                <div class='row'>
+                    <div class='col-md-6'><strong>Notes: </strong>{{ $registration->notes}}</div>
+                </div><div class="clearfix"> </div>
+                <div class='row'>
+                    <div class='col-md-3'><strong>Deposit: </strong>${{ $registration->deposit}}</div>
+                </div><div class="clearfix"> </div>
+                <div class='row'>
+                    <div class='col-md-1'><a href="{{ action('RegistrationsController@edit', $registration->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
+                    <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['registration.destroy', $registration->id]]) !!}
                     {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
                     {!! Form::close() !!}</div><div class="clearfix"> </div>
                 </div>

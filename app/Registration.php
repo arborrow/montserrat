@@ -13,7 +13,7 @@ class Registration extends Model
 
     public function retreat()
     {
-        return $this->belongsTo('montserrat\Retreat','id','retreat_id');
+        return $this->belongsTo('montserrat\Retreat','retreat_id','id');
     }
     public function retreatant()
     {

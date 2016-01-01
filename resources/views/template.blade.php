@@ -45,7 +45,8 @@
             <ul class="nav navbar-nav navbar-left">
                 <li><a href={{ route('retreat.index') }}> {!! Html::image('img/retreat.png', 'Retreat',array('title'=>"Retreat")) !!}</a></li>
                 <li><a href={{ route('retreatant.index') }}> {!! Html::image('img/retreatant.png', 'Retreatant',array('title'=>"Retreatant")) !!}</a></li>
-                <li><a href={{ route('reservation') }}> {!! Html::image('img/reservation.png', 'Reservation',array('title'=>"Reservation")) !!}</a></li>
+                <li><a href={{ route('registration.index') }}> {!! Html::image('img/registration.png', 'Registration',array('title'=>"Registration")) !!}</a></li>
+                <!--<li><a href={{ route('reservation') }}> {!! Html::image('img/reservation.png', 'Reservation',array('title'=>"Reservation")) !!}</a></li> -->
                 <li><a href={{ route('room.index') }}> {!! Html::image('img/room.png', 'Room',array('title'=>"Room")) !!}</a></li>
                 <li><a href={{ route('parish.index') }}> {!! Html::image('img/parish.png', 'Room',array('title'=>"Parish")) !!}</a></li>
                 <li><a href={{ route('diocese.index') }}> {!! Html::image('img/diocese.png', 'Room',array('title'=>"Diocese")) !!}</a></li>
