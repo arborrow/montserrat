@@ -8,6 +8,12 @@
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="//codeorigin.jquery.com/ui/1.10.2/jquery-ui.min.js"></script>
+                <link rel="stylesheet"href="//codeorigin.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="//codeorigin.jquery.com/ui/1.10.2/jquery-ui.min.js"></script>
+
     </head>
     
     <body>
@@ -94,15 +100,24 @@
             (940) 321-6020<br /> 
             <a href='http://montserratretreat.org/' target='_blank'>montserratretreat.org</a>
         </p>
-    </div><script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    </div>
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-  <script>
+  <script type="text/javascript">
   $(function() {
     $( "#startdate" ).datepicker();
     $( "#enddate" ).datepicker();
     $( "#register" ).datepicker();
     $( "#confirmregister" ).datepicker();
     $( "#confirmattend" ).datepicker();
+    $( "#auto").autocomplete({
+        source: "../getdata",
+        minLength: 1,
+        select: function( event, ui ) {
+            $('#response').val(ui.item.id);
+        }
+    });
+            
   });
   </script>
     </body>

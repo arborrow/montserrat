@@ -24,7 +24,7 @@ class RetreatantsController extends Controller
     public function index()
     {
         //
-          $retreatants = \montserrat\Retreatant::orderBy('lastname', 'asc','firstname', 'asc')->get();
+       $retreatants = \montserrat\Retreatant::orderBy('lastname', 'asc','firstname', 'asc')->get();
           
         return view('retreatants.index',compact('retreatants'));   //
     }
@@ -102,7 +102,7 @@ class RetreatantsController extends Controller
     public function show($id)
     {
         //
-          $retreatant = \montserrat\Retreatant::find($id);
+       $retreatant = \montserrat\Retreatant::find($id);
         
        return view('retreatants.show',compact('retreatant'));//
     }
@@ -118,7 +118,7 @@ class RetreatantsController extends Controller
         //
         $retreatant = \montserrat\Retreatant::find($id);
       
-       return view('retreatants.edit',compact('retreatant'));
+        return view('retreatants.edit',compact('retreatant'));
     }
 
     /**
@@ -184,6 +184,6 @@ class RetreatantsController extends Controller
     {
         //
         \montserrat\Retreatant::destroy($id);
-       return Redirect::action('RetreatantsController@index');
+        return Redirect::action('RetreatantsController@index');
     }
 }

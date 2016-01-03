@@ -4,6 +4,15 @@
     <section class="section-padding">
         <div class="jumbotron text-left">
             <h2><strong>Add A Registration</strong></h2>
+        <?= Form::open() ?>
+        <?= Form::label('auto', 'Find a retreatant: ') ?>
+        <?= Form::text('auto', '', array('id' => 'auto'))?>
+        
+        <?= Form::label('response', 'Retreatant id: ') ?>
+        <?= Form::text('response', '', array('id' =>'response', 'disabled' => 'disabled')) ?>
+        <?= Form::close() ?>
+
+
             {!! Form::open(['url' => 'registration', 'method' => 'post', 'class' => 'form-horizontal panel']) !!}
            <div class="form-group">
 
@@ -15,6 +24,7 @@
 
                 {!! Form::label('retreatant_id', 'Retreatant:', ['class' => 'col-md-2']) !!}
                 {!! Form::select('retreatant_id', $retreatants, 0, ['class' => 'col-md-2']) !!}
+                
                 
             </div><div class="clearfix"> </div>
             <div class="form-group">
@@ -48,5 +58,4 @@
                 {!! Form::close() !!}
         </div>
     </section>
-
 @stop

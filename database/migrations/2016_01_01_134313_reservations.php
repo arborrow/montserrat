@@ -15,9 +15,11 @@ class Reservations extends Migration
         //
          Schema::create('reservations', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned;
-            $table->integer('retreatant_id');
             $table->integer('room_id');
+            $table->integer('registration_id');
+            $table->integer('retreatant_id');
             $table->integer('retreat_id');
+            $table->integer('group_id');
             $table->dateTime('start');
             $table->dateTime('end');
             $table->text('notes');

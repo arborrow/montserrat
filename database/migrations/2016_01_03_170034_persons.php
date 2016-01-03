@@ -53,9 +53,11 @@ class Persons extends Migration
             $table->boolean('is_captain')->default('0');
             $table->boolean('is_staff')->default('0');
             $table->boolean('is_volunteer')->default('0');
+            $table->boolean('is_board')->default('0');
             $table->boolean('is_pastor')->default('0');
             $table->boolean('is_bishop')->default('0');
             $table->boolean('is_catholic')->default('1');
+            
             $table->string('password', 60);
             $table->softDeletes();
             $table->rememberToken();
