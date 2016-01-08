@@ -50,6 +50,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-left">
                 <li><a href={{ route('retreat.index') }}> {!! Html::image('img/retreat.png', 'Retreat',array('title'=>"Retreat")) !!}</a></li>
+                <li><a href={{ route('person.index') }}> {!! Html::image('img/person.png', 'Retreatant',array('title'=>"Person")) !!}</a></li>
                 <li><a href={{ route('retreatant.index') }}> {!! Html::image('img/retreatant.png', 'Retreatant',array('title'=>"Retreatant")) !!}</a></li>
                 <li><a href={{ route('registration.index') }}> {!! Html::image('img/registration.png', 'Registration',array('title'=>"Registration")) !!}</a></li>
                 <!--<li><a href={{ route('reservation') }}> {!! Html::image('img/reservation.png', 'Reservation',array('title'=>"Reservation")) !!}</a></li> -->

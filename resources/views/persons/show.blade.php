@@ -57,7 +57,11 @@
                 <strong>Notes: </strong>{{$person->notes}}
                 <br /><strong>Room Preference: </strong>{{$person->roompreference}}
                 </span></div>
-            </div><div class="clearfix"> </div>                
+            </div><div class="clearfix"> </div>  
+            
+            
+            
+            
         </div>
         <div class='row'>
             <div class='col-md-1'><a href="{{ action('PersonsController@edit', $person->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>

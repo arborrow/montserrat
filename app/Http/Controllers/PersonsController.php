@@ -5,6 +5,9 @@ namespace montserrat\Http\Controllers;
 use Illuminate\Http\Request;
 use montserrat\Http\Requests;
 use montserrat\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
+use Input;
+
 
 class PersonsController extends Controller
 {
@@ -215,4 +218,94 @@ class PersonsController extends Controller
         return Redirect::action('PersonsController@index');
     
     }
+    public function assistants()
+    {
+        //
+        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where('is_assistant','1')->get();
+        //dd($persons);
+        return view('persons.assistants',compact('persons'));   //
+    
+    }
+    public function bishops()
+    {
+        //
+        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where('is_bishop','1')->get();
+        //dd($persons);
+        return view('persons.bishops',compact('persons'));   //
+    
+    }
+
+    public function boardmembers()
+    {
+        //
+        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where('is_board','1')->get();
+        //dd($persons);
+        return view('persons.boardmembers',compact('persons'));   //
+    
+    }
+    public function captains()
+    {
+        //
+        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where('is_captain','1')->get();
+        //dd($persons);
+        return view('persons.captains',compact('persons'));   //
+    
+    }
+    public function directors()
+    {
+        //
+        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where('is_director','1')->get();
+        //dd($persons);
+        return view('persons.directors',compact('persons'));   //
+    
+    }
+    public function donors()
+    {
+        //
+        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where('is_donor','1')->get();
+        //dd($persons);
+        return view('persons.donors',compact('persons'));   //
+    
+    }
+    public function employees()
+    {
+        //
+        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where('is_staff','1')->get();
+        //dd($persons);
+        return view('persons.employees',compact('persons'));   //
+    
+    }
+    public function innkeepers()
+    {
+        //
+        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where('is_innkeeper','1')->get();
+        //dd($persons);
+        return view('persons.innkeepers',compact('persons'));   //
+    
+    }
+    public function pastors()
+    {
+        //
+        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where('is_pastor','1')->get();
+        //dd($persons);
+        return view('persons.pastors',compact('persons'));   //
+    
+    }
+    public function retreatants()
+    {
+        //
+        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where('is_retreatant','1')->get();
+        //dd($persons);
+        return view('persons.retreatants',compact('persons'));   //
+    
+    }
+    public function volunteers()
+    {
+        //
+        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where('is_volunteer','1')->get();
+        //dd($persons);
+        return view('persons.volunteers',compact('persons'));   //
+    
+    }
+    
 }

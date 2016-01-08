@@ -85,9 +85,9 @@ class RetreatsController extends Controller
         // $directors = \montserrat\Director::where('active','1')->select('id','title','firstname','lastname','suffix')->orderBy('lastname')->get();
         // $innkeepers = \montserrat\Innkeeper::where('active','1')->select('id','title','firstname','lastname','suffix')->orderBy('lastname')->get();
         // $assistants = \montserrat\Assistant::where('active','1')->select('id','title','firstname','lastname','suffix')->orderBy('lastname')->get();
-        $d=  \montserrat\Director::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('active','1')->orderBy('fullname')->lists('fullname','id');
-        $i=  \montserrat\Innkeeper::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('active','1')->orderBy('fullname')->lists('fullname','id');
-        $a=  \montserrat\Assistant::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('active','1')->orderBy('fullname')->lists('fullname','id');
+        $d=  \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('is_director','1')->orderBy('fullname')->lists('fullname','id');
+        $i=  \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('is_innkeeper','1')->orderBy('fullname')->lists('fullname','id');
+        $a=  \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('is_assistant','1')->orderBy('fullname')->lists('fullname','id');
         
         /*$d=array();
         foreach ($directors as $director) {
@@ -229,9 +229,9 @@ public function edit($id)
         foreach ($assistants as $assistant) {
             $a[$assistant->id] = $assistant->lastname.', '.$assistant->firstname;
         } */
-        $d=  \montserrat\Director::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('active','1')->orderBy('fullname')->lists('fullname','id');
-        $i=  \montserrat\Innkeeper::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('active','1')->orderBy('fullname')->lists('fullname','id');
-        $a=  \montserrat\Assistant::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('active','1')->orderBy('fullname')->lists('fullname','id');
+        $d=  \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('is_director','1')->orderBy('fullname')->lists('fullname','id');
+        $i=  \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('is_innkeeper','1')->orderBy('fullname')->lists('fullname','id');
+        $a=  \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('is_assistant','1')->orderBy('fullname')->lists('fullname','id');
         
        return view('retreats.edit',compact('retreat','d','i','a'));
       }
