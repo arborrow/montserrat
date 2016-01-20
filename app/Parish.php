@@ -15,4 +15,9 @@ class Parish extends Model
     public function diocese() {
         return $this->belongsTo('\montserrat\Diocese','diocese_id','id');
     }
+    
+    //
+    public function parishioners() {
+        return $this->hasMany('\montserrat\Person','parish_id','id');
+    }
 }

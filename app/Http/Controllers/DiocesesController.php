@@ -23,7 +23,9 @@ class DiocesesController extends Controller
     public function index()
     {
         // need to implement getting Bishop's name from bishop_id
-        $dioceses = \montserrat\Diocese::orderBy('name', 'asc')->get();
+        $dioceses = \montserrat\Diocese::with('bishop')->orderBy('name', 'asc')->get();
+        //dd($dioceses);
+        
         return view('dioceses.index',compact('dioceses'));   //
     
     }
@@ -84,9 +86,9 @@ return Redirect::action('DiocesesController@index');
     public function show($id)
     {
         //
-        $diocese = \montserrat\Diocese::find($id);
+        $diocese = \montserrat\Diocese::with('bishop')->find($id);
         // $diocese =  \montserrat\Diocese::find($id)->bishop;
-        $diocese->bishop = 'Bishop name lookup not yet implemented';
+        //$diocese->bishop = 'Bishop name lookup not yet implemented';
         
        return view('dioceses.show',compact('diocese'));//
     
@@ -101,10 +103,9 @@ return Redirect::action('DiocesesController@index');
     public function edit($id)
     {
         //
-        $bishops = array();
-        $bishops[0] = "Not yet implemented";
         $diocese = \montserrat\Diocese::findOrFail($id);
-      
+        $bishops=  \montserrat\Person::select(\DB::raw('CONCAT(title," ",firstname," ",lastname) as fullname'), 'id')->where('is_bishop','1')->orderBy('fullname')->lists('fullname','id');
+  //dd($bishops);      
        return view('dioceses.edit',compact('diocese','bishops'));
     }
 

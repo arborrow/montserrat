@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
 Route::get('/',['as' => 'welcome','uses' => 'PagesController@welcome']);
 Route::get('retreats',['as' => 'retreats','uses' => 'PagesController@retreat']);
 Route::get('reservation',['as' => 'reservation','uses' => 'PagesController@reservation']);
-//Route::get('room',['as' => 'room','uses' => 'PagesController@room']);
+Route::get('rooms/{ym?}/{building?}',['as' => 'rooms','uses' => 'RoomsController@schedule']);
 Route::get('housekeeping',['as' => 'housekeeping','uses' => 'PagesController@housekeeping']);
 Route::get('grounds',['as' => 'grounds','uses' => 'PagesController@grounds']);
 Route::get('maintenance',['as' => 'maintenance','uses' => 'PagesController@maintenance']);

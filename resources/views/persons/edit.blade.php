@@ -27,6 +27,9 @@
                     {!! Form::text('lastname', $person->lastname, ['class' => 'col-md-1']) !!}
                     {!! Form::label('suffix', 'Suffix:', ['class' => 'col-md-1'])  !!}
                     {!! Form::text('suffix', $person->suffix, ['class' => 'col-md-1']) !!}
+                    {!! Form::label('nickname', 'Nickname: ', ['class' => 'col-md-1'])  !!}
+                    {!! Form::text('nickname', null, ['class' => 'col-md-1']) !!}
+                    
                 </div>
             </span>
         </div>

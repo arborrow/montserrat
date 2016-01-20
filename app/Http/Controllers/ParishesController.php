@@ -23,10 +23,11 @@ class ParishesController extends Controller
     public function index()
     {
         //
-        $parishes = \montserrat\Parish::orderBy('name', 'asc')->get();
-         foreach ($parishes as $parish) {
-            $parish->diocese = \montserrat\Diocese::find($parish->diocese_id)->name;
-        }
+        $parishes = \montserrat\Parish::with('diocese')->orderBy('name', 'asc')->get();
+        // foreach ($parishes as $parish) {
+          //  $parish->diocese = \montserrat\Diocese::find($parish->diocese_id)->name;
+        //}
+        //dd($parishes->toArray());
         $parishes = $parishes->sortBy(function($parish) {
             return sprintf('%-12s%s',$parish->diocese,$parish->name);
         }); 
@@ -93,12 +94,10 @@ return Redirect::action('ParishesController@index');
     public function show($id)
     {
         //
-        $parish = \montserrat\Parish::findOrFail($id);
-        $diocese =  \montserrat\Parish::find($id)->diocese;
-        $parish->diocese = $diocese->name;
-        $parishioners = \montserrat\Retreatant::where('parish_id',$id)->orderBy('lastname')->get();
-        //dd($parishioners);
-       return view('parishes.show',compact('parish','parishioners'));//
+        $parish = \montserrat\Parish::with('diocese','parishioners')->findOrFail($id);
+        //dd($parish);
+        //$parishioners = \montserrat\Retreatant::where('parish_id',$id)->orderBy('lastname')->get();
+        return view('parishes.show',compact('parish','parishioners'));//
     
     }
 

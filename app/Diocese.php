@@ -12,5 +12,7 @@ class Diocese extends Model
     public function parishes() {
         return $this->hasMany('\montserrat\Parish','diocese_id','id');
     }
-    
+    public function bishop() {
+        return $this->hasOne('\montserrat\Person','id','bishop_id');
+    }
 }

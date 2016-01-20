@@ -43,7 +43,8 @@
                 <div class='col-md-8'<span><h2>Demographics:</h2>
                 <strong>Gender: </strong>{{$person->gender}}  
                 <br /><strong>Ethnicity: </strong>{{$person->ethnicity}}   
-                <br /><strong>Parish: </strong>{{$person->parish_id}}     
+                <br /><strong>Parish: </strong>
+                @if (isset($person->parish->id)) <a href="../parish/{{$person->parish->id}}">{{$person->parish->name}}</a> @endIf     
                 <br /><strong>Languages: </strong>{{$person->languages}}</div></span> 
             </div><div class="clearfix"> </div>
 

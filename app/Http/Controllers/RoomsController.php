@@ -7,6 +7,7 @@ use montserrat\Http\Requests;
 use montserrat\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Input;
+use Carbon\Carbon;
 
 class RoomsController extends Controller
 {
@@ -151,5 +152,41 @@ return Redirect::action('RoomsController@index');
         //
         \montserrat\Room::destroy($id);
         return Redirect::action('RoomsController@index');
+    }
+    
+    /**
+     * Display the room schedules for a particular month/year - default this month.
+     *
+     * @param  int  $ym
+     * @return \Illuminate\Http\Response
+     */
+    public function schedule($ym = null, $building = null)
+    {   //dd($ym);
+    
+        //
+        if ((!isset($ym)) or ($ym==0)) {
+            $dt = Carbon::now();
+            //dd($dt);
+        } else{
+            if (!$dt = Carbon::parse($ym))
+                    return view('404');
+        }
+        $upcoming = clone $dt;
+        $dts[0] = $dt;
+        //dd($dts);
+        for ($i=1; $i<=31;$i++) {
+            $dts[$i] = Carbon::parse($upcoming->addDays((1)));
+        }
+        $rooms = \montserrat\Room::with('location')->get();
+        //dd($rooms);
+        //foreach ($rooms as $room) {
+        //    $room->building = \montserrat\Location::find($room->building_id)->name;
+        //}
+        $rooms= $rooms->sortBy(function($room) {
+    return sprintf('%-12s%s', $room->building_id, $room->name);
+});
+        
+        //dd($rooms);
+        return view('rooms.schedule',compact('dts','rooms'));
     }
 }

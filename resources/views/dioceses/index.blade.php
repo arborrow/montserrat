@@ -14,7 +14,7 @@
                 @if ($dioceses->isEmpty())
                     <p>No Dioceses are currently in the database.</p>
                 @else
-                <table class="table"><caption><h2>Parishes</h2></caption>
+                <table class="table"><caption><h2>Dioceses</h2></caption>
                     <thead>
                         <tr>
                             <th>Name</th> 
@@ -29,7 +29,7 @@
                         @foreach($dioceses as $diocese)
                         <tr>
                             <td><a href="diocese/{{$diocese->id}}">{{ $diocese->name }}</a></td>
-                            <td>{{ $diocese->bishop_id }}</td>
+                            <td><a href="person/{{$diocese->bishop_id}}">{{$diocese->bishop->title}} {{$diocese->bishop->firstname}} {{$diocese->bishop->lastname}}</a></td>
                             <td>{{ $diocese->address1 }}</td>
                             <td>{{ $diocese->phone }}</td>
                             <td><a href="mailto:{{ $diocese->email }}">{{ $diocese->email }}</a></td>

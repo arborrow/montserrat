@@ -12,7 +12,7 @@
                 <h2>Name</h2>
                     <div class="form-group">
                         {!! Form::label('title', 'Title: ', ['class' => 'col-md-1'])  !!}
-                        {!! Form::text('title1', null, ['class' => 'col-md-1']) !!}
+                        {!! Form::text('title', null, ['class' => 'col-md-1']) !!}
                         {!! Form::label('firstname', 'First: ', ['class' => 'col-md-1'])  !!}
                         {!! Form::text('firstname', null, ['class' => 'col-md-2']) !!}
                         {!! Form::label('middlename', 'Middle: ', ['class' => 'col-md-1'])  !!}
