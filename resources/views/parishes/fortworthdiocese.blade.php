@@ -8,18 +8,13 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                        <span class="grey">Parish Index</span> 
-                        <span class="create"><a href={{ action('ParishesController@create') }}>{!! Html::image('img/create.png', 'Create a Parish',array('title'=>"Create Parish",'class' => 'btn btn-primary')) !!}</a></span></h1>
-                        <span class="btn btn-primary"><a href={{ action('ParishesController@dallasdiocese') }}>Diocese of Dallas</a></span>
-                        <span class="btn btn-primary"><a href={{ action('ParishesController@fortworthdiocese') }}>Diocese of Fort Worth</a></span>
-                        <span class="btn btn-primary"><a href={{ action('ParishesController@tylerdiocese') }}>Diocese of Tyler</a></span>
-                    </h1>
-             
+                    <span class="grey">Diocese of Fort Worth Parish Index</span> 
+                    <span class="create"><a href={{ action('ParishesController@create') }}>{!! Html::image('img/create.png', 'Create a Parish',array('title'=>"Create Parish",'class' => 'btn btn-primary')) !!}</a></span></h1>
                 </div>
                 @if ($parishes->isEmpty())
-                    <p>No parishes are currently in the database.</p>
+                    <p>No Diocese of Fort Worth parishes are currently in the database.</p>
                 @else
-                <table class="table"><caption><h2>Parishes</h2></caption>
+                <table class="table"><caption><h2>Diocese of Fort Worth Parishes</h2></caption>
                     <thead>
                         <tr>
                             <th>Diocese</th>

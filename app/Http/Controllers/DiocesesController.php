@@ -39,8 +39,10 @@ class DiocesesController extends Controller
     {
         //
         //$bishops = \montserrat\Bishop::orderby('lastname')->lists('lastname','id');
-        $bishops = array();
-        $bishops[0]='Not implemented yet';
+   //     $bishops = array();
+     //   $bishops[0]='Not implemented yet';
+        $bishops=  \montserrat\Person::select(\DB::raw('CONCAT(title," ",firstname," ",lastname) as fullname'), 'id')->where('is_bishop','1')->orderBy('fullname')->lists('fullname','id');
+  
         return view('dioceses.create',compact('dioceses','bishops'));  
     
     }

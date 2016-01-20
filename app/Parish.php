@@ -20,4 +20,8 @@ class Parish extends Model
     public function parishioners() {
         return $this->hasMany('\montserrat\Person','parish_id','id');
     }
+    
+    public function pastor() {
+        return $this->hasOne('\montserrat\Person','id','pastor_id');
+    }
 }

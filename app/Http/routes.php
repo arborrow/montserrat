@@ -37,20 +37,24 @@ Route::resource('director','DirectorsController');
 Route::resource('innkeeper','InnkeepersController');
 Route::resource('assistant','AssistantsController');
 Route::resource('parish','ParishesController');
+    Route::get('dallasdiocese',['as' => 'dallasdiocese','uses' => 'ParishesController@dallasdiocese']);
+    Route::get('fortworthdiocese',['as' => 'fortworthdiocese','uses' => 'ParishesController@fortworthdiocese']);
+    Route::get('tylerdiocese',['as' => 'tylerdiocese','uses' => 'ParishesController@tylerdiocese']);
+
 Route::resource('diocese','DiocesesController');
 
 Route::resource('person','PersonsController');
-Route::get('assistants',['as' => 'assistants','uses' => 'PersonsController@assistants']);
-Route::get('bishops',['as' => 'bishops','uses' => 'PersonsController@bishops']);
-Route::get('boardmembers',['as' => 'boardmembers','uses' => 'PersonsController@boardmembers']);
-Route::get('captains',['as' => 'captains','uses' => 'PersonsController@captains']);
-Route::get('directors',['as' => 'directors','uses' => 'PersonsController@directors']);
-Route::get('donors',['as' => 'donors','uses' => 'PersonsController@donors']);
-Route::get('employees',['as' => 'employees','uses' => 'PersonsController@employees']);
-Route::get('innkeepers',['as' => 'innkeepers','uses' => 'PersonsController@innkeepers']);
-Route::get('pastors',['as' => 'pastors','uses' => 'PersonsController@pastors']);
-// Route::get('retreatants',['as' => 'retreatants','uses' => 'PersonsController@retreatants']);
-Route::get('volunteers',['as' => 'volunteers','uses' => 'PersonsController@volunteers']);
+    Route::get('assistants',['as' => 'assistants','uses' => 'PersonsController@assistants']);
+    Route::get('bishops',['as' => 'bishops','uses' => 'PersonsController@bishops']);
+    Route::get('boardmembers',['as' => 'boardmembers','uses' => 'PersonsController@boardmembers']);
+    Route::get('captains',['as' => 'captains','uses' => 'PersonsController@captains']);
+    Route::get('directors',['as' => 'directors','uses' => 'PersonsController@directors']);
+    Route::get('donors',['as' => 'donors','uses' => 'PersonsController@donors']);
+    Route::get('employees',['as' => 'employees','uses' => 'PersonsController@employees']);
+    Route::get('innkeepers',['as' => 'innkeepers','uses' => 'PersonsController@innkeepers']);
+    Route::get('pastors',['as' => 'pastors','uses' => 'PersonsController@pastors']);
+    // Route::get('retreatants',['as' => 'retreatants','uses' => 'PersonsController@retreatants']);
+    Route::get('volunteers',['as' => 'volunteers','uses' => 'PersonsController@volunteers']);
 
 // Authentication routes...
 Route::get('login/{provider?}', 'Auth\AuthController@login');

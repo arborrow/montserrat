@@ -36,7 +36,7 @@
                     <div class='col-md-6'><strong>Webpage: </strong><a href="{{ $parish->webpage}}" target='_blank'>{{ $parish->webpage}}</a></div>
                 </div><div class="clearfix"> </div>
                 <div class='row'>
-                    <div class='col-md-6'><strong>Pastor: </strong>{{ $parish->pastor_id}} (Not yet implemented)</div>
+                    <div class='col-md-6'><strong>Pastor: </strong><a href="../person/{{ $parish->pastor_id}}">{{ $parish->pastor->title or ''}} {{ $parish->pastor->firstname or '' }} {{ $parish->pastor->lastname or 'No pastor assigned'}}</a></div>
                 </div><div class="clearfix"> </div>
                 
                 <div class='row'>

@@ -23,7 +23,7 @@ class ParishesController extends Controller
     public function index()
     {
         //
-        $parishes = \montserrat\Parish::with('diocese')->orderBy('name', 'asc')->get();
+        $parishes = \montserrat\Parish::with('diocese','pastor')->orderBy('name', 'asc')->get();
         // foreach ($parishes as $parish) {
           //  $parish->diocese = \montserrat\Diocese::find($parish->diocese_id)->name;
         //}
@@ -44,9 +44,12 @@ class ParishesController extends Controller
     {
         //
         $dioceses = \montserrat\Diocese::orderby('name')->lists('name','id');
-        //$pastors = \montserrat\Pastor::orderby('lastname')->lists('lastname','id');
-        $pastors = array();
-        $pastors[0]='Not implemented yet';
+//        $pastors = \montserrat\Person::where('is_pastor','1')->orderby('lastname')->lists('lastname','id');
+        $pastors = \montserrat\Person::select(\DB::raw('CONCAT(title," ",firstname," ",lastname) as fullname'), 'id')->where('is_pastor','1')->orderBy('fullname')->lists('fullname','id');
+
+  //dd($pastors);
+        //$pastors = array();
+        //$pastors[0]='Not implemented yet';
         return view('parishes.create',compact('dioceses','pastors'));  
     
     }
@@ -94,7 +97,7 @@ return Redirect::action('ParishesController@index');
     public function show($id)
     {
         //
-        $parish = \montserrat\Parish::with('diocese','parishioners')->findOrFail($id);
+        $parish = \montserrat\Parish::with('diocese','parishioners','pastor')->findOrFail($id);
         //dd($parish);
         //$parishioners = \montserrat\Retreatant::where('parish_id',$id)->orderBy('lastname')->get();
         return view('parishes.show',compact('parish','parishioners'));//
@@ -111,10 +114,9 @@ return Redirect::action('ParishesController@index');
     {
         //
         $dioceses = \montserrat\Diocese::orderby('name')->lists('name','id');
-        $pastors = array();
-        $pastors[0] = "Not yet implemented";
+        $pastors = \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname," ",middlename," (",title,")") as fullname'), 'id')->where('is_pastor','1')->orderBy('fullname')->lists('fullname','id');
         $parish = \montserrat\Parish::findOrFail($id);
-      
+      $pastors[0] = 'No pastor assigned';
        return view('parishes.edit',compact('parish','dioceses','pastors'));
     }
 
@@ -169,4 +171,24 @@ return Redirect::action('ParishesController@index');
          \montserrat\Parish::destroy($id);
         return Redirect::action('ParishesController@index');
     }
+
+    public function fortworthdiocese()
+    {
+        $parishes = \montserrat\Parish::with('diocese','pastor')->orderBy('name', 'asc')->where('diocese_id','1')->get();
+        return view('parishes.fortworthdiocese',compact('parishes'));   //
+    
+    }
+    public function dallasdiocese()
+    {
+        $parishes = \montserrat\Parish::with('diocese','pastor')->orderBy('name', 'asc')->where('diocese_id','3')->get();
+        return view('parishes.dallasdiocese',compact('parishes'));   //
+    
+    }
+    public function tylerdiocese()
+    {
+        $parishes = \montserrat\Parish::with('diocese','pastor')->orderBy('name', 'asc')->where('diocese_id','2')->get();
+        return view('parishes.tylerdiocese',compact('parishes'));   //
+    
+    }
+  
 }
