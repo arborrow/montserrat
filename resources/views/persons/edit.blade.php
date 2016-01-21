@@ -124,13 +124,19 @@
                     {!! Form::label('dob', 'DOB:', ['class' => 'col-md-1']) !!}
                     {!! Form::text('dob', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
                 </div>
+                <div class="clearfix"> </div>
+
                 <div class="form-group">
-    
+                    {!! Form::label('parish_id', 'Parish:', ['class' => 'col-md-1'])  !!}
+                    {!! Form::select('parish_id', $parishes, $person->parish_id, ['class' => 'col-md-8']) !!} 
+                    
+                </div>
+                    <div class="clearfix"> </div>
+
+                <div class="form-group">
                     {!! Form::label('ethnicity', 'Ethnicity:', ['class' => 'col-md-1'])  !!}
                     {!! Form::text('ethnicity', $person->ethnicity, ['class' => 'col-md-3']) !!}
-                    {!! Form::label('parish_id', 'Parish:', ['class' => 'col-md-1'])  !!}
-                    {!! Form::text('parish_id', $person->parish_id, ['class' => 'col-md-1']) !!}
-                    {!! Form::label('languages', 'Languages:', ['class' => 'col-md-1'])  !!}
+                    {!! Form::label('languages', 'Languages:', ['class' => 'col-md-2'])  !!}
                     {!! Form::text('languages', $person->languages, ['class' => 'col-md-3']) !!}
                 </div>
             </span>

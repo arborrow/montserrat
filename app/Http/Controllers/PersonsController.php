@@ -140,8 +140,10 @@ class PersonsController extends Controller
     {
         //
         $person = \montserrat\Person::find($id);
-      
-        return view('persons.edit',compact('person'));
+        $parishes = \montserrat\Parish::select(\DB::raw('CONCAT(parishes.name," (",parishes.city,"-",dioceses.name,")") as parishname'), 'parishes.id')->join('dioceses','parishes.diocese_id','=','dioceses.id')->orderBy('parishname')->lists('parishname','parishes.id');
+        $parishes->prepend('N/A',0);  
+
+        return view('persons.edit',compact('person','parishes'));
     
     }
 
