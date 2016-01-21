@@ -43,6 +43,7 @@
                             <td><a href="{{ $parish->webpage }}" target="_blank">{{ $parish->webpage }}</a></td>
                         </tr>
                         @endforeach
+                      
                     </tbody>
                 </table>
                 @endif

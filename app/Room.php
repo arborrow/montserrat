@@ -18,5 +18,8 @@ class Room extends Model
         return $this->belongsTo('\montserrat\Location','building_id','id');
     }
     
+    public function roomstates() {
+        return $this->hasMany('\montserrat\Roomstate','room_id','id');
+    }
         
 }

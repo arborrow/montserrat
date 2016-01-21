@@ -25,7 +25,7 @@ class PersonsController extends Controller
     public function index()
     {
         //
-        $persons = \montserrat\Person::with('parish')->orderBy('lastname', 'asc', 'firstname','asc')->get();
+        $persons = \montserrat\Person::with('parish')->orderBy('lastname', 'asc', 'firstname','asc')->Paginate(25);
         return view('persons.index',compact('persons'));   //
     }
 

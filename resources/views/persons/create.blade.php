@@ -41,7 +41,7 @@
                         </div>
                         <div class='row'>
                             {!! Form::label('address2', 'Address 2:', ['class' => 'col-md-1'])  !!}
-                            {!! Form::text('address2', null, ['class' => 'col-md-2']) !!}
+                            {!! Form::text('address2', null, ['class' => 'col-md-3']) !!}
                         </div>
                         <div class='row'>
                             {!! Form::label('city', 'City:', ['class' => 'col-md-1'])  !!}
