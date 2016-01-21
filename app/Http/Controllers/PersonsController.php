@@ -42,8 +42,8 @@ class PersonsController extends Controller
       
         $parishes = \montserrat\Parish::select(\DB::raw('CONCAT(parishes.name," (",parishes.city,"-",dioceses.name,")") as parishname'), 'parishes.id')->join('dioceses','parishes.diocese_id','=','dioceses.id')->orderBy('parishname')->lists('parishname','parishes.id');
         $parishes->prepend('N/A',0);  
-
-        return view('persons.create',compact('parishes')); 
+        $ethnicities = \montserrat\Ethnicity::orderby('ethnicity')->lists('ethnicity','ethnicity');
+        return view('persons.create',compact('parishes','ethnicities')); 
     
     }
 
@@ -142,8 +142,10 @@ class PersonsController extends Controller
         $person = \montserrat\Person::find($id);
         $parishes = \montserrat\Parish::select(\DB::raw('CONCAT(parishes.name," (",parishes.city,"-",dioceses.name,")") as parishname'), 'parishes.id')->join('dioceses','parishes.diocese_id','=','dioceses.id')->orderBy('parishname')->lists('parishname','parishes.id');
         $parishes->prepend('N/A',0);  
+        $ethnicities = \montserrat\Ethnicity::orderby('ethnicity')->lists('ethnicity','ethnicity');
 
-        return view('persons.edit',compact('person','parishes'));
+//dd($parishes);
+        return view('persons.edit',compact('person','parishes','ethnicities'));
     
     }
 

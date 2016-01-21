@@ -118,7 +118,12 @@
                     <h2>Demographics</h2>
                     <div class="form-group">
                         {!! Form::label('gender', 'Gender:', ['class' => 'col-md-1'])  !!}
-                        {!! Form::text('gender', null, ['class' => 'col-md-1']) !!}
+                        {!! Form::select('gender', [
+                            'Female' => 'Female',
+                            'Male' => 'Male',
+                            'Other' => 'Other',
+                            'Unspecified' => 'Unspecified',
+                            ], 'Unspecified', ['class' => 'col-md-2']) !!}
                         {!! Form::label('dob', 'DOB:', ['class' => 'col-md-1']) !!}
                         {!! Form::text('dob', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
                     </div>
@@ -128,7 +133,7 @@
                     </div>
                     <div class="form-group">                        
                         {!! Form::label('ethnicity', 'Ethnicity:', ['class' => 'col-md-1'])  !!}
-                        {!! Form::text('ethnicity', 'Caucasian', ['class' => 'col-md-2']) !!}
+                        {!! Form::select('ethnicity', $ethnicities, 'Unspecified', ['class' => 'col-md-2']) !!}
                         {!! Form::label('languages', 'Languages:', ['class' => 'col-md-2'])  !!}
                         {!! Form::text('languages', 'English', ['class' => 'col-md-3']) !!}
                     </div>

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Roomstates extends Migration
+class CreateEthnicities extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,14 @@ class Roomstates extends Migration
     public function up()
     {
         //
-        Schema::create('roomstates', function (Blueprint $table) 
-        {
-            $table->increments('id');
-            $table->integer('room_id')->unsigned;
-            $table->timestamp('statechange_at');
-            $table->string('statusfrom');
-            $table->string('statusto');
+            Schema::create('ethnicities', function (Blueprint $table) {
+            $table->increments('id')->unsigned;
+            $table->string('ethnicity');
+            $table->Text('description');
             $table->softDeletes();
+            $table->rememberToken();
             $table->timestamps();
-           
-        //
-        });  
-     
+            });
     }
 
     /**
@@ -36,6 +31,7 @@ class Roomstates extends Migration
     public function down()
     {
         //
-           Schema::drop('roomstates');
+           Schema::drop('ethnicities');
     }
+    
 }

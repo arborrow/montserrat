@@ -121,6 +121,15 @@
                 <div class="form-group">
                     {!! Form::label('gender', 'Gender:', ['class' => 'col-md-1'])  !!}
                     {!! Form::text('gender', $person->gender, ['class' => 'col-md-1']) !!}
+                    {!! Form::select('gender', [
+                            'Female' => 'Female',
+                            'Male' => 'Male',
+                            'Other' => 'Other',
+                            'Unspecified' => 'Unspecified',
+                            ], $person->gender, ['class' => 'col-md-2']) !!}
+                        {!! Form::label('dob', 'DOB:', ['class' => 'col-md-1']) !!}
+                        {!! Form::text('dob', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+
                     {!! Form::label('dob', 'DOB:', ['class' => 'col-md-1']) !!}
                     {!! Form::text('dob', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
                 </div>
@@ -135,7 +144,7 @@
 
                 <div class="form-group">
                     {!! Form::label('ethnicity', 'Ethnicity:', ['class' => 'col-md-1'])  !!}
-                    {!! Form::text('ethnicity', $person->ethnicity, ['class' => 'col-md-3']) !!}
+                    {!! Form::select('ethnicity', $ethnicities, $person->ethnicity, ['class' => 'col-md-3']) !!}
                     {!! Form::label('languages', 'Languages:', ['class' => 'col-md-2'])  !!}
                     {!! Form::text('languages', $person->languages, ['class' => 'col-md-3']) !!}
                 </div>

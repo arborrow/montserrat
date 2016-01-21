@@ -13,15 +13,18 @@
                 <span class="back"><a href={{ action('PersonsController@index') }}>{!! Html::image('img/person.png', 'Person Index',array('title'=>"Person Index",'class' => 'btn btn-primary')) !!}</a></span></h1>
             </div>
             <div class='row'><div class='col-md-4'><span><h2>Address</h2>
-                <address>{{ $person->address1}}
-                @if (isset($person->address2))
-                <br />{{$person->address2}}
-                @endif   
-                <br />{{$person->city}} {{$person->state}} {{ $person->zip}} 
+                <address>
+                    <a href="http://maps.google.com/?q={{$person->address1}} {{ $person->address2}} {{ $person->city}} {{ $person->state}} {{ $person->zip}}" target="_blank">
+                                
+                    {{ $person->address1}}
+                        @if (!empty($person->address2))
+                            <br />{{$person->address2}}
+                        @endif   
+                        <br />{{$person->city}} {{$person->state}} {{ $person->zip}}</a> 
                 <br />@if ($person->country='USA') @else {{$person->country}} @endif </address>
             </span></div>
-             <div class='col-md-4'><span class="info">
-                    <h2>Emergency Contact Information</h2>
+             <div class='col-md-4' style="background-color: lightcoral;"><span class="info">
+                     <h2><strong>Emergency Contact Information</strong></h2>
                     <strong>Name: </strong>{{ isset($person->emergencycontactname) ? $person->emergencycontactname : 'N/A' }}
                     <br /><strong>Phone:</strong> {{ isset($person->emergencycontactphone) ? $person->emergencycontactphone : 'N/A' }}
                     <br /><strong>Alt phone:</strong> {{ isset($person->emergencycontactphone2) ? $person->emergencycontactphone2: 'N/A' }}
@@ -35,8 +38,8 @@
                 <br /><strong>Fax: </strong>{{$person->faxphone}}
                 </span></div>
                 <div class='col-md-4'><span><h2>Electronic Communications</h2>
-                <strong>Email: </strong>{{$person->email}}
-                <br /><strong>URL: </strong>{{$person->url}}   
+                        <strong>Email: </strong><a href="mailto:{{$person->email}}">{{$person->email}}</a>
+                        <br /><strong>URL: </strong><a href="{{$person->url}}" target="_blank">{{$person->url}}</a>   
                 </span></div></div><div class="clearfix"> </div>
 
             <div class='row'><span>
@@ -51,14 +54,19 @@
 
             <div class='row'>
 
-                <div class='col-md-4'><span><h2>Medical</h2>
-                <strong>Medical notes: </strong>{{$person->medical}}
-                <br /><strong>Dietary notes: </strong>{{$person->dietary}}   
-                </span></div>
-            <div class='col-md-4'><span><h2>Notes</h2>
-                <strong>Notes: </strong>{{$person->notes}}
-                <br /><strong>Room Preference: </strong>{{$person->roompreference}}
-                </span></div>
+                <div class='col-md-4'>
+                    <span><h2>Notes</h2>
+                        <strong>Notes: </strong>{{$person->notes}}<br />
+                        <strong>Room Preference: </strong>{{$person->roompreference}}
+                    </span>
+                </div>
+                <div class='col-md-4' style="background-color: lightcoral;">
+                    <span><h2><strong>Medical</strong></h2>
+                        <strong>Medical notes: </strong>{{$person->medical}}<br />
+                        <strong>Dietary notes: </strong>{{$person->dietary}}   
+                    </span>
+                </div>
+            
             </div><div class="clearfix"> </div>  
             <div class='row'>
 
