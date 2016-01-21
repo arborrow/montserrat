@@ -90,12 +90,15 @@ class RegistrationsController extends Controller
     $registration->start = $retreat->start;
     $registration->end = $retreat->end;
     $registration->retreatant_id= $request->input('retreatant_id');
-    $registration->register = Carbon::parse($request->input('register'));
-    $registration->confirmattend = Carbon::parse($request->input('confirmattend'));
-    $registration->confirmregister = Carbon::parse($request->input('confirmregister'));
+    $registration->register = $request->input('register');
+    //dd($request->confirmattend);
+    $registration->confirmattend = $request->input('confirmattend');
+    
+    $registration->confirmregister = $request->input('confirmregister');
     $registration->confirmedby = $request->input('confirmedby');
     $registration->deposit = $request->input('deposit');
     $registration->notes = $request->input('notes');
+    
     $registration->save();
     
     return Redirect::action('RegistrationsController@index');
@@ -110,6 +113,7 @@ class RegistrationsController extends Controller
     public function show($id)
     {
         //
+        //dd(date('F d, Y', strtotime(NULL)));
         $registration= \montserrat\Registration::find($id);
         $retreat = \montserrat\Retreat::findOrFail($registration->retreat_id);
         $retreatant = \montserrat\Retreatant::findOrFail($registration->retreatant_id);
@@ -163,9 +167,9 @@ class RegistrationsController extends Controller
     $registration->start = $retreat->start;
     $registration->end = $retreat->end;
     $registration->retreatant_id= $request->input('retreatant_id');
-    $registration->register = Carbon::parse($request->input('register'));
-    $registration->confirmattend = Carbon::parse($request->input('confirmattend'));
-    $registration->confirmregister = Carbon::parse($request->input('confirmregister'));
+    $registration->register = $request->input('register');
+    $registration->confirmattend = $request->input('confirmattend');
+    $registration->confirmregister = $request->input('confirmregister');
     $registration->confirmedby = $request->input('confirmedby');
     $registration->deposit = $request->input('deposit');
     $registration->notes = $request->input('notes');

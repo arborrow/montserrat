@@ -19,10 +19,24 @@
                     <div class='col-md-3'><strong>Registered: </strong>{{ date('F d, Y', strtotime($registration->register))}}</div>
                 </div><div class="clearfix"> </div>
                 <div class='row'>
-                    <div class='col-md-3'><strong>Registration Confirmed: </strong>{{ date('F d, Y', strtotime($registration->confirmregister))}}</div>
-                </div><div class="clearfix"> </div>
+                    <div class='col-md-3'><strong>Registration Confirmed: </strong>
+                        @if ($registration->confirmregister == NULL)
+                            Unconfirmed
+                        @else
+                            {{date('F d, Y', strtotime($registration->confirmregister))}}
+                        @endif
+                    </div><div class="clearfix"> </div>
+                </div>
                 <div class='row'>
-                    <div class='col-md-3'><strong>Attendance Confirmed: </strong>{{ date('F d, Y', strtotime($registration->confirmattend))}}</div>
+                    <div class='col-md-3'><strong>Attendance Confirmed: </strong>
+                    @if ($registration->confirmattend == NULL)
+                        Unconfirmed
+                    @else
+                        {{date('F d, Y', strtotime($registration->confirmattend))}}
+                    @endif
+                        
+                        
+                    </div>
                     <div class='col-md-3'><strong>Confirmed by: </strong>{{ $registration->confirmedby}}</div>
                 </div><div class="clearfix"> </div>
                

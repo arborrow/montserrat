@@ -119,10 +119,14 @@
                     <div class="form-group">
                         {!! Form::label('gender', 'Gender:', ['class' => 'col-md-1'])  !!}
                         {!! Form::text('gender', null, ['class' => 'col-md-1']) !!}
-                        {!! Form::label('ethnicity', 'Ethnicity:', ['class' => 'col-md-1'])  !!}
-                        {!! Form::text('ethnicity', 'Caucasian', ['class' => 'col-md-3']) !!}
+                        {!! Form::label('dob', 'DOB:', ['class' => 'col-md-1']) !!}
+                        {!! Form::text('dob', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+                    </div>
+                    <div class="form-group">
                         {!! Form::label('parish_id', 'Parish:', ['class' => 'col-md-1'])  !!}
                         {!! Form::text('parish_id', null, ['class' => 'col-md-1']) !!}
+                        {!! Form::label('ethnicity', 'Ethnicity:', ['class' => 'col-md-1'])  !!}
+                        {!! Form::text('ethnicity', 'Caucasian', ['class' => 'col-md-3']) !!}
                         {!! Form::label('languages', 'Languages:', ['class' => 'col-md-1'])  !!}
                         {!! Form::text('languages', 'English', ['class' => 'col-md-3']) !!}
                     </div>

@@ -54,6 +54,7 @@ class PersonsController extends Controller
             'firstname' => 'required',
             'lastname' => 'required',
             'email' => 'email',
+            'dob' => 'date',            
             'url' => 'url',
             'parish_id' => 'integer|min:0',
             'gender' => 'in:Male,Female,Other'
@@ -82,6 +83,7 @@ class PersonsController extends Controller
         $person->url = $request->input('url');
         $person->email = $request->input('email');
         $person->gender = $request->input('gender');
+        $person->dob = $request->input('dob');
         $person->ethnicity = $request->input('ethnicity');
         $person->parish_id = $request->input('parish_id');
         $person->languages = $request->input('languages');
@@ -151,6 +153,7 @@ class PersonsController extends Controller
             'firstname' => 'required',
             'lastname' => 'required',
             'email' => 'email',
+            'dob' => 'date',
             'url' => 'url',
             'parish_id' => 'integer|min:0',
             'gender' => 'in:Male,Female,Other'
@@ -178,6 +181,7 @@ class PersonsController extends Controller
         $person->url = $request->input('url');
         $person->email = $request->input('email');
         $person->gender = $request->input('gender');
+        $person->dob = $request->input('dob');
         $person->ethnicity = $request->input('ethnicity');
         $person->parish_id = $request->input('parish_id');
         $person->languages = $request->input('languages');

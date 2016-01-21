@@ -111,6 +111,7 @@
     $( "#register" ).datepicker();
     $( "#confirmregister" ).datepicker();
     $( "#confirmattend" ).datepicker();
+    $( "#dob" ).datepicker();
     $( "#auto").autocomplete({
         source: "../getdata",
         minLength: 1,

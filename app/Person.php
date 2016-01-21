@@ -13,6 +13,14 @@ class Person extends Model
     protected $table = 'persons';
     protected $dates = ['dob', 'created_at', 'updated_at', 'deleted_at']; 
     
+    public function setDobAttribute($date) {
+        if (strlen($date)) {
+            $this->attributes['dob'] = Carbon::parse($date);
+        } else {
+            $this->attributes['dob'] = null;
+        }
+    }
+    
     public function parish() {
         return $this->belongsTo('\montserrat\Parish','parish_id','id');
     }
