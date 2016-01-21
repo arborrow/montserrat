@@ -37,7 +37,13 @@ class PersonsController extends Controller
     public function create()
     {
         //
-        return view('persons.create'); 
+        //$parishes= \montserrat\Parish::with('diocese')->orderby('name')->lists('name','id');
+        //$parishes = \montserrat\Parish::join('dioceses', 'parishes.diocese_id', '=', 'dioceses.id')->select('parishes.name', 'parishes.id')->lists('parishes.name','parishes.id');
+      
+        $parishes = \montserrat\Parish::select(\DB::raw('CONCAT(parishes.name," (",parishes.city,"-",dioceses.name,")") as parishname'), 'parishes.id')->join('dioceses','parishes.diocese_id','=','dioceses.id')->orderBy('parishname')->lists('parishname','parishes.id');
+        $parishes->prepend('N/A',0);  
+
+        return view('persons.create',compact('parishes')); 
     
     }
 

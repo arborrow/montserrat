@@ -124,10 +124,12 @@
                     </div>
                     <div class="form-group">
                         {!! Form::label('parish_id', 'Parish:', ['class' => 'col-md-1'])  !!}
-                        {!! Form::text('parish_id', null, ['class' => 'col-md-1']) !!}
+                        {!! Form::select('parish_id', $parishes, 0, ['class' => 'col-md-8']) !!} 
+                    </div>
+                    <div class="form-group">                        
                         {!! Form::label('ethnicity', 'Ethnicity:', ['class' => 'col-md-1'])  !!}
-                        {!! Form::text('ethnicity', 'Caucasian', ['class' => 'col-md-3']) !!}
-                        {!! Form::label('languages', 'Languages:', ['class' => 'col-md-1'])  !!}
+                        {!! Form::text('ethnicity', 'Caucasian', ['class' => 'col-md-2']) !!}
+                        {!! Form::label('languages', 'Languages:', ['class' => 'col-md-2'])  !!}
                         {!! Form::text('languages', 'English', ['class' => 'col-md-3']) !!}
                     </div>
                 </span>
