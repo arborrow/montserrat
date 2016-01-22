@@ -34,8 +34,14 @@
                             <td>{{ $person->city }}</td>
                             <td>{{ $person->homephone }}</td>
                             <td>{{ $person->mobilephone }}</td>
-                            <td>{{ $person->email }}</td>
-                            <td>{{ $person->parish_id}}</td>
+                            <td><a href='mailto:{{ $person->email}}'>{{ $person->email }}</a></td>
+                            <td>
+                                @if (!isset($person->parish))
+                                        N/A
+                                    @else
+                                    <a href="parish/{{$person->parish->id}}">{{ $person->parish->name }}</a>
+                                 @endif
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

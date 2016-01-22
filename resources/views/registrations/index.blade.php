@@ -29,7 +29,7 @@
                         @foreach($registrations as $registration)
                         <tr>
                             <td><a href="registration/{{$registration->id}}">{{ date('F d, Y', strtotime($registration->register)) }}</a></td>
-                            <td><a href="retreatant/{{$registration->retreatant_id}}">{{ $registration->retreatant->lastname}}, {{ $registration->retreatant->firstname}}</a></td>
+                            <td><a href="person/{{$registration->retreatant_id}}">{{ $registration->retreatant->lastname}}, {{ $registration->retreatant->firstname}}</a></td>
                             <td><a href="retreat/{{$registration->retreat_id}}">{{ $registration->retreat->title }} ({{$registration->retreat->idnumber}})</a></td>
                             <td>{{ date('F d, Y', strtotime($registration->start)) }} - {{ date('F d, Y', strtotime($registration->end)) }}</td>
                             <td>{{ date('F d, Y', strtotime($registration->confirmattend)) }}</td>

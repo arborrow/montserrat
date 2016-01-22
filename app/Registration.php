@@ -40,6 +40,6 @@ class Registration extends Model
     }
     public function retreatant()
     {
-        return $this->belongsTo('montserrat\Retreatant','retreatant_id','id');
+        return $this->belongsTo('montserrat\Person','retreatant_id','id');
     }
 }

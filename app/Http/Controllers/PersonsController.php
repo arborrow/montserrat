@@ -25,7 +25,7 @@ class PersonsController extends Controller
     public function index()
     {
         //
-        $persons = \montserrat\Person::with('parish')->orderBy('lastname', 'asc', 'firstname','asc')->Paginate(25);
+        $persons = \montserrat\Person::with('parish')->orderBy('lastname', 'asc', 'firstname','asc')->Paginate(100);
         return view('persons.index',compact('persons'));   //
     }
 
@@ -307,10 +307,10 @@ class PersonsController extends Controller
     public function retreatants()
     {
         //
-        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where('is_retreatant','1')->get();
+        $persons = \montserrat\Person::with('parish')->orderBy('lastname', 'asc', 'firstname','asc')->where('is_retreatant','1')->get();
         //dd($persons);
         return view('persons.retreatants',compact('persons'));   //
-    
+     
     }
     public function volunteers()
     {

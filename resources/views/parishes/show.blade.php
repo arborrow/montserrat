@@ -30,7 +30,7 @@
                     <div class='col-md-6'><strong>Fax: </strong>{{ $parish->fax}}</div>
                 </div><div class="clearfix"> </div>
                 <div class='row'>
-                    <div class='col-md-6'><strong>Email: </strong>{{ $parish->email}}</div>
+                    <div class='col-md-6'><strong>Email: </strong><a href='mailto:{{ $parish->email}}'>{{ $parish->email}}</a></div>
                 </div><div class="clearfix"> </div>
                 <div class='row'>
                     <div class='col-md-6'><strong>Webpage: </strong><a href="{{ $parish->webpage}}" target='_blank'>{{ $parish->webpage}}</a></div>

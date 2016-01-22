@@ -30,7 +30,10 @@
                         <tr>
                             <td><a href="diocese/{{$diocese->id}}">{{ $diocese->name }}</a></td>
                             <td><a href="person/{{$diocese->bishop_id}}">{{$diocese->bishop->title}} {{$diocese->bishop->firstname}} {{$diocese->bishop->lastname}}</a></td>
-                            <td>{{ $diocese->address1 }}</td>
+                            <td><a href="http://maps.google.com/?q={{$diocese->address1}} {{ $diocese->address2}} {{ $diocese->city}} {{ $diocese->state}} {{ $diocese->zip}}" target="_blank">
+                                {{ $diocese->address1 }}
+                                </a>
+                            </td>
                             <td>{{ $diocese->phone }}</td>
                             <td><a href="mailto:{{ $diocese->email }}">{{ $diocese->email }}</a></td>
                             <td><a href="{{ $diocese->webpage }}" target="_blank">{{ $diocese->webpage }}</a></td>

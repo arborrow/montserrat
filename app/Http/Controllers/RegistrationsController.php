@@ -29,7 +29,7 @@ class RegistrationsController extends Controller
             //dd($registration->retreat_id);
             $retreat = \montserrat\Retreat::findOrFail($registration->retreat_id);
             //dd($retreat);
-            $retreatant = \montserrat\Retreatant::findOrFail($registration->retreatant_id);
+            $retreatant = \montserrat\Person::findOrFail($registration->retreatant_id);
             //dd($retreatant);
             if (empty($retreat)) {
                 $registration->retreat = 'Not assigned';
@@ -41,7 +41,7 @@ class RegistrationsController extends Controller
             } else {
                 $registration->retreatant = $retreatant;
             }
-        //dd($registration->retreatant->lastname);
+       //dd($registration->retreatant);
            
             
         }
@@ -59,7 +59,7 @@ class RegistrationsController extends Controller
         //
         //$retreats = \montserrat\Retreat::where('end','>',\Carbon\Carbon::today())->lists('idnumber','title','id');
         $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start,"%m-%d-%Y"),")") as description'), 'id')->where("end",">",\Carbon\Carbon::today())->orderBy('start')->lists('description','id');
-        $retreatants = \montserrat\Retreatant::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->orderBy('fullname')->lists('fullname','id');
+        $retreatants = \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('is_retreatant','=','1')->orderBy('fullname')->lists('fullname','id');
 
         return view('registrations.create',compact('retreats','retreatants')); 
         //dd($retreatants);
@@ -116,7 +116,7 @@ class RegistrationsController extends Controller
         //dd(date('F d, Y', strtotime(NULL)));
         $registration= \montserrat\Registration::find($id);
         $retreat = \montserrat\Retreat::findOrFail($registration->retreat_id);
-        $retreatant = \montserrat\Retreatant::findOrFail($registration->retreatant_id);
+        $retreatant = \montserrat\Person::findOrFail($registration->retreatant_id);
        return view('registrations.show',compact('registration','retreat','retreatant'));//
     }
 
@@ -133,7 +133,7 @@ class RegistrationsController extends Controller
 //        $retreat = \montserrat\Retreat::findOrFail($registration->retreat_id);
 //        $retreatant = \montserrat\Retreatant::findOrFail($registration->retreatant_id);
         $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start,"%m-%d-%Y"),")") as description'), 'id')->where("end",">",\Carbon\Carbon::today())->orderBy('start')->lists('description','id');
-        $retreatants = \montserrat\Retreatant::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->orderBy('fullname')->lists('fullname','id');
+        $retreatants = \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('is_retreatant','=','1')->orderBy('fullname')->lists('fullname','id');
 
         
         return view('registrations.edit',compact('registration','retreats','retreatants'));

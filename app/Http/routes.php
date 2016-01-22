@@ -30,16 +30,16 @@ Route::get('support',['as' => 'support','uses' => 'PagesController@support']);
 Route::get('about',['as' => 'about','uses' => 'PagesController@about']);
 Route::get('phpinfo',['as' => 'phpinfo','uses' => 'SystemController@phpinfo','middleware' => 'auth']);
 Route::resource('retreat','RetreatsController');
-Route::resource('retreatant','RetreatantsController');
+//Route::resource('retreatant','RetreatantsController');
 Route::resource('registration','RegistrationsController');
 Route::resource('room','RoomsController');
 Route::resource('director','DirectorsController');
 Route::resource('innkeeper','InnkeepersController');
 Route::resource('assistant','AssistantsController');
 Route::resource('parish','ParishesController');
-    Route::get('dallasdiocese',['as' => 'dallasdiocese','uses' => 'ParishesController@dallasdiocese']);
-    Route::get('fortworthdiocese',['as' => 'fortworthdiocese','uses' => 'ParishesController@fortworthdiocese']);
-    Route::get('tylerdiocese',['as' => 'tylerdiocese','uses' => 'ParishesController@tylerdiocese']);
+    Route::get('parishes/dallas',['as' => 'dallasparishes','uses' => 'ParishesController@dallasdiocese']);
+    Route::get('parishes/fortworth',['as' => 'fortworthparishes','uses' => 'ParishesController@fortworthdiocese']);
+    Route::get('parishes/tyler',['as' => 'tylerparishes','uses' => 'ParishesController@tylerdiocese']);
 
 Route::resource('diocese','DiocesesController');
 
@@ -53,7 +53,7 @@ Route::resource('person','PersonsController');
     Route::get('employees',['as' => 'employees','uses' => 'PersonsController@employees']);
     Route::get('innkeepers',['as' => 'innkeepers','uses' => 'PersonsController@innkeepers']);
     Route::get('pastors',['as' => 'pastors','uses' => 'PersonsController@pastors']);
-    // Route::get('retreatants',['as' => 'retreatants','uses' => 'PersonsController@retreatants']);
+    Route::get('retreatants',['as' => 'retreatants','uses' => 'PersonsController@retreatants']);
     Route::get('volunteers',['as' => 'volunteers','uses' => 'PersonsController@volunteers']);
 
 // Authentication routes...

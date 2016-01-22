@@ -49,15 +49,14 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-left">
-                <li><a href={{ route('retreat.index') }}> {!! Html::image('img/retreat.png', 'Retreat',array('title'=>"Retreat")) !!}</a></li>
-                <li><a href={{ route('person.index') }}> {!! Html::image('img/person.png', 'Retreatant',array('title'=>"Person")) !!}</a></li>
-                <li><a href={{ route('retreatant.index') }}> {!! Html::image('img/retreatant.png', 'Retreatant',array('title'=>"Retreatant")) !!}</a></li>
-                <li><a href={{ route('registration.index') }}> {!! Html::image('img/registration.png', 'Registration',array('title'=>"Registration")) !!}</a></li>
+                <li><a href={{ route('retreat.index') }}> {!! Html::image('img/retreat.png', 'Retreats',array('title'=>"Retreats")) !!}</a></li>
+                <li><a href={{ route('person.index') }}> {!! Html::image('img/person.png', 'Persons',array('title'=>"Persons")) !!}</a></li>
+                <li><a href={{ route('registration.index') }}> {!! Html::image('img/registration.png', 'Registrations',array('title'=>"Registrations")) !!}</a></li>
                 <!--<li><a href={{ route('reservation') }}> {!! Html::image('img/reservation.png', 'Reservation',array('title'=>"Reservation")) !!}</a></li> -->
-                <li><a href={{ route('room.index') }}> {!! Html::image('img/room.png', 'Room',array('title'=>"Room")) !!}</a></li>
-                <li><a href={{ route('parish.index') }}> {!! Html::image('img/parish.png', 'Room',array('title'=>"Parish")) !!}</a></li>
-                <li><a href={{ route('diocese.index') }}> {!! Html::image('img/diocese.png', 'Room',array('title'=>"Diocese")) !!}</a></li>
-<!--                <li><a href={{ route('housekeeping') }}> {!! Html::image('img/housekeeping.png', 'Housekeeping',array('title'=>"Housekeeping")) !!}</a></li>
+                <li><a href={{ route('room.index') }}> {!! Html::image('img/room.png', 'Rooms',array('title'=>"Rooms")) !!}</a></li>
+                <li><a href={{ route('parish.index') }}> {!! Html::image('img/parish.png', 'Parishes',array('title'=>"Parishes")) !!}</a></li>
+                <li><a href={{ route('diocese.index') }}> {!! Html::image('img/diocese.png', 'Dioceses',array('title'=>"Dioceses")) !!}</a></li>
+<!--          <li><a href={{ route('housekeeping') }}> {!! Html::image('img/housekeeping.png', 'Housekeeping',array('title'=>"Housekeeping")) !!}</a></li>
                 <li class="divider"></li>
                 <li><a href={{ route('maintenance') }}>{!! Html::image('img/maintenance.png', 'Maintenance',array('title'=>"Maintenance")) !!}</a></li>
                 <li><a href={{ route('grounds') }}>{!! Html::image('img/grounds.png', 'Grounds',array('title'=>"Grounds")) !!}</a></li>
@@ -67,7 +66,7 @@
                 <li><a href={{ route('bookstore') }}>{!! Html::image('img/bookstore.png', 'Bookstore',array('title'=>"Bookstore")) !!}</a></li>
                 <li class="divider"></li>
                 <li><a href={{ route('users') }}>{!! Html::image('img/users.png', 'Users',array('title'=>"Users")) !!}</a></li>
--->                <li><a href={{ route('support') }}>{!! Html::image('img/support.png', 'Support',array('title'=>"Support")) !!}</a></li>
+-->           <li><a href={{ route('support') }}>{!! Html::image('img/support.png', 'Support',array('title'=>"Support")) !!}</a></li>
                 <li><a href={{ route('about') }}>{!! Html::image('img/about.png', 'About',array('title' => 'About')) !!}</a></li>
                 <!-- @if (isset(Auth::User()->email))
                      <li><a href={{ route('logout') }}>{!! Html::image('img/logout.png', 'Logout',array('title' => 'Logout')) !!}</a></li>
