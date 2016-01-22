@@ -17,8 +17,8 @@
                 <table class="table"><caption><h2>Diocese of Tyler Parishes</h2></caption>
                     <thead>
                         <tr>
-                            <th>Diocese</th>
                             <th>Name</th> 
+                            <th>Diocese</th>
                             <th>Pastor</th> 
                             <th>Address</th> 
                             <th>Phone</th> 
@@ -29,9 +29,9 @@
                     <tbody>
                         @foreach($parishes as $parish)
                         <tr>
-                            <td><a href="diocese/{{$parish->diocese_id}}">{{ $parish->diocese->name }}</a></td>
-                            <td><a href="parish/{{$parish->id}}">{{ $parish->name }}</a></td>
-                            <td><a href="person/{{$parish->pastor_id}}">{{ $parish->pastor->title or ''}} {{ $parish->pastor->firstname or ''}} {{ $parish->pastor->lastname or 'No pastor assigned'}}</a></td>
+                            <td><a href="../parish/{{$parish->id}}">{{ $parish->name }}</a></td>
+                            <td><a href="../diocese/{{$parish->diocese_id}}">{{ $parish->diocese->name }}</a></td>
+                            <td><a href="../person/{{$parish->pastor_id}}">{{ $parish->pastor->title or ''}} {{ $parish->pastor->firstname or ''}} {{ $parish->pastor->lastname or 'No pastor assigned'}}</a></td>
                             <td><a href="http://maps.google.com/?q={{$parish->address1}} {{ $parish->address2}} {{ $parish->city}} {{ $parish->state}} {{ $parish->zip}}" target="_blank">{{ $parish->address1}}</a></td>
                             <td>{{ $parish->phone }}</td>
                             <td><a href="mailto:{{ $parish->email }}">{{ $parish->email }}</a></td>

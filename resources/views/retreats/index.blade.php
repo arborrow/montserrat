@@ -33,9 +33,9 @@
                             <td><a href="retreat/{{ $retreat->id}}">{{ $retreat->idnumber}}</a></td>
                             <td>{{ $retreat->title }}</td>
                             <td>{{ date('F d, Y', strtotime($retreat->start)) }} - {{ date('F d, Y', strtotime($retreat->end)) }}</td>
-                            <td>{{ $retreat->directorname }}</td>
-                            <td>{{ $retreat->innkeepername }}</td>
-                            <td>{{ $retreat->assistantname }}</td>
+                            <td><a href="person/{{ $retreat->directorid }}">{{ $retreat->directorname }}</a></td>
+                            <td><a href="person/{{ $retreat->innkeeperid }}">{{ $retreat->innkeepername }}</a></td>
+                            <td><a href="person/{{ $retreat->assistantid }}">{{ $retreat->assistantname }}</a></td>
                             <td>{{ $retreat->attending}}</td>
                             <!--<td>{{ $retreat->silent ? 'Yes' : 'No'}}</td>
                             <td><a href="{{ action('RetreatsController@edit', $retreat->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></td>
@@ -61,7 +61,7 @@
                             <th>Director</th>
                             <th>Innkeeper</th>
                             <th>Assistant</th>
-                            <th># Attending</th>
+                            <th># Attended</th>
                             <!--<th>Silent</th>
                             <th>Edit</th>
                             <th>Delete</th> -->
@@ -73,9 +73,9 @@
                             <td><a href="retreat/{{ $oldretreat->id}}">{{ $oldretreat->idnumber}}</a></td>
                             <td>{{ $oldretreat->title }}</td>
                             <td>{{ date('F d, Y', strtotime($oldretreat->start)) }} - {{ date('F d, Y', strtotime($oldretreat->end)) }}</td>
-                            <td>{{ $oldretreat->directorname }}</td>
-                            <td>{{ $oldretreat->innkeepername }}</td>
-                            <td>{{ $oldretreat->assistantname }}</td>
+                            <td><a href="person/{{ $oldretreat->directorid }}">{{ $oldretreat->directorname }}</a></td>
+                            <td><a href="person/{{ $oldretreat->innkeeperid }}">{{ $oldretreat->innkeepername }}</a></td>
+                            <td><a href="person/{{ $oldretreat->assistantid }}">{{ $oldretreat->assistantname }}</a></td>
                             <td>{{ $oldretreat->attending}}</td>
                         </tr>
                         @endforeach

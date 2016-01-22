@@ -124,8 +124,7 @@ class PersonsController extends Controller
     public function show($id)
     {
         //
-       $person = \montserrat\Person::find($id);
-        
+       $person = \montserrat\Person::findOrFail($id);
        return view('persons.show',compact('person'));//
     
     }

@@ -23,9 +23,9 @@
                 <div class='col-md-6'><strong>Description: </strong>{{ $retreat->description}}</div>
             </div><div class="clearfix"> </div>
             <div class='row'>
-                <div class='col-md-3'><strong>Director ID: </strong> {{ $retreat->directorname}}</div>
-                <div class='col-md-3'><strong>Innkeeper ID: </strong>{{ $retreat->innkeepername}}</div>
-                <div class='col-md-3'><strong>Assistant ID: </strong>{{ $retreat->assistantname}}</div>
+                <div class='col-md-3'><strong>Director: </strong><a href="person/{{ $retreat->directorid}}">{{ $retreat->directorname}}</a></div>
+                <div class='col-md-3'><strong>Innkeeper: </strong><a href="person/{{ $retreat->innkeeperid}}">{{ $retreat->innkeepername}}</a></div>
+                <div class='col-md-3'><strong>Assistant: </strong><a href="person/{{ $retreat->assistantid}}">{{ $retreat->assistantname}}</a></div>
             </div><div class="clearfix"> </div>
             <div class='row'>
                 <div class='col-md-3'><strong>Type: </strong>{{ $retreat->type}}</div>
@@ -68,7 +68,7 @@
                         <td><a href="{{action('PersonsController@show', $registration->retreatant_id)}}">{{ $registration->retreatantname}}</a></td>
                         <td>{{ $registration->deposit }}</td>
                         <td>{{ $registration->retreatantmobilephone}}</td>
-                        <td>{{ $registration->retreatantparish}}</td>
+                        <td><a href="{{action('ParishesController@show', $registration->parish_id)}}">{{ $registration->retreatantparish}}</td>
                         <td>{{ $registration->notes }}</td>
 
 

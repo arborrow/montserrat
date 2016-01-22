@@ -160,7 +160,10 @@ return Redirect::action('RetreatsController@index');//
         $registrations = \montserrat\Retreat::find($id)->registrations;
         foreach ($registrations as $registration) {
             $retreatant = \montserrat\Registration::find($registration->id)->retreatant;
-            //dd($director);
+            $parish = \montserrat\Parish::find($retreatant->parish_id);
+            $registration->parish_id=$retreatant->parish_id;
+            //dd($retreatant);
+           // dd($parish);
             if (empty($retreatant)) {
                 $registration->retreatantname = 'Unknown retreatant';
             } else {
@@ -171,14 +174,15 @@ return Redirect::action('RetreatsController@index');//
             } else {
                $registration->retreatantmobilephone = $retreatant->mobilephone;
              }
-            if (empty($registration->retreatantparish)) {
+            if (empty($parish->id)) {
                 $registration->retreatantparish = 'Unknown';
             } else {
-                $registration->retreatantparish = $retreatant->parish;
+                $registration->retreatantparish = $parish->name;
             }
             
         }
-        // dd($registrations);
+        
+         //dd($registrations);
          if (empty($director)) {
                 $retreat->directorname = 'Not assigned';
             } else {
