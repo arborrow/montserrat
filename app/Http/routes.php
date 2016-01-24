@@ -48,6 +48,7 @@ Route::resource('person','PersonsController');
     Route::get('bishops',['as' => 'bishops','uses' => 'PersonsController@bishops']);
     Route::get('boardmembers',['as' => 'boardmembers','uses' => 'PersonsController@boardmembers']);
     Route::get('captains',['as' => 'captains','uses' => 'PersonsController@captains']);
+    Route::get('catholics',['as' => 'catholics','uses' => 'PersonsController@catholics']);
     Route::get('directors',['as' => 'directors','uses' => 'PersonsController@directors']);
     Route::get('donors',['as' => 'donors','uses' => 'PersonsController@donors']);
     Route::get('employees',['as' => 'employees','uses' => 'PersonsController@employees']);

@@ -3,12 +3,30 @@
     
 
 <div class="jumbotron text-left">
-    <span><h2><strong>Edit Person: {{ isset($person->title) ? $person->title : null }} 
-                    {{ isset($person->firstname) ? $person->firstname : null }} 
-                    {{ isset($person->middlename) ? $person->middlename : null}} 
-                    {{ $person->lastname}}{{isset($person->suffix) ? ', '.$person->suffix : null }}
-                    {{ isset($person->nickname) ? "(&quot;$person->nickname&quot;)" : null }}</strong></h2></span>
+    <span><h2><strong>Edit Person: 
+        {{ isset($person->title) ? $person->title : null }} 
+        {{ isset($person->firstname) ? $person->firstname : null }} 
+        {{ isset($person->middlename) ? $person->middlename : null}} 
+        {{ $person->lastname}}{{isset($person->suffix) ? ', '.$person->suffix : null }}
+        {{ (!empty($person->nickname)) ? "(&quot;$person->nickname&quot;)" : null }}
+    </strong></h2></span>
 
+    <span class="back">
+        @if ($person->is_assistant) <span class="back"><a href={{ action('PersonsController@assistants') }}>{!! Html::image('img/assistant.png', 'Assistants Index',array('title'=>"Assistants Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+        @if ($person->is_bishop) <span class="back"><a href={{ action('PersonsController@bishops') }}>{!! Html::image('img/bishop.png', 'Bishop Index',array('title'=>"Bishop Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+        @if ($person->is_board) <span class="back"><a href={{ action('PersonsController@boardmembers') }}>{!! Html::image('img/board.png', 'Board Members Index',array('title'=>"Board Members Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+        @if ($person->is_captain) <span class="back"><a href={{ action('PersonsController@captains') }}>{!! Html::image('img/captain.png', 'Captains Index',array('title'=>"Captains Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+        @if ($person->is_catholic) <span class="back"><a href={{ action('PersonsController@catholics') }}>{!! Html::image('img/catholic.png', 'Catholics Index',array('title'=>"Catholics Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+        @if ($person->is_director) <span class="back"><a href={{ action('PersonsController@directors') }}>{!! Html::image('img/director.png', 'Directors Index',array('title'=>"Directors Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+        @if ($person->is_donor) <span class="back"><a href={{ action('PersonsController@donors') }}>{!! Html::image('img/donor.png', 'Donor Index',array('title'=>"Donor Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+        @if ($person->is_innkeeper) <span class="back"><a href={{ action('PersonsController@innkeepers') }}>{!! Html::image('img/innkeeper.png', 'Innkeepers Index',array('title'=>"Innkeepers Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+        @if ($person->is_pastor) <span class="back"><a href={{ action('PersonsController@pastors') }}>{!! Html::image('img/pastor.png', 'Pastors Index',array('title'=>"Pastors Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+        @if ($person->is_retreatant) <span class="back"><a href={{ action('PersonsController@retreatants') }}>{!! Html::image('img/retreatant.png', 'Retreatants Index',array('title'=>"Retreatants Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+        @if ($person->is_staff) <span class="back"><a href={{ action('PersonsController@employees') }}>{!! Html::image('img/employee.png', 'Employees Index',array('title'=>"Employees Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+        @if ($person->is_volunteer) <span class="back"><a href={{ action('PersonsController@volunteers') }}>{!! Html::image('img/volunteer.png', 'Volunteers Index',array('title'=>"Volunteers Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+    </span>                
+
+    
     {!! Form::open(['method' => 'PUT', 'route' => ['person.update', $person->id]]) !!}
     {!! Form::hidden('id', $person->id) !!}
     
@@ -120,16 +138,13 @@
             <h2>Demographics</h2>
                 <div class="form-group">
                     {!! Form::label('gender', 'Gender:', ['class' => 'col-md-1'])  !!}
-                    {!! Form::text('gender', $person->gender, ['class' => 'col-md-1']) !!}
                     {!! Form::select('gender', [
                             'Female' => 'Female',
                             'Male' => 'Male',
                             'Other' => 'Other',
                             'Unspecified' => 'Unspecified',
                             ], $person->gender, ['class' => 'col-md-2']) !!}
-                        {!! Form::label('dob', 'DOB:', ['class' => 'col-md-1']) !!}
-                        {!! Form::text('dob', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
-
+                      
                     {!! Form::label('dob', 'DOB:', ['class' => 'col-md-1']) !!}
                     {!! Form::text('dob', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
                 </div>

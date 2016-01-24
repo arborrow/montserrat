@@ -263,6 +263,14 @@ class PersonsController extends Controller
         return view('persons.captains',compact('persons'));   //
     
     }
+    public function catholics()
+    {
+        //
+        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where('is_catholic','1')->get();
+        //dd($persons);
+        return view('persons.catholics',compact('persons'));   //
+    
+    }
     public function directors()
     {
         //
@@ -311,6 +319,7 @@ class PersonsController extends Controller
         return view('persons.retreatants',compact('persons'));   //
      
     }
+    
     public function volunteers()
     {
         //
