@@ -63,7 +63,7 @@ class PersonsController extends Controller
             'dob' => 'date',            
             'url' => 'url',
             'parish_id' => 'integer|min:0',
-            'gender' => 'in:Male,Female,Other'
+            'gender' => 'in:Male,Female,Other,Unspecified'
         ]);
         
         $person = new \montserrat\Person;
@@ -165,7 +165,7 @@ class PersonsController extends Controller
             'dob' => 'date',
             'url' => 'url',
             'parish_id' => 'integer|min:0',
-            'gender' => 'in:Male,Female,Other'
+            'gender' => 'in:Male,Female,Other,Unspecified'
         ]);
         $person = \montserrat\Person::findOrFail($request->input('id'));
         $person->title = $request->input('title');

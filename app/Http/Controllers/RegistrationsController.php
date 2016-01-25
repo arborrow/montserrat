@@ -100,7 +100,10 @@ class RegistrationsController extends Controller
     $registration->notes = $request->input('notes');
     
     $registration->save();
-    
+    $registrations = \montserrat\Registration::where('retreat_id','=',$request->input('retreat_id'))->count();
+    $retreat->attending = $registrations;
+    $retreat->save();
+    //dd($registrations);
     return Redirect::action('RegistrationsController@index');
     }
 
@@ -188,7 +191,13 @@ class RegistrationsController extends Controller
     public function destroy($id)
     {
         //
+         $registration= \montserrat\Registration::findOrFail($id);
+         $retreat = \montserrat\Retreat::findOrFail($registration->retreat_id);
+         
         \montserrat\Registration::destroy($id);
-       return Redirect::action('RegistrationsController@index');
+        $countregistrations = \montserrat\Registration::where('retreat_id','=',$registration->retreat_id)->count();
+        $retreat->attending = $countregistrations;
+        $retreat->save();
+        return Redirect::action('RegistrationsController@index');
     }
 }
