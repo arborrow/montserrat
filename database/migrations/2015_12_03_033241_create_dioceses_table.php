@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Dioceses extends Migration
+class CreateDiocesesTable extends Migration
 {
     /**
      * Run the migrations.

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEthnicities extends Migration
+class CreateEthnicitiesTable extends Migration
 {
     /**
      * Run the migrations.
