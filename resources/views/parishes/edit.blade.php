@@ -10,8 +10,12 @@
         {!! Form::select('diocese_id', $dioceses, $parish->diocese_id, ['class' => 'col-md-2']) !!}
     </div><div class="clearfix"> </div>
  <div class="form-group">
-        {!! Form::label('pastor_id', 'Pastor:', ['class' => 'col-md-1'])  !!}
-        {!! Form::select('pastor_id', $pastors, $parish->pastor_id, ['class' => 'col-md-2']) !!}
+        {!! Form::label('pastor_id', 'Pastor:', ['class' => 'col-md-1'])  !!} 
+        @if (empty($parish->pastor_id))
+            {!! Form::select('pastor_id', $pastors, 0, ['class' => 'col-md-2']) !!}
+        @else 
+            {!! Form::select('pastor_id', $pastors, $parish->pastor_id, ['class' => 'col-md-2']) !!}
+        @endIf
     </div><div class="clearfix"> </div>
 
     <div class="form-group">

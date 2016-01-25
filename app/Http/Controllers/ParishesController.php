@@ -45,8 +45,9 @@ class ParishesController extends Controller
         //
         $dioceses = \montserrat\Diocese::orderby('name')->lists('name','id');
 //        $pastors = \montserrat\Person::where('is_pastor','1')->orderby('lastname')->lists('lastname','id');
-        $pastors = \montserrat\Person::select(\DB::raw('CONCAT(title," ",firstname," ",lastname) as fullname'), 'id')->where('is_pastor','1')->orderBy('fullname')->lists('fullname','id');
-
+        $pastors = \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname," (",title,")") as fullname'), 'id')->where('is_pastor','1')->orderBy('fullname')->lists('fullname','id');
+        $pastors[0] = 'No pastor assigned';
+      
   //dd($pastors);
         //$pastors = array();
         //$pastors[0]='Not implemented yet';
