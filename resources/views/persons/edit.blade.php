@@ -138,13 +138,20 @@
             <h2>Demographics</h2>
                 <div class="form-group">
                     {!! Form::label('gender', 'Gender:', ['class' => 'col-md-1'])  !!}
+                    @if (!empty($person->gender)) 
                     {!! Form::select('gender', [
                             'Female' => 'Female',
                             'Male' => 'Male',
                             'Other' => 'Other',
                             'Unspecified' => 'Unspecified',
                             ], $person->gender, ['class' => 'col-md-2']) !!}
-                      
+                    @else {!! Form::select('gender', [
+                            'Female' => 'Female',
+                            'Male' => 'Male',
+                            'Other' => 'Other',
+                            'Unspecified' => 'Unspecified',
+                            ], 'Unspecified', ['class' => 'col-md-2']) !!}
+                    @endIf  
                     {!! Form::label('dob', 'DOB:', ['class' => 'col-md-1']) !!}
                     {!! Form::text('dob', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
                 </div>
@@ -159,7 +166,11 @@
 
                 <div class="form-group">
                     {!! Form::label('ethnicity', 'Ethnicity:', ['class' => 'col-md-1'])  !!}
-                    {!! Form::select('ethnicity', $ethnicities, $person->ethnicity, ['class' => 'col-md-3']) !!}
+                    @if (!empty($person->ethnicity))
+                        {!! Form::select('ethnicity', $ethnicities, $person->ethnicity, ['class' => 'col-md-3']) !!}
+                    @else
+                        {!! Form::select('ethnicity', $ethnicities, 'Unspecified', ['class' => 'col-md-3']) !!}
+                    @endIf    
                     {!! Form::label('languages', 'Languages:', ['class' => 'col-md-2'])  !!}
                     {!! Form::text('languages', $person->languages, ['class' => 'col-md-3']) !!}
                 </div>

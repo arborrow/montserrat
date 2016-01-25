@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddcolumnDeceasedPersons extends Migration
+class AddcolumnDonoridPersons extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,9 @@ class AddcolumnDeceasedPersons extends Migration
     {
         //
         Schema::table('persons', function ($table) {
-            $table->boolean('is_deceased');
+            $table->Integer('donor_id')->unique()->nullable()->default(NULL);
         });
+    
     }
 
     /**
@@ -26,8 +27,8 @@ class AddcolumnDeceasedPersons extends Migration
     public function down()
     {
         //
-        Schema::table('persons', function ($table) {
-            $table->dropColumn('is_deceased');
+         Schema::table('persons', function ($table) {
+            $table->dropColumn('donor_id');
         });
     }
 }

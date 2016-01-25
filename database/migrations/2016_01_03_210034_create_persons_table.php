@@ -35,7 +35,7 @@ class CreatePersonsTable extends Migration
             $table->string('emergencycontactname')->nullable();
             $table->string('emergencycontactphone')->nullable();
             $table->string('emergencycontactphone2')->nullable();
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable()->default(NULL);
             $table->string('gender')->nullable();
             $table->date('dob')->nullable();
             $table->integer('parish_id')->nullable()->unsigned();
