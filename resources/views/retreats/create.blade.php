@@ -39,8 +39,16 @@
             </div><div class="clearfix"> </div>
             
             <div class="form-group">
-                {!! Form::label('type', 'Type: (Men, Women, Open, Couples, Other)', ['class' => 'col-md-3']) !!}
-                {!! Form::text('type', null, ['class'=>'col-md-1']) !!}
+                {!! Form::label('type', 'Type: ', ['class' => 'col-md-1']) !!}
+                {!! Form::select('type', [
+                            'Unspecified' => 'Unspecified',
+                            'Couples' => 'Couples',
+                            'Men' => 'Men',
+                            'Other' => 'Other',
+                            'Open' => 'Open',
+                            'Women' => 'Women',
+                            ], 'Unspecified', ['class' => 'col-md-1']) !!}
+                        
                <div class='left-checkbox'> {!! Form::label('silent', 'Silent:', ['class' => 'col-md-1']) !!}
                 {!! Form::text('silent', 1, ['class'=>'col-md-1']) !!}</div>
                 {!! Form::label('amount', 'Amount:', ['class' => 'col-md-1']) !!}

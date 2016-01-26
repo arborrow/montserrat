@@ -87,7 +87,11 @@ class PersonsController extends Controller
         $person->emergencycontactphone = $request->input('emergencycontactphone');
         $person->emergencycontactphone2 = $request->input('emergencycontactphone2');
         $person->url = $request->input('url');
-        $person->email = $request->input('email');
+        if (!empty($request->input('email'))) {
+            $person->email = $request->input('email');
+        } else {
+            $person->email = NULL;
+        }
         $person->gender = $request->input('gender');
         $person->dob = $request->input('dob');
         $person->ethnicity = $request->input('ethnicity');

@@ -23,9 +23,28 @@
                 <div class='col-md-6'><strong>Description: </strong>{{ $retreat->description}}</div>
             </div><div class="clearfix"> </div>
             <div class='row'>
-                <div class='col-md-3'><strong>Director: </strong><a href="person/{{ $retreat->directorid}}">{{ $retreat->directorname}}</a></div>
-                <div class='col-md-3'><strong>Innkeeper: </strong><a href="person/{{ $retreat->innkeeperid}}">{{ $retreat->innkeepername}}</a></div>
-                <div class='col-md-3'><strong>Assistant: </strong><a href="person/{{ $retreat->assistantid}}">{{ $retreat->assistantname}}</a></div>
+                <div class='col-md-3'><strong>Director: </strong>
+                    @if ($retreat->directorid == 0)
+                        {{$retreat->directorname}}
+                    @else
+                        <a href="person/{{ $retreat->directorid}}">{{ $retreat->directorname}}</a>
+                    @endIf
+                </div>
+                    
+                <div class='col-md-3'><strong>Innkeeper: </strong>
+                    @if ($retreat->innkeeperid == 0) 
+                        {{$retreat->innkeepername}}
+                    @else
+                        <a href="person/{{ $retreat->innkeeperid}}">{{ $retreat->innkeepername}}</a>
+                    @endIf
+                </div>
+                <div class='col-md-3'><strong>Assistant: </strong>
+                    @if ($retreat->assistantid == 0) 
+                        {{$retreat->assistantname}}
+                    @else
+                        <a href="person/{{ $retreat->assistantid}}">{{ $retreat->assistantname}}</a>
+                    @endIf
+                </div>
             </div><div class="clearfix"> </div>
             <div class='row'>
                 <div class='col-md-3'><strong>Type: </strong>{{ $retreat->type}}</div>

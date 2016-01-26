@@ -33,9 +33,27 @@
                             <td><a href="retreat/{{ $retreat->id}}">{{ $retreat->idnumber}}</a></td>
                             <td>{{ $retreat->title }}</td>
                             <td>{{ date('F d, Y', strtotime($retreat->start)) }} - {{ date('F d, Y', strtotime($retreat->end)) }}</td>
-                            <td><a href="person/{{ $retreat->directorid }}">{{ $retreat->directorname }}</a></td>
-                            <td><a href="person/{{ $retreat->innkeeperid }}">{{ $retreat->innkeepername }}</a></td>
-                            <td><a href="person/{{ $retreat->assistantid }}">{{ $retreat->assistantname }}</a></td>
+                            <td>
+                                @if ($retreat->directorid > 0)
+                                    <a href="person/{{ $retreat->directorid }}">{{ $retreat->directorname }}</a>
+                                @else
+                                    {{$retreat->directorname}}
+                                @endIf
+                            </td>
+                            <td>
+                                @if ($retreat->innkeeperid > 0)
+                                    <a href="person/{{ $retreat->innkeeperid }}">{{ $retreat->innkeepername }}</a>
+                                @else
+                                    {{$retreat->innkeepername}}
+                                @endIf
+                            </td>
+                            <td>
+                                @if ($retreat->assistantid > 0)
+                                    <a href="person/{{ $retreat->assistantid }}">{{ $retreat->assistantname }}</a>
+                                @else
+                                    {{$retreat->assistantname}}
+                                @endIf
+                            </td>
                             <td>{{ $retreat->attending}}</td>
                             <!--<td>{{ $retreat->silent ? 'Yes' : 'No'}}</td>
                             <td><a href="{{ action('RetreatsController@edit', $retreat->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></td>
