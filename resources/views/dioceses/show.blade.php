@@ -5,7 +5,7 @@
         <div class="jumbotron text-left">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span><h2>{!! $diocese->name !!} (<a href="person/{{$diocese->bishop->id}}">{{$diocese->bishop->title }} {{$diocese->bishop->firstname}} {{$diocese->bishop->lastname }}</a>) </span>
+                    <span><h2>{!! $diocese->name !!} (<a href="../person/{{$diocese->bishop->id}}">{{$diocese->bishop->title }} {{$diocese->bishop->firstname}} {{$diocese->bishop->lastname }}</a>) </span>
                     <span class="back"><a href={{ action('DiocesesController@index') }}>{!! Html::image('img/diocese.png', 'Diocese Index',array('title'=>"Diocese Index",'class' => 'btn btn-primary')) !!}</a></span></h1>
                 </div>
                 <div class='row'>
