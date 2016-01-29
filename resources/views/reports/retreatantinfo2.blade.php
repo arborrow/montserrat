@@ -55,15 +55,15 @@
     <tr><td> </td></tr>
     <tr><td><h2>Emergency Contact Information</h2></td></tr>
     <tr>
-        <td><strong>Emergency Contact Phone #:</strong>{{$registration->retreatant->emergencycontactphone}}</td>
+        <td><strong>Phone #:</strong>{{$registration->retreatant->emergencycontactphone}}</td>
         <td><hr/></td>
     </tr>
     <tr>
-        <td><strong>Emergency Contact Name:</strong>{{$registration->retreatant->emergencycontactname}}</td>
+        <td><strong>Name:</strong>{{$registration->retreatant->emergencycontactname}}</td>
         <td><hr/></td>
     </tr>
     <tr>
-        <td><strong>Emergency Contact Relationship:<br /></strong></td>
+        <td><strong>Relationship:<br /></strong></td>
         <td><hr/></td>
     </tr>
         
