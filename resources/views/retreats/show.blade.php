@@ -64,7 +64,9 @@
         <div class="panel-heading">
             <h2>Retreatants Registered</h2>
             <span class="create"><a href={{ action('RegistrationsController@create') }}>{!! Html::image('img/create.png', 'Create Registration',array('title'=>"Create Registration",'class' => 'btn btn-primary')) !!}</a></span>
-            <span class="report"><a href={{ action('PagesController@retreatantinforeport',$retreat->idnumber) }}>{!! Html::image('img/retreatantinfo.png', 'Retreatant Info Report',array('title'=>"Retreatant Info Report",'class' => 'btn btn-primary')) !!}</a></span>
+            <span class="report"><a href={{ action('PagesController@retreatantinforeport',$retreat->idnumber) }}>Retreatant Info Report</a></span>
+            <span class="report"><a href={{ action('PagesController@retreatrosterreport',$retreat->idnumber) }}>Retreat Roster Report</a></span>
+            <span class="report"><a href={{ action('PagesController@retreatlistingreport',$retreat->idnumber) }}>Retreatant Info Report</a></span>
                 
         </div>
             @if ($registrations->isEmpty())

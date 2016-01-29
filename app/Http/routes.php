@@ -29,6 +29,8 @@ Route::get('admin',['as' => 'admin','uses' => 'PagesController@admin']);
 Route::get('support',['as' => 'support','uses' => 'PagesController@support']);
 Route::get('about',['as' => 'about','uses' => 'PagesController@about']);
 Route::get('report/retreatantinfo/{retreat_id}',['uses' => 'PagesController@retreatantinforeport']);
+Route::get('report/retreatlisting/{retreat_id}',['uses' => 'PagesController@retreatlistingreport']);
+Route::get('report/retreatroster/{retreat_id}',['uses' => 'PagesController@retreatrosterreport']);
 Route::get('phpinfo',['as' => 'phpinfo','uses' => 'SystemController@phpinfo','middleware' => 'auth']);
 Route::resource('retreat','RetreatsController');
 //Route::resource('retreatant','RetreatantsController');

@@ -11,25 +11,31 @@ and open the template in the editor.
  
 @media print {
     @page {
-        size: 8.5in 11in;
-        margin: 1cm;
+        size: 8.5in 11in ;
+        margin: 2cm;
+        @top-right {
+        content: "Page " counter(page);
+        }
     } 
-    
+     @page rotated { size : landscape }
     .page-break	{ display: block; page-break-before: always; };
 
-    @font-face {
+    
+}
+@font-face {
 
     font-family: perpetua;
 
     src: local(perpetua), url('fonts/perpetua.ttf') format('opentype');
 
-    }   
-
+    }       
 body { 
     background: white;
     font-family: "perpetua";
     font-size: 13pt;
 }
+
+
 
 td {
     width: 50%;
@@ -37,9 +43,7 @@ td {
     margin: 0in;
 }
 
-h1,h2, span {
-    margin: 0px;
-}
+
 td.box {
     border: solid black;
     height: 1in;
@@ -57,16 +61,69 @@ td.box {
 
 .pagefooter {
      font-size: 10pt;
-     position: fixed;
      bottom: 0in;
  }
  
  .logo {
-     position: fixed;
      bottom: 0in;
      right: 0in;
      height: 62px;
      width: 200px;
  }
+ .square {
+     font-size: 12pt;
+ }
+ .retreatlisting { 
+        page : rotated;
+        font-size: 9pt;
+ }
+        td {
+            width: auto;
+        }
+        th {
+           text-align: left; 
+        }
+        h2 {
+            position: relative;
+        }
+        table {
+            table-layout: fixed;
+            width: 100%;
+            white-space: normal
+        }
+        .row-name {
+            width: 15%
+        }
+        .row-address {
+            width: 20%
+        }
+        .row-city {
+            width: 18%
+        }
+        .row-phone {
+            width: 9%
+        }
+        .row-notes {
+            width: 20%
+        }
+    
 
-}
+
+ .retreatroster { 
+        page : rotated;
+        font-size: 12pt;
+    }
+ .retreatroster row-cancel {
+            width: 15%
+        }
+ .retreatroster row-room {
+            width: 20%
+        }
+.retreatroster .row-name {
+            width: 65%
+        }
+        
+    
+
+
+

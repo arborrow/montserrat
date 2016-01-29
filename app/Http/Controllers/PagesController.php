@@ -80,9 +80,29 @@ class PagesController extends Controller
     {
         $retreat = \montserrat\Retreat::where('idnumber','=',$id)->first();
         $registrations = \montserrat\Registration::where('retreat_id','=',$retreat->id)->with('retreat','retreatant')->get();
+        //$registrations = $registrations->sortBy($registrations->retreatant->lastname);
+//products = Shop\Product::join('shop_products_options as po', 'po.product_id', '=', 'products.id')
+  // ->orderBy('po.pinned', 'desc')
+  //  ->select('products.*')       // just to avoid fetching anything from joined table
+  // ->with('options')         // if you need options data anyway
+  // ->paginate(5);
+        return view('reports.retreatantinfo2',compact('registrations'));   //
+    }
+   public function retreatlistingreport($id)
+    {
+        $retreat = \montserrat\Retreat::where('idnumber','=',$id)->first();
+        $registrations = \montserrat\Registration::where('retreat_id','=',$retreat->id)->with('retreat','retreatant')->get();
         
 
-        return view('reports.retreatantinfo2',compact('registrations'));   //
+        return view('reports.retreatlisting',compact('registrations'));   //
+    }
+   public function retreatrosterreport($id)
+    {
+        $retreat = \montserrat\Retreat::where('idnumber','=',$id)->first();
+        $registrations = \montserrat\Registration::where('retreat_id','=',$retreat->id)->with('retreat','retreatant')->get();
+        
+
+        return view('reports.retreatroster',compact('registrations'));   //
     }
    /**
      * Display a listing of the resource.
