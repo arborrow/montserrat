@@ -1,4 +1,4 @@
-@extends('report')
+@extends('reportlandscape')
 @section('content')
 
 <div class ="retreatlisting">
