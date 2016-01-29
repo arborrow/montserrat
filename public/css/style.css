@@ -56,7 +56,9 @@ body {
     text-align: center;
     background-color: #e7e7e7;
 }
-
+.btn {
+    font-size: 20px;
+}
 .title {
     font-size: 96px;
 }
