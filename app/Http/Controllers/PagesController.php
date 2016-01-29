@@ -76,6 +76,14 @@ class PagesController extends Controller
     {
      return view('welcome');   //
     }
+    public function retreatantinforeport($id)
+    {
+        $retreat = \montserrat\Retreat::where('idnumber','=',$id)->first();
+        $registrations = \montserrat\Registration::where('retreat_id','=',$retreat->id)->with('retreat','retreatant')->get();
+        
+
+        return view('reports.retreatantinfo2',compact('registrations'));   //
+    }
    /**
      * Display a listing of the resource.
      *
