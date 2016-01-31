@@ -78,7 +78,13 @@
         <td><hr/></td>
     </tr>
     <tr>
-        <td><strong>Parish and Location:</strong>{{$registration->retreatant->parish_id}}<br />(If not Catholic, please indicate religious affiliation)</td>
+        <td><strong>Parish (Location):</strong>
+            @if (!empty($registration->retreatant->parish->name))
+                {{$registration->retreatant->parish->name}} ({{$registration->retreatant->parish->city}})
+            @else
+                N/A
+            @endif
+            <br />(If not Catholic, please indicate religious affiliation)</td>
         <td><hr/></td>
     </tr>    
 

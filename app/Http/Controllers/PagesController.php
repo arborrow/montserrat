@@ -79,8 +79,9 @@ class PagesController extends Controller
     public function retreatantinforeport($id)
     {
         $retreat = \montserrat\Retreat::where('idnumber','=',$id)->first();
-        $registrations = \montserrat\Registration::where('retreat_id','=',$retreat->id)->with('retreat','retreatant')->get();
-        //$registrations = $registrations->sortBy($registrations->retreatant->lastname);
+        $registrations = \montserrat\Registration::where('retreat_id','=',$retreat->id)->with('retreat','retreatant','retreatant.parish')->get();
+//dd($registrations);        
+//$registrations = $registrations->sortBy($registrations->retreatant->lastname);
 //products = Shop\Product::join('shop_products_options as po', 'po.product_id', '=', 'products.id')
   // ->orderBy('po.pinned', 'desc')
   //  ->select('products.*')       // just to avoid fetching anything from joined table

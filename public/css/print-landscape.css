@@ -46,7 +46,7 @@ td {
 
 td.box {
     border: solid black;
-    height: 1in;
+    height: .75in;
     vertical-align: top;
 }
 #menu { display: none; }
