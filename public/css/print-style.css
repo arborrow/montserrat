@@ -43,6 +43,9 @@ td {
     margin: 0in;
 }
 
+h2 {
+    margin: 0;
+}
 
 td.box {
     border: solid black;
