@@ -32,7 +32,7 @@
                                 'Face' => 'Face to Face',
                                 'Letter' => 'Letter',
                                 'Other' => 'Other',
-                            ], $touchpoint->type ['class' => 'col-md-3']) !!}
+                            ], $touchpoint->type, ['class' => 'col-md-3']) !!}
 
                     </div>
                     <div class='row'>

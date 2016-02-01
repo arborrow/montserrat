@@ -55,7 +55,7 @@ class TouchpointsController extends Controller
         'touched_at' => 'required|date',
         'person_id' => 'required|integer|min:0',
         'staff_id' => 'required|integer|min:0',
-        'type' => 'in:Email,Call,Letter,Face,Home,Other'
+        'type' => 'in:Email,Call,Letter,Face,Other'
         ]);
 
     $touchpoint = new \montserrat\Touchpoint;
@@ -116,7 +116,7 @@ class TouchpointsController extends Controller
         'touched_at' => 'required|date',
         'person_id' => 'required|integer|min:0',
         'staff_id' => 'required|integer|min:0',
-        'type' => 'in:Email,Call,Letter,Other'
+        'type' => 'in:Email,Call,Letter,Face,Other'
         ]);
         $touchpoint = \montserrat\Touchpoint::findOrFail($request->input('id'));
     

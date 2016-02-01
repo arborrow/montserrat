@@ -130,7 +130,7 @@
                 </div>
                 <div class="clearfix"> </div>
             </div>
-                   
+                   <hr />
              @if ($person->touchpoints->isEmpty())
                     <p>It is a brand new world, there are no touch points for this person!</p>
                 @else
