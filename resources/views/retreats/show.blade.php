@@ -87,10 +87,22 @@
                 @foreach($registrations as $registration)
                     <tr>
                         <td><a href="{{action('RegistrationsController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register)) }}</a></td>
-                        <td><a href="{{action('PersonsController@show', $registration->retreatant_id)}}">{{ $registration->retreatantname}}</a></td>
+                        <td><a href="{{action('PersonsController@show', $registration->retreatant->id)}}">{{ $registration->retreatant->lastname}}, {{ $registration->retreatant->firstname}}</a></td>
                         <td>{{ $registration->deposit }}</td>
-                        <td>{{ $registration->retreatantmobilephone}}</td>
-                        <td><a href="{{action('ParishesController@show', $registration->parish_id)}}">{{ $registration->retreatantparish}}</td>
+                        <td>
+                            @if (empty($registration->retreatant->mobilephone))
+                                N/A
+                            @else
+                                {{ $registration->retreatant->mobilephone}}
+                            @endif
+                        </td>
+                        <td>
+                            @if (empty($registration->retreatant->parish->id))
+                                N/A
+                            @else
+                                <a href="{{action('ParishesController@show', $registration->retreatant->parish->id)}}">{{ $registration->retreatant->parish->name}}
+                            @endif
+                        </td>
                         <td>{{ $registration->notes }}</td>
 
 

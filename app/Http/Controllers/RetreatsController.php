@@ -159,33 +159,9 @@ return Redirect::action('RetreatsController@index');//
         $director = \montserrat\Retreat::find($id)->director;
         $innkeeper = \montserrat\Retreat::find($id)->innkeeper;
         $assistant = \montserrat\Retreat::find($id)->assistant;
-        $registrations = \montserrat\Retreat::find($id)->registrations;
-        foreach ($registrations as $registration) {
-            $retreatant = \montserrat\Registration::find($registration->id)->retreatant;
-            $parish = \montserrat\Parish::find($retreatant->parish_id);
-            $registration->parish_id=$retreatant->parish_id;
-            //dd($retreatant);
-           // dd($parish);
-            if (empty($retreatant)) {
-                $registration->retreatantname = 'Unknown retreatant';
-            } else {
-                $registration->retreatantname = $retreatant->firstname.' '.$retreatant->lastname;
-            }
-            if (empty($registration->retreatantmobilephone)) {
-                $registration->retreatantmobilephone = 'N/A';
-            } else {
-               $registration->retreatantmobilephone = $retreatant->mobilephone;
-             }
-            if (empty($parish->id)) {
-                $registration->retreatantparish = 'Unknown';
-            } else {
-                $registration->retreatantparish = $parish->name;
-            }
-            
-        }
+        $registrations = \montserrat\Registration::where('retreat_id','=',$id)->with('retreatant','retreatant.parish')->get();
         
-         //dd($registrations);
-         if (empty($director)) {
+        if (empty($director)) {
                 $retreat->directorname = 'Not assigned';
             } else {
                 $retreat->directorname = $director->firstname.' '.$director->lastname;
