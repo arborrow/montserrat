@@ -25,4 +25,8 @@ class Person extends Model
         return $this->belongsTo('\montserrat\Parish','parish_id','id');
     }
     
+    public function touchpoints() {
+        return $this->hasMany('\montserrat\Touchpoint','person_id','id');
+    }
+    
 }

@@ -131,7 +131,32 @@
                 <div class="clearfix"> </div>
             </div>
                    
-            
+             @if ($person->touchpoints->isEmpty())
+                    <p>It is a brand new world, there are no touch points for this person!</p>
+                @else
+                <table class="table"><caption><h2>Touch points for {{ $person->firstname }} {{ $person->lastname }} </h2></caption>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Contacted by</th>
+                            <th>Type of contact</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($person->touchpoints as $touchpoint)
+                        <tr>
+                            <td><a href="touchpoint/{{ $touchpoint->id}}">{{ $touchpoint->touched_at }}</a></td>
+                            <td><a href="person/{{ $touchpoint->staff->id}}">{{ $touchpoint->staff->lastname }}, {{ $touchpoint->staff->firstname }}</a></td>
+                            <td>{{ $touchpoint->type }}</td>
+                            <td>{{ $touchpoint->notes }}</td>
+                        </tr>
+                        @endforeach
+                        
+                    </tbody>
+                </table>
+                @endif
+
             
         </div>
         <div class='row'>
