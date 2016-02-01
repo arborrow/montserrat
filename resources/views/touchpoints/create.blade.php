@@ -26,6 +26,7 @@
                 {!! Form::select('type', [
                 'Call' => 'Call',
                 'Email' => 'Email',
+                'Face' => 'Face to Face',
                 'Letter' => 'Letter',
                 'Other' => 'Other',
                 ], NULL, ['class' => 'col-md-3']) !!}

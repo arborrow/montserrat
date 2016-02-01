@@ -26,7 +26,14 @@
                     
                     <div class='row'>
                         {!! Form::label('type', 'Type of Contact:', ['class' => 'col-md-3'])  !!}
-                        {!! Form::text('type', $touchpoint->type, ['class' => 'col-md-3']) !!}
+                            {!! Form::select('type', [
+                                'Call' => 'Call',
+                                'Email' => 'Email',
+                                'Face' => 'Face to Face',
+                                'Letter' => 'Letter',
+                                'Other' => 'Other',
+                            ], $touchpoint->type ['class' => 'col-md-3']) !!}
+
                     </div>
                     <div class='row'>
                         {!! Form::label('notes', 'Notes:', ['class' => 'col-md-3'])  !!}
