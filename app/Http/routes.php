@@ -61,6 +61,7 @@ Route::resource('person','PersonsController');
     Route::get('volunteers',['as' => 'volunteers','uses' => 'PersonsController@volunteers']);
 
 Route::resource('touchpoint','TouchpointsController');
+Route::get('touchpoint/add/{id?}',['uses' => 'TouchpointsController@add']);
 
 // Authentication routes...
 Route::get('login/{provider?}', 'Auth\AuthController@login');

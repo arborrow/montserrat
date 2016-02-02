@@ -41,6 +41,16 @@ class TouchpointsController extends Controller
         return view('touchpoints.create',compact('staff','persons'));  
 
     }
+    public function add($id)
+    {
+        //
+        
+        $staff = \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('is_staff','=','1')->orderBy('fullname')->lists('fullname','id');
+        $persons = \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->orderBy('fullname')->where('id','=',$id)->lists('fullname','id');
+
+        return view('touchpoints.create',compact('staff','persons'));  
+
+    }
 
     /**
      * Store a newly created resource in storage.
