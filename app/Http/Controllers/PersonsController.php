@@ -113,6 +113,9 @@ class PersonsController extends Controller
         $person->is_bishop = $request->input('is_bishop');
         $person->is_catholic = $request->input('is_catholic');
         $person->is_board = $request->input('is_board');
+        $person->is_formerboard = $request->input('is_formerboard');
+        $person->is_jesuit = $request->input('is_jesuit');
+        $person->is_deceased = $request->input('is_deceased');
         
         $person->save();
         return Redirect::action('PersonsController@index');//
@@ -220,6 +223,10 @@ class PersonsController extends Controller
         $person->is_bishop = $request->input('is_bishop');
         $person->is_catholic = $request->input('is_catholic');
         $person->is_board = $request->input('is_board');
+        $person->is_formerboard = $request->input('is_formerboard');
+        $person->is_jesuit = $request->input('is_jesuit');
+        $person->is_deceased = $request->input('is_deceased');
+        
         
         $person->save();
         return Redirect::action('PersonsController@index');//
@@ -243,107 +250,124 @@ class PersonsController extends Controller
     public function assistants()
     {
         //
-        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where('is_assistant','1')->get();
-        //dd($persons);
-        return view('persons.assistants',compact('persons'));   //
-    
+        $role['name'] = 'Assistants';
+        $role['field'] = 'is_assistant';
+        return $this->role($role);
     }
     public function bishops()
     {
         //
-        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where('is_bishop','1')->get();
-        //dd($persons);
-        return view('persons.bishops',compact('persons'));   //
+        $role['name'] = 'Bishops';
+        $role['field'] = 'is_bishop';
+        return $this->role($role);
     
     }
 
     public function boardmembers()
     {
         //
-        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where('is_board','1')->get();
-        //dd($persons);
-        return view('persons.boardmembers',compact('persons'));   //
-    
+        $role['name'] = 'Board members';
+        $role['field'] = 'is_board';
+        return $this->role($role);
+        
     }
     public function captains()
     {
         //
-        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where('is_captain','1')->get();
-        //dd($persons);
-        return view('persons.captains',compact('persons'));   //
+        $role['name'] = 'Captains';
+        $role['field'] = 'is_captain';
+        return $this->role($role);
     
     }
     public function catholics()
     {
+        $role['name'] = 'Catholics';
+        $role['field'] = 'is_catholic';
+        return $this->role($role);
+    }
+    public function deceased()
+    {
         //
-        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where('is_catholic','1')->get();
-        //dd($persons);
-        return view('persons.catholics',compact('persons'));   //
+        $role['name'] = 'Deceased';
+        $role['field'] = 'is_deceased';
+        return $this->role($role);
     
     }
+
     public function directors()
     {
         //
-        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where('is_director','1')->get();
-        //dd($persons);
-        return view('persons.directors',compact('persons'));   //
-    
+        $role['name'] = 'Retreat Directors';
+        $role['field'] = 'is_director';
+        return $this->role($role);
+        
     }
     public function donors()
     {
         //
-        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where('is_donor','1')->get();
-        //dd($persons);
-        return view('persons.donors',compact('persons'));   //
+        $role['name'] = 'Donors';
+        $role['field'] = 'is_donor';
+        return $this->role($role);
     
     }
     public function employees()
     {
-        //
-        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where('is_staff','1')->get();
-        //dd($persons);
-        return view('persons.employees',compact('persons'));   //
-    
+        $role['name'] = 'Employees';
+        $role['field'] = 'is_staff';
+        return $this->role($role);
     }
-    public function innkeepers()
+    public function formerboard()
     {
         //
-        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where('is_innkeeper','1')->get();
-        //dd($persons);
-        return view('persons.innkeepers',compact('persons'));   //
+        $role['name'] = 'Former Board Members';
+        $role['field'] = 'is_formerboard';
+        return $this->role($role);
     
     }
-    public function pastors()
+   public function innkeepers()
     {
         //
-        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where('is_pastor','1')->get();
-        //dd($persons);
-        return view('persons.pastors',compact('persons'));   //
+        $role['name'] = 'Retreat Innkeepers';
+        $role['field'] = 'is_innkeeper';
+        return $this->role($role);
     
+    }
+    public function jesuits()
+    {
+        //
+        $role['name'] = 'Jesuits';
+        $role['field'] = 'is_jesuit';
+        return $this->role($role);
+    
+    }
+  public function pastors()
+    {
+        //
+        $role['name'] = 'Pastors';
+        $role['field'] = 'is_pastor';
+        return $this->role($role);
+
     }
     public function retreatants()
     {
         //
-        $persons = \montserrat\Person::with('parish')->orderBy('lastname', 'asc', 'firstname','asc')->where('is_retreatant','1')->get();
-        //dd($persons);
-        return view('persons.retreatants',compact('persons'));   //
-     
+        $role['name'] = 'Retreatants';
+        $role['field'] = 'is_retreatant';
+        return $this->role($role);
     }
     
     public function volunteers()
     {
         //
-        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where('is_volunteer','1')->get();
-        //dd($persons);
-        return view('persons.volunteers',compact('persons'));   //
-    
+        $role['name'] = 'Volunteers';
+        $role['field'] = 'is_volunteer';
+        return $this->role($role);
     }
     
     public function role($role)
     {
         //
-        $rolefield = 'is_'.$role;
-        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where($rolefield,'1')->get();
+        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where($role['field'],'1')->get();
         //dd($persons);
         return view('persons.role',compact('persons','role'));   //
     

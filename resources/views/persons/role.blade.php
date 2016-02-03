@@ -6,15 +6,15 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                    <span class="grey">{{$role}} Index</span> 
+                    <span class="grey">{{$role['name']}} Index</span> 
                     <span class="create"><a href={{ action('PersonsController@create') }}>{!! Html::image('img/create.png', 'Add Person',array('title'=>"Add Person",'class' => 'btn btn-primary')) !!}</a></span></h1>
                     <span class="person"><a href={{ action('PersonsController@index') }}>{!! Html::image('img/person.png', 'Show Persons',array('title'=>"Show Persons",'class' => 'btn btn-primary')) !!}</a></span></h1>
                 
                 </div>
                 @if ($persons->isEmpty())
-                    <p>Currently, there are no {{$role}}</p>
+                    <p>Currently, there are no {{$role['name']}}</p>
                 @else
-                <table class="table"><caption><h2>{{$role}}</h2></caption>
+                <table class="table"><caption><h2>{{$role['name']}}</h2></caption>
                     <thead>
                         <tr>
                             <th>Lastname</th>
