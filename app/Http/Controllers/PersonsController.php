@@ -339,4 +339,15 @@ class PersonsController extends Controller
     
     }
     
+    public function role($role)
+    {
+        //
+        $rolefield = 'is_'.$role;
+        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where($rolefield,'1')->get();
+        //dd($persons);
+        return view('persons.role',compact('persons','role'));   //
+    
+    }
+    
+    
 }

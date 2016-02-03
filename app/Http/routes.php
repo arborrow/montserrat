@@ -47,6 +47,7 @@ Route::resource('parish','ParishesController');
 Route::resource('diocese','DiocesesController');
 
 Route::resource('person','PersonsController');
+    Route::get('person/role/{role}',['uses' => 'PersonsController@role']);
     Route::get('assistants',['as' => 'assistants','uses' => 'PersonsController@assistants']);
     Route::get('bishops',['as' => 'bishops','uses' => 'PersonsController@bishops']);
     Route::get('boardmembers',['as' => 'boardmembers','uses' => 'PersonsController@boardmembers']);
