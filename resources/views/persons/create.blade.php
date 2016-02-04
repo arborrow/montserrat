@@ -182,6 +182,8 @@
                         {!! Form::checkbox('is_retreatant', 1, true,['class' => 'col-md-1']) !!}
                         {!! Form::label('is_catholic', 'Catholic:', ['class' => 'col-md-2'])  !!}
                         {!! Form::checkbox('is_catholic', 1, true,['class' => 'col-md-1']) !!}
+                        {!! Form::label('is_deceased', 'Deceased:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::checkbox('is_deceased', 1, false,['class' => 'col-md-1']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('is_director', 'Retreat Director:', ['class' => 'col-md-2'])  !!}
@@ -202,8 +204,12 @@
                         {!! Form::checkbox('is_staff', 1, false,['class' => 'col-md-1']) !!}
                         {!! Form::label('is_board', 'Board Member:', ['class' => 'col-md-2'])  !!}
                         {!! Form::checkbox('is_board', 1, false,['class' => 'col-md-1']) !!}
+                        {!! Form::label('is_formerboard', 'Former Board:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::checkbox('is_formerboard', 1, false,['class' => 'col-md-1']) !!}
                     </div>
                     <div class="form-group">
+                        {!! Form::label('is_jesuit', 'Jesuit:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::checkbox('is_jesuit', 1, false,['class' => 'col-md-1']) !!}
                         {!! Form::label('is_pastor', 'Pastor of Parish:', ['class' => 'col-md-2'])  !!}
                         {!! Form::checkbox('is_pastor', 1, false,['class' => 'col-md-1']) !!}
                         {!! Form::label('is_bishop', 'Bishop:', ['class' => 'col-md-2'])  !!}

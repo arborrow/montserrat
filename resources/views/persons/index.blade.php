@@ -15,6 +15,7 @@
                     <span class="donors"><a href={{ action('PersonsController@donors') }}>{!! Html::image('img/donor.png', 'Donors',array('title'=>"Donors",'class' => 'btn btn-primary')) !!}</a></span></h1>
                     <span class="employees"><a href={{ action('PersonsController@employees') }}>{!! Html::image('img/employee.png', 'Employees',array('title'=>"Employees",'class' => 'btn btn-primary')) !!}</a></span></h1>
                     <span class="innkeepers"><a href={{ action('PersonsController@innkeepers') }}>{!! Html::image('img/innkeeper.png', 'Innkeepers',array('title'=>"Innkeepers",'class' => 'btn btn-primary')) !!}</a></span></h1>
+                    <span class="jesuits"><a href={{ action('PersonsController@jesuits') }}>{!! Html::image('img/jesuit.png', 'Jesuits',array('title'=>"Jesuits",'class' => 'btn btn-primary')) !!}</a></span></h1>
                     <span class="pastors"><a href={{ action('PersonsController@pastors') }}>{!! Html::image('img/pastor.png', 'Pastors',array('title'=>"Pastors",'class' => 'btn btn-primary')) !!}</a></span></h1>
                     <span class="retreatants"><a href={{ action('PersonsController@retreatants') }}>{!! Html::image('img/retreatant.png', 'Retreatants',array('title'=>"Retreatants",'class' => 'btn btn-primary')) !!}</a></span></h1>
                     <span class="volunteers"><a href={{ action('PersonsController@volunteers') }}>{!! Html::image('img/volunteer.png', 'Volunteers',array('title'=>"Volunteers",'class' => 'btn btn-primary')) !!}</a></span></h1>
@@ -26,20 +27,18 @@
                 <table class="table"><caption><h2>Persons</h2></caption>
                     <thead>
                         <tr>
-                            <th>Lastname</th>
-                            <th>Firstname</th>
-                            <th>Address/City</th>
+                            <th>Name</th>
+                            <th>Address (City)</th>
                             <th>Home phone</th>
                             <th>Cell phone</th>
                             <th>Email</th>
-                            <th>Parish</th>
+                            <th>Parish (Diocese)</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($persons as $person)
                         <tr>
-                            <td><a href="person/{{ $person->id}}">{{ $person->lastname }}</a></td>
-                            <td>{{ $person->firstname }}</td>
+                            <td><a href="person/{{ $person->id}}">{{ $person->lastname }}, {{ $person->firstname }}</a></td>
                             <td>
                                 <a href="http://maps.google.com/?q={{$person->address1}} {{ $person->address2}} {{ $person->city}} {{ $person->state}} {{ $person->zip}}" target="_blank">
                                 {{ $person->address1 }} ({{ $person->city }})

@@ -17,25 +17,33 @@
                 <table class="table"><caption><h2>{{$role['name']}}</h2></caption>
                     <thead>
                         <tr>
-                            <th>Lastname</th>
-                            <th>Firstname</th>
-                            <th>City</th>
+                            <th>Name</th>
+                            <th>Address (City)</th>
                             <th>Home phone</th>
                             <th>Cell phone</th>
                             <th>Email</th>
-                            <th>Parish</th>
+                            <th>Parish (Diocese)</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($persons as $person)
                         <tr>
-                            <td><a href="person/{{ $person->id}}">{{ $person->lastname }}</a></td>
-                            <td>{{ $person->firstname }}</td>
-                            <td>{{ $person->city }}</td>
+                            <td><a href="person/{{ $person->id}}">{{ $person->lastname }}, {{ $person->firstname }}</a></td>
+                            <td>
+                                <a href="http://maps.google.com/?q={{$person->address1}} {{ $person->address2}} {{ $person->city}} {{ $person->state}} {{ $person->zip}}" target="_blank">
+                                {{ $person->address1 }} ({{ $person->city }})
+                                </a>
+                            </td>
                             <td>{{ $person->homephone }}</td>
                             <td>{{ $person->mobilephone }}</td>
-                            <td>{{ $person->email }}</td>
-                            <td>{{ $person->parish_id}}</td>
+                            <td><a href="mailto:{{$person->email}}">{{ $person->email }}</a></td>
+                            <td>
+                                @if (!isset($person->parish))
+                                    N/A
+                                @else
+                                <a href="parish/{{$person->parish->id}}">{{ $person->parish->name }}</a>
+                                @endif
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

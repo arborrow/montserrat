@@ -16,9 +16,12 @@
                 @if ($person->is_board) <span class="back"><a href={{ action('PersonsController@boardmembers') }}>{!! Html::image('img/board.png', 'Board Members Index',array('title'=>"Board Members Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
                 @if ($person->is_captain) <span class="back"><a href={{ action('PersonsController@captains') }}>{!! Html::image('img/captain.png', 'Captains Index',array('title'=>"Captains Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
                 @if ($person->is_catholic) <span class="back"><a href={{ action('PersonsController@catholics') }}>{!! Html::image('img/catholic.png', 'Catholics Index',array('title'=>"Catholics Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+                @if ($person->is_deceased) <span class="back"><a href={{ action('PersonsController@deceased') }}>{!! Html::image('img/deceased.png', 'Deceased Index',array('title'=>"Deceased Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
                 @if ($person->is_director) <span class="back"><a href={{ action('PersonsController@directors') }}>{!! Html::image('img/director.png', 'Directors Index',array('title'=>"Directors Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
                 @if ($person->is_donor) <span class="back"><a href={{ action('PersonsController@donors') }}>{!! Html::image('img/donor.png', 'Donor Index',array('title'=>"Donor Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+                @if ($person->is_formerboard) <span class="back"><a href={{ action('PersonsController@formerboard') }}>{!! Html::image('img/formerboard.png', 'Former Board Index',array('title'=>"Former Board Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
                 @if ($person->is_innkeeper) <span class="back"><a href={{ action('PersonsController@innkeepers') }}>{!! Html::image('img/innkeeper.png', 'Innkeepers Index',array('title'=>"Innkeepers Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+                @if ($person->is_jesuit) <span class="back"><a href={{ action('PersonsController@jesuits') }}>{!! Html::image('img/jesuit.png', 'Jesuits Index',array('title'=>"Jesuits Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
                 @if ($person->is_pastor) <span class="back"><a href={{ action('PersonsController@pastors') }}>{!! Html::image('img/pastor.png', 'Pastors Index',array('title'=>"Pastors Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
                 @if ($person->is_retreatant) <span class="back"><a href={{ action('PersonsController@retreatants') }}>{!! Html::image('img/retreatant.png', 'Retreatants Index',array('title'=>"Retreatants Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
                 @if ($person->is_staff) <span class="back"><a href={{ action('PersonsController@employees') }}>{!! Html::image('img/employee.png', 'Employees Index',array('title'=>"Employees Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
@@ -100,6 +103,9 @@
                             {!! Form::checkbox('is_retreatant', 1, $person->is_retreatant,['class' => 'col-md-1']) !!}
                             {!! Form::label('is_catholic', 'Catholic:', ['class' => 'col-md-2'])  !!}
                             {!! Form::checkbox('is_catholic', 1, $person->is_catholic,['class' => 'col-md-1']) !!}
+                            {!! Form::label('is_deceased', 'Deceased:', ['class' => 'col-md-2'])  !!}
+                            {!! Form::checkbox('is_deceased', 1, $person->is_deceased,['class' => 'col-md-1']) !!}
+
                         </div>
                         <div class="form-group">
                             {!! Form::label('is_director', 'Retreat Director:', ['class' => 'col-md-2'])  !!}
@@ -120,8 +126,12 @@
                             {!! Form::checkbox('is_staff', 1, $person->is_staff,['class' => 'col-md-1']) !!}
                             {!! Form::label('is_board', 'Board Member:', ['class' => 'col-md-2'])  !!}
                             {!! Form::checkbox('is_board', 1, $person->is_board,['class' => 'col-md-1']) !!}
+                            {!! Form::label('is_formerboard', 'Former Board:', ['class' => 'col-md-2'])  !!}
+                            {!! Form::checkbox('is_formerboard', 1, $person->is_formerboard,['class' => 'col-md-1']) !!}
                         </div>
                         <div class="form-group">
+                            {!! Form::label('is_jesuit', 'Jesuit:', ['class' => 'col-md-2'])  !!}
+                            {!! Form::checkbox('is_jesuit', 1, $person->is_jesuit,['class' => 'col-md-1']) !!}
                             {!! Form::label('is_pastor', 'Pastor of Parish:', ['class' => 'col-md-2'])  !!}
                             {!! Form::checkbox('is_pastor', 1, $person->is_pastor,['class' => 'col-md-1']) !!}
                             {!! Form::label('is_bishop', 'Bishop:', ['class' => 'col-md-2'])  !!}

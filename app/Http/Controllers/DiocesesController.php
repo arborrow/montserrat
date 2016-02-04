@@ -88,7 +88,7 @@ return Redirect::action('DiocesesController@index');
     public function show($id)
     {
         //
-        $diocese = \montserrat\Diocese::with('bishop')->find($id);
+        $diocese = \montserrat\Diocese::with('bishop')->findOrFail($id);
         // $diocese =  \montserrat\Diocese::find($id)->bishop;
         //$diocese->bishop = 'Bishop name lookup not yet implemented';
         
