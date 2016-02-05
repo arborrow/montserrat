@@ -35,7 +35,7 @@
          @endif
         </div>
         <div class="clearfix"> </div>
-        <nav class="navbar navbar-default" role="navigation">
+        <nav class="navbar navbar-default">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
