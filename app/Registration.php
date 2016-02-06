@@ -33,6 +33,27 @@ class Registration extends Model
             $this->attributes['confirmregister'] = null;
         }
     }
+    public function setCanceledAtAttribute($date) {
+        if (strlen($date)) {
+            $this->attributes['canceled_at'] = Carbon::parse($date);
+        } else {
+            $this->attributes['canceled_at'] = null;
+        }
+    }
+    public function setArrivedAtAttribute($date) {
+        if (strlen($date)) {
+            $this->attributes['arrived_at'] = Carbon::parse($date);
+        } else {
+            $this->attributes['arrived_at'] = null;
+        }
+    }
+    public function setDepartedAtAttribute($date) {
+        if (strlen($date)) {
+            $this->attributes['departed_at'] = Carbon::parse($date);
+        } else {
+            $this->attributes['departed_at'] = null;
+        }
+    }
     
     public function retreat()
     {

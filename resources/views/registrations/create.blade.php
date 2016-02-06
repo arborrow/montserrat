@@ -40,9 +40,26 @@
                 {!! Form::text('confirmattend', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
-                {!! Form::label('confirmedby', 'Confirmed by:', ['class' => 'col-md-2']) !!}
-                {!! Form::text('confirmedby', null, ['class'=>'col-md-2']) !!}
+                {!! Form::label('confirmattend', 'Attendance Confirmed:', ['class' => 'col-md-2']) !!}
+                {!! Form::text('confirmattend', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
             </div><div class="clearfix"> </div>
+            <div class="form-group">
+                {!! Form::label('canceled_at', 'Canceled at:', ['class' => 'col-md-2']) !!}
+                {!! Form::text('canceled_at', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+            </div><div class="clearfix"> </div>
+            <div class="form-group">
+                {!! Form::label('arrived_at', 'Arrived at:', ['class' => 'col-md-2']) !!}
+                {!! Form::text('arrived_at', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+            </div><div class="clearfix"> </div>
+            <div class="form-group">
+                {!! Form::label('departed_at', 'Departed at:', ['class' => 'col-md-2']) !!}
+                {!! Form::text('departed_at', null, ['class'=>'col-md-2']) !!}
+            </div><div class="clearfix"> </div>
+            <div class="form-group">
+                {!! Form::label('room_id', 'Room:', ['class' => 'col-md-2'])  !!}
+                {!! Form::select('room_id', $rooms, 0, ['class' => 'col-md-2']) !!} 
+            </div>
+                    
             <div class="form-group">
                 {!! Form::label('deposit', 'Deposit:', ['class' => 'col-md-2']) !!}
                 {!! Form::text('deposit', '50.00', ['class'=>'col-md-2']) !!}

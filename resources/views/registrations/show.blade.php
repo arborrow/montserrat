@@ -21,7 +21,7 @@
                 <div class='row'>
                     <div class='col-md-3'><strong>Registration Confirmed: </strong>
                         @if ($registration->confirmregister == NULL)
-                            Unconfirmed
+                            N/A
                         @else
                             {{date('F d, Y', strtotime($registration->confirmregister))}}
                         @endif
@@ -30,16 +30,46 @@
                 <div class='row'>
                     <div class='col-md-3'><strong>Attendance Confirmed: </strong>
                     @if ($registration->confirmattend == NULL)
-                        Unconfirmed
+                        N/A
                     @else
                         {{date('F d, Y', strtotime($registration->confirmattend))}}
                     @endif
-                        
-                        
                     </div>
                     <div class='col-md-3'><strong>Confirmed by: </strong>{{ $registration->confirmedby}}</div>
                 </div><div class="clearfix"> </div>
-               
+
+                <div class='row'>
+                    <div class='col-md-3'><strong>Canceled at: </strong>
+                    @if ($registration->canceled_at == NULL)
+                        N/A
+                    @else
+                        {{date('F d, Y', strtotime($registration->canceled_at))}}
+                    @endif
+                    </div>
+                </div><div class="clearfix"> </div>
+
+                <div class='row'>
+                    <div class='col-md-3'><strong>Arrived at: </strong>
+                    @if (empty($registration->arrived_at))
+                        N/A
+                    @else
+                        {{date('F d, Y', strtotime($registration->arrived_at))}}
+                    @endif
+                    </div>
+                </div><div class="clearfix"> </div>
+                <div class='row'>
+                    <div class='col-md-3'><strong>Departed at: </strong>
+                    @if ($registration->departed_at == NULL)
+                        N/A
+                    @else
+                        {{date('F d, Y', strtotime($registration->departed_at))}}
+                    @endif
+                    </div>
+                </div><div class="clearfix"> </div>
+                <div class='row'>
+                    <div class='col-md-2'><strong>Room ID: </strong>{{ $registration->room_id}}</div>
+                </div><div class="clearfix"> </div>
+
                 <div class='row'>
                     <div class='col-md-6'><strong>Notes: </strong>{{ $registration->notes}}</div>
                 </div><div class="clearfix"> </div>

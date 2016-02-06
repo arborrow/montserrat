@@ -113,6 +113,9 @@
     $( "#register" ).datepicker();
     $( "#confirmregister" ).datepicker();
     $( "#confirmattend" ).datepicker();
+    $( "#arrived_at" ).datepicker();
+    $( "#departed_at" ).datepicker();
+    $( "#canceled_at" ).datepicker();
     $( "#dob" ).datepicker();
     $( "#touched_at" ).datepicker();
     $( "#auto").autocomplete({

@@ -60,8 +60,9 @@ class RegistrationsController extends Controller
         //$retreats = \montserrat\Retreat::where('end','>',\Carbon\Carbon::today())->lists('idnumber','title','id');
         $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start,"%m-%d-%Y"),")") as description'), 'id')->where("end",">",\Carbon\Carbon::today())->orderBy('start')->lists('description','id');
         $retreatants = \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('is_retreatant','=','1')->orderBy('fullname')->lists('fullname','id');
-
-        return view('registrations.create',compact('retreats','retreatants')); 
+        $rooms= \montserrat\Room::orderby('name')->lists('name','id');
+        
+        return view('registrations.create',compact('retreats','retreatants','rooms')); 
         //dd($retreatants);
     }
 
@@ -78,8 +79,12 @@ class RegistrationsController extends Controller
         'register' => 'required|date',
         'confirmattend' => 'date',
         'confirmregister' => 'date',
+        'canceled_at' => 'date',
+        'arrived_at' => 'date',
+        'departed_at' => 'date',
         'retreat_id' => 'required|integer|min:0',
         'retreatant_id' => 'required|integer|min:0',
+        'room_id' => 'required|integer|min:0',
         'deposit' => 'required|numeric|min:0|max:1000',
         ]);
 
@@ -93,6 +98,10 @@ class RegistrationsController extends Controller
     $registration->register = $request->input('register');
     //dd($request->confirmattend);
     $registration->confirmattend = $request->input('confirmattend');
+    if (!empty($request->input('canceled_at'))) {$registration->canceled_at= $request->input('canceled_at'); }
+    if (!empty($request->input('arrived_at'))) {$registration->arrived_at = $request->input('arrived_at'); }
+    if (!empty($request->input('departed_at'))) {$registration->departed_at = $request->input('departed_at'); }
+    $registration->room_id= $request->input('room_id');
     
     $registration->confirmregister = $request->input('confirmregister');
     $registration->confirmedby = $request->input('confirmedby');
@@ -137,9 +146,10 @@ class RegistrationsController extends Controller
 //        $retreatant = \montserrat\Retreatant::findOrFail($registration->retreatant_id);
         $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start,"%m-%d-%Y"),")") as description'), 'id')->where("end",">",\Carbon\Carbon::today())->orderBy('start')->lists('description','id');
         $retreatants = \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('is_retreatant','=','1')->orderBy('fullname')->lists('fullname','id');
+        $rooms= \montserrat\Room::orderby('name')->lists('name','id');
 
         
-        return view('registrations.edit',compact('registration','retreats','retreatants'));
+        return view('registrations.edit',compact('registration','retreats','retreatants','rooms'));
     }
 
     /**
@@ -157,8 +167,12 @@ class RegistrationsController extends Controller
         'register' => 'required|date',
         'confirmattend' => 'date',
         'confirmregister' => 'date',
+        'canceled_at' => 'date',
+        'arrived_at' => 'date',
+        'departed_at' => 'date',
         'retreat_id' => 'required|integer|min:0',
         'retreatant_id' => 'required|integer|min:0',
+        'room_id' => 'required|integer|min:0',
         'deposit' => 'required|numeric|min:0|max:1000',
         ]);
 
@@ -176,6 +190,11 @@ class RegistrationsController extends Controller
     $registration->confirmedby = $request->input('confirmedby');
     $registration->deposit = $request->input('deposit');
     $registration->notes = $request->input('notes');
+    $registration->canceled_at = $request->input('canceled_at');
+    $registration->arrived_at= $request->input('arrived_at');
+    $registration->departed_at= $request->input('departed_at');
+    
+    $registration->room_id= $request->input('room_id');
     $registration->save();
     
     return Redirect::action('RegistrationsController@index');

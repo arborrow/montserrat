@@ -22,7 +22,7 @@ class CreateRegistrationsTable extends Migration
             $table->timestamp('register');
             $table->timestamp('confirmregister');
             $table->timestamp('confirmattend');
-            $table->string('confirmedby');
+            $table->string('confirmedby')->nullable();
             $table->text('notes');
             $table->decimal('deposit',7,2);
             $table->softDeletes();
