@@ -11,7 +11,7 @@
                     <span class="grey">Room Schedules for {{$dts[0]->format('F d, Y')}} - {{$dts[31]->format('F d, Y')}} </span> 
                     </div>
                 
-                @if (empty($dts))
+                @if (empty($m))
                     <p> Yikes, there is nothing to schedule!</p>
                 @else
                 <table border="1" class="table">
@@ -41,8 +41,21 @@
                             <tr>
                                 <td>{{$room->location->name}}</td> 
                                 <td>{{$room->name}}</td>
-                                 @foreach($dts as $dt)
-                                 @if ($dt->day == 21) 
+                                
+                                @foreach($dts as $dt)
+                                    @if ($m[$room->id][$dt->toDateString()]['status'] == 'R')
+                                    <td class='warning'>
+                                    {!! Html::link('registration/'.$m[$room->id][$dt->toDateString()]['registration_id'], $m[$room->id][$dt->toDateString()]['status'] , array('title'=>$m[$room->id][$dt->toDateString()]['retreatant_name'])) !!} 
+                                    @else
+                                    <td class='success'>
+                                        A
+                                    @endif
+                                    </td>
+                                @endforeach
+                                
+                                
+                                <!--
+                                @if ($dt->day == 21) 
                                     <td class="warning">R</td>
                                  @elseif ($dt->day == 22 or $room->name == "104") 
                                     <td class="danger">M</td>
@@ -52,11 +65,11 @@
                                     <td class="danger">C</td>
                                  @else 
                                     <td class="success">A</td>
-                                 @endif
+                                 @endif -->
                             @endforeach
                             </tr>
 
-                            @endforeach
+                            
                         @endif
                     </tbody>
                 </table>

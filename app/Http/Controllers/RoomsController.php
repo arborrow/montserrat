@@ -3,10 +3,10 @@
 namespace montserrat\Http\Controllers;
 
 use Illuminate\Http\Request;
-use montserrat\Http\Requests;
+//use montserrat\Http\Requests;
 use montserrat\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
-use Input;
+//use Input;
 use Carbon\Carbon;
 
 class RoomsController extends Controller
@@ -30,10 +30,10 @@ class RoomsController extends Controller
             $room->building = \montserrat\Location::find($room->building_id)->name;
            
          }
-         $rooms = $rooms->sortBy(function($building) {
+         $roomsort = $rooms->sortBy(function($building) {
          return sprintf('%-12s%s',$building->building,$building->name);});
           //dd($rooms);      
-        return view('rooms.index',compact('rooms'));   //
+        return view('rooms.index',compact('roomsort'));   //
     
     
     }
@@ -168,8 +168,9 @@ return Redirect::action('RoomsController@index');
             $dt = Carbon::now();
             //dd($dt);
         } else{
-            if (!$dt = Carbon::parse($ym))
+            if (!$dt = Carbon::parse($ym)) {
                     return view('404');
+            }
         }
         $upcoming = clone $dt;
         $dts[0] = $dt;
@@ -182,11 +183,57 @@ return Redirect::action('RoomsController@index');
         //foreach ($rooms as $room) {
         //    $room->building = \montserrat\Location::find($room->building_id)->name;
         //}
-        $rooms= $rooms->sortBy(function($room) {
-    return sprintf('%-12s%s', $room->building_id, $room->name);
-});
+        $roomsort = $rooms->sortBy(function($room) {
+            return sprintf('%-12s%s', $room->building_id, $room->name);
+        });
         
-        //dd($rooms);
-        return view('rooms.schedule',compact('dts','rooms'));
+        $registrations = \montserrat\Registration::where('start','>=',$dts[0])->where('start','<=',$dts[30])->with('room','room.location','retreatant')->where('room_id','>',0)->get();
+        //dd($registrations);
+        
+        // create matrix of rooms and dates
+        foreach ($rooms as $room) {
+            foreach ($dts as $dt) {
+                //dd($dt);
+                $m[$room->id][$dt->toDateString()]['status'] = 'A';
+                $m[$room->id][$dt->toDateString()]['registration_id'] = NULL;
+                $m[$room->id][$dt->toDateString()]['retreatant_id'] = NULL;
+                $m[$room->id][$dt->toDateString()]['retreatant_name'] = NULL;
+                
+                $m[$room->id]['room'] = $room->name;
+                $m[$room->id]['building'] = $room->location->name;
+                $m[$room->id]['occupancy'] = $room->occupancy;
+                
+            
+            }
+        }
+        // dd($m[1]);
+        /* 
+         * for each registration, get the number of days 
+         * for each day, check if the status is set (in other words it is in the room schedule matrix)
+         * if it is in the matrix update the status to reserved
+         */
+        
+        foreach ($registrations as $registration) {
+            
+            $numdays = ($registration->end->diffInDays($registration->start))-1;
+            
+            for ($i=0; $i<=$numdays;$i++) {
+                $matrixdate = $registration->start->copy()->addDays($i);
+                if (array_key_exists($matrixdate->toDateString(),$m[$registration->room_id])) {
+                        $m[$registration->room_id][$matrixdate->toDateString()]['status']='R';
+                        $m[$registration->room_id][$matrixdate->toDateString()]['registration_id']=$registration->id;
+                        $m[$registration->room_id][$matrixdate->toDateString()]['retreatant_id']=$registration->retreatant_id;
+                        $m[$registration->room_id][$matrixdate->toDateString()]['retreatant_name']=$registration->retreatant->lastname;
+                        /* For now just handle marking the room as reserved with a URL to the registration and name in the title when hovering over it
+                         * I am thinking about using diffInDays to see if the retreatant arrived on the day that we are looking at or sooner
+                         * If they have not yet arrived then the first day should be reserved but not occupied. 
+                         * Occupied will be the same link to the registration. 
+                         */                  
+                     }
+        
+            }
+        }
+        
+        return view('rooms.sched2',compact('dts','roomsort','m'));
     }
 }

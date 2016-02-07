@@ -63,4 +63,8 @@ class Registration extends Model
     {
         return $this->belongsTo('montserrat\Person','retreatant_id','id');
     }
+    public function room()
+    {
+        return $this->hasOne('montserrat\Room','id','room_id');
+    }
 }
