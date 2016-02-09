@@ -11,7 +11,7 @@
                     <span class="grey">Room Index</span> 
                     <span class="create"><a href={{ action('RoomsController@create') }}>{!! Html::image('img/create.png', 'Create a Room',array('title'=>"Create Room",'class' => 'btn btn-primary')) !!}</a></span></h1>
                 </div>
-                @if ($rooms->isEmpty())
+                @if ($roomsort->isEmpty())
                     <p> Yikes, there are no rooms at this retreat house!</p>
                 @else
                 <table class="table"><caption><h2>Rooms</h2></caption>
@@ -23,7 +23,7 @@
                        </tr>
                     </thead>
                     <tbody>
-                        @foreach($rooms as $room)
+                        @foreach($roomsort as $room)
                         <tr>
                             <td><a href="room/{{$room->id}}">{{ $room->name }}</a></td>
                             <td>{{ $room->building}}</td>

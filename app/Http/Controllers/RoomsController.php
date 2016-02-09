@@ -187,7 +187,7 @@ return Redirect::action('RoomsController@index');
             return sprintf('%-12s%s', $room->building_id, $room->name);
         });
         
-        $registrations = \montserrat\Registration::where('start','>=',$dts[0])->where('start','<=',$dts[30])->with('room','room.location','retreatant')->where('room_id','>',0)->get();
+        $registrations = \montserrat\Registration::where('start','>=',$dts[0])->where('start','<=',$dts[30])->with('room','room.location','retreatant','retreat')->where('room_id','>',0)->get();
         //dd($registrations);
         
         // create matrix of rooms and dates
@@ -215,15 +215,15 @@ return Redirect::action('RoomsController@index');
         
         foreach ($registrations as $registration) {
             
-            $numdays = ($registration->end->diffInDays($registration->start))-1;
+            $numdays = ($registration->retreat->end->diffInDays($registration->retreat->start))-1;
             
             for ($i=0; $i<=$numdays;$i++) {
-                $matrixdate = $registration->start->copy()->addDays($i);
+                $matrixdate = $registration->retreat->start->copy()->addDays($i);
                 if (array_key_exists($matrixdate->toDateString(),$m[$registration->room_id])) {
                         $m[$registration->room_id][$matrixdate->toDateString()]['status']='R';
                         $m[$registration->room_id][$matrixdate->toDateString()]['registration_id']=$registration->id;
                         $m[$registration->room_id][$matrixdate->toDateString()]['retreatant_id']=$registration->retreatant_id;
-                        $m[$registration->room_id][$matrixdate->toDateString()]['retreatant_name']=$registration->retreatant->lastname;
+                        $m[$registration->room_id][$matrixdate->toDateString()]['retreatant_name']= $registration->retreatant->lastname.', '.$registration->retreatant->firstname;
                         /* For now just handle marking the room as reserved with a URL to the registration and name in the title when hovering over it
                          * I am thinking about using diffInDays to see if the retreatant arrived on the day that we are looking at or sooner
                          * If they have not yet arrived then the first day should be reserved but not occupied. 
