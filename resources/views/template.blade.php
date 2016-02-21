@@ -33,6 +33,18 @@
          @else
         <a href="login/google">{!! Html::image('img/login.png', 'Login',array('title'=>"Login")) !!}</a>
          @endif
+         @role('admin')
+    <p>Logged in as Admin</p>
+@endrole
+
+@role('manager')
+    <p>Logged in as Manager</p>
+@endrole
+
+@role('employee')
+    <p>Logged in as Employee</p>
+@endrole
+
         </div>
         <div class="clearfix"> </div>
         <nav class="navbar navbar-default">

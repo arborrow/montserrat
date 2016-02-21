@@ -77,6 +77,7 @@
                     <tr>
                         <th>Date Registered</th>
                         <th>Name</th>
+                        <th>Room</th>
                         <th>Deposit</th>
                         <th>Mobile Phone</th>
                         <th>Parish</th>
@@ -88,6 +89,13 @@
                     <tr>
                         <td><a href="{{action('RegistrationsController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register)) }}</a></td>
                         <td><a href="{{action('PersonsController@show', $registration->retreatant->id)}}">{{ $registration->retreatant->lastname}}, {{ $registration->retreatant->firstname}}</a></td>
+                        <td>
+                            @if (empty($registration->room->name))
+                                N/A
+                            @else
+                            <a href="{{action('RoomsController@show', $registration->room->id)}}">{{ $registration->room->name}}</a>
+                            @endif
+                        </td>
                         <td>{{ $registration->deposit }}</td>
                         <td>
                             @if (empty($registration->retreatant->mobilephone))
@@ -100,7 +108,7 @@
                             @if (empty($registration->retreatant->parish->id))
                                 N/A
                             @else
-                                <a href="{{action('ParishesController@show', $registration->retreatant->parish->id)}}">{{ $registration->retreatant->parish->name}}
+                            <a href="{{action('ParishesController@show', $registration->retreatant->parish->id)}}">{{ $registration->retreatant->parish->name}}</a>
                             @endif
                         </td>
                         <td>{{ $registration->notes }}</td>

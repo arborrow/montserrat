@@ -188,7 +188,10 @@ return Redirect::action('RoomsController@index');
         });
         
         $registrations = \montserrat\Registration::where('start','>=',$dts[0])->where('start','<=',$dts[30])->with('room','room.location','retreatant','retreat')->where('room_id','>',0)->get();
-        //dd($registrations);
+        //$endregistrations = \montserrat\Registration::where('end','>=',$dts[0])->where('end','<=',$dts[30])->with('room','room.location','retreatant','retreat')->where('room_id','>',0)->get();
+        /* get registrations that are not inclusive of the date range */
+        // dd($endregistrations);
+        // $registrations->merge($endregistrations);
         
         // create matrix of rooms and dates
         foreach ($rooms as $room) {
@@ -206,7 +209,7 @@ return Redirect::action('RoomsController@index');
             
             }
         }
-        // dd($m[1]);
+        
         /* 
          * for each registration, get the number of days 
          * for each day, check if the status is set (in other words it is in the room schedule matrix)

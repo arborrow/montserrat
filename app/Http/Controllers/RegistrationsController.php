@@ -24,8 +24,8 @@ class RegistrationsController extends Controller
     public function index()
     {
         //
-        $registrations = \montserrat\Registration::whereDate('end', '>=', date('Y-m-d'))->orderBy('start','asc')->get();
-        foreach ($registrations as $registration) {
+        $registrations = \montserrat\Registration::whereDate('end', '>=', date('Y-m-d'))->orderBy('start','asc')->with('retreatant','retreat','room')->get();
+/*        foreach ($registrations as $registration) {
             //dd($registration->retreat_id);
             $retreat = \montserrat\Retreat::findOrFail($registration->retreat_id);
             //dd($retreat);
@@ -45,6 +45,9 @@ class RegistrationsController extends Controller
            
             
         }
+        
+ * 
+ */
         //dd($registrations);
         return view('registrations.index',compact('registrations'));
     }
@@ -58,7 +61,8 @@ class RegistrationsController extends Controller
     {
         //
         //$retreats = \montserrat\Retreat::where('end','>',\Carbon\Carbon::today())->lists('idnumber','title','id');
-        $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start,"%m-%d-%Y"),")") as description'), 'id')->where("end",">",\Carbon\Carbon::today())->orderBy('start')->lists('description','id');
+        $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start,"%m-%d-%Y"),")") as description'), 'id')->where("end",">",\Carbon\Carbon::today())->orderBy('start')->pluck('description','id');
+        $retreats->prepend('Unassigned',0);
         $retreatants = \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('is_retreatant','=','1')->orderBy('fullname')->lists('fullname','id');
         $rooms= \montserrat\Room::orderby('name')->lists('name','id');
         
@@ -126,10 +130,9 @@ class RegistrationsController extends Controller
     {
         //
         //dd(date('F d, Y', strtotime(NULL)));
-        $registration= \montserrat\Registration::find($id);
-        $retreat = \montserrat\Retreat::findOrFail($registration->retreat_id);
-        $retreatant = \montserrat\Person::findOrFail($registration->retreatant_id);
-       return view('registrations.show',compact('registration','retreat','retreatant'));//
+        $registration= \montserrat\Registration::with('retreat','retreatant','room')->find($id);
+        //dd($registration);
+       return view('registrations.show',compact('registration'));//
     }
 
     /**
@@ -141,14 +144,20 @@ class RegistrationsController extends Controller
     public function edit($id)
     {
         //
-        $registration= \montserrat\Registration::findOrFail($id);
+        $registration= \montserrat\Registration::with('retreatant','retreat','room')->findOrFail($id);
 //        $retreat = \montserrat\Retreat::findOrFail($registration->retreat_id);
 //        $retreatant = \montserrat\Retreatant::findOrFail($registration->retreatant_id);
-        $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start,"%m-%d-%Y"),")") as description'), 'id')->where("end",">",\Carbon\Carbon::today())->orderBy('start')->lists('description','id');
+        $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start,"%m-%d-%Y"),")") as description'), 'id')->where("end",">",\Carbon\Carbon::today())->orderBy('start')->pluck('description','id');
+        //dd($retreats);
         $retreatants = \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('is_retreatant','=','1')->orderBy('fullname')->lists('fullname','id');
         $rooms= \montserrat\Room::orderby('name')->lists('name','id');
-
+        /* Check to see if the current registration is for a past retreat and if so, add it to the collection */
+        // $retreats[0] = 'Unassigned';
         
+        if ($registration->retreat->end < \Carbon\Carbon::now()) {
+            
+            $retreats[$registration->retreat_id] = $registration->retreat->idnumber.'-'.$registration->retreat->title." (".date('m-d-Y', strtotime($registration->retreat->start)).")";
+        }
         return view('registrations.edit',compact('registration','retreats','retreatants','rooms'));
     }
 

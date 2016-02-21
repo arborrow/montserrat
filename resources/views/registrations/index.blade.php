@@ -22,6 +22,7 @@
                             <th>Retreat</th>
                             <th>Retreat Dates</th>
                             <th>Attendance Confirmed</th> 
+                            <th>Room</th>
                             <th>Deposit</th> 
                         </tr>
                     </thead>
@@ -29,10 +30,24 @@
                         @foreach($registrations as $registration)
                         <tr>
                             <td><a href="registration/{{$registration->id}}">{{ date('F d, Y', strtotime($registration->register)) }}</a></td>
-                            <td><a href="person/{{$registration->retreatant_id}}">{{ $registration->retreatant->lastname}}, {{ $registration->retreatant->firstname}}</a></td>
+                            <td>
+                                @if (isset($registration->retreatant->lastname))
+                                    <a href="person/{{$registration->retreatant_id}}">{{ $registration->retreatant->lastname}}, {{ $registration->retreatant->firstname}}</a>
+                                @else
+                                    N/A
+                                @endif  
+                            </td>
                             <td><a href="retreat/{{$registration->retreat_id}}">{{ $registration->retreat->title }} ({{$registration->retreat->idnumber}})</a></td>
                             <td>{{ date('F d, Y', strtotime($registration->start)) }} - {{ date('F d, Y', strtotime($registration->end)) }}</td>
                             <td>{{ date('F d, Y', strtotime($registration->confirmattend)) }}</td>
+                            <td>
+                                @if (isset($registration->room->name))
+                                    <a href="room/{{$registration->room_id}}">{{ $registration->room->name }}</a>
+                                @else
+                                    N/A
+                                @endif
+                                    
+                            </td>
                             <td>${{ $registration->deposit }}</td>
                         </tr>
                         @endforeach

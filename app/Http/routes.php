@@ -28,10 +28,20 @@ Route::get('restricted',['as' => 'restricted','uses' => 'PagesController@restric
 Route::get('admin',['as' => 'admin','uses' => 'PagesController@admin']);
 Route::get('support',['as' => 'support','uses' => 'PagesController@support']);
 Route::get('about',['as' => 'about','uses' => 'PagesController@about']);
-Route::get('report/retreatantinfo/{retreat_id}',['uses' => 'PagesController@retreatantinforeport']);
-Route::get('report/retreatlisting/{retreat_id}',['uses' => 'PagesController@retreatlistingreport']);
-Route::get('report/retreatroster/{retreat_id}',['uses' => 'PagesController@retreatrosterreport']);
-Route::get('phpinfo',['as' => 'phpinfo','uses' => 'SystemController@phpinfo','middleware' => 'auth']);
+Route::group(['prefix' => 'report', 'middleware' => ['role:manager']], function() {
+Route::get('retreatantinfo/{retreat_id}',['uses' => 'PagesController@retreatantinforeport']);
+Route::get('retreatlisting/{retreat_id}',['uses' => 'PagesController@retreatlistingreport']);
+Route::get('retreatroster/{retreat_id}',['uses' => 'PagesController@retreatrosterreport']);
+});
+
+
+Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function() {
+Route::resource('permission','PermissionsController');
+Route::resource('role','RolesController');
+Route::get('phpinfo',['as' => 'phpinfo','uses' => 'SystemController@phpinfo']);
+
+
+});
 Route::resource('retreat','RetreatsController');
 //Route::resource('retreatant','RetreatantsController');
 Route::resource('registration','RegistrationsController');
