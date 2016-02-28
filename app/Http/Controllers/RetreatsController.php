@@ -23,19 +23,14 @@ class RetreatsController extends Controller
     public function index()
     {
         //dd(Auth::User());
-        $retreats = \montserrat\Retreat::whereDate('end', '>=', date('Y-m-d'))->orderBy('start','asc')->get();
-        $oldretreats = \montserrat\Retreat::whereDate('end', '<', date('Y-m-d'))->orderBy('start','desc')->get();
+        $retreats = \montserrat\Retreat::whereDate('end', '>=', date('Y-m-d'))->orderBy('start','asc')->with('retreatmasters.retreatmaster')->get();
+        $oldretreats = \montserrat\Retreat::whereDate('end', '<', date('Y-m-d'))->orderBy('start','desc')->with('retreatmasters.retreatmaster')->get();
         
         foreach ($retreats as $retreat) {
             $director = \montserrat\Retreat::find($retreat->id)->director;
             $innkeeper = \montserrat\Retreat::find($retreat->id)->innkeeper;
             $assistant = \montserrat\Retreat::find($retreat->id)->assistant;
-            //dd($director);
-            if (empty($director)) {
-                $retreat->directorname = 'Not assigned';
-            } else {
-                $retreat->directorname = $director->firstname.' '.$director->lastname;
-            }
+            //dd($retreat->retreatmasters);
             if (empty($innkeeper)) {
                 $retreat->innkeepername = 'Not assigned';
             } else {
@@ -88,9 +83,10 @@ class RetreatsController extends Controller
         $d=  \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('is_director','1')->orderBy('fullname')->lists('fullname','id');
         $i=  \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('is_innkeeper','1')->orderBy('fullname')->lists('fullname','id');
         $a=  \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('is_assistant','1')->orderBy('fullname')->lists('fullname','id');
-        $d[0] = 'Unspecified';
-        $i[0] = 'Unspecified';
-        $a[0] = 'Unspecified';
+        $d->prepend('N/A',0);
+        $i->prepend('N/A',0);
+        $a->prepend('N/A',0);
+        
         /*$d=array();
         foreach ($directors as $director) {
             $d[$director->id] = $director->lastname.', '.$director->firstname;
@@ -144,6 +140,18 @@ class RetreatsController extends Controller
         $retreat->innkeeperid = $request->input('innkeeperid');
         $retreat->assistantid = $request->input('assistantid');
         $retreat->save();
+        //dd($request->get('directors'));
+        
+        foreach($request->get('directors') as $director_id) {
+            //dd($retreat);
+            
+            $new_director = array(
+                'retreat_id' => $retreat->id,
+                'retreatmaster_id' => $director_id
+            );
+            $retreatmaster = new \montserrat\Retreatmaster($new_director);
+            $retreatmaster->save();
+        }
 return Redirect::action('RetreatsController@index');//
     }
 

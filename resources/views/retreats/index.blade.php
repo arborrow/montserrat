@@ -18,7 +18,7 @@
                             <th>ID#</th>
                             <th>Title</th>
                             <th>Starts - Ends</th>
-                            <th>Director</th>
+                            <th>Director(s)</th>
                             <th>Innkeeper</th>
                             <th>Assistant</th>
                             <th># Attending</th>
@@ -33,12 +33,14 @@
                             <td><a href="retreat/{{ $retreat->id}}">{{ $retreat->idnumber}}</a></td>
                             <td>{{ $retreat->title }}</td>
                             <td>{{ date('F d, Y', strtotime($retreat->start)) }} - {{ date('F d, Y', strtotime($retreat->end)) }}</td>
-                            <td>
-                                @if ($retreat->directorid > 0)
-                                    <a href="person/{{ $retreat->directorid }}">{{ $retreat->directorname }}</a>
+                            <td>                            
+                                @if ($retreat->retreatmasters->isEmpty())
+                                N/A
                                 @else
-                                    {{$retreat->directorname}}
-                                @endIf
+                                    @foreach($retreat->retreatmasters as $rm)
+                                        <a href="person/{{ $rm["retreatmaster"]["id"] }}">{{ $rm["retreatmaster"]["firstname"] }} {{ $rm["retreatmaster"]["lastname"] }}</a><br /> 
+                                    @endforeach
+                                @endif
                             </td>
                             <td>
                                 @if ($retreat->innkeeperid > 0)
@@ -76,7 +78,7 @@
                             <th>ID#</th>
                             <th>Title</th>
                             <th>Starts - Ends</th>
-                            <th>Director</th>
+                            <th>Director(s)</th>
                             <th>Innkeeper</th>
                             <th>Assistant</th>
                             <th># Attended</th>
@@ -91,7 +93,15 @@
                             <td><a href="retreat/{{ $oldretreat->id}}">{{ $oldretreat->idnumber}}</a></td>
                             <td>{{ $oldretreat->title }}</td>
                             <td>{{ date('F d, Y', strtotime($oldretreat->start)) }} - {{ date('F d, Y', strtotime($oldretreat->end)) }}</td>
-                            <td><a href="person/{{ $oldretreat->directorid }}">{{ $oldretreat->directorname }}</a></td>
+                            <td>                            
+                            @if ($oldretreat->retreatmasters->isEmpty())
+                            N/A
+                            @else
+                                @foreach($oldretreat->retreatmasters as $rm)
+                                    <a href="person/{{ $rm["retreatmaster"]["id"] }}">{{ $rm["retreatmaster"]["firstname"] }} {{ $rm["retreatmaster"]["lastname"] }}</a><br /> 
+                                @endforeach
+                            @endif
+                        </td>
                             <td><a href="person/{{ $oldretreat->innkeeperid }}">{{ $oldretreat->innkeepername }}</a></td>
                             <td><a href="person/{{ $oldretreat->assistantid }}">{{ $oldretreat->assistantname }}</a></td>
                             <td>{{ $oldretreat->attending}}</td>

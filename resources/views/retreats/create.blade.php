@@ -29,12 +29,15 @@
                 {!! Form::textarea('description', null, ['class'=>'col-md-5', 'rows'=>'3']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group"> 
-                {!! Form::label('directorid', 'Director ID:', ['class' => 'col-md-1']) !!}
-                <!-- {!! Form::select('directorid', array('0' => 'Not assigned', '3' => 'Ron Boudreaux', '1' => 'Anthony Borrow', '4' => 'John Payne'), 0, ['class' => 'col-md-2']) !!} -->
-                {!! Form::select('directorid', $d, 0, ['class' => 'col-md-2']) !!} 
-                {!! Form::label('innkeeperid', 'Innkeeper ID:', ['class' => 'col-md-1']) !!}
+    
+                {!! Form::label('directors', 'Director(s):', ['class' => 'col-md-1']) !!}
+                {!! Form::select('directors[]', $d, 0, ['class' => 'form-control col-md-2','multiple' => 'multiple','style'=>'width: auto; font-size: inherit;']) !!}
+                
+               <!-- {!! Form::label('directorid', 'Director ID:', ['class' => 'col-md-1']) !!}
+                {!! Form::select('directorid', $d, 0, ['class' => 'col-md-2']) !!} -->
+                {!! Form::label('innkeeperid', 'Innkeeper:', ['class' => 'col-md-1']) !!}
                 {!! Form::select('innkeeperid', $i, 0, ['class' => 'col-md-2']) !!}
-                {!! Form::label('assistantid', 'Assistant ID:', ['class' => 'col-md-1']) !!}
+                {!! Form::label('assistantid', 'Assistant:', ['class' => 'col-md-1']) !!}
                 {!! Form::select('assistantid', $a, 0, ['class' => 'col-md-2']) !!}
             </div><div class="clearfix"> </div>
             
@@ -47,7 +50,7 @@
                             'Other' => 'Other',
                             'Open' => 'Open',
                             'Women' => 'Women',
-                            ], 'Unspecified', ['class' => 'col-md-1']) !!}
+                            ], 'Unspecified', ['class' => 'col-md-1','style' => 'width:auto;']) !!}
                         
                <div class='left-checkbox'> {!! Form::label('silent', 'Silent:', ['class' => 'col-md-1']) !!}
                 {!! Form::text('silent', 1, ['class'=>'col-md-1']) !!}</div>

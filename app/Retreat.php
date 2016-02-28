@@ -27,6 +27,10 @@ class Retreat extends Model
       $this->attributes['end'] = Carbon::parse($date);
     }
   
+    public function assistant() {
+        return $this->belongsTo('\montserrat\Person','assistantid','id');
+    }
+    
     public function director() {
         return $this->belongsTo('\montserrat\Person','directorid','id');
     }
@@ -35,11 +39,12 @@ class Retreat extends Model
         return $this->belongsTo('\montserrat\Person','innkeeperid','id');
     }
     
-    public function assistant() {
-        return $this->belongsTo('\montserrat\Person','assistantid','id');
+    public function retreatmasters() {
+        return $this->hasMany('\montserrat\Retreatmaster','retreat_id','id');
     }
     
     public function registrations() {
         return $this->hasMany('\montserrat\Registration','retreat_id','id');
     }
+    
 }
