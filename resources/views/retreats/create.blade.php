@@ -32,9 +32,6 @@
     
                 {!! Form::label('directors', 'Director(s):', ['class' => 'col-md-1']) !!}
                 {!! Form::select('directors[]', $d, 0, ['class' => 'form-control col-md-2','multiple' => 'multiple','style'=>'width: auto; font-size: inherit;']) !!}
-                
-               <!-- {!! Form::label('directorid', 'Director ID:', ['class' => 'col-md-1']) !!}
-                {!! Form::select('directorid', $d, 0, ['class' => 'col-md-2']) !!} -->
                 {!! Form::label('innkeeperid', 'Innkeeper:', ['class' => 'col-md-1']) !!}
                 {!! Form::select('innkeeperid', $i, 0, ['class' => 'col-md-2']) !!}
                 {!! Form::label('assistantid', 'Assistant:', ['class' => 'col-md-1']) !!}

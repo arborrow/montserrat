@@ -41,13 +41,5 @@ class User extends Model implements AuthenticatableContract,
      */
     protected $hidden = ['password', 'remember_token'];
     
-    public function directing() {
-        return $this->hasMany('\montserrat\Retreat','id','directorid');
-    }
-    public function innkeeping() {
-        return $this->hasMany('\montserrat\Retreat','id','innkeeperid');
-    }
-    public function assisting() {
-        return $this->hasMany('\montserrat\Retreat','id','assistantid');
-    }
+    
 }

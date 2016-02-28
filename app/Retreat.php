@@ -31,10 +31,6 @@ class Retreat extends Model
         return $this->belongsTo('\montserrat\Person','assistantid','id');
     }
     
-    public function director() {
-        return $this->belongsTo('\montserrat\Person','directorid','id');
-    }
-    
     public function innkeeper() {
         return $this->belongsTo('\montserrat\Person','innkeeperid','id');
     }
