@@ -38,7 +38,7 @@
                                 N/A
                                 @else
                                     @foreach($retreat->retreatmasters as $rm)
-                                        <a href="person/{{ $rm["retreatmaster"]["id"] }}">{{ $rm["retreatmaster"]["firstname"] }} {{ $rm["retreatmaster"]["lastname"] }}</a><br /> 
+                                        <a href="person/{{ $rm->id}}">{{ $rm->firstname }} {{ $rm->lastname }}</a><br /> 
                                     @endforeach
                                 @endif
                             </td>
@@ -98,7 +98,7 @@
                             N/A
                             @else
                                 @foreach($oldretreat->retreatmasters as $rm)
-                                    <a href="person/{{ $rm["retreatmaster"]["id"] }}">{{ $rm["retreatmaster"]["firstname"] }} {{ $rm["retreatmaster"]["lastname"] }}</a><br /> 
+                                        <a href="person/{{ $rm->id}}">{{ $rm->firstname }} {{ $rm->lastname }}</a><br /> 
                                 @endforeach
                             @endif
                         </td>

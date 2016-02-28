@@ -23,9 +23,9 @@ class RetreatsController extends Controller
     public function index()
     {
         //dd(Auth::User());
-        $retreats = \montserrat\Retreat::whereDate('end', '>=', date('Y-m-d'))->orderBy('start','asc')->with('retreatmasters.retreatmaster')->get();
-        $oldretreats = \montserrat\Retreat::whereDate('end', '<', date('Y-m-d'))->orderBy('start','desc')->with('retreatmasters.retreatmaster')->get();
-        
+        $retreats = \montserrat\Retreat::whereDate('end', '>=', date('Y-m-d'))->orderBy('start','asc')->with('retreatmasters')->get();
+        $oldretreats = \montserrat\Retreat::whereDate('end', '<', date('Y-m-d'))->orderBy('start','desc')->with('retreatmasters')->get();
+        //dd($retreats);
         foreach ($retreats as $retreat) {
             $director = \montserrat\Retreat::find($retreat->id)->director;
             $innkeeper = \montserrat\Retreat::find($retreat->id)->innkeeper;
@@ -136,22 +136,12 @@ class RetreatsController extends Controller
         $retreat->amount = $request->input('amount');
         $retreat->attending = $request->input('attending');
         $retreat->year = $request->input('year');
-        $retreat->directorid = $request->input('directorid');
         $retreat->innkeeperid = $request->input('innkeeperid');
         $retreat->assistantid = $request->input('assistantid');
         $retreat->save();
         //dd($request->get('directors'));
+        $retreat->retreatmasters()->sync($request->input('directors'));
         
-        foreach($request->get('directors') as $director_id) {
-            //dd($retreat);
-            
-            $new_director = array(
-                'retreat_id' => $retreat->id,
-                'retreatmaster_id' => $director_id
-            );
-            $retreatmaster = new \montserrat\Retreatmaster($new_director);
-            $retreatmaster->save();
-        }
 return Redirect::action('RetreatsController@index');//
     }
 
@@ -163,12 +153,12 @@ return Redirect::action('RetreatsController@index');//
      */
     public function show($id)
     {
-        $retreat = \montserrat\Retreat::find($id);
+        $retreat = \montserrat\Retreat::with('retreatmasters')->find($id);
         $director = \montserrat\Retreat::find($id)->director;
         $innkeeper = \montserrat\Retreat::find($id)->innkeeper;
         $assistant = \montserrat\Retreat::find($id)->assistant;
         $registrations = \montserrat\Registration::where('retreat_id','=',$id)->with('retreatant','retreatant.parish')->get();
-        
+        //dd($retreat);
         if (empty($director)) {
                 $retreat->directorname = 'Not assigned';
             } else {
@@ -200,7 +190,7 @@ return Redirect::action('RetreatsController@index');//
     //   return view('retreats.edit',compact('retreats'));
     //  }
 public function edit($id)
-    { $retreat = \montserrat\Retreat::find($id);
+    { $retreat = \montserrat\Retreat::with('retreatmasters')->find($id);
       /*
         $directors = \montserrat\Director::where('active','1')->select('id','title','firstname','lastname','suffix')->orderBy('lastname')->get();
         $innkeepers = \montserrat\Innkeeper::where('active','1')->select('id','title','firstname','lastname','suffix')->orderBy('lastname')->get();
@@ -222,10 +212,11 @@ public function edit($id)
         $d=  \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('is_director','1')->orderBy('fullname')->lists('fullname','id');
         $i=  \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('is_innkeeper','1')->orderBy('fullname')->lists('fullname','id');
         $a=  \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('is_assistant','1')->orderBy('fullname')->lists('fullname','id');
-        $d[0] = 'Unspecified';
-        $i[0] = 'Unspecified';
-        $a[0] = 'Unspecified';
         
+        $d->prepend('N/A',0);
+        $i->prepend('N/A',0);
+        $a->prepend('N/A',0);
+       
        return view('retreats.edit',compact('retreat','d','i','a'));
       }
 
@@ -264,11 +255,11 @@ public function edit($id)
         $retreat->amount = $request->input('amount');
         $retreat->attending = $request->input('attending');
         $retreat->year = $request->input('year');
-        $retreat->directorid = $request->input('directorid');
         $retreat->innkeeperid = $request->input('innkeeperid');
         $retreat->assistantid = $request->input('assistantid');
         $retreat->save();
-
+        $retreat->retreatmasters()->sync($request->input('directors'));
+        
 return Redirect::action('RetreatsController@index');
     }
 

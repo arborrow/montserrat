@@ -29,12 +29,15 @@
     <div class="clearfix"> </div>
     <div class="form-group">
         {!! Form::label('description', 'Description:', ['class' => 'col-md-1']) !!}
-        {!! Form::textarea('body', $retreat->desription, ['class' => 'col-md-5', 'rows'=>'3']) !!}
+        {!! Form::textarea('body', $retreat->description, ['class' => 'col-md-5', 'rows'=>'3']) !!}
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
-        {!! Form::label('directorid', 'Director:', ['class' => 'col-md-1']) !!}
-        {!! Form::select('directorid', $d, $retreat->directorid, ['class' => 'col-md-2']) !!}
+        
+    {!! Form::label('Directors') !!}<br />
+    {!! Form::select('directors[]', $d, 
+    $retreat->retreatmasters->lists('id')->toArray(),
+        ['class' => 'form-control col-md-2','multiple' => 'multiple','style'=>'width: auto; font-size: inherit;']) !!}
         {!! Form::label('innkeeperid', 'Innkeeper:', ['class' => 'col-md-1']) !!}
         {!! Form::select('innkeeperid', $i, $retreat->innkeeperid, ['class' => 'col-md-2']) !!}
         {!! Form::label('assistantid', 'Assistant:', ['class' => 'col-md-1']) !!}

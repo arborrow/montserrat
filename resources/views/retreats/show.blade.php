@@ -23,13 +23,17 @@
                 <div class='col-md-6'><strong>Description: </strong>{{ $retreat->description}}</div>
             </div><div class="clearfix"> </div>
             <div class='row'>
-                <div class='col-md-3'><strong>Director: </strong>
-                    @if ($retreat->directorid == 0)
-                        {{$retreat->directorname}}
+                <div class='col-md-1'><strong>Director(s): </strong></div>
+                    @if ($retreat->retreatmasters->isEmpty())
+                        N/A
                     @else
-                        <a href="person/{{ $retreat->directorid}}">{{ $retreat->directorname}}</a>
-                    @endIf
-                </div>
+                    <div class='col-md-2'>
+                        @foreach($retreat->retreatmasters as $rm)
+                            <a href="person/{{ $rm->id }}">{{ $rm->firstname }} {{ $rm->lastname }} </a><br /> 
+                        @endforeach
+                        </div>
+                    @endif
+
                     
                 <div class='col-md-3'><strong>Innkeeper: </strong>
                     @if ($retreat->innkeeperid == 0) 

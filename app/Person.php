@@ -29,4 +29,8 @@ class Person extends Model
         return $this->hasMany('\montserrat\Touchpoint','person_id','id');
     }
     
+    public function retreatmasters() {
+        return $this->belongsToMany('\montserrat\Retreat','retreatmasters','person_id','retreat_id');
+    }
+    
 }

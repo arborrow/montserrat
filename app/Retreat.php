@@ -40,7 +40,7 @@ class Retreat extends Model
     }
     
     public function retreatmasters() {
-        return $this->hasMany('\montserrat\Retreatmaster','retreat_id','id');
+        return $this->belongsToMany('\montserrat\Person','retreatmasters','retreat_id','person_id');
     }
     
     public function registrations() {
