@@ -36,12 +36,12 @@
         
     {!! Form::label('Directors') !!}<br />
     {!! Form::select('directors[]', $d, 
-    $retreat->retreatmasters->lists('id')->toArray(),
+        $retreat->retreatmasters->lists('id')->toArray(),
         ['class' => 'form-control col-md-2','multiple' => 'multiple','style'=>'width: auto; font-size: inherit;']) !!}
-        {!! Form::label('innkeeperid', 'Innkeeper:', ['class' => 'col-md-1']) !!}
-        {!! Form::select('innkeeperid', $i, $retreat->innkeeperid, ['class' => 'col-md-2']) !!}
-        {!! Form::label('assistantid', 'Assistant:', ['class' => 'col-md-1']) !!}
-        {!! Form::select('assistantid', $a, $retreat->assistantid, ['class' => 'col-md-2']) !!}
+    {!! Form::label('innkeeperid', 'Innkeeper:', ['class' => 'col-md-1']) !!}
+    {!! Form::select('innkeeperid', $i, $retreat->innkeeperid, ['class' => 'col-md-2']) !!}
+    {!! Form::label('assistantid', 'Assistant:', ['class' => 'col-md-1']) !!}
+    {!! Form::select('assistantid', $a, $retreat->assistantid, ['class' => 'col-md-2']) !!}
 
 
     </div>

@@ -139,9 +139,14 @@ class RetreatsController extends Controller
         $retreat->assistantid = $request->input('assistantid');
         $retreat->save();
         //dd($request->get('directors'));
-        $retreat->retreatmasters()->sync($request->input('directors'));
+        //dd($request->input('directors'));
+        if (empty($request->input('directors')) or in_array(0,$request->input('directors'))) {
+            $retreat->retreatmasters()->detach();
+        } else {
+            $retreat->retreatmasters()->sync($request->input('directors'));
+        }
         
-return Redirect::action('RetreatsController@index');//
+        return Redirect::action('RetreatsController@index');//
     }
 
     /**
@@ -256,9 +261,14 @@ public function edit($id)
         $retreat->innkeeperid = $request->input('innkeeperid');
         $retreat->assistantid = $request->input('assistantid');
         $retreat->save();
-        $retreat->retreatmasters()->sync($request->input('directors'));
         
-return Redirect::action('RetreatsController@index');
+        if (empty($request->input('directors')) or in_array(0,$request->input('directors'))) {
+            $retreat->retreatmasters()->detach();
+        } else {
+            $retreat->retreatmasters()->sync($request->input('directors'));
+        }
+       
+        return Redirect::action('RetreatsController@index');
     }
 
     /**
