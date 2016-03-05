@@ -30,16 +30,21 @@
                </span>                
 
             </div>
-            <div class='row'><div class='col-md-4'><span><h2>Address</h2>
+            <div class='row'><div class='col-md-4'><span><h2>Addresses</h2>
+                @foreach($person->addresses as $address)
+                Location: {{$address->location->display_name}}
+                
                 <address>
-                    <a href="http://maps.google.com/?q={{$person->address1}} {{ $person->address2}} {{ $person->city}} {{ $person->state}} {{ $person->zip}}" target="_blank">
+                    <a href="http://maps.google.com/?q={{$address->street_address}} {{ $address->city}} {{ $address->state->abbreviation}} {{ $address->postal_code}}" target="_blank">
                                 
-                    {{ $person->address1}}
-                        @if (!empty($person->address2))
-                            <br />{{$person->address2}}
+                    {{ $address->street_address}}
+                        @if (!empty($address_supplemental_address_1))
+                            <br />{{$address_supplemental_address_1}}
                         @endif   
-                        <br />{{$person->city}} {{$person->state}} {{ $person->zip}}</a> 
-                <br />@if ($person->country='USA') @else {{$person->country}} @endif </address>
+                        <br />{{$address->city}}, {{ $address->state->abbreviation}} {{ $address->postal_code}}</a> 
+                <br />@if ($address->country_id=1228) @else {{$address->country_id}} @endif 
+                </address>
+                @endforeach
             </span></div>
              <div class='col-md-4' style="background-color: lightcoral;"><span class="info">
                      <h2><strong>Emergency Contact Information</strong></h2>

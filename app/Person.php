@@ -33,4 +33,19 @@ class Person extends Model
         return $this->belongsToMany('\montserrat\Retreat','retreatmasters','person_id','retreat_id');
     }
     
+    public function websites() {
+        return $this->hasMany('\montserrat\Website','contact_id','id');
+    }
+
+    public function addresses() {
+        return $this->hasMany('\montserrat\Address','contact_id','id');
+    }
+    
+    public function phones() {
+        return $this->hasMany('\montserrat\Phone','contact_id','id');
+    }
+    
+    public function emails() {
+        return $this->hasMany('\montserrat\Email','contact_id','id');
+    }    
 }

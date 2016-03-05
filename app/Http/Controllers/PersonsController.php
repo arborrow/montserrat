@@ -131,7 +131,7 @@ class PersonsController extends Controller
     public function show($id)
     {
         //
-       $person = \montserrat\Person::with('touchpoints','touchpoints.staff')->findOrFail($id);
+       $person = \montserrat\Person::with('touchpoints','touchpoints.staff','websites','addresses','addresses.location','addresses.state','addresses.country','emails','emails.location','phones','phones.location')->findOrFail($id);
        
        //dd($person);
        return view('persons.show',compact('person'));//
