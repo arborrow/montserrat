@@ -14,11 +14,11 @@ class AddcolumnsCategoriesTouchpoints extends Migration
     {
         //
         Schema::table('touchpoints', function ($table) {
-            $table->Integer('touchcategory_id')->unsigned()->nullable()->default(NULL);
+            $table->integer('touchcategory_id')->unsigned()->nullable()->default(NULL);
             $table->string('status')->default('Resolved');
             $table->string('urgency')->default('Normal');
             $table->Timestamp('due_at')->nullable()->default(NULL);
-            $table->Integer('assignedto_id')->unsigned()->nullable()->default(NULL);
+            $table->integer('assignedto_id')->unsigned()->nullable()->default(NULL);
             
         });
     
