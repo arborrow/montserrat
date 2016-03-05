@@ -32,7 +32,7 @@
             </div>
             <div class='row'><div class='col-md-4'><span><h2>Addresses</h2>
                 @foreach($person->addresses as $address)
-                Location: {{$address->location->display_name}}
+                <strong>{{$address->location->display_name}}:</strong>
                 
                 <address>
                     <a href="http://maps.google.com/?q={{$address->street_address}} {{ $address->city}} {{ $address->state->abbreviation}} {{ $address->postal_code}}" target="_blank">
@@ -55,15 +55,25 @@
             </div><div class="clearfix"> </div>
 
             <div class='row'>
-                <div class='col-md-4'><span><h2>Phone Numbers</h2><strong>Home phone: </strong>{{$person->homephone}}
-                <br /><strong>Work phone: </strong>{{$person->workphone}}   
-                <br /><strong>Mobile phone: </strong>{{$person->mobilephone}}     
-                <br /><strong>Fax: </strong>{{$person->faxphone}}
-                </span></div>
-                <div class='col-md-4'><span><h2>Electronic Communications</h2>
-                        <strong>Email: </strong><a href="mailto:{{$person->email}}">{{$person->email}}</a>
-                        <br /><strong>URL: </strong><a href="{{$person->url}}" target="_blank">{{$person->url}}</a>   
-                </span></div></div><div class="clearfix"> </div>
+                <div class='col-md-4'>
+                    <span><h2>Phone Numbers</h2>
+                        @foreach($person->phones as $phone)
+                            <strong>{{$phone->location->display_name}} - {{$phone->phone_type}}: </strong>{{$phone->phone}} {{$phone->phone_ext}}<br />
+                        @endforeach
+                    </span>
+                </div>
+                
+                <div class='col-md-4'>
+                    <span><h2>Electronic Communications</h2>
+                        @foreach($person->emails as $email)
+                        <strong>{{$email->location->display_name}} - Email: </strong><a href="mailto:{{$email->email}}">{{$email->email}}</a><br />
+                        @endforeach
+                        @foreach($person->websites as $website)
+                        <strong>{{$website->website_type}} - URL: </strong><a href="{{$website->url}}" target="_blank">{{$website->url}}</a><br />
+                        @endforeach
+                    </span>
+                </div>
+            </div><div class="clearfix"> </div>
 
             <div class='row'><span>
                 <div class='col-md-8'<span><h2>Demographics:</h2>
