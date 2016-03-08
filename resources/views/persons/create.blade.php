@@ -48,7 +48,7 @@
         <div class='row'>
             <div class='col-md-12'>
                 <span>
-                    @include('persons.addresses')
+                    @include('persons.create.addresses')
                 </span>
             </div>
         </div>
@@ -57,7 +57,7 @@
         <div class='row'>
             <div class='col-md-8'>
                 <span>
-                    @include('persons.phones')
+                    @include('persons.create.phones')
                 </span>
             </div>
         </div>
@@ -67,7 +67,7 @@
      <div class='row'>
             <div class='col-md-8'>
                 <span>
-                    @include('persons.emails')
+                    @include('persons.create.emails')
                 </span>
             </div>
         </div>
@@ -76,7 +76,7 @@
      <div class='row'>
             <div class='col-md-8'>
                 <span>
-                    @include('persons.urls')
+                    @include('persons.create.urls')
                 </span>
             </div>
         </div>

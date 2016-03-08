@@ -237,7 +237,7 @@ class PersonsController extends Controller
         $email_other = new \montserrat\Email;
             $email_other->contact_id=$person->id;
             $email_other->location_type_id=LOCATION_TYPE_OTHER;
-            $email_other->email=$request->input('email_home');
+            $email_other->email=$request->input('email_other');
         $email_other->save();
         
         $url_main = new \montserrat\Website;
@@ -311,13 +311,44 @@ class PersonsController extends Controller
     public function edit($id)
     {
         //
-        $person = \montserrat\Person::find($id);
+        $person = \montserrat\Person::with('addresses.location','emails.location','phones.location','websites')->find($id);
+        //dd($person);
         $parishes = \montserrat\Parish::select(\DB::raw('CONCAT(parishes.name," (",parishes.city,"-",dioceses.name,")") as parishname'), 'parishes.id')->join('dioceses','parishes.diocese_id','=','dioceses.id')->orderBy('parishname')->lists('parishname','parishes.id');
-        $parishes->prepend('N/A',0);  
+        $parishes->prepend('N/A',0); 
+        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(1228)->lists('name','id');
+        $states->prepend('N/A',0); 
+        $countries = \montserrat\Country::orderby('iso_code')->lists('iso_code','id');
+        $countries->prepend('N/A',0); 
         $ethnicities = \montserrat\Ethnicity::orderby('ethnicity')->lists('ethnicity','ethnicity');
+        
+        //create defaults array for easier pre-populating of default values on edit/update blade
+        $defaults = array();
+        
+        foreach($person->addresses as $address) {
+            $defaults[$address->location->name]['street_address'] = $address->street_address;
+            $defaults[$address->location->name]['supplemental_address_1'] = $address->supplemental_address_1;
+            $defaults[$address->location->name]['city'] = $address->city;
+            $defaults[$address->location->name]['state_province_id'] = $address->state_province_id;
+            $defaults[$address->location->name]['postal_code'] = $address->postal_code;
+            $defaults[$address->location->name]['country_id'] = $address->country_id;
+        }
+        
+        foreach($person->phones as $phone) {
+            $defaults[$phone->location->name][$phone->phone_type] = $phone->phone;
+        }
+        
+        foreach($person->emails as $email) {
+            $defaults[$email->location->name]['email'] = $email->email;
+        }
+        
+        foreach($person->websites as $website) {
+            $defaults[$website->website_type]['url'] = $website->url;
+        }
+        //dd($defaults);
+        
 
 //dd($parishes);
-        return view('persons.edit',compact('person','parishes','ethnicities'));
+        return view('persons.edit',compact('person','parishes','ethnicities','states','countries','defaults'));
     
     }
 

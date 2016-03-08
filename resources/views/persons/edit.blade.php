@@ -54,34 +54,7 @@
         </div>
     </div>
     <div class="clearfix"> </div>  
-    <div class='row'>
-        <div class='col-md-8'>
-            <span>
-            <h2>Address</h2>
-                <div class="form-group">
-                    <div class='row'>
-                        {!! Form::label('address1', 'Address 1:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::text('address1', $person->address1, ['class' => 'col-md-4']) !!}
-                    </div>
-                    <div class='row'>
-                        {!! Form::label('address2', 'Address 2:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::text('address2', $person->address2, ['class' => 'col-md-4']) !!}
-                    </div>
-                    <div class='row'>
-                        {!! Form::label('city', 'City:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::text('city', $person->city, ['class' => 'col-md-2']) !!}
-                        {!! Form::label('state', 'State:', ['class' => 'col-md-1'])  !!}
-                        {!! Form::text('state', $person->state, ['class' => 'col-md-1']) !!}
-                        {!! Form::label('zip', 'Zip:', ['class' => 'col-md-1'])  !!}
-                        {!! Form::text('zip', $person->zip, ['class' => 'col-md-1']) !!}
-                        {!! Form::label('country', 'Country:', ['class' => 'col-md-1'])  !!}
-                        {!! Form::text('country', $person->country, ['class' => 'col-md-1']) !!}
-                    </div>  
-                </div>
-            </span>
-        </div>
-    </div>
-    <div class="clearfix"> </div>
+
     <div class='row'>
         <div class='col-md-8'>
             <span>
@@ -98,20 +71,20 @@
         </div>
     </div>
     <div class="clearfix"> </div>
+
     <div class='row'>
         <div class='col-md-8'>
             <span>
-            <h2>Phone Numbers</h2>
-                <div class="form-group">
-                    {!! Form::label('homephone', 'Home:', ['class' => 'col-md-1'])  !!}
-                    {!! Form::text('homephone', $person->homephone, ['class' => 'col-md-2']) !!}
-                    {!! Form::label('mobilephone', 'Mobile:', ['class' => 'col-md-1'])  !!}
-                    {!! Form::text('mobilephone', $person->mobilephone, ['class' => 'col-md-2']) !!}
-                    {!! Form::label('workphone', 'Work:', ['class' => 'col-md-1'])  !!}
-                    {!! Form::text('workphone', $person->workphone, ['class' => 'col-md-2']) !!}
-                    {!! Form::label('faxphone', 'Fax:', ['class' => 'col-md-1'])  !!}
-                    {!! Form::text('faxphone', $person->faxphone, ['class' => 'col-md-2']) !!}
-                </div>
+  @include('persons.update.addresses')
+            </span>
+        </div>
+    </div>
+    <div class="clearfix"> </div>
+
+    <div class='row'>
+        <div class='col-md-8'>
+            <span>
+                @include('persons.update.phones')
             </span>
         </div>
     </div>
@@ -119,13 +92,15 @@
     <div class='row'>
         <div class='col-md-8'>
             <span>
-            <h2>Electronic communications</h2>
-                <div class="form-group">
-                    {!! Form::label('email', 'Email:', ['class' => 'col-md-1'])  !!}
-                    {!! Form::text('email', $person->email, ['class' => 'col-md-3']) !!}
-                    {!! Form::label('url', 'Webpage:', ['class' => 'col-md-1'])  !!}
-                    {!! Form::text('url', $person->url, ['class' => 'col-md-3']) !!}
-                </div>
+            @include('persons.update.emails')
+            </span>
+        </div>
+    </div>
+    <div class="clearfix"> </div>
+    <div class='row'>
+        <div class='col-md-8'>
+            <span>
+            @include('persons.update.urls')
             </span>
         </div>
     </div>
