@@ -11,6 +11,7 @@ class Website extends Model
     //
     use SoftDeletes;
     protected $table = 'website';
+    protected $fillable =  ['contact_id', 'url', 'website_type'];
     
     public function owner() {
         return $this->belongsTo('\montserrat\Person','contact_id','id');

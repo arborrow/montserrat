@@ -9,6 +9,7 @@ class Email extends Model
 {
     use SoftDeletes;
     protected $table = 'email';
+    protected $fillable =  ['contact_id', 'location_type_id', 'is_primary', 'email'];
     
     public function owner() {
         return $this->belongsTo('\montserrat\Person','contact_id','id');

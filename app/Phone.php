@@ -10,6 +10,8 @@ class Phone extends Model
     //
     use SoftDeletes;
     protected $table = 'phone';
+    protected $fillable =  ['contact_id', 'location_type_id', 'is_primary', 'phone', 'phone_type'];
+    
     
     public function owner() {
         return $this->belongsTo('\montserrat\Person','contact_id','id');
