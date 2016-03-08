@@ -40,13 +40,35 @@
                         <tr>
                             <td><a href="person/{{ $person->id}}">{{ $person->lastname }}, {{ $person->firstname }}</a></td>
                             <td>
-                                <a href="http://maps.google.com/?q={{$person->address1}} {{ $person->address2}} {{ $person->city}} {{ $person->state}} {{ $person->zip}}" target="_blank">
-                                {{ $person->address1 }} ({{ $person->city }})
+                                @foreach($person->addresses as $address)
+                                @if ($address->is_primary)
+                                <a href="http://maps.google.com/?q={{$address->street_address}} {{ $address->suplemental_address_1}} {{ $address->city}} {{ $address->state->abbreviation}} {{ $address->postal_code}} {{ $person->zip}}" target="_blank">
+                                {{ $address->street_address }} ({{ $address->city }})
                                 </a>
+                                @endif
+                                @endforeach
                             </td>
-                            <td>{{ $person->homephone }}</td>
-                            <td>{{ $person->mobilephone }}</td>
-                            <td><a href="mailto:{{$person->email}}">{{ $person->email }}</a></td>
+                            <td>
+                                @foreach($person->phones as $phone)
+                                @if (($phone->location_type_id==1) and ($phone->phone_type=="Phone"))  
+                                {{ $phone->phone }} 
+                                @endif
+                                @endforeach
+                                
+                            <td>
+                                @foreach($person->phones as $phone)
+                                @if (($phone->location_type_id==1) and ($phone->phone_type=="Mobile"))  
+                                {{ $phone->phone }} 
+                                @endif
+                                @endforeach
+                            </td>
+                            <td>
+                                @foreach($person->emails as $email)
+                                @if ($email->is_primary)  
+                                <a href="mailto:{{ $email->email }}">{{ $email->email }}</a> 
+                                @endif
+                                @endforeach
+                            </td>
                             <td>
                                 @if (!isset($person->parish))
                                     N/A

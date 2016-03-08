@@ -47,5 +47,8 @@ class Person extends Model
     
     public function emails() {
         return $this->hasMany('\montserrat\Email','contact_id','id');
-    }    
+    }
+
+    
+        
 }

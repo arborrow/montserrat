@@ -90,3 +90,10 @@ a {
 .create {
     text-align: right;
 }
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    background-color: darkgray;
+    border-color: gray gray transparent;
+    border-width: 3px;
+    color: black;
+}
