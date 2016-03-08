@@ -32,18 +32,27 @@
             </div>
             <div class='row'><div class='col-md-4'><span><h2>Addresses</h2>
                 @foreach($person->addresses as $address)
+                @if (!empty($address->street_address))
                 <strong>{{$address->location->display_name}}:</strong>
                 
                 <address>
-                    <a href="http://maps.google.com/?q={{$address->street_address}} {{ $address->city}} {{ $address->state->abbreviation}} {{ $address->postal_code}}" target="_blank">
+                    <a href="http://maps.google.com/?q=
+                       {{isset($address->street_address) ? $address->street_address : '' }} 
+                       {{isset($address->city) ? $address->city : ''}} 
+                       {{isset($address->state->abbreviation) ? $address->state->abbreviation : ''}} 
+                       {{isset($address->postal_code) ? $address->postal_code : ''}}" target="_blank">
                                 
-                    {{ $address->street_address}}
+                    {{isset($address->street_address) ? $address->street_address : ''}}
                         @if (!empty($address_supplemental_address_1))
                             <br />{{$address_supplemental_address_1}}
                         @endif   
-                        <br />{{$address->city}}, {{ $address->state->abbreviation}} {{ $address->postal_code}}</a> 
+                        <br />
+                        {{isset($address->city) ? $address->city : ''}}, 
+                        {{isset($address->state->abbreviation) ? $address->state->abbreviation : ''}} 
+                        {{isset($address->postal_code) ? $address->postal_code : ''}}</a> 
                 <br />@if ($address->country_id=1228) @else {{$address->country_id}} @endif 
                 </address>
+                @endif
                 @endforeach
             </span></div>
              <div class='col-md-4' style="background-color: lightcoral;"><span class="info">
@@ -58,18 +67,24 @@
                 <div class='col-md-4'>
                     <span><h2>Phone Numbers</h2>
                         @foreach($person->phones as $phone)
+                        @if(!empty($phone->phone))
                             <strong>{{$phone->location->display_name}} - {{$phone->phone_type}}: </strong>{{$phone->phone}} {{$phone->phone_ext}}<br />
-                        @endforeach
+                        @endif
+                            @endforeach
                     </span>
                 </div>
                 
                 <div class='col-md-4'>
                     <span><h2>Electronic Communications</h2>
                         @foreach($person->emails as $email)
+                        @if(!empty($email->email))
                         <strong>{{$email->location->display_name}} - Email: </strong><a href="mailto:{{$email->email}}">{{$email->email}}</a><br />
+                        @endif
                         @endforeach
                         @foreach($person->websites as $website)
+                        @if(!empty($website->url))
                         <strong>{{$website->website_type}} - URL: </strong><a href="{{$website->url}}" target="_blank">{{$website->url}}</a><br />
+                        @endif
                         @endforeach
                     </span>
                 </div>
