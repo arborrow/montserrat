@@ -138,7 +138,7 @@ class PersonsController extends Controller
         $work_address= new \montserrat\Address;
         $work_address->contact_id=$person->id;
             $work_address->location_type_id=LOCATION_TYPE_WORK;
-            $work_address->is_primary=1;
+            $work_address->is_primary=0;
             $work_address->street_address=$request->input('address_work_address1');
             $work_address->supplemental_address_1=$request->input('address_work_address2');
             $work_address->city=$request->input('address_work_city');
@@ -150,7 +150,7 @@ class PersonsController extends Controller
         $other_address= new \montserrat\Address;
         $other_address->contact_id=$person->id;
             $other_address->location_type_id=LOCATION_TYPE_OTHER;
-            $other_address->is_primary=1;
+            $other_address->is_primary=0;
             $other_address->street_address=$request->input('address_other_address1');
             $other_address->supplemental_address_1=$request->input('address_other_address2');
             $other_address->city=$request->input('address_other_city');
@@ -371,41 +371,30 @@ class PersonsController extends Controller
             'parish_id' => 'integer|min:0',
             'gender' => 'in:Male,Female,Other,Unspecified'
         ]);
-        $person = \montserrat\Person::findOrFail($request->input('id'));
+        $person = \montserrat\Person::with('addresses.location','emails.location','phones.location','websites')->findOrFail($request->input('id'));
         $person->title = $request->input('title');
         $person->firstname = $request->input('firstname');
         $person->middlename = $request->input('middlename');
         $person->lastname = $request->input('lastname');
         $person->suffix = $request->input('suffix');
         $person->nickname = $request->input('nickname');
-        $person->address1 = $request->input('address1');
-        $person->address2 = $request->input('address2');
-        $person->city = $request->input('city');
-        $person->state = $request->input('state');
-        $person->zip = $request->input('zip');
-        $person->country = $request->input('country');
-        $person->homephone = $request->input('homephone');
-        $person->workphone = $request->input('workphone');
-        $person->mobilephone = $request->input('mobilephone');
-        $person->faxphone = $request->input('faxphone');
+        //emergency contact info
         $person->emergencycontactname = $request->input('emergencycontactname');
         $person->emergencycontactphone = $request->input('emergencycontactphone');
         $person->emergencycontactphone2 = $request->input('emergencycontactphone2');
-        $person->url = $request->input('url');
-        if (empty($person->email)) {
-            $person->email = NULL;
-        } else {
-            $person->email = $request->input('email');
-        }
+        //demographic info
         $person->gender = $request->input('gender');
         $person->dob = $request->input('dob');
         $person->ethnicity = $request->input('ethnicity');
         $person->parish_id = $request->input('parish_id');
         $person->languages = $request->input('languages');
+        //health info
         $person->medical = $request->input('medical');
         $person->dietary = $request->input('dietary');
+        //misc info
         $person->notes = $request->input('notes');
         $person->roompreference = $request->input('roompreference');
+        //group or roles info
         $person->is_donor = $request->input('is_donor');
         $person->is_retreatant = $request->input('is_retreatant');
         $person->is_director = $request->input('is_director');
@@ -421,9 +410,115 @@ class PersonsController extends Controller
         $person->is_formerboard = $request->input('is_formerboard');
         $person->is_jesuit = $request->input('is_jesuit');
         $person->is_deceased = $request->input('is_deceased');
-        
-        
+                
         $person->save();
+        
+        
+        $home_address= \montserrat\Address::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_HOME]);
+        //dd($home_address);
+            $home_address->street_address=$request->input('address_home_address1');
+            $home_address->supplemental_address_1=$request->input('address_home_address2');
+            $home_address->city=$request->input('address_home_city');
+            $home_address->state_province_id=$request->input('address_home_state');
+            $home_address->postal_code=$request->input('address_home_zip');
+            $home_address->country_id=$request->input('address_home_country');  
+        $home_address->save();
+         
+        $work_address= \montserrat\Address::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_WORK]);
+            $work_address->street_address=$request->input('address_work_address1');
+            $work_address->supplemental_address_1=$request->input('address_work_address2');
+            $work_address->city=$request->input('address_work_city');
+            $work_address->state_province_id=$request->input('address_work_state');
+            $work_address->postal_code=$request->input('address_work_zip');
+            $work_address->country_id=$request->input('address_work_country');  
+        $work_address->save();
+        
+        $other_address= \montserrat\Address::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_OTHER]);
+            $other_address->street_address=$request->input('address_other_address1');
+            $other_address->supplemental_address_1=$request->input('address_other_address2');
+            $other_address->city=$request->input('address_other_city');
+            $other_address->state_province_id=$request->input('address_other_state');
+            $other_address->postal_code=$request->input('address_other_zip');
+            $other_address->country_id=$request->input('address_other_country');  
+        $other_address->save();
+        
+        $phone_home_phone= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_HOME,'phone_type'=>'Phone']);
+            $phone_home_phone->phone=$request->input('phone_home_phone');
+        $phone_home_phone->save();
+        
+        $phone_home_mobile= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_HOME,'phone_type'=>'Mobile']);
+            $phone_home_mobile->phone=$request->input('phone_home_mobile');
+        $phone_home_mobile->save();
+        
+        $phone_home_fax= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_HOME,'phone_type'=>'Fax']);
+            $phone_home_fax->phone=$request->input('phone_home_fax');
+        $phone_home_fax->save();
+        
+        $phone_work_phone= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_WORK,'phone_type'=>'Phone']);
+            $phone_work_phone->phone=$request->input('phone_work_phone');
+        $phone_work_phone->save();
+        
+        $phone_work_mobile= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_WORK,'phone_type'=>'Mobile']);
+            $phone_work_mobile->phone=$request->input('phone_work_mobile');
+        $phone_work_mobile->save();
+        
+        $phone_work_fax= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_WORK,'phone_type'=>'Fax']);
+            $phone_work_fax->phone=$request->input('phone_work_fax');
+        $phone_work_fax->save();
+        
+        $phone_other_phone= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_OTHER,'phone_type'=>'Phone']);
+            $phone_other_phone->phone=$request->input('phone_other_phone');
+        $phone_other_phone->save();
+        
+        $phone_other_mobile= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_OTHER,'phone_type'=>'Mobile']);
+            $phone_other_mobile->phone=$request->input('phone_other_mobile');
+        $phone_other_mobile->save();
+        
+        $phone_other_fax= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_OTHER,'phone_type'=>'Fax']);
+            $phone_other_fax->phone=$request->input('phone_other_fax');
+        $phone_other_fax->save();
+        
+        $email_home = \montserrat\Email::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_HOME]);
+            $email_home->email=$request->input('email_home');
+        $email_home->save();
+        
+        $email_work= \montserrat\Email::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_WORK]);
+            $email_work->email=$request->input('email_work');
+        $email_work->save();
+        
+        $email_other = \montserrat\Email::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_OTHER]);
+            $email_other->email=$request->input('email_other');
+        $email_other->save();
+        
+        $url_main = \montserrat\Website::firstOrNew(['contact_id'=>$person->id,'website_type'=>'Main']);
+            $url_main->url=$request->input('url_main');
+        $url_main->save();
+        
+        $url_work= \montserrat\Website::firstOrNew(['contact_id'=>$person->id,'website_type'=>'Work']);
+            $url_work->url=$request->input('url_work');
+        $url_work->save();
+        
+        $url_facebook= \montserrat\Website::firstOrNew(['contact_id'=>$person->id,'website_type'=>'Facebook']);
+            $url_facebook->url=$request->input('url_facebook');
+        $url_facebook->save();
+        
+        $url_google = \montserrat\Website::firstOrNew(['contact_id'=>$person->id,'website_type'=>'Google']);
+            $url_google->url=$request->input('url_google');
+        $url_google->save();
+        
+        $url_instagram= \montserrat\Website::firstOrNew(['contact_id'=>$person->id,'website_type'=>'Instagram']);
+            $url_instagram->url=$request->input('url_instagram');
+        $url_instagram->save();
+        
+        $url_linkedin= \montserrat\Website::firstOrNew(['contact_id'=>$person->id,'website_type'=>'LinkedIn']);
+            $url_linkedin->url=$request->input('url_linkedin');
+        $url_linkedin->save();
+        
+        $url_twitter= \montserrat\Website::firstOrNew(['contact_id'=>$person->id,'website_type'=>'Twitter']);
+            $url_twitter->url=$request->input('url_twitter');
+        $url_twitter->save();
+        
+        
         return Redirect::action('PersonsController@index');//
         
 
