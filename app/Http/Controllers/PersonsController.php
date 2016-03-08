@@ -322,7 +322,48 @@ class PersonsController extends Controller
         $ethnicities = \montserrat\Ethnicity::orderby('ethnicity')->lists('ethnicity','ethnicity');
         
         //create defaults array for easier pre-populating of default values on edit/update blade
+        // initialize defaults to avoid undefined index errors
         $defaults = array();
+        $defaults['Home']['street_address']='';
+        $defaults['Home']['supplemental_address_1']='';
+        $defaults['Home']['city']='';
+        $defaults['Home']['state_province_id']='';
+        $defaults['Home']['postal_code']='';
+        $defaults['Home']['country_id']='';
+        $defaults['Home']['Phone']='';
+        $defaults['Home']['Mobile']='';
+        $defaults['Home']['Fax']='';
+        $defaults['Home']['email']='';
+        
+        $defaults['Work']['street_address']='';
+        $defaults['Work']['supplemental_address_1']='';
+        $defaults['Work']['city']='';
+        $defaults['Work']['state_province_id']='';
+        $defaults['Work']['postal_code']='';
+        $defaults['Work']['country_id']='';
+        $defaults['Work']['Phone']='';
+        $defaults['Work']['Mobile']='';
+        $defaults['Work']['Fax']='';
+        $defaults['Work']['email']='';
+        
+        $defaults['Other']['street_address']='';
+        $defaults['Other']['supplemental_address_1']='';
+        $defaults['Other']['city']='';
+        $defaults['Other']['state_province_id']='';
+        $defaults['Other']['postal_code']='';
+        $defaults['Other']['country_id']='';
+        $defaults['Other']['Phone']='';
+        $defaults['Other']['Mobile']='';
+        $defaults['Other']['Fax']='';
+        $defaults['Other']['email']='';
+        
+        $defaults['Main']['url']='';
+        $defaults['Work']['url']='';
+        $defaults['Facebook']['url']='';
+        $defaults['Google']['url']='';
+        $defaults['Instagram']['url']='';
+        $defaults['LinkedIn']['url']='';
+        $defaults['Twitter']['url']='';
         
         foreach($person->addresses as $address) {
             $defaults[$address->location->name]['street_address'] = $address->street_address;
