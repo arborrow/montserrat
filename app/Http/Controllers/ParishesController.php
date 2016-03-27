@@ -8,6 +8,27 @@ use montserrat\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Input;
 
+define('RELATIONSHIP_TYPE_PARISHIONER',11);
+define('RELATIONSHIP_TYPE_BISHOP',12);
+define('RELATIONSHIP_TYPE_DIOCESE',13);
+define('RELATIONSHIP_TYPE_PASTOR',14);
+
+define('CONTACT_TYPE_INDIVIDUAL',1);
+define('CONTACT_TYPE_HOUSEHOLD',2);
+define('CONTACT_TYPE_ORGANIZATION',3);
+define('CONTACT_TYPE_PARISH',4);
+define('CONTACT_TYPE_DIOCESE',5);
+define('CONTACT_TYPE_PROVINCE',6);
+define('CONTACT_TYPE_COMMUNITY',7);
+
+define('COUNTRY_ID_USA',1228);
+define('STATE_PROVINCE_ID_TX',1042);
+
+define('LOCATION_TYPE_HOME',1);
+define('LOCATION_TYPE_WORK',2);
+define('LOCATION_TYPE_MAIN',3);
+define('LOCATION_TYPE_OTHER',4);
+define('LOCATION_TYPE_BILLING',5);
 class ParishesController extends Controller
 {
     public function __construct()
@@ -23,14 +44,16 @@ class ParishesController extends Controller
     public function index()
     {
         //
-        $parishes = \montserrat\Parish::with('diocese','pastor')->orderBy('name', 'asc')->get();
-        // foreach ($parishes as $parish) {
-          //  $parish->diocese = \montserrat\Diocese::find($parish->diocese_id)->name;
-        //}
-        //dd($parishes->toArray());
+        //$parishes = \montserrat\Parish::with('diocese','pastor')->orderBy('name', 'asc')->get();
+        $parishes = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('addresses.state','phones','emails','websites','pastor.contact_b','diocese.contact_a')->get();
+        
+                
+        //dd($parishes[3]);
         $parishes = $parishes->sortBy(function($parish) {
-            return sprintf('%-12s%s',$parish->diocese,$parish->name);
-        }); 
+            return sprintf('%-12s%s',$parish->diocese->contact_a->organization_name,$parish->organization_name);
+        });
+        
+        //dd($parishes[76]);
         return view('parishes.index',compact('parishes'));   //
     
     }
@@ -43,15 +66,22 @@ class ParishesController extends Controller
     public function create()
     {
         //
-        $dioceses = \montserrat\Diocese::orderby('name')->lists('name','id');
-//        $pastors = \montserrat\Person::where('is_pastor','1')->orderby('lastname')->lists('lastname','id');
-        $pastors = \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname," (",title,")") as fullname'), 'id')->where('is_pastor','1')->orderBy('fullname')->lists('fullname','id');
+        // $dioceses = \montserrat\Diocese::orderby('name')->lists('name','id');
+        $dioceses = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_DIOCESE)->orderby('organization_name')->lists('organization_name','id');
+        $pastors = \montserrat\Contact::whereHas('b_relationships', function($query) {
+            $query->whereRelationshipTypeId(RELATIONSHIP_TYPE_PASTOR)->whereIsActive(1);})->orderby('sort_name')->lists('sort_name','id');
         $pastors[0] = 'No pastor assigned';
-      
+        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->lists('name','id');
+        $states->prepend('N/A',0); 
+        $countries = \montserrat\Country::orderby('iso_code')->lists('iso_code','id');
+        $default['state_province_id'] = STATE_PROVINCE_ID_TX;
+        $default['country_id'] = COUNTRY_ID_USA;
+        $countries->prepend('N/A',0); 
+        
   //dd($pastors);
         //$pastors = array();
         //$pastors[0]='Not implemented yet';
-        return view('parishes.create',compact('dioceses','pastors'));  
+        return view('parishes.create',compact('dioceses','pastors','states','countries','default'));  
     
     }
 
@@ -65,27 +95,85 @@ class ParishesController extends Controller
     {
         //
             $this->validate($request, [
-                'name' => 'required',
+                'organization_name' => 'required',
                 'diocese_id' => 'integer|min:0',
                 'pastor_id' => 'integer|min:0',
-                'email' => 'email',
-                'webpage' => 'url'
+                'parish_email_main' => 'email',
+                '$parish_website_main' => 'url'
             ]);
-        $parish = new \montserrat\Parish;
-        $parish->diocese_id = $request->input('diocese_id');
-        $parish->pastor_id= $request->input('pastor_id');
-        $parish->name = $request->input('name');
-        $parish->address1 = $request->input('address1');
-        $parish->address2 = $request->input('address2');
-        $parish->city = $request->input('city');
-        $parish->state = $request->input('state');
-        $parish->zip = $request->input('zip');
-        $parish->phone= $request->input('phone');
-        $parish->fax = $request->input('fax');
-        $parish->email = $request->input('email');
-        $parish->webpage = $request->input('webpage');
-        $parish->notes = $request->input('notes');
+        $parish = new \montserrat\Contact;
+        $parish->organization_name = $request->input('organization_name');
+        $parish->display_name  = $request->input('organization_name');
+        $parish->sort_name  = $request->input('organization_name');
+        $parish->contact_type = CONTACT_TYPE_ORGANIZATION;
+        $parish->subcontact_type = CONTACT_TYPE_PARISH;
         $parish->save();
+        
+        $parish_address= new \montserrat\Address;
+            $parish_address->contact_id=$parish->id;
+            $parish_address->location_type_id=LOCATION_TYPE_MAIN;
+            $parish_address->is_primary=1;
+            $parish_address->street_address=$request->input('street_address');
+            $parish_address->supplemental_address_1=$request->input('supplemental_address_1');
+            $parish_address->city=$request->input('city');
+            $parish_address->state_province_id=$request->input('state_province_id');
+            $parish_address->postal_code=$request->input('postal_code');
+            $parish_address->country_id=$request->input('country_id');  
+        $parish_address->save();
+        
+        $parish_main_phone= new \montserrat\Phone;
+            $parish_main_phone->contact_id=$parish->id;
+            $parish_main_phone->location_type_id=LOCATION_TYPE_MAIN;
+            $parish_main_phone->is_primary=1;
+            $parish_main_phone->phone=$request->input('phone_main_phone');
+            $parish_main_phone->phone_type='Phone';
+        $parish_main_phone->save();
+        
+        $parish_fax_phone= new \montserrat\Phone;
+            $parish_fax_phone->contact_id=$parish->id;
+            $parish_fax_phone->location_type_id=LOCATION_TYPE_MAIN;
+            $parish_fax_phone->phone=$request->input('phone_main_fax');
+            $parish_fax_phone->phone_type='Fax';
+        $parish_fax_phone->save();
+        
+        $parish_email_main = new \montserrat\Email;
+            $parish_email_main->contact_id=$parish->id;
+            $parish_email_main->is_primary=1;
+            $parish_email_main->location_type_id=LOCATION_TYPE_MAIN;
+            $parish_email_main->email=$request->input('email_main');
+        $parish_email_main->save();
+        
+        $parish_website_main = new \montserrat\Website;
+            $parish_website_main->contact_id=$parish->id;
+            $parish_website_main->url=$request->input('website_main');
+            $parish_website_main->website_type='Main';
+        $parish_website_main->save();
+        
+        //TODO: add contact_id which is the id of the creator of the note
+        $parish_note = new \montserrat\Note;
+            $parish_note->entity_table = 'contact';
+            $parish_note->entity_id = $parish->id;
+            $parish_note->note=$request->input('note');
+            $parish_note->subject='Parish note';
+        $parish_note->save();
+        
+        if ($request->input('diocese_id')>0) {
+            $relationship_diocese = new \montserrat\Relationship;
+                $relationship_diocese->contact_id_a = $request->input('diocese_id');
+                $relationship_diocese->contact_id_b = $parish->id;
+                $relationship_diocese->relationship_type_id = RELATIONSHIP_TYPE_DIOCESE;
+                $relationship_diocese->is_active = 1;
+            $relationship_diocese->save();
+        }
+        if ($request->input('pastor_id')>0) {
+            $relationship_pastor = new \montserrat\Relationship;
+                $relationship_diocese->contact_id_a = $parish->id;
+                $relationship_diocese->contact_id_b = $request->input('pastor_id');
+                $relationship_diocese->relationship_type_id = RELATIONSHIP_TYPE_PASTOR;
+                $relationship_diocese->is_active = 1;
+            $relationship_diocese->save();
+        }
+        
 return Redirect::action('ParishesController@index');
     }
 
@@ -98,10 +186,10 @@ return Redirect::action('ParishesController@index');
     public function show($id)
     {
         //
-        $parish = \montserrat\Parish::with('diocese','parishioners','pastor')->findOrFail($id);
+        $parish = \montserrat\Contact::with('pastor.contact_b','diocese.contact_a','addresses.state','addresses.location','phones.location','emails.location','websites','notes','parishioners.contact_b.primary_address.state','parishioners.contact_b.emails','parishioners.contact_b.phones.location')->findOrFail($id);
+        
         //dd($parish);
-        //$parishioners = \montserrat\Retreatant::where('parish_id',$id)->orderBy('lastname')->get();
-        return view('parishes.show',compact('parish','parishioners'));//
+        return view('parishes.show',compact('parish'));//
     
     }
 
@@ -114,11 +202,21 @@ return Redirect::action('ParishesController@index');
     public function edit($id)
     {
         //
-        $dioceses = \montserrat\Diocese::orderby('name')->lists('name','id');
-        $pastors = \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname," ",middlename," (",title,")") as fullname'), 'id')->where('is_pastor','1')->orderBy('fullname')->lists('fullname','id');
-        $parish = \montserrat\Parish::findOrFail($id);
-      $pastors[0] = 'No pastor assigned';
-       return view('parishes.edit',compact('parish','dioceses','pastors'));
+        $dioceses = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_DIOCESE)->orderby('organization_name')->lists('organization_name','id');
+        $pastors = \montserrat\Contact::whereHas('b_relationships', function($query) {
+            $query->whereRelationshipTypeId(RELATIONSHIP_TYPE_PASTOR)->whereIsActive(1);})->orderby('sort_name')->lists('sort_name','id');
+        $dioceses[0] = 'No Diocese assigned';
+        $pastors[0] = 'No pastor assigned';
+        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->lists('name','id');
+        $states->prepend('N/A',0); 
+        $countries = \montserrat\Country::orderby('iso_code')->lists('iso_code','id');
+        $default['state_province_id'] = STATE_PROVINCE_ID_TX;
+        $default['country_id'] = COUNTRY_ID_USA;
+        $countries->prepend('N/A',0); 
+        
+        $parish = \montserrat\Contact::with('pastor.contact_b','diocese.contact_a','primary_address.state','primary_address.location','primary_phone.location','phone_main_fax','primary_email.location','website_main','notes')->findOrFail($id);
+        //dd($parish);
+        return view('parishes.edit',compact('parish','dioceses','pastors','states','countries','defaults'));
     }
 
     /**
@@ -133,29 +231,58 @@ return Redirect::action('ParishesController@index');
         //
 
         $this->validate($request, [
-            'name' => 'required',
+            'organization_name' => 'required',
             'diocese_id' => 'integer|min:0',
             'pastor_id' => 'integer|min:0',
-            'email' => 'email',
-            'webpage' => 'url'
+            'primary_email' => 'email',
+            'website_main' => 'url'
         ]);
-
-        $parish = \montserrat\Parish::findOrFail($request->input('id'));
-        $parish->diocese_id = $request->input('diocese_id');
-        $parish->pastor_id= $request->input('pastor_id');
-        $parish->name = $request->input('name');
-        $parish->address1 = $request->input('address1');
-        $parish->address2 = $request->input('address2');
-        $parish->city = $request->input('city');
-        $parish->state = $request->input('state');
-        $parish->zip = $request->input('zip');
-        $parish->phone= $request->input('phone');
-        $parish->fax = $request->input('fax');
-        $parish->email = $request->input('email');
-        $parish->webpage = $request->input('webpage');
-        $parish->notes = $request->input('notes');
+        $parish = \montserrat\Contact::with('pastor.contact_b','diocese.contact_a','primary_address.state','primary_address.location','primary_phone.location','phone_main_fax','primary_email.location','website_main','notes')->findOrFail($request->input('id'));
+        $parish->organization_name = $request->input('organization_name');
+        $parish->display_name = $request->input('organization_name');
+        $parish->sort_name = $request->input('organization_name');
         $parish->save();
 
+            $diocese = \montserrat\Relationship::findOrNew($parish->diocese->id);
+            $diocese->contact_id_a = $request->input('diocese_id');
+            $diocese->save();
+            
+            if (empty($parish->pastor)) {
+                $pastor = new \montserrat\Relationship;
+            } else {
+                $pastor = \montserrat\Relationship::findOrNew($parish->pastor->id);
+            }
+            $pastor->contact_id_a = $parish->id;
+            $pastor->contact_id_b = $request->input('pastor_id');
+            $pastor->relationship_type_id = RELATIONSHIP_TYPE_PASTOR;
+            $pastor->is_active = 1;
+            $pastor->save();
+            
+            $primary_address = \montserrat\Address::findOrNew($parish->primary_address->id);
+            $primary_address->street_address = $request->input('street_address');
+            $primary_address->supplemental_address_1 = $request->input('supplemental_address_1');
+            $primary_address->city = $request->input('city');
+            $primary_address->state_province_id = $request->input('state_province_id');
+            $primary_address->postal_code = $request->input('postal_code');
+            $primary_address->save();
+        
+            $primary_phone = \montserrat\Phone::findOrNew($parish->primary_phone->id);
+            $primary_phone->phone = $request->input('phone_main_phone');
+            $primary_phone->save();
+            
+            $phone_main_fax = \montserrat\Phone::findOrNew($parish->phone_main_fax->id);
+            $phone_main_fax->phone = $request->input('phone_main_fax');
+            $phone_main_fax->save();
+            
+            $primary_email = \montserrat\Email::findOrNew($parish->primary_email->id);
+            $primary_email->email = $request->input('primary_email');
+            $primary_email->save();
+            
+            $website_main = \montserrat\Website::findOrNew($parish->website_main->id);
+            $website_main->url = $request->input('website_main');
+            $website_main->save();
+        
+        
         return Redirect::action('ParishesController@index');
         
     }
@@ -169,7 +296,7 @@ return Redirect::action('ParishesController@index');
     public function destroy($id)
     {
         //
-         \montserrat\Parish::destroy($id);
+         \montserrat\Contact::destroy($id);
         return Redirect::action('ParishesController@index');
     }
 

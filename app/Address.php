@@ -27,4 +27,6 @@ class Address extends Model
         return $this->belongsTo('\montserrat\Country','country_id','id');
     }
     
+    
+    
 }

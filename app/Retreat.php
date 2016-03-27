@@ -28,15 +28,15 @@ class Retreat extends Model
     }
   
     public function assistant() {
-        return $this->belongsTo('\montserrat\Person','assistantid','id');
+        return $this->belongsTo('\montserrat\Contact','assistantid','id');
     }
     
     public function innkeeper() {
-        return $this->belongsTo('\montserrat\Person','innkeeperid','id');
+        return $this->belongsTo('\montserrat\Contact','innkeeperid','id');
     }
     
     public function retreatmasters() {
-        return $this->belongsToMany('\montserrat\Person','retreatmasters','retreat_id','person_id');
+        return $this->belongsToMany('\montserrat\Contact','retreatmasters','retreat_id','person_id');
     }
     
     public function registrations() {
