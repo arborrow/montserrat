@@ -29,6 +29,12 @@ define('LOCATION_TYPE_WORK',2);
 define('LOCATION_TYPE_MAIN',3);
 define('LOCATION_TYPE_OTHER',4);
 define('LOCATION_TYPE_BILLING',5);
+
+define('CONTACT_DIOCESE_DALLAS',3);
+define('CONTACT_DIOCESE_FORTWORTH',1);
+define('CONTACT_DIOCESE_TYLER',2);
+
+
 class ParishesController extends Controller
 {
     public function __construct()
@@ -237,7 +243,7 @@ return Redirect::action('ParishesController@index');
             'primary_email' => 'email',
             'website_main' => 'url'
         ]);
-        $parish = \montserrat\Contact::with('pastor.contact_b','diocese.contact_a','primary_address.state','primary_address.location','primary_phone.location','phone_main_fax','primary_email.location','website_main','notes')->findOrFail($request->input('id'));
+        $parish = \montserrat\Contact::with('pastor.contact_a','diocese.contact_a','primary_address.state','primary_address.location','primary_phone.location','phone_main_fax','primary_email.location','website_main','notes')->findOrFail($request->input('id'));
         $parish->organization_name = $request->input('organization_name');
         $parish->display_name = $request->input('organization_name');
         $parish->sort_name = $request->input('organization_name');
@@ -302,19 +308,19 @@ return Redirect::action('ParishesController@index');
 
     public function fortworthdiocese()
     {
-        $parishes = \montserrat\Parish::with('diocese','pastor')->orderBy('name', 'asc')->where('diocese_id','1')->get();
+        $parishes= \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('addresses.state','phones','emails','websites','pastor.contact_b','diocese.contact_a')->whereHas('diocese.contact_a', function ($query) {$query->where('contact_id_a','=',CONTACT_DIOCESE_FORTWORTH);})->get();
         return view('parishes.fortworthdiocese',compact('parishes'));   //
     
     }
     public function dallasdiocese()
     {
-        $parishes = \montserrat\Parish::with('diocese','pastor')->orderBy('name', 'asc')->where('diocese_id','3')->get();
+        $parishes= \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('addresses.state','phones','emails','websites','pastor.contact_b','diocese.contact_a')->whereHas('diocese.contact_a', function ($query) {$query->where('contact_id_a','=',CONTACT_DIOCESE_DALLAS);})->get();
         return view('parishes.dallasdiocese',compact('parishes'));   //
     
     }
     public function tylerdiocese()
     {
-        $parishes = \montserrat\Parish::with('diocese','pastor')->orderBy('name', 'asc')->where('diocese_id','2')->get();
+        $parishes= \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('addresses.state','phones','emails','websites','pastor.contact_b','diocese.contact_a')->whereHas('diocese.contact_a', function ($query) {$query->where('contact_id_a','=',CONTACT_DIOCESE_TYLER);})->get();
         return view('parishes.tylerdiocese',compact('parishes'));   //
     
     }

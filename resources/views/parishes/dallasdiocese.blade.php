@@ -27,18 +27,52 @@
                        </tr>
                     </thead>
                     <tbody>
-                        @foreach($parishes as $parish)
+                   @foreach($parishes as $parish)
                         <tr>
-                            <td><a href="../parish/{{$parish->id}}">{{ $parish->name }}</a></td>
-                            <td><a href="../diocese/{{$parish->diocese_id}}">{{ $parish->diocese->name }}</a></td>
-                            <td><a href="../person/{{$parish->pastor_id }}">{{ $parish->pastor->title or ''}} {{ $parish->pastor->firstname or ''}} {{ $parish->pastor->lastname or 'No pastor assigned'}}</a></td>
-                            <td><a href="http://maps.google.com/?q={{$parish->address1}} {{ $parish->address2}} {{ $parish->city}} {{ $parish->state}} {{ $parish->zip}}" target="_blank">{{ $parish->address1}}</a></td>
-                            <td>{{ $parish->phone }}</td>
-                            <td><a href="mailto:{{ $parish->email }}">{{ $parish->email }}</a></td>
-                            <td><a href="{{ $parish->webpage }}" target="_blank">{{ $parish->webpage }}</a></td>
+                            <td><a href="parish/{{$parish->id}}">{{ $parish->organization_name }} </a></td>
+                            <td><a href="diocese/{{$parish->diocese->contact_id_a}}">{{ $parish->diocese->contact_a->organization_name }}</a></td> 
+                            <td>
+                                @if (empty($parish->pastor->contact_b))
+                                No pastor assigned
+                                @else
+                                <a href="contact/{{$parish->pastor->contact_b->id}}">{{ $parish->pastor->contact_b->display_name}}</a>
+                                @endif
+                            </td>
+                            <td>
+                                @foreach($parish->addresses as $address)
+                                @if ($address->is_primary)
+                                <a href="http://maps.google.com/?q={{$address->street_address}} {{ $address->suplemental_address_1}} {{ $address->city}} {{ $address->state->abbreviation}} {{ $address->postal_code}}" target="_blank">
+                                {{ $address->street_address }} ({{ $address->city }})
+                                </a>
+                                @endif
+                                @endforeach
+                            </td>
+                            <td>
+                                @foreach($parish->phones as $phone)
+                                @if (($phone->location_type_id==3) and ($phone->phone_type=="Phone"))  
+                                <a href="tel:{{ $phone->phone }}"> {{ $phone->phone }}</a>
+                                @endif
+                                @endforeach
+                            </td>
+                            <td> 
+                                @foreach($parish->emails as $email)
+                                @if ($email->is_primary)  
+                                <a href="mailto:{{ $email->email }}">{{ $email->email }}</a> 
+                                @endif
+                                @endforeach
+                            </td>
+                            <td>
+                                
+                                @foreach($parish->websites as $website)
+                                 @if(!empty($website->url))
+                                <a href="{{$website->url}}" target="_blank">{{$website->url}}</a><br />
+                                @endif
+                                @endforeach
+                                
+                            </td>
                         </tr>
                         @endforeach
-                    </tbody>
+                       </tbody>
                 </table>
                 @endif
             </div>

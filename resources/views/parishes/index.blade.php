@@ -55,7 +55,7 @@
                             <td>
                                 @foreach($parish->phones as $phone)
                                 @if (($phone->location_type_id==3) and ($phone->phone_type=="Phone"))  
-                                {{ $phone->phone }} 
+                                <a href="tel:{{ $phone->phone }}"> {{ $phone->phone }}</a>
                                 @endif
                                 @endforeach
                             </td>

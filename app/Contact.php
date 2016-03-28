@@ -84,9 +84,14 @@ class Contact extends Model
     public function parishes() {
         return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_DIOCESE);
     }
+    public function dallas_parishes() {
+        return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_DIOCESE)->whereContactIdA(CONTACT_DIOCESE_DALLAS);
+    }
+  
     public function diocese() {
         return $this->hasOne('\montserrat\Relationship','contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_DIOCESE);
     }
+    
     public function parish() {
         return $this->hasOne('\montserrat\Relationship','contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_PARISHIONER);
     }
