@@ -37,17 +37,22 @@
                 <div class="form-group">
                     {!! Form::label('title', 'Title:', ['class' => 'col-md-1'])  !!}
                     {!! Form::text('title', $person->title, ['class' => 'col-md-2']) !!}
-                    {!! Form::label('firstname', 'First:', ['class' => 'col-md-1'])  !!}
-                    {!! Form::text('firstname', $person->firstname, ['class' => 'col-md-2']) !!}
-                    {!! Form::label('middlename', 'Middle:', ['class' => 'col-md-1'])  !!}
-                    {!! Form::text('middlename', $person->middlename, ['class' => 'col-md-2']) !!}
-                    {!! Form::label('lastname', 'Last:', ['class' => 'col-md-1'])  !!}
-                    {!! Form::text('lastname', $person->lastname, ['class' => 'col-md-2']) !!}
+                    {!! Form::label('first_name', 'First:', ['class' => 'col-md-1'])  !!}
+                    {!! Form::text('first_name', $person->first_name, ['class' => 'col-md-2']) !!}
+                    {!! Form::label('middle_name', 'Middle:', ['class' => 'col-md-1'])  !!}
+                    {!! Form::text('middle_name', $person->middle_name, ['class' => 'col-md-2']) !!}
+                    {!! Form::label('last_name', 'Last:', ['class' => 'col-md-1'])  !!}
+                    {!! Form::text('last_name', $person->last_name, ['class' => 'col-md-2']) !!}
                 <div class="clearfix"> </div>
                     {!! Form::label('suffix', 'Suffix:', ['class' => 'col-md-1'])  !!}
                     {!! Form::text('suffix', $person->suffix, ['class' => 'col-md-1']) !!}
-                    {!! Form::label('nickname', 'Nickname: ', ['class' => 'col-md-2'])  !!}
-                    {!! Form::text('nickname', null, ['class' => 'col-md-2']) !!}
+                    {!! Form::label('nick_name', 'Nickname: ', ['class' => 'col-md-2'])  !!}
+                    {!! Form::text('nick_name', $person->nick_name, ['class' => 'col-md-2']) !!}
+                    {!! Form::label('display_name', 'Display name: ', ['class' => 'col-md-2'])  !!}
+                    {!! Form::text('display_name', $person->display_name, ['class' => 'col-md-2']) !!}
+                    {!! Form::label('sort_name', 'Sort name: ', ['class' => 'col-md-2'])  !!}
+                    {!! Form::text('sort_name', $person->sort_name, ['class' => 'col-md-2']) !!}
+
                     
                 </div>
             </span>

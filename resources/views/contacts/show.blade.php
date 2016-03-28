@@ -95,7 +95,9 @@
                 <div class='col-md-4'>
                     <span><h2>Notes</h2>
                         <strong>Notes: </strong>{{$contact->notes}}<br />
-                        <strong>Room Preference: </strong>{{$contact->roompreference}}
+                        <strong>Room Preference: </strong>{{$contact->roompreference}}<br />
+                        <strong>Display name: </strong>{{$contact->display_name}}<br />
+                        <strong>Sort name: </strong>{{$contact->sort_name}}
                     </span>
                 </div>
                 <div class='col-md-4' style="background-color: lightcoral;">
@@ -147,7 +149,7 @@
             
         </div>
         <div class='row'>
-            <div class='col-md-1'><a href="{{ action('PersonsController@edit', $contact->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
+            <div class='col-md-1'><a href="{{ action('ContactsController@edit', $contact->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
             <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['person.destroy', $contact->id]]) !!}
             {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
             {!! Form::close() !!}</div><div class="clearfix"> </div>

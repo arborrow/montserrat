@@ -81,8 +81,8 @@ class ContactsController extends Controller
     {
         //
         $this->validate($request, [
-            'firstname' => 'required',
-            'lastname' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
             'email' => 'email',
             'dob' => 'date',            
             'url' => 'url',
@@ -98,9 +98,18 @@ class ContactsController extends Controller
         $contact->last_name = $request->input('last_name');
         $contact->suffix_id = $request->input('suffix_id');
         $contact->nickname = $request->input('nick_name');
-        $contact->display_name = $contact->first_name.' '.$contact->last_name;
-        $contact->sort_name = $contact->last_name.', '.$contact->first_name;
+        if (empty($request->input('display_name'))) {
+            $contact->display_name = $contact->first_name.' '.$contact->last_name;
+        } else {
+            $contact->display_name = $request->input('display_name');
+        }
         
+        if (empty($request->input('sort_name'))) {
+            $contact->sort_name = $contact->last_name.', '.$contact->first_name;
+        } else {
+            $contact->sort_name = $request->input('sort_name');
+        }
+                
         // emergency contact info
         $contact->emergencycontactname = $request->input('emergencycontactname');
         $contact->emergencycontactphone = $request->input('emergencycontactphone');
@@ -421,8 +430,8 @@ class ContactsController extends Controller
     {
         //
         $this->validate($request, [
-            'firstname' => 'required',
-            'lastname' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
             'email' => 'email',
             'dob' => 'date',
             'url' => 'url',
@@ -431,11 +440,13 @@ class ContactsController extends Controller
         ]);
         $contact = \montserrat\Contact::with('addresses.location','emails.location','phones.location','websites')->findOrFail($request->input('id'));
         $contact->title = $request->input('title');
-        $contact->firstname = $request->input('firstname');
-        $contact->middlename = $request->input('middlename');
-        $contact->lastname = $request->input('lastname');
+        $contact->firstname = $request->input('first_name');
+        $contact->middlename = $request->input('middle_name');
+        $contact->lastname = $request->input('last_name');
         $contact->suffix = $request->input('suffix');
-        $contact->nickname = $request->input('nickname');
+        $contact->nickname = $request->input('nick_name');
+        $contact->display_name = $request->input('display_name');
+        $contact->sort_name = $request->input('sort_name');
         //emergency contact info
         $contact->emergencycontactname = $request->input('emergencycontactname');
         $contact->emergencycontactphone = $request->input('emergencycontactphone');

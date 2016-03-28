@@ -20,25 +20,59 @@
                             <th>Name</th> 
                             <th>Bishop</th> 
                             <th>Address</th> 
-                            <th>Phone</th> 
-                            <th>Email</th> 
-                            <th>Webpage</th> 
+                            <th>Phone(s)</th> 
+                            <th>Email(s)</th> 
+                            <th>Website(s)</th> 
                        </tr>
                     </thead>
                     <tbody>
-                        @foreach($dioceses as $diocese)
+                       @foreach($dioceses as $diocese)
                         <tr>
-                            <td><a href="diocese/{{$diocese->id}}">{{ $diocese->name }}</a></td>
-                            <td><a href="person/{{$diocese->bishop_id}}">{{$diocese->bishop->title}} {{$diocese->bishop->firstname}} {{$diocese->bishop->lastname}}</a></td>
-                            <td><a href="http://maps.google.com/?q={{$diocese->address1}} {{ $diocese->address2}} {{ $diocese->city}} {{ $diocese->state}} {{ $diocese->zip}}" target="_blank">
-                                {{ $diocese->address1 }}
-                                </a>
+                            <td><a href="diocese/{{$diocese->id}}">{{ $diocese->organization_name }} </a></td>
+                            <td>
+                                @if (empty($diocese->bishops))
+                                No Bishop(s) assigned 
+                                @else
+                                @foreach($diocese->bishops as $bishop)
+                                <a href="contact/{{$bishop->contact_id_b}}">{{ $bishop->contact_b->display_name}}</a>
+                                @endforeach
+                                @endif
                             </td>
-                            <td>{{ $diocese->phone }}</td>
-                            <td><a href="mailto:{{ $diocese->email }}">{{ $diocese->email }}</a></td>
-                            <td><a href="{{ $diocese->webpage }}" target="_blank">{{ $diocese->webpage }}</a></td>
+                            <td>
+                                @foreach($diocese->addresses as $address)
+                                @if ($address->is_primary)
+                                <a href="http://maps.google.com/?q={{$address->street_address}} {{ $address->suplemental_address_1}} {{ $address->city}} {{ $address->state->abbreviation}} {{ $address->postal_code}}" target="_blank">
+                                {{ $address->street_address }} ({{ $address->city }})
+                                </a>
+                                @endif
+                                @endforeach
+                            </td>
+                            <td>
+                                @foreach($diocese->phones as $phone)
+                                @if (($phone->location_type_id==3) and ($phone->phone_type=="Phone"))  
+                                <a href="tel:{{ $phone->phone }}"> {{ $phone->phone }}</a>
+                                @endif
+                                @endforeach
+                            </td>
+                            <td> 
+                                @foreach($diocese->emails as $email)
+                                @if ($email->is_primary)  
+                                <a href="mailto:{{ $email->email }}">{{ $email->email }}</a> 
+                                @endif
+                                @endforeach
+                            </td>
+                            <td>
+                                
+                                @foreach($diocese->websites as $website)
+                                 @if(!empty($website->url))
+                                <a href="{{$website->url}}" target="_blank">{{$website->url}}</a><br />
+                                @endif
+                                @endforeach
+                                
+                            </td>
                         </tr>
                         @endforeach
+                      
                     </tbody>
                 </table>
                 @endif

@@ -156,12 +156,14 @@ class ParishesController extends Controller
         $parish_website_main->save();
         
         //TODO: add contact_id which is the id of the creator of the note
-        $parish_note = new \montserrat\Note;
+        if (!empty($request->input('note'))) {
+            $parish_note = new \montserrat\Note;
             $parish_note->entity_table = 'contact';
             $parish_note->entity_id = $parish->id;
             $parish_note->note=$request->input('note');
             $parish_note->subject='Parish note';
-        $parish_note->save();
+            $parish_note->save();
+        }
         
         if ($request->input('diocese_id')>0) {
             $relationship_diocese = new \montserrat\Relationship;

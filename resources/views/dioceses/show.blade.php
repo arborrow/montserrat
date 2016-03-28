@@ -5,43 +5,91 @@
         <div class="jumbotron text-left">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span><h2>{!! $diocese->name !!} (<a href="../person/{{$diocese->bishop->id}}">{{$diocese->bishop->title }} {{$diocese->bishop->firstname}} {{$diocese->bishop->lastname }}</a>) </span>
-                    <span class="back"><a href={{ action('DiocesesController@index') }}>{!! Html::image('img/diocese.png', 'Diocese Index',array('title'=>"Diocese Index",'class' => 'btn btn-primary')) !!}</a></span></h1>
+                    <span><h2>{!! $diocese->organization_name !!}</h2></span>
+                    <span><a href={{ action('DiocesesController@index') }}>{!! Html::image('img/diocese.png', 'Diocese Index',array('title'=>"Diocese Index",'class' => 'btn btn-primary')) !!}</a></span>
                 </div>
-                <div class='row'>
-                    <div class='col-md-6'><strong>Address 1: </strong>
-                        <a href="http://maps.google.com/?q={{$diocese->address1}} {{ $diocese->address2}} {{ $diocese->city}} {{ $diocese->state}} {{ $diocese->zip}}" target="_blank">{{ $diocese->address1}}</a></div>
+                <div class="row">
+                    <div class='col-md-6'>
+                    <strong>Bishop(s)</strong><br />
+                    @foreach ($diocese->bishops as $bishop)
+                    <a href="contact/{{$bishop->contact_id_b}}">{{$bishop->contact_b->display_name}}</a></br >
+                    @endforeach
+                    </div>
                 </div><div class="clearfix"> </div>
+                <div class="row">
+                <div class='col-md-6'>
+                    
+                <span><h2>Addresses</h2>
+                @foreach($diocese->addresses as $address)
+                @if (!empty($address->street_address))
+                <strong>{{$address->location->display_name}}:</strong>
+                
+                <address>
+                    <a href="http://maps.google.com/?q=
+                       {{isset($address->street_address) ? $address->street_address : '' }} 
+                       {{isset($address->city) ? $address->city : ''}} 
+                       {{isset($address->state->abbreviation) ? $address->state->abbreviation : ''}} 
+                       {{isset($address->postal_code) ? $address->postal_code : ''}}" target="_blank">
+                                
+                    {{isset($address->street_address) ? $address->street_address : ''}}
+                        @if (!empty($address->supplemental_address_1))
+                            <br />{{$address->supplemental_address_1}}
+                        @endif   
+                        <br />
+                        {{isset($address->city) ? $address->city : ''}}, 
+                        {{isset($address->state->abbreviation) ? $address->state->abbreviation : ''}} 
+                        {{isset($address->postal_code) ? $address->postal_code : ''}}</a> 
+                <br />@if ($address->country_id=1228) @else {{$address->country_id}} @endif 
+                </address>
+                @endif
+                @endforeach
+                </span></div></div><div class="clearfix"> </div>
                 <div class='row'>
-                    <div class='col-md-6'><strong>Address 2: </strong>{{ $diocese->address2}}</div>
-                </div><div class="clearfix"> </div>
-                <div class='row'>
-                    <div class='col-md-6'><strong>City: </strong>{{ $diocese->city}}</div>
-                    </div><div class="clearfix"> </div>
-                <div class='row'>
-                    <div class='col-md-6'><strong>State: </strong>{{ $diocese->state}}</div>
-                </div><div class="clearfix"> </div>
-                <div class='row'>
-                    <div class='col-md-6'><strong>Zip: </strong>{{ $diocese->zip}}</div>
-                </div><div class="clearfix"> </div>
-                <div class='row'>
-                    <div class='col-md-6'><strong>Phone: </strong>{{ $diocese->phone}}</div>
-                </div><div class="clearfix"> </div>
-                <div class='row'>
-                    <div class='col-md-6'><strong>Fax: </strong>{{ $diocese->fax}}</div>
-                </div><div class="clearfix"> </div>
-                <div class='row'>
-                    <div class='col-md-6'><strong>Email: </strong><a href="mailto:">{{ $diocese->email}}</a></div>
-                </div><div class="clearfix"> </div>
-                <div class='row'>
-                    <div class='col-md-6'><strong>Webpage: </strong><a href="{{ $diocese->webpage}}" target='_blank'>{{ $diocese->webpage}}</a></div>
+                    
+                    <div class='col-md-4'>
+                    <span><h2>Phone Numbers</h2>
+                        @foreach($diocese->phones as $phone)
+                        @if(!empty($phone->phone))
+                            <strong>{{$phone->location->display_name}} - {{$phone->phone_type}}: </strong>{{$phone->phone}} {{$phone->phone_ext}}<br />
+                        @endif
+                            @endforeach
+                    </span>
+                </div>
+                
                 </div><div class="clearfix"> </div>
                 
                 <div class='row'>
-                    <div class='col-md-6'><strong>Notes: </strong>{{ $diocese->notes}}</div>
+                    <div class='col-md-4'>
+                        <span><h2>Electronic Communications</h2>
+                            @foreach($diocese->emails as $email)
+                            @if(!empty($email->email))
+                            <strong>{{$email->location->display_name}} - Email: </strong><a href="mailto:{{$email->email}}">{{$email->email}}</a><br />
+                            @endif
+                            @endforeach
+                            @foreach($diocese->websites as $website)
+                            @if(!empty($website->url))
+                            <strong>{{$website->website_type}} - URL: </strong><a href="{{$website->url}}" target="_blank">{{$website->url}}</a><br />
+                            @endif
+                            @endforeach
+                        </span>
+                    </div>
                 </div><div class="clearfix"> </div>
-            </div>    
-            <div class='row'>
+                
+                <div class='row'>
+                    <div class='col-md-6'>
+                        <span><h2>Notes</h2>
+                            @foreach($diocese->notes as $note)
+                            @if(!empty($note->note))
+                            <strong>{{$note->subject}}: </strong>{{$note->note}} (modified: {{$note->modified_date}})<br />
+                            @endif
+                            @endforeach
+                            
+                        </span>
+                    </div>
+                
+                    
+                </div><div class="clearfix"> </div>
+            </div>            <div class='row'>
                 <div class='col-md-1'><a href="{{ action('DiocesesController@edit', $diocese->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
                 <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['diocese.destroy', $diocese->id]]) !!}
                 {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 

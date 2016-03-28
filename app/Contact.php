@@ -65,6 +65,10 @@ class Contact extends Model
         return $this->hasMany('\montserrat\Email','contact_id','id');
     }
     
+    public function groups() {
+        return $this->hasMany('\montserrat\GroupContact','contact_id','id');
+    }
+    
     public function primary_email() {
         return $this->hasOne('\montserrat\Email','contact_id','id')->whereIsPrimary(1);
     }

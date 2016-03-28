@@ -24,6 +24,10 @@
                         {!! Form::text('suffix_id', null, ['class' => 'col-md-1']) !!}
                         {!! Form::label('nick_name', 'Nickname: ', ['class' => 'col-md-2'])  !!}
                         {!! Form::text('nick_name', null, ['class' => 'col-md-2']) !!}
+                        {!! Form::label('display_name', 'Display name: ', ['class' => 'col-md-2'])  !!}
+                        {!! Form::text('display_name', null, ['class' => 'col-md-2']) !!}
+                        {!! Form::label('sort_name', 'Sort name: ', ['class' => 'col-md-2'])  !!}
+                        {!! Form::text('sort_name', null, ['class' => 'col-md-2']) !!}
                     </div>
                 </span>
             </div>
