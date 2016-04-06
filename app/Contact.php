@@ -50,6 +50,10 @@ class Contact extends Model
         return $this->hasOne('\montserrat\Email','contact_id','id')->whereIsPrimary(1);
     }
     
+    public function emergency_contact() {
+        return $this->hasOne('\montserrat\EmergencyContact','contact_id','id');
+    }
+    
     public function groups() {
         return $this->hasMany('\montserrat\GroupContact','contact_id','id');
     }
@@ -83,6 +87,14 @@ class Contact extends Model
     
     public function pastor() {
         return $this->hasOne('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_PASTOR);
+    }
+    
+    public function prefix() {
+        return $this->hasOne('\montserrat\Prefix','prefix_id','id');
+    }
+    
+    public function suffix() {
+        return $this->hasOne('\montserrat\Suffix','suffix_id','id');
     }
     
     public function touchpoints() {

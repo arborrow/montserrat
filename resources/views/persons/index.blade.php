@@ -38,7 +38,7 @@
                     <tbody>
                         @foreach($persons as $person)
                         <tr>
-                            <td><a href="person/{{ $person->id}}">{{ $person->lastname }}, {{ $person->firstname }}</a></td>
+                            <td><a href="person/{{ $person->id}}">{{ $person->last_name }}, {{ $person->first_name }}</a></td>
                             <td>
                                 @foreach($person->addresses as $address)
                                 @if ($address->is_primary)
@@ -51,14 +51,14 @@
                             <td>
                                 @foreach($person->phones as $phone)
                                 @if (($phone->location_type_id==1) and ($phone->phone_type=="Phone"))  
-                                {{ $phone->phone }} 
+                                <a href="tel:{{ $phone->phone }}">{{ $phone->phone }}</a> 
                                 @endif
                                 @endforeach
                                 
                             <td>
                                 @foreach($person->phones as $phone)
                                 @if (($phone->location_type_id==1) and ($phone->phone_type=="Mobile"))  
-                                {{ $phone->phone }} 
+                                <a href="tel:{{ $phone->phone }}">{{ $phone->phone }}</a> 
                                 @endif
                                 @endforeach
                             </td>
@@ -73,7 +73,7 @@
                                 @if (!isset($person->parish))
                                     N/A
                                 @else
-                                <a href="parish/{{$person->parish->id}}">{{ $person->parish->name }}</a>
+                                <a href="parish/{{$person->parish->contact_id_a}}">{{ $person->parish->contact_a->organization_name }}</a>
                                 @endif
                             </td>
                         </tr>

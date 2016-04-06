@@ -11,8 +11,9 @@
                 <span>
                 <h2>Name</h2>
                     <div class="form-group">
-                        {!! Form::label('title', 'Title: ', ['class' => 'col-md-1'])  !!}
-                        {!! Form::text('title', null, ['class' => 'col-md-1']) !!}
+                        {!! Form::label('prefix_id', 'Title: ', ['class' => 'col-md-1'])  !!}
+                        {!! Form::select('prefix_id', $prefixes, 0, ['class' => 'col-md-2']) !!}
+                        
                         {!! Form::label('first_name', 'First: ', ['class' => 'col-md-1'])  !!}
                         {!! Form::text('first_name', null, ['class' => 'col-md-2']) !!}
                         {!! Form::label('middle_name', 'Middle: ', ['class' => 'col-md-1'])  !!}
@@ -21,7 +22,7 @@
                         {!! Form::text('last_name', null, ['class' => 'col-md-2']) !!}
  <div class="clearfix"> </div>
                         {!! Form::label('suffix_id', 'Suffix: ', ['class' => 'col-md-1'])  !!}
-                        {!! Form::text('suffix_id', null, ['class' => 'col-md-1']) !!}
+                        {!! Form::select('suffix_id', $suffixes, 0, ['class' => 'col-md-2']) !!}
                         {!! Form::label('nick_name', 'Nickname: ', ['class' => 'col-md-2'])  !!}
                         {!! Form::text('nick_name', null, ['class' => 'col-md-2']) !!}
                         {!! Form::label('display_name', 'Display name: ', ['class' => 'col-md-2'])  !!}

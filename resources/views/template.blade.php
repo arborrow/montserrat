@@ -3,17 +3,15 @@
     <head>
         <meta charset="UTF-8">
         <title>Montserrat Retreat House Database</title>
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-        <script src="https://code.jquery.com/jquery.js"></script>
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
+        <script src="{{ asset('js/jquery.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.min.js') }}"></script>
+        <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
+
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
         <link rel="stylesheet" href="{{ asset('css/bootstrap-adaptive-tabs.css') }}">
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script src="//codeorigin.jquery.com/ui/1.10.2/jquery-ui.min.js"></script>
-                <link rel="stylesheet"href="//codeorigin.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script src="//codeorigin.jquery.com/ui/1.10.2/jquery-ui.min.js"></script>
 
     </head>
     
@@ -129,7 +127,8 @@
     $( "#arrived_at" ).datepicker();
     $( "#departed_at" ).datepicker();
     $( "#canceled_at" ).datepicker();
-    $( "#dob" ).datepicker();
+    $( "#birth_date" ).datepicker();
+    $( "#deceased_date" ).datepicker();
     $( "#touched_at" ).datepicker();
     $( "#auto").autocomplete({
         source: "../getdata",
