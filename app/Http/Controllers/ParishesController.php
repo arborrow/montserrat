@@ -194,7 +194,7 @@ return Redirect::action('ParishesController@index');
     public function show($id)
     {
         //
-        $parish = \montserrat\Contact::with('pastor.contact_b','diocese.contact_a','addresses.state','addresses.location','phones.location','emails.location','websites','notes','parishioners.contact_b.primary_address.state','parishioners.contact_b.emails','parishioners.contact_b.phones.location')->findOrFail($id);
+        $parish = \montserrat\Contact::with('pastor.contact_b','diocese.contact_a','addresses.state','addresses.location','phones.location','emails.location','websites','notes','parishioners.contact_b.address_primary.state','parishioners.contact_b.emails','parishioners.contact_b.phones.location')->findOrFail($id);
         
         //dd($parish);
         return view('parishes.show',compact('parish'));//
@@ -222,7 +222,7 @@ return Redirect::action('ParishesController@index');
         $default['country_id'] = COUNTRY_ID_USA;
         $countries->prepend('N/A',0); 
         
-        $parish = \montserrat\Contact::with('pastor.contact_b','diocese.contact_a','primary_address.state','primary_address.location','primary_phone.location','phone_main_fax','primary_email.location','website_main','notes')->findOrFail($id);
+        $parish = \montserrat\Contact::with('pastor.contact_b','diocese.contact_a','address_primary.state','address_primary.location','phone_primary.location','phone_main_fax','email_primary.location','website_main','notes')->findOrFail($id);
         //dd($parish);
         return view('parishes.edit',compact('parish','dioceses','pastors','states','countries','defaults'));
     }
@@ -242,10 +242,10 @@ return Redirect::action('ParishesController@index');
             'organization_name' => 'required',
             'diocese_id' => 'integer|min:0',
             'pastor_id' => 'integer|min:0',
-            'primary_email' => 'email',
+            'email_primary' => 'email',
             'website_main' => 'url'
         ]);
-        $parish = \montserrat\Contact::with('pastor.contact_a','diocese.contact_a','primary_address.state','primary_address.location','primary_phone.location','phone_main_fax','primary_email.location','website_main','notes')->findOrFail($request->input('id'));
+        $parish = \montserrat\Contact::with('pastor.contact_a','diocese.contact_a','address_primary.state','address_primary.location','phone_primary.location','phone_main_fax','email_primary.location','website_main','notes')->findOrFail($request->input('id'));
         $parish->organization_name = $request->input('organization_name');
         $parish->display_name = $request->input('organization_name');
         $parish->sort_name = $request->input('organization_name');
@@ -266,25 +266,25 @@ return Redirect::action('ParishesController@index');
             $pastor->is_active = 1;
             $pastor->save();
             
-            $primary_address = \montserrat\Address::findOrNew($parish->primary_address->id);
-            $primary_address->street_address = $request->input('street_address');
-            $primary_address->supplemental_address_1 = $request->input('supplemental_address_1');
-            $primary_address->city = $request->input('city');
-            $primary_address->state_province_id = $request->input('state_province_id');
-            $primary_address->postal_code = $request->input('postal_code');
-            $primary_address->save();
+            $address_primary = \montserrat\Address::findOrNew($parish->address_primary->id);
+            $address_primary->street_address = $request->input('street_address');
+            $address_primary->supplemental_address_1 = $request->input('supplemental_address_1');
+            $address_primary->city = $request->input('city');
+            $address_primary->state_province_id = $request->input('state_province_id');
+            $address_primary->postal_code = $request->input('postal_code');
+            $address_primary->save();
         
-            $primary_phone = \montserrat\Phone::findOrNew($parish->primary_phone->id);
-            $primary_phone->phone = $request->input('phone_main_phone');
-            $primary_phone->save();
+            $phone_primary = \montserrat\Phone::findOrNew($parish->phone_primary->id);
+            $phone_primary->phone = $request->input('phone_main_phone');
+            $phone_primary->save();
             
             $phone_main_fax = \montserrat\Phone::findOrNew($parish->phone_main_fax->id);
             $phone_main_fax->phone = $request->input('phone_main_fax');
             $phone_main_fax->save();
             
-            $primary_email = \montserrat\Email::findOrNew($parish->primary_email->id);
-            $primary_email->email = $request->input('primary_email');
-            $primary_email->save();
+            $email_primary = \montserrat\Email::findOrNew($parish->email_primary->id);
+            $email_primary->email = $request->input('email_primary');
+            $email_primary->save();
             
             $website_main = \montserrat\Website::findOrNew($parish->website_main->id);
             $website_main->url = $request->input('website_main');

@@ -10,10 +10,10 @@
                 </div>
                 <div class="row">
                     <div class='col-md-6'>
-                    <strong>Bishop(s)</strong><br />
-                    @foreach ($diocese->bishops as $bishop)
-                    <a href="contact/{{$bishop->contact_id_b}}">{{$bishop->contact_b->display_name}}</a></br >
-                    @endforeach
+                    <strong>Bishop</strong><br />
+                    @if (!empty($diocese->bishop))
+                    <a href="contact/{{$diocese->bishop->contact_id_b}}">{{$diocese->bishop->contact_b->display_name}}</a></br >
+                    @endif
                     </div>
                 </div><div class="clearfix"> </div>
                 <div class="row">

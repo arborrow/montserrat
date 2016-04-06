@@ -117,24 +117,24 @@
                         <tr>
                             
                             <td><a href="../person/{{$parishioner->contact_b->id}}">{{ $parishioner->contact_b->display_name }}</a></td>
-                            @if(isset($parishioner->contact_b->primary_address))
+                            @if(isset($parishioner->contact_b->address_primary))
                                 <td>
                                     <a href="http://maps.google.com/?q=
-                                    {{isset($parishioner->contact_b->primary_address->street_address) ? $parishioner->contact_b->primary_address->street_address : '' }} 
-                                    {{isset($parishioner->contact_b->primary_address->city) ? $parishioner->contact_b->primary_address->city : ''}} 
-                                    {{isset($parishioner->contact_b->primary_address->state->abbreviation) ? $parishioner->contact_b->primary_address->state->abbreviation : ''}} 
-                                    {{isset($parishioner->contact_b->primary_address->postal_code) ? $parishioner->contact_b->primary_address->postal_code : ''}}" target="_blank">
+                                    {{isset($parishioner->contact_b->address_primary->street_address) ? $parishioner->contact_b->address_primary->street_address : '' }} 
+                                    {{isset($parishioner->contact_b->address_primary->city) ? $parishioner->contact_b->address_primary->city : ''}} 
+                                    {{isset($parishioner->contact_b->address_primary->state->abbreviation) ? $parishioner->contact_b->address_primary->state->abbreviation : ''}} 
+                                    {{isset($parishioner->contact_b->address_primary->postal_code) ? $parishioner->contact_b->address_primary->postal_code : ''}}" target="_blank">
 
-                                    {{isset($parishioner->contact_b->primary_address->street_address) ? $parishioner->contact_b->primary_address->street_address : ''}}
-                                    @if (!empty($parishioner->contact_b->primary_address->supplemental_address_1))
-                                        <br />{{ $parishioner->contact_b->primary_address->supplemental_address_1 }}
+                                    {{isset($parishioner->contact_b->address_primary->street_address) ? $parishioner->contact_b->address_primary->street_address : ''}}
+                                    @if (!empty($parishioner->contact_b->address_primary->supplemental_address_1))
+                                        <br />{{ $parishioner->contact_b->address_primary->supplemental_address_1 }}
                                     @endif   
                                     <br />
-                                    {{isset($parishioner->contact_b->primary_address->city) ? $parishioner->contact_b->primary_address->city : ''}}, 
-                                    {{isset($parishioner->contact_b->primary_address->state->abbreviation) ? $parishioner->contact_b->primary_address->state->abbreviation : ''}} 
-                                    {{isset($parishioner->contact_b->primary_address->postal_code) ? $parishioner->contact_b->primary_address->postal_code : ''}}</a> 
+                                    {{isset($parishioner->contact_b->address_primary->city) ? $parishioner->contact_b->address_primary->city : ''}}, 
+                                    {{isset($parishioner->contact_b->address_primary->state->abbreviation) ? $parishioner->contact_b->address_primary->state->abbreviation : ''}} 
+                                    {{isset($parishioner->contact_b->address_primary->postal_code) ? $parishioner->contact_b->address_primary->postal_code : ''}}</a> 
                                     <br />
-                                    @if ($parishioner->contact_b->primary_address->country_id=1228) @else {{$parishioner->contact_b->primary_address->country_id}} @endif
+                                    @if ($parishioner->contact_b->address_primary->country_id=1228) @else {{$parishioner->contact_b->address_primary->country_id}} @endif
                                 </td> 
                             @else <td> </td>
                             @endif

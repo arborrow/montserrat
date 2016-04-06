@@ -25,36 +25,36 @@
     <div class="clearfix"> </div>
     <div class="form-group">
         {!! Form::label('street_address', 'Address1:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('street_address', $parish->primary_address->street_address, ['class' => 'col-md-2']) !!}
+        {!! Form::text('street_address', $parish->address_primary->street_address, ['class' => 'col-md-2']) !!}
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
         {!! Form::label('supplemental_address_1', 'Address2:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('supplemental_address_1', $parish->primary_address->supplemental_address_1, ['class' => 'col-md-2']) !!}
+        {!! Form::text('supplemental_address_1', $parish->address_primary->supplemental_address_1, ['class' => 'col-md-2']) !!}
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
         {!! Form::label('city', 'City:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('city', $parish->primary_address->city, ['class' => 'col-md-2']) !!}
+        {!! Form::text('city', $parish->address_primary->city, ['class' => 'col-md-2']) !!}
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
         {!! Form::label('state_province_id', 'State:', ['class' => 'col-md-1']) !!}
-        {!! Form::select('state_province_id', $states, $parish->primary_address->state->id, ['class' => 'col-md-2']) !!}
+        {!! Form::select('state_province_id', $states, $parish->address_primary->state->id, ['class' => 'col-md-2']) !!}
             
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
         {!! Form::label('postal_code', 'Zip:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('postal_code', $parish->primary_address->postal_code, ['class' => 'col-md-2']) !!}
+        {!! Form::text('postal_code', $parish->address_primary->postal_code, ['class' => 'col-md-2']) !!}
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
         {!! Form::label('phone_main_phone', 'Phone:', ['class' => 'col-md-1']) !!}
-        @if (empty($parish->primary_phone))
+        @if (empty($parish->phone_primary))
         {!! Form::text('phone_main_phone', NULL, ['class' => 'col-md-2']) !!}
         @else
-        {!! Form::text('phone_main_phone', $parish->primary_phone->phone, ['class' => 'col-md-2']) !!}
+        {!! Form::text('phone_main_phone', $parish->phone_primary->phone, ['class' => 'col-md-2']) !!}
         @endif
     </div>
     <div class="clearfix"> </div>
@@ -69,8 +69,8 @@
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
-        {!! Form::label('primary_email', 'Email:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('primary_email', $parish->primary_email->email, ['class' => 'col-md-2']) !!}
+        {!! Form::label('email_primary', 'Email:', ['class' => 'col-md-1']) !!}
+        {!! Form::text('email_primary', $parish->email_primary->email, ['class' => 'col-md-2']) !!}
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">

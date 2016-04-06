@@ -12,61 +12,63 @@
     </div><div class="clearfix"> </div>
 
     <div class="form-group">
-        {!! Form::label('name', 'Name:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('name', $diocese->name, ['class' => 'col-md-2']) !!}
+        {!! Form::label('organization_name', 'Name:', ['class' => 'col-md-1']) !!}
+        {!! Form::text('organization_name', $diocese->organization_name, ['class' => 'col-md-2']) !!}
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
-        {!! Form::label('address1', 'Address1:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('address1', $diocese->address1, ['class' => 'col-md-2']) !!}
+        {!! Form::label('street_address', 'Address1:', ['class' => 'col-md-1']) !!}
+        {!! Form::text('street_address', $diocese->address_primary->street_address, ['class' => 'col-md-2']) !!}
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
-        {!! Form::label('address2', 'Address2:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('address2', $diocese->address2, ['class' => 'col-md-2']) !!}
+        {!! Form::label('supplemental_address_1', 'Address2:', ['class' => 'col-md-1']) !!}
+        {!! Form::text('supplemental_address_1', $diocese->address_primary->supplemental_address_1, ['class' => 'col-md-2']) !!}
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
         {!! Form::label('city', 'City:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('city', $diocese->city, ['class' => 'col-md-2']) !!}
+        {!! Form::text('city', $diocese->address_primary->city, ['class' => 'col-md-2']) !!}
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
-        {!! Form::label('state', 'State:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('state', $diocese->state, ['class' => 'col-md-2']) !!}
+        {!! Form::label('state_province_id', 'State:', ['class' => 'col-md-1']) !!}
+        {!! Form::select('state_province_id', $states, $diocese->address_primary->state_province_id, ['class' => 'col-md-2']) !!}
+            
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
-        {!! Form::label('zip', 'Zip:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('zip', $diocese->zip, ['class' => 'col-md-2']) !!}
+        {!! Form::label('postal_code', 'Zip:', ['class' => 'col-md-1']) !!}
+        {!! Form::text('postal_code', $diocese->address_primary->postal_code, ['class' => 'col-md-2']) !!}
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
-        {!! Form::label('phone', 'Phone:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('phone', $diocese->phone, ['class' => 'col-md-2']) !!}
+        {!! Form::label('phone_main_phone', 'Phone:', ['class' => 'col-md-1']) !!}
+        {!! Form::text('phone_main_phone', $diocese->phone_primary->phone, ['class' => 'col-md-2']) !!}
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
-        {!! Form::label('fax', 'Fax:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('fax', $diocese->fax, ['class' => 'col-md-2']) !!}
+        {!! Form::label('phone_main_fax', 'Fax:', ['class' => 'col-md-1']) !!}
+        {!! Form::text('phone_main_fax', $diocese->phone_main_fax->phone, ['class' => 'col-md-2']) !!}
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
-        {!! Form::label('email', 'Email:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('email', $diocese->email, ['class' => 'col-md-2']) !!}
+        {!! Form::label('email_primary', 'Email:', ['class' => 'col-md-1']) !!}
+        {!! Form::text('email_primary', $diocese->email_primary->email, ['class' => 'col-md-2']) !!}
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
-        {!! Form::label('webpage', 'Webpage:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('webpage', $diocese->webpage, ['class' => 'col-md-2']) !!}
+        {!! Form::label('website_main', 'Webpage:', ['class' => 'col-md-1']) !!}
+        {!! Form::text('website_main', $diocese->website_main->url, ['class' => 'col-md-2']) !!}
     </div>
     <div class="clearfix"> </div>
+    <!-- removing notes for now
     <div class="form-group">
         {!! Form::label('notes', 'Notes:', ['class' => 'col-md-1']) !!}
         {!! Form::textarea('notes', $diocese->notes, ['class' => 'col-md-5', 'rows'=>'3']) !!}
     </div>
     <div class="clearfix"> </div>
-    
+    -->
     <div class="form-group">
         {!! Form::image('img/save.png','btnSave',['class' => 'btn btn-primary']) !!}
     </div>
