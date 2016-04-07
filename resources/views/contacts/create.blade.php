@@ -39,12 +39,15 @@
                 <span>
                     <h2>Emergency Contact Information</h2>
                     <div class="form-group">
-                        {!! Form::label('emergencycontactname', 'Name: ', ['class' => 'col-md-1'])  !!}
-                        {!! Form::text('emergencycontactname', null, ['class' => 'col-md-2']) !!}
-                        {!! Form::label('emergencycontactphone', 'Phone: ', ['class' => 'col-md-1'])  !!}
-                        {!! Form::text('emergencycontactphone', null, ['class' => 'col-md-2']) !!}
-                        {!! Form::label('emergencycontactphone2', 'Alternate Phone: ', ['class' => 'col-md-2'])  !!}
-                        {!! Form::text('emergencycontactphone2', null, ['class' => 'col-md-2']) !!}
+                        {!! Form::label('emergency_contact_name', 'Name: ', ['class' => 'col-md-1'])  !!}
+                        {!! Form::text('emergency_contact_name', null, ['class' => 'col-md-2']) !!}
+                        {!! Form::label('emergency_contact_relationship', 'Relationship: ', ['class' => 'col-md-2'])  !!}
+                        {!! Form::text('emergency_contact_relationship', null, ['class' => 'col-md-2']) !!}
+                        <div class="clearfix"> </div>
+                        {!! Form::label('emergency_contact_phone', 'Phone: ', ['class' => 'col-md-1'])  !!}
+                        {!! Form::text('emergency_contact_phone', null, ['class' => 'col-md-2']) !!}
+                        {!! Form::label('emergency_contact_phone_alternate', 'Alternate Phone: ', ['class' => 'col-md-2'])  !!}
+                        {!! Form::text('emergency_contact_phone_alternate', null, ['class' => 'col-md-2']) !!}
                     </div>
                 </span>
             </div>
@@ -92,19 +95,14 @@
                 <span>
                     <h2>Demographics</h2>
                     <div class="form-group">
-                        {!! Form::label('gender', 'Gender:', ['class' => 'col-md-1'])  !!}
-                        {!! Form::select('gender', [
-                            'Female' => 'Female',
-                            'Male' => 'Male',
-                            'Other' => 'Other',
-                            'Unspecified' => 'Unspecified',
-                            ], 'Unspecified', ['class' => 'col-md-2']) !!}
+                        {!! Form::label('gender_id', 'Gender:', ['class' => 'col-md-1'])  !!}
+                        {!! Form::select('gender_id', $genders, 0, ['class' => 'col-md-2']) !!}
                         {!! Form::label('dob', 'DOB:', ['class' => 'col-md-1']) !!}
                         {!! Form::text('dob', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('parish_id', 'Parish:', ['class' => 'col-md-1'])  !!}
-                        {!! Form::select('parish_id', $parishes, 0, ['class' => 'col-md-8']) !!} 
+                        {!! Form::select('parish_id', $parish_list, 0, ['class' => 'col-md-8']) !!} 
                     </div>
                     <div class="form-group">                        
                         {!! Form::label('ethnicity', 'Ethnicity:', ['class' => 'col-md-1'])  !!}

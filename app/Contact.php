@@ -57,6 +57,11 @@ class Contact extends Model
     public function groups() {
         return $this->hasMany('\montserrat\GroupContact','contact_id','id');
     }
+
+    public function languages() {
+        return $this->belongsToMany('\montserrat\Language','contact_languages','contact_id','language_id');
+    }
+
     
     public function notes() {
         return $this->hasMany('\montserrat\Note','entity_id','id')->whereEntityTable('contact');

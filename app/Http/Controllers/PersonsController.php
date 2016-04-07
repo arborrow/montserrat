@@ -65,33 +65,31 @@ class PersonsController extends Controller
      */
     public function create()
     {
-        //
-        //$parishes= \montserrat\Parish::with('diocese')->orderby('name')->lists('name','id');
-        //$parishes = \montserrat\Parish::join('dioceses', 'parishes.diocese_id', '=', 'dioceses.id')->select('parishes.name', 'parishes.id')->lists('parishes.name','parishes.id');
-      
-       
         $parishes = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('address_primary.state','diocese.contact_a')->get();
-        $parishlist[0]='N/A';  
-        
+        $parish_list[0]='N/A';  
+        // while probably not the most efficient way of doing this it gets me the result
         foreach($parishes as $parish) {
-            $parishlist[$parish->id] = $parish->organization_name.' ('.$parish->address_primary->city.') - '.$parish->diocese->contact_a->organization_name;
+            $parish_list[$parish->id] = $parish->organization_name.' ('.$parish->address_primary->city.') - '.$parish->diocese->contact_a->organization_name;
         }
-        
-        //dd($parishlist);
-        $suffixes = \montserrat\Suffix::orderBy('name')->lists('name','id');
-        $suffixes->prepend('N/A',0); 
-        
-        $prefixes= \montserrat\Prefix::orderBy('name')->lists('name','id');
-        $prefixes->prepend('N/A',0); 
-        
-        $states = \montserrat\StateProvince::orderBy('name')->whereCountryId(1228)->lists('name','id');
-        $states->prepend('N/A',0); 
+
         $countries = \montserrat\Country::orderBy('iso_code')->lists('iso_code','id');
         $countries->prepend('N/A',0); 
         $ethnicities = \montserrat\Ethnicity::orderBy('ethnicity')->lists('ethnicity','ethnicity');
-        $languages = \montserrat\Language::orderBy('name')->whereIsActive(1)->lists('label','id');
+        $ethnicities->prepend('N/A',0); 
+        $genders = \montserrat\Gender::orderBy('name')->lists('name','id');
+        $genders ->prepend('N/A',0); 
+        $languages = \montserrat\Language::orderBy('label')->whereIsActive(1)->lists('label','id');
+        $languages->prepend('N/A',0);
+        $prefixes= \montserrat\Prefix::orderBy('name')->lists('name','id');
+        $prefixes->prepend('N/A',0); 
+        $religions = \montserrat\Religion::orderBy('name')->whereIsActive(1)->lists('name','id');
+        $religions->prepend('N/A',0);
+        $states = \montserrat\StateProvince::orderBy('name')->whereCountryId(1228)->lists('name','id');
+        $states->prepend('N/A',0); 
+        $suffixes = \montserrat\Suffix::orderBy('name')->lists('name','id');
+        $suffixes->prepend('N/A',0); 
         
-        return view('persons.create',compact('parishlist','ethnicities','states','countries','suffixes','prefixes','languages')); 
+        return view('persons.create',compact('parish_list','ethnicities','states','countries','suffixes','prefixes','languages','genders','religions')); 
     
     }
 
@@ -110,7 +108,8 @@ class PersonsController extends Controller
             'email_home' => 'email',
             'email_work' => 'email',
             'email_other' => 'email',
-            'dob' => 'date',            
+            'birth_date' => 'date',            
+            'deceased_date' => 'date',            
             'url_main' => 'url',
             'url_work' => 'url',
             'url_facebook' => 'url',
@@ -119,7 +118,10 @@ class PersonsController extends Controller
             'url_linkedin' => 'url',
             'url_twitter' => 'url',
             'parish_id' => 'integer|min:0',
-            'gender' => 'in:Male,Female,Other,Unspecified'
+            'gender_id' => 'integer|min:0',
+            'ethnicity_id' => 'integer|min:0',
+            'religion_id' => 'integer|min:0',
+        
         ]);
                
         $person = new \montserrat\Contact;
@@ -130,8 +132,31 @@ class PersonsController extends Controller
         $person->last_name = $request->input('last_name');
         $person->suffix = $request->input('suffix');
         $person->nick_name = $request->input('nick_name');
-        $person->display_name = $request->input('display_name');
-        $person->sort_name = $request->input('sort_name');
+        
+        if (empty($request->input('display_name'))) {
+            $person->display_name = $person->first_name.' '.$person->last_name;
+        } else {
+            $person->display_name = $request->input('display_name');
+        }
+        if (empty($request->input('sort_name'))) {
+            $person->sort_name = $person->last_name.', '.$person->first_name;
+        } else {
+            $person->sort_name = $request->input('sort_name');
+        }
+
+        // demographic info
+        $person->gender_id = $request->input('gender_id');
+        $person->birth_date= $request->input('birth_date');
+        $person->ethnicity_id = $request->input('ethnicity_id');
+        $person->religion_id = $request->input('religion_id');
+        
+        // CiviCRM stores the language name rather than the language id in the contact's preferred_language field
+        if (!empty($request->input('preferred_language_id'))) {
+            $language = \montserrat\Language::findOrFail($request->input('preferred_language_id'));
+            $person->preferred_language = $language->name;
+        }
+        
+        $person->save();
         
         // emergency contact information - not part of CiviCRM squema 
         $emergency_contact = new \montserrat\EmergencyContact;
@@ -142,40 +167,59 @@ class PersonsController extends Controller
             $emergency_contact->phone_alternate=$request->input('emergency_contact_phone_alternate');
         $emergency_contact->save();
         
-        // demographic info
-        $person->gender = $request->input('gender');
-        $person->dob = $request->input('dob');
-        $person->ethnicity = $request->input('ethnicity');
-        $person->parish_id = $request->input('parish_id');
-        $person->languages = $request->input('languages');
-        // health related info
-        $person->medical = $request->input('medical');
-        $person->dietary = $request->input('dietary');
-        // misc
-        $person->notes = $request->input('notes');
-        $person->roompreference = $request->input('roompreference');
-        // roles, groups, etc.
-        /* $person->is_donor = $request->input('is_donor');
-        $person->is_retreatant = $request->input('is_retreatant');
-        $person->is_director = $request->input('is_director');
-        $person->is_innkeeper = $request->input('is_innkeeper');
-        $person->is_assistant = $request->input('is_assistant');
-        $person->is_captain = $request->input('is_captain');
-        $person->is_staff = $request->input('is_staff');
-        $person->is_volunteer = $request->input('is_volunteer');
-        $person->is_pastor = $request->input('is_pastor');
-        $person->is_bishop = $request->input('is_bishop');
-        $person->is_catholic = $request->input('is_catholic');
-        $person->is_board = $request->input('is_board');
-        $person->is_formerboard = $request->input('is_formerboard');
-        $person->is_jesuit = $request->input('is_jesuit');
-        if (empty($request->input('is_deceased'))) {
-                $person->is_deceased = 0;
-        } else {
-            $person->is_deceased = $request->input('is_deceased');
+        // save parishioner relationship    
+        if ($request->input('parish_id')>0) {
+            $relationship_parishioner = new \montserrat\Relationship;
+                $relationship_parishioner->contact_id_a = $request->input('parish_id');
+                $relationship_parishioner->contact_id_b = $person->id;
+                $relationship_parishioner->relationship_type_id = RELATIONSHIP_TYPE_PARISHIONER;
+                $relationship_parishioner->is_active = 1;
+            $relationship_parishioner->save();
         }
-        */
-        $person->save();
+            
+        // save health, dietary, general and room preference notes
+        
+        if (!empty($request->input('note_health'))) {
+            $person_note_health = new \montserrat\Note;
+            $person_note_health->entity_table = 'contact';
+            $person_note_health->entity_id = $person->id;
+            $person_note_health->note=$request->input('note_health');
+            $person_note_health->subject='Health Note';
+            $person_note_health->save();
+        }
+        
+        if (!empty($request->input('note_dietary'))) {
+            $person_note_dietary = new \montserrat\Note;
+            $person_note_dietary->entity_table = 'contact';
+            $person_note_dietary->entity_id = $person->id;
+            $person_note_dietary->note=$request->input('note_dietary');
+            $person_note_dietary->subject='Dietary Note';
+            $person_note_dietary->save();
+        }
+        
+        if (!empty($request->input('note_contact'))) {
+            $person_note_contact = new \montserrat\Note;
+            $person_note_contact->entity_table = 'contact';
+            $person_note_contact->entity_id = $person->id;
+            $person_note_contact->note=$request->input('note_contact');
+            $person_note_contact->subject='Contact Note';
+            $person_note_contact->save();
+        }
+        
+        if (!empty($request->input('note_room_preference'))) {
+            $person_note_room_preference = new \montserrat\Note;
+            $person_note_room_preference->entity_table = 'contact';
+            $person_note_room_preference->entity_id = $person->id;
+            $person_note_room_preference->note=$request->input('note_room_preference');
+            $person_note_room_preference->subject='Room Preference';
+            $person_note_room_preference->save();
+        }
+        
+        if (empty($request->input('languages')) or in_array(0,$request->input('languages'))) {
+            $person->languages()->detach();
+        } else {
+            $person->languages()->sync($request->input('languages'));
+        }
         
         $home_address= new \montserrat\Address;
             $home_address->contact_id=$person->id;
@@ -335,6 +379,28 @@ class PersonsController extends Controller
             $url_twitter->url=$request->input('url_twitter');
             $url_twitter->website_type='Twitter';
         $url_twitter->save();
+
+        // roles, groups, etc.
+        /* $person->is_donor = $request->input('is_donor');
+        $person->is_retreatant = $request->input('is_retreatant');
+        $person->is_director = $request->input('is_director');
+        $person->is_innkeeper = $request->input('is_innkeeper');
+        $person->is_assistant = $request->input('is_assistant');
+        $person->is_captain = $request->input('is_captain');
+        $person->is_staff = $request->input('is_staff');
+        $person->is_volunteer = $request->input('is_volunteer');
+        $person->is_pastor = $request->input('is_pastor');
+        $person->is_bishop = $request->input('is_bishop');
+        $person->is_catholic = $request->input('is_catholic');
+        $person->is_board = $request->input('is_board');
+        $person->is_formerboard = $request->input('is_formerboard');
+        $person->is_jesuit = $request->input('is_jesuit');
+        if (empty($request->input('is_deceased'))) {
+                $person->is_deceased = 0;
+        } else {
+            $person->is_deceased = $request->input('is_deceased');
+        }
+        */
         
         return Redirect::action('PersonsController@index');//
 

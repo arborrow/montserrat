@@ -100,14 +100,9 @@
                     <h2>Demographics</h2>
                     <div class="form-group">
                         {!! Form::label('gender_id', 'Gender:', ['class' => 'col-md-1'])  !!}
-                        {!! Form::select('gender_id', [
-                            'Female' => 'Female',
-                            'Male' => 'Male',
-                            'Other' => 'Other',
-                            'Unspecified' => 'Unspecified',
-                            ], 'Unspecified', ['class' => 'col-md-2']) !!}
+                        {!! Form::select('gender_id', $genders, 0, ['class' => 'col-md-2']) !!}
                         <div class="clearfix"> </div>
-                        {!! Form::label('birth_date', 'DOB:', ['class' => 'col-md-1']) !!}
+                        {!! Form::label('birth_date', 'Birth Date:', ['class' => 'col-md-2']) !!}
                         {!! Form::text('birth_date', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
                         <div class="clearfix"> </div>
 
@@ -118,9 +113,13 @@
                         
                     </div>
                     <div class="form-group">
+                        {!! Form::label('religion_id', 'Religion:', ['class' => 'col-md-1'])  !!}
+                        {!! Form::select('religion_id', $religions, 1, ['class' => 'col-md-2']) !!} 
+                        <div class="clearfix"> </div>
+                        
                         {!! Form::label('parish_id', 'Parish:', ['class' => 'col-md-1'])  !!}
-                        {!! Form::select('parish_id', $parishlist, 0, ['class' => 'col-md-8']) !!} 
-                    </div>
+                        {!! Form::select('parish_id', $parish_list, 0, ['class' => 'col-md-8']) !!} 
+                        </div>
                     <div class="form-group">                        
                         {!! Form::label('ethnicity_id', 'Ethnicity:', ['class' => 'col-md-1'])  !!}
                         {!! Form::select('ethnicity_id', $ethnicities, 'Unspecified', ['class' => 'col-md-2']) !!}
@@ -128,8 +127,8 @@
                         {!! Form::label('languages', 'Languages:', ['class' => 'col-md-2'])  !!}
                         {!! Form::select('languages[]', $languages, 45, ['class' => 'form-control col-md-2','multiple' => 'multiple','style'=>'width: auto; font-size: inherit;']) !!}
                 
-                        {!! Form::label('preferred_language', 'Preferred Language:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::select('preferred_language', $languages, 45, ['class' => 'col-md-3']) !!}
+                        {!! Form::label('preferred_language_id', 'Preferred Language:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::select('preferred_language_id', $languages, 45, ['class' => 'col-md-3']) !!}
                     </div>
                 </span>
             </div>
@@ -141,10 +140,10 @@
                 <span>
                     <h2>Health Notes</h2>
                     <div class="form-group">
-                        {!! Form::label('medical', 'Medical Notes:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::textarea('medical', null, ['class' => 'col-md-3']) !!}
-                        {!! Form::label('dietary', 'Dietary Notes:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::textarea('dietary', null, ['class' => 'col-md-3']) !!}
+                        {!! Form::label('note_health', 'Health Notes:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::textarea('note_health', null, ['class' => 'col-md-3']) !!}
+                        {!! Form::label('note_dietary', 'Dietary Notes:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::textarea('note_dietary', null, ['class' => 'col-md-3']) !!}
                     </div>
                 </span>
             </div>
@@ -156,10 +155,10 @@
                 <span>
                     <h2>General Notes</h2>
                     <div class="form-group">
-                        {!! Form::label('notes', 'General Notes:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::textarea('notes', null, ['class' => 'col-md-3']) !!}
-                        {!! Form::label('roompreference', 'Room Preference:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::textarea('roompreference', null, ['class' => 'col-md-3']) !!}
+                        {!! Form::label('note_contact', 'General Notes:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::textarea('note_contact', null, ['class' => 'col-md-3']) !!}
+                        {!! Form::label('note_room_preference', 'Room Preference:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::textarea('note_room_preference', null, ['class' => 'col-md-3']) !!}
                     </div>
                 </span>
             </div>

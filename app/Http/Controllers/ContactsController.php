@@ -56,18 +56,31 @@ class ContactsController extends Controller
      */
     public function create()
     {
-        //
-        //$parishes= \montserrat\Parish::with('diocese')->orderby('name')->lists('name','id');
-        //$parishes = \montserrat\Parish::join('dioceses', 'parishes.diocese_id', '=', 'dioceses.id')->select('parishes.name', 'parishes.id')->lists('parishes.name','parishes.id');
-      
-        $parishes = \montserrat\Parish::select(\DB::raw('CONCAT(parishes.name," (",parishes.city,"-",dioceses.name,")") as parishname'), 'parishes.id')->join('dioceses','parishes.diocese_id','=','dioceses.id')->orderBy('parishname')->lists('parishname','parishes.id');
-        $parishes->prepend('N/A',0);  
-        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(1228)->lists('name','id');
-        $states->prepend('N/A',0); 
-        $countries = \montserrat\Country::orderby('iso_code')->lists('iso_code','id');
+        $parishes = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('address_primary.state','diocese.contact_a')->get();
+        $parish_list[0]='N/A';  
+        // while probably not the most efficient way of doing this it gets me the result
+        foreach($parishes as $parish) {
+            $parish_list[$parish->id] = $parish->organization_name.' ('.$parish->address_primary->city.') - '.$parish->diocese->contact_a->organization_name;
+        }
+
+        $countries = \montserrat\Country::orderBy('iso_code')->lists('iso_code','id');
         $countries->prepend('N/A',0); 
-        $ethnicities = \montserrat\Ethnicity::orderby('ethnicity')->lists('ethnicity','ethnicity');
-        return view('contacts.create',compact('parishes','ethnicities','states','countries')); 
+        $ethnicities = \montserrat\Ethnicity::orderBy('ethnicity')->lists('ethnicity','ethnicity');
+        $ethnicities->prepend('N/A',0); 
+        $genders = \montserrat\Gender::orderBy('name')->lists('name','id');
+        $genders ->prepend('N/A',0); 
+        $languages = \montserrat\Language::orderBy('label')->whereIsActive(1)->lists('label','id');
+        $languages->prepend('N/A',0);
+        $prefixes= \montserrat\Prefix::orderBy('name')->lists('name','id');
+        $prefixes->prepend('N/A',0); 
+        $religions = \montserrat\Religion::orderBy('name')->whereIsActive(1)->lists('name','id');
+        $religions->prepend('N/A',0);
+        $states = \montserrat\StateProvince::orderBy('name')->whereCountryId(1228)->lists('name','id');
+        $states->prepend('N/A',0); 
+        $suffixes = \montserrat\Suffix::orderBy('name')->lists('name','id');
+        $suffixes->prepend('N/A',0); 
+
+        return view('contacts.create',compact('parish_list','ethnicities','states','countries','suffixes','prefixes','languages','genders','religions')); 
     
     }
 
@@ -83,11 +96,22 @@ class ContactsController extends Controller
         $this->validate($request, [
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'email',
-            'dob' => 'date',            
-            'url' => 'url',
+            'email_home' => 'email',
+            'email_work' => 'email',
+            'email_other' => 'email',
+            'birth_date' => 'date',            
+            'deceased_date' => 'date',            
+            'url_main' => 'url',
+            'url_work' => 'url',
+            'url_facebook' => 'url',
+            'url_google' => 'url',
+            'url_instagram' => 'url',
+            'url_linkedin' => 'url',
+            'url_twitter' => 'url',
             'parish_id' => 'integer|min:0',
-            'gender' => 'in:Male,Female,Other,Unspecified'
+            'gender_id' => 'integer|min:0',
+            'ethnicity_id' => 'integer|min:0',
+            'religion_id' => 'integer|min:0'
         ]);
         
         $contact = new \montserrat\Contact;
@@ -111,15 +135,23 @@ class ContactsController extends Controller
         }
                 
         // emergency contact info
-        $contact->emergencycontactname = $request->input('emergencycontactname');
-        $contact->emergencycontactphone = $request->input('emergencycontactphone');
-        $contact->emergencycontactphone2 = $request->input('emergencycontactphone2');
+        $emergency_contact = new \montserrat\EmergencyContact;
+            $emergency_contact->contact_id=$person->id;
+            $emergency_contact->name=$request->input('emergency_contact_name');
+            $emergency_contact->relationship=$request->input('emergency_contact_relationship');
+            $emergency_contact->phone=$request->input('emergency_contact_phone');
+            $emergency_contact->phone_alternate=$request->input('emergency_contact_phone_alternate');
+        $emergency_contact->save();
+        
         // demographic info
-        $contact->gender = $request->input('gender');
-        $contact->dob = $request->input('dob');
-        $contact->ethnicity = $request->input('ethnicity');
-        $contact->parish_id = $request->input('parish_id');
+        $contact->gender_id = $request->input('gender_id');
+        $contact->birth_date = $request->input('birth_date');
+        $contact->ethnicity_id = $request->input('ethnicity_id');
+        $contact->religion_id = $request->input('religion_id');
+        
         $contact->languages = $request->input('languages');
+                
+        
         // health related info
         $contact->medical = $request->input('medical');
         $contact->dietary = $request->input('dietary');

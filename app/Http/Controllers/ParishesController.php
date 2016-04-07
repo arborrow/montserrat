@@ -175,11 +175,11 @@ class ParishesController extends Controller
         }
         if ($request->input('pastor_id')>0) {
             $relationship_pastor = new \montserrat\Relationship;
-                $relationship_diocese->contact_id_a = $parish->id;
-                $relationship_diocese->contact_id_b = $request->input('pastor_id');
-                $relationship_diocese->relationship_type_id = RELATIONSHIP_TYPE_PASTOR;
-                $relationship_diocese->is_active = 1;
-            $relationship_diocese->save();
+                $relationship_pastor->contact_id_a = $parish->id;
+                $relationship_pastor->contact_id_b = $request->input('pastor_id');
+                $relationship_pastor->relationship_type_id = RELATIONSHIP_TYPE_PASTOR;
+                $relationship_pastor->is_active = 1;
+            $relationship_pastor->save();
         }
         
 return Redirect::action('ParishesController@index');
