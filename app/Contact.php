@@ -18,6 +18,13 @@ class Contact extends Model
         return $this->belongsToMany('\montserrat\Retreat','retreatmasters','person_id','retreat_id');
     }
 */
+    public function setBirthDateAttribute($date) {
+        if (strlen($date)) {
+            $this->attributes['birth_date'] = Carbon::parse($date);
+        } else {
+            $this->attributes['birth_date'] = null;
+        }
+    }
     public function a_relationships() {
         return $this->hasMany('\montserrat\Relationship','contact_id_a','id');
     }

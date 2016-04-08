@@ -74,7 +74,7 @@ class PersonsController extends Controller
 
         $countries = \montserrat\Country::orderBy('iso_code')->lists('iso_code','id');
         $countries->prepend('N/A',0); 
-        $ethnicities = \montserrat\Ethnicity::orderBy('ethnicity')->lists('ethnicity','ethnicity');
+        $ethnicities = \montserrat\Ethnicity::orderBy('ethnicity')->lists('ethnicity','id');
         $ethnicities->prepend('N/A',0); 
         $genders = \montserrat\Gender::orderBy('name')->lists('name','id');
         $genders ->prepend('N/A',0); 
@@ -126,12 +126,13 @@ class PersonsController extends Controller
                
         $person = new \montserrat\Contact;
         // name info
-        $person->title = $request->input('title');
+        $person->prefix_id = $request->input('prefix_id');
         $person->first_name = $request->input('first_name');
         $person->middle_name = $request->input('middle_name');
         $person->last_name = $request->input('last_name');
-        $person->suffix = $request->input('suffix');
+        $person->suffix_id = $request->input('suffix_id');
         $person->nick_name = $request->input('nick_name');
+        $person->contact_type = CONTACT_TYPE_INDIVIDUAL;
         
         if (empty($request->input('display_name'))) {
             $person->display_name = $person->first_name.' '.$person->last_name;

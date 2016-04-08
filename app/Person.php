@@ -11,13 +11,13 @@ class Person extends Model
     //
     use SoftDeletes;
     protected $table = 'persons';
-    protected $dates = ['dob', 'created_at', 'updated_at', 'deleted_at']; 
+    protected $dates = ['birth_date', 'deceased_date', 'created_at', 'updated_at', 'deleted_at']; 
     
-    public function setDobAttribute($date) {
+    public function setBirthDateAttribute($date) {
         if (strlen($date)) {
-            $this->attributes['dob'] = Carbon::parse($date);
+            $this->attributes['birth_date'] = Carbon::parse($date);
         } else {
-            $this->attributes['dob'] = null;
+            $this->attributes['birth_date'] = null;
         }
     }
     
