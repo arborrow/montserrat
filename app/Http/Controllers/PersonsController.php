@@ -416,7 +416,7 @@ class PersonsController extends Controller
     public function show($id)
     {
         //
-       $person = \montserrat\Person::with('touchpoints','touchpoints.staff','websites','addresses.location','addresses.state','addresses.country','emails.location','phones','phones.location')->findOrFail($id);
+       $person = \montserrat\Contact::with('touchpoints','touchpoints.staff','websites','addresses.location','addresses.state','addresses.country','emails.location','phones','phones.location','prefix','suffix')->findOrFail($id);
        
        //dd($person);
        return view('persons.show',compact('person'));//
@@ -432,15 +432,70 @@ class PersonsController extends Controller
     public function edit($id)
     {
         //
-        $person = \montserrat\Person::with('addresses.location','emails.location','phones.location','websites')->find($id);
+        $person = \montserrat\Contact::with('prefix','suffix','addresses.location','emails.location','phones.location','websites','parish','emergency_contact','notes')->find($id);
         //dd($person);
-        $parishes = \montserrat\Parish::select(\DB::raw('CONCAT(parishes.name," (",parishes.city,"-",dioceses.name,")") as parishname'), 'parishes.id')->join('dioceses','parishes.diocese_id','=','dioceses.id')->orderBy('parishname')->lists('parishname','parishes.id');
-        $parishes->prepend('N/A',0); 
-        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(1228)->lists('name','id');
-        $states->prepend('N/A',0); 
-        $countries = \montserrat\Country::orderby('iso_code')->lists('iso_code','id');
+        
+        $parishes = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('address_primary.state','diocese.contact_a')->get();
+        $parish_list[0]='N/A';  
+        // while probably not the most efficient way of doing this it gets me the result
+        foreach($parishes as $parish) {
+            $parish_list[$parish->id] = $parish->organization_name.' ('.$parish->address_primary->city.') - '.$parish->diocese->contact_a->organization_name;
+        }
+        if (!empty($person->parish)) {
+            $person->parish_id = $person->parish->contact_id_a;
+        } else {
+            $person->parish_id = 0;
+        }
+        $preferred_language = \montserrat\Language::whereName($person->preferred_language)->first();
+        if (!empty($preferred_language)) {
+            $person->preferred_language_id=$preferred_language->id;
+        }
+        else {
+            $person->preferred_language_id = 0;
+        }
+        
+        //again not at all elegant but this parses out the notes for easy display and use in the edit blade
+        $person->note_health='';
+        $person->note_dietary='';
+        $person->note_contact='';
+        $person->note_room_preference='';
+        
+        if (!empty($person->notes)) {
+            foreach($person->notes as $note) {
+                if ($note->subject=="Health Note") {
+                    $person->note_health = $note->note;
+                }
+
+                if ($note->subject=='Dietary Note') {
+                    $person->note_dietary = $note->note;
+                }
+
+                if ($note->subject=='Contact Note') {
+                    $person->note_contact = $note->note;
+                }
+
+                if ($note->subject=='Room Preference') {
+                    $person->note_room_preference = $note->note;
+                }
+            }
+        } 
+        //dd($person);
+        $countries = \montserrat\Country::orderBy('iso_code')->lists('iso_code','id');
         $countries->prepend('N/A',0); 
-        $ethnicities = \montserrat\Ethnicity::orderby('ethnicity')->lists('ethnicity','ethnicity');
+        $ethnicities = \montserrat\Ethnicity::orderBy('ethnicity')->lists('ethnicity','id');
+        $ethnicities->prepend('N/A',0); 
+        $genders = \montserrat\Gender::orderBy('name')->lists('name','id');
+        $genders ->prepend('N/A',0); 
+        $languages = \montserrat\Language::orderBy('label')->whereIsActive(1)->lists('label','id');
+        $languages->prepend('N/A',0);
+        $prefixes= \montserrat\Prefix::orderBy('name')->lists('name','id');
+        $prefixes->prepend('N/A',0); 
+        $religions = \montserrat\Religion::orderBy('name')->whereIsActive(1)->lists('name','id');
+        $religions->prepend('N/A',0);
+        $states = \montserrat\StateProvince::orderBy('name')->whereCountryId(1228)->lists('name','id');
+        $states->prepend('N/A',0); 
+        $suffixes = \montserrat\Suffix::orderBy('name')->lists('name','id');
+        $suffixes->prepend('N/A',0); 
         
         //create defaults array for easier pre-populating of default values on edit/update blade
         // initialize defaults to avoid undefined index errors
@@ -507,10 +562,8 @@ class PersonsController extends Controller
             $defaults[$website->website_type]['url'] = $website->url;
         }
         //dd($defaults);
-        
 
-//dd($parishes);
-        return view('persons.edit',compact('person','parishes','ethnicities','states','countries','defaults'));
+        return view('persons.edit',compact('prefixes','suffixes','person','parish_list','ethnicities','states','countries','genders','languages','defaults','religions'));
     
     }
 
@@ -525,14 +578,27 @@ class PersonsController extends Controller
     {
         //
         $this->validate($request, [
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'email' => 'email',
-            'dob' => 'date',
-            'url' => 'url',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email_home' => 'email',
+            'email_work' => 'email',
+            'email_other' => 'email',
+            'birth_date' => 'date',            
+            'deceased_date' => 'date',            
+            'url_main' => 'url',
+            'url_work' => 'url',
+            'url_facebook' => 'url',
+            'url_google' => 'url',
+            'url_instagram' => 'url',
+            'url_linkedin' => 'url',
+            'url_twitter' => 'url',
             'parish_id' => 'integer|min:0',
-            'gender' => 'in:Male,Female,Other,Unspecified'
+            'gender_id' => 'integer|min:0',
+            'ethnicity_id' => 'integer|min:0',
+            'religion_id' => 'integer|min:0',
+        
         ]);
+        
         $person = \montserrat\Person::with('addresses.location','emails.location','phones.location','websites')->findOrFail($request->input('id'));
         $person->title = $request->input('title');
         $person->firstname = $request->input('firstname');

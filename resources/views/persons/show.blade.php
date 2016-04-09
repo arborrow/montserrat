@@ -5,27 +5,12 @@
     <div class="jumbotron text-left">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span><h2>{{ isset($person->title) ? $person->title : null }} 
-                {{ isset($person->firstname) ? $person->firstname : null }} 
-                {{ isset($person->middlename) ? $person->middlename : null}} 
-                {{ $person->lastname}}{{isset($person->suffix) ? ', '.$person->suffix : null }}
-                {{ (!empty($person->nickname)) ? "(&quot;$person->nickname&quot;)" : null }}   </span>
+                <span><h2>{{ isset($person->prefix_id) ? $person->prefix->name : null }} 
+                {{ isset($person->first_name) ? $person->first_name : null }} 
+                {{ isset($person->middle_name) ? $person->middle_name : null}} 
+                {{ $person->last_name}}{{isset($person->suffix_id) ? ', '.$person->suffix->name : null }}
+                {{ (!empty($person->nick_name)) ? "(&quot;$person->nick_name&quot;)" : null }}   </span>
                 <span class="back">
-                @if ($person->is_assistant) <span class="back"><a href={{ action('PersonsController@assistants') }}>{!! Html::image('img/assistant.png', 'Assistants Index',array('title'=>"Assistants Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
-                @if ($person->is_bishop) <span class="back"><a href={{ action('PersonsController@bishops') }}>{!! Html::image('img/bishop.png', 'Bishop Index',array('title'=>"Bishop Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
-                @if ($person->is_board) <span class="back"><a href={{ action('PersonsController@boardmembers') }}>{!! Html::image('img/board.png', 'Board Members Index',array('title'=>"Board Members Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
-                @if ($person->is_captain) <span class="back"><a href={{ action('PersonsController@captains') }}>{!! Html::image('img/captain.png', 'Captains Index',array('title'=>"Captains Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
-                @if ($person->is_catholic) <span class="back"><a href={{ action('PersonsController@catholics') }}>{!! Html::image('img/catholic.png', 'Catholics Index',array('title'=>"Catholics Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
-                @if ($person->is_deceased) <span class="back"><a href={{ action('PersonsController@deceased') }}>{!! Html::image('img/deceased.png', 'Deceased Index',array('title'=>"Deceased Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
-                @if ($person->is_director) <span class="back"><a href={{ action('PersonsController@directors') }}>{!! Html::image('img/director.png', 'Directors Index',array('title'=>"Directors Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
-                @if ($person->is_donor) <span class="back"><a href={{ action('PersonsController@donors') }}>{!! Html::image('img/donor.png', 'Donor Index',array('title'=>"Donor Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
-                @if ($person->is_formerboard) <span class="back"><a href={{ action('PersonsController@formerboard') }}>{!! Html::image('img/formerboard.png', 'Former Board Index',array('title'=>"Former Board Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
-                @if ($person->is_innkeeper) <span class="back"><a href={{ action('PersonsController@innkeepers') }}>{!! Html::image('img/innkeeper.png', 'Innkeepers Index',array('title'=>"Innkeepers Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
-                @if ($person->is_jesuit) <span class="back"><a href={{ action('PersonsController@jesuits') }}>{!! Html::image('img/jesuit.png', 'Jesuits Index',array('title'=>"Jesuits Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
-                @if ($person->is_pastor) <span class="back"><a href={{ action('PersonsController@pastors') }}>{!! Html::image('img/pastor.png', 'Pastors Index',array('title'=>"Pastors Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
-                @if ($person->is_retreatant) <span class="back"><a href={{ action('PersonsController@retreatants') }}>{!! Html::image('img/retreatant.png', 'Retreatants Index',array('title'=>"Retreatants Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
-                @if ($person->is_staff) <span class="back"><a href={{ action('PersonsController@employees') }}>{!! Html::image('img/employee.png', 'Employees Index',array('title'=>"Employees Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
-                @if ($person->is_volunteer) <span class="back"><a href={{ action('PersonsController@volunteers') }}>{!! Html::image('img/volunteer.png', 'Volunteers Index',array('title'=>"Volunteers Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
                <span class="btn btn-primary"><a href={{ action('TouchpointsController@add',$person->id) }}>Add Touch point</a></span> 
                </span>                
 
@@ -94,8 +79,8 @@
                 <div class='col-md-8'<span><h2>Demographics:</h2>
                 <strong>Gender: </strong>{{$person->gender}}  
                 <br /><strong>DOB: </strong> 
-                @if (isset($person->dob))
-                    {{date('F d, Y', strtotime($person->dob))}}
+                @if (isset($person->birth_date))
+                    {{date('F d, Y', strtotime($person->birth_date))}}
                 @else 
                     N/A
                 @endif
@@ -110,7 +95,9 @@
                 <div class='col-md-4'>
                     <span><h2>Notes</h2>
                         <strong>Notes: </strong>{{$person->notes}}<br />
-                        <strong>Room Preference: </strong>{{$person->roompreference}}
+                        <strong>Room Preference: </strong>{{$person->roompreference}}<br />
+                        <strong>Display name: </strong>{{$person->display_name}}<br />
+                        <strong>Sort name: </strong>{{$person->sort_name}}
                     </span>
                 </div>
                 <div class='col-md-4' style="background-color: lightcoral;">
@@ -127,40 +114,6 @@
                     <span>
                         <h2>Roles</h2>
                         <div class="form-group">
-                            <span style="white-space: nowrap;"> {!! Form::label('is_donor', 'Donor:', ['class' => 'col-md-2'])  !!}
-                            {!! Form::checkbox('is_donor', 1, $person->is_donor, ['class' => 'col-md-1']) !!}</span>
-                            <span style="white-space: nowrap;"> {!! Form::label('is_retreatant', 'Retreatant:', ['class' => 'col-md-2'])  !!}
-                            {!! Form::checkbox('is_retreatant', 1, $person->is_retreatant,['class' => 'col-md-1']) !!}</span>
-                            <span style="white-space: nowrap;"> {!! Form::label('is_catholic', 'Catholic:', ['class' => 'col-md-2'])  !!}
-                            {!! Form::checkbox('is_catholic', 1, $person->is_catholic,['class' => 'col-md-1']) !!}</span>
-                            <span style="white-space: nowrap;"> {!! Form::label('is_deceased', 'Deceased:', ['class' => 'col-md-2'])  !!}
-                            {!! Form::checkbox('is_deceased', 1, $person->is_deceased,['class' => 'col-md-1']) !!}</span>
-
-                            <span style="white-space: nowrap;"> {!! Form::label('is_director', 'Retreat Director:', ['class' => 'col-md-2'])  !!}
-                            {!! Form::checkbox('is_director', 1, $person->is_director,['class' => 'col-md-1']) !!}</span>
-                            <span style="white-space: nowrap;"> {!! Form::label('is_innkeeper', 'Retreat Innkeeper:', ['class' => 'col-md-2'])  !!}
-                            {!! Form::checkbox('is_innkeeper', 1, $person->is_innkeeper,['class' => 'col-md-1']) !!}</span>
-                            <span style="white-space: nowrap;">  {!! Form::label('is_assistant', 'Retreat Assistant:', ['class' => 'col-md-2'])  !!}
-                            {!! Form::checkbox('is_assistant', 1, $person->is_assistant,['class' => 'col-md-1']) !!}</span>
-                            
-                            <span style="white-space: nowrap;"> {!! Form::label('is_captain', 'Captain:', ['class' => 'col-md-2'])  !!}
-                            {!! Form::checkbox('is_captain', 1, $person->is_captain,['class' => 'col-md-1']) !!}</span>
-                            <span style="white-space: nowrap;"> {!! Form::label('is_volunteer', 'Volunteer:', ['class' => 'col-md-2'])  !!}
-                            {!! Form::checkbox('is_volunteer', 1, $person->is_volunteer,['class' => 'col-md-1']) !!}</span>
-                       
-                            <span style="white-space: nowrap;"> {!! Form::label('is_staff', 'Staff:', ['class' => 'col-md-2'])  !!}
-                            {!! Form::checkbox('is_staff', 1, $person->is_staff,['class' => 'col-md-1']) !!}</span>
-                            <span style="white-space: nowrap;"> {!! Form::label('is_board', 'Board Member:', ['class' => 'col-md-2'])  !!}
-                            {!! Form::checkbox('is_board', 1, $person->is_board,['class' => 'col-md-1']) !!}</span>
-                            <span style="white-space: nowrap;"> {!! Form::label('is_formerboard', 'Former Board:', ['class' => 'col-md-2'])  !!}
-                            {!! Form::checkbox('is_formerboard', 1, $person->is_formerboard,['class' => 'col-md-1']) !!}</span>
-                        
-                            <span style="white-space: nowrap;"> {!! Form::label('is_jesuit', 'Jesuit:', ['class' => 'col-md-2'])  !!}
-                            {!! Form::checkbox('is_jesuit', 1, $person->is_jesuit,['class' => 'col-md-1']) !!}</span>
-                            <span style="white-space: nowrap;"> {!! Form::label('is_pastor', 'Pastor:', ['class' => 'col-md-2'])  !!}
-                            {!! Form::checkbox('is_pastor', 1, $person->is_pastor,['class' => 'col-md-1']) !!}</span>
-                            <span style="white-space: nowrap;"> {!! Form::label('is_bishop', 'Bishop:', ['class' => 'col-md-2'])  !!}
-                            {!! Form::checkbox('is_bishop', 1, $person->is_bishop,['class' => 'col-md-1']) !!}</span>
                         </div>    
                     </span>
                 </div>
@@ -170,7 +123,7 @@
              @if ($person->touchpoints->isEmpty())
                     <p>It is a brand new world, there are no touch points for this person!</p>
                 @else
-                <table class="table"><caption><h2>Touch points for {{ $person->firstname }} {{ $person->lastname }} </h2></caption>
+                <table class="table"><caption><h2>Touch points for {{ $person->display_name }} </h2></caption>
                     <thead>
                         <tr>
                             <th>Date</th>

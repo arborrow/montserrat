@@ -102,11 +102,11 @@ class Contact extends Model
     }
     
     public function prefix() {
-        return $this->hasOne('\montserrat\Prefix','prefix_id','id');
+        return $this->hasOne('\montserrat\Prefix','id','prefix_id');
     }
     
     public function suffix() {
-        return $this->hasOne('\montserrat\Suffix','suffix_id','id');
+        return $this->hasOne('\montserrat\Suffix','id','suffix_id');
     }
     
     public function touchpoints() {

@@ -4,11 +4,11 @@
 
 <div class="jumbotron text-left">
     <span><h2><strong>Edit Person: 
-        {{ isset($person->title) ? $person->title : null }} 
-        {{ isset($person->firstname) ? $person->firstname : null }} 
-        {{ isset($person->middlename) ? $person->middlename : null}} 
-        {{ $person->lastname}}{{isset($person->suffix) ? ', '.$person->suffix : null }}
-        {{ (!empty($person->nickname)) ? "(&quot;$person->nickname&quot;)" : null }}
+        {{ isset($person->prefix_id) ? $person->prefix->name : null }} 
+        {{ isset($person->first_name) ? $person->first_name : null }} 
+        {{ isset($person->middle_name) ? $person->middle_name : null}} 
+        {{ $person->last_name}}{{isset($person->suffix_id) ? ', '.$person->suffix->name : null }}
+        {{ (!empty($person->nick_name)) ? "(&quot;$person->nick_name&quot;)" : null }}
     </strong></h2></span>
 
     <span class="back">
@@ -35,19 +35,21 @@
             <span>
             <h2>Name</h2>
                 <div class="form-group">
-                    {!! Form::label('title', 'Title:', ['class' => 'col-md-1'])  !!}
-                    {!! Form::text('title', $person->title, ['class' => 'col-md-2']) !!}
-                    {!! Form::label('firstname', 'First:', ['class' => 'col-md-1'])  !!}
-                    {!! Form::text('firstname', $person->firstname, ['class' => 'col-md-2']) !!}
-                    {!! Form::label('middlename', 'Middle:', ['class' => 'col-md-1'])  !!}
-                    {!! Form::text('middlename', $person->middlename, ['class' => 'col-md-2']) !!}
-                    {!! Form::label('lastname', 'Last:', ['class' => 'col-md-1'])  !!}
-                    {!! Form::text('lastname', $person->lastname, ['class' => 'col-md-2']) !!}
+                    {!! Form::label('prefix_id', 'Title:', ['class' => 'col-md-1'])  !!}
+                    {!! Form::select('prefix_id', $prefixes, $person->prefix_id, ['class' => 'col-md-2']) !!}
+                      
+                    {!! Form::label('first_name', 'First:', ['class' => 'col-md-1'])  !!}
+                    {!! Form::text('first_name', $person->first_name, ['class' => 'col-md-2']) !!}
+                    {!! Form::label('middle_name', 'Middle:', ['class' => 'col-md-1'])  !!}
+                    {!! Form::text('middle_name', $person->middle_name, ['class' => 'col-md-2']) !!}
+                    {!! Form::label('last_name', 'Last:', ['class' => 'col-md-1'])  !!}
+                    {!! Form::text('last_name', $person->last_name, ['class' => 'col-md-2']) !!}
                 <div class="clearfix"> </div>
-                    {!! Form::label('suffix', 'Suffix:', ['class' => 'col-md-1'])  !!}
-                    {!! Form::text('suffix', $person->suffix, ['class' => 'col-md-1']) !!}
-                    {!! Form::label('nickname', 'Nickname: ', ['class' => 'col-md-2'])  !!}
-                    {!! Form::text('nickname', null, ['class' => 'col-md-2']) !!}
+                    {!! Form::label('suffix_id', 'Suffix:', ['class' => 'col-md-1'])  !!}
+                    {!! Form::select('suffix_id', $suffixes, $person->suffix_id, ['class' => 'col-md-2']) !!}
+                        
+                    {!! Form::label('nick_name', 'Nickname: ', ['class' => 'col-md-2'])  !!}
+                    {!! Form::text('nick_name', $person->nick_name, ['class' => 'col-md-2']) !!}
                     
                 </div>
             </span>
@@ -58,15 +60,38 @@
     <div class='row'>
         <div class='col-md-8'>
             <span>
-            <h2>Emergency Contact Information</h2>
-                <div class="form-group">
-                    {!! Form::label('emergencycontactname', 'Name:', ['class' => 'col-md-1'])  !!}
-                    {!! Form::text('emergencycontactname', $person->emergencycontactname, ['class' => 'col-md-2']) !!}
-                    {!! Form::label('emergencycontactphone', 'Phone:', ['class' => 'col-md-1'])  !!}
-                    {!! Form::text('emergencycontactphone', $person->emergencycontactphone, ['class' => 'col-md-2']) !!}
-                    {!! Form::label('emergencycontactphone2', 'Alternate Phone:', ['class' => 'col-md-2'])  !!}
-                    {!! Form::text('emergencycontactphone2', $person->emergencycontactphone2, ['class' => 'col-md-2']) !!}
-                </div>
+                    <h2>Emergency Contact Information</h2>
+                    <div class="form-group">
+                        
+                        {!! Form::label('emergency_contact_name', 'Name: ', ['class' => 'col-md-1'])  !!}
+                        @if (isset($person->emergency_contact->name))
+                            {!! Form::text('emergency_contact_name', $person->emergency_contact->name, ['class' => 'col-md-2']) !!}
+                        @else
+                           {!! Form::text('emergency_contact_name', null, ['class' => 'col-md-2']) !!}
+                        @endif
+                        
+                        {!! Form::label('emergency_contact_relationship', 'Relationship: ', ['class' => 'col-md-2'])  !!}
+                        @if (isset($person->emergency_contact->relationship))
+                            {!! Form::text('emergency_contact_relationship', $person->emergency_contact->relationship, ['class' => 'col-md-2']) !!}
+                        @else
+                           {!! Form::text('emergency_contact_relationship', null, ['class' => 'col-md-2']) !!}
+                        @endif
+                        
+                        <div class="clearfix"> </div>
+                        {!! Form::label('emergency_contact_phone', 'Phone: ', ['class' => 'col-md-1'])  !!}
+                        @if (isset($person->emergency_contact->phone))
+                            {!! Form::text('emergency_contact_phone', $person->emergency_contact->phone, ['class' => 'col-md-2']) !!}
+                        @else
+                           {!! Form::text('emergency_contact_phone', null, ['class' => 'col-md-2']) !!}
+                        @endif
+                        
+                        {!! Form::label('emergency_contact_phone_alternate', 'Alternate Phone: ', ['class' => 'col-md-2'])  !!}
+                        @if (isset($person->emergency_contact->phone_alternate))
+                            {!! Form::text('emergency_contact_phone_alternate', $person->emergency_contact->phone_alternate, ['class' => 'col-md-2']) !!}
+                        @else
+                           {!! Form::text('emergency_contact_phone_alternate', null, ['class' => 'col-md-2']) !!}
+                        @endif
+                    </div>
             </span>
         </div>
     </div>
@@ -110,60 +135,58 @@
     <div class='row'>
         <div class='col-md-8'>
             <span>
-            <h2>Demographics</h2>
-                <div class="form-group">
-                    {!! Form::label('gender', 'Gender:', ['class' => 'col-md-1'])  !!}
-                    @if (!empty($person->gender)) 
-                    {!! Form::select('gender', [
-                            'Female' => 'Female',
-                            'Male' => 'Male',
-                            'Other' => 'Other',
-                            'Unspecified' => 'Unspecified',
-                            ], $person->gender, ['class' => 'col-md-2']) !!}
-                    @else {!! Form::select('gender', [
-                            'Female' => 'Female',
-                            'Male' => 'Male',
-                            'Other' => 'Other',
-                            'Unspecified' => 'Unspecified',
-                            ], 'Unspecified', ['class' => 'col-md-2']) !!}
-                    @endIf  
-                    {!! Form::label('dob', 'DOB:', ['class' => 'col-md-1']) !!}
-                    {!! Form::text('dob', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
-                </div>
-                <div class="clearfix"> </div>
+                <h2>Demographics</h2>
+                    <div class="form-group">
+                        {!! Form::label('gender_id', 'Gender:', ['class' => 'col-md-1'])  !!}
+                        {!! Form::select('gender_id', $genders, $person->gender_id, ['class' => 'col-md-2']) !!}
+                        <div class="clearfix"> </div>
+                        {!! Form::label('birth_date', 'Birth Date:', ['class' => 'col-md-2']) !!}
+                        {!! Form::text('birth_date', $person->birth_date, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+                        <div class="clearfix"> </div>
 
-                <div class="form-group">
-                    {!! Form::label('parish_id', 'Parish:', ['class' => 'col-md-1'])  !!}
-                    {!! Form::select('parish_id', $parishes, $person->parish_id, ['class' => 'col-md-8']) !!} 
-                    
-                </div>
+                        {!! Form::label('deceased_date', 'Deceased Date:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::text('deceased_date', $person->deceased_date, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+                        {!! Form::label('is_deceased', 'Is Deceased:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::checkbox('is_deceased', $person->is_deceased, false,['class' => 'col-md-1']) !!}
+                        <div class="clearfix"> </div>
+
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('religion_id', 'Religion:', ['class' => 'col-md-1'])  !!}
+                        {!! Form::select('religion_id', $religions, $person->religion_id, ['class' => 'col-md-2']) !!} 
+                        <div class="clearfix"> </div>
+                        
+                        {!! Form::label('parish_id', 'Parish:', ['class' => 'col-md-1'])  !!}
+                        {!! Form::select('parish_id', $parish_list, $person->parish_id, ['class' => 'col-md-8']) !!} 
                     <div class="clearfix"> </div>
-
-                <div class="form-group">
-                    {!! Form::label('ethnicity', 'Ethnicity:', ['class' => 'col-md-1'])  !!}
-                    @if (!empty($person->ethnicity))
-                        {!! Form::select('ethnicity', $ethnicities, $person->ethnicity, ['class' => 'col-md-3']) !!}
-                    @else
-                        {!! Form::select('ethnicity', $ethnicities, 'Unspecified', ['class' => 'col-md-3']) !!}
-                    @endIf    
-                    {!! Form::label('languages', 'Languages:', ['class' => 'col-md-2'])  !!}
-                    {!! Form::text('languages', $person->languages, ['class' => 'col-md-3']) !!}
-                </div>
+                        
+                    </div>
+                    <div class="form-group">                        
+                        {!! Form::label('ethnicity_id', 'Ethnicity:', ['class' => 'col-md-1'])  !!}
+                        {!! Form::select('ethnicity_id', $ethnicities, $person->ethnicity_id, ['class' => 'col-md-2']) !!}
+                        <div class="clearfix"> </div>
+                        {!! Form::label('languages', 'Languages:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::select('languages[]', $languages, $person->languages->lists('id')->toArray(), ['class' => 'form-control col-md-2','multiple' => 'multiple','style'=>'width: auto; font-size: inherit;']) !!}
+                
+                        {!! Form::label('preferred_language_id', 'Preferred Language:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::select('preferred_language_id', $languages, $person->preferred_language_id, ['class' => 'col-md-3']) !!}
+                    </div>
             </span>
         </div>
+        <div class="clearfix"> </div>
+
     </div>
     <div class="clearfix"> </div>
-
 
     <div class='row'>
         <div class='col-md-8'>
             <span>
             <h2>Health Notes</h2>
                 <div class="form-group">
-                    {!! Form::label('medical', 'Medical Notes:', ['class' => 'col-md-2'])  !!}
-                    {!! Form::textarea('medical', $person->medical, ['class' => 'col-md-3']) !!}
-                    {!! Form::label('dietary', 'Dietary Notes:', ['class' => 'col-md-2'])  !!}
-                    {!! Form::textarea('dietary', $person->dietary, ['class' => 'col-md-3']) !!}
+                    {!! Form::label('note_health', 'Health Notes:', ['class' => 'col-md-2'])  !!}
+                    {!! Form::textarea('note_health', $person->note_health, ['class' => 'col-md-3']) !!}
+                    {!! Form::label('note_dietary', 'Dietary Notes:', ['class' => 'col-md-2'])  !!}
+                    {!! Form::textarea('note_dietary', $person->note_dietary, ['class' => 'col-md-3']) !!}
                 </div>
             </span>
         </div>
@@ -176,10 +199,10 @@
             <span>
             <h2>General Notes</h2>
                 <div class="form-group">
-                    {!! Form::label('notes', 'General Notes:', ['class' => 'col-md-2'])  !!}
-                    {!! Form::textarea('notes', $person->notes, ['class' => 'col-md-3']) !!}
-                    {!! Form::label('roompreference', 'Room Preference:', ['class' => 'col-md-2'])  !!}
-                    {!! Form::textarea('roompreference', $person->roompreference, ['class' => 'col-md-3']) !!}
+                    {!! Form::label('note_contact', 'General Notes:', ['class' => 'col-md-2'])  !!}
+                    {!! Form::textarea('note_contact', $person->note_contact, ['class' => 'col-md-3']) !!}
+                    {!! Form::label('note_room_preference', 'Room Preference:', ['class' => 'col-md-2'])  !!}
+                    {!! Form::textarea('note_room_preference', $person->note_room_preference, ['class' => 'col-md-3']) !!}
                 </div>
             </span>
         </div>
@@ -189,7 +212,7 @@
  <div class='row'>
             <div class='col-md-8'>
                 <span>
-                    <h2>Roles</h2>
+                    <h2>Groups and Relationships</h2>
                     <div class="form-group">
                         {!! Form::label('is_donor', 'Donor:', ['class' => 'col-md-2'])  !!}
                         {!! Form::checkbox('is_donor', 1, $person->is_donor, ['class' => 'col-md-1']) !!}

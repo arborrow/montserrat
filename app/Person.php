@@ -49,6 +49,13 @@ class Person extends Model
         return $this->hasMany('\montserrat\Email','contact_id','id');
     }
 
+    public function prefix() {
+        return $this->hasOne('\montserrat\Prefix','prefix_id','prefix_id');
+    }
     
+    public function suffix() {
+        return $this->hasOne('\montserrat\Suffix','suffix_id','id');
+    }
+
         
 }
