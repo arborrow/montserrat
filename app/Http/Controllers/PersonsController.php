@@ -8,31 +8,7 @@ use montserrat\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Input;
 
-define('CONTACT_DIOCESE_DALLAS',3);
-define('CONTACT_DIOCESE_FORTWORTH',1);
-define('CONTACT_DIOCESE_TYLER',2);
 
-define('CONTACT_TYPE_INDIVIDUAL',1);
-define('CONTACT_TYPE_HOUSEHOLD',2);
-define('CONTACT_TYPE_ORGANIZATION',3);
-define('CONTACT_TYPE_PARISH',4);
-define('CONTACT_TYPE_DIOCESE',5);
-define('CONTACT_TYPE_PROVINCE',6);
-define('CONTACT_TYPE_COMMUNITY',7);
-
-define('COUNTRY_ID_USA',1228);
-define('STATE_PROVINCE_ID_TX',1042);
-
-define('LOCATION_TYPE_HOME',1);
-define('LOCATION_TYPE_WORK',2);
-define('LOCATION_TYPE_MAIN',3);
-define('LOCATION_TYPE_OTHER',4);
-define('LOCATION_TYPE_BILLING',5);
-
-define('RELATIONSHIP_TYPE_PARISHIONER',11);
-define('RELATIONSHIP_TYPE_BISHOP',12);
-define('RELATIONSHIP_TYPE_DIOCESE',13);
-define('RELATIONSHIP_TYPE_PASTOR',14);
 
 
 class PersonsController extends Controller
@@ -416,8 +392,49 @@ class PersonsController extends Controller
     public function show($id)
     {
         //
-       $person = \montserrat\Contact::with('touchpoints','touchpoints.staff','websites','addresses.location','addresses.state','addresses.country','emails.location','phones','phones.location','prefix','suffix')->findOrFail($id);
+       $person = \montserrat\Contact::with('addresses.country','addresses.location','addresses.state','emails.location','emergency_contact','ethnicity','languages','notes','parish.contact_a.address_primary','parish.contact_a.diocese.contact_a','phones.location','prefix','suffix','touchpoints','touchpoints.staff','websites')->findOrFail($id);
        
+       //not at all elegant but this parses out the notes for easy display and use in the edit blade
+        $person->note_health='';
+        $person->note_dietary='';
+        $person->note_contact='';
+        $person->note_room_preference='';
+        if (!empty($person->notes)) {
+            foreach($person->notes as $note) {
+                if ($note->subject=="Health Note") {
+                    $person->note_health = $note->note;
+                }
+
+                if ($note->subject=='Dietary Note') {
+                    $person->note_dietary = $note->note;
+                }
+
+                if ($note->subject=='Contact Note') {
+                    $person->note_contact = $note->note;
+                }
+
+                if ($note->subject=='Room Preference') {
+                    $person->note_room_preference = $note->note;
+                }
+            }
+        } 
+        
+        //not pretty but moves some of the processing to the controller rather than the blade
+        $person->parish_id='';
+        $person->parish_name = '';
+        if (!empty($person->parish)) {
+            $person->parish_id = $person->parish->contact_id_a;
+            $person->parish_name = $person->parish->contact_a->organization_name.' ('.$person->parish->contact_a->address_primary->city.') - '.$person->parish->contact_a->diocese->contact_a->organization_name;;
+        }
+       
+        $preferred_language = \montserrat\Language::whereName($person->preferred_language)->first();
+        if (!empty($preferred_language)) {
+            $person->preferred_language_label=$preferred_language->label;
+        }
+        else {
+            $person->preferred_language_label = 'N/A';
+        }
+
        //dd($person);
        return view('persons.show',compact('person'));//
     
@@ -599,51 +616,124 @@ class PersonsController extends Controller
         
         ]);
         
-        $person = \montserrat\Person::with('addresses.location','emails.location','phones.location','websites')->findOrFail($request->input('id'));
-        $person->title = $request->input('title');
-        $person->firstname = $request->input('firstname');
-        $person->middlename = $request->input('middlename');
-        $person->lastname = $request->input('lastname');
-        $person->suffix = $request->input('suffix');
-        $person->nickname = $request->input('nickname');
-        //emergency contact info
-        $person->emergencycontactname = $request->input('emergencycontactname');
-        $person->emergencycontactphone = $request->input('emergencycontactphone');
-        $person->emergencycontactphone2 = $request->input('emergencycontactphone2');
+        //name 
+        $person = \montserrat\Contact::with('addresses.location','emails.location','phones.location','websites','emergency_contact')->findOrFail($request->input('id'));
+        $person->prefix_id = $request->input('prefix_id');
+        $person->first_name = $request->input('first_name');
+        $person->middle_name = $request->input('middle_name');
+        $person->last_name = $request->input('last_name');
+        $person->suffix_id = $request->input('suffix_id');
+        $person->nick_name = $request->input('nick_name');
+        
+        if (empty($request->input('display_name'))) {
+            $person->display_name = $person->first_name.' '.$person->last_name;
+        } else {
+            $person->display_name = $request->input('display_name');
+        }
+        if (empty($request->input('sort_name'))) {
+            $person->sort_name = $person->last_name.', '.$person->first_name;
+        } else {
+            $person->sort_name = $request->input('sort_name');
+        }
+
         //demographic info
-        $person->gender = $request->input('gender');
-        $person->dob = $request->input('dob');
-        $person->ethnicity = $request->input('ethnicity');
-        $person->parish_id = $request->input('parish_id');
-        $person->languages = $request->input('languages');
-        //health info
-        $person->medical = $request->input('medical');
-        $person->dietary = $request->input('dietary');
-        //misc info
-        $person->notes = $request->input('notes');
-        $person->roompreference = $request->input('roompreference');
-        //group or roles info
-        $person->is_donor = $request->input('is_donor');
-        $person->is_retreatant = $request->input('is_retreatant');
-        $person->is_director = $request->input('is_director');
-        $person->is_innkeeper = $request->input('is_innkeeper');
-        $person->is_assistant = $request->input('is_assistant');
-        $person->is_captain = $request->input('is_captain');
-        $person->is_staff = $request->input('is_staff');
-        $person->is_volunteer = $request->input('is_volunteer');
-        $person->is_pastor = $request->input('is_pastor');
-        $person->is_bishop = $request->input('is_bishop');
-        $person->is_catholic = $request->input('is_catholic');
-        $person->is_board = $request->input('is_board');
-        $person->is_formerboard = $request->input('is_formerboard');
-        $person->is_jesuit = $request->input('is_jesuit');
-        $person->is_deceased = $request->input('is_deceased');
-                
+        $person->gender_id = $request->input('gender_id');
+        $person->birth_date = $request->input('birth_date');
+        $person->ethnicity_id = $request->input('ethnicity_id');
+        $person->religion_id = $request->input('religion_id');
+        
+        // CiviCRM stores the language name rather than the language id in the contact's preferred_language field
+        if (!empty($request->input('preferred_language_id'))) {
+            $language = \montserrat\Language::findOrFail($request->input('preferred_language_id'));
+            $person->preferred_language = $language->name;
+        }
+        
         $person->save();
         
+        //emergency contact info
+        $emergency_contact = \montserrat\EmergencyContact::firstOrNew(['contact_id'=>$person->id]);
+            $emergency_contact->contact_id=$person->id;
+            $emergency_contact->name = $request->input('emergency_contact_name');
+            $emergency_contact->relationship = $request->input('emergency_contact_relationship');
+            $emergency_contact->phone = $request->input('emergency_contact_phone');
+            $emergency_contact->phone_alternate = $request->input('emergency_contact_phone_alternate');
+        $emergency_contact->save();
         
+        // save parishioner relationship    
+        if ($request->input('parish_id')>0) {
+            $relationship_parishioner = \montserrat\Relationship::firstOrNew(['contact_id_a'=>$person->parish_id,'contact_id_b'=>$person->id,'relationship_type'=>RELATIONSHIP_TYPE_PARISHIONER,'is_active'=>1]);
+                $relationship_parishioner->contact_id_a = $request->input('parish_id');
+                $relationship_parishioner->contact_id_b = $person->id;
+                $relationship_parishioner->relationship_type_id = RELATIONSHIP_TYPE_PARISHIONER;
+                $relationship_parishioner->is_active = 1;
+            $relationship_parishioner->save();
+        }
+
+      // save health, dietary, general and room preference notes
+        
+        if (!empty($request->input('note_health'))) {
+            $person_note_health = \montserrat\Note::firstOrNew(['entity_table'=>'contact','entity_id'=>$person->id,'subject'=>'Health Note']);
+            $person_note_health->entity_table = 'contact';
+            $person_note_health->entity_id = $person->id;
+            $person_note_health->note=$request->input('note_health');
+            $person_note_health->subject='Health Note';
+            $person_note_health->save();
+        }
+        
+        if (!empty($request->input('note_dietary'))) {
+            $person_note_dietary = \montserrat\Note::firstOrNew(['entity_table'=>'contact','entity_id'=>$person->id,'subject'=>'Dietary Note']);
+            $person_note_dietary->entity_table = 'contact';
+            $person_note_dietary->entity_id = $person->id;
+            $person_note_dietary->note=$request->input('note_dietary');
+            $person_note_dietary->subject='Dietary Note';
+            $person_note_dietary->save();
+        }
+        
+        if (!empty($request->input('note_contact'))) {
+            $person_note_contact = \montserrat\Note::firstOrNew(['entity_table'=>'contact','entity_id'=>$person->id,'subject'=>'Contact Note']);
+            $person_note_contact->entity_table = 'contact';
+            $person_note_contact->entity_id = $person->id;
+            $person_note_contact->note=$request->input('note_contact');
+            $person_note_contact->subject='Contact Note';
+            $person_note_contact->save();
+        }
+        
+        if (!empty($request->input('note_room_preference'))) {
+            $person_note_room_preference = \montserrat\Note::firstOrNew(['entity_table'=>'contact','entity_id'=>$person->id,'subject'=>'Room Preference']);
+            $person_note_room_preference->entity_table = 'contact';
+            $person_note_room_preference->entity_id = $person->id;
+            $person_note_room_preference->note=$request->input('note_room_preference');
+            $person_note_room_preference->subject='Room Preference';
+            $person_note_room_preference->save();
+        }        
+        
+        if (empty($request->input('languages')) or in_array(0,$request->input('languages'))) {
+            $person->languages()->detach();
+        } else {
+            $person->languages()->sync($request->input('languages'));
+        }
+
+        //group or roles info
+        // $person->is_donor = $request->input('is_donor');
+        // $person->is_retreatant = $request->input('is_retreatant');
+        // $person->is_director = $request->input('is_director');
+        // $person->is_innkeeper = $request->input('is_innkeeper');
+        // $person->is_assistant = $request->input('is_assistant');
+        // $person->is_captain = $request->input('is_captain');
+        // $person->is_staff = $request->input('is_staff');
+        // $person->is_volunteer = $request->input('is_volunteer');
+        // $person->is_pastor = $request->input('is_pastor');
+        // $person->is_bishop = $request->input('is_bishop');
+        // $person->is_catholic = $request->input('is_catholic');
+        // $person->is_board = $request->input('is_board');
+        // $person->is_formerboard = $request->input('is_formerboard');
+        // $person->is_jesuit = $request->input('is_jesuit');
+        // $person->is_deceased = $request->input('is_deceased');
+                
         $home_address= \montserrat\Address::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_HOME]);
-        //dd($home_address);
+            $home_address->contact_id=$person->id;
+            $home_address->location_type_id=LOCATION_TYPE_HOME;
+            $home_address->is_primary=1;
             $home_address->street_address=$request->input('address_home_address1');
             $home_address->supplemental_address_1=$request->input('address_home_address2');
             $home_address->city=$request->input('address_home_city');
@@ -653,6 +743,9 @@ class PersonsController extends Controller
         $home_address->save();
          
         $work_address= \montserrat\Address::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_WORK]);
+            $work_address->contact_id=$person->id;
+            $work_address->location_type_id=LOCATION_TYPE_WORK;
+            $work_address->is_primary=0;
             $work_address->street_address=$request->input('address_work_address1');
             $work_address->supplemental_address_1=$request->input('address_work_address2');
             $work_address->city=$request->input('address_work_city');
@@ -662,6 +755,9 @@ class PersonsController extends Controller
         $work_address->save();
         
         $other_address= \montserrat\Address::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_OTHER]);
+            $other_address->contact_id=$person->id;
+            $other_address->location_type_id=LOCATION_TYPE_OTHER;
+            $other_address->is_primary=0;
             $other_address->street_address=$request->input('address_other_address1');
             $other_address->supplemental_address_1=$request->input('address_other_address2');
             $other_address->city=$request->input('address_other_city');
@@ -671,81 +767,127 @@ class PersonsController extends Controller
         $other_address->save();
         
         $phone_home_phone= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_HOME,'phone_type'=>'Phone']);
+            $phone_home_phone->contact_id=$person->id;
+            $phone_home_phone->location_type_id=LOCATION_TYPE_HOME;
             $phone_home_phone->phone=$request->input('phone_home_phone');
+            $phone_home_phone->phone_type='Phone';
         $phone_home_phone->save();
         
         $phone_home_mobile= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_HOME,'phone_type'=>'Mobile']);
-            $phone_home_mobile->phone=$request->input('phone_home_mobile');
+            $phone_home_phone->contact_id=$person->id;
+            $phone_home_phone->location_type_id=LOCATION_TYPE_HOME;
+            $phone_home_phone->phone=$request->input('phone_home_phone');
+            $phone_home_phone->phone_type='Phone';
         $phone_home_mobile->save();
         
         $phone_home_fax= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_HOME,'phone_type'=>'Fax']);
+            $phone_home_fax->contact_id=$person->id;
+            $phone_home_fax->location_type_id=LOCATION_TYPE_HOME;
             $phone_home_fax->phone=$request->input('phone_home_fax');
+            $phone_home_fax->phone_type='Fax';
         $phone_home_fax->save();
         
         $phone_work_phone= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_WORK,'phone_type'=>'Phone']);
+            $phone_work_phone->contact_id=$person->id;
+            $phone_work_phone->location_type_id=LOCATION_TYPE_WORK;
             $phone_work_phone->phone=$request->input('phone_work_phone');
+            $phone_work_phone->phone_type='Phone';
         $phone_work_phone->save();
         
         $phone_work_mobile= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_WORK,'phone_type'=>'Mobile']);
+            $phone_work_mobile->contact_id=$person->id;
+            $phone_work_mobile->location_type_id=LOCATION_TYPE_WORK;
             $phone_work_mobile->phone=$request->input('phone_work_mobile');
+            $phone_work_mobile->phone_type='Mobile';
         $phone_work_mobile->save();
         
         $phone_work_fax= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_WORK,'phone_type'=>'Fax']);
+            $phone_work_fax->contact_id=$person->id;
+            $phone_work_fax->location_type_id=LOCATION_TYPE_WORK;
             $phone_work_fax->phone=$request->input('phone_work_fax');
+            $phone_work_fax->phone_type='Fax';
         $phone_work_fax->save();
         
         $phone_other_phone= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_OTHER,'phone_type'=>'Phone']);
+            $phone_other_phone->contact_id=$person->id;
+            $phone_other_phone->location_type_id=LOCATION_TYPE_OTHER;
             $phone_other_phone->phone=$request->input('phone_other_phone');
+            $phone_other_phone->phone_type='Phone';
         $phone_other_phone->save();
         
         $phone_other_mobile= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_OTHER,'phone_type'=>'Mobile']);
+            $phone_other_mobile->contact_id=$person->id;
+            $phone_other_mobile->location_type_id=LOCATION_TYPE_OTHER;
             $phone_other_mobile->phone=$request->input('phone_other_mobile');
+            $phone_other_mobile->phone_type='Mobile';
         $phone_other_mobile->save();
         
         $phone_other_fax= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_OTHER,'phone_type'=>'Fax']);
+            $phone_other_fax->contact_id=$person->id;
+            $phone_other_fax->location_type_id=LOCATION_TYPE_OTHER;
             $phone_other_fax->phone=$request->input('phone_other_fax');
+            $phone_other_fax->phone_type='Fax';
         $phone_other_fax->save();
         
         $email_home = \montserrat\Email::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_HOME]);
+            $email_home->contact_id=$person->id;
+            $email_home->location_type_id=LOCATION_TYPE_HOME;
             $email_home->email=$request->input('email_home');
         $email_home->save();
         
         $email_work= \montserrat\Email::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_WORK]);
+            $email_work->contact_id=$person->id;
+            $email_work->location_type_id=LOCATION_TYPE_WORK;
             $email_work->email=$request->input('email_work');
         $email_work->save();
         
         $email_other = \montserrat\Email::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_OTHER]);
+            $email_other->contact_id=$person->id;
+            $email_other->location_type_id=LOCATION_TYPE_OTHER;
             $email_other->email=$request->input('email_other');
         $email_other->save();
         
         $url_main = \montserrat\Website::firstOrNew(['contact_id'=>$person->id,'website_type'=>'Main']);
+            $url_main->contact_id=$person->id;
             $url_main->url=$request->input('url_main');
+            $url_main->website_type='Main';
         $url_main->save();
         
         $url_work= \montserrat\Website::firstOrNew(['contact_id'=>$person->id,'website_type'=>'Work']);
+            $url_work->contact_id=$person->id;
             $url_work->url=$request->input('url_work');
+            $url_work->website_type='Work';
         $url_work->save();
         
         $url_facebook= \montserrat\Website::firstOrNew(['contact_id'=>$person->id,'website_type'=>'Facebook']);
+            $url_facebook->contact_id=$person->id;
             $url_facebook->url=$request->input('url_facebook');
+            $url_facebook->website_type='Facebook';
         $url_facebook->save();
         
         $url_google = \montserrat\Website::firstOrNew(['contact_id'=>$person->id,'website_type'=>'Google']);
+            $url_google->contact_id=$person->id;
             $url_google->url=$request->input('url_google');
+            $url_google->website_type='Google';
         $url_google->save();
         
         $url_instagram= \montserrat\Website::firstOrNew(['contact_id'=>$person->id,'website_type'=>'Instagram']);
+            $url_instagram->contact_id=$person->id;
             $url_instagram->url=$request->input('url_instagram');
+            $url_instagram->website_type='Instagram';
         $url_instagram->save();
         
         $url_linkedin= \montserrat\Website::firstOrNew(['contact_id'=>$person->id,'website_type'=>'LinkedIn']);
+            $url_linkedin->contact_id=$person->id;
             $url_linkedin->url=$request->input('url_linkedin');
+            $url_linkedin->website_type='LinkedIn';
         $url_linkedin->save();
         
         $url_twitter= \montserrat\Website::firstOrNew(['contact_id'=>$person->id,'website_type'=>'Twitter']);
+            $url_twitter->contact_id=$person->id;
             $url_twitter->url=$request->input('url_twitter');
+            $url_twitter->website_type='Twitter';
         $url_twitter->save();
-        
         
         return Redirect::action('PersonsController@index');//
         
@@ -761,7 +903,7 @@ class PersonsController extends Controller
     public function destroy($id)
     {
         //
-        \montserrat\Person::destroy($id);
+        \montserrat\Contact::destroy($id);
         return Redirect::action('PersonsController@index');
     
     }

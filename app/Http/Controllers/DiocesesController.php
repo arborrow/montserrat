@@ -8,33 +8,6 @@ use montserrat\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Input;
 
-define('RELATIONSHIP_TYPE_PARISHIONER',11);
-define('RELATIONSHIP_TYPE_BISHOP',12);
-define('RELATIONSHIP_TYPE_DIOCESE',13);
-define('RELATIONSHIP_TYPE_PASTOR',14);
-
-define('CONTACT_TYPE_INDIVIDUAL',1);
-define('CONTACT_TYPE_HOUSEHOLD',2);
-define('CONTACT_TYPE_ORGANIZATION',3);
-define('CONTACT_TYPE_PARISH',4);
-define('CONTACT_TYPE_DIOCESE',5);
-define('CONTACT_TYPE_PROVINCE',6);
-define('CONTACT_TYPE_COMMUNITY',7);
-
-define('COUNTRY_ID_USA',1228);
-define('STATE_PROVINCE_ID_TX',1042);
-
-define('LOCATION_TYPE_HOME',1);
-define('LOCATION_TYPE_WORK',2);
-define('LOCATION_TYPE_MAIN',3);
-define('LOCATION_TYPE_OTHER',4);
-define('LOCATION_TYPE_BILLING',5);
-
-define('CONTACT_DIOCESE_DALLAS',3);
-define('CONTACT_DIOCESE_FORTWORTH',1);
-define('CONTACT_DIOCESE_TYLER',2);
-
-define('GROUP_ID_BISHOP',4);
 
 
 class DiocesesController extends Controller

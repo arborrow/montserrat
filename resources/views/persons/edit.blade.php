@@ -213,7 +213,7 @@
             <div class='col-md-8'>
                 <span>
                     <h2>Groups and Relationships</h2>
-                    <div class="form-group">
+                   <!-- <div class="form-group">
                         {!! Form::label('is_donor', 'Donor:', ['class' => 'col-md-2'])  !!}
                         {!! Form::checkbox('is_donor', 1, $person->is_donor, ['class' => 'col-md-1']) !!}
                         {!! Form::label('is_retreatant', 'Retreatant:', ['class' => 'col-md-2'])  !!}
@@ -252,7 +252,9 @@
                         {!! Form::checkbox('is_pastor', 1, $person->is_pastor,['class' => 'col-md-1']) !!}
                         {!! Form::label('is_bishop', 'Bishop:', ['class' => 'col-md-2'])  !!}
                         {!! Form::checkbox('is_bishop', 1, $person->is_bishop,['class' => 'col-md-1']) !!}
-                    </div>    
+                    </div> 
+                   -->
+                    Not yet implemented
                 </span>
             </div>
         </div><div class="clearfix"> </div>

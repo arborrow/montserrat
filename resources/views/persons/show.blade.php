@@ -5,16 +5,52 @@
     <div class="jumbotron text-left">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span><h2>{{ isset($person->prefix_id) ? $person->prefix->name : null }} 
-                {{ isset($person->first_name) ? $person->first_name : null }} 
-                {{ isset($person->middle_name) ? $person->middle_name : null}} 
-                {{ $person->last_name}}{{isset($person->suffix_id) ? ', '.$person->suffix->name : null }}
-                {{ (!empty($person->nick_name)) ? "(&quot;$person->nick_name&quot;)" : null }}   </span>
                 <span class="back">
+                    <span><h2>
+                        {{ (!empty($person->prefix_id)) ? $person->prefix->name : null }} 
+                        {{ (!empty($person->first_name)) ? $person->first_name : null }} 
+                        {{ (!empty($person->middle_name)) ? $person->middle_name : null}} 
+                        {{ (!empty($person->last_name)) ? $person->lastname : null}}
+                        {{ (!empty($person->suffix_id)) ? ', '.$person->suffix->name : null }}
+                        {{ (!empty($person->nick_name)) ? "(&quot;$person->nick_name&quot;)" : null }}   
+                        </h2>
+                    </span>
+
                <span class="btn btn-primary"><a href={{ action('TouchpointsController@add',$person->id) }}>Add Touch point</a></span> 
                </span>                
 
             </div>
+            <div class='row'>
+                <div class='col-md-4'><span><h2>Names</h2>
+                    <div>
+                        <span>
+                            <strong>Title: </strong>{{ (!empty($person->prefix_id)) ? $person->prefix->name : null }} <br />
+                            <strong>First Name: </strong>{{ (!empty($person->first_name)) ? $person->first_name : null }} <br /> 
+                            <strong>Middle Name: </strong>{{ (!empty($person->middle_name)) ? $person->middle_name : null}} <br />
+                            <strong>Last Name: </strong>{{ (!empty($person->last_name)) ? $person->last_name : null}} <br />
+                            <strong>Suffix: </strong>{{(!empty($person->suffix_id)) ? $person->suffix->name : null }} <br />
+                        </span>
+                        <strong>Nick name:</strong> {{ (!empty($person->nick_name)) ? $person->nick_name : null }} <br />
+                        <strong>Display name: </strong>{{ (!empty($person->display_name)) ? $person->display_name : null }}   <br />
+                        <strong>Sort name: </strong>{{ (!empty($person->sort_name)) ? $person->sort_name : null }}   
+                    </div>
+                </div>
+                <div class='col-md-4' style="background-color: lightcoral;">
+                    <span class="info">
+                        <h2><strong>Emergency Contact Information</strong></h2>
+                        <strong>Name: </strong>{{ isset($person->emergency_contact->name) ? $person->emergency_contact->name : 'N/A' }}
+                        <br /><strong>Relationship: </strong>{{ isset($person->emergency_contact->relationship) ? $person->emergency_contact->relationship : 'N/A' }}
+                        <br /><strong>Phone:</strong> {{ isset($person->emergency_contact->phone) ? $person->emergency_contact->phone : 'N/A' }}
+                        <br /><strong>Alt phone:</strong> {{ isset($person->emergency_contact->phone_alternate) ? $person->emergency_contact->phone_alternate: 'N/A' }}
+                    </span>
+                    <span><h2><strong>Health and Dietary Information</strong></h2>
+                        <strong>Health notes: </strong>{{$person->note_health}}<br />
+                        <strong>Dietary notes: </strong>{{$person->note_dietary}}   
+                    </span>
+            
+                </div>               
+            </div><div class="clearfix"> </div>
+
             <div class='row'><div class='col-md-4'><span><h2>Addresses</h2>
                 @foreach($person->addresses as $address)
                 @if (!empty($address->street_address))
@@ -39,15 +75,8 @@
                 </address>
                 @endif
                 @endforeach
-            </span></div>
-             <div class='col-md-4' style="background-color: lightcoral;"><span class="info">
-                     <h2><strong>Emergency Contact Information</strong></h2>
-                    <strong>Name: </strong>{{ isset($person->emergencycontactname) ? $person->emergencycontactname : 'N/A' }}
-                    <br /><strong>Phone:</strong> {{ isset($person->emergencycontactphone) ? $person->emergencycontactphone : 'N/A' }}
-                    <br /><strong>Alt phone:</strong> {{ isset($person->emergencycontactphone2) ? $person->emergencycontactphone2: 'N/A' }}
-                </span></div>               
-            </div><div class="clearfix"> </div>
-
+                    </span></div></div>
+            
             <div class='row'>
                 <div class='col-md-4'>
                     <span><h2>Phone Numbers</h2>
@@ -77,43 +106,45 @@
 
             <div class='row'><span>
                 <div class='col-md-8'<span><h2>Demographics:</h2>
-                <strong>Gender: </strong>{{$person->gender}}  
-                <br /><strong>DOB: </strong> 
-                @if (isset($person->birth_date))
-                    {{date('F d, Y', strtotime($person->birth_date))}}
-                @else 
-                    N/A
-                @endif
-                <br /><strong>Ethnicity: </strong>{{$person->ethnicity}}   
-                <br /><strong>Parish: </strong>
-                @if (isset($person->parish->id)) <a href="../parish/{{$person->parish->id}}">{{$person->parish->name}}</a> @endIf     
-                <br /><strong>Languages: </strong>{{$person->languages}}</div></span> 
+                    <strong>Gender: </strong>{{ !empty($person->gender_id) ? $person->gender->name: 'N/A' }}  
+                    <br /><strong>Birth Date: </strong> 
+                    @if (isset($person->birth_date))
+                        {{date('F d, Y', strtotime($person->birth_date))}}
+                    @else 
+                        N/A
+                    @endif
+                    <br /><strong>Ethnicity: </strong>{{ !empty($person->ethnicity_id) ? $person->ethnicity->ethnicity: 'N/A' }}    
+                    <br /><strong>Parish: </strong>
+                    @if (isset($person->parish_id)) <a href="../parish/{{$person->parish_id}}">{{$person->parish_name}}</a> @endIf     
+                    <br /><strong>Languages: </strong>
+                        <ul>
+                            @foreach($person->languages as $language)
+                                <li>{{$language->label}}</li> 
+                            @endforeach
+                        </ul>
+                    <strong>Preferred Language: </strong>
+                        {{ isset($person->preferred_language) ? $person->preferred_language_label: 'N/A' }}
+                        
+                </div></span> 
             </div><div class="clearfix"> </div>
 
             <div class='row'>
 
                 <div class='col-md-4'>
                     <span><h2>Notes</h2>
-                        <strong>Notes: </strong>{{$person->notes}}<br />
-                        <strong>Room Preference: </strong>{{$person->roompreference}}<br />
-                        <strong>Display name: </strong>{{$person->display_name}}<br />
-                        <strong>Sort name: </strong>{{$person->sort_name}}
+                        <strong>General Note: </strong>{{$person->note_contact}}<br />
+                        <strong>Room Preference: </strong>{{$person->note_room_preference}}<br />
                     </span>
                 </div>
-                <div class='col-md-4' style="background-color: lightcoral;">
-                    <span><h2><strong>Medical</strong></h2>
-                        <strong>Medical notes: </strong>{{$person->medical}}<br />
-                        <strong>Dietary notes: </strong>{{$person->dietary}}   
-                    </span>
-                </div>
-            
+                
             </div><div class="clearfix"> </div>  
             <div class='row'>
 
                 <div class='col-md-8'>
                     <span>
-                        <h2>Roles</h2>
+                        <h2>Groups and Relationships</h2>
                         <div class="form-group">
+                            Not yet implemented
                         </div>    
                     </span>
                 </div>

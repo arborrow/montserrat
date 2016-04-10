@@ -61,6 +61,14 @@ class Contact extends Model
         return $this->hasOne('\montserrat\EmergencyContact','contact_id','id');
     }
     
+    public function ethnicity() {
+        return $this->hasOne('\montserrat\Ethnicity','id','ethnicity_id');
+    }
+    
+    public function gender() {
+        return $this->hasOne('\montserrat\Gender','id','gender_id');
+    }
+    
     public function groups() {
         return $this->hasMany('\montserrat\GroupContact','contact_id','id');
     }

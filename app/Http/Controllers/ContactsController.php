@@ -8,24 +8,6 @@ use montserrat\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Input;
 
-define('LOCATION_TYPE_HOME',1);
-define('LOCATION_TYPE_WORK',2);
-define('LOCATION_TYPE_MAIN',3);
-define('LOCATION_TYPE_OTHER',4);
-define('LOCATION_TYPE_BILLING',5);
-
-define('RELATIONSHIP_TYPE_PARISHIONER',11);
-define('RELATIONSHIP_TYPE_BISHOP',12);
-define('RELATIONSHIP_TYPE_DIOCESE',13);
-define('RELATIONSHIP_TYPE_PASTOR',14);
-
-define('CONTACT_TYPE_INDIVIDUAL',1);
-define('CONTACT_TYPE_HOUSEHOLD',2);
-define('CONTACT_TYPE_ORGANIZATION',3);
-define('CONTACT_TYPE_PARISH',4);
-define('CONTACT_TYPE_DIOCESE',5);
-define('CONTACT_TYPE_PROVINCE',6);
-define('CONTACT_TYPE_COMMUNITY',7);
 
 class ContactsController extends Controller
 {
@@ -470,7 +452,7 @@ class ContactsController extends Controller
             'parish_id' => 'integer|min:0',
             'gender' => 'in:Male,Female,Other,Unspecified'
         ]);
-        $contact = \montserrat\Contact::with('addresses.location','emails.location','phones.location','websites')->findOrFail($request->input('id'));
+        $contact = \montserrat\Contact::with('addresses.location','emails.location','phones.location','websites','emergency_contact')->findOrFail($request->input('id'));
         $contact->title = $request->input('title');
         $contact->firstname = $request->input('first_name');
         $contact->middlename = $request->input('middle_name');
@@ -480,9 +462,10 @@ class ContactsController extends Controller
         $contact->display_name = $request->input('display_name');
         $contact->sort_name = $request->input('sort_name');
         //emergency contact info
-        $contact->emergencycontactname = $request->input('emergencycontactname');
-        $contact->emergencycontactphone = $request->input('emergencycontactphone');
-        $contact->emergencycontactphone2 = $request->input('emergencycontactphone2');
+        $contact->emergency_contact->name = $request->input('emergency_contact_name');
+        $contact->emergency_contact->relationship = $request->input('emergency_contact_relationship');
+        $contact->emergency_contact->phone = $request->input('emergency_contact_phone');
+        $contact->emergency_contact->phone_alternate = $request->input('emergency_contact_phone_alternate');
         //demographic info
         $contact->gender = $request->input('gender');
         $contact->dob = $request->input('dob');

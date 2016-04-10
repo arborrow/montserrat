@@ -24,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
          $this->app->register('Laracasts\Generators\GeneratorsServiceProvider');
+         require app_path().'/constants.php';
     //
     }
 }
