@@ -7,7 +7,8 @@
         {{ isset($person->prefix_id) ? $person->prefix->name : null }} 
         {{ isset($person->first_name) ? $person->first_name : null }} 
         {{ isset($person->middle_name) ? $person->middle_name : null}} 
-        {{ $person->last_name}}{{isset($person->suffix_id) ? ', '.$person->suffix->name : null }}
+        {{ $person->last_name}}
+        {{ (!empty($person->suffix_id)) ? ', '.$person->suffix->name : null }}
         {{ (!empty($person->nick_name)) ? "(&quot;$person->nick_name&quot;)" : null }}
     </strong></h2></span>
 

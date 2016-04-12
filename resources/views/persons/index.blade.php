@@ -70,10 +70,10 @@
                                 @endforeach
                             </td>
                             <td>
-                                @if (!isset($person->parish))
-                                    N/A
+                                @if ((!empty($person->parish)) AND ($person->parish->contact_id_a>0))
+                                    <a href="parish/{{$person->parish->contact_id_a}}">{{ $person->parish->contact_a->organization_name }}</a>
                                 @else
-                                <a href="parish/{{$person->parish->contact_id_a}}">{{ $person->parish->contact_a->organization_name }}</a>
+                                    N/A
                                 @endif
                             </td>
                         </tr>

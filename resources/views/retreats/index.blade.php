@@ -38,22 +38,22 @@
                                 N/A
                                 @else
                                     @foreach($retreat->retreatmasters as $rm)
-                                        <a href="person/{{ $rm->id}}">{{ $rm->firstname }} {{ $rm->lastname }}</a><br /> 
+                                        <a href="person/{{ $rm->id}}">{{ $rm->display_name }}</a><br /> 
                                     @endforeach
                                 @endif
                             </td>
                             <td>
                                 @if ($retreat->innkeeperid > 0)
-                                    <a href="person/{{ $retreat->innkeeperid }}">{{ $retreat->innkeepername }}</a>
+                                    <a href="person/{{ $retreat->innkeeperid }}">{{ $retreat->innkeeper->display_name }}</a>
                                 @else
-                                    {{$retreat->innkeepername}}
+                                    N/A
                                 @endIf
                             </td>
                             <td>
                                 @if ($retreat->assistantid > 0)
-                                    <a href="person/{{ $retreat->assistantid }}">{{ $retreat->assistantname }}</a>
+                                    <a href="person/{{ $retreat->assistantid }}">{{ $retreat->assistant->display_name }}</a>
                                 @else
-                                    {{$retreat->assistantname}}
+                                    N/A
                                 @endIf
                             </td>
                             <td>{{ $retreat->attending}}</td>
@@ -95,15 +95,30 @@
                             <td>{{ date('F d, Y', strtotime($oldretreat->start)) }} - {{ date('F d, Y', strtotime($oldretreat->end)) }}</td>
                             <td>                            
                             @if ($oldretreat->retreatmasters->isEmpty())
-                            N/A
-                            @else
-                                @foreach($oldretreat->retreatmasters as $rm)
-                                        <a href="person/{{ $rm->id}}">{{ $rm->firstname }} {{ $rm->lastname }}</a><br /> 
-                                @endforeach
+                                N/A
+                                @else
+                                    @foreach($oldretreat->retreatmasters as $rm)
+                                        <a href="person/{{ $rm->id}}">{{ $rm->display_name }}</a><br /> 
+                                    @endforeach
                             @endif
-                        </td>
-                            <td><a href="person/{{ $oldretreat->innkeeperid }}">{{ $oldretreat->innkeepername }}</a></td>
-                            <td><a href="person/{{ $oldretreat->assistantid }}">{{ $oldretreat->assistantname }}</a></td>
+                            </td>
+                        
+                            <td>
+                                @if ($oldretreat->innkeeperid > 0)
+                                    <a href="person/{{ $oldretreat->innkeeperid }}">{{ $oldretreat->innkeeper->display_name }}</a>
+                                @else
+                                    N/A
+                                @endIf
+                            </td>
+                            <td>
+                                @if ($oldretreat->assistantid > 0)
+                                    <a href="person/{{ $oldretreat->assistantid }}">{{ $oldretreat->assistant->display_name }}</a>
+                                @else
+                                    N/A
+                                @endIf
+                            </td>
+
+                            
                             <td>{{ $oldretreat->attending}}</td>
                         </tr>
                         @endforeach

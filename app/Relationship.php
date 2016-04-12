@@ -8,6 +8,8 @@ class Relationship extends Model
 {
     use SoftDeletes;
     protected $table = 'relationship';
+    protected $fillable = ['contact_id_a','contact_id_b','relationship_type_id','is_active','description'];
+            
     public function relationship_type() {
         return $this->hasOne('\montserrat\RelationshipType','id','relationship_type_id');
     }

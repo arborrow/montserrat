@@ -113,6 +113,18 @@ class Contact extends Model
         return $this->hasOne('\montserrat\Prefix','id','prefix_id');
     }
     
+    public function retreat_assistants() {
+        return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_ASSISTANT)->whereIsActive(1);
+    }
+    
+    public function retreat_directors() {
+        return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_DIRECTOR);
+    }
+    
+    public function retreat_innkeepers() {
+        return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_INNKEEPER);
+    }
+    
     public function suffix() {
         return $this->hasOne('\montserrat\Suffix','id','suffix_id');
     }

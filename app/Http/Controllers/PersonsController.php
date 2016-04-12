@@ -578,7 +578,7 @@ class PersonsController extends Controller
         foreach($person->websites as $website) {
             $defaults[$website->website_type]['url'] = $website->url;
         }
-        //dd($defaults);
+        //dd($person);
 
         return view('persons.edit',compact('prefixes','suffixes','person','parish_list','ethnicities','states','countries','genders','languages','defaults','religions'));
     
@@ -661,7 +661,7 @@ class PersonsController extends Controller
         
         // save parishioner relationship    
         if ($request->input('parish_id')>0) {
-            $relationship_parishioner = \montserrat\Relationship::firstOrNew(['contact_id_a'=>$person->parish_id,'contact_id_b'=>$person->id,'relationship_type'=>RELATIONSHIP_TYPE_PARISHIONER,'is_active'=>1]);
+            $relationship_parishioner = \montserrat\Relationship::firstOrNew(['contact_id_a'=>$person->parish_id,'contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_PARISHIONER,'is_active'=>1]);
                 $relationship_parishioner->contact_id_a = $request->input('parish_id');
                 $relationship_parishioner->contact_id_b = $person->id;
                 $relationship_parishioner->relationship_type_id = RELATIONSHIP_TYPE_PARISHIONER;
