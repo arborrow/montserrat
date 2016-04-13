@@ -29,24 +29,24 @@
                     @else
                     <div class='col-md-2'>
                         @foreach($retreat->retreatmasters as $rm)
-                            <a href="person/{{ $rm->id }}">{{ $rm->firstname }} {{ $rm->lastname }} </a><br /> 
+                            <a href="person/{{ $rm->id }}">{{ $rm->display_name }}</a><br /> 
                         @endforeach
                         </div>
                     @endif
 
                     
                 <div class='col-md-3'><strong>Innkeeper: </strong>
-                    @if ($retreat->innkeeperid == 0) 
-                        {{$retreat->innkeepername}}
+                    @if ($retreat->innkeeperid > 0)
+                        <a href="person/{{ $retreat->innkeeperid }}">{{ $retreat->innkeeper->display_name }}</a>
                     @else
-                        <a href="person/{{ $retreat->innkeeperid}}">{{ $retreat->innkeepername}}</a>
+                        N/A
                     @endIf
                 </div>
                 <div class='col-md-3'><strong>Assistant: </strong>
-                    @if ($retreat->assistantid == 0) 
-                        {{$retreat->assistantname}}
+                    @if ($retreat->assistantid > 0)
+                        <a href="person/{{ $retreat->assistantid }}">{{ $retreat->assistant->display_name }}</a>
                     @else
-                        <a href="person/{{ $retreat->assistantid}}">{{ $retreat->assistantname}}</a>
+                        N/A
                     @endIf
                 </div>
             </div><div class="clearfix"> </div>
