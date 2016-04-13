@@ -167,7 +167,7 @@
                         @foreach($person->touchpoints as $touchpoint)
                         <tr>
                             <td><a href="touchpoint/{{ $touchpoint->id}}">{{ $touchpoint->touched_at }}</a></td>
-                            <td><a href="person/{{ $touchpoint->staff->id}}">{{ $touchpoint->staff->lastname }}, {{ $touchpoint->staff->firstname }}</a></td>
+                            <td><a href="person/{{ $touchpoint->staff->id}}">{{ $touchpoint->staff->display_name }}</a></td>
                             <td>{{ $touchpoint->type }}</td>
                             <td>{{ $touchpoint->notes }}</td>
                         </tr>
