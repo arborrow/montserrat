@@ -36,5 +36,17 @@ define('CONTACT_DIOCESE_FORTWORTH',1);
 define('CONTACT_DIOCESE_TYLER',2);
 define('CONTACT_MONTSERRAT',620);
 
+define('GROUP_ID_INNKEEPER',1);
+define('GROUP_ID_DIRECTOR',2);
+define('GROUP_ID_ASSISTANT',3);
 define('GROUP_ID_BISHOP',4);
+define('GROUP_ID_PRIEST',5);
+define('GROUP_ID_DEACON',6);
+define('GROUP_ID_JESUIT',7);
+define('GROUP_ID_PROVINCIAL',8);
+define('GROUP_ID_SUPERIOR',9);
+define('GROUP_ID_PASTOR',10);
+define('GROUP_ID_CAPTAIN',11);
+define('GROUP_ID_BOARD',12);
+define('GROUP_ID_STAFF',13);
 

@@ -6,16 +6,14 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <span><h2>Touch point details with <a href="../person/{{$touchpoint->person_id}}">
-                    {{ isset($touchpoint->person->firstname) ? $touchpoint->person->firstname : null }} 
-                    {{ isset($touchpoint->person->lastname) ? $touchpoint->person->lastname : null}} 
-                    {{ (!empty($touchpoint->person->nickname)) ? "(&quot;$touchpoint->person->nickname&quot;)" : null }}</a>
+                    {{ !empty($touchpoint->person->display_name) ? $touchpoint->person->display_name : 'N/A' }} </a>
                 </span>                
             </div>
             
             <div class='row'>
                 <div class='col-md-4'>
                         <strong>Date: </strong>{{$touchpoint->touched_at}}
-                        <br /><strong>Contacted by: </strong>{{$touchpoint->staff->lastname}}, {{$touchpoint->staff->firstname}}  
+                        <br /><strong>Contacted by: </strong>{{$touchpoint->staff->display_name}}  
                         <br /><strong>Type: </strong>{{$touchpoint->type}}     
                         <br /><strong>Notes: </strong>{{$touchpoint->notes}}
                     

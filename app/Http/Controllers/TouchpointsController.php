@@ -37,9 +37,8 @@ class TouchpointsController extends Controller
     public function create()
     {
         //
-        $staff = \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('is_staff','=','1')->orderBy('fullname')->lists('fullname','id');
-        $persons = \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->orderBy('fullname')->lists('fullname','id');
-
+        $staff = \montserrat\Contact::with('groups')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_STAFF);})->orderBy('sort_name')->lists('sort_name','id');
+        $persons = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->lists('sort_name','id');
         return view('touchpoints.create',compact('staff','persons'));  
 
     }
@@ -48,8 +47,8 @@ class TouchpointsController extends Controller
         //
         
         $user = Auth::user();
-        $staff = \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('email','=',$user->email)->orderBy('fullname')->lists('fullname','id');
-        $persons = \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->orderBy('fullname')->where('id','=',$id)->lists('fullname','id');
+        $staff = \montserrat\Contact::with('groups')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_STAFF);})->orderBy('sort_name')->lists('sort_name','id');
+        $persons = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->lists('sort_name','id');
 
         return view('touchpoints.create',compact('staff','persons'));  
 
@@ -108,8 +107,8 @@ class TouchpointsController extends Controller
     {
         //
         $touchpoint = \montserrat\Touchpoint::with('staff','person')->findOrFail($id);
-        $staff = \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->where('is_staff','=','1')->orderBy('fullname')->lists('fullname','id');
-        $persons = \montserrat\Person::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->orderBy('fullname')->lists('fullname','id');
+        $staff = \montserrat\Contact::with('groups')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_STAFF);})->orderBy('sort_name')->lists('sort_name','id');
+        $persons = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->lists('sort_name','id');
 
         return view('touchpoints.edit',compact('touchpoint','staff','persons'));//
 

@@ -26,11 +26,7 @@ class PersonsController extends Controller
      */
     public function index()
     {
-        //
-//        $persons = \montserrat\Person::with('parish','addresses.state','phones','emails')->orderBy('lastname', 'asc', 'firstname','asc')->paginate(100);
-        $persons = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name', 'asc')->with('addresses.state','phones','emails','websites','parish.contact_a')->paginate(100);
-
-        //dd($persons[1]);
+       $persons = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name', 'asc')->with('addresses.state','phones','emails','websites','parish.contact_a')->paginate(100);
         return view('persons.index',compact('persons'));   //
     }
 
@@ -1024,11 +1020,10 @@ class PersonsController extends Controller
         return $this->role($role);
     }
     
-    public function role($role)
+    public function role($group_id)
     {
-        //
-        $persons = \montserrat\Person::orderBy('lastname', 'asc', 'firstname','asc')->where($role['field'],'1')->get();
-        //dd($persons);
+        $persons = \montserrat\Contact::with('groups')->whereHas('groups', function ($query) {$query->where('group_id','=',$group_id);})->orderBy('sort_name')->get();
+        
         return view('persons.role',compact('persons','role'));   //
     
     }

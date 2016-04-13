@@ -14,11 +14,11 @@ class Touchpoint extends Model
     protected $dates = ['touched_at', 'created_at', 'updated_at', 'deleted_at']; 
     
     public function person() {
-        return $this->belongsTo('\montserrat\Person','person_id','id');
+        return $this->belongsTo('\montserrat\Contact','person_id','id');
     }
     
     public function staff() {
-        return $this->belongsTo('\montserrat\Person','staff_id','id');
+        return $this->belongsTo('\montserrat\Contact','staff_id','id');
     }
     
 }
