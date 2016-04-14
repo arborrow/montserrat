@@ -88,7 +88,11 @@
                 <li><a href='login/google'>{!! Html::image('img/login.png', 'Login',array('title' => 'Login')) !!}</a></li>
                 @endif
                 -->
-        
+    {{ Form::open(['action' => ['SearchController@getuser'], 'method' => 'GET']) }}
+    {{ Form::text('q', '', ['id' =>  'q', 'placeholder' =>  'Search users'])}}
+    {{ Form::submit('Find user', array('class' => 'btn btn-default')) }}
+    {{ Form::close() }}
+    
             </ul>
         </div><!-- /.navbar-collapse -->
         </nav>
@@ -130,15 +134,18 @@
     $( "#birth_date" ).datepicker();
     $( "#deceased_date" ).datepicker();
     $( "#touched_at" ).datepicker();
-    $( "#auto").autocomplete({
-        source: "../getdata",
-        minLength: 1,
-        select: function( event, ui ) {
-            $('#response').val(ui.item.id);
-        }
-    });
+
+    	 $( "#q" ).autocomplete({
+	  source: "{{ url('search/autocomplete') }}",
+	  minLength: 3,
+	  select: function(event, ui) {
+	  	$('#q').val(ui.item.value);
+	  }
+	});    
             
   });
+  
+  
   </script>
     </body>
 </html>

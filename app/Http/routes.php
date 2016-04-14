@@ -89,34 +89,6 @@ Route::get('login/{provider?}', 'Auth\AuthController@login');
 Route::get('auth/google/callback', 'Auth\AuthController@handleProviderCallback');
 //Route::get('login/google', 'Auth\AuthController@login');
  Route::get('logout', ['as' => 'logout','uses' => 'Auth\AuthController@logout']);
- 
- Route::get('autocomplete', function()
-    {
-        return View::make('autocomplete');
-    });
+ Route::get('search/autocomplete', 'SearchController@autocomplete');
+ Route::get('search/getuser', 'SearchController@getuser');
 
-Route::get('getdata', function()
-{
-    $term = Str::lower(Input::get('term'));
-    $data = \montserrat\Retreatant::select(\DB::raw('CONCAT(lastname,", ",firstname) as fullname'), 'id')->orderBy('fullname')->lists('fullname','id');
-
-    /* $data = array(
-        'R' => 'Red',
-        'O' => 'Orange',
-        'Y' => 'Yellow',
-        'G' => 'Green',
-        'B' => 'Blue',
-        'I' => 'Indigo',
-        'V' => 'Violet',
-    );
-     * 
-     */
-    $return_array = array();
-
-    foreach ($data as $k => $v) {
-        if (strpos(Str::lower($v), $term) !== FALSE) {
-            $return_array[] = array('value' => $v, 'id' =>$k);
-        }
-    }
-    return Response::json($return_array);
-});
