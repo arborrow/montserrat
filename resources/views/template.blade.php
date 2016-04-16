@@ -92,7 +92,7 @@
     {{ Form::text('q', '', ['id' =>  'q', 'placeholder' =>  'Type Name','autofocus'=>'autofocus'])}}
     {{Form::hidden('response', '', array('id' =>'response')) }}
     
-    {{ Form::submit('Find user', array('class' => 'btn btn-default')) }}
+    {{ Form::submit('Find Person', array('class' => 'btn btn-default')) }}
     {{ Form::close() }}
     
             </ul>

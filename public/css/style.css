@@ -97,3 +97,7 @@ a {
     border-width: 3px;
     color: black;
 }
+
+.ui-widget-content a {
+    font-family: perpetua;
+}
