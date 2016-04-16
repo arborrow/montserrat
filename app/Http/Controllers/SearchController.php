@@ -16,7 +16,7 @@ public function autocomplete(){
 	$term = Input::get('term');
 	
 	$results = array();
-	
+	// TODO: search for parishes, dioceses, etc.
 	$queries = DB::table('contact')
                 ->orderBy('sort_name')
 		->where('display_name', 'LIKE', '%'.$term.'%')
@@ -34,9 +34,8 @@ return Response::json($results);
 
 public function getuser() {
     $id = Input::get('response');
-    $contact = \montserrat\Contact::with('touchpoints','touchpoints.staff','websites','addresses.location','addresses.state','addresses.country','emails.location','phones.location')->findOrFail($id);
-    return view('contacts.show',compact('contact'));//
-    
+    // TODO: check contact_type field and redirect to appropriate parish, diocese, person, etc.
+    return redirect()->action('PersonsController@show',$id);    
 }
 }
 
