@@ -32,9 +32,11 @@ public function autocomplete(){
 return Response::json($results);
 }
 
-public function getuser($q) {
-    $id = Input::get('q');
-    dd($id);
+public function getuser() {
+    $id = Input::get('response');
+    $contact = \montserrat\Contact::with('touchpoints','touchpoints.staff','websites','addresses.location','addresses.state','addresses.country','emails.location','phones.location')->findOrFail($id);
+    return view('contacts.show',compact('contact'));//
+    
 }
 }
 

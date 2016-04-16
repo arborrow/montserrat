@@ -89,7 +89,9 @@
                 @endif
                 -->
     {{ Form::open(['action' => ['SearchController@getuser'], 'method' => 'GET']) }}
-    {{ Form::text('q', '', ['id' =>  'q', 'placeholder' =>  'Search users'])}}
+    {{ Form::text('q', '', ['id' =>  'q', 'placeholder' =>  'Type Name','autofocus'=>'autofocus'])}}
+    {{Form::hidden('response', '', array('id' =>'response')) }}
+    
     {{ Form::submit('Find user', array('class' => 'btn btn-default')) }}
     {{ Form::close() }}
     
@@ -119,8 +121,9 @@
             <a href='http://montserratretreat.org/' target='_blank'>montserratretreat.org</a>
         </p>
     </div>
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <!-- <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+  -->
   <script type="text/javascript">
   $(function() {
     $( "#startdate" ).datepicker();
@@ -140,6 +143,7 @@
 	  minLength: 3,
 	  select: function(event, ui) {
 	  	$('#q').val(ui.item.value);
+                $('#response').val(ui.item.id);
 	  }
 	});    
             
