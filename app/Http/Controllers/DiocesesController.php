@@ -26,7 +26,7 @@ class DiocesesController extends Controller
     {
         // need to implement getting Bishop's name from bishop_id
         //$dioceses = \montserrat\Diocese::with('bishop')->orderBy('name', 'asc')->get();
-        $dioceses = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_DIOCESE)->orderBy('organization_name', 'asc')->with('addresses.state','phones','emails','websites','bishop.contact_b','parishes.contact_a')->get();
+        $dioceses = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_DIOCESE)->orderBy('organization_name', 'asc')->with('addresses.state','phones','emails','websites','bishops.contact_b','parishes.contact_a')->get();
         
         //dd($dioceses[0]["bishops"]);
         
@@ -272,7 +272,7 @@ return Redirect::action('DiocesesController@index');
     public function destroy($id)
     {
         //
-         \montserrat\Diocese::destroy($id);
+         \montserrat\Contact::destroy($id);
         return Redirect::action('DiocesesController@index');
     }
 }

@@ -196,7 +196,7 @@ class PersonsController extends Controller
         
         $home_address= new \montserrat\Address;
             $home_address->contact_id=$person->id;
-            $home_address->location_type_id=LOCATION_TYPE_HOME;
+            $home_address->location_type_id=LOCATION_TYPE_HOME; 
             $home_address->is_primary=1;
             $home_address->street_address=$request->input('address_home_address1');
             $home_address->supplemental_address_1=$request->input('address_home_address2');
@@ -204,7 +204,7 @@ class PersonsController extends Controller
             $home_address->state_province_id=$request->input('address_home_state');
             $home_address->postal_code=$request->input('address_home_zip');
             $home_address->country_id=$request->input('address_home_country');  
-        $home_address->save();
+            $home_address->save();
         
         $work_address= new \montserrat\Address;
         $work_address->contact_id=$person->id;

@@ -41,8 +41,8 @@ class Contact extends Model
         return $this->hasOne('\montserrat\Address','contact_id','id')->whereIsPrimary(1);
     }
     
-    public function bishop() {
-        return $this->hasOne('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_BISHOP);
+    public function bishops() {
+        return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_BISHOP);
     }
     
     public function diocese() {
