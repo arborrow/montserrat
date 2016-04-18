@@ -35,7 +35,7 @@
                                 @if (empty($parish->pastor->contact_b))
                                 No pastor assigned
                                 @else
-                                <a href="contact/{{$parish->pastor->contact_b->id}}">{{ $parish->pastor->contact_b->display_name}}</a>
+                                <a href="person/{{$parish->pastor->contact_b->id}}">{{ $parish->pastor->contact_b->display_name}}</a>
                                 @endif
                             </td>
                             <td>

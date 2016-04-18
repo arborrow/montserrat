@@ -12,7 +12,7 @@
                     <div class='col-md-6'>
                     <strong>Bishop</strong><br />
                     @if (!empty($diocese->bishop))
-                    <a href="contact/{{$diocese->bishop->contact_id_b}}">{{$diocese->bishop->contact_b->display_name}}</a></br >
+                    <a href="person/{{$diocese->bishop->contact_id_b}}">{{$diocese->bishop->contact_b->display_name}}</a></br >
                     @endif
                     </div>
                 </div><div class="clearfix"> </div>
