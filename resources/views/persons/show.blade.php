@@ -6,14 +6,14 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <span class="back">
-                    <span><h2>
+                    <span><h2><strong>
                         {{ (!empty($person->prefix_id)) ? $person->prefix->name : null }} 
                         {{ (!empty($person->first_name)) ? $person->first_name : null }} 
                         {{ (!empty($person->middle_name)) ? $person->middle_name : null}} 
                         {{ (!empty($person->last_name)) ? $person->last_name : null}}
                         {{ (!empty($person->suffix_id)) ? ', '.$person->suffix->name : null }}
                         {{ (!empty($person->nick_name)) ? "(&quot;$person->nick_name&quot;)" : null }}   
-                        </h2>
+                        </strong></h2>
                     </span>
 
                <span class="btn btn-primary"><a href={{ action('TouchpointsController@add',$person->id) }}>Add Touch point</a></span> 
@@ -21,7 +21,7 @@
 
             </div>
             <div class='row'>
-                <div class='col-md-4'><span><h2>Names</h2>
+                <div class='col-md-4'><span><h2><strong>Names</strong></h2>
                     <div>
                         <span>
                             <strong>Title: </strong>{{ (!empty($person->prefix_id)) ? $person->prefix->name : null }} <br />
@@ -51,7 +51,7 @@
                 </div>               
             </div><div class="clearfix"> </div>
 
-            <div class='row'><div class='col-md-4'><span><h2>Addresses</h2>
+            <div class='row'><div class='col-md-4'><span><h2><strong>Addresses</strong></h2>
                 @foreach($person->addresses as $address)
                 @if (!empty($address->street_address))
                 <strong>{{$address->location->display_name}}:</strong>
@@ -79,7 +79,7 @@
             
             <div class='row'>
                 <div class='col-md-4'>
-                    <span><h2>Phone Numbers</h2>
+                    <span><h2><strong>Phone Numbers</strong></h2>
                         @foreach($person->phones as $phone)
                         @if(!empty($phone->phone))
                             <strong>{{$phone->location->display_name}} - {{$phone->phone_type}}: </strong>{{$phone->phone}} {{$phone->phone_ext}}<br />
@@ -89,7 +89,7 @@
                 </div>
                 
                 <div class='col-md-4'>
-                    <span><h2>Electronic Communications</h2>
+                    <span><h2><strong>Electronic Communications</strong></h2>
                         @foreach($person->emails as $email)
                         @if(!empty($email->email))
                         <strong>{{$email->location->display_name}} - Email: </strong><a href="mailto:{{$email->email}}">{{$email->email}}</a><br />
@@ -105,7 +105,7 @@
             </div><div class="clearfix"> </div>
 
             <div class='row'><span>
-                <div class='col-md-8'<span><h2>Demographics:</h2>
+                <div class='col-md-8'<span><h2><strong>Demographics:</strong></h2>
                     <strong>Gender: </strong>{{ !empty($person->gender_id) ? $person->gender->name: 'N/A' }}  
                     <br /><strong>Birth Date: </strong> 
                     @if (isset($person->birth_date))
@@ -131,7 +131,7 @@
             <div class='row'>
 
                 <div class='col-md-4'>
-                    <span><h2>Notes</h2>
+                    <span><h2><strong>Notes</strong></h2>
                         <strong>General Note: </strong>{{$person->note_contact}}<br />
                         <strong>Room Preference: </strong>{{$person->note_room_preference}}<br />
                     </span>
@@ -142,7 +142,7 @@
 
                 <div class='col-md-8'>
                     <span>
-                        <h2>Groups and Relationships</h2>
+                        <h2><strong>Groups and Relationships</strong></h2>
                         <div class="form-group">
                             Not yet implemented
                         </div>    

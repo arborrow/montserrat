@@ -297,6 +297,7 @@ class PersonsController extends Controller
             $email_home->contact_id=$person->id;
             $email_home->location_type_id=LOCATION_TYPE_HOME;
             $email_home->email=$request->input('email_home');
+            $email_home->is_primary=1;
         $email_home->save();
         
         $email_work= new \montserrat\Email;
