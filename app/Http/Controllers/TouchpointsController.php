@@ -49,8 +49,9 @@ class TouchpointsController extends Controller
         $user = Auth::user();
         $staff = \montserrat\Contact::with('groups')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_STAFF);})->orderBy('sort_name')->lists('sort_name','id');
         $persons = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->lists('sort_name','id');
-        $contact_id = $id;
-        return view('touchpoints.create',compact('staff','persons','contact_id'));  
+        $defaults['contact_id'] = $id;
+        $defaults['user_id'] = $user->id;
+        return view('touchpoints.create',compact('staff','persons','defaults'));  
 
     }
 

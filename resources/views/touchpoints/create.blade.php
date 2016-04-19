@@ -13,8 +13,8 @@
             </div>
             <div class='row'>
                 {!! Form::label('person_id', 'Name of Contact:', ['class' => 'col-md-3'])  !!}
-                @if (isset($contact_id))
-                    {!! Form::select('person_id', $persons, $contact_id, ['class' => 'col-md-3']) !!}
+                @if (isset($defaults['contact_id']))
+                    {!! Form::select('person_id', $persons, $defaults['contact_id'], ['class' => 'col-md-3']) !!}
                 @else
                     {!! Form::select('person_id', $persons, NULL, ['class' => 'col-md-3']) !!}
                 @endif
@@ -22,7 +22,13 @@
             </div>
             <div class='row'>
                 {!! Form::label('staff_id', 'Contacted by:', ['class' => 'col-md-3'])  !!}
-                {!! Form::select('staff_id', $staff, NULL, ['class' => 'col-md-3']) !!}
+                @if (isset($defaults['user_id']))
+                    {!! Form::select('staff_id', $staff, $defaults['user_id'], ['class' => 'col-md-3']) !!}
+                @else
+                    {!! Form::select('staff_id', $staff, NULL, ['class' => 'col-md-3']) !!}
+                
+                @endif
+                
             </div>
 
             <div class='row'>
