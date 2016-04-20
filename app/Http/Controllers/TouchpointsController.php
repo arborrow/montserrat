@@ -38,6 +38,7 @@ class TouchpointsController extends Controller
     {
         //
         $staff = \montserrat\Contact::with('groups')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_STAFF);})->orderBy('sort_name')->lists('sort_name','id');
+        // TODO: replace this with an autocomplete text box for performance rather than a dropdown box
         $persons = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->lists('sort_name','id');
         return view('touchpoints.create',compact('staff','persons'));  
 
@@ -46,11 +47,14 @@ class TouchpointsController extends Controller
     {
         //
         
-        $user = Auth::user();
-        $staff = \montserrat\Contact::with('groups')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_STAFF);})->orderBy('sort_name')->lists('sort_name','id');
-        $persons = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->lists('sort_name','id');
+        $current_user = Auth::user();
+        $user_email = \montserrat\Email::whereEmail($current_user->email)->first();
         $defaults['contact_id'] = $id;
-        $defaults['user_id'] = $user->id;
+        $defaults['user_id'] = $user_email->contact_id;
+        
+        $staff = \montserrat\Contact::with('groups')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_STAFF);})->orderBy('sort_name')->lists('sort_name','id');
+        // TODO: replace this with an autocomplete text box for performance rather than a dropdown box
+        $persons = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->lists('sort_name','id');
         return view('touchpoints.create',compact('staff','persons','defaults'));  
 
     }
