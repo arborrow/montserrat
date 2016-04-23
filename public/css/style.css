@@ -101,3 +101,9 @@ a {
 .ui-widget-content a {
     font-family: perpetua;
 }
+
+div.scroll {
+    width: 450px;
+    height: 250px;
+    overflow: auto;
+}

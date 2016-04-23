@@ -25,9 +25,11 @@ class GroupsController extends Controller
     public function index()
     {
         // TODO: figure out how to get parish information
-        $groups = \montserrat\Group::get();
-        
-        //dd($groups[3]);
+        $groups = \montserrat\Group::whereIsActive(1)->orderBy('name')->with('members')->get();
+        foreach ($groups as $group) {
+            $group->count = $group->members()->count();
+        }
+        //dd($groups);
         return view('groups.index',compact('groups'));   //
     }
 
@@ -82,8 +84,8 @@ class GroupsController extends Controller
     public function show($id)
     {
         //
-       $group = \montserrat\Group::findOrFail($id);
-       
+       $group = \montserrat\Group::with('members.contact')->findOrFail($id);
+       //dd($group);
        return view('groups.show',compact('group'));//
     
     }

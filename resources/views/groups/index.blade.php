@@ -19,9 +19,7 @@
                             <th>Name</th>
                             <th>Title</th>
                             <th>Description</th>
-                            <th>Active</th>
-                            <th>Hidden</th>
-                            <th>Reserved</th>
+                            <th># of Members</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -30,9 +28,7 @@
                             <td><a href="group/{{ $group->id }}">{{ $group->name }}</a></td>
                             <td>{{ $group->title }}</td>
                             <td>{{ $group->description }}</td>
-                            <td>{{ $group->is_active }}</td>
-                            <td>{{ $group->is_hidden }}</td>
-                            <td>{{ $group->is_reserved }}</td>
+                            <td>{{ $group->count }}</td>
                             
                         </tr>
                         @endforeach
