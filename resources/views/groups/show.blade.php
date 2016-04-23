@@ -25,7 +25,7 @@
                         <div class="scroll">
                             @foreach($group->members as $member)
                                 @if(!empty($member->contact->display_name))
-                                <a href="person/"{{$member->contact_id}}>{{$member->contact->display_name}}</a><br />
+                                <a href="../person/{{$member->contact_id}}">{{$member->contact->display_name}}</a><br />
                                 @endif
                             @endforeach
                         </div>
