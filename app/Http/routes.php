@@ -46,9 +46,6 @@ Route::resource('retreat','RetreatsController');
 //Route::resource('retreatant','RetreatantsController');
 Route::resource('registration','RegistrationsController');
 Route::resource('room','RoomsController');
-Route::resource('director','DirectorsController');
-Route::resource('innkeeper','InnkeepersController');
-Route::resource('assistant','AssistantsController');
 Route::resource('parish','ParishesController');
     Route::get('parishes/dallas',['as' => 'dallasparishes','uses' => 'ParishesController@dallasdiocese']);
     Route::get('parishes/fortworth',['as' => 'fortworthparishes','uses' => 'ParishesController@fortworthdiocese']);
@@ -78,6 +75,7 @@ Route::resource('touchpoint','TouchpointsController');
 Route::get('touchpoint/add/{id?}',['uses' => 'TouchpointsController@add']);
 
 Route::resource('group','GroupsController');
+Route::resource('relationship_type','RelationshipTypesController');
 
 // Authentication routes...
 Route::get('login/{provider?}', 'Auth\AuthController@login');

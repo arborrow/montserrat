@@ -143,9 +143,30 @@
                 <div class='col-md-8'>
                     <span>
                         <h2><strong>Groups and Relationships</strong></h2>
-                        <div class="form-group">
-                            Not yet implemented
-                        </div>    
+                        <div class="form-group">Groups
+                            <ul>    @foreach($person->groups as $group)
+                        
+                            <li><a href="../group/{{ $group->group_id}}">{{ $group->group->name }}</a></li>
+                        
+                        @endforeach
+                        </ul>
+                        </div>
+                        <div class="form-group">A Relationships
+                            <ul>    @foreach($person->a_relationships as $a_relationship)
+                        
+                            <li>{{ $a_relationship->relationship_type->description}}</li>
+                        
+                        @endforeach
+                        </ul>
+                        </div>
+                        <div class="form-group">B Relationships
+                            <ul>    @foreach($person->b_relationships as $b_relationship)
+                        
+                                <li>{{  $b_relationship->relationship_type->description }}</li>
+                        
+                        @endforeach
+                        </ul>
+                        </div>
                     </span>
                 </div>
                 <div class="clearfix"> </div>
