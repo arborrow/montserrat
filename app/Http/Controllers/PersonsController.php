@@ -139,8 +139,8 @@ class PersonsController extends Controller
             $emergency_contact->phone=$request->input('emergency_contact_phone');
             $emergency_contact->phone_alternate=$request->input('emergency_contact_phone_alternate');
         $emergency_contact->save();
-        
-        // save parishioner relationship    
+       
+         // save parishioner relationship    
         if ($request->input('parish_id')>0) {
             $relationship_parishioner = new \montserrat\Relationship;
                 $relationship_parishioner->contact_id_a = $request->input('parish_id');
@@ -149,6 +149,105 @@ class PersonsController extends Controller
                 $relationship_parishioner->is_active = 1;
             $relationship_parishioner->save();
         }
+        
+        // save donor relationship    
+        if ($request->input('is_donor')>0) {
+            $relationship_donor = new \montserrat\Relationship;
+                $relationship_donor->contact_id_a = CONTACT_MONTSERRAT;
+                $relationship_donor->contact_id_b = $person->id;
+                $relationship_donor->relationship_type_id = RELATIONSHIP_TYPE_DONOR;
+                $relationship_donor->is_active = 1;
+            $relationship_donor->save();
+        }
+        
+        // save retreatant relationship    
+        if ($request->input('is_retreatant')>0) {
+            $relationship_retreatant = new \montserrat\Relationship;
+                $relationship_retreatant->contact_id_a = CONTACT_MONTSERRAT;
+                $relationship_retreatant->contact_id_b = $person->id;
+                $relationship_retreatant->relationship_type_id = RELATIONSHIP_TYPE_RETREATANT;
+                $relationship_retreatant->is_active = 1;
+            $relationship_retreatant->save();
+        }
+        
+        // save volunteer relationship    
+        if ($request->input('is_volunteer')>0) {
+            $relationship_volunteer= new \montserrat\Relationship;
+                $relationship_volunteer->contact_id_a = CONTACT_MONTSERRAT;
+                $relationship_volunteer->contact_id_b = $person->id;
+                $relationship_volunteer->relationship_type_id = RELATIONSHIP_TYPE_VOLUNTEER;
+                $relationship_volunteer->is_active = 1;
+            $relationship_volunteer->save();
+        }
+        
+        // save captain relationship    
+        if ($request->input('is_captain')>0) {
+            $relationship_captain= new \montserrat\Relationship;
+                $relationship_captain->contact_id_a = CONTACT_MONTSERRAT;
+                $relationship_captain->contact_id_b = $person->id;
+                $relationship_captain->relationship_type_id = RELATIONSHIP_TYPE_CAPTAIN;
+                $relationship_captain->is_active = 1;
+            $relationship_captain->save();
+        }
+        // save retreat director relationship    
+        if ($request->input('is_director')>0) {
+            $relationship_director= new \montserrat\Relationship;
+                $relationship_director->contact_id_a = CONTACT_MONTSERRAT;
+                $relationship_director->contact_id_b = $person->id;
+                $relationship_director->relationship_type_id = RELATIONSHIP_TYPE_RETREAT_DIRECTOR;
+                $relationship_director->is_active = 1;
+            $relationship_director->save();
+        }
+        // save retreat innkeeper relationship    
+        if ($request->input('is_innkeeper')>0) {
+            $relationship_innkeeper= new \montserrat\Relationship;
+                $relationship_innkeeper->contact_id_a = CONTACT_MONTSERRAT;
+                $relationship_innkeeper->contact_id_b = $person->id;
+                $relationship_innkeeper->relationship_type_id = RELATIONSHIP_TYPE_RETREAT_INNKEEPER;
+                $relationship_innkeeper->is_active = 1;
+            $relationship_innkeeper->save();
+        }
+        // save retreat assistant relationship    
+        if ($request->input('is_assistant')>0) {
+            $relationship_assistant= new \montserrat\Relationship;
+                $relationship_assistant->contact_id_a = CONTACT_MONTSERRAT;
+                $relationship_assistant->contact_id_b = $person->id;
+                $relationship_assistant->relationship_type_id = RELATIONSHIP_TYPE_RETREAT_ASSISTANT;
+                $relationship_assistant->is_active = 1;
+            $relationship_assistant->save();
+        }
+        // save staff relationship    
+        if ($request->input('is_staff')>0) {
+            $relationship_staff= new \montserrat\Relationship;
+                $relationship_staff->contact_id_a = CONTACT_MONTSERRAT;
+                $relationship_staff->contact_id_b = $person->id;
+                $relationship_staff->relationship_type_id = RELATIONSHIP_TYPE_STAFF;
+                $relationship_staff->is_active = 1;
+            $relationship_staff->save();
+        }
+        // save board member relationship    
+        if ($request->input('is_board')>0) {
+            $relationship_board= new \montserrat\Relationship;
+                $relationship_board->contact_id_a = CONTACT_MONTSERRAT;
+                $relationship_board->contact_id_b = $person->id;
+                $relationship_board->relationship_type_id = RELATIONSHIP_TYPE_BOARD_MEMBER;
+                $relationship_board->is_active = 1;
+            $relationship_board->save();
+        }
+        
+        
+        /* 
+        $this->save_relationship('parish_id',$parish_id,$person->id,RELATIONSHIP_TYPE_PARISHIONER);
+        $this->save_relationship('is_donor',CONTACT_MONTSERRAT,$person->id,RELATIONSHIP_TYPE_DONOR);
+        $this->save_relationship('is_retreatant',CONTACT_MONTSERRAT,$person->id,RELATIONSHIP_TYPE_RETREATANT);
+        $this->save_relationship('is_volunteer',CONTACT_MONTSERRAT,$person->id,RELATIONSHIP_TYPE_VOLUNTEER);
+        $this->save_relationship('is_captain',CONTACT_MONTSERRAT,$person->id,RELATIONSHIP_TYPE_CAPTAIN);
+        $this->save_relationship('is_director',CONTACT_MONTSERRAT,$person->id,RELATIONSHIP_TYPE_RETREAT_DIRECTOR);
+        $this->save_relationship('is_innkeeper',CONTACT_MONTSERRAT,$person->id,RELATIONSHIP_TYPE_RETREAT_INNKEEPER);
+        $this->save_relationship('is_assistant',CONTACT_MONTSERRAT,$person->id,RELATIONSHIP_TYPE_RETREAT_ASSISTANT);
+        $this->save_relationship('is_staff',CONTACT_MONTSERRAT,$person->id,RELATIONSHIP_TYPE_STAFF);
+        $this->save_relationship('is_board',CONTACT_MONTSERRAT,$person->id,RELATIONSHIP_TYPE_BOARD_MEMBER);
+        */
             
         // save health, dietary, general and room preference notes
         
@@ -656,6 +755,7 @@ class PersonsController extends Controller
             $emergency_contact->phone_alternate = $request->input('emergency_contact_phone_alternate');
         $emergency_contact->save();
         
+        
         // save parishioner relationship    
         if ($request->input('parish_id')>0) {
             $relationship_parishioner = \montserrat\Relationship::firstOrNew(['contact_id_a'=>$person->parish_id,'contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_PARISHIONER,'is_active'=>1]);
@@ -665,7 +765,7 @@ class PersonsController extends Controller
                 $relationship_parishioner->is_active = 1;
             $relationship_parishioner->save();
         }
-
+        
       // save health, dietary, general and room preference notes
         
         if (!empty($request->input('note_health'))) {
@@ -1029,5 +1129,17 @@ class PersonsController extends Controller
     
     }
     
+    public function save_relationship($field, $contact_id_a, $contact_id_b, $relationship_type) {
+        
+        // save relationship
+        if ($request->input($field)>0) {
+            $relationship = new \montserrat\Relationship;
+                $relationship->contact_id_a = $contact_id_a;
+                $relationship->contact_id_b = $contact_id_b;
+                $relationship->relationship_type_id = $relationship_type;
+                $relationship->is_active = 1;
+            $relationship->save();
+        }
+    }
     
 }

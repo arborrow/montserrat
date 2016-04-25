@@ -96,9 +96,8 @@ class RelationshipTypesController extends Controller
      */
     public function edit($id)
     {
-        //
         $relationship_type = \montserrat\RelationshipType::find($id);
-        
+        //dd($relationship_type);
         return view('relationships.types.edit',compact('relationship_type'));
     
     }
@@ -133,7 +132,7 @@ class RelationshipTypesController extends Controller
        
         $relationship_type->save();
     
-        return Redirect::action('RelationshipTypes@index');//
+        return Redirect::action('RelationshipTypesController@index');//
     }
 
     /**
