@@ -61,7 +61,7 @@
     <div class="form-group">
         
         {!! Form::label('phone_main_fax', 'Fax:', ['class' => 'col-md-1']) !!}
-        @if (empty($parish->website_main))
+        @if (empty($parish->phone_main_fax))
         {!! Form::text('phone_main_fax', NULL, ['class' => 'col-md-2']) !!}
         @else
         {!! Form::text('phone_main_fax', $parish->phone_main_fax->phone, ['class' => 'col-md-2']) !!}
