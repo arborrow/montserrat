@@ -264,7 +264,7 @@ return Redirect::action('ParishesController@index');
             $address_primary->city = $request->input('city');
             $address_primary->state_province_id = $request->input('state_province_id');
             $address_primary->postal_code = $request->input('postal_code');
-            $parish_address->country_id=$request->input('country_id');  
+            $address_primary->country_id=$request->input('country_id');  
             $address_primary->save();
         
             if (empty($parish->phone_primary)) {
