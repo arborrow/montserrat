@@ -488,7 +488,7 @@ class PersonsController extends Controller
     public function show($id)
     {
         //
-       $person = \montserrat\Contact::with('addresses.country','addresses.location','addresses.state','emails.location','emergency_contact','ethnicity','languages','notes','parish.contact_a.address_primary','parish.contact_a.diocese.contact_a','phones.location','prefix','suffix','touchpoints','touchpoints.staff','websites','groups.group','a_relationships.relationship_type','b_relationships.relationship_type')->findOrFail($id);
+       $person = \montserrat\Contact::with('addresses.country','addresses.location','addresses.state','emails.location','emergency_contact','ethnicity','languages','notes','parish.contact_a.address_primary','parish.contact_a.diocese.contact_a','phones.location','prefix','suffix','touchpoints','touchpoints.staff','websites','groups.group','a_relationships.relationship_type','a_relationships.contact_b','b_relationships.relationship_type','b_relationships.contact_a')->findOrFail($id);
        
        //not at all elegant but this parses out the notes for easy display and use in the edit blade
         $person->note_health='';
@@ -531,7 +531,7 @@ class PersonsController extends Controller
             $person->preferred_language_label = 'N/A';
         }
 
-       //dd($person);
+       //dd($person->b_relationships);
        return view('persons.show',compact('person'));//
     
     }

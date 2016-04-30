@@ -151,20 +151,18 @@
                         @endforeach
                         </ul>
                         </div>
-                        <div class="form-group">A Relationships
-                            <ul>    @foreach($person->a_relationships as $a_relationship)
+                        <div class="form-group">Relationships
+                            <ul>    
+                                @foreach($person->a_relationships as $a_relationship)
+                                    <li>{{$person->display_name}} is {{  $a_relationship->relationship_type->label_a_b }} {{$a_relationship->contact_b->display_name}}</li>
+                                @endforeach
+                   
+                                @foreach($person->b_relationships as $b_relationship)
+                                    <li>{{$person->display_name}} is {{  $b_relationship->relationship_type->label_b_a }} {{$b_relationship->contact_a->display_name}}</li>
+                                @endforeach
                         
-                            <li>{{ $a_relationship->relationship_type->description}}</li>
-                        
-                        @endforeach
-                        </ul>
+                            </ul>
                         </div>
-                        <div class="form-group">B Relationships
-                            <ul>    @foreach($person->b_relationships as $b_relationship)
-                        
-                                <li>{{  $b_relationship->relationship_type->description }}</li>
-                        
-                        @endforeach
                         </ul>
                         </div>
                     </span>
