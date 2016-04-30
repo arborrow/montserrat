@@ -713,7 +713,7 @@ class PersonsController extends Controller
         ]);
         
         //name 
-        $person = \montserrat\Contact::with('addresses.location','emails.location','phones.location','websites','emergency_contact')->findOrFail($request->input('id'));
+        $person = \montserrat\Contact::with('addresses.location','emails.location','phones.location','websites','emergency_contact','parish')->findOrFail($request->input('id'));
         $person->prefix_id = $request->input('prefix_id');
         $person->first_name = $request->input('first_name');
         $person->middle_name = $request->input('middle_name');
@@ -755,10 +755,10 @@ class PersonsController extends Controller
             $emergency_contact->phone_alternate = $request->input('emergency_contact_phone_alternate');
         $emergency_contact->save();
         
-        
+        //dd($person);
         // save parishioner relationship    
         if ($request->input('parish_id')>0) {
-            $relationship_parishioner = \montserrat\Relationship::firstOrNew(['contact_id_a'=>$person->parish_id,'contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_PARISHIONER,'is_active'=>1]);
+            $relationship_parishioner = \montserrat\Relationship::firstOrNew(['contact_id_a'=>$person->parish->contact_id_a,'contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_PARISHIONER,'is_active'=>1]);
                 $relationship_parishioner->contact_id_a = $request->input('parish_id');
                 $relationship_parishioner->contact_id_b = $person->id;
                 $relationship_parishioner->relationship_type_id = RELATIONSHIP_TYPE_PARISHIONER;

@@ -171,9 +171,9 @@ return Redirect::action('ParishesController@index');
     public function show($id)
     {
         //
-        $parish = \montserrat\Contact::with('pastor.contact_b','diocese.contact_a','addresses.state','addresses.location','phones.location','emails.location','websites','notes','parishioners.contact_b.address_primary.state','parishioners.contact_b.emails','parishioners.contact_b.phones.location')->findOrFail($id);
+        $parish = \montserrat\Contact::with('pastor.contact_b','diocese.contact_a','addresses.state','addresses.location','phones.location','emails.location','websites','notes','parishioners.contact_b.address_primary.state','parishioners.contact_b.emails.location','parishioners.contact_b.phones.location')->findOrFail($id);
         
-        //dd($parish);
+        //dd($parish->parishioners);
         return view('parishes.show',compact('parish'));//
     
     }
@@ -190,6 +190,7 @@ return Redirect::action('ParishesController@index');
         $dioceses = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_DIOCESE)->orderby('organization_name')->lists('organization_name','id');
         $pastors = \montserrat\Contact::whereHas('b_relationships', function($query) {
             $query->whereRelationshipTypeId(RELATIONSHIP_TYPE_PASTOR)->whereIsActive(1);})->orderby('sort_name')->lists('sort_name','id');
+        
         $dioceses[0] = 'No Diocese assigned';
         $pastors[0] = 'No pastor assigned';
         $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->lists('name','id');
@@ -200,7 +201,7 @@ return Redirect::action('ParishesController@index');
         $countries->prepend('N/A',0); 
         
         $parish = \montserrat\Contact::with('pastor.contact_b','diocese.contact_a','address_primary.state','address_primary.location','phone_primary.location','phone_main_fax','email_primary.location','website_main','notes')->findOrFail($id);
-        //dd($parish);
+        
         return view('parishes.edit',compact('parish','dioceses','pastors','states','countries','defaults'));
     }
 

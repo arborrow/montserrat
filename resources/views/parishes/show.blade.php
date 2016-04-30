@@ -140,12 +140,24 @@
                             @endif
                             <td>
                                 @foreach($parishioner->contact_b->phones as $phone)
+                                @if (!empty($phone->phone))
                                 <strong>{{$phone->location->name}}-{{$phone->phone_type}}:</strong><a href="tel:{{$phone->phone}}">{{$phone->phone }}</a><br />
+                                @endif
                                 @endforeach    
                             </td>
                             <td>
                                 @foreach($parishioner->contact_b->emails as $email)
-                                <a href="mailto:"{{$email->email }}>{{$email->email }}</a><br />
+                                @if (!empty($email->email))
+                                    @if ($email->is_primary>0)
+                                        <strong>
+                                    @endif
+                                    
+                                    {{$email->location->name}}: <a href="mailto:"{{$email->email }}>{{$email->email }}</a><br />
+                                    @if ($email->is_primary>0)
+                                        </strong>
+                                    @endif
+                                @endif
+                                    
                                 @endforeach   
                             </td>
                         </tr>
