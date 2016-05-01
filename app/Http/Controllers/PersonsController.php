@@ -485,8 +485,9 @@ class PersonsController extends Controller
         $person->is_jesuit = $request->input('is_jesuit');
         */
         
+        return Redirect::action('PersonsController@show', $person->id);//
         
-        return Redirect::action('PersonsController@index');//
+        //return Redirect::action('PersonsController@index');//
 
     }
 
@@ -1013,7 +1014,7 @@ class PersonsController extends Controller
             $url_twitter->website_type='Twitter';
         $url_twitter->save();
         
-        return Redirect::action('PersonsController@index');//
+        return Redirect::action('PersonsController@show', $person->id);//
         
 
     }

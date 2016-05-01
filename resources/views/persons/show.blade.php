@@ -10,8 +10,7 @@
                         {{ (!empty($person->prefix_id)) ? $person->prefix->name : null }} 
                         {{ (!empty($person->first_name)) ? $person->first_name : null }} 
                         {{ (!empty($person->middle_name)) ? $person->middle_name : null}} 
-                        {{ (!empty($person->last_name)) ? $person->last_name : null}}
-                        {{ (!empty($person->suffix_id)) ? ', '.$person->suffix->name : null }}
+                        {{ (!empty($person->last_name)) ? $person->last_name : null}}{{(!empty($person->suffix_id)) ? ', '.$person->suffix->name : null }}
                         {{ (!empty($person->nick_name)) ? "(&quot;$person->nick_name&quot;)" : null }}   
                         </strong></h2>
                     </span>
