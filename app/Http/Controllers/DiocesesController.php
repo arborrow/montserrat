@@ -208,7 +208,7 @@ return Redirect::action('DiocesesController@index');
             'website_main' => 'url'
         ]);
 
-        $diocese = \montserrat\Contact::with('bishop.contact_b','parishes.contact_b','address_primary.state','address_primary.location','phone_primary.location','phone_main_fax.location','email_primary.location','website_main','notes')->findOrFail($id);
+        $diocese = \montserrat\Contact::with('bishops.contact_b','parishes.contact_b','address_primary.state','address_primary.location','phone_primary.location','phone_main_fax.location','email_primary.location','website_main','notes')->findOrFail($id);
         $diocese->organization_name = $request->input('organization_name');
         $diocese->display_name  = $request->input('organization_name');
         $diocese->sort_name  = $request->input('organization_name');
@@ -238,7 +238,11 @@ return Redirect::action('DiocesesController@index');
         $phone_primary->phone_type='Phone';
         $phone_primary->save();
         
-        $phone_main_fax = \montserrat\Phone::findOrNew($diocese->phone_main_fax->id);
+        if (empty($diocese->phone_main_fax)) {
+                $phone_main_fax = new \montserrat\Phone;
+            } else {
+                $phone_main_fax = \montserrat\Phone::findOrNew($diocese->phone_main_fax->id);
+        }
         $phone_main_fax->contact_id=$diocese->id;
         $phone_main_fax->location_type_id=LOCATION_TYPE_MAIN;
         $phone_main_fax->phone=$request->input('phone_main_fax');
