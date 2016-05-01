@@ -60,8 +60,10 @@ class PersonsController extends Controller
         $states->prepend('N/A',0); 
         $suffixes = \montserrat\Suffix::orderBy('name')->lists('name','id');
         $suffixes->prepend('N/A',0); 
+        $occupations = \montserrat\Ppd_occupation::orderBy('name')->lists('name','id');
+        $occupations->prepend('N/A',0); 
         
-        return view('persons.create',compact('parish_list','ethnicities','states','countries','suffixes','prefixes','languages','genders','religions')); 
+        return view('persons.create',compact('parish_list','ethnicities','states','countries','suffixes','prefixes','languages','genders','religions','occupations')); 
     
     }
 
@@ -93,6 +95,7 @@ class PersonsController extends Controller
             'gender_id' => 'integer|min:0',
             'ethnicity_id' => 'integer|min:0',
             'religion_id' => 'integer|min:0',
+            'occupation_id' => 'integer|min:0'
         
         ]);
                
@@ -122,11 +125,23 @@ class PersonsController extends Controller
         $person->birth_date= $request->input('birth_date');
         $person->ethnicity_id = $request->input('ethnicity_id');
         $person->religion_id = $request->input('religion_id');
+        $person->occupation_id = $request->input('occupation_id');
         
         // CiviCRM stores the language name rather than the language id in the contact's preferred_language field
         if (!empty($request->input('preferred_language_id'))) {
             $language = \montserrat\Language::findOrFail($request->input('preferred_language_id'));
             $person->preferred_language = $language->name;
+        }
+        
+        if (empty($request->input('is_deceased'))) {
+                $person->is_deceased = 0;
+        } else {
+            $person->is_deceased = $request->input('is_deceased');
+        }
+        if (empty($request->input('deceased_date'))) {
+                $person->deceased_date = NULL;
+        } else {
+            $person->deceased_date = $request->input('deceased_date');
         }
         
         $person->save();
@@ -468,12 +483,8 @@ class PersonsController extends Controller
         $person->is_board = $request->input('is_board');
         $person->is_formerboard = $request->input('is_formerboard');
         $person->is_jesuit = $request->input('is_jesuit');
-        if (empty($request->input('is_deceased'))) {
-                $person->is_deceased = 0;
-        } else {
-            $person->is_deceased = $request->input('is_deceased');
-        }
         */
+        
         
         return Redirect::action('PersonsController@index');//
 
@@ -488,7 +499,7 @@ class PersonsController extends Controller
     public function show($id)
     {
         //
-       $person = \montserrat\Contact::with('addresses.country','addresses.location','addresses.state','emails.location','emergency_contact','ethnicity','languages','notes','parish.contact_a.address_primary','parish.contact_a.diocese.contact_a','phones.location','prefix','suffix','touchpoints','touchpoints.staff','websites','groups.group','a_relationships.relationship_type','a_relationships.contact_b','b_relationships.relationship_type','b_relationships.contact_a')->findOrFail($id);
+       $person = \montserrat\Contact::with('addresses.country','addresses.location','addresses.state','emails.location','emergency_contact','ethnicity','languages','notes','occupation','parish.contact_a.address_primary','parish.contact_a.diocese.contact_a','phones.location','prefix','suffix','religion','touchpoints','touchpoints.staff','websites','groups.group','a_relationships.relationship_type','a_relationships.contact_b','b_relationships.relationship_type','b_relationships.contact_a')->findOrFail($id);
        
        //not at all elegant but this parses out the notes for easy display and use in the edit blade
         $person->note_health='';
@@ -609,6 +620,8 @@ class PersonsController extends Controller
         $states->prepend('N/A',0); 
         $suffixes = \montserrat\Suffix::orderBy('name')->lists('name','id');
         $suffixes->prepend('N/A',0); 
+        $occupations = \montserrat\Ppd_occupation::orderBy('name')->lists('name','id');
+        $occupations->prepend('N/A',0); 
         
         //create defaults array for easier pre-populating of default values on edit/update blade
         // initialize defaults to avoid undefined index errors
@@ -676,7 +689,7 @@ class PersonsController extends Controller
         }
         //dd($person);
 
-        return view('persons.edit',compact('prefixes','suffixes','person','parish_list','ethnicities','states','countries','genders','languages','defaults','religions'));
+        return view('persons.edit',compact('prefixes','suffixes','person','parish_list','ethnicities','states','countries','genders','languages','defaults','religions','occupations'));
     
     }
 
@@ -709,6 +722,7 @@ class PersonsController extends Controller
             'gender_id' => 'integer|min:0',
             'ethnicity_id' => 'integer|min:0',
             'religion_id' => 'integer|min:0',
+            'occupation_id' => 'integer|min:0'
         
         ]);
         
@@ -737,11 +751,29 @@ class PersonsController extends Controller
         $person->birth_date = $request->input('birth_date');
         $person->ethnicity_id = $request->input('ethnicity_id');
         $person->religion_id = $request->input('religion_id');
+        $person->occupation_id = $request->input('occupation_id');
+        
+        if (empty($request->input('languages')) or in_array(0,$request->input('languages'))) {
+            $person->languages()->detach();
+        } else {
+            $person->languages()->sync($request->input('languages'));
+        }
         
         // CiviCRM stores the language name rather than the language id in the contact's preferred_language field
         if (!empty($request->input('preferred_language_id'))) {
             $language = \montserrat\Language::findOrFail($request->input('preferred_language_id'));
             $person->preferred_language = $language->name;
+        }
+        
+        if (empty($request->input('is_deceased'))) {
+                $person->is_deceased = 0;
+        } else {
+            $person->is_deceased = $request->input('is_deceased');
+        }
+        if (empty($request->input('deceased_date'))) {
+                $person->deceased_date = NULL;
+        } else {
+            $person->deceased_date = $request->input('deceased_date');
         }
         
         $person->save();
@@ -804,11 +836,6 @@ class PersonsController extends Controller
             $person_note_room_preference->save();
         }        
         
-        if (empty($request->input('languages')) or in_array(0,$request->input('languages'))) {
-            $person->languages()->detach();
-        } else {
-            $person->languages()->sync($request->input('languages'));
-        }
 
         //group or roles info
         // $person->is_donor = $request->input('is_donor');

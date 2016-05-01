@@ -10,12 +10,17 @@
             
             <div class='row'>
                 <div class='col-md-4'>
+                        <strong>Description: </strong>{{$relationship_type->description}}     
+                        <hr />
                         <strong>Name A_B: </strong>{{$relationship_type->name_a_b}}
                         <br /><strong>Label A_B: </strong>{{$relationship_type->label_a_b}}
-                        <br /><strong>Name B_A: </strong>{{$relationship_type->name_b_a}}
+                        <br /><strong>Contact A Type: </strong>{{$relationship_type->contact_sub_type_a or $relationship_type->contact_type_a }}
+                        <hr />
+                        <strong>Name B_A: </strong>{{$relationship_type->name_b_a}}
                         <br /><strong>Label B_A: </strong>{{$relationship_type->label_b_a}}  
-                        <br /><strong>Description: </strong>{{$relationship_type->description}}     
-                        <br /><strong>Active: </strong>{{$relationship_type->is_active}}
+                        <br /><strong>Contact B Type: </strong>{{$relationship_type->contact_sub_type_b or $relationship_type->contact_type_b}}
+                        <hr />
+                        <strong>Active: </strong>{{$relationship_type->is_active}}
                         <br /><strong>Reserved: </strong>{{$relationship_type->is_reserved}}
                     
                 </div>

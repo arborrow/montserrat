@@ -145,25 +145,23 @@
                         {!! Form::text('birth_date', $person->birth_date, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
                         <div class="clearfix"> </div>
 
-                        {!! Form::label('deceased_date', 'Deceased Date:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::text('deceased_date', $person->deceased_date, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
-                        {!! Form::label('is_deceased', 'Is Deceased:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_deceased', $person->is_deceased, false,['class' => 'col-md-1']) !!}
-                        <div class="clearfix"> </div>
-
+                        
                     </div>
                     <div class="form-group">
-                        {!! Form::label('religion_id', 'Religion:', ['class' => 'col-md-1'])  !!}
+                        {!! Form::label('religion_id', 'Religion:', ['class' => 'col-md-2'])  !!}
                         {!! Form::select('religion_id', $religions, $person->religion_id, ['class' => 'col-md-2']) !!} 
                         <div class="clearfix"> </div>
+                        {!! Form::label('occupation_id', 'Occupation:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::select('occupation_id', $occupations, $person->occupation_id, ['class' => 'col-md-2']) !!} 
+                        <div class="clearfix"> </div>
                         
-                        {!! Form::label('parish_id', 'Parish:', ['class' => 'col-md-1'])  !!}
+                        {!! Form::label('parish_id', 'Parish:', ['class' => 'col-md-2'])  !!}
                         {!! Form::select('parish_id', $parish_list, $person->parish_id, ['class' => 'col-md-8']) !!} 
                     <div class="clearfix"> </div>
                         
                     </div>
                     <div class="form-group">                        
-                        {!! Form::label('ethnicity_id', 'Ethnicity:', ['class' => 'col-md-1'])  !!}
+                        {!! Form::label('ethnicity_id', 'Ethnicity:', ['class' => 'col-md-2'])  !!}
                         {!! Form::select('ethnicity_id', $ethnicities, $person->ethnicity_id, ['class' => 'col-md-2']) !!}
                         <div class="clearfix"> </div>
                         {!! Form::label('languages', 'Languages:', ['class' => 'col-md-2'])  !!}
@@ -171,6 +169,14 @@
                 
                         {!! Form::label('preferred_language_id', 'Preferred Language:', ['class' => 'col-md-2'])  !!}
                         {!! Form::select('preferred_language_id', $languages, $person->preferred_language_id, ['class' => 'col-md-3']) !!}
+                    </div>
+                <div class="clearfix"> </div>
+                    <div class="form-group">                        
+                        {!! Form::label('deceased_date', 'Deceased Date:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::text('deceased_date', $person->deceased_date, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+                        {!! Form::label('is_deceased', 'Is Deceased:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::checkbox('is_deceased', $person->is_deceased, false,['class' => 'col-md-1']) !!}
+                        <div class="clearfix"> </div>
                     </div>
             </span>
         </div>

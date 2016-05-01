@@ -106,15 +106,13 @@
                         {!! Form::text('birth_date', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
                         <div class="clearfix"> </div>
 
-                        {!! Form::label('deceased_date', 'Deceased Date:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::text('deceased_date', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
-                        {!! Form::label('is_deceased', 'Is Deceased:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_deceased', 1, false,['class' => 'col-md-1']) !!}
                         
                     </div>
                     <div class="form-group">
                         {!! Form::label('religion_id', 'Religion:', ['class' => 'col-md-1'])  !!}
                         {!! Form::select('religion_id', $religions, 1, ['class' => 'col-md-2']) !!} 
+                        {!! Form::label('occupation_id', 'Occupation:', ['class' => 'col-md-1'])  !!}
+                        {!! Form::select('occupation_id', $occupations, 1, ['class' => 'col-md-2']) !!} 
                         <div class="clearfix"> </div>
                         
                         {!! Form::label('parish_id', 'Parish:', ['class' => 'col-md-1'])  !!}
@@ -130,6 +128,12 @@
                         {!! Form::label('preferred_language_id', 'Preferred Language:', ['class' => 'col-md-2'])  !!}
                         {!! Form::select('preferred_language_id', $languages, 45, ['class' => 'col-md-3']) !!}
                     </div>
+                    {!! Form::label('deceased_date', 'Deceased Date:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::text('deceased_date', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+                        {!! Form::label('is_deceased', 'Is Deceased:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::checkbox('is_deceased', 1, false,['class' => 'col-md-1']) !!}
+                        <div class="clearfix"> </div>
+
                 </span>
             </div>
         </div>

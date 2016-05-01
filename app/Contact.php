@@ -82,6 +82,10 @@ class Contact extends Model
         return $this->hasMany('\montserrat\Note','entity_id','id')->whereEntityTable('contact');
     }
     
+    public function occupation() {
+        return $this->hasOne('\montserrat\Ppd_occupation','id','occupation_id');
+    }
+    
     public function phones() {
         return $this->hasMany('\montserrat\Phone','contact_id','id');
     }
@@ -111,6 +115,10 @@ class Contact extends Model
     
     public function prefix() {
         return $this->hasOne('\montserrat\Prefix','id','prefix_id');
+    }
+    
+    public function religion() {
+        return $this->hasOne('\montserrat\Religion','id','religion_id');
     }
     
     public function retreat_assistants() {
