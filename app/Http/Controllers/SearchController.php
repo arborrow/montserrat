@@ -43,7 +43,18 @@ public function getuser() {
     if ($id==0) {
         return redirect()->action('PersonsController@create');
     } else {
-    return redirect()->action('PersonsController@show',$id);    
+        $contact = \montserrat\Contact::findOrFail($id);
+        if ($contact->contact_type == CONTACT_TYPE_INDIVIDUAL) {
+            return redirect()->action('PersonsController@show',$id);
+        }
+        if ($contact->contact_type == CONTACT_TYPE_ORGANIZATION) {
+            if ($contact->subcontact_type == CONTACT_TYPE_PARISH) {
+                return redirect()->action('ParishesController@show',$id);
+            }
+            if ($contact->subcontact_type == CONTACT_TYPE_DIOCESE) {
+                return redirect()->action('DiocesesController@show',$id);
+            }
+        }
     }
 }
 }

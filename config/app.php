@@ -150,6 +150,7 @@ return [
         
         Laravel\Socialite\SocialiteServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
+         Spatie\Menu\Laravel\MenuServiceProvider::class,
 //        \montserrat\Providers\EntrustCustomServiceProvider::class,
     ],
 
@@ -203,6 +204,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
         'Entrust' => \Zizaco\Entrust\EntrustFacade::class,
+         'Menu' => Spatie\Menu\Laravel\MenuFacade::class,
 
     ],
 

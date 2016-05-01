@@ -49,7 +49,12 @@
     <div class="clearfix"> </div>
     <div class="form-group">
         {!! Form::label('phone_main_fax', 'Fax:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('phone_main_fax', $diocese->phone_main_fax->phone, ['class' => 'col-md-2']) !!}
+        @if (isset($diocese->phone_main_fax->phone))
+            {!! Form::text('phone_main_fax', $diocese->phone_main_fax->phone, ['class' => 'col-md-2']) !!}
+        @else
+            {!! Form::text('phone_main_fax', NULL, ['class' => 'col-md-2']) !!}
+        @endif
+        
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">

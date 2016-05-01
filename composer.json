@@ -11,7 +11,8 @@
         "laravel/socialite": "^2.0",
         "cartalyst/sentry": "2.1.*",
         "twbs/bootstrap": "^3.3",
-        "zizaco/entrust": "1.5.0"
+        "zizaco/entrust": "1.5.0",
+        "spatie/laravel-menu": "^1.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

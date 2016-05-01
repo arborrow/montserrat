@@ -152,7 +152,7 @@ return Redirect::action('DiocesesController@index');
     public function show($id)
     {
         // $diocese = \montserrat\Diocese::with('bishop')->findOrFail($id);
-        $diocese = \montserrat\Contact::with('bishop.contact_b','parishes.contact_b','addresses.state','addresses.location','phones.location','emails.location','websites','notes')->findOrFail($id);
+        $diocese = \montserrat\Contact::with('bishops.contact_b','parishes.contact_b','addresses.state','addresses.location','phones.location','emails.location','websites','notes')->findOrFail($id);
        //dd($diocese); 
        return view('dioceses.show',compact('diocese'));//
     
@@ -168,7 +168,7 @@ return Redirect::action('DiocesesController@index');
     {
         // TODO: make create and edit bishop id multi-select with all bishops defaulting to selected on edit
         // TODO: consider making one primary bishop with multi-select for seperate auxilary bishops (new relationship)
-        $diocese = \montserrat\Contact::with('bishop.contact_b','parishes.contact_b','address_primary.state','address_primary.location','phone_primary.location','phone_main_fax.location','email_primary.location','website_main','notes')->findOrFail($id);
+        $diocese = \montserrat\Contact::with('bishops.contact_b','parishes.contact_b','address_primary.state','address_primary.location','phone_primary.location','phone_main_fax.location','email_primary.location','website_main','notes')->findOrFail($id);
        if (empty($diocese->bishop)) {
            $diocese->bishop_id=0;
        } else {
