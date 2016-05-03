@@ -2,7 +2,7 @@
 @section('content')
 
     <section class="section-padding">
-        <div class="jumbotron text-left">Pages
+        <div class="jumbotron text-left">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
