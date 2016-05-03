@@ -14,7 +14,7 @@
                 @if ($parishes->isEmpty())
                     <p>No Diocese of Fort Worth parishes are currently in the database.</p>
                 @else
-                <table class="table"><caption><h2>Diocese of Fort Worth Parishes</h2></caption>
+                <table class="table table-bordered table-striped table-hover><caption><h2>Diocese of Fort Worth Parishes</h2></caption>
                     <thead>
                         <tr>
                             <th>Name</th> 

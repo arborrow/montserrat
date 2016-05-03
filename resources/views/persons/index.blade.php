@@ -2,7 +2,7 @@
 @section('content')
 
     <section class="section-padding">
-        <div class="jumbotron text-left">
+        <div class="jumbotron text-left">Pages
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
@@ -21,10 +21,11 @@
                     <span class="volunteers"><a href={{ action('PersonsController@volunteers') }}>{!! Html::image('img/volunteer.png', 'Volunteers',array('title'=>"Volunteers",'class' => 'btn btn-primary')) !!}</a></span></h1>
                 
                 </div>
+                
                 @if ($persons->isEmpty())
                     <p>It is a brand new world, there are no persons!</p>
                 @else
-                <table class="table"><caption><h2>Persons</h2></caption>
+                <table class="table table-striped table-bordered table-hover"><caption><h2>Persons</h2></caption>
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -78,7 +79,7 @@
                             </td>
                         </tr>
                         @endforeach
-                        {!! $persons->render() !!}
+                    {!! $persons->render() !!}    
                     </tbody>
                 </table>
                 @endif

@@ -12,7 +12,7 @@
                 @if ($retreats->isEmpty())
                     <p> Currently, there are no current or upcoming retreats!</p>
                 @else
-                <table class="table"><caption><h2>Current and upcoming retreats</h2></caption>
+                <table class="table table-bordered table-striped table-hover"><caption><h2>Current and upcoming retreats</h2></caption>
                     <thead>
                         <tr>
                             <th>ID#</th>

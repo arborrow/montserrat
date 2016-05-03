@@ -14,7 +14,7 @@
                 @if ($roomsort->isEmpty())
                     <p> Yikes, there are no rooms at this retreat house!</p>
                 @else
-                <table class="table"><caption><h2>Rooms</h2></caption>
+                <table class="table table-bordered table-striped table-hover"><caption><h2>Rooms</h2></caption>
                     <thead>
                         <tr>
                             <th>Room</th> 

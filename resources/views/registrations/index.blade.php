@@ -14,7 +14,7 @@
                 @if ($registrations->isEmpty())
                     <p> Yikes, there are no registrations!</p>
                 @else
-                <table class="table"><caption><h2>Registrations</h2></caption>
+                <table class="table table-bordered table-striped table-hover"><caption><h2>Registrations</h2></caption>
                     <thead>
                         <tr>
                             <th>Registered</th> 

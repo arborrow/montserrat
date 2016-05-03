@@ -13,7 +13,7 @@
                 @if ($touchpoints->isEmpty())
                     <p>It is a brand new world, there are no touch points!</p>
                 @else
-                <table class="table"><caption><h2>Touch points</h2></caption>
+                <table class="table table-bordered table-striped table-hover"><caption><h2>Touch points</h2></caption>
                     <thead>
                         <tr>
                             <th>Date</th>

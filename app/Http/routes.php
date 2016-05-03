@@ -70,6 +70,7 @@ Route::resource('person','PersonsController');
     Route::get('pastors',['as' => 'pastors','uses' => 'PersonsController@pastors']);
     Route::get('retreatants',['as' => 'retreatants','uses' => 'PersonsController@retreatants']);
     Route::get('volunteers',['as' => 'volunteers','uses' => 'PersonsController@volunteers']);
+    Route::get('person/lastnames/{id?}',['as' => 'person.lastnames', 'uses' => 'PersonsController@lastnames'])->where('id','[a-z]');
 
 Route::resource('touchpoint','TouchpointsController');
 Route::get('touchpoint/add/{id?}',['uses' => 'TouchpointsController@add']);

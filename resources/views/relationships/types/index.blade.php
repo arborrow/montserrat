@@ -13,7 +13,7 @@
                 @if ($relationship_types->isEmpty())
                     <p>It is a brand new world, there are no relationship types!</p>
                 @else
-                <table class="table"><caption><h2>Relationship Types</h2></caption>
+                <table class="table table-bordered table-striped table-hover"><caption><h2>Relationship Types</h2></caption>
                     <thead>
                         <tr>
                             <th>Description</th>
