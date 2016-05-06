@@ -43,9 +43,15 @@
                             <td>
                                 @foreach($person->addresses as $address)
                                 @if ($address->is_primary)
-                                <a href="http://maps.google.com/?q={{$address->street_address}} {{ $address->suplemental_address_1}} {{ $address->city}} {{ $address->state->abbreviation}} {{ $address->postal_code}} {{ $person->zip}}" target="_blank">
-                                {{ $address->street_address }} ({{ $address->city }})
-                                </a>
+                                    @if ($address->state_province_id>0)
+                                        <a href="http://maps.google.com/?q={{$address->street_address}} {{ $address->suplemental_address_1}} {{ $address->city}} {{ $address->state->abbreviation}} {{ $address->postal_code}} {{ $person->zip}}" target="_blank">
+                                        {{ $address->street_address }} ({{ $address->city }}, {{ $address->state->abbreviation}})
+                                        </a>
+                                    @else
+                                        <a href="http://maps.google.com/?q={{$address->street_address}} {{ $address->suplemental_address_1}} {{ $address->city}} {{ $address->postal_code}} {{ $person->zip}}" target="_blank">
+                                        {{ $address->street_address }} ({{ $address->city }})
+                                        </a>
+                                    @endIf
                                 @endif
                                 @endforeach
                             </td>

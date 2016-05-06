@@ -74,6 +74,7 @@ Route::resource('person','PersonsController');
 
 Route::resource('touchpoint','TouchpointsController');
 Route::get('touchpoint/add/{id?}',['uses' => 'TouchpointsController@add']);
+Route::get('registration/add/{id?}',['uses' => 'RegistrationsController@add']);
 
 Route::resource('group','GroupsController');
 Route::resource('relationship_type','RelationshipTypesController');

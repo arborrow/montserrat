@@ -24,7 +24,7 @@ class RetreatsController extends Controller
     {
         //dd(Auth::User());
         $retreats = \montserrat\Retreat::whereDate('end', '>=', date('Y-m-d'))->orderBy('start','asc')->with('retreatmasters','innkeeper','assistant')->get();
-        $oldretreats = \montserrat\Retreat::whereDate('end', '<', date('Y-m-d'))->orderBy('start','desc')->with('retreatmasters','innkeeper','assistant')->get();
+        $oldretreats = \montserrat\Retreat::whereDate('end', '<', date('Y-m-d'))->orderBy('start','desc')->with('retreatmasters','innkeeper','assistant')->paginate(100);
         
         //dd($oldretreats);    
         return view('retreats.index',compact('retreats','oldretreats'));   //

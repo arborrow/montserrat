@@ -15,8 +15,12 @@
                         </strong></h2>
                     </span>
 
-               <span class="btn btn-primary"><a href={{ action('TouchpointsController@add',$person->id) }}>Add Touch point</a></span> 
-               </span>                
+                <span class="btn btn-primary">
+                   <a href={{ action('TouchpointsController@add',$person->id) }}>Add Touch point</a>
+                </span>
+                <span class="btn btn-primary">
+                    <a href={{ action('RegistrationsController@add',$person->id) }}>Add Registration</a> 
+                </span>                
 
             </div>
             <div class='row'>

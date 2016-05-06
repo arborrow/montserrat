@@ -23,7 +23,13 @@
            <div class="form-group">
 
                 {!! Form::label('retreatant_id', 'Retreatant:', ['class' => 'col-md-2']) !!}
-                {!! Form::select('retreatant_id', $retreatants, 0, ['class' => 'col-md-2']) !!}
+                @if (isset($defaults['retreatant_id']))
+                    {!! Form::select('retreatant_id', $retreatants, $defaults['retreatant_id'], ['class' => 'col-md-2']) !!}
+                @else
+                    {!! Form::select('retreatant_id', $retreatants, 0, ['class' => 'col-md-2']) !!}
+                @endif
+                
+                
                 
                 
             </div><div class="clearfix"> </div>

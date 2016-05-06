@@ -45,6 +45,19 @@ class RegistrationsController extends Controller
         //dd($retreatants);
     }
 
+    public function add($id)
+    {
+        //
+        //$retreats = \montserrat\Retreat::where('end','>',\Carbon\Carbon::today())->lists('idnumber','title','id');
+        $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start,"%m-%d-%Y"),")") as description'), 'id')->where("end",">",\Carbon\Carbon::today())->orderBy('start')->pluck('description','id');
+        $retreats->prepend('Unassigned',0);
+        $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->lists('sort_name','id');
+        $rooms= \montserrat\Room::orderby('name')->lists('name','id');
+        $defaults['retreatant_id']=$id;
+        return view('registrations.create',compact('retreats','retreatants','rooms','defaults')); 
+        //dd($retreatants);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
