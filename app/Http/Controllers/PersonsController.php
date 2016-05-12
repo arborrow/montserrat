@@ -26,8 +26,8 @@ class PersonsController extends Controller
      */
     public function index()
     {
-       $persons = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name', 'asc')->with('addresses.state','phones','emails','websites','parish.contact_a')->paginate(150);
-       //dd($persons);
+       $persons = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name', 'asc')->with('addresses.state','phones','emails','websites','parish.contact_a','google_addresses')->paginate(150);
+       //dd($persons[28]);
        return view('persons.index',compact('persons'));   //
     }
 
