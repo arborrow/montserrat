@@ -116,7 +116,7 @@ class RetreatsController extends Controller
     {
         $retreat = \montserrat\Retreat::with('retreatmasters','innkeeper','assistant')->find($id);
         $registrations = \montserrat\Registration::where('retreat_id','=',$id)->with('retreatant','retreatant.parish')->get();
-        
+       //dd($registrations); 
        return view('retreats.show',compact('retreat','registrations'));//
     }
 

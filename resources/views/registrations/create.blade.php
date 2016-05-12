@@ -4,14 +4,7 @@
     <section class="section-padding">
         <div class="jumbotron text-left">
             <h2><strong>Add A Registration</strong></h2>
-        <?= Form::open() ?>
-        <?= Form::label('auto', 'Find a retreatant: ') ?>
-        <?= Form::text('auto', '', array('id' => 'auto'))?>
         
-        <?= Form::label('response', 'Retreatant id: ') ?>
-        <?= Form::text('response', '', array('id' =>'response', 'disabled' => 'disabled')) ?>
-        <?= Form::close() ?>
-
 
             {!! Form::open(['url' => 'registration', 'method' => 'post', 'class' => 'form-horizontal panel']) !!}
            <div class="form-group">
@@ -46,8 +39,8 @@
                 {!! Form::text('confirmattend', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
-                {!! Form::label('confirmattend', 'Attendance Confirmed:', ['class' => 'col-md-2']) !!}
-                {!! Form::text('confirmattend', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+                {!! Form::label('confirmedby', 'Confirmed By:', ['class' => 'col-md-2']) !!}
+                {!! Form::text('confirmedby', null, ['class'=>'col-md-2']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('canceled_at', 'Canceled at:', ['class' => 'col-md-2']) !!}

@@ -31,8 +31,8 @@
                         <tr>
                             <td><a href="registration/{{$registration->id}}">{{ date('F d, Y', strtotime($registration->register)) }}</a></td>
                             <td>
-                                @if (isset($registration->retreatant->lastname))
-                                    <a href="person/{{$registration->retreatant_id}}">{{ $registration->retreatant->lastname}}, {{ $registration->retreatant->firstname}}</a>
+                                @if (isset($registration->retreatant->display_name))
+                                    <a href="person/{{$registration->retreatant_id}}">{{ $registration->retreatant->display_name}}</a>
                                 @else
                                     N/A
                                 @endif  
