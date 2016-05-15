@@ -60,6 +60,14 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-left">
+                  <li>
+    {{ Form::open(['action' => ['SearchController@getuser'], 'method' => 'GET']) }}
+    {{ Form::text('q', '', ['id' =>  'q', 'placeholder' =>  'Type Name','autofocus'=>'autofocus'])}}
+    {{Form::hidden('response', '', array('id' =>'response')) }}
+    
+    {{ Form::submit('Find Person', array('class' => 'btn btn-default')) }}
+    {{ Form::close() }}
+    </li>
                 <li><a href={{ route('retreat.index') }}> {!! Html::image('img/retreat.png', 'Retreats',array('title'=>"Retreats")) !!}</a></li>
                 <li><a href={{ route('person.index') }}> {!! Html::image('img/person.png', 'Persons',array('title'=>"Persons")) !!}</a></li>
                 <li><a href={{ route('registration.index') }}> {!! Html::image('img/registration.png', 'Registrations',array('title'=>"Registrations")) !!}</a></li>
@@ -88,13 +96,7 @@
                 <li><a href='login/google'>{!! Html::image('img/login.png', 'Login',array('title' => 'Login')) !!}</a></li>
                 @endif
                 -->
-    {{ Form::open(['action' => ['SearchController@getuser'], 'method' => 'GET']) }}
-    {{ Form::text('q', '', ['id' =>  'q', 'placeholder' =>  'Type Name','autofocus'=>'autofocus'])}}
-    {{Form::hidden('response', '', array('id' =>'response')) }}
-    
-    {{ Form::submit('Find Person', array('class' => 'btn btn-default')) }}
-    {{ Form::close() }}
-    
+              
             </ul>
         </div><!-- /.navbar-collapse -->
         </nav>

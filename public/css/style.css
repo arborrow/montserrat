@@ -39,7 +39,7 @@ body {
     display: table;
     font-weight: 100;
     font-family: 'perpetua';
-    background: buttonshadow none repeat scroll 0 0;
+    background: #b7a99a none repeat scroll 0 0;
 }
 
 .container {
@@ -54,11 +54,16 @@ body {
 }
 .footer {
     text-align: center;
-    background-color: #e7e7e7;
+    background-color: #e5e5e5;
 }
 .btn {
     font-size: 20px;
 }
+
+.btn-default {
+    background-color: #e5e5e5;
+}
+
 .title {
     font-size: 96px;
 }
@@ -67,7 +72,7 @@ td {
 }
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-  background-color: tan;
+  background-color: #b7a99a;
 }
 
 .logo {
@@ -77,10 +82,13 @@ td {
 .jumbotron {
     /* background-color: transparent; */
     line-height: 1.5;
+    background-color: #00204e;
 }
 
 .navbar-default {
     /* background-color: transparent; */
+    background-color: #748cab;
+    border-color: #e5e5e5;
 }
 
 .navbar {
@@ -88,16 +96,21 @@ td {
 }
 
 a {
-    color: mediumblue;
+    color: #3E5C76;
 }
+
+.panel-default .panel-heading {
+    background-color: #e5e5e5;
+}
+
 
 .create {
     text-align: right;
 }
 
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-    background-color: darkgray;
-    border-color: gray gray transparent;
+    background-color: #767676;
+    border-color: #a2a2a2 #a2a2a2 transparent;
     border-width: 3px;
     color: black;
 }
