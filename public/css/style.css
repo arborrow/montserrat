@@ -64,6 +64,7 @@ body {
     background-color: #e5e5e5;
 }
 
+
 .title {
     font-size: 96px;
 }
@@ -87,7 +88,7 @@ td {
 
 .navbar-default {
     /* background-color: transparent; */
-    background-color: #748cab;
+    background-color: #E5E6E4;
     border-color: #e5e5e5;
 }
 
@@ -99,6 +100,11 @@ a {
     color: #3E5C76;
 }
 
+.navbar-default .navbar-nav > li > a {
+  color: #3E5C76;
+  font-size: 18pt;
+  
+}
 .panel-default .panel-heading {
     background-color: #e5e5e5;
 }
@@ -109,7 +115,7 @@ a {
 }
 
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-    background-color: #767676;
+    background-color: #E5E6E7;
     border-color: #a2a2a2 #a2a2a2 transparent;
     border-width: 3px;
     color: black;
