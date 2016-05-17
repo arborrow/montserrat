@@ -14,7 +14,7 @@
                 @if ($parishes->isEmpty())
                     <p>No Diocese of Fort Worth parishes are currently in the database.</p>
                 @else
-                <table class="table table-bordered table-striped table-hover><caption><h2>Diocese of Fort Worth Parishes</h2></caption>
+                <table class="table table-bordered table-striped table-hover"><caption><h2>Diocese of Fort Worth Parishes</h2></caption>
                     <thead>
                         <tr>
                             <th>Name</th> 
@@ -41,9 +41,7 @@
                             <td>
                                 @foreach($parish->addresses as $address)
                                 @if ($address->is_primary)
-                                <a href="http://maps.google.com/?q={{$address->street_address}} {{ $address->suplemental_address_1}} {{ $address->city}} {{ $address->state->abbreviation}} {{ $address->postal_code}}" target="_blank">
-                                {{ $address->street_address }} ({{ $address->city }})
-                                </a>
+                                {!!$address->google_map!!}
                                 @endif
                                 @endforeach
                             </td>

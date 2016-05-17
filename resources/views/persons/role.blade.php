@@ -30,9 +30,7 @@
                         <tr>
                             <td><a href="person/{{ $person->id}}">{{ $person->lastname }}, {{ $person->firstname }}</a></td>
                             <td>
-                                <a href="http://maps.google.com/?q={{$person->address1}} {{ $person->address2}} {{ $person->city}} {{ $person->state}} {{ $person->zip}}" target="_blank">
-                                {{ $person->address1 }} ({{ $person->city }})
-                                </a>
+                                {!!$address->google_map!!} 
                             </td>
                             <td>{{ $person->homephone }}</td>
                             <td>{{ $person->mobilephone }}</td>

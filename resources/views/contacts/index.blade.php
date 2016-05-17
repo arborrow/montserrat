@@ -31,9 +31,7 @@
                             <td>
                                 @foreach($contact->addresses as $address)
                                 @if ($address->is_primary)
-                                <a href="http://maps.google.com/?q={{$address->street_address}} {{ $address->suplemental_address_1}} {{ $address->city}} {{ $address->state->abbreviation}} {{ $address->postal_code}} {{ $contact->zip}}" target="_blank">
-                                {{ $address->street_address }} ({{ $address->city }})
-                                </a>
+                                    {!!$address->google_map!!} 
                                 @endif
                                 @endforeach
                             </td>

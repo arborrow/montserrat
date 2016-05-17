@@ -29,20 +29,7 @@
                 <strong>{{$address->location->display_name}}:</strong>
                 
                 <address>
-                    <a href="http://maps.google.com/?q=
-                       {{isset($address->street_address) ? $address->street_address : '' }} 
-                       {{isset($address->city) ? $address->city : ''}} 
-                       {{isset($address->state->abbreviation) ? $address->state->abbreviation : ''}} 
-                       {{isset($address->postal_code) ? $address->postal_code : ''}}" target="_blank">
-                                
-                    {{isset($address->street_address) ? $address->street_address : ''}}
-                        @if (!empty($address->supplemental_address_1))
-                            <br />{{$address->supplemental_address_1}}
-                        @endif   
-                        <br />
-                        {{isset($address->city) ? $address->city : ''}}, 
-                        {{isset($address->state->abbreviation) ? $address->state->abbreviation : ''}} 
-                        {{isset($address->postal_code) ? $address->postal_code : ''}}</a> 
+                    {!!$address->google_map!!}  
                 <br />@if ($address->country_id=1228) @else {{$address->country_id}} @endif 
                 </address>
                 @endif

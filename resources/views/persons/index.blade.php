@@ -42,17 +42,9 @@
                             <td><a href="person/{{ $person->id}}">{{ $person->last_name }}, {{ $person->first_name }}</a></td>
                             <td>
                                 @foreach($person->addresses as $address)
-                                @if ($address->is_primary)
-                                    @if ($address->state_province_id>0)
-                                        <a href="http://maps.google.com/?q={{$address->street_address}} {{ $address->suplemental_address_1}} {{ $address->city}} {{ $address->state->abbreviation}} {{ $address->postal_code}} {{ $person->zip}}" target="_blank">
-                                        {{ $address->street_address }} ({{ $address->city }}, {{ $address->state->abbreviation}})
-                                        </a>
-                                    @else
-                                        <a href="http://maps.google.com/?q={{$address->street_address}} {{ $address->suplemental_address_1}} {{ $address->city}} {{ $address->postal_code}} {{ $person->zip}}" target="_blank">
-                                        {{ $address->street_address }} ({{ $address->city }})
-                                        </a>
-                                    @endIf
-                                @endif
+                                    @if ($address->is_primary)
+                                        {!!$address->google_map!!}
+                                    @endif
                                 @endforeach
                             </td>
                             <td>

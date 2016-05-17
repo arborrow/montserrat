@@ -28,6 +28,18 @@ class Address extends Model
         return $this->hasOne('\montserrat\Country','id','country_id');
     }
     
+    public function getGoogleMapAttribute() {
+        //dd($this);
+        if (isset($this->state->abbreviation)) {
+            $gmap = '<a href="http://maps.google.com/?q='.$this->street_address.' '.$this->supplemental_address.' '.$this->city.' '.$this->state->abbreviation.' '.$this->postal_code.'" target="_blank">'.
+                    $this->street_address.' '.$this->supplemental_address.'('.$this->city.', '.$this->state->abbreviation.' '.$this->postal_code.')</a>';
+        } else {
+            $gmap = '<a href="http://maps.google.com/?q='.$this->street_address.' '.$this->supplemental_address.' '.$this->city.' '.$this->postal_code.'">'.
+                    $this->street_address.' '.$this->supplemental_address.'('.$this->city.' '.$this->postal_code.')</a>';
+        } 
+        return $gmap;
+    }
+
     
     
 }

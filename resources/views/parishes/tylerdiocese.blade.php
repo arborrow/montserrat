@@ -27,7 +27,7 @@
                        </tr>
                     </thead>
                     <tbody>
-@foreach($parishes as $parish)
+                    @foreach($parishes as $parish)
                         <tr>
                             <td><a href="../parish/{{$parish->id}}">{{ $parish->organization_name }} </a></td>
                             <td><a href="diocese/{{$parish->diocese->contact_id_a}}">{{ $parish->diocese->contact_a->organization_name }}</a></td> 
@@ -41,9 +41,7 @@
                             <td>
                                 @foreach($parish->addresses as $address)
                                 @if ($address->is_primary)
-                                <a href="http://maps.google.com/?q={{$address->street_address}} {{ $address->suplemental_address_1}} {{ $address->city}} {{ $address->state->abbreviation}} {{ $address->postal_code}}" target="_blank">
-                                {{ $address->street_address }} ({{ $address->city }})
-                                </a>
+                                {!!$address->google_map!!}
                                 @endif
                                 @endforeach
                             </td>

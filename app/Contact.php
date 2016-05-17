@@ -68,11 +68,6 @@ class Contact extends Model
     public function gender() {
         return $this->hasOne('\montserrat\Gender','id','gender_id');
     }
-    public function google_addresses() {
-        $addresses = $this->hasMany('\montserrat\Address','contact_id','id');
-    //    dd($addresses);
-        return $this->hasMany('\montserrat\Address','contact_id','id');
-    }
     
     public function groups() {
         return $this->hasMany('\montserrat\GroupContact','contact_id','id');

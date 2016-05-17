@@ -23,6 +23,7 @@ and open the template in the editor.
 }
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   font-family: "perpetua";
+  color: #00204e;
 }
 body {
   font-size: 18px;
@@ -83,7 +84,7 @@ td {
 .jumbotron {
     /* background-color: transparent; */
     line-height: 1.5;
-    background-color: #00204e;
+    background-color: #b7a99a;
 }
 
 .navbar-default {

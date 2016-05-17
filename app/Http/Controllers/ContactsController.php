@@ -27,7 +27,7 @@ class ContactsController extends Controller
         // TODO: figure out how to get parish information
         $contacts = \montserrat\Contact::with('addresses.state','phones','emails')->orderBy('last_name', 'asc', 'first_name','asc')->whereContactType(1)->paginate(100);
         
-        //dd($contacts[3]);
+        dd($contacts[3]);
         return view('contacts.index',compact('contacts'));   //
     }
 
