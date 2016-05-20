@@ -117,7 +117,7 @@ class PersonsController extends Controller
         $person->suffix_id = $request->input('suffix_id');
         $person->nick_name = $request->input('nick_name');
         $person->contact_type = CONTACT_TYPE_INDIVIDUAL;
-        
+        // the sort and display names are not available on creation so that we create a default and then it can be customized or tweaked individually
         if (empty($request->input('display_name'))) {
             $person->display_name = $person->first_name.' '.$person->last_name;
         } else {

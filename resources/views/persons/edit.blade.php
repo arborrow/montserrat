@@ -51,7 +51,12 @@
                         
                     {!! Form::label('nick_name', 'Nickname: ', ['class' => 'col-md-2'])  !!}
                     {!! Form::text('nick_name', $person->nick_name, ['class' => 'col-md-2']) !!}
-                    
+                <div class="clearfix"> </div>
+                    {!! Form::label('display_name', 'Display name: ', ['class' => 'col-md-2'])  !!}
+                    {!! Form::text('display_name', $person->display_name, ['class' => 'col-md-2']) !!}
+                    {!! Form::label('sort_name', 'Sort name: ', ['class' => 'col-md-2'])  !!}
+                    {!! Form::text('sort_name', $person->sort_name, ['class' => 'col-md-2']) !!}
+ 
                 </div>
             </span>
         </div>

@@ -29,11 +29,7 @@
  <div class="clearfix"> </div>
                         {!! Form::label('nick_name', 'Nick: ', ['class' => 'col-md-1'])  !!}
                         {!! Form::text('nick_name', null, ['class' => 'col-md-2']) !!}
-<!--                        {!! Form::label('display_name', 'Display: ', ['class' => 'col-md-1'])  !!}
-                        {!! Form::text('display_name', null, ['class' => 'col-md-2']) !!}
-                        {!! Form::label('sort_name', 'Sort: ', ['class' => 'col-md-1'])  !!}
-                        {!! Form::text('sort_name', null, ['class' => 'col-md-2']) !!}
- -->                   </div>
+                        </div>
                 </span>
             </div>
         </div>

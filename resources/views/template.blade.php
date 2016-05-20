@@ -68,13 +68,13 @@
     {{ Form::submit('Find Person', array('class' => 'btn btn-default')) }}
     {{ Form::close() }}
     </li>
-                <li><a href={{ route('retreat.index') }}> {!! Html::image('img/retreat.png', 'Retreats',array('title'=>"Retreats")) !!}</a></li>
-                <li><a href={{ route('person.index') }}> {!! Html::image('img/person.png', 'Persons',array('title'=>"Persons")) !!}</a></li>
-                <li><a href={{ route('registration.index') }}> {!! Html::image('img/registration.png', 'Registrations',array('title'=>"Registrations")) !!}</a></li>
+                <li><a href={{ route('retreat.index') }}>Retreats</a></li>
+                <li><a href={{ route('person.index') }}>Persons</a></li>
+                <li><a href={{ route('registration.index') }}>Registrations</a></li>
                 <!--<li><a href={{ route('reservation') }}> {!! Html::image('img/reservation.png', 'Reservation',array('title'=>"Reservation")) !!}</a></li> -->
-                <li><a href={{ route('room.index') }}> {!! Html::image('img/room.png', 'Rooms',array('title'=>"Rooms")) !!}</a></li>
-                <li><a href={{ route('parish.index') }}> {!! Html::image('img/parish.png', 'Parishes',array('title'=>"Parishes")) !!}</a></li>
-                <li><a href={{ route('diocese.index') }}> {!! Html::image('img/diocese.png', 'Dioceses',array('title'=>"Dioceses")) !!}</a></li>
+                <li><a href={{ route('room.index') }}>Rooms</a></li>
+                <li><a href={{ route('parish.index') }}>Parishes</a></li>
+                <li><a href={{ route('diocese.index') }}>Dioceses</a></li>
 <!--          <li><a href={{ route('housekeeping') }}> {!! Html::image('img/housekeeping.png', 'Housekeeping',array('title'=>"Housekeeping")) !!}</a></li>
                 <li class="divider"></li>
                 <li><a href={{ route('maintenance') }}>{!! Html::image('img/maintenance.png', 'Maintenance',array('title'=>"Maintenance")) !!}</a></li>
@@ -86,7 +86,7 @@
                 <li class="divider"></li>
                 <li><a href={{ route('users') }}>{!! Html::image('img/users.png', 'Users',array('title'=>"Users")) !!}</a></li>
 -->           
-                <li><a href={{ route('touchpoint.index') }}>{!! Html::image('img/touchpoint.png', 'Touch points',array('title'=>"Touch points")) !!}</a></li>
+                <li><a href={{ route('touchpoint.index') }}>Touchpoints</a></li>
               
                 <li><a href={{ route('support') }}>{!! Html::image('img/support.png', 'Support',array('title'=>"Support")) !!}</a></li>
                 <li><a href={{ route('about') }}>{!! Html::image('img/about.png', 'About',array('title' => 'About')) !!}</a></li>
