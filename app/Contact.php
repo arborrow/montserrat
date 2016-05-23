@@ -65,6 +65,14 @@ class Contact extends Model
         return $this->hasOne('\montserrat\Ethnicity','id','ethnicity_id');
     }
     
+    public function getPrefixNameAttribute () {
+        if (isset($this->prefix_id)&&($this->prefix_id>0)) {
+            return $this->prefix->name;
+        } else {
+            return NULL;
+        }
+    }
+
     public function gender() {
         return $this->hasOne('\montserrat\Gender','id','gender_id');
     }

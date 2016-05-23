@@ -4,7 +4,7 @@
 
 <div class="jumbotron text-left">
     <span><h2><strong>Edit Person: 
-        {{ isset($person->prefix_id) ? $person->prefix->name : null }} 
+        {{ $person->prefix_name }} 
         {{ isset($person->first_name) ? $person->first_name : null }} 
         {{ isset($person->middle_name) ? $person->middle_name : null}} 
         {{ $person->last_name}}
