@@ -39,7 +39,7 @@
                     <tbody>
                         @foreach($persons as $person)
                         <tr>
-                            <td><a href="person/{{ $person->id}}">{{ $person->last_name }}, {{ $person->first_name }}</a></td>
+                            <td><a href="person/{{ $person->id}}">{{$person->display_name}}</a></td>
                             <td>
                                 @foreach($person->addresses as $address)
                                     @if ($address->is_primary)

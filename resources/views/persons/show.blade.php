@@ -7,10 +7,9 @@
             <div class="panel-heading">
                 <span class="back">
                     <span><h2><strong>
-                        {{ (!empty($person->prefix_id)) ? $person->prefix->name : null }} 
-                        {{ (!empty($person->first_name)) ? $person->first_name : null }} 
-                        {{ (!empty($person->middle_name)) ? $person->middle_name : null}} 
-                        {{ (!empty($person->last_name)) ? $person->last_name : null}}{{(!empty($person->suffix_id)) ? ', '.$person->suffix->name : null }}
+                        {{ $person->prefix_name }} 
+                        {{ (!empty($person->display_name)) ? $person->display_name : null }} 
+                        {{ $person->suffix_name }}
                         {{ (!empty($person->nick_name)) ? "(&quot;$person->nick_name&quot;)" : null }}   
                         </strong></h2>
                     </span>
@@ -27,11 +26,11 @@
                 <div class='col-md-4'><span><h2><strong>Names</strong></h2>
                     <div>
                         <span>
-                            <strong>Title: </strong>{{ (!empty($person->prefix_id)) ? $person->prefix->name : null }} <br />
+                            <strong>Title: </strong>{{ $person->prefix_name }} <br />
                             <strong>First Name: </strong>{{ (!empty($person->first_name)) ? $person->first_name : null }} <br /> 
                             <strong>Middle Name: </strong>{{ (!empty($person->middle_name)) ? $person->middle_name : null}} <br />
                             <strong>Last Name: </strong>{{ (!empty($person->last_name)) ? $person->last_name : null}} <br />
-                            <strong>Suffix: </strong>{{(!empty($person->suffix_id)) ? $person->suffix->name : null }} <br />
+                            <strong>Suffix: </strong>{{$person->suffix_name}} <br />
                         </span>
                         <strong>Nick name:</strong> {{ (!empty($person->nick_name)) ? $person->nick_name : null }} <br />
                         <strong>Display name: </strong>{{ (!empty($person->display_name)) ? $person->display_name : null }}   <br />

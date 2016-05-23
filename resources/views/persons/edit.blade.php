@@ -5,10 +5,8 @@
 <div class="jumbotron text-left">
     <span><h2><strong>Edit Person: 
         {{ $person->prefix_name }} 
-        {{ isset($person->first_name) ? $person->first_name : null }} 
-        {{ isset($person->middle_name) ? $person->middle_name : null}} 
-        {{ $person->last_name}}
-        {{ (!empty($person->suffix_id)) ? ', '.$person->suffix->name : null }}
+        {{ isset($person->display_name) ? $person->display_name : null }} 
+        {{ $person->suffix_name }}
         {{ (!empty($person->nick_name)) ? "(&quot;$person->nick_name&quot;)" : null }}
     </strong></h2></span>
 

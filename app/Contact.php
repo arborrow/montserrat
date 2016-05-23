@@ -72,6 +72,14 @@ class Contact extends Model
             return NULL;
         }
     }
+    
+    public function getSuffixNameAttribute () {
+        if (isset($this->suffix_id)&&($this->suffix_id>0)) {
+            return $this->suffix->name;
+        } else {
+            return NULL;
+        }
+    }
 
     public function gender() {
         return $this->hasOne('\montserrat\Gender','id','gender_id');
