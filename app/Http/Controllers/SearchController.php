@@ -21,6 +21,7 @@ public function autocomplete(){
 	$queries = DB::table('contact')
                 ->orderBy('sort_name')
 		->where('display_name', 'LIKE', '%'.$term.'%')
+                ->whereNull('deleted_at')
 		->take(15)->get();
         
 	foreach ($queries as $query)
