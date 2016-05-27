@@ -108,7 +108,7 @@
                         {!! Form::label('religion_id', 'Religion:', ['class' => 'col-md-1'])  !!}
                         {!! Form::select('religion_id', $religions, 1, ['class' => 'col-md-2']) !!} 
                         {!! Form::label('occupation_id', 'Occupation:', ['class' => 'col-md-1'])  !!}
-                        {!! Form::select('occupation_id', $occupations, 1, ['class' => 'col-md-2']) !!} 
+                        {!! Form::select('occupation_id', $occupations, 0, ['class' => 'col-md-2']) !!} 
                         <div class="clearfix"> </div>
                         
                         {!! Form::label('parish_id', 'Parish:', ['class' => 'col-md-1'])  !!}
