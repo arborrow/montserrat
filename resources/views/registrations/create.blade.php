@@ -28,7 +28,7 @@
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('register', 'Registered:', ['class' => 'col-md-2']) !!}
-                {!! Form::text('register', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+                {!! Form::text('register', $defaults['today'], ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('confirmregister', 'Registration Confirmed:', ['class' => 'col-md-2']) !!}
