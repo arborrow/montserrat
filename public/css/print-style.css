@@ -12,7 +12,7 @@ and open the template in the editor.
 @media print {
     @page {
         size: 8.5in 11in ;
-        margin: 2cm;
+        margin: 1cm;
         @top-right {
         content: "Page " counter(page);
         }
@@ -49,7 +49,7 @@ h2 {
 
 td.box {
     border: solid black;
-    height: .75in;
+    height: .5in;
     vertical-align: top;
 }
 #menu { display: none; }
