@@ -3,7 +3,7 @@
 @section('content')
 
 @foreach($registrations as $registration)
-    <h2>Retreatant Information for Retreat #{{$registration->retreat->idnumber}} - {{$registration->retreat->title}}</h2> 
+    <h2>Retreatant Information for Retreat {{$registration->retreat->title}}</h2> 
 
 
 <i>Please review the information below for accuracy and make changes as appropriate.</i>
@@ -14,103 +14,129 @@
         </td>
     </tr>
     <tr>
-        <td>{{$registration->retreatant->title}} {{$registration->retreatant->firstname}} {{$registration->retreatant->lastname}}</td>
+        <td><strong>{{$registration->retreatant->prefix_name}} {{$registration->retreatant->display_name}} {{$registration->retreatant->suffix_name}}</strong></td>
         <td><hr/></td>
     </tr>
     <tr>
-        <td>{{$registration->retreatant->address1}}</td>
+        <td><strong>{{$registration->retreatant->address_primary->street_address}}</strong></td>
         <td><hr/></td>
     </tr>
     <tr>
-        <td>{{$registration->retreatant->city}}, {{$registration->retreatant->state}}  {{$registration->retreatant->zip}}</td>
+        <td><strong>{{$registration->retreatant->address_primary->city}}, {{$registration->retreatant->address_primary->state->abbreviation}}  {{$registration->retreatant->address_primary->postal_code}}</strong></td>
         <td><hr/></td>
     </tr>
    
     <tr>
         <td>
-            <h2>Personal Contact Information</h2>
+            <h2>Phone numbers</h2>
         </td>
     </tr>
     <tr>
-        <td><strong>Cell Phone:</strong>{{$registration->retreatant->cellphone}}</td>
+        <td><strong>Home phone: </strong>{{$registration->retreatant->phone_home_phone_number}}</td>
         <td><hr/></td>
+    </tr>
+    <tr>
+        <td><strong>Mobile phone: </strong>{{$registration->retreatant->phone_home_mobile_number}}</td>
+        <td><hr/></td>
+    </tr>
+    <tr>
+        <td><strong>Work phone: </strong>{{$registration->retreatant->phone_work_phone_number}}</td>
+        <td><hr/></td>
+    </tr>
+    <tr>
+        <td>
+            <h2>Email addresses</h2>
+        </td>
     </tr>
     
+    @foreach ($registration->retreatant->emails as $email)
     <tr>
-        <td><strong>Home Phone:</strong>{{$registration->retreatant->homephone}}</td>
+        <td><strong>{{$email->location->name}} - Email:</strong>{{$email->email}}</td>  
         <td><hr/></td>
-    </tr>
+    </tr>  
+    @endforeach
     <tr>
-        <td><strong>Work Phone:</strong>{{$registration->retreatant->workphone}}</td> 
-        <td><hr/></td>
-    </tr>
-    <tr>
-        <td><strong>Email:</strong>{{$registration->retreatant->email}}</td>  
-        <td><hr/></td>
-    </tr>    
-    <tr>
-        <td><strong>Preferred contact method:</strong> <br />(Email, Cell, Home, Work, Mail, etc.)</td>  
+        <td><strong>Preferred contact method:</strong> {{$registration->retreatant->preferred_communication_method}} <br />(Email, Cell, Home, Work, Mail, etc.)</td>  
         <td><hr/></td>
     </tr>    
     <tr><td> </td></tr>
     <tr><td><h2>Emergency Contact Information</h2></td></tr>
+    
     <tr>
-        <td><strong>Phone #:</strong>{{$registration->retreatant->emergencycontactphone}}</td>
+        <td><strong>Name:</strong>{{$registration->retreatant->emergency_contact->name}}</td>
         <td><hr/></td>
     </tr>
     <tr>
-        <td><strong>Name:</strong>{{$registration->retreatant->emergencycontactname}}</td>
+        <td><strong>Relationship: </strong>{{$registration->retreatant->emergency_contact->relationship}}<br /></td>
         <td><hr/></td>
     </tr>
     <tr>
-        <td><strong>Relationship:<br /></strong></td>
+        <td><strong>Phone #:</strong>{{$registration->retreatant->emergency_contact->phone}}</td>
         <td><hr/></td>
     </tr>
-        
+<tr>
+        <td><strong>Alternate Phone #:</strong>{{$registration->retreatant->emergency_contact->phone_alternate}}</td>
+        <td><hr/></td>
+    </tr>    
     <tr>
         <td>
             <h2>Demographics</h2>
         </td>
     </tr>
+    <tr>    
+        <td><strong>Gender:</strong>{{$registration->retreatant->gender_name}}</td>
+        <td><hr/></td>
+    </tr>
     
     <tr>    
-        <td><strong>Date of Birth:</strong>{{$registration->retreatant->dob}}</td>
+        <td><strong>Date of Birth:</strong>{{$registration->retreatant->birth_date}}</td>
         <td><hr/></td>
     </tr>
     <tr>
         <td><strong>Parish (Location):</strong>
-            @if (!empty($registration->retreatant->parish->name))
-                {{$registration->retreatant->parish->name}} ({{$registration->retreatant->parish->city}})
-            @else
-                N/A
-            @endif
+            {{$registration->retreatant->parish_name}}
             <br />(If not Catholic, please indicate religious affiliation)</td>
         <td><hr/></td>
     </tr>    
 
     <tr>
-        <td><strong>Occupation:</strong>{{$registration->retreatant->occupation}}</td>
+        <td><strong>Occupation:</strong>{{$registration->retreatant->occupation->name}}</td>
         <td><hr/></td>
         
     </tr>    
     <tr>
-        <td><strong>Languages spoken:</strong>{{$registration->retreatant->languages}}</td>
+        <td><strong>Ethnicity:</strong>{{$registration->retreatant->ethnicity_name}}</td>
         <td><hr/></td>
         
     </tr>    
     <tr>
-        <td><strong>Room Preference:</strong>{{$registration->retreatant->roompreference}}<br />(1st or 2nd Floor) </td>
+        <td><strong>Languages spoken:</strong>
+            @foreach ($registration->retreatant->languages as $language)
+                {{$language->label}} 
+            @endforeach
+        </td>
         <td><hr/></td>
         
     </tr>    
+    
     <tr>
-        <td class='box'><strong>Dietary notes:</strong>{{$registration->retreatant->dietary}}</td>
-        <td class='box'><strong>Health notes:</strong>{{$registration->retreatant->medical}}</td>
+        <td><strong>Room Preference: </strong>{{$registration->retreatant->note_room_preference_text}}</td>
+        <td><hr/></td>
         
+    </tr>
+    <tr>
+        <td>
+            <h2>Notes</h2>
+        </td>
+    </tr>
+    <tr>
+        <td class='box'><strong>Dietary notes:</strong>{{$registration->retreatant->note_dietary_text}}</td>
+        <td class='box'><strong>Health notes:</strong>{{$registration->retreatant->note_health_text}}</td>
+
     </tr>    
-        
+    
 </table>
-<strong>General Notes:</strong><br /><br /><br />
+<strong>Additional Notes:</strong><br /><br />
 
 
         <span class="logo">

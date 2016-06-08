@@ -12,11 +12,11 @@
                 {!! Form::text('touched_at', \Carbon\Carbon::now() , ['class' => 'col-md-3']) !!}
             </div>
             <div class='row'>
-                {!! Form::label('person_id', 'Name of Contact:', ['class' => 'col-md-3'])  !!}
-                @if (isset($defaults['contact_id']))
-                    {!! Form::select('person_id', $persons, $defaults['contact_id'], ['class' => 'col-md-3']) !!}
+                {!! Form::label('group_id', 'Name of Group:', ['class' => 'col-md-3'])  !!}
+                @if (isset($defaults['group_id']))
+                    {!! Form::select('group_id', $groups, $defaults['group_id'], ['class' => 'col-md-3']) !!}
                 @else
-                    {!! Form::select('person_id', $persons, NULL, ['class' => 'col-md-3']) !!}
+                    {!! Form::select('group_id', $groups, NULL, ['class' => 'col-md-3']) !!}
                 @endif
                         
             </div>
@@ -50,7 +50,7 @@
         <div class="clearfix"> </div>
      <div class="col-md-1">
             <div class="form-group">
-                {!! Form::submit('Add Touch point', ['class'=>'btn btn-primary']) !!}
+                {!! Form::submit('Add Group Touch point', ['class'=>'btn btn-primary']) !!}
             </div>
                 {!! Form::close() !!}
         </div>

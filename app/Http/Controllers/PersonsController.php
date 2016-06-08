@@ -798,15 +798,21 @@ class PersonsController extends Controller
         $emergency_contact->save();
         
         //dd($person);
-        // save parishioner relationship    
+        // save parishioner relationship  
+        // TEST: does unset work?
         if ($request->input('parish_id')>0) {
-            $relationship_parishioner = \montserrat\Relationship::firstOrNew(['contact_id_a'=>$person->parish->contact_id_a,'contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_PARISHIONER,'is_active'=>1]);
+                $relationship_parishioner = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_PARISHIONER,'is_active'=>1]);
                 $relationship_parishioner->contact_id_a = $request->input('parish_id');
                 $relationship_parishioner->contact_id_b = $person->id;
                 $relationship_parishioner->relationship_type_id = RELATIONSHIP_TYPE_PARISHIONER;
                 $relationship_parishioner->is_active = 1;
             $relationship_parishioner->save();
         }
+        if ($request->input('parish_id')==0) {
+                $relationship_parishioner = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_PARISHIONER,'is_active'=>1]);
+                $relationship_parishioner->delete();
+        }
+        
         
       // save health, dietary, general and room preference notes
         

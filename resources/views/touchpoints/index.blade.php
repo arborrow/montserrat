@@ -8,6 +8,7 @@
                     <h1>
                     <span class="grey">Touch point Index</span> 
                     <span class="create"><a href={{ action('TouchpointsController@create') }}>{!! Html::image('img/create.png', 'Add Touchpoint',array('title'=>"Add Touchpoint",'class' => 'btn btn-primary')) !!}</a></span></h1>
+                    <span class="create"><a href={{ action('TouchpointsController@group_create') }}>{!! Html::image('img/group_add.png', 'Add Group Touchpoint',array('title'=>"Add Group Touchpoint",'class' => 'btn btn-primary')) !!}</a></span></h1>
                 
                 </div>
                 @if ($touchpoints->isEmpty())
