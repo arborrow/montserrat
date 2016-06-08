@@ -108,23 +108,48 @@ class Contact extends Model
     }
 
     public function getPhoneHomeMobileNumberAttribute () {
-        return $this->phone_home_mobile->phone;
+        if (isset($this->phone_home_mobile->phone)) {
+            return $this->phone_home_mobile->phone;
+        } else {
+            return NULL;
+        }
     }
     public function getPhoneHomePhoneNumberAttribute () {
-        return $this->phone_home_phone->phone;
+        if (isset($this->phone_home_phone->phone)) {
+            return $this->phone_home_phone->phone;
+        } else {
+            return NULL;
+        }
     }
+    
     public function getPhoneWorkPhoneNumberAttribute () {
-        return $this->phone_work_phone->phone;
+        if (isset($this->phone_work_phone)) {
+            return $this->phone_work_phone->phone;
+        } else {
+            return NULL;
+        }
     }
     
     public function getNoteDietaryTextAttribute () {
-        return $this->note_dietary->note;
+        if (isset($this->note_dietary->note)) {
+            return $this->note_dietary->note; 
+        } else {
+            return NULL;
+        }
     }
     public function getNoteHealthTextAttribute () {
-        return $this->note_health->note;
+        if (isset($this->note_health->note)) {
+            return $this->note_health->note;
+        } else {
+            return NULL;
+        }
     }
     public function getNoteRoomPreferenceTextAttribute () {
-        return $this->note_room_preference->note;
+        if (isset($this->note_room_preference->note)) {
+            return $this->note_room_preference->note;
+        } else {
+            return NULL;
+        }
     }
     public function getOccupationNameAttribute () {
         if (isset($this->occupation_id)&&($this->occupation_id>0)) {
