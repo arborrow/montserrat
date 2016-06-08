@@ -127,7 +127,11 @@ class Contact extends Model
         return $this->note_room_preference->note;
     }
     public function getOccupationNameAttribute () {
-        return $this->occupation->name;
+        if (isset($this->occupation_id)&&($this->occupation_id>0)) {
+            return $this->occupation->name;
+        } else {
+            return NULL;
+        }
     }
     
 
