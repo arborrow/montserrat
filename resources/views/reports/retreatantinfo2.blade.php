@@ -100,7 +100,7 @@
     </tr>    
 
     <tr>
-        <td><strong>Occupation:</strong>{{$registration->retreatant->occupation->name}}</td>
+        <td><strong>Occupation:</strong>{{$registration->retreatant->occupation_name}}</td>
         <td><hr/></td>
         
     </tr>    

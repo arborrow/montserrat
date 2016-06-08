@@ -126,6 +126,9 @@ class Contact extends Model
     public function getNoteRoomPreferenceTextAttribute () {
         return $this->note_room_preference->note;
     }
+    public function getOccupationNameAttribute () {
+        return $this->occupation->name;
+    }
     
 
     public function gender() {
