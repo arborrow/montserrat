@@ -101,7 +101,7 @@ class PagesController extends Controller
     {
         $retreat = \montserrat\Retreat::where('idnumber','=',$id)->first();
         $registrations = \montserrat\Registration::where('retreat_id','=',$retreat->id)->with('retreat','retreatant.suffix','retreatant.address_primary','retreatant.prefix')->get();
-        dd($registrations);
+        //dd($registrations);
 
         return view('reports.retreatroster',compact('registrations'));   //
     }

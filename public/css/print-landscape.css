@@ -81,7 +81,8 @@ td.box {
             width: auto;
         }
         th {
-           text-align: left; 
+           text-align: left;
+           font-weight: 700;
         }
         h2 {
             position: relative;

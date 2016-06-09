@@ -45,6 +45,7 @@ td {
 
 h2 {
     margin: 0;
+    font-weight: 700;
 }
 
 td.box {
@@ -85,6 +86,7 @@ td.box {
         }
         th {
            text-align: left; 
+           font-weight: 700;
         }
         h2 {
             position: relative;
