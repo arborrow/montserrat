@@ -26,7 +26,7 @@
                 <div class='col-md-4'><span><h2><strong>Names</strong></h2>
                     <div>
                         <span>
-                            <strong>Title: </strong>{{ $person->prefix_name }} <br />
+                            <strong>Title: </strong>{{ (!empty($person->prefix_name)) ? $person->prefix_name : null }} <br />
                             <strong>First Name: </strong>{{ (!empty($person->first_name)) ? $person->first_name : null }} <br /> 
                             <strong>Middle Name: </strong>{{ (!empty($person->middle_name)) ? $person->middle_name : null}} <br />
                             <strong>Last Name: </strong>{{ (!empty($person->last_name)) ? $person->last_name : null}} <br />
@@ -40,10 +40,10 @@
                 <div class='col-md-4' style="background-color: lightcoral;">
                     <span class="info">
                         <h2><strong>Emergency Contact Information</strong></h2>
-                        <strong>Name: </strong>{{ isset($person->emergency_contact->name) ? $person->emergency_contact->name : 'N/A' }}
-                        <br /><strong>Relationship: </strong>{{ isset($person->emergency_contact->relationship) ? $person->emergency_contact->relationship : 'N/A' }}
-                        <br /><strong>Phone:</strong> {{ isset($person->emergency_contact->phone) ? $person->emergency_contact->phone : 'N/A' }}
-                        <br /><strong>Alt phone:</strong> {{ isset($person->emergency_contact->phone_alternate) ? $person->emergency_contact->phone_alternate: 'N/A' }}
+                        <strong>Name: </strong>{{ !empty($person->emergency_contact->name) ? $person->emergency_contact->name : 'N/A' }}
+                        <br /><strong>Relationship: </strong>{{ !empty($person->emergency_contact->relationship) ? $person->emergency_contact->relationship : 'N/A' }}
+                        <br /><strong>Phone:</strong> {{ !empty($person->emergency_contact->phone) ? $person->emergency_contact->phone : 'N/A' }}
+                        <br /><strong>Alt phone:</strong> {{ !empty($person->emergency_contact->phone_alternate) ? $person->emergency_contact->phone_alternate: 'N/A' }}
                     </span>
                     <span><h2><strong>Health and Dietary Information</strong></h2>
                         <strong>Health notes: </strong>{{$person->note_health}}<br />
@@ -93,7 +93,7 @@
                 <div class='col-md-8'<span><h2><strong>Demographics:</strong></h2>
                     <strong>Gender: </strong>{{ !empty($person->gender_id) ? $person->gender->name: 'N/A' }}  
                     <br /><strong>Birth Date: </strong> 
-                    @if (isset($person->birth_date))
+                    @if (!empty($person->birth_date))
                         {{date('F d, Y', strtotime($person->birth_date))}}
                     @else 
                         N/A
@@ -103,7 +103,11 @@
                     <br /><strong>Occupation: </strong> {{ !empty($person->occupation_id) ? $person->occupation->name: 'N/A' }}  
                     <br /><strong>Ethnicity: </strong>{{ !empty($person->ethnicity_id) ? $person->ethnicity->ethnicity: 'N/A' }}    
                     <br /><strong>Parish: </strong>
-                    @if (isset($person->parish_id)) <a href="../parish/{{$person->parish_id}}">{{$person->parish_name}}</a> @endIf     
+                    @if (!empty($person->parish_id)) 
+                        <a href="../parish/{{$person->parish_id}}">{{$person->parish_name}}</a> 
+                    @else 
+                        N/A 
+                    @endIf     
                     <br /><strong>Languages: </strong>
                         <ul>
                             @foreach($person->languages as $language)
@@ -111,19 +115,19 @@
                             @endforeach
                         </ul>
                     <strong>Preferred Language: </strong>
-                        {{ isset($person->preferred_language) ? $person->preferred_language_label: 'N/A' }}
+                        {{ !empty($person->preferred_language) ? $person->preferred_language_label: 'N/A' }}
                     <br />
                     <strong>Deceased?: </strong>
                     @if ($person->is_deceased>0)
                         Yes
                     @else 
-                        No
+                        Not yet
                     @endIf
                     <strong>Deceased Date: </strong> 
-                    @if (isset($person->deceased_date))
+                    @if (!empty($person->deceased_date))
                         {{date('F d, Y', strtotime($person->deceased_date))}}
                     @else 
-                        N/A
+                        Coming soon!
                     @endif
                         
                 </div></span> 
