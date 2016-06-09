@@ -12,7 +12,7 @@ and open the template in the editor.
 @media print {
     @page {
         size: landscape;
-        margin: 2cm;
+        margin: 1cm;
         @top-right {
         content: "Page " counter(page);
         }
