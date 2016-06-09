@@ -18,21 +18,23 @@
     @foreach($registrations as $registration)
     
     <tr>
-        <td>{{$registration->retreatant->title}} {{$registration->retreatant->firstname}} {{$registration->retreatant->lastname}}</td>
-        <td>{{$registration->retreatant->address1}}</td>
-        <td>{{$registration->retreatant->city}}, {{$registration->retreatant->state}}  {{$registration->retreatant->zip}}</td>
-        <td>{{$registration->retreatant->cellphone}}</td>
-        <td>{{$registration->retreatant->homephone}}</td>
-        <td>{{$registration->retreatant->workphone}}</td> 
-        <td>{{$registration->retreatant->notes}}</td>
+        <td>{{$registration->retreatant->display_name}}</td>
+        <td>{{$registration->retreatant->address_primary_street}}</td>
+        <td>{{$registration->retreatant->address_primary_city}}, {{$registration->retreatant->address_primary_state}}  {{$registration->retreatant->address_primary_postal_code}}</td>
+        <td>{{$registration->retreatant->phone_home_mobile_number}}</td>
+        <td>{{$registration->retreatant->phone_home_phone_number}}</td>
+        <td>{{$registration->retreatant->phone_work_phone_number}}</td> 
+        <td>{{$registration->retreatant->note_regsitration_text}}</td>
         
     </tr>    
     @endforeach
-        
+       
 </table>
 <br />
-<hr />
 
+<hr />
+Registered Retreatants: {{$registrations->count()}} 
+<hr />
         <span class="logo">
             {!! Html::image('img/mrhlogoblack.png','Home',array('title'=>'Home','class'=>'logo','align'=>'right')) !!}
        

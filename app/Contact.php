@@ -65,6 +65,40 @@ class Contact extends Model
         return $this->hasOne('\montserrat\Ethnicity','id','ethnicity_id');
     }
     
+    public function getAddressPrimaryStreetAttribute() {
+        if (isset($this->address_primary->street_address)) {
+            if (isset($this->address_primary->supplemental_address)) {
+                return $this->address_primary->street_address.' '.$this->address_primary->supplemental_address;
+            } else {
+                return $this->address_primary->street_address;
+            }
+        } else {
+            return NULL;
+        }
+    }  
+    
+    public function getAddressPrimaryCityAttribute() {
+        if (isset($this->address_primary->city)) {
+            return $this->address_primary->city;
+        } else {
+            return NULL;
+        }
+    }  
+    public function getAddressPrimaryStateAttribute() {
+        if (isset($this->address_primary->state->abbreviation)) {
+            return $this->address_primary->state->abbreviation;
+        } else {
+            return NULL;
+        }
+    }  
+    public function getAddressPrimaryPostalCodeAttribute() {
+        if (isset($this->address_primary->postal_code)) {
+            return $this->address_primary->postal_code;
+        } else {
+            return NULL;
+        }
+    }  
+    
     public function getPrefixNameAttribute () {
         if (isset($this->prefix_id)&&($this->prefix_id>0)) {
             return $this->prefix->name;
@@ -144,6 +178,20 @@ class Contact extends Model
             return NULL;
         }
     }
+    public function getNoteGeneralTextAttribute () {
+        if (isset($this->note_general->note)) {
+            return $this->note_general->note;
+        } else {
+            return NULL;
+        }
+    }
+    public function getNoteRegistrationTextAttribute () {
+        if (isset($this->note_registration->note)) {
+            return $this->note_registration->note;
+        } else {
+            return NULL;
+        }
+    }
     public function getNoteRoomPreferenceTextAttribute () {
         if (isset($this->note_room_preference->note)) {
             return $this->note_room_preference->note;
@@ -187,6 +235,9 @@ class Contact extends Model
     }
     public function note_general() {
         return $this->hasOne('\montserrat\Note','entity_id','id')->whereEntityTable('contact')->whereSubject('Contact Note'); 
+    }
+    public function note_registration() {
+        return $this->hasOne('\montserrat\Note','entity_id','id')->whereEntityTable('contact')->whereSubject('Registration Note'); 
     }
     
     public function occupation() {
