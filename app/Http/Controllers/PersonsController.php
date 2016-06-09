@@ -809,8 +809,10 @@ class PersonsController extends Controller
             $relationship_parishioner->save();
         }
         if ($request->input('parish_id')==0) {
-                $relationship_parishioner = \montserrat\Relationship::first(['contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_PARISHIONER,'is_active'=>1]);
-                $relationship_parishioner->delete();
+                $relationship_parishioner = \montserrat\Relationship::whereContactIdB($person->id)->whereRelationshipTypeId(RELATIONSHIP_TYPE_PARISHIONER)->whereIsActive(1)->first();
+                if(isset($relationship_parishioner)) {
+                        $relationship_parishioner->delete();
+                }
         }
         
         
