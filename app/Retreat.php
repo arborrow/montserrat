@@ -47,7 +47,7 @@ class Retreat extends Model
         $bcc_list = '';
         foreach ($this->registrations as $registration) {
             if (!empty($registration->retreatant->email_primary_text)) {
-                $bcc_list .= $registration->retreatant->email_primary_text.', ';
+                $bcc_list .= $registration->retreatant->email_primary_text.',';
             }
         }
         return "<a href='mailto:?bcc=".$bcc_list."'>E-mail Registered Retreatants</a>";
