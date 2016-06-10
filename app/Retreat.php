@@ -46,7 +46,9 @@ class Retreat extends Model
     public function getEmailRegisteredRetreatantsAttribute () {
         $bcc_list = '';
         foreach ($this->registrations as $registration) {
-            $bcc_list .= $registration->retreatant->email_primary_text.', ';        
+            if (!empty($registration->retreatant->email_primary_text)) {
+                $bcc_list .= $registration->retreatant->email_primary_text.', ';
+            }
         }
         return "<a href='mailto:?bcc=".$bcc_list."'>E-mail Registered Retreatants</a>";
     }

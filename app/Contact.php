@@ -115,7 +115,7 @@ class Contact extends Model
         }
     }
     public function getEmailPrimaryTextAttribute () {
-        if (isset($this->email_primary->email)&&($this->ethnicity_id>0)) {
+        if (!empty($this->email_primary->email)) {
             return $this->email_primary->email;
         } else {
             return NULL;
