@@ -42,5 +42,13 @@ class Retreat extends Model
     public function registrations() {
         return $this->hasMany('\montserrat\Registration','retreat_id','id');
     }
-    
+
+    public function getEmailRegisteredRetreatantsAttribute () {
+        $bcc_list = '';
+        foreach ($this->registrations as $registration) {
+            $bcc_list .= $registration->retreatant->email_primary_text.', ';        
+        }
+        return "<a href='mailto:?bcc=".$bcc_list."'>E-mail Registered Retreatants</a>";
+    }
+
 }

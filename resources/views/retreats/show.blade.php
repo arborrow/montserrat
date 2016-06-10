@@ -71,6 +71,7 @@
             <span class="btn btn-primary"><a href={{ action('PagesController@retreatantinforeport',$retreat->idnumber) }}>Retreatant Information Report</a></span>
             <span class="btn btn-primary"><a href={{ action('PagesController@retreatrosterreport',$retreat->idnumber) }}>Retreat Roster</a></span>
             <span class="btn btn-primary"><a href={{ action('PagesController@retreatlistingreport',$retreat->idnumber) }}>Retreat Listing</a></span>
+            <span class="btn btn-primary">{!! $retreat->email_registered_retreatants !!}</span>
                 
         </div>
             @if ($registrations->isEmpty())

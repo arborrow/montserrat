@@ -8,6 +8,8 @@ use montserrat\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Input;
 use Auth;
+use Spatie\GoogleCalendar\Event;
+
 class RetreatsController extends Controller
 {
      public function __construct()
@@ -25,7 +27,8 @@ class RetreatsController extends Controller
         //dd(Auth::User());
         $retreats = \montserrat\Retreat::whereDate('end', '>=', date('Y-m-d'))->orderBy('start','asc')->with('retreatmasters','innkeeper','assistant')->get();
         $oldretreats = \montserrat\Retreat::whereDate('end', '<', date('Y-m-d'))->orderBy('start','desc')->with('retreatmasters','innkeeper','assistant')->paginate(100);
-        
+        // $events = Event::get();
+        // dd($events[4]);
         //dd($oldretreats);    
         return view('retreats.index',compact('retreats','oldretreats'));   //
     }
