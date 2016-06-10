@@ -916,10 +916,10 @@ class PersonsController extends Controller
         $phone_home_phone->save();
         
         $phone_home_mobile= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_HOME,'phone_type'=>'Mobile']);
-            $phone_home_phone->contact_id=$person->id;
-            $phone_home_phone->location_type_id=LOCATION_TYPE_HOME;
-            $phone_home_phone->phone=$request->input('phone_home_phone');
-            $phone_home_phone->phone_type='Phone';
+            $phone_home_mobile->contact_id=$person->id;
+            $phone_home_mobile->location_type_id=LOCATION_TYPE_HOME;
+            $phone_home_mobile->phone=$request->input('phone_home_mobile');
+            $phone_home_mobile->phone_type='Mobile';
         $phone_home_mobile->save();
         
         $phone_home_fax= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_HOME,'phone_type'=>'Fax']);

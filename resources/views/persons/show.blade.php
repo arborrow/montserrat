@@ -121,13 +121,13 @@
                     @if ($person->is_deceased>0)
                         Yes
                     @else 
-                        Not yet
+                        No
                     @endIf
                     <strong>Deceased Date: </strong> 
                     @if (!empty($person->deceased_date))
                         {{date('F d, Y', strtotime($person->deceased_date))}}
                     @else 
-                        Coming soon!
+                        N/A
                     @endif
                         
                 </div></span> 

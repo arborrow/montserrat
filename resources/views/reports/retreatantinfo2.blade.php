@@ -65,7 +65,11 @@
     <tr><td><h2>Emergency Contact Information</h2></td></tr>
     
     <tr>
-        <td><strong>Name (Relationship): </strong>{{$registration->retreatant->emergency_contact->name}} ({{$registration->retreatant->emergency_contact->relationship}})</td>
+        <td><strong>Name (Relationship): </strong>{{$registration->retreatant->emergency_contact->name}} 
+            @if (!empty($registration->retreatant->emergency_contact->relationship))
+                ({{$registration->retreatant->emergency_contact->relationship}})
+            @endif
+        </td>
         <td><hr/></td>
     </tr>
     <tr>
