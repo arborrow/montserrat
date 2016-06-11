@@ -818,7 +818,7 @@ class PersonsController extends Controller
         
       // save health, dietary, general and room preference notes
         
-        if (!empty($request->input('note_health'))) {
+        if (isset($request->input('note_health'))) {
             $person_note_health = \montserrat\Note::firstOrNew(['entity_table'=>'contact','entity_id'=>$person->id,'subject'=>'Health Note']);
             $person_note_health->entity_table = 'contact';
             $person_note_health->entity_id = $person->id;
@@ -827,7 +827,7 @@ class PersonsController extends Controller
             $person_note_health->save();
         }
         
-        if (!empty($request->input('note_dietary'))) {
+        if (isset($request->input('note_dietary'))) {
             $person_note_dietary = \montserrat\Note::firstOrNew(['entity_table'=>'contact','entity_id'=>$person->id,'subject'=>'Dietary Note']);
             $person_note_dietary->entity_table = 'contact';
             $person_note_dietary->entity_id = $person->id;
@@ -836,7 +836,7 @@ class PersonsController extends Controller
             $person_note_dietary->save();
         }
         
-        if (!empty($request->input('note_contact'))) {
+        if (isset($request->input('note_contact'))) {
             $person_note_contact = \montserrat\Note::firstOrNew(['entity_table'=>'contact','entity_id'=>$person->id,'subject'=>'Contact Note']);
             $person_note_contact->entity_table = 'contact';
             $person_note_contact->entity_id = $person->id;
@@ -845,7 +845,7 @@ class PersonsController extends Controller
             $person_note_contact->save();
         }
         
-        if (!empty($request->input('note_room_preference'))) {
+        if (isset($request->input('note_room_preference'))) {
             $person_note_room_preference = \montserrat\Note::firstOrNew(['entity_table'=>'contact','entity_id'=>$person->id,'subject'=>'Room Preference']);
             $person_note_room_preference->entity_table = 'contact';
             $person_note_room_preference->entity_id = $person->id;
