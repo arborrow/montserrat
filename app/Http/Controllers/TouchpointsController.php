@@ -85,10 +85,11 @@ class TouchpointsController extends Controller
         } else {
             $defaults['user_id'] = $user_email->contact_id;
         }
-        
+        //lookup the contact type of the touchpoint being added and show similar ones in drop down (persons, parishes, etc.)
+        $contact = \montserrat\Contact::findOrFail($id);
         $staff = \montserrat\Contact::with('groups')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_STAFF);})->orderBy('sort_name')->lists('sort_name','id');
         // TODO: replace this with an autocomplete text box for performance rather than a dropdown box
-        $persons = \montserrat\Contact::orderBy('sort_name')->lists('sort_name','id');
+        $persons = \montserrat\Contact::whereContactType($contact->contact_type)->orderBy('sort_name')->lists('sort_name','id');
         return view('touchpoints.create',compact('staff','persons','defaults'));  
 
     }
