@@ -7,6 +7,9 @@
                 <div class="panel-heading">
                     <span><h2>{!! $parish->organization_name !!} (<a href="../diocese/{{$parish->diocese->contact_a->id}}">{{ $parish->diocese->contact_a->organization_name}}</a>)</span>
                     <span class="back"><a href={{ action('ParishesController@index') }}>{!! Html::image('img/parish.png', 'Parish Index',array('title'=>"Parish Index",'class' => 'btn btn-primary')) !!}</a></span></h1>
+                    <span class="btn btn-primary">
+                        <a href={{ action('TouchpointsController@add',$parish->id) }}>Add Touch point</a>
+                    </span>
                 </div>
                 <div class='row'><div class='col-md-4'>
                 <span><h2>Addresses</h2>
