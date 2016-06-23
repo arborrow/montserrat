@@ -9,30 +9,30 @@
             
             <div aria-labelledby="tab1-tab" id="phone_home" class="tab-pane fade in active" role="tabpanel">
                 <h3>Home phone numbers</h3>
-                {!! Form::label('phone_home_phone', 'Home:', ['class' => 'col-md-1'])  !!}
+                {!! Form::label('phone_home_phone', 'Home:', ['class' => 'col-md-2'])  !!}
                         {!! Form::text('phone_home_phone', null, ['class' => 'col-md-2']) !!}
-                        {!! Form::label('phone_home_mobile', 'Mobile:', ['class' => 'col-md-1'])  !!}
+                        {!! Form::label('phone_home_mobile', 'Mobile:', ['class' => 'col-md-2'])  !!}
                         {!! Form::text('phone_home_mobile', null, ['class' => 'col-md-2']) !!}
-                        {!! Form::label('phone_home_fax', 'Fax:', ['class' => 'col-md-1'])  !!}
+                        {!! Form::label('phone_home_fax', 'Fax:', ['class' => 'col-md-2'])  !!}
                         {!! Form::text('phone_home_fax', null, ['class' => 'col-md-2']) !!}
             </div>
             <div aria-labelledby="tab2-tab" id="phone_work" class="tab-pane" role="tabpanel">
             <h3>Work phone numbers</h3>
                 
-                        {!! Form::label('phone_work_phone', 'Work:', ['class' => 'col-md-1'])  !!}
+                        {!! Form::label('phone_work_phone', 'Work:', ['class' => 'col-md-2'])  !!}
                         {!! Form::text('phone_work_phone', null, ['class' => 'col-md-2']) !!}
-                        {!! Form::label('phone_work_mobile', 'Mobile:', ['class' => 'col-md-1'])  !!}
+                        {!! Form::label('phone_work_mobile', 'Mobile:', ['class' => 'col-md-2'])  !!}
                         {!! Form::text('phone_work_mobile', null, ['class' => 'col-md-2']) !!}
-                        {!! Form::label('phone_work_fax', 'Fax:', ['class' => 'col-md-1'])  !!}
+                        {!! Form::label('phone_work_fax', 'Fax:', ['class' => 'col-md-2'])  !!}
                         {!! Form::text('phone_work_fax', null, ['class' => 'col-md-2']) !!}
             </div>
             <div aria-labelledby="tab3-tab" id="phone_other" class="tab-pane" role="tabpanel">
             <h3>Other phone numbers</h3>
-                        {!! Form::label('phone_other_phone', 'Main:', ['class' => 'col-md-1'])  !!}
+                        {!! Form::label('phone_other_phone', 'Main:', ['class' => 'col-md-2'])  !!}
                     {!! Form::text('phone_other_phone', null, ['class' => 'col-md-2']) !!}
-                    {!! Form::label('phone_other_mobile', 'Mobile:', ['class' => 'col-md-1'])  !!}
+                    {!! Form::label('phone_other_mobile', 'Mobile:', ['class' => 'col-md-2'])  !!}
                     {!! Form::text('phone_other_mobile', null, ['class' => 'col-md-2']) !!}
-                    {!! Form::label('phone_other_fax', 'Fax:', ['class' => 'col-md-1'])  !!}
+                    {!! Form::label('phone_other_fax', 'Fax:', ['class' => 'col-md-2'])  !!}
                     {!! Form::text('phone_other_fax', null, ['class' => 'col-md-2']) !!}
 
             </div>

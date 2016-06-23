@@ -56,4 +56,5 @@ define('GROUP_ID_PASTOR',10);
 define('GROUP_ID_CAPTAIN',11);
 define('GROUP_ID_BOARD',12);
 define('GROUP_ID_STAFF',13);
+define('GROUP_ID_VOLUNTEER',14);
 

@@ -11,8 +11,8 @@
         </ul>
         <div class="tab-content" id="myTabContent">
             <div aria-labelledby="tab1-tab" id="url_main" class="tab-pane fade in active" role="tabpanel">
-                {!! Form::label('url_main', 'Personal (main):', ['class' => 'col-md-2'])  !!}
-                {!! Form::text('url_main', null, ['class' => 'col-md-3']) !!}
+                {!! Form::label('url_main', 'Personal (main):', ['class' => 'col-md-3'])  !!}
+                {!! Form::text('url_main', null, ['class' => 'col-md-4']) !!}
             </div>
             <div aria-labelledby="tab2-tab" id="url_work" class="tab-pane" role="tabpanel">
                 {!! Form::label('url_work', 'Work:', ['class' => 'col-md-2'])  !!}

@@ -34,7 +34,9 @@
                         </span>
                         <strong>Nick name:</strong> {{ (!empty($person->nick_name)) ? $person->nick_name : null }} <br />
                         <strong>Display name: </strong>{{ (!empty($person->display_name)) ? $person->display_name : null }}   <br />
-                        <strong>Sort name: </strong>{{ (!empty($person->sort_name)) ? $person->sort_name : null }}   
+                        <strong>Sort name: </strong>{{ (!empty($person->sort_name)) ? $person->sort_name : null }} <br />   
+                        <strong>Contact type: </strong>{{ $person->contact_type_label }}   <br />
+                        <strong>Subcontact type: </strong>{{ $person->subcontact_type_label }}   
                     </div>
                 </div>
                 <div class='col-md-4' style="background-color: lightcoral;">
@@ -159,11 +161,12 @@
                         <div class="form-group">Relationships
                             <ul>    
                                 @foreach($person->a_relationships as $a_relationship)
-                                    <li>{{$person->display_name}} is {{  $a_relationship->relationship_type->label_a_b }} {{$a_relationship->contact_b->display_name}}</li>
+                                
+                                <li><a href="{{$person->id}}">{{$person->display_name}}</a> is {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b_display_name !!}  </li>
                                 @endforeach
                    
                                 @foreach($person->b_relationships as $b_relationship)
-                                    <li>{{$person->display_name}} is {{  $b_relationship->relationship_type->label_b_a }} {{$b_relationship->contact_a->display_name}}</li>
+                                <li><a href="{{$person->id}}">{{$person->display_name}}</a> is {{ $b_relationship->relationship_type->label_b_a }} {!! $b_relationship->contact_a_display_name !!}</li>
                                 @endforeach
                         
                             </ul>

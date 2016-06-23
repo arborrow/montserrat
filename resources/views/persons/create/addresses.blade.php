@@ -10,11 +10,11 @@
                 <h3>Home address</h3>
                     
                         <div class='row'>
-                            {!! Form::label('address_home_address1', 'Street Address 1:', ['class' => 'col-md-2'])  !!}
+                            {!! Form::label('address_home_address1', 'Street 1:', ['class' => 'col-md-2'])  !!}
                             {!! Form::text('address_home_address1', null, ['class' => 'col-md-3']) !!}
                         </div>
                         <div class='row'>
-                            {!! Form::label('address_home_address2', 'Street Address 2:', ['class' => 'col-md-2'])  !!}
+                            {!! Form::label('address_home_address2', 'Street 2:', ['class' => 'col-md-2'])  !!}
                             {!! Form::text('address_home_address2', null, ['class' => 'col-md-3']) !!}
                         </div>
                         <div class='row'>
@@ -27,19 +27,19 @@
                             {!! Form::text('address_home_zip', null, ['class' => 'col-md-2']) !!}
                         </div>
                         <div class='row'>
-                            {!! Form::label('address_home_country', 'Country:', ['class' => 'col-md-1'])  !!}
-                            {!! Form::select('address_home_country', $countries, '1228', ['class' => 'col-md-1']) !!}
+                            {!! Form::label('address_home_country', 'Country:', ['class' => 'col-md-2'])  !!}
+                            {!! Form::select('address_home_country', $countries, '1228', ['class' => 'col-md-2']) !!}
                         </div>
             
             </div>
             <div aria-labelledby="tab2-tab" id="address_work" class="tab-pane" role="tabpanel">
                 <h3>Work address</h3>
                     <div class='row'>
-                        {!! Form::label('address_work_address1', 'Street Address 1:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::label('address_work_address1', 'Street 1:', ['class' => 'col-md-2'])  !!}
                         {!! Form::text('address_work_address1', null, ['class' => 'col-md-3']) !!}
                     </div>
                     <div class='row'>
-                        {!! Form::label('address_work_address2', 'Street Address 2:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::label('address_work_address2', 'Street 2:', ['class' => 'col-md-2'])  !!}
                         {!! Form::text('address_work_address2', null, ['class' => 'col-md-3']) !!}
                     </div>
                     <div class='row'>
@@ -51,19 +51,19 @@
                         {!! Form::text('address_work_zip', null, ['class' => 'col-md-2']) !!}
                     </div>
                     <div class='row'>
-                        {!! Form::label('address_work_country', 'Country:', ['class' => 'col-md-1'])  !!}
-                        {!! Form::select('address_work_country', $countries, '1228', ['class' => 'col-md-1']) !!}
+                        {!! Form::label('address_work_country', 'Country:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::select('address_work_country', $countries, '1228', ['class' => 'col-md-2']) !!}
 
                     </div>
             </div>
             <div aria-labelledby="tab3-tab" id="address_other" class="tab-pane" role="tabpanel">
                 <h3>Other address</h3>
                     <div class='row'>
-                        {!! Form::label('address_other_address1', 'Street Address 1:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::label('address_other_address1', 'Street 1:', ['class' => 'col-md-2'])  !!}
                         {!! Form::text('address_other_address1', null, ['class' => 'col-md-3']) !!}
                     </div>
                     <div class='row'>
-                        {!! Form::label('address_other_address2', 'Street Address 2:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::label('address_other_address2', 'Street 2:', ['class' => 'col-md-2'])  !!}
                         {!! Form::text('address_other_address2', null, ['class' => 'col-md-3']) !!}
                     </div>
                     <div class='row'>
@@ -75,7 +75,7 @@
                         {!! Form::text('address_other_zip', null, ['class' => 'col-md-2']) !!}
                     </div>
                     <div class='row'>
-                        {!! Form::label('address_other_country', 'Country:', ['class' => 'col-md-1'])  !!}
+                        {!! Form::label('address_other_country', 'Country:', ['class' => 'col-md-2'])  !!}
                         {!! Form::select('address_other_country', $countries, '1228', ['class' => 'col-md-2']) !!}
                     </div>
         

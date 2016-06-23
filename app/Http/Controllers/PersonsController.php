@@ -71,8 +71,12 @@ class PersonsController extends Controller
         $suffixes->prepend('N/A',0); 
         $occupations = \montserrat\Ppd_occupation::orderBy('name')->lists('name','id');
         $occupations->prepend('N/A',0); 
+        $contact_types = \montserrat\ContactType::whereIsReserved(TRUE)->orderBy('label')->lists('label','id');
+        $subcontact_types = \montserrat\ContactType::whereIsReserved(FALSE)->whereIsActive(TRUE)->orderBy('label')->lists('label','id');
+        $subcontact_types->prepend('N/A',0); 
         
-        return view('persons.create',compact('parish_list','ethnicities','states','countries','suffixes','prefixes','languages','genders','religions','occupations')); 
+        //dd($subcontact_types);
+        return view('persons.create',compact('parish_list','ethnicities','states','countries','suffixes','prefixes','languages','genders','religions','occupations','contact_types','subcontact_types')); 
     
     }
 
@@ -104,6 +108,8 @@ class PersonsController extends Controller
             'gender_id' => 'integer|min:0',
             'ethnicity_id' => 'integer|min:0',
             'religion_id' => 'integer|min:0',
+            'contact_type' => 'integer|min:0',
+            'subcontact_type' => 'integer|min:0',
             'occupation_id' => 'integer|min:0'
         
         ]);
@@ -116,7 +122,8 @@ class PersonsController extends Controller
         $person->last_name = $request->input('last_name');
         $person->suffix_id = $request->input('suffix_id');
         $person->nick_name = $request->input('nick_name');
-        $person->contact_type = CONTACT_TYPE_INDIVIDUAL;
+        $person->contact_type = $request->input('contact_type');
+        $person->subcontact_type = $request->input('subcontact_type');
         // the sort and display names are not available on creation so that we create a default and then it can be customized or tweaked individually
         if (empty($request->input('display_name'))) {
             $person->display_name = $person->first_name.' '.$person->last_name;
@@ -164,7 +171,9 @@ class PersonsController extends Controller
             $emergency_contact->phone_alternate=$request->input('emergency_contact_phone_alternate');
         $emergency_contact->save();
        
-         // save parishioner relationship    
+        // relationships: parishioner, donor, retreatant, volunteer, captain, director, innkeeper, assistant, staff, board
+        
+        // save parishioner relationship    
         if ($request->input('parish_id')>0) {
             $relationship_parishioner = new \montserrat\Relationship;
                 $relationship_parishioner->contact_id_a = $request->input('parish_id');
@@ -202,6 +211,11 @@ class PersonsController extends Controller
                 $relationship_volunteer->relationship_type_id = RELATIONSHIP_TYPE_VOLUNTEER;
                 $relationship_volunteer->is_active = 1;
             $relationship_volunteer->save();
+            $group_volunteer = new \montserrat\GroupContact;
+                $group_volunteer->group_id = GROUP_ID_VOLUNTEER;
+                $group_volunteer->contact_id = $person->id;
+                $group_volunteer->status = 'Added';
+            $group_volunteer->save();
         }
         
         // save captain relationship    
@@ -212,6 +226,11 @@ class PersonsController extends Controller
                 $relationship_captain->relationship_type_id = RELATIONSHIP_TYPE_CAPTAIN;
                 $relationship_captain->is_active = 1;
             $relationship_captain->save();
+            $group_captain = new \montserrat\GroupContact;
+                $group_captain->group_id = GROUP_ID_CAPTAIN;
+                $group_captain->contact_id = $person->id;
+                $group_captain->status = 'Added';
+            $group_captain->save();
         }
         // save retreat director relationship    
         if ($request->input('is_director')>0) {
@@ -221,6 +240,11 @@ class PersonsController extends Controller
                 $relationship_director->relationship_type_id = RELATIONSHIP_TYPE_RETREAT_DIRECTOR;
                 $relationship_director->is_active = 1;
             $relationship_director->save();
+            $group_director = new \montserrat\GroupContact;
+                $group_director->group_id = GROUP_ID_DIRECTOR;
+                $group_director->contact_id = $person->id;
+                $group_director->status = 'Added';
+            $group_director->save();
         }
         // save retreat innkeeper relationship    
         if ($request->input('is_innkeeper')>0) {
@@ -230,6 +254,11 @@ class PersonsController extends Controller
                 $relationship_innkeeper->relationship_type_id = RELATIONSHIP_TYPE_RETREAT_INNKEEPER;
                 $relationship_innkeeper->is_active = 1;
             $relationship_innkeeper->save();
+            $group_innkeeper = new \montserrat\GroupContact;
+                $group_innkeeper->group_id = GROUP_ID_INNKEEPER;
+                $group_innkeeper->contact_id = $person->id;
+                $group_innkeeper->status = 'Added';
+            $group_innkeeper->save();
         }
         // save retreat assistant relationship    
         if ($request->input('is_assistant')>0) {
@@ -239,15 +268,27 @@ class PersonsController extends Controller
                 $relationship_assistant->relationship_type_id = RELATIONSHIP_TYPE_RETREAT_ASSISTANT;
                 $relationship_assistant->is_active = 1;
             $relationship_assistant->save();
+            $group_assistant = new \montserrat\GroupContact;
+                $group_assistant->group_id = GROUP_ID_ASSISTANT;
+                $group_assistant->contact_id = $person->id;
+                $group_assistant->status = 'Added';
+            $group_assistant->save();
+            
         }
-        // save staff relationship    
+        // save staff relationship - nb that the individual is contact_a and organization is contact_b   
         if ($request->input('is_staff')>0) {
             $relationship_staff= new \montserrat\Relationship;
-                $relationship_staff->contact_id_a = CONTACT_MONTSERRAT;
-                $relationship_staff->contact_id_b = $person->id;
+                $relationship_staff->contact_id_a = $person->id;
+                $relationship_staff->contact_id_b = CONTACT_MONTSERRAT;
                 $relationship_staff->relationship_type_id = RELATIONSHIP_TYPE_STAFF;
                 $relationship_staff->is_active = 1;
             $relationship_staff->save();
+            $group_staff = new \montserrat\GroupContact;
+                $group_staff->group_id = GROUP_ID_STAFF;
+                $group_staff->contact_id = $person->id;
+                $group_staff->status = 'Added';
+            $group_staff->save();
+        
         }
         // save board member relationship    
         if ($request->input('is_board')>0) {
@@ -257,6 +298,64 @@ class PersonsController extends Controller
                 $relationship_board->relationship_type_id = RELATIONSHIP_TYPE_BOARD_MEMBER;
                 $relationship_board->is_active = 1;
             $relationship_board->save();
+            $group_board = new \montserrat\GroupContact;
+                $group_board->group_id = GROUP_ID_BOARD;
+                $group_board->contact_id = $person->id;
+                $group_board->status = 'Added';
+            $group_board->save();
+        
+        }
+        
+        //groups: deacon, priest, bishop, pastor, jesuit, provincial, superior, captain, board, innkeeper, director, assistant, staff
+        
+        if ($request->input('is_bishop')>0) {
+            $group_bishop = new \montserrat\GroupContact;
+                $group_bishop->group_id = GROUP_ID_BISHOP;
+                $group_bishop->contact_id = $person->id;
+                $group_bishop->status = 'Added';
+            $group_bishop->save();
+        }
+        if ($request->input('is_priest')>0) {
+            $group_priest = new \montserrat\GroupContact;
+                $group_priest->group_id = GROUP_ID_PRIEST;
+                $group_priest->contact_id = $person->id;
+                $group_priest->status = 'Added';
+            $group_priest->save();
+        }
+        if ($request->input('is_deacon')>0) {
+            $group_deacon = new \montserrat\GroupContact;
+                $group_deacon->group_id = GROUP_ID_DEACON;
+                $group_deacon->contact_id = $person->id;
+                $group_deacon->status = 'Added';
+            $group_deacon->save();
+        }
+        if ($request->input('is_pastor')>0) {
+            $group_pastor = new \montserrat\GroupContact;
+                $group_pastor->group_id = GROUP_ID_PASTOR;
+                $group_pastor->contact_id = $person->id;
+                $group_pastor->status = 'Added';
+            $group_pastor->save();
+        }
+        if ($request->input('is_jesuit')>0) {
+            $group_jesuit = new \montserrat\GroupContact;
+                $group_jesuit->group_id = GROUP_ID_JESUIT;
+                $group_jesuit->contact_id = $person->id;
+                $group_jesuit->status = 'Added';
+            $group_jesuit->save();
+        }
+        if ($request->input('is_superior')>0) {
+            $group_superior = new \montserrat\GroupContact;
+                $group_superior->group_id = GROUP_ID_SUPERIOR;
+                $group_superior->contact_id = $person->id;
+                $group_superior->status = 'Added';
+            $group_superior->save();
+        }
+        if ($request->input('is_provincial')>0) {
+            $group_provincial = new \montserrat\GroupContact;
+                $group_provincial->group_id = GROUP_ID_PROVINCIAL;
+                $group_provincial->contact_id = $person->id;
+                $group_provincial->status = 'Added';
+            $group_provincial->save();
         }
         
         
@@ -477,23 +576,6 @@ class PersonsController extends Controller
             $url_twitter->website_type='Twitter';
         $url_twitter->save();
 
-        // roles, groups, etc.
-        /* $person->is_donor = $request->input('is_donor');
-        $person->is_retreatant = $request->input('is_retreatant');
-        $person->is_director = $request->input('is_director');
-        $person->is_innkeeper = $request->input('is_innkeeper');
-        $person->is_assistant = $request->input('is_assistant');
-        $person->is_captain = $request->input('is_captain');
-        $person->is_staff = $request->input('is_staff');
-        $person->is_volunteer = $request->input('is_volunteer');
-        $person->is_pastor = $request->input('is_pastor');
-        $person->is_bishop = $request->input('is_bishop');
-        $person->is_catholic = $request->input('is_catholic');
-        $person->is_board = $request->input('is_board');
-        $person->is_formerboard = $request->input('is_formerboard');
-        $person->is_jesuit = $request->input('is_jesuit');
-        */
-        
         return Redirect::action('PersonsController@show', $person->id);//
         
         //return Redirect::action('PersonsController@index');//
@@ -552,7 +634,7 @@ class PersonsController extends Controller
             $person->preferred_language_label = 'N/A';
         }
 
-       //dd($person->b_relationships);
+       //dd($person->a_relationships);
        return view('persons.show',compact('person'));//
     
     }
@@ -570,7 +652,10 @@ class PersonsController extends Controller
         //dd($person);
         
         $parishes = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('address_primary.state','diocese.contact_a')->get();
-        $parish_list[0]='N/A';  
+        $parish_list[0]='N/A';
+        $contact_types = \montserrat\ContactType::whereIsReserved(TRUE)->lists('label','id');
+        $subcontact_types = \montserrat\ContactType::whereIsReserved(FALSE)->whereIsActive(TRUE)->lists('label','id');
+        $subcontact_types->prepend('N/A',0); 
         // while probably not the most efficient way of doing this it gets me the result
         foreach($parishes as $parish) {
             $parish_list[$parish->id] = $parish->organization_name.' ('.$parish->address_primary->city.') - '.$parish->diocese->contact_a->organization_name;
@@ -699,7 +784,7 @@ class PersonsController extends Controller
         }
         //dd($person);
 
-        return view('persons.edit',compact('prefixes','suffixes','person','parish_list','ethnicities','states','countries','genders','languages','defaults','religions','occupations'));
+        return view('persons.edit',compact('prefixes','suffixes','person','parish_list','ethnicities','states','countries','genders','languages','defaults','religions','occupations','contact_types','subcontact_types'));
     
     }
 
@@ -732,6 +817,8 @@ class PersonsController extends Controller
             'gender_id' => 'integer|min:0',
             'ethnicity_id' => 'integer|min:0',
             'religion_id' => 'integer|min:0',
+            'contact_type' => 'integer|min:0',
+            'subcontact_type' => 'integer|min:0',
             'occupation_id' => 'integer|min:0'
         
         ]);
@@ -744,6 +831,8 @@ class PersonsController extends Controller
         $person->last_name = $request->input('last_name');
         $person->suffix_id = $request->input('suffix_id');
         $person->nick_name = $request->input('nick_name');
+        $person->contact_type = $request->input('contact_type');
+        $person->subcontact_type = $request->input('subcontact_type');
         
         if (empty($request->input('display_name'))) {
             $person->display_name = $person->first_name.' '.$person->last_name;
@@ -854,24 +943,6 @@ class PersonsController extends Controller
             $person_note_room_preference->subject='Room Preference';
             $person_note_room_preference->save();
         }        
-        
-
-        //group or roles info
-        // $person->is_donor = $request->input('is_donor');
-        // $person->is_retreatant = $request->input('is_retreatant');
-        // $person->is_director = $request->input('is_director');
-        // $person->is_innkeeper = $request->input('is_innkeeper');
-        // $person->is_assistant = $request->input('is_assistant');
-        // $person->is_captain = $request->input('is_captain');
-        // $person->is_staff = $request->input('is_staff');
-        // $person->is_volunteer = $request->input('is_volunteer');
-        // $person->is_pastor = $request->input('is_pastor');
-        // $person->is_bishop = $request->input('is_bishop');
-        // $person->is_catholic = $request->input('is_catholic');
-        // $person->is_board = $request->input('is_board');
-        // $person->is_formerboard = $request->input('is_formerboard');
-        // $person->is_jesuit = $request->input('is_jesuit');
-        // $person->is_deceased = $request->input('is_deceased');
                 
         $home_address= \montserrat\Address::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_HOME]);
             $home_address->contact_id=$person->id;
@@ -1031,6 +1102,228 @@ class PersonsController extends Controller
             $url_twitter->url=$request->input('url_twitter');
             $url_twitter->website_type='Twitter';
         $url_twitter->save();
+        
+        // relationships: donor, retreatant, volunteer, captain, director, innkeeper, assistant, staff, board
+        $relationship_donor = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_DONOR,'is_active'=>1]);
+        if ($request->input('is_donor')==0) {
+            $relationship_donor->delete();
+        } else {
+            $relationship_donor->contact_id_a = CONTACT_MONTSERRAT;
+            $relationship_donor->contact_id_b = $person->id;
+            $relationship_donor->relationship_type_id = RELATIONSHIP_TYPE_DONOR;
+            $relationship_donor->is_active = 1;
+            $relationship_donor->save();
+        }
+        $relationship_retreatant = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_RETREATANT,'is_active'=>1]);
+        if ($request->input('is_retreatant')==0) {
+            $relationship_retreatant->delete();
+        } else {
+            $relationship_retreatant->contact_id_a = CONTACT_MONTSERRAT;
+            $relationship_retreatant->contact_id_b = $person->id;
+            $relationship_retreatant->relationship_type_id = RELATIONSHIP_TYPE_RETREATANT;
+            $relationship_retreatant->is_active = 1;
+            $relationship_retreatant->save();
+        }
+        $relationship_volunteer = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_VOLUNTEER,'is_active'=>1]);
+        if ($request->input('is_volunteer')==0) {
+            $relationship_volunteer->delete();
+        } else {
+            $relationship_volunteer->contact_id_a = CONTACT_MONTSERRAT;
+            $relationship_volunteer->contact_id_b = $person->id;
+            $relationship_volunteer->relationship_type_id = RELATIONSHIP_TYPE_VOLUNTEER;
+            $relationship_volunteer->is_active = 1;
+            $relationship_volunteer->save();
+        }
+        $relationship_captain = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_CAPTAIN,'is_active'=>1]);
+        if ($request->input('is_captain')==0) {
+            $relationship_captain->delete();
+        } else {
+            $relationship_captain->contact_id_a = CONTACT_MONTSERRAT;
+            $relationship_captain->contact_id_b = $person->id;
+            $relationship_captain->relationship_type_id = RELATIONSHIP_TYPE_CAPTAIN;
+            $relationship_captain->is_active = 1;
+            $relationship_captain->save();
+        }
+        $relationship_director = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_RETREAT_DIRECTOR,'is_active'=>1]);
+        if ($request->input('is_director')==0) {
+            $relationship_director->delete();
+        } else {
+            $relationship_director->contact_id_a = CONTACT_MONTSERRAT;
+            $relationship_director->contact_id_b = $person->id;
+            $relationship_director->relationship_type_id = RELATIONSHIP_TYPE_RETREAT_DIRECTOR;
+            $relationship_director->is_active = 1;
+            $relationship_director->save();
+        }
+        $relationship_innkeeper = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_RETREAT_INNKEEPER,'is_active'=>1]);
+        if ($request->input('is_innkeeper')==0) {
+            $relationship_innkeeper->delete();
+        } else {
+            $relationship_innkeeper->contact_id_a = CONTACT_MONTSERRAT;
+            $relationship_innkeeper->contact_id_b = $person->id;
+            $relationship_innkeeper->relationship_type_id = RELATIONSHIP_TYPE_RETREAT_INNKEEPER;
+            $relationship_innkeeper->is_active = 1;
+            $relationship_innkeeper->save();
+        }
+        $relationship_assistant = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_RETREAT_ASSISTANT,'is_active'=>1]);
+        if ($request->input('is_assistant')==0) {
+            $relationship_assistant->delete();
+        } else {
+            $relationship_assistant->contact_id_a = CONTACT_MONTSERRAT;
+            $relationship_assistant->contact_id_b = $person->id;
+            $relationship_assistant->relationship_type_id = RELATIONSHIP_TYPE_RETREAT_ASSISTANT;
+            $relationship_assistant->is_active = 1;
+            $relationship_assistant->save();
+        }
+        $relationship_staff = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_STAFF,'is_active'=>1]);
+        if ($request->input('is_staff')==0) {
+            $relationship_staff->delete();
+        } else {
+            $relationship_staff->contact_id_a = $person->id;
+            $relationship_staff->contact_id_b = CONTACT_MONTSERRAT;
+            $relationship_staff->relationship_type_id = RELATIONSHIP_TYPE_STAFF;
+            $relationship_staff->is_active = 1;
+            $relationship_staff->save();
+        }
+        $relationship_board = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_BOARD_MEMBER,'is_active'=>1]);
+        if ($request->input('is_board')==0) {
+            $relationship_board->delete();
+        } else {
+            $relationship_board->contact_id_a = CONTACT_MONTSERRAT;
+            $relationship_board->contact_id_b = $person->id;
+            $relationship_board->relationship_type_id = RELATIONSHIP_TYPE_BOARD_MEMBER;
+            $relationship_board->is_active = 1;
+            $relationship_board->save();
+        }
+        
+            //groups: 
+        $group_captain = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_CAPTAIN,'status'=>'Added']);
+        if ($request->input('is_captain')==0) {
+            $group_captain->delete();
+        } else {
+            $group_captain->contact_id = $person->id;
+            $group_captain->group_id = GROUP_ID_CAPTAIN;
+            $group_captain->status = 'Added';
+            $group_captain->save();
+        }
+        $group_volunteer = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_VOLUNTEER,'status'=>'Added']);
+        if ($request->input('is_volunteer')==0) {
+            $group_volunteer->delete();
+        } else {
+            $group_volunteer->contact_id = $person->id;
+            $group_volunteer->group_id = GROUP_ID_VOLUNTEER;
+            $group_volunteer->status = 'Added';
+            $group_volunteer->save();
+        }
+        $group_bishop = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_BISHOP,'status'=>'Added']);
+        if ($request->input('is_bishop')==0) {
+            $group_bishop->delete();
+        } else {
+            $group_bishop->contact_id = $person->id;
+            $group_bishop->group_id = GROUP_ID_BISHOP;
+            $group_bishop->status = 'Added';
+            $group_bishop->save();
+        }
+        $group_priest = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_PRIEST,'status'=>'Added']);
+        if ($request->input('is_priest')==0) {
+            $group_priest->delete();
+        } else {
+            $group_priest->contact_id = $person->id;
+            $group_priest->group_id = GROUP_ID_PRIEST;
+            $group_priest->status = 'Added';
+            $group_priest->save();
+        }
+        $group_deacon = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_DEACON,'status'=>'Added']);
+        if ($request->input('is_deacon')==0) {
+            $group_deacon->delete();
+        } else {
+            $group_deacon->contact_id = $person->id;
+            $group_deacon->group_id = GROUP_ID_DEACON;
+            $group_deacon->status = 'Added';
+            $group_deacon->save();
+        }
+        $group_pastor = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_PASTOR,'status'=>'Added']);
+        if ($request->input('is_pastor')==0) {
+            $group_pastor->delete();
+        } else {
+            $group_pastor->contact_id = $person->id;
+            $group_pastor->group_id = GROUP_ID_PASTOR;
+            $group_pastor->status = 'Added';
+            $group_pastor->save();
+        }
+        $group_jesuit = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_JESUIT,'status'=>'Added']);
+        if ($request->input('is_jesuit')==0) {
+            $group_jesuit->delete();
+        } else {
+            $group_jesuit->contact_id = $person->id;
+            $group_jesuit->group_id = GROUP_ID_JESUIT;
+            $group_jesuit->status = 'Added';
+            $group_jesuit->save();
+        }
+        $group_provincial = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_PROVINCIAL,'status'=>'Added']);
+        if ($request->input('is_provincial')==0) {
+            $group_provincial->delete();
+        } else {
+            $group_provincial->contact_id = $person->id;
+            $group_provincial->group_id = GROUP_ID_PROVINCIAL;
+            $group_provincial->status = 'Added';
+            $group_provincial->save();
+        }
+        $group_superior = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_SUPERIOR,'status'=>'Added']);
+        if ($request->input('is_superior')==0) {
+            $group_superior->delete();
+        } else {
+            $group_superior->contact_id = $person->id;
+            $group_superior->group_id = GROUP_ID_SUPERIOR;
+            $group_superior->status = 'Added';
+            $group_superior->save();
+        }
+        $group_board = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_BOARD,'status'=>'Added']);
+        if ($request->input('is_board')==0) {
+            $group_board->delete();
+        } else {
+            $group_board->contact_id = $person->id;
+            $group_board->group_id = GROUP_ID_BOARD;
+            $group_board->status = 'Added';
+            $group_board->save();
+        }
+        $group_staff = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_STAFF,'status'=>'Added']);
+        if ($request->input('is_staff')==0) {
+            $group_staff->delete();
+        } else {
+            $group_staff->contact_id = $person->id;
+            $group_staff->group_id = GROUP_ID_STAFF;
+            $group_staff->status = 'Added';
+            $group_staff->save();
+        }
+        $group_director = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_DIRECTOR,'status'=>'Added']);
+        if ($request->input('is_director')==0) {
+            $group_director->delete();
+        } else {
+            $group_director->contact_id = $person->id;
+            $group_director->group_id = GROUP_ID_DIRECTOR;
+            $group_director->status = 'Added';
+            $group_director->save();
+        }
+        $group_innkeeper = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_INNKEEPER,'status'=>'Added']);
+        if ($request->input('is_innkeeper')==0) {
+            $group_innkeeper->delete();
+        } else {
+            $group_innkeeper->contact_id = $person->id;
+            $group_innkeeper->group_id = GROUP_ID_INNKEEPER;
+            $group_innkeeper->status = 'Added';
+            $group_innkeeper->save();
+        }
+        $group_assistant = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_ASSISTANT,'status'=>'Added']);
+        if ($request->input('is_assistant')==0) {
+            $group_assistant->delete();
+        } else {
+            $group_assistant->contact_id = $person->id;
+            $group_assistant->group_id = GROUP_ID_ASSISTANT;
+            $group_assistant->status = 'Added';
+            $group_assistant->save();
+        }
+        
+        
         
         return Redirect::action('PersonsController@show', $person->id);//
         

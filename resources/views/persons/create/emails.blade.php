@@ -9,19 +9,19 @@
             <div aria-labelledby="tab1-tab" id="email_home" class="tab-pane fade in active" role="tabpanel">
                 <h3>Home email</h3>
                 
-                {!! Form::label('email_home', 'Email:', ['class' => 'col-md-1'])  !!}
+                {!! Form::label('email_home', 'Email:', ['class' => 'col-md-2'])  !!}
                 {!! Form::text('email_home', null, ['class' => 'col-md-3']) !!}
                          
             </div>
             <div aria-labelledby="tab2-tab" id="email_work" class="tab-pane" role="tabpanel">
                 <h3>Work email</h3>
-                {!! Form::label('email_work', 'Email:', ['class' => 'col-md-1'])  !!}
+                {!! Form::label('email_work', 'Email:', ['class' => 'col-md-2'])  !!}
                 {!! Form::text('email_work', null, ['class' => 'col-md-3']) !!}
                 
             </div>
             <div aria-labelledby="tab3-tab" id="email_other" class="tab-pane" role="tabpanel">
                 <h3>Other email</h3>
-                {!! Form::label('email_other', 'Email:', ['class' => 'col-md-1'])  !!}
+                {!! Form::label('email_other', 'Email:', ['class' => 'col-md-2'])  !!}
                 {!! Form::text('email_other', null, ['class' => 'col-md-3']) !!}
                 
             </div>

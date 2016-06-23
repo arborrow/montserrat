@@ -52,6 +52,7 @@ Route::resource('parish','ParishesController');
     Route::get('parishes/tyler',['as' => 'tylerparishes','uses' => 'ParishesController@tylerdiocese']);
 
 Route::resource('diocese','DiocesesController');
+Route::resource('organization','OrganizationsController');
 Route::resource('contact','ContactsController');
 
 Route::resource('person','PersonsController');

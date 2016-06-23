@@ -9,6 +9,7 @@ class GroupContact extends Model
 {
     use SoftDeletes;
     protected $table = 'group_contact';
+    protected $fillable =  ['contact_id', 'group_id', 'status'];
     
     public function group() {
         return $this->belongsTo('\montserrat\Group','group_id','id');

@@ -45,6 +45,13 @@ class Contact extends Model
         return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_BISHOP);
     }
     
+    public function contacttype() {
+        return $this->hasOne('\montserrat\ContactType','id','contact_type');
+    }
+    public function subcontacttype() {
+        return $this->hasOne('\montserrat\ContactType','id','subcontact_type');
+    }
+    
     public function diocese() {
         return $this->hasOne('\montserrat\Relationship','contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_DIOCESE);
     }
@@ -99,6 +106,22 @@ class Contact extends Model
         }
     }  
     
+    public function getContactTypeLabelAttribute() {
+        
+        if (isset($this->contacttype->label)) {
+            return $this->contacttype->label;
+        } else {
+            return 'N/A';
+        }
+    }  
+    public function getSubcontactTypeLabelAttribute() {
+        
+        if (isset($this->subcontacttype->label)) {
+            return $this->subcontacttype->label;
+        } else {
+            return 'N/A';
+        }
+    }  
     public function getPrefixNameAttribute () {
         if (isset($this->prefix_id)&&($this->prefix_id>0)) {
             return $this->prefix->name;

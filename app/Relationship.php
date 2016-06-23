@@ -21,4 +21,40 @@ class Relationship extends Model
     public function contact_b() {
         return $this->hasOne('\montserrat\Contact','id','contact_id_b');
     }
+    
+    public function getContactADisplayNameAttribute () {
+        if (isset($this->contact_a)) {
+            //default is individual person
+            $display_name = '<a href="'.$this->contact_a->id.'">'.$this->contact_a->display_name.'</a>';
+            //diocese
+            if ($this->contact_a->contact_type==CONTACT_TYPE_ORGANIZATION && $this->contact_a->subcontact_type==CONTACT_TYPE_DIOCESE) {
+                $display_name = '<a href="../diocese/'.$this->contact_a->id.'">'.$this->contact_a->display_name.'</a>';
+            }
+            //parish
+            if ($this->contact_a->contact_type==CONTACT_TYPE_ORGANIZATION && $this->contact_a->subcontact_type==CONTACT_TYPE_PARISH) {
+                $display_name = '<a href="../parish/'.$this->contact_a->id.'">'.$this->contact_a->display_name.'</a>';
+            }
+            return $display_name;
+        } else {
+            return NULL;
+        }
+    }
+    public function getContactBDisplayNameAttribute () {
+        if (isset($this->contact_b)) {
+            //default is individual person
+            $display_name = '<a href="'.$this->contact_b->id.'">'.$this->contact_b->display_name.'</a>';
+            //diocese
+            if ($this->contact_b->contact_type==CONTACT_TYPE_ORGANIZATION && $this->contact_b->subcontact_type==CONTACT_TYPE_DIOCESE) {
+                $display_name = '<a href="../diocese'.$this->contact_b->id.'">'.$this->contact_b->display_name.'</a>';
+            }
+            //parish
+            if ($this->contact_b->contact_type==CONTACT_TYPE_ORGANIZATION && $this->contact_b->subcontact_type==CONTACT_TYPE_PARISH) {
+                $display_name = '<a href="../parish/'.$this->contact_b->id.'">'.$this->contact_b->display_name.'</a>';
+            }
+            return $display_name;
+        } else {
+            return NULL;
+        }
+    }
+
 }
