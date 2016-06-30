@@ -234,51 +234,51 @@
                     <h2>Groups and Relationships</h2>
                     <div class="form-group">
                         {!! Form::label('is_donor', 'Donor:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_donor', 1, true, ['class' => 'col-md-1']) !!}
+                        {!! Form::checkbox('is_donor', 1, $person->is_donor, ['class' => 'col-md-1']) !!}
                         {!! Form::label('is_retreatant', 'Retreatant:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_retreatant', 1, true,['class' => 'col-md-1']) !!}
+                        {!! Form::checkbox('is_retreatant', 1, $person->is_retreatant,['class' => 'col-md-1']) !!}
                         {!! Form::label('is_captain', 'Captain:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_captain', 1, false,['class' => 'col-md-1']) !!}
+                        {!! Form::checkbox('is_captain', 1, $person->is_captain,['class' => 'col-md-1']) !!}
                         {!! Form::label('is_volunteer', 'Volunteer:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_volunteer', 1, false,['class' => 'col-md-1']) !!}
+                        {!! Form::checkbox('is_volunteer', 1, $person->is_volunteer,['class' => 'col-md-1']) !!}
                     </div><div class="clearfix"> </div>
               
                     <div class="form-group">
                         {!! Form::label('is_bishop', 'Bishop:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_bishop', 1, false,['class' => 'col-md-1']) !!}
+                        {!! Form::checkbox('is_bishop', 1, $person->is_bishop,['class' => 'col-md-1']) !!}
                         {!! Form::label('is_priest', 'Priest:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_priest', 1, false,['class' => 'col-md-1']) !!}
+                        {!! Form::checkbox('is_priest', 1, $person->is_priest,['class' => 'col-md-1']) !!}
                         {!! Form::label('is_deacon', 'Deacon:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_deacon', 1, false,['class' => 'col-md-1']) !!}
+                        {!! Form::checkbox('is_deacon', 1, $person->is_deacon,['class' => 'col-md-1']) !!}
                         {!! Form::label('is_pastor', 'Pastor:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_pastor', 1, false,['class' => 'col-md-1']) !!}
+                        {!! Form::checkbox('is_pastor', 1, $person->is_pastor,['class' => 'col-md-1']) !!}
                     </div><div class="clearfix"> </div>
               
                     <div class="form-group">
                         {!! Form::label('is_jesuit', 'Jesuit:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_jesuit', 1, false,['class' => 'col-md-1']) !!}
+                        {!! Form::checkbox('is_jesuit', 1, $person->is_jesuit,['class' => 'col-md-1']) !!}
                         {!! Form::label('is_provincial', 'Provincial:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_provincial', 1, false,['class' => 'col-md-1']) !!}
+                        {!! Form::checkbox('is_provincial', 1, $person->is_provincial,['class' => 'col-md-1']) !!}
                         {!! Form::label('is_superior', 'Superior:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_superior', 1, false,['class' => 'col-md-1']) !!}
+                        {!! Form::checkbox('is_superior', 1, $person->is_superior,['class' => 'col-md-1']) !!}
                     </div><div class="clearfix"> </div>
               
                     <div class="form-group">
                         {!! Form::label('is_board', 'Board Member:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_board', 1, false,['class' => 'col-md-1']) !!}
+                        {!! Form::checkbox('is_board', 1, $person->is_board_member,['class' => 'col-md-1']) !!}
                         {!! Form::label('is_formerboard', 'Former Board:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_formerboard', 1, false,['class' => 'col-md-1']) !!}
+                        {!! Form::checkbox('is_formerboard', 1, false,['class' => 'col-md-1','disabled']) !!}
                     </div><div class="clearfix"> </div>
               
                     <div class="form-group">
                         {!! Form::label('is_staff', 'Staff:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_staff', 1, false,['class' => 'col-md-1']) !!}
+                        {!! Form::checkbox('is_staff', 1, $person->is_staff,['class' => 'col-md-1']) !!}
                         {!! Form::label('is_director', 'Retreat Director:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_director', 1, false,['class' => 'col-md-1']) !!}
+                        {!! Form::checkbox('is_director', 1, $person->is_retreat_director,['class' => 'col-md-1']) !!}
                         {!! Form::label('is_innkeeper', 'Retreat Innkeeper:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_innkeeper', 1, false,['class' => 'col-md-1']) !!}
+                        {!! Form::checkbox('is_innkeeper', 1, $person->is_retreat_innkeeper,['class' => 'col-md-1']) !!}
                         {!! Form::label('is_assistant', 'Retreat Assistant:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_assistant', 1, false,['class' => 'col-md-1']) !!}
+                        {!! Form::checkbox('is_assistant', 1, $person->is_retreat_assistant,['class' => 'col-md-1']) !!}
                     </div><div class="clearfix"> </div>
               
                 

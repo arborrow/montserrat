@@ -28,50 +28,39 @@ class Contact extends Model
     public function a_relationships() {
         return $this->hasMany('\montserrat\Relationship','contact_id_a','id');
     }
-    
     public function b_relationships() {
         return $this->hasMany('\montserrat\Relationship','contact_id_b','id');
     }
-
     public function addresses() {
         return $this->hasMany('\montserrat\Address','contact_id','id');
     }
-    
     public function address_primary() {
         return $this->hasOne('\montserrat\Address','contact_id','id')->whereIsPrimary(1);
     }
-    
     public function bishops() {
         return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_BISHOP);
     }
-    
     public function contacttype() {
         return $this->hasOne('\montserrat\ContactType','id','contact_type');
     }
     public function subcontacttype() {
         return $this->hasOne('\montserrat\ContactType','id','subcontact_type');
     }
-    
     public function diocese() {
         return $this->hasOne('\montserrat\Relationship','contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_DIOCESE);
     }
-        
     public function emails() {
         return $this->hasMany('\montserrat\Email','contact_id','id');
     }
-    
     public function email_primary() {
         return $this->hasOne('\montserrat\Email','contact_id','id')->whereIsPrimary(1);
     }
-    
     public function emergency_contact() {
         return $this->hasOne('\montserrat\EmergencyContact','contact_id','id');
     }
-    
     public function ethnicity() {
         return $this->hasOne('\montserrat\Ethnicity','id','ethnicity_id');
     }
-    
     public function getAddressPrimaryStreetAttribute() {
         if (isset($this->address_primary->street_address)) {
             if (isset($this->address_primary->supplemental_address)) {
@@ -82,8 +71,7 @@ class Contact extends Model
         } else {
             return NULL;
         }
-    }  
-    
+    }
     public function getAddressPrimaryCityAttribute() {
         if (isset($this->address_primary->city)) {
             return $this->address_primary->city;
@@ -104,8 +92,7 @@ class Contact extends Model
         } else {
             return NULL;
         }
-    }  
-    
+    }
     public function getContactTypeLabelAttribute() {
         
         if (isset($this->contacttype->label)) {
@@ -129,7 +116,6 @@ class Contact extends Model
             return NULL;
         }
     }
-    
     public function getSuffixNameAttribute () {
         if (isset($this->suffix_id)&&($this->suffix_id>0)) {
             return $this->suffix->name;
@@ -144,7 +130,6 @@ class Contact extends Model
             return NULL;
         }
     }
-
     public function getEthnicityNameAttribute () {
         if (isset($this->ethnicity_id)&&($this->ethnicity_id>0)) {
             return $this->ethnicity->ethnicity;
@@ -152,7 +137,6 @@ class Contact extends Model
             return NULL;
         }
     }
-
     public function getGenderNameAttribute () {
         if (isset($this->gender_id)&&($this->gender_id>0)) {
             return $this->gender->name;
@@ -160,7 +144,118 @@ class Contact extends Model
             return NULL;
         }
     }
-
+    public function getIsDonorAttribute () {
+        if (!empty($this->relationship_mjrh_donor)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+    public function getIsRetreatantAttribute () {
+        if (!empty($this->relationship_mjrh_retreatant)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+    public function getIsCaptainAttribute () {
+        if (isset($this->group_captain)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+    public function getIsVolunteerAttribute () {
+        if (isset($this->group_volunteer)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+    public function getIsBishopAttribute () {
+        if (isset($this->group_bishop)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+    public function getIsPriestAttribute () {
+        if (isset($this->group_priest)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+    public function getIsDeaconAttribute () {
+        if (isset($this->group_deacon)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+    public function getIsPastorAttribute () {
+        if (isset($this->group_pastor)) {
+            return $this->gender->name;
+        } else {
+            return NULL;
+        }
+    }
+    public function getIsJesuitAttribute () {
+        if (isset($this->group_jesuit)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+    public function getIsProvincialAttribute () {
+        if (isset($this->group_provincial)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+    public function getIsSuperiorAttribute () {
+        if (isset($this->group_superior)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+    public function getIsBoardMemberAttribute () {
+        if (isset($this->group_board_member)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+    public function getIsStaffAttribute () {
+        if (isset($this->group_staff)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+    public function getIsRetreatDirectorAttribute () {
+        if (isset($this->relationship_mjrh_retreat_director)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+    public function getIsRetreatInnkeeperAttribute () {
+        if (isset($this->relationship_mjrh_retreat_innkeeper)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+    public function getIsRetreatAssistantAttribute () {
+        if (isset($this->relationship_mjrh_retreat_assistant)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
     public function getParishNameAttribute () {
         if (isset($this->parish->contact_id_a)&&($this->parish->contact_id_a>0)) {
            
@@ -170,7 +265,6 @@ class Contact extends Model
             return NULL;
         }
     }
-
     public function getPhoneHomeMobileNumberAttribute () {
         if (isset($this->phone_home_mobile->phone)) {
             return $this->phone_home_mobile->phone;
@@ -185,7 +279,6 @@ class Contact extends Model
             return NULL;
         }
     }
-    
     public function getPhoneWorkPhoneNumberAttribute () {
         if (isset($this->phone_work_phone)) {
             return $this->phone_work_phone->phone;
@@ -200,7 +293,6 @@ class Contact extends Model
             return NULL;
         }
     }
-    
     public function getNoteDietaryTextAttribute () {
         if (isset($this->note_dietary->note)) {
             return $this->note_dietary->note; 
@@ -250,20 +342,49 @@ class Contact extends Model
             return NULL;
         }
     }
-    
     public function gender() {
         return $this->hasOne('\montserrat\Gender','id','gender_id');
     }
-    
+    public function group_captain() {
+        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_CAPTAIN);
+    }
+    public function group_volunteer() {
+        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_VOLUNTEER);
+    }
+    public function group_bishop() {
+        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_BISHOP);
+    }
+    public function group_priest() {
+        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_PRIEST);
+    }
+    public function group_deacon() {
+        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_DEACON);
+    }
+    public function group_pastor() {
+        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_PASTOR);
+    }
+    public function group_jesuit() {
+        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_JESUIT);
+    }
+    public function group_provincial() {
+        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_PROVINCIAL);
+    }
+    public function group_superior() {
+        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_SUPERIOR);
+    }
+    public function group_board_member() {
+        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_BOARD);
+    }
+    public function group_staff() {
+        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_STAFF);
+    }
+
     public function groups() {
         return $this->hasMany('\montserrat\GroupContact','contact_id','id');
     }
-
     public function languages() {
         return $this->belongsToMany('\montserrat\Language','contact_languages','contact_id','language_id');
     }
-
-    
     public function notes() {
         return $this->hasMany('\montserrat\Note','entity_id','id')->whereEntityTable('contact');
     }
@@ -285,15 +406,24 @@ class Contact extends Model
     public function note_registration() {
         return $this->hasOne('\montserrat\Note','entity_id','id')->whereEntityTable('contact')->whereSubject('Registration Note'); 
     }
-    
     public function occupation() {
         return $this->hasOne('\montserrat\Ppd_occupation','id','occupation_id');
     }
-    
+    public function parish() {
+        return $this->hasOne('\montserrat\Relationship','contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_PARISHIONER);
+    }
+    public function parishes() {
+        return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_DIOCESE);
+    }
+    public function parishioners() {
+        return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_PARISHIONER);
+    }
+    public function pastor() {
+        return $this->hasOne('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_PASTOR);
+    }
     public function phones() {
         return $this->hasMany('\montserrat\Phone','contact_id','id');
     }
-    
     public function phone_primary() {
         return $this->hasOne('\montserrat\Phone','contact_id','id')->whereIsPrimary(1);
     }
@@ -333,31 +463,9 @@ class Contact extends Model
     public function phone_other_fax() {
         return $this->hasOne('\montserrat\Phone','contact_id','id')->wherePhoneType('Fax')->whereLocationTypeId(LOCATION_TYPE_OTHER); 
     }
-
-    public function parish() {
-        return $this->hasOne('\montserrat\Relationship','contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_PARISHIONER);
-    }
-    
-    public function parishes() {
-        return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_DIOCESE);
-    }
-    
-    public function parishioners() {
-        return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_PARISHIONER);
-    }
-    
-    public function pastor() {
-        return $this->hasOne('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_PASTOR);
-    }
-    
     public function prefix() {
         return $this->hasOne('\montserrat\Prefix','id','prefix_id');
     }
-    
-    public function religion() {
-        return $this->hasOne('\montserrat\Religion','id','religion_id');
-    }
-    
     public function retreat_assistants() {
         return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_ASSISTANT)->whereIsActive(1);
     }
@@ -369,21 +477,34 @@ class Contact extends Model
     public function retreat_innkeepers() {
         return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_INNKEEPER);
     }
-    
+    public function relationship_mjrh_donor() {
+        return $this->hasOne('\montserrat\Relationship','contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_DONOR);
+    }   
+    public function relationship_mjrh_retreatant() {
+        return $this->hasOne('\montserrat\Relationship','contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREATANT)->whereIsActive(1)->whereContactIdA(CONTACT_MONTSERRAT);
+    }
+    public function relationship_mjrh_retreat_assistant() {
+        return $this->hasOne('\montserrat\Relationship','contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_ASSISTANT)->whereContactIdA(CONTACT_MONTSERRAT)->whereIsActive(1);
+    }
+    public function relationship_mjrh_retreat_director() {
+        return $this->hasOne('\montserrat\Relationship','contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_DIRECTOR)->whereContactIdA(CONTACT_MONTSERRAT)->whereIsActive(1);
+    }
+    public function relationship_mjrh_retreat_innkeeper() {
+        return $this->hasOne('\montserrat\Relationship','contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_INNKEEPER)->whereContactIdA(CONTACT_MONTSERRAT)->whereIsActive(1);
+    }
+    public function religion() {
+        return $this->hasOne('\montserrat\Religion','id','religion_id');
+    }
     public function suffix() {
         return $this->hasOne('\montserrat\Suffix','id','suffix_id');
     }
-    
     public function touchpoints() {
         return $this->hasMany('\montserrat\Touchpoint','person_id','id');
     }
-    
     public function websites() {
         return $this->hasMany('\montserrat\Website','contact_id','id');
     }
     public function website_main() {
         return $this->hasOne('\montserrat\Website','contact_id','id')->whereWebsiteType('Main');
     }
-
-    
 }
