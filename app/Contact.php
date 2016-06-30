@@ -145,112 +145,112 @@ class Contact extends Model
         }
     }
     public function getIsDonorAttribute () {
-        if (!empty($this->relationship_mjrh_donor)) {
+        if (!empty($this->relationship_mjrh_donor->id)) {
             return TRUE;
         } else {
             return FALSE;
         }
     }
     public function getIsRetreatantAttribute () {
-        if (!empty($this->relationship_mjrh_retreatant)) {
+        if (!empty($this->relationship_mjrh_retreatant->id)) {
             return TRUE;
         } else {
             return FALSE;
         }
     }
     public function getIsCaptainAttribute () {
-        if (isset($this->group_captain)) {
+        if (isset($this->group_captain->id)) {
             return TRUE;
         } else {
             return FALSE;
         }
     }
     public function getIsVolunteerAttribute () {
-        if (isset($this->group_volunteer)) {
+        if (isset($this->group_volunteer->id)) {
             return TRUE;
         } else {
             return FALSE;
         }
     }
     public function getIsBishopAttribute () {
-        if (isset($this->group_bishop)) {
+        if (isset($this->group_bishop->id)) {
             return TRUE;
         } else {
             return FALSE;
         }
     }
     public function getIsPriestAttribute () {
-        if (isset($this->group_priest)) {
+        if (isset($this->group_priest->id)) {
             return TRUE;
         } else {
             return FALSE;
         }
     }
     public function getIsDeaconAttribute () {
-        if (isset($this->group_deacon)) {
+        if (isset($this->group_deacon->id)) {
             return TRUE;
         } else {
             return FALSE;
         }
     }
     public function getIsPastorAttribute () {
-        if (isset($this->group_pastor)) {
+        if (isset($this->group_pastor->id)) {
             return $this->gender->name;
         } else {
             return NULL;
         }
     }
     public function getIsJesuitAttribute () {
-        if (isset($this->group_jesuit)) {
+        if (isset($this->group_jesuit->id)) {
             return TRUE;
         } else {
             return FALSE;
         }
     }
     public function getIsProvincialAttribute () {
-        if (isset($this->group_provincial)) {
+        if (isset($this->group_provincial->id)) {
             return TRUE;
         } else {
             return FALSE;
         }
     }
     public function getIsSuperiorAttribute () {
-        if (isset($this->group_superior)) {
+        if (isset($this->group_superior->id)) {
             return TRUE;
         } else {
             return FALSE;
         }
     }
     public function getIsBoardMemberAttribute () {
-        if (isset($this->group_board_member)) {
+        if (isset($this->group_board_member->id)) {
             return TRUE;
         } else {
             return FALSE;
         }
     }
     public function getIsStaffAttribute () {
-        if (isset($this->group_staff)) {
+        if (isset($this->group_staff->id)) {
             return TRUE;
         } else {
             return FALSE;
         }
     }
     public function getIsRetreatDirectorAttribute () {
-        if (isset($this->relationship_mjrh_retreat_director)) {
+        if (isset($this->relationship_mjrh_retreat_director->id)) {
             return TRUE;
         } else {
             return FALSE;
         }
     }
     public function getIsRetreatInnkeeperAttribute () {
-        if (isset($this->relationship_mjrh_retreat_innkeeper)) {
+        if (isset($this->relationship_mjrh_retreat_innkeeper->id)) {
             return TRUE;
         } else {
             return FALSE;
         }
     }
     public function getIsRetreatAssistantAttribute () {
-        if (isset($this->relationship_mjrh_retreat_assistant)) {
+        if (isset($this->relationship_mjrh_retreat_assistant->id)) {
             return TRUE;
         } else {
             return FALSE;
