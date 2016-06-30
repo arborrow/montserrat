@@ -193,6 +193,13 @@ class Contact extends Model
             return NULL;
         }
     }
+    public function getPhoneMainPhoneNumberAttribute () {
+        if (isset($this->phone_main_phone)) {
+            return $this->phone_main_phone->phone;
+        } else {
+            return NULL;
+        }
+    }
     
     public function getNoteDietaryTextAttribute () {
         if (isset($this->note_dietary->note)) {
@@ -211,6 +218,13 @@ class Contact extends Model
     public function getNoteGeneralTextAttribute () {
         if (isset($this->note_general->note)) {
             return $this->note_general->note;
+        } else {
+            return NULL;
+        }
+    }
+    public function getNoteOrganizationTextAttribute () {
+        if (isset($this->note_organization->note)) {
+            return $this->note_organization->note;
         } else {
             return NULL;
         }
@@ -237,7 +251,6 @@ class Contact extends Model
         }
     }
     
-
     public function gender() {
         return $this->hasOne('\montserrat\Gender','id','gender_id');
     }
@@ -266,6 +279,9 @@ class Contact extends Model
     public function note_general() {
         return $this->hasOne('\montserrat\Note','entity_id','id')->whereEntityTable('contact')->whereSubject('Contact Note'); 
     }
+    public function note_organization() {
+        return $this->hasOne('\montserrat\Note','entity_id','id')->whereEntityTable('contact')->whereSubject('Organization Note'); 
+    }
     public function note_registration() {
         return $this->hasOne('\montserrat\Note','entity_id','id')->whereEntityTable('contact')->whereSubject('Registration Note'); 
     }
@@ -280,6 +296,12 @@ class Contact extends Model
     
     public function phone_primary() {
         return $this->hasOne('\montserrat\Phone','contact_id','id')->whereIsPrimary(1);
+    }
+    public function phone_main_phone() {
+        return $this->hasOne('\montserrat\Phone','contact_id','id')->wherePhoneType('Phone')->whereLocationTypeId(LOCATION_TYPE_MAIN); 
+    }
+    public function phone_main_mobile() {
+        return $this->hasOne('\montserrat\Phone','contact_id','id')->wherePhoneType('Mobile')->whereLocationTypeId(LOCATION_TYPE_MAIN); 
     }
     public function phone_main_fax() {
         return $this->hasOne('\montserrat\Phone','contact_id','id')->wherePhoneType('Fax')->whereLocationTypeId(LOCATION_TYPE_MAIN); 

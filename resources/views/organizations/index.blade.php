@@ -19,7 +19,7 @@
                         <tr>
                             <th>Name</th> 
                             <th>Address</th> 
-                            <th>Work phone</th> 
+                            <th>Main phone</th> 
                             <th>Email(s)</th> 
                             <th>Website(s)</th> 
                        </tr>
@@ -36,8 +36,12 @@
                                 @endforeach
                             </td>
                             <td>
-                                <a href="tel:{{ $organization->phone_work_phone_number }}"> {{ $organization->phone_work_phone_number }}</a>
-                                </td>
+                                @if (!empty($organization->phone_main_phone_number)) 
+                                    <a href="tel:{{ $organization->phone_main_phone_number }}"> {{ $organization->phone_main_phone_number }} </a>
+                                @else
+                                    N/A
+                                @endIf
+                            </td>
                             <td> 
                                 <a href="mailto:{{ $organization->email_primary_text }}">{{ $organization->email_primary_text }}</a> 
                             </td>

@@ -172,13 +172,14 @@
                             </ul>
                         </div>
                         </ul>
-                        </div>
-                    </span>
-                </div>
-                <div class="clearfix"> </div>
+                    </div>
+                </span>
             </div>
-                   <hr />
-             @if ($person->touchpoints->isEmpty())
+            <div class="clearfix"> </div>
+        
+        <hr />
+        <div>
+            @if ($person->touchpoints->isEmpty())
                     <p>It is a brand new world, there are no touch points for this person!</p>
                 @else
                 <table class="table"><caption><h2>Touch points for {{ $person->display_name }} </h2></caption>
@@ -203,7 +204,9 @@
                     </tbody>
                 </table>
                 @endif
-
+        </div>
+        </div>
+        
             
         </div>
         <div class='row'>

@@ -25,7 +25,7 @@ class OrganizationsController extends Controller
     public function index()
     {
         //TODO: subcontact_type dependent on order in database which is less than ideal really looking for where not a parish or diocese organization 
-        $organizations = \montserrat\Contact::whereContactType(CONTACT_TYPE_ORGANIZATION)->where('subcontact_type','>',CONTACT_TYPE_DIOCESE)->orderBy('organization_name', 'asc')->with('addresses.state','phones','emails','websites','bishops.contact_b','parishes.contact_a')->paginate(100);
+        $organizations = \montserrat\Contact::whereContactType(CONTACT_TYPE_ORGANIZATION)->where('subcontact_type','>',CONTACT_TYPE_DIOCESE)->orderBy('organization_name', 'asc')->with('addresses.state','phone_primary.location','emails','websites','bishops.contact_b','parishes.contact_a')->paginate(100);
         
         //dd($organizations);
         
@@ -48,11 +48,12 @@ class OrganizationsController extends Controller
         
         $default['state_province_id'] = STATE_PROVINCE_ID_TX;
         $default['country_id'] = COUNTRY_ID_USA;
-        
-        $bishops = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_BISHOP);})->lists('display_name','id');
-        $bishops->prepend('N/A',0); 
-        
-        return view('organizations.create',compact('bishops','states','countries','default'));  
+                
+        $subcontact_types = \montserrat\ContactType::whereIsReserved(FALSE)->whereIsActive(TRUE)->lists('label','id');
+        $subcontact_types->prepend('N/A',0); 
+
+      
+        return view('organizations.create',compact('subcontact_types','states','countries','default'));  
     
     }
 
@@ -67,7 +68,7 @@ class OrganizationsController extends Controller
         //
             $this->validate($request, [
                 'organization_name' => 'required',
-                'bishop_id' => 'integer|min:0',
+                'subcontact_type' => 'integer|min:0',
                 'email_main' => 'email',
                 'website_main' => 'url'
             ]);
@@ -77,7 +78,7 @@ class OrganizationsController extends Controller
         $organization->display_name  = $request->input('organization_name');
         $organization->sort_name  = $request->input('organization_name');
         $organization->contact_type = CONTACT_TYPE_ORGANIZATION;
-        $organization->subcontact_type = CONTACT_TYPE_DIOCESE;
+        $organization->subcontact_type = $request->input('subcontact_type');
         $organization->save();
         
         $organization_address= new \montserrat\Address;
@@ -126,20 +127,12 @@ class OrganizationsController extends Controller
             $organization_note->entity_table = 'contact';
             $organization_note->entity_id = $organization->id;
             $organization_note->note=$request->input('note');
-            $organization_note->subject='Diocese note';
+            $organization_note->subject='Organization Note';
             $organization_note->save();
         }
         
-        if ($request->input('bishop_id')>0) {
-            $relationship_pastor = new \montserrat\Relationship;
-            $relationship_organization->contact_id_a = $organization->id;
-            $relationship_organization->contact_id_b = $request->input('bishop_id');
-            $relationship_organization->relationship_type_id = RELATIONSHIP_TYPE_BISHOP;
-            $relationship_organization->is_active = 1;
-            $relationship_organization->save();
-        }
    
-return Redirect::action('DiocesesController@index');
+return Redirect::action('OrganizationsController@index');
     }
 
     /**
@@ -151,7 +144,7 @@ return Redirect::action('DiocesesController@index');
     public function show($id)
     {
         // $organization = \montserrat\Diocese::with('bishop')->findOrFail($id);
-        $organization = \montserrat\Contact::with('bishops.contact_b','parishes.contact_b','addresses.state','addresses.location','phones.location','emails.location','websites','notes')->findOrFail($id);
+        $organization = \montserrat\Contact::with('addresses.state','addresses.location','phones.location','emails.location','websites','notes','phone_main_phone.location')->findOrFail($id);
        //dd($organization); 
        return view('organizations.show',compact('organization'));//
     
@@ -167,12 +160,8 @@ return Redirect::action('DiocesesController@index');
     {
         // TODO: make create and edit bishop id multi-select with all bishops defaulting to selected on edit
         // TODO: consider making one primary bishop with multi-select for seperate auxilary bishops (new relationship)
-        $organization = \montserrat\Contact::with('bishops.contact_b','parishes.contact_b','address_primary.state','address_primary.location','phone_primary.location','phone_main_fax.location','email_primary.location','website_main','notes')->findOrFail($id);
-       if (empty($organization->bishop)) {
-           $organization->bishop_id=0;
-       } else {
-           $organization->bishop_id = $organization->bishop->contact_id_b;
-       }
+        $organization = \montserrat\Contact::with('address_primary.state','address_primary.location','phone_main_phone.location','phone_main_fax.location','email_primary.location','website_main','notes')->findOrFail($id);
+
         $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->lists('name','id');
         $states->prepend('N/A',0); 
         
@@ -182,11 +171,12 @@ return Redirect::action('DiocesesController@index');
         $default['state_province_id'] = STATE_PROVINCE_ID_TX;
         $default['country_id'] = COUNTRY_ID_USA;
         
-        $bishops = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_BISHOP);})->lists('display_name','id');
-        $bishops->prepend('N/A',0); 
+        $subcontact_types = \montserrat\ContactType::whereIsReserved(FALSE)->whereIsActive(TRUE)->lists('label','id');
+        $subcontact_types->prepend('N/A',0); 
+        
         //dd($organization);
               
-       return view('organizations.edit',compact('organization','bishops','states','countries','default'));
+       return view('organizations.edit',compact('organization','states','countries','default','subcontact_types'));
     }
 
     /**
@@ -207,15 +197,19 @@ return Redirect::action('DiocesesController@index');
             'website_main' => 'url'
         ]);
 
-        $organization = \montserrat\Contact::with('bishops.contact_b','parishes.contact_b','address_primary.state','address_primary.location','phone_primary.location','phone_main_fax.location','email_primary.location','website_main','notes')->findOrFail($id);
+        $organization = \montserrat\Contact::with('address_primary.state','address_primary.location','phone_main_phone.location','phone_main_fax.location','email_primary.location','website_main','note_organization')->findOrFail($id);
         $organization->organization_name = $request->input('organization_name');
-        $organization->display_name  = $request->input('organization_name');
-        $organization->sort_name  = $request->input('organization_name');
+        $organization->display_name = $request->input('organization_name');
+        $organization->sort_name  = $request->input('sort_name');
         $organization->contact_type = CONTACT_TYPE_ORGANIZATION;
-        $organization->subcontact_type = CONTACT_TYPE_DIOCESE;
+        $organization->subcontact_type = $request->input('subcontact_type');
         $organization->save();
       
-        $address_primary = \montserrat\Address::findOrNew($organization->address_primary->id);
+        if (empty($organization->address_primary)) {
+            $address_primary = new \montserrat\Address;
+        } else {
+            $address_primary = \montserrat\Address::findOrNew($organization->address_primary->id);
+        }
         $address_primary->contact_id=$organization->id;
         $address_primary->location_type_id=LOCATION_TYPE_MAIN;
         $address_primary->is_primary=1;
@@ -228,8 +222,13 @@ return Redirect::action('DiocesesController@index');
         $address_primary->country_id = COUNTRY_ID_USA;
         $address_primary->is_primary = 1;
         $address_primary->save();
+//        dd($organization->phone_main_phone);
+        if (empty($organization->phone_main_phone)) {
+            $phone_primary = new \montserrat\Phone;
+        } else {
+            $phone_primary = \montserrat\Phone::findOrNew($organization->phone_main_phone->id);
         
-        $phone_primary = \montserrat\Phone::findOrNew($organization->phone_primary->id);
+        }
         $phone_primary->contact_id=$organization->id;
         $phone_primary->location_type_id=LOCATION_TYPE_MAIN;
         $phone_primary->is_primary=1;
@@ -248,21 +247,39 @@ return Redirect::action('DiocesesController@index');
         $phone_main_fax->phone_type='Fax';
         $phone_main_fax->save();
         
-        $email_primary = \montserrat\Email::findOrNew($organization->email_primary->id);
+        if (empty($organization->email_primary)) {
+            $email_primary = new \montserrat\Email;
+        } else {
+            $email_primary = \montserrat\Email::findOrNew($organization->email_primary->id);
+        }
         $email_primary->contact_id=$organization->id;
         $email_primary ->is_primary=1;
         $email_primary ->location_type_id=LOCATION_TYPE_MAIN;
         $email_primary ->email=$request->input('email_primary');
         $email_primary->save();
         
-        $website_main = \montserrat\Website::findOrNew($organization->website_main->id);
+        if (empty($organization->website_main)) {
+            $website_main = new \montserrat\Website;
+        } else {
+            $website_main = \montserrat\Website::findOrNew($organization->website_main->id);
+        }
         $website_main->url = $request->input('website_main');
         $website_main->contact_id=$organization->id;
         $website_main->website_type='Main';
         $website_main->save();
         
+        if (empty($organization->note_organization)) {
+            $organization_note = new \montserrat\Note;
+        } else {
+            $organization_note = \montserrat\Note::findOrNew($organization->note_organization->id);
+        }
+        $organization_note->entity_table = 'contact';
+        $organization_note->entity_id = $organization->id;
+        $organization_note->note=$request->input('note');
+        $organization_note->subject='Organization Note';
+        $organization_note->save();
         
-        return Redirect::action('DiocesesController@index');
+        return Redirect::action('OrganizationsController@index');
         
     }
 
@@ -274,8 +291,8 @@ return Redirect::action('DiocesesController@index');
      */
     public function destroy($id)
     {
-        //
+        // TODO: delete addresses, emails, webpages, and phone numbers for persons, parishes, dioceses and organizations
          \montserrat\Contact::destroy($id);
-        return Redirect::action('DiocesesController@index');
+        return Redirect::action('OrganizationsController@index');
     }
 }

@@ -77,6 +77,10 @@ class CreateEvent extends Migration
             $table->integer('parent_event_id')->unsigned()->nullable()->default(NULL);
             $table->integer('slot_label_id')->unsigned()->nullable()->default(NULL);
             $table->integer('retreat_id')->unsigned()->nullable()->default(NULL);
+            $table->string('idnumber')->nullable()->default(NULL);
+            $table->integer('director_id')->unsigned()->nullable()->default(NULL);
+            $table->integer('innkeeper_id')->unsigned()->nullable()->default(NULL);
+            $table->integer('assistant_id')->unsigned()->nullable()->default(NULL);
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
