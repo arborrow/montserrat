@@ -84,8 +84,7 @@ class CreateEvent extends Migration
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
-        
-    });
+        });
     }
 
     /**
@@ -95,6 +94,6 @@ class CreateEvent extends Migration
      */
     public function down()
     {
-        Schema::drop('event'); //
+        Schema::drop('event'); 
     }
 }

@@ -25,8 +25,8 @@ class RetreatsController extends Controller
     public function index()
     {
         //dd(Auth::User());
-        $retreats = \montserrat\Retreat::whereDate('end', '>=', date('Y-m-d'))->orderBy('start','asc')->with('retreatmasters','innkeeper','assistant')->get();
-        $oldretreats = \montserrat\Retreat::whereDate('end', '<', date('Y-m-d'))->orderBy('start','desc')->with('retreatmasters','innkeeper','assistant')->paginate(100);
+        $retreats = \montserrat\Retreat::whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date','asc')->with('retreatmasters','innkeeper','assistant')->get();
+        $oldretreats = \montserrat\Retreat::whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date','desc')->with('retreatmasters','innkeeper','assistant')->paginate(100);
         // $events = Event::get();
         // dd($events[4]);
         //dd($oldretreats);    
@@ -74,32 +74,36 @@ class RetreatsController extends Controller
     { // dd($request);
         $this->validate($request, [
             'idnumber' => 'required|unique:retreats',
-            'start' => 'required|date|before:end',
-            'end' => 'required|date|after:start',
+            'start_date' => 'required|date|before:end',
+            'end_date' => 'required|date|after:start',
             'title' => 'required',
-            'innkeeperid' => 'integer|min:0',
-            'assistantid' => 'integer|min:0',
+            'innkeeper_id' => 'integer|min:0',
+            'assistant_id' => 'integer|min:0',
             'year' => 'integer|min:1990|max:2020',
             'amount' => 'numeric|min:0|max:100000',
             'attending' => 'integer|min:0|max:150',
             'silent' => 'boolean'
-        ]);
+          ]);
+        
         $retreat = new \montserrat\Retreat;
         $retreat->idnumber = $request->input('idnumber');
-        $retreat->start = $request->input('start');
-        $retreat->end = $request->input('end');
+        $retreat->start_date = $request->input('start');
+        $retreat->end_date = $request->input('end');
         $retreat->title = $request->input('title');
         $retreat->description = $request->input('description');
+        // TODO: create dropdown list of retreat types - disable for now
         $retreat->type = $request->input('type');
+        // TODO: find a way to tag silent retreats, perhaps with event_type_id - for now disabled
         $retreat->silent = $request->input('silent');
+        // amount will be related to default_fee_id?
         $retreat->amount = $request->input('amount');
+        // attending should be calculated based on retreat participants
+        // TODO: consider making Directors, Innkeepers, and Assistants participant roles and adding them by default to retreats
         $retreat->attending = $request->input('attending');
         $retreat->year = $request->input('year');
-        $retreat->innkeeperid = $request->input('innkeeperid');
-        $retreat->assistantid = $request->input('assistantid');
+        $retreat->innkeeper_id = $request->input('innkeeper_id');
+        $retreat->assistant_id = $request->input('assistant_id');
         $retreat->save();
-        //dd($request->get('directors'));
-        //dd($request->input('directors'));
         if (empty($request->input('directors')) or in_array(0,$request->input('directors'))) {
             $retreat->retreatmasters()->detach();
         } else {
@@ -177,20 +181,21 @@ public function edit($id)
       // dd($request);
         $this->validate($request, [
             'idnumber' => 'required|unique:retreats,idnumber,'.$id,
-            'start' => 'required|date|before:end',
-            'end' => 'required|date|after:start',
+            'start_date' => 'required|date|before:end',
+            'end_date' => 'required|date|after:start',
             'title' => 'required',
-            'innkeeperid' => 'integer|min:0',
-            'assistantid' => 'integer|min:0',
+            'innkeeper_id' => 'integer|min:0',
+            'assistant_id' => 'integer|min:0',
             'year' => 'integer|min:1990|max:2020',
             'amount' => 'numeric|min:0|max:100000',
             'attending' => 'integer|min:0|max:150',
             'silent' => 'boolean'
         ]);
+        
         $retreat = \montserrat\Retreat::findOrFail($request->input('id'));
         $retreat->idnumber = $request->input('idnumber');
-        $retreat->start = $request->input('start');
-        $retreat->end = $request->input('end');
+        $retreat->start_date = $request->input('start_date');
+        $retreat->end_date = $request->input('end_date');
         $retreat->title = $request->input('title');
         $retreat->description = $request->input('description');
         $retreat->type = $request->input('type');
@@ -198,8 +203,8 @@ public function edit($id)
         $retreat->amount = $request->input('amount');
         $retreat->attending = $request->input('attending');
         $retreat->year = $request->input('year');
-        $retreat->innkeeperid = $request->input('innkeeperid');
-        $retreat->assistantid = $request->input('assistantid');
+        $retreat->innkeeper_id = $request->input('innkeeper_id');
+        $retreat->assistant_id = $request->input('assistant_id');
         $retreat->save();
         
         if (empty($request->input('directors')) or in_array(0,$request->input('directors'))) {
@@ -223,5 +228,4 @@ public function edit($id)
        return Redirect::action('RetreatsController@index');
        //
     }
-    
 }

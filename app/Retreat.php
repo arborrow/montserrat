@@ -15,24 +15,24 @@ class Retreat extends Model
 	 */
     use SoftDeletes;
     
-    protected $table = 'retreats';
+    protected $table = 'event';
 
-    protected $dates = ['start', 'end', 'created_at', 'updated_at', 'disabled_at', 'deleted_at'];  //
+    protected $dates = ['start_date', 'end_date', 'created_at', 'updated_at', 'disabled_at', 'deleted_at'];  //
     
     public function setStartAttribute($date) {
-      $this->attributes['start'] = Carbon::parse($date);
+      $this->attributes['start_date'] = Carbon::parse($date);
     }
     
     public function setEndAttribute($date) {
-      $this->attributes['end'] = Carbon::parse($date);
+      $this->attributes['end_date'] = Carbon::parse($date);
     }
   
     public function assistant() {
-        return $this->belongsTo('\montserrat\Contact','assistantid','id')->whereContactType(CONTACT_TYPE_INDIVIDUAL);
+        return $this->belongsTo('\montserrat\Contact','assistant_id','id')->whereContactType(CONTACT_TYPE_INDIVIDUAL);
     }
     
     public function innkeeper() {
-        return $this->belongsTo('\montserrat\Contact','innkeeperid','id')->whereContactType(CONTACT_TYPE_INDIVIDUAL);
+        return $this->belongsTo('\montserrat\Contact','innkeeper_id','id')->whereContactType(CONTACT_TYPE_INDIVIDUAL);
     }
     
     public function retreatmasters() {

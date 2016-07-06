@@ -32,7 +32,7 @@
                         <tr>
                             <td><a href="retreat/{{ $retreat->id}}">{{ $retreat->idnumber}}</a></td>
                             <td>{{ $retreat->title }}</td>
-                            <td>{{ date('F d, Y', strtotime($retreat->start)) }} - {{ date('F d, Y', strtotime($retreat->end)) }}</td>
+                            <td>{{ date('F d, Y', strtotime($retreat->start_date)) }} - {{ date('F d, Y', strtotime($retreat->end_date)) }}</td>
                             <td>                            
                                 @if ($retreat->retreatmasters->isEmpty())
                                 N/A
@@ -43,15 +43,15 @@
                                 @endif
                             </td>
                             <td>
-                                @if ($retreat->innkeeperid > 0)
-                                    <a href="person/{{ $retreat->innkeeperid }}">{{ $retreat->innkeeper->display_name }}</a>
+                                @if ($retreat->innkeeper_id > 0)
+                                    <a href="person/{{ $retreat->innkeeper_id }}">{{ $retreat->innkeeper->display_name }}</a>
                                 @else
                                     N/A
                                 @endIf
                             </td>
                             <td>
-                                @if ($retreat->assistantid > 0)
-                                    <a href="person/{{ $retreat->assistantid }}">{{ $retreat->assistant->display_name }}</a>
+                                @if ($retreat->assistant_id > 0)
+                                    <a href="person/{{ $retreat->assistant_id }}">{{ $retreat->assistant->display_name }}</a>
                                 @else
                                     N/A
                                 @endIf

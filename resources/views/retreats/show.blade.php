@@ -12,8 +12,8 @@
                 <div class='col-md-2'><strong>ID#: </strong>{{ $retreat->idnumber}}</div>
             </div><div class="clearfix"> </div>
             <div class='row'>
-                <div class='col-md-3'><strong>Starts: </strong>{{date('F d, Y', strtotime($retreat->start))}}</div>
-                <div class='col-md-3'><strong>Ends: </strong>{{date('F d, Y', strtotime($retreat->end))}}</div>
+                <div class='col-md-3'><strong>Starts: </strong>{{date('F d, Y', strtotime($retreat->start_date))}}</div>
+                <div class='col-md-3'><strong>Ends: </strong>{{date('F d, Y', strtotime($retreat->end_date))}}</div>
             </div><div class="clearfix"> </div>
             <div class='row'>
                 <div class='col-md-3'><strong>Title: </strong>{{ $retreat->title}}</div>
@@ -37,14 +37,14 @@
                     
                 <div class='col-md-3'><strong>Innkeeper: </strong>
                     @if ($retreat->innkeeperid > 0)
-                        <a href="person/{{ $retreat->innkeeperid }}">{{ $retreat->innkeeper->display_name }}</a>
+                        <a href="person/{{ $retreat->innkeeper_id }}">{{ $retreat->innkeeper->display_name }}</a>
                     @else
                         N/A
                     @endIf
                 </div>
                 <div class='col-md-3'><strong>Assistant: </strong>
                     @if ($retreat->assistantid > 0)
-                        <a href="person/{{ $retreat->assistantid }}">{{ $retreat->assistant->display_name }}</a>
+                        <a href="person/{{ $retreat->assistant_id }}">{{ $retreat->assistant->display_name }}</a>
                     @else
                         N/A
                     @endIf

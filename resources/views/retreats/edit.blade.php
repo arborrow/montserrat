@@ -11,11 +11,11 @@
     </div><div class="clearfix"> </div>
     
     <div class="form-group">
-        {!! Form::label('start', 'Starts:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('start', $retreat->start, ['id' => 'startdate', 'class' => 'col-md-2']) !!}
+        {!! Form::label('start_date', 'Starts:', ['class' => 'col-md-1']) !!}
+        {!! Form::text('start_date', $retreat->start, ['id' => 'startdate', 'class' => 'col-md-2']) !!}
         <!--{!! Form::text('start', $retreat->start, ['class' => 'col-md-2']) !!} -->
-        {!! Form::label('end', 'Ends:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('end', $retreat->end, ['id' => 'enddate', 'class' => 'col-md-2']) !!}
+        {!! Form::label('end_date', 'Ends:', ['class' => 'col-md-1']) !!}
+        {!! Form::text('end_date', $retreat->end, ['id' => 'enddate', 'class' => 'col-md-2']) !!}
         <!--{!! Form::text('end', $retreat->end, ['class' => 'col-md-2']) !!} -->
     </div>
     <div class="clearfix"> </div>
@@ -38,10 +38,10 @@
     {!! Form::select('directors[]', $d, 
         $retreat->retreatmasters->lists('id')->toArray(),
         ['class' => 'form-control col-md-2','multiple' => 'multiple','style'=>'width: auto; font-size: inherit;']) !!}
-    {!! Form::label('innkeeperid', 'Innkeeper:', ['class' => 'col-md-1']) !!}
-    {!! Form::select('innkeeperid', $i, $retreat->innkeeperid, ['class' => 'col-md-2']) !!}
-    {!! Form::label('assistantid', 'Assistant:', ['class' => 'col-md-1']) !!}
-    {!! Form::select('assistantid', $a, $retreat->assistantid, ['class' => 'col-md-2']) !!}
+    {!! Form::label('innkeeper_id', 'Innkeeper:', ['class' => 'col-md-1']) !!}
+    {!! Form::select('innkeeper_id', $i, $retreat->innkeeperid, ['class' => 'col-md-2']) !!}
+    {!! Form::label('assistant_id', 'Assistant:', ['class' => 'col-md-1']) !!}
+    {!! Form::select('assistant_id', $a, $retreat->assistantid, ['class' => 'col-md-2']) !!}
 
 
     </div>
