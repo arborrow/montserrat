@@ -179,6 +179,10 @@
         
         <hr />
         <div>
+                 <span class="btn btn-primary">
+                   <a href={{ action('TouchpointsController@add',$person->id) }}>Add Touch point</a>
+                </span>
+           
             @if ($person->touchpoints->isEmpty())
                     <p>It is a brand new world, there are no touch points for this person!</p>
                 @else

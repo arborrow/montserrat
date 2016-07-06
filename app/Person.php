@@ -30,6 +30,7 @@ class Person extends Model
     }
     
     public function retreatmasters() {
+        // TODO: move all of the roles to participants - for now be careful with differenc between retreat_id and event_id
         return $this->belongsToMany('\montserrat\Retreat','retreatmasters','person_id','retreat_id');
     }
     

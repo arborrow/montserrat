@@ -132,9 +132,9 @@
   $(function() {
     $( "#startdate" ).datepicker();
     $( "#enddate" ).datepicker();
-    $( "#register" ).datepicker();
-    $( "#confirmregister" ).datepicker();
-    $( "#confirmattend" ).datepicker();
+    $( "#register_date" ).datepicker();
+    $( "#registration_confirm_date" ).datepicker();
+    $( "#attendance_confirm_date" ).datepicker();
     $( "#arrived_at" ).datepicker();
     $( "#departed_at" ).datepicker();
     $( "#canceled_at" ).datepicker();

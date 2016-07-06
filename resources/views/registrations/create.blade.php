@@ -9,17 +9,17 @@
             {!! Form::open(['url' => 'registration', 'method' => 'post', 'class' => 'form-horizontal panel']) !!}
            <div class="form-group">
 
-                {!! Form::label('retreat_id', 'Retreat:', ['class' => 'col-md-2']) !!}
-                {!! Form::select('retreat_id', $retreats, 0, ['class' => 'col-md-2']) !!}
+                {!! Form::label('event_id', 'Retreat:', ['class' => 'col-md-2']) !!}
+                {!! Form::select('event_id', $retreats, 0, ['class' => 'col-md-2']) !!}
                 
             </div><div class="clearfix"> </div>
            <div class="form-group">
 
-                {!! Form::label('retreatant_id', 'Retreatant:', ['class' => 'col-md-2']) !!}
-                @if (isset($defaults['retreatant_id']))
-                    {!! Form::select('retreatant_id', $retreatants, $defaults['retreatant_id'], ['class' => 'col-md-2']) !!}
+                {!! Form::label('contact_id', 'Retreatant:', ['class' => 'col-md-2']) !!}
+                @if (isset($defaults['contact_id']))
+                    {!! Form::select('contact_id', $retreatants, $defaults['contact_id'], ['class' => 'col-md-2']) !!}
                 @else
-                    {!! Form::select('retreatant_id', $retreatants, 0, ['class' => 'col-md-2']) !!}
+                    {!! Form::select('contact_id', $retreatants, 0, ['class' => 'col-md-2']) !!}
                 @endif
                 
                 
@@ -27,20 +27,20 @@
                 
             </div><div class="clearfix"> </div>
             <div class="form-group">
-                {!! Form::label('register', 'Registered:', ['class' => 'col-md-2']) !!}
-                {!! Form::text('register', $defaults['today'], ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+                {!! Form::label('register_date', 'Registered:', ['class' => 'col-md-2']) !!}
+                {!! Form::text('register_date', $defaults['today'], ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
-                {!! Form::label('confirmregister', 'Registration Confirmed:', ['class' => 'col-md-2']) !!}
-                {!! Form::text('confirmregister', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+                {!! Form::label('registration_confirm_date', 'Registration Confirmed:', ['class' => 'col-md-2']) !!}
+                {!! Form::text('registration_confirm_date', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
-                {!! Form::label('confirmattend', 'Attendance Confirmed:', ['class' => 'col-md-2']) !!}
-                {!! Form::text('confirmattend', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+                {!! Form::label('attendance_confirm_date', 'Attendance Confirmed:', ['class' => 'col-md-2']) !!}
+                {!! Form::text('attendance_confirm_date', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
-                {!! Form::label('confirmedby', 'Confirmed By:', ['class' => 'col-md-2']) !!}
-                {!! Form::text('confirmedby', null, ['class'=>'col-md-2']) !!}
+                {!! Form::label('confirmed_by', 'Confirmed By:', ['class' => 'col-md-2']) !!}
+                {!! Form::text('confirmed_by', null, ['class'=>'col-md-2']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('canceled_at', 'Canceled at:', ['class' => 'col-md-2']) !!}

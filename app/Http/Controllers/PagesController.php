@@ -79,7 +79,7 @@ class PagesController extends Controller
     public function retreatantinforeport($id)
     {
         $retreat = \montserrat\Retreat::where('idnumber','=',$id)->first();
-        $registrations = \montserrat\Registration::where('retreat_id','=',$retreat->id)->with('retreat','retreatant.languages','retreatant.parish.contact_a.address_primary','retreatant.prefix','retreatant.suffix','retreatant.address_primary.state','retreatant.phones.location','retreatant.emails.location','retreatant.emergency_contact','retreatant.notes','retreatant.occupation')->get();
+        $registrations = \montserrat\Registration::where('event_id','=',$retreat->id)->with('retreat','retreatant.languages','retreatant.parish.contact_a.address_primary','retreatant.prefix','retreatant.suffix','retreatant.address_primary.state','retreatant.phones.location','retreatant.emails.location','retreatant.emergency_contact','retreatant.notes','retreatant.occupation')->get();
 //dd($registrations);        
 //$registrations = $registrations->sortBy($registrations->retreatant->lastname);
 //products = Shop\Product::join('shop_products_options as po', 'po.product_id', '=', 'products.id')
@@ -92,7 +92,7 @@ class PagesController extends Controller
    public function retreatlistingreport($id)
     {
         $retreat = \montserrat\Retreat::where('idnumber','=',$id)->first();
-        $registrations = \montserrat\Registration::where('retreat_id','=',$retreat->id)->with('retreat','retreatant')->get();
+        $registrations = \montserrat\Registration::where('event_id','=',$retreat->id)->with('retreat','retreatant')->get();
         
 
         return view('reports.retreatlisting',compact('registrations'));   //
@@ -100,7 +100,7 @@ class PagesController extends Controller
    public function retreatrosterreport($id)
     {
         $retreat = \montserrat\Retreat::where('idnumber','=',$id)->first();
-        $registrations = \montserrat\Registration::where('retreat_id','=',$retreat->id)->with('retreat','retreatant.suffix','retreatant.address_primary','retreatant.prefix')->get();
+        $registrations = \montserrat\Registration::where('event_id','=',$retreat->id)->with('retreat','retreatant.suffix','retreatant.address_primary','retreatant.prefix')->get();
         //dd($registrations);
 
         return view('reports.retreatroster',compact('registrations'));   //

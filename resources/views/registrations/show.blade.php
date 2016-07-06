@@ -12,30 +12,30 @@
                     <div class='col-md-3'><strong>Retreatant: </strong><a href="../person/{{ $registration->retreatant->id}}">{{ $registration->retreatant->lastname}},{{ $registration->retreatant->firstname}}</a></div>
                 </div><div class="clearfix"> </div>
                          <div class='row'>
-                    <div class='col-md-3'><strong>Retreat: </strong><a href="../retreat/{{ $registration->retreat_id}}">{{ $registration->retreat->title}} ({{ $registration->retreat->idnumber}})</a></div>
+                    <div class='col-md-3'><strong>Retreat: </strong><a href="../retreat/{{ $registration->event_id}}">{{ $registration->retreat->title}} ({{ $registration->retreat->idnumber}})</a></div>
                 <div class='col-md-3'><strong>Retreat Dates: </strong>{{ date('F d, Y', strtotime($registration->retreat->start))}} - {{ date('F d, Y', strtotime($registration->end))}}</div>
                 </div><div class="clearfix"> </div> 
                 <div class='row'>
-                    <div class='col-md-3'><strong>Registered: </strong>{{ date('F d, Y', strtotime($registration->register))}}</div>
+                    <div class='col-md-3'><strong>Registered: </strong>{{ date('F d, Y', strtotime($registration->register_date))}}</div>
                 </div><div class="clearfix"> </div>
                 <div class='row'>
                     <div class='col-md-3'><strong>Registration Confirmed: </strong>
-                        @if ($registration->confirmregister == NULL)
+                        @if ($registration->registration_confirm_date == NULL)
                             N/A
                         @else
-                            {{date('F d, Y', strtotime($registration->confirmregister))}}
+                            {{date('F d, Y', strtotime($registration->registration_confirm_date))}}
                         @endif
                     </div><div class="clearfix"> </div>
                 </div>
                 <div class='row'>
                     <div class='col-md-3'><strong>Attendance Confirmed: </strong>
-                    @if ($registration->confirmattend == NULL)
+                    @if ($registration->attendance_confirm_date== NULL)
                         N/A
                     @else
-                        {{date('F d, Y', strtotime($registration->confirmattend))}}
+                        {{date('F d, Y', strtotime($registration->attendance_confirm_date))}}
                     @endif
                     </div>
-                    <div class='col-md-3'><strong>Confirmed by: </strong>{{ $registration->confirmedby}}</div>
+                    <div class='col-md-3'><strong>Confirmed by: </strong>{{ $registration->confirmed_by}}</div>
                 </div><div class="clearfix"> </div>
 
                 <div class='row'>

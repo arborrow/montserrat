@@ -32,14 +32,14 @@
                             <td><a href="registration/{{$registration->id}}">{{ date('F d, Y', strtotime($registration->register)) }}</a></td>
                             <td>
                                 @if (isset($registration->retreatant->display_name))
-                                    <a href="person/{{$registration->retreatant_id}}">{{ $registration->retreatant->display_name}}</a>
+                                    <a href="person/{{$registration->contact_id}}">{{ $registration->retreatant->display_name}}</a>
                                 @else
                                     N/A
                                 @endif  
                             </td>
-                            <td><a href="retreat/{{$registration->retreat_id}}">{{ $registration->retreat->title }} ({{$registration->retreat->idnumber}})</a></td>
+                            <td><a href="retreat/{{$registration->event_id}}">{{ $registration->retreat->title }} ({{$registration->retreat->idnumber}})</a></td>
                             <td>{{ date('F d, Y', strtotime($registration->start)) }} - {{ date('F d, Y', strtotime($registration->end)) }}</td>
-                            <td>{{ date('F d, Y', strtotime($registration->confirmattend)) }}</td>
+                            <td>{{ date('F d, Y', strtotime($registration->attendance_confirm_date)) }}</td>
                             <td>
                                 @if (isset($registration->room->name))
                                     <a href="room/{{$registration->room_id}}">{{ $registration->room->name }}</a>

@@ -36,11 +36,12 @@ class Retreat extends Model
     }
     
     public function retreatmasters() {
+        // TODO: handle with participants of role Retreat Director or Master - be careful with difference between (registration table) retreat_id and (participant table) event_id
         return $this->belongsToMany('\montserrat\Contact','retreatmasters','retreat_id','person_id')->whereContactType(CONTACT_TYPE_INDIVIDUAL);
     }
     
     public function registrations() {
-        return $this->hasMany('\montserrat\Registration','retreat_id','id');
+        return $this->hasMany('\montserrat\Registration','contact_id','id');
     }
 
     public function getEmailRegisteredRetreatantsAttribute () {

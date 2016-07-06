@@ -54,7 +54,7 @@ class RegistrationsController extends Controller
     {
         //
         //$retreats = \montserrat\Retreat::where('end','>',\Carbon\Carbon::today())->lists('idnumber','title','id');
-        $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start,"%m-%d-%Y"),")") as description'), 'id')->where("end",">",\Carbon\Carbon::today())->orderBy('start')->pluck('description','id');
+        $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date",">",\Carbon\Carbon::today())->orderBy('start_date')->pluck('description','id');
         $retreats->prepend('Unassigned',0);
         
         $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->lists('sort_name','id');
@@ -62,7 +62,7 @@ class RegistrationsController extends Controller
         $rooms= \montserrat\Room::orderby('name')->lists('name','id');
         $rooms->prepend('Unassigned',0);
         
-        $defaults['retreatant_id']=$id;
+        $defaults['contact_id']=$id;
         $dt_today =  \Carbon\Carbon::today();
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
         return view('registrations.create',compact('retreats','retreatants','rooms','defaults')); 
@@ -77,43 +77,42 @@ class RegistrationsController extends Controller
      */
     public function store(Request $request)
     {
-    //
     $this->validate($request, [
-        'register' => 'required|date',
-        'confirmattend' => 'date',
-        'confirmregister' => 'date',
+        'register_date' => 'required|date',
+        'attendance_confirm_date' => 'date',
+        'registration_confirm_date' => 'date',
         'canceled_at' => 'date',
         'arrived_at' => 'date',
         'departed_at' => 'date',
-        'retreat_id' => 'required|integer|min:0',
-        'retreatant_id' => 'required|integer|min:0',
+        'event_id' => 'required|integer|min:0',
+        'contact_id' => 'required|integer|min:0',
         'room_id' => 'required|integer|min:0',
         'deposit' => 'required|numeric|min:0|max:1000',
         ]);
 
-    $retreat = \montserrat\Retreat::findOrFail($request->input('retreat_id'));
+    $retreat = \montserrat\Retreat::findOrFail($request->input('event_id'));
 
     $registration = new \montserrat\Registration;
-    $registration->retreat_id= $request->input('retreat_id');
-    $registration->start = $retreat->start;
-    $registration->end = $retreat->end;
-    $registration->retreatant_id= $request->input('retreatant_id');
-    $registration->register = $request->input('register');
+    $registration->event_id= $request->input('event_id');
+    // $registration->start = $retreat->start;
+    // $registration->end = $retreat->end;
+    $registration->contact_id= $request->input('contact_id');
+    $registration->register_date = $request->input('register');
     //dd($request->confirmattend);
-    $registration->confirmattend = $request->input('confirmattend');
+    $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
     if (!empty($request->input('canceled_at'))) {$registration->canceled_at= $request->input('canceled_at'); }
     if (!empty($request->input('arrived_at'))) {$registration->arrived_at = $request->input('arrived_at'); }
     if (!empty($request->input('departed_at'))) {$registration->departed_at = $request->input('departed_at'); }
     $registration->room_id= $request->input('room_id');
     
-    $registration->confirmregister = $request->input('confirmregister');
-    $registration->confirmedby = $request->input('confirmedby');
+    $registration->registration_confirm_date= $request->input('registration_confirm_date');
+    $registration->confirmed_by = $request->input('confirmed_by');
     $registration->deposit = $request->input('deposit');
     $registration->notes = $request->input('notes');
     
     $registration->save();
-    $registrations = \montserrat\Registration::where('retreat_id','=',$request->input('retreat_id'))->count();
-    $retreat->attending = $registrations;
+    $count_registrations = \montserrat\Registration::where('event_id','=',$request->input('event_id'))->count();
+    $retreat->attending = $count_registrations;
     $retreat->save();
     //dd($registrations);
     return Redirect::action('RegistrationsController@index');
@@ -144,8 +143,8 @@ class RegistrationsController extends Controller
     {
         //
         $registration= \montserrat\Registration::with('retreatant','retreat','room')->findOrFail($id);
-//        $retreat = \montserrat\Retreat::findOrFail($registration->retreat_id);
-//        $retreatant = \montserrat\Retreatant::findOrFail($registration->retreatant_id);
+//        $retreat = \montserrat\Retreat::findOrFail($registration->event_id);
+//        $retreatant = \montserrat\Retreatant::findOrFail($registration->contact_id);
         $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start,"%m-%d-%Y"),")") as description'), 'id')->where("end",">",\Carbon\Carbon::today())->orderBy('start')->pluck('description','id');
         //dd($retreats);
         $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->lists('sort_name','id');
@@ -155,7 +154,7 @@ class RegistrationsController extends Controller
         
         if ($registration->retreat->end < \Carbon\Carbon::now()) {
             
-            $retreats[$registration->retreat_id] = $registration->retreat->idnumber.'-'.$registration->retreat->title." (".date('m-d-Y', strtotime($registration->retreat->start)).")";
+            $retreats[$registration->event_id] = $registration->retreat->idnumber.'-'.$registration->retreat->title." (".date('m-d-Y', strtotime($registration->retreat->start)).")";
         }
         return view('registrations.edit',compact('registration','retreats','retreatants','rooms'));
     }
@@ -172,30 +171,31 @@ class RegistrationsController extends Controller
         //
         
     $this->validate($request, [
-        'register' => 'required|date',
-        'confirmattend' => 'date',
-        'confirmregister' => 'date',
+        'register_date' => 'required|date',
+        'attendance_confirm_date' => 'date',
+        'registration_confirm_date' => 'date',
         'canceled_at' => 'date',
         'arrived_at' => 'date',
         'departed_at' => 'date',
-        'retreat_id' => 'required|integer|min:0',
-        'retreatant_id' => 'required|integer|min:0',
+        'event_id' => 'required|integer|min:0',
+        'contact_id' => 'required|integer|min:0',
         'room_id' => 'required|integer|min:0',
         'deposit' => 'required|numeric|min:0|max:1000',
         ]);
 
 
     $registration = \montserrat\Registration::findOrFail($request->input('id'));
-    $retreat = \montserrat\Retreat::findOrFail($request->input('retreat_id'));
+    $retreat = \montserrat\Retreat::findOrFail($request->input('event_id'));
 
-    $registration->retreat_id= $request->input('retreat_id');
-    $registration->start = $retreat->start;
-    $registration->end = $retreat->end;
-    $registration->retreatant_id= $request->input('retreatant_id');
-    $registration->register = $request->input('register');
-    $registration->confirmattend = $request->input('confirmattend');
-    $registration->confirmregister = $request->input('confirmregister');
-    $registration->confirmedby = $request->input('confirmedby');
+    $registration->event_id= $request->input('event_id');
+    // TODO: pull this from the retreat's start_date and end_date
+    //$registration->start = $retreat->start;
+    //$registration->end = $retreat->end;
+    $registration->contact_id= $request->input('contact_id');
+    $registration->register_date = $request->input('register_date');
+    $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
+    $registration->registration_confirm_date = $request->input('registration_confirm_date');
+    $registration->confirmed_by = $request->input('confirmed_by');
     $registration->deposit = $request->input('deposit');
     $registration->notes = $request->input('notes');
     $registration->canceled_at = $request->input('canceled_at');
@@ -219,10 +219,10 @@ class RegistrationsController extends Controller
     {
         //
          $registration= \montserrat\Registration::findOrFail($id);
-         $retreat = \montserrat\Retreat::findOrFail($registration->retreat_id);
+         $retreat = \montserrat\Retreat::findOrFail($registration->event_id);
          
         \montserrat\Registration::destroy($id);
-        $countregistrations = \montserrat\Registration::where('retreat_id','=',$registration->retreat_id)->count();
+        $countregistrations = \montserrat\Registration::where('event_id','=',$registration->event_id)->count();
         $retreat->attending = $countregistrations;
         $retreat->save();
         return Redirect::action('RegistrationsController@index');

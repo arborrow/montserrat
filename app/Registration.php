@@ -8,17 +8,19 @@ use Carbon\Carbon;
 
 class Registration extends Model
 {   use SoftDeletes; 
-    //
-    protected $dates = ['start', 'end', 'register', 'confirmregister', 'confirmattend' ,'created_at', 'updated_at', 'disabled_at'];  //
+
+    protected $table = 'participant';
+
+    protected $dates = ['register_date', 'registration_confirm_date', 'attendance_confirm_date' ,'created_at', 'updated_at', 'disabled_at'];  //
    
-    public function setRegisterAttribute($date) {
+    public function setRegisterDateAttribute($date) {
         if (strlen($date)) {
             $this->attributes['register'] = Carbon::parse($date);
         } else {
             $this->attributes['register'] = null;
         }
     }
-    public function setConfirmattendAttribute($date) {
+    public function setAttendanceConfirmDateAttribute($date) {
         if (strlen($date)) {
             $this->attributes['confirmattend'] = Carbon::parse($date);
         } else {
@@ -26,7 +28,7 @@ class Registration extends Model
             //dd($this->attributes['confirmattend']);
         }
     }
-    public function setConfirmregisterAttribute($date) {
+    public function setRegistrationConfirmDateAttribute($date) {
         if (strlen($date)) {
             $this->attributes['confirmregister'] = Carbon::parse($date);
         } else {
@@ -57,11 +59,11 @@ class Registration extends Model
     
     public function retreat()
     {
-        return $this->belongsTo('montserrat\Retreat','retreat_id','id');
+        return $this->belongsTo('montserrat\Event','event_id','id');
     }
     public function retreatant()
     {
-        return $this->belongsTo('montserrat\Contact','retreatant_id','id');
+        return $this->belongsTo('montserrat\Contact','contact_id','id');
     }
     public function room()
     {
