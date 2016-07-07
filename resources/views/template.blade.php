@@ -130,8 +130,8 @@
   -->
   <script type="text/javascript">
   $(function() {
-    $( "#startdate" ).datepicker();
-    $( "#enddate" ).datepicker();
+    $( "#start_date" ).datepicker();
+    $( "#end_date" ).datepicker();
     $( "#register_date" ).datepicker();
     $( "#registration_confirm_date" ).datepicker();
     $( "#attendance_confirm_date" ).datepicker();

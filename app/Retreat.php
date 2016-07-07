@@ -19,15 +19,16 @@ class Retreat extends Model
 
     protected $dates = ['start_date', 'end_date', 'created_at', 'updated_at', 'disabled_at', 'deleted_at'];  //
     
-    public function setStartAttribute($date) {
+    public function setStartDateAttribute($date) {
       $this->attributes['start_date'] = Carbon::parse($date);
     }
     
-    public function setEndAttribute($date) {
+    public function setEndDateAttribute($date) {
       $this->attributes['end_date'] = Carbon::parse($date);
     }
     
     public function getRegistrationCountAttribute() {
+        // keep in mind that if/when innkeeper and other not retreatant roles are added will not to use where clause to keep the count accurate and exclude non-participating participants
         return $this->registrations->count();
     }
   

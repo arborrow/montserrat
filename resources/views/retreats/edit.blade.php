@@ -6,16 +6,16 @@
     {!! Form::open(['method' => 'PUT', 'route' => ['retreat.update', $retreat->id]]) !!}
     {!! Form::hidden('id', $retreat->id) !!}
     <div class="form-group">
-        {!! Form::label('idnumber', 'ID Number:', ['class' => 'col-md-1'])  !!}
+        {!! Form::label('idnumber', 'ID#:', ['class' => 'col-md-1'])  !!}
         {!! Form::text('idnumber', $retreat->idnumber, ['class' => 'col-md-1']) !!}
     </div><div class="clearfix"> </div>
     
     <div class="form-group">
         {!! Form::label('start_date', 'Starts:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('start_date', $retreat->start, ['id' => 'startdate', 'class' => 'col-md-2']) !!}
+        {!! Form::text('start_date', date('m/d/Y', strtotime($retreat->start_date)), ['id' => 'start_date', 'class' => 'col-md-2']) !!}
         <!--{!! Form::text('start', $retreat->start, ['class' => 'col-md-2']) !!} -->
         {!! Form::label('end_date', 'Ends:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('end_date', $retreat->end, ['id' => 'enddate', 'class' => 'col-md-2']) !!}
+        {!! Form::text('end_date', date('m/d/Y', strtotime($retreat->end_date)), ['id' => 'end_date', 'class' => 'col-md-2']) !!}
         <!--{!! Form::text('end', $retreat->end, ['class' => 'col-md-2']) !!} -->
     </div>
     <div class="clearfix"> </div>
@@ -23,8 +23,8 @@
     <div class="form-group">
         {!! Form::label('title', 'Title:', ['class' => 'col-md-1']) !!}
         {!! Form::text('title', $retreat->title, ['class' => 'col-md-2']) !!}
-        {!! Form::label('attending', 'Attending:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('attending', $retreat->attending, ['class' => 'col-md-1']) !!}
+<!--        {!! Form::label('attending', 'Attending:', ['class' => 'col-md-1']) !!}
+        {!! Form::text('attending', $retreat->attending, ['class' => 'col-md-1']) !!} -->
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
@@ -46,20 +46,26 @@
 
     </div>
     <div class="clearfix"> </div>
+    
+    <!--    
     <div class="form-group">
         {!! Form::label('type', 'Type:', ['class' => 'col-md-1']) !!}
         {!! Form::text('type', $retreat->type, ['class' => 'col-md-1']) !!}
-    <!--<div class='left-checkbox'>    {!! Form::label('silent', 'Silent:', ['class' => 'col-md-1']) !!} -->
-    <label class="col-md-1" for="silent">Silent:  {!! Form::checkbox('silent', 1, $retreat->silent, ['class' => 'col-md-1']) !!}</label> <!--</div>-->
-        {!! Form::label('amount', 'Donation:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('amount', $retreat->amount, ['class' => 'col-md-1']) !!}
+        <div class='left-checkbox'>    {!! Form::label('silent', 'Silent:', ['class' => 'col-md-1']) !!}
+        <label class="col-md-1" for="silent">Silent:  {!! Form::checkbox('silent', 1, $retreat->silent, ['class' => 'col-md-1']) !!}</label> </div> 
+        {!! Form::label('amount', 'Donation:', ['class' => 'col-md-1']) !!} 
+        {!! Form::text('amount', $retreat->amount, ['class' => 'col-md-1']) !!} 
     </div>
     <div class="clearfix"> </div>
+    -->
+    
+    <!-- 
     <div class="form-group">
         {!! Form::label('year', 'Year:', ['class' => 'col-md-1']) !!}
         {!! Form::text('year', $retreat->year, ['class' => 'col-md-1']) !!}
     </div>
     <div class="clearfix"> </div>
+    -->
     
     <div class="form-group">
         {!! Form::image('img/save.png','btnSave',['class' => 'btn btn-primary']) !!}

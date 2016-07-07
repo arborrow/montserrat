@@ -12,10 +12,10 @@
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('start_date', 'Starts: ', ['class' => 'col-md-1']) !!}
-                {!! Form::text('start_date', null, ['id' => 'startdate', 'class' => 'col-md-2']) !!}
+                {!! Form::text('start_date', null, ['id' => 'start_date', 'class' => 'col-md-2']) !!}
                 <!-- {!! Form::input('date', 'start', date('Y-m-d'), ['class'=>'col-md-2']) !!} -->
                 {!! Form::label('end_date', 'Ends: ', ['class' => 'col-md-1']) !!}
-                {!! Form::text('end_date', null, ['id' => 'enddate', 'class' => 'col-md-2','data-provide'=>'datepicker']) !!}
+                {!! Form::text('end_date', null, ['id' => 'end_date', 'class' => 'col-md-2','data-provide'=>'datepicker']) !!}
                 <!-- {!! Form::input('date', 'end', Carbon\Carbon::now()->addDays(3)->format('Y-m-d'), ['class'=>'col-md-2']) !!} -->
             </div><div class="clearfix"> </div>
             <div class="form-group">

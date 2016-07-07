@@ -181,8 +181,8 @@ public function edit($id)
       // dd($request);
         $this->validate($request, [
             'idnumber' => 'required|unique:retreats,idnumber,'.$id,
-            'start_date' => 'required|date|before:end',
-            'end_date' => 'required|date|after:start',
+            'start_date' => 'required|date|before:end_date',
+            'end_date' => 'required|date|after:start_date',
             'title' => 'required',
             'innkeeper_id' => 'integer|min:0',
             'assistant_id' => 'integer|min:0',
@@ -198,11 +198,13 @@ public function edit($id)
         $retreat->end_date = $request->input('end_date');
         $retreat->title = $request->input('title');
         $retreat->description = $request->input('description');
-        $retreat->type = $request->input('type');
-        $retreat->silent = $request->input('silent');
-        $retreat->amount = $request->input('amount');
-        $retreat->attending = $request->input('attending');
-        $retreat->year = $request->input('year');
+        //$retreat->type = $request->input('type');
+        //TODO: Figure out how to use event type or some other way of tracking the silent retreats, possibly silent boolean field in event table
+        //$retreat->silent = $request->input('silent');
+        //$retreat->amount = $request->input('amount');
+        // attending field not needed - will calculate with count on registrations
+        //$retreat->attending = $request->input('attending');
+        //$retreat->year = $request->input('year');
         $retreat->innkeeper_id = $request->input('innkeeper_id');
         $retreat->assistant_id = $request->input('assistant_id');
         $retreat->save();
