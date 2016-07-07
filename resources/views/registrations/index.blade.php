@@ -14,7 +14,7 @@
                 @if ($registrations->isEmpty())
                     <p> Yikes, there are no registrations!</p>
                 @else
-                <table class="table table-bordered table-striped table-hover"><caption><h2>Registrations</h2></caption>
+                <table class="table table-bordered table-striped table-hover"><caption><h2>Registrations for Upcoming Retreats</h2></caption>
                     <thead>
                         <tr>
                             <th>Registered</th> 
@@ -29,7 +29,7 @@
                     <tbody>
                         @foreach($registrations as $registration)
                         <tr>
-                            <td><a href="registration/{{$registration->id}}">{{ date('F d, Y', strtotime($registration->register)) }}</a></td>
+                            <td><a href="registration/{{$registration->id}}">{{ date('F d, Y', strtotime($registration->register_date)) }}</a></td>
                             <td>
                                 @if (isset($registration->retreatant->display_name))
                                     <a href="person/{{$registration->contact_id}}">{{ $registration->retreatant->display_name}}</a>
@@ -38,7 +38,7 @@
                                 @endif  
                             </td>
                             <td><a href="retreat/{{$registration->event_id}}">{{ $registration->retreat->title }} ({{$registration->retreat->idnumber}})</a></td>
-                            <td>{{ date('F d, Y', strtotime($registration->start)) }} - {{ date('F d, Y', strtotime($registration->end)) }}</td>
+                            <td>{{ date('F d, Y', strtotime($registration->retreat->start_date)) }} - {{ date('F d, Y', strtotime($registration->retreat->end_date)) }}</td>
                             <td>{{ date('F d, Y', strtotime($registration->attendance_confirm_date)) }}</td>
                             <td>
                                 @if (isset($registration->room->name))

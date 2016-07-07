@@ -23,7 +23,11 @@ class RegistrationsController extends Controller
      */
     public function index()
     {
-        $registrations = \montserrat\Registration::whereDate('end', '>=', date('Y-m-d'))->orderBy('start','asc')->with('retreatant','retreat','room')->get();
+        $registrations = \montserrat\Registration::whereHas('retreat', function($query) {
+            $query->where('end_date','>=',date('Y-m-d'));
+            
+        })->orderBy('register_date','desc')->with('retreatant','retreat','room')->get();
+        //dd($registrations);
         return view('registrations.index',compact('registrations'));
     }
 
@@ -97,7 +101,7 @@ class RegistrationsController extends Controller
     // $registration->start = $retreat->start;
     // $registration->end = $retreat->end;
     $registration->contact_id= $request->input('contact_id');
-    $registration->register_date = $request->input('register');
+    $registration->register_date = $request->input('register_date');
     //dd($request->confirmattend);
     $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
     if (!empty($request->input('canceled_at'))) {$registration->canceled_at= $request->input('canceled_at'); }
@@ -112,7 +116,8 @@ class RegistrationsController extends Controller
     
     $registration->save();
     $count_registrations = \montserrat\Registration::where('event_id','=',$request->input('event_id'))->count();
-    $retreat->attending = $count_registrations;
+    // TODO: check and make sure that this is handled on the model so that we can easily get a count of the number of participants/retreatants registered
+    // $retreat->attending = $count_registrations;
     $retreat->save();
     //dd($registrations);
     return Redirect::action('RegistrationsController@index');

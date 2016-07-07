@@ -15,24 +15,24 @@ class Registration extends Model
    
     public function setRegisterDateAttribute($date) {
         if (strlen($date)) {
-            $this->attributes['register'] = Carbon::parse($date);
+            $this->attributes['register_date'] = Carbon::parse($date);
         } else {
-            $this->attributes['register'] = null;
+            $this->attributes['register_date'] = null;
         }
     }
     public function setAttendanceConfirmDateAttribute($date) {
         if (strlen($date)) {
-            $this->attributes['confirmattend'] = Carbon::parse($date);
+            $this->attributes['attendance_confirm_date'] = Carbon::parse($date);
         } else {
-            $this->attributes['confirmattend'] = NULL;
+            $this->attributes['attendance_confirm_date'] = NULL;
             //dd($this->attributes['confirmattend']);
         }
     }
     public function setRegistrationConfirmDateAttribute($date) {
         if (strlen($date)) {
-            $this->attributes['confirmregister'] = Carbon::parse($date);
+            $this->attributes['registration_confirm_date'] = Carbon::parse($date);
         } else {
-            $this->attributes['confirmregister'] = null;
+            $this->attributes['registration_confirm_date'] = null;
         }
     }
     public function setCanceledAtAttribute($date) {
@@ -59,7 +59,7 @@ class Registration extends Model
     
     public function retreat()
     {
-        return $this->belongsTo('montserrat\Event','event_id','id');
+        return $this->belongsTo('montserrat\Retreat','event_id','id');
     }
     public function retreatant()
     {

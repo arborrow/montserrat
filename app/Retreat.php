@@ -26,6 +26,10 @@ class Retreat extends Model
     public function setEndAttribute($date) {
       $this->attributes['end_date'] = Carbon::parse($date);
     }
+    
+    public function getRegistrationCountAttribute() {
+        return $this->registrations->count();
+    }
   
     public function assistant() {
         return $this->belongsTo('\montserrat\Contact','assistant_id','id')->whereContactType(CONTACT_TYPE_INDIVIDUAL);
@@ -41,7 +45,7 @@ class Retreat extends Model
     }
     
     public function registrations() {
-        return $this->hasMany('\montserrat\Registration','contact_id','id');
+        return $this->hasMany('\montserrat\Registration','event_id','id');
     }
 
     public function getEmailRegisteredRetreatantsAttribute () {

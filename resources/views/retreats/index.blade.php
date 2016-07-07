@@ -56,7 +56,7 @@
                                     N/A
                                 @endIf
                             </td>
-                            <td>{{ $retreat->attending}}</td>
+                            <td>{{ $retreat->registration_count}}</td>
                             <!--<td>{{ $retreat->silent ? 'Yes' : 'No'}}</td>
                             <td><a href="{{ action('RetreatsController@edit', $retreat->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></td>
 <td>{!! Form::open(['method' => 'DELETE', 'route' => ['retreat.destroy', $retreat->id]]) !!}
@@ -123,7 +123,7 @@
                             </td>
 
                             
-                            <td>{{ $oldretreat->attending}}</td>
+                            <td>{{ $oldretreat->registration_count}}</td>
                         </tr>
                         @endforeach
                         {!! $oldretreats->render() !!}  
