@@ -16,13 +16,13 @@
 
                 {!! Form::label('event_id', 'Retreat:', ['class' => 'col-md-2']) !!}
                 {!! Form::select('event_id', $retreats, $registration->event_id, ['class' => 'col-md-2']) !!}
-                {!! Form::label('start', 'Retreat Dates: '.date('F d, Y', strtotime($registration->start)).' - '.date('F d, Y', strtotime($registration->end)), ['class' => 'col-md-6']) !!}
+                {!! Form::label('start', 'Retreat Dates: '.date('F d, Y', strtotime($registration->retreat->start_date)).' - '.date('F d, Y', strtotime($registration->retreat->end_date)), ['class' => 'col-md-6']) !!}
               
                 
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('register_date', 'Registered:', ['class' => 'col-md-2']) !!}
-                {!! Form::text('register_date', date('F d, Y', strtotime($registration->register)), ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+                {!! Form::text('register_date', date('F d, Y', strtotime($registration->register_date)), ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('registration_confirm_date', 'Registration Confirmed:', ['class' => 'col-md-2']) !!}

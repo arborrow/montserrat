@@ -150,16 +150,18 @@ class RegistrationsController extends Controller
         $registration= \montserrat\Registration::with('retreatant','retreat','room')->findOrFail($id);
 //        $retreat = \montserrat\Retreat::findOrFail($registration->event_id);
 //        $retreatant = \montserrat\Retreatant::findOrFail($registration->contact_id);
-        $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start,"%m-%d-%Y"),")") as description'), 'id')->where("end",">",\Carbon\Carbon::today())->orderBy('start')->pluck('description','id');
+        $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date",">",\Carbon\Carbon::today())->orderBy('start_date')->pluck('description','id');
         //dd($retreats);
         $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->lists('sort_name','id');
         $rooms= \montserrat\Room::orderby('name')->lists('name','id');
+        $rooms->prepend('Unassigned',0);
+    
         /* Check to see if the current registration is for a past retreat and if so, add it to the collection */
         // $retreats[0] = 'Unassigned';
         
         if ($registration->retreat->end < \Carbon\Carbon::now()) {
             
-            $retreats[$registration->event_id] = $registration->retreat->idnumber.'-'.$registration->retreat->title." (".date('m-d-Y', strtotime($registration->retreat->start)).")";
+            $retreats[$registration->event_id] = $registration->retreat->idnumber.'-'.$registration->retreat->title." (".date('m-d-Y', strtotime($registration->retreat->start_date)).")";
         }
         return view('registrations.edit',compact('registration','retreats','retreatants','rooms'));
     }
