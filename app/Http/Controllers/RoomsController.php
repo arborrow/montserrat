@@ -187,7 +187,10 @@ return Redirect::action('RoomsController@index');
             return sprintf('%-12s%s', $room->building_id, $room->name);
         });
         
-        $registrations = \montserrat\Registration::where('start','>=',$dts[0])->where('start','<=',$dts[30])->with('room','room.location','retreatant','retreat')->where('room_id','>',0)->get();
+        //dd($dts);
+        $registrations = \montserrat\Registration::with('room','room.location','retreatant','retreat')->where('room_id','>',0)->whereHas('retreat', function($query) use ($dts) {
+            $query->where('start_date','>=',$dts[0])->where('start_date','<=',$dts[30]);
+        })->get();
         //$endregistrations = \montserrat\Registration::where('end','>=',$dts[0])->where('end','<=',$dts[30])->with('room','room.location','retreatant','retreat')->where('room_id','>',0)->get();
         /* get registrations that are not inclusive of the date range */
         // dd($endregistrations);
@@ -218,10 +221,10 @@ return Redirect::action('RoomsController@index');
         
         foreach ($registrations as $registration) {
             
-            $numdays = ($registration->retreat->end->diffInDays($registration->retreat->start))-1;
+            $numdays = ($registration->retreat->end_date->diffInDays($registration->retreat->start_date))-1;
             
             for ($i=0; $i<=$numdays;$i++) {
-                $matrixdate = $registration->retreat->start->copy()->addDays($i);
+                $matrixdate = $registration->retreat->start_date->copy()->addDays($i);
                 if (array_key_exists($matrixdate->toDateString(),$m[$registration->room_id])) {
                         $m[$registration->room_id][$matrixdate->toDateString()]['status']='R';
                         $m[$registration->room_id][$matrixdate->toDateString()]['registration_id']=$registration->id;

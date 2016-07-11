@@ -22,31 +22,37 @@
 
     <div class="form-group">
         {!! Form::label('title', 'Title:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('title', $retreat->title, ['class' => 'col-md-2']) !!}
+        {!! Form::text('title', $retreat->title, ['class' => 'col-md-5']) !!}
 <!--        {!! Form::label('attending', 'Attending:', ['class' => 'col-md-1']) !!}
         {!! Form::text('attending', $retreat->attending, ['class' => 'col-md-1']) !!} -->
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
         {!! Form::label('description', 'Description:', ['class' => 'col-md-1']) !!}
-        {!! Form::textarea('body', $retreat->description, ['class' => 'col-md-5', 'rows'=>'3']) !!}
+        {!! Form::textarea('description', $retreat->description, ['class' => 'col-md-5', 'rows'=>'3']) !!}
     </div>
     <div class="clearfix"> </div>
-    <div class="form-group">
-        
-    {!! Form::label('Directors') !!}<br />
-    {!! Form::select('directors[]', $d, 
-        $retreat->retreatmasters->lists('id')->toArray(),
-        ['class' => 'form-control col-md-2','multiple' => 'multiple','style'=>'width: auto; font-size: inherit;']) !!}
-    {!! Form::label('innkeeper_id', 'Innkeeper:', ['class' => 'col-md-1']) !!}
-    {!! Form::select('innkeeper_id', $i, $retreat->innkeeperid, ['class' => 'col-md-2']) !!}
-    {!! Form::label('assistant_id', 'Assistant:', ['class' => 'col-md-1']) !!}
-    {!! Form::select('assistant_id', $a, $retreat->assistantid, ['class' => 'col-md-2']) !!}
-
-
-    </div>
-    <div class="clearfix"> </div>
+    <div class="form-group">    
+        {!! Form::label('directors','Director(s):', ['class' => 'col-md-1'])  !!}
+        {!! Form::select('directors[]', $d, 
+            $retreat->retreatmasters->lists('id')->toArray(),
+            ['class' => 'form-control col-md-2','multiple' => 'multiple','style'=>'width: auto; font-size: inherit;']) !!}
+    </div><div class="clearfix"> </div>
     
+    <div class="form-group">
+        {!! Form::label('innkeeper_id', 'Innkeeper:', ['class' => 'col-md-1']) !!}
+        {!! Form::select('innkeeper_id', $i, $retreat->innkeeperid, ['class' => 'col-md-2']) !!}
+    </div><div class="clearfix"> </div>
+
+    <div class="form-group">
+        {!! Form::label('assistant_id', 'Assistant:', ['class' => 'col-md-1']) !!}
+        {!! Form::select('assistant_id', $a, $retreat->assistantid, ['class' => 'col-md-2']) !!}
+    </div><div class="clearfix"> </div>
+    
+    <div class="form-group">
+        {!! Form::label('event_type', 'Type: ', ['class' => 'col-md-1']) !!}
+        {!! Form::select('event_type', $event_types, $retreat->event_type_id, ['class' => 'col-md-2']) !!}
+    </div><div class="clearfix"> </div>
     <!--    
     <div class="form-group">
         {!! Form::label('type', 'Type:', ['class' => 'col-md-1']) !!}

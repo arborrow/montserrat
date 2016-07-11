@@ -42,7 +42,7 @@ class RetreatsController extends Controller
     public function create()
     {
         $retreat_house = \montserrat\Contact::with('retreat_directors.contact_b','retreat_innkeepers.contact_b','retreat_assistants.contact_b')->find(CONTACT_MONTSERRAT);
-     
+        $event_types = \montserrat\EventType::whereIsActive(1)->orderBy('name')->lists('name','id');
         foreach ($retreat_house->retreat_innkeepers as $innkeeper) {
             $i[$innkeeper->contact_id_b]=$innkeeper->contact_b->sort_name;
         }
@@ -61,7 +61,7 @@ class RetreatsController extends Controller
         asort($a);
         $a=array(0=>'N/A')+$a;
         
-        return view('retreats.create',compact('d','i','a'));  
+        return view('retreats.create',compact('d','i','a','event_types'));  
     }
 
     /**
@@ -74,8 +74,8 @@ class RetreatsController extends Controller
     { // dd($request);
         $this->validate($request, [
             'idnumber' => 'required|unique:retreats',
-            'start_date' => 'required|date|before:end',
-            'end_date' => 'required|date|after:start',
+            'start_date' => 'required|date|before:end_date',
+            'end_date' => 'required|date|after:start_date',
             'title' => 'required',
             'innkeeper_id' => 'integer|min:0',
             'assistant_id' => 'integer|min:0',
@@ -87,20 +87,20 @@ class RetreatsController extends Controller
         
         $retreat = new \montserrat\Retreat;
         $retreat->idnumber = $request->input('idnumber');
-        $retreat->start_date = $request->input('start');
-        $retreat->end_date = $request->input('end');
+        $retreat->start_date = $request->input('start_date');
+        $retreat->end_date = $request->input('end_date');
         $retreat->title = $request->input('title');
         $retreat->description = $request->input('description');
         // TODO: create dropdown list of retreat types - disable for now
-        $retreat->type = $request->input('type');
+        $retreat->event_type_id = $request->input('event_type');
         // TODO: find a way to tag silent retreats, perhaps with event_type_id - for now disabled
-        $retreat->silent = $request->input('silent');
+        //$retreat->silent = $request->input('silent');
         // amount will be related to default_fee_id?
-        $retreat->amount = $request->input('amount');
+        //$retreat->amount = $request->input('amount');
         // attending should be calculated based on retreat participants
         // TODO: consider making Directors, Innkeepers, and Assistants participant roles and adding them by default to retreats
-        $retreat->attending = $request->input('attending');
-        $retreat->year = $request->input('year');
+        //$retreat->attending = $request->input('attending');
+        //$retreat->year = $request->input('year');
         $retreat->innkeeper_id = $request->input('innkeeper_id');
         $retreat->assistant_id = $request->input('assistant_id');
         $retreat->save();
@@ -142,7 +142,8 @@ public function edit($id)
     {
         //get this retreat's information
         $retreat = \montserrat\Retreat::with('retreatmasters','assistant','innkeeper')->find($id);
-
+        $event_types = \montserrat\EventType::whereIsActive(1)->orderBy('name')->lists('name','id');
+        
         //create lists of retreat directors, innkeepers, and assistants from relationship to retreat house 
         $retreat_house = \montserrat\Contact::with('retreat_directors.contact_b','retreat_innkeepers.contact_b','retreat_assistants.contact_b')->find(CONTACT_MONTSERRAT);
         
@@ -165,7 +166,7 @@ public function edit($id)
         $a=array(0=>'N/A')+$a;
         
        //dd($a);
-       return view('retreats.edit',compact('retreat','d','i','a'));
+       return view('retreats.edit',compact('retreat','d','i','a','event_types'));
       }
 
     /**
@@ -198,7 +199,7 @@ public function edit($id)
         $retreat->end_date = $request->input('end_date');
         $retreat->title = $request->input('title');
         $retreat->description = $request->input('description');
-        //$retreat->type = $request->input('type');
+        $retreat->event_type_id = $request->input('event_type');
         //TODO: Figure out how to use event type or some other way of tracking the silent retreats, possibly silent boolean field in event table
         //$retreat->silent = $request->input('silent');
         //$retreat->amount = $request->input('amount');
