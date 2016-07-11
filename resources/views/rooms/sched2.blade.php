@@ -16,11 +16,11 @@
                 @else
                 <table border="1" class="table">
                         <caption><h2>Legend: 
-                            <span style="background-color:#dff0d8">A=Available</span>; 
-                            <span style="background-color:#fcf8e3">R=Reserved</span>; 
-                            <span style="background-color:#fcf8e3">O=Occupied</span>; 
-                            <span style="background-color:#f2dede">C=Cleaning Needed</span>; 
-                            <span style="background-color:#f2dede">M=Maintenance Required</span>
+                            <span style="background-color:yellowgreen">A=Available</span>; 
+                            <span style="background-color:yellow">R=Reserved</span>; 
+                            <span style="background-color:yellow">O=Occupied</span>; 
+                            <span style="background-color:lightcoral">C=Cleaning Needed</span>; 
+                            <span style="background-color:lightcoral">M=Maintenance Required</span>
                         </h2></caption>
                     <thead>
                         <tr>

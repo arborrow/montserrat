@@ -131,3 +131,31 @@ div.scroll {
     height: 250px;
     overflow: auto;
 }
+
+.success {
+    background-color: greenyellow;
+}
+
+.table thead tr .warning, 
+.table tbody tr .warning, 
+.table tfoot tr .warning, 
+.table thead .warning td, 
+.table tbody .warning td, 
+.table tfoot .warning td, 
+.table thead .warning th, 
+.table tbody .warning th, 
+.table tfoot .warning th {
+    background-color: yellow;
+}
+
+.table thead tr .success, 
+.table tbody tr .success, 
+.table tfoot tr .success, 
+.table thead .success td, 
+.table tbody .success td, 
+.table tfoot .success td, 
+.table thead .success th, 
+.table tbody .success th, 
+.table tfoot .success th {
+    background-color: greenyellow;
+}
