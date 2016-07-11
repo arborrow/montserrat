@@ -41,12 +41,12 @@
     
     <div class="form-group">
         {!! Form::label('innkeeper_id', 'Innkeeper:', ['class' => 'col-md-1']) !!}
-        {!! Form::select('innkeeper_id', $i, $retreat->innkeeperid, ['class' => 'col-md-2']) !!}
+        {!! Form::select('innkeeper_id', $i, $retreat->innkeeper_id, ['class' => 'col-md-2']) !!}
     </div><div class="clearfix"> </div>
 
     <div class="form-group">
         {!! Form::label('assistant_id', 'Assistant:', ['class' => 'col-md-1']) !!}
-        {!! Form::select('assistant_id', $a, $retreat->assistantid, ['class' => 'col-md-2']) !!}
+        {!! Form::select('assistant_id', $a, $retreat->assistant_id, ['class' => 'col-md-2']) !!}
     </div><div class="clearfix"> </div>
     
     <div class="form-group">
