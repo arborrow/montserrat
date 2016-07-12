@@ -141,19 +141,15 @@
     $( "#birth_date" ).datepicker();
     $( "#deceased_date" ).datepicker();
     $( "#touched_at" ).datepicker();
-
-    	 $( "#q" ).autocomplete({
+    $( "#q" ).autocomplete({
 	  source: "{{ url('search/autocomplete') }}",
 	  minLength: 3,
 	  select: function(event, ui) {
 	  	$('#q').val(ui.item.value);
                 $('#response').val(ui.item.id);
 	  }
-	});    
-            
+	}); 
   });
-  
-  
   </script>
-    </body>
+</body>
 </html>
