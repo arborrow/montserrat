@@ -66,7 +66,9 @@
     
     <tr>
         <td><strong>Name (Relationship): </strong>{{$registration->retreatant->emergency_contact_name}} 
-                ({{$registration->retreatant->emergency_contact_relationship}})
+                @if (!empty($registration->retreatant->emergency_contact_relationship))
+                    ({{$registration->retreatant->emergency_contact_relationship}})
+                @endIf
         </td>
         <td><hr/></td>
     </tr>
