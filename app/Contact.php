@@ -130,6 +130,34 @@ class Contact extends Model
             return NULL;
         }
     }
+    public function getEmergencyContactNameAttribute () {
+        if (!empty($this->emergency_contact->name)) {
+            return $this->emergency_contact->name;
+        } else {
+            return NULL;
+        }
+    }
+    public function getEmergencyContactRelationshipAttribute () {
+        if (!empty($this->emergency_contact->relationship)) {
+            return $this->emergency_contact->relationship;
+        } else {
+            return NULL;
+        }
+    }
+    public function getEmergencyContactPhoneAttribute () {
+        if (!empty($this->emergency_contact->phone)) {
+            return $this->emergency_contact->phone;
+        } else {
+            return NULL;
+        }
+    }
+    public function getEmergencyContactPhoneAlternateAttribute () {
+        if (!empty($this->emergency_contact->phone_alternate)) {
+            return $this->emergency_contact->phone_alternate;
+        } else {
+            return NULL;
+        }
+    }
     public function getEthnicityNameAttribute () {
         if (isset($this->ethnicity_id)&&($this->ethnicity_id>0)) {
             return $this->ethnicity->ethnicity;

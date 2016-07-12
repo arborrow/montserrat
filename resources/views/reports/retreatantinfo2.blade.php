@@ -18,11 +18,11 @@
         <td><hr/></td>
     </tr>
     <tr>
-        <td><strong>{{$registration->retreatant->address_primary->street_address}}</strong></td>
+        <td><strong>{{$registration->retreatant->address_primary_street}}</strong></td>
         <td><hr/></td>
     </tr>
     <tr>
-        <td><strong>{{$registration->retreatant->address_primary->city}}, {{$registration->retreatant->address_primary->state->abbreviation}}  {{$registration->retreatant->address_primary->postal_code}}</strong></td>
+        <td><strong>{{$registration->retreatant->address_primary_city}}, {{$registration->retreatant->address_primary_state}}  {{$registration->retreatant->address_primary_postal_code}}</strong></td>
         <td><hr/></td>
     </tr>
    
@@ -65,19 +65,17 @@
     <tr><td><h2>Emergency Contact Information</h2></td></tr>
     
     <tr>
-        <td><strong>Name (Relationship): </strong>{{$registration->retreatant->emergency_contact->name}} 
-            @if (!empty($registration->retreatant->emergency_contact->relationship))
-                ({{$registration->retreatant->emergency_contact->relationship}})
-            @endif
+        <td><strong>Name (Relationship): </strong>{{$registration->retreatant->emergency_contact_name}} 
+                ({{$registration->retreatant->emergency_contact_relationship}})
         </td>
         <td><hr/></td>
     </tr>
     <tr>
-        <td><strong>Phone #: </strong>{{$registration->retreatant->emergency_contact->phone}}</td>
+        <td><strong>Phone #: </strong>{{$registration->retreatant->emergency_contact_phone}}</td>
         <td><hr/></td>
     </tr>
     <tr>
-        <td><strong>Alternate Phone #: </strong>{{$registration->retreatant->emergency_contact->phone_alternate}}</td>
+        <td><strong>Alternate Phone #: </strong>{{$registration->retreatant->emergency_contact_phone_alternate}}</td>
         <td><hr/></td>
     </tr>
     <tr>
