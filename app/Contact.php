@@ -223,9 +223,9 @@ class Contact extends Model
     }
     public function getIsPastorAttribute () {
         if (isset($this->group_pastor->id)) {
-            return $this->gender->name;
+            return TRUE;
         } else {
-            return NULL;
+            return FALSE;
         }
     }
     public function getIsJesuitAttribute () {
