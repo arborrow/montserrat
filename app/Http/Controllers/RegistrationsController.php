@@ -230,7 +230,7 @@ class RegistrationsController extends Controller
          
         \montserrat\Registration::destroy($id);
         $countregistrations = \montserrat\Registration::where('event_id','=',$registration->event_id)->count();
-        $retreat->attending = $countregistrations;
+        //$retreat->attending = $countregistrations;
         $retreat->save();
         return Redirect::action('RegistrationsController@index');
     }
