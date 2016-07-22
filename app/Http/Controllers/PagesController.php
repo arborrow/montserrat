@@ -79,8 +79,16 @@ class PagesController extends Controller
     public function retreatantinforeport($id)
     {
         $retreat = \montserrat\Retreat::where('idnumber','=',$id)->first();
-        $registrations = \montserrat\Registration::where('event_id','=',$retreat->id)->with('retreat','retreatant.languages','retreatant.parish.contact_a.address_primary','retreatant.prefix','retreatant.suffix','retreatant.address_primary.state','retreatant.phones.location','retreatant.emails.location','retreatant.emergency_contact','retreatant.notes','retreatant.occupation')->get();
-//dd($registrations);        
+        //unsorted registrations
+        //$registrations = \montserrat\Registration::where('event_id','=',$retreat->id)->with('retreat','retreatant.languages','retreatant.parish.contact_a.address_primary','retreatant.prefix','retreatant.suffix','retreatant.address_primary.state','retreatant.phones.location','retreatant.emails.location','retreatant.emergency_contact','retreatant.notes','retreatant.occupation')->get();
+        //registrations sorted by contact's sort_name
+        $registrations = \montserrat\Registration::select(\DB::raw('participant.*','contact.*'))
+                ->join('contact', 'participant.contact_id', '=', 'contact.id')
+                ->where('participant.event_id','=',$retreat->id)
+                ->with('retreat','retreatant.languages','retreatant.parish.contact_a.address_primary','retreatant.prefix','retreatant.suffix','retreatant.address_primary.state','retreatant.phones.location','retreatant.emails.location','retreatant.emergency_contact','retreatant.notes','retreatant.occupation')
+                ->orderBy('contact.sort_name', 'asc')->get();
+        
+//dd($registrations[2]);        
 //$registrations = $registrations->sortBy($registrations->retreatant->lastname);
 //products = Shop\Product::join('shop_products_options as po', 'po.product_id', '=', 'products.id')
   // ->orderBy('po.pinned', 'desc')
