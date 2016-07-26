@@ -147,6 +147,7 @@ class PersonsController extends Controller
         $person->do_not_mail = $request->input('do_not_mail');
         $person->do_not_email = $request->input('do_not_email');
         $person->do_not_phone = $request->input('do_not_phone');
+        $person->do_not_sms = $request->input('do_not_sms');
         
         // CiviCRM stores the language name rather than the language id in the contact's preferred_language field
         if (!empty($request->input('preferred_language_id'))) {
@@ -861,6 +862,7 @@ class PersonsController extends Controller
         $person->do_not_mail = $request->input('do_not_mail');
         $person->do_not_email = $request->input('do_not_email');
         $person->do_not_phone = $request->input('do_not_phone');
+        $person->do_not_sms = $request->input('do_not_sms');
         
         if (empty($request->input('languages')) or in_array(0,$request->input('languages'))) {
             $person->languages()->detach();

@@ -73,6 +73,9 @@
                         @if($person->do_not_phone)
                         <div class="alert alert-warning"><strong>Do Not Call</strong></div>
                         @endIf
+                        @if($person->do_not_sms)
+                        <div class="alert alert-warning"><strong>Do Not Text</strong></div>
+                        @endIf
                         @foreach($person->phones as $phone)
                         @if(!empty($phone->phone))
                             <strong>{{$phone->location->display_name}} - {{$phone->phone_type}}: </strong>{{$phone->phone}} {{$phone->phone_ext}}<br />

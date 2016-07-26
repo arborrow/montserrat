@@ -54,6 +54,9 @@
                                 @if($person->do_not_phone)
                                     <div class="alert alert-warning"><strong>Do Not Call</strong></div>
                                 @endIf
+                                @if($person->do_not_sms)
+                                    <div class="alert alert-warning"><strong>Do Not Text</strong></div>
+                                @endIf
                                 @foreach($person->phones as $phone)
                                 @if (($phone->location_type_id==1) and ($phone->phone_type=="Phone"))  
                                 <a href="tel:{{ $phone->phone }}">{{ $phone->phone }}</a> 
@@ -64,6 +67,9 @@
                                 
                                 @if($person->do_not_phone)
                                     <div class="alert alert-warning"><strong>Do Not Call</strong></div>
+                                @endIf
+                                @if($person->do_not_sms)
+                                    <div class="alert alert-warning"><strong>Do Not Text</strong></div>
                                 @endIf
                                 @foreach($person->phones as $phone)
                                 @if (($phone->location_type_id==1) and ($phone->phone_type=="Mobile"))  

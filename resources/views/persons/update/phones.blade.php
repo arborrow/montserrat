@@ -4,6 +4,9 @@
 
     {!! Form::label('do_not_phone', 'Do not call:', ['class' => 'col-md-2'])  !!}
     {!! Form::checkbox('do_not_phone', 1, $person->do_not_phone,['class' => 'col-md-1']) !!}
+    {!! Form::label('do_not_sms', 'Do not text:', ['class' => 'col-md-2'])  !!}
+    {!! Form::checkbox('do_not_sms', 1, $person->do_not_sms,['class' => 'col-md-1']) !!}
+
 </div>
 
 <ul role="tablist" class="nav nav-tabs bs-adaptive-tabs" id="addresses">
