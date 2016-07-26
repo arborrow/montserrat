@@ -33,10 +33,10 @@ class ParishesController extends Controller
                 
         //dd($parishes[3]);
         $parishes = $parishes->sortBy(function($parish) {
-            return sprintf('%-12s%s',$parish->diocese->contact_a->organization_name,$parish->organization_name);
+            return sprintf('%-12s%s',$parish->diocese_name,$parish->organization_name);
         });
         
-        //dd($parishes[76]);
+        //dd($parishes[214]);
         return view('parishes.index',compact('parishes'));   //
     
     }

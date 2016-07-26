@@ -35,7 +35,7 @@
                         @foreach($parishes as $parish)
                         <tr>
                             <td><a href="parish/{{$parish->id}}">{{ $parish->organization_name }} </a></td>
-                            <td><a href="diocese/{{$parish->diocese->contact_id_a}}">{{ $parish->diocese->contact_a->organization_name }}</a></td> 
+                            <td><a href="diocese/{{$parish->diocese_id}}">{{ $parish->diocese_name }}</a></td> 
                             <td>
                                 @if (empty($parish->pastor->contact_b))
                                 No pastor assigned
