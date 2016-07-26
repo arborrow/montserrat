@@ -1,5 +1,11 @@
 <div class="container">
-<h2>Phone numbers</h2>
+<div class="row">    
+    <h2>Phone numbers</h2>
+
+    {!! Form::label('do_not_phone', 'Do not call:', ['class' => 'col-md-2'])  !!}
+    {!! Form::checkbox('do_not_phone', 1, $person->do_not_phone,['class' => 'col-md-1']) !!}
+</div>
+
 <ul role="tablist" class="nav nav-tabs bs-adaptive-tabs" id="addresses">
             <li class="active" role="presentation"><a aria-expanded="true" aria-controls="home" data-toggle="tab" role="tab" id="tab1-tab" href="#phone_home"><i class="fa fa-home"></i> <label>Home</label></a></li>
             <li role="presentation"><a aria-expanded="true" aria-controls="home" data-toggle="tab" role="tab" id="tab2-tab" href="#phone_work"><i class="fa fa-archive"></i> <label>Work</label></a></li>

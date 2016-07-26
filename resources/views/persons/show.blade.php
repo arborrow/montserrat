@@ -56,6 +56,9 @@
             </div><div class="clearfix"> </div>
 
             <div class='row'><div class='col-md-4'><span><h2><strong>Addresses</strong></h2>
+                @if($person->do_not_mail)
+                    <div class="alert alert-warning"><strong>Do Not Mail</strong></div>
+                @endIf
                 @foreach($person->addresses as $address)
                 @if (!empty($address->street_address))
                 <strong>{{$address->location->display_name}}:</strong>
@@ -67,6 +70,9 @@
             <div class='row'>
                 <div class='col-md-4'>
                     <span><h2><strong>Phone Numbers</strong></h2>
+                        @if($person->do_not_phone)
+                        <div class="alert alert-warning"><strong>Do Not Call</strong></div>
+                        @endIf
                         @foreach($person->phones as $phone)
                         @if(!empty($phone->phone))
                             <strong>{{$phone->location->display_name}} - {{$phone->phone_type}}: </strong>{{$phone->phone}} {{$phone->phone_ext}}<br />
@@ -77,6 +83,9 @@
                 
                 <div class='col-md-4'>
                     <span><h2><strong>Electronic Communications</strong></h2>
+                        @if($person->do_not_email)
+                            <div class="alert alert-warning"><strong>Do Not Email</strong></div>
+                        @endIf
                         @foreach($person->emails as $email)
                         @if(!empty($email->email))
                         <strong>{{$email->location->display_name}} - Email: </strong><a href="mailto:{{$email->email}}">{{$email->email}}</a><br />

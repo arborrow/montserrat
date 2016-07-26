@@ -1,6 +1,11 @@
 <div class="container">
-<h2>Addresses</h2>
-<ul role="tablist" class="nav nav-tabs bs-adaptive-tabs" id="addresses">
+<div class="row">    
+    <h2>Addresses</h2>
+
+    {!! Form::label('do_not_mail', 'Do not mail:', ['class' => 'col-md-2'])  !!}
+    {!! Form::checkbox('do_not_mail', 1, 0,['class' => 'col-md-1']) !!}
+</div>
+    <ul role="tablist" class="nav nav-tabs bs-adaptive-tabs" id="addresses">
             <li class="active" role="presentation"><a aria-expanded="true" aria-controls="home" data-toggle="tab" role="tab" id="tab1-tab" href="#address_home"><i class="fa fa-home"></i> <label>Home</label></a></li>
             <li role="presentation"><a aria-expanded="true" aria-controls="home" data-toggle="tab" role="tab" id="tab2-tab" href="#address_work"><i class="fa fa-archive"></i> <label>Work</label></a></li>
             <li role="presentation"><a aria-expanded="true" aria-controls="home" data-toggle="tab" role="tab" id="tab3-tab" href="#address_other"><i class="fa fa-cog"></i> <label>Other</label></a></li>

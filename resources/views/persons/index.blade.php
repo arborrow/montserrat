@@ -41,6 +41,9 @@
                         <tr>
                             <td><a href="person/{{ $person->id}}">{{$person->display_name}}</a></td>
                             <td>
+                                @if($person->do_not_mail)
+                                    <div class="alert alert-warning"><strong>Do Not Mail</strong></div>
+                                @endIf
                                 @foreach($person->addresses as $address)
                                     @if ($address->is_primary)
                                         {!!$address->google_map!!}
@@ -48,6 +51,9 @@
                                 @endforeach
                             </td>
                             <td>
+                                @if($person->do_not_phone)
+                                    <div class="alert alert-warning"><strong>Do Not Call</strong></div>
+                                @endIf
                                 @foreach($person->phones as $phone)
                                 @if (($phone->location_type_id==1) and ($phone->phone_type=="Phone"))  
                                 <a href="tel:{{ $phone->phone }}">{{ $phone->phone }}</a> 
@@ -55,6 +61,10 @@
                                 @endforeach
                                 
                             <td>
+                                
+                                @if($person->do_not_phone)
+                                    <div class="alert alert-warning"><strong>Do Not Call</strong></div>
+                                @endIf
                                 @foreach($person->phones as $phone)
                                 @if (($phone->location_type_id==1) and ($phone->phone_type=="Mobile"))  
                                 <a href="tel:{{ $phone->phone }}">{{ $phone->phone }}</a> 
@@ -62,6 +72,10 @@
                                 @endforeach
                             </td>
                             <td>
+                                
+                                @if($person->do_not_email)
+                                    <div class="alert alert-warning"><strong>Do Not Email</strong></div>
+                                @endIf
                                 @foreach($person->emails as $email)
                                 @if ($email->is_primary)  
                                 <a href="mailto:{{ $email->email }}">{{ $email->email }}</a> 

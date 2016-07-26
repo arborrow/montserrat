@@ -101,6 +101,13 @@ class Contact extends Model
             return 'N/A';
         }
     }  
+    public function getDioceseNameAttribute() {
+        if (isset($this->diocese->contact_a->organization_name)) {
+            return $this->diocese->contact_a->organization_name;
+        } else {
+            return NULL;
+        }
+    }
     public function getSubcontactTypeLabelAttribute() {
         
         if (isset($this->subcontacttype->label)) {

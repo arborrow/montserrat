@@ -50,7 +50,7 @@ class PersonsController extends Controller
         $parish_list[0]='N/A';  
         // while probably not the most efficient way of doing this it gets me the result
         foreach($parishes as $parish) {
-            $parish_list[$parish->id] = $parish->organization_name.' ('.$parish->address_primary->city.') - '.$parish->diocese->contact_a->organization_name;
+            $parish_list[$parish->id] = $parish->organization_name.' ('.$parish->address_primary_city.') - '.$parish->diocese_name;
         }
 
         $countries = \montserrat\Country::orderBy('iso_code')->lists('iso_code','id');
@@ -142,6 +142,11 @@ class PersonsController extends Controller
         $person->ethnicity_id = $request->input('ethnicity_id');
         $person->religion_id = $request->input('religion_id');
         $person->occupation_id = $request->input('occupation_id');
+        
+        // communication preferences
+        $person->do_not_mail = $request->input('do_not_mail');
+        $person->do_not_email = $request->input('do_not_email');
+        $person->do_not_phone = $request->input('do_not_phone');
         
         // CiviCRM stores the language name rather than the language id in the contact's preferred_language field
         if (!empty($request->input('preferred_language_id'))) {
@@ -658,7 +663,7 @@ class PersonsController extends Controller
         $subcontact_types->prepend('N/A',0); 
         // while probably not the most efficient way of doing this it gets me the result
         foreach($parishes as $parish) {
-            $parish_list[$parish->id] = $parish->organization_name.' ('.$parish->address_primary->city.') - '.$parish->diocese->contact_a->organization_name;
+            $parish_list[$parish->id] = $parish->organization_name.' ('.$parish->address_primary_city.') - '.$parish->diocese_name;
         }
         if (!empty($person->parish)) {
             $person->parish_id = $person->parish->contact_id_a;
@@ -851,6 +856,11 @@ class PersonsController extends Controller
         $person->ethnicity_id = $request->input('ethnicity_id');
         $person->religion_id = $request->input('religion_id');
         $person->occupation_id = $request->input('occupation_id');
+        
+        // communication preferences
+        $person->do_not_mail = $request->input('do_not_mail');
+        $person->do_not_email = $request->input('do_not_email');
+        $person->do_not_phone = $request->input('do_not_phone');
         
         if (empty($request->input('languages')) or in_array(0,$request->input('languages'))) {
             $person->languages()->detach();
