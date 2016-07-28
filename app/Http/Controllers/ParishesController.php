@@ -171,7 +171,7 @@ return Redirect::action('ParishesController@index');
     public function show($id)
     {
         //
-        $parish = \montserrat\Contact::with('pastor.contact_b','diocese.contact_a','addresses.state','addresses.location','phones.location','emails.location','websites','notes','parishioners.contact_b.address_primary.state','parishioners.contact_b.emails.location','parishioners.contact_b.phones.location')->findOrFail($id);
+        $parish = \montserrat\Contact::with('pastor.contact_b','diocese.contact_a','addresses.state','addresses.location','phones.location','emails.location','websites','notes','parishioners.contact_b.address_primary.state','parishioners.contact_b.emails.location','parishioners.contact_b.phones.location','touchpoints')->findOrFail($id);
         
         //dd($parish);
         return view('parishes.show',compact('parish'));//

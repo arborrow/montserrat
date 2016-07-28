@@ -143,6 +143,37 @@
                 </table>
                 @endif
             </div>
+            <div>
+                 <span class="btn btn-primary">
+                   <a href={{ action('TouchpointsController@add',$parish->id) }}>Add Touch point</a>
+                </span>
+           
+            @if ($parish->touchpoints->isEmpty())
+                    <p>It is a brand new world, there are no touch points for this person!</p>
+                @else
+                <table class="table"><caption><h2>Touch points for {{ $parish->display_name }} </h2></caption>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Contacted by</th>
+                            <th>Type of contact</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($parish->touchpoints as $touchpoint)
+                        <tr>
+                            <td><a href="touchpoint/{{ $touchpoint->id}}">{{ $touchpoint->touched_at }}</a></td>
+                            <td><a href="person/{{ $touchpoint->staff->id}}">{{ $touchpoint->staff->display_name }}</a></td>
+                            <td>{{ $touchpoint->type }}</td>
+                            <td>{{ $touchpoint->notes }}</td>
+                        </tr>
+                        @endforeach
+                        
+                    </tbody>
+                </table>
+                @endif
+        </div>
         </div>
     </section>
 @stop
