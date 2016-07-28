@@ -88,7 +88,7 @@
             <hr />
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h2><span class="grey">Parishioner Index</span></h2> 
+                    <h2><span class="grey">Parishioners of {{$parish->organization_name}}</span></h2> 
                 </div>
                 @if (!isset($parish->parishioners))
                     <p>No parishioners are currently registered in the database.</p>
@@ -143,15 +143,21 @@
                 </table>
                 @endif
             </div>
-            <div>
-                 <span class="btn btn-primary">
-                   <a href={{ action('TouchpointsController@add',$parish->id) }}>Add Touch point</a>
-                </span>
-           
+            
+            <div class="panel panel-default">
+               
             @if ($parish->touchpoints->isEmpty())
                     <p>It is a brand new world, there are no touch points for this person!</p>
                 @else
-                <table class="table"><caption><h2>Touch points for {{ $parish->display_name }} </h2></caption>
+            <div class="panel-heading">
+                <h2><span class="grey">Touch points for {{ $parish->display_name }} </span></h2> 
+            <span class="btn btn-primary">
+                   <a href={{ action('TouchpointsController@add',$parish->id) }}>Add Touch point</a>
+                </span>
+            
+            </div>
+                
+                <table class="table">
                     <thead>
                         <tr>
                             <th>Date</th>
@@ -172,8 +178,10 @@
                         
                     </tbody>
                 </table>
-                @endif
+            @endif
+            
         </div>
+            
         </div>
     </section>
 @stop
