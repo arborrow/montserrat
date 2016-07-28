@@ -173,7 +173,7 @@ return Redirect::action('ParishesController@index');
         //
         $parish = \montserrat\Contact::with('pastor.contact_b','diocese.contact_a','addresses.state','addresses.location','phones.location','emails.location','websites','notes','parishioners.contact_b.address_primary.state','parishioners.contact_b.emails.location','parishioners.contact_b.phones.location')->findOrFail($id);
         
-        //dd($parish->parishioners);
+        //dd($parish);
         return view('parishes.show',compact('parish'));//
     
     }
@@ -188,11 +188,13 @@ return Redirect::action('ParishesController@index');
     {
         //
         $dioceses = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_DIOCESE)->orderby('organization_name')->lists('organization_name','id');
-        $pastors = \montserrat\Contact::whereHas('b_relationships', function($query) {
-            $query->whereRelationshipTypeId(RELATIONSHIP_TYPE_PASTOR)->whereIsActive(1);})->orderby('sort_name')->lists('sort_name','id');
-        
+        //$pastors = \montserrat\Contact::whereHas('b_relationships', function($query) {
+        //    $query->whereRelationshipTypeId(RELATIONSHIP_TYPE_PASTOR)->whereIsActive(1);})->orderby('sort_name')->lists('sort_name','id');
+        $pastors = \montserrat\Contact::whereHas('group_pastor', function($query) {
+            $query->whereGroupId(GROUP_ID_PASTOR)->whereStatus('Added');})->orderby('sort_name')->lists('sort_name','id');
         $dioceses[0] = 'No Diocese assigned';
         $pastors[0] = 'No pastor assigned';
+        //dd($pastors);
         $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->lists('name','id');
         $states->prepend('N/A',0); 
         $countries = \montserrat\Country::orderby('iso_code')->lists('iso_code','id');

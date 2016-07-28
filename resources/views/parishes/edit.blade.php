@@ -7,7 +7,7 @@
     {!! Form::hidden('id', $parish->id) !!}
     <div class="form-group">
         {!! Form::label('diocese_id', 'Diocese:', ['class' => 'col-md-1'])  !!}
-        {!! Form::select('diocese_id', $dioceses, $parish->diocese->contact_a->id, ['class' => 'col-md-2']) !!}
+        {!! Form::select('diocese_id', $dioceses, $parish->diocese_id, ['class' => 'col-md-2']) !!}
     </div><div class="clearfix"> </div>
  <div class="form-group">
         {!! Form::label('pastor_id', 'Pastor:', ['class' => 'col-md-1'])  !!} 
@@ -24,29 +24,25 @@
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
-        {!! Form::label('street_address', 'Address1:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('street_address', $parish->address_primary->street_address, ['class' => 'col-md-2']) !!}
+        {!! Form::label('street_address', 'Address:', ['class' => 'col-md-1']) !!}
+        {!! Form::text('street_address', $parish->address_primary_street, ['class' => 'col-md-2']) !!}
     </div>
     <div class="clearfix"> </div>
-    <div class="form-group">
-        {!! Form::label('supplemental_address_1', 'Address2:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('supplemental_address_1', $parish->address_primary->supplemental_address_1, ['class' => 'col-md-2']) !!}
-    </div>
     <div class="clearfix"> </div>
     <div class="form-group">
         {!! Form::label('city', 'City:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('city', $parish->address_primary->city, ['class' => 'col-md-2']) !!}
+        {!! Form::text('city', $parish->address_primary_city, ['class' => 'col-md-2']) !!}
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
         {!! Form::label('state_province_id', 'State:', ['class' => 'col-md-1']) !!}
-        {!! Form::select('state_province_id', $states, $parish->address_primary->state->id, ['class' => 'col-md-2']) !!}
+        {!! Form::select('state_province_id', $states, $parish->address_primary_state, ['class' => 'col-md-2']) !!}
             
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
         {!! Form::label('postal_code', 'Zip:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('postal_code', $parish->address_primary->postal_code, ['class' => 'col-md-2']) !!}
+        {!! Form::text('postal_code', $parish->address_primary_postal_code, ['class' => 'col-md-2']) !!}
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">

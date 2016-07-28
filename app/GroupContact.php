@@ -18,4 +18,8 @@ class GroupContact extends Model
         return $this->belongsTo('\montserrat\Contact','contact_id','id');
     }
     
+    public function getContactSortNameAttribute() {
+        return $this->contact->sort_name;
+        
+    }
 }
