@@ -23,10 +23,8 @@
              <div class='col-md-4'>
                     <span><h2><strong>Members of the {{$group->name}} Group</strong></h2>
                         <div class="scroll">
-                            @foreach($group->members as $member)
-                                @if(!empty($member->contact->display_name))
-                                <a href="../person/{{$member->contact_id}}">{{$member->contact->display_name}}</a><br />
-                                @endif
+                            @foreach($members as $member)
+                                <a href="../person/{{$member->id}}">{{$member->sort_name}}</a><br />
                             @endforeach
                         </div>
                     </span>

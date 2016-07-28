@@ -84,9 +84,12 @@ class GroupsController extends Controller
     public function show($id)
     {
         //
-       $group = \montserrat\Group::with('members.contact')->findOrFail($id);
+       $group = \montserrat\Group::findOrFail($id);
+       $members = \montserrat\Contact::whereHas('groups', function($query) use ($id) {
+            $query->whereGroupId($id)->whereStatus('Added');})->orderby('sort_name')->get();
+         
        //dd($group);
-       return view('groups.show',compact('group'));//
+       return view('groups.show',compact('group','members'));//
     
     }
 
