@@ -1,10 +1,10 @@
-<div class="container">
-<div class="row">    
-    <h2>Addresses</h2>
 
-    {!! Form::label('do_not_mail', 'Do not mail:', ['class' => 'col-md-2'])  !!}
-    {!! Form::checkbox('do_not_mail', 1, $person->do_not_mail,['class' => 'col-md-1']) !!}
-</div>
+    <div class='panel-heading'><h2>Addresses</h2></div>
+    <div class='panel-body'>
+        {!! Form::label('do_not_mail', 'Do not mail:', ['class' => 'col-md-2'])  !!}
+        {!! Form::checkbox('do_not_mail', 1, $person->do_not_mail,['class' => 'col-md-1']) !!}
+    </div>
+    
 <ul role="tablist" class="nav nav-tabs bs-adaptive-tabs" id="addresses">
             <li class="active" role="presentation"><a aria-expanded="true" aria-controls="home" data-toggle="tab" role="tab" id="tab1-tab" href="#address_home"><i class="fa fa-home"></i> <label>Home</label></a></li>
             <li role="presentation"><a aria-expanded="true" aria-controls="home" data-toggle="tab" role="tab" id="tab2-tab" href="#address_work"><i class="fa fa-archive"></i> <label>Work</label></a></li>
@@ -13,7 +13,7 @@
         <div class="tab-content" id="myTabContent">
             <div aria-labelledby="tab1-tab" id="address_home" class="tab-pane fade in active" role="tabpanel">
                 <h3>Home address</h3>
-                    
+                        <div class='form-group'>
                         <div class='row'>
                             {!! Form::label('address_home_address1', 'Street 1:', ['class' => 'col-md-2'])  !!}
                             {!! Form::text('address_home_address1', $defaults['Home']['street_address'], ['class' => 'col-md-3']) !!}
@@ -34,6 +34,7 @@
                         <div class='row'>
                             {!! Form::label('address_home_country', 'Country:', ['class' => 'col-md-2'])  !!}
                             {!! Form::select('address_home_country', $countries, $defaults['Home']['country_id'], ['class' => 'col-md-2']) !!}
+                        </div>
                         </div>
             
             </div>
@@ -86,4 +87,3 @@
         
             </div>
         </div>
-</div>

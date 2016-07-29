@@ -1,7 +1,5 @@
-<div class="container">
-<div class="row">    
-<h2>Email communications</h2>
-
+<div class='panel-heading'><h2>Email communications</h2></div>
+<div class='panel-body'>
     {!! Form::label('do_not_email', 'Do not email:', ['class' => 'col-md-2'])  !!}
     {!! Form::checkbox('do_not_email', 1, $person->do_not_email,['class' => 'col-md-1']) !!}
 </div>
@@ -31,4 +29,3 @@
                 
             </div>
         </div>
-</div>

@@ -4,14 +4,14 @@
 <section class="section-padding">
     <div class="jumbotron text-left">
         <div class="panel panel-default">
-            <div class="panel-heading">
+            <div class="panel-body">
                 <span class="back">
-                    <span><h2><strong>
+                    <span><h1><strong>
                         {{ $person->prefix_name }} 
                         {{ (!empty($person->display_name)) ? $person->display_name : null }} 
                         {{ $person->suffix_name }}
                         {{ (!empty($person->nick_name)) ? "(&quot;$person->nick_name&quot;)" : null }}   
-                        </strong></h2>
+                        </strong></h1>
                     </span>
 
                 <span class="btn btn-primary">
@@ -23,7 +23,8 @@
 
             </div>
             <div class='row'>
-                <div class='col-md-4'><span><h2><strong>Names</strong></h2>
+                <div class='col-md-4'>
+                <div class='panel-heading'><h2><strong>Names</strong></h2></div>
                     <div>
                         <span>
                             <strong>Title: </strong>{{ (!empty($person->prefix_name)) ? $person->prefix_name : null }} <br />
@@ -32,11 +33,13 @@
                             <strong>Last Name: </strong>{{ (!empty($person->last_name)) ? $person->last_name : null}} <br />
                             <strong>Suffix: </strong>{{$person->suffix_name}} <br />
                         </span>
+                        <span>
                         <strong>Nick name:</strong> {{ (!empty($person->nick_name)) ? $person->nick_name : null }} <br />
                         <strong>Display name: </strong>{{ (!empty($person->display_name)) ? $person->display_name : null }}   <br />
                         <strong>Sort name: </strong>{{ (!empty($person->sort_name)) ? $person->sort_name : null }} <br />   
                         <strong>Contact type: </strong>{{ $person->contact_type_label }}   <br />
                         <strong>Subcontact type: </strong>{{ $person->subcontact_type_label }}   
+                        </span>
                     </div>
                 </div>
                 <div class='col-md-4' style="background-color: lightcoral;">
@@ -55,21 +58,24 @@
                 </div>               
             </div><div class="clearfix"> </div>
 
-            <div class='row'><div class='col-md-4'><span><h2><strong>Addresses</strong></h2>
-                @if($person->do_not_mail)
-                    <div class="alert alert-warning"><strong>Do Not Mail</strong></div>
-                @endIf
-                @foreach($person->addresses as $address)
-                @if (!empty($address->street_address))
-                <strong>{{$address->location->display_name}}:</strong>
-                <address>{!!$address->google_map!!}</address>
-                @endif
-                @endforeach
-                    </span></div></div>
+            <div class='row'>
+                <div class='col-md-8'>
+                    <div class='panel-heading'><h2><strong>Addresses</strong></h2></div>
+                    @if($person->do_not_mail)
+                        <div class="alert alert-warning"><strong>Do Not Mail</strong></div>
+                    @endIf
+                    @foreach($person->addresses as $address)
+                    @if (!empty($address->street_address))
+                    <strong>{{$address->location->display_name}}:</strong>
+                    <address>{!!$address->google_map!!}</address>
+                    @endif
+                    @endforeach
+                </div>
+            </div>
             
             <div class='row'>
                 <div class='col-md-4'>
-                    <span><h2><strong>Phone Numbers</strong></h2>
+                    <div class='panel-heading'><h2><strong>Phone Numbers</strong></h2></div>
                         @if($person->do_not_phone)
                         <div class="alert alert-warning"><strong>Do Not Call</strong></div>
                         @endIf
@@ -81,11 +87,10 @@
                             <strong>{{$phone->location->display_name}} - {{$phone->phone_type}}: </strong>{{$phone->phone}} {{$phone->phone_ext}}<br />
                         @endif
                             @endforeach
-                    </span>
                 </div>
                 
                 <div class='col-md-4'>
-                    <span><h2><strong>Electronic Communications</strong></h2>
+                    <div class='panel-heading'><h2><strong>Electronic Communications</strong></h2></div>
                         @if($person->do_not_email)
                             <div class="alert alert-warning"><strong>Do Not Email</strong></div>
                         @endIf
@@ -99,12 +104,12 @@
                         <strong>{{$website->website_type}} - URL: </strong><a href="{{$website->url}}" target="_blank">{{$website->url}}</a><br />
                         @endif
                         @endforeach
-                    </span>
                 </div>
             </div><div class="clearfix"> </div>
 
             <div class='row'><span>
-                <div class='col-md-8'<span><h2><strong>Demographics:</strong></h2>
+                    <div class='col-md-8'>
+                        <div class='panel-heading'><h2><strong>Demographics:</strong></h2></div>
                     <strong>Gender: </strong>{{ !empty($person->gender_id) ? $person->gender->name: 'N/A' }}  
                     <br /><strong>Birth Date: </strong> 
                     @if (!empty($person->birth_date))
@@ -144,24 +149,22 @@
                         N/A
                     @endif
                         
-                </div></span> 
+                </div>
             </div><div class="clearfix"> </div>
 
             <div class='row'>
 
-                <div class='col-md-4'>
-                    <span><h2><strong>Notes</strong></h2>
+                <div class='col-md-8'>
+                    <div class='panel-heading'><h2><strong>Notes</strong></h2></div>
                         <strong>General Note: </strong>{{$person->note_contact}}<br />
                         <strong>Room Preference: </strong>{{$person->note_room_preference}}<br />
-                    </span>
                 </div>
                 
             </div><div class="clearfix"> </div>  
             <div class='row'>
 
                 <div class='col-md-8'>
-                    <span>
-                        <h2><strong>Groups and Relationships</strong></h2>
+                    <div class='panel-heading'><h2><strong>Groups and Relationships</strong></h2></div>
                         <div class="form-group">Groups
                             <ul>    @foreach($person->groups as $group)
                         
@@ -185,7 +188,6 @@
                         </div>
                         </ul>
                     </div>
-                </span>
             </div>
             <div class="clearfix"> </div>
         

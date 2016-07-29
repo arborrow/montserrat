@@ -1,5 +1,4 @@
-<div class="container">
-<h2>Websites (URLs)</h2>
+<div class='panel-heading'><h2>Websites (URLs)</h2></div>
 <ul role="tablist" class="nav nav-tabs bs-adaptive-tabs" id="urls">
             <li class="active" role="presentation"><a aria-expanded="true" aria-controls="home" data-toggle="tab" role="tab" id="tab1-tab" href="#url_main"><i class="fa fa-home"></i> <label>Personal (main)</label></a></li>
             <li role="presentation"><a aria-expanded="true" aria-controls="home" data-toggle="tab" role="tab" id="tab2-tab" href="#url_work"><i class="fa fa-archive"></i> <label>Work</label></a></li>
@@ -39,4 +38,3 @@
                 {!! Form::text('url_twitter', $defaults['Twitter']['url'], ['class' => 'col-md-3']) !!}
             </div>
         </div>
-</div>

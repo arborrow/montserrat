@@ -1,7 +1,5 @@
-<div class="container">
-<div class="row">    
-    <h2>Phone numbers</h2>
-
+<div class='panel-heading'><h2>Phone numbers</h2></div>
+<div class='panel-body'>
     {!! Form::label('do_not_phone', 'Do not call:', ['class' => 'col-md-2'])  !!}
     {!! Form::checkbox('do_not_phone', 1, $person->do_not_phone,['class' => 'col-md-1']) !!}
     {!! Form::label('do_not_sms', 'Do not text:', ['class' => 'col-md-2'])  !!}
@@ -46,4 +44,3 @@
 
             </div>
         </div>
-</div>
