@@ -6,7 +6,7 @@ use montserrat\Ethnicities;
 // composer require laracasts/testdummy
 use Laracasts\TestDummy\Factory as TestDummy;
 
-class {{class}} extends Seeder
+class EthnicitiesTableSeeder extends Seeder
 {
     public function run()
     {

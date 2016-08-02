@@ -1376,35 +1376,20 @@ class PersonsController extends Controller
     }
     public function assistants()
     {
-        //
-        $role['name'] = 'Assistants';
-        $role['field'] = 'is_assistant';
-        return $this->role($role);
+        return $this->role(GROUP_ID_ASSISTANT);
     }
     public function bishops()
     {
-        //
-        $role['name'] = 'Bishops';
-        $role['field'] = 'is_bishop';
-        return $this->role($role);
-    
+        return $this->role(GROUP_ID_BISHOP);
     }
 
     public function boardmembers()
     {
-        //
-        $role['name'] = 'Board members';
-        $role['field'] = 'is_board';
-        return $this->role($role);
-        
+        return $this->role(GROUP_ID_BOARD);
     }
     public function captains()
     {
-        //
-        $role['name'] = 'Captains';
-        $role['field'] = 'is_captain';
-        return $this->role($role);
-    
+        return $this->role(GROUP_ID_CAPTAIN);
     }
     public function catholics()
     {
@@ -1423,11 +1408,7 @@ class PersonsController extends Controller
 
     public function directors()
     {
-        //
-        $role['name'] = 'Retreat Directors';
-        $role['field'] = 'is_director';
-        return $this->role($role);
-        
+        return $this->role(GROUP_ID_DIRECTOR);
     }
     public function donors()
     {
@@ -1493,8 +1474,10 @@ class PersonsController extends Controller
     
     public function role($group_id)
     {
-        $persons = \montserrat\Contact::with('groups')->whereHas('groups', function ($query) {$query->where('group_id','=',$group_id);})->orderBy('sort_name')->get();
-        
+        //dd($group_id);
+        $persons = \montserrat\Contact::with('groups','address_primary')->whereHas('groups', function ($query) use ($group_id) {$query->where('group_id','=',$group_id);})->orderBy('sort_name')->get();
+        $group = \montserrat\Group::findOrFail($group_id);
+        $role['name']= $group->name;
         return view('persons.role',compact('persons','role'));   //
     
     }

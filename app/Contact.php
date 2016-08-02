@@ -307,6 +307,15 @@ class Contact extends Model
             return NULL;
         }
     }
+    public function getParishLinkAttribute () {
+        if (isset($this->parish->contact_id_a)&&($this->parish->contact_id_a>0)) {
+           
+            return "<a href='parish/".$this->parish->contact_a->id."'>".$this->parish->contact_a->display_name.' ('.$this->parish->contact_a->address_primary->city.')'."</a>";
+        } else {
+            
+            return NULL;
+        }
+    }
     public function getPhoneHomeMobileNumberAttribute () {
         if (isset($this->phone_home_mobile->phone)) {
             return $this->phone_home_mobile->phone;

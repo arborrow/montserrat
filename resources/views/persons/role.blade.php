@@ -28,20 +28,14 @@
                     <tbody>
                         @foreach($persons as $person)
                         <tr>
-                            <td><a href="person/{{ $person->id}}">{{ $person->lastname }}, {{ $person->firstname }}</a></td>
+                            <td><a href="person/{{ $person->id}}">{{ $person->sort_name }}</a></td>
                             <td>
-                                {!!$address->google_map!!} 
+                                {!!$person->address_primary_street!!} 
                             </td>
-                            <td>{{ $person->homephone }}</td>
-                            <td>{{ $person->mobilephone }}</td>
-                            <td><a href="mailto:{{$person->email}}">{{ $person->email }}</a></td>
-                            <td>
-                                @if (!isset($person->parish))
-                                    N/A
-                                @else
-                                <a href="parish/{{$person->parish->id}}">{{ $person->parish->name }}</a>
-                                @endif
-                            </td>
+                            <td>{{ $person->phone_home_phone_number }}</td>
+                            <td>{{ $person->phone_home_mobile_number }}</td>
+                            <td><a href="mailto:{{$person->email_primary_text}}">{{ $person->email_primary_text }}</a></td>
+                            <td>{!! $person->parish_link !!}</td>
                         </tr>
                         @endforeach
                     </tbody>
