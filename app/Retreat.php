@@ -35,9 +35,16 @@ class Retreat extends Model
     public function assistant() {
         return $this->belongsTo('\montserrat\Contact','assistant_id','id')->whereContactType(CONTACT_TYPE_INDIVIDUAL);
     }
+    public function captains() {
+        // TODO: handle with participants of role Retreat Director or Master - be careful with difference between (registration table) retreat_id and (participant table) event_id
+        return $this->belongsToMany('\montserrat\Contact','captain_retreat','event_id','contact_id')->whereContactType(CONTACT_TYPE_INDIVIDUAL);
+    }
     
     public function innkeeper() {
         return $this->belongsTo('\montserrat\Contact','innkeeper_id','id')->whereContactType(CONTACT_TYPE_INDIVIDUAL);
+    }
+    public function event_type() {
+        return $this->hasOne('\montserrat\EventType','id','event_type_id');
     }
     
     public function retreatmasters() {
@@ -58,5 +65,12 @@ class Retreat extends Model
         }
         return "<a href='mailto:?bcc=".$bcc_list."'>E-mail Registered Retreatants</a>";
     }
-
+    public function getRetreatTypeAttribute () {
+        //dd($this->event_type);
+        if (isset($this->event_type)) {
+            return $this->event_type->name;
+        } else 
+            return NULL;
+        }
+    
 }

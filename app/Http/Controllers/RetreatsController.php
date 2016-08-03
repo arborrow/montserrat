@@ -41,7 +41,7 @@ class RetreatsController extends Controller
      */
     public function create()
     {
-        $retreat_house = \montserrat\Contact::with('retreat_directors.contact_b','retreat_innkeepers.contact_b','retreat_assistants.contact_b')->find(CONTACT_MONTSERRAT);
+        $retreat_house = \montserrat\Contact::with('retreat_directors.contact_b','retreat_innkeepers.contact_b','retreat_assistants.contact_b','retreat_captains.contact_b')->find(CONTACT_MONTSERRAT);
         $event_types = \montserrat\EventType::whereIsActive(1)->orderBy('name')->lists('name','id');
         foreach ($retreat_house->retreat_innkeepers as $innkeeper) {
             $i[$innkeeper->contact_id_b]=$innkeeper->contact_b->sort_name;
@@ -61,7 +61,13 @@ class RetreatsController extends Controller
         asort($a);
         $a=array(0=>'N/A')+$a;
         
-        return view('retreats.create',compact('d','i','a','event_types'));  
+        foreach ($retreat_house->retreat_captains as $captain) {
+            $c[$captain->contact_id_b]=$captain->contact_b->sort_name;
+        }
+        asort($c);
+        $c=array(0=>'N/A')+$c;
+        //dd($retreat_house);
+        return view('retreats.create',compact('d','i','a','c','event_types'));  
     }
 
     /**
@@ -110,6 +116,12 @@ class RetreatsController extends Controller
             $retreat->retreatmasters()->sync($request->input('directors'));
         }
         
+        if (empty($request->input('captains')) or in_array(0,$request->input('captains'))) {
+            $retreat->captains()->detach();
+        } else {
+            $retreat->captains()->sync($request->input('captains'));
+        }
+        
         return Redirect::action('RetreatsController@index');//
     }
 
@@ -121,7 +133,7 @@ class RetreatsController extends Controller
      */
     public function show($id)
     {
-        $retreat = \montserrat\Retreat::with('retreatmasters','innkeeper','assistant')->find($id);
+        $retreat = \montserrat\Retreat::with('retreatmasters','innkeeper','assistant','captains')->find($id);
         $registrations = \montserrat\Registration::where('event_id','=',$id)->with('retreatant','retreatant.parish')->get();
        //dd($registrations); 
        return view('retreats.show',compact('retreat','registrations'));//
@@ -141,7 +153,7 @@ class RetreatsController extends Controller
 public function edit($id)
     {
         //get this retreat's information
-        $retreat = \montserrat\Retreat::with('retreatmasters','assistant','innkeeper')->find($id);
+        $retreat = \montserrat\Retreat::with('retreatmasters','assistant','innkeeper','captains')->find($id);
         $event_types = \montserrat\EventType::whereIsActive(1)->orderBy('name')->lists('name','id');
         
         //create lists of retreat directors, innkeepers, and assistants from relationship to retreat house 
@@ -165,8 +177,14 @@ public function edit($id)
         asort($a);
         $a=array(0=>'N/A')+$a;
         
+        foreach ($retreat_house->retreat_captains as $captain) {
+            $c[$captain->contact_id_b]=$captain->contact_b->sort_name;
+        }
+        asort($c);
+        $c=array(0=>'N/A')+$c;
+      
        //dd($a);
-       return view('retreats.edit',compact('retreat','d','i','a','event_types'));
+       return view('retreats.edit',compact('retreat','d','i','a','c','event_types'));
       }
 
     /**
@@ -214,6 +232,11 @@ public function edit($id)
             $retreat->retreatmasters()->detach();
         } else {
             $retreat->retreatmasters()->sync($request->input('directors'));
+        }
+        if (empty($request->input('captains')) or in_array(0,$request->input('captains'))) {
+            $retreat->captains()->detach();
+        } else {
+            $retreat->captains()->sync($request->input('captains'));
         }
        
         return Redirect::action('RetreatsController@index');

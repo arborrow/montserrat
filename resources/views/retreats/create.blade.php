@@ -42,6 +42,10 @@
                 {!! Form::label('assistant_id', 'Assistant:', ['class' => 'col-md-1']) !!}
                 {!! Form::select('assistant_id', $a, 0, ['class' => 'col-md-2']) !!}
             </div><div class="clearfix"> </div>
+            <div class="form-group"> 
+                {!! Form::label('captains', 'Captain(s):', ['class' => 'col-md-1']) !!}
+                {!! Form::select('captains[]', $c, 0, ['class' => 'form-control col-md-2','multiple' => 'multiple','style'=>'width: auto; font-size: inherit;']) !!}
+            </div><div class="clearfix"> </div>
             
             <div class="form-group">
                 {!! Form::label('event_type', 'Type: ', ['class' => 'col-md-1']) !!}

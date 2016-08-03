@@ -528,7 +528,13 @@ class Contact extends Model
     public function retreat_innkeepers() {
         return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_INNKEEPER);
     }
-    public function relationship_mjrh_donor() {
+    
+    public function retreat_captains() {
+        // TODO: handle with participants of role Retreat Director or Master - be careful with difference between (registration table) retreat_id and (participant table) event_id
+        return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_CAPTAIN);
+    }
+    
+     public function relationship_mjrh_donor() {
         return $this->hasOne('\montserrat\Relationship','contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_DONOR);
     }   
     public function relationship_mjrh_retreatant() {

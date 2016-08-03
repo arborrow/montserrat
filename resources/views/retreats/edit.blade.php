@@ -49,6 +49,13 @@
         {!! Form::select('assistant_id', $a, $retreat->assistant_id, ['class' => 'col-md-2']) !!}
     </div><div class="clearfix"> </div>
     
+    <div class="form-group"> 
+        {!! Form::label('captains', 'Captain(s):', ['class' => 'col-md-1']) !!}
+        {!! Form::select('captains[]', $c,  
+        $retreat->captains->lists('id')->toArray(), 
+        ['class' => 'form-control col-md-2','multiple' => 'multiple','style'=>'width: auto; font-size: inherit;']) !!}
+    </div><div class="clearfix"> </div>
+            
     <div class="form-group">
         {!! Form::label('event_type', 'Type: ', ['class' => 'col-md-1']) !!}
         {!! Form::select('event_type', $event_types, $retreat->event_type_id, ['class' => 'col-md-2']) !!}

@@ -33,8 +33,7 @@
                         @endforeach
                         </div>
                     @endif
-
-                    
+    
                 <div class='col-md-3'><strong>Innkeeper: </strong>
                     @if ($retreat->innkeeper_id > 0)
                         <a href="/person/{{ $retreat->innkeeper_id }}">{{ $retreat->innkeeper->display_name }}</a>
@@ -49,9 +48,22 @@
                         N/A
                     @endIf
                 </div>
+
             </div><div class="clearfix"> </div>
             <div class='row'>
-                <div class='col-md-3'><strong>Type: </strong>{{ $retreat->type}}</div>
+                <div class='col-md-1'><strong>Captain(s): </strong></div>
+                    @if ($retreat->captains->isEmpty())
+                        N/A
+                    @else
+                    <div class='col-md-2'>
+                        @foreach($retreat->captains as $captain)
+                            <a href="/person/{{ $captain->id }}">{{ $captain->display_name }}</a><br /> 
+                        @endforeach
+                    </div>
+                    @endif
+            </div>
+            <div class='row'>
+                <div class='col-md-3'><strong>Type: </strong>{{ $retreat->retreat_type}}</div>
                 <div class='col-md-3'><strong>Silent: </strong>{{ $retreat->silent}}</div>
                 <div class='col-md-3'><strong>Donation: </strong>{{ $retreat->amount}}</div>
             </div><div class="clearfix"> </div>
