@@ -535,7 +535,7 @@ class Contact extends Model
         return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_CAPTAIN);
     }
     
-    public function retreatant() {
+    public function retreat_participants() {
         // the events (retreats) for which this contact has been a retreatant (ROLE_ID_RETREATANT) 
         return $this->hasMany('\montserrat\Participant','contact_id','id')->whereRoleId(ROLE_ID_CAPTAIN);
     }
