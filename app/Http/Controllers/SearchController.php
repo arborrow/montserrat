@@ -22,12 +22,15 @@ public function autocomplete(){
                 ->orderBy('sort_name')
 		->where('display_name', 'LIKE', '%'.$term.'%')
                 ->whereNull('deleted_at')
-		->take(15)->get();
+		->take(20)->get();
         
-	foreach ($queries as $query)
-	{
-	    $results[] = [ 'id' => $query->id, 'value' => $query->display_name ];
-	}
+	foreach ($queries as $query) {
+            if (isset($query->nick_name)) {
+                $results[] = [ 'id' => $query->id, 'value' => $query->first_name.' "'.$query->nick_name.'" '.$query->last_name ];
+            } else {
+                $results[] = [ 'id' => $query->id, 'value' => $query->display_name ];
+            }
+        }
 
         // $query = \montserrat\Contact::orderBy('sort_name')->where('display_name','LIKE','%'.$term.'%')->list('display_name','id')->toJson();
         
