@@ -180,26 +180,34 @@ class Contact extends Model
         }
     }
     public function getFullNameAttribute () {
-        $full_name = '';
-        if (isset($this->prefix->name)) {
-            $full_name .= $this->prefix->name. ' ';
+        if ($this->contact_type == CONTACT_TYPE_INDIVIDUAL)
+        {
+            $full_name = '';
+            if (isset($this->prefix->name)) {
+                $full_name .= $this->prefix->name. ' ';
+            }
+
+            if (isset($this->first_name)) {
+                $full_name .= $this->first_name. ' ';
+            }
+            if (isset($this->nick_name)) {
+                $full_name .= '"'.$this->nick_name.'" ';
+            }
+            if (isset($this->middle_name)) {
+                $full_name .= $this->middle_name.' ';
+            }
+            if (isset($this->last_name)) {
+                $full_name .= $this->last_name;
+            }
+            if (isset($this->suffix->name)) {
+                $full_name .= ', '.$this->suffix->name;
+            }
         }
-    
-        if (isset($this->first_name)) {
-            $full_name .= $this->first_name. ' ';
+        if ($this->contact_type == CONTACT_TYPE_ORGANIZATION)
+        {
+            $full_name = $this->organization_name;
         }
-        if (isset($this->nick_name)) {
-            $full_name .= '"'.$this->nick_name.'" ';
-        }
-        if (isset($this->middle_name)) {
-            $full_name .= $this->middle_name.' ';
-        }
-        if (isset($this->last_name)) {
-            $full_name .= $this->last_name;
-        }
-        if (isset($this->suffix->name)) {
-            $full_name .= ', '.$this->suffix->name;
-        }
+        
             return $full_name;
     }
     public function getGenderNameAttribute () {
