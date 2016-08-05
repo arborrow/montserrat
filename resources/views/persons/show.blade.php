@@ -229,9 +229,11 @@
         </div>
         <div class='row'>
             <div class='col-md-1'><a href="{{ action('PersonsController@edit', $person->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
+            @role('manager')
             <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['person.destroy', $person->id]]) !!}
             {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
             {!! Form::close() !!}</div><div class="clearfix"> </div>
+            @endrole
         </div>
     </div>
 </section>
