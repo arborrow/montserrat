@@ -6,12 +6,8 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <span class="back">
-                    <span><h1><strong>
-                        {{ $person->prefix_name }} 
-                        {{ (!empty($person->display_name)) ? $person->display_name : null }} 
-                        {{ $person->suffix_name }}
-                        {{ (!empty($person->nick_name)) ? "(&quot;$person->nick_name&quot;)" : null }}   
-                        </strong></h1>
+                    <span>
+                        <h1><strong>{{ $person->full_name }}</strong></h1>
                     </span>
 
                 <span class="btn btn-primary">

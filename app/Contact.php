@@ -585,6 +585,10 @@ class Contact extends Model
     {
         $this->attributes['nick_name'] = trim($nick_name) !== '' ? $nick_name : null;
     }
+    public function setMiddleNameAttribute($middle_name)
+    {
+        $this->attributes['middle_name'] = trim($middle_name) !== '' ? $middle_name : null;
+    }
     public function suffix() {
         return $this->hasOne('\montserrat\Suffix','id','suffix_id');
     }
