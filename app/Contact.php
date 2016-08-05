@@ -179,6 +179,29 @@ class Contact extends Model
             return NULL;
         }
     }
+    public function getFullNameAttribute () {
+        $full_name = '';
+        if (isset($this->prefix->name)) {
+            $full_name .= $this->prefix->name. ' ';
+        }
+    
+        if (isset($this->first_name)) {
+            $full_name .= $this->first_name. ' ';
+        }
+        if (isset($this->nick_name)) {
+            $full_name .= '"'.$this->nick_name.'" ';
+        }
+        if (isset($this->middle_name)) {
+            $full_name .= $this->middle_name.' ';
+        }
+        if (isset($this->last_name)) {
+            $full_name .= $this->last_name;
+        }
+        if (isset($this->suffix->name)) {
+            $full_name .= ', '.$this->suffix->name;
+        }
+            return $full_name;
+    }
     public function getGenderNameAttribute () {
         if (isset($this->gender_id)&&($this->gender_id>0)) {
             return $this->gender->name;
@@ -557,6 +580,10 @@ class Contact extends Model
     }
     public function religion() {
         return $this->hasOne('\montserrat\Religion','id','religion_id');
+    }
+    public function setNickNameAttribute($nick_name)
+    {
+        $this->attributes['nick_name'] = trim($nick_name) !== '' ? $nick_name : null;
     }
     public function suffix() {
         return $this->hasOne('\montserrat\Suffix','id','suffix_id');

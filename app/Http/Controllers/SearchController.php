@@ -23,13 +23,10 @@ public function autocomplete(){
 		->where('display_name', 'LIKE', '%'.$term.'%')
                 ->whereNull('deleted_at')
 		->take(20)->get();
-        
+        $queries = \montserrat\Contact::orderBy('sort_name')->where('display_name','LIKE','%'.$term.'%')->whereDeletedAt(NULL)->take(20)->get();
 	foreach ($queries as $query) {
-            if (isset($query->nick_name)) {
-                $results[] = [ 'id' => $query->id, 'value' => $query->first_name.' "'.$query->nick_name.'" '.$query->last_name ];
-            } else {
-                $results[] = [ 'id' => $query->id, 'value' => $query->display_name ];
-            }
+                $results[] = [ 'id' => $query->id, 'value' => $query->full_name ];
+            
         }
 
         // $query = \montserrat\Contact::orderBy('sort_name')->where('display_name','LIKE','%'.$term.'%')->list('display_name','id')->toJson();
