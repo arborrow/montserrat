@@ -5,7 +5,7 @@
     <div class="jumbotron text-left">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span><h2>Touch point details with <a href="../person/{{$touchpoint->person_id}}">
+                <span><h2>Touch point details for <a href="../{{strtolower($touchpoint->contact_subtype)}}/{{$touchpoint->person_id}}">
                     {{ !empty($touchpoint->person->display_name) ? $touchpoint->person->display_name : 'N/A' }} </a>
                 </span>                
             </div>

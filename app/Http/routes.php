@@ -50,6 +50,7 @@ Route::resource('parish','ParishesController');
     Route::get('parishes/dallas',['as' => 'dallasparishes','uses' => 'ParishesController@dallasdiocese']);
     Route::get('parishes/fortworth',['as' => 'fortworthparishes','uses' => 'ParishesController@fortworthdiocese']);
     Route::get('parishes/tyler',['as' => 'tylerparishes','uses' => 'ParishesController@tylerdiocese']);
+Route::resource('vendor','VendorsController');
 
 Route::resource('diocese','DiocesesController');
 Route::resource('organization','OrganizationsController');

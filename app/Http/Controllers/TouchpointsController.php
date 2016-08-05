@@ -155,7 +155,7 @@ class TouchpointsController extends Controller
         $touchpoint = \montserrat\Touchpoint::with('staff','person')->findOrFail($id);
         $staff = \montserrat\Contact::with('groups')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_STAFF);})->orderBy('sort_name')->lists('sort_name','id');
         
-        $contact = \montserrat\Contact::findOrFail($id);
+        $contact = \montserrat\Contact::findOrFail($touchpoint->contact_id);
         if (isset($contact->subcontact_type)) {
             $persons = \montserrat\Contact::whereSubcontactType($contact->subcontact_type)->orderBy('sort_name')->lists('sort_name','id');
         

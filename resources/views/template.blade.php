@@ -75,6 +75,7 @@
                 <li><a href={{ route('parish.index') }}>Parishes</a></li>
                 <li><a href={{ route('diocese.index') }}>Dioceses</a></li>
                 <li><a href={{ route('organization.index') }}>Organizations</a></li>
+                <li><a href={{ route('vendor.index') }}>Vendors</a></li>
                 <!--          <li><a href={{ route('housekeeping') }}> {!! Html::image('img/housekeeping.png', 'Housekeeping',array('title'=>"Housekeeping")) !!}</a></li>
                 <li class="divider"></li>
                 <li><a href={{ route('maintenance') }}>{!! Html::image('img/maintenance.png', 'Maintenance',array('title'=>"Maintenance")) !!}</a></li>

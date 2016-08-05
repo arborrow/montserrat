@@ -21,4 +21,8 @@ class Touchpoint extends Model
         return $this->belongsTo('\montserrat\Contact','staff_id','id');
     }
     
+    public function getContactSubtypeAttribute () {
+        return $this->person->subcontacttype->name;
+    }
+    
 }
