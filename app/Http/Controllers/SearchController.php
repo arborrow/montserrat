@@ -55,6 +55,10 @@ public function getuser() {
             if ($contact->subcontact_type == CONTACT_TYPE_DIOCESE) {
                 return redirect()->action('DiocesesController@show',$id);
             }
+            if ($contact->subcontact_type == CONTACT_TYPE_VENDOR) {
+                return redirect()->action('VendorsController@show',$id);
+            }
+            
         }
     }
 }
