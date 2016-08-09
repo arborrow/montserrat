@@ -80,8 +80,8 @@ class RetreatsController extends Controller
     { // dd($request);
         $this->validate($request, [
             'idnumber' => 'required|unique:retreats',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
+            'start_date' => 'required|date|before:end_date',
+            'end_date' => 'required|date|after:start_date',
             'title' => 'required',
             'innkeeper_id' => 'integer|min:0',
             'assistant_id' => 'integer|min:0',
@@ -200,8 +200,8 @@ public function edit($id)
       // dd($request);
         $this->validate($request, [
             'idnumber' => 'required|unique:retreats,idnumber,'.$id,
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
+            'start_date' => 'required|date|before:end_date',
+            'end_date' => 'required|date|after:start_date',
             'title' => 'required',
             'innkeeper_id' => 'integer|min:0',
             'assistant_id' => 'integer|min:0',

@@ -4,11 +4,13 @@
         <meta charset="UTF-8">
         <title>Montserrat Retreat House Database</title>
         <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('js/datetimeentry/jquery.datetimeentry.css')}}"> 
         <script src="{{ asset('js/jquery.js') }}"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
-
+        <script type="text/javascript" src="{{ asset('js/jquery.plugin.js')}}"></script> 
+        <script type="text/javascript" src="{{ asset('js/jquery.datetimeentry.js')}}"></script>
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
         <link rel="stylesheet" href="{{ asset('css/bootstrap-adaptive-tabs.css') }}">
@@ -130,9 +132,13 @@
   <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
   -->
   <script type="text/javascript">
-  $(function() {
-    $( "#start_date" ).datepicker();
-    $( "#end_date" ).datepicker();
+    var APP_URL = {!! json_encode(url('/')) !!};
+    $(function() {
+    
+    $( "#start_date" ).datetimeEntry({
+        datetimeFormat:'N D,Y H:Ma'});
+    $( "#end_date" ).datetimeEntry({
+        datetimeFormat:'N D,Y H:Ma'});
     $( "#register_date" ).datepicker();
     $( "#registration_confirm_date" ).datepicker();
     $( "#attendance_confirm_date" ).datepicker();
