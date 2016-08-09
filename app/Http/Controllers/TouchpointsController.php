@@ -153,17 +153,21 @@ class TouchpointsController extends Controller
     {
         //
         $touchpoint = \montserrat\Touchpoint::with('staff','person')->findOrFail($id);
+        
         $staff = \montserrat\Contact::with('groups')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_STAFF);})->orderBy('sort_name')->lists('sort_name','id');
         //consider renaming touchpoint table's person_id field to contact_id
-        $contact = \montserrat\Contact::findOrFail($touchpoint->contact_id);
+        $contact = \montserrat\Contact::findOrFail($touchpoint->person_id);
         if (isset($contact->subcontact_type)) {
             $persons = \montserrat\Contact::whereSubcontactType($contact->subcontact_type)->orderBy('sort_name')->lists('sort_name','id');
+        
         } else {
             $persons = \montserrat\Contact::whereContactType($contact->contact_type)->orderBy('sort_name')->lists('sort_name','id');
+        
         }
         //$persons = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->lists('sort_name','id');
 // check contact type and if parish get list of parishes if individual get list of persons
         return view('touchpoints.edit',compact('touchpoint','staff','persons'));//
+
     }
 
     /**
