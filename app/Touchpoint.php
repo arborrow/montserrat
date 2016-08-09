@@ -22,7 +22,11 @@ class Touchpoint extends Model
     }
     
     public function getContactSubtypeAttribute () {
-        return $this->person->subcontacttype->name;
+        if (isset($this->person->subcontacttype->name)) {
+            return $this->person->subcontacttype->name;
+        } else {
+            return NULL;
+        }
     }
     
 }
