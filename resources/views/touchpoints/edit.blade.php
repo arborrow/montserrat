@@ -13,7 +13,7 @@
                 <div class="form-group">
                     <div class='row'>
                         {!! Form::label('touched_at', 'Date of contact:', ['class' => 'col-md-3'])  !!}
-                        {!! Form::text('touched_at', $touchpoint->touched_at, ['class' => 'col-md-3']) !!}
+                        {!! Form::text('touched_at', date('F j, Y g:i A', strtotime($touchpoint->touched_at)), ['class' => 'col-md-3']) !!}
                     </div>
                     <div class='row'>
                         {!! Form::label('person_id', 'Name of Contact:', ['class' => 'col-md-3'])  !!}

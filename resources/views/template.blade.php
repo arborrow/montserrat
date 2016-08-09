@@ -147,7 +147,8 @@
     $( "#canceled_at" ).datepicker();
     $( "#birth_date" ).datepicker();
     $( "#deceased_date" ).datepicker();
-    $( "#touched_at" ).datepicker();
+    $( "#touched_at" ).datetimeEntry({
+        datetimeFormat:'N d, Y h:M a'});
     $( "#q" ).autocomplete({
 	  source: "{{ url('search/autocomplete') }}",
 	  minLength: 3,
