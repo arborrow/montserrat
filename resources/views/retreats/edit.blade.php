@@ -8,15 +8,20 @@
     <div class="form-group">
         {!! Form::label('idnumber', 'ID#:', ['class' => 'col-md-1'])  !!}
         {!! Form::text('idnumber', $retreat->idnumber, ['class' => 'col-md-1']) !!}
-    </div><div class="clearfix"> </div>
-    
+    </div>
+    <div class="clearfix"> </div>
+
     <div class="form-group">
+        <span>
         {!! Form::label('start_date', 'Starts:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('start_date', date('F d,Y h:iA', strtotime($retreat->start_date)), ['id' => 'start_date', 'class' => 'col-md-2']) !!}
+        {!! Form::text('start_date', date('F j, Y g:i A', strtotime($retreat->start_date)), ['id' => 'start_date', 'class' => 'col-md-2']) !!}
+        </span>
     </div>
     <div class="form-group">
+        <span>
         {!! Form::label('end_date', 'Ends:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('end_date', date('F d,Y h:iA', strtotime($retreat->end_date)), ['id' => 'end_date', 'class' => 'col-md-2']) !!}
+        {!! Form::text('end_date', date('F j, Y g:i A', strtotime($retreat->end_date)), ['id' => 'end_date', 'class' => 'col-md-2']) !!}
+        </span>
     </div>
     <div class="clearfix"> </div>
 

@@ -136,9 +136,9 @@
     $(function() {
     
     $( "#start_date" ).datetimeEntry({
-        datetimeFormat:'N D,Y H:Ma'});
+        datetimeFormat:'N d, Y h:M a'});
     $( "#end_date" ).datetimeEntry({
-        datetimeFormat:'N D,Y H:Ma'});
+        datetimeFormat:'N d, Y h:M a'});
     $( "#register_date" ).datepicker();
     $( "#registration_confirm_date" ).datepicker();
     $( "#attendance_confirm_date" ).datepicker();
