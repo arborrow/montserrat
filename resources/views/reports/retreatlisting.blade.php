@@ -12,7 +12,7 @@
         <th class="row-3 row-city">City, State, Zip</th>
         <th class="row-4 row-phone">Cell phone</th>
         <th class="row-5 row-phone">Home phone</th>
-        <th class="row-6 row-phone">Work phone</th>
+        <th class="row-6 row-phone">Parish</th>
         <th class="row-7 row-notes">Notes</th>
 
     @foreach($registrations as $registration)
@@ -23,7 +23,7 @@
         <td>{{$registration->retreatant->address_primary_city}}, {{$registration->retreatant->address_primary_state}}  {{$registration->retreatant->address_primary_postal_code}}</td>
         <td>{{$registration->retreatant->phone_home_mobile_number}}</td>
         <td>{{$registration->retreatant->phone_home_phone_number}}</td>
-        <td>{{$registration->retreatant->phone_work_phone_number}}</td> 
+        <td>{{$registration->retreatant->parish_name}}</td> 
         <td>{{$registration->retreatant->note_regsitration_text}}</td>
         
     </tr>    
