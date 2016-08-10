@@ -18,20 +18,20 @@
                     <thead>
                         <tr>
                             <th>Date</th>
-                            <th>Name of Contact</th>
+                            <th>Contact Name</th>
                             <th>Contacted by</th>
-                            <th>Type of contact</th>
+                            <th>Type</th>
                             <th>Notes</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($touchpoints as $touchpoint)
                         <tr>
-                            <td><a href="touchpoint/{{ $touchpoint->id}}">{{ $touchpoint->touched_at }}</a></td>
-                            <td><a href="person/{{ $touchpoint->person->id}}">{{ $touchpoint->person->display_name }}</a></td>
-                            <td><a href="person/{{ $touchpoint->staff->id}}">{{ $touchpoint->staff->display_name }}</a></td>
-                            <td>{{ $touchpoint->type }}</td>
-                            <td>{{ $touchpoint->notes }}</td>
+                            <td style="width:17%"><a href="touchpoint/{{ $touchpoint->id}}">{{ date('M d, Y g:i A', strtotime($touchpoint->touched_at)) }}</a></td>
+                            <td style="width:17%"><a href="person/{{ $touchpoint->person->id}}">{{ $touchpoint->person->display_name }}</a></td>
+                            <td style="width:17%"><a href="person/{{ $touchpoint->staff->id}}">{{ $touchpoint->staff->display_name }}</a></td>
+                            <td style="width:5%">{{ $touchpoint->type }}</td>
+                            <td style="width:44%">{{ $touchpoint->notes }}</td>
                         </tr>
                         @endforeach
                         

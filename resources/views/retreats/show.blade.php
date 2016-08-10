@@ -12,8 +12,8 @@
                 <div class='col-md-2'><strong>ID#: </strong>{{ $retreat->idnumber}}</div>
             </div><div class="clearfix"> </div>
             <div class='row'>
-                <div class='col-md-3'><strong>Starts: </strong>{{date('F d,Y h:iA', strtotime($retreat->start_date))}}</div>
-                <div class='col-md-3'><strong>Ends: </strong>{{date('F d,Y h:iA', strtotime($retreat->end_date))}}</div>
+                <div class='col-md-3'><strong>Starts: </strong>{{date('F j, Y g:i A', strtotime($retreat->start_date))}}</div>
+                <div class='col-md-3'><strong>Ends: </strong>{{date('F j, Y g:i A', strtotime($retreat->end_date))}}</div>
             </div><div class="clearfix"> </div>
             <div class='row'>
                 <div class='col-md-3'><strong>Title: </strong>{{ $retreat->title}}</div>

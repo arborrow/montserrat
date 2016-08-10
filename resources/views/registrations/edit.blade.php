@@ -16,20 +16,20 @@
 
                 {!! Form::label('event_id', 'Retreat:', ['class' => 'col-md-2']) !!}
                 {!! Form::select('event_id', $retreats, $registration->event_id, ['class' => 'col-md-2']) !!}
-                {!! Form::label('start', 'Retreat Dates: '.date('F d, Y', strtotime($registration->retreat->start_date)).' - '.date('F d, Y', strtotime($registration->retreat->end_date)), ['class' => 'col-md-6']) !!}
+                {!! Form::label('start', 'Retreat Dates: '.date('M j, Y', strtotime($registration->retreat->start_date)).' - '.date('M j, Y', strtotime($registration->retreat->end_date)), ['class' => 'col-md-6']) !!}
               
                 
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('register_date', 'Registered:', ['class' => 'col-md-2']) !!}
-                {!! Form::text('register_date', date('F d, Y', strtotime($registration->register_date)), ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+                {!! Form::text('register_date', $registration->register_date, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('registration_confirm_date', 'Registration Confirmed:', ['class' => 'col-md-2']) !!}
                 @if ($registration->registration_confirm_date == NULL)
                     {!! Form::text('registration_confirm_date', NULL, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
                 @else
-                    {!! Form::text('registration_confirm_date', date('F d, Y', strtotime($registration->registration_confirm_date)), ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+                    {!! Form::text('registration_confirm_date', $registration->registration_confirm_date, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
                 @endif
                     
             </div><div class="clearfix"> </div>
@@ -38,7 +38,7 @@
                 @if ($registration->attendance_confirm_date== NULL)
                     {!! Form::text('attendance_confirm_date', NULL, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
                 @else
-                    {!! Form::text('attendance_confirm_date', date('F d, Y', strtotime($registration->attendance_confirm_date)), ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+                    {!! Form::text('attendance_confirm_date', $registration->attendance_confirm_date, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
                 @endif
                 
             </div><div class="clearfix"> </div>
