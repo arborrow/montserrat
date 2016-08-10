@@ -147,7 +147,7 @@
             <div class="panel panel-default">
                
             @if ($parish->touchpoints->isEmpty())
-                    <p>It is a brand new world, there are no touch points for this person!</p>
+                    <p>It is a brand new world, there are no touch points for this contact!</p>
                 @else
             <div class="panel-heading">
                 <h2><span class="grey">Touch points for {{ $parish->display_name }} </span></h2> 
