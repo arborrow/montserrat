@@ -122,10 +122,10 @@
                             @endif
                         </td>
                         <td>
-                            @if (empty($registration->retreatant->parish->id))
+                            @if (empty($registration->retreatant->parish_name))
                                 N/A
                             @else
-                            <a href="{{action('ParishesController@show', $registration->retreatant->parish->id)}}">{{ $registration->retreatant->parish->name}}</a>
+                            {!! $registration->retreatant->parish_link!!}
                             @endif
                         </td>
                         <td>{{ $registration->notes }}</td>

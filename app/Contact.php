@@ -340,8 +340,8 @@ class Contact extends Model
     }
     public function getParishLinkAttribute () {
         if (isset($this->parish->contact_id_a)&&($this->parish->contact_id_a>0)) {
-           
-            return "<a href='parish/".$this->parish->contact_a->id."'>".$this->parish->contact_a->display_name.' ('.$this->parish->contact_a->address_primary->city.')'."</a>";
+           $path = url('parish/'.$this->parish->contact_a->id);
+            return "<a href='".$path."'>".$this->parish->contact_a->display_name.' ('.$this->parish->contact_a->address_primary->city.')'."</a>";
         } else {
             
             return NULL;
