@@ -1205,7 +1205,7 @@ class PersonsController extends Controller
             $relationship_assistant->is_active = 1;
             $relationship_assistant->save();
         }
-        $relationship_staff = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_STAFF,'is_active'=>1]);
+        $relationship_staff = \montserrat\Relationship::firstOrNew(['contact_id_a'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_STAFF,'is_active'=>1]);
         if ($request->input('is_staff')==0) {
             $relationship_staff->delete();
         } else {
