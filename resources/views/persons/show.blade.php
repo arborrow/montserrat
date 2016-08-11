@@ -117,12 +117,7 @@
                     <br /><strong>Religion: </strong> {{ !empty($person->religion_id) ? $person->religion->label: 'N/A' }}  
                     <br /><strong>Occupation: </strong> {{ !empty($person->occupation_id) ? $person->occupation->name: 'N/A' }}  
                     <br /><strong>Ethnicity: </strong>{{ !empty($person->ethnicity_id) ? $person->ethnicity->ethnicity: 'N/A' }}    
-                    <br /><strong>Parish: </strong>
-                    @if (!empty($person->parish_id)) 
-                        <a href="../parish/{{$person->parish_id}}">{{$person->parish_name}}</a> 
-                    @else 
-                        N/A 
-                    @endIf     
+                    <br /><strong>Parish: </strong>{!! $person->parish_link!!}
                     <br /><strong>Languages: </strong>
                         <ul>
                             @foreach($person->languages as $language)
