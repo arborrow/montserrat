@@ -89,11 +89,7 @@
                                 @endforeach
                             </td>
                             <td>
-                                @if ((!empty($person->parish)) AND ($person->parish->contact_id_a>0))
-                                    <a href="parish/{{$person->parish->contact_id_a}}">{{ $person->parish->contact_a->organization_name }}</a>
-                                @else
-                                    N/A
-                                @endif
+                                {!! $person->parish_link !!}
                             </td>
                         </tr>
                         @endforeach
