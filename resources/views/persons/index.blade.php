@@ -33,7 +33,7 @@
                             <th>Home phone</th>
                             <th>Cell phone</th>
                             <th>Email</th>
-                            <th>Parish (Diocese)</th>
+                            <th>Parish (City)</th>
                         </tr>
                     </thead>
                     <tbody>
