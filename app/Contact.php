@@ -18,13 +18,6 @@ class Contact extends Model
         return $this->belongsToMany('\montserrat\Retreat','retreatmasters','person_id','retreat_id');
     }
 */
-    public function setBirthDateAttribute($date) {
-        if (strlen($date)) {
-            $this->attributes['birth_date'] = Carbon::parse($date);
-        } else {
-            $this->attributes['birth_date'] = null;
-        }
-    }
     public function a_relationships() {
         return $this->hasMany('\montserrat\Relationship','contact_id_a','id');
     }
@@ -101,6 +94,14 @@ class Contact extends Model
             return 'N/A';
         }
     }  
+    public function getSubcontactTypeLabelAttribute() {
+        
+        if (isset($this->subcontacttype->label)) {
+            return $this->subcontacttype->label;
+        } else {
+            return 'N/A';
+        }
+    }  
     public function getDioceseIdAttribute() {
         if (isset($this->diocese->contact_id_a)) {
             return $this->diocese->contact_id_a;
@@ -111,28 +112,6 @@ class Contact extends Model
     public function getDioceseNameAttribute() {
         if (isset($this->diocese->contact_a->organization_name)) {
             return $this->diocese->contact_a->organization_name;
-        } else {
-            return NULL;
-        }
-    }
-    public function getSubcontactTypeLabelAttribute() {
-        
-        if (isset($this->subcontacttype->label)) {
-            return $this->subcontacttype->label;
-        } else {
-            return 'N/A';
-        }
-    }  
-    public function getPrefixNameAttribute () {
-        if (isset($this->prefix_id)&&($this->prefix_id>0)) {
-            return $this->prefix->name;
-        } else {
-            return NULL;
-        }
-    }
-    public function getSuffixNameAttribute () {
-        if (isset($this->suffix_id)&&($this->suffix_id>0)) {
-            return $this->suffix->name;
         } else {
             return NULL;
         }
@@ -329,52 +308,6 @@ class Contact extends Model
             return FALSE;
         }
     }
-    public function getParishNameAttribute () {
-        if (isset($this->parish->contact_id_a)&&($this->parish->contact_id_a>0)) {
-           
-            return $this->parish->contact_a->display_name.' ('.$this->parish->contact_a->address_primary->city.')';
-        } else {
-            
-            return NULL;
-        }
-    }
-    public function getParishLinkAttribute () {
-        if (isset($this->parish->contact_id_a)&&($this->parish->contact_id_a>0)) {
-           $path = url('parish/'.$this->parish->contact_a->id);
-            return "<a href='".$path."'>".$this->parish->contact_a->display_name.' ('.$this->parish->contact_a->address_primary->city.')'."</a>";
-        } else {
-            
-            return NULL;
-        }
-    }
-    public function getPhoneHomeMobileNumberAttribute () {
-        if (isset($this->phone_home_mobile->phone)) {
-            return $this->phone_home_mobile->phone;
-        } else {
-            return NULL;
-        }
-    }
-    public function getPhoneHomePhoneNumberAttribute () {
-        if (isset($this->phone_home_phone->phone)) {
-            return $this->phone_home_phone->phone;
-        } else {
-            return NULL;
-        }
-    }
-    public function getPhoneWorkPhoneNumberAttribute () {
-        if (isset($this->phone_work_phone)) {
-            return $this->phone_work_phone->phone;
-        } else {
-            return NULL;
-        }
-    }
-    public function getPhoneMainPhoneNumberAttribute () {
-        if (isset($this->phone_main_phone)) {
-            return $this->phone_main_phone->phone;
-        } else {
-            return NULL;
-        }
-    }
     public function getNoteDietaryTextAttribute () {
         if (isset($this->note_dietary->note)) {
             return $this->note_dietary->note; 
@@ -424,6 +357,66 @@ class Contact extends Model
             return NULL;
         }
     }
+    public function getParishNameAttribute () {
+        if (isset($this->parish->contact_id_a)&&($this->parish->contact_id_a>0)) {
+           
+            return $this->parish->contact_a->display_name.' ('.$this->parish->contact_a->address_primary->city.')';
+        } else {
+            
+            return NULL;
+        }
+    }
+    public function getParishLinkAttribute () {
+        if (isset($this->parish->contact_id_a)&&($this->parish->contact_id_a>0)) {
+           $path = url('parish/'.$this->parish->contact_a->id);
+            return "<a href='".$path."'>".$this->parish->contact_a->display_name.' ('.$this->parish->contact_a->address_primary->city.')'."</a>";
+        } else {
+            
+            return NULL;
+        }
+    }
+    public function getPhoneHomeMobileNumberAttribute () {
+        if (isset($this->phone_home_mobile->phone)) {
+            return $this->phone_home_mobile->phone;
+        } else {
+            return NULL;
+        }
+    }
+    public function getPhoneHomePhoneNumberAttribute () {
+        if (isset($this->phone_home_phone->phone)) {
+            return $this->phone_home_phone->phone;
+        } else {
+            return NULL;
+        }
+    }
+    public function getPhoneWorkPhoneNumberAttribute () {
+        if (isset($this->phone_work_phone)) {
+            return $this->phone_work_phone->phone;
+        } else {
+            return NULL;
+        }
+    }
+    public function getPhoneMainPhoneNumberAttribute () {
+        if (isset($this->phone_main_phone)) {
+            return $this->phone_main_phone->phone;
+        } else {
+            return NULL;
+        }
+    }
+    public function getPrefixNameAttribute () {
+        if (isset($this->prefix_id)&&($this->prefix_id>0)) {
+            return $this->prefix->name;
+        } else {
+            return NULL;
+        }
+    }
+    public function getSuffixNameAttribute () {
+        if (isset($this->suffix_id)&&($this->suffix_id>0)) {
+            return $this->suffix->name;
+        } else {
+            return NULL;
+        }
+    }
     public function gender() {
         return $this->hasOne('\montserrat\Gender','id','gender_id');
     }
@@ -460,7 +453,6 @@ class Contact extends Model
     public function group_staff() {
         return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_STAFF);
     }
-
     public function groups() {
         return $this->hasMany('\montserrat\GroupContact','contact_id','id');
     }
@@ -551,27 +543,21 @@ class Contact extends Model
     public function retreat_assistants() {
         return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_ASSISTANT)->whereIsActive(1);
     }
-    
     public function retreat_directors() {
         return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_DIRECTOR);
     }
-    
     public function retreat_innkeepers() {
         return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_INNKEEPER);
     }
-    
-    
     public function retreat_captains() {
         // TODO: handle with participants of role Retreat Director or Master - be careful with difference between (registration table) retreat_id and (participant table) event_id
         return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_CAPTAIN);
     }
-    
     public function retreat_participants() {
         // the events (retreats) for which this contact has been a retreatant (ROLE_ID_RETREATANT) 
         return $this->hasMany('\montserrat\Participant','contact_id','id')->whereRoleId(ROLE_ID_CAPTAIN);
     }
-    
-     public function relationship_mjrh_donor() {
+    public function relationship_mjrh_donor() {
         return $this->hasOne('\montserrat\Relationship','contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_DONOR);
     }   
     public function relationship_mjrh_retreatant() {
@@ -588,6 +574,13 @@ class Contact extends Model
     }
     public function religion() {
         return $this->hasOne('\montserrat\Religion','id','religion_id');
+    }
+    public function setBirthDateAttribute($date) {
+        if (strlen($date)) {
+            $this->attributes['birth_date'] = Carbon::parse($date);
+        } else {
+            $this->attributes['birth_date'] = null;
+        }
     }
     public function setNickNameAttribute($nick_name)
     {

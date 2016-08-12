@@ -9,23 +9,22 @@
             {{ $person->prefix_name }} 
             {{ isset($person->display_name) ? $person->display_name : null }} 
             {{ $person->suffix_name }}
-            {{ (!empty($person->nick_name)) ? "(&quot;$person->nick_name&quot;)" : null }}
+            {{ (!empty($person->nick_name)) ? "(&quot;$person->nick_name&quot;)" : null }} 
         </strong></h1>
         </div>
 
         <span class="back">
-            @if ($person->is_assistant) <span class="back"><a href={{ action('PersonsController@assistants') }}>{!! Html::image('img/assistant.png', 'Assistants Index',array('title'=>"Assistants Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
-            @if ($person->is_bishop) <span class="back"><a href={{ action('PersonsController@bishops') }}>{!! Html::image('img/bishop.png', 'Bishop Index',array('title'=>"Bishop Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
-            @if ($person->is_board) <span class="back"><a href={{ action('PersonsController@boardmembers') }}>{!! Html::image('img/board.png', 'Board Members Index',array('title'=>"Board Members Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
-            @if ($person->is_captain) <span class="back"><a href={{ action('PersonsController@captains') }}>{!! Html::image('img/captain.png', 'Captains Index',array('title'=>"Captains Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
-            @if ($person->is_catholic) <span class="back"><a href={{ action('PersonsController@catholics') }}>{!! Html::image('img/catholic.png', 'Catholics Index',array('title'=>"Catholics Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
-            @if ($person->is_director) <span class="back"><a href={{ action('PersonsController@directors') }}>{!! Html::image('img/director.png', 'Directors Index',array('title'=>"Directors Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
-            @if ($person->is_donor) <span class="back"><a href={{ action('PersonsController@donors') }}>{!! Html::image('img/donor.png', 'Donor Index',array('title'=>"Donor Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
-            @if ($person->is_innkeeper) <span class="back"><a href={{ action('PersonsController@innkeepers') }}>{!! Html::image('img/innkeeper.png', 'Innkeepers Index',array('title'=>"Innkeepers Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
-            @if ($person->is_pastor) <span class="back"><a href={{ action('PersonsController@pastors') }}>{!! Html::image('img/pastor.png', 'Pastors Index',array('title'=>"Pastors Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
-            @if ($person->is_retreatant) <span class="back"><a href={{ action('PersonsController@retreatants') }}>{!! Html::image('img/retreatant.png', 'Retreatants Index',array('title'=>"Retreatants Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
-            @if ($person->is_staff) <span class="back"><a href={{ action('PersonsController@employees') }}>{!! Html::image('img/employee.png', 'Employees Index',array('title'=>"Employees Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
-            @if ($person->is_volunteer) <span class="back"><a href={{ action('PersonsController@volunteers') }}>{!! Html::image('img/volunteer.png', 'Volunteers Index',array('title'=>"Volunteers Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+            @if ($person->is_retreat_assistant) <span class="back"><a href={{ action('GroupsController@show',GROUP_ID_ASSISTANT) }}>{!! Html::image('img/assistant.png', 'Assistants Index',array('title'=>"Assistants Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+            @if ($person->is_bishop) <span class="back"><a href={{ action('GroupsController@show',GROUP_ID_BISHOP) }}>{!! Html::image('img/bishop.png', 'Bishop Index',array('title'=>"Bishop Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+            @if ($person->is_board) <span class="back"><a href={{ action('GroupsController@show',GROUP_ID_BOARD) }}>{!! Html::image('img/board.png', 'Board Members Index',array('title'=>"Board Members Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+            @if ($person->is_captain) <span class="back"><a href={{ action('GroupsController@show',GROUP_ID_CAPTAIN) }}>{!! Html::image('img/captain.png', 'Captains Index',array('title'=>"Captains Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+            @if ($person->is_retreat_director) <span class="back"><a href={{ action('GroupsController@show',GROUP_ID_DIRECTOR) }}>{!! Html::image('img/director.png', 'Directors Index',array('title'=>"Directors Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+            @if ($person->is_donor) <span class="back"><a href={{ action('RelationshipTypesController@show',RELATIONSHIP_TYPE_DONOR) }}>{!! Html::image('img/donor.png', 'Donor Index',array('title'=>"Donor Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+            @if ($person->is_retreat_innkeeper) <span class="back"><a href={{ action('GroupsController@show',GROUP_ID_INNKEEPER) }}>{!! Html::image('img/innkeeper.png', 'Innkeepers Index',array('title'=>"Innkeepers Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+            @if ($person->is_pastor) <span class="back"><a href={{ action('GroupsController@show',GROUP_ID_PASTOR) }}>{!! Html::image('img/pastor.png', 'Pastors Index',array('title'=>"Pastors Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+            @if ($person->is_retreatant) <span class="back"><a href={{ action('RelationshipTypesController@show',RELATIONSHIP_TYPE_RETREATANT) }}>{!! Html::image('img/retreatant.png', 'Retreatants Index',array('title'=>"Retreatants Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+            @if ($person->is_staff) <span class="back"><a href={{ action('GroupsController@show',GROUP_ID_STAFF) }}>{!! Html::image('img/employee.png', 'Employees Index',array('title'=>"Employees Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+            @if ($person->is_volunteer) <span class="back"><a href={{ action('GroupsController@show',GROUP_ID_VOLUNTEER) }}>{!! Html::image('img/volunteer.png', 'Volunteers Index',array('title'=>"Volunteers Index",'class' => 'btn btn-primary')) !!}</a></span> @endIf
         </span>                
     
         {!! Form::open(['method' => 'PUT', 'route' => ['person.update', $person->id]]) !!}
@@ -74,34 +73,18 @@
                 <div class='panel-heading' style="background-color: lightcoral;"><h2>Emergency Contact Information</h2></div>
                 <div class="panel-body" style="background-color: lightcoral;">
                     {!! Form::label('emergency_contact_name', 'Name: ', ['class' => 'col-md-1'])  !!}
-                    @if (isset($person->emergency_contact->name))
-                        {!! Form::text('emergency_contact_name', $person->emergency_contact->name, ['class' => 'col-md-2']) !!}
-                    @else
-                       {!! Form::text('emergency_contact_name', null, ['class' => 'col-md-2']) !!}
-                    @endif
-
+                    {!! Form::text('emergency_contact_name', $person->emergency_contact_name, ['class' => 'col-md-2']) !!}
+                    
                     {!! Form::label('emergency_contact_relationship', 'Relationship: ', ['class' => 'col-md-2'])  !!}
-                    @if (isset($person->emergency_contact->relationship))
-                        {!! Form::text('emergency_contact_relationship', $person->emergency_contact->relationship, ['class' => 'col-md-2']) !!}
-                    @else
-                       {!! Form::text('emergency_contact_relationship', null, ['class' => 'col-md-2']) !!}
-                    @endif
+                    {!! Form::text('emergency_contact_relationship', $person->emergency_contact_relationship, ['class' => 'col-md-2']) !!}
                 </div>
                 <div class="clearfix"> </div>
                 <div class="panel-body" style="background-color: lightcoral;">
                     {!! Form::label('emergency_contact_phone', 'Phone: ', ['class' => 'col-md-1'])  !!}
-                    @if (isset($person->emergency_contact->phone))
-                        {!! Form::text('emergency_contact_phone', $person->emergency_contact->phone, ['class' => 'col-md-2']) !!}
-                    @else
-                       {!! Form::text('emergency_contact_phone', null, ['class' => 'col-md-2']) !!}
-                    @endif
+                    {!! Form::text('emergency_contact_phone', $person->emergency_contact_phone, ['class' => 'col-md-2']) !!}
 
                     {!! Form::label('emergency_contact_phone_alternate', 'Alt. Phone: ', ['class' => 'col-md-2'])  !!}
-                    @if (isset($person->emergency_contact->phone_alternate))
-                        {!! Form::text('emergency_contact_phone_alternate', $person->emergency_contact->phone_alternate, ['class' => 'col-md-2']) !!}
-                    @else
-                       {!! Form::text('emergency_contact_phone_alternate', null, ['class' => 'col-md-2']) !!}
-                    @endif
+                    {!! Form::text('emergency_contact_phone_alternate', $person->emergency_contact_phone_alternate, ['class' => 'col-md-2']) !!}
                 </div>
             </div>
         </div>
