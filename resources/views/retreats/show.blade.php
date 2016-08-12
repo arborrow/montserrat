@@ -115,11 +115,7 @@
                         </td>
                         <td>{{ $registration->deposit }}</td>
                         <td>
-                            @if (empty($registration->retreatant->mobilephone))
-                                N/A
-                            @else
-                                {{ $registration->retreatant->mobilephone}}
-                            @endif
+                            {!!$registration->retreatant->phone_home_mobile_number!!}
                         </td>
                         <td>
                             @if (empty($registration->retreatant->parish_name))
