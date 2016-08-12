@@ -8,12 +8,30 @@
                 <span class="back">
                     <span>
                         <h1><strong>{{ $person->full_name }}</strong></h1>
-                    </span>
+                   
+                   @if ($person->is_board_member) <span class="back"><a href={{ action('GroupsController@show',GROUP_ID_BOARD) }}>{!! Html::image('img/board.png', 'Board Members Group',array('title'=>"Board Members Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
+            @if ($person->is_captain) <span class="back"><a href={{ action('GroupsController@show',GROUP_ID_CAPTAIN) }}>{!! Html::image('img/captain.png', 'Captains Group',array('title'=>"Captains Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
+            @if ($person->is_staff) <span class="back"><a href={{ action('GroupsController@show',GROUP_ID_STAFF) }}>{!! Html::image('img/employee.png', 'Staff Group',array('title'=>"Employees Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
+            @if ($person->is_volunteer) <span class="back"><a href={{ action('GroupsController@show',GROUP_ID_VOLUNTEER) }}>{!! Html::image('img/volunteer.png', 'Volunteers Group',array('title'=>"Volunteers Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
+            @if ($person->is_retreat_director) <span class="back"><a href={{ action('GroupsController@show',GROUP_ID_DIRECTOR) }}>{!! Html::image('img/director.png', 'Retreat Directors Group',array('title'=>"Directors Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
+            @if ($person->is_retreat_innkeeper) <span class="back"><a href={{ action('GroupsController@show',GROUP_ID_INNKEEPER) }}>{!! Html::image('img/innkeeper.png', 'Retreat Innkeepers Group',array('title'=>"Innkeepers Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
+            @if ($person->is_retreat_assistant) <span class="back"><a href={{ action('GroupsController@show',GROUP_ID_ASSISTANT) }}>{!! Html::image('img/assistant.png', 'Retreat Assistants Group',array('title'=>"Assistants Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
+            @if ($person->is_bishop) <span class="back"><a href={{ action('GroupsController@show',GROUP_ID_BISHOP) }}>{!! Html::image('img/bishop.png', 'Bishops Group',array('title'=>"Bishop Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
+            @if ($person->is_priest) <span class="back"><a href={{ action('GroupsController@show',GROUP_ID_PRIEST) }}>{!! Html::image('img/priest.png', 'Priests Group',array('title'=>"Priests Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
+            @if ($person->is_deacon) <span class="back"><a href={{ action('GroupsController@show',GROUP_ID_DEACON) }}>{!! Html::image('img/deacon.png', 'Deacons Group',array('title'=>"Deacons Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
+            @if ($person->is_pastor) <span class="back"><a href={{ action('GroupsController@show',GROUP_ID_PASTOR) }}>{!! Html::image('img/pastor.png', 'Pastors Group',array('title'=>"Pastors Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
+            @if ($person->is_jesuit) <span class="back"><a href={{ action('GroupsController@show',GROUP_ID_JESUIT) }}>{!! Html::image('img/jesuit.png', 'Jesuits Group',array('title'=>"Jesuits Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
+            @if ($person->is_provincial) <span class="back"><a href={{ action('GroupsController@show',GROUP_ID_PROVINCIAL) }}>{!! Html::image('img/jesuit.png', 'Provincials Group',array('title'=>"Provincials Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
+            @if ($person->is_superior) <span class="back"><a href={{ action('GroupsController@show',GROUP_ID_SUPERIOR) }}>{!! Html::image('img/jesuit.png', 'Superiors Group',array('title'=>"Superiors Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
+                        
+         </span>           
 
-                <span class="btn btn-primary">
+                </span>
+        
+                <span class="btn btn-default">
                    <a href={{ action('TouchpointsController@add',$person->id) }}>Add Touch point</a>
                 </span>
-                <span class="btn btn-primary">
+                <span class="btn btn-default">
                     <a href={{ action('RegistrationsController@add',$person->id) }}>Add Registration</a> 
                 </span>                
 
@@ -184,7 +202,7 @@
         
         <hr />
         <div>
-                 <span class="btn btn-primary">
+                 <span class="btn btn-default">
                    <a href={{ action('TouchpointsController@add',$person->id) }}>Add Touch point</a>
                 </span>
            

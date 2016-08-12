@@ -227,7 +227,7 @@
         
         <div class="col-md-1">
             <div class="form-group">
-                {!! Form::submit('Add Person', ['class'=>'btn btn-primary']) !!}
+                {!! Form::submit('Add Person', ['class'=>'btn btn-default']) !!}
             </div>
             {!! Form::close() !!}
         </div>
