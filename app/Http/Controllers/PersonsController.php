@@ -1397,6 +1397,11 @@ class PersonsController extends Controller
         $role['field'] = 'is_catholic';
         return $this->role($role);
     }
+    
+    public function deacons()
+    {
+        return $this->role(GROUP_ID_DEACON);
+    }
     public function deceased()
     {
         //
@@ -1420,9 +1425,7 @@ class PersonsController extends Controller
     }
     public function employees()
     {
-        $role['name'] = 'Employees';
-        $role['field'] = 'is_staff';
-        return $this->role($role);
+        return $this->role(GROUP_ID_STAFF);
     }
     public function formerboard()
     {
@@ -1434,42 +1437,36 @@ class PersonsController extends Controller
     }
    public function innkeepers()
     {
-        //
-        $role['name'] = 'Retreat Innkeepers';
-        $role['field'] = 'is_innkeeper';
-        return $this->role($role);
-    
+        return $this->role(GROUP_ID_INNKEEPER);
     }
     public function jesuits()
     {
-        //
-        $role['name'] = 'Jesuits';
-        $role['field'] = 'is_jesuit';
-        return $this->role($role);
-    
+        return $this->role(GROUP_ID_JESUIT);
     }
-  public function pastors()
+    public function pastors()
     {
-        //
-        $role['name'] = 'Pastors';
-        $role['field'] = 'is_pastor';
-        return $this->role($role);
-
+        return $this->role(GROUP_ID_PASTOR);
+    }
+    public function priests()
+    {
+        return $this->role(GROUP_ID_PRIEST);
+    }
+    public function provincials()
+    {
+        return $this->role(GROUP_ID_PROVINCIAL);
     }
     public function retreatants()
-    {
-        //
-        $role['name'] = 'Retreatants';
-        $role['field'] = 'is_retreatant';
+    {//relationship (not a group)
         return $this->role($role);
     }
-    
+    public function superiors()
+    {
+        return $this->role(GROUP_ID_SUPERIOR);
+    }
+        
     public function volunteers()
     {
-        //
-        $role['name'] = 'Volunteers';
-        $role['field'] = 'is_volunteer';
-        return $this->role($role);
+        return $this->role(GROUP_ID_VOLUNTEER);
     }
     
     public function role($group_id)

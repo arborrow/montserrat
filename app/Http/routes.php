@@ -62,6 +62,7 @@ Route::resource('person','PersonsController');
     Route::get('boardmembers',['as' => 'boardmembers','uses' => 'PersonsController@boardmembers']);
     Route::get('captains',['as' => 'captains','uses' => 'PersonsController@captains']);
     Route::get('catholics',['as' => 'catholics','uses' => 'PersonsController@catholics']);
+    Route::get('deacons',['as' => 'deacons','uses' => 'PersonsController@deacons']);
     Route::get('deceased',['as' => 'deceased','uses' => 'PersonsController@deceased']);
     Route::get('directors',['as' => 'directors','uses' => 'PersonsController@directors']);
     Route::get('donors',['as' => 'donors','uses' => 'PersonsController@donors']);
@@ -70,7 +71,10 @@ Route::resource('person','PersonsController');
     Route::get('innkeepers',['as' => 'innkeepers','uses' => 'PersonsController@innkeepers']);
     Route::get('jesuits',['as' => 'jesuits','uses' => 'PersonsController@jesuits']);
     Route::get('pastors',['as' => 'pastors','uses' => 'PersonsController@pastors']);
+    Route::get('priests',['as' => 'priests','uses' => 'PersonsController@priests']);
+    Route::get('provincials',['as' => 'provincials','uses' => 'PersonsController@provincials']);
     Route::get('retreatants',['as' => 'retreatants','uses' => 'PersonsController@retreatants']);
+    Route::get('superiors',['as' => 'superiors','uses' => 'PersonsController@superiors']);
     Route::get('volunteers',['as' => 'volunteers','uses' => 'PersonsController@volunteers']);
     Route::get('person/lastnames/{id?}',['as' => 'person.lastnames', 'uses' => 'PersonsController@lastnames'])->where('id','[a-z]');
 
