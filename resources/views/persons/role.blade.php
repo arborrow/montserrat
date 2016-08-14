@@ -28,7 +28,7 @@
                     <tbody>
                         @foreach($persons as $person)
                         <tr>
-                            <td><a href="person/{{ $person->id}}">{{ $person->sort_name }}</a></td>
+                            <td><a href="person/{{ $person->id}}">{{ $person->full_name }}</a></td>
                             <td>
                                 {!!$person->address_primary_street!!} 
                             </td>
