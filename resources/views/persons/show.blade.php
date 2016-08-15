@@ -200,7 +200,7 @@
         <div class='row'>
                 <div class='col-md-8'>
                     <div class='panel-heading'><h2><strong>Retreat Participation</strong></h2></div>
-                        <   <ul>    
+                            <ul>    
                                 @foreach($person->event_registrations as $registration)
                                 <li>{!!$registration->event_link!!}</li> 
                                 @endforeach
