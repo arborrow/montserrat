@@ -49,11 +49,7 @@
                                 @if($person->do_not_mail)
                                     <div class="alert alert-warning"><strong>Do Not Mail</strong></div>
                                 @endIf
-                                @foreach($person->addresses as $address)
-                                    @if ($address->is_primary)
-                                        {!!$address->google_map!!}
-                                    @endif
-                                @endforeach
+                                {!!$person->address_primary_google_map!!} 
                             </td>
                             <td>
                                 @if($person->do_not_phone)

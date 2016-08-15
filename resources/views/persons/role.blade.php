@@ -22,7 +22,7 @@
                             <th>Home phone</th>
                             <th>Cell phone</th>
                             <th>Email</th>
-                            <th>Parish (Diocese)</th>
+                            <th>Parish (City)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -30,7 +30,7 @@
                         <tr>
                             <td><a href="person/{{ $person->id}}">{{ $person->full_name }}</a></td>
                             <td>
-                                {!!$person->address_primary_street!!} 
+                                {!!$person->address_primary_google_map!!} 
                             </td>
                             <td>{{ $person->phone_home_phone_number }}</td>
                             <td>{{ $person->phone_home_mobile_number }}</td>

@@ -86,6 +86,14 @@ class Contact extends Model
             return NULL;
         }
     }
+    public function getAddressPrimaryGoogleMapAttribute() {
+        if (isset($this->address_primary->google_map)) {
+            return $this->address_primary->google_map;
+        } else {
+            return NULL;
+        }
+    }
+    
     public function getContactTypeLabelAttribute() {
         
         if (isset($this->contacttype->label)) {
