@@ -561,9 +561,17 @@ class Contact extends Model
         // TODO: handle with participants of role Retreat Director or Master - be careful with difference between (registration table) retreat_id and (participant table) event_id
         return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_CAPTAIN);
     }
-    public function retreat_participants() {
-        // the events (retreats) for which this contact has been a retreatant (ROLE_ID_RETREATANT) 
-        return $this->hasMany('\montserrat\Participant','contact_id','id')->whereRoleId(ROLE_ID_CAPTAIN);
+    public function event_registrations() {
+        // the events (retreats) for which this contact has been a retreatant  
+        return $this->hasMany('\montserrat\Participant','contact_id','id');
+    }
+    public function event_captains() {
+        // the events (retreats) for which this contact has been a retreatant  
+        return $this->hasMany('\montserrat\Participant','contact_id','id')->whereRoleId(PARTICIPANT_ROLE_ID_CAPTAIN);
+    }
+    public function event_retreatants() {
+        // the events (retreats) for which this contact has been a retreatant  
+        return $this->hasMany('\montserrat\Participant','contact_id','id')->whereRoleId(PARTICIPANT_ROLE_ID_RETREATANT);
     }
     public function relationship_mjrh_donor() {
         return $this->hasOne('\montserrat\Relationship','contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_DONOR);

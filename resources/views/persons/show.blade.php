@@ -170,7 +170,6 @@
                 
             </div><div class="clearfix"> </div>  
             <div class='row'>
-
                 <div class='col-md-8'>
                     <div class='panel-heading'><h2><strong>Groups and Relationships</strong></h2></div>
                         <div class="form-group">Groups
@@ -198,42 +197,56 @@
                     </div>
             </div>
             <div class="clearfix"> </div>
+        <div class='row'>
+                <div class='col-md-8'>
+                    <div class='panel-heading'><h2><strong>Retreat History</strong></h2></div>
+                        <div class="form-group">List of Attended Retreats
+                            <ul>    
+                                @foreach($person->event_registrations as $registration)
+                                <li>{!!$registration->event_link!!}</li> 
+                                @endforeach
+                            </ul>
+                        </div>
+                        </ul>
+                    </div>
+            </div>
+            <div class="clearfix"> </div>
         
-        <hr />
-        <div>
-                 <span class="btn btn-default">
+        <div class='row'>
+
+        <div class='col-md-8'>
+            <div class='panel-heading'><h2><strong>Touchpoints</strong></h2>
+                <span class="btn btn-default">
                    <a href={{ action('TouchpointsController@add',$person->id) }}>Add Touch point</a>
                 </span>
-           
-            @if ($person->touchpoints->isEmpty())
-                    <p>It is a brand new world, there are no touch points for this person!</p>
-                @else
-                <table class="table"><caption><h2>Touch points for {{ $person->display_name }} </h2></caption>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Contacted by</th>
-                            <th>Type of contact</th>
-                            <th>Notes</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($person->touchpoints as $touchpoint)
-                        <tr>
-                            <td><a href="touchpoint/{{ $touchpoint->id}}">{{ $touchpoint->touched_at }}</a></td>
-                            <td><a href="person/{{ $touchpoint->staff->id}}">{{ $touchpoint->staff->display_name }}</a></td>
-                            <td>{{ $touchpoint->type }}</td>
-                            <td>{{ $touchpoint->notes }}</td>
-                        </tr>
-                        @endforeach
-                        
-                    </tbody>
-                </table>
+           </div>
+                @if ($person->touchpoints->isEmpty())
+                        <p>It is a brand new world, there are no touch points for this person!</p>
+                    @else
+                    <table class="table"><caption><h2>Touch points for {{ $person->display_name }} </h2></caption>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Contacted by</th>
+                                <th>Type of contact</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($person->touchpoints as $touchpoint)
+                            <tr>
+                                <td><a href="touchpoint/{{ $touchpoint->id}}">{{ $touchpoint->touched_at }}</a></td>
+                                <td><a href="person/{{ $touchpoint->staff->id}}">{{ $touchpoint->staff->display_name }}</a></td>
+                                <td>{{ $touchpoint->type }}</td>
+                                <td>{{ $touchpoint->notes }}</td>
+                            </tr>
+                            @endforeach
+
+                        </tbody>
+                    </table>
                 @endif
         </div>
         </div>
-        
-            
         </div>
         <div class='row'>
             <div class='col-md-1'><a href="{{ action('PersonsController@edit', $person->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
