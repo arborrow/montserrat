@@ -199,15 +199,12 @@
             <div class="clearfix"> </div>
         <div class='row'>
                 <div class='col-md-8'>
-                    <div class='panel-heading'><h2><strong>Retreat History</strong></h2></div>
-                        <div class="form-group">List of Attended Retreats
-                            <ul>    
+                    <div class='panel-heading'><h2><strong>Retreat Participation</strong></h2></div>
+                        <   <ul>    
                                 @foreach($person->event_registrations as $registration)
                                 <li>{!!$registration->event_link!!}</li> 
                                 @endforeach
                             </ul>
-                        </div>
-                        </ul>
                     </div>
             </div>
             <div class="clearfix"> </div>
