@@ -202,7 +202,7 @@
                     <div class='panel-heading'><h2><strong>Retreat Participation</strong></h2></div>
                             <ul>    
                                 @foreach($person->event_registrations as $registration)
-                                <li>{!!$registration->event_link!!}</li> 
+                                <li>{!!$registration->event_link!!} ({{date('F j, Y', strtotime($registration->event->start_date))}} - {{date('F j, Y', strtotime($registration->event->end_date))}}) </li>
                                 @endforeach
                             </ul>
                     </div>
