@@ -6,10 +6,14 @@
     <section class="section-padding">
         <div class="jumbotron text-left">
             <div class="panel panel-default">
-                <div class="panel-heading">
+                <div class="panel-heading" style="text-align: center">
+                    <h1>Room Schedules for</h1>
                     <h1>
-                    <span class="grey">Room Schedules for {{$dts[0]->format('F d, Y')}} - {{$dts[31]->format('F d, Y')}} </span> 
-                    </div>
+                        {!!$previous_link!!}
+                        {{$dts[0]->format('F d, Y')}} - {{$dts[31]->format('F d, Y')}} 
+                        {!!$next_link!!}
+                    </h1>
+                </div>
                 
                 @if (empty($m))
                     <p> Yikes, there is nothing to schedule!</p>

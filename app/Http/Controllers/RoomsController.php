@@ -173,11 +173,19 @@ return Redirect::action('RoomsController@index');
             }
         }
         $upcoming = clone $dt;
+        $previous_dt = clone $dt;
+        $path=url('rooms/'.$previous_dt->subDays(31)->format('Ymd'));
+        $previous_link = '<a href="'.$path.'">&#171;</a>'; 
         $dts[0] = $dt;
         //dd($dts);
         for ($i=1; $i<=31;$i++) {
             $dts[$i] = Carbon::parse($upcoming->addDays((1)));
         }
+        
+        $path=url('rooms/'.$upcoming->format('Ymd'));
+        $next_link = '<a href="'.$path.'">&#187;</a>'; 
+        //dd($dts);
+        
         $rooms = \montserrat\Room::with('location')->get();
         //dd($rooms);
         //foreach ($rooms as $room) {
@@ -240,6 +248,6 @@ return Redirect::action('RoomsController@index');
             }
         }
         
-        return view('rooms.sched2',compact('dts','roomsort','m'));
+        return view('rooms.sched2',compact('dts','roomsort','m','previous_link','next_link'));
     }
 }
