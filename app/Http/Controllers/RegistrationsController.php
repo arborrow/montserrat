@@ -91,36 +91,32 @@ class RegistrationsController extends Controller
         'departed_at' => 'date',
         'event_id' => 'required|integer|min:0',
         'contact_id' => 'required|integer|min:0',
-        'room_id' => 'required|integer|min:0',
         'deposit' => 'required|numeric|min:0|max:1000',
         ]);
-
+    
+    $rooms = $request->input('rooms');
+    //TODO: Should we check and verify that the contact type is an organization to allow multiselect or just allow any registration to book multiple rooms?
     $retreat = \montserrat\Retreat::findOrFail($request->input('event_id'));
-
-    $registration = new \montserrat\Registration;
-    $registration->event_id= $request->input('event_id');
-    // $registration->start = $retreat->start;
-    // $registration->end = $retreat->end;
-    $registration->contact_id= $request->input('contact_id');
-    $registration->register_date = $request->input('register_date');
-    //dd($request->confirmattend);
-    $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
-    if (!empty($request->input('canceled_at'))) {$registration->canceled_at= $request->input('canceled_at'); }
-    if (!empty($request->input('arrived_at'))) {$registration->arrived_at = $request->input('arrived_at'); }
-    if (!empty($request->input('departed_at'))) {$registration->departed_at = $request->input('departed_at'); }
-    $registration->room_id= $request->input('room_id');
+    $contact = \montserrat\Contact::findOrFail($request->input('contact_id'));
+    foreach($rooms as $room) {
+        //ensure that it is a valid room (not N/A)
+        $registration = new \montserrat\Registration;
+        $registration->event_id= $request->input('event_id');
+        $registration->contact_id= $request->input('contact_id');
+        $registration->register_date = $request->input('register_date');
+        $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
+        if (!empty($request->input('canceled_at'))) {$registration->canceled_at= $request->input('canceled_at'); }
+        if (!empty($request->input('arrived_at'))) {$registration->arrived_at = $request->input('arrived_at'); }
+        if (!empty($request->input('departed_at'))) {$registration->departed_at = $request->input('departed_at'); }
+        $registration->room_id= $room;
+        $registration->registration_confirm_date= $request->input('registration_confirm_date');
+        $registration->confirmed_by = $request->input('confirmed_by');
+        $registration->deposit = $request->input('deposit');
+        $registration->notes = $request->input('notes');
+        $registration->save();
+        //TODO: verify that the newly created room assignment does not conflict with an existing one
+    }
     
-    $registration->registration_confirm_date= $request->input('registration_confirm_date');
-    $registration->confirmed_by = $request->input('confirmed_by');
-    $registration->deposit = $request->input('deposit');
-    $registration->notes = $request->input('notes');
-    
-    $registration->save();
-    $count_registrations = \montserrat\Registration::where('event_id','=',$request->input('event_id'))->count();
-    // TODO: check and make sure that this is handled on the model so that we can easily get a count of the number of participants/retreatants registered
-    // $retreat->attending = $count_registrations;
-    $retreat->save();
-    //dd($registrations);
     return Redirect::action('RegistrationsController@index');
     }
 

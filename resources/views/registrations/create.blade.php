@@ -54,10 +54,10 @@
                 {!! Form::label('departed_at', 'Departed at:', ['class' => 'col-md-2']) !!}
                 {!! Form::text('departed_at', null, ['class'=>'col-md-2']) !!}
             </div><div class="clearfix"> </div>
-            <div class="form-group">
-                {!! Form::label('room_id', 'Room:', ['class' => 'col-md-2'])  !!}
-                {!! Form::select('room_id', $rooms, 0, ['class' => 'col-md-2']) !!} 
-            </div>
+             <div class="form-group"> 
+                {!! Form::label('rooms', 'Room(s):', ['class' => 'col-md-2']) !!}
+                {!! Form::select('rooms[]', $rooms, 0, ['class' => 'col-md-2','multiple' => 'multiple','style'=>'font-size: inherit;']) !!}
+            </div><div class="clearfix"> </div>
                     
             <div class="form-group">
                 {!! Form::label('deposit', 'Deposit:', ['class' => 'col-md-2']) !!}
