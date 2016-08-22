@@ -196,8 +196,11 @@ return Redirect::action('RoomsController@index');
         });
         
         //dd($dts);
-        $registrations = \montserrat\Registration::with('room','room.location','retreatant','retreat')->where('room_id','>',0)->whereHas('retreat', function($query) use ($dts) {
+        $registrations_start = \montserrat\Registration::with('room','room.location','retreatant','retreat')->where('room_id','>',0)->whereHas('retreat', function($query) use ($dts) {
             $query->where('start_date','>=',$dts[0])->where('start_date','<=',$dts[30]);
+        })->get();
+        $registrations_end = \montserrat\Registration::with('room','room.location','retreatant','retreat')->where('room_id','>',0)->whereHas('retreat', function($query) use ($dts) {
+            $query->where('end_date','>=',$dts[0])->where('start_date','<=',$dts[0]);
         })->get();
         //$endregistrations = \montserrat\Registration::where('end','>=',$dts[0])->where('end','<=',$dts[30])->with('room','room.location','retreatant','retreat')->where('room_id','>',0)->get();
         /* get registrations that are not inclusive of the date range */
@@ -227,7 +230,27 @@ return Redirect::action('RoomsController@index');
          * if it is in the matrix update the status to reserved
          */
         
-        foreach ($registrations as $registration) {
+        foreach ($registrations_start as $registration) {
+            
+            $numdays = ($registration->retreat->end_date->diffInDays($registration->retreat->start_date))-1;
+            
+            for ($i=0; $i<=$numdays;$i++) {
+                $matrixdate = $registration->retreat->start_date->copy()->addDays($i);
+                if (array_key_exists($matrixdate->toDateString(),$m[$registration->room_id])) {
+                        $m[$registration->room_id][$matrixdate->toDateString()]['status']='R';
+                        $m[$registration->room_id][$matrixdate->toDateString()]['registration_id']=$registration->id;
+                        $m[$registration->room_id][$matrixdate->toDateString()]['retreatant_id']=$registration->contact_id;
+                        $m[$registration->room_id][$matrixdate->toDateString()]['retreatant_name']= $registration->retreatant->display_name;
+                        /* For now just handle marking the room as reserved with a URL to the registration and name in the title when hovering over it
+                         * I am thinking about using diffInDays to see if the retreatant arrived on the day that we are looking at or sooner
+                         * If they have not yet arrived then the first day should be reserved but not occupied. 
+                         * Occupied will be the same link to the registration. 
+                         */                  
+                     }
+        
+            }
+        }
+        foreach ($registrations_end as $registration) {
             
             $numdays = ($registration->retreat->end_date->diffInDays($registration->retreat->start_date))-1;
             
