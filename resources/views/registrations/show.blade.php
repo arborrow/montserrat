@@ -9,7 +9,7 @@
                     <span class="back"><a href={{ action('RegistrationsController@index') }}>{!! Html::image('img/registration.png', 'Registration Index',array('title'=>"Registration Index",'class' => 'btn btn-primary')) !!}</a></span></h1>
                 </div>
                 <div class='row'>
-                    <div class='col-md-3'><strong>Retreatant: </strong><a href="../person/{{ $registration->retreatant->id}}">{{ $registration->retreatant->lastname}},{{ $registration->retreatant->firstname}}</a></div>
+                    <div class='col-md-3'><strong>Retreatant: </strong><a href="../person/{{ $registration->retreatant->id}}">{{ $registration->retreatant->display_name}}</a></div>
                 </div><div class="clearfix"> </div>
                          <div class='row'>
                     <div class='col-md-3'><strong>Retreat: </strong><a href="../retreat/{{ $registration->event_id}}">{{ $registration->retreat->title}} ({{ $registration->retreat->idnumber}})</a></div>
