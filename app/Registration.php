@@ -63,6 +63,14 @@ class Registration extends Model
             return 'N/A';
         }
     }
+    public function getAttendanceConfirmDateTextAttribute() {
+        if (isset($this->attendance_confirm_date)) {
+            return date('F d, Y', strtotime($this->attendance_confirm_date));
+        } else {
+            return 'N/A';
+        }
+        
+        }
 
     public function retreat()
     {
