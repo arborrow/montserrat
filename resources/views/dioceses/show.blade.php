@@ -6,10 +6,14 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <span><h2>{!! $diocese->organization_name !!}</h2></span>
-                    <span><a href={{ action('DiocesesController@index') }}>{!! Html::image('img/diocese.png', 'Diocese Index',array('title'=>"Diocese Index",'class' => 'btn btn-primary')) !!}</a></span>
-                    <span class="btn btn-primary">
+                    <span><a href={{ action('DiocesesController@index') }}>{!! Html::image('img/diocese.png', 'Diocese Index',array('title'=>"Diocese Index",'class' => 'btn btn-default')) !!}</a></span>
+                    <span class="btn btn-default">
                         <a href={{ action('TouchpointsController@add',$diocese->id) }}>Add Touch point</a>
                     </span>
+                    <span class="btn btn-default">
+                    <a href={{ action('RegistrationsController@add',$diocese->id) }}>Add Registration</a> 
+                </span>                
+
                 </div>
                 <div class="row">
                     <div class='col-md-6'>

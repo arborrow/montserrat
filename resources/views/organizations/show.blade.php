@@ -6,10 +6,14 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <span><h2>{{ $organization->organization_name }} ({{ $organization->subcontact_type_label }})</h2></span>
-                    <span><a href={{ action('OrganizationsController@index') }}>{!! Html::image('img/organization.png', 'Organization Index',array('title'=>"Organization Index",'class' => 'btn btn-primary')) !!}</a></span>
-                    <span class="btn btn-primary">
+                    <span><a href={{ action('OrganizationsController@index') }}>{!! Html::image('img/organization.png', 'Organization Index',array('title'=>"Organization Index",'class' => 'btn btn-default')) !!}</a></span>
+                    <span class="btn btn-default">
                         <a href={{ action('TouchpointsController@add',$organization->id) }}>Add Touch point</a>
                     </span>
+                    <span class="btn btn-default">
+                    <a href={{ action('RegistrationsController@add',$organization->id) }}>Add Registration</a> 
+                </span>                
+
                 </div>
                 <div class="row">
                 <div class='col-md-6'>

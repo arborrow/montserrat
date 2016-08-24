@@ -48,16 +48,11 @@ public function getuser() {
         if ($contact->contact_type == CONTACT_TYPE_INDIVIDUAL) {
             return redirect()->action('PersonsController@show',$id);
         }
-        if ($contact->contact_type == CONTACT_TYPE_ORGANIZATION) {
-            if ($contact->subcontact_type == CONTACT_TYPE_PARISH) {
-                return redirect()->action('ParishesController@show',$id);
-            }
-            if ($contact->subcontact_type == CONTACT_TYPE_DIOCESE) {
-                return redirect()->action('DiocesesController@show',$id);
-            }
-            if ($contact->subcontact_type == CONTACT_TYPE_VENDOR) {
-                return redirect()->action('VendorsController@show',$id);
-            }
+        switch ($contact->subcontact_type) {
+            case CONTACT_TYPE_PARISH : return redirect()->action('ParishesController@show',$id); break;
+            case CONTACT_TYPE_DIOCESE: return redirect()->action('DiocesesController@show',$id); break;
+            case CONTACT_TYPE_VENDOR : return redirect()->action('VendorsController@show',$id); break;
+            default : return redirect()->action('OrganizationsController@show',$id);
             
         }
     }

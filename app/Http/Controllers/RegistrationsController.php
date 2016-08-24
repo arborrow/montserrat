@@ -60,8 +60,13 @@ class RegistrationsController extends Controller
         //$retreats = \montserrat\Retreat::where('end','>',\Carbon\Carbon::today())->lists('idnumber','title','id');
         $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date",">",\Carbon\Carbon::today()->subWeek())->orderBy('start_date')->pluck('description','id');
         $retreats->prepend('Unassigned',0);
-        
-        $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->lists('sort_name','id');
+        $retreatant = \montserrat\Contact::findOrFail($id);
+        if ($retreatant->contact_type == CONTACT_TYPE_INDIVIDUAL) {
+            $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->lists('sort_name','id');
+        }
+        if ($retreatant->contact_type == CONTACT_TYPE_ORGANIZATION) {
+            $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_ORGANIZATION)->whereSubcontactType($retreatant->subcontact_type)->orderBy('sort_name')->lists('sort_name','id');
+        }
         
         $rooms= \montserrat\Room::orderby('name')->lists('name','id');
         $rooms->prepend('Unassigned',0);

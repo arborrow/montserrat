@@ -6,10 +6,13 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <span><h2>{!! $parish->organization_name !!} (<a href="../diocese/{{$parish->diocese_id}}">{{ $parish->diocese_name}}</a>)</span>
-                    <span class="back"><a href={{ action('ParishesController@index') }}>{!! Html::image('img/parish.png', 'Parish Index',array('title'=>"Parish Index",'class' => 'btn btn-primary')) !!}</a></span></h1>
-                    <span class="btn btn-primary">
+                    <span class="back"><a href={{ action('ParishesController@index') }}>{!! Html::image('img/parish.png', 'Parish Index',array('title'=>"Parish Index",'class' => 'btn btn-default')) !!}</a></span></h1>
+                    <span class="btn btn-default">
                         <a href={{ action('TouchpointsController@add',$parish->id) }}>Add Touch point</a>
                     </span>
+                    <span class="btn btn-default">
+                        <a href={{ action('RegistrationsController@add',$parish->id) }}>Add Registration</a> 
+                    </span>                
                 </div>
                 <div class='row'><div class='col-md-4'>
                 <span><h2>Addresses</h2>
@@ -151,7 +154,7 @@
                 @else
             <div class="panel-heading">
                 <h2><span class="grey">Touch points for {{ $parish->display_name }} </span></h2> 
-            <span class="btn btn-primary">
+            <span class="btn btn-default">
                    <a href={{ action('TouchpointsController@add',$parish->id) }}>Add Touch point</a>
                 </span>
             
