@@ -49,14 +49,14 @@ class ParishesController extends Controller
     public function create()
     {
         //
-        // $dioceses = \montserrat\Diocese::orderby('name')->lists('name','id');
-        $dioceses = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_DIOCESE)->orderby('organization_name')->lists('organization_name','id');
+        // $dioceses = \montserrat\Diocese::orderby('name')->pluck('name','id');
+        $dioceses = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_DIOCESE)->orderby('organization_name')->pluck('organization_name','id');
         $pastors = \montserrat\Contact::whereHas('b_relationships', function($query) {
-            $query->whereRelationshipTypeId(RELATIONSHIP_TYPE_PASTOR)->whereIsActive(1);})->orderby('sort_name')->lists('sort_name','id');
+            $query->whereRelationshipTypeId(RELATIONSHIP_TYPE_PASTOR)->whereIsActive(1);})->orderby('sort_name')->pluck('sort_name','id');
         $pastors[0] = 'No pastor assigned';
-        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->lists('name','id');
+        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name','id');
         $states->prepend('N/A',0); 
-        $countries = \montserrat\Country::orderby('iso_code')->lists('iso_code','id');
+        $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code','id');
         $default['state_province_id'] = STATE_PROVINCE_ID_TX;
         $default['country_id'] = COUNTRY_ID_USA;
         $countries->prepend('N/A',0); 
@@ -187,17 +187,17 @@ return Redirect::action('ParishesController@index');
     public function edit($id)
     {
         //
-        $dioceses = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_DIOCESE)->orderby('organization_name')->lists('organization_name','id');
+        $dioceses = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_DIOCESE)->orderby('organization_name')->pluck('organization_name','id');
         //$pastors = \montserrat\Contact::whereHas('b_relationships', function($query) {
-        //    $query->whereRelationshipTypeId(RELATIONSHIP_TYPE_PASTOR)->whereIsActive(1);})->orderby('sort_name')->lists('sort_name','id');
+        //    $query->whereRelationshipTypeId(RELATIONSHIP_TYPE_PASTOR)->whereIsActive(1);})->orderby('sort_name')->pluck('sort_name','id');
         $pastors = \montserrat\Contact::whereHas('group_pastor', function($query) {
-            $query->whereGroupId(GROUP_ID_PASTOR)->whereStatus('Added');})->orderby('sort_name')->lists('sort_name','id');
+            $query->whereGroupId(GROUP_ID_PASTOR)->whereStatus('Added');})->orderby('sort_name')->pluck('sort_name','id');
         $dioceses[0] = 'No Diocese assigned';
         $pastors[0] = 'No pastor assigned';
         //dd($pastors);
-        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->lists('name','id');
+        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name','id');
         $states->prepend('N/A',0); 
-        $countries = \montserrat\Country::orderby('iso_code')->lists('iso_code','id');
+        $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code','id');
         $default['state_province_id'] = STATE_PROVINCE_ID_TX;
         $default['country_id'] = COUNTRY_ID_USA;
         $countries->prepend('N/A',0); 

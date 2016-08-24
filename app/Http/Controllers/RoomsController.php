@@ -46,7 +46,7 @@ class RoomsController extends Controller
     public function create()
     {
         //
-        $locations = \montserrat\Location::orderby('name')->lists('name','id');
+        $locations = \montserrat\Location::orderby('name')->pluck('name','id');
         return view('rooms.create',compact('locations'));  
     
     }
@@ -105,7 +105,7 @@ return Redirect::action('RoomsController@index');
     public function edit($id)
     {
         //
-        $locations = \montserrat\Location::orderby('name')->lists('name','id');
+        $locations = \montserrat\Location::orderby('name')->pluck('name','id');
         $room= \montserrat\Room::find($id);
       
        return view('rooms.edit',compact('room','locations'));

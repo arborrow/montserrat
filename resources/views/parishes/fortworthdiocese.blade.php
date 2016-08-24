@@ -9,7 +9,7 @@
                 <div class="panel-heading">
                     <h1>
                     <span class="grey">Diocese of Fort Worth Parish Index</span> 
-                    <span class="create"><a href={{ action('ParishesController@create') }}>{!! Html::image('img/create.png', 'Create a Parish',array('title'=>"Create Parish",'class' => 'btn btn-primary')) !!}</a></span></h1>
+                    <span class="create"><a href={{ action('ParishesController@create') }}>{!! Html::image('img/create.png', 'Create a Parish',array('title'=>"Create Parish",'class' => 'btn btn-default')) !!}</a></span></h1>
                 </div>
                 @if ($parishes->isEmpty())
                     <p>No Diocese of Fort Worth parishes are currently in the database.</p>

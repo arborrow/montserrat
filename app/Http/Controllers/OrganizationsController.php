@@ -25,7 +25,8 @@ class OrganizationsController extends Controller
     public function index()
     {
         //TODO: subcontact_type dependent on order in database which is less than ideal really looking for where not a parish or diocese organization 
-        $organizations = \montserrat\Contact::whereContactType(CONTACT_TYPE_ORGANIZATION)->where('subcontact_type','>',CONTACT_TYPE_DIOCESE)->orderBy('organization_name', 'asc')->with('addresses.state','phone_primary.location','emails','websites','bishops.contact_b','parishes.contact_a')->paginate(100);
+        //$organizations = \montserrat\Contact::whereContactType(CONTACT_TYPE_ORGANIZATION)->where('subcontact_type','>',CONTACT_TYPE_DIOCESE)->orderBy('organization_name', 'asc')->with('addresses.state','phone_primary.location','emails','websites','bishops.contact_b','parishes.contact_a')->toSql();
+        $organizations = \montserrat\Contact::organizations_generic()->orderBy('organization_name', 'asc')->paginate(100);
         
         //dd($organizations);
         
@@ -40,16 +41,16 @@ class OrganizationsController extends Controller
      */
     public function create()
     {
-        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->lists('name','id');
+        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name','id');
         $states->prepend('N/A',0); 
         
-        $countries = \montserrat\Country::orderby('iso_code')->lists('iso_code','id');
+        $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code','id');
         $countries->prepend('N/A',0); 
         
         $default['state_province_id'] = STATE_PROVINCE_ID_TX;
         $default['country_id'] = COUNTRY_ID_USA;
                 
-        $subcontact_types = \montserrat\ContactType::whereIsReserved(FALSE)->whereIsActive(TRUE)->lists('label','id');
+        $subcontact_types = \montserrat\ContactType::whereIsReserved(FALSE)->whereIsActive(TRUE)->pluck('label','id');
         $subcontact_types->prepend('N/A',0); 
 
       
@@ -162,16 +163,16 @@ return Redirect::action('OrganizationsController@index');
         // TODO: consider making one primary bishop with multi-select for seperate auxilary bishops (new relationship)
         $organization = \montserrat\Contact::with('address_primary.state','address_primary.location','phone_main_phone.location','phone_main_fax.location','email_primary.location','website_main','notes')->findOrFail($id);
 
-        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->lists('name','id');
+        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name','id');
         $states->prepend('N/A',0); 
         
-        $countries = \montserrat\Country::orderby('iso_code')->lists('iso_code','id');
+        $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code','id');
         $countries->prepend('N/A',0); 
         
         $default['state_province_id'] = STATE_PROVINCE_ID_TX;
         $default['country_id'] = COUNTRY_ID_USA;
         
-        $subcontact_types = \montserrat\ContactType::whereIsReserved(FALSE)->whereIsActive(TRUE)->lists('label','id');
+        $subcontact_types = \montserrat\ContactType::whereIsReserved(FALSE)->whereIsActive(TRUE)->pluck('label','id');
         $subcontact_types->prepend('N/A',0); 
         
         //dd($organization);

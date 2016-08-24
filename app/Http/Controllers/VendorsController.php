@@ -39,9 +39,9 @@ class VendorsController extends Controller
      */
     public function create()
     {
-        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->lists('name','id');
+        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name','id');
         $states->prepend('N/A',0); 
-        $countries = \montserrat\Country::orderby('iso_code')->lists('iso_code','id');
+        $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code','id');
         $default['state_province_id'] = STATE_PROVINCE_ID_TX;
         $default['country_id'] = COUNTRY_ID_USA;
         $countries->prepend('N/A',0); 
@@ -143,9 +143,9 @@ return Redirect::action('VendorsController@index');
      */
     public function edit($id)
     {
-        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->lists('name','id');
+        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name','id');
         $states->prepend('N/A',0); 
-        $countries = \montserrat\Country::orderby('iso_code')->lists('iso_code','id');
+        $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code','id');
         $default['state_province_id'] = STATE_PROVINCE_ID_TX;
         $default['country_id'] = COUNTRY_ID_USA;
         $countries->prepend('N/A',0); 

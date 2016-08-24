@@ -39,12 +39,12 @@ class RegistrationsController extends Controller
     public function create()
     {
         //
-        //$retreats = \montserrat\Retreat::where('end','>',\Carbon\Carbon::today())->lists('idnumber','title','id');
+        //$retreats = \montserrat\Retreat::where('end','>',\Carbon\Carbon::today())->pluck('idnumber','title','id');
         $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date",">",\Carbon\Carbon::today()->subWeek())->orderBy('start_date')->pluck('description','id');
         $retreats->prepend('Unassigned',0);
-        $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->lists('sort_name','id');
+        $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->pluck('sort_name','id');
         
-        $rooms= \montserrat\Room::orderby('name')->lists('name','id');
+        $rooms= \montserrat\Room::orderby('name')->pluck('name','id');
         $rooms->prepend('Unassigned',0);
         
         $dt_today =  \Carbon\Carbon::today();
@@ -57,18 +57,18 @@ class RegistrationsController extends Controller
     public function add($id)
     {
         //
-        //$retreats = \montserrat\Retreat::where('end','>',\Carbon\Carbon::today())->lists('idnumber','title','id');
+        //$retreats = \montserrat\Retreat::where('end','>',\Carbon\Carbon::today())->pluck('idnumber','title','id');
         $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date",">",\Carbon\Carbon::today()->subWeek())->orderBy('start_date')->pluck('description','id');
         $retreats->prepend('Unassigned',0);
         $retreatant = \montserrat\Contact::findOrFail($id);
         if ($retreatant->contact_type == CONTACT_TYPE_INDIVIDUAL) {
-            $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->lists('sort_name','id');
+            $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->pluck('sort_name','id');
         }
         if ($retreatant->contact_type == CONTACT_TYPE_ORGANIZATION) {
-            $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_ORGANIZATION)->whereSubcontactType($retreatant->subcontact_type)->orderBy('sort_name')->lists('sort_name','id');
+            $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_ORGANIZATION)->whereSubcontactType($retreatant->subcontact_type)->orderBy('sort_name')->pluck('sort_name','id');
         }
         
-        $rooms= \montserrat\Room::orderby('name')->lists('name','id');
+        $rooms= \montserrat\Room::orderby('name')->pluck('name','id');
         $rooms->prepend('Unassigned',0);
         
         $defaults['contact_id']=$id;
@@ -154,8 +154,8 @@ class RegistrationsController extends Controller
 //        $retreatant = \montserrat\Retreatant::findOrFail($registration->contact_id);
         $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date",">",\Carbon\Carbon::today())->orderBy('start_date')->pluck('description','id');
         //dd($retreats);
-        $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->lists('sort_name','id');
-        $rooms= \montserrat\Room::orderby('name')->lists('name','id');
+        $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->pluck('sort_name','id');
+        $rooms= \montserrat\Room::orderby('name')->pluck('name','id');
         $rooms->prepend('Unassigned',0);
     
         /* Check to see if the current registration is for a past retreat and if so, add it to the collection */

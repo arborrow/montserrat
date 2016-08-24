@@ -66,7 +66,7 @@
                 {!! Form::textarea('note', null, ['class'=>'col-md-5', 'rows'=>'3']) !!}
             </div><div class="clearfix"> </div>
             <div class="col-md-1"><div class="form-group">
-                {!! Form::submit('Add Parish', ['class'=>'btn btn-primary']) !!}
+                {!! Form::submit('Add Parish', ['class'=>'btn btn-default']) !!}
             </div></div>
                 {!! Form::close() !!}
         </div>

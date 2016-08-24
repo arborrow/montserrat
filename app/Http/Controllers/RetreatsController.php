@@ -42,7 +42,7 @@ class RetreatsController extends Controller
     public function create()
     {
         $retreat_house = \montserrat\Contact::with('retreat_directors.contact_b','retreat_innkeepers.contact_b','retreat_assistants.contact_b','retreat_captains.contact_b')->find(CONTACT_MONTSERRAT);
-        $event_types = \montserrat\EventType::whereIsActive(1)->orderBy('name')->lists('name','id');
+        $event_types = \montserrat\EventType::whereIsActive(1)->orderBy('name')->pluck('name','id');
         foreach ($retreat_house->retreat_innkeepers as $innkeeper) {
             $i[$innkeeper->contact_id_b]=$innkeeper->contact_b->sort_name;
         }
@@ -154,7 +154,7 @@ public function edit($id)
     {
         //get this retreat's information
         $retreat = \montserrat\Retreat::with('retreatmasters','assistant','innkeeper','captains')->find($id);
-        $event_types = \montserrat\EventType::whereIsActive(1)->orderBy('name')->lists('name','id');
+        $event_types = \montserrat\EventType::whereIsActive(1)->orderBy('name')->pluck('name','id');
         
         //create lists of retreat directors, innkeepers, and assistants from relationship to retreat house 
         $retreat_house = \montserrat\Contact::with('retreat_directors.contact_b','retreat_innkeepers.contact_b','retreat_assistants.contact_b')->find(CONTACT_MONTSERRAT);

@@ -18,6 +18,7 @@
                     <thead>
                         <tr>
                             <th>Name</th> 
+                            <th>Type</th>
                             <th>Address</th> 
                             <th>Main phone</th> 
                             <th>Email(s)</th> 
@@ -28,6 +29,7 @@
                        @foreach($organizations as $organization)
                         <tr>
                             <td><a href="organization/{{$organization->id}}">{{ $organization->display_name }} </a></td>
+                            <td>{{$organization->subcontact_type_label}}</td>
                             <td>
                                 @foreach($organization->addresses as $address)
                                 @if ($address->is_primary)

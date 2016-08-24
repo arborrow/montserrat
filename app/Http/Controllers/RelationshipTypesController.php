@@ -35,7 +35,7 @@ class RelationshipTypesController extends Controller
      */
     public function create()
     {
-     $contact_types = \montserrat\ContactType::OrderBy('name')->lists('name','name');
+     $contact_types = \montserrat\ContactType::OrderBy('name')->pluck('name','name');
         return view('relationships.types.create', compact('contact_types')); 
     
     }

@@ -6,7 +6,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <span><h2>Retreat Details for #{!! $retreat->idnumber !!}</span>
-                <span class="back"><a href={{ action('RetreatsController@index') }}>{!! Html::image('img/retreat.png', 'Retreat Index',array('title'=>"Retreat Index",'class' => 'btn btn-primary')) !!}</a></span></h1>
+                <span class="back"><a href={{ action('RetreatsController@index') }}>{!! Html::image('img/retreat.png', 'Retreat Index',array('title'=>"Retreat Index",'class' => 'btn btn-default')) !!}</a></span></h1>
             </div>
             <div class='row'>
                 <div class='col-md-2'><strong>ID#: </strong>{{ $retreat->idnumber}}</div>
@@ -79,11 +79,11 @@
         <div class="panel panel-default">  
         <div class="panel-heading">
             <h2>Retreatants Registered</h2>
-            <span class="create"><a href={{ action('RegistrationsController@create') }}>{!! Html::image('img/create.png', 'Create Registration',array('title'=>"Create Registration",'class' => 'btn btn-primary')) !!}</a></span>
-            <span class="btn btn-primary"><a href={{ action('PagesController@retreatantinforeport',$retreat->idnumber) }}>Retreatant Information Report</a></span>
-            <span class="btn btn-primary"><a href={{ action('PagesController@retreatrosterreport',$retreat->idnumber) }}>Retreat Roster</a></span>
-            <span class="btn btn-primary"><a href={{ action('PagesController@retreatlistingreport',$retreat->idnumber) }}>Retreat Listing</a></span>
-            <span class="btn btn-primary">{!! $retreat->email_registered_retreatants !!}</span>
+            <span class="create"><a href={{ action('RegistrationsController@create') }}>{!! Html::image('img/create.png', 'Create Registration',array('title'=>"Create Registration",'class' => 'btn btn-default')) !!}</a></span>
+            <span class="btn btn-default"><a href={{ action('PagesController@retreatantinforeport',$retreat->idnumber) }}>Retreatant Information Report</a></span>
+            <span class="btn btn-default"><a href={{ action('PagesController@retreatrosterreport',$retreat->idnumber) }}>Retreat Roster</a></span>
+            <span class="btn btn-default"><a href={{ action('PagesController@retreatlistingreport',$retreat->idnumber) }}>Retreat Listing</a></span>
+            <span class="btn btn-default">{!! $retreat->email_registered_retreatants !!}</span>
                 
         </div>
             @if ($registrations->isEmpty())

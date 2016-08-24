@@ -11,7 +11,10 @@ class Contact extends Model
     use SoftDeletes; 
     protected $table = 'contact';
     protected $dates = ['birth_date', 'deceased_date', 'created_date','modified_date', 'created_at', 'updated_at', 'deleted_at']; 
-    
+    protected $casts = [
+        'contact_type' => 'integer',
+        'subcontact_type' => 'integer',
+    ]; 
     // TODO: refactor to lookup based on relationship
     //TODO: rename person_id to contact_id
 /*    public function retreatmasters() {
@@ -617,5 +620,11 @@ class Contact extends Model
     }
     public function website_main() {
         return $this->hasOne('\montserrat\Website','contact_id','id')->whereWebsiteType('Main');
+    }
+    public function scopeOrganizations_Generic($query) {
+        return $query->where([
+            ['contact_type','>=',CONTACT_TYPE_ORGANIZATION],
+            ['subcontact_type','>=',CONTACT_TYPE_VENDOR],
+            ]);
     }
 }

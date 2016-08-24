@@ -41,16 +41,16 @@ class DiocesesController extends Controller
      */
     public function create()
     {
-        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->lists('name','id');
+        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name','id');
         $states->prepend('N/A',0); 
         
-        $countries = \montserrat\Country::orderby('iso_code')->lists('iso_code','id');
+        $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code','id');
         $countries->prepend('N/A',0); 
         
         $default['state_province_id'] = STATE_PROVINCE_ID_TX;
         $default['country_id'] = COUNTRY_ID_USA;
         
-        $bishops = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_BISHOP);})->lists('display_name','id');
+        $bishops = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_BISHOP);})->pluck('display_name','id');
         $bishops->prepend('N/A',0); 
         
         return view('dioceses.create',compact('bishops','states','countries','default'));  
@@ -174,16 +174,16 @@ return Redirect::action('DiocesesController@index');
        } else {
            $diocese->bishop_id = $diocese->bishop->contact_id_b;
        }
-        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->lists('name','id');
+        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name','id');
         $states->prepend('N/A',0); 
         
-        $countries = \montserrat\Country::orderby('iso_code')->lists('iso_code','id');
+        $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code','id');
         $countries->prepend('N/A',0); 
         
         $default['state_province_id'] = STATE_PROVINCE_ID_TX;
         $default['country_id'] = COUNTRY_ID_USA;
         
-        $bishops = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_BISHOP);})->lists('display_name','id');
+        $bishops = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_BISHOP);})->pluck('display_name','id');
         $bishops->prepend('N/A',0); 
         //dd($diocese);
               

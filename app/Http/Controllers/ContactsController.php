@@ -45,21 +45,21 @@ class ContactsController extends Controller
             $parish_list[$parish->id] = $parish->organization_name.' ('.$parish->address_primary->city.') - '.$parish->diocese->contact_a->organization_name;
         }
 
-        $countries = \montserrat\Country::orderBy('iso_code')->lists('iso_code','id');
+        $countries = \montserrat\Country::orderBy('iso_code')->pluck('iso_code','id');
         $countries->prepend('N/A',0); 
-        $ethnicities = \montserrat\Ethnicity::orderBy('ethnicity')->lists('ethnicity','ethnicity');
+        $ethnicities = \montserrat\Ethnicity::orderBy('ethnicity')->pluck('ethnicity','ethnicity');
         $ethnicities->prepend('N/A',0); 
-        $genders = \montserrat\Gender::orderBy('name')->lists('name','id');
+        $genders = \montserrat\Gender::orderBy('name')->pluck('name','id');
         $genders ->prepend('N/A',0); 
-        $languages = \montserrat\Language::orderBy('label')->whereIsActive(1)->lists('label','id');
+        $languages = \montserrat\Language::orderBy('label')->whereIsActive(1)->pluck('label','id');
         $languages->prepend('N/A',0);
-        $prefixes= \montserrat\Prefix::orderBy('name')->lists('name','id');
+        $prefixes= \montserrat\Prefix::orderBy('name')->pluck('name','id');
         $prefixes->prepend('N/A',0); 
-        $religions = \montserrat\Religion::orderBy('name')->whereIsActive(1)->lists('name','id');
+        $religions = \montserrat\Religion::orderBy('name')->whereIsActive(1)->pluck('name','id');
         $religions->prepend('N/A',0);
-        $states = \montserrat\StateProvince::orderBy('name')->whereCountryId(1228)->lists('name','id');
+        $states = \montserrat\StateProvince::orderBy('name')->whereCountryId(1228)->pluck('name','id');
         $states->prepend('N/A',0); 
-        $suffixes = \montserrat\Suffix::orderBy('name')->lists('name','id');
+        $suffixes = \montserrat\Suffix::orderBy('name')->pluck('name','id');
         $suffixes->prepend('N/A',0); 
 
         return view('contacts.create',compact('parish_list','ethnicities','states','countries','suffixes','prefixes','languages','genders','religions')); 
@@ -353,13 +353,13 @@ class ContactsController extends Controller
         //
         $contact = \montserrat\Contact::with('addresses.location','emails.location','phones.location','websites')->find($id);
         //dd($contact);
-        $parishes = \montserrat\Parish::select(\DB::raw('CONCAT(parishes.name," (",parishes.city,"-",dioceses.name,")") as parishname'), 'parishes.id')->join('dioceses','parishes.diocese_id','=','dioceses.id')->orderBy('parishname')->lists('parishname','parishes.id');
+        $parishes = \montserrat\Parish::select(\DB::raw('CONCAT(parishes.name," (",parishes.city,"-",dioceses.name,")") as parishname'), 'parishes.id')->join('dioceses','parishes.diocese_id','=','dioceses.id')->orderBy('parishname')->pluck('parishname','parishes.id');
         $parishes->prepend('N/A',0); 
-        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(1228)->lists('name','id');
+        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(1228)->pluck('name','id');
         $states->prepend('N/A',0); 
-        $countries = \montserrat\Country::orderby('iso_code')->lists('iso_code','id');
+        $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code','id');
         $countries->prepend('N/A',0); 
-        $ethnicities = \montserrat\Ethnicity::orderby('ethnicity')->lists('ethnicity','ethnicity');
+        $ethnicities = \montserrat\Ethnicity::orderby('ethnicity')->pluck('ethnicity','ethnicity');
         
         //create defaults array for easier pre-populating of default values on edit/update blade
         // initialize defaults to avoid undefined index errors

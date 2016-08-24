@@ -67,7 +67,7 @@
                     </div>
                 </div><div class="clearfix"> </div>
                 <div class='row'>
-                    <div class='col-md-2'><strong>Room ID: </strong>{{ $registration->room_id}}</div>
+                    <div class='col-md-2'><strong>Room: </strong>{{ $registration->room_name}}</div>
                 </div><div class="clearfix"> </div>
 
                 <div class='row'>

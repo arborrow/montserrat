@@ -155,7 +155,7 @@
                         {!! Form::select('ethnicity_id', $ethnicities, $person->ethnicity_id, ['class' => 'col-md-2']) !!}
                         <div class="clearfix"> </div>
                         {!! Form::label('languages', 'Languages:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::select('languages[]', $languages, $person->languages->lists('id')->toArray(), ['class' => 'form-control col-md-2','multiple' => 'multiple','style'=>'width: auto; font-size: inherit;']) !!}
+                        {!! Form::select('languages[]', $languages, $person->languages->pluck('id')->toArray(), ['class' => 'form-control col-md-2','multiple' => 'multiple','style'=>'width: auto; font-size: inherit;']) !!}
 
                         {!! Form::label('preferred_language_id', 'Preferred Language:', ['class' => 'col-md-2'])  !!}
                         {!! Form::select('preferred_language_id', $languages, $person->preferred_language_id, ['class' => 'col-md-3']) !!}

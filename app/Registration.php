@@ -56,7 +56,14 @@ class Registration extends Model
             $this->attributes['departed_at'] = null;
         }
     }
-    
+    public function getRoomNameAttribute() {
+        if (isset($this->room->name)) {
+            return $this->room->name;
+        } else {
+            return 'N/A';
+        }
+    }
+
     public function retreat()
     {
         return $this->belongsTo('montserrat\Retreat','event_id','id');
