@@ -105,7 +105,7 @@
                 @foreach($registrations as $registration)
                     <tr>
                         <td><a href="{{action('RegistrationsController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }}</a></td>
-                        <td><a href="{{action('PersonsController@show', $registration->retreatant->id)}}">{{ $registration->retreatant->display_name}}</a></td>
+                        <td>{!!$registration->retreatant->contact_link!!}</td>
                         <td>
                             @if (empty($registration->room->name))
                                 N/A
