@@ -106,8 +106,21 @@ class Contact extends Model
         if ($this->contact_type == CONTACT_TYPE_INDIVIDUAL) {
             $path=url("person/".$this->id);
         }
-        
         return "<a href='".$path."'>".$this->display_name."</a>";
+    }
+    
+public function getContactLinkFullNameAttribute() {
+        switch ($this->subcontact_type) {
+            case CONTACT_TYPE_PARISH : $path = url("parish/".$this->id); break;
+            case CONTACT_TYPE_DIOCESE: $path = url("diocese/".$this->id); break;
+            case CONTACT_TYPE_VENDOR : $path = url("vendor/".$this->id); break;
+            default : $path = url("organization/".$this->id);
+        }
+        if ($this->contact_type == CONTACT_TYPE_INDIVIDUAL) {
+            $path=url("person/".$this->id);
+        }
+        
+        return "<a href='".$path."'>".$this->full_name."</a>";
             
     }
 

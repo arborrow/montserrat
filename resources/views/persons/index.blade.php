@@ -44,7 +44,7 @@
                     <tbody>
                         @foreach($persons as $person)
                         <tr>
-                            <td><a href="person/{{ $person->id}}">{{$person->full_name}}</a></td>
+                            <td>{!!$person->contact_link_full_name!!}</td>
                             <td>
                                 @if($person->do_not_mail)
                                     <div class="alert alert-warning"><strong>Do Not Mail</strong></div>
