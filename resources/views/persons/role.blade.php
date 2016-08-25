@@ -21,6 +21,7 @@
                             <th>Address (City)</th>
                             <th>Home phone</th>
                             <th>Cell phone</th>
+                            <th>Work phone</th>
                             <th>Email</th>
                             <th>Parish (City)</th>
                         </tr>
@@ -28,12 +29,13 @@
                     <tbody>
                         @foreach($persons as $person)
                         <tr>
-                            <td><a href="person/{{ $person->id}}">{{ $person->full_name }}</a></td>
+                            <td>{!!$person->contact_link_full_name!!}</td>
                             <td>
                                 {!!$person->address_primary_google_map!!} 
                             </td>
                             <td>{{ $person->phone_home_phone_number }}</td>
                             <td>{{ $person->phone_home_mobile_number }}</td>
+                            <td>{{ $person->phone_work_phone_number }}</td>
                             <td><a href="mailto:{{$person->email_primary_text}}">{{ $person->email_primary_text }}</a></td>
                             <td>{!! $person->parish_link !!}</td>
                         </tr>
