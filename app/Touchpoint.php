@@ -12,6 +12,9 @@ class Touchpoint extends Model
     use SoftDeletes;
     protected $table = 'touchpoints';
     protected $dates = ['touched_at', 'created_at', 'updated_at', 'deleted_at']; 
+    public function setTouchedAtAttribute($date) {
+      $this->attributes['touched_at'] = Carbon::parse($date);
+    }
     
     public function person() {
         return $this->belongsTo('\montserrat\Contact','person_id','id');
