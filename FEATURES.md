@@ -1,13 +1,10 @@
-- Retreats - Create, edit, view and delete
-- Registrations (Retreat) - (add, edit, view and delete) 
-- Retreatants - (add, edit, view and delete)
-- Rooms - (add, edit, view and delete) 
-- Donors - (add, edit, view and delete)
-- Innkeepers - (add, edit, view and delete)
-- Assistants - (add, edit, view and delete)
-- Captains - (add, edit, view and delete)
-- Board of Trustees - (add, edit, view and delete)
+- Events (Retreats) - Create, edit, view and delete, email retreat participants
+- Participants (aka Registrations - Retreat) - (add, edit, view and delete) 
+- Contacts (Retreatants, Donors, Parishes, Dioceses, Vendors, Organizations, etc.) - (add, edit, view and delete)
+- Rooms - (add, edit, view and delete)
 - Locations (Buildings) - (add, edit, view and delete)
-- Reservation (of Rooms) - (add, edit, view and delete)
-- Dioceses (add, edit, view and delete)
-- Parishes (add, edit, view and delete)
+- Touchpoints - Create, edit, view, delete
+- Reports - Retreatant Information Report, Retreat Roster, Retreat Listing
+
+--upcoming
+Donations - create, edit, view and delete
