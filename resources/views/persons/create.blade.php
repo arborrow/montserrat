@@ -22,22 +22,19 @@
                         {!! Form::text('middle_name', null, ['class' => 'col-md-2']) !!}
                         {!! Form::label('last_name', 'Last: ', ['class' => 'col-md-1'])  !!}
                         {!! Form::text('last_name', null, ['class' => 'col-md-2']) !!}
- <div class="clearfix"> </div>
+                        <div class="clearfix"> </div>
                         {!! Form::label('suffix_id', 'Suffix: ', ['class' => 'col-md-1'])  !!}
                         {!! Form::select('suffix_id', $suffixes, 0, ['class' => 'col-md-2']) !!}
-                        
- <div class="clearfix"> </div>
+                        <div class="clearfix"> </div>
                         {!! Form::label('nick_name', 'Nick: ', ['class' => 'col-md-1'])  !!}
                         {!! Form::text('nick_name', null, ['class' => 'col-md-2']) !!}
-                        </div>
-                
                         <div class="clearfix"> </div>
                             {!! Form::label('contact_type', 'Contact type: ', ['class' => 'col-md-3'])  !!}
                             {!! Form::select('contact_type', $contact_types, 1, ['class' => 'col-md-2']) !!}
                             {!! Form::label('subcontact_type', 'Subcontact type: ', ['class' => 'col-md-3'])  !!}
                             {!! Form::select('subcontact_type', $subcontact_types, 0, ['class' => 'col-md-2']) !!}
-
-                        
+                        <div class="clearfix"> </div>
+                    </div>
                 </span>
             </div>
         </div>
