@@ -103,3 +103,4 @@ Route::get('auth/google/callback', 'Auth\AuthController@handleProviderCallback')
  Route::get('search/autocomplete', 'SearchController@autocomplete');
  Route::get('search/getuser', 'SearchController@getuser');
 
+Route::get('avatar/{user_id}', ['as' => 'get_avatar','uses' => 'PagesController@get_avatar']);

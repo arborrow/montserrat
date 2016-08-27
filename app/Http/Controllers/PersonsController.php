@@ -7,8 +7,9 @@ use montserrat\Http\Requests;
 use montserrat\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Input;
-
-
+use Illuminate\Support\Facades\Storage;
+use Intervention;
+use Image;
 
 
 class PersonsController extends Controller
@@ -88,7 +89,7 @@ class PersonsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request);//
         $this->validate($request, [
             'first_name' => 'required',
             'last_name' => 'required',
@@ -110,11 +111,12 @@ class PersonsController extends Controller
             'religion_id' => 'integer|min:0',
             'contact_type' => 'integer|min:0',
             'subcontact_type' => 'integer|min:0',
-            'occupation_id' => 'integer|min:0'
+            'occupation_id' => 'integer|min:0',
+            'avatar' => 'image',
         
         ]);
-               
         $person = new \montserrat\Contact;
+        
         // name info
         $person->prefix_id = $request->input('prefix_id');
         $person->first_name = $request->input('first_name');
@@ -186,7 +188,10 @@ class PersonsController extends Controller
         }
         
         $person->save();
-        
+        if (null !== $request->file('avatar')) {
+            $avatar = Image::make($request->file('avatar'))->resize(150, 150);
+            Storage::put('contacts/'.$person->id.'/'.'avatar.png',$avatar->stream('png'));
+        }
         // emergency contact information - not part of CiviCRM squema 
         $emergency_contact = new \montserrat\EmergencyContact;
             $emergency_contact->contact_id=$person->id;
@@ -926,7 +931,7 @@ class PersonsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //dd($request);
         $this->validate($request, [
             'first_name' => 'required',
             'last_name' => 'required',
@@ -948,8 +953,8 @@ class PersonsController extends Controller
             'religion_id' => 'integer|min:0',
             'contact_type' => 'integer|min:0',
             'subcontact_type' => 'integer|min:0',
-            'occupation_id' => 'integer|min:0'
-        
+            'avatar' => 'image',
+            'occupation_id' => 'integer|min:0',
         ]);
         
         //name 
@@ -1011,7 +1016,10 @@ class PersonsController extends Controller
         }
         
         $person->save();
-        
+        if (null !== $request->file('avatar')) {
+            $avatar = Image::make($request->file('avatar'))->resize(150, 150);
+            Storage::put('contacts/'.$person->id.'/'.'avatar.png',$avatar->stream('png'));
+        }
         //emergency contact info
         $emergency_contact = \montserrat\EmergencyContact::firstOrNew(['contact_id'=>$person->id]);
             $emergency_contact->contact_id=$person->id;

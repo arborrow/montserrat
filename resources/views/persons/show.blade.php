@@ -5,6 +5,12 @@
     <div class="jumbotron text-left">
         <div class="panel panel-default">
             <div class="panel-body">
+                <div class='panel-heading' style="height:170px">
+                @if (Storage::has('contacts/'.$person->id.'/avatar.png'))
+                    <div>
+                    <img src="{{url('avatar/'.$person->id)}}" class="img-circle" style="position:absolute; right:50px; padding:5px; background-color: #0f0f0f">
+                    </div>
+                    @endif
                 <span class="back">
                     <span>
                         <h1><strong>{{ $person->full_name }}</strong></h1>
@@ -25,14 +31,14 @@
                     </span>           
 
                 </span>
-        
+                
                 <span class="btn btn-default">
                    <a href={{ action('TouchpointsController@add',$person->id) }}>Add Touch point</a>
                 </span>
                 <span class="btn btn-default">
                     <a href={{ action('RegistrationsController@add',$person->id) }}>Add Registration</a> 
                 </span>                
-
+                </div>
             </div>
             <div class='row'>
                 <div class='col-md-4'>

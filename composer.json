@@ -12,7 +12,8 @@
         "cartalyst/sentry": "2.1.*",
         "twbs/bootstrap": "^3.3",
         "zizaco/entrust": "1.5.0",
-        "spatie/laravel-google-calendar": "^1.0"
+        "spatie/laravel-google-calendar": "^1.0",
+        "intervention/image": "^2.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

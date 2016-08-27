@@ -4,7 +4,7 @@
 <section class="section-padding">
     <div class="jumbotron text-left">
         <h2><strong>Create Person</strong></h2>
-        {!! Form::open(['url' => 'person', 'method' => 'post', 'class' => 'form-horizontal panel']) !!}
+        {!! Form::open(['url' => 'person', 'files' => 'true', 'method' => 'post', 'class' => 'form-horizontal panel']) !!}
 
         <div class='row'>
             <div class='col-md-8'>
@@ -29,12 +29,18 @@
                         {!! Form::label('nick_name', 'Nick: ', ['class' => 'col-md-1'])  !!}
                         {!! Form::text('nick_name', null, ['class' => 'col-md-2']) !!}
                         <div class="clearfix"> </div>
+                        
                             {!! Form::label('contact_type', 'Contact type: ', ['class' => 'col-md-3'])  !!}
                             {!! Form::select('contact_type', $contact_types, 1, ['class' => 'col-md-2']) !!}
+                        <div class="clearfix"> </div>
                             {!! Form::label('subcontact_type', 'Subcontact type: ', ['class' => 'col-md-3'])  !!}
                             {!! Form::select('subcontact_type', $subcontact_types, 0, ['class' => 'col-md-2']) !!}
                         <div class="clearfix"> </div>
+                            {!! Form::label('avatar', 'Picture: ', ['class' => 'col-md-2'])  !!}
+                            {!! Form::file('avatar'); !!}
+
                     </div>
+                        
                 </span>
             </div>
         </div>

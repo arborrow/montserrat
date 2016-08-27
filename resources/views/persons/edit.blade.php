@@ -12,7 +12,10 @@
             {{ (!empty($person->nick_name)) ? "(&quot;$person->nick_name&quot;)" : null }} 
         </strong></h1>
         </div>
-
+        @if (Storage::has('contacts/'.$person->id.'/avatar.png'))
+            <img src="{{url('avatar/'.$person->id)}}" class="img-circle" style="position:absolute; right:25px; padding:15px;">
+        @endif
+                
         <span class="back">
                         @if ($person->is_board_member) <span class="back"><a href={{ action('PersonsController@boardmembers') }}>{!! Html::image('img/board.png', 'Board Members Group',array('title'=>"Board Members Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
                         @if ($person->is_captain) <span class="back"><a href={{ action('PersonsController@captains') }}>{!! Html::image('img/captain.png', 'Captains Group',array('title'=>"Captains Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
@@ -31,7 +34,7 @@
                         @if ($person->is_jesuit) <span class="back"><a href={{ action('PersonsController@jesuits') }}>{!! Html::image('img/jesuit.png', 'Jesuits Group',array('title'=>"Jesuits Group",'class' => 'btn btn-default')) !!}</a></span> @endIf                        
         </span>                
     
-        {!! Form::open(['method' => 'PUT', 'route' => ['person.update', $person->id]]) !!}
+        {!! Form::open(['method' => 'PUT', 'files'=>'true', 'route' => ['person.update', $person->id]]) !!}
         {!! Form::hidden('id', $person->id) !!}
     
         <div class='row'>
@@ -66,6 +69,10 @@
 
                     {!! Form::label('subcontact_type', 'Subcontact type: ', ['class' => 'col-md-3'])  !!}
                     {!! Form::select('subcontact_type', $subcontact_types, $person->subcontact_type, ['class' => 'col-md-2']) !!}
+                    <div class="clearfix"> </div>
+                    
+                    {!! Form::label('avatar', 'Picture: ', ['class' => 'col-md-2'])  !!}
+                    {!! Form::file('avatar'); !!}
 
                 </div>
             </div>
