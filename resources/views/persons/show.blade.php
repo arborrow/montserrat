@@ -4,16 +4,18 @@
 <section class="section-padding">
     <div class="jumbotron text-left">
         <div class="panel panel-default">
-            <div class="panel-body">
-                <div class='panel-heading' style="height:170px">
-                @if (Storage::has('contacts/'.$person->id.'/avatar.png'))
-                    <div>
-                    <img src="{{url('avatar/'.$person->id)}}" class="img-circle" style="position:absolute; right:50px; padding:5px; background-color: #0f0f0f">
+            <div class="panel-heading">
+                <div class='row' style="height: 175px;">
+                    
+                    <div class="col-md-12 col-sm-12">
+                        @if (Storage::has('contacts/'.$person->id.'/avatar.png'))
+                            <img src="{{url('avatar/'.$person->id)}}" class="img-circle" style="position:absolute; top: 5px; left:5px; padding:5px; background-color: #0f0f0f">
+                        @endif
+                        <h1 style="position: absolute; top:5px; left:175px; padding: 5px;"><strong>{{ $person->full_name }}</strong></h1>
                     </div>
-                    @endif
-                <span class="back">
-                    <span>
-                        <h1><strong>{{ $person->full_name }}</strong></h1>
+                </div>
+            
+            
                         @if ($person->is_board_member) <span class="back"><a href={{ action('PersonsController@boardmembers') }}>{!! Html::image('img/board.png', 'Board Members Group',array('title'=>"Board Members Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
                         @if ($person->is_captain) <span class="back"><a href={{ action('PersonsController@captains') }}>{!! Html::image('img/captain.png', 'Captains Group',array('title'=>"Captains Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
                         @if ($person->is_staff) <span class="back"><a href={{ action('PersonsController@employees') }}>{!! Html::image('img/employee.png', 'Staff Group',array('title'=>"Employees Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
@@ -28,17 +30,15 @@
                         @if ($person->is_provincial) <span class="back"><a href={{ action('PersonsController@provincials') }}>{!! Html::image('img/provincial.png', 'Provincials Group',array('title'=>"Provincials Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
                         @if ($person->is_superior) <span class="back"><a href={{ action('PersonsController@superiors') }}>{!! Html::image('img/superior.png', 'Superiors Group',array('title'=>"Superiors Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
                         @if ($person->is_jesuit) <span class="back"><a href={{ action('PersonsController@jesuits') }}>{!! Html::image('img/jesuit.png', 'Jesuits Group',array('title'=>"Jesuits Group",'class' => 'btn btn-default')) !!}</a></span> @endIf                        
-                    </span>           
-
-                </span>
+                        <br/>
+                        <span class="btn btn-default">
+                            <a href={{ action('TouchpointsController@add',$person->id) }}>Add Touch point</a>
+                        </span>
+                        <span class="btn btn-default">
+                            <a href={{ action('RegistrationsController@add',$person->id) }}>Add Registration</a> 
+                        </span>                
+                    
                 
-                <span class="btn btn-default">
-                   <a href={{ action('TouchpointsController@add',$person->id) }}>Add Touch point</a>
-                </span>
-                <span class="btn btn-default">
-                    <a href={{ action('RegistrationsController@add',$person->id) }}>Add Registration</a> 
-                </span>                
-                </div>
             </div>
             <div class='row'>
                 <div class='col-md-4'>
