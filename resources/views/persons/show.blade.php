@@ -8,7 +8,7 @@
                 <div class='row' style="height: 175px;">
                     <div class="col-md-12 col-sm-12">
                         @if (Storage::has('contacts/'.$person->id.'/avatar.png'))
-                            <img src="{{url('avatar/'.$person->id)}}" class="img-circle" style="position:absolute; top: 5px; left:15px; padding:5px; background-color: #0f0f0f">
+                            <img src="{{url('avatar/'.$person->id)}}" class="img-circle" style="position:absolute; top: 5px; left:15px; padding:5px;">
                         @else
                             <img src="{{url('img/default.png')}}" class="img-circle" style="position:absolute; top: 5px; left:15px; padding:5px;">
                         @endif
@@ -62,19 +62,21 @@
                         </span>
                     </div>
                 </div>
-                <div class='col-md-4' style="background-color: lightcoral;">
-                    <span class="info">
+                <div class='col-md-4' style="background-color: lightcoral; padding: 0px;">
+                    <div class="panel-heading" style="background-color: lightcoral;">
                         <h2><strong>Emergency Contact Information</strong></h2>
-                        <strong>Name: </strong>{{ !empty($person->emergency_contact->name) ? $person->emergency_contact->name : 'N/A' }}
-                        <br /><strong>Relationship: </strong>{{ !empty($person->emergency_contact->relationship) ? $person->emergency_contact->relationship : 'N/A' }}
-                        <br /><strong>Phone:</strong> {{ !empty($person->emergency_contact->phone) ? $person->emergency_contact->phone : 'N/A' }}
-                        <br /><strong>Alt phone:</strong> {{ !empty($person->emergency_contact->phone_alternate) ? $person->emergency_contact->phone_alternate: 'N/A' }}
-                    </span>
-                    <span><h2><strong>Health and Dietary Information</strong></h2>
-                        <strong>Health notes: </strong>{{$person->note_health}}<br />
-                        <strong>Dietary notes: </strong>{{$person->note_dietary}}   
-                    </span>
-            
+                    </div>    
+                    <strong>Name: </strong>{{ !empty($person->emergency_contact->name) ? $person->emergency_contact->name : 'N/A' }}
+                    <br /><strong>Relationship: </strong>{{ !empty($person->emergency_contact->relationship) ? $person->emergency_contact->relationship : 'N/A' }}
+                    <br /><strong>Phone:</strong> {{ !empty($person->emergency_contact->phone) ? $person->emergency_contact->phone : 'N/A' }}
+                    <br /><strong>Alt phone:</strong> {{ !empty($person->emergency_contact->phone_alternate) ? $person->emergency_contact->phone_alternate: 'N/A' }}
+                    
+                    <div class="panel-heading" style="background-color: lightcoral;">
+                        <h2><strong>Health and Dietary Information</strong></h2>
+                    </div>
+                    <strong>Health notes: </strong>{{$person->note_health}}<br />
+                    <strong>Dietary notes: </strong>{{$person->note_dietary}}   
+                
                 </div>               
             </div><div class="clearfix"> </div>
 
