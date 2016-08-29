@@ -10,6 +10,7 @@ use Input;
 use Illuminate\Support\Facades\Storage;
 use Intervention;
 use Image;
+use Illuminate\Support\Facades\File;
 
 
 class PersonsController extends Controller
@@ -953,10 +954,11 @@ class PersonsController extends Controller
             'religion_id' => 'integer|min:0',
             'contact_type' => 'integer|min:0',
             'subcontact_type' => 'integer|min:0',
-            'avatar' => 'image',
             'occupation_id' => 'integer|min:0',
-        ]);
-        
+            'letter' => 'file|mimes:pdf,doc,docx:',
+
+            ]);
+        //dd($request);
         //name 
         $person = \montserrat\Contact::with('addresses.location','emails.location','phones.location','websites','emergency_contact','parish')->findOrFail($request->input('id'));
         $person->prefix_id = $request->input('prefix_id');
@@ -1020,6 +1022,13 @@ class PersonsController extends Controller
             $avatar = Image::make($request->file('avatar'))->resize(150, 150);
             Storage::put('contacts/'.$person->id.'/'.'avatar.png',$avatar->stream('png'));
         }
+        //dd($request);
+        if (null !== $request->file('attachment')) {
+            $file = $request->file('attachment');
+            $file_name = $file->getClientOriginalName();
+            Storage::disk('local')->put('contacts/'.$person->id.'/attachments/'.$file_name,File::get($file));
+        }
+        
         //emergency contact info
         $emergency_contact = \montserrat\EmergencyContact::firstOrNew(['contact_id'=>$person->id]);
             $emergency_contact->contact_id=$person->id;

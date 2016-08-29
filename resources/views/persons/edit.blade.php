@@ -13,7 +13,7 @@
         </strong></h1>
         </div>
         @if (Storage::has('contacts/'.$person->id.'/avatar.png'))
-            <img src="{{url('avatar/'.$person->id)}}" class="img-circle" style="position:absolute; right:25px; padding:15px;">
+            <img src="{{url('avatar/'.$person->id)}}" class="img-circle" style="position:absolute; left:25px; padding:15px;">
         @endif
                 
         <span class="back">
@@ -73,6 +73,9 @@
                     
                     {!! Form::label('avatar', 'Picture: ', ['class' => 'col-md-2'])  !!}
                     {!! Form::file('avatar'); !!}
+
+                    {!! Form::label('attachment', 'Attach letter: ', ['class' => 'col-md-3'])  !!}
+                    {!! Form::file('attachment'); !!}
 
                 </div>
             </div>
