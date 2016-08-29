@@ -5,16 +5,21 @@
 <div class="jumbotron text-left">
     <div class="panel panel-default">
         
-        <div class='panel-body'><h1><strong>Edit Person: 
-            {{ $person->prefix_name }} 
-            {{ isset($person->display_name) ? $person->display_name : null }} 
-            {{ $person->suffix_name }}
-            {{ (!empty($person->nick_name)) ? "(&quot;$person->nick_name&quot;)" : null }} 
-        </strong></h1>
+        <div class='panel-heading'>
+            <div class='row' style="height: 175px;">
+                    <div class="col-md-12 col-sm-12">
+                        @if (Storage::has('contacts/'.$person->id.'/avatar.png'))
+                            <img src="{{url('avatar/'.$person->id)}}" class="img-circle" style="position:absolute; top: 5px; left:15px; padding:5px; background-color: #0f0f0f">
+                        @else
+                            <img src="{{url('img/default.png')}}" class="img-circle" style="position:absolute; top: 5px; left:15px; padding:5px;">
+                        @endif
+                        <h1 style="position: absolute; top:5px; left:175px; padding: 5px;"><strong>Edit: {{ $person->full_name }}</strong></h1>
+                        
+                    </div>
+                </div>
+            
+            
         </div>
-        @if (Storage::has('contacts/'.$person->id.'/avatar.png'))
-            <img src="{{url('avatar/'.$person->id)}}" class="img-circle" style="position:absolute; left:25px; padding:15px;">
-        @endif
                 
         <span class="back">
                         @if ($person->is_board_member) <span class="back"><a href={{ action('PersonsController@boardmembers') }}>{!! Html::image('img/board.png', 'Board Members Group',array('title'=>"Board Members Group",'class' => 'btn btn-default')) !!}</a></span> @endIf

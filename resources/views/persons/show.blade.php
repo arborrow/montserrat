@@ -5,16 +5,15 @@
     <div class="jumbotron text-left">
         <div class="panel panel-default">
             <div class="panel-heading">
+                <div class='row' style="height: 175px;">
+                    <div class="col-md-12 col-sm-12">
                         @if (Storage::has('contacts/'.$person->id.'/avatar.png'))
-                            <div class='row' style="height: 175px;">
-                            <div class="col-md-12 col-sm-12">
                             <img src="{{url('avatar/'.$person->id)}}" class="img-circle" style="position:absolute; top: 5px; left:15px; padding:5px; background-color: #0f0f0f">
-                            <h1 style="position: absolute; top:5px; left:175px; padding: 5px;"><strong>{{ $person->full_name }}</strong></h1>
                         @else
-                            <div class='row' style="height: 75px;">
-                            <div class="col-md-12 col-sm-12">
-                            <h1 style="position: absolute; top:5px; left:15px; padding: 5px;"><strong>{{ $person->full_name }}</strong></h1>
+                            <img src="{{url('img/default.png')}}" class="img-circle" style="position:absolute; top: 5px; left:15px; padding:5px;">
                         @endif
+                        <h1 style="position: absolute; top:5px; left:175px; padding: 5px;"><strong>{{ $person->full_name }}</strong></h1>
+                        
                     </div>
                 </div>
             

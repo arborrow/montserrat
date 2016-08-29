@@ -110,7 +110,7 @@ class PersonsController extends Controller
             'contact_type' => 'integer|min:0',
             'subcontact_type' => 'integer|min:0',
             'occupation_id' => 'integer|min:0',
-            'avatar' => 'image',
+            'avatar' => 'image|max:5000',
         
         ]);
         $person = new \montserrat\Contact;
