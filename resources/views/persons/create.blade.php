@@ -36,7 +36,7 @@
                             {!! Form::label('subcontact_type', 'Subcontact type: ', ['class' => 'col-md-3'])  !!}
                             {!! Form::select('subcontact_type', $subcontact_types, 0, ['class' => 'col-md-2']) !!}
                         <div class="clearfix"> </div>
-                            {!! Form::label('avatar', 'Picture: ', ['class' => 'col-md-2'])  !!}
+                            {!! Form::label('avatar', 'Picture (max 5M): ', ['class' => 'col-md-3'])  !!}
                             {!! Form::file('avatar'); !!}
 
                     </div>
@@ -46,7 +46,7 @@
         </div>
         <div class="clearfix"> </div>
         <div class='row'>
-            <div class='col-md-8'>
+            <div class='col-md-8' style="background-color: lightcoral;">
                 <span>
                     <h2>Emergency Contact Information</h2>
                     <div class="form-group">

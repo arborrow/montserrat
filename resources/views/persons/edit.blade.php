@@ -72,10 +72,11 @@
                     {!! Form::select('subcontact_type', $subcontact_types, $person->subcontact_type, ['class' => 'col-md-2']) !!}
                     <div class="clearfix"> </div>
                     
-                    {!! Form::label('avatar', 'Picture: ', ['class' => 'col-md-2'])  !!}
+                    {!! Form::label('avatar', 'Picture (max 5M): ', ['class' => 'col-md-3'])  !!}
                     {!! Form::file('avatar'); !!}
-
-                    {!! Form::label('attachment', 'Attach letter: ', ['class' => 'col-md-3'])  !!}
+<div class="clearfix"> </div>
+                    
+                    {!! Form::label('attachment', 'Attachment (max 10M): ', ['class' => 'col-md-3'])  !!}
                     {!! Form::file('attachment'); !!}
 
                 </div>
