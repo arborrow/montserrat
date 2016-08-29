@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Image;
 use Illuminate\Support\Facades\File;
-
+use Intervention;
 
 class PersonsController extends Controller
 {
