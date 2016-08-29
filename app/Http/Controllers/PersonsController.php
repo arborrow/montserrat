@@ -3,12 +3,9 @@
 namespace montserrat\Http\Controllers;
 
 use Illuminate\Http\Request;
-use montserrat\Http\Requests;
 use montserrat\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
-use Input;
 use Illuminate\Support\Facades\Storage;
-use Intervention;
 use Image;
 use Illuminate\Support\Facades\File;
 
@@ -190,7 +187,7 @@ class PersonsController extends Controller
         
         $person->save();
         if (null !== $request->file('avatar')) {
-            $avatar = Image::make($request->file('avatar'))->resize(150, 150);
+            $avatar = Image::make($request->file('avatar')->getRealPath())->resize(150, 150);
             Storage::put('contacts/'.$person->id.'/'.'avatar.png',$avatar->stream('png'));
         }
         // emergency contact information - not part of CiviCRM squema 
@@ -1019,13 +1016,23 @@ class PersonsController extends Controller
         
         $person->save();
         if (null !== $request->file('avatar')) {
-            $avatar = Image::make($request->file('avatar'))->resize(150, 150);
+            $avatar = Image::make($request->file('avatar')->getRealPath())->resize(150, 150);
             Storage::put('contacts/'.$person->id.'/'.'avatar.png',$avatar->stream('png'));
         }
         //dd($request);
         if (null !== $request->file('attachment')) {
+            $attachment = new \montserrat\Attachment;
             $file = $request->file('attachment');
             $file_name = $file->getClientOriginalName();
+            
+            $attachment->file_type_id = FILE_TYPE_CONTACT_ATTACHMENT;
+            $attachment->mime_type = $file->getClientMimeType();
+            $attachment->uri = $file_name;
+            $attachment->description = 'Attachment for '.$person->display_name;
+            $attachment->upload_date = \Carbon\Carbon::now();
+            $attachment->entity = "contact";
+            $attachment->entity_id = $person->id;
+            $attachment->save();
             Storage::disk('local')->put('contacts/'.$person->id.'/attachments/'.$file_name,File::get($file));
         }
         
