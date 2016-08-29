@@ -952,7 +952,8 @@ class PersonsController extends Controller
             'contact_type' => 'integer|min:0',
             'subcontact_type' => 'integer|min:0',
             'occupation_id' => 'integer|min:0',
-            'letter' => 'file|mimes:pdf,doc,docx:',
+            'avatar' => 'image|max:5000',
+            'attachment' => 'file|mimes:pdf,doc,docx|max:10000',
 
             ]);
         //dd($request);
