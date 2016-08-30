@@ -104,3 +104,4 @@ Route::get('auth/google/callback', 'Auth\AuthController@handleProviderCallback')
  Route::get('search/getuser', 'SearchController@getuser');
 
 Route::get('avatar/{user_id}', ['as' => 'get_avatar','uses' => 'PagesController@get_avatar']);
+Route::get('person/{user_id}/attachment/{file_name}', ['as' => 'get_attachment','uses' => 'PersonsController@get_attachment']);

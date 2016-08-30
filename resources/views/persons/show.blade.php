@@ -208,7 +208,7 @@
             <div class="clearfix"> </div>
         <div class='row'>
                 <div class='col-md-8'>
-                    <div class='panel-heading'><h2><strong>Retreat Participation</strong></h2></div>
+                    <div class='panel-heading'><h2><strong>Retreat Participation for {{ $person->display_name }}</strong></h2></div>
                             <ul>    
                                 @foreach($person->event_registrations as $registration)
                                 <li>{!!$registration->event_link!!} ({{date('F j, Y', strtotime($registration->event->start_date))}} - {{date('F j, Y', strtotime($registration->event->end_date))}}) </li>
@@ -219,9 +219,8 @@
             <div class="clearfix"> </div>
         
         <div class='row'>
-
         <div class='col-md-8'>
-            <div class='panel-heading'><h2><strong>Touchpoints</strong></h2>
+            <div class='panel-heading'><h2><strong>Touchpoints for {{ $person->display_name }}</strong></h2>
                 <span class="btn btn-default">
                    <a href={{ action('TouchpointsController@add',$person->id) }}>Add Touch point</a>
                 </span>
@@ -229,7 +228,7 @@
                 @if ($person->touchpoints->isEmpty())
                         <p>It is a brand new world, there are no touch points for this person!</p>
                     @else
-                    <table class="table"><caption><h2>Touch points for {{ $person->display_name }} </h2></caption>
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>Date</th>
@@ -248,6 +247,37 @@
                             </tr>
                             @endforeach
 
+                        </tbody>
+                    </table>
+                @endif
+        </div>
+        </div>
+            <div class='row'>
+        <div class='col-md-8'>
+            <div class='panel-heading'>
+                <h2><strong>Attachments for {{ $person->display_name }} </strong></h2>
+           </div>
+                @if (empty($files))
+                        <p>This user currently has no attachments</p>
+                    @else
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Uploaded date</th>
+                                <th>MIME type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($files as $file)
+                            <tr>
+                                <td><a href="{{url('person/'.$person->id.'/attachment/'.$file->uri)}}">{{ $file->uri }}</a></td>
+                                <td>{{$file->description}}</td>
+                                <td>{{ $file->upload_date}}</td>
+                                <td>{{ $file->mime_type }}</td>
+                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 @endif

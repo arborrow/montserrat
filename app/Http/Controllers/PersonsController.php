@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Image;
 use Illuminate\Support\Facades\File;
 use Intervention;
+use Response;
 
 class PersonsController extends Controller
 {
@@ -620,8 +621,10 @@ class PersonsController extends Controller
     {
         //
        $person = \montserrat\Contact::with('addresses.country','addresses.location','addresses.state','emails.location','emergency_contact','ethnicity','languages','notes','occupation','parish.contact_a.address_primary','parish.contact_a.diocese.contact_a','phones.location','prefix','suffix','religion','touchpoints.staff','websites','groups.group','a_relationships.relationship_type','a_relationships.contact_b','b_relationships.relationship_type','b_relationships.contact_a','event_registrations')->findOrFail($id);
-       
-       //not at all elegant but this parses out the notes for easy display and use in the edit blade
+       //$files = Storage::files('contacts/'.$person->id.'/attachments');
+       $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($person->id)->get();
+       //dd($files);
+        //not at all elegant but this parses out the notes for easy display and use in the edit blade
         $person->note_health='';
         $person->note_dietary='';
         $person->note_contact='';
@@ -663,7 +666,7 @@ class PersonsController extends Controller
         }
 
        //dd($person->a_relationships);
-       return view('persons.show',compact('person'));//
+       return view('persons.show',compact('person','files'));//
     
     }
 
@@ -954,6 +957,7 @@ class PersonsController extends Controller
             'occupation_id' => 'integer|min:0',
             'avatar' => 'image|max:5000',
             'attachment' => 'file|mimes:pdf,doc,docx|max:10000',
+            'attachment_description' => 'string|max:200',
 
             ]);
         //dd($request);
@@ -1029,7 +1033,7 @@ class PersonsController extends Controller
             $attachment->file_type_id = FILE_TYPE_CONTACT_ATTACHMENT;
             $attachment->mime_type = $file->getClientMimeType();
             $attachment->uri = $file_name;
-            $attachment->description = 'Attachment for '.$person->display_name;
+            $attachment->description = $request->input('attachment_description');
             $attachment->upload_date = \Carbon\Carbon::now();
             $attachment->entity = "contact";
             $attachment->entity_id = $person->id;
@@ -1620,5 +1624,18 @@ class PersonsController extends Controller
             $relationship->save();
         }
     }
-    
+
+    public function get_attachment($user_id, $attachment)
+    {
+        $path = storage_path() . '/app/contacts/' . $user_id . '/attachments/'.$attachment;
+        if(!File::exists($path)) abort(404);
+
+        $file = File::get($path);
+        $type = File::mimeType($path);
+
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+
+        return $response;
+    }    
 }

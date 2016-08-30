@@ -39,7 +39,7 @@
         {!! Form::hidden('id', $person->id) !!}
     
         <div class='row'>
-            <div class='col-md-8'>
+            <div class='col-md-12'>
                 <div class='panel-heading'><h2>Name</h2></div>
                 <div class="form-group">
                     {!! Form::label('prefix_id', 'Title:', ['class' => 'col-md-1'])  !!}
@@ -59,25 +59,27 @@
                     {!! Form::label('nick_name', 'Nickname: ', ['class' => 'col-md-2'])  !!}
                     {!! Form::text('nick_name', $person->nick_name, ['class' => 'col-md-3']) !!}
                     <div class="clearfix"> </div>
-                    {!! Form::label('display_name', 'Display name: ', ['class' => 'col-md-3'])  !!}
+                    {!! Form::label('display_name', 'Display name: ', ['class' => 'col-md-2'])  !!}
                     {!! Form::text('display_name', $person->display_name, ['class' => 'col-md-3']) !!}
-                    {!! Form::label('sort_name', 'Sort name: ', ['class' => 'col-md-3'])  !!}
+                    {!! Form::label('sort_name', 'Sort name: ', ['class' => 'col-md-2'])  !!}
                     {!! Form::text('sort_name', $person->sort_name, ['class' => 'col-md-3']) !!}
 
                     <div class="clearfix"> </div>
-                    {!! Form::label('contact_type', 'Contact type: ', ['class' => 'col-md-3'])  !!}
+                    {!! Form::label('contact_type', 'Contact type: ', ['class' => 'col-md-2'])  !!}
                     {!! Form::select('contact_type', $contact_types, $person->contact_type, ['class' => 'col-md-2']) !!}
 
-                    {!! Form::label('subcontact_type', 'Subcontact type: ', ['class' => 'col-md-3'])  !!}
+                    {!! Form::label('subcontact_type', 'Subcontact type: ', ['class' => 'col-md-2'])  !!}
                     {!! Form::select('subcontact_type', $subcontact_types, $person->subcontact_type, ['class' => 'col-md-2']) !!}
                     <div class="clearfix"> </div>
                     
-                    {!! Form::label('avatar', 'Picture (max 5M): ', ['class' => 'col-md-3'])  !!}
-                    {!! Form::file('avatar'); !!}
-<div class="clearfix"> </div>
+                    {!! Form::label('avatar', 'Picture (max 5M): ', ['class' => 'col-md-2'])  !!}
+                    {!! Form::file('avatar',['class' => 'col-md-2']); !!}
+                    <div class="clearfix"> </div>
                     
-                    {!! Form::label('attachment', 'Attachment (max 10M): ', ['class' => 'col-md-3'])  !!}
-                    {!! Form::file('attachment'); !!}
+                    {!! Form::label('attachment', 'Attachment (max 10M): ', ['class' => 'col-md-2'])  !!}
+                    {!! Form::file('attachment',['class' => 'col-md-2']); !!}
+                    {!! Form::label('attachment_description', 'Description: (max 200)', ['class' => 'col-md-2'])  !!}
+                    {!! Form::text('attachment_description', NULL, ['class' => 'col-md-3']) !!}
 
                 </div>
             </div>
