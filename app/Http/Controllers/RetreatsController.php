@@ -3,12 +3,13 @@
 namespace montserrat\Http\Controllers;
 
 use Illuminate\Http\Request;
-use montserrat\Http\Requests;
 use montserrat\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
-use Input;
-use Auth;
 use Spatie\GoogleCalendar\Event;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+use Response;
+
 
 class RetreatsController extends Controller
 {
@@ -208,7 +209,9 @@ public function edit($id)
             'year' => 'integer|min:1990|max:2020',
             'amount' => 'numeric|min:0|max:100000',
             'attending' => 'integer|min:0|max:150',
-            'silent' => 'boolean'
+            'silent' => 'boolean',
+            'schedule' => 'file|mimes:pdf|max:5000',
+            'attachment' => 'file|mimes:pdf|max:10000',
         ]);
         
         $retreat = \montserrat\Retreat::findOrFail($request->input('id'));
@@ -227,6 +230,37 @@ public function edit($id)
         $retreat->innkeeper_id = $request->input('innkeeper_id');
         $retreat->assistant_id = $request->input('assistant_id');
         $retreat->save();
+        
+        if (null !== $request->file('schedule')) {
+            $attachment = new \montserrat\Attachment;
+            $file = $request->file('schedule');
+            $file_name = $file->getClientOriginalName();
+            
+            $attachment->file_type_id = FILE_TYPE_EVENT_SCHEDULE;
+            $attachment->mime_type = $file->getClientMimeType();
+            $attachment->uri = 'schedule.pdf';
+            $attachment->description = 'Schedule for '.$retreat->idnumber.'-'.$retreat->title;
+            $attachment->upload_date = \Carbon\Carbon::now();
+            $attachment->entity = "event";
+            $attachment->entity_id = $retreat->id;
+            $attachment->save();
+            Storage::disk('local')->put('events/'.$retreat->id.'/schedule.pdf',File::get($file));
+        }
+        if (null !== $request->file('evaluations')) {
+            $attachment = new \montserrat\Attachment;
+            $file = $request->file('evaluations');
+            $file_name = $file->getClientOriginalName();
+            
+            $attachment->file_type_id = FILE_TYPE_EVENT_EVALUATION;
+            $attachment->mime_type = $file->getClientMimeType();
+            $attachment->uri = 'evaluations.pdf';
+            $attachment->description = 'Evaluations for '.$retreat->idnumber.'-'.$retreat->title;
+            $attachment->upload_date = \Carbon\Carbon::now();
+            $attachment->entity = "event";
+            $attachment->entity_id = $retreat->id;
+            $attachment->save();
+            Storage::disk('local')->put('events/'.$retreat->id.'/evaluations.pdf',File::get($file));
+        }
         
         if (empty($request->input('directors')) or in_array(0,$request->input('directors'))) {
             $retreat->retreatmasters()->detach();
@@ -254,4 +288,31 @@ public function edit($id)
        return Redirect::action('RetreatsController@index');
        //
     }
+    
+    public function get_event_schedule($event_id) {
+        $path = storage_path() . '/app/events/'.$event_id.'/schedule.pdf';
+        if(!File::exists($path)) abort(404);
+
+        $file = File::get($path);
+        $type = File::mimeType($path);
+
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+
+        return $response;
+    }    
+
+    
+    public function get_event_evaluations($event_id) {
+        $path = storage_path() . '/app/events/'.$event_id.'/evaluations.pdf';
+        if(!File::exists($path)) abort(404);
+
+        $file = File::get($path);
+        $type = File::mimeType($path);
+
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+
+        return $response;
+    }    
 }

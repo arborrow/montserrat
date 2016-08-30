@@ -3,7 +3,7 @@
 
 <div class="jumbotron text-left">
     <h1>Edit Retreat {!! $retreat->idnumber !!}</h1>
-    {!! Form::open(['method' => 'PUT', 'route' => ['retreat.update', $retreat->id]]) !!}
+    {!! Form::open(['method' => 'PUT', 'files'=>'true','route' => ['retreat.update', $retreat->id]]) !!}
     {!! Form::hidden('id', $retreat->id) !!}
     <div class="form-group">
         {!! Form::label('idnumber', 'ID#:', ['class' => 'col-md-2'])  !!}
@@ -65,6 +65,17 @@
         {!! Form::label('event_type', 'Type: ', ['class' => 'col-md-2']) !!}
         {!! Form::select('event_type', $event_types, $retreat->event_type_id, ['class' => 'col-md-3']) !!}
     </div><div class="clearfix"> </div>
+    <div class="form-group">
+        {!! Form::label('schedule', 'Schedule (max 5M|pdf): ', ['class' => 'col-md-2'])  !!}
+        {!! Form::file('schedule',['class' => 'col-md-2']); !!}
+    </div>
+    <div class="clearfix"> </div>
+    <div class="form-group">
+        {!! Form::label('evaluations', 'Evaluations (max 10M|pdf): ', ['class' => 'col-md-2'])  !!}
+        {!! Form::file('evaluations',['class' => 'col-md-2']); !!}
+    </div>
+    <div class="clearfix"> </div>
+    
     <!--    
     <div class="form-group">
         {!! Form::label('type', 'Type:', ['class' => 'col-md-2']) !!}

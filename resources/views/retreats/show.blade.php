@@ -69,7 +69,24 @@
             </div><div class="clearfix"> </div>
             <div class='row'>
                 <div class='col-md-2'><strong>Year: </strong>{{ $retreat->year}}</div>
-            </div><div class="clearfix"> </div></div>
+            </div><div class="clearfix"> </div>
+                @if (Storage::has('events/'.$retreat->id.'/schedule.pdf'))
+                <div class='row'>
+                    <div class="col-md-2">
+                        <a href="{{url('retreat/'.$retreat->id.'/schedule')}}">Retreat Schedule</a>
+                    </div>
+                </div>
+                @endif
+                @if (Storage::has('events/'.$retreat->id.'/evaluations.pdf'))
+                <div class='row'>
+                    <div class="col-md-2">
+                        <a href="{{url('retreat/'.$retreat->id.'/evaluations')}}">Retreat Evaluations</a>
+                    </div>
+                </div>
+                @endif
+        </div><div class="clearfix"> </div>
+                
+        </div>
             <div class='row'>
                 <div class='col-md-1'><a href="{{ action('RetreatsController@edit', $retreat->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
                 <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['retreat.destroy', $retreat->id]]) !!}
