@@ -73,14 +73,14 @@
                 @if (Storage::has('events/'.$retreat->id.'/schedule.pdf'))
                 <div class='row'>
                     <div class="col-md-2">
-                        <a href="{{url('retreat/'.$retreat->id.'/schedule')}}">Retreat Schedule</a>
+                        <a href="{{url('retreat/'.$retreat->id.'/schedule')}}" class="btn-default" style="padding: 3px;">Retreat Schedule</a></span>
                     </div>
                 </div>
                 @endif
                 @if (Storage::has('events/'.$retreat->id.'/evaluations.pdf'))
                 <div class='row'>
                     <div class="col-md-2">
-                        <a href="{{url('retreat/'.$retreat->id.'/evaluations')}}">Retreat Evaluations</a>
+                        <a href="{{url('retreat/'.$retreat->id.'/evaluations')}}" class="btn-default" style="padding: 3px;">Retreat Evaluations</a>
                     </div>
                 </div>
                 @endif
