@@ -1611,7 +1611,7 @@ class PersonsController extends Controller
         $email_list = "";
         foreach ($persons as $person) {
             if (!empty($person->email_primary_text)) {
-                $email_list .= $person->email_primary_text;
+                $email_list .= $person->email_primary_text.',';
             }
             
             if (!empty($email_list)) {
