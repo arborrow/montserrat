@@ -257,7 +257,7 @@
             <div class='panel-heading'>
                 <h2><strong>Attachments for {{ $person->display_name }} </strong></h2>
            </div>
-                @if (empty($files))
+                @if ($files->isEmpty())
                         <p>This user currently has no attachments</p>
                     @else
                     <table class="table">
