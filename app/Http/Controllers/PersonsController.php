@@ -1608,6 +1608,22 @@ class PersonsController extends Controller
         $persons = \montserrat\Contact::with('groups','address_primary')->whereHas('groups', function ($query) use ($group_id) {$query->where('group_id','=',$group_id);})->orderBy('sort_name')->get();
         $group = \montserrat\Group::findOrFail($group_id);
         $role['name']= $group->name;
+        $email_list = "";
+        foreach ($persons as $person) {
+            if (!empty($person->email_primary_text)) {
+                $email_list .= $person->email_primary_text;
+            }
+            
+            if (!empty($email_list)) {
+                $role['email_link'] = "<a href='mailto:?bcc=".$email_list."'>E-mail ".$group->name." Group</a>";
+                         
+            } else {
+                $role['email_link'] = NULL;
+                
+            }
+            
+        }
+        
         return view('persons.role',compact('persons','role'));   //
     
     }

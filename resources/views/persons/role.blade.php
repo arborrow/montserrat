@@ -9,7 +9,8 @@
                     <span class="grey">{{$role['name']}} Index</span> 
                     <span class="create"><a href={{ action('PersonsController@create') }}>{!! Html::image('img/create.png', 'Add Person',array('title'=>"Add Person",'class' => 'btn btn-primary')) !!}</a></span></h1>
                     <span class="person"><a href={{ action('PersonsController@index') }}>{!! Html::image('img/person.png', 'Show Persons',array('title'=>"Show Persons",'class' => 'btn btn-primary')) !!}</a></span></h1>
-                
+                    <span class="btn btn-default">{!! $role['email_link'] !!}</span>
+            
                 </div>
                 @if ($persons->isEmpty())
                     <p>Currently, there are no {{$role['name']}}</p>
