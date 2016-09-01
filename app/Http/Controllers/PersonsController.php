@@ -188,7 +188,7 @@ class PersonsController extends Controller
         
         $person->save();
         if (null !== $request->file('avatar')) {
-            $avatar = Image::make($request->file('avatar')->getRealPath())->fit(150, 150);
+            $avatar = Image::make($request->file('avatar')->getRealPath())->fit(150, 150)->orientate();
             Storage::put('contacts/'.$person->id.'/'.'avatar.png',$avatar->stream('png'));
         }
         // emergency contact information - not part of CiviCRM squema 
@@ -1021,7 +1021,7 @@ class PersonsController extends Controller
         
         $person->save();
         if (null !== $request->file('avatar')) {
-            $avatar = Image::make($request->file('avatar')->getRealPath())->fit(150, 150);
+            $avatar = Image::make($request->file('avatar')->getRealPath())->fit(150, 150)->orientate();
             Storage::put('contacts/'.$person->id.'/'.'avatar.png',$avatar->stream('png'));
         }
         //dd($request);
