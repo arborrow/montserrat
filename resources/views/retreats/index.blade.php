@@ -84,6 +84,7 @@
                             <th>Innkeeper</th>
                             <th>Assistant</th>
                             <th># Attended</th>
+                            <th>Attachments</th>
                             <!--<th>Silent</th>
                             <th>Edit</th>
                             <th>Delete</th> -->
@@ -126,6 +127,7 @@
 
                             
                             <td>{{ $oldretreat->registration_count}}</td>
+                            <td> {!!$oldretreat->retreat_contract_link!!} {!!$oldretreat->retreat_schedule_link!!} {!!$oldretreat->retreat_evaluations_link!!}</td>
                         </tr>
                         @endforeach
                         {!! $oldretreats->render() !!}  
