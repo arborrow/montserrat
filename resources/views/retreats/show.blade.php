@@ -29,21 +29,21 @@
                     @else
                     <div class='col-md-2'>
                         @foreach($retreat->retreatmasters as $rm)
-                            <a href="/person/{{ $rm->id }}">{{ $rm->display_name }}</a><br /> 
+                            <a href="{{url('person/'.$rm->id)}}">{{ $rm->display_name }}</a><br /> 
                         @endforeach
                         </div>
                     @endif
     
                 <div class='col-md-3'><strong>Innkeeper: </strong>
                     @if ($retreat->innkeeper_id > 0)
-                        <a href="/person/{{ $retreat->innkeeper_id }}">{{ $retreat->innkeeper->display_name }}</a>
+                        <a href="{{url('person/'.$retreat->innkeeper_id)}}">{{ $retreat->innkeeper->display_name }}</a>
                     @else
                         N/A
                     @endIf
                 </div>
                 <div class='col-md-3'><strong>Assistant: </strong>
                     @if ($retreat->assistant_id > 0)
-                        <a href="/person/{{ $retreat->assistant_id }}">{{ $retreat->assistant->display_name }}</a>
+                        <a href="{{url('person/'.$retreat->assistant_id) }}">{{ $retreat->assistant->display_name }}</a>
                     @else
                         N/A
                     @endIf
