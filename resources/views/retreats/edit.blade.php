@@ -66,6 +66,11 @@
         {!! Form::select('event_type', $event_types, $retreat->event_type_id, ['class' => 'col-md-3']) !!}
     </div><div class="clearfix"> </div>
     <div class="form-group">
+        {!! Form::label('contract', 'Contract (max 5M|pdf): ', ['class' => 'col-md-2'])  !!}
+        {!! Form::file('contract',['class' => 'col-md-2']); !!}
+    </div>
+    <div class="clearfix"> </div>
+    <div class="form-group">
         {!! Form::label('schedule', 'Schedule (max 5M|pdf): ', ['class' => 'col-md-2'])  !!}
         {!! Form::file('schedule',['class' => 'col-md-2']); !!}
     </div>
@@ -73,6 +78,11 @@
     <div class="form-group">
         {!! Form::label('evaluations', 'Evaluations (max 10M|pdf): ', ['class' => 'col-md-2'])  !!}
         {!! Form::file('evaluations',['class' => 'col-md-2']); !!}
+    </div>
+    <div class="clearfix"> </div>
+    <div class="form-group">
+        {!! Form::label('photo', 'Group photo (max 10M): ', ['class' => 'col-md-2'])  !!}
+        {!! Form::file('photo',['class' => 'col-md-2']); !!}
     </div>
     <div class="clearfix"> </div>
     

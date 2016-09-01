@@ -70,6 +70,14 @@
             <div class='row'>
                 <div class='col-md-2'><strong>Year: </strong>{{ $retreat->year}}</div>
             </div><div class="clearfix"> </div>
+                @if (Storage::has('events/'.$retreat->id.'/contract.pdf'))
+                <div class='row'>
+                    <div class="col-md-2">
+                        <a href="{{url('retreat/'.$retreat->id.'/contract')}}" class="btn-default" style="padding: 3px;">Retreat Contract</a></span>
+                    </div>
+                </div>
+                @endif
+                
                 @if (Storage::has('events/'.$retreat->id.'/schedule.pdf'))
                 <div class='row'>
                     <div class="col-md-2">
@@ -84,6 +92,10 @@
                     </div>
                 </div>
                 @endif
+                @if (Storage::has('events/'.$retreat->id.'/group_photo.jpg'))
+                <strong>Group photo:</strong> <img src="{{url('retreat/'.$retreat->id).'/photo'}}" class="img" style="padding:5px;">
+                @endif
+                        
         </div><div class="clearfix"> </div>
                 
         </div>
