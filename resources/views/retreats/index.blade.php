@@ -22,6 +22,7 @@
                             <th>Innkeeper</th>
                             <th>Assistant</th>
                             <th># Attending</th>
+                            <th>Attachments</th>
                             <!--<th>Silent</th>
                             <th>Edit</th>
                             <th>Delete</th> -->
@@ -57,6 +58,7 @@
                                 @endIf
                             </td>
                             <td>{{ $retreat->registration_count}}</td>
+                            <td> {!!$retreat->retreat_contract_link!!} {!!$retreat->retreat_schedule_link!!} {!!$retreat->retreat_evaluations_link!!}</td>
                             <!--<td>{{ $retreat->silent ? 'Yes' : 'No'}}</td>
                             <td><a href="{{ action('RetreatsController@edit', $retreat->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></td>
 <td>{!! Form::open(['method' => 'DELETE', 'route' => ['retreat.destroy', $retreat->id]]) !!}

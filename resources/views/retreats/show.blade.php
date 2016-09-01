@@ -70,28 +70,19 @@
             <div class='row'>
                 <div class='col-md-2'><strong>Year: </strong>{{ $retreat->year}}</div>
             </div><div class="clearfix"> </div>
-                @if (Storage::has('events/'.$retreat->id.'/contract.pdf'))
-                <div class='row'>
-                    <div class="col-md-2">
-                        <a href="{{url('retreat/'.$retreat->id.'/contract')}}" class="btn-default" style="padding: 3px;">Retreat Contract</a></span>
-                    </div>
+            <div class='row'>
+                <div class="col-md-1">
+                    <strong>Attachments: </strong>
                 </div>
-                @endif
-                
-                @if (Storage::has('events/'.$retreat->id.'/schedule.pdf'))
-                <div class='row'>
-                    <div class="col-md-2">
-                        <a href="{{url('retreat/'.$retreat->id.'/schedule')}}" class="btn-default" style="padding: 3px;">Retreat Schedule</a></span>
-                    </div>
+                <div class="col-md-2">
+                    {!!$retreat->retreat_contract_link!!}
+                    {!!$retreat->retreat_schedule_link!!}
+                    {!!$retreat->retreat_evaluations_link!!}
                 </div>
-                @endif
-                @if (Storage::has('events/'.$retreat->id.'/evaluations.pdf'))
-                <div class='row'>
-                    <div class="col-md-2">
-                        <a href="{{url('retreat/'.$retreat->id.'/evaluations')}}" class="btn-default" style="padding: 3px;">Retreat Evaluations</a>
-                    </div>
-                </div>
-                @endif
+                    
+            </div>
+            <div class="clearfix"> </div>
+    
                 @if (Storage::has('events/'.$retreat->id.'/group_photo.jpg'))
                 <strong>Group photo:</strong> <img src="{{url('retreat/'.$retreat->id).'/photo'}}" class="img" style="padding:5px;">
                 @endif

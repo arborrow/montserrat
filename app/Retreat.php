@@ -5,7 +5,8 @@ namespace montserrat;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Illuminate\Support\Facades\Storage;
+use Html; 
 class Retreat extends Model
 {
     /**
@@ -72,5 +73,33 @@ class Retreat extends Model
         } else 
             return NULL;
         }
+    public function getRetreatScheduleLinkAttribute () {
+        if (Storage::has('events/'.$this->id.'/schedule.pdf')) {
+            $img = Html::image('img/schedule.png', 'Schedule',array('title'=>"Schedule"));
+            $link = '<a href="'.url('retreat/'.$this->id.'/schedule" ').'class="btn btn-default" style="padding: 3px;">'.$img.'</a>';
+            return $link;
+        } else {
+            return NULL;
+        }
+    }
     
+    public function getRetreatContractLinkAttribute () {
+        if (Storage::has('events/'.$this->id.'/contract.pdf')) {
+            $img = Html::image('img/contract.png', 'Contract',array('title'=>"Contract"));
+            $link = '<a href="'.url('retreat/'.$this->id.'/contract" ').'class="btn btn-default" style="padding: 3px;">'.$img.'</a>';
+            return $link;
+        } else {
+            return NULL;
+        }
+    }
+    
+    public function getRetreatEvaluationsLinkAttribute () {
+        if (Storage::has('events/'.$this->id.'/evaluations.pdf')) {
+            $img = Html::image('img/evaluation.png', 'Evaluations',array('title'=>"Evaluations"));
+            $link = '<a href="'.url('retreat/'.$this->id.'/evaluations" ').'class="btn btn-default" style="padding: 3px;">'.$img.'</a>';
+            return $link;
+        } else {
+            return NULL;
+        }
+    }
 }
