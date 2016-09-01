@@ -213,8 +213,8 @@ public function edit($id)
             'silent' => 'boolean',
             'contract' => 'file|mimes:pdf|max:5000',
             'schedule' => 'file|mimes:pdf|max:5000',
-            'attachment' => 'file|mimes:pdf|max:10000',
-            'photo' => 'image|max:5000',
+            'evaluations' => 'file|mimes:pdf|max:10000',
+            'photo' => 'image|max:10000',
             
         ]);
         
