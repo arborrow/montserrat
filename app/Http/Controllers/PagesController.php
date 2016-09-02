@@ -20,18 +20,20 @@ class PagesController extends Controller
      */
     public function get_avatar($user_id)
     {
-    $path = storage_path() . '/app/contacts/' . $user_id . '/avatar.png';
-    //dd($path);
-    if(!File::exists($path)) abort(404);
+        $path = storage_path() . '/app/contacts/' . $user_id . '/avatar.png';
+        //dd($path);
+        if(!File::exists($path)) {
+            abort(404);
+        } else {
+            $file = File::get($path);
+            $type = File::mimeType($path);
 
-    $file = File::get($path);
-    $type = File::mimeType($path);
+            $response = Response::make($file, 200);
+            $response->header("Content-Type", $type);
 
-    $response = Response::make($file, 200);
-    $response->header("Content-Type", $type);
-
-    return $response;
-}
+            return $response;
+        }
+    }
     public function about()
     {
      return view('pages.about');   //
