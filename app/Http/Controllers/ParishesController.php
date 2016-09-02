@@ -82,7 +82,9 @@ class ParishesController extends Controller
                 'diocese_id' => 'integer|min:0',
                 'pastor_id' => 'integer|min:0',
                 'parish_email_main' => 'email',
-                '$parish_website_main' => 'url'
+                '$parish_website_main' => 'url',
+                'phone_main_phone' => 'phone',
+                'phone_main_fax' => 'phone',
             ]);
         $parish = new \montserrat\Contact;
         $parish->organization_name = $request->input('organization_name');

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "94f03b41c948067dd5cb73f2d74bf071",
-    "content-hash": "03da3bb85428b4aa589e4df096698e89",
+    "hash": "3c32eb955b298cebebd6b875169aaacd",
+    "content-hash": "1adeab6a726934cfdffbaee79e70505f",
     "packages": [
         {
             "name": "cartalyst/sentry",
@@ -1550,6 +1550,50 @@
             "time": "2016-08-06 21:50:28"
         },
         {
+            "name": "stuyam/laravel-phone-validator",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stuyam/laravel-phone-validator.git",
+                "reference": "4accaebb2da80c218493f1b97318a615ab7bc4fb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stuyam/laravel-phone-validator/zipball/4accaebb2da80c218493f1b97318a615ab7bc4fb",
+                "reference": "4accaebb2da80c218493f1b97318a615ab7bc4fb",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^5.2",
+                "twilio/sdk": "^4.10"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "StuYam\\PhoneValidator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stuart Yamartino",
+                    "email": "stuartyamartino@gmail.com"
+                }
+            ],
+            "description": "A phone validator for Laravel using the free Twilio phone lookup service",
+            "keywords": [
+                "laravel",
+                "phone",
+                "twilio",
+                "validation",
+                "validator"
+            ],
+            "time": "2016-07-13 13:56:28"
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "v5.4.3",
             "source": {
@@ -2431,6 +2475,56 @@
                 "web"
             ],
             "time": "2016-07-25 15:51:55"
+        },
+        {
+            "name": "twilio/sdk",
+            "version": "4.12.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twilio/twilio-php.git",
+                "reference": "6e4b45fc3f8b56c088dfecf4bced76c712cb6182"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/6e4b45fc3f8b56c088dfecf4bced76c712cb6182",
+                "reference": "6e4b45fc3f8b56c088dfecf4bced76c712cb6182",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.1"
+            },
+            "require-dev": {
+                "mockery/mockery": ">=0.7.2",
+                "phpunit/phpunit": "4.5.*"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "Services/Twilio.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kevin Burke",
+                    "email": "kevin@twilio.com"
+                },
+                {
+                    "name": "Kyle Conroy",
+                    "email": "kyle+pear@twilio.com"
+                }
+            ],
+            "description": "A PHP wrapper for Twilio's API",
+            "homepage": "http://github.com/twilio/twilio-php",
+            "keywords": [
+                "api",
+                "sms",
+                "twilio"
+            ],
+            "time": "2016-09-01 18:42:52"
         },
         {
             "name": "vlucas/phpdotenv",

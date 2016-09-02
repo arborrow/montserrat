@@ -71,7 +71,9 @@ class OrganizationsController extends Controller
                 'organization_name' => 'required',
                 'subcontact_type' => 'integer|min:0',
                 'email_main' => 'email',
-                'website_main' => 'url'
+                'website_main' => 'url',
+                'phone_main_phone' => 'phone',
+                'phone_main_fax' => 'phone',
             ]);
             
         $organization = new \montserrat\Contact;
@@ -195,7 +197,9 @@ return Redirect::action('OrganizationsController@index');
             'organization_name' => 'required',
             'bishop_id' => 'integer|min:0',
             'email_main' => 'email',
-            'website_main' => 'url'
+            'website_main' => 'url',
+            'phone_main_phone' => 'phone',
+            'phone_main_fax' => 'phone',
         ]);
 
         $organization = \montserrat\Contact::with('address_primary.state','address_primary.location','phone_main_phone.location','phone_main_fax.location','email_primary.location','website_main','note_organization')->findOrFail($id);

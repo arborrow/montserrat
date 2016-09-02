@@ -112,7 +112,17 @@ class PersonsController extends Controller
             'subcontact_type' => 'integer|min:0',
             'occupation_id' => 'integer|min:0',
             'avatar' => 'image|max:5000',
-        
+            'emergency_contact_phone' => 'phone',
+            'emergency_contact_phone_alternate' => 'phone',
+            'phone_home_phone' => 'phone',
+            'phone_home_mobile' => 'phone',
+            'phone_home_fax' => 'phone',
+            'phone_work_phone' => 'phone',
+            'phone_work_mobile' => 'phone',
+            'phone_work_fax' => 'phone',
+            'phone_other_phone' => 'phone',
+            'phone_other_mobile' => 'phone',
+            'phone_other_fax' => 'phone',
         ]);
         $person = new \montserrat\Contact;
         
@@ -958,7 +968,18 @@ class PersonsController extends Controller
             'avatar' => 'image|max:5000',
             'attachment' => 'file|mimes:pdf,doc,docx|max:10000',
             'attachment_description' => 'string|max:200',
-
+            'emergency_contact_phone' => 'phone',
+            'emergency_contact_phone_alternate' => 'phone',
+            'phone_home_phone' => 'phone',
+            'phone_home_mobile' => 'phone',
+            'phone_home_fax' => 'phone',
+            'phone_work_phone' => 'phone',
+            'phone_work_mobile' => 'phone',
+            'phone_work_fax' => 'phone',
+            'phone_other_phone' => 'phone',
+            'phone_other_mobile' => 'phone',
+            'phone_other_fax' => 'phone',
+        
             ]);
         //dd($request);
         //name 

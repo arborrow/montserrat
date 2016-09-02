@@ -60,7 +60,9 @@ class VendorsController extends Controller
         $this->validate($request, [
             'organization_name' => 'required',
             'vendor_email_main' => 'email',
-            'vendor_website_main' => 'url'
+            'vendor_website_main' => 'url',
+            'phone_main_phone' => 'phone',
+            'phone_main_fax' => 'phone',
         ]);
     $vendor = new \montserrat\Contact;
         $vendor->organization_name = $request->input('organization_name');
@@ -164,13 +166,14 @@ return Redirect::action('VendorsController@index');
      */
     public function update(Request $request, $id)
     {
-        //
-
         $this->validate($request, [
             'organization_name' => 'required',
             'email_primary' => 'email',
-            'website_main' => 'url'
+            'website_main' => 'url',
+            'phone_main_phone' => 'phone',
+            'phone_main_fax' => 'phone',
         ]);
+        
         $vendor = \montserrat\Contact::with('address_primary.state','address_primary.location','phone_primary.location','phone_main_fax','email_primary.location','website_main','notes')->findOrFail($request->input('id'));
         $vendor->organization_name = $request->input('organization_name');
         $vendor->display_name = $request->input('organization_name');

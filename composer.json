@@ -13,7 +13,8 @@
         "twbs/bootstrap": "^3.3",
         "zizaco/entrust": "1.5.0",
         "spatie/laravel-google-calendar": "^1.0",
-        "intervention/image": "^2.3"
+        "intervention/image": "^2.3",
+        "stuyam/laravel-phone-validator": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

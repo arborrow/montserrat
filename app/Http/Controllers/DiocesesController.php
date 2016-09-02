@@ -70,7 +70,9 @@ class DiocesesController extends Controller
                 'organization_name' => 'required',
                 'bishop_id' => 'integer|min:0',
                 'email_main' => 'email',
-                'website_main' => 'url'
+                'website_main' => 'url',
+                'phone_main_phone' => 'phone',
+                'phone_main_fax' => 'phone',
             ]);
             
         $diocese = new \montserrat\Contact;
@@ -205,7 +207,10 @@ return Redirect::action('DiocesesController@index');
             'organization_name' => 'required',
             'bishop_id' => 'integer|min:0',
             'email_main' => 'email',
-            'website_main' => 'url'
+            'website_main' => 'url',
+            'phone_main_phone' => 'phone',
+            'phone_main_fax' => 'phone',
+        
         ]);
 
         $diocese = \montserrat\Contact::with('bishops.contact_b','parishes.contact_b','address_primary.state','address_primary.location','phone_primary.location','phone_main_fax.location','email_primary.location','website_main','notes')->findOrFail($id);

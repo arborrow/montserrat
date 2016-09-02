@@ -152,6 +152,7 @@ return [
         Spatie\GoogleCalendar\GoogleCalendarServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        StuYam\PhoneValidator\PhoneValidatorServiceProvider::class,
         // Spatie\Menu\Laravel\MenuServiceProvider::class,
 //        \montserrat\Providers\EntrustCustomServiceProvider::class,
     ],
