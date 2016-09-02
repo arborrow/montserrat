@@ -5,7 +5,7 @@
         <div class="jumbotron text-left">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span><h2>{!! $parish->organization_name !!} (<a href="../diocese/{{$parish->diocese_id}}">{{ $parish->diocese_name}}</a>)</span>
+                    <span><h2><a href="{{url('parish/'.$parish->id.'/edit')}}">{!! $parish->organization_name !!}</a> (<a href="../diocese/{{$parish->diocese_id}}">{{ $parish->diocese_name}}</a>)</span>
                     <span class="back"><a href={{ action('ParishesController@index') }}>{!! Html::image('img/parish.png', 'Parish Index',array('title'=>"Parish Index",'class' => 'btn btn-default')) !!}</a></span></h1>
                     <span class="btn btn-default">
                         <a href={{ action('TouchpointsController@add',$parish->id) }}>Add Touch point</a>

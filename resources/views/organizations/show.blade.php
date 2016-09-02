@@ -5,7 +5,7 @@
         <div class="jumbotron text-left">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span><h2>{{ $organization->organization_name }} ({{ $organization->subcontact_type_label }})</h2></span>
+                    <span><h2><a href="{{url('organization/'.$organization->id.'/edit')}}">{{ $organization->organization_name }} ({{ $organization->subcontact_type_label }})</a></h2></span>
                     <span><a href={{ action('OrganizationsController@index') }}>{!! Html::image('img/organization.png', 'Organization Index',array('title'=>"Organization Index",'class' => 'btn btn-default')) !!}</a></span>
                     <span class="btn btn-default">
                         <a href={{ action('TouchpointsController@add',$organization->id) }}>Add Touch point</a>

@@ -28,8 +28,7 @@
                         </h2></caption>
                     <thead>
                         <tr>
-                            <th>Building</th>
-                            <th>Room#</th>
+                            <th>Room</th>
                             @foreach($dts as $dt)
                             <th>{{$dt->day}}</th>
                             @endforeach
@@ -43,8 +42,7 @@
                             @foreach($roomsort as $room)
                         
                             <tr>
-                                <td>{{$room->location->name}}</td> 
-                                <td>{{$room->name}}</td>
+                                <td><a href="{{url('room/'.$room->id)}}">{{$room->location->name}} {{$room->name}}</a></td>
                                 
                                 @foreach($dts as $dt)
                                     @if ($m[$room->id][$dt->toDateString()]['status'] == 'R')

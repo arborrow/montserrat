@@ -5,7 +5,7 @@
     <div class="jumbotron text-left">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span><h2>Retreat Details for #{!! $retreat->idnumber !!}</span>
+                <span><h2>Retreat #<a href="{{url('retreat/'.$retreat->id.'/edit')}}">{{ $retreat->idnumber }} - {{ $retreat->title }}</a></span>
                 <span class="back"><a href={{ action('RetreatsController@index') }}>{!! Html::image('img/retreat.png', 'Retreat Index',array('title'=>"Retreat Index",'class' => 'btn btn-default')) !!}</a></span></h1>
             </div>
             <div class='row'>
