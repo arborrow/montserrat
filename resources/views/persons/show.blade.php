@@ -12,7 +12,7 @@
                         @else
                             <img src="{{url('img/default.png')}}" class="img-circle" style="position:absolute; top: 5px; left:15px; padding:5px;">
                         @endif
-                        <h1 style="position: absolute; top:5px; left:175px; padding: 5px;"><strong>{{ $person->full_name }}</strong></h1>
+                        <h1 style="position: absolute; top:5px; left:175px; padding: 5px;"><strong><a href="{{url('person/'.$person->id.'/edit')}}">{{ $person->full_name }}</a></strong></h1>
                         
                     </div>
                 </div>
