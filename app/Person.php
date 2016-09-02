@@ -57,21 +57,6 @@ class Person extends Model
     public function suffix() {
         return $this->hasOne('\montserrat\Suffix','suffix_id','id');
     }
-    public function getAvatarLinkAttribute() {
-        $path = storage_path() . '/app/contacts/' . $this->id . '/avatar.png';
-        //dd($path);
-        if(!File::exists($path)) {
-            return NULL;
-        } else {
-            $file = File::get($path);
-            $type = File::mimeType($path);
-
-            $response = Response::make($file, 200);
-            $response->header("Content-Type", $type);
-
-            return $response;
-        }
     
-    }
         
 }

@@ -5,6 +5,8 @@ namespace montserrat;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\File;
+use Response;
 
 class Contact extends Model
 {
@@ -96,6 +98,25 @@ class Contact extends Model
             return NULL;
         }
     }
+    /* Not currently working as expected so I am commenting this out for now
+    public function getAvatarLinkAttribute() {
+        $path = storage_path() . '/app/contacts/' . $this->id . '/avatar.png';
+        //dd($path);
+        if(!File::exists($path)) {
+            return NULL;
+        } else {
+            $file = File::get($path);
+            $type = File::mimeType($path);
+
+            $response = Response::make($file, 200);
+            $response->header("Content-Type", $type);
+
+            return $response;
+        }
+    
+    }
+     * 
+     */
     public function getContactLinkAttribute() {
         switch ($this->subcontact_type) {
             case CONTACT_TYPE_PARISH : $path = url("parish/".$this->id); break;

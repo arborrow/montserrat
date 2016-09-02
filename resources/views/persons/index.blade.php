@@ -33,6 +33,7 @@
                 <table class="table table-striped table-bordered table-hover"><caption><h2>Persons</h2></caption>
                     <thead>
                         <tr>
+                            <th>Picture</th>
                             <th>Name</th>
                             <th>Address (City)</th>
                             <th>Home phone</th>
@@ -44,6 +45,12 @@
                     <tbody>
                         @foreach($persons as $person)
                         <tr>
+                            <td> @if (Storage::has('contacts/'.$person->id.'/avatar.png'))
+                                    <img src="{{url('avatar/'.$person->id)}}" class="img-circle" style="height: 75px; padding:5px;">
+                                @else
+                                    <img src="{{url('img/default.png')}}" class="img-circle" style="height: 75px; padding:5px;">
+                                @endif
+                            </td>
                             <td>{!!$person->contact_link_full_name!!}</td>
                             <td>
                                 @if($person->do_not_mail)

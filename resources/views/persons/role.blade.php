@@ -9,7 +9,9 @@
                     <span class="grey">{{$role['name']}} Index</span> 
                     <span class="create"><a href={{ action('PersonsController@create') }}>{!! Html::image('img/create.png', 'Add Person',array('title'=>"Add Person",'class' => 'btn btn-primary')) !!}</a></span></h1>
                     <span class="person"><a href={{ action('PersonsController@index') }}>{!! Html::image('img/person.png', 'Show Persons',array('title'=>"Show Persons",'class' => 'btn btn-primary')) !!}</a></span></h1>
-                    <span class="btn btn-default">{!! $role['email_link'] !!}</span>
+                    @if (isset($role['email_link']))
+                        <span class="btn btn-default">{!! $role['email_link'] !!}</span>
+                    @endif
             
                 </div>
                 @if ($persons->isEmpty())
@@ -36,7 +38,7 @@
                                     <img src="{{url('avatar/'.$person->id)}}" class="img-circle" style="height: 75px; padding:5px;">
                                 @else
                                     <img src="{{url('img/default.png')}}" class="img-circle" style="height: 75px; padding:5px;">
-                        @endif
+                                @endif
                             </td>
                             <td>
                                 {!!$person->contact_link_full_name!!}
