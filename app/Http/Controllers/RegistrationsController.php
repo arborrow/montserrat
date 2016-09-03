@@ -96,7 +96,7 @@ class RegistrationsController extends Controller
         'departed_at' => 'date',
         'event_id' => 'required|integer|min:0',
         'contact_id' => 'required|integer|min:0',
-        'deposit' => 'required|numeric|min:0|max:1000',
+        'deposit' => 'required|numeric|min:0|max:10000',
         ]);
     
     $rooms = $request->input('rooms');
@@ -196,7 +196,7 @@ class RegistrationsController extends Controller
         'event_id' => 'required|integer|min:0',
         'contact_id' => 'required|integer|min:0',
         'room_id' => 'required|integer|min:0',
-        'deposit' => 'required|numeric|min:0|max:1000',
+        'deposit' => 'required|numeric|min:0|max:10000',
         ]);
 
 
