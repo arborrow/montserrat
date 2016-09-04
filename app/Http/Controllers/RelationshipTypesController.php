@@ -176,12 +176,12 @@ class RelationshipTypesController extends Controller
     public function add($id, $a = NULL, $b = NULL) {
         $relationship_type = \montserrat\RelationshipType::findOrFail($id);
         $ignored_subtype = array();
-            $ignored_subtype["CHILD"] = RELATIONSHIP_TYPE_CHILD_PARENT;
-            $ignored_subtype["PARENT"] = RELATIONSHIP_TYPE_CHILD_PARENT;
-            $ignored_subtype["HUSBAND"] = RELATIONSHIP_TYPE_HUSBAND_WIFE;
-            $ignored_subtype["WIFE"] = RELATIONSHIP_TYPE_HUSBAND_WIFE;
-            $ignored_subtype["SIBLING"] = RELATIONSHIP_TYPE_SIBLING;
-            $ignored_subtype["PARISHIONER"] = RELATIONSHIP_TYPE_PARISHIONER;
+            $ignored_subtype["Child"] = RELATIONSHIP_TYPE_CHILD_PARENT;
+            $ignored_subtype["Parent"] = RELATIONSHIP_TYPE_CHILD_PARENT;
+            $ignored_subtype["Husband"] = RELATIONSHIP_TYPE_HUSBAND_WIFE;
+            $ignored_subtype["Wife"] = RELATIONSHIP_TYPE_HUSBAND_WIFE;
+            $ignored_subtype["Sibling"] = RELATIONSHIP_TYPE_SIBLING;
+            $ignored_subtype["Parishioner"] = RELATIONSHIP_TYPE_PARISHIONER;
 
         if (in_array($relationship_type->name_a_b,$ignored_subtype)) {
             $subtype_a_name = NULL;
