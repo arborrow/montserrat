@@ -26,7 +26,36 @@
                 </div>
             </div>
             
-         
+        <div class='row'>
+            <div class='col-md-8'>
+                <div class='panel-heading'>
+                    <h2><strong>Relationships of type: {{ $relationship_type->name_a_b }} </strong></h2>
+                </div>
+                    @if ($relationships->isEmpty())
+                        <p>No relationships of this type are currently defined.</p>
+                    @else
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Contact A</th>
+                                    <th>Relationship</th>
+                                    <th>Contact B</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($relationships as $relationship)
+                                <tr>
+                                    <td>{{$relationship->contact_a->display_name}}</td>
+                                    <td>{{$relationship_type->label_a_b}}</td>
+                                    <td>{{$relationship->contact_b->display_name}}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
+                </div>
+            </div>
+        </div> 
         </div>
             <div class='row'>
                 <div class='col-md-1'><a href="{{ action('RelationshipTypesController@edit', $relationship_type->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>

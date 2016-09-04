@@ -633,7 +633,15 @@ class PersonsController extends Controller
        $person = \montserrat\Contact::with('addresses.country','addresses.location','addresses.state','emails.location','emergency_contact','ethnicity','languages','notes','occupation','parish.contact_a.address_primary','parish.contact_a.diocese.contact_a','phones.location','prefix','suffix','religion','touchpoints.staff','websites','groups.group','a_relationships.relationship_type','a_relationships.contact_b','b_relationships.relationship_type','b_relationships.contact_a','event_registrations')->findOrFail($id);
        //$files = Storage::files('contacts/'.$person->id.'/attachments');
        $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($person->id)->get();
-       //dd($files);
+       $relationship_types = array();
+       $relationship_types["Child"] = "Child";
+       $relationship_types["Parent"] = "Parent";
+       $relationship_types["Sibling"] = "Sibling";
+       $relationship_types["Employee"] = "Employee";
+       $relationship_types["Volunteer"] = "Volunteer";
+       $relationship_types["Parishioner"] = "Parishioner";
+       
+        //dd($files);
         //not at all elegant but this parses out the notes for easy display and use in the edit blade
         $person->note_health='';
         $person->note_dietary='';
@@ -676,7 +684,7 @@ class PersonsController extends Controller
         }
 
        //dd($person->a_relationships);
-       return view('persons.show',compact('person','files'));//
+       return view('persons.show',compact('person','files','relationship_types'));//
     
     }
 
@@ -1577,7 +1585,7 @@ class PersonsController extends Controller
         return $this->role($role);
     
     }
-    public function employees()
+    public function staff()
     {
         return $this->role(GROUP_ID_STAFF);
     }

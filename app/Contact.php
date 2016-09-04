@@ -672,7 +672,7 @@ public function getContactLinkFullNameAttribute() {
     public function scopeOrganizations_Generic($query) {
         return $query->where([
             ['contact_type','>=',CONTACT_TYPE_ORGANIZATION],
-            ['subcontact_type','>=',CONTACT_TYPE_VENDOR],
+            ['subcontact_type','>=',CONTACT_TYPE_PROVINCE],
             ]);
     }
 }

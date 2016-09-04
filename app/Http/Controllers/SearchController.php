@@ -11,6 +11,11 @@ use DB;
 use Response;
 
 class SearchController extends Controller {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
 
 public function autocomplete(){
 	$term = Input::get('term');

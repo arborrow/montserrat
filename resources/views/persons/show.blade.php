@@ -20,7 +20,7 @@
             
                         @if ($person->is_board_member) <span class="back"><a href={{ action('PersonsController@boardmembers') }}>{!! Html::image('img/board.png', 'Board Members Group',array('title'=>"Board Members Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
                         @if ($person->is_captain) <span class="back"><a href={{ action('PersonsController@captains') }}>{!! Html::image('img/captain.png', 'Captains Group',array('title'=>"Captains Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
-                        @if ($person->is_staff) <span class="back"><a href={{ action('PersonsController@employees') }}>{!! Html::image('img/employee.png', 'Staff Group',array('title'=>"Employees Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
+                        @if ($person->is_staff) <span class="back"><a href={{ action('PersonsController@staff') }}>{!! Html::image('img/employee.png', 'Staff Group',array('title'=>"Employees Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
                         @if ($person->is_volunteer) <span class="back"><a href={{ action('PersonsController@volunteers') }}>{!! Html::image('img/volunteer.png', 'Volunteers Group',array('title'=>"Volunteers Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
                         @if ($person->is_retreat_director) <span class="back"><a href={{ action('PersonsController@directors') }}>{!! Html::image('img/director.png', 'Retreat Directors Group',array('title'=>"Directors Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
                         @if ($person->is_retreat_innkeeper) <span class="back"><a href={{ action('PersonsController@innkeepers') }}>{!! Html::image('img/innkeeper.png', 'Retreat Innkeepers Group',array('title'=>"Innkeepers Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
@@ -180,16 +180,27 @@
             </div><div class="clearfix"> </div>  
             <div class='row'>
                 <div class='col-md-8'>
-                    <div class='panel-heading'><h2><strong>Groups and Relationships</strong></h2></div>
-                        <div class="form-group">Groups
-                            <ul>    @foreach($person->groups as $group)
+                    <div class='panel-heading'><h2><strong>Groups</strong></h2></div>
+                            <ul>
+                                @foreach($person->groups as $group)
+                                    <li><a href="../group/{{ $group->group_id}}">{{ $group->group->name }}</a></li>
+                                @endforeach
+                            </ul>
                         
-                            <li><a href="../group/{{ $group->group_id}}">{{ $group->group->name }}</a></li>
-                        
-                        @endforeach
-                        </ul>
-                        </div>
-                        <div class="form-group">Relationships
+                </div>
+            </div>
+            <div class='row'>
+                <div class='col-md-8'>
+                    <div class='panel-heading'>
+                        <h2><strong>Relationships</strong></h2>
+                    </div>
+                    {!! Form::open(['method' => 'POST', 'route' => ['relationship_type.addme']]) !!}
+                    {!! Form::label('relationship_type', 'Add Relationship: ', ['class' => 'col-md-2'])  !!}
+                    {!! Form::select('relationship_type', $relationship_types, NULL, ['class' => 'col-md-2']) !!}
+                    {!! Form::hidden('contact_id',$person->id)!!}
+                    {!! Form::submit('Create relationship') !!}
+                    {!! Form::close() !!}
+                    
                             <ul>    
                                 @foreach($person->a_relationships as $a_relationship)
                                 
@@ -201,9 +212,7 @@
                                 @endforeach
                         
                             </ul>
-                        </div>
-                        </ul>
-                    </div>
+                </div>
             </div>
             <div class="clearfix"> </div>
         <div class='row'>
@@ -252,37 +261,37 @@
                 @endif
         </div>
         </div>
-            <div class='row'>
-        <div class='col-md-8'>
-            <div class='panel-heading'>
-                <h2><strong>Attachments for {{ $person->display_name }} </strong></h2>
-           </div>
-                @if ($files->isEmpty())
+        <div class='row'>
+            <div class='col-md-8'>
+                <div class='panel-heading'>
+                    <h2><strong>Attachments for {{ $person->display_name }} </strong></h2>
+                </div>
+                    @if ($files->isEmpty())
                         <p>This user currently has no attachments</p>
                     @else
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Uploaded date</th>
-                                <th>MIME type</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($files as $file)
-                            <tr>
-                                <td><a href="{{url('person/'.$person->id.'/attachment/'.$file->uri)}}">{{ $file->uri }}</a></td>
-                                <td>{{$file->description}}</td>
-                                <td>{{ $file->upload_date}}</td>
-                                <td>{{ $file->mime_type }}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                @endif
-        </div>
-        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Uploaded date</th>
+                                    <th>MIME type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($files as $file)
+                                <tr>
+                                    <td><a href="{{url('person/'.$person->id.'/attachment/'.$file->uri)}}">{{ $file->uri }}</a></td>
+                                    <td>{{$file->description}}</td>
+                                    <td>{{ $file->upload_date}}</td>
+                                    <td>{{ $file->mime_type }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
+                </div>
+            </div>
         </div>
         <div class='row'>
             <div class='col-md-1'><a href="{{ action('PersonsController@edit', $person->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
