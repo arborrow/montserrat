@@ -389,7 +389,7 @@ class RelationshipTypesController extends Controller
                     
                     //default null 
                     default : 
-                        $individuals = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->whereSubcontactType(NULL)->orderBy('sort_name', 'asc')->pluck('sort_name','id');
+                        $individuals = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name', 'asc')->pluck('sort_name','id');
                         return $individuals;
                         break;
                 }
