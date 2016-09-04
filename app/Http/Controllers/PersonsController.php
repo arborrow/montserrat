@@ -635,11 +635,13 @@ class PersonsController extends Controller
        $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($person->id)->get();
        $relationship_types = array();
        $relationship_types["Child"] = "Child";
-       $relationship_types["Parent"] = "Parent";
-       $relationship_types["Sibling"] = "Sibling";
        $relationship_types["Employee"] = "Employee";
-       $relationship_types["Volunteer"] = "Volunteer";
+       $relationship_types["Husband"] = "Husband";
+       $relationship_types["Parent"] = "Parent";
        $relationship_types["Parishioner"] = "Parishioner";
+       $relationship_types["Sibling"] = "Sibling";
+       $relationship_types["Volunteer"] = "Volunteer";
+       $relationship_types["Wife"] = "Wife";
        
         //dd($files);
         //not at all elegant but this parses out the notes for easy display and use in the edit blade
