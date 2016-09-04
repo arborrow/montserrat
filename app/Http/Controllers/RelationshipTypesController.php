@@ -175,14 +175,33 @@ class RelationshipTypesController extends Controller
     
     public function add($id, $a = NULL, $b = NULL) {
         $relationship_type = \montserrat\RelationshipType::findOrFail($id);
+        $ignored_subtype = array();
+            $ignored_subtype["CHILD"] = RELATIONSHIP_TYPE_CHILD_PARENT;
+            $ignored_subtype["PARENT"] = RELATIONSHIP_TYPE_CHILD_PARENT;
+            $ignored_subtype["HUSBAND"] = RELATIONSHIP_TYPE_HUSBAND_WIFE;
+            $ignored_subtype["WIFE"] = RELATIONSHIP_TYPE_HUSBAND_WIFE;
+            $ignored_subtype["SIBLING"] = RELATIONSHIP_TYPE_SIBLING;
+            $ignored_subtype["PARISHIONER"] = RELATIONSHIP_TYPE_PARISHIONER;
+
+        if (in_array($relationship_type->name_a_b,$ignored_subtype)) {
+            $subtype_a_name = NULL;
+        } else {
+            $subtype_a_name = $relationship_type->name_a_b;
+        }    
+        if (in_array($relationship_type->name_b_a,$ignored_subtype)) {
+            $subtype_b_name = NULL;
+        } else {
+            $subtype_b_name = $relationship_type->name_b_a;
+        }    
+        
         if (!isset($a) or $a==0) {
-            $contact_a_list = $this->get_contact_type_list($relationship_type->contact_type_a, $relationship_type->name_a_b);
+            $contact_a_list = $this->get_contact_type_list($relationship_type->contact_type_a, $subtype_a_name);
         } else {
             $contacta = \montserrat\Contact::findOrFail($a);
             $contact_a_list[$contacta->id] = $contacta->sort_name;
         }
         if (!isset($b) or $b==0) {
-            $contact_b_list = $this->get_contact_type_list($relationship_type->contact_type_b, $relationship_type->name_b_a);
+            $contact_b_list = $this->get_contact_type_list($relationship_type->contact_type_b, $subtype_b_name);
         } else {
             $contactb = \montserrat\Contact::findOrFail($b);
             $contact_b_list[$contactb->id] = $contactb->sort_name;
@@ -359,7 +378,7 @@ class RelationshipTypesController extends Controller
                         $board_members = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_BOARD);})->pluck('sort_name','id');
                         return $board_members;
                         break;
-                    case 'Staff' :
+                    case 'Employee' :
                         $staff = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_STAFF);})->pluck('sort_name','id');
                         return $staff;
                         break;
