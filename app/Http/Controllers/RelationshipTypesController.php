@@ -7,6 +7,7 @@ use montserrat\Http\Requests;
 use montserrat\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Input;
+use Illuminate\Support\Facades\URL;
 
 class RelationshipTypesController extends Controller
 {
@@ -259,7 +260,20 @@ class RelationshipTypesController extends Controller
             'contact_a_id' => 'integer|min:0|required',
             'contact_b_id' => 'integer|min:0|required'
         ]);
-        
+        $url_previous = URL::previous();
+        $url_param = strpos($url_previous,'add')+4;
+        $url_right = substr($url_previous,$url_param);
+        if (strpos($url_right,'/')>0) {
+            $url_a_param = substr($url_right,0,strpos($url_right,'/'));
+            $url_b_param = substr($url_right,strpos($url_right,'/')+1);
+            $contact_id = $url_b_param;
+            
+        } else {
+            $url_a_param = $url_right;
+            $url_b_param = 0;
+            $contact_id = $url_a_param;
+        }
+        //dd($url_right,$url_a_param, $url_b_param);
         $relationship = new \montserrat\Relationship;
         $relationship->contact_id_a = $request->input('contact_a_id');
         $relationship->contact_id_b = $request->input('contact_b_id');
@@ -267,7 +281,7 @@ class RelationshipTypesController extends Controller
         $relationship->is_active = 1;
         $relationship->save();
        
-        return Redirect::action('RelationshipTypesController@index');//
+        return Redirect::route('person.show', ['id' => $contact_id]);
 
     }
     public function get_contact_type_list($contact_type='Individual', $contact_subtype = NULL) {

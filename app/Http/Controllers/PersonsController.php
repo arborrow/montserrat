@@ -640,7 +640,6 @@ class PersonsController extends Controller
        $relationship_types["Parent"] = "Parent";
        $relationship_types["Parishioner"] = "Parishioner";
        $relationship_types["Sibling"] = "Sibling";
-       $relationship_types["Volunteer"] = "Volunteer";
        $relationship_types["Wife"] = "Wife";
        
         //dd($files);
