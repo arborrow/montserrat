@@ -260,6 +260,8 @@ class RelationshipTypesController extends Controller
             'contact_a_id' => 'integer|min:0|required',
             'contact_b_id' => 'integer|min:0|required'
         ]);
+        // a very hacky way to get the contact_id of the user that we are creating a relationship for
+        // this allows the ability to redirect back to that user
         $url_previous = URL::previous();
         $url_param = strpos($url_previous,'add')+4;
         $url_right = substr($url_previous,$url_param);
