@@ -137,8 +137,7 @@ class RetreatsController extends Controller
     {
         $retreat = \montserrat\Retreat::with('retreatmasters','innkeeper','assistant','captains')->find($id);
         $registrations = \montserrat\Registration::where('event_id','=',$id)->with('retreatant.parish')->orderBy('register_date','DESC')->get();
-       //dd($registrations); 
-       return view('retreats.show',compact('retreat','registrations'));//
+        return view('retreats.show',compact('retreat','registrations'));//
     }
 
     /**
@@ -376,5 +375,15 @@ public function edit($id)
 
         return $response;
     }    
+
+    public function assign_rooms($id)
+    {
+        //get this retreat's information
+        $retreat = \montserrat\Retreat::with('retreatmasters','assistant','innkeeper','captains')->findOrFail($id);
+        $registrations = \montserrat\Registration::where('event_id','=',$id)->with('retreatant.parish')->orderBy('register_date','DESC')->get();
+       
+       return view('retreats.assign_rooms',compact('retreat','registrations'));
+      }
+
 
 }

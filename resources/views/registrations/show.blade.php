@@ -5,7 +5,8 @@
         <div class="jumbotron text-left">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span><h2>Details for Registration #{!! $registration->id !!}</span>
+                    <span><h2>Details for 
+                            <a href="{{url('registration/'.$registration->id.'/edit')}}">Registration #{{ $registration->id }}</a></span>
                     <span class="back"><a href={{ action('RegistrationsController@index') }}>{!! Html::image('img/registration.png', 'Registration Index',array('title'=>"Registration Index",'class' => 'btn btn-primary')) !!}</a></span></h1>
                 </div>
                 <div class='row'>

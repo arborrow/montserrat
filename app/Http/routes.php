@@ -95,6 +95,8 @@ Route::group(['prefix' => 'report', 'middleware' => ['role:manager']], function(
 Route::get('reservation',['as' => 'reservation','uses' => 'PagesController@reservation']);
 Route::get('restricted',['as' => 'restricted','uses' => 'PagesController@restricted']);
 Route::resource('retreat','RetreatsController');
+Route::get('retreat/{id}/assign_rooms',['as'=>'retreat.assign_rooms','uses' => 'RetreatsController@assign_rooms']);
+
 Route::get('retreats',['as' => 'retreats','uses' => 'PagesController@retreat']);
 Route::resource('room','RoomsController');
 Route::get('rooms/{ym?}/{building?}',['as' => 'rooms','uses' => 'RoomsController@schedule']);

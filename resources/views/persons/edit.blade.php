@@ -14,7 +14,6 @@
                             <img src="{{url('img/default.png')}}" class="img-circle" style="position:absolute; top: 5px; left:15px; padding:5px;">
                         @endif
                         <h1 style="position: absolute; top:5px; left:175px; padding: 5px;"><strong>Edit: {{ $person->full_name }}</strong></h1>
-                        
                     </div>
                 </div>
                 <span class="back">
@@ -40,7 +39,9 @@
     
         <div class='row'>
             <div class='col-md-12'>
-                <div class='panel-heading'><h2>Name</h2></div>
+                <div class='panel-heading'>
+                        {!! Form::image('img/save.png','btnSave',['class' => 'btn btn-default']) !!}
+            <h2>Name</h2></div>
                 <div class="form-group">
                     {!! Form::label('prefix_id', 'Title:', ['class' => 'col-md-1'])  !!}
                     {!! Form::select('prefix_id', $prefixes, $person->prefix_id, ['class' => 'col-md-2']) !!}
