@@ -631,7 +631,6 @@ class PersonsController extends Controller
     {
         //
        $person = \montserrat\Contact::with('addresses.country','addresses.location','addresses.state','emails.location','emergency_contact','ethnicity','languages','notes','occupation','parish.contact_a.address_primary','parish.contact_a.diocese.contact_a','phones.location','prefix','suffix','religion','touchpoints.staff','websites','groups.group','a_relationships.relationship_type','a_relationships.contact_b','b_relationships.relationship_type','b_relationships.contact_a','event_registrations')->findOrFail($id);
-       //$files = Storage::files('contacts/'.$person->id.'/attachments');
        $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($person->id)->get();
        $relationship_types = array();
        $relationship_types["Child"] = "Child";
@@ -1068,7 +1067,7 @@ class PersonsController extends Controller
             $attachment->entity = "contact";
             $attachment->entity_id = $person->id;
             $attachment->save();
-            Storage::disk('local')->put('contacts/'.$person->id.'/attachments/'.$file_name,File::get($file));
+            Storage::disk('local')->put('contact/'.$person->id.'/attachments/'.$file_name,File::get($file));
         }
         
         //emergency contact info

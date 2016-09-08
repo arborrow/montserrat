@@ -7,8 +7,9 @@ use montserrat\Http\Requests;
 use montserrat\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Input;
-
-
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
 
 class OrganizationsController extends Controller
 {
@@ -147,9 +148,14 @@ return Redirect::action('OrganizationsController@index');
     public function show($id)
     {
         // $organization = \montserrat\Diocese::with('bishop')->findOrFail($id);
-        $organization = \montserrat\Contact::with('addresses.state','addresses.location','phones.location','emails.location','websites','notes','phone_main_phone.location')->findOrFail($id);
-       //dd($organization); 
-       return view('organizations.show',compact('organization'));//
+        $organization = \montserrat\Contact::with('addresses.state','addresses.location','phones.location','emails.location','websites','notes','phone_main_phone.location','a_relationships.relationship_type','a_relationships.contact_b','b_relationships.relationship_type','b_relationships.contact_a','event_registrations')->findOrFail($id);
+       
+        $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($organization->id)->get();
+        $relationship_types = array();
+        $relationship_types["Employer"] = "Employer";
+        $relationship_types["Primary Contact"] = "Primary Contact";
+
+       return view('organizations.show',compact('organization','files','relationship_types'));//
     
     }
 
@@ -200,6 +206,10 @@ return Redirect::action('OrganizationsController@index');
             'website_main' => 'url',
             'phone_main_phone' => 'phone',
             'phone_main_fax' => 'phone',
+            'avatar' => 'image|max:5000',
+            'attachment' => 'file|mimes:pdf,doc,docx|max:10000',
+            'attachment_description' => 'string|max:200',
+            
         ]);
 
         $organization = \montserrat\Contact::with('address_primary.state','address_primary.location','phone_main_phone.location','phone_main_fax.location','email_primary.location','website_main','note_organization')->findOrFail($id);
@@ -283,6 +293,27 @@ return Redirect::action('OrganizationsController@index');
         $organization_note->note=$request->input('note');
         $organization_note->subject='Organization Note';
         $organization_note->save();
+        if (null !== $request->file('avatar')) {
+            $avatar = Image::make($request->file('avatar')->getRealPath())->fit(150, 150)->orientate();
+            Storage::put('contacts/'.$organization->id.'/'.'avatar.png',$avatar->stream('png'));
+        }
+        
+        
+        if (null !== $request->file('attachment')) {
+            $attachment = new \montserrat\Attachment;
+            $file = $request->file('attachment');
+            $file_name = $file->getClientOriginalName();
+            
+            $attachment->file_type_id = FILE_TYPE_CONTACT_ATTACHMENT;
+            $attachment->mime_type = $file->getClientMimeType();
+            $attachment->uri = $file_name;
+            $attachment->description = $request->input('attachment_description');
+            $attachment->upload_date = \Carbon\Carbon::now();
+            $attachment->entity = "contact";
+            $attachment->entity_id = $organization->id;
+            $attachment->save();
+            Storage::disk('local')->put('contacts/'.$organization->id.'/attachments/'.$file_name,File::get($file));
+        }
         
         return Redirect::action('OrganizationsController@index');
         

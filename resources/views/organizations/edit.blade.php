@@ -3,7 +3,7 @@
 
 <div class="jumbotron text-left">
     <h1>Edit Organization: {{ $organization->name }}</h1>
-    {!! Form::open(['method' => 'PUT', 'route' => ['organization.update', $organization->id]]) !!}
+    {!! Form::open(['method' => 'PUT', 'files'=>'true', 'route' => ['organization.update', $organization->id]]) !!}
     {!! Form::hidden('id', $organization->id) !!}
     
     <div class="form-group">
@@ -116,6 +116,21 @@
         @endIf
     </div>        
     <div class="clearfix"> </div>
+    <div class="form-group">
+    
+        {!! Form::label('avatar', 'Picture (max 5M): ', ['class' => 'col-md-2'])  !!}
+        {!! Form::file('avatar',['class' => 'col-md-2']); !!}
+    </div>
+    <div class="clearfix"> </div>
+    <div class="form-group">
+
+        {!! Form::label('attachment', 'Attachment (max 10M): ', ['class' => 'col-md-2'])  !!}
+        {!! Form::file('attachment',['class' => 'col-md-2']); !!}
+        {!! Form::label('attachment_description', 'Description: (max 200)', ['class' => 'col-md-2'])  !!}
+        {!! Form::text('attachment_description', NULL, ['class' => 'col-md-3']) !!}
+    </div>
+    <div class="clearfix"> </div>
+    
     
     <!-- removing notes for now
     <div class="form-group">
