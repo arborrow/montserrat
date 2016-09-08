@@ -172,7 +172,7 @@ class RegistrationsController extends Controller
             
             $retreats[$registration->event_id] = $registration->retreat->idnumber.'-'.$registration->retreat->title." (".date('m-d-Y', strtotime($registration->retreat->start_date)).")";
         }
-        return view('registrations.edit',compact('registration','retreats','retreatants','rooms'));
+        return view('registrations.edit',compact('registration','retreats','rooms'));
     }
 
     /**
