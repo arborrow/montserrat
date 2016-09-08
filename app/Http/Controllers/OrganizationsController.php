@@ -293,6 +293,7 @@ return Redirect::action('OrganizationsController@index');
         $organization_note->note=$request->input('note');
         $organization_note->subject='Organization Note';
         $organization_note->save();
+        
         if (null !== $request->file('avatar')) {
             $avatar = Image::make($request->file('avatar')->getRealPath())->fit(150, 150)->orientate();
             Storage::put('contacts/'.$organization->id.'/'.'avatar.png',$avatar->stream('png'));

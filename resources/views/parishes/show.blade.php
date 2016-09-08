@@ -82,13 +82,6 @@
                     
                 </div><div class="clearfix"> </div>
             </div>    
-            <div class='row'>
-                <div class='col-md-1'><a href="{{ action('ParishesController@edit', $parish->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
-                <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['parish.destroy', $parish->id]]) !!}
-                {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
-                {!! Form::close() !!}</div><div class="clearfix"> </div>
-            </div>
-            <hr />
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h2><span class="grey">Parishioners of {{$parish->organization_name}}</span></h2> 
@@ -150,7 +143,10 @@
             <div class="panel panel-default">
                
             @if ($parish->touchpoints->isEmpty())
-                    <p>It is a brand new world, there are no touch points for this contact!</p>
+                        <div class='panel-heading'>
+                            <h2><strong>Touchpoints</strong></h2>
+                        </div>
+                                <p>It is a brand new world, there are no touch points for this contact!</p>
                 @else
             <div class="panel-heading">
                 <h2><span class="grey">Touch points for {{ $parish->display_name }} </span></h2> 
@@ -183,7 +179,85 @@
                 </table>
             @endif
             
-        </div>
+            <div class='row'>
+                    <div class='col-md-8'>
+                        <div class='panel-heading'>
+                            <h2><strong>Relationships</strong></h2>
+                        </div>
+                        {!! Form::open(['method' => 'POST', 'route' => ['relationship_type.addme']]) !!}
+                        {!! Form::label('relationship_type', 'Add Relationship: ', ['class' => 'col-md-2'])  !!}
+                        {!! Form::select('relationship_type', $relationship_types, NULL, ['class' => 'col-md-2']) !!}
+                        {!! Form::hidden('contact_id',$parish->id)!!}
+                        {!! Form::submit('Create relationship') !!}
+                        {!! Form::close() !!}
+
+                                <ul>    
+                                    @foreach($parish->a_relationships as $a_relationship)
+
+                                    <li>{!!$parish->contact_link!!} is {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link !!}  </li>
+                                    @endforeach
+
+                                    @foreach($parish->b_relationships as $b_relationship)
+                                    <li>{!!$parish->contact_link!!} is {{ $b_relationship->relationship_type->label_b_a }} {!! $b_relationship->contact_a->contact_link!!}</li>
+                                    @endforeach
+
+                                </ul>
+                    </div>
+                </div>
+                <div class="clearfix"> </div>
+
+                <div class='row'>
+                <div class='col-md-8'>
+                    <div class='panel-heading'><h2><strong>Retreat Participation for {{ $parish->display_name }}</strong></h2></div>
+                            <ul>    
+                                @foreach($parish->event_registrations as $registration)
+                                <li>{!!$registration->event_link!!} ({{date('F j, Y', strtotime($registration->event->start_date))}} - {{date('F j, Y', strtotime($registration->event->end_date))}}) </li>
+                                @endforeach
+                            </ul>
+                    </div>
+            </div>
+            <div class="clearfix"> </div>
+        
+        <div class='row'>
+            <div class='col-md-8'>
+                <div class='panel-heading'>
+                    <h2><strong>Attachments for {{ $parish->display_name }} </strong></h2>
+                </div>
+                    @if ($files->isEmpty())
+                        <p>This user currently has no attachments</p>
+                    @else
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Uploaded date</th>
+                                    <th>MIME type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($files as $file)
+                                <tr>
+                                    <td><a href="{{url('contact/'.$parish->id.'/attachment/'.$file->uri)}}">{{ $file->uri }}</a></td>
+                                    <td>{{$file->description}}</td>
+                                    <td>{{ $file->upload_date}}</td>
+                                    <td>{{ $file->mime_type }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
+                </div>
+            </div>
+            </div>
+            <div class='row'>
+                <div class='col-md-1'><a href="{{ action('ParishesController@edit', $parish->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
+                <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['parish.destroy', $parish->id]]) !!}
+                {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                {!! Form::close() !!}</div><div class="clearfix"> </div>
+            </div>
+                        
+        
             
         </div>
     </section>
