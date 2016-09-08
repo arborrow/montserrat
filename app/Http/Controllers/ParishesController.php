@@ -326,7 +326,7 @@ return Redirect::action('ParishesController@index');
             $website_main->url = $request->input('website_main');
             $website_main->save();
 
-            if (null !== $request->file('avatar')) {
+        if (null !== $request->file('avatar')) {
             $avatar = Image::make($request->file('avatar')->getRealPath())->fit(150, 150)->orientate();
             Storage::put('contacts/'.$parish->id.'/'.'avatar.png',$avatar->stream('png'));
         }
