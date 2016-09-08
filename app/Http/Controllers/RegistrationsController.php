@@ -194,7 +194,6 @@ class RegistrationsController extends Controller
         'arrived_at' => 'date',
         'departed_at' => 'date',
         'event_id' => 'required|integer|min:0',
-        'contact_id' => 'required|integer|min:0',
         'room_id' => 'required|integer|min:0',
         'deposit' => 'required|numeric|min:0|max:10000',
         ]);
