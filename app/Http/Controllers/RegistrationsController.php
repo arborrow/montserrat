@@ -175,6 +175,36 @@ class RegistrationsController extends Controller
         return view('registrations.edit',compact('registration','retreats','rooms'));
     }
 
+    public function edit_group($id)
+    {
+        //
+        $registration= \montserrat\Registration::with('retreatant','retreat','room')->findOrFail($id);
+//        $retreat = \montserrat\Retreat::findOrFail($registration->event_id);
+        $retreatant = \montserrat\Contact::findOrFail($registration->contact_id);
+        $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date",">",\Carbon\Carbon::today())->orderBy('start_date')->pluck('description','id');
+        //dd($retreats);
+        //TODO: we will want to be able to switch between types when going from a group registration to individual room assignment
+        if ($retreatant->contact_type == CONTACT_TYPE_INDIVIDUAL) {
+            $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->pluck('sort_name','id');
+        }
+        if ($retreatant->contact_type == CONTACT_TYPE_ORGANIZATION) {
+            $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_ORGANIZATION)->whereSubcontactType($retreatant->subcontact_type)->orderBy('sort_name')->pluck('sort_name','id');
+        }
+        
+        $rooms= \montserrat\Room::orderby('name')->pluck('name','id');
+        $rooms->prepend('Unassigned',0);
+    
+        /* Check to see if the current registration is for a past retreat and if so, add it to the collection */
+        // $retreats[0] = 'Unassigned';
+        
+        if ($registration->retreat->end < \Carbon\Carbon::now()) {
+            
+            $retreats[$registration->event_id] = $registration->retreat->idnumber.'-'.$registration->retreat->title." (".date('m-d-Y', strtotime($registration->retreat->start_date)).")";
+        }
+        return view('registrations.edit',compact('registration','retreats','rooms','retreatants'));
+    }
+
+
     /**
      * Update the specified resource in storage.
      *
@@ -193,6 +223,48 @@ class RegistrationsController extends Controller
         'canceled_at' => 'date',
         'arrived_at' => 'date',
         'departed_at' => 'date',
+        'event_id' => 'required|integer|min:0',
+        'room_id' => 'required|integer|min:0',
+        'deposit' => 'required|numeric|min:0|max:10000',
+        ]);
+
+
+    $registration = \montserrat\Registration::findOrFail($request->input('id'));
+    $retreat = \montserrat\Retreat::findOrFail($request->input('event_id'));
+
+    $registration->event_id= $request->input('event_id');
+    // TODO: pull this from the retreat's start_date and end_date
+    //$registration->start = $retreat->start;
+    //$registration->end = $retreat->end;
+    //$registration->contact_id= $request->input('contact_id');
+    $registration->register_date = $request->input('register_date');
+    $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
+    $registration->registration_confirm_date = $request->input('registration_confirm_date');
+    $registration->confirmed_by = $request->input('confirmed_by');
+    $registration->deposit = $request->input('deposit');
+    $registration->notes = $request->input('notes');
+    $registration->canceled_at = $request->input('canceled_at');
+    $registration->arrived_at= $request->input('arrived_at');
+    $registration->departed_at= $request->input('departed_at');
+    
+    $registration->room_id= $request->input('room_id');
+    $registration->save();
+    
+    return Redirect::action('RegistrationsController@index');
+    
+    }
+    public function update_group(Request $request, $id)
+    {
+        //
+        
+    $this->validate($request, [
+        'register_date' => 'required|date',
+        'attendance_confirm_date' => 'date',
+        'registration_confirm_date' => 'date',
+        'canceled_at' => 'date',
+        'arrived_at' => 'date',
+        'departed_at' => 'date',
+        'contact_id' => 'required|integer|min:0',
         'event_id' => 'required|integer|min:0',
         'room_id' => 'required|integer|min:0',
         'deposit' => 'required|numeric|min:0|max:10000',
