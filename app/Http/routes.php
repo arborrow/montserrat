@@ -96,6 +96,7 @@ Route::get('reservation',['as' => 'reservation','uses' => 'PagesController@reser
 Route::get('restricted',['as' => 'restricted','uses' => 'PagesController@restricted']);
 Route::resource('retreat','RetreatsController');
 Route::get('retreat/{id}/assign_rooms',['as'=>'retreat.assign_rooms','uses' => 'RetreatsController@assign_rooms']);
+Route::post('retreat/room_update',['as' => 'retreat.room_update', 'uses' => 'RetreatsController@room_update']);
 
 Route::get('retreats',['as' => 'retreats','uses' => 'PagesController@retreat']);
 Route::resource('room','RoomsController');

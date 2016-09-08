@@ -3,6 +3,8 @@
 
 <section class="section-padding">
     <div class="jumbotron text-left">
+        {!! Form::open(['url' => 'retreat/room_update', 'method' => 'POST', 'route' => ['retreat.room_update', $retreat->id]]) !!}
+        
         <div class="panel panel-default">
             <div class="panel-heading">
                 <span><h2>Retreat #<a href="{{url('retreat/'.$retreat->id)}}">{{ $retreat->idnumber }} - {{ $retreat->title }}</a></span>
@@ -60,21 +62,13 @@
             </div><div class="clearfix"> </div>
                 
         </div>
-            <div class='row'>
-                <div class='col-md-1'><a href="{{ action('RetreatsController@edit', $retreat->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
-                <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['retreat.destroy', $retreat->id]]) !!}
-                {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
-                {!! Form::close() !!}</div><div class="clearfix"> </div>
-            </div><br />
+            <hr>
         <div class="panel panel-default">  
         <div class="panel-heading">
-            <h2>Retreatants Registered</h2>
-            <span class="create"><a href={{ action('RegistrationsController@create') }}>{!! Html::image('img/create.png', 'Create Registration',array('title'=>"Create Registration",'class' => 'btn btn-default')) !!}</a></span>
-            <span class="btn btn-default"><a href={{ action('PagesController@retreatantinforeport',$retreat->idnumber) }}>Retreatant Information Report</a></span>
-            <span class="btn btn-default"><a href={{ action('PagesController@retreatrosterreport',$retreat->idnumber) }}>Retreat Roster</a></span>
-            <span class="btn btn-default"><a href={{ action('PagesController@retreatlistingreport',$retreat->idnumber) }}>Retreat Listing</a></span>
-            <span class="btn btn-default">{!! $retreat->email_registered_retreatants !!}</span>
-                
+            <h2>Registered Retreatants</h2>
+            Save Room Assignments {!! Form::image('img/save.png','btnSave',['class' => 'btn btn-default']) !!}
+
+            
         </div>
             @if ($registrations->isEmpty())
                 <p> Currently, there are no registrations for this retreats</p>
@@ -84,11 +78,8 @@
                     <tr>
                         <th>Date Registered</th>
                         <th>Name</th>
+                        <th>Room Preference</th>
                         <th>Room</th>
-                        <th>Deposit</th>
-                        <th>Mobile Phone</th>
-                        <th>Parish</th>
-                        <th>Notes</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -96,26 +87,13 @@
                     <tr>
                         <td><a href="{{action('RegistrationsController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }}</a></td>
                         <td>{!!$registration->retreatant->contact_link!!}</td>
+                        <td>{{$registration->retreatant->note_room_preference_text}}</td>
                         <td>
-                            @if (empty($registration->room->name))
-                                N/A
-                            @else
-                            <a href="{{action('RoomsController@show', $registration->room->id)}}">{{ $registration->room->name}}</a>
-                            @endif
+                            
+        {!! Form::label('registration.'.$registration->id, 'Room: ', ['class' => 'col-md-2']) !!}
+        {!! Form::select('registration.'.$registration->id, $rooms, $registration->room_id, ['class' => 'col-md-3']) !!}
                         </td>
-                        <td>{{ $registration->deposit }}</td>
-                        <td>
-                            {!!$registration->retreatant->phone_home_mobile_number!!}
-                        </td>
-                        <td>
-                            @if (empty($registration->retreatant->parish_name))
-                                N/A
-                            @else
-                            {!! $registration->retreatant->parish_link!!}
-                            @endif
-                        </td>
-                        <td>{{ $registration->notes }}</td>
-
+                        
 
                     </tr>
                     @endforeach

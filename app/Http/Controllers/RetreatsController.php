@@ -381,9 +381,33 @@ public function edit($id)
         //get this retreat's information
         $retreat = \montserrat\Retreat::with('retreatmasters','assistant','innkeeper','captains')->findOrFail($id);
         $registrations = \montserrat\Registration::where('event_id','=',$id)->with('retreatant.parish')->orderBy('register_date','DESC')->get();
+        $rooms= \montserrat\Room::orderby('name')->pluck('name','id');
+        $rooms->prepend('Unassigned',0);
        
-       return view('retreats.assign_rooms',compact('retreat','registrations'));
+       return view('retreats.assign_rooms',compact('retreat','registrations','rooms'));
       }
 
-
+public function room_update(Request $request)
+    {
+        //
+       dd($request);
+        $this->validate($request, [
+            'idnumber' => 'required|unique:retreats,idnumber,'.$id,
+            'start_date' => 'required|date|before:end_date',
+            'end_date' => 'required|date|after:start_date',
+            'title' => 'required',
+            'innkeeper_id' => 'integer|min:0',
+            'assistant_id' => 'integer|min:0',
+            'year' => 'integer|min:1990|max:2020',
+            'amount' => 'numeric|min:0|max:100000',
+            'attending' => 'integer|min:0|max:150',
+            'silent' => 'boolean',
+            'contract' => 'file|mimes:pdf|max:5000',
+            'schedule' => 'file|mimes:pdf|max:5000',
+            'evaluations' => 'file|mimes:pdf|max:10000',
+            'photo' => 'image|max:10000',
+            
+        ]);
+    }    
+    
 }
