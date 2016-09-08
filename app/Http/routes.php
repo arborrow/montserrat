@@ -81,9 +81,9 @@ Route::group(['prefix' => 'persons'], function() {
 
 Route::resource('registration','RegistrationsController');
 Route::get('registration/add/{id?}',['uses' => 'RegistrationsController@add']);
-Route::get('registration/{id}/edit_group',['as' => 'registration.edit_group', 'uses' => 'RegistrationsController@edit_group']);
+Route::get('registration/{id}/edit_group',['url'=>'registration.edit_group', 'as' => 'registration.edit_group', 'uses' => 'RegistrationsController@edit_group']);
 Route::post('relationship/add',['uses' => 'RelationshipTypesController@make']);
-Route::put('registration/update_group',['uses' => 'RegistrationsController@update_group']);
+Route::post('registration/{id}/update_group',['as' => 'registration.update_group', 'uses' => 'RegistrationsController@update_group']);
 Route::post('relationship_type/addme',['as' => 'relationship_type.addme', 'uses' => 'RelationshipTypesController@addme']);
 Route::resource('relationship_type','RelationshipTypesController');
 Route::get('relationship_type/{id}/add/{a?}/{b?}',['as'=>'relationship_type.add','uses' => 'RelationshipTypesController@add']);

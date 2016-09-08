@@ -3,8 +3,13 @@
 
 <div class="jumbotron text-left">
     <h1>Edit Registration #{!! $registration->id !!} for {!!$registration->retreatant->contact_link!!}</h1>
-    {!! Form::open(['method' => 'PUT', 'route' => ['registration.update', $registration->id]]) !!}
+    {!! Form::open(['url' => 'registration/'.$registration->id.'/update_group','method' => 'POST', 'route' => ['registration.update_group', $registration->id]]) !!}
     {!! Form::hidden('id', $registration->id) !!}
+        <div class="form-group">
+                {!! Form::label('contact_id', 'Retreatant:', ['class' => 'col-md-2']) !!}
+                {!! Form::select('contact_id', $retreatants, $registration->contact_id, ['class' => 'col-md-2']) !!}
+        </div>
+        <div class="clearfix"> </div>
     
            <div class="form-group">
 

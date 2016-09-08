@@ -201,7 +201,7 @@ class RegistrationsController extends Controller
             
             $retreats[$registration->event_id] = $registration->retreat->idnumber.'-'.$registration->retreat->title." (".date('m-d-Y', strtotime($registration->retreat->start_date)).")";
         }
-        return view('registrations.edit',compact('registration','retreats','rooms','retreatants'));
+        return view('registrations.edit_group',compact('registration','retreats','rooms','retreatants'));
     }
 
 
@@ -256,7 +256,6 @@ class RegistrationsController extends Controller
     public function update_group(Request $request, $id)
     {
         //
-        
     $this->validate($request, [
         'register_date' => 'required|date',
         'attendance_confirm_date' => 'date',
