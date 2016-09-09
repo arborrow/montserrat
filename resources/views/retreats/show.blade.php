@@ -104,6 +104,7 @@
             <span class="btn btn-default"><a href={{ action('PagesController@retreatrosterreport',$retreat->idnumber) }}>Retreat Roster</a></span>
             <span class="btn btn-default"><a href={{ action('PagesController@retreatlistingreport',$retreat->idnumber) }}>Retreat Listing</a></span>
             <span class="btn btn-default">{!! $retreat->email_registered_retreatants !!}</span>
+            <span class="btn btn-default"><a href={{ action('RetreatsController@assign_rooms',$retreat->id) }}>Assign Rooms</a></span>
                 
         </div>
             @if ($registrations->isEmpty())

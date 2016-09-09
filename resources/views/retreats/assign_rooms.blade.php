@@ -90,8 +90,8 @@
                         <td>{{$registration->retreatant->note_room_preference_text}}</td>
                         <td>
                             
-        {!! Form::label('registration.'.$registration->id, 'Room: ', ['class' => 'col-md-2']) !!}
-        {!! Form::select('registration.'.$registration->id, $rooms, $registration->room_id, ['class' => 'col-md-3']) !!}
+        {!! Form::label('registrations['.$registration->id.']', 'Room: ', ['class' => 'col-md-2']) !!}
+        {!! Form::select('registrations['.$registration->id.']', $rooms, $registration->room_id, ['class' => 'col-md-3']) !!}
                         </td>
                         
 

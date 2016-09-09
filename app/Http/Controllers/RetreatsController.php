@@ -390,24 +390,19 @@ public function edit($id)
 public function room_update(Request $request)
     {
         //
-       dd($request);
+       //dd($request);
         $this->validate($request, [
-            'idnumber' => 'required|unique:retreats,idnumber,'.$id,
-            'start_date' => 'required|date|before:end_date',
-            'end_date' => 'required|date|after:start_date',
-            'title' => 'required',
-            'innkeeper_id' => 'integer|min:0',
-            'assistant_id' => 'integer|min:0',
-            'year' => 'integer|min:1990|max:2020',
-            'amount' => 'numeric|min:0|max:100000',
-            'attending' => 'integer|min:0|max:150',
-            'silent' => 'boolean',
-            'contract' => 'file|mimes:pdf|max:5000',
-            'schedule' => 'file|mimes:pdf|max:5000',
-            'evaluations' => 'file|mimes:pdf|max:10000',
-            'photo' => 'image|max:10000',
+            'retreat_id' => 'integer|min:0',
             
         ]);
+        foreach($request->input('registrations') as $key => $value) {
+            
+            $registration = \montserrat\Registration::findOrFail($key);
+            $registration->room_id = $value;
+            $registration->save();
+            //dd($registration,$value);
+        }
+        return Redirect::action('RetreatsController@index');
     }    
     
 }
