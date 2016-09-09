@@ -6,15 +6,17 @@
 <h2>Retreat #{{$registrations[0]->retreat->idnumber}} Room Roster - {{$registrations[0]->retreat->title}}</h2> 
      
 <hr />
- <table width="100%">
+ <table width="00%">
         <th class="row-1 row-name">Full name</th>
-        <th class="row-2 row-room">Room Pref.</th>
-        <th class="row-3 row-cancel">Called to Cancel</th>
+        <th class="row-2 row-room">Assigned Room</th>
+        <th class="row-3 row-room_preference">Room Preference</th>
+        <th class="row-4 row-cancel">Called to Cancel</th>
         
     @foreach($registrations as $registration)
     
     <tr>
         <td>{{$registration->retreatant->display_name}}</td>
+        <td>{{ $registration->room_name}}</td>
         <td>{{$registration->retreatant->note_room_preference_text}}</td>
         <td><div class="square">&EmptySmallSquare;</div> </td>
         
