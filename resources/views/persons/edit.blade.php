@@ -8,11 +8,7 @@
         <div class='panel-heading'>
             <div class='row' style="height: 175px;">
                     <div class="col-md-12 col-sm-12">
-                        @if (Storage::has('contacts/'.$person->id.'/avatar.png'))
-                            <img src="{{url('avatar/'.$person->id)}}" class="img-circle" style="position:absolute; top: 5px; left:15px; padding:5px; background-color: #0f0f0f">
-                        @else
-                            <img src="{{url('img/default.png')}}" class="img-circle" style="position:absolute; top: 5px; left:15px; padding:5px;">
-                        @endif
+                        {!!$person->avatar_large_link!!}
                         <h1 style="position: absolute; top:5px; left:175px; padding: 5px;"><strong>Edit: {{ $person->full_name }}</strong></h1>
                     </div>
                 </div>
