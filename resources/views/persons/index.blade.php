@@ -45,12 +45,7 @@
                     <tbody>
                         @foreach($persons as $person)
                         <tr>
-                            <td> @if (Storage::has('contacts/'.$person->id.'/avatar.png'))
-                                    <img src="{{url('avatar/'.$person->id)}}" class="img-circle" style="height: 75px; padding:5px;">
-                                @else
-                                    <img src="{{url('img/default.png')}}" class="img-circle" style="height: 75px; padding:5px;">
-                                @endif
-                            </td>
+                            <td>{!!$person->avatar_small_link!!}</td>
                             <td>{!!$person->contact_link_full_name!!}</td>
                             <td>
                                 @if($person->do_not_mail)

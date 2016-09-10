@@ -127,13 +127,7 @@
                 @foreach($registrations as $registration)
                     <tr>
                         <td><a href="{{action('RegistrationsController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }}</a></td>
-                        <td>
-                            @if (Storage::has('contacts/'.$registration->contact_id.'/avatar.png'))
-                                <img src="{{url('avatar/'.$registration->contact_id)}}" class="img-circle" style="height: 75px; padding:5px;">
-                            @else
-                                <img src="{{url('img/default.png')}}" class="img-circle" style="height: 75px; padding:5px;">
-                            @endif
-                        </td>
+                        <td>{!!$registration->retreatant->avatar_small_link!!}</td>
                         <td>{!!$registration->retreatant->contact_link!!}</td>
                         <td>
                             @if (empty($registration->room->name))

@@ -5,8 +5,7 @@ namespace montserrat;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\File;
-use Response;
+use Illuminate\Support\Facades\Storage;
 
 class Contact extends Model
 {
@@ -98,25 +97,24 @@ class Contact extends Model
             return NULL;
         }
     }
-    /* Not currently working as expected so I am commenting this out for now
-    public function getAvatarLinkAttribute() {
-        $path = storage_path() . '/app/contacts/' . $this->id . '/avatar.png';
-        //dd($path);
-        if(!File::exists($path)) {
-            return NULL;
+    
+    public function getAvatarLargeLinkAttribute() {
+        if (Storage::has('contacts/'.$this->id.'/avatar.png')) {
+            return "<img src='".url('avatar/'.$this->id)."' class='img-circle' style='height: 150px; padding:5px;'>";
         } else {
-            $file = File::get($path);
-            $type = File::mimeType($path);
-
-            $response = Response::make($file, 200);
-            $response->header("Content-Type", $type);
-
-            return $response;
+            return "<img src='".url('img/default.png')."' class='img-circle' style='height: 150px; padding:5px;'>";
         }
     
     }
-     * 
-     */
+    public function getAvatarSmallLinkAttribute() {
+        if (Storage::has('contacts/'.$this->id.'/avatar.png')) {
+            return "<img src='".url('avatar/'.$this->id)."' class='img-circle' style='height: 75px; padding:5px;'>";
+        } else {
+            return "<img src='".url('img/default.png')."' class='img-circle' style='height: 75px; padding:5px;'>";
+        }
+    
+    }
+    
     public function getContactLinkAttribute() {
         
         switch ($this->subcontact_type) {
