@@ -42,10 +42,33 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        
         if ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException($e->getMessage(), $e);
         }
+        //dd($e);
+        
+        if ($e instanceof HttpResponseException) {
+            return $e->getResponse();
+        } elseif ($e instanceof ModelNotFoundException) {
+            $e = new NotFoundHttpException($e->getMessage(), $e);
+        } elseif ($e instanceof AuthenticationException) {
+            return $this->unauthenticated($request, $e);
+        } elseif ($e instanceof AuthorizationException) {
+            $e = new HttpException(403, $e->getMessage());
+        } elseif ($e instanceof ValidationException && $e->getResponse()) {
+            return $e->getResponse();
+        }
 
-        return parent::render($request, $e);
+        if ($this->isHttpException($e)) {
+            return $this->toIlluminateResponse($this->renderHttpException($e), $e);
+        } else {
+            //dd(env('APP_DEBUG'));
+            if (env('APP_DEBUG')) {
+                return $this->toIlluminateResponse($this->convertExceptionToResponse($e), $e);
+            } else {
+                return view('errors.default',compact('e'));
+            }
+        }
     }
 }
