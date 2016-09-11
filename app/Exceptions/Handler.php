@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Mail;
 
 class Handler extends ExceptionHandler
 {
@@ -41,13 +42,14 @@ class Handler extends ExceptionHandler
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $e)
-    {
+    {   
+        $fullurl = $request->fullUrl();
+        //dd($fullurl);
         
         if ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException($e->getMessage(), $e);
         }
-        //dd($e);
-        
+        //dd($request->fullUrl());
         if ($e instanceof HttpResponseException) {
             return $e->getResponse();
         } elseif ($e instanceof ModelNotFoundException) {
@@ -63,12 +65,13 @@ class Handler extends ExceptionHandler
         if ($this->isHttpException($e)) {
             return $this->toIlluminateResponse($this->renderHttpException($e), $e);
         } else {
-            //dd(env('APP_DEBUG'));
-            if (env('APP_DEBUG')) {
-                return $this->toIlluminateResponse($this->convertExceptionToResponse($e), $e);
-            } else {
-                return view('errors.default',compact('e'));
-            }
+            Mail::send('emails.error', ['error' => $this->convertExceptionToResponse($e)], function($message) use ($fullurl) {
+            $message->to('anthony.borrow@montserratretreat.org');
+            $message->subject('Polanco error: '.$fullurl);
+            $message->from('polanco@montserratretreat.org');
+        });
+            return view('errors.default',compact('e'));
         }
+        
     }
 }

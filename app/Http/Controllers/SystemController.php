@@ -25,8 +25,7 @@ class SystemController extends Controller
      */
     public function phpinfo()
     {
-     
-     phpinfo();   //
+        phpinfo();
     }
 
  
