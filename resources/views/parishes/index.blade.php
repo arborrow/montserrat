@@ -22,6 +22,7 @@
                 <table class="table table-bordered table-striped table-hover"><caption><h2>Parishes</h2></caption>
                     <thead>
                         <tr>
+                            <th>Picture</th>
                             <th>Name</th> 
                             <th>Diocese</th>
                             <th>Pastor</th> 
@@ -34,6 +35,7 @@
                     <tbody>
                         @foreach($parishes as $parish)
                         <tr>
+                            <td>{!!$parish->avatar_small_link!!}</td>
                             <td><a href="parish/{{$parish->id}}">{{ $parish->organization_name }} </a></td>
                             <td><a href="diocese/{{$parish->diocese_id}}">{{ $parish->diocese_name }}</a></td> 
                             <td>

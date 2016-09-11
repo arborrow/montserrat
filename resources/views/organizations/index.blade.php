@@ -17,6 +17,7 @@
                 <table class="table table-bordered table-striped table-hover"><caption><h2>Organizations</h2></caption>
                     <thead>
                         <tr>
+                            <th>Picture</th>
                             <th>Name</th> 
                             <th>Type</th>
                             <th>Address</th> 
@@ -28,6 +29,7 @@
                     <tbody>
                        @foreach($organizations as $organization)
                         <tr>
+                            <td>{!!$organization->avatar_small_link!!}</td>
                             <td><a href="organization/{{$organization->id}}">{{ $organization->display_name }} </a></td>
                             <td>{{$organization->subcontact_type_label}}</td>
                             <td>

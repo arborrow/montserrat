@@ -19,6 +19,7 @@
                 <table class="table table-bordered table-striped table-hover"><caption><h2>Vendors</h2></caption>
                     <thead>
                         <tr>
+                            <th>Picture</th>
                             <th>Name</th> 
                             <th>Address</th> 
                             <th>Phone</th> 
@@ -29,6 +30,7 @@
                     <tbody>
                         @foreach($vendors as $vendor)
                         <tr>
+                            <td>{!!$vendor->avatar_small_link!!}</td>
                             <td><a href="vendor/{{$vendor->id}}">{{ $vendor->organization_name }} </a></td>
                             <td>
                                 @foreach($vendor->addresses as $address)
