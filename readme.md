@@ -14,11 +14,11 @@ Documentation for the framework can be found on the [Github.com wiki](https://gi
 
 ## Contributing
 
-Thank you for considering contributing to the MRH database! All feature request, code improvements, bug fixes, suggestions, words of wisdom are greatly appreciated. 
+Thank you for considering contributing to the MRH database (aka, Polanco)! All feature request, code improvements, bug fixes, suggestions, words of wisdom are greatly appreciated. 
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within the MRH Database, please send an e-mail to Anthony Borrow at arborrow@jesuits.net. 
+If you discover a security vulnerability within the MRH Database, please send an e-mail to Anthony Borrow at anthony.borrow@montserratretreat.org. 
 
 All security vulnerabilities will be promptly addressed.
 

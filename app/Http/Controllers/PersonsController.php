@@ -1531,8 +1531,24 @@ class PersonsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // TODO: consider creating a restore/{id} or undelete/{id}
+        
+        //delete existing groups and relationships when deleting user
+        \montserrat\Relationship::whereContactIdA($id)->delete();
+        \montserrat\Relationship::whereContactIdB($id)->delete();
+        \montserrat\GroupContact::whereContactId($id)->delete();
+        //delete address, email, phone, website, emergency contact, notes for deleted users
+        \montserrat\Address::whereContactId($id)->delete();
+        \montserrat\Email::whereContactId($id)->delete();
+        \montserrat\Phone::whereContactId($id)->delete();
+        \montserrat\Website::whereContactId($id)->delete();
+        \montserrat\EmergencyContact::whereContactId($id)->delete();
+        \montserrat\Note::whereContactId($id)->delete();
+        \montserrat\Touchpoint::wherePersonId($id)->delete();
+        //delete registrations
+        \montserrat\Registration::whereContactId($id)->delete();
         \montserrat\Contact::destroy($id);
+        
         return Redirect::action('PersonsController@index');
     
     }
