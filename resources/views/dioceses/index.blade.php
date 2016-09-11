@@ -17,6 +17,7 @@
                 <table class="table table-bordered table-striped table-hover"><caption><h2>Dioceses</h2></caption>
                     <thead>
                         <tr>
+                            <th>Picture</th>
                             <th>Name</th> 
                             <th>Bishop</th> 
                             <th>Address</th> 
@@ -28,6 +29,7 @@
                     <tbody>
                        @foreach($dioceses as $diocese)
                         <tr>
+                            <td>{!!$diocese->avatar_small_link!!}</td>
                             <td><a href="diocese/{{$diocese->id}}">{{ $diocese->organization_name }} </a></td>
                             <td>
                                 @if (empty($diocese->bishops))
