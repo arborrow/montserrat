@@ -12,6 +12,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Exception\HttpResponseException;
+use Symfony\Component\Debug\Exception\FlattenException;
 
 class Handler extends ExceptionHandler
 {
@@ -64,7 +65,7 @@ class Handler extends ExceptionHandler
         } elseif ($e instanceof ValidationException && $e->getResponse()) {
             return $e->getResponse();
         }
-
+        $e->debug=TRUE;
         if ($this->isHttpException($e)) {
             return $this->toIlluminateResponse($this->renderHttpException($e), $e);
         } else {
@@ -73,7 +74,7 @@ class Handler extends ExceptionHandler
             $message->subject('Polanco error: '.$fullurl);
             $message->from('polanco@montserratretreat.org');
         });
-            return view('errors.default',compact('e'));
+            return view('errors.default');
         }
         
     }
