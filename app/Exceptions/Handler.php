@@ -13,7 +13,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Exception\HttpResponseException;
 use Symfony\Component\Debug\Exception\FlattenException;
-
+use Illuminate\Support\Facades\Auth;
 class Handler extends ExceptionHandler
 {
     /**
@@ -47,9 +47,10 @@ class Handler extends ExceptionHandler
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $e)
-    {           
+    {          
         $fullurl = $request->fullUrl();
-        $username = Auth::user()->name;
+        $username = Auth::User()->name;
+        
         if ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException($e->getMessage(), $e);
         }
@@ -69,9 +70,9 @@ class Handler extends ExceptionHandler
         if ($this->isHttpException($e)) {
             return $this->toIlluminateResponse($this->renderHttpException($e), $e);
         } else {
-            Mail::send('emails.error', ['error' => $this->convertExceptionToResponse($e)], function($message) use ($fullurl) {
+            Mail::send('emails.error', ['error' => $this->convertExceptionToResponse($e)], function($message) use ($fullurl, $username) {
             $message->to('anthony.borrow@montserratretreat.org');
-            $message->subject('Polanco error: '.$username.'-'.$fullurl);
+            $message->subject('Polanco Error @'.$fullurl.' by: '.$username);
             $message->from('polanco@montserratretreat.org');
         });
             return view('errors.default');

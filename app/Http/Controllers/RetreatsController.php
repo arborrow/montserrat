@@ -395,12 +395,14 @@ public function room_update(Request $request)
             'retreat_id' => 'integer|min:0',
             
         ]);
-        foreach($request->input('registrations') as $key => $value) {
-            
-            $registration = \montserrat\Registration::findOrFail($key);
-            $registration->room_id = $value;
-            $registration->save();
-            //dd($registration,$value);
+        if (null !== $request->input('registrations')) {
+            foreach($request->input('registrations') as $key => $value) {
+
+                $registration = \montserrat\Registration::findOrFail($key);
+                $registration->room_id = $value;
+                $registration->save();
+                //dd($registration,$value);
+            }
         }
         return Redirect::action('RetreatsController@index');
     }    
