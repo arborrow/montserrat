@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Image;
 use Illuminate\Support\Facades\File;
-use Intervention;
 use Response;
 
 class PersonsController extends Controller
@@ -672,7 +671,7 @@ class PersonsController extends Controller
         $person->parish_name = '';
         if (!empty($person->parish)) {
             $person->parish_id = $person->parish->contact_id_a;
-            $person->parish_name = $person->parish->contact_a->organization_name.' ('.$person->parish->contact_a->address_primary->city.') - '.$person->parish->contact_a->diocese->contact_a->organization_name;;
+            $person->parish_name = $person->parish->contact_a->organization_name.' ('.$person->parish->contact_a->address_primary->city.') - '.$person->parish->contact_a->diocese->contact_a->organization_name;
         }
        
         $preferred_language = \montserrat\Language::whereName($person->preferred_language)->first();
@@ -839,6 +838,7 @@ class PersonsController extends Controller
     
     public function search()
     {
+        $person = new \montserrat\Contact;
         $parishes = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('address_primary.state','diocese.contact_a')->get();
         $parish_list[0]='N/A';
         $contact_types = \montserrat\ContactType::whereIsReserved(TRUE)->pluck('label','id');
@@ -991,7 +991,7 @@ class PersonsController extends Controller
             ]);
         //dd($request);
         //name 
-        $person = \montserrat\Contact::with('addresses.location','emails.location','phones.location','websites','emergency_contact','parish')->findOrFail($request->input('id'));
+        $person = \montserrat\Contact::with('addresses.location','emails.location','phones.location','websites','emergency_contact','parish')->findOrFail($id);
         $person->prefix_id = $request->input('prefix_id');
         $person->first_name = $request->input('first_name');
         $person->middle_name = $request->input('middle_name');

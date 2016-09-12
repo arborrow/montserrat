@@ -21,7 +21,6 @@
                             <th>Home phone</th>
                             <th>Cell phone</th>
                             <th>Email</th>
-                            <th>Parish (City)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -73,9 +72,7 @@
                                 @endif
                                 @endforeach
                             </td>
-                            <td>
-                                {!! $duplicate->parish_link !!}
-                            </td>
+                            
                         </tr>
                         @endforeach
                     {!! $duplicates->render() !!}    

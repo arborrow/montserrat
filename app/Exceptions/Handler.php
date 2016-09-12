@@ -49,7 +49,7 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $e)
     {           
         $fullurl = $request->fullUrl();
-        
+        $username = Auth::user()->name;
         if ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException($e->getMessage(), $e);
         }
@@ -71,7 +71,7 @@ class Handler extends ExceptionHandler
         } else {
             Mail::send('emails.error', ['error' => $this->convertExceptionToResponse($e)], function($message) use ($fullurl) {
             $message->to('anthony.borrow@montserratretreat.org');
-            $message->subject('Polanco error: '.$fullurl);
+            $message->subject('Polanco error: '.$username.'-'.$fullurl);
             $message->from('polanco@montserratretreat.org');
         });
             return view('errors.default');
