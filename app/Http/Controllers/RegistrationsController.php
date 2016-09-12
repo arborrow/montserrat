@@ -72,7 +72,39 @@ class RegistrationsController extends Controller
         $rooms->prepend('Unassigned',0);
         
         $defaults['contact_id']=$id;
+        $defaults['retreat_id']=0;
         $dt_today =  \Carbon\Carbon::today();
+        $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
+        
+        return view('registrations.create',compact('retreats','retreatants','rooms','defaults')); 
+        //dd($retreatants);
+    }
+
+        public function register($retreat_id = 0, $contact_id = 0)
+    {
+        //
+        //$retreats = \montserrat\Retreat::where('end','>',\Carbon\Carbon::today())->pluck('idnumber','title','id');
+
+        if ($retreat_id > 0) {
+            $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date",">",\Carbon\Carbon::today())->whereId($retreat_id)->orderBy('start_date')->pluck('description','id');
+        } else {
+            $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date",">",\Carbon\Carbon::today())->orderBy('start_date')->pluck('description','id');
+        }
+        $retreats->prepend('Unassigned',0);
+        
+        if ($contact_id > 0) {
+            $retreatants = \montserrat\Contact::whereId($contact_id)->orderBy('sort_name')->pluck('sort_name','id');
+        } else {
+            $retreatants = \montserrat\Contact::orderBy('sort_name')->pluck('sort_name','id');
+        }
+        $retreatants->prepend('Unassigned',0);
+        
+        $rooms= \montserrat\Room::orderby('name')->pluck('name','id');
+        $rooms->prepend('Unassigned',0);
+        
+        $dt_today =  \Carbon\Carbon::today();
+        $defaults['retreat_id'] = $retreat_id;
+        $defaults['contact_id'] = $contact_id;
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
         
         return view('registrations.create',compact('retreats','retreatants','rooms','defaults')); 

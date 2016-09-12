@@ -10,7 +10,7 @@
            <div class="form-group">
 
                 {!! Form::label('event_id', 'Retreat:', ['class' => 'col-md-2']) !!}
-                {!! Form::select('event_id', $retreats, 0, ['class' => 'col-md-2']) !!}
+                {!! Form::select('event_id', $retreats, $defaults['retreat_id'], ['class' => 'col-md-2']) !!}
                 
             </div><div class="clearfix"> </div>
            <div class="form-group">

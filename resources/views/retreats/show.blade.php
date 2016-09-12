@@ -99,7 +99,7 @@
         <div class="panel panel-default">  
         <div class="panel-heading">
             <h2>Retreatants Registered</h2>
-            <span class="create"><a href={{ action('RegistrationsController@create') }}>{!! Html::image('img/create.png', 'Create Registration',array('title'=>"Create Registration",'class' => 'btn btn-default')) !!}</a></span>
+            <span class="create"><a href={{ action('RegistrationsController@register', $retreat->id) }}>{!! Html::image('img/create.png', 'Create Registration',array('title'=>"Create Registration",'class' => 'btn btn-default')) !!}</a></span>
             <span class="btn btn-default"><a href={{ action('PagesController@retreatantinforeport',$retreat->idnumber) }}>Retreatant Information Report</a></span>
             <span class="btn btn-default"><a href={{ action('PagesController@retreatrosterreport',$retreat->idnumber) }}>Retreat Roster</a></span>
             <span class="btn btn-default"><a href={{ action('PagesController@retreatlistingreport',$retreat->idnumber) }}>Retreat Listing</a></span>
