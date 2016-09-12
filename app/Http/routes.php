@@ -54,9 +54,7 @@ Route::resource('parish','ParishesController');
 Route::get('parishes/dallas',['as' => 'dallasparishes','uses' => 'ParishesController@dallasdiocese']);
 Route::get('parishes/fortworth',['as' => 'fortworthparishes','uses' => 'ParishesController@fortworthdiocese']);
 Route::get('parishes/tyler',['as' => 'tylerparishes','uses' => 'ParishesController@tylerdiocese']);
-Route::resource('person','PersonsController');
-
-Route::group(['prefix' => 'persons'], function() {
+Route::group(['prefix' => 'person'], function() {
     Route::get('assistants',['as' => 'assistants','uses' => 'PersonsController@assistants']);
     Route::get('bishops',['as' => 'bishops','uses' => 'PersonsController@bishops']);
     Route::get('boardmembers',['as' => 'boardmembers','uses' => 'PersonsController@boardmembers']);
@@ -77,7 +75,12 @@ Route::group(['prefix' => 'persons'], function() {
     Route::get('superiors',['as' => 'superiors','uses' => 'PersonsController@superiors']);
     Route::get('volunteers',['as' => 'volunteers','uses' => 'PersonsController@volunteers']);
     Route::get('lastnames/{id?}',['as' => 'lastnames', 'uses' => 'PersonsController@lastnames'])->where('id','[a-z]');
+    Route::get('duplicates',['as' => 'duplicates','uses' => 'PersonsController@duplicates']);
+
+    
 });
+
+Route::resource('person','PersonsController');
 
 Route::resource('registration','RegistrationsController');
 Route::get('registration/add/{id?}',['uses' => 'RegistrationsController@add']);

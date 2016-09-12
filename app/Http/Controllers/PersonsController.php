@@ -1701,4 +1701,12 @@ class PersonsController extends Controller
 
         return $response;
     }    
+    public function duplicates() {
+        
+        $duplicates = \montserrat\Contact::whereIn('id',function($query) {
+        $query->select('id')->from('contact')->groupBy('sort_name')->whereDeletedAt(NULL)->havingRaw('count(*)>1');})->orderBy('sort_name')->paginate(100);
+        //dd($duplicates);
+        return view('persons.duplicates',compact('duplicates'));
+        
+    }
 }
