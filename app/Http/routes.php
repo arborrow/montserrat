@@ -91,7 +91,7 @@ Route::post('relationship_type/addme',['as' => 'relationship_type.addme', 'uses'
 Route::resource('relationship_type','RelationshipTypesController');
 Route::get('relationship_type/{id}/add/{a?}/{b?}',['as'=>'relationship_type.add','uses' => 'RelationshipTypesController@add']);
 
-Route::group(['prefix' => 'report', 'middleware' => ['role:manager']], function() {
+Route::group(['prefix' => 'report'], function() {
     Route::get('retreatantinfo/{retreat_id}',['uses' => 'PagesController@retreatantinforeport']);
     Route::get('retreatlisting/{retreat_id}',['uses' => 'PagesController@retreatlistingreport']);
     Route::get('retreatroster/{retreat_id}',['uses' => 'PagesController@retreatrosterreport']);
