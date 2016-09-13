@@ -28,15 +28,6 @@
                     
             </div><div class="clearfix"> </div>
             <div class="form-group">
-                {!! Form::label('attendance_confirm_date', 'Attendance Confirmed:', ['class' => 'col-md-2']) !!}
-                @if ($registration->attendance_confirm_date== NULL)
-                    {!! Form::text('attendance_confirm_date', NULL, ['class'=>'col-md-3','data-provide'=>'datepicker']) !!}
-                @else
-                    {!! Form::text('attendance_confirm_date', $registration->attendance_confirm_date, ['class'=>'col-md-3','data-provide'=>'datepicker']) !!}
-                @endif
-                
-            </div><div class="clearfix"> </div>
-            <div class="form-group">
                 {!! Form::label('confirmed_by', 'Confirmed by:', ['class' => 'col-md-2']) !!}
                 {!! Form::text('confirmed_by', $registration->confirmed_by, ['class'=>'col-md-3']) !!}
             </div><div class="clearfix"> </div>

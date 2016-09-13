@@ -70,7 +70,16 @@ class Registration extends Model
             return 'N/A';
         }
         
+    }
+    
+    public function getRegistrationConfirmDateTextAttribute() {
+        if (isset($this->registration_confirm_date)) {
+            return date('F d, Y', strtotime($this->registration_confirm_date));
+        } else {
+            return 'N/A';
         }
+        
+    }
 
     public function retreat()
     {

@@ -29,13 +29,7 @@
                     </div><div class="clearfix"> </div>
                 </div>
                 <div class='row'>
-                    <div class='col-md-3'><strong>Attendance Confirmed: </strong>
-                    @if ($registration->attendance_confirm_date== NULL)
-                        N/A
-                    @else
-                        {{date('F d, Y', strtotime($registration->attendance_confirm_date))}}
-                    @endif
-                    </div>
+                    
                     <div class='col-md-3'><strong>Confirmed by: </strong>{{ $registration->confirmed_by}}</div>
                 </div><div class="clearfix"> </div>
 

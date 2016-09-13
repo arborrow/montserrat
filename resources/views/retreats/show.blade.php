@@ -152,9 +152,6 @@
                         <td>@if ((!isset($registration->arrived_at)) && (!isset($registration->canceled_at)) && (!isset($registration->registration_confirm_date)))
                             <span class="btn btn-primary"><a href='{{url('registration/'.$registration->id.'/confirm')}}'>Confirmed</a></span>
                             @endif
-                            @if ((!isset($registration->arrived_at)) && (!isset($registration->canceled_at)) && (!isset($registration->attendance_confirm_date)))
-                            <span class="btn btn-default"><a href='{{url('registration/'.$registration->id.'/attend')}}'>Attending</a></span>
-                            @endif
                             @if (!isset($registration->arrived_at) && (!isset($registration->canceled_at)))
                             <span class="btn btn-success"><a href='{{url('registration/'.$registration->id.'/arrive')}}'>Arrived</a></span>
                             @endif

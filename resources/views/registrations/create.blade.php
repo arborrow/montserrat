@@ -35,10 +35,6 @@
                 {!! Form::text('registration_confirm_date', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
-                {!! Form::label('attendance_confirm_date', 'Attendance Confirmed:', ['class' => 'col-md-2']) !!}
-                {!! Form::text('attendance_confirm_date', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
-            </div><div class="clearfix"> </div>
-            <div class="form-group">
                 {!! Form::label('confirmed_by', 'Confirmed By:', ['class' => 'col-md-2']) !!}
                 {!! Form::text('confirmed_by', null, ['class'=>'col-md-2']) !!}
             </div><div class="clearfix"> </div>

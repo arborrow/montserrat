@@ -39,7 +39,7 @@
                             </td>
                             <td><a href="retreat/{{$registration->event_id}}">{{ $registration->retreat->title }} ({{$registration->retreat->idnumber}})</a></td>
                             <td>{{ date('F d, Y', strtotime($registration->retreat->start_date)) }} - {{ date('F d, Y', strtotime($registration->retreat->end_date)) }}</td>
-                            <td>{{ $registration->attendance_confirm_date_text }}</td>
+                            <td>{{ $registration->registration_confirm_date_text }}</td>
                             <td>
                                 @if (isset($registration->room->name))
                                     <a href="room/{{$registration->room_id}}">{{ $registration->room->name }}</a>
