@@ -149,18 +149,25 @@
                             @endif
                         </td>
                         <td>{{ $registration->notes }}</td>
-                        <td>@if ((!isset($registration->arrived_at)) && (!isset($registration->registration_confirm_date)))
+                        <td>@if ((!isset($registration->arrived_at)) && (!isset($registration->canceled_at)) && (!isset($registration->registration_confirm_date)))
                             <span class="btn btn-primary"><a href='{{url('registration/'.$registration->id.'/confirm')}}'>Confirmed</a></span>
                             @endif
-                            @if ((!isset($registration->arrived_at)) && (!isset($registration->attendance_confirm_date)))
+                            @if ((!isset($registration->arrived_at)) && (!isset($registration->canceled_at)) && (!isset($registration->attendance_confirm_date)))
                             <span class="btn btn-default"><a href='{{url('registration/'.$registration->id.'/attend')}}'>Attending</a></span>
                             @endif
-                            @if (!isset($registration->arrived_at))
+                            @if (!isset($registration->arrived_at) && (!isset($registration->canceled_at)))
                             <span class="btn btn-success"><a href='{{url('registration/'.$registration->id.'/arrive')}}'>Arrived</a></span>
                             @endif
                             @if ((isset($registration->arrived_at)) && (!isset($registration->departed_at)))
                             <span class="btn btn-warning"><a href='{{url('registration/'.$registration->id.'/depart')}}'>Departed</a></span>
                             @endif
+                            @if (isset($registration->canceled_at)) 
+                            Canceled at {{$registration->canceled_at}}
+                            @endif
+                            @if (isset($registration->departed_at)) 
+                            Departed at {{$registration->departed_at}}
+                            @endif
+
                         </td>
 
                     </tr>
