@@ -98,7 +98,7 @@
             </div><br />
         <div class="panel panel-default">  
         <div class="panel-heading">
-            <h2>Retreatants Registered</h2>
+            <h2 id='registrations'>Retreatants Registered</h2>
             <span class="create"><a href={{ action('RegistrationsController@register', $retreat->id) }}>{!! Html::image('img/create.png', 'Create Registration',array('title'=>"Create Registration",'class' => 'btn btn-default')) !!}</a></span>
             <span class="btn btn-default"><a href={{ action('PagesController@retreatantinforeport',$retreat->idnumber) }}>Retreatant Information Report</a></span>
             <span class="btn btn-default"><a href={{ action('PagesController@retreatrosterreport',$retreat->idnumber) }}>Retreat Roster</a></span>
@@ -121,12 +121,13 @@
                         <th>Mobile Phone</th>
                         <th>Parish</th>
                         <th>Notes</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
                 @foreach($registrations as $registration)
                     <tr>
-                        <td><a href="{{action('RegistrationsController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }}</a></td>
+                        <td id='registration-{{$registration->id}}'><a href="{{action('RegistrationsController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }}</a></td>
                         <td>{!!$registration->retreatant->avatar_small_link!!}</td>
                         <td>{!!$registration->retreatant->contact_link!!}</td>
                         <td>
@@ -148,7 +149,19 @@
                             @endif
                         </td>
                         <td>{{ $registration->notes }}</td>
-
+                        <td>@if ((!isset($registration->arrived_at)) && (!isset($registration->registration_confirm_date)))
+                            <span class="btn btn-primary"><a href='{{url('registration/'.$registration->id.'/confirm')}}'>Confirmed</a></span>
+                            @endif
+                            @if ((!isset($registration->arrived_at)) && (!isset($registration->attendance_confirm_date)))
+                            <span class="btn btn-default"><a href='{{url('registration/'.$registration->id.'/attend')}}'>Attending</a></span>
+                            @endif
+                            @if (!isset($registration->arrived_at))
+                            <span class="btn btn-success"><a href='{{url('registration/'.$registration->id.'/arrive')}}'>Arrived</a></span>
+                            @endif
+                            @if ((isset($registration->arrived_at)) && (!isset($registration->departed_at)))
+                            <span class="btn btn-warning"><a href='{{url('registration/'.$registration->id.'/depart')}}'>Departed</a></span>
+                            @endif
+                        </td>
 
                     </tr>
                     @endforeach

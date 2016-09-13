@@ -345,4 +345,31 @@ class RegistrationsController extends Controller
         $retreat->save();
         return Redirect::action('RegistrationsController@index');
     }
+    public function confirm($id) {
+        $registration = \montserrat\Registration::findOrFail($id);
+        $registration->registration_confirm_date = \Carbon\Carbon::now();
+        $registration->save();
+        return Redirect::back();
+    }
+       
+    public function attend($id) {
+        $registration = \montserrat\Registration::findOrFail($id);
+        $registration->attendance_confirm_date = \Carbon\Carbon::now();
+        $registration->save();
+        return Redirect::back();
+    }
+    
+    public function arrive($id) {
+        $registration = \montserrat\Registration::findOrFail($id);
+        $registration->arrived_at = \Carbon\Carbon::now();
+        $registration->save();
+        return Redirect::back();
+    }
+    
+    public function depart($id) {
+        $registration = \montserrat\Registration::findOrFail($id);
+        $registration->departed_at = \Carbon\Carbon::now();
+        $registration->save();
+        return Redirect::back();
+    }
 }
