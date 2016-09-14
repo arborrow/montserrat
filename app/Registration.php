@@ -80,6 +80,26 @@ class Registration extends Model
         }
         
     }
+    
+    public function getRegistrationStatusButtonsAttribute() {
+        $status = '';
+        if ((!isset($this->arrived_at)) && (!isset($this->canceled_at)) && (!isset($this->registration_confirm_date))) {
+            $status .= '<span class="btn btn-default"><a href="'.url("registration/".$this->id."/confirm").'">Confirmed</a></span>';
+        }
+        if (!isset($this->arrived_at) && (!isset($this->canceled_at))) {
+            $status .= '<span class="btn btn-success"><a href="'.url("registration/".$this->id."/arrive").'">Arrived</a></span>';
+        }
+        if ((isset($this->arrived_at)) && (!isset($this->departed_at))) {
+            $status .= '<span class="btn btn-warning"><a href="'.url("registration/".$this->id."/depart").'">Departed</a></span>';
+        }
+        if (isset($this->canceled_at)) {
+            $status .= 'Canceled at '.$this->canceled_at;
+        } 
+        if (isset($this->departed_at)) { 
+            $status .= 'Departed at '.$this->departed_at;
+        }
+        return $status;
+    }
 
     public function retreat()
     {

@@ -82,6 +82,7 @@
                     
             </div>
             <div class="clearfix"> </div>
+            <div class='row'>
     
                 @if (Storage::has('events/'.$retreat->id.'/group_photo.jpg'))
                 <strong>Group photo:</strong> <img src="{{url('retreat/'.$retreat->id).'/photo'}}" class="img" style="padding:5px;">
@@ -98,13 +99,13 @@
             </div><br />
         <div class="panel panel-default">  
         <div class="panel-heading">
-            <h2 id='registrations'>Retreatants Registered</h2>
-            <span class="create"><a href={{ action('RegistrationsController@register', $retreat->id) }}>{!! Html::image('img/create.png', 'Create Registration',array('title'=>"Create Registration",'class' => 'btn btn-default')) !!}</a></span>
+            <h2 id='registrations'>Retreatants Registered for {{ $retreat->idnumber }} - {{ $retreat->title }}</h2>
+            <span class="btn btn-default"><a href={{ action('RegistrationsController@register', $retreat->id) }}>Register a Retreatant</a></span>
+            <span class="btn btn-default">{!! $retreat->email_registered_retreatants !!}</span>
+            <span class="btn btn-default"><a href={{ action('RetreatsController@assign_rooms',$retreat->id) }}>Assign Rooms</a></span>
             <span class="btn btn-default"><a href={{ action('PagesController@retreatantinforeport',$retreat->idnumber) }}>Retreatant Information Report</a></span>
             <span class="btn btn-default"><a href={{ action('PagesController@retreatrosterreport',$retreat->idnumber) }}>Retreat Roster</a></span>
             <span class="btn btn-default"><a href={{ action('PagesController@retreatlistingreport',$retreat->idnumber) }}>Retreat Listing</a></span>
-            <span class="btn btn-default">{!! $retreat->email_registered_retreatants !!}</span>
-            <span class="btn btn-default"><a href={{ action('RetreatsController@assign_rooms',$retreat->id) }}>Assign Rooms</a></span>
                 
         </div>
             @if ($registrations->isEmpty())
@@ -149,22 +150,7 @@
                             @endif
                         </td>
                         <td>{{ $registration->notes }}</td>
-                        <td>@if ((!isset($registration->arrived_at)) && (!isset($registration->canceled_at)) && (!isset($registration->registration_confirm_date)))
-                            <span class="btn btn-default"><a href='{{url('registration/'.$registration->id.'/confirm')}}'>Confirmed</a></span>
-                            @endif
-                            @if (!isset($registration->arrived_at) && (!isset($registration->canceled_at)))
-                            <span class="btn btn-success"><a href='{{url('registration/'.$registration->id.'/arrive')}}'>Arrived</a></span>
-                            @endif
-                            @if ((isset($registration->arrived_at)) && (!isset($registration->departed_at)))
-                            <span class="btn btn-warning"><a href='{{url('registration/'.$registration->id.'/depart')}}'>Departed</a></span>
-                            @endif
-                            @if (isset($registration->canceled_at)) 
-                            Canceled at {{$registration->canceled_at}}
-                            @endif
-                            @if (isset($registration->departed_at)) 
-                            Departed at {{$registration->departed_at}}
-                            @endif
-
+                        <td>{!! $registration->registration_status_buttons!!}
                         </td>
 
                     </tr>
