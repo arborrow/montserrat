@@ -28,7 +28,7 @@
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('state_province_id', 'State:', ['class' => 'col-md-1']) !!}
-                {!! Form::select('state_province_id', $states, $default['state_province_id'], ['class' => 'col-md-2']) !!}
+                {!! Form::select('state_province_id', $states, $defaults['state_province_id'], ['class' => 'col-md-2']) !!}
             
             </div><div class="clearfix"> </div>
             <div class="form-group">
@@ -48,13 +48,14 @@
                 {!! Form::text('email_main', null, ['class'=>'col-md-2']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
-                {!! Form::label('website_main', 'Webpage:', ['class' => 'col-md-1']) !!}
-                {!! Form::text('website_main', null, ['class'=>'col-md-2']) !!}
-            </div><div class="clearfix"> </div>
-            <div class="form-group">
                 {!! Form::label('notes', 'Notes:', ['class' => 'col-md-1']) !!}
                 {!! Form::textarea('notes', null, ['class'=>'col-md-5', 'rows'=>'3']) !!}
             </div><div class="clearfix"> </div>
+            <div class='form-group'>
+                @include('dioceses.create.urls')
+            </div>
+            <div class="clearfix"> </div>
+    
             <div class="col-md-1"><div class="form-group">
                 {!! Form::submit('Add Diocese', ['class'=>'btn btn-primary']) !!}
             </div></div>

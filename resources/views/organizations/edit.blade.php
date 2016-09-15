@@ -99,15 +99,6 @@
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
-        {!! Form::label('website_main', 'Webpage:', ['class' => 'col-md-2']) !!}
-        @if (isset($organization->website_main))
-            {!! Form::text('website_main', $organization->website_main->url, ['class' => 'col-md-3']) !!}
-        @else 
-            {!! Form::text('website_main', NULL, ['class' => 'col-md-3']) !!}
-        @endIf
-    </div>
-    <div class="clearfix"> </div>
-    <div class="form-group">
        {!! Form::label('note', 'Notes:', ['class' => 'col-md-2']) !!}
         @if (isset($organization->note_organization_text)) 
             {!! Form::textarea('note', $organization->note_organization_text, ['class'=>'col-md-5', 'rows'=>'3']) !!}
@@ -128,6 +119,10 @@
         {!! Form::file('attachment',['class' => 'col-md-2']); !!}
         {!! Form::label('attachment_description', 'Description: (max 200)', ['class' => 'col-md-2'])  !!}
         {!! Form::text('attachment_description', NULL, ['class' => 'col-md-3']) !!}
+    </div>
+    <div class="clearfix"> </div>
+    <div class='form-group'>
+        @include('organizations.update.urls')
     </div>
     <div class="clearfix"> </div>
     

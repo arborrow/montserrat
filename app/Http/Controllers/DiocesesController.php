@@ -50,13 +50,13 @@ class DiocesesController extends Controller
         $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code','id');
         $countries->prepend('N/A',0); 
         
-        $default['state_province_id'] = STATE_PROVINCE_ID_TX;
-        $default['country_id'] = COUNTRY_ID_USA;
+        $defaults['state_province_id'] = STATE_PROVINCE_ID_TX;
+        $defaults['country_id'] = COUNTRY_ID_USA;
         
         $bishops = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_BISHOP);})->pluck('display_name','id');
         $bishops->prepend('N/A',0); 
         
-        return view('dioceses.create',compact('bishops','states','countries','default'));  
+        return view('dioceses.create',compact('bishops','states','countries','defaults'));  
     
     }
 
@@ -73,7 +73,12 @@ class DiocesesController extends Controller
                 'organization_name' => 'required',
                 'bishop_id' => 'integer|min:0',
                 'email_main' => 'email',
-                'website_main' => 'url',
+                'url_main' => 'url',
+                'url_facebook' => 'url|regex:/facebook\.com\/.+/i',
+                'url_google' => 'url|regex:/plus\.google\.com\/.+/i',
+                'url_twitter' => 'url|regex:/twitter\.com\/.+/i',
+                'url_instagram' => 'url|regex:/instagram\.com\/.+/i',
+                'url_linkedin' => 'url|regex:/linkedin\.com\/.+/i',
                 'phone_main_phone' => 'phone',
                 'phone_main_fax' => 'phone',
             ]);
@@ -120,12 +125,49 @@ class DiocesesController extends Controller
             $diocese_email_main->email=$request->input('email_main');
         $diocese_email_main->save();
         
-        $diocese_website_main = new \montserrat\Website;
-            $diocese_website_main->contact_id=$diocese->id;
-            $diocese_website_main->url=$request->input('website_main');
-            $diocese_website_main->website_type='Main';
-        $diocese_website_main->save();
+        $url_main = new \montserrat\Website;
+            $url_main->contact_id=$diocese->id;
+            $url_main->url=$request->input('url_main');
+            $url_main->website_type='Main';
+        $url_main->save();
         
+        $url_work= new \montserrat\Website;
+            $url_work->contact_id=$diocese->id;
+            $url_work->url=$request->input('url_work');
+            $url_work->website_type='Work';
+        $url_work->save();
+        
+        $url_facebook= new \montserrat\Website;
+            $url_facebook->contact_id=$diocese->id;
+            $url_facebook->url=$request->input('url_facebook');
+            $url_facebook->website_type='Facebook';
+        $url_facebook->save();
+        
+        $url_google = new \montserrat\Website;
+            $url_google->contact_id=$diocese->id;
+            $url_google->url=$request->input('url_google');
+            $url_google->website_type='Google';
+        $url_google->save();
+        
+        $url_instagram= new \montserrat\Website;
+            $url_instagram->contact_id=$diocese->id;
+            $url_instagram->url=$request->input('url_instagram');
+            $url_instagram->website_type='Instagram';
+        $url_instagram->save();
+        
+        $url_linkedin= new \montserrat\Website;
+            $url_linkedin->contact_id=$diocese->id;
+            $url_linkedin->url=$request->input('url_linkedin');
+            $url_linkedin->website_type='LinkedIn';
+        $url_linkedin->save();
+        
+        $url_twitter= new \montserrat\Website;
+            $url_twitter->contact_id=$diocese->id;
+            $url_twitter->url=$request->input('url_twitter');
+            $url_twitter->website_type='Twitter';
+        $url_twitter->save();
+
+
         //TODO: add contact_id which is the id of the creator of the note
         if (!empty($request->input('note'))); {
             $diocese_note = new \montserrat\Note;
@@ -186,14 +228,27 @@ return Redirect::action('DiocesesController@index');
         $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code','id');
         $countries->prepend('N/A',0); 
         
-        $default['state_province_id'] = STATE_PROVINCE_ID_TX;
-        $default['country_id'] = COUNTRY_ID_USA;
+        $defaults['state_province_id'] = STATE_PROVINCE_ID_TX;
+        $defaults['country_id'] = COUNTRY_ID_USA;
         
         $bishops = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_BISHOP);})->pluck('display_name','id');
         $bishops->prepend('N/A',0); 
         //dd($diocese);
+        $defaults['Main']['url']='';
+        $defaults['Work']['url']='';
+        $defaults['Facebook']['url']='';
+        $defaults['Google']['url']='';
+        $defaults['Instagram']['url']='';
+        $defaults['LinkedIn']['url']='';
+        $defaults['Twitter']['url']='';
+
+
+        foreach($diocese->websites as $website) {
+            $defaults[$website->website_type]['url'] = $website->url;
+        }
+
               
-       return view('dioceses.edit',compact('diocese','bishops','states','countries','default'));
+       return view('dioceses.edit',compact('diocese','bishops','states','countries','defaults'));
     }
 
     /**
@@ -211,7 +266,12 @@ return Redirect::action('DiocesesController@index');
             'organization_name' => 'required',
             'bishop_id' => 'integer|min:0',
             'email_main' => 'email',
-            'website_main' => 'url',
+            'url_main' => 'url',
+            'url_facebook' => 'url|regex:/facebook\.com\/.+/i',
+            'url_google' => 'url|regex:/plus\.google\.com\/.+/i',
+            'url_twitter' => 'url|regex:/twitter\.com\/.+/i',
+            'url_instagram' => 'url|regex:/instagram\.com\/.+/i',
+            'url_linkedin' => 'url|regex:/linkedin\.com\/.+/i',
             'phone_main_phone' => 'phone',
             'phone_main_fax' => 'phone',
             'avatar' => 'image|max:5000',
@@ -268,11 +328,49 @@ return Redirect::action('DiocesesController@index');
         $email_primary ->email=$request->input('email_primary');
         $email_primary->save();
         
-        $website_main = \montserrat\Website::findOrNew($diocese->website_main->id);
-        $website_main->url = $request->input('website_main');
-        $website_main->contact_id=$diocese->id;
-        $website_main->website_type='Main';
-        $website_main->save();
+        $url_main = \montserrat\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'Main']);
+            $url_main->contact_id=$diocese->id;
+            $url_main->url=$request->input('url_main');
+            $url_main->website_type='Main';
+        $url_main->save();
+
+        $url_work= \montserrat\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'Work']);
+            $url_work->contact_id=$diocese->id;
+            $url_work->url=$request->input('url_work');
+            $url_work->website_type='Work';
+        $url_work->save();
+
+        $url_facebook= \montserrat\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'Facebook']);
+            $url_facebook->contact_id=$diocese->id;
+            $url_facebook->url=$request->input('url_facebook');
+            $url_facebook->website_type='Facebook';
+        $url_facebook->save();
+
+        $url_google = \montserrat\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'Google']);
+            $url_google->contact_id=$diocese->id;
+            $url_google->url=$request->input('url_google');
+            $url_google->website_type='Google';
+        $url_google->save();
+
+        $url_instagram= \montserrat\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'Instagram']);
+            $url_instagram->contact_id=$diocese->id;
+            $url_instagram->url=$request->input('url_instagram');
+            $url_instagram->website_type='Instagram';
+        $url_instagram->save();
+
+        $url_linkedin= \montserrat\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'LinkedIn']);
+            $url_linkedin->contact_id=$diocese->id;
+            $url_linkedin->url=$request->input('url_linkedin');
+            $url_linkedin->website_type='LinkedIn';
+        $url_linkedin->save();
+
+            $url_twitter= \montserrat\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'Twitter']);
+                $url_twitter->contact_id=$diocese->id;
+                $url_twitter->url=$request->input('url_twitter');
+                $url_twitter->website_type='Twitter';
+            $url_twitter->save();
+
+
         
         if (null !== $request->file('avatar')) {
             $avatar = Image::make($request->file('avatar')->getRealPath())->fit(150, 150)->orientate();

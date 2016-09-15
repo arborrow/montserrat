@@ -59,14 +59,14 @@ class ParishesController extends Controller
         $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name','id');
         $states->prepend('N/A',0); 
         $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code','id');
-        $default['state_province_id'] = STATE_PROVINCE_ID_TX;
-        $default['country_id'] = COUNTRY_ID_USA;
+        $defaults['state_province_id'] = STATE_PROVINCE_ID_TX;
+        $defaults['country_id'] = COUNTRY_ID_USA;
         $countries->prepend('N/A',0); 
         
   //dd($pastors);
         //$pastors = array();
         //$pastors[0]='Not implemented yet';
-        return view('parishes.create',compact('dioceses','pastors','states','countries','default'));  
+        return view('parishes.create',compact('dioceses','pastors','states','countries','defaults'));  
     
     }
 
@@ -84,7 +84,12 @@ class ParishesController extends Controller
                 'diocese_id' => 'integer|min:0',
                 'pastor_id' => 'integer|min:0',
                 'parish_email_main' => 'email',
-                '$parish_website_main' => 'url',
+                'url_main' => 'url',
+                'url_facebook' => 'url|regex:/facebook\.com\/.+/i',
+                'url_google' => 'url|regex:/plus\.google\.com\/.+/i',
+                'url_twitter' => 'url|regex:/twitter\.com\/.+/i',
+                'url_instagram' => 'url|regex:/instagram\.com\/.+/i',
+                'url_linkedin' => 'url|regex:/linkedin\.com\/.+/i',
                 'phone_main_phone' => 'phone',
                 'phone_main_fax' => 'phone',
             ]);
@@ -130,11 +135,48 @@ class ParishesController extends Controller
             $parish_email_main->email=$request->input('email_main');
         $parish_email_main->save();
         
-        $parish_website_main = new \montserrat\Website;
-            $parish_website_main->contact_id=$parish->id;
-            $parish_website_main->url=$request->input('website_main');
-            $parish_website_main->website_type='Main';
-        $parish_website_main->save();
+        $url_main = new \montserrat\Website;
+            $url_main->contact_id=$parish->id;
+            $url_main->url=$request->input('url_main');
+            $url_main->website_type='Main';
+        $url_main->save();
+        
+        $url_work= new \montserrat\Website;
+            $url_work->contact_id=$parish->id;
+            $url_work->url=$request->input('url_work');
+            $url_work->website_type='Work';
+        $url_work->save();
+        
+        $url_facebook= new \montserrat\Website;
+            $url_facebook->contact_id=$parish->id;
+            $url_facebook->url=$request->input('url_facebook');
+            $url_facebook->website_type='Facebook';
+        $url_facebook->save();
+        
+        $url_google = new \montserrat\Website;
+            $url_google->contact_id=$parish->id;
+            $url_google->url=$request->input('url_google');
+            $url_google->website_type='Google';
+        $url_google->save();
+        
+        $url_instagram= new \montserrat\Website;
+            $url_instagram->contact_id=$parish->id;
+            $url_instagram->url=$request->input('url_instagram');
+            $url_instagram->website_type='Instagram';
+        $url_instagram->save();
+        
+        $url_linkedin= new \montserrat\Website;
+            $url_linkedin->contact_id=$parish->id;
+            $url_linkedin->url=$request->input('url_linkedin');
+            $url_linkedin->website_type='LinkedIn';
+        $url_linkedin->save();
+        
+        $url_twitter= new \montserrat\Website;
+            $url_twitter->contact_id=$parish->id;
+            $url_twitter->url=$request->input('url_twitter');
+            $url_twitter->website_type='Twitter';
+        $url_twitter->save();
+
         
         //TODO: add contact_id which is the id of the creator of the note
         if (!empty($request->input('note'))) {
@@ -204,11 +246,25 @@ return Redirect::action('ParishesController@index');
         $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name','id');
         $states->prepend('N/A',0); 
         $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code','id');
-        $default['state_province_id'] = STATE_PROVINCE_ID_TX;
-        $default['country_id'] = COUNTRY_ID_USA;
+        $defaults['state_province_id'] = STATE_PROVINCE_ID_TX;
+        $defaults['country_id'] = COUNTRY_ID_USA;
         $countries->prepend('N/A',0); 
-        
+
         $parish = \montserrat\Contact::with('pastor.contact_b','diocese.contact_a','address_primary.state','address_primary.location','phone_primary.location','phone_main_fax','email_primary.location','website_main','notes')->findOrFail($id);
+        
+        $defaults['Main']['url']='';
+        $defaults['Work']['url']='';
+        $defaults['Facebook']['url']='';
+        $defaults['Google']['url']='';
+        $defaults['Instagram']['url']='';
+        $defaults['LinkedIn']['url']='';
+        $defaults['Twitter']['url']='';
+
+
+        foreach($parish->websites as $website) {
+            $defaults[$website->website_type]['url'] = $website->url;
+        }
+
         
         return view('parishes.edit',compact('parish','dioceses','pastors','states','countries','defaults'));
     }
@@ -229,7 +285,12 @@ return Redirect::action('ParishesController@index');
             'diocese_id' => 'integer|min:0',
             'pastor_id' => 'integer|min:0',
             'email_primary' => 'email',
-            'website_main' => 'url',
+            'url_main' => 'url',
+            'url_facebook' => 'url|regex:/facebook\.com\/.+/i',
+            'url_google' => 'url|regex:/plus\.google\.com\/.+/i',
+            'url_twitter' => 'url|regex:/twitter\.com\/.+/i',
+            'url_instagram' => 'url|regex:/instagram\.com\/.+/i',
+            'url_linkedin' => 'url|regex:/linkedin\.com\/.+/i',
             'avatar' => 'image|max:5000',
             'attachment' => 'file|mimes:pdf,doc,docx|max:10000',
             'attachment_description' => 'string|max:200',
@@ -316,16 +377,50 @@ return Redirect::action('ParishesController@index');
             $email_primary->email = $request->input('email_primary');
             $email_primary->save();
             
-            if (empty($parish->website_main)) {
-                $website_main = new \montserrat\Website;
-            } else {
-                $website_main = \montserrat\Website::findOrNew($parish->website_main->id);
-            }
-            $website_main->contact_id=$parish->id;
-            $website_main->website_type='Main';
-            $website_main->url = $request->input('website_main');
-            $website_main->save();
+        
+            $url_main = \montserrat\Website::firstOrNew(['contact_id'=>$parish->id,'website_type'=>'Main']);
+                $url_main->contact_id=$parish->id;
+                $url_main->url=$request->input('url_main');
+                $url_main->website_type='Main';
+            $url_main->save();
 
+            $url_work= \montserrat\Website::firstOrNew(['contact_id'=>$parish->id,'website_type'=>'Work']);
+                $url_work->contact_id=$parish->id;
+                $url_work->url=$request->input('url_work');
+                $url_work->website_type='Work';
+            $url_work->save();
+
+            $url_facebook= \montserrat\Website::firstOrNew(['contact_id'=>$parish->id,'website_type'=>'Facebook']);
+                $url_facebook->contact_id=$parish->id;
+                $url_facebook->url=$request->input('url_facebook');
+                $url_facebook->website_type='Facebook';
+            $url_facebook->save();
+
+            $url_google = \montserrat\Website::firstOrNew(['contact_id'=>$parish->id,'website_type'=>'Google']);
+                $url_google->contact_id=$parish->id;
+                $url_google->url=$request->input('url_google');
+                $url_google->website_type='Google';
+            $url_google->save();
+
+            $url_instagram= \montserrat\Website::firstOrNew(['contact_id'=>$parish->id,'website_type'=>'Instagram']);
+                $url_instagram->contact_id=$parish->id;
+                $url_instagram->url=$request->input('url_instagram');
+                $url_instagram->website_type='Instagram';
+            $url_instagram->save();
+
+            $url_linkedin= \montserrat\Website::firstOrNew(['contact_id'=>$parish->id,'website_type'=>'LinkedIn']);
+                $url_linkedin->contact_id=$parish->id;
+                $url_linkedin->url=$request->input('url_linkedin');
+                $url_linkedin->website_type='LinkedIn';
+            $url_linkedin->save();
+
+            $url_twitter= \montserrat\Website::firstOrNew(['contact_id'=>$parish->id,'website_type'=>'Twitter']);
+                $url_twitter->contact_id=$parish->id;
+                $url_twitter->url=$request->input('url_twitter');
+                $url_twitter->website_type='Twitter';
+            $url_twitter->save();
+
+            
         if (null !== $request->file('avatar')) {
             $avatar = Image::make($request->file('avatar')->getRealPath())->fit(150, 150)->orientate();
             Storage::put('contacts/'.$parish->id.'/'.'avatar.png',$avatar->stream('png'));

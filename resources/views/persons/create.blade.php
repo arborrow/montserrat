@@ -93,13 +93,13 @@
         <div class="clearfix"> </div>
 
      <div class='row'>
-            <div class='col-md-8'>
-                <span>
-                    @include('persons.create.urls')
-                </span>
-            </div>
+        <div class='col-md-8'>
+            <span>
+                @include('persons.create.urls')
+            </span>
         </div>
-        <div class="clearfix"> </div>
+    </div>
+    <div class="clearfix"> </div>
        
         <div class='row'>
             <div class='col-md-8'>

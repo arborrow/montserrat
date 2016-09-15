@@ -11,10 +11,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 
-
-
-
-
 class VendorsController extends Controller
 {
     public function __construct()
@@ -45,10 +41,10 @@ class VendorsController extends Controller
         $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name','id');
         $states->prepend('N/A',0); 
         $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code','id');
-        $default['state_province_id'] = STATE_PROVINCE_ID_TX;
-        $default['country_id'] = COUNTRY_ID_USA;
+        $defaults['state_province_id'] = STATE_PROVINCE_ID_TX;
+        $defaults['country_id'] = COUNTRY_ID_USA;
         $countries->prepend('N/A',0); 
-        return view('vendors.create',compact('states','countries','default'));  
+        return view('vendors.create',compact('states','countries','defaults'));  
     
     }
 
@@ -63,7 +59,12 @@ class VendorsController extends Controller
         $this->validate($request, [
             'organization_name' => 'required',
             'vendor_email_main' => 'email',
-            'vendor_website_main' => 'url',
+            'url_main' => 'url',
+            'url_facebook' => 'url|regex:/facebook\.com\/.+/i',
+            'url_google' => 'url|regex:/plus\.google\.com\/.+/i',
+            'url_twitter' => 'url|regex:/twitter\.com\/.+/i',
+            'url_instagram' => 'url|regex:/instagram\.com\/.+/i',
+            'url_linkedin' => 'url|regex:/linkedin\.com\/.+/i',
             'phone_main_phone' => 'phone',
             'phone_main_fax' => 'phone',
         ]);
@@ -109,12 +110,6 @@ class VendorsController extends Controller
             $vendor_email_main->email=$request->input('email_main');
         $vendor_email_main->save();
         
-        $vendor_website_main = new \montserrat\Website;
-            $vendor_website_main->contact_id=$vendor->id;
-            $vendor_website_main->url=$request->input('website_main');
-            $vendor_website_main->website_type='Main';
-        $vendor_website_main->save();
-        
         //TODO: add contact_id which is the id of the creator of the note
         if (!empty($request->input('note'))) {
             $vendor_note = new \montserrat\Note;
@@ -124,6 +119,50 @@ class VendorsController extends Controller
             $vendor_note->subject='Vendor note';
             $vendor_note->save();
         }
+                
+        $url_main = new \montserrat\Website;
+            $url_main->contact_id=$vendor->id;
+            $url_main->url=$request->input('url_main');
+            $url_main->website_type='Main';
+        $url_main->save();
+        
+        $url_work= new \montserrat\Website;
+            $url_work->contact_id=$vendor->id;
+            $url_work->url=$request->input('url_work');
+            $url_work->website_type='Work';
+        $url_work->save();
+        
+        $url_facebook= new \montserrat\Website;
+            $url_facebook->contact_id=$vendor->id;
+            $url_facebook->url=$request->input('url_facebook');
+            $url_facebook->website_type='Facebook';
+        $url_facebook->save();
+        
+        $url_google = new \montserrat\Website;
+            $url_google->contact_id=$vendor->id;
+            $url_google->url=$request->input('url_google');
+            $url_google->website_type='Google';
+        $url_google->save();
+        
+        $url_instagram= new \montserrat\Website;
+            $url_instagram->contact_id=$vendor->id;
+            $url_instagram->url=$request->input('url_instagram');
+            $url_instagram->website_type='Instagram';
+        $url_instagram->save();
+        
+        $url_linkedin= new \montserrat\Website;
+            $url_linkedin->contact_id=$vendor->id;
+            $url_linkedin->url=$request->input('url_linkedin');
+            $url_linkedin->website_type='LinkedIn';
+        $url_linkedin->save();
+        
+        $url_twitter= new \montserrat\Website;
+            $url_twitter->contact_id=$vendor->id;
+            $url_twitter->url=$request->input('url_twitter');
+            $url_twitter->website_type='Twitter';
+        $url_twitter->save();
+
+
         
 return Redirect::action('VendorsController@index');
     }
@@ -154,11 +193,25 @@ return view('vendors.show',compact('vendor','relationship_types','files'));//
         $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name','id');
         $states->prepend('N/A',0); 
         $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code','id');
-        $default['state_province_id'] = STATE_PROVINCE_ID_TX;
-        $default['country_id'] = COUNTRY_ID_USA;
-        $countries->prepend('N/A',0); 
-        
+        $defaults['state_province_id'] = STATE_PROVINCE_ID_TX;
+        $defaults['country_id'] = COUNTRY_ID_USA;
+        $countries->prepend('N/A',0);
+                
+        $defaults['Main']['url']='';
+        $defaults['Work']['url']='';
+        $defaults['Facebook']['url']='';
+        $defaults['Google']['url']='';
+        $defaults['Instagram']['url']='';
+        $defaults['LinkedIn']['url']='';
+        $defaults['Twitter']['url']='';
+
         $vendor = \montserrat\Contact::with('address_primary.state','address_primary.location','phone_primary.location','phone_main_fax','email_primary.location','website_main','notes')->findOrFail($id);
+        
+        foreach($vendor->websites as $website) {
+            $defaults[$website->website_type]['url'] = $website->url;
+        }
+
+        
         
         return view('vendors.edit',compact('vendor','states','countries','defaults'));
     }
@@ -175,7 +228,12 @@ return view('vendors.show',compact('vendor','relationship_types','files'));//
         $this->validate($request, [
             'organization_name' => 'required',
             'email_primary' => 'email',
-            'website_main' => 'url',
+            'url_main' => 'url',
+            'url_facebook' => 'url|regex:/facebook\.com\/.+/i',
+            'url_google' => 'url|regex:/plus\.google\.com\/.+/i',
+            'url_twitter' => 'url|regex:/twitter\.com\/.+/i',
+            'url_instagram' => 'url|regex:/instagram\.com\/.+/i',
+            'url_linkedin' => 'url|regex:/linkedin\.com\/.+/i',
             'phone_main_phone' => 'phone',
             'phone_main_fax' => 'phone',
             'avatar' => 'image|max:5000',
@@ -243,16 +301,6 @@ return view('vendors.show',compact('vendor','relationship_types','files'));//
         $email_primary->email = $request->input('email_primary');
         $email_primary->save();
 
-        if (empty($vendor->website_main)) {
-            $website_main = new \montserrat\Website;
-        } else {
-            $website_main = \montserrat\Website::findOrNew($vendor->website_main->id);
-        }
-        $website_main->contact_id=$vendor->id;
-        $website_main->website_type='Main';
-        $website_main->url = $request->input('website_main');
-        $website_main->save();
-
         if (null !== $request->file('avatar')) {
             $avatar = Image::make($request->file('avatar')->getRealPath())->fit(150, 150)->orientate();
             Storage::put('contacts/'.$vendor->id.'/'.'avatar.png',$avatar->stream('png'));
@@ -273,6 +321,51 @@ return view('vendors.show',compact('vendor','relationship_types','files'));//
             $attachment->save();
             Storage::disk('local')->put('contacts/'.$vendor->id.'/attachments/'.$file_name,File::get($file));
         }
+
+        
+                
+        $url_main = \montserrat\Website::firstOrNew(['contact_id'=>$vendor->id,'website_type'=>'Main']);
+            $url_main->contact_id=$vendor->id;
+            $url_main->url=$request->input('url_main');
+            $url_main->website_type='Main';
+        $url_main->save();
+
+        $url_work= \montserrat\Website::firstOrNew(['contact_id'=>$vendor->id,'website_type'=>'Work']);
+            $url_work->contact_id=$vendor->id;
+            $url_work->url=$request->input('url_work');
+            $url_work->website_type='Work';
+        $url_work->save();
+
+        $url_facebook= \montserrat\Website::firstOrNew(['contact_id'=>$vendor->id,'website_type'=>'Facebook']);
+            $url_facebook->contact_id=$vendor->id;
+            $url_facebook->url=$request->input('url_facebook');
+            $url_facebook->website_type='Facebook';
+        $url_facebook->save();
+
+        $url_google = \montserrat\Website::firstOrNew(['contact_id'=>$vendor->id,'website_type'=>'Google']);
+            $url_google->contact_id=$vendor->id;
+            $url_google->url=$request->input('url_google');
+            $url_google->website_type='Google';
+        $url_google->save();
+
+        $url_instagram= \montserrat\Website::firstOrNew(['contact_id'=>$vendor->id,'website_type'=>'Instagram']);
+            $url_instagram->contact_id=$vendor->id;
+            $url_instagram->url=$request->input('url_instagram');
+            $url_instagram->website_type='Instagram';
+        $url_instagram->save();
+
+        $url_linkedin= \montserrat\Website::firstOrNew(['contact_id'=>$vendor->id,'website_type'=>'LinkedIn']);
+            $url_linkedin->contact_id=$vendor->id;
+            $url_linkedin->url=$request->input('url_linkedin');
+            $url_linkedin->website_type='LinkedIn';
+        $url_linkedin->save();
+
+        $url_twitter= \montserrat\Website::firstOrNew(['contact_id'=>$vendor->id,'website_type'=>'Twitter']);
+            $url_twitter->contact_id=$vendor->id;
+            $url_twitter->url=$request->input('url_twitter');
+            $url_twitter->website_type='Twitter';
+        $url_twitter->save();
+
 
 
         return Redirect::action('VendorsController@index');

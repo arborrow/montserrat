@@ -62,10 +62,6 @@
         {!! Form::text('email_primary', $diocese->email_primary->email, ['class' => 'col-md-2']) !!}
     </div>
     <div class="clearfix"> </div>
-    <div class="form-group">
-        {!! Form::label('website_main', 'Webpage:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('website_main', $diocese->website_main->url, ['class' => 'col-md-2']) !!}
-    </div>
     <div class="clearfix"> </div>
     <div class="form-group">
     
@@ -79,6 +75,10 @@
         {!! Form::file('attachment',['class' => 'col-md-2']); !!}
         {!! Form::label('attachment_description', 'Description: (max 200)', ['class' => 'col-md-2'])  !!}
         {!! Form::text('attachment_description', NULL, ['class' => 'col-md-3']) !!}
+    </div>
+    <div class="clearfix"> </div>
+    <div class='form-group'>
+        @include('dioceses.update.urls')
     </div>
     <div class="clearfix"> </div>
     

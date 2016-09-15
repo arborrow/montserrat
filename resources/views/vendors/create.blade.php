@@ -23,7 +23,7 @@
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('state_province_id', 'State:', ['class' => 'col-md-1'])  !!}
-                {!! Form::select('state_province_id', $states, $default['state_province_id'], ['class' => 'col-md-2']) !!}
+                {!! Form::select('state_province_id', $states, $defaults['state_province_id'], ['class' => 'col-md-2']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('postal_code', 'Zip:', ['class' => 'col-md-1']) !!}
@@ -31,7 +31,7 @@
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('country_id', 'Country:', ['class' => 'col-md-1'])  !!}
-                {!! Form::select('country_id', $countries, $default['country_id'], ['class' => 'col-md-1']) !!}
+                {!! Form::select('country_id', $countries, $defaults['country_id'], ['class' => 'col-md-1']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('phone_main_phone', 'Phone:', ['class' => 'col-md-1']) !!}
@@ -46,13 +46,14 @@
                 {!! Form::text('email_main', null, ['class'=>'col-md-2']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
-                {!! Form::label('website_main', 'Webpage:', ['class' => 'col-md-1']) !!}
-                {!! Form::text('website_main', null, ['class'=>'col-md-2']) !!}
-            </div><div class="clearfix"> </div>
-            <div class="form-group">
                 {!! Form::label('note', 'Note:', ['class' => 'col-md-1']) !!}
                 {!! Form::textarea('note', null, ['class'=>'col-md-5', 'rows'=>'3']) !!}
             </div><div class="clearfix"> </div>
+            <div class='form-group'>
+                @include('vendors.create.urls')
+            </div>
+            <div class="clearfix"> </div>
+            
             <div class="col-md-1"><div class="form-group">
                 {!! Form::submit('Add Vendor', ['class'=>'btn btn-primary']) !!}
             </div></div>

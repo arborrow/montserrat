@@ -69,15 +69,7 @@
         {!! Form::text('email_primary', $parish->email_primary->email, ['class' => 'col-md-2']) !!}
     </div>
     <div class="clearfix"> </div>
-    <div class="form-group">
-        {!! Form::label('website_main', 'Webpage:', ['class' => 'col-md-1']) !!}
-        @if (empty($parish->website_main))
-        {!! Form::text('website_main', NULL, ['class' => 'col-md-2']) !!}
-        @else
-        {!! Form::text('website_main', $parish->website_main->url, ['class' => 'col-md-2']) !!}
-        @endif
-    </div>
-    <div class="clearfix"> </div>
+    
     <div class="form-group">
     
         {!! Form::label('avatar', 'Picture (max 5M): ', ['class' => 'col-md-2'])  !!}
@@ -92,6 +84,10 @@
         {!! Form::text('attachment_description', NULL, ['class' => 'col-md-3']) !!}
     </div>
     <div class="clearfix"> </div>
+    <div class='form-group'>
+        @include('parishes.update.urls')
+    </div>
+<div class="clearfix"> </div>
     
     <!-- commenting out notes - adding notes should be done when showing the record similar to touchpoints
     // TODO: figure out how to edit and delete notes
