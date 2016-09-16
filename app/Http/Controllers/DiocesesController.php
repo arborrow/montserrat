@@ -264,6 +264,8 @@ return Redirect::action('DiocesesController@index');
 
         $this->validate($request, [
             'organization_name' => 'required',
+            'display_name' => 'required',
+            'sort_name' => 'required',
             'bishop_id' => 'integer|min:0',
             'email_main' => 'email',
             'url_main' => 'url',
@@ -282,8 +284,8 @@ return Redirect::action('DiocesesController@index');
 
         $diocese = \montserrat\Contact::with('bishops.contact_b','parishes.contact_b','address_primary.state','address_primary.location','phone_primary.location','phone_main_fax.location','email_primary.location','website_main','notes')->findOrFail($id);
         $diocese->organization_name = $request->input('organization_name');
-        $diocese->display_name  = $request->input('organization_name');
-        $diocese->sort_name  = $request->input('organization_name');
+        $diocese->display_name  = $request->input('display_name');
+        $diocese->sort_name  = $request->input('sort_name');
         $diocese->contact_type = CONTACT_TYPE_ORGANIZATION;
         $diocese->subcontact_type = CONTACT_TYPE_DIOCESE;
         $diocese->save();

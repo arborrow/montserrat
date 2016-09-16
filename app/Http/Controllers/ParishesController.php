@@ -282,6 +282,8 @@ return Redirect::action('ParishesController@index');
 
         $this->validate($request, [
             'organization_name' => 'required',
+            'display_name' => 'required',
+            'sort_name' => 'required',
             'diocese_id' => 'integer|min:0',
             'pastor_id' => 'integer|min:0',
             'email_primary' => 'email',
@@ -298,8 +300,8 @@ return Redirect::action('ParishesController@index');
         ]);
         $parish = \montserrat\Contact::with('pastor.contact_a','diocese.contact_a','address_primary.state','address_primary.location','phone_primary.location','phone_main_fax','email_primary.location','website_main','notes')->findOrFail($request->input('id'));
         $parish->organization_name = $request->input('organization_name');
-        $parish->display_name = $request->input('organization_name');
-        $parish->sort_name = $request->input('organization_name');
+        $parish->display_name = $request->input('display_name');
+        $parish->sort_name = $request->input('sort_name');
         $parish->save();
 
             if (empty($parish->diocese)) {

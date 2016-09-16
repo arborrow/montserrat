@@ -10,10 +10,17 @@
         {!! Form::label('bishop_id', 'Bishop:', ['class' => 'col-md-1'])  !!}
         {!! Form::select('bishop_id', $bishops, $diocese->bishop_id, ['class' => 'col-md-2']) !!}
     </div><div class="clearfix"> </div>
-
     <div class="form-group">
         {!! Form::label('organization_name', 'Name:', ['class' => 'col-md-1']) !!}
         {!! Form::text('organization_name', $diocese->organization_name, ['class' => 'col-md-2']) !!}
+    </div>
+    <div class="form-group">
+        {!! Form::label('display_name', 'Display:', ['class' => 'col-md-1']) !!}
+        {!! Form::text('display_name', $diocese->display_name, ['class' => 'col-md-2']) !!}
+    </div>
+    <div class="form-group">
+        {!! Form::label('sort_name', 'Sort:', ['class' => 'col-md-1']) !!}
+        {!! Form::text('sort_name', $diocese->sort_name, ['class' => 'col-md-2']) !!}
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">

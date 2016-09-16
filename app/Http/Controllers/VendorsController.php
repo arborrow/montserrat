@@ -25,7 +25,7 @@ class VendorsController extends Controller
      */
     public function index()
     {
-        $vendors = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_VENDOR)->orderBy('organization_name', 'asc')->with('addresses.state','phones','emails','websites')->get();
+        $vendors = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_VENDOR)->orderBy('sort_name', 'asc')->with('addresses.state','phones','emails','websites')->get();
         
         return view('vendors.index',compact('vendors'));   //
     
@@ -227,6 +227,8 @@ return view('vendors.show',compact('vendor','relationship_types','files'));//
     {
         $this->validate($request, [
             'organization_name' => 'required',
+            'display_name' => 'required',
+            'sort_name' => 'required',
             'email_primary' => 'email',
             'url_main' => 'url',
             'url_facebook' => 'url|regex:/facebook\.com\/.+/i',
@@ -244,8 +246,8 @@ return view('vendors.show',compact('vendor','relationship_types','files'));//
         
         $vendor = \montserrat\Contact::with('address_primary.state','address_primary.location','phone_primary.location','phone_main_fax','email_primary.location','website_main','notes')->findOrFail($request->input('id'));
         $vendor->organization_name = $request->input('organization_name');
-        $vendor->display_name = $request->input('organization_name');
-        $vendor->sort_name = $request->input('organization_name');
+        $vendor->display_name = $request->input('display_name');
+        $vendor->sort_name = $request->input('sort_name');
         $vendor->save();
 
         if (empty($vendor->address_primary)) {

@@ -10,6 +10,14 @@
         {!! Form::label('organization_name', 'Name:', ['class' => 'col-md-1']) !!}
         {!! Form::text('organization_name', $vendor->organization_name, ['class' => 'col-md-2']) !!}
     </div>
+    <div class="form-group">
+        {!! Form::label('display_name', 'Display:', ['class' => 'col-md-1']) !!}
+        {!! Form::text('display_name', $vendor->display_name, ['class' => 'col-md-2']) !!}
+    </div>
+    <div class="form-group">
+        {!! Form::label('sort_name', 'Sort:', ['class' => 'col-md-1']) !!}
+        {!! Form::text('sort_name', $vendor->sort_name, ['class' => 'col-md-2']) !!}
+    </div>
     <div class="clearfix"> </div>
     <div class="form-group">
         {!! Form::label('street_address', 'Address:', ['class' => 'col-md-1']) !!}
