@@ -80,23 +80,23 @@
                         <th>Name</th>
                         <th>Room Preference</th>
                         <th>Room</th>
+                        <th>Notes</th>
                     </tr>
                 </thead>
                 <tbody>
                 @foreach($registrations as $registration)
                     <tr>
-                        <td><a href="{{action('RegistrationsController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }}</a></td>
-                        <td>{!!$registration->retreatant->contact_link!!}</td>
-                        <td>{{$registration->retreatant->note_room_preference_text}}</td>
-                        <td>
-                            
-        {!! Form::label('registrations['.$registration->id.']', 'Room: ', ['class' => 'col-md-2']) !!}
-        {!! Form::select('registrations['.$registration->id.']', $rooms, $registration->room_id, ['class' => 'col-md-3']) !!}
+                        <td class='col-md-2'><a href="{{action('RegistrationsController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }}</a></td>
+                        <td class='col-md-3'>{!!$registration->retreatant->contact_link!!}</td>
+                        <td class='col-md-2'>{{$registration->retreatant->note_room_preference_text}}</td>
+                        <td class='col-md-2'>
+                            {!! Form::select('registrations['.$registration->id.']', $rooms, $registration->room_id) !!}
                         </td>
-                        
-
+                        <td class='col-md-3'>    
+                            {!! Form::text('notes['.$registration->id.']', $registration->notes) !!}
+                        </td>
                     </tr>
-                    @endforeach
+                @endforeach
             </tbody>
 </table>@endif
         </div>

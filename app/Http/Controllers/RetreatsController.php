@@ -404,6 +404,15 @@ public function room_update(Request $request)
                 //dd($registration,$value);
             }
         }
+        if (null !== $request->input('notes')) {
+            foreach($request->input('notes') as $key => $value) {
+
+                $registration = \montserrat\Registration::findOrFail($key);
+                $registration->notes = $value;
+                $registration->save();
+                //dd($registration,$value);
+            }
+        }
         return Redirect::action('RetreatsController@index');
     }    
     

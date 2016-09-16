@@ -33,12 +33,10 @@ Route::get('/',['as' => 'welcome','uses' => 'PagesController@welcome']);
 Route::get('about',['as' => 'about','uses' => 'PagesController@about']);
 Route::get('admin',['as' => 'admin','uses' => 'PagesController@admin']);
 
-Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function() {
+Route::group(['prefix' => 'admin', 'middleware' => ['role:manager']], function() {
 Route::resource('permission','PermissionsController');
 Route::resource('role','RolesController');
 Route::get('phpinfo',['as' => 'phpinfo','uses' => 'SystemController@phpinfo']);
-Route::get('merge/{contact_id}',['as' => 'merge','uses'=>'PersonsController@merge']);
-Route::get('merge_delete/{id}',['as' => 'merge_delete','uses'=>'PersonsController@destroy']);
 });
 
 Route::get('bookstore',['as' => 'bookstore','uses' => 'PagesController@bookstore']);
@@ -78,6 +76,8 @@ Route::group(['prefix' => 'person'], function() {
     Route::get('volunteers',['as' => 'volunteers','uses' => 'PersonsController@volunteers']);
     Route::get('lastnames/{id?}',['as' => 'lastnames', 'uses' => 'PersonsController@lastnames'])->where('id','[a-z]');
     Route::get('duplicates',['as' => 'duplicates','uses' => 'PersonsController@duplicates']);
+    Route::get('merge/{contact_id}',['as' => 'merge','uses'=>'PersonsController@merge']);
+    Route::get('merge_delete/{id}',['as' => 'merge_delete','uses'=>'PersonsController@destroy']);
 
     
 });
