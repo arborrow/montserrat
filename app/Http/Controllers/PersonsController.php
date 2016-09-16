@@ -1709,4 +1709,15 @@ class PersonsController extends Controller
         return view('persons.duplicates',compact('duplicates'));
         
     }
+    public function merge($contact_id) {
+        
+        $contact = \montserrat\Contact::findOrFail($contact_id);
+        $similar = \montserrat\Contact::whereSortName($contact->sort_name)->get();
+        $duplicates = $similar->keyBy('id');
+        $duplicates->forget($contact->id);
+        //dd($duplicates);
+        
+        return view('persons.merge',compact('contact','duplicates'));
+        
+    }
 }

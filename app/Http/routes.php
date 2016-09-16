@@ -37,6 +37,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function() {
 Route::resource('permission','PermissionsController');
 Route::resource('role','RolesController');
 Route::get('phpinfo',['as' => 'phpinfo','uses' => 'SystemController@phpinfo']);
+Route::get('merge/{contact_id}',['as' => 'merge','uses'=>'PersonsController@merge']);
+Route::get('merge_delete/{id}',['as' => 'merge_delete','uses'=>'PersonsController@destroy']);
 });
 
 Route::get('bookstore',['as' => 'bookstore','uses' => 'PagesController@bookstore']);
