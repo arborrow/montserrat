@@ -27,7 +27,7 @@
                         @foreach($duplicates as $duplicate)
                         <tr>
                             <td>{!!$duplicate->avatar_small_link!!}</td>
-                            <td>{!!$duplicate->contact_link_full_name!!}</td>
+                            <td><a href="{!!url('person/merge/'.$duplicate->id)!!}">{{$duplicate->full_name}}</a></td>
                             <td>
                                 @if($duplicate->do_not_mail)
                                     <div class="alert alert-warning"><strong>Do Not Mail</strong></div>
