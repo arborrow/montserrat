@@ -7,17 +7,18 @@
      
 <hr />
  <table width="100%">
-     <th class="row-1 row-name" style='width: 25%'>Full name</th>
+     <tr>
+        <th class="row-1 row-name" style='width: 25%'>Full name</th>
         <th class="row-2 row-note" style='width: 35%'>Notes</th>
-        <th class="row-3 row-room" style='width: 20%'>Assigned Room</th>
+        <td align='center' class="row-3 row-room" style='width: 20%'><strong>Assigned Room</strong></td>
         <th class="row-4 row-room_preference" style='width: 20%'>Room Preference</th>
-        
+     <tr>   
     @foreach($registrations as $registration)
     
     <tr>
         <td>{{$registration->retreatant->full_name}}</td>
         <td>{{$registration->notes}}</td>
-        <td>{{ $registration->room_name}}</td>
+        <td align='center'>{{ $registration->room_name}}</td>
         <td>{{$registration->retreatant->note_room_preference_text}}</td>
        
     </tr>    
