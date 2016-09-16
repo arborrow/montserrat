@@ -49,6 +49,7 @@ class RegistrationsController extends Controller
         
         $dt_today =  \Carbon\Carbon::today();
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
+        $defaults['retreat_id']=0;
         
         return view('registrations.create',compact('retreats','retreatants','rooms','defaults')); 
         
