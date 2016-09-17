@@ -277,7 +277,7 @@
                             <tbody>
                                 @foreach($files as $file)
                                 <tr>
-                                    <td><a href="{{url('person/'.$person->id.'/attachment/'.$file->uri)}}">{{ $file->uri }}</a></td>
+                                    <td><a href="{{url('contact/'.$person->id.'/attachment/'.$file->uri)}}">{{ $file->uri }}</a></td>
                                     <td>{{$file->description}}</td>
                                     <td>{{ $file->upload_date}}</td>
                                     <td>{{ $file->mime_type }}</td>
