@@ -1875,10 +1875,11 @@ class PersonsController extends Controller
             }
             //attachments
             foreach ($merge->attachments as $attachment) {
+                $file = Storage::disk('local')->get('contacts/'.$merge_id.'/attachments/'.$attachment->file_name);
+                dd($file);
+                $newfile = Storage::disk('local')->put('contacts/'.$contact_id.'/attachments/'.$attachment->file_name,File::get($file));
                 $attachment->entity_id = $contact->id;
                 $attachment->save();
-                $file = Storage::disk('local')->get('contacts/'.$merge->id.'/attachments/'.$attachment->file_name);
-                $newfile = Storage::disk('local')->put('contacts/'.$contact->id.'/attachments/'.$attachment->file_name,File::get($file));
             }
        
         }
