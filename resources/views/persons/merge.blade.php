@@ -54,6 +54,13 @@
         @endforeach
     </tr>
     <tr>
+        <td><strong># of Addresses</strong></td>
+        <td>{{$contact->address->count()}}</td>
+        @foreach ($duplicates as $duplicate)
+            <td>{{$duplicate->address->count()}}</td>
+        @endforeach
+    </tr>
+    <tr>
         <td><strong>Home Phone</strong></td>
         <td>{{$contact->phone_home_phone_number}}</td>
         @foreach ($duplicates as $duplicate)
