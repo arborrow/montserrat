@@ -1817,6 +1817,7 @@ class PersonsController extends Controller
             }
             if ((empty($contact->emergency_contact->phone)) && (!empty($merge->emergency_contact->phone))) {
                 $contact->emergency_contact->phone = $merge->emergency_contact->phone;
+                $contact->emergency_contact->save();
             }
             if ((empty($contact->emergency_contact->phone_alternate)) && (!empty($merge->emergency_contact->phone_alternate))) {
                 $contact->emergency_contact->phone_alternate = $merge->emergency_contact->phone_alternate;
