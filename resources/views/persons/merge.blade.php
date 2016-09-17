@@ -55,9 +55,9 @@
     </tr>
     <tr>
         <td><strong># of Addresses</strong></td>
-        <td>{{$contact->address->count()}}</td>
+        <td>{{$contact->addresses->count()}}</td>
         @foreach ($duplicates as $duplicate)
-            <td>{{$duplicate->address->count()}}</td>
+            <td>{{$duplicate->addresses->count()}}</td>
         @endforeach
     </tr>
     <tr>
