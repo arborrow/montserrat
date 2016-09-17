@@ -1877,8 +1877,7 @@ class PersonsController extends Controller
             foreach ($merge->attachments as $attachment) {
                 $path = 'contacts/' . $merge_id . '/attachments/'.$attachment->uri;
                 $file = Storage::disk('local')->get($path);
-                dd($file);
-                $newpath = storage_path() . '/app/contacts/' . $contact_id . '/attachments/'.$attachment->uri;
+                $newpath = 'contacts/' . $contact_id . '/attachments/'.$attachment->uri;
                 $newfile = Storage::disk('local')->put($newpath,File::get($file));
                 $attachment->entity_id = $contact->id;
                 $attachment->save();
