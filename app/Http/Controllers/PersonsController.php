@@ -1783,7 +1783,6 @@ class PersonsController extends Controller
             
             //addresses
             if (NULL === $contact->address_primary) {
-                dd('Null address');
                 $contact->address_primary = new \montserrat\Address;
                 $contact->address_primary->contact_id = $contact->id;
                 $contact->address_primary->is_primary = 1;
@@ -1809,6 +1808,12 @@ class PersonsController extends Controller
             $contact->address_primary->save();
             
             //emergency_contact_info
+            if (NULL === $contact->emergency_contact) {
+                
+                $contact->emergency_contact = new \montserrat\EmergencyContact;
+                $contact->emergency_contact->contact_id = $contact->id;
+            }
+         
             if ((empty($contact->emergency_contact->name)) && (!empty($merge->emergency_contact->name))) {
                 $contact->emergency_contact->name = $merge->emergency_contact->name;
             }
@@ -1817,11 +1822,11 @@ class PersonsController extends Controller
             }
             if ((empty($contact->emergency_contact->phone)) && (!empty($merge->emergency_contact->phone))) {
                 $contact->emergency_contact->phone = $merge->emergency_contact->phone;
-                $contact->emergency_contact->save();
             }
             if ((empty($contact->emergency_contact->phone_alternate)) && (!empty($merge->emergency_contact->phone_alternate))) {
                 $contact->emergency_contact->phone_alternate = $merge->emergency_contact->phone_alternate;
             }
+            $contact->emergency_contact->save();
             
             //emails
             foreach ($merge->emails as $email) {
