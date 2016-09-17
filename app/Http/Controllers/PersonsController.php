@@ -1552,6 +1552,30 @@ class PersonsController extends Controller
         return Redirect::action('PersonsController@index');
     
     }
+    public function merge_destroy($id)
+    {
+        // TODO: consider creating a restore/{id} or undelete/{id}
+        
+        //delete existing groups and relationships when deleting user
+        \montserrat\Relationship::whereContactIdA($id)->delete();
+        \montserrat\Relationship::whereContactIdB($id)->delete();
+        \montserrat\GroupContact::whereContactId($id)->delete();
+        //delete address, email, phone, website, emergency contact, notes for deleted users
+        \montserrat\Address::whereContactId($id)->delete();
+        \montserrat\Email::whereContactId($id)->delete();
+        \montserrat\Phone::whereContactId($id)->delete();
+        \montserrat\Website::whereContactId($id)->delete();
+        \montserrat\EmergencyContact::whereContactId($id)->delete();
+        \montserrat\Note::whereContactId($id)->delete();
+        \montserrat\Touchpoint::wherePersonId($id)->delete();
+        //delete registrations
+        \montserrat\Registration::whereContactId($id)->delete();
+        \montserrat\Contact::destroy($id);
+        
+        return Redirect::action('PersonsController@duplicates');
+    
+    }
+    
     public function assistants()
     {
         return $this->role(GROUP_ID_ASSISTANT);
@@ -1709,14 +1733,156 @@ class PersonsController extends Controller
         return view('persons.duplicates',compact('duplicates'));
         
     }
-    public function merge($contact_id) {
+    public function merge($contact_id,$merge_id=NULL) {
         
         $contact = \montserrat\Contact::findOrFail($contact_id);
         $similar = \montserrat\Contact::whereSortName($contact->sort_name)->get();
         $duplicates = $similar->keyBy('id');
         $duplicates->forget($contact->id);
-        //dd($duplicates);
         
+        if (!empty($merge_id)) {
+            $merge = \montserrat\Contact::findOrFail($merge_id);
+            //dd($merge);
+            if ((empty($contact->prefix_id)) && (!empty($merge->prefix_id))) {
+                $contact->prefix_id = $merge->prefix_id;
+            }
+            if (empty($contact->first_name) && !empty($merge->first_name)) {
+                $contact->first_name = $merge->first_name;
+            }
+            if (empty($contact->nick_name) && !empty($merge->nick_name)) {
+                $contact->nick_name = $merge->nick_name;
+            }
+            if (empty($contact->middle_name) && !empty($merge->middle_name)) {
+                $contact->middle_name = $merge->middle_name;
+            }
+            if (empty($contact->last_name) && !empty($merge->last_name)) {
+                $contact->last_name = $merge->last_name;
+            }
+            if (empty($contact->organization_name) && !empty($merge->organization_name)) {
+                $contact->organization_name = $merge->organization_name;
+            }
+            if (empty($contact->suffix_id) && !empty($merge->suffix_id)) {
+                $contact->suffix_id = $merge->suffix_id;
+            }
+            if (empty($contact->gender_id) && !empty($merge->gender_id)) {
+                $contact->gender_id = $merge->gender_id;
+            }
+            if (empty($contact->birth_date) && !empty($merge->birth_date)) {
+                $contact->birth_date = $merge->birth_date;
+            }
+            if (empty($contact->religion_id) && !empty($merge->religion_id)) {
+                $contact->religion_id = $merge->religion_id;
+            }
+            if (empty($contact->occupation_id) && !empty($merge->occupation_id)) {
+                $contact->occupation_id = $merge->occupation_id;
+            }
+            if (empty($contact->ethnicity_id) && !empty($merge->ethnicity_id)) {
+                $contact->ethnicity_id = $merge->ethnicity_id;
+            }
+            $contact->save();
+            
+            //addresses
+            if (NULL === $contact->address_primary) {
+                dd('Null address');
+                $contact->address_primary = new \montserrat\Address;
+                $contact->address_primary->contact_id = $contact->id;
+                $contact->address_primary->is_primary = 1;
+            }
+            if ((empty($contact->address_primary->street_address)) && (!empty($merge->address_primary->street_address))) {
+                $contact->address_primary->street_address = $merge->address_primary->street_address;
+            }
+            if ((empty($contact->address_primary->supplemental_address)) && (!empty($merge->address_primary->supplemental_address))) {
+                $contact->address_primary->supplemental_address = $merge->address_primary->supplemental_address;
+            }
+            if ((empty($contact->address_primary->city)) && (!empty($merge->address_primary->city))) {
+                $contact->address_primary->city = $merge->address_primary->city;
+            }
+            if ((empty($contact->address_primary->state_province_id)) && (!empty($merge->address_primary->state_province_id))) {
+                $contact->address_primary->state_province_id = $merge->address_primary->state_province_id;
+            }
+            if ((empty($contact->address_primary->postal_code)) && (!empty($merge->address_primary->postal_code))) {
+                $contact->address_primary->postal_code = $merge->address_primary->postal_code;
+            }
+            if ((empty($contact->address_primary->country_code)) && (!empty($merge->address_primary->country_code))) {
+                $contact->address_primary->country_code = $merge->address_primary->country_code;
+            }
+            $contact->address_primary->save();
+            
+            //emergency_contact_info
+            if ((empty($contact->emergency_contact->name)) && (!empty($merge->emergency_contact->name))) {
+                $contact->emergency_contact->name = $merge->emergency_contact->name;
+            }
+            if ((empty($contact->emergency_contact->relationship)) && (!empty($merge->emergency_contact->relationship))) {
+                $contact->emergency_contact->relationship = $merge->emergency_contact->relationship;
+            }
+            if ((empty($contact->emergency_contact->phone)) && (!empty($merge->emergency_contact->phone))) {
+                $contact->emergency_contact->phone = $merge->emergency_contact->phone;
+            }
+            if ((empty($contact->emergency_contact->phone_alternate)) && (!empty($merge->emergency_contact->phone_alternate))) {
+                $contact->emergency_contact->phone_alternate = $merge->emergency_contact->phone_alternate;
+            }
+            
+            //emails
+            foreach ($merge->emails as $email) {
+                $contact_email = \montserrat\Email::firstOrNew(['contact_id' => $contact->id, 'location_type_id' => $email->location_type_id]);
+                $contact_email->contact_id = $contact->id;
+                $contact_email->location_type_id = $email->location_type_id;
+                $contact_email->is_primary = $email->is_primary;
+                //only create or overwrite if the current email address for the location is empty
+                if (empty($contact_email->email)) {
+                    $contact_email->email = $email->email;
+                    $contact_email->save();
+                }
+            }
+            
+            //phones
+            foreach ($merge->phones as $phone) {
+                $contact_phone = \montserrat\Phone::firstOrNew(['contact_id' => $contact->id, "location_type_id" => $phone->location_type_id, "phone_type" => $phone->phone_type]);
+                $contact_phone->contact_id = $contact->id;
+                $contact_phone->location_type_id = $phone->location_type_id;
+                $contact_phone->phone_type = $phone->phone_type;
+                $contact_phone->is_primary = $phone->is_primary;
+                //only create or overwrite if the current email address for the location is empty
+                if (empty($contact_phone->phone)) {
+                    $contact_phone->phone = $phone->phone;
+                    $contact_phone->save();
+                }
+            }
+            
+            //notes - move all from merge to contact
+            foreach ($merge->notes as $note) {
+                $note->entity_id = $contact_id;
+                $note->save();
+            }
+            //groups - move all from merge to contact
+            foreach ($merge->groups as $group) {
+                $group->contact_id = $contact_id;
+                $group->save();
+            }
+            //relationships
+            foreach ($merge->a_relationships as $a_relationship) {
+                $a_relationship->contact_id_a = $contact_id;
+                $a_relationship->save();
+            }
+            foreach ($merge->b_relationships as $b_relationship) {
+                $b_relationship->contact_id_b = $contact_id;
+                $b_relationship->save();
+            }
+            //touchpoints
+            foreach ($merge->touchpoints as $touchpoint) {
+                $touchpoint->person_id = $contact_id;
+                $touchpoint->save();
+            }
+            //attachments
+            foreach ($merge->attachments as $attachment) {
+                $attachment->entity_id = $contact->id;
+                $attachment->save();
+                $file = Storage::disk('local')->get('contact/'.$merge->id.'/attachments/'.$attachment->file_name);
+                $newfile = Storage::disk('local')->put('contact/'.$contact->id.'/attachments/'.$attachment->file_name,File::get($file));
+            }
+       
+        }
+                
         return view('persons.merge',compact('contact','duplicates'));
         
     }

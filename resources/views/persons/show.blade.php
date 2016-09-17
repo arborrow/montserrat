@@ -128,7 +128,7 @@
             <div class='row'><span>
                     <div class='col-md-8'>
                         <div class='panel-heading'><h2><strong>Demographics:</strong></h2></div>
-                    <strong>Gender: </strong>{{ !empty($person->gender_id) ? $person->gender->name: 'N/A' }}  
+                    <strong>Gender: </strong>{{$person->gender_name}}  
                     <br /><strong>Birth Date: </strong> 
                     @if (!empty($person->birth_date))
                         {{date('F d, Y', strtotime($person->birth_date))}}
@@ -136,9 +136,9 @@
                         N/A
                     @endif
                     
-                    <br /><strong>Religion: </strong> {{ !empty($person->religion_id) ? $person->religion->label: 'N/A' }}  
-                    <br /><strong>Occupation: </strong> {{ !empty($person->occupation_id) ? $person->occupation->name: 'N/A' }}  
-                    <br /><strong>Ethnicity: </strong>{{ !empty($person->ethnicity_id) ? $person->ethnicity->ethnicity: 'N/A' }}    
+                    <br /><strong>Religion: </strong> {{ !empty($person->religion_id) ? $person->religion_name: 'N/A' }}  
+                    <br /><strong>Occupation: </strong> {{ !empty($person->occupation_id) ? $person->occupation_name: 'N/A' }}  
+                    <br /><strong>Ethnicity: </strong>{{ !empty($person->ethnicity_id) ? $person->ethnicity_name: 'N/A' }}    
                     <br /><strong>Parish: </strong>{!! $person->parish_link!!}
                     <br /><strong>Languages: </strong>
                         <ul>

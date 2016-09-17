@@ -49,6 +49,9 @@ class Contact extends Model
     public function emails() {
         return $this->hasMany('\montserrat\Email','contact_id','id');
     }
+    public function attachments() {
+        return $this->hasMany('\montserrat\Attachment','entity_id','id')->whereEntity('contact');
+    }
     public function email_primary() {
         return $this->hasOne('\montserrat\Email','contact_id','id')->whereIsPrimary(1);
     }
@@ -469,6 +472,15 @@ public function getContactLinkFullNameAttribute() {
         } else {
             return NULL;
         }
+    }
+    public function getReligionName() {
+        if (isset($this->religion_id)&&($this->religion_id>0)) {
+            return $this->religion->label;
+        } else {
+            return NULL;
+        }
+
+        
     }
     public function getSuffixNameAttribute () {
         if (isset($this->suffix_id)&&($this->suffix_id>0)) {
