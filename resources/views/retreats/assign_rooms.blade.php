@@ -12,7 +12,7 @@
                 <div class='row'>
                     <div class='col-md-3'><strong>Starts: </strong>{{date('F j, Y g:i A', strtotime($retreat->start_date))}}</div>
                     <div class='col-md-3'><strong>Ends: </strong>{{date('F j, Y g:i A', strtotime($retreat->end_date))}}</div>
-                    <div class='col-md-3'><strong>Attending: </strong>{{ $retreat->registration_count}}</div>
+                    <div class='col-md-3'><strong>Attending: </strong>{{ $retreat->retreatant_count}}</div>
                 </div><div class="clearfix"> </div>
             <div class='row'>
                 <div class='col-md-6'><strong>Description: </strong>{{ $retreat->description}}</div>
@@ -90,7 +90,11 @@
                         <td class='col-md-3'>{!!$registration->retreatant->contact_link!!}</td>
                         <td class='col-md-2'>{{$registration->retreatant->note_room_preference_text}}</td>
                         <td class='col-md-2'>
+                            @if($registration->canceled_at === NULL)
                             {!! Form::select('registrations['.$registration->id.']', $rooms, $registration->room_id) !!}
+                            @else
+                            Canceled
+                            @endIf
                         </td>
                         <td class='col-md-3'>    
                             {!! Form::text('notes['.$registration->id.']', $registration->notes) !!}

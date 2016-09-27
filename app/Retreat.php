@@ -32,7 +32,12 @@ class Retreat extends Model
         // keep in mind that if/when innkeeper and other not retreatant roles are added will not to use where clause to keep the count accurate and exclude non-participating participants
         return $this->registrations->count();
     }
-  
+
+    public function getRetreatantCountAttribute() {
+        // keep in mind that if/when innkeeper and other not retreatant roles are added will not to use where clause to keep the count accurate and exclude non-participating participants
+        return $this->retreatants->count();
+    }
+
     public function assistant() {
         return $this->belongsTo('\montserrat\Contact','assistant_id','id')->whereContactType(CONTACT_TYPE_INDIVIDUAL);
     }
@@ -57,6 +62,9 @@ class Retreat extends Model
         return $this->hasMany('\montserrat\Registration','event_id','id');
     }
 
+    public function retreatants() {
+        return $this->registrations()->whereCanceledAt(NULL);
+    }
     public function getEmailRegisteredRetreatantsAttribute () {
         $bcc_list = '';
         foreach ($this->registrations as $registration) {

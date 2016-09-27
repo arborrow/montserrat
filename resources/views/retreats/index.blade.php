@@ -57,7 +57,7 @@
                                     N/A
                                 @endIf
                             </td>
-                            <td>{{ $retreat->registration_count}}</td>
+                            <td>{{ $retreat->retreatant_count}}</td>
                             <td> {!!$retreat->retreat_contract_link!!} {!!$retreat->retreat_schedule_link!!} {!!$retreat->retreat_evaluations_link!!}</td>
                             <!--<td>{{ $retreat->silent ? 'Yes' : 'No'}}</td>
                             <td><a href="{{ action('RetreatsController@edit', $retreat->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></td>
@@ -126,7 +126,7 @@
                             </td>
 
                             
-                            <td>{{ $oldretreat->registration_count}}</td>
+                            <td>{{ $oldretreat->retreatant_count}}</td>
                             <td> {!!$oldretreat->retreat_contract_link!!} {!!$oldretreat->retreat_schedule_link!!} {!!$oldretreat->retreat_evaluations_link!!}</td>
                         </tr>
                         @endforeach
