@@ -91,6 +91,7 @@ Route::post('registration/{id}/update_group',['as' => 'registration.update_group
 Route::get('registration/{id}/confirm',['as' => 'registration.confirm', 'uses' => 'RegistrationsController@confirm']);
 Route::get('registration/{id}/attend',['as' => 'registration.attend', 'uses' => 'RegistrationsController@attend']);
 Route::get('registration/{id}/arrive',['as' => 'registration.arrive', 'uses' => 'RegistrationsController@arrive']);
+Route::get('registration/{id}/cancel',['as' => 'registration.cancel', 'uses' => 'RegistrationsController@cancel']);
 Route::get('registration/{id}/depart',['as' => 'registration.depart', 'uses' => 'RegistrationsController@depart']);
 Route::resource('registration','RegistrationsController');
 

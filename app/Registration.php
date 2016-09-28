@@ -89,6 +89,9 @@ class Registration extends Model
         if (!isset($this->arrived_at) && (!isset($this->canceled_at))) {
             $status .= '<span class="btn btn-success"><a href="'.url("registration/".$this->id."/arrive").'">Arrived</a></span>';
         }
+        if (!isset($this->arrived_at) && (!isset($this->canceled_at))) {
+            $status .= '<span class="btn btn-danger"><a href="'.url("registration/".$this->id."/cancel").'">Canceled</a></span>';
+        }
         if ((isset($this->arrived_at)) && (!isset($this->departed_at))) {
             $status .= '<span class="btn btn-warning"><a href="'.url("registration/".$this->id."/depart").'">Departed</a></span>';
         }

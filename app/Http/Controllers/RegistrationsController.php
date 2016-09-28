@@ -373,4 +373,10 @@ class RegistrationsController extends Controller
         $registration->save();
         return Redirect::back();
     }
+    public function cancel($id) {
+        $registration = \montserrat\Registration::findOrFail($id);
+        $registration->canceled_at = \Carbon\Carbon::now();
+        $registration->save();
+        return Redirect::back();
+    }
 }
