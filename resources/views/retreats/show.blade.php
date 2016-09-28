@@ -85,11 +85,11 @@
             <div class='row'>
                 
                 @if (Storage::has('events/'.$retreat->id.'/group_photo.jpg'))
-                    <div class='col-md-2'>
+                    <div class='col-md-1'>
                         <strong>Group photo:</strong> 
                     </div>
-                    <div class='col-md-6'>
-                        <img src="{{url('retreat/'.$retreat->id).'/photo'}}" class="img" style="padding:5px; width:50%">
+                    <div class='col-md-8'>
+                        <img src="{{url('retreat/'.$retreat->id).'/photo'}}" class="img" style="padding:5px; width:75%">
                     </div>
                 @endif
                         
