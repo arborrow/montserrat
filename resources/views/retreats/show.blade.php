@@ -83,12 +83,17 @@
             </div>
             <div class="clearfix"> </div>
             <div class='row'>
-    
+                
                 @if (Storage::has('events/'.$retreat->id.'/group_photo.jpg'))
-                <strong>Group photo:</strong> <img src="{{url('retreat/'.$retreat->id).'/photo'}}" class="img" style="padding:5px; width:50%">
+                    <div class='col-md-2'>
+                        <strong>Group photo:</strong> 
+                    </div>
+                    <div class='col-md-6'>
+                        <img src="{{url('retreat/'.$retreat->id).'/photo'}}" class="img" style="padding:5px; width:50%">
+                    </div>
                 @endif
                         
-        </div><div class="clearfix"> </div>
+            </div><div class="clearfix"> </div>
                 
         </div>
             <div class='row'>
