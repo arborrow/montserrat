@@ -121,6 +121,7 @@ class PagesController extends Controller
         $registrations = \montserrat\Registration::select(\DB::raw('participant.*','contact.*'))
                 ->join('contact', 'participant.contact_id', '=', 'contact.id')
                 ->where('participant.event_id','=',$retreat->id)
+                ->whereCanceledAt(NULL)
                 ->with('retreat','retreatant.languages','retreatant.parish.contact_a.address_primary','retreatant.prefix','retreatant.suffix','retreatant.address_primary.state','retreatant.phones.location','retreatant.emails.location','retreatant.emergency_contact','retreatant.notes','retreatant.occupation')
                 ->orderBy('contact.sort_name', 'asc')->get();
         
@@ -135,6 +136,7 @@ class PagesController extends Controller
         $registrations = \montserrat\Registration::select(\DB::raw('participant.*','contact.*'))
                 ->join('contact', 'participant.contact_id', '=', 'contact.id')
                 ->where('participant.event_id','=',$retreat->id)
+                ->whereCanceledAt(NULL)
                 ->with('retreat','retreatant.languages','retreatant.parish.contact_a.address_primary','retreatant.prefix','retreatant.suffix','retreatant.address_primary.state','retreatant.phones.location','retreatant.emails.location','retreatant.emergency_contact','retreatant.notes','retreatant.occupation')
                 ->orderBy('contact.sort_name', 'asc')->get();
         
