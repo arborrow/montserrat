@@ -26,5 +26,34 @@ class Participant extends Model
             return NULL;
         }
     }
+    
+    public function getParticipantRoleNameAttribute() {
+        if (isset($this->role_id)) {
+            return $this->participant_role_type->name;
+        } else {
+            return 'Unassigned role';
+        }
+    }
+        public function getParticipantStatusAttribute() {
+        if (!is_null($this->canceled_at)) {
+            return 'Canceled: '.$this->canceled_at;
+        }
+        if (!is_null($this->arrived_at)) {
+            return 'Attended';
+        }
+        if (!is_null($this->registration_confirm_date)) {
+            return 'Confirmed: '.$this->registration_confirm_date;
+        }
+        if (is_null($this->registration_confirm_date) && !is_null($this->register_date)) {
+            return 'Registered:'.$this->register_date;
+        }
+        return 'Unspecified status';
+        
+    }
+
+    public function participant_role_type() {
+        return $this->hasOne('montserrat\ParticipantRoleType','id','role_id');
+    }
+    
 
 }

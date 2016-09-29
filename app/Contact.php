@@ -626,7 +626,7 @@ public function getContactLinkFullNameAttribute() {
         return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_CAPTAIN);
     }
     public function event_registrations() {
-        // the events (retreats) for which this contact has been a retreatant  
+        // the events (retreats) for which this contact has participated  
         return $this->hasMany('\montserrat\Participant','contact_id','id');
     }
     public function event_captains() {
