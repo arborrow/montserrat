@@ -73,6 +73,7 @@ Route::group(['prefix' => 'person'], function() {
     Route::get('provincials',['as' => 'provincials','uses' => 'PersonsController@provincials']);
     Route::get('retreatants',['as' => 'retreatants','uses' => 'PersonsController@retreatants']);
     Route::get('superiors',['as' => 'superiors','uses' => 'PersonsController@superiors']);
+    Route::get('stewards',['as' => 'stewards','uses' => 'PersonsController@stewards']);
     Route::get('volunteers',['as' => 'volunteers','uses' => 'PersonsController@volunteers']);
     Route::get('lastnames/{id?}',['as' => 'lastnames', 'uses' => 'PersonsController@lastnames'])->where('id','[a-z]');
     Route::get('duplicates',['as' => 'duplicates','uses' => 'PersonsController@duplicates']);

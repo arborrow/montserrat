@@ -11,6 +11,7 @@
                     <span class="boards"><a href={{ action('PersonsController@boardmembers') }}>{!! Html::image('img/board.png', 'Board members',array('title'=>"Board members",'class' => 'btn btn-info')) !!}</a></span></h1>
                     <span class="captains"><a href={{ action('PersonsController@captains') }}>{!! Html::image('img/captain.png', 'Captains',array('title'=>"Captains",'class' => 'btn btn-info')) !!}</a></span></h1>
                     <span class="staff"><a href={{ action('PersonsController@staff') }}>{!! Html::image('img/employee.png', 'Employees',array('title'=>"Employees",'class' => 'btn btn-info')) !!}</a></span></h1>
+                    <span class="steward"><a href={{ action('PersonsController@stewards') }}>{!! Html::image('img/steward.png', 'Stewards',array('title'=>"Stewards",'class' => 'btn btn-info')) !!}</a></span></h1>
                     <span class="volunteers"><a href={{ action('PersonsController@volunteers') }}>{!! Html::image('img/volunteer.png', 'Volunteers',array('title'=>"Volunteers",'class' => 'btn btn-info')) !!}</a></span></h1>
                     <span class="directors"><a href={{ action('PersonsController@directors') }}>{!! Html::image('img/director.png', 'Directors',array('title'=>"Directors",'class' => 'btn btn-info')) !!}</a></span></h1>
                     <span class="innkeepers"><a href={{ action('PersonsController@innkeepers') }}>{!! Html::image('img/innkeeper.png', 'Innkeepers',array('title'=>"Innkeepers",'class' => 'btn btn-info')) !!}</a></span></h1>

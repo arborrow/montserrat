@@ -182,12 +182,16 @@
                     <div class="form-group">
                         {!! Form::label('is_donor', 'Donor:', ['class' => 'col-md-2'])  !!}
                         {!! Form::checkbox('is_donor', 1, true, ['class' => 'col-md-1']) !!}
+                        {!! Form::label('is_steward', 'Steward:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::checkbox('is_steward', 1, false, ['class' => 'col-md-1']) !!}
+                        {!! Form::label('is_volunteer', 'Volunteer:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::checkbox('is_volunteer', 1, false,['class' => 'col-md-1']) !!}
+                                        </div>
+                    <div class="form-group">
                         {!! Form::label('is_retreatant', 'Retreatant:', ['class' => 'col-md-2'])  !!}
                         {!! Form::checkbox('is_retreatant', 1, true,['class' => 'col-md-1']) !!}
                         {!! Form::label('is_captain', 'Captain:', ['class' => 'col-md-2'])  !!}
                         {!! Form::checkbox('is_captain', 1, false,['class' => 'col-md-1']) !!}
-                        {!! Form::label('is_volunteer', 'Volunteer:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_volunteer', 1, false,['class' => 'col-md-1']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('is_bishop', 'Bishop:', ['class' => 'col-md-2'])  !!}

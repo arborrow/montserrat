@@ -350,6 +350,13 @@ public function getContactLinkFullNameAttribute() {
             return FALSE;
         }
     }
+    public function getIsStewardAttribute () {
+        if (isset($this->group_steward->id)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
     public function getIsRetreatDirectorAttribute () {
         if (isset($this->relationship_mjrh_retreat_director->id)) {
             return TRUE;
@@ -524,6 +531,9 @@ public function getContactLinkFullNameAttribute() {
     }
     public function group_staff() {
         return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_STAFF);
+    }
+    public function group_steward() {
+        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_STEWARD);
     }
     public function groups() {
         return $this->hasMany('\montserrat\GroupContact','contact_id','id');

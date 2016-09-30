@@ -328,6 +328,15 @@ class PersonsController extends Controller
             $group_staff->save();
         
         }
+        // save steward group
+        if ($request->input('is_steward')>0) {
+            $group_steward = new \montserrat\GroupContact;
+                $group_steward->group_id = GROUP_ID_STEWARD;
+                $group_steward->contact_id = $person->id;
+                $group_steward->status = 'Added';
+            $group_steward->save();
+        
+        }
         // save board member relationship    
         if ($request->input('is_board')>0) {
             $relationship_board= new \montserrat\Relationship;
@@ -1488,6 +1497,15 @@ class PersonsController extends Controller
             $group_staff->status = 'Added';
             $group_staff->save();
         }
+        $group_steward = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_STEWARD,'status'=>'Added']);
+        if ($request->input('is_steward')==0) {
+            $group_steward->delete();
+        } else {
+            $group_steward->contact_id = $person->id;
+            $group_steward->group_id = GROUP_ID_STEWARD;
+            $group_steward->status = 'Added';
+            $group_steward->save();
+        }
         $group_director = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_DIRECTOR,'status'=>'Added']);
         if ($request->input('is_director')==0) {
             $group_director->delete();
@@ -1665,6 +1683,11 @@ class PersonsController extends Controller
     {
         return $this->role(GROUP_ID_SUPERIOR);
     }
+    public function stewards()
+    {
+        return $this->role(GROUP_ID_STEWARD);
+    }
+    
         
     public function volunteers()
     {
