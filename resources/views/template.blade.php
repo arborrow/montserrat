@@ -19,40 +19,35 @@
     
     <body>
     <header>
-        <div class="col-md-10">
-            <a href={{ route('welcome') }}>{!! Html::image('img/mrhlogoblack.png','Home',array('title'=>'Home','class'=>'logo')) !!}</a>
+        <div class="row">
+            <div class="col-md-10">
+                <a href={{ route('welcome') }}>{!! Html::image('img/mrhlogoblack.png','Home',array('title'=>'Home','class'=>'logo')) !!}</a>
+            </div>
+            <div class="col-md-2">
+            @if (isset(Auth::User()->avatar))
+            <!-- <a href='user/'> -->
+                {!! Html::image(Auth::User()->avatar, Auth::User()->name,array('title'=>Auth::User()->name)) !!}
+
+            <!-- </a> -->
+
+            <a href={{ route('logout') }}>{!! Html::image('img/logout.png', 'Logout',array('title'=>"Logout")) !!}</a>
+
+             @else
+            <a href="login/google">{!! Html::image('img/login.png', 'Login',array('title'=>"Login")) !!}</a>
+             @endif
+
+            </div>
         </div>
-        <div class="col-md-2">
-        @if (isset(Auth::User()->avatar))
-        <!-- <a href='user/'> -->
-            {!! Html::image(Auth::User()->avatar, Auth::User()->name,array('title'=>Auth::User()->name)) !!}
-            
-        <!-- </a> -->
-        
-        <a href={{ route('logout') }}>{!! Html::image('img/logout.png', 'Logout',array('title'=>"Logout")) !!}</a>
-         
-         @else
-        <a href="login/google">{!! Html::image('img/login.png', 'Login',array('title'=>"Login")) !!}</a>
-         @endif
-         @role('admin')
-    <p>Logged in as Admin</p>
-@endrole
+        <div class="row">
+            <div class="col-md-6">
+            {{ Form::open(['action' => ['SearchController@getuser'], 'method' => 'GET']) }}
+            {{ Form::text('q', '', ['id' =>  'q', 'placeholder' =>  'Type Name','autofocus'=>'autofocus'])}}
+            {{Form::hidden('response', '', array('id' =>'response')) }}
 
-@role('manager')
-    <p>Logged in as Manager</p>
-@endrole
-
-@role('employee')
-    <p>Logged in as Employee</p>
-@endrole
-
+            {{ Form::submit('Find Person', array('class' => 'btn btn-default')) }}
+            {{ Form::close() }}
+            </div>
         </div>
-        {{ Form::open(['action' => ['SearchController@getuser'], 'method' => 'GET']) }}
-    {{ Form::text('q', '', ['id' =>  'q', 'placeholder' =>  'Type Name','autofocus'=>'autofocus'])}}
-    {{Form::hidden('response', '', array('id' =>'response')) }}
-    
-    {{ Form::submit('Find Person', array('class' => 'btn btn-default')) }}
-    {{ Form::close() }}
     
         <div class="clearfix"> </div>
         <nav class="navbar navbar-default">
