@@ -1885,8 +1885,11 @@ class PersonsController extends Controller
             }
             //groups - move all from merge to contact
             foreach ($merge->groups as $group) {
-                $group->contact_id = $contact_id;
-                $group->save();
+                $group_exist = \montserrat\GroupContact::whereContactId($contact_id)->whereGroupId($group->group_id)->first();
+                if (!isset($group_exist)) {
+                    $group->contact_id = $contact_id;
+                    $group->save();
+                }
             }
             //relationships
             foreach ($merge->a_relationships as $a_relationship) {
