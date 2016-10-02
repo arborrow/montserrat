@@ -160,6 +160,21 @@ class Registration extends Model
             return 'N/A';
         }
     }
+    public function getRetreatEndDateAttribute() {
+        if (!empty($this->retreat->end_date)) {
+            return $this->retreat->end_date;
+        } else {
+            return NULL;
+        }
+    }
+    public function getRetreatStartDateAttribute() {
+        if (!empty($this->retreat->start_date)) {
+            return $this->retreat->start_date;
+        } else {
+            return NULL;
+        }
+    }
+    
     public function getRoomNameAttribute() {
         if (isset($this->room->name)) {
             return $this->room->name;

@@ -387,7 +387,19 @@ public function edit($id)
        return view('retreats.assign_rooms',compact('retreat','registrations','rooms'));
       }
 
-public function room_update(Request $request)
+      public function checkout($id) {
+          /* checkout all registrations for a retreat where the arrived_at is not NULL and the departed is NULL for a particular event */
+        $retreat = \montserrat\Retreat::findOrFail($id); //verifies that it is a valid retreat id
+        $registrations = \montserrat\Registration::whereEventId($id)->whereDepartedAt(NULL)->whereNotNull('arrived_at')->get();
+        foreach ($registrations as $registration) {
+                $registration->departed_at = $registration->retreat_end_date;
+                $registration->save();
+        }
+        return Redirect::back();
+    }
+      
+
+    public function room_update(Request $request)
     {
         //
        //dd($request);

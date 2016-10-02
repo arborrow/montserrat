@@ -108,6 +108,7 @@
             <span class="btn btn-default"><a href={{ action('RegistrationsController@register', $retreat->id) }}>Register a Retreatant</a></span>
             <span class="btn btn-default">{!! $retreat->email_registered_retreatants !!}</span>
             <span class="btn btn-default"><a href={{ action('RetreatsController@assign_rooms',$retreat->id) }}>Assign Rooms</a></span>
+            <span class="btn btn-default"><a href={{ action('RetreatsController@checkout',$retreat->id) }}>Checkout</a></span>
             <span class="btn btn-default"><a href={{ action('PagesController@retreatantinforeport',$retreat->idnumber) }}>Retreatant Information Report</a></span>
             <span class="btn btn-default"><a href={{ action('PagesController@retreatrosterreport',$retreat->idnumber) }}>Retreat Roster</a></span>
             <span class="btn btn-default"><a href={{ action('PagesController@retreatlistingreport',$retreat->idnumber) }}>Retreat Listing</a></span>
