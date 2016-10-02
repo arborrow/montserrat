@@ -1893,12 +1893,18 @@ class PersonsController extends Controller
             }
             //relationships
             foreach ($merge->a_relationships as $a_relationship) {
-                $a_relationship->contact_id_a = $contact_id;
-                $a_relationship->save();
+                $a_relationship_exist = \montserrat\Relationship::whereContactIdA($contact_id)->whereContactIdB($a_relationship->contact_id_b)->whereRelationshipTypeId($a_relationship->relationship_type_id)->first();
+                if (!isset($a_relationship_exist)) {
+                    $a_relationship->contact_id_a = $contact_id;
+                    $a_relationship->save();
+                }
             }
             foreach ($merge->b_relationships as $b_relationship) {
-                $b_relationship->contact_id_b = $contact_id;
-                $b_relationship->save();
+                $b_relationship_exist = \montserrat\Relationship::whereContactIdB($contact_id)->whereContactIdA($b_relationship->contact_id_a)->whereRelationshipTypeId($b_relationship->relationship_type_id)->first();
+                if (!isset($b_relationship_exist)) {
+                    $b_relationship->contact_id_b = $contact_id;
+                    $b_relationship->save();
+                }
             }
             //touchpoints
             foreach ($merge->touchpoints as $touchpoint) {
