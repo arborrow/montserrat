@@ -168,7 +168,7 @@ class RegistrationsController extends Controller
     {
         //
         //dd(date('F d, Y', strtotime(NULL)));
-        $registration= \montserrat\Registration::with('retreat','retreatant','room')->find($id);
+        $registration= \montserrat\Registration::with('retreat','retreatant','room')->findOrFail($id);
         //dd($registration);
        return view('registrations.show',compact('registration'));//
     }

@@ -705,7 +705,7 @@ class PersonsController extends Controller
     public function edit($id)
     {
         //
-        $person = \montserrat\Contact::with('prefix','suffix','addresses.location','emails.location','phones.location','websites','parish','emergency_contact','notes')->find($id);
+        $person = \montserrat\Contact::with('prefix','suffix','addresses.location','emails.location','phones.location','websites','parish','emergency_contact','notes')->findOrFail($id);
         //dd($person);
         
         $parishes = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('address_primary.state','diocese.contact_a')->get();

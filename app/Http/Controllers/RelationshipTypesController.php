@@ -121,7 +121,7 @@ class RelationshipTypesController extends Controller
      */
     public function edit($id)
     {
-        $relationship_type = \montserrat\RelationshipType::find($id);
+        $relationship_type = \montserrat\RelationshipType::findOrFail($id);
         //dd($relationship_type);
         return view('relationships.types.edit',compact('relationship_type'));
     

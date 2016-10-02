@@ -102,7 +102,7 @@ class GroupsController extends Controller
     public function edit($id)
     {
         //
-        $group = \montserrat\Group::find($id);
+        $group = \montserrat\Group::findOrFail($id);
         
         return view('groups.edit',compact('group'));
     

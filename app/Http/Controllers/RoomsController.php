@@ -27,7 +27,7 @@ class RoomsController extends Controller
         
         $rooms = \montserrat\Room::orderBy('building_id', 'asc','name','asc')->get();
          foreach ($rooms as $room) {
-            $room->building = \montserrat\Location::find($room->building_id)->name;
+            $room->building = \montserrat\Location::findOrFail($room->building_id)->name;
            
          }
          $roomsort = $rooms->sortBy(function($building) {
@@ -88,8 +88,8 @@ return Redirect::action('RoomsController@index');
     {
         //
         
-        $room = \montserrat\Room::find($id);
-        $building =  \montserrat\Room::find($id)->location;
+        $room = \montserrat\Room::findOrFail($id);
+        $building =  \montserrat\Room::findOrFail($id)->location;
         $room->building = $building->name;
         
        return view('rooms.show',compact('room'));//
@@ -106,7 +106,7 @@ return Redirect::action('RoomsController@index');
     {
         //
         $locations = \montserrat\Location::orderby('name')->pluck('name','id');
-        $room= \montserrat\Room::find($id);
+        $room= \montserrat\Room::findOrFail($id);
       
        return view('rooms.edit',compact('room','locations'));
     }
@@ -189,7 +189,7 @@ return Redirect::action('RoomsController@index');
         $rooms = \montserrat\Room::with('location')->get();
         //dd($rooms);
         //foreach ($rooms as $room) {
-        //    $room->building = \montserrat\Location::find($room->building_id)->name;
+        //    $room->building = \montserrat\Location::findOrFail($room->building_id)->name;
         //}
         $roomsort = $rooms->sortBy(function($room) {
             return sprintf('%-12s%s', $room->building_id, $room->name);

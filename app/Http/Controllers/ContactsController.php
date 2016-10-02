@@ -351,7 +351,7 @@ class ContactsController extends Controller
     public function edit($id)
     {
         //
-        $contact = \montserrat\Contact::with('addresses.location','emails.location','phones.location','websites')->find($id);
+        $contact = \montserrat\Contact::with('addresses.location','emails.location','phones.location','websites')->findOrFail($id);
         //dd($contact);
         $parishes = \montserrat\Parish::select(\DB::raw('CONCAT(parishes.name," (",parishes.city,"-",dioceses.name,")") as parishname'), 'parishes.id')->join('dioceses','parishes.diocese_id','=','dioceses.id')->orderBy('parishname')->pluck('parishname','parishes.id');
         $parishes->prepend('N/A',0); 
