@@ -181,7 +181,7 @@
         </div>
             <div class='row'>
                 <div class='col-md-1'><a href="{{ action('VendorsController@edit', $vendor->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
-                <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['vendor.destroy', $vendor->id]]) !!}
+                <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['vendor.destroy', $vendor->id],'onsubmit'=>'return ConfirmDelete()']) !!}
                 {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
                 {!! Form::close() !!}</div><div class="clearfix"> </div>
             </div>

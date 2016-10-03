@@ -61,7 +61,7 @@
                             <td> {!!$retreat->retreat_contract_link!!} {!!$retreat->retreat_schedule_link!!} {!!$retreat->retreat_evaluations_link!!}</td>
                             <!--<td>{{ $retreat->silent ? 'Yes' : 'No'}}</td>
                             <td><a href="{{ action('RetreatsController@edit', $retreat->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></td>
-<td>{!! Form::open(['method' => 'DELETE', 'route' => ['retreat.destroy', $retreat->id]]) !!}
+<td>{!! Form::open(['method' => 'DELETE', 'route' => ['retreat.destroy', $retreat->id],'onsubmit'=>'return ConfirmDelete()']) !!}
  {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
 {!! Form::close() !!}
 </td>-->

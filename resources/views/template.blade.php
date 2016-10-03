@@ -15,6 +15,18 @@
         <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
         <link rel="stylesheet" href="{{ asset('css/bootstrap-adaptive-tabs.css') }}">
 
+        <script>
+
+  function ConfirmDelete()
+  {
+  var x = confirm("Are you sure you want to delete?");
+  if (x)
+    return true;
+  else
+    return false;
+  }
+
+</script>
     </head>
     
     <body>

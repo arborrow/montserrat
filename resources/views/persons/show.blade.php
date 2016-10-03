@@ -200,12 +200,23 @@
                     
                             <ul>    
                                 @foreach($person->a_relationships as $a_relationship)
-                                
-                                <li>{!!$person->contact_link!!} is {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link !!}  </li>
+                                <li>
+                                    {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $a_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                                    {!!$person->contact_link!!} is {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link !!} 
+                                    
+                                    {!! Form::image('img/delete.png','btnDelete',['title'=>'Delete Relationship '.$a_relationship->id, 'style'=>'padding-left: 50px;']) !!} 
+                                    {!! Form::close() !!}
+                                </li>
                                 @endforeach
+                                
                    
                                 @foreach($person->b_relationships as $b_relationship)
-                                <li>{!!$person->contact_link!!} is {{ $b_relationship->relationship_type->label_b_a }} {!! $b_relationship->contact_a->contact_link!!}</li>
+                                <li>
+                                    {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $b_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                                        {!!$person->contact_link!!} is {{ $b_relationship->relationship_type->label_b_a }} {!! $b_relationship->contact_a->contact_link!!}
+                                        {!! Form::image('img/delete.png','btnDelete',['title'=>'Delete Relationship '.$b_relationship->id,'style'=>'padding-left: 50px;']) !!} 
+                                    {!! Form::close() !!}
+                                </li>
                                 @endforeach
                         
                             </ul>
@@ -293,7 +304,7 @@
         <div class='row'>
             <div class='col-md-1'><a href="{{ action('PersonsController@edit', $person->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
             @role('manager')
-            <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['person.destroy', $person->id]]) !!}
+            <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['person.destroy', $person->id],'onsubmit'=>'return ConfirmDelete()']) !!}
             {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
             {!! Form::close() !!}</div><div class="clearfix"> </div>
             @endrole

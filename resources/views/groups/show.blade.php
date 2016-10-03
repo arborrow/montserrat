@@ -34,7 +34,7 @@
         </div>
             <div class='row'>
                 <div class='col-md-1'><a href="{{ action('GroupsController@edit', $group->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
-                <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['group.destroy', $group->id]]) !!}
+                <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['group.destroy', $group->id],'onsubmit'=>'return ConfirmDelete()']) !!}
                 {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
                 {!! Form::close() !!}</div><div class="clearfix"> </div>
             </div>

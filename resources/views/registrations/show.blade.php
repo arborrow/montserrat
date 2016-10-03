@@ -73,7 +73,7 @@
                 </div><div class="clearfix"> </div>
                 <div class='row'>
                     <div class='col-md-1'><a href="{{ action('RegistrationsController@edit', $registration->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
-                    <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['registration.destroy', $registration->id]]) !!}
+                    <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['registration.destroy', $registration->id],'onsubmit'=>'return ConfirmDelete()']) !!}
                     {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
                     {!! Form::close() !!}</div><div class="clearfix"> </div>
                 </div>

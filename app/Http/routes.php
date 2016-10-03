@@ -95,6 +95,7 @@ Route::get('registration/{id}/arrive',['as' => 'registration.arrive', 'uses' => 
 Route::get('registration/{id}/cancel',['as' => 'registration.cancel', 'uses' => 'RegistrationsController@cancel']);
 Route::get('registration/{id}/depart',['as' => 'registration.depart', 'uses' => 'RegistrationsController@depart']);
 Route::resource('registration','RegistrationsController');
+Route::resource('relationship','RelationshipsController');
 
 Route::post('relationship_type/addme',['as' => 'relationship_type.addme', 'uses' => 'RelationshipTypesController@addme']);
 Route::get('relationship_type/{id}/add/{a?}/{b?}',['as'=>'relationship_type.add','uses' => 'RelationshipTypesController@add']);
