@@ -202,6 +202,7 @@ return Redirect::action('RoomsController@index');
         $registrations_end = \montserrat\Registration::with('room','room.location','retreatant','retreat')->where('room_id','>',0)->whereHas('retreat', function($query) use ($dts) {
             $query->where('end_date','>=',$dts[0])->where('start_date','<=',$dts[0]);
         })->get();
+        //dd($registrations_start, $registrations_end);
         //$endregistrations = \montserrat\Registration::where('end','>=',$dts[0])->where('end','<=',$dts[30])->with('room','room.location','retreatant','retreat')->where('room_id','>',0)->get();
         /* get registrations that are not inclusive of the date range */
         // dd($endregistrations);
@@ -232,8 +233,7 @@ return Redirect::action('RoomsController@index');
         
         foreach ($registrations_start as $registration) {
             
-            $numdays = ($registration->retreat->end_date->diffInDays($registration->retreat->start_date))-1;
-            
+            $numdays = ($registration->retreat->end_date->diffInDays($registration->retreat->start_date));
             for ($i=0; $i<=$numdays;$i++) {
                 $matrixdate = $registration->retreat->start_date->copy()->addDays($i);
                 if (array_key_exists($matrixdate->toDateString(),$m[$registration->room_id])) {
@@ -254,7 +254,7 @@ return Redirect::action('RoomsController@index');
         }
         foreach ($registrations_end as $registration) {
             
-            $numdays = ($registration->retreat->end_date->diffInDays($registration->retreat->start_date))-1;
+            $numdays = ($registration->retreat->end_date->diffInDays($registration->retreat->start_date));
             
             for ($i=0; $i<=$numdays;$i++) {
                 $matrixdate = $registration->retreat->start_date->copy()->addDays($i);
@@ -274,7 +274,7 @@ return Redirect::action('RoomsController@index');
         
             }
         }
-        
+        //dd($m);
         return view('rooms.sched2',compact('dts','roomsort','m','previous_link','next_link'));
     }
 }
