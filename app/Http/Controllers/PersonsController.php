@@ -1750,7 +1750,7 @@ class PersonsController extends Controller
     }
 public function delete_attachment($user_id, $attachment)
     {
-        $file_attachment = \montserrat\Attachment::whereEntity('contact')->whereEntityId($user_id)->whereUri($attachment)->first();
+        $file_attachment = \montserrat\Attachment::whereEntity('contact')->whereEntityId($user_id)->whereUri($attachment)->firstOrFail();
         $path = storage_path() . '/app/contacts/' . $user_id . '/attachments/'.$attachment;
         if(!File::exists($path)) {abort(404);}
         

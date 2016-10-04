@@ -367,7 +367,7 @@ public function edit($id)
      * TODO: on update, check if file already exists and if so, rename it to updated-unix_timestamp */
     
     public function delete_event_evaluations($event_id) {
-        $evaluation = \montserrat\Attachment::whereEntity('event')->whereEntityId($event_id)->whereUri('evaluations.pdf')->first();
+        $evaluation = \montserrat\Attachment::whereEntity('event')->whereEntityId($event_id)->whereUri('evaluations.pdf')->firstOrFail();
         $path = storage_path() . '/app/events/'.$event_id.'/evaluations.pdf';
         $new_path = 'evaluations-deleted-'.time().'.pdf';
         if(!File::exists($path)) abort(404);
@@ -380,7 +380,7 @@ public function edit($id)
         return Redirect::action('RetreatsController@show',$event_id);
     } 
     public function delete_event_schedule($event_id) {
-        $schedule = \montserrat\Attachment::whereEntity('event')->whereEntityId($event_id)->whereUri('schedule.pdf')->first();
+        $schedule = \montserrat\Attachment::whereEntity('event')->whereEntityId($event_id)->whereUri('schedule.pdf')->firstOrFail();
         //dd($evaluation);
         $path = storage_path() . '/app/events/'.$event_id.'/schedule.pdf';
         $new_path = 'contract-deleted-'.time().'.pdf';
@@ -395,7 +395,7 @@ public function edit($id)
     }
 
     public function delete_event_contract($event_id) {
-        $contract = \montserrat\Attachment::whereEntity('event')->whereEntityId($event_id)->whereUri('contract.pdf')->first();
+        $contract = \montserrat\Attachment::whereEntity('event')->whereEntityId($event_id)->whereUri('contract.pdf')->firstOrFail();
         $path = storage_path() . '/app/events/'.$event_id.'/contract.pdf';
         $new_path = 'contract-deleted-'.time().'.pdf';
         if(!File::exists($path)) abort(404);
@@ -409,7 +409,7 @@ public function edit($id)
     }
     
     public function delete_event_group_photo($event_id) {
-        $group_photo = \montserrat\Attachment::whereEntity('event')->whereEntityId($event_id)->whereUri('group_photo.jpg')->first();
+        $group_photo = \montserrat\Attachment::whereEntity('event')->whereEntityId($event_id)->whereUri('group_photo.jpg')->firstOrFail();
         $path = storage_path() . '/app/events/'.$event_id.'/group_photo.jpg';
         $new_path = 'group_photo-deleted-'.time().'.jpg';
         if(!File::exists($path)) abort(404);
