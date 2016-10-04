@@ -362,6 +362,65 @@ public function edit($id)
 
         return $response;
     }  
+    /* Since soft deletes are being used in the model, 
+     * I am doing a type of soft delete of files by renaming to deleted-unix_timestamp
+     * TODO: on update, check if file already exists and if so, rename it to updated-unix_timestamp */
+    
+    public function delete_event_evaluations($event_id) {
+        $evaluation = \montserrat\Attachment::whereEntity('event')->whereEntityId($event_id)->first();
+        $path = storage_path() . '/app/events/'.$event_id.'/evaluations.pdf';
+        $new_path = 'evaluations-deleted-'.time().'.pdf';
+        if(!File::exists($path)) abort(404);
+        if (Storage::move('events/'.$event_id.'/evaluations.pdf','events/'.$event_id.'/'.$new_path)) {
+            $evaluation->uri=$new_path;
+            $evaluation->save();
+            $evaluation->delete();
+        }
+            
+        return Redirect::action('RetreatsController@show',$event_id);
+    } 
+    public function delete_event_schedule($event_id) {
+        $schedule = \montserrat\Attachment::whereEntity('event')->whereEntityId($event_id)->first();
+        //dd($evaluation);
+        $path = storage_path() . '/app/events/'.$event_id.'/schedule.pdf';
+        $new_path = 'contract-deleted-'.time().'.pdf';
+        if(!File::exists($path)) abort(404);
+        if (Storage::move('events/'.$event_id.'/schedule.pdf','events/'.$event_id.'/'.$new_path)) {
+            $schedule->uri = $new_path;
+            $schedule->save();
+            $schedule->delete();
+        }
+            
+        return Redirect::action('RetreatsController@show',$event_id);
+    }
+
+    public function delete_event_contract($event_id) {
+        $contract = \montserrat\Attachment::whereEntity('event')->whereEntityId($event_id)->first();
+        $path = storage_path() . '/app/events/'.$event_id.'/contract.pdf';
+        $new_path = 'contract-deleted-'.time().'.pdf';
+        if(!File::exists($path)) abort(404);
+        if (Storage::move('events/'.$event_id.'/contract.pdf','events/'.$event_id.'/'.$new_path)) {
+            $contract->uri=$new_path;
+            $contract->save();
+            $contract->delete();
+        }
+            
+        return Redirect::action('RetreatsController@show',$event_id);
+    }
+    
+    public function delete_event_group_photo($event_id) {
+        $group_photo = \montserrat\Attachment::whereEntity('event')->whereEntityId($event_id)->first();
+        $path = storage_path() . '/app/events/'.$event_id.'/group_photo.jpg';
+        $new_path = 'group_photo-deleted-'.time().'.jpg';
+        if(!File::exists($path)) abort(404);
+        if (Storage::move('events/'.$event_id.'/group_photo.jpg','events/'.$event_id.'/'.$new_path)) {
+            $group_photo->uri=$new_path;
+            $group_photo->save();
+            $group_photo->delete();
+        }
+            
+        return Redirect::action('RetreatsController@show',$event_id);
+    }
 
     public function get_event_group_photo($event_id) {
         $path = storage_path() . '/app/events/'.$event_id.'/group_photo.jpg';

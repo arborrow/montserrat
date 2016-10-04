@@ -1747,6 +1747,24 @@ class PersonsController extends Controller
         $response->header("Content-Type", $type);
 
         return $response;
+    }
+public function delete_attachment($user_id, $attachment)
+    {
+        $file_attachment = \montserrat\Attachment::whereEntity('contact')->whereEntityId($user_id)->whereUri($attachment)->first();
+        $path = storage_path() . '/app/contacts/' . $user_id . '/attachments/'.$attachment;
+        if(!File::exists($path)) {abort(404);}
+        
+        $file_name = File::name($path);
+        $extension = File::extension($path);
+        $new_path = $file_name.'-deleted-'.time().'.'.$extension;
+        if (Storage::move('contacts/'.$user_id.'/attachments/'.$attachment,'contacts/'.$user_id.'/attachments/'.$new_path)) {
+            $file_attachment->uri=$new_path;
+            $file_attachment->save();
+            $file_attachment->delete();
+        }
+
+        return Redirect::action('PersonsController@show',$user_id);
+        
     }    
     public function duplicates() {
         

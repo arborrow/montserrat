@@ -22,11 +22,19 @@ Route::get('search/getuser', 'SearchController@getuser');
 
 // Attachment routes
 Route::get('avatar/{user_id}', ['as' => 'get_avatar','uses' => 'PagesController@get_avatar']);
+Route::get('avatar/{user_id}/delete', ['as' => 'delete_avatar','uses' => 'PagesController@delete_avatar']);
+
 Route::get('contact/{user_id}/attachment/{file_name}', ['as' => 'get_attachment','uses' => 'PersonsController@get_attachment']);
+Route::get('contact/{user_id}/attachment/{file_name}/delete', ['as' => 'delete_attachment','uses' => 'PersonsController@delete_attachment']);
+
 Route::get('retreat/{event_id}/contract', ['as' => 'get_event_contract','uses' => 'RetreatsController@get_event_contract']);
+Route::get('retreat/{event_id}/contract/delete', ['as' => 'delete_event_contract','uses' => 'RetreatsController@delete_event_contract']);
 Route::get('retreat/{event_id}/schedule', ['as' => 'get_event_schedule','uses' => 'RetreatsController@get_event_schedule']);
+Route::get('retreat/{event_id}/schedule/delete', ['as' => 'delete_event_schedule','uses' => 'RetreatsController@delete_event_schedule']);
 Route::get('retreat/{event_id}/evaluations', ['as' => 'get_event_evaluations','uses' => 'RetreatsController@get_event_evaluations']);
+Route::get('retreat/{event_id}/evaluations/delete', ['as' => 'delete_event_evaluations','uses' => 'RetreatsController@delete_event_evaluations']);
 Route::get('retreat/{event_id}/photo', ['as' => 'get_event_group_photo','uses' => 'RetreatsController@get_event_group_photo']);
+Route::get('retreat/{event_id}/photo/delete', ['as' => 'delete_event_group_photo','uses' => 'RetreatsController@delete_event_group_photo']);
 
 // General routes including groups, resources, etc. 
 Route::get('/',['as' => 'welcome','uses' => 'PagesController@welcome']);

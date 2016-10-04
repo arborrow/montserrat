@@ -7,6 +7,9 @@ use montserrat\Http\Requests;
 use montserrat\Http\Controllers\Controller;
 use File;
 use Response;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Redirect;
+
 class PagesController extends Controller
 {
      public function __construct()
@@ -33,6 +36,19 @@ class PagesController extends Controller
 
             return $response;
         }
+    }
+    
+    public function delete_avatar($user_id)
+    {
+        $path = storage_path() . '/app/contacts/' . $user_id . '/avatar.png';
+        $new_path = 'avatar-deleted-'.time().'.png';
+        if(!File::exists($path)) {
+            abort(404);
+        } 
+        Storage::move('contacts/'.$user_id.'/avatar.png','contacts/'.$user_id.'/'.$new_path); 
+            
+        return Redirect::action('PersonsController@show',$user_id);
+        
     }
     public function about()
     {
