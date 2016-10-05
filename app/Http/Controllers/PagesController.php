@@ -155,7 +155,9 @@ class PagesController extends Controller
                 ->where('participant.event_id','=',$retreat->id)
                 ->whereCanceledAt(NULL)
                 ->with('retreat','retreatant.languages','retreatant.parish.contact_a.address_primary','retreatant.prefix','retreatant.suffix','retreatant.address_primary.state','retreatant.phones.location','retreatant.emails.location','retreatant.emergency_contact','retreatant.notes','retreatant.occupation')
-                ->orderBy('contact.sort_name', 'asc')->get();
+                ->orderBy('contact.sort_name', 'asc')
+                ->orderBy('participant.notes', 'asc')
+                ->get();
         
         return view('reports.retreatroster',compact('registrations'));   //
     }
