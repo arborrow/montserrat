@@ -49,7 +49,11 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $e)
     {          
         $fullurl = $request->fullUrl();
-        $username = Auth::User()->name;
+        if (isset(Auth::User()->name)) {
+            $username = Auth::User()->name;
+        } else {
+            $username = 'Unknown user';
+        }
         
         if ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException($e->getMessage(), $e);
