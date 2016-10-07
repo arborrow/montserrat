@@ -14,6 +14,8 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Exception\HttpResponseException;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+
 class Handler extends ExceptionHandler
 {
     /**
@@ -54,7 +56,11 @@ class Handler extends ExceptionHandler
         } else {
             $username = 'Unknown user';
         }
-        
+        $ip_address = 'Unspecified IP Address';
+        if (!empty($request->ip())) {
+            $ip_address = $request->ip();
+        }
+         
         if ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException($e->getMessage(), $e);
         }
@@ -70,13 +76,15 @@ class Handler extends ExceptionHandler
         } elseif ($e instanceof ValidationException && $e->getResponse()) {
             return $e->getResponse();
         }
+        
         $e->debug=TRUE;
         if ($this->isHttpException($e)) {
             return $this->toIlluminateResponse($this->renderHttpException($e), $e);
         } else {
-            Mail::send('emails.error', ['error' => $this->convertExceptionToResponse($e)], function($message) use ($fullurl, $username) {
+            
+            Mail::send('emails.error', ['error' => $this->convertExceptionToResponse($e)], function($message) use ($fullurl, $username, $ip_address) {
             $message->to('anthony.borrow@montserratretreat.org');
-            $message->subject('Polanco Error @'.$fullurl.' by: '.$username);
+            $message->subject('Polanco Error @'.$fullurl.' by: '.$username.' from: '.$ip_address);
             $message->from('polanco@montserratretreat.org');
         });
             return view('errors.default');
