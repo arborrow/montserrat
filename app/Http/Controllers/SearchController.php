@@ -23,14 +23,14 @@ public function autocomplete(){
 	$results = array();
 	$results[0]='Add new person';
         // TODO: search for parishes, dioceses, etc.
-	$queries = DB::table('contact')
+	/* $queries = DB::table('contact')
                 ->orderBy('sort_name')
 		->where('display_name', 'LIKE', '%'.$term.'%')
                 ->whereNull('deleted_at')
-		->take(20)->get();
+		->take(20)->get(); */
         $queries = \montserrat\Contact::orderBy('sort_name')->where('display_name','LIKE','%'.$term.'%')->whereDeletedAt(NULL)->take(20)->get();
 	foreach ($queries as $query) {
-                $results[] = [ 'id' => $query->id, 'value' => $query->full_name ];
+                $results[] = [ 'id' => $query->id, 'value' => $query->full_name_with_city ];
             
         }
 
