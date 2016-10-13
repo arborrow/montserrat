@@ -343,6 +343,7 @@ class PersonsController extends Controller
                 $relationship_board->contact_id_a = CONTACT_MONTSERRAT;
                 $relationship_board->contact_id_b = $person->id;
                 $relationship_board->relationship_type_id = RELATIONSHIP_TYPE_BOARD_MEMBER;
+                $relationship_board->start_date = \Carbon\Carbon::now();
                 $relationship_board->is_active = 1;
             $relationship_board->save();
             $group_board = new \montserrat\GroupContact;
@@ -1386,13 +1387,19 @@ class PersonsController extends Controller
             $relationship_staff->is_active = 1;
             $relationship_staff->save();
         }
-        $relationship_board = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_BOARD_MEMBER,'is_active'=>1]);
+        // for Board Members we are not deleting the relationship but ending it and making it inactive
+        $relationship_board = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_BOARD_MEMBER]);
         if ($request->input('is_board')==0) {
-            $relationship_board->delete();
+            if (isset($relationship_board->id)) {
+                $relationship_board->end_date = \Carbon\Carbon::now();
+                $relationship_board->is_active = 0;
+                $relationship_board->save();
+            }
         } else {
             $relationship_board->contact_id_a = CONTACT_MONTSERRAT;
             $relationship_board->contact_id_b = $person->id;
             $relationship_board->relationship_type_id = RELATIONSHIP_TYPE_BOARD_MEMBER;
+            $relationship_board->start_date = \Carbon\Carbon::now();
             $relationship_board->is_active = 1;
             $relationship_board->save();
         }
@@ -1479,9 +1486,11 @@ class PersonsController extends Controller
             $group_superior->status = 'Added';
             $group_superior->save();
         }
-        $group_board = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_BOARD,'status'=>'Added']);
+        $group_board = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_BOARD]);
         if ($request->input('is_board')==0) {
-            $group_board->delete();
+            
+            $group_board->status='Removed';
+            $group_board->save();
         } else {
             $group_board->contact_id = $person->id;
             $group_board->group_id = GROUP_ID_BOARD;
@@ -1697,7 +1706,7 @@ class PersonsController extends Controller
     public function role($group_id)
     {
         //dd($group_id);
-        $persons = \montserrat\Contact::with('groups','address_primary')->whereHas('groups', function ($query) use ($group_id) {$query->where('group_id','=',$group_id);})->orderBy('sort_name')->get();
+        $persons = \montserrat\Contact::with('groups','address_primary')->whereHas('groups', function ($query) use ($group_id) {$query->where('group_id','=',$group_id)->whereStatus('Added');})->orderBy('sort_name')->get();
         $group = \montserrat\Group::findOrFail($group_id);
         $role['name']= $group->name;
         $role['email_link']= "";

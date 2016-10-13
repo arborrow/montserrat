@@ -257,7 +257,7 @@
                             {!! Form::label('is_board', 'Board Member:', ['class' => 'col-md-2'])  !!}
                             {!! Form::checkbox('is_board', 1, $person->is_board_member,['class' => 'col-md-1']) !!}
                             {!! Form::label('is_formerboard', 'Former Board:', ['class' => 'col-md-2'])  !!}
-                            {!! Form::checkbox('is_formerboard', 1, false,['class' => 'col-md-1','disabled']) !!}
+                            {!! Form::checkbox('is_formerboard', 1, $person->is_former_board_member,['class' => 'col-md-1','disabled']) !!}
                         </div><div class="clearfix"> </div>
 
                         <div class="form-group">

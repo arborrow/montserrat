@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Redirect;
 
 class RelationshipsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +19,9 @@ class RelationshipsController extends Controller
      */
     public function index()
     {
-        //
+        $relationships = \montserrat\Relationship::paginate();
+        return view('relationships.index',compact('relationships'));   //
+    
     }
 
     /**

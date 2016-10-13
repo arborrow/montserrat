@@ -361,6 +361,13 @@ public function getContactLinkFullNameAttribute() {
             return FALSE;
         }
     }
+    public function getIsFormerBoardMemberAttribute () {
+        if (isset($this->relationship_mjrh_former_board_member->id)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
     public function getIsStaffAttribute () {
         if (isset($this->group_staff->id)) {
             return TRUE;
@@ -545,7 +552,7 @@ public function getContactLinkFullNameAttribute() {
         return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_SUPERIOR);
     }
     public function group_board_member() {
-        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_BOARD);
+        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_BOARD)->whereStatus('Added');
     }
     public function group_staff() {
         return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_STAFF);
@@ -665,6 +672,10 @@ public function getContactLinkFullNameAttribute() {
         // the events (retreats) for which this contact has been a retreatant  
         return $this->hasMany('\montserrat\Registration','contact_id','id')->whereRoleId(PARTICIPANT_ROLE_ID_RETREATANT);
     }
+    public function relationship_mjrh_former_board_member() {
+        return $this->hasOne('\montserrat\Relationship','contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_BOARD_MEMBER)->whereNotNull('end_date');
+    }   
+    
     public function relationship_mjrh_donor() {
         return $this->hasOne('\montserrat\Relationship','contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_DONOR);
     }   
