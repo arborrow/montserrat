@@ -36,6 +36,9 @@
                         <span class="btn btn-default">
                             <a href={{ action('RegistrationsController@add',$person->id) }}>Add Registration</a> 
                         </span>                
+                        <span class="btn btn-default">
+                            <a href={{ action('PagesController@contact_info_report',$person->id) }}>Contact Info Report</a> 
+                        </span>                
                     
                 
             </div>

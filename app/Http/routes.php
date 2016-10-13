@@ -113,6 +113,7 @@ Route::group(['prefix' => 'report'], function() {
     Route::get('retreatantinfo/{retreat_id}',['uses' => 'PagesController@retreatantinforeport']);
     Route::get('retreatlisting/{retreat_id}',['uses' => 'PagesController@retreatlistingreport']);
     Route::get('retreatroster/{retreat_id}',['uses' => 'PagesController@retreatrosterreport']);
+    Route::get('contact_info_report/{id}',['uses' => 'PagesController@contact_info_report']);
 });
 
 Route::get('reservation',['as' => 'reservation','uses' => 'PagesController@reservation']);

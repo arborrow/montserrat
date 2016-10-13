@@ -133,7 +133,14 @@ class PagesController extends Controller
   // ->paginate(5);
         return view('reports.retreatantinfo2',compact('registrations'));   //
     }
-   public function retreatlistingreport($id)
+    
+    public function contact_info_report($id)
+    {
+        $person = \montserrat\Contact::findOrFail($id);
+        return view('reports.contact_info',compact('person'));   //
+    }
+    
+    public function retreatlistingreport($id)
     {
         $retreat = \montserrat\Retreat::where('idnumber','=',$id)->first();
         //$registrations = \montserrat\Registration::where('event_id','=',$retreat->id)->with('retreat','retreatant')->get();
