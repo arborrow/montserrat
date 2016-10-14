@@ -1488,9 +1488,10 @@ class PersonsController extends Controller
         }
         $group_board = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_BOARD]);
         if ($request->input('is_board')==0) {
-            
-            $group_board->status='Removed';
-            $group_board->save();
+            if (isset($group_board->id)) {
+                $group_board->status='Removed';
+                $group_board->save();
+            }
         } else {
             $group_board->contact_id = $person->id;
             $group_board->group_id = GROUP_ID_BOARD;
