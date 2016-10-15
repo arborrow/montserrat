@@ -60,7 +60,7 @@ class TouchpointsController extends Controller
         $groups = \montserrat\Group::orderBy('title')->pluck('title','id');
         $current_user = Auth::user();
         $user_email = \montserrat\Email::whereEmail($current_user->email)->first();
-        $defaults['contact_id'] = $group_id;
+        $defaults['group_id'] = $group_id;
         if (empty($user_email->contact_id)) {
             $defaults['user_id'] = 0;
         } else {
