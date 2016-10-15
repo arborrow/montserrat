@@ -52,7 +52,7 @@ class TouchpointsController extends Controller
 
     }
 
-    public function group_create()
+    public function add_group($group_id=0)
     {
         //
         $staff = \montserrat\Contact::with('groups')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_STAFF);})->orderBy('sort_name')->pluck('sort_name','id');
@@ -66,29 +66,10 @@ class TouchpointsController extends Controller
         } else {
             $defaults['user_id'] = $user_email->contact_id;
         }
-    return view('touchpoints.group_add',compact('staff','groups','defaults'));  
+    return view('touchpoints.add_group',compact('staff','groups','defaults'));  
 
     }
-    
-    public function group_add($group_id)
-    {
-        $current_user = Auth::user();
-        $user_email = \montserrat\Email::whereEmail($current_user->email)->first();
-        $defaults['contact_id'] = $group_id;
-        if (empty($user_email->contact_id)) {
-            $defaults['user_id'] = 0;
-        } else {
-            $defaults['user_id'] = $user_email->contact_id;
-        }
         
-        
-        $staff = \montserrat\Contact::with('groups')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_STAFF);})->orderBy('sort_name')->pluck('sort_name','id');
-        // TODO: replace this with an autocomplete text box for performance rather than a dropdown box
-        $groups = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->pluck('sort_name','id');
-        return view('touchpoints.group_add',compact('staff','groups','defaults'));  
-
-    }
-    
     public function add($id)
     {
         //
@@ -142,6 +123,29 @@ class TouchpointsController extends Controller
     $touchpoint->save();
     
     return Redirect::action('TouchpointsController@index');
+    }
+    
+    public function store_group(Request $request)
+    {
+        //
+        $this->validate($request, [
+        'group_id' => 'required|integer|min:0',
+        'touched_at' => 'required|date',
+        'staff_id' => 'required|integer|min:0',
+        'type' => 'in:Email,Call,Letter,Face,Other'
+        ]);
+        $group_id = $request->input('group_id');
+        $group_members = \montserrat\GroupContact::whereGroupId($group_id)->whereStatus('Added')->get();
+        foreach ($group_members as $group_member) {
+                $touchpoint = new \montserrat\Touchpoint;
+                $touchpoint->person_id= $group_member->contact_id;
+                $touchpoint->staff_id= $request->input('staff_id');
+                $touchpoint->touched_at= Carbon::parse($request->input('touched_at'));
+                $touchpoint->type = $request->input('type');
+                $touchpoint->notes= $request->input('notes');
+                $touchpoint->save();
+        }
+        return Redirect::action('GroupsController@show',$touchpoint->group_id);
     }
     
 

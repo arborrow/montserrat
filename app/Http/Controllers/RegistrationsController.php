@@ -81,6 +81,32 @@ class RegistrationsController extends Controller
         //dd($retreatants);
     }
 
+    public function add_group($id)
+    {
+        //
+        //$retreats = \montserrat\Retreat::where('end','>',\Carbon\Carbon::today())->pluck('idnumber','title','id');
+        $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date",">",\Carbon\Carbon::today()->subWeek())->orderBy('start_date')->pluck('description','id');
+        $retreats->prepend('Unassigned',0);
+        $retreatant = \montserrat\Contact::findOrFail($id);
+        if ($retreatant->contact_type == CONTACT_TYPE_INDIVIDUAL) {
+            $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->pluck('sort_name','id');
+        }
+        if ($retreatant->contact_type == CONTACT_TYPE_ORGANIZATION) {
+            $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_ORGANIZATION)->whereSubcontactType($retreatant->subcontact_type)->orderBy('sort_name')->pluck('sort_name','id');
+        }
+        
+        $rooms= \montserrat\Room::orderby('name')->pluck('name','id');
+        $rooms->prepend('Unassigned',0);
+        
+        $defaults['contact_id']=$id;
+        $defaults['retreat_id']=0;
+        $dt_today =  \Carbon\Carbon::today();
+        $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
+        
+        return view('registrations.create',compact('retreats','retreatants','rooms','defaults')); 
+        //dd($retreatants);
+    }
+
         public function register($retreat_id = 0, $contact_id = 0)
     {
         //
@@ -119,6 +145,46 @@ class RegistrationsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
+    {
+    $this->validate($request, [
+        'register_date' => 'required|date',
+        'attendance_confirm_date' => 'date',
+        'registration_confirm_date' => 'date',
+        'canceled_at' => 'date',
+        'arrived_at' => 'date',
+        'departed_at' => 'date',
+        'event_id' => 'required|integer|min:0',
+        'contact_id' => 'required|integer|min:0',
+        'deposit' => 'required|numeric|min:0|max:10000',
+        ]);
+    
+    $rooms = $request->input('rooms');
+    //TODO: Should we check and verify that the contact type is an organization to allow multiselect or just allow any registration to book multiple rooms?
+    $retreat = \montserrat\Retreat::findOrFail($request->input('event_id'));
+    $contact = \montserrat\Contact::findOrFail($request->input('contact_id'));
+    foreach($rooms as $room) {
+        //ensure that it is a valid room (not N/A)
+        $registration = new \montserrat\Registration;
+        $registration->event_id= $request->input('event_id');
+        $registration->contact_id= $request->input('contact_id');
+        $registration->register_date = $request->input('register_date');
+        $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
+        if (!empty($request->input('canceled_at'))) {$registration->canceled_at= $request->input('canceled_at'); }
+        if (!empty($request->input('arrived_at'))) {$registration->arrived_at = $request->input('arrived_at'); }
+        if (!empty($request->input('departed_at'))) {$registration->departed_at = $request->input('departed_at'); }
+        $registration->room_id= $room;
+        $registration->registration_confirm_date= $request->input('registration_confirm_date');
+        $registration->confirmed_by = $request->input('confirmed_by');
+        $registration->deposit = $request->input('deposit');
+        $registration->notes = $request->input('notes');
+        $registration->save();
+        //TODO: verify that the newly created room assignment does not conflict with an existing one
+    }
+    
+    return Redirect::action('RegistrationsController@index');
+    }
+
+    public function store_group(Request $request)
     {
     $this->validate($request, [
         'register_date' => 'required|date',

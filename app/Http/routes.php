@@ -42,9 +42,9 @@ Route::get('about',['as' => 'about','uses' => 'PagesController@about']);
 Route::get('admin',['as' => 'admin','uses' => 'PagesController@admin']);
 
 Route::group(['prefix' => 'admin', 'middleware' => ['role:manager']], function() {
-Route::resource('permission','PermissionsController');
-Route::resource('role','RolesController');
-Route::get('phpinfo',['as' => 'phpinfo','uses' => 'SystemController@phpinfo']);
+    Route::resource('permission','PermissionsController');
+    Route::resource('role','RolesController');
+    Route::get('phpinfo',['as' => 'phpinfo','uses' => 'SystemController@phpinfo']);
 });
 
 Route::get('bookstore',['as' => 'bookstore','uses' => 'PagesController@bookstore']);
@@ -52,6 +52,13 @@ Route::get('bookstore',['as' => 'bookstore','uses' => 'PagesController@bookstore
 Route::resource('contact','ContactsController');
 Route::resource('diocese','DiocesesController');
 Route::get('donation',['as' => 'donation','uses' => 'PagesController@donation']);
+
+Route::get('group/{group_id?}/touchpoint',['uses' => 'TouchpointsController@add_group']);
+Route::get('group/{group_id?}/registration',['uses' => 'RegistrationsController@add_group']);
+Route::post('touchpoint/add_group',['uses' => 'TouchpointsController@store_group']);
+Route::post('registration/add_group',['uses' => 'RegistrationsController@store_group']);
+
+
 Route::resource('group','GroupsController');
 Route::get('grounds',['as' => 'grounds','uses' => 'PagesController@grounds']);
 Route::get('housekeeping',['as' => 'housekeeping','uses' => 'PagesController@housekeeping']);
@@ -135,4 +142,3 @@ Route::get('touchpoint/group_add/{group_id?}',['uses' => 'TouchpointsController@
 Route::get('touchpoint/group_create',['uses' => 'TouchpointsController@group_create']);
 Route::get('users',['as' => 'users','uses' => 'PagesController@user']);
 Route::resource('vendor','VendorsController');
-

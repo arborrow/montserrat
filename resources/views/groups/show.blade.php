@@ -5,7 +5,11 @@
     <div class="jumbotron text-left">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span><h2>Group details</h2></span>                
+                <span><h2>Group details</h2></span>  
+                <span class="btn btn-default">
+                            <a href={{ action('TouchpointsController@add_group',$group->id) }}>Add Group Touchpoint</a>
+                        </span>
+                        
             </div>
             
             <div class='row'>

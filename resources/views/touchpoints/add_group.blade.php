@@ -3,13 +3,14 @@
 
 <section class="section-padding">
     <div class="jumbotron text-left">
-        <h2><strong>Create Touch point</strong></h2>
-        {!! Form::open(['url' => 'touchpoint', 'method' => 'post', 'class' => 'form-horizontal panel']) !!}
+        <h2><strong>Create Group Touchpoint</strong></h2>
+        {!! Form::open(['url' => 'touchpoint/add_group', 'method' => 'post', 'class' => 'form-horizontal panel']) !!}
         <span>
             <div class='row'>
-                {!! Form::label('touched_at', 'Date of contact:', ['class' => 'col-md-3'])  !!}
 
-                {!! Form::text('touched_at', \Carbon\Carbon::now() , ['class' => 'col-md-3']) !!}
+                {!! Form::label('touched_at', 'Date of contact:', ['class' => 'col-md-3'])  !!}
+                {!! Form::text('touched_at',date('F j, Y g:i A', strtotime(\Carbon\Carbon::now())) , ['class' => 'col-md-3']) !!}
+
             </div>
             <div class='row'>
                 {!! Form::label('group_id', 'Name of Group:', ['class' => 'col-md-3'])  !!}
