@@ -7,8 +7,11 @@
             <div class="panel-heading">
                 <span><h2>Group details</h2></span>  
                 <span class="btn btn-default">
-                            <a href={{ action('TouchpointsController@add_group',$group->id) }}>Add Group Touchpoint</a>
-                        </span>
+                    <a href={{ action('TouchpointsController@add_group',$group->id) }}>Add Group Touchpoint</a>
+                </span>
+                <span class="btn btn-default">
+                    <a href={{ action('RegistrationsController@add_group',$group->id) }}>Add Group Registration</a>
+                </span>
                         
             </div>
             
