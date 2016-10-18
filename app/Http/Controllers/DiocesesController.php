@@ -374,7 +374,7 @@ return Redirect::action('DiocesesController@index');
         
         if ($request->input('bishop_id')>0) {
             $bishop_id = $request->input('bishop_id');
-            $relationship_bishop = \montserrat\Relationship::whereContactIdA($diocese->id)->whereContactIdB($bishop_id)->firstOrNew;
+            $relationship_bishop = \montserrat\Relationship::firstOrNew(['contact_id_a'=>$diocese->id,'contact_id_b'=>$bishop_id,'relationship_type_id'=>RELATIONSHIP_TYPE_BISHOP,'is_active'=>1]);
             $relationship_bishop->contact_id_a = $diocese->id;
             $relationship_bishop->contact_id_b = $bishop_id;
             $relationship_bishop->relationship_type_id = RELATIONSHIP_TYPE_BISHOP;
