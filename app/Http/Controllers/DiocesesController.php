@@ -179,12 +179,12 @@ class DiocesesController extends Controller
         }
         
         if ($request->input('bishop_id')>0) {
-            $relationship_pastor = new \montserrat\Relationship;
-            $relationship_diocese->contact_id_a = $diocese->id;
-            $relationship_diocese->contact_id_b = $request->input('bishop_id');
-            $relationship_diocese->relationship_type_id = RELATIONSHIP_TYPE_BISHOP;
-            $relationship_diocese->is_active = 1;
-            $relationship_diocese->save();
+            $relationship_bishop= new \montserrat\Relationship;
+            $relationship_bishop->contact_id_a = $diocese->id;
+            $relationship_bishop->contact_id_b = $request->input('bishop_id');
+            $relationship_bishop->relationship_type_id = RELATIONSHIP_TYPE_BISHOP;
+            $relationship_bishop->is_active = 1;
+            $relationship_bishop->save();
         }
    
 return Redirect::action('DiocesesController@index');
@@ -371,7 +371,16 @@ return Redirect::action('DiocesesController@index');
                 $url_twitter->url=$request->input('url_twitter');
                 $url_twitter->website_type='Twitter';
             $url_twitter->save();
-
+        
+        if ($request->input('bishop_id')>0) {
+            $bishop_id = $request->input('bishop_id');
+            $relationship_bishop = \montserrat\Relationship::whereContactIdA($diocese->id)->whereContactIdB($bishop_id)->firstOrNew;
+            $relationship_bishop->contact_id_a = $diocese->id;
+            $relationship_bishop->contact_id_b = $bishop_id;
+            $relationship_bishop->relationship_type_id = RELATIONSHIP_TYPE_BISHOP;
+            $relationship_bishop->is_active = 1;
+            $relationship_bishop->save();
+        }
 
         
         if (null !== $request->file('avatar')) {
