@@ -1060,15 +1060,32 @@ class PersonsController extends Controller
         
         $person->save();
         if (null !== $request->file('avatar')) {
-            $avatar = Image::make($request->file('avatar')->getRealPath())->fit(150, 150)->orientate();
-            Storage::put('contacts/'.$person->id.'/'.'avatar.png',$avatar->stream('png'));
+            $path = storage_path().'/app/contacts/'.$person->id.'/avatar.png';
+            //dd($path);
+            $new_path = 'avatar-updated-'.time().'.png';
+            if(File::exists($path)) {
+                Storage::move('contacts/'.$person->id.'/avatar.png','contacts/'.$person->id.'/'.$new_path);
+                $avatar = Image::make($request->file('avatar')->getRealPath())->fit(150, 150)->orientate();
+                Storage::put('contacts/'.$person->id.'/'.'avatar.png',$avatar->stream('png'));
+            } else {
+                $avatar = Image::make($request->file('avatar')->getRealPath())->fit(150, 150)->orientate();
+                Storage::put('contacts/'.$person->id.'/'.'avatar.png',$avatar->stream('png'));
+            }
         }
         //dd($request);
         if (null !== $request->file('attachment')) {
-            $attachment = new \montserrat\Attachment;
             $file = $request->file('attachment');
             $file_name = $file->getClientOriginalName();
             
+            $attachment = \montserrat\Attachment::firstOrNew(['entity'=>'contact','entity_id'=>$person->id,'uri'=>$file_name,'mime_type'=>$file->getClientMimeType(),'file_type_id'=>FILE_TYPE_CONTACT_ATTACHMENT]);
+            if (isset($attachment->id)) {
+                $new_path= 'updated-'.time().'-'.$file_name;
+                $attachment->description = $request->input('attachment_description');
+                $attachment->upload_date = \Carbon\Carbon::now();
+                $attachment->save();
+                Storage::move('contacts/'.$person->id.'/attachments/'.$file_name,'contacts/'.$person->id.'/attachments/'.$new_path);
+                Storage::disk('local')->put('contacts/'.$person->id.'/attachments/'.$file_name,File::get($file));
+            } else {
             $attachment->file_type_id = FILE_TYPE_CONTACT_ATTACHMENT;
             $attachment->mime_type = $file->getClientMimeType();
             $attachment->uri = $file_name;
@@ -1078,6 +1095,7 @@ class PersonsController extends Controller
             $attachment->entity_id = $person->id;
             $attachment->save();
             Storage::disk('local')->put('contacts/'.$person->id.'/attachments/'.$file_name,File::get($file));
+            }
         }
         
         //emergency contact info
