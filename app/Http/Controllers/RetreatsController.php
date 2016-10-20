@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Response;
 use Image;
-
+use montserrat\Http\Controllers\AttachmentsController;
 
 class RetreatsController extends Controller
 {
@@ -235,18 +235,9 @@ public function edit($id)
         $retreat->save();
 
         if (null !== $request->file('contract')) {
-            $contract = new \montserrat\Attachment;
-            $file = $request->file('contract');
-            $file_name = $file->getClientOriginalName();
-            $contract->file_type_id = FILE_TYPE_EVENT_CONTRACT;
-            $contract->mime_type = $file->getClientMimeType();
-            $contract->uri = 'contract.pdf';
-            $contract->description = 'Contract for '.$retreat->idnumber.'-'.$retreat->title;
-            $contract->upload_date = \Carbon\Carbon::now();
-            $contract->entity = "event";
-            $contract->entity_id = $retreat->id;
-            $contract->save();
-            Storage::disk('local')->put('events/'.$retreat->id.'/contract.pdf',File::get($file));
+            $description = 'Contract for '.$retreat->idnumber.'-'.$retreat->title;
+            $attachment = new AttachmentsController;
+            $attachment->create_attachment($request->file('contract'),'events',$retreat->id,'contract',$description);
         }
         
         if (null !== $request->file('schedule')) {
@@ -486,5 +477,4 @@ public function edit($id)
         }
         return Redirect::action('RetreatsController@index');
     }    
-    
 }

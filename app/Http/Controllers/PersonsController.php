@@ -197,8 +197,9 @@ class PersonsController extends Controller
         
         $person->save();
         if (null !== $request->file('avatar')) {
-            $avatar = Image::make($request->file('avatar')->getRealPath())->fit(150, 150)->orientate();
-            Storage::put('contacts/'.$person->id.'/'.'avatar.png',$avatar->stream('png'));
+            $description = 'Avatar for '.$person->full_name;
+            $attachment = new AttachmentsController;
+            $attachment->create_attachment($request->file('avatar'),'contacts',$person->id,'avatar',$description);
         }
         // emergency contact information - not part of CiviCRM squema 
         $emergency_contact = new \montserrat\EmergencyContact;
@@ -640,7 +641,7 @@ class PersonsController extends Controller
     {
         //
        $person = \montserrat\Contact::with('addresses.country','addresses.location','addresses.state','emails.location','emergency_contact','ethnicity','languages','notes','occupation','parish.contact_a.address_primary','parish.contact_a.diocese.contact_a','phones.location','prefix','suffix','religion','touchpoints.staff','websites','groups.group','a_relationships.relationship_type','a_relationships.contact_b','b_relationships.relationship_type','b_relationships.contact_a','event_registrations')->findOrFail($id);
-       $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($person->id)->get();
+       $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($person->id)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->get();
        $relationship_types = array();
        $relationship_types["Child"] = "Child";
        $relationship_types["Employee"] = "Employee";
@@ -1060,42 +1061,17 @@ class PersonsController extends Controller
         
         $person->save();
         if (null !== $request->file('avatar')) {
-            $path = storage_path().'/app/contacts/'.$person->id.'/avatar.png';
-            //dd($path);
-            $new_path = 'avatar-updated-'.time().'.png';
-            if(File::exists($path)) {
-                Storage::move('contacts/'.$person->id.'/avatar.png','contacts/'.$person->id.'/'.$new_path);
-                $avatar = Image::make($request->file('avatar')->getRealPath())->fit(150, 150)->orientate();
-                Storage::put('contacts/'.$person->id.'/'.'avatar.png',$avatar->stream('png'));
-            } else {
-                $avatar = Image::make($request->file('avatar')->getRealPath())->fit(150, 150)->orientate();
-                Storage::put('contacts/'.$person->id.'/'.'avatar.png',$avatar->stream('png'));
-            }
+            $description = 'Avatar for '.$person->full_name;
+            $attachment = new AttachmentsController;
+            $attachment->update_attachment($request->file('avatar'),'contact',$person->id,'avatar',$description);
+
         }
+
         //dd($request);
         if (null !== $request->file('attachment')) {
-            $file = $request->file('attachment');
-            $file_name = $file->getClientOriginalName();
-            
-            $attachment = \montserrat\Attachment::firstOrNew(['entity'=>'contact','entity_id'=>$person->id,'uri'=>$file_name,'mime_type'=>$file->getClientMimeType(),'file_type_id'=>FILE_TYPE_CONTACT_ATTACHMENT]);
-            if (isset($attachment->id)) {
-                $new_path= 'updated-'.time().'-'.$file_name;
-                $attachment->description = $request->input('attachment_description');
-                $attachment->upload_date = \Carbon\Carbon::now();
-                $attachment->save();
-                Storage::move('contacts/'.$person->id.'/attachments/'.$file_name,'contacts/'.$person->id.'/attachments/'.$new_path);
-                Storage::disk('local')->put('contacts/'.$person->id.'/attachments/'.$file_name,File::get($file));
-            } else {
-            $attachment->file_type_id = FILE_TYPE_CONTACT_ATTACHMENT;
-            $attachment->mime_type = $file->getClientMimeType();
-            $attachment->uri = $file_name;
-            $attachment->description = $request->input('attachment_description');
-            $attachment->upload_date = \Carbon\Carbon::now();
-            $attachment->entity = "contact";
-            $attachment->entity_id = $person->id;
-            $attachment->save();
-            Storage::disk('local')->put('contacts/'.$person->id.'/attachments/'.$file_name,File::get($file));
-            }
+            $description = $request->input('attachment_description');
+            $attachment = new AttachmentsController;
+            $attachment->update_attachment($request->file('attachment'),'contact',$person->id,'attachment',$description); 
         }
         
         //emergency contact info
