@@ -199,7 +199,7 @@ class PersonsController extends Controller
         if (null !== $request->file('avatar')) {
             $description = 'Avatar for '.$person->full_name;
             $attachment = new AttachmentsController;
-            $attachment->create_attachment($request->file('avatar'),'contacts',$person->id,'avatar',$description);
+            $attachment->create_attachment($request->file('avatar'),'contact',$person->id,'avatar',$description);
         }
         // emergency contact information - not part of CiviCRM squema 
         $emergency_contact = new \montserrat\EmergencyContact;
@@ -641,7 +641,7 @@ class PersonsController extends Controller
     {
         //
        $person = \montserrat\Contact::with('addresses.country','addresses.location','addresses.state','emails.location','emergency_contact','ethnicity','languages','notes','occupation','parish.contact_a.address_primary','parish.contact_a.diocese.contact_a','phones.location','prefix','suffix','religion','touchpoints.staff','websites','groups.group','a_relationships.relationship_type','a_relationships.contact_b','b_relationships.relationship_type','b_relationships.contact_a','event_registrations')->findOrFail($id);
-       $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($person->id)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->get();
+       $files = \montserrat\Attachment::whereEntity('contacts')->whereEntityId($person->id)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->get();
        $relationship_types = array();
        $relationship_types["Child"] = "Child";
        $relationship_types["Employee"] = "Employee";
@@ -1741,7 +1741,7 @@ class PersonsController extends Controller
 
     public function get_attachment($user_id, $attachment)
     {
-        $path = storage_path() . '/app/contacts/' . $user_id . '/attachments/'.$attachment;
+        $path = storage_path() . '/app/contact/' . $user_id . '/attachments/'.$attachment;
         if(!File::exists($path)) abort(404);
 
         $file = File::get($path);
@@ -1755,13 +1755,13 @@ class PersonsController extends Controller
 public function delete_attachment($user_id, $attachment)
     {
         $file_attachment = \montserrat\Attachment::whereEntity('contact')->whereEntityId($user_id)->whereUri($attachment)->firstOrFail();
-        $path = storage_path() . '/app/contacts/' . $user_id . '/attachments/'.$attachment;
+        $path = storage_path() . '/app/contact/' . $user_id . '/attachments/'.$attachment;
         if(!File::exists($path)) {abort(404);}
         
         $file_name = File::name($path);
         $extension = File::extension($path);
         $new_path = $file_name.'-deleted-'.time().'.'.$extension;
-        if (Storage::move('contacts/'.$user_id.'/attachments/'.$attachment,'contacts/'.$user_id.'/attachments/'.$new_path)) {
+        if (Storage::move('contact/'.$user_id.'/attachments/'.$attachment,'contact/'.$user_id.'/attachments/'.$new_path)) {
             $file_attachment->uri=$new_path;
             $file_attachment->save();
             $file_attachment->delete();
@@ -1935,8 +1935,8 @@ public function delete_attachment($user_id, $attachment)
             }
             //attachments
             foreach ($merge->attachments as $attachment) {
-                $path = 'contacts/' . $merge_id . '/attachments/'.$attachment->uri;
-                $newpath = 'contacts/' . $contact_id . '/attachments/'.$attachment->uri;
+                $path = 'contact/' . $merge_id . '/attachments/'.$attachment->uri;
+                $newpath = 'contact/' . $contact_id . '/attachments/'.$attachment->uri;
                 Storage::move($path,$newpath);
                 $attachment->entity_id = $contact->id;
                 $attachment->save();

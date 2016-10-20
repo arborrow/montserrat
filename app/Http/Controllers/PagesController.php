@@ -23,7 +23,7 @@ class PagesController extends Controller
      */
     public function get_avatar($user_id)
     {
-        $path = storage_path() . '/app/contacts/' . $user_id . '/avatar.png';
+        $path = storage_path() . '/app/contact/' . $user_id . '/avatar.png';
         //dd($path);
         if(!File::exists($path)) {
             abort(404);
@@ -40,12 +40,12 @@ class PagesController extends Controller
     
     public function delete_avatar($user_id)
     {
-        $path = storage_path() . '/app/contacts/' . $user_id . '/avatar.png';
+        $path = storage_path() . '/app/contact/' . $user_id . '/avatar.png';
         $new_path = 'avatar-deleted-'.time().'.png';
         if(!File::exists($path)) {
             abort(404);
         } 
-        Storage::move('contacts/'.$user_id.'/avatar.png','contacts/'.$user_id.'/'.$new_path); 
+        Storage::move('contact/'.$user_id.'/avatar.png','contact/'.$user_id.'/'.$new_path); 
             
         return Redirect::action('PersonsController@show',$user_id);
         
