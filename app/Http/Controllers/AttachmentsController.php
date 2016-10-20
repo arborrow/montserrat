@@ -22,7 +22,7 @@ class AttachmentsController extends Controller
     }
 
 
-    public function create_attachment($file, $entity='events',$entity_id=0, $type=NULL,$description=NULL) {
+    public function create_attachment($file, $entity='event',$entity_id=0, $type=NULL,$description=NULL) {
             $file_name = $this->sanitize_filename($file->getClientOriginalName());
             $attachment = new \montserrat\Attachment;
             $attachment->mime_type = $file->getClientMimeType();

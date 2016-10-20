@@ -641,7 +641,7 @@ class PersonsController extends Controller
     {
         //
        $person = \montserrat\Contact::with('addresses.country','addresses.location','addresses.state','emails.location','emergency_contact','ethnicity','languages','notes','occupation','parish.contact_a.address_primary','parish.contact_a.diocese.contact_a','phones.location','prefix','suffix','religion','touchpoints.staff','websites','groups.group','a_relationships.relationship_type','a_relationships.contact_b','b_relationships.relationship_type','b_relationships.contact_a','event_registrations')->findOrFail($id);
-       $files = \montserrat\Attachment::whereEntity('contacts')->whereEntityId($person->id)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->get();
+       $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($person->id)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->get();
        $relationship_types = array();
        $relationship_types["Child"] = "Child";
        $relationship_types["Employee"] = "Employee";
