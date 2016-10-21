@@ -270,6 +270,7 @@ class AttachmentsController extends Controller
     public function delete_contact_attachment($user_id, $attachment)
     {
         $this->delete_attachment($attachment,'contact',$user_id,'attachment');
+        // TODO: get contact type and redirect to person, parish, organization, vendor as appropriate
         return Redirect::action('PersonsController@show',$user_id);
         
     }    
