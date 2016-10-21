@@ -211,6 +211,7 @@ class AttachmentsController extends Controller
         $attachment->save();
     }
     public function delete_attachment($file_name, $entity='event',$entity_id=0, $type=NULL) {
+        $path = $entity.'/'.$entity_id.'/';
         switch ($type) {
             case 'group_photo' :
                 $file_name='group_photo.jpg';
@@ -236,6 +237,18 @@ class AttachmentsController extends Controller
                 $path = $entity.'/'.$entity_id.'/';
                 $updated_file_name = 'evaluations-deleted-'.time().'.pdf';
                 break;
+            case 'attachment' :
+                $attachment = \montserrat\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->firstOrFail();
+                $path = $entity.'/'.$entity_id.'/attachments/';
+                $file_extension = File::extension($path.$file_name);
+                $file_basename = File::name($path.$file_name);
+                $updated_file_name= $file_basename.'-deleted-'.time().'.'.$file_extension;
+                break;
+            case 'avatar' :
+                $attachment = \montserrat\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(FILE_TYPE_CONTACT_AVATAR)->firstOrFail();
+                $path = $entity.'/'.$entity_id.'/';
+                $updated_file_name= 'avatar-deleted-'.time().'.png';
+                break;
             default : break;
         }
         
@@ -251,62 +264,24 @@ class AttachmentsController extends Controller
 
     public function show_contact_attachment($user_id, $file_name)
     {
-        $path = storage_path() . '/app/contact/' . $user_id . '/attachments/'.$file_name;
-        if(!File::exists($path)) abort(404);
-
-        $file = File::get($path);
-        $type = File::mimeType($path);
-
-        $response = Response::make($file, 200);
-        $response->header("Content-Type", $type);
-
-        return $response;
+        return $this->show_attachment('contact',$user_id,'attachment',$file_name);
+    
     }
     public function delete_contact_attachment($user_id, $attachment)
     {
-        $file_attachment = \montserrat\Attachment::whereEntity('contact')->whereEntityId($user_id)->whereUri($attachment)->firstOrFail();
-        $path = storage_path() . '/app/contact/' . $user_id . '/attachments/'.$attachment;
-        if(!File::exists($path)) {abort(404);}
-        
-        $file_name = File::name($path);
-        $extension = File::extension($path);
-        $new_path = $file_name.'-deleted-'.time().'.'.$extension;
-        if (Storage::move('contact/'.$user_id.'/attachments/'.$attachment,'contact/'.$user_id.'/attachments/'.$new_path)) {
-            $file_attachment->uri=$new_path;
-            $file_attachment->save();
-            $file_attachment->delete();
-        }
-
+        $this->delete_attachment($attachment,'contact',$user_id,'attachment');
         return Redirect::action('PersonsController@show',$user_id);
         
     }    
     
     public function get_avatar($user_id)
     {
-        $path = storage_path() . '/app/contact/' . $user_id . '/avatar.png';
-        //dd($path);
-        if(!File::exists($path)) {
-            abort(404);
-        } else {
-            $file = File::get($path);
-            $type = File::mimeType($path);
-
-            $response = Response::make($file, 200);
-            $response->header("Content-Type", $type);
-
-            return $response;
-        }
+        return $this->show_attachment('contact',$user_id,'avatar','avatar.png');
     }
     
     public function delete_avatar($user_id)
     {
-        $path = storage_path() . '/app/contact/' . $user_id . '/avatar.png';
-        $new_path = 'avatar-deleted-'.time().'.png';
-        if(!File::exists($path)) {
-            abort(404);
-        } 
-        Storage::move('contact/'.$user_id.'/avatar.png','contact/'.$user_id.'/'.$new_path); 
-            
+        $this->delete_attachment('avatar.png','contact',$user_id,'avatar');
         return Redirect::action('PersonsController@show',$user_id);
         
     }
