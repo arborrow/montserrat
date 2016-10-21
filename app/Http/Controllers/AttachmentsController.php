@@ -210,6 +210,44 @@ class AttachmentsController extends Controller
 
         $attachment->save();
     }
+    public function delete_attachment($file_name, $entity='event',$entity_id=0, $type=NULL) {
+        switch ($type) {
+            case 'group_photo' :
+                $file_name='group_photo.jpg';
+                $attachment = \montserrat\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(FILE_TYPE_EVENT_GROUP_PHOTO)->firstOrFail();
+                $path = $entity.'/'.$entity_id.'/';
+                $updated_file_name = 'group_photo-deleted-'.time().'.jpg';
+                break;
+            case 'contract' :
+                $file_name='contract.pdf';
+                $attachment = \montserrat\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(FILE_TYPE_EVENT_CONTRACT_PHOTO)->firstOrFail();
+                $path = $entity.'/'.$entity_id.'/';
+                $updated_file_name = 'contract-deleted-'.time().'.pdf';
+                break;
+            case 'schedule' :
+                $file_name='schedule.pdf';
+                $attachment = \montserrat\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(FILE_TYPE_EVENT_CONTRACT)->firstOrFail();
+                $path = $entity.'/'.$entity_id.'/';
+                $updated_file_name = 'schedule-deleted-'.time().'.pdf';
+                break;
+            case 'evaluations' :
+                $file_name='evaluations.pdf';
+                $attachment = \montserrat\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(FILE_TYPE_EVENT_EVALUATION)->firstOrFail();
+                $path = $entity.'/'.$entity_id.'/';
+                $updated_file_name = 'evaluations-deleted-'.time().'.pdf';
+                break;
+            default : break;
+        }
+        
+        if(!File::exists(storage_path().'/app/'.$path.$file_name)) abort(404);
+        if (Storage::move($path.$file_name,$path.$updated_file_name)) {
+            $attachment->uri=$updated_file_name;
+            $attachment->save();
+            $attachment->delete();
+        }
+            
+        return Redirect::action('RetreatsController@show',$entity_id);
+    }
 
     public function show_contact_attachment($user_id, $file_name)
     {
@@ -273,7 +311,7 @@ class AttachmentsController extends Controller
         
     }
 
-    public function get_event_contract($event_id) {
+    public function get_event_contract($eent_id) {
         return $this->show_attachment('event',$event_id,'contract',NULL);
     }    
 
@@ -283,75 +321,26 @@ class AttachmentsController extends Controller
 
     
     public function get_event_evaluations($event_id) {
-        $path = storage_path() . '/app/event/'.$event_id.'/evaluations.pdf';
-        if(!File::exists($path)) abort(404);
-
-        $file = File::get($path);
-        $type = File::mimeType($path);
-
-        $response = Response::make($file, 200);
-        $response->header("Content-Type", $type);
-
-        return $response;
+        return $this->show_attachment('event',$event_id,'evaluations',NULL);
     }  
-    /* Since soft deletes are being used in the model, 
-     * I am doing a type of soft delete of files by renaming to deleted-unix_timestamp
-     * TODO: on update, check if file already exists and if so, rename it to updated-unix_timestamp */
     
     public function delete_event_evaluations($event_id) {
-        $evaluation = \montserrat\Attachment::whereEntity('event')->whereEntityId($event_id)->whereUri('evaluations.pdf')->firstOrFail();
-        $path = storage_path() . '/app/event/'.$event_id.'/evaluations.pdf';
-        $new_path = 'evaluations-deleted-'.time().'.pdf';
-        if(!File::exists($path)) abort(404);
-        if (Storage::move('event/'.$event_id.'/evaluations.pdf','event/'.$event_id.'/'.$new_path)) {
-            $evaluation->uri=$new_path;
-            $evaluation->save();
-            $evaluation->delete();
-        }
-            
+        $this->delete_attachment('evaluations.pdf','event',$event_id,'evaluations');
         return Redirect::action('RetreatsController@show',$event_id);
     } 
     public function delete_event_schedule($event_id) {
-        $schedule = \montserrat\Attachment::whereEntity('event')->whereEntityId($event_id)->whereUri('schedule.pdf')->firstOrFail();
-        //dd($evaluation);
-        $path = storage_path() . '/app/event/'.$event_id.'/schedule.pdf';
-        $new_path = 'contract-deleted-'.time().'.pdf';
-        if(!File::exists($path)) abort(404);
-        if (Storage::move('event/'.$event_id.'/schedule.pdf','event/'.$event_id.'/'.$new_path)) {
-            $schedule->uri = $new_path;
-            $schedule->save();
-            $schedule->delete();
-        }
-            
+        $this->delete_attachment('schedule.pdf','event',$event_id,'schedule');
         return Redirect::action('RetreatsController@show',$event_id);
     }
 
     public function delete_event_contract($event_id) {
-        $contract = \montserrat\Attachment::whereEntity('event')->whereEntityId($event_id)->whereUri('contract.pdf')->firstOrFail();
-        $path = storage_path() . '/app/event/'.$event_id.'/contract.pdf';
-        $new_path = 'contract-deleted-'.time().'.pdf';
-        if(!File::exists($path)) abort(404);
-        if (Storage::move('event/'.$event_id.'/contract.pdf','event/'.$event_id.'/'.$new_path)) {
-            $contract->uri=$new_path;
-            $contract->save();
-            $contract->delete();
-        }
-            
+        $this->delete_attachment('contract.pdf','event',$event_id,'contract');
         return Redirect::action('RetreatsController@show',$event_id);
     }
     
     public function delete_event_group_photo($event_id) {
-        $group_photo = \montserrat\Attachment::whereEntity('event')->whereEntityId($event_id)->whereUri('group_photo.jpg')->firstOrFail();
-        $path = storage_path() . '/app/event/'.$event_id.'/group_photo.jpg';
-        $new_path = 'group_photo-deleted-'.time().'.jpg';
-        if(!File::exists($path)) abort(404);
-        if (Storage::move('event/'.$event_id.'/group_photo.jpg','event/'.$event_id.'/'.$new_path)) {
-            $group_photo->uri=$new_path;
-            $group_photo->save();
-            $group_photo->delete();
-        }
-            
-        return Redirect::action('RetreatsController@show',$event_id);
+           $this->delete_attachment('group_photo.jpg','event',$event_id,'group_photo');
+           return Redirect::action('RetreatsController@show',$event_id);
     }
 
     public function get_event_group_photo($event_id) {
