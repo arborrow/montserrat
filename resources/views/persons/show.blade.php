@@ -9,11 +9,8 @@
                     <div class="col-md-12 col-sm-12">
                         {!!$person->avatar_large_link!!}
                         <h1 style="position: absolute; top:5px; left:175px; padding: 5px;"><strong><a href="{{url('person/'.$person->id.'/edit')}}">{{ $person->full_name }}</a></strong></h1>
-                        
                     </div>
                 </div>
-            
-            
                         @if ($person->is_board_member) <span class="back"><a href={{ action('PersonsController@boardmembers') }}>{!! Html::image('img/board.png', 'Board Members Group',array('title'=>"Board Members Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
                         @if ($person->is_captain) <span class="back"><a href={{ action('PersonsController@captains') }}>{!! Html::image('img/captain.png', 'Captains Group',array('title'=>"Captains Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
                         @if ($person->is_staff) <span class="back"><a href={{ action('PersonsController@staff') }}>{!! Html::image('img/employee.png', 'Staff Group',array('title'=>"Employees Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
@@ -39,8 +36,6 @@
                         <span class="btn btn-default">
                             <a href={{ action('PagesController@contact_info_report',$person->id) }}>Contact Info Report</a> 
                         </span>                
-                    
-                
             </div>
             <div class='row'>
                 <div class='col-md-4'>

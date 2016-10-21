@@ -5,7 +5,15 @@
         <div class="jumbotron text-left">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span><h2><a href="{{url('parish/'.$parish->id.'/edit')}}">{!! $parish->organization_name !!}</a> (<a href="../diocese/{{$parish->diocese_id}}">{{ $parish->diocese_name}}</a>)</span>
+                    <div class='row' style="height: 175px;">
+                    <div class="col-md-12 col-sm-12">
+                        {!!$parish->avatar_large_link!!}
+                        
+                    <h1 style="position: absolute; top:5px; left:175px; padding: 5px;"><strong>
+                            <a href="{{url('parish/'.$parish->id.'/edit')}}">{!! $parish->organization_name !!}</a> (<a href="../diocese/{{$parish->diocese_id}}">{{ $parish->diocese_name}}</a>)
+                    </strong></h1>
+                    </div>
+                </div>
                     <span class="back"><a href={{ action('ParishesController@index') }}>{!! Html::image('img/parish.png', 'Parish Index',array('title'=>"Parish Index",'class' => 'btn btn-default')) !!}</a></span></h1>
                     <span class="btn btn-default">
                         <a href={{ action('TouchpointsController@add',$parish->id) }}>Add Touch point</a>

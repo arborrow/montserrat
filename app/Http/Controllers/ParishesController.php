@@ -218,7 +218,7 @@ return Redirect::action('ParishesController@index');
     {
         //
         $parish = \montserrat\Contact::with('pastor.contact_b','diocese.contact_a','addresses.state','addresses.location','phones.location','emails.location','websites','notes','parishioners.contact_b.address_primary.state','parishioners.contact_b.emails.location','parishioners.contact_b.phones.location','touchpoints','a_relationships.relationship_type','a_relationships.contact_b','b_relationships.relationship_type','b_relationships.contact_a','event_registrations')->findOrFail($id);
-        $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($parish->id)->get();
+        $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($parish->id)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->get();
         $relationship_types = array();
         $relationship_types["Primary Contact"] = "Primary Contact";
 
@@ -423,27 +423,20 @@ return Redirect::action('ParishesController@index');
             $url_twitter->save();
 
             
-        if (null !== $request->file('avatar')) {
-            $avatar = Image::make($request->file('avatar')->getRealPath())->fit(150, 150)->orientate();
-            Storage::put('contacts/'.$parish->id.'/'.'avatar.png',$avatar->stream('png'));
-        }
         
-        if (null !== $request->file('attachment')) {
-            $attachment = new \montserrat\Attachment;
-            $file = $request->file('attachment');
-            $file_name = $file->getClientOriginalName();
-            
-            $attachment->file_type_id = FILE_TYPE_CONTACT_ATTACHMENT;
-            $attachment->mime_type = $file->getClientMimeType();
-            $attachment->uri = $file_name;
-            $attachment->description = $request->input('attachment_description');
-            $attachment->upload_date = \Carbon\Carbon::now();
-            $attachment->entity = "contact";
-            $attachment->entity_id = $parish->id;
-            $attachment->save();
-            Storage::disk('local')->put('contacts/'.$parish->id.'/attachments/'.$file_name,File::get($file));
+        if (null !== $request->file('avatar')) {
+            $description = 'Avatar for '.$parish->organization_name;
+            $attachment = new AttachmentsController;
+            $attachment->update_attachment($request->file('avatar'),'contact',$parish->id,'avatar',$description);
+
         }
-        return Redirect::action('ParishesController@index');
+
+        if (null !== $request->file('attachment')) {
+            $description = $request->input('attachment_description');
+            $attachment = new AttachmentsController;
+            $attachment->update_attachment($request->file('attachment'),'contact',$parish->id,'attachment',$description); 
+        }
+        return Redirect::action('ParishesController@show',$parish->id);
         
     }
 
