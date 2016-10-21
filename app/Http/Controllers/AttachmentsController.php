@@ -287,7 +287,7 @@ class AttachmentsController extends Controller
         
     }
 
-    public function get_event_contract($eent_id) {
+    public function get_event_contract($event_id) {
         return $this->show_attachment('event',$event_id,'contract',NULL);
     }    
 
