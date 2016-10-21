@@ -176,7 +176,7 @@ return Redirect::action('VendorsController@index');
     public function show($id)
     {
         $vendor = \montserrat\Contact::with('addresses.state','addresses.location','phones.location','emails.location','websites','notes','touchpoints')->findOrFail($id);
-        $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($vendor->id)->get();
+        $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($vendor->id)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->get();
         $relationship_types = array();
         $relationship_types["Primary Contact"] = "Primary Contact";
 return view('vendors.show',compact('vendor','relationship_types','files'));//
@@ -302,29 +302,21 @@ return view('vendors.show',compact('vendor','relationship_types','files'));//
         $email_primary->location_type_id=LOCATION_TYPE_MAIN;
         $email_primary->email = $request->input('email_primary');
         $email_primary->save();
-
+        
+                
         if (null !== $request->file('avatar')) {
-            $avatar = Image::make($request->file('avatar')->getRealPath())->fit(150, 150)->orientate();
-            Storage::put('contacts/'.$vendor->id.'/'.'avatar.png',$avatar->stream('png'));
-        }
-        
-        if (null !== $request->file('attachment')) {
-            $attachment = new \montserrat\Attachment;
-            $file = $request->file('attachment');
-            $file_name = $file->getClientOriginalName();
-            
-            $attachment->file_type_id = FILE_TYPE_CONTACT_ATTACHMENT;
-            $attachment->mime_type = $file->getClientMimeType();
-            $attachment->uri = $file_name;
-            $attachment->description = $request->input('attachment_description');
-            $attachment->upload_date = \Carbon\Carbon::now();
-            $attachment->entity = "contact";
-            $attachment->entity_id = $vendor->id;
-            $attachment->save();
-            Storage::disk('local')->put('contacts/'.$vendor->id.'/attachments/'.$file_name,File::get($file));
+            $description = 'Avatar for '.$vendor->organization_name;
+            $attachment = new AttachmentsController;
+            $attachment->update_attachment($request->file('avatar'),'contact',$vendor->id,'avatar',$description);
+
         }
 
-        
+        if (null !== $request->file('attachment')) {
+            $description = $request->input('attachment_description');
+            $attachment = new AttachmentsController;
+            $attachment->update_attachment($request->file('attachment'),'contact',$vendor->id,'attachment',$description); 
+        }
+
                 
         $url_main = \montserrat\Website::firstOrNew(['contact_id'=>$vendor->id,'website_type'=>'Main']);
             $url_main->contact_id=$vendor->id;

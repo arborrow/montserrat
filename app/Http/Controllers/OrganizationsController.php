@@ -194,7 +194,7 @@ return Redirect::action('OrganizationsController@index');
         // $organization = \montserrat\Diocese::with('bishop')->findOrFail($id);
         $organization = \montserrat\Contact::with('addresses.state','addresses.location','phones.location','emails.location','websites','notes','phone_main_phone.location','a_relationships.relationship_type','a_relationships.contact_b','b_relationships.relationship_type','b_relationships.contact_a','event_registrations')->findOrFail($id);
        
-        $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($organization->id)->get();
+        $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($organization->id)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->get();
         $relationship_types = array();
         $relationship_types["Employer"] = "Employer";
         $relationship_types["Primary Contact"] = "Primary Contact";
@@ -345,29 +345,19 @@ return Redirect::action('OrganizationsController@index');
         $organization_note->note=$request->input('note');
         $organization_note->subject='Organization Note';
         $organization_note->save();
-        
+                
         if (null !== $request->file('avatar')) {
-            $avatar = Image::make($request->file('avatar')->getRealPath())->fit(150, 150)->orientate();
-            Storage::put('contacts/'.$organization->id.'/'.'avatar.png',$avatar->stream('png'));
-        }
-        
-        
-        if (null !== $request->file('attachment')) {
-            $attachment = new \montserrat\Attachment;
-            $file = $request->file('attachment');
-            $file_name = $file->getClientOriginalName();
-            
-            $attachment->file_type_id = FILE_TYPE_CONTACT_ATTACHMENT;
-            $attachment->mime_type = $file->getClientMimeType();
-            $attachment->uri = $file_name;
-            $attachment->description = $request->input('attachment_description');
-            $attachment->upload_date = \Carbon\Carbon::now();
-            $attachment->entity = "contact";
-            $attachment->entity_id = $organization->id;
-            $attachment->save();
-            Storage::disk('local')->put('contacts/'.$organization->id.'/attachments/'.$file_name,File::get($file));
+            $description = 'Avatar for '.$organization->organization_name;
+            $attachment = new AttachmentsController;
+            $attachment->update_attachment($request->file('avatar'),'contact',$organization->id,'avatar',$description);
+
         }
 
+        if (null !== $request->file('attachment')) {
+            $description = $request->input('attachment_description');
+            $attachment = new AttachmentsController;
+            $attachment->update_attachment($request->file('attachment'),'contact',$organization->id,'attachment',$description); 
+        }
                 
         $url_main = \montserrat\Website::firstOrNew(['contact_id'=>$organization->id,'website_type'=>'Main']);
             $url_main->contact_id=$organization->id;

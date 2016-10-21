@@ -5,7 +5,13 @@
         <div class="jumbotron text-left">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span><h2><a href="{{url('vendor/'.$vendor->id.'/edit')}}">{!! $vendor->organization_name !!}</a></span>
+                    <div class="col-md-12 col-sm-12">
+                        {!!$vendor->avatar_large_link!!}
+                        
+                    <h1 style="position: absolute; top:5px; left:175px; padding: 5px;"><strong>
+                            <a href="{{url('vendor/'.$vendor->id.'/edit')}}">{{ $vendor->organization_name }}</a>
+                    </strong></h1>
+                    </div>
                     <span class="back"><a href={{ action('VendorsController@index') }}>{!! Html::image('img/vendor.png', 'Vendor Index',array('title'=>"Vendor Index",'class' => 'btn btn-primary')) !!}</a></span></h1>
                     <span class="btn btn-primary">
                         <a href={{ action('TouchpointsController@add',$vendor->id) }}>Add Touch point</a>
