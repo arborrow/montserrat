@@ -421,8 +421,6 @@ return Redirect::action('ParishesController@index');
                 $url_twitter->url=$request->input('url_twitter');
                 $url_twitter->website_type='Twitter';
             $url_twitter->save();
-
-            
         
         if (null !== $request->file('avatar')) {
             $description = 'Avatar for '.$parish->organization_name;
