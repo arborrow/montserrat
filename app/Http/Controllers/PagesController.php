@@ -3,12 +3,7 @@
 namespace montserrat\Http\Controllers;
 
 use Illuminate\Http\Request;
-use montserrat\Http\Requests;
 use montserrat\Http\Controllers\Controller;
-use File;
-use Response;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Redirect;
 
 class PagesController extends Controller
 {
@@ -21,35 +16,7 @@ class PagesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function get_avatar($user_id)
-    {
-        $path = storage_path() . '/app/contact/' . $user_id . '/avatar.png';
-        //dd($path);
-        if(!File::exists($path)) {
-            abort(404);
-        } else {
-            $file = File::get($path);
-            $type = File::mimeType($path);
-
-            $response = Response::make($file, 200);
-            $response->header("Content-Type", $type);
-
-            return $response;
-        }
-    }
     
-    public function delete_avatar($user_id)
-    {
-        $path = storage_path() . '/app/contact/' . $user_id . '/avatar.png';
-        $new_path = 'avatar-deleted-'.time().'.png';
-        if(!File::exists($path)) {
-            abort(404);
-        } 
-        Storage::move('contact/'.$user_id.'/avatar.png','contact/'.$user_id.'/'.$new_path); 
-            
-        return Redirect::action('PersonsController@show',$user_id);
-        
-    }
     public function about()
     {
      return view('pages.about');   //

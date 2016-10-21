@@ -81,8 +81,8 @@
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
-        {!! Form::label('photo', 'Group photo (max 10M): ', ['class' => 'col-md-2'])  !!}
-        {!! Form::file('photo',['class' => 'col-md-2']); !!}
+        {!! Form::label('group_photo', 'Group photo (max 10M): ', ['class' => 'col-md-2'])  !!}
+        {!! Form::file('group_photo',['class' => 'col-md-2']); !!}
     </div>
     <div class="clearfix"> </div>
     

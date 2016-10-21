@@ -84,7 +84,7 @@
             <div class="clearfix"> </div>
             <div class='row'>
                 
-                @if (Storage::has('events/'.$retreat->id.'/group_photo.jpg'))
+                @if (Storage::has('event/'.$retreat->id.'/group_photo.jpg'))
                     <div class='col-md-1'>
                         <strong>Group photo:</strong> 
                     </div>

@@ -82,7 +82,7 @@ class Retreat extends Model
             return NULL;
         }
     public function getRetreatScheduleLinkAttribute () {
-        if (Storage::has('events/'.$this->id.'/schedule.pdf')) {
+        if (Storage::has('event/'.$this->id.'/schedule.pdf')) {
             $img = Html::image('img/schedule.png', 'Schedule',array('title'=>"Schedule"));
             $link = '<a href="'.url('retreat/'.$this->id.'/schedule" ').'class="btn btn-default" style="padding: 3px;">'.$img.'</a>';
             return $link;
@@ -92,7 +92,7 @@ class Retreat extends Model
     }
     
     public function getRetreatContractLinkAttribute () {
-        if (Storage::has('events/'.$this->id.'/contract.pdf')) {
+        if (Storage::has('event/'.$this->id.'/contract.pdf')) {
             $img = Html::image('img/contract.png', 'Contract',array('title'=>"Contract"));
             $link = '<a href="'.url('retreat/'.$this->id.'/contract" ').'class="btn btn-default" style="padding: 3px;">'.$img.'</a>';
             return $link;
@@ -102,7 +102,7 @@ class Retreat extends Model
     }
     
     public function getRetreatEvaluationsLinkAttribute () {
-        if (Storage::has('events/'.$this->id.'/evaluations.pdf')) {
+        if (Storage::has('event/'.$this->id.'/evaluations.pdf')) {
             $img = Html::image('img/evaluation.png', 'Evaluations',array('title'=>"Evaluations"));
             $link = '<a href="'.url('retreat/'.$this->id.'/evaluations" ').'class="btn btn-default" style="padding: 3px;">'.$img.'</a>';
             return $link;

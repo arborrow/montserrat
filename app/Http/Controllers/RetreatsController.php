@@ -213,7 +213,7 @@ public function edit($id)
             'contract' => 'file|mimes:pdf|max:5000',
             'schedule' => 'file|mimes:pdf|max:5000',
             'evaluations' => 'file|mimes:pdf|max:10000',
-            'photo' => 'image|max:10000',
+            'group_photo' => 'image|max:10000',
             
         ]);
         
@@ -237,55 +237,26 @@ public function edit($id)
         if (null !== $request->file('contract')) {
             $description = 'Contract for '.$retreat->idnumber.'-'.$retreat->title;
             $attachment = new AttachmentsController;
-            $attachment->create_attachment($request->file('contract'),'events',$retreat->id,'contract',$description);
+            $attachment->update_attachment($request->file('contract'),'event',$retreat->id,'contract',$description);
         }
         
         if (null !== $request->file('schedule')) {
-            $schedule = new \montserrat\Attachment;
-            $file = $request->file('schedule');
-            $file_name = $file->getClientOriginalName();
-            $schedule->file_type_id = FILE_TYPE_EVENT_SCHEDULE;
-            $schedule->mime_type = $file->getClientMimeType();
-            $schedule->uri = 'schedule.pdf';
-            $schedule->description = 'Schedule for '.$retreat->idnumber.'-'.$retreat->title;
-            $schedule->upload_date = \Carbon\Carbon::now();
-            $schedule->entity = "event";
-            $schedule->entity_id = $retreat->id;
-            $schedule->save();
-            Storage::disk('local')->put('events/'.$retreat->id.'/schedule.pdf',File::get($file));
-        }
+            $description = 'Schedule for '.$retreat->idnumber.'-'.$retreat->title;
+            $attachment = new AttachmentsController;
+            $attachment->update_attachment($request->file('schedule'),'event',$retreat->id,'schedule',$description);
+        }   
+            
         if (null !== $request->file('evaluations')) {
-            $evaluations = new \montserrat\Attachment;
-            $file = $request->file('evaluations');
-            $file_name = $file->getClientOriginalName();
-            
-            $evaluations->file_type_id = FILE_TYPE_EVENT_EVALUATION;
-            $evaluations->mime_type = $file->getClientMimeType();
-            $evaluations->uri = 'evaluations.pdf';
-            $evaluations->description = 'Evaluations for '.$retreat->idnumber.'-'.$retreat->title;
-            $evaluations->upload_date = \Carbon\Carbon::now();
-            $evaluations->entity = "event";
-            $evaluations->entity_id = $retreat->id;
-            $evaluations->save();
-            Storage::disk('local')->put('events/'.$retreat->id.'/evaluations.pdf',File::get($file));
-        }
+            $description = 'Evaluations for '.$retreat->idnumber.'-'.$retreat->title;
+            $attachment = new AttachmentsController;
+            $attachment->update_attachment($request->file('evaluations'),'event',$retreat->id,'evaluations',$description);
+        }   
         
-        if (null !== $request->file('photo')) {
-            $group_photo = Image::make($request->file('photo')->getRealPath());
-            Storage::put('events/'.$retreat->id.'/'.'group_photo.jpg',$group_photo->stream('jpg'));
-                $evaluations = new \montserrat\Attachment;
-            $file = $request->file('photo');
-            $file_name = 'group_photo.jpg';
-            
-            $evaluations->file_type_id = FILE_TYPE_EVENT_GROUP_PHOTO;
-            $evaluations->mime_type = $file->getClientMimeType();
-            $evaluations->uri = 'group_photo.jpg';
-            $evaluations->description = 'Group photo for '.$retreat->idnumber.'-'.$retreat->title;
-            $evaluations->upload_date = \Carbon\Carbon::now();
-            $evaluations->entity = "event";
-            $evaluations->entity_id = $retreat->id;
-            $evaluations->save();
-        }
+        if (null !== $request->file('group_photo')) {
+            $description = 'Group photo for '.$retreat->idnumber.'-'.$retreat->title;
+            $attachment = new AttachmentsController;
+            $attachment->update_attachment($request->file('group_photo'),'event',$retreat->id,'group_photo',$description);
+        }   
         
         if (empty($request->input('directors')) or in_array(0,$request->input('directors'))) {
             $retreat->retreatmasters()->detach();
@@ -314,117 +285,6 @@ public function edit($id)
        //
     }
  
-    public function get_event_contract($event_id) {
-        $path = storage_path() . '/app/events/'.$event_id.'/contract.pdf';
-        if(!File::exists($path)) abort(404);
-
-        $file = File::get($path);
-        $type = File::mimeType($path);
-
-        $response = Response::make($file, 200);
-        $response->header("Content-Type", $type);
-
-        return $response;
-    }    
-
-    public function get_event_schedule($event_id) {
-        $path = storage_path() . '/app/events/'.$event_id.'/schedule.pdf';
-        if(!File::exists($path)) abort(404);
-
-        $file = File::get($path);
-        $type = File::mimeType($path);
-
-        $response = Response::make($file, 200);
-        $response->header("Content-Type", $type);
-
-        return $response;
-    }    
-
-    
-    public function get_event_evaluations($event_id) {
-        $path = storage_path() . '/app/events/'.$event_id.'/evaluations.pdf';
-        if(!File::exists($path)) abort(404);
-
-        $file = File::get($path);
-        $type = File::mimeType($path);
-
-        $response = Response::make($file, 200);
-        $response->header("Content-Type", $type);
-
-        return $response;
-    }  
-    /* Since soft deletes are being used in the model, 
-     * I am doing a type of soft delete of files by renaming to deleted-unix_timestamp
-     * TODO: on update, check if file already exists and if so, rename it to updated-unix_timestamp */
-    
-    public function delete_event_evaluations($event_id) {
-        $evaluation = \montserrat\Attachment::whereEntity('event')->whereEntityId($event_id)->whereUri('evaluations.pdf')->firstOrFail();
-        $path = storage_path() . '/app/events/'.$event_id.'/evaluations.pdf';
-        $new_path = 'evaluations-deleted-'.time().'.pdf';
-        if(!File::exists($path)) abort(404);
-        if (Storage::move('events/'.$event_id.'/evaluations.pdf','events/'.$event_id.'/'.$new_path)) {
-            $evaluation->uri=$new_path;
-            $evaluation->save();
-            $evaluation->delete();
-        }
-            
-        return Redirect::action('RetreatsController@show',$event_id);
-    } 
-    public function delete_event_schedule($event_id) {
-        $schedule = \montserrat\Attachment::whereEntity('event')->whereEntityId($event_id)->whereUri('schedule.pdf')->firstOrFail();
-        //dd($evaluation);
-        $path = storage_path() . '/app/events/'.$event_id.'/schedule.pdf';
-        $new_path = 'contract-deleted-'.time().'.pdf';
-        if(!File::exists($path)) abort(404);
-        if (Storage::move('events/'.$event_id.'/schedule.pdf','events/'.$event_id.'/'.$new_path)) {
-            $schedule->uri = $new_path;
-            $schedule->save();
-            $schedule->delete();
-        }
-            
-        return Redirect::action('RetreatsController@show',$event_id);
-    }
-
-    public function delete_event_contract($event_id) {
-        $contract = \montserrat\Attachment::whereEntity('event')->whereEntityId($event_id)->whereUri('contract.pdf')->firstOrFail();
-        $path = storage_path() . '/app/events/'.$event_id.'/contract.pdf';
-        $new_path = 'contract-deleted-'.time().'.pdf';
-        if(!File::exists($path)) abort(404);
-        if (Storage::move('events/'.$event_id.'/contract.pdf','events/'.$event_id.'/'.$new_path)) {
-            $contract->uri=$new_path;
-            $contract->save();
-            $contract->delete();
-        }
-            
-        return Redirect::action('RetreatsController@show',$event_id);
-    }
-    
-    public function delete_event_group_photo($event_id) {
-        $group_photo = \montserrat\Attachment::whereEntity('event')->whereEntityId($event_id)->whereUri('group_photo.jpg')->firstOrFail();
-        $path = storage_path() . '/app/events/'.$event_id.'/group_photo.jpg';
-        $new_path = 'group_photo-deleted-'.time().'.jpg';
-        if(!File::exists($path)) abort(404);
-        if (Storage::move('events/'.$event_id.'/group_photo.jpg','events/'.$event_id.'/'.$new_path)) {
-            $group_photo->uri=$new_path;
-            $group_photo->save();
-            $group_photo->delete();
-        }
-            
-        return Redirect::action('RetreatsController@show',$event_id);
-    }
-
-    public function get_event_group_photo($event_id) {
-        $path = storage_path() . '/app/events/'.$event_id.'/group_photo.jpg';
-        if(!File::exists($path)) abort(404);
-
-        $file = File::get($path);
-        $type = File::mimeType($path);
-
-        $response = Response::make($file, 200);
-        $response->header("Content-Type", $type);
-
-        return $response;
-    }    
 
     public function assign_rooms($id)
     {
