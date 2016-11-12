@@ -69,7 +69,30 @@ class TouchpointsController extends Controller
     return view('touchpoints.add_group',compact('staff','groups','defaults'));  
 
     }
+
+    public function add_retreat($event_id=0)
+    {
+        $staff = \montserrat\Contact::with('groups')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_STAFF);})->orderBy('sort_name')->pluck('sort_name','id');
+        $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->orderBy('start_date','desc')->pluck('description','id');
+        $retreats->prepend('Unassigned',0);
         
+        $retreat = \montserrat\Retreat::findOrFail($event_id);
+        // TODO: replace this with an autocomplete text box for performance rather than a dropdown box
+        $participants = \montserrat\Registration::whereEventId($event_id)->whereCanceledAt(NULL)->get();
+        $current_user = Auth::user();
+        $user_email = \montserrat\Email::whereEmail($current_user->email)->first();
+        
+        $defaults['event_id'] = $event_id;
+        $defaults['event_description'] = $retreat->idnumber.'-'.$retreat->title.' ('.$retreat->start_date.')';
+        if (empty($user_email->contact_id)) {
+            $defaults['user_id'] = 0;
+        } else {
+            $defaults['user_id'] = $user_email->contact_id;
+        }
+    return view('touchpoints.add_retreat',compact('staff','retreat','retreats','participants','defaults'));  
+
+    }
+
     public function add($id)
     {
         //
@@ -146,6 +169,29 @@ class TouchpointsController extends Controller
                 $touchpoint->save();
         }
         return Redirect::action('GroupsController@show',$touchpoint->group_id);
+    }
+    
+    public function store_retreat(Request $request)
+    {
+        //
+        $this->validate($request, [
+        'event_id' => 'required|integer|min:0',
+        'touched_at' => 'required|date',
+        'staff_id' => 'required|integer|min:0',
+        'type' => 'in:Email,Call,Letter,Face,Other'
+        ]);
+        $event_id = $request->input('event_id');
+        $participants = \montserrat\Registration::whereEventId($event_id)->whereRoleId(PARTICIPANT_ROLE_ID_RETREATANT)->whereNull('canceled_at')->get();
+        foreach ($participants as $participant) {
+                $touchpoint = new \montserrat\Touchpoint;
+                $touchpoint->person_id= $participant->contact_id;
+                $touchpoint->staff_id= $request->input('staff_id');
+                $touchpoint->touched_at= Carbon::parse($request->input('touched_at'));
+                $touchpoint->type = $request->input('type');
+                $touchpoint->notes= $request->input('notes');
+                $touchpoint->save();
+        }
+        return Redirect::action('RetreatsController@show',$event_id);
     }
     
 

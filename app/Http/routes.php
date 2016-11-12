@@ -36,6 +36,7 @@ Route::get('retreat/{event_id}/evaluations', ['as' => 'get_event_evaluations','u
 Route::get('retreat/{event_id}/evaluations/delete', ['as' => 'delete_event_evaluations','uses' => 'AttachmentsController@delete_event_evaluations']);
 Route::get('retreat/{event_id}/photo', ['as' => 'get_event_group_photo','uses' => 'AttachmentsController@get_event_group_photo']);
 Route::get('retreat/{event_id}/photo/delete', ['as' => 'delete_event_group_photo','uses' => 'AttachmentsController@delete_event_group_photo']);
+Route::get('retreat/{event_id}/touchpoint',['uses' => 'TouchpointsController@add_retreat']);
 
 // General routes including groups, resources, etc. 
 Route::get('/',['as' => 'welcome','uses' => 'PagesController@welcome']);
@@ -57,6 +58,7 @@ Route::get('donation',['as' => 'donation','uses' => 'PagesController@donation'])
 Route::get('group/{group_id?}/touchpoint',['uses' => 'TouchpointsController@add_group']);
 Route::get('group/{group_id?}/registration',['uses' => 'RegistrationsController@add_group']);
 Route::post('touchpoint/add_group',['uses' => 'TouchpointsController@store_group']);
+Route::post('touchpoint/add_retreat',['uses' => 'TouchpointsController@store_retreat']);
 Route::post('registration/add_group',['uses' => 'RegistrationsController@store_group']);
 
 
