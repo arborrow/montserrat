@@ -21,6 +21,7 @@ class Person extends Model
         }
     }
     
+    
     public function parish() {
         return $this->belongsTo('\montserrat\Parish','parish_id','id');
     }

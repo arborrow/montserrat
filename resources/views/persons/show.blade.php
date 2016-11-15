@@ -149,7 +149,7 @@
                         {{ !empty($person->preferred_language) ? $person->preferred_language_label: 'N/A' }}
                     <br />
                     <strong>Deceased?: </strong>
-                    @if ($person->is_deceased>0)
+                    @if ($person->is_deceased)
                         Yes
                     @else 
                         No

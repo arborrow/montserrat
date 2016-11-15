@@ -177,7 +177,7 @@
                         {!! Form::label('deceased_date', 'Deceased Date:', ['class' => 'col-md-2'])  !!}
                         {!! Form::text('deceased_date', $person->deceased_date, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
                         {!! Form::label('is_deceased', 'Is Deceased:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_deceased', $person->is_deceased, false,['class' => 'col-md-1']) !!}
+                        {!! Form::checkbox('is_deceased', 1, $person->is_deceased, ['class' => 'col-md-1']) !!}
                         <div class="clearfix"> </div>
                     </div>
             </div>

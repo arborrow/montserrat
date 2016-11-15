@@ -1047,7 +1047,6 @@ class PersonsController extends Controller
             $language = \montserrat\Language::findOrFail($request->input('preferred_language_id'));
             $person->preferred_language = $language->name;
         }
-        
         if (empty($request->input('is_deceased'))) {
                 $person->is_deceased = 0;
         } else {
