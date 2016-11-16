@@ -110,7 +110,13 @@
                         @foreach($parish->parishioners as $parishioner)
                         <tr>
                             
-                            <td><a href="../person/{{$parishioner->contact_b->id}}">{{ $parishioner->contact_b->display_name }}</a></td>
+                            <td><a href="../person/{{$parishioner->contact_b->id}}">
+                                    @if($parishioner->contact_b->is_captain) 
+                                        {!! Html::image('img/captain.png', 'Captain',array('title'=>"Captain",'class' => 'btn btn-default')) !!}
+                                    @endIf
+                                    {{ $parishioner->contact_b->full_name }}
+                                </a>
+                            </td>
                             @if(isset($parishioner->contact_b->address_primary))
                                 <td>
                                     {!!$parishioner->contact_b->address_primary->google_map!!}
