@@ -95,9 +95,9 @@
                 <li><a href={{ route('bookstore') }}>{!! Html::image('img/bookstore.png', 'Bookstore',array('title'=>"Bookstore")) !!}</a></li>
                 <li class="divider"></li>
                 <li><a href={{ route('users') }}>{!! Html::image('img/users.png', 'Users',array('title'=>"Users")) !!}</a></li>
-           
+           -->             
                 <li><a href={{ route('touchpoint.index') }}>Touchpoints</a></li>
--->              
+ <!--
                 <li><a href={{ route('support') }}>{!! Html::image('img/support.png', 'Support',array('title'=>"Support")) !!}</a></li>
                 <li><a href={{ route('about') }}>{!! Html::image('img/about.png', 'About',array('title' => 'About')) !!}</a></li>
                 <!-- @if (isset(Auth::User()->email))
