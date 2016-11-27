@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'url' => 'http://localhost/montserrat/public',
+    'url' => 'http://localhost/polanco/public',
 
     /*
     |--------------------------------------------------------------------------
