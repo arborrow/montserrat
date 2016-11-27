@@ -36,7 +36,7 @@
                                 No Bishop(s) assigned 
                                 @else
                                 @foreach($diocese->bishops as $bishop)
-                                <a href="person/{{$bishop->contact_id_b}}">{{ $bishop->contact_b->display_name}}</a>
+                                <a href="person/{{$bishop->contact_id_b}}">{{ $bishop->contact_b->full_name}}</a>
                                 @endforeach
                                 @endif
                             </td>
