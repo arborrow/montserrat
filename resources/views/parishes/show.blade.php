@@ -68,7 +68,7 @@
                 <div class='row'>
                     <div class='col-md-6'><strong>Pastor: </strong>
                         @if (isset($parish->pastor->contact_b))
-                            <a href="../person/{{ $parish->pastor->contact_b->id}}">{{ $parish->pastor->contact_b->display_name or 'No pastor assigned'}}</a>
+                            <a href="../person/{{ $parish->pastor->contact_b->id}}">{{ $parish->pastor->contact_b->full_name or 'No pastor assigned'}}</a>
                         @else
                             No pastor assigned
                         @endIf
