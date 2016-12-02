@@ -45,7 +45,7 @@
                                 <td><a href="{{url('room/'.$room->id)}}">{{$room->location->name}} {{$room->name}}</a></td>
                                 
                                 @foreach($dts as $dt)
-                                    @if ($m[$room->id][$dt->toDateString()]['status'] == 'R')
+                                    @if (($m[$room->id][$dt->toDateString()]['status'] == 'R') OR ($m[$room->id][$dt->toDateString()]['status'] == 'O')) 
                                     <td class='warning'>
                                     {!! Html::link('registration/'.$m[$room->id][$dt->toDateString()]['registration_id'], $m[$room->id][$dt->toDateString()]['status'] , array('title'=>$m[$room->id][$dt->toDateString()]['retreat_name'].' ('.$m[$room->id][$dt->toDateString()]['retreatant_name'].')')) !!} 
                                     @else
