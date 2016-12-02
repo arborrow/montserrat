@@ -196,10 +196,10 @@ return Redirect::action('RoomsController@index');
         });
         
         //dd($dts);
-        $registrations_start = \montserrat\Registration::with('room','room.location','retreatant','retreat')->where('room_id','>',0)->whereHas('retreat', function($query) use ($dts) {
+        $registrations_start = \montserrat\Registration::with('room','room.location','retreatant','retreat')->whereNull('canceled_at')->where('room_id','>',0)->whereHas('retreat', function($query) use ($dts) {
             $query->where('start_date','>=',$dts[0])->where('start_date','<=',$dts[30]);
         })->get();
-        $registrations_end = \montserrat\Registration::with('room','room.location','retreatant','retreat')->where('room_id','>',0)->whereHas('retreat', function($query) use ($dts) {
+        $registrations_end = \montserrat\Registration::with('room','room.location','retreatant','retreat')->whereNull('canceled_at')->where('room_id','>',0)->whereHas('retreat', function($query) use ($dts) {
             $query->where('end_date','>=',$dts[0])->where('start_date','<=',$dts[0]);
         })->get();
         //dd($registrations_start, $registrations_end);
