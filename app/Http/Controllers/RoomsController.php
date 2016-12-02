@@ -238,6 +238,10 @@ return Redirect::action('RoomsController@index');
                 $matrixdate = $registration->retreat->start_date->copy()->addDays($i);
                 if (array_key_exists($matrixdate->toDateString(),$m[$registration->room_id])) {
                         $m[$registration->room_id][$matrixdate->toDateString()]['status']='R';
+                        if (!empty($registration->arrived_at) && empty($registration->departed_at)) {
+                            $m[$registration->room_id][$matrixdate->toDateString()]['status']='O';
+                        
+                        }
                         $m[$registration->room_id][$matrixdate->toDateString()]['registration_id']=$registration->id;
                         $m[$registration->room_id][$matrixdate->toDateString()]['retreatant_id']=$registration->contact_id;
                         $m[$registration->room_id][$matrixdate->toDateString()]['retreatant_name']= $registration->retreatant->display_name;
@@ -260,6 +264,9 @@ return Redirect::action('RoomsController@index');
                 $matrixdate = $registration->retreat->start_date->copy()->addDays($i);
                 if (array_key_exists($matrixdate->toDateString(),$m[$registration->room_id])) {
                         $m[$registration->room_id][$matrixdate->toDateString()]['status']='R';
+                        if (!empty($registration->arrived_at) && empty($registration->departed_at)) {
+                            $m[$registration->room_id][$matrixdate->toDateString()]['status']='O';
+                        }
                         $m[$registration->room_id][$matrixdate->toDateString()]['registration_id']=$registration->id;
                         $m[$registration->room_id][$matrixdate->toDateString()]['retreatant_id']=$registration->contact_id;
                         $m[$registration->room_id][$matrixdate->toDateString()]['retreatant_name']= $registration->retreatant->display_name;
