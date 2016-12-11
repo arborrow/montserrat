@@ -735,4 +735,30 @@ public function getContactLinkFullNameAttribute() {
             ['subcontact_type','>=',CONTACT_TYPE_PROVINCE],
             ]);
     }
+    public function scopeFiltered($query,$filters) {
+        //dd($filters->request);
+        foreach ($filters->request as $filter => $value) {
+            
+            if ($filter=='prefix_id' && $value>0) {$query->where($filter,$value); }
+            if ($filter=='first_name' && !empty($value)) {$query->where($filter,'like','%'.$value.'%'); }
+            if ($filter=='middle_name'&& !empty($value)) {$query->where($filter,'like','%'.$value.'%'); }
+            if ($filter=='last_name'&& !empty($value)) {$query->where($filter,'like','%'.$value.'%'); }
+            if ($filter=='suffix_id' && $value>0) {$query->where($filter,$value); }
+            if ($filter=='nick_name' && !empty($value)) {$query->where($filter,'like','%'.$value.'%'); }
+            if ($filter=='display_name'&& !empty($value)) {$query->where($filter,'like','%'.$value.'%'); }
+            if ($filter=='sort_name'&& !empty($value)) {$query->where($filter,'like','%'.$value.'%'); }
+            
+            if ($filter=='contact_type' && $value>0) {$query->where($filter,$value); }
+            if ($filter=='subcontact_type' && $value>0) {$query->where($filter,$value); }
+            if ($filter=='gender_id' && $value>0) {$query->where($filter,$value); }
+            
+            if ($filter=='religion_id' && $value>0) {$query->where($filter,$value); }
+            if ($filter=='occupation_id' && $value>0) {$query->where($filter,$value); }
+            if ($filter=='ethnicity_id' && $value>0) {$query->where($filter,$value); }
+                        
+        }
+        return $query;
+        
+    }
+    
 }

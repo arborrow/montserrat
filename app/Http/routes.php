@@ -19,6 +19,8 @@ Route::get('auth/google/callback', 'Auth\AuthController@handleProviderCallback')
 Route::get('logout', ['as' => 'logout','uses' => 'Auth\AuthController@logout']);
 Route::get('search/autocomplete', 'SearchController@autocomplete');
 Route::get('search/getuser', 'SearchController@getuser');
+Route::get('search', 'SearchController@search');
+Route::post('results',['as' => 'results', 'uses' => 'SearchController@results']);
 
 // Attachment routes
 
