@@ -72,7 +72,7 @@ class Retreat extends Model
                 $bcc_list .= $registration->retreatant->email_primary_text.',';
             }
         }
-        return "<a href='mailto:?bcc=".$bcc_list."'>E-mail Registered Retreatants</a>";
+        return "mailto:?bcc=".$bcc_list;
     }
     public function getRetreatTypeAttribute () {
         //dd($this->event_type);

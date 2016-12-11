@@ -5,8 +5,12 @@
     <div class="jumbotron text-left">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span><h2>Retreat #<a href="{{url('retreat/'.$retreat->id.'/edit')}}">{{ $retreat->idnumber }} - {{ $retreat->title }}</a></span>
-                <span class="back"><a href={{ action('RetreatsController@index') }}>{!! Html::image('img/retreat.png', 'Retreat Index',array('title'=>"Retreat Index",'class' => 'btn btn-default')) !!}</a></span></h1>
+                <h2>
+                    Retreat {!!Html::link(url('retreat/'.$retreat->id.'/edit'),$retreat->idnumber.' - '.$retreat->title)!!} 
+                </h2>
+                {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-default')) !!}
+                {!! Html::link(url('retreat'),'Retreat index',array('class' => 'btn btn-default')) !!}
+            
             </div>
             <div class='row'>
                 <div class='col-md-2'><strong>ID#: </strong>{{ $retreat->idnumber}}</div>
@@ -103,16 +107,16 @@
                 {!! Form::close() !!}</div><div class="clearfix"> </div>
             </div><br />
         <div class="panel panel-default">  
-        <div class="panel-heading">
-            <h2 id='registrations'>Retreatants Registered for {{ $retreat->idnumber }} - {{ $retreat->title }}</h2>
-            <span class="btn btn-default"><a href={{ action('RegistrationsController@register', $retreat->id) }}>Register a Retreatant</a></span>
-            <span class="btn btn-default">{!! $retreat->email_registered_retreatants !!}</span>
-            <span class="btn btn-default"><a href={{ action('RetreatsController@assign_rooms',$retreat->id) }}>Assign Rooms</a></span>
-            <span class="btn btn-default"><a href={{ action('RetreatsController@checkout',$retreat->id) }}>Checkout</a></span>
-            <span class="btn btn-default"><a href={{ action('PagesController@retreatantinforeport',$retreat->idnumber) }}>Retreatant Information Report</a></span>
-            <span class="btn btn-default"><a href={{ action('PagesController@retreatrosterreport',$retreat->idnumber) }}>Retreat Roster</a></span>
-            <span class="btn btn-default"><a href={{ action('PagesController@retreatlistingreport',$retreat->idnumber) }}>Retreat Listing</a></span>
-            <span class="btn btn-default"><a href={{ action('TouchpointsController@add_retreat',$retreat->id)}}>Retreat Touchpoint</a></span>
+        <div class="panel-heading" id='registrations'>
+            <h2>Retreatants Registered for {!!Html::link(url('retreat/'.$retreat->id.'/edit'),$retreat->idnumber.' - '.$retreat->title)!!} </h2>
+            {!! Html::link(action('RegistrationsController@register',$retreat->id),'Register a retreatant',array('class' => 'btn btn-default'))!!}
+            {!! Html::link($retreat->email_registered_retreatants,'Email registered retreatants',array('class' => 'btn btn-default'))!!}
+            {!! Html::link(action('RetreatsController@assign_rooms',$retreat->id),'Assign rooms',array('class' => 'btn btn-default'))!!}
+            {!! Html::link(action('RetreatsController@checkout',$retreat->id),'Checkout',array('class' => 'btn btn-default'))!!}
+            {!! Html::link(action('PagesController@retreatantinforeport',$retreat->idnumber),'Retreatant information report',array('class' => 'btn btn-default'))!!}
+            {!! Html::link(action('PagesController@retreatrosterreport',$retreat->idnumber),'Retreat roster',array('class' => 'btn btn-default'))!!}
+            {!! Html::link(action('PagesController@retreatlistingreport',$retreat->idnumber),'Retreat listing',array('class' => 'btn btn-default'))!!}
+            {!! Html::link(action('TouchpointsController@add_retreat',$retreat->id),'Retreat touchpoint',array('class' => 'btn btn-default'))!!}
                 
         </div>
             @if ($registrations->isEmpty())
