@@ -6,13 +6,16 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                    <span class="grey">Retreat Index</span> 
-                    <span class="create"><a href={{ action('RetreatsController@create') }}>{!! Html::image('img/create.png', 'Create a Retreat',array('title'=>"Create Retreat",'class' => 'btn btn-primary')) !!}</a></span></h1>
+                    <span class="grey" id="upcoming_retreats">Upcoming retreats</span> 
+                    <span class="previous">{!! Html::link('#previous_retreats','Previous retreats',array('class' => 'btn btn-primary'))!!}</span>
+                    <span class="create"><a href={{ action('RetreatsController@create') }}>{!! Html::image('img/create.png', 'Create a Retreat',array('title'=>"Create Retreat",'class' => 'btn btn-primary')) !!}</a></span>
+                    </h1>
+
                 </div>
                 @if ($retreats->isEmpty())
-                    <p> Currently, there are no current or upcoming retreats!</p>
+                    <p> Currently, there are no upcoming retreats!</p>
                 @else
-                <table class="table table-bordered table-striped table-hover"><caption><h2>Current and upcoming retreats</h2></caption>
+                <table class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
                             <th>ID#</th>
@@ -70,11 +73,18 @@
                     </tbody>
                 </table>
                 @endif
-<hr>
+<hr>            <div class="panel-heading">
+                    <h1>
+                    <span class="grey" id="previous_retreats">Previous retreats</span> 
+                    <span class="grey">{!! Html::link('#upcoming_retreats','Upcoming retreats',array('class' => 'btn btn-primary'))!!}</span>
+                    </h1>
+                </div>
+                
                 @if ($oldretreats->isEmpty())
                     <p> Currently, there are no previous retreats!</p>
                 @else
-                <table class="table"><caption><h2>Previous retreats</h2></caption>
+                <table class="table">
+                    
                     <thead>
                         <tr>
                             <th>ID#</th>
@@ -130,9 +140,9 @@
                             <td> {!!$oldretreat->retreat_contract_link!!} {!!$oldretreat->retreat_schedule_link!!} {!!$oldretreat->retreat_evaluations_link!!}</td>
                         </tr>
                         @endforeach
-                        {!! $oldretreats->render() !!}  
                     </tbody>
                 </table>
+                {!! $oldretreats->render() !!}  
                 @endif
             </div>
         </div>
