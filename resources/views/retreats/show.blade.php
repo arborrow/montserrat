@@ -141,7 +141,7 @@
                     <tr>
                         <td id='registration-{{$registration->id}}'><a href="{{action('RegistrationsController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }}</a></td>
                         <td>{!!$registration->retreatant->avatar_small_link!!}</td>
-                        <td>{!!$registration->retreatant->contact_link!!}</td>
+                        <td>{!!$registration->retreatant->contact_link_full_name!!}</td>
                         <td>
                             @if (empty($registration->room->name))
                                 N/A
