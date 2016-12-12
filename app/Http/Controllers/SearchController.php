@@ -63,7 +63,10 @@ public function getuser() {
     }
 }
 public function results(Request $request) {
-    $persons = \montserrat\Contact::filtered($request)->paginate(100);
+    if (!empty($request)) {
+            $persons = \montserrat\Contact::filtered($request)->orderBy('sort_name')->paginate(100);
+            $persons->appends(Input::except('page'));
+    }
     return view('search.results',  compact('persons'));
     
 }

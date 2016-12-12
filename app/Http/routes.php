@@ -20,7 +20,10 @@ Route::get('logout', ['as' => 'logout','uses' => 'Auth\AuthController@logout']);
 Route::get('search/autocomplete', 'SearchController@autocomplete');
 Route::get('search/getuser', 'SearchController@getuser');
 Route::get('search', 'SearchController@search');
-Route::post('results',['as' => 'results', 'uses' => 'SearchController@results']);
+
+//need to figure out how to paginate results and keep the various variables passed along with it
+
+Route::get('results',['as' => 'results', 'uses' => 'SearchController@results']);
 
 // Attachment routes
 

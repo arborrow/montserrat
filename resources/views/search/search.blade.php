@@ -9,7 +9,7 @@
                         <h1><strong>Search Contacts</strong></h1>
         </div>
        
-        {!! Form::open(['method' => 'POST', 'route' => ['results']]) !!}
+        {!! Form::open(['method' => 'GET', 'route' => ['results']]) !!}
 
         <div class='row'>
             <div class='col-md-12'>

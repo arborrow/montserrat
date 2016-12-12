@@ -6,7 +6,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                    <span class="grey">Search results</span> 
+                    <span class="grey">{{count($persons)}} results found</span> 
                     <span class="search"><a href={{ action('SearchController@search') }}>{!! Html::image('img/search.png', 'New search',array('title'=>"New search",'class' => 'btn btn-link')) !!}</a></span></h1>
                 </div>
                 
