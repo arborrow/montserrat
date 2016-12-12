@@ -109,6 +109,10 @@ class Contact extends Model
     }
     
     public function getAvatarLargeLinkAttribute() {
+         if ($this->is_deceased) {
+            return "<img src='".url('img/dead.png')."' class='img-circle' style='height: 150px; padding:5px;'>";
+        }
+       
         if (Storage::has('contact/'.$this->id.'/avatar.png')) {
             return "<img src='".url('avatar/'.$this->id)."' class='img-circle' style='height: 150px; padding:5px;'>";
         } else {
@@ -117,6 +121,9 @@ class Contact extends Model
     
     }
     public function getAvatarSmallLinkAttribute() {
+        if ($this->is_deceased) {
+            return "<img src='".url('img/dead.png')."' class='img-circle' style='height: 75px; padding:5px;'>";
+        }
         if (Storage::has('contact/'.$this->id.'/avatar.png')) {
             return "<img src='".url('avatar/'.$this->id)."' class='img-circle' style='height: 75px; padding:5px;'>";
         } else {
@@ -755,6 +762,7 @@ public function getContactLinkFullNameAttribute() {
             if ($filter=='religion_id' && $value>0) {$query->where($filter,$value); }
             if ($filter=='occupation_id' && $value>0) {$query->where($filter,$value); }
             if ($filter=='ethnicity_id' && $value>0) {$query->where($filter,$value); }
+            if ($filter=='is_deceased' && $value>0) {$query->where($filter,$value); }
                         
         }
         return $query;
