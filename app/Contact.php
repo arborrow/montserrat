@@ -116,7 +116,7 @@ class Contact extends Model
             if ($this->is_deceased) {
                 return "<img src='".url('img/dead.png')."' class='img-circle' style='height: 150px; padding:5px;'>";
             } else {
-            return "<img src='".url('img/default.png')."' class='img-circle' style='height: 150px; padding:5px;'>";
+                return "<img src='".url('img/default.png')."' class='img-circle' style='height: 150px; padding:5px;'>";
             }
         }
     
@@ -766,6 +766,15 @@ public function getContactLinkFullNameAttribute() {
             if ($filter=='occupation_id' && $value>0) {$query->where($filter,$value); }
             if ($filter=='ethnicity_id' && $value>0) {$query->where($filter,$value); }
             if ($filter=='is_deceased' && $value>0) {$query->where($filter,$value); }
+            // ignore year but get everyone born on that month/day
+            if ($filter=='birth_date' && !empty($value)) {
+                    $dob = Carbon::parse($value);
+                    $query->whereMonth('birth_date','=',$dob->month); 
+                    $query->whereDay('birth_date','=',$dob->day); 
+                    
+                    //$query->whereDate('birth_date','=',$dob->toDateString()); 
+                    //dd($dob->toDateString());
+                }
                         
         }
         return $query;

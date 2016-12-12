@@ -8,8 +8,11 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                    <span class="grey">Diocese Index</span> 
-                    <span class="create"><a href={{ action('DiocesesController@create') }}>{!! Html::image('img/create.png', 'Create a Diocese',array('title'=>"Create Diocese",'class' => 'btn btn-primary')) !!}</a></span></h1>
+                        <span class="grey">Diocese Index</span>
+                        <span class="create">
+                            <a href={{ action('DiocesesController@create') }}>{!! Html::image('img/create.png', 'Create a Diocese',array('title'=>"Create Diocese",'class' => 'btn btn-primary')) !!}</a>
+                        </span>
+                    </h1>
                 </div>
                 @if ($dioceses->isEmpty())
                     <p>No Dioceses are currently in the database.</p>

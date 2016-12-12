@@ -63,6 +63,39 @@ public function getuser() {
     }
 }
 public function results(Request $request) {
+        $this->validate($request, [
+            'email_home' => 'email',
+            'email_work' => 'email',
+            'email_other' => 'email',
+            'birth_date' => 'date',            
+            'deceased_date' => 'date',            
+            'url_main' => 'url',
+            'url_work' => 'url',
+            'url_facebook' => 'url|regex:/facebook\.com\/.+/i',
+            'url_google' => 'url|regex:/plus\.google\.com\/.+/i',
+            'url_twitter' => 'url|regex:/twitter\.com\/.+/i',
+            'url_instagram' => 'url|regex:/instagram\.com\/.+/i',
+            'url_linkedin' => 'url|regex:/linkedin\.com\/.+/i',
+            'parish_id' => 'integer|min:0',
+            'gender_id' => 'integer|min:0',
+            'ethnicity_id' => 'integer|min:0',
+            'religion_id' => 'integer|min:0',
+            'contact_type' => 'integer|min:0',
+            'subcontact_type' => 'integer|min:0',
+            'occupation_id' => 'integer|min:0',
+            'emergency_contact_phone' => 'phone',
+            'emergency_contact_phone_alternate' => 'phone',
+            'phone_home_phone' => 'phone',
+            'phone_home_mobile' => 'phone',
+            'phone_home_fax' => 'phone',
+            'phone_work_phone' => 'phone',
+            'phone_work_mobile' => 'phone',
+            'phone_work_fax' => 'phone',
+            'phone_other_phone' => 'phone',
+            'phone_other_mobile' => 'phone',
+            'phone_other_fax' => 'phone',
+        ]);
+
     if (!empty($request)) {
             $persons = \montserrat\Contact::filtered($request)->orderBy('sort_name')->paginate(100);
             $persons->appends(Input::except('page'));
