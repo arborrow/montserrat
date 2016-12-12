@@ -515,7 +515,7 @@ public function getContactLinkFullNameAttribute() {
             return NULL;
         }
     }
-    public function getReligionName() {
+    public function getReligionNameAttribute() {
         if (isset($this->religion_id)&&($this->religion_id>0)) {
             return $this->religion->label;
         } else {
