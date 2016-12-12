@@ -109,25 +109,28 @@ class Contact extends Model
     }
     
     public function getAvatarLargeLinkAttribute() {
-         if ($this->is_deceased) {
-            return "<img src='".url('img/dead.png')."' class='img-circle' style='height: 150px; padding:5px;'>";
-        }
-       
+         
         if (Storage::has('contact/'.$this->id.'/avatar.png')) {
             return "<img src='".url('avatar/'.$this->id)."' class='img-circle' style='height: 150px; padding:5px;'>";
         } else {
+            if ($this->is_deceased) {
+                return "<img src='".url('img/dead.png')."' class='img-circle' style='height: 150px; padding:5px;'>";
+            } else {
             return "<img src='".url('img/default.png')."' class='img-circle' style='height: 150px; padding:5px;'>";
+            }
         }
     
     }
     public function getAvatarSmallLinkAttribute() {
-        if ($this->is_deceased) {
-            return "<img src='".url('img/dead.png')."' class='img-circle' style='height: 75px; padding:5px;'>";
-        }
+        
         if (Storage::has('contact/'.$this->id.'/avatar.png')) {
             return "<img src='".url('avatar/'.$this->id)."' class='img-circle' style='height: 75px; padding:5px;'>";
         } else {
-            return "<img src='".url('img/default.png')."' class='img-circle' style='height: 75px; padding:5px;'>";
+            if ($this->is_deceased) {
+                return "<img src='".url('img/dead.png')."' class='img-circle' style='height: 75px; padding:5px;'>";
+            } else {
+                return "<img src='".url('img/default.png')."' class='img-circle' style='height: 75px; padding:5px;'>";
+            }
         }
     
     }
