@@ -120,7 +120,6 @@ class PagesController extends Controller
                 ->orderBy('participant.notes', 'asc')
                 ->get();
         
-
         return view('reports.retreatlisting',compact('registrations'));   //
     }
    public function retreatrosterreport($id)

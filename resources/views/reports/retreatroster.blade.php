@@ -2,6 +2,7 @@
 @section('content')
 
 <div class ="retreatroster">
+@if (!$registrations->isEmpty())
 
 <h2>Retreat #{{$registrations[0]->retreat->idnumber}} Room Roster - {{$registrations[0]->retreat->title}}</h2> 
      
@@ -25,6 +26,7 @@
     @endforeach
         
 </table>
+@endIf
 <br />
 <hr />
 <strong>{{$registrations->count()}} Registered Retreatant(s) as of {{date('l, F j, Y')}}</strong>

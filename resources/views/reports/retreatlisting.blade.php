@@ -2,7 +2,7 @@
 @section('content')
 
 <div class ="retreatlisting">
-
+@if (!$registrations->isEmpty())
 <h2>Retreat Listing for Retreat #{{$registrations[0]->retreat->idnumber}} - {{$registrations[0]->retreat->title}}</h2> 
      
 <hr />
@@ -14,7 +14,8 @@
         <th class="row-5 row-phone">Home phone</th>
         <th class="row-6 row-phone">Parish</th>
         <th class="row-7 row-notes">Notes</th>
-
+    
+                
     @foreach($registrations as $registration)
     
     <tr>
@@ -28,7 +29,7 @@
         
     </tr>    
     @endforeach
-       
+   @endIf    
 </table>
 <br />
 
