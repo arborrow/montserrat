@@ -771,9 +771,11 @@ public function getContactLinkFullNameAttribute() {
                     $dob = Carbon::parse($value);
                     $query->whereMonth('birth_date','=',$dob->month); 
                     $query->whereDay('birth_date','=',$dob->day); 
-                    
-                    //$query->whereDate('birth_date','=',$dob->toDateString()); 
-                    //dd($dob->toDateString());
+                }
+            if ($filter=='deceased_date' && !empty($value)) {
+                    $dod = Carbon::parse($value);
+                    $query->whereMonth('deceased_date','=',$dod->month); 
+                    $query->whereDay('deceased_date','=',$dod->day); 
                 }
                         
         }
