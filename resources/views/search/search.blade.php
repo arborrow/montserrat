@@ -68,6 +68,19 @@
             {!! Form::text('email', NULL, ['class' => 'col-md-3']) !!}
             {!! Form::label('phone', 'Phone:', ['class' => 'col-md-1'])  !!}
             {!! Form::text('phone', NULL, ['class' => 'col-md-2']) !!}
+            {!! Form::label('street_address', 'Address:', ['class' => 'col-md-2'])  !!}
+            {!! Form::text('street_address', NULL, ['class' => 'col-md-3']) !!}
+            {!! Form::label('city', 'City:', ['class' => 'col-md-2'])  !!}
+            {!! Form::text('city', NULL, ['class' => 'col-md-3']) !!}
+                      
+            {!! Form::label('state_province_id', 'State:', ['class' => 'col-md-1'])  !!}
+            {!! Form::select('state_province_id', $states, NULL, ['class' => 'col-md-2']) !!}
+
+            {!! Form::label('postal_code', 'Zip:', ['class' => 'col-md-1'])  !!}
+            {!! Form::text('postal_code', NULL, ['class' => 'col-md-2']) !!}
+                                            
+            {!! Form::label('url', 'Website:', ['class' => 'col-md-2'])  !!}
+            {!! Form::text('url', NULL, ['class' => 'col-md-3']) !!}
                        
                 
         </div>
