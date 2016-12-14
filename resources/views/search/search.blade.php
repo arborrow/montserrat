@@ -62,7 +62,15 @@
                 </div>
             </div>
         </div>
-        <div class="clearfix"> </div>  
+        <div class="clearfix"> </div> 
+        <div class="row">
+            {!! Form::label('email', 'Email:', ['class' => 'col-md-1'])  !!}
+            {!! Form::text('email', NULL, ['class' => 'col-md-3']) !!}
+            {!! Form::label('phone', 'Phone:', ['class' => 'col-md-1'])  !!}
+            {!! Form::text('phone', NULL, ['class' => 'col-md-2']) !!}
+                       
+                
+        </div>
 {{--
         <div class='row'>
             <div class='col-md-8'>

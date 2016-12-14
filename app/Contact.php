@@ -777,6 +777,8 @@ public function getContactLinkFullNameAttribute() {
                     $query->whereMonth('deceased_date','=',$dod->month); 
                     $query->whereDay('deceased_date','=',$dod->day); 
                 }
+            
+                
                         
         }
         return $query;

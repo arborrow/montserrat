@@ -85,20 +85,24 @@ public function results(Request $request) {
             'occupation_id' => 'integer|min:0',
             'emergency_contact_phone' => 'phone',
             'emergency_contact_phone_alternate' => 'phone',
-            'phone_home_phone' => 'phone',
-            'phone_home_mobile' => 'phone',
-            'phone_home_fax' => 'phone',
-            'phone_work_phone' => 'phone',
-            'phone_work_mobile' => 'phone',
-            'phone_work_fax' => 'phone',
-            'phone_other_phone' => 'phone',
-            'phone_other_mobile' => 'phone',
-            'phone_other_fax' => 'phone',
+            
         ]);
 
     if (!empty($request)) {
             $persons = \montserrat\Contact::filtered($request)->orderBy('sort_name')->paginate(100);
             $persons->appends(Input::except('page'));
+            if (!empty($request->phone)) {
+                $persons = \montserrat\Contact::filtered($request)->whereHas('phones', function ($query) use ($request) {
+                    $query->where('phone', 'like', '%'.$request->phone.'%');
+                    })->with('phones')->orderBy('sort_name')->paginate(100);
+                //dd($persons);
+            }
+            if (!empty($request->email)) {
+                $persons = \montserrat\Contact::filtered($request)->whereHas('emails', function ($query) use ($request) {
+                    $query->where('email', 'like', '%'.$request->email.'%');
+                    })->with('emails')->orderBy('sort_name')->paginate(100);
+                //dd($persons);
+            }
     }
     return view('search.results',  compact('persons'));
     
