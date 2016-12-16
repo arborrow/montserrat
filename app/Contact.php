@@ -777,10 +777,44 @@ public function getContactLinkFullNameAttribute() {
                     $query->whereMonth('deceased_date','=',$dod->month); 
                     $query->whereDay('deceased_date','=',$dod->day); 
                 }
+            if ($filter=='phone' && !empty($value)) {
+                $query->whereHas('phones', function($q) use ($value) {
+                    $q->where('phone','like','%'.$value.'%');
+                });
+            }    
+            if ($filter=='email'  && !empty($value)) {
+                $query->whereHas('emails', function($q) use ($value) {
+                    $q->where('email','like','%'.$value.'%');
+                });
+            }
+            if ($filter=='street_address'  && !empty($value)) {
+                $query->whereHas('addresses', function($q) use ($value) {
+                    $q->where('street_address','like','%'.$value.'%');
+                });
+            }
+            if ($filter=='city' && !empty($value)) {
+                $query->whereHas('addresses', function($q) use ($value) {
+                    $q->where('city','like','%'.$value.'%');
+                });
+            }
+            if ($filter=='state_province_id' && !empty($value)) {
+                $query->whereHas('addresses', function($q) use ($value) {
+                    $q->where('state_province_id','=',$value);
+                });
+            }
+            if ($filter=='postal_code' && !empty($value)) {
+                $query->whereHas('addresses', function($q) use ($value) {
+                    $q->where('postal_code','like','%'.$value.'%');
+                });
+            }
+            if ($filter=='url' && !empty($value)) {
+                $query->whereHas('websites', function($q) use ($value) {
+                    $q->where('url','like','%'.$value.'%');
+                });
+            }
             
-                
-                        
         }
+        
         return $query;
         
     }

@@ -91,48 +91,7 @@ public function results(Request $request) {
     if (!empty($request)) {
             $persons = \montserrat\Contact::filtered($request)->orderBy('sort_name')->paginate(100);
             $persons->appends(Input::except('page'));
-            if (!empty($request->phone)) {
-                $persons = \montserrat\Contact::filtered($request)->whereHas('phones', function ($query) use ($request) {
-                    $query->where('phone', 'like', '%'.$request->phone.'%');
-                    })->with('phones')->orderBy('sort_name')->paginate(100);
-                //dd($persons);
-            }
-            if (!empty($request->email)) {
-                $persons = \montserrat\Contact::filtered($request)->whereHas('emails', function ($query) use ($request) {
-                    $query->where('email', 'like', '%'.$request->email.'%');
-                    })->with('emails')->orderBy('sort_name')->paginate(100);
-                //dd($persons);
-            }
-            if (!empty($request->street_address)) {
-                $persons = \montserrat\Contact::filtered($request)->whereHas('addresses', function ($query) use ($request) {
-                    $query->where('street_address', 'like', '%'.$request->street_address.'%');
-                    })->with('addresses')->orderBy('sort_name')->paginate(100);
-                //dd($persons);
-            }
-            if (!empty($request->city)) {
-                $persons = \montserrat\Contact::filtered($request)->whereHas('addresses', function ($query) use ($request) {
-                    $query->where('city', 'like', '%'.$request->city.'%');
-                    })->with('addresses')->orderBy('sort_name')->paginate(100);
-                //dd($persons);
-            }
-            if (!empty($request->state_province_id)) {
-                $persons = \montserrat\Contact::filtered($request)->whereHas('addresses', function ($query) use ($request) {
-                    $query->where('state_province_id', '=', $request->state_province_id);
-                    })->with('addresses')->orderBy('sort_name')->paginate(100);
-                //dd($persons);
-            }
-            if (!empty($request->postal_code)) {
-                $persons = \montserrat\Contact::filtered($request)->whereHas('addresses', function ($query) use ($request) {
-                    $query->where('postal_code', 'like', '%'.$request->postal_code.'%');
-                    })->with('addresses')->orderBy('sort_name')->paginate(100);
-                //dd($persons);
-            }
-            if (!empty($request->url)) {
-                $persons = \montserrat\Contact::filtered($request)->whereHas('websites', function ($query) use ($request) {
-                    $query->where('url', 'like', '%'.$request->url.'%');
-                    })->with('websites')->orderBy('sort_name')->paginate(100);
-                //dd($persons);
-            }
+            
     }
     return view('search.results',  compact('persons'));
     
