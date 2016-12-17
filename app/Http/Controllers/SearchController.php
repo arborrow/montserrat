@@ -18,25 +18,16 @@ class SearchController extends Controller {
 
 
 public function autocomplete(){
-	$term = Input::get('term');
-	
-	$results = array();
-	$results[0]='Add new person';
-        // TODO: search for parishes, dioceses, etc.
-	/* $queries = DB::table('contact')
-                ->orderBy('sort_name')
-		->where('display_name', 'LIKE', '%'.$term.'%')
-                ->whereNull('deleted_at')
-		->take(20)->get(); */
-        $queries = \montserrat\Contact::orderBy('sort_name')->where('display_name','LIKE','%'.$term.'%')->whereDeletedAt(NULL)->take(20)->get();
-	foreach ($queries as $query) {
-                $results[] = [ 'id' => $query->id, 'value' => $query->full_name_with_city ];
-            
-        }
-
-        // $query = \montserrat\Contact::orderBy('sort_name')->where('display_name','LIKE','%'.$term.'%')->list('display_name','id')->toJson();
-        
-return Response::json($results);
+    $term = Input::get('term');
+    $results = array();
+    $queries = \montserrat\Contact::orderBy('sort_name')->where('display_name','LIKE','%'.$term.'%')->whereDeletedAt(NULL)->take(20)->get();
+    if (($queries->count() == 0)) {
+        $results[0]='Add new contact (No results)';
+    }
+    foreach ($queries as $query) {
+        $results[] = [ 'id' => $query->id, 'value' => $query->full_name_with_city ];
+    }
+    return Response::json($results);
 }
 
 public function getuser() {

@@ -158,6 +158,7 @@
     $( "#q" ).autocomplete({
 	  source: "{{ url('search/autocomplete') }}",
 	  minLength: 3,
+          autoFocus: true,
 	  select: function(event, ui) {
 	  	$('#q').val(ui.item.value);
                 $('#response').val(ui.item.id);
