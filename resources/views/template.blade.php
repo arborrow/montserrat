@@ -17,16 +17,15 @@
 
         <script>
 
-  function ConfirmDelete()
-  {
-  var x = confirm("Are you sure you want to delete?");
-  if (x)
-    return true;
-  else
-    return false;
-  }
+            function ConfirmDelete() {
+                var x = confirm("Are you sure you want to delete?");
+                if (x)
+                    return true;
+                else
+                return false;
+            }
 
-</script>
+        </script>
     </head>
     
     <body>
@@ -53,10 +52,9 @@
         <div class="row">
             <div class="col-md-6">
             {{ Form::open(['action' => ['SearchController@getuser'], 'method' => 'GET']) }}
-            {{ Form::text('q', '', ['id' =>  'q', 'placeholder' =>  'Type Name','autofocus'=>'autofocus'])}}
-            {{Form::hidden('response', '', array('id' =>'response')) }}
-
-            {{ Form::submit('Find Person', array('class' => 'btn btn-default')) }}
+            {{ Form::text('q', '', ['id' =>  'q', 'placeholder' =>  'Find contact by name','autofocus'=>'autofocus'])}}
+            {{ Form::hidden('response', '', array('id' =>'response')) }}
+            {{ Form::submit('Find Person', array('class' => 'btn btn-default','id'=>'btnSearch','style'=>'display:none')) }}
             <a href="{{action('SearchController@search')}}">{!! Html::image('img/search.png', 'Advanced search',array('title'=>"Advanced search",'class' => 'btn btn-link')) !!}</a>
             {{ Form::close() }}
             </div>
@@ -163,8 +161,9 @@
 	  select: function(event, ui) {
 	  	$('#q').val(ui.item.value);
                 $('#response').val(ui.item.id);
+                $('#btnSearch').click();
 	  }
-	}); 
+	});
   });
   </script>
 </body>

@@ -52,6 +52,9 @@ class Contact extends Model
     public function attachments() {
         return $this->hasMany('\montserrat\Attachment','entity_id','id')->whereEntity('contact');
     }
+    public function avatar() {
+        return $this->hasOne('\montserrat\Attachment','entity_id','id')->whereFileTypeId(FILE_TYPE_CONTACT_AVATAR);
+    }
     public function email_primary() {
         return $this->hasOne('\montserrat\Email','contact_id','id')->whereIsPrimary(1);
     }
@@ -811,6 +814,24 @@ public function getContactLinkFullNameAttribute() {
                 $query->whereHas('websites', function($q) use ($value) {
                     $q->where('url','like','%'.$value.'%');
                 });
+            }
+            if ($filter=='parish_id' && !empty($value)) {
+                $query->whereHas('parish', function($q) use ($value) {
+                    $q->where('contact_id_a','=',$value);
+                });
+            }
+            if ($filter=='has_attachment' && !empty($value)) {
+                $query->whereHas('attachments', function($q) use ($value) {
+                    $q->where('uri','!=','avatar.png');
+                });
+            }
+            if ($filter=='attachment_description' && !empty($value)) {
+                $query->whereHas('attachments', function($q) use ($value) {
+                    $q->where('description','LIKE','%'.$value.'%');
+                });
+            }
+            if ($filter=='has_avatar' && !empty($value)) {
+                $query->has('avatar');
             }
             
         }

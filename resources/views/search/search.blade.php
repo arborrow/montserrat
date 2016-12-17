@@ -42,10 +42,10 @@
 
                     <div class="clearfix"> </div>
                     {!! Form::label('contact_type', 'Contact type: ', ['class' => 'col-md-2'])  !!}
-                    {!! Form::select('contact_type', $contact_types, NULL, ['class' => 'col-md-2']) !!}
+                    {!! Form::select('contact_type', $contact_types, 0, ['class' => 'col-md-2']) !!}
 
                     {!! Form::label('subcontact_type', 'Subcontact type: ', ['class' => 'col-md-2'])  !!}
-                    {!! Form::select('subcontact_type', $subcontact_types, NULL, ['class' => 'col-md-2']) !!}
+                    {!! Form::select('subcontact_type', $subcontact_types, 0, ['class' => 'col-md-2']) !!}
                     <div class="clearfix"> </div>
 
                     {!! Form::label('has_avatar', 'Has avatar?:', ['class' => 'col-md-2'])  !!}

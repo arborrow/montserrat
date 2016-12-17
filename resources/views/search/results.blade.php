@@ -12,7 +12,7 @@
                 @if ($persons->isEmpty())
                     <p>Oops, no known contacts with the given search criteria</p>
                 @else
-                <table class="table table-striped table-bordered table-hover"><caption><h2>Persons</h2></caption>
+                <table class="table table-striped table-bordered table-hover"><caption><h2>Contacts</h2></caption>
                     <thead>
                         <tr>
                             <th>Picture</th>

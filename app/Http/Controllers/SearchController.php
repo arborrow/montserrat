@@ -89,7 +89,7 @@ public function results(Request $request) {
         ]);
 
     if (!empty($request)) {
-            $persons = \montserrat\Contact::filtered($request)->orderBy('sort_name')->paginate(100);
+            $persons = \montserrat\Contact::filtered($request)->orderBy('sort_name')->with('attachments')->paginate(100);
             $persons->appends(Input::except('page'));
             
     }
@@ -103,6 +103,7 @@ public function search()
         $parishes = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('address_primary.state','diocese.contact_a')->get();
         $parish_list[0]='N/A';
         $contact_types = \montserrat\ContactType::whereIsReserved(TRUE)->pluck('label','id');
+        $contact_types->prepend('N/A',0); 
         $subcontact_types = \montserrat\ContactType::whereIsReserved(FALSE)->whereIsActive(TRUE)->pluck('label','id');
         $subcontact_types->prepend('N/A',0); 
         // while probably not the most efficient way of doing this it gets me the result
