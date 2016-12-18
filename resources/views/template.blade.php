@@ -52,7 +52,7 @@
         <div class="row">
             <div class="col-md-6">
             {{ Form::open(['action' => ['SearchController@getuser'], 'method' => 'GET']) }}
-            {{ Form::text('q', '', ['id' =>  'q', 'placeholder' =>  'Find contact by name','autofocus'=>'autofocus'])}}
+            {{ Form::text('q', '', ['id' =>  'q', 'placeholder' =>  'Find contact by name','autofocus'=>'autofocus','class'=>'col-md-6'])}}
             {{ Form::hidden('response', '', array('id' =>'response')) }}
             {{ Form::submit('Find Person', array('class' => 'btn btn-default','id'=>'btnSearch','style'=>'display:none')) }}
             <a href="{{action('SearchController@search')}}">{!! Html::image('img/search.png', 'Advanced search',array('title'=>"Advanced search",'class' => 'btn btn-link')) !!}</a>
