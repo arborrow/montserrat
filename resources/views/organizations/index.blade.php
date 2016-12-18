@@ -9,6 +9,7 @@
                 <div class="panel-heading">
                     <h1>
                     <span class="grey">Organization Index</span> 
+                    <span class="grey">({{$organizations->count()}} records)</span> 
                     <span class="create"><a href={{ action('OrganizationsController@create') }}>{!! Html::image('img/create.png', 'Create a Diocese',array('title'=>"Create Diocese",'class' => 'btn btn-primary')) !!}</a></span></h1>
                 </div>
                 @if ($organizations->isEmpty())

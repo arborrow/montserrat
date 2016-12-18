@@ -6,9 +6,9 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                    <span class="grey" id="upcoming_retreats">Upcoming retreats</span> 
-                    <span class="previous">{!! Html::link('#previous_retreats','Previous retreats',array('class' => 'btn btn-primary'))!!}</span>
-                    <span class="create"><a href={{ action('RetreatsController@create') }}>{!! Html::image('img/create.png', 'Create a Retreat',array('title'=>"Create Retreat",'class' => 'btn btn-primary')) !!}</a></span>
+                        <span class="grey" id="upcoming_retreats">Upcoming retreats ({{$retreats->count()}}) </span> 
+                        <span class="previous">{!! Html::link('#previous_retreats','Previous retreats',array('class' => 'btn btn-primary'))!!}</span>
+                        <span class="create"><a href={{ action('RetreatsController@create') }}>{!! Html::image('img/create.png', 'Create a Retreat',array('title'=>"Create Retreat",'class' => 'btn btn-primary')) !!}</a></span>
                     </h1>
 
                 </div>
@@ -75,7 +75,7 @@
                 @endif
 <hr>            <div class="panel-heading">
                     <h1>
-                    <span class="grey" id="previous_retreats">Previous retreats</span> 
+                    <span class="grey" id="previous_retreats">Previous retreats ({{$oldretreats->total()}})</span> 
                     <span class="grey">{!! Html::link('#upcoming_retreats','Upcoming retreats',array('class' => 'btn btn-primary'))!!}</span>
                     </h1>
                 </div>

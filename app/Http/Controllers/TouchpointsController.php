@@ -25,7 +25,7 @@ class TouchpointsController extends Controller
     public function index()
     {
         //
-        $touchpoints = \montserrat\Touchpoint::orderBy('touched_at', 'desc')->with('person','staff')->get();
+        $touchpoints = \montserrat\Touchpoint::orderBy('touched_at', 'desc')->with('person','staff')->paginate(100);
         return view('touchpoints.index',compact('touchpoints'));   
     }
 

@@ -6,10 +6,12 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                    <span class="grey">Touch point Index</span> 
-                    <span class="create"><a href={{ action('TouchpointsController@create') }}>{!! Html::image('img/create.png', 'Add Touchpoint',array('title'=>"Add Touchpoint",'class' => 'btn btn-primary')) !!}</a></span></h1>
-                    <span class="create"><a href={{ action('TouchpointsController@group_create') }}>{!! Html::image('img/group_add.png', 'Add Group Touchpoint',array('title'=>"Add Group Touchpoint",'class' => 'btn btn-primary')) !!}</a></span></h1>
-                
+                        <span class="grey">Touch point Index</span> 
+                        <span class="grey">({{$touchpoints->total()}} records)</span> 
+                        <span class="create"><a href={{ action('TouchpointsController@create') }}>{!! Html::image('img/create.png', 'Add Touchpoint',array('title'=>"Add Touchpoint",'class' => 'btn btn-primary')) !!}</a></span>
+                        <span class="create"><a href={{ action('TouchpointsController@group_create') }}>{!! Html::image('img/group_add.png', 'Add Group Touchpoint',array('title'=>"Add Group Touchpoint",'class' => 'btn btn-primary')) !!}</a></span>
+                    </h1>
+                    <span>{!! $touchpoints->render() !!}</span>
                 </div>
                 @if ($touchpoints->isEmpty())
                     <p>It is a brand new world, there are no touch points!</p>
@@ -25,8 +27,10 @@
                         </tr>
                     </thead>
                     <tbody>
+
                         @foreach($touchpoints as $touchpoint)
                         <tr>
+
                             <td style="width:17%"><a href="touchpoint/{{ $touchpoint->id}}">{{ date('M d, Y g:i A', strtotime($touchpoint->touched_at)) }}</a></td>
                             <td style="width:17%"><a href="person/{{ $touchpoint->person->id}}">{{ $touchpoint->person->full_name }}</a></td>
                             <td style="width:17%"><a href="person/{{ $touchpoint->staff->id}}">{{ $touchpoint->staff->display_name }}</a></td>
@@ -36,7 +40,10 @@
                         @endforeach
                         
                     </tbody>
+                    
                 </table>
+                {!! $touchpoints->render() !!}    
+                    
                 @endif
             </div>
         </div>

@@ -9,6 +9,7 @@
                 <div class="panel-heading">
                     <h1>
                         <span class="grey">Diocese Index</span>
+                        <span class="grey">({{$dioceses->count()}} records)</span> 
                         <span class="create">
                             <a href={{ action('DiocesesController@create') }}>{!! Html::image('img/create.png', 'Create a Diocese',array('title'=>"Create Diocese",'class' => 'btn btn-primary')) !!}</a>
                         </span>
