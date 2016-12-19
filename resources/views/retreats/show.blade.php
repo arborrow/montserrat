@@ -56,7 +56,7 @@
 
             </div><div class="clearfix"> </div>
             <div class='row'>
-                <div class='col-md-3'><strong>Captain(s): </strong></div>
+                <div class='col-md-3'><strong>Captain(s): </strong>
                     @if ($retreat->captains->isEmpty())
                         N/A
                     @else
@@ -66,6 +66,7 @@
                         @endforeach
                     </div>
                     @endif
+                </div>
             </div>
             <div class='row'>
                 <div class='col-md-3'><strong>Type: </strong>{{ $retreat->retreat_type}}</div>
