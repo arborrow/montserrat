@@ -122,7 +122,7 @@
                 
         </div>
             @if ($registrations->isEmpty())
-                <p> Currently, there are no registrations for this retreats</p>
+                <p> Currently, there are no registrations for this retreat.</p>
             @else
             <table class="table">
                 <thead>
