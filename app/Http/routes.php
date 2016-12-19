@@ -146,7 +146,5 @@ Route::get('rooms/{ym?}/{building?}',['as' => 'rooms','uses' => 'RoomsController
 Route::get('support',['as' => 'support','uses' => 'PagesController@support']);
 Route::resource('touchpoint','TouchpointsController');
 Route::get('touchpoint/add/{id?}',['uses' => 'TouchpointsController@add']);
-Route::get('touchpoint/group_add/{group_id?}',['uses' => 'TouchpointsController@group_add']);
-Route::get('touchpoint/group_create',['uses' => 'TouchpointsController@group_create']);
 Route::get('users',['as' => 'users','uses' => 'PagesController@user']);
 Route::resource('vendor','VendorsController');

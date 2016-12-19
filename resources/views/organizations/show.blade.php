@@ -15,7 +15,7 @@
                     
                     <span><a href={{ action('OrganizationsController@index') }}>{!! Html::image('img/organization.png', 'Organization Index',array('title'=>"Organization Index",'class' => 'btn btn-default')) !!}</a></span>
                     <span class="btn btn-default">
-                        <a href={{ action('TouchpointsController@add',$organization->id) }}>Add Touch point</a>
+                        <a href={{ action('TouchpointsController@add',$organization->id) }}>Add Touchpoint</a>
                     </span>
                     <span class="btn btn-default">
                     <a href={{ action('RegistrationsController@add',$organization->id) }}>Add Registration</a> 
@@ -79,9 +79,9 @@
                     </div>
                     <div class="col-md-12">
                         @if ($organization->touchpoints->isEmpty())
-                            <h2>It is a brand new world, there are no touch points for this organization!</h2>
+                            <h2>It is a brand new world, there are no touchpoints for this organization!</h2>
                         @else
-                            <table class="table"><caption><h2>Touch points for {{ $organization->display_name }} </h2></caption>
+                            <table class="table"><caption><h2>Touchpoints for {{ $organization->display_name }} </h2></caption>
                                 <thead>
                                     <tr>
                                         <th>Date</th>

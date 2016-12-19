@@ -3,7 +3,7 @@
 
 <section class="section-padding">
     <div class="jumbotron text-left">
-        <h2><strong>Create Touch point</strong></h2>
+        <h2><strong>Create Touchpoint</strong></h2>
         {!! Form::open(['url' => 'touchpoint', 'method' => 'post', 'class' => 'form-horizontal panel']) !!}
         <span>
             <div class='row'>
@@ -49,7 +49,7 @@
         <div class="clearfix"> </div>
      <div class="col-md-1">
             <div class="form-group">
-                {!! Form::submit('Add Touch point', ['class'=>'btn btn-primary']) !!}
+                {!! Form::submit('Add Touchpoint', ['class'=>'btn btn-primary']) !!}
             </div>
                 {!! Form::close() !!}
         </div>

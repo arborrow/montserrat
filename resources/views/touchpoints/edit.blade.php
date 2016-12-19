@@ -3,13 +3,13 @@
     
 
 <div class="jumbotron text-left">
-    <span><h2><strong>Edit Touch point:</strong></h2></span>
+    <span><h2><strong>Edit Touchpoint:</strong></h2></span>
 
     {!! Form::open(['method' => 'PUT', 'route' => ['touchpoint.update', $touchpoint->id]]) !!}
     {!! Form::hidden('id', $touchpoint->id) !!}
     
         <span>
-            <h2>Touch point details</h2>
+            <h2>Touchpoint details</h2>
                 <div class="form-group">
                     <div class='row'>
                         {!! Form::label('touched_at', 'Date of contact:', ['class' => 'col-md-3'])  !!}

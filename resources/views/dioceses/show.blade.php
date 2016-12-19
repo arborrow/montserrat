@@ -15,7 +15,7 @@
                     
                     <span><a href={{ action('DiocesesController@index') }}>{!! Html::image('img/diocese.png', 'Diocese Index',array('title'=>"Diocese Index",'class' => 'btn btn-default')) !!}</a></span>
                     <span class="btn btn-default">
-                        <a href={{ action('TouchpointsController@add',$diocese->id) }}>Add Touch point</a>
+                        <a href={{ action('TouchpointsController@add',$diocese->id) }}>Add Touchpoint</a>
                     </span>
                     <span class="btn btn-default">
                     <a href={{ action('RegistrationsController@add',$diocese->id) }}>Add Registration</a> 
@@ -99,12 +99,12 @@
                         <div class='panel-heading'>
                             <h2><strong>Touchpoints</strong></h2>
                         </div>
-                                <p>It is a brand new world, there are no touch points for this contact!</p>
+                                <p>It is a brand new world, there are no touchpoints for this contact!</p>
                 @else
             <div class="panel-heading">
-                <h2><span class="grey">Touch points for {{ $diocese->display_name }} </span></h2> 
+                <h2><span class="grey">Touchpoints for {{ $diocese->display_name }} </span></h2> 
             <span class="btn btn-default">
-                   <a href={{ action('TouchpointsController@add',$diocese->id) }}>Add Touch point</a>
+                   <a href={{ action('TouchpointsController@add',$diocese->id) }}>Add Touchpoint</a>
                 </span>
             
             </div>

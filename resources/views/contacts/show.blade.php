@@ -11,7 +11,7 @@
                 {{ $contact->last_name}}{{isset($contact->suffix) ? ', '.$contact->suffix : null }}
                 {{ (!empty($contact->nick_name)) ? "(&quot;$contact->nick_name&quot;)" : null }}   </span>
                 <span class="back">
-               <span class="btn btn-primary"><a href={{ action('TouchpointsController@add',$contact->id) }}>Add Touch point</a></span> 
+               <span class="btn btn-primary"><a href={{ action('TouchpointsController@add',$contact->id) }}>Add Touchpoint</a></span> 
                </span>                
 
             </div>
@@ -108,9 +108,9 @@
             </div>
                    <hr />
              @if ($contact->touchpoints->isEmpty())
-                    <p>It is a brand new world, there are no touch points for this person!</p>
+                    <p>It is a brand new world, there are no touchpoints for this person!</p>
                 @else
-                <table class="table"><caption><h2>Touch points for {{ $contact->firstname }} {{ $contact->lastname }} </h2></caption>
+                <table class="table"><caption><h2>Touchpoints for {{ $contact->firstname }} {{ $contact->lastname }} </h2></caption>
                     <thead>
                         <tr>
                             <th>Date</th>

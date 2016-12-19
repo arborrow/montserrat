@@ -51,7 +51,7 @@
         <div class="clearfix"> </div>
      <div class="col-md-1">
             <div class="form-group">
-                {!! Form::submit('Add Group Touch point', ['class'=>'btn btn-primary']) !!}
+                {!! Form::submit('Add Group Touchpoint', ['class'=>'btn btn-primary']) !!}
             </div>
                 {!! Form::close() !!}
         </div>

@@ -48,7 +48,7 @@
         <div class="clearfix"> </div>
      <div class="col-md-1">
             <div class="form-group">
-                {!! Form::submit('Add Retreat Touch point', ['class'=>'btn btn-primary']) !!}
+                {!! Form::submit('Add Retreat Touchpoint', ['class'=>'btn btn-primary']) !!}
             </div>
                 {!! Form::close() !!}
         </div>

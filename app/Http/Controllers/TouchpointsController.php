@@ -56,7 +56,6 @@ class TouchpointsController extends Controller
     {
         //
         $staff = \montserrat\Contact::with('groups')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_STAFF);})->orderBy('sort_name')->pluck('sort_name','id');
-        // TODO: replace this with an autocomplete text box for performance rather than a dropdown box
         $groups = \montserrat\Group::orderBy('title')->pluck('title','id');
         $current_user = Auth::user();
         $user_email = \montserrat\Email::whereEmail($current_user->email)->first();

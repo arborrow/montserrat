@@ -28,7 +28,7 @@
                         @if ($person->is_jesuit) <span class="back"><a href={{ action('PersonsController@jesuits') }}>{!! Html::image('img/jesuit.png', 'Jesuits Group',array('title'=>"Jesuits Group",'class' => 'btn btn-default')) !!}</a></span> @endIf                        
                         <br/>
                         <span class="btn btn-default">
-                            <a href={{ action('TouchpointsController@add',$person->id) }}>Add Touch point</a>
+                            <a href={{ action('TouchpointsController@add',$person->id) }}>Add Touchpoint</a>
                         </span>
                         <span class="btn btn-default">
                             <a href={{ action('RegistrationsController@add',$person->id) }}>Add Registration</a> 
@@ -237,11 +237,11 @@
         <div class='col-md-8'>
             <div class='panel-heading'><h2><strong>Touchpoints for {{ $person->display_name }}</strong></h2>
                 <span class="btn btn-default">
-                   <a href={{ action('TouchpointsController@add',$person->id) }}>Add Touch point</a>
+                   <a href={{ action('TouchpointsController@add',$person->id) }}>Add Touchpoint</a>
                 </span>
            </div>
                 @if ($person->touchpoints->isEmpty())
-                        <p>It is a brand new world, there are no touch points for this person!</p>
+                        <p>It is a brand new world, there are no touchpoints for this person!</p>
                     @else
                     <table class="table">
                         <thead>

@@ -14,7 +14,7 @@
                     </div>
                     <span class="back"><a href={{ action('VendorsController@index') }}>{!! Html::image('img/vendor.png', 'Vendor Index',array('title'=>"Vendor Index",'class' => 'btn btn-primary')) !!}</a></span></h1>
                     <span class="btn btn-primary">
-                        <a href={{ action('TouchpointsController@add',$vendor->id) }}>Add Touch point</a>
+                        <a href={{ action('TouchpointsController@add',$vendor->id) }}>Add Touchpoint</a>
                     </span>
                 </div>
                 <div class='row'><div class='col-md-4'>
@@ -148,14 +148,14 @@
                
             @if ($vendor->touchpoints->isEmpty())
             <div class="panel-heading">
-                <h2><span class="grey">Touch points for {{ $vendor->display_name }} </span></h2> 
+                <h2><span class="grey">Touchpoints for {{ $vendor->display_name }} </span></h2> 
             </div>
-                    <p>It is a brand new world, there are no touch points for this person!</p>
+                    <p>It is a brand new world, there are no touchpoints for this person!</p>
                 @else
             <div class="panel-heading">
-                <h2><span class="grey">Touch points for {{ $vendor->display_name }} </span></h2> 
+                <h2><span class="grey">Touchpoints for {{ $vendor->display_name }} </span></h2> 
             <span class="btn btn-primary">
-                   <a href={{ action('TouchpointsController@add',$vendor->id) }}>Add Touch point</a>
+                   <a href={{ action('TouchpointsController@add',$vendor->id) }}>Add Touchpoint</a>
                 </span>
             
             </div>
