@@ -27,7 +27,7 @@
                 <div class='col-md-6'><strong>Description: </strong>{{ $retreat->description}}</div>
             </div><div class="clearfix"> </div>
             <div class='row'>
-                <div class='col-md-1'><strong>Director(s): </strong></div>
+                <div class='col-md-1'><strong>Director(s): </strong>
                     @if ($retreat->retreatmasters->isEmpty())
                         N/A
                     @else
@@ -37,6 +37,7 @@
                         @endforeach
                         </div>
                     @endif
+                </div>
     
                 <div class='col-md-3'><strong>Innkeeper: </strong>
                     @if ($retreat->innkeeper_id > 0)
