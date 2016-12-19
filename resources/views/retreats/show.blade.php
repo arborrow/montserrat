@@ -8,8 +8,8 @@
                 <h2>
                     Retreat {!!Html::link(url('retreat/'.$retreat->id.'/edit'),$retreat->idnumber.' - '.$retreat->title)!!} 
                 </h2>
-                {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-default')) !!}
-                {!! Html::link(url('retreat'),'Retreat index',array('class' => 'btn btn-default')) !!}
+                {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-primary')) !!}
+                {!! Html::link(url('retreat'),'Retreat index',array('class' => 'btn btn-primary')) !!}
             
             </div>
             <div class='row'>
