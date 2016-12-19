@@ -31,24 +31,22 @@
                     @if ($retreat->retreatmasters->isEmpty())
                         N/A
                     @else
-                    <div class='col-md-2'>
                         @foreach($retreat->retreatmasters as $rm)
-                            <a href="{{url('person/'.$rm->id)}}">{{ $rm->display_name }}</a><br /> 
+                            {!!$rm->contact_link_full_name!!}
                         @endforeach
-                    </div>
                     @endif
                 </div>
     
                 <div class='col-md-3'><strong>Innkeeper: </strong>
                     @if ($retreat->innkeeper_id > 0)
-                        <a href="{{url('person/'.$retreat->innkeeper_id)}}">{{ $retreat->innkeeper->display_name }}</a>
+                        {!!$retreat->innkeeper->contact_link_full_name!!}
                     @else
                         N/A
                     @endIf
                 </div>
                 <div class='col-md-3'><strong>Assistant: </strong>
                     @if ($retreat->assistant_id > 0)
-                        <a href="{{url('person/'.$retreat->assistant_id) }}">{{ $retreat->assistant->display_name }}</a>
+                        {!!$retreat->assistant->contact_link_full_name!!}
                     @else
                         N/A
                     @endIf
@@ -56,15 +54,15 @@
 
             </div><div class="clearfix"> </div>
             <div class='row'>
-                <div class='col-md-3'><strong>Captain(s): </strong>
+                <div class='col-md-6'><strong>Captain(s): </strong>
                     @if ($retreat->captains->isEmpty())
                         N/A
                     @else
-                    <div class='col-md-2'>
+                    <ul>
                         @foreach($retreat->captains as $captain)
-                            <a href="/person/{{ $captain->id }}">{{ $captain->display_name }}</a><br /> 
+                        <li>    {!!$captain->contact_link_full_name!!} </li>
                         @endforeach
-                    </div>
+                    </ul>
                     @endif
                 </div>
             </div>
