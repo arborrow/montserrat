@@ -27,7 +27,7 @@
                 <div class='col-md-6'><strong>Description: </strong>{{ $retreat->description}}</div>
             </div><div class="clearfix"> </div>
             <div class='row'>
-                <div class='col-md-1'><strong>Director(s): </strong>
+                <div class='col-md-3'><strong>Director(s): </strong>
                     @if ($retreat->retreatmasters->isEmpty())
                         N/A
                     @else
@@ -35,7 +35,7 @@
                         @foreach($retreat->retreatmasters as $rm)
                             <a href="{{url('person/'.$rm->id)}}">{{ $rm->display_name }}</a><br /> 
                         @endforeach
-                        </div>
+                    </div>
                     @endif
                 </div>
     
