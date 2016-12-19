@@ -4,7 +4,7 @@
         <meta charset="UTF-8"> 
         <title>Montserrat Retreat House Database</title>
         <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
-        <link rel="stylesheet" type="text/css" href="{{asset('js/datetimeentry/jquery.datetimeentry.css')}}"> 
+        <link rel="stylesheet" type="text/css" href="{{asset('css/jquery.datetimeentry.css')}}"> 
         <script src="{{ asset('js/jquery.js') }}"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('js/jquery.min.js') }}"></script>
