@@ -56,7 +56,7 @@
 
             </div><div class="clearfix"> </div>
             <div class='row'>
-                <div class='col-md-1'><strong>Captain(s): </strong></div>
+                <div class='col-md-3'><strong>Captain(s): </strong></div>
                     @if ($retreat->captains->isEmpty())
                         N/A
                     @else
