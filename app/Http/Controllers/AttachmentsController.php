@@ -16,6 +16,11 @@ class AttachmentsController extends Controller
      * every attachment should have a record in the files table 
      * attachments are stored in the storage/app folder according to entity/entity_id
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     
     public function sanitize_filename ($filename) {
         $sanitized = preg_replace('/[^a-zA-Z0-9\-\._]/','', $filename);

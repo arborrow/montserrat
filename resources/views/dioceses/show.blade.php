@@ -146,11 +146,21 @@
 
                                 <ul>    
                                     @foreach($diocese->a_relationships as $a_relationship)
-                                        <li>{!!$diocese->contact_link!!} is {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link!!}</li>
+                                        <li>
+                                            {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $a_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                                            {!!$diocese->contact_link!!} {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link !!} 
+                                            {!! Form::image('img/delete.png','btnDelete',['title'=>'Delete Relationship '.$a_relationship->id, 'style'=>'padding-left: 50px;']) !!} 
+                                            {!! Form::close() !!}
+                                        </li>
                                     @endforeach
 
                                     @foreach($diocese->b_relationships as $b_relationship)
-                                        <li>{!!$diocese->contact_link!!} is {{ $b_relationship->relationship_type->label_b_a }} {!! $b_relationship->contact_a->contact_link!!}</li>
+                                        <li>
+                                            {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $b_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                                            {!!$diocese->contact_link!!} is {{ $b_relationship->relationship_type->label_a_b }} {!! $b_relationship->contact_b->contact_link !!} 
+                                            {!! Form::image('img/delete.png','btnDelete',['title'=>'Delete Relationship '.$b_relationship->id, 'style'=>'padding-left: 50px;']) !!} 
+                                            {!! Form::close() !!}
+                                        </li>
                                     @endforeach
 
                                 </ul>
