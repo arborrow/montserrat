@@ -1488,7 +1488,7 @@ class PersonsController extends Controller
         \montserrat\Registration::whereContactId($id)->delete();
         \montserrat\Contact::destroy($id);
         
-        return Redirect::action('PersonsController@duplicates');
+        return Redirect::back();
     
     }
     
