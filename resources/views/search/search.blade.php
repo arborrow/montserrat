@@ -209,8 +209,8 @@
                 <span>
                     <div class='panel-heading'><h2>General Notes</h2></div>
                     <div class="form-group">
-                        {!! Form::label('note_contact', 'General Notes:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::text('note_contact', NULL, ['class' => 'col-md-3']) !!}
+                        {!! Form::label('note_general', 'General Notes:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::text('note_general', NULL, ['class' => 'col-md-3']) !!}
                         {!! Form::label('note_room_preference', 'Room Preference:', ['class' => 'col-md-2'])  !!}
                         {!! Form::text('note_room_preference', NULL, ['class' => 'col-md-3']) !!}
                     </div>

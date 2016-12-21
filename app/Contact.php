@@ -833,6 +833,26 @@ public function getContactLinkFullNameAttribute() {
             if ($filter=='has_avatar' && !empty($value)) {
                 $query->has('avatar');
             }
+            if ($filter=='note_health' && !empty($value)) {
+                $query->whereHas('note_health', function($q) use ($value) {
+                    $q->where('note','LIKE','%'.$value.'%');
+                });
+            }
+            if ($filter=='note_dietary' && !empty($value)) {
+                $query->whereHas('note_dietary', function($q) use ($value) {
+                    $q->where('note','LIKE','%'.$value.'%');
+                });
+            }
+            if ($filter=='note_general' && !empty($value)) {
+                $query->whereHas('note_general', function($q) use ($value) {
+                    $q->where('note','LIKE','%'.$value.'%');
+                });
+            }
+            if ($filter=='note_room_preference' && !empty($value)) {
+                $query->whereHas('note_room_preference', function($q) use ($value) {
+                    $q->where('note','LIKE','%'.$value.'%');
+                });
+            }
             
         }
         
