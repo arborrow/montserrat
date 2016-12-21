@@ -853,6 +853,22 @@ public function getContactLinkFullNameAttribute() {
                     $q->where('note','LIKE','%'.$value.'%');
                 });
             }
+            if ($filter=='emergency_contact_name' && !empty($value)) {
+                $query->whereHas('emergency_contact', function($q) use ($value) {
+                    $q->where('name','LIKE','%'.$value.'%');
+                });
+            }
+            if ($filter=='emergency_contact_relationship' && !empty($value)) {
+                $query->whereHas('emergency_contact', function($q) use ($value) {
+                    $q->where('relationship','LIKE','%'.$value.'%');
+                });
+            }
+            if ($filter=='emergency_contact_phone' && !empty($value)) {
+                $query->whereHas('emergency_contact', function($q) use ($value) {
+                    $q->where('phone','LIKE','%'.$value.'%');
+                    $q->where('phone_alternate','LIKE','%'.$value.'%');
+                });
+            }
             
         }
         

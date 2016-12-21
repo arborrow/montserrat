@@ -86,61 +86,25 @@
                        
                 
         </div>
-{{--
+
         <div class='row'>
             <div class='col-md-8'>
                 <div class='panel-heading' style="background-color: lightcoral;"><h2>Emergency Contact Information</h2></div>
                 <div class="panel-body" style="background-color: lightcoral;">
                     {!! Form::label('emergency_contact_name', 'Name: ', ['class' => 'col-md-1'])  !!}
-                    {!! Form::text('emergency_contact_name', $person->emergency_contact_name, ['class' => 'col-md-2']) !!}
+                    {!! Form::text('emergency_contact_name', NULL, ['class' => 'col-md-2']) !!}
                     
                     {!! Form::label('emergency_contact_relationship', 'Relationship: ', ['class' => 'col-md-2'])  !!}
-                    {!! Form::text('emergency_contact_relationship', $person->emergency_contact_relationship, ['class' => 'col-md-2']) !!}
-                </div>
-                <div class="clearfix"> </div>
-                <div class="panel-body" style="background-color: lightcoral;">
+                    {!! Form::text('emergency_contact_relationship', NULL, ['class' => 'col-md-2']) !!}
                     {!! Form::label('emergency_contact_phone', 'Phone: ', ['class' => 'col-md-1'])  !!}
-                    {!! Form::text('emergency_contact_phone', $person->emergency_contact_phone, ['class' => 'col-md-2']) !!}
+                    {!! Form::text('emergency_contact_phone', NULL, ['class' => 'col-md-2']) !!}
 
-                    {!! Form::label('emergency_contact_phone_alternate', 'Alt. Phone: ', ['class' => 'col-md-2'])  !!}
-                    {!! Form::text('emergency_contact_phone_alternate', $person->emergency_contact_phone_alternate, ['class' => 'col-md-2']) !!}
                 </div>
             </div>
         </div>
         <div class="clearfix"> </div>
 
-        <div class='row'>
-            <div class='col-md-8'>
-            @include('persons.update.addresses')
-            </div>
-        </div>
-        <div class="clearfix"> </div>
 
-        <div class='row'>
-            <div class='col-md-8'>
-                <span>
-                    @include('persons.update.phones')
-                </span>
-            </div>
-        </div>
-        <div class="clearfix"> </div>
-        <div class='row'>
-            <div class='col-md-8'>
-                <span>
-                @include('persons.update.emails')
-                </span>
-            </div>
-        </div>
-        <div class="clearfix"> </div>
-        <div class='row'>
-            <div class='col-md-8'>
-                <span>
-                @include('persons.update.urls')
-                </span>
-            </div>
-        </div>
-        <div class="clearfix"> </div>
---}}
         <div class='row'>
             <div class='col-md-8'>
                 <div class='panel-heading'><h2>Demographics</h2></div>

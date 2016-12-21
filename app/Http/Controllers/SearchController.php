@@ -74,8 +74,6 @@ public function results(Request $request) {
             'contact_type' => 'integer|min:0',
             'subcontact_type' => 'integer|min:0',
             'occupation_id' => 'integer|min:0',
-            'emergency_contact_phone' => 'phone',
-            'emergency_contact_phone_alternate' => 'phone',
             
         ]);
 
