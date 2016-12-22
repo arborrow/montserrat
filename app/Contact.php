@@ -870,8 +870,7 @@ public function getContactLinkFullNameAttribute() {
             }
             if ($filter=='emergency_contact_phone' && !empty($value)) {
                 $query->whereHas('emergency_contact', function($q) use ($value) {
-                    $q->where('phone','LIKE','%'.$value.'%');
-                    $q->where('phone_alternate','LIKE','%'.$value.'%');
+                    $q->where('phone','LIKE','%'.$value.'%')->orWhere('phone_alternate','LIKE','%'.$value.'%');
                 });
             }
             
