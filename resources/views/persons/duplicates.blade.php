@@ -6,7 +6,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                    <span class="grey">List of duplicated sort_name</span> 
+                    <span class="grey">List of duplicated sort_name ({{$duplicates->total()}} records)</span> 
                 </div>
                 
                 @if ($duplicates->isEmpty())
