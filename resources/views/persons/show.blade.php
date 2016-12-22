@@ -101,7 +101,7 @@
                         @endIf
                         @foreach($person->phones as $phone)
                         @if(!empty($phone->phone))
-                            <strong>{{$phone->location->display_name}} - {{$phone->phone_type}}: </strong>{{$phone->phone}} {{$phone->phone_ext}}<br />
+                            <strong>{{$phone->location->display_name}} - {{$phone->phone_type}}: </strong>{{$phone->phone}}{{$phone->phone_extension}}<br />
                         @endif
                             @endforeach
                 </div>

@@ -20,6 +20,14 @@ class Phone extends Model
     public function location() {
         return $this->belongsTo('\montserrat\LocationType','location_type_id','id');
     }
+    public function getPhoneExtensionAttribute() {
+        if (empty($this->phone_ext)) {
+            return NULL; 
+        }
+        else {
+            return ','.$this->phone_ext;
+        }
+    }
 
     public function setPhoneAttribute($phone) {
         $phone_extension = '';
