@@ -20,5 +20,37 @@ class Phone extends Model
     public function location() {
         return $this->belongsTo('\montserrat\LocationType','location_type_id','id');
     }
-    
+
+    public function setPhoneAttribute($phone) {
+        $phone_extension = '';
+        $phone_numeric = $phone;
+        $phone_numeric = str_replace(" ","",$phone_numeric);
+        $phone_numeric = str_replace("(","",$phone_numeric);
+        $phone_numeric = str_replace(")","",$phone_numeric);
+        $phone_numeric = str_replace("-","",$phone_numeric);
+        $phone_numeric = str_replace("ext.",",",$phone_numeric);
+        $phone_numeric = str_replace("x",",",$phone_numeric);
+        
+        if (strpos($phone_numeric,',') > 0) {
+            $phone_extension = substr($phone_numeric,strpos($phone_numeric,',')+1);
+            $phone_numeric = substr($phone_numeric,0,strpos($phone_numeric,','));
+        }
+        
+        if (strlen($phone_numeric) == 10) { // if US number then format
+            $phone_formatted = '('.substr($phone_numeric,0,3).') '.substr($phone_numeric,3,3).'-'.substr($phone_numeric,6,4);
+        } else { //if International then store as all numbers
+            $phone_formatted = $phone_numeric;
+        }
+//        dd($phone_formatted,$phone_extension,$phone_numeric);
+        if (empty($phone_extension)) {
+            $this->attributes['phone'] = $phone_formatted;
+            $this->attributes['phone_numeric'] = $phone_numeric;
+        } else {
+            $this->attributes['phone'] = $phone_formatted;
+            $this->attributes['phone_ext'] = $phone_extension;
+            $this->attributes['phone_numeric'] = $phone_numeric;
+
+            }
+    }
+
 }

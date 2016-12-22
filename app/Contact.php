@@ -721,7 +721,7 @@ public function getContactLinkFullNameAttribute() {
             $this->attributes['deceased_date'] = null;
         }
     }
-    
+
     public function setNickNameAttribute($nick_name)
     {
         $this->attributes['nick_name'] = trim($nick_name) !== '' ? $nick_name : null;
@@ -781,8 +781,13 @@ public function getContactLinkFullNameAttribute() {
                     $query->whereDay('deceased_date','=',$dod->day); 
                 }
             if ($filter=='phone' && !empty($value)) {
+                $value= str_replace(" ","",$value);
+                $value= str_replace("(","",$value);
+                $value= str_replace(")","",$value);
+                $value= str_replace("-","",$value);
+                        
                 $query->whereHas('phones', function($q) use ($value) {
-                    $q->where('phone','like','%'.$value.'%');
+                    $q->where('phone_numeric','like','%'.$value.'%');
                 });
             }    
             if ($filter=='email'  && !empty($value)) {
