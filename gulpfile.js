@@ -13,4 +13,20 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
     mix.sass('app.scss');
+    mix.styles([
+        'bootstrap.css',
+        'bootstrap-adaptive-tabs.css',
+        'jquery.datetimeentry.css',
+        'jquery-ui.css',
+        'style.css'
+    ],null,'public/css');
+    mix.scripts([
+        'jquery.js',
+        'jquery.plugin.js',
+        'jquery-ui.js',
+        'bootstrap.js',
+        'jquery.datetimeentry.js'
+    ],null,'public/js');
+    mix.version(['public/css/all.css','public/js/all.js'],'public');
+    
 });

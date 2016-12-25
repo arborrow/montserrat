@@ -3,18 +3,9 @@
     <head>
         <meta charset="UTF-8"> 
         <title>Montserrat Retreat House Database</title>
-        <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
-        <link rel="stylesheet" type="text/css" href="{{asset('css/jquery.datetimeentry.css')}}"> 
-        <script src="{{ asset('js/jquery.js') }}"></script>
-        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('js/jquery.min.js') }}"></script>
-        <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/jquery.plugin.js')}}"></script> 
-        <script type="text/javascript" src="{{ asset('js/jquery.datetimeentry.js')}}"></script>
-        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/bootstrap-adaptive-tabs.css') }}">
-
+        <link rel="stylesheet" type="text/css" href="{{ asset(elixir('css/all.css','/')) }}"> 
+        <script type="text/javascript" src="{{ asset(elixir('js/all.js','/')) }}"></script> 
+        
         <script>
 
             function ConfirmDelete() {
@@ -154,7 +145,7 @@
     $( "#birth_date" ).datepicker();
     $( "#deceased_date" ).datepicker();
     $( "#touched_at" ).datetimeEntry({
-        datetimeFormat:'N d, Y h:M a'});
+        datetimeFormat:'N d, Y h:M a' });
     $( "#q" ).autocomplete({
 	  source: "{{ url('search/autocomplete') }}",
 	  minLength: 3,
