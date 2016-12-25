@@ -165,6 +165,9 @@
    $("#captains").select2({
         placeholder: 'Choose captain(s)'
     });
+   $("#groups").select2({
+        placeholder: 'Choose group(s)'
+    });
         
   });
   </script>

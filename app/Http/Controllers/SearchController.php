@@ -108,6 +108,8 @@ public function search()
 
         $genders = \montserrat\Gender::orderBy('name')->pluck('name','id');
         $genders ->prepend('N/A',0); 
+        $groups = \montserrat\Group::orderBy('name')->pluck('name','id');
+        $groups->prepend('N/A',0); 
 
         $languages = \montserrat\Language::orderBy('label')->whereIsActive(1)->pluck('label','id');
         $languages->prepend('N/A',0);
@@ -188,7 +190,7 @@ public function search()
         }
         //dd($person);
 
-        return view('search.search',compact('prefixes','suffixes','person','parish_list','ethnicities','states','countries','genders','languages','defaults','religions','occupations','contact_types','subcontact_types'));
+        return view('search.search',compact('prefixes','suffixes','person','parish_list','ethnicities','states','countries','genders','languages','defaults','religions','occupations','contact_types','subcontact_types','groups'));
     
     }
 

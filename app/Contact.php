@@ -829,6 +829,15 @@ public function getContactLinkFullNameAttribute() {
                     }
                 }
             }
+            if ($filter=='groups' && !empty($value)) {
+                foreach ($value as $group) {
+                    if ($group > 0) {
+                        $query->whereHas('groups', function($q) use ($group) {
+                            $q->whereGroupId($group);
+                        });
+                    }
+                }
+            }
             if ($filter=='parish_id' && !empty($value)) {
                 $query->whereHas('parish', function($q) use ($value) {
                     $q->where('contact_id_a','=',$value);

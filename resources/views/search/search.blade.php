@@ -183,6 +183,20 @@
             </div>
         </div>
         <div class="clearfix"> </div>
+
+        <div class='row'>
+            <div class='col-md-8'>
+                <span>
+                    <div class='panel-heading'><h2>Groups and Relationships</h2></div>
+                    <div class="form-group">
+                        {!! Form::label('groups', 'Groups:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::select('groups[]', $groups, NULL, ['id'=>'groups','class' => 'form-control col-md-4','multiple' => 'multiple','style'=>'width: auto; font-size: inherit;']) !!}
+                    </div>
+                </span>
+            </div>
+        </div>
+
+        
 {{--
         <div class='row'>
                 <div class='col-md-8'>
