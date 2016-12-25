@@ -31,7 +31,7 @@
             </div><div class="clearfix"> </div>
             <div class="form-group"> 
                 {!! Form::label('directors', 'Director(s):', ['class' => 'col-md-2']) !!}
-                {!! Form::select('directors[]', $d, 0, ['class' => 'col-md-3','multiple' => 'multiple','style'=>'font-size: inherit;']) !!}
+                {!! Form::select('directors[]', $d, 0, ['id'=>'directors','class' => 'col-md-3','multiple' => 'multiple','style'=>'font-size: inherit;']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group"> 
                 {!! Form::label('innkeeper_id', 'Innkeeper:', ['class' => 'col-md-2']) !!}
@@ -43,7 +43,7 @@
             </div><div class="clearfix"> </div>
             <div class="form-group"> 
                 {!! Form::label('captains', 'Captain(s):', ['class' => 'col-md-2']) !!}
-                {!! Form::select('captains[]', $c, 0, ['class' => 'col-md-3','multiple' => 'multiple','style'=>'font-size: inherit;']) !!}
+                {!! Form::select('captains[]', $c, 0, ['id'=>'captains','class' => 'col-md-3','multiple' => 'multiple','style'=>'font-size: inherit;']) !!}
             </div><div class="clearfix"> </div>
             
             <div class="form-group">

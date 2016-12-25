@@ -18,6 +18,7 @@ elixir(function(mix) {
         'bootstrap-adaptive-tabs.css',
         'jquery.datetimeentry.css',
         'jquery-ui.css',
+        'select2.css',
         'style.css'
     ],null,'public/css');
     mix.scripts([
@@ -25,7 +26,8 @@ elixir(function(mix) {
         'jquery.plugin.js',
         'jquery-ui.js',
         'bootstrap.js',
-        'jquery.datetimeentry.js'
+        'jquery.datetimeentry.js',
+        'select2.js'
     ],null,'public/js');
     mix.version(['public/css/all.css','public/js/all.js'],'public');
     

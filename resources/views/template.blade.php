@@ -156,6 +156,16 @@
                 $('#btnSearch').click();
 	  }
 	});
+    $("#languages").select2({
+        placeholder: 'Choose language(s)'
+    });
+   $("#directors").select2({
+        placeholder: 'Choose retreat director(s)'
+    });
+   $("#captains").select2({
+        placeholder: 'Choose captain(s)'
+    });
+        
   });
   </script>
 </body>

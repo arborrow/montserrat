@@ -15,6 +15,7 @@ class EmergencyContact extends Model
         return $this->belongsTo('\montserrat\Contact','contact_id','id');
     }
     public function setPhoneAttribute($phone) {
+        $phone_formatted = NULL;
         $phone_numeric = $phone;
         $phone_numeric = str_replace(" ","",$phone_numeric);
         $phone_numeric = str_replace("(","",$phone_numeric);
@@ -34,6 +35,7 @@ class EmergencyContact extends Model
         }
     }
     public function setPhoneAlternateAttribute($phone) {
+        $phone_formatted = NULL;
         $phone_numeric = $phone;
         $phone_numeric = str_replace(" ","",$phone_numeric);
         $phone_numeric = str_replace("(","",$phone_numeric);

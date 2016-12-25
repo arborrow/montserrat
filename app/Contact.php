@@ -766,6 +766,10 @@ public function getContactLinkFullNameAttribute() {
             if ($filter=='gender_id' && $value>0) {$query->where($filter,$value); }
             
             if ($filter=='religion_id' && $value>0) {$query->where($filter,$value); }
+            if ($filter=='preferred_language_id' && $value>0) {
+                    $lang = \montserrat\Language::findOrFail($value);
+                    $query->wherePreferredLanguage($lang->name); 
+                }
             if ($filter=='occupation_id' && $value>0) {$query->where($filter,$value); }
             if ($filter=='ethnicity_id' && $value>0) {$query->where($filter,$value); }
             if ($filter=='is_deceased' && $value>0) {$query->where($filter,$value); }
@@ -815,10 +819,15 @@ public function getContactLinkFullNameAttribute() {
                     $q->where('postal_code','like','%'.$value.'%');
                 });
             }
-            if ($filter=='url' && !empty($value)) {
-                $query->whereHas('websites', function($q) use ($value) {
-                    $q->where('url','like','%'.$value.'%');
-                });
+            
+            if ($filter=='languages' && !empty($value)) {
+                foreach ($value as $language) {
+                    if ($language > 0) {
+                        $query->whereHas('languages', function($q) use ($language) {
+                            $q->whereLanguageId($language);
+                        });
+                    }
+                }
             }
             if ($filter=='parish_id' && !empty($value)) {
                 $query->whereHas('parish', function($q) use ($value) {

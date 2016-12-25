@@ -41,7 +41,7 @@
         {!! Form::label('directors','Director(s):', ['class' => 'col-md-2'])  !!}
         {!! Form::select('directors[]', $d, 
             $retreat->retreatmasters->pluck('id')->toArray(),
-            ['class' => 'col-md-3','multiple' => 'multiple','style'=>'font-size: inherit;']) !!}
+            ['id'=>'directors','class' => 'col-md-3','multiple' => 'multiple','style'=>'font-size: inherit;']) !!}
     </div><div class="clearfix"> </div>
     
     <div class="form-group">
@@ -58,7 +58,7 @@
         {!! Form::label('captains', 'Captain(s):', ['class' => 'col-md-2']) !!}
         {!! Form::select('captains[]', $c,  
         $retreat->captains->pluck('id')->toArray(), 
-        ['class' => 'col-md-3','multiple' => 'multiple','style'=>'font-size: inherit;']) !!}
+        ['id'=>'captains','class' => 'col-md-3','multiple' => 'multiple','style'=>'font-size: inherit;']) !!}
     </div><div class="clearfix"> </div>
             
     <div class="form-group">
