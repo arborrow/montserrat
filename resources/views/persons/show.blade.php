@@ -8,7 +8,11 @@
                 <div class='row' style="height: 175px;">
                     <div class="col-md-12 col-sm-12">
                         {!!$person->avatar_large_link!!}
-                        <h1 style="position: absolute; top:5px; left:175px; padding: 5px;"><strong><a href="{{url('person/'.$person->id.'/edit')}}">{{ $person->full_name }}</a></strong></h1>
+                        @can('update-contact')
+                            <h1 style="position: absolute; top:5px; left:175px; padding: 5px;"><strong><a href="{{url('person/'.$person->id.'/edit')}}">{{ $person->full_name }}</a></strong></h1>
+                        @else
+                            <h1 style="position: absolute; top:5px; left:175px; padding: 5px;"><strong>{{ $person->full_name }}</strong></h1>
+                        @endCan
                     </div>
                 </div>
                         @if ($person->is_board_member) <span class="back"><a href={{ action('PersonsController@boardmembers') }}>{!! Html::image('img/board.png', 'Board Members Group',array('title'=>"Board Members Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
