@@ -307,13 +307,18 @@
         @endCan
         <div class='row'>
             @can('update-contact')
-                <div class='col-md-1'><a href="{{ action('PersonsController@edit', $person->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
+                <div class='col-md-1'>
+                    <a href="{{ action('PersonsController@edit', $person->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                </div>
             @endCan
             @can('delete-contact')
-            <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['person.destroy', $person->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-            {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
-            {!! Form::close() !!}</div><div class="clearfix"> </div>
+                <div class='col-md-1'>
+                    {!! Form::open(['method' => 'DELETE', 'route' => ['person.destroy', $person->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                    {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                    {!! Form::close() !!}
+                </div>
             @endCan
+            <div class="clearfix"> </div>
         </div>
     </div>
 </section>
