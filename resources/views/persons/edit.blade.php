@@ -193,9 +193,9 @@
                 <div class='panel-heading'><h2>Health Notes</h2></div>
                     <div class="form-group">
                         {!! Form::label('note_health', 'Health Notes:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::textarea('note_health', $person->note_health, ['class' => 'col-md-3']) !!}
+                        {!! Form::textarea('note_health', $person->note_health, ['class' => 'col-md-3','size'=>'50x5']) !!}
                         {!! Form::label('note_dietary', 'Dietary Notes:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::textarea('note_dietary', $person->note_dietary, ['class' => 'col-md-3']) !!}
+                        {!! Form::textarea('note_dietary', $person->note_dietary, ['class' => 'col-md-3','size'=>'50x5']) !!}
                     </div>
                 </div>
         </div>
@@ -208,9 +208,9 @@
                     <div class='panel-heading'><h2>General Notes</h2></div>
                     <div class="form-group">
                         {!! Form::label('note_contact', 'General Notes:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::textarea('note_contact', $person->note_contact, ['class' => 'col-md-3']) !!}
+                        {!! Form::textarea('note_contact', $person->note_contact, ['class' => 'col-md-3','size'=>'50x5']) !!}
                         {!! Form::label('note_room_preference', 'Room Preference:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::textarea('note_room_preference', $person->note_room_preference, ['class' => 'col-md-3']) !!}
+                        {!! Form::textarea('note_room_preference', $person->note_room_preference, ['class' => 'col-md-3','size'=>'50x5']) !!}
                     </div>
                 </span>
             </div>
