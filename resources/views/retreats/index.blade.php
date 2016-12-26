@@ -8,7 +8,11 @@
                     <h1>
                         <span class="grey" id="upcoming_retreats">Upcoming retreats ({{$retreats->count()}}) </span> 
                         <span class="previous">{!! Html::link('#previous_retreats','Previous retreats',array('class' => 'btn btn-primary'))!!}</span>
-                        <span class="create"><a href={{ action('RetreatsController@create') }}>{!! Html::image('img/create.png', 'Create a Retreat',array('title'=>"Create Retreat",'class' => 'btn btn-primary')) !!}</a></span>
+                        @can('create-retreat')
+                            <span class="create">
+                                <a href={{ action('RetreatsController@create') }}>{!! Html::image('img/create.png', 'Create a Retreat',array('title'=>"Create Retreat",'class' => 'btn btn-primary')) !!}</a>
+                            </span>
+                        @endCan
                     </h1>
 
                 </div>

@@ -29,7 +29,7 @@
             @if (isset(Auth::User()->avatar))
             <!-- <a href='user/'> -->
                 {!! Html::image(Auth::User()->avatar, Auth::User()->name,array('title'=>Auth::User()->name)) !!}
-
+                
             <!-- </a> -->
 
             <a href={{ route('logout') }}>{!! Html::image('img/logout.png', 'Logout',array('title'=>"Logout")) !!}</a>
@@ -37,7 +37,12 @@
              @else
             <a href="login/google">{!! Html::image('img/login.png', 'Login',array('title'=>"Login")) !!}</a>
              @endif
-
+             <br />
+             Roles: 
+            @foreach (Auth::User()->roles as $user_roles)
+                 {{$user_roles->display_name}}
+            @endforeach 
+                
             </div>
         </div>
         <div class="row">

@@ -43,6 +43,8 @@ class RetreatsController extends Controller
      */
     public function create()
     {
+        $this->authorize('create-retreat');
+                
         $retreat_house = \montserrat\Contact::with('retreat_directors.contact_b','retreat_innkeepers.contact_b','retreat_assistants.contact_b','retreat_captains.contact_b')->findOrFail(CONTACT_MONTSERRAT);
         $event_types = \montserrat\EventType::whereIsActive(1)->orderBy('name')->pluck('name','id');
         foreach ($retreat_house->retreat_innkeepers as $innkeeper) {
