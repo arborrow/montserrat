@@ -26,21 +26,13 @@ class ParishesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-        //$parishes = \montserrat\Parish::with('diocese','pastor')->orderBy('name', 'asc')->get();
+    public function index() {
+        $this->authorize('show-contact');
         $parishes = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('addresses.state','phones','emails','websites','pastor.contact_b','diocese.contact_a')->get();
-        
-                
-        //dd($parishes[3]);
         $parishes = $parishes->sortBy(function($parish) {
             return sprintf('%-12s%s',$parish->diocese_name,$parish->organization_name);
         });
-        
-        //dd($parishes[214]);
         return view('parishes.index',compact('parishes'));   //
-    
     }
 
     /**
@@ -48,10 +40,8 @@ class ParishesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-        // $dioceses = \montserrat\Diocese::orderby('name')->pluck('name','id');
+    public function create() {
+        $this->authorize('create-contact');
         $dioceses = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_DIOCESE)->orderby('organization_name')->pluck('organization_name','id');
         $pastors = \montserrat\Contact::whereHas('b_relationships', function($query) {
             $query->whereRelationshipTypeId(RELATIONSHIP_TYPE_PASTOR)->whereIsActive(1);})->orderby('sort_name')->pluck('sort_name','id');
@@ -62,12 +52,8 @@ class ParishesController extends Controller
         $defaults['state_province_id'] = STATE_PROVINCE_ID_TX;
         $defaults['country_id'] = COUNTRY_ID_USA;
         $countries->prepend('N/A',0); 
-        
-  //dd($pastors);
-        //$pastors = array();
-        //$pastors[0]='Not implemented yet';
+
         return view('parishes.create',compact('dioceses','pastors','states','countries','defaults'));  
-    
     }
 
     /**
@@ -76,23 +62,22 @@ class ParishesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-            $this->validate($request, [
-                'organization_name' => 'required',
-                'diocese_id' => 'integer|min:0',
-                'pastor_id' => 'integer|min:0',
-                'parish_email_main' => 'email',
-                'url_main' => 'url',
-                'url_facebook' => 'url|regex:/facebook\.com\/.+/i',
-                'url_google' => 'url|regex:/plus\.google\.com\/.+/i',
-                'url_twitter' => 'url|regex:/twitter\.com\/.+/i',
-                'url_instagram' => 'url|regex:/instagram\.com\/.+/i',
-                'url_linkedin' => 'url|regex:/linkedin\.com\/.+/i',
-                'phone_main_phone' => 'phone',
-                'phone_main_fax' => 'phone',
-            ]);
+    public function store(Request $request) {
+        $this->authorize('create-contact');
+        $this->validate($request, [
+            'organization_name' => 'required',
+            'diocese_id' => 'integer|min:0',
+            'pastor_id' => 'integer|min:0',
+            'parish_email_main' => 'email',
+            'url_main' => 'url',
+            'url_facebook' => 'url|regex:/facebook\.com\/.+/i',
+            'url_google' => 'url|regex:/plus\.google\.com\/.+/i',
+            'url_twitter' => 'url|regex:/twitter\.com\/.+/i',
+            'url_instagram' => 'url|regex:/instagram\.com\/.+/i',
+            'url_linkedin' => 'url|regex:/linkedin\.com\/.+/i',
+            'phone_main_phone' => 'phone',
+            'phone_main_fax' => 'phone',
+        ]);
         $parish = new \montserrat\Contact;
         $parish->organization_name = $request->input('organization_name');
         $parish->display_name  = $request->input('organization_name');
@@ -214,16 +199,14 @@ return Redirect::action('ParishesController@index');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show($id) {
+        $this->authorize('show-contact');
         $parish = \montserrat\Contact::with('pastor.contact_b','diocese.contact_a','addresses.state','addresses.location','phones.location','emails.location','websites','notes','parishioners.contact_b.address_primary.state','parishioners.contact_b.emails.location','parishioners.contact_b.phones.location','touchpoints','a_relationships.relationship_type','a_relationships.contact_b','b_relationships.relationship_type','b_relationships.contact_a','event_registrations')->findOrFail($id);
         $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($parish->id)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->get();
         $relationship_types = array();
         $relationship_types["Primary Contact"] = "Primary Contact";
 
         return view('parishes.show',compact('parish','files','relationship_types'));//
-    
     }
 
     /**
@@ -232,23 +215,24 @@ return Redirect::action('ParishesController@index');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+    public function edit($id) {
+        $this->authorize('update-contact');
+
         $dioceses = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_DIOCESE)->orderby('organization_name')->pluck('organization_name','id');
-        //$pastors = \montserrat\Contact::whereHas('b_relationships', function($query) {
-        //    $query->whereRelationshipTypeId(RELATIONSHIP_TYPE_PASTOR)->whereIsActive(1);})->orderby('sort_name')->pluck('sort_name','id');
+        $dioceses[0] = 'No Diocese assigned';
+ 
         $pastors = \montserrat\Contact::whereHas('group_pastor', function($query) {
             $query->whereGroupId(GROUP_ID_PASTOR)->whereStatus('Added');})->orderby('sort_name')->pluck('sort_name','id');
-        $dioceses[0] = 'No Diocese assigned';
         $pastors[0] = 'No pastor assigned';
-        //dd($pastors);
+
         $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name','id');
         $states->prepend('N/A',0); 
+
         $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code','id');
+        $countries->prepend('N/A',0); 
+
         $defaults['state_province_id'] = STATE_PROVINCE_ID_TX;
         $defaults['country_id'] = COUNTRY_ID_USA;
-        $countries->prepend('N/A',0); 
 
         $parish = \montserrat\Contact::with('pastor.contact_b','diocese.contact_a','address_primary.state','address_primary.location','phone_primary.location','phone_main_fax','email_primary.location','website_main','notes')->findOrFail($id);
         
@@ -260,11 +244,9 @@ return Redirect::action('ParishesController@index');
         $defaults['LinkedIn']['url']='';
         $defaults['Twitter']['url']='';
 
-
         foreach($parish->websites as $website) {
             $defaults[$website->website_type]['url'] = $website->url;
         }
-
         
         return view('parishes.edit',compact('parish','dioceses','pastors','states','countries','defaults'));
     }
@@ -276,10 +258,8 @@ return Redirect::action('ParishesController@index');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
-
+    public function update(Request $request, $id) {
+        $this->authorize('update-contact');
         $this->validate($request, [
             'organization_name' => 'required',
             'display_name' => 'required',
@@ -444,30 +424,28 @@ return Redirect::action('ParishesController@index');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
-         \montserrat\Contact::destroy($id);
+    public function destroy($id) {
+        $this->authorize('delete-contact');
+        \montserrat\Contact::destroy($id);
         return Redirect::action('ParishesController@index');
     }
 
-    public function fortworthdiocese()
-    {
+    public function fortworthdiocese() {
+        $this->authorize('show-contact');
         $parishes= \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('addresses.state','phones','emails','websites','pastor.contact_b','diocese.contact_a')->whereHas('diocese.contact_a', function ($query) {$query->where('contact_id_a','=',CONTACT_DIOCESE_FORTWORTH);})->get();
         return view('parishes.fortworthdiocese',compact('parishes'));   //
     
     }
-    public function dallasdiocese()
-    {
+    public function dallasdiocese() {
+        $this->authorize('show-contact');
         $parishes= \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('addresses.state','phones','emails','websites','pastor.contact_b','diocese.contact_a')->whereHas('diocese.contact_a', function ($query) {$query->where('contact_id_a','=',CONTACT_DIOCESE_DALLAS);})->get();
         return view('parishes.dallasdiocese',compact('parishes'));   //
     
     }
-    public function tylerdiocese()
-    {
+    public function tylerdiocese() {
+        $this->authorize('show-contact');
         $parishes= \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('addresses.state','phones','emails','websites','pastor.contact_b','diocese.contact_a')->whereHas('diocese.contact_a', function ($query) {$query->where('contact_id_a','=',CONTACT_DIOCESE_TYLER);})->get();
         return view('parishes.tylerdiocese',compact('parishes'));   //
-    
     }
   
 }

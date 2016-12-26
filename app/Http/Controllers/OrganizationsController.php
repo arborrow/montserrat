@@ -22,17 +22,14 @@ class OrganizationsController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * 
+     * //TODO: subcontact_type dependent on order in database which is less than ideal really looking for where not a parish or diocese organization 
+     * 
      */
-    public function index()
-    {
-        //TODO: subcontact_type dependent on order in database which is less than ideal really looking for where not a parish or diocese organization 
-        //$organizations = \montserrat\Contact::whereContactType(CONTACT_TYPE_ORGANIZATION)->where('subcontact_type','>',CONTACT_TYPE_DIOCESE)->orderBy('organization_name', 'asc')->with('addresses.state','phone_primary.location','emails','websites','bishops.contact_b','parishes.contact_a')->toSql();
+    public function index() {
+        $this->authorize('show-contact');
         $organizations = \montserrat\Contact::organizations_generic()->orderBy('organization_name', 'asc')->paginate(100);
-        
-        //dd($organizations);
-        
         return view('organizations.index',compact('organizations'));   //
-    
     }
 
     /**
@@ -40,8 +37,8 @@ class OrganizationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
+        $this->authorize('create-contact');
         $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name','id');
         $states->prepend('N/A',0); 
         
@@ -65,22 +62,21 @@ class OrganizationsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-            $this->validate($request, [
-                'organization_name' => 'required',
-                'subcontact_type' => 'integer|min:0',
-                'email_main' => 'email',
-                'url_main' => 'url',
-                'url_facebook' => 'url|regex:/facebook\.com\/.+/i',
-                'url_google' => 'url|regex:/plus\.google\.com\/.+/i',
-                'url_twitter' => 'url|regex:/twitter\.com\/.+/i',
-                'url_instagram' => 'url|regex:/instagram\.com\/.+/i',
-                'url_linkedin' => 'url|regex:/linkedin\.com\/.+/i',
-                'phone_main_phone' => 'phone',
-                'phone_main_fax' => 'phone',
-            ]);
+    public function store(Request $request) {
+        $this->authorize('show-contact');
+        $this->validate($request, [
+            'organization_name' => 'required',
+            'subcontact_type' => 'integer|min:0',
+            'email_main' => 'email',
+            'url_main' => 'url',
+            'url_facebook' => 'url|regex:/facebook\.com\/.+/i',
+            'url_google' => 'url|regex:/plus\.google\.com\/.+/i',
+            'url_twitter' => 'url|regex:/twitter\.com\/.+/i',
+            'url_instagram' => 'url|regex:/instagram\.com\/.+/i',
+            'url_linkedin' => 'url|regex:/linkedin\.com\/.+/i',
+            'phone_main_phone' => 'phone',
+            'phone_main_fax' => 'phone',
+        ]);
             
         $organization = new \montserrat\Contact;
         $organization->organization_name = $request->input('organization_name');
@@ -176,11 +172,8 @@ class OrganizationsController extends Controller
             $url_twitter->url=$request->input('url_twitter');
             $url_twitter->website_type='Twitter';
         $url_twitter->save();
-
-
-        
    
-return Redirect::action('OrganizationsController@index');
+        return Redirect::action('OrganizationsController@index');
     }
 
     /**
@@ -189,9 +182,8 @@ return Redirect::action('OrganizationsController@index');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        // $organization = \montserrat\Diocese::with('bishop')->findOrFail($id);
+    public function show($id) {
+        $this->authorize('show-contact');
         $organization = \montserrat\Contact::with('addresses.state','addresses.location','phones.location','emails.location','websites','notes','phone_main_phone.location','a_relationships.relationship_type','a_relationships.contact_b','b_relationships.relationship_type','b_relationships.contact_a','event_registrations')->findOrFail($id);
        
         $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($organization->id)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->get();
@@ -208,11 +200,13 @@ return Redirect::action('OrganizationsController@index');
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     * 
+     * // TODO: make create and edit bishop id multi-select with all bishops defaulting to selected on edit
+     * // TODO: consider making one primary bishop with multi-select for seperate auxilary bishops (new relationship) 
+     * 
      */
-    public function edit($id)
-    {
-        // TODO: make create and edit bishop id multi-select with all bishops defaulting to selected on edit
-        // TODO: consider making one primary bishop with multi-select for seperate auxilary bishops (new relationship)
+    public function edit($id) {
+        $this->authorize('update-contact');
         $organization = \montserrat\Contact::with('address_primary.state','address_primary.location','phone_main_phone.location','phone_main_fax.location','email_primary.location','website_main','notes')->findOrFail($id);
 
         $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name','id');
@@ -252,10 +246,8 @@ return Redirect::action('OrganizationsController@index');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
-
+    public function update(Request $request, $id) {
+        $this->authorize('update-contact');
         $this->validate($request, [
             'organization_name' => 'required',
             'bishop_id' => 'integer|min:0',
@@ -271,7 +263,6 @@ return Redirect::action('OrganizationsController@index');
             'avatar' => 'image|max:5000',
             'attachment' => 'file|mimes:pdf,doc,docx|max:10000',
             'attachment_description' => 'string|max:200',
-            
         ]);
 
         $organization = \montserrat\Contact::with('address_primary.state','address_primary.location','phone_main_phone.location','phone_main_fax.location','email_primary.location','website_main','note_organization')->findOrFail($id);
@@ -401,10 +392,7 @@ return Redirect::action('OrganizationsController@index');
             $url_twitter->website_type='Twitter';
         $url_twitter->save();
 
-
-
-        
-        return Redirect::action('OrganizationsController@index');
+       return Redirect::action('OrganizationsController@index');
         
     }
 
@@ -413,11 +401,14 @@ return Redirect::action('OrganizationsController@index');
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     * 
+     * // TODO: delete addresses, emails, webpages, and phone numbers for persons, parishes, dioceses and organizations
+     * 
      */
     public function destroy($id)
     {
-        // TODO: delete addresses, emails, webpages, and phone numbers for persons, parishes, dioceses and organizations
-         \montserrat\Contact::destroy($id);
+        $this->authorize('delete-contact');
+        \montserrat\Contact::destroy($id);
         return Redirect::action('OrganizationsController@index');
     }
 }

@@ -11,8 +11,7 @@ use Carbon\Carbon;
 
 class RoomsController extends Controller
 {
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('auth');
     }
 
@@ -21,21 +20,16 @@ class RoomsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-        
+    public function index() {
+        $this->authorize('show-room');
         $rooms = \montserrat\Room::orderBy('building_id', 'asc','name','asc')->get();
-         foreach ($rooms as $room) {
+        foreach ($rooms as $room) {
             $room->building = \montserrat\Location::findOrFail($room->building_id)->name;
            
-         }
-         $roomsort = $rooms->sortBy(function($building) {
+        }
+        $roomsort = $rooms->sortBy(function($building) {
          return sprintf('%-12s%s',$building->building,$building->name);});
-          //dd($rooms);      
         return view('rooms.index',compact('roomsort'));   //
-    
-    
     }
 
     /**
@@ -43,12 +37,10 @@ class RoomsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create() {
+        $this->authorize('create-room');
         $locations = \montserrat\Location::orderby('name')->pluck('name','id');
         return view('rooms.create',compact('locations'));  
-    
     }
 
     /**
@@ -57,14 +49,14 @@ class RoomsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-           $this->validate($request, [
+    public function store(Request $request) {
+        $this->authorize('create-room');
+        $this->validate($request, [
             'name' => 'required',
             'building_id' => 'integer|min:0',
             'occupancy' => 'integer|min:0'
         ]);
+        
         $room = new \montserrat\Room;
         $room->building_id = $request->input('building_id');
         $room->name = $request->input('name');
@@ -75,7 +67,8 @@ class RoomsController extends Controller
         $room->occupancy = $request->input('occupancy');
         $room->status= $request->input('status');
         $room->save();
-return Redirect::action('RoomsController@index');
+        
+        return Redirect::action('RoomsController@index');
     }
 
     /**
@@ -84,16 +77,12 @@ return Redirect::action('RoomsController@index');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-        
+    public function show($id) {
+        $this->authorize('show-room');
         $room = \montserrat\Room::findOrFail($id);
         $building =  \montserrat\Room::findOrFail($id)->location;
         $room->building = $building->name;
-        
-       return view('rooms.show',compact('room'));//
-    
+        return view('rooms.show',compact('room'));//
     }
 
     /**
@@ -102,13 +91,11 @@ return Redirect::action('RoomsController@index');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+    public function edit($id) {
+        $this->authorize('update-room');
         $locations = \montserrat\Location::orderby('name')->pluck('name','id');
         $room= \montserrat\Room::findOrFail($id);
-      
-       return view('rooms.edit',compact('room','locations'));
+        return view('rooms.edit',compact('room','locations'));
     }
 
     /**
@@ -118,9 +105,8 @@ return Redirect::action('RoomsController@index');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id) {
+        $this->authorize('update-room');
         $this->validate($request, [
             'name' => 'required',
             'building_id' => 'integer|min:0',
@@ -147,9 +133,8 @@ return Redirect::action('RoomsController@index');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+        $this->authorize('delete-room');
         \montserrat\Room::destroy($id);
         return Redirect::action('RoomsController@index');
     }
@@ -160,10 +145,8 @@ return Redirect::action('RoomsController@index');
      * @param  int  $ym
      * @return \Illuminate\Http\Response
      */
-    public function schedule($ym = null, $building = null)
-    {   //dd($ym);
-    
-        //
+    public function schedule($ym = null, $building = null) {   
+        $this->authorize('show-room');
         if ((!isset($ym)) or ($ym==0)) {
             $dt = Carbon::now();
             //dd($dt);
@@ -174,39 +157,28 @@ return Redirect::action('RoomsController@index');
         }
         $upcoming = clone $dt;
         $previous_dt = clone $dt;
-        $path=url('rooms/'.$previous_dt->subDays(31)->format('Ymd'));
-        $previous_link = '<a href="'.$path.'">&#171;</a>'; 
+        $prev_path=url('rooms/'.$previous_dt->subDays(31)->format('Ymd'));
+        $previous_link = '<a href="'.$prev_path.'">&#171;</a>'; 
         $dts[0] = $dt;
         //dd($dts);
         for ($i=1; $i<=31;$i++) {
             $dts[$i] = Carbon::parse($upcoming->addDays((1)));
         }
         
-        $path=url('rooms/'.$upcoming->format('Ymd'));
-        $next_link = '<a href="'.$path.'">&#187;</a>'; 
-        //dd($dts);
+        $next_path=url('rooms/'.$upcoming->format('Ymd'));
+        $next_link = '<a href="'.$next_path.'">&#187;</a>'; 
         
         $rooms = \montserrat\Room::with('location')->get();
-        //dd($rooms);
-        //foreach ($rooms as $room) {
-        //    $room->building = \montserrat\Location::findOrFail($room->building_id)->name;
-        //}
         $roomsort = $rooms->sortBy(function($room) {
             return sprintf('%-12s%s', $room->building_id, $room->name);
         });
         
-        //dd($dts);
         $registrations_start = \montserrat\Registration::with('room','room.location','retreatant','retreat')->whereNull('canceled_at')->where('room_id','>',0)->whereHas('retreat', function($query) use ($dts) {
             $query->where('start_date','>=',$dts[0])->where('start_date','<=',$dts[30]);
         })->get();
         $registrations_end = \montserrat\Registration::with('room','room.location','retreatant','retreat')->whereNull('canceled_at')->where('room_id','>',0)->whereHas('retreat', function($query) use ($dts) {
             $query->where('end_date','>=',$dts[0])->where('start_date','<=',$dts[0]);
         })->get();
-        //dd($registrations_start, $registrations_end);
-        //$endregistrations = \montserrat\Registration::where('end','>=',$dts[0])->where('end','<=',$dts[30])->with('room','room.location','retreatant','retreat')->where('room_id','>',0)->get();
-        /* get registrations that are not inclusive of the date range */
-        // dd($endregistrations);
-        // $registrations->merge($endregistrations);
         
         // create matrix of rooms and dates
         foreach ($rooms as $room) {
@@ -281,7 +253,6 @@ return Redirect::action('RoomsController@index');
         
             }
         }
-        //dd($m);
         return view('rooms.sched2',compact('dts','roomsort','m','previous_link','next_link'));
     }
 }

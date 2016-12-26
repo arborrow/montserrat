@@ -87,7 +87,7 @@ class PersonsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('update-contact');
+        $this->authorize('create-contact');
         $this->validate($request, [
             'first_name' => 'required',
             'last_name' => 'required',
@@ -856,7 +856,8 @@ class PersonsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //dd($request);
+        $this->authorize('update-contact');
+        
         $this->validate($request, [
             'first_name' => 'required',
             'last_name' => 'required',
@@ -1446,7 +1447,8 @@ class PersonsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
+    {   $this->authorize('delete-contact');
+        
         // TODO: consider creating a restore/{id} or undelete/{id}
         
         //delete existing groups and relationships when deleting user
@@ -1594,7 +1596,8 @@ class PersonsController extends Controller
     
     public function role($group_id)
     {
-        //dd($group_id);
+        $this->authorize('show-contact');
+        
         $persons = \montserrat\Contact::with('groups','address_primary')->whereHas('groups', function ($query) use ($group_id) {$query->where('group_id','=',$group_id)->whereStatus('Added');})->orderBy('sort_name')->get();
         $group = \montserrat\Group::findOrFail($group_id);
         $role['name']= $group->name;
@@ -1621,8 +1624,8 @@ class PersonsController extends Controller
     }
     
     public function save_relationship($field, $contact_id_a, $contact_id_b, $relationship_type) {
+        $this->authorize('update-contact');
         
-        // save relationship
         if ($request->input($field)>0) {
             $relationship = new \montserrat\Relationship;
                 $relationship->contact_id_a = $contact_id_a;
@@ -1633,6 +1636,7 @@ class PersonsController extends Controller
         }
     }
     public function duplicates() {
+        $this->authorize('update-contact');
         
         $duplicates = \montserrat\Contact::whereIn('id',function($query) {
         $query->select('id')->from('contact')->groupBy('sort_name')->whereDeletedAt(NULL)->havingRaw('count(*)>1');})->orderBy('sort_name')->paginate(100);
@@ -1641,6 +1645,7 @@ class PersonsController extends Controller
         
     }
     public function merge($contact_id,$merge_id=NULL) {
+        $this->authorize('update-contact');
         
         $contact = \montserrat\Contact::findOrFail($contact_id);
         $similar = \montserrat\Contact::whereSortName($contact->sort_name)->get();

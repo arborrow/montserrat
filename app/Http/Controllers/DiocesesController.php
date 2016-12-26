@@ -25,13 +25,10 @@ class DiocesesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        // need to implement getting Bishop's name from bishop_id
-        //$dioceses = \montserrat\Diocese::with('bishop')->orderBy('name', 'asc')->get();
-        $dioceses = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_DIOCESE)->orderBy('sort_name', 'asc')->with('addresses.state','phones','emails','websites','bishops.contact_b','parishes.contact_a')->get();
+    public function index() {
+        $this->authorize('show-contact');
         
-        //dd($dioceses[0]["bishops"]);
+        $dioceses = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_DIOCESE)->orderBy('sort_name', 'asc')->with('addresses.state','phones','emails','websites','bishops.contact_b','parishes.contact_a')->get();
         
         return view('dioceses.index',compact('dioceses'));   //
     
@@ -42,8 +39,8 @@ class DiocesesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
+        $this->authorize('create-contact');
         $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name','id');
         $states->prepend('N/A',0); 
         
@@ -66,23 +63,22 @@ class DiocesesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-            $this->validate($request, [
-                'organization_name' => 'required',
-                'bishop_id' => 'integer|min:0',
-                'email_main' => 'email',
-                'url_main' => 'url',
-                'url_facebook' => 'url|regex:/facebook\.com\/.+/i',
-                'url_google' => 'url|regex:/plus\.google\.com\/.+/i',
-                'url_twitter' => 'url|regex:/twitter\.com\/.+/i',
-                'url_instagram' => 'url|regex:/instagram\.com\/.+/i',
-                'url_linkedin' => 'url|regex:/linkedin\.com\/.+/i',
-                'phone_main_phone' => 'phone',
-                'phone_main_fax' => 'phone',
-            ]);
-            
+    public function store(Request $request) {
+        $this->authorize('create-contact');
+        $this->validate($request, [
+            'organization_name' => 'required',
+            'bishop_id' => 'integer|min:0',
+            'email_main' => 'email',
+            'url_main' => 'url',
+            'url_facebook' => 'url|regex:/facebook\.com\/.+/i',
+            'url_google' => 'url|regex:/plus\.google\.com\/.+/i',
+            'url_twitter' => 'url|regex:/twitter\.com\/.+/i',
+            'url_instagram' => 'url|regex:/instagram\.com\/.+/i',
+            'url_linkedin' => 'url|regex:/linkedin\.com\/.+/i',
+            'phone_main_phone' => 'phone',
+            'phone_main_fax' => 'phone',
+        ]);
+
         $diocese = new \montserrat\Contact;
         $diocese->organization_name = $request->input('organization_name');
         $diocese->display_name  = $request->input('organization_name');
@@ -196,8 +192,8 @@ return Redirect::action('DiocesesController@index');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {   
+    public function show($id) {
+        $this->authorize('show-contact');
         $diocese = \montserrat\Contact::with('bishops.contact_b','parishes.contact_b','addresses.state','addresses.location','phones.location','emails.location','websites','notes','a_relationships.relationship_type','a_relationships.contact_b','b_relationships.relationship_type','b_relationships.contact_a','event_registrations')->findOrFail($id);
         $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($diocese->id)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->get();
         $relationship_types = array();
@@ -211,17 +207,18 @@ return Redirect::action('DiocesesController@index');
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        // TODO: make create and edit bishop id multi-select with all bishops defaulting to selected on edit
+     * 
+     *  // TODO: make create and edit bishop id multi-select with all bishops defaulting to selected on edit
         // TODO: consider making one primary bishop with multi-select for seperate auxilary bishops (new relationship)
+     */
+    public function edit($id) {
+        $this->authorize('update-contact');
         $diocese = \montserrat\Contact::with('bishops.contact_b','parishes.contact_b','address_primary.state','address_primary.location','phone_primary.location','phone_main_fax.location','email_primary.location','website_main','notes')->findOrFail($id);
-       if (empty($diocese->bishop)) {
-           $diocese->bishop_id=0;
-       } else {
-           $diocese->bishop_id = $diocese->bishop->contact_id_b;
-       }
+        if (empty($diocese->bishop)) {
+            $diocese->bishop_id=0;
+        } else {
+            $diocese->bishop_id = $diocese->bishop->contact_id_b;
+        }
         $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name','id');
         $states->prepend('N/A',0); 
         
@@ -246,7 +243,6 @@ return Redirect::action('DiocesesController@index');
         foreach($diocese->websites as $website) {
             $defaults[$website->website_type]['url'] = $website->url;
         }
-
               
        return view('dioceses.edit',compact('diocese','bishops','states','countries','defaults'));
     }
@@ -258,10 +254,8 @@ return Redirect::action('DiocesesController@index');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
-
+    public function update(Request $request, $id) {
+        $this->authorize('update-contact');
         $this->validate($request, [
             'organization_name' => 'required',
             'display_name' => 'required',
@@ -404,9 +398,8 @@ return Redirect::action('DiocesesController@index');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+        $this->authorize('delete-contact');
          \montserrat\Contact::destroy($id);
         return Redirect::action('DiocesesController@index');
     }

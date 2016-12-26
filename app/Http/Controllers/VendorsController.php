@@ -13,8 +13,7 @@ use Intervention\Image\Facades\Image;
 
 class VendorsController extends Controller
 {
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('auth');
     }
 
@@ -23,12 +22,10 @@ class VendorsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
+        $this->authorize('show-contact');
         $vendors = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_VENDOR)->orderBy('sort_name', 'asc')->with('addresses.state','phones','emails','websites')->get();
-        
         return view('vendors.index',compact('vendors'));   //
-    
     }
 
     /**
@@ -36,8 +33,9 @@ class VendorsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
+        $this->authorize('create-contact');
+
         $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name','id');
         $states->prepend('N/A',0); 
         $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code','id');
@@ -45,7 +43,6 @@ class VendorsController extends Controller
         $defaults['country_id'] = COUNTRY_ID_USA;
         $countries->prepend('N/A',0); 
         return view('vendors.create',compact('states','countries','defaults'));  
-    
     }
 
     /**
@@ -54,8 +51,8 @@ class VendorsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
+        $this->authorize('create-contact');
         $this->validate($request, [
             'organization_name' => 'required',
             'vendor_email_main' => 'email',
@@ -68,7 +65,8 @@ class VendorsController extends Controller
             'phone_main_phone' => 'phone',
             'phone_main_fax' => 'phone',
         ]);
-    $vendor = new \montserrat\Contact;
+        
+        $vendor = new \montserrat\Contact;
         $vendor->organization_name = $request->input('organization_name');
         $vendor->display_name  = $request->input('organization_name');
         $vendor->sort_name  = $request->input('organization_name');
@@ -161,10 +159,8 @@ class VendorsController extends Controller
             $url_twitter->url=$request->input('url_twitter');
             $url_twitter->website_type='Twitter';
         $url_twitter->save();
-
-
-        
-return Redirect::action('VendorsController@index');
+ 
+        return Redirect::action('VendorsController@index');
     }
 
     /**
@@ -173,13 +169,13 @@ return Redirect::action('VendorsController@index');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
+        $this->authorize('show-contact');
         $vendor = \montserrat\Contact::with('addresses.state','addresses.location','phones.location','emails.location','websites','notes','touchpoints')->findOrFail($id);
         $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($vendor->id)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->get();
         $relationship_types = array();
         $relationship_types["Primary Contact"] = "Primary Contact";
-return view('vendors.show',compact('vendor','relationship_types','files'));//
+        return view('vendors.show',compact('vendor','relationship_types','files'));//
     }
 
     /**
@@ -188,8 +184,9 @@ return view('vendors.show',compact('vendor','relationship_types','files'));//
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id) {
+        $this->authorize('update-contact');
+
         $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name','id');
         $states->prepend('N/A',0); 
         $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code','id');
@@ -211,8 +208,6 @@ return view('vendors.show',compact('vendor','relationship_types','files'));//
             $defaults[$website->website_type]['url'] = $website->url;
         }
 
-        
-        
         return view('vendors.edit',compact('vendor','states','countries','defaults'));
     }
 
@@ -223,8 +218,8 @@ return view('vendors.show',compact('vendor','relationship_types','files'));//
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
+        $this->authorize('show-contact');
         $this->validate($request, [
             'organization_name' => 'required',
             'display_name' => 'required',
@@ -302,7 +297,6 @@ return view('vendors.show',compact('vendor','relationship_types','files'));//
         $email_primary->location_type_id=LOCATION_TYPE_MAIN;
         $email_primary->email = $request->input('email_primary');
         $email_primary->save();
-        
                 
         if (null !== $request->file('avatar')) {
             $description = 'Avatar for '.$vendor->organization_name;
@@ -316,7 +310,6 @@ return view('vendors.show',compact('vendor','relationship_types','files'));//
             $attachment = new AttachmentsController;
             $attachment->update_attachment($request->file('attachment'),'contact',$vendor->id,'attachment',$description); 
         }
-
                 
         $url_main = \montserrat\Website::firstOrNew(['contact_id'=>$vendor->id,'website_type'=>'Main']);
             $url_main->contact_id=$vendor->id;
@@ -360,8 +353,6 @@ return view('vendors.show',compact('vendor','relationship_types','files'));//
             $url_twitter->website_type='Twitter';
         $url_twitter->save();
 
-
-
         return Redirect::action('VendorsController@index');
     }
 
@@ -371,10 +362,9 @@ return view('vendors.show',compact('vendor','relationship_types','files'));//
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
-         \montserrat\Contact::destroy($id);
+    public function destroy($id) {
+        $this->authorize('delete-contact');
+        \montserrat\Contact::destroy($id);
         return Redirect::action('VendorsController@index');
     }
 
