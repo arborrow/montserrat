@@ -38,10 +38,14 @@
             <a href="login/google">{!! Html::image('img/login.png', 'Login',array('title'=>"Login")) !!}</a>
              @endif
              <br />
-             Roles: 
+            @if (Auth::User()->roles->isEmpty())
+                 No assigned roles
+            @else
+                Role(s): 
             @foreach (Auth::User()->roles as $user_roles)
                  {{$user_roles->display_name}}
             @endforeach 
+            @endIf
                 
             </div>
         </div>
