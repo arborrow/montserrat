@@ -134,13 +134,13 @@ class RolesController extends Controller
         $role->permissions()->detach();
         $role->permissions()->sync($request->input('permissions'));
     
-        return Redirect::action('PermissionsController@index');
+        return Redirect::action('RolesController@index');
     }
     public function update_users(Request $request) {
         $role = \montserrat\Role::findOrFail($request->input('id'));
         $role->users()->detach();
         $role->users()->sync($request->input('users'));
     
-        return Redirect::action('PermissionsController@index');
+        return Redirect::action('RolesController@index');
     }
 }

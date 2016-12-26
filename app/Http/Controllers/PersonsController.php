@@ -24,10 +24,10 @@ class PersonsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-       $persons = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name', 'asc')->with('addresses.state','phones','emails','websites','parish.contact_a')->paginate(150);
+    {   $this->authorize('show-contact');
+        $persons = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name', 'asc')->with('addresses.state','phones','emails','websites','parish.contact_a')->paginate(150);
        
-       return view('persons.index',compact('persons'));   //
+        return view('persons.index',compact('persons'));   //
     }
 
     public function lastnames($lastname=NULL)
@@ -43,8 +43,8 @@ class PersonsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
+        $this->authorize('create-contact');
         $parishes = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('address_primary.state','diocese.contact_a')->get();
         $parish_list[0]='N/A';  
         // while probably not the most efficient way of doing this it gets me the result
@@ -87,7 +87,7 @@ class PersonsController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);//
+        $this->authorize('update-contact');
         $this->validate($request, [
             'first_name' => 'required',
             'last_name' => 'required',
@@ -639,7 +639,7 @@ class PersonsController extends Controller
      */
     public function show($id)
     {
-        //
+       $this->authorize('show-contact');
        $person = \montserrat\Contact::with('addresses.country','addresses.location','addresses.state','emails.location','emergency_contact','ethnicity','languages','notes','occupation','parish.contact_a.address_primary','parish.contact_a.diocese.contact_a','phones.location','prefix','suffix','religion','touchpoints.staff','websites','groups.group','a_relationships.relationship_type','a_relationships.contact_b','b_relationships.relationship_type','b_relationships.contact_a','event_registrations')->findOrFail($id);
        $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($person->id)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->get();
        $relationship_types = array();
@@ -706,7 +706,7 @@ class PersonsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $this->authorize('update-contact');
         $person = \montserrat\Contact::with('prefix','suffix','addresses.location','emails.location','phones.location','websites','parish','emergency_contact','notes')->findOrFail($id);
         //dd($person);
         
