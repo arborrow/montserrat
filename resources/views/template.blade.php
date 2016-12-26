@@ -177,10 +177,10 @@
         placeholder: 'Choose role(s)'
     });
    $("#permissions").select2({
-        placeholder: 'Choose role(s)'
+        placeholder: 'Choose permission(s)'
     });
    $("#users").select2({
-        placeholder: 'Choose role(s)'
+        placeholder: 'Choose user(s)'
     });
         
   });
