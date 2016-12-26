@@ -79,32 +79,49 @@
                     <strong>Attachments: </strong>
                 </div>
                 <div class="col-md-2">
-                    {!!$retreat->retreat_contract_link!!}
-                    {!!$retreat->retreat_schedule_link!!}
-                    {!!$retreat->retreat_evaluations_link!!}
+                    @can('show-event-contract')
+                        {!!$retreat->retreat_contract_link!!}
+                    @endCan
+                    @can('show-event-schedule')
+                        {!!$retreat->retreat_schedule_link!!}
+                    @endCan
+                    @can('show-event-evaluation')
+                        {!!$retreat->retreat_evaluations_link!!}
+                    @endCan
                 </div>
                     
             </div>
             <div class="clearfix"> </div>
-            <div class='row'>
-                
-                @if (Storage::has('event/'.$retreat->id.'/group_photo.jpg'))
-                    <div class='col-md-1'>
-                        <strong>Group photo:</strong> 
-                    </div>
-                    <div class='col-md-8'>
-                        <img src="{{url('retreat/'.$retreat->id).'/photo'}}" class="img" style="padding:5px; width:75%">
-                    </div>
-                @endif
-                        
-            </div><div class="clearfix"> </div>
+            @can('show-event-group-photo')
+                <div class='row'>
+
+                    @if (Storage::has('event/'.$retreat->id.'/group_photo.jpg'))
+                        <div class='col-md-1'>
+                            <strong>Group photo:</strong> 
+                        </div>
+                        <div class='col-md-8'>
+                            <img src="{{url('retreat/'.$retreat->id).'/photo'}}" class="img" style="padding:5px; width:75%">
+                        </div>
+                    @endif
+
+                </div>
+            @endCan
+            <div class="clearfix"> </div>
                 
         </div>
             <div class='row'>
-                <div class='col-md-1'><a href="{{ action('RetreatsController@edit', $retreat->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
-                <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['retreat.destroy', $retreat->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
-                {!! Form::close() !!}</div><div class="clearfix"> </div>
+                @can('update-retreat')
+                    <div class='col-md-1'>
+                        <a href="{{ action('RetreatsController@edit', $retreat->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                    </div>
+                @endCan
+                @can('delete-retreat')
+                    <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['retreat.destroy', $retreat->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                        {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                        {!! Form::close() !!}
+                    </div>
+                @endCan
+                <div class="clearfix"> </div>
             </div><br />
         <div class="panel panel-default">  
         <div class="panel-heading" id='registrations'>

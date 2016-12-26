@@ -47,12 +47,17 @@ Route::get('retreat/{event_id}/touchpoint',['uses' => 'TouchpointsController@add
 Route::get('/',['as' => 'welcome','uses' => 'PagesController@welcome']);
 Route::get('about',['as' => 'about','uses' => 'PagesController@about']);
 Route::get('admin',['as' => 'admin','uses' => 'PagesController@admin']);
-
-Route::group(['prefix' => 'admin', 'middleware' => ['role:manager']], function() {
+Route::post('admin/permission/update_roles',['as' => 'admin.permission.update_roles', 'uses' => 'PermissionsController@update_roles']);
+Route::post('admin/role/update_permissions',['as' => 'admin.role.update_permissions', 'uses' => 'RolesController@update_permissions']);
+Route::post('admin/role/update_users',['as' => 'admin.role.update_users', 'uses' => 'RolesController@update_users']);
+    
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     Route::resource('permission','PermissionsController');
     Route::resource('role','RolesController');
     Route::get('phpinfo',['as' => 'phpinfo','uses' => 'SystemController@phpinfo']);
+
 });
+
 
 Route::get('bookstore',['as' => 'bookstore','uses' => 'PagesController@bookstore']);
 //TODO: remove deprecated contact controller and resources

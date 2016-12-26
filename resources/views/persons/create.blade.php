@@ -36,9 +36,10 @@
                             {!! Form::label('subcontact_type', 'Subcontact type: ', ['class' => 'col-md-3'])  !!}
                             {!! Form::select('subcontact_type', $subcontact_types, 0, ['class' => 'col-md-2']) !!}
                         <div class="clearfix"> </div>
+                        @can('create-avatar')
                             {!! Form::label('avatar', 'Picture (max 5M): ', ['class' => 'col-md-3'])  !!}
                             {!! Form::file('avatar'); !!}
-
+                        @endCan        
                     </div>
                         
                 </span>

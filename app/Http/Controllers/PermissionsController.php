@@ -13,6 +13,11 @@ class PermissionsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        if ('cli' != php_sapi_name()) {
+            $this->authorize('show-admin-menu');
+        }
+        
+        
     }
     
     public function index()
@@ -66,8 +71,9 @@ class PermissionsController extends Controller
     {
         //
         $permission = \montserrat\Permission::with('roles')->findOrFail($id);
+        $roles = \montserrat\Role::pluck('name','id');
         
-        return view('admin.permissions.show',compact('permission'));//
+        return view('admin.permissions.show',compact('permission','roles'));//
 
     }
 
@@ -121,4 +127,12 @@ class PermissionsController extends Controller
        return Redirect::action('PermissionsController@index');
     
     }
+    public function update_roles(Request $request) {
+        $permission = \montserrat\Permission::findOrFail($request->input('id'));
+        $permission->roles()->detach();
+        $permission->roles()->sync($request->input('roles'));
+    
+        return Redirect::action('PermissionsController@index');
+    }
+    
 }

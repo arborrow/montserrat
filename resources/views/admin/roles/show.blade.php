@@ -17,65 +17,45 @@
                         <br /><strong>Description: </strong>{{$role->description}}
                     
                 </div>
-            </div></div>
-            
-        <div class='row'>
-            
-        @if ($role->permissions->isEmpty())
-            <p>This role has no permissions!</p>
-        @else
-            <table class="table"><caption><h2>This role has the following permissions</h2></caption>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Display name</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($role->permissions as $permission)
-                    <tr>
-                        <td><a href="../../admin/permission/{{ $permission->id}}">{{ $permission->name }}</a></td>
-                        <td>{{ $permission->display_name }}</td>
-                        <td>{{ $permission->description }}</td>
-                    </tr>
-                    @endforeach
-
-                </tbody>
-            </table>
-        @endif
-        </div>
-        
-        <div class='row'>
-            
-        @if ($role->users->isEmpty())
-            <p>No users currently have this role!</p>
-        @else
-            <table class="table"><caption><h2>The following users have this role:</h2></caption>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($role->users as $user)
-                    <tr>
-                        <td>{{ $user->name }} </a></td>
-                    </tr>
-                    @endforeach
-
-                </tbody>
-            </table>
-        @endif
-        </div>
-        
-            <div class='row'>
-                <div class='col-md-1'><a href="{{ action('RolesController@edit', $role->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
-                <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['admin.role.destroy', $role->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
-                {!! Form::close() !!}</div><div class="clearfix"> </div>
             </div>
-        
+            <div class="clearfix"> </div>
+<hr />
+            <div class='row'>
+                <div class='col-md-8'>
+                
+                    @can('manage-permission')
+                        {!! Form::open(['url' => 'admin/role/update_permissions', 'method' => 'POST', 'route' => ['admin.role.update_permissions']]) !!}
+                        {!! Form::hidden('id',$role->id) !!}
+                        {!! Form::label('permissions', 'Permissions granted to '.$role->name.' role:', ['class' => 'col-md-4'])  !!}
+                        {!! Form::select('permissions[]', $permissions, $role->permissions->pluck('id')->toArray(), ['id'=>'permissions','class' => 'form-control col-md-6','multiple' => 'multiple']) !!}
+                        Update permissions {!! Form::image('img/save.png','btnSave',['class' => 'btn btn-default']) !!}
+                        {!! Form::close() !!}
+                    @endCan
+                </div>
+            </div>
+<hr />
+            <div class='row'>
+                <div class='col-md-8'>
+
+                    @can('manage-permission')
+                        {!! Form::open(['url' => 'admin/role/update_users', 'method' => 'POST', 'route' => ['admin.role.update_users']]) !!}
+                        {!! Form::hidden('id',$role->id) !!}
+                        {!! Form::label('users', 'Users with '.$role->name.' role:', ['class' => 'col-md-4'])  !!}
+                        {!! Form::select('users[]', $users, $role->users->pluck('id')->toArray(), ['id'=>'users','class' => 'form-control col-md-6','multiple' => 'multiple']) !!}
+                        Update users {!! Form::image('img/save.png','btnSave',['class' => 'btn btn-default']) !!}
+                        {!! Form::close() !!}
+                    @endCan
+
+                </div>
+            </div>
+        </div>
+
+        <div class='row'>
+            <div class='col-md-1'><a href="{{ action('RolesController@edit', $role->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
+            <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['admin.role.destroy', $role->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+            {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+            {!! Form::close() !!}</div><div class="clearfix"> </div>
+        </div>
     </div>
 </section>
 @stop

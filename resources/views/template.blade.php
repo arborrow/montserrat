@@ -87,6 +87,11 @@
                 <li><a href={{ route('users') }}>{!! Html::image('img/users.png', 'Users',array('title'=>"Users")) !!}</a></li>
            -->             
                 <li><a href={{ route('touchpoint.index') }}>Touchpoints</a></li>
+                @can('show-admin-menu')
+                <li><a href={{ route('admin.role.index') }}>Roles</a></li>
+                <li><a href={{ route('admin.permission.index') }}>Permissions</a></li>
+                @endCan
+                
  <!--
                 <li><a href={{ route('support') }}>{!! Html::image('img/support.png', 'Support',array('title'=>"Support")) !!}</a></li>
                 <li><a href={{ route('about') }}>{!! Html::image('img/about.png', 'About',array('title' => 'About')) !!}</a></li>
@@ -167,6 +172,15 @@
     });
    $("#groups").select2({
         placeholder: 'Choose group(s)'
+    });
+   $("#roles").select2({
+        placeholder: 'Choose role(s)'
+    });
+   $("#permissions").select2({
+        placeholder: 'Choose role(s)'
+    });
+   $("#users").select2({
+        placeholder: 'Choose role(s)'
     });
         
   });

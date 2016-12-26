@@ -5,6 +5,7 @@ namespace montserrat;
 // use Illuminate\Database\Eloquent\Model;
 use Zizaco\Entrust\EntrustRole;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use montserrat\Permission;
 
 class Role extends EntrustRole
 {
@@ -15,7 +16,11 @@ class Role extends EntrustRole
         return $this->belongsToMany('\montserrat\User');
     }
     public function permissions() {
-        return $this->belongsToMany('\montserrat\Permission');
+        return $this->belongsToMany(Permission::class);
+    }
+    
+    public function givePermissionTo (Permission $permission) {
+        return $this->permissions->save();
     }
     
 }

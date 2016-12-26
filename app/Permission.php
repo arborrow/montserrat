@@ -18,6 +18,10 @@ class Permission extends EntrustPermission
     public function roles() {
         return $this->belongsToMany('\montserrat\Role');
     }
+    public function assignRoleTo (Role $role) {
+        return $this->roles->save();
+    }
+    
     
 
 }

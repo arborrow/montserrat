@@ -267,6 +267,7 @@
                 @endif
         </div>
         </div>
+         @can('show-attachment')   
         <div class='row'>
             <div class='col-md-8'>
                 <div class='panel-heading'>
@@ -299,6 +300,7 @@
                 </div>
             </div>
         </div>
+        @endCan
         <div class='row'>
             <div class='col-md-1'><a href="{{ action('PersonsController@edit', $person->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
             @role('manager')

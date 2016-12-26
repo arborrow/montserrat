@@ -69,16 +69,17 @@
                     {!! Form::label('subcontact_type', 'Subcontact type: ', ['class' => 'col-md-2'])  !!}
                     {!! Form::select('subcontact_type', $subcontact_types, $person->subcontact_type, ['class' => 'col-md-2']) !!}
                     <div class="clearfix"> </div>
-                    
-                    {!! Form::label('avatar', 'Picture (max 5M): ', ['class' => 'col-md-2'])  !!}
-                    {!! Form::file('avatar',['class' => 'col-md-2']); !!}
+                    @can('create-avatar')
+                        {!! Form::label('avatar', 'Picture (max 5M): ', ['class' => 'col-md-2'])  !!}
+                        {!! Form::file('avatar',['class' => 'col-md-2']); !!}
+                    @endCan
                     <div class="clearfix"> </div>
-                    
-                    {!! Form::label('attachment', 'Attachment (max 10M): ', ['class' => 'col-md-2'])  !!}
-                    {!! Form::file('attachment',['class' => 'col-md-2']); !!}
-                    {!! Form::label('attachment_description', 'Description: (max 200)', ['class' => 'col-md-2'])  !!}
-                    {!! Form::text('attachment_description', NULL, ['class' => 'col-md-3']) !!}
-
+                    @can('create-attachment')
+                        {!! Form::label('attachment', 'Attachment (max 10M): ', ['class' => 'col-md-2'])  !!}
+                        {!! Form::file('attachment',['class' => 'col-md-2']); !!}
+                        {!! Form::label('attachment_description', 'Description: (max 200)', ['class' => 'col-md-2'])  !!}
+                        {!! Form::text('attachment_description', NULL, ['class' => 'col-md-3']) !!}
+                    @endCan
                 </div>
             </div>
         </div>
