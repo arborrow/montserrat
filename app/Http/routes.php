@@ -106,7 +106,7 @@ Route::group(['prefix' => 'person'], function() {
     Route::get('lastnames/{id?}',['as' => 'lastnames', 'uses' => 'PersonsController@lastnames'])->where('id','[a-z]');
     Route::get('duplicates',['as' => 'duplicates','uses' => 'PersonsController@duplicates']);
     Route::get('merge/{contact_id}/{merge_id?}',['as' => 'merge','uses'=>'PersonsController@merge']);
-    Route::get('merge_delete/{id}',['as' => 'merge_delete','uses'=>'PersonsController@merge_destroy']);
+    Route::get('merge_delete/{id}/{return_id}',['as' => 'merge_delete','uses'=>'PersonsController@merge_destroy']);
 
     
 });

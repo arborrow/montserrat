@@ -12,7 +12,7 @@
             <a href="{!!url('person/merge/'.$contact->id.'/'.$duplicate->id)!!}">Merge</a>
         </span>
         <span class='btn btn-default'>
-            <a href="{!!url('person/merge_delete/'.$duplicate->id)!!}">Delete</a>
+            <a href="{!!url('person/merge_delete/'.$duplicate->id.'/'.$contact->id)!!}">Delete</a>
         </span>
         
     </th>

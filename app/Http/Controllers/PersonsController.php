@@ -1470,7 +1470,7 @@ class PersonsController extends Controller
         return Redirect::action('PersonsController@index');
     
     }
-    public function merge_destroy($id)
+    public function merge_destroy($id, $return_id)
     {
         // TODO: consider creating a restore/{id} or undelete/{id}
         
@@ -1490,7 +1490,7 @@ class PersonsController extends Controller
         \montserrat\Registration::whereContactId($id)->delete();
         \montserrat\Contact::destroy($id);
         
-        return Redirect::back();
+        return Redirect::action('PersonsController@merge',$return_id);
     
     }
     
