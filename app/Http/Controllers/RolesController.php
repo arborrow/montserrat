@@ -71,8 +71,8 @@ class RolesController extends Controller
     {
         //
         $role = \montserrat\Role::with('users','permissions')->findOrFail($id);
-        $permissions = \montserrat\Permission::pluck('name','id');
-        $users = \montserrat\User::pluck('name','id');
+        $permissions = \montserrat\Permission::orderBy('name')->pluck('name','id');
+        $users = \montserrat\User::orderBy('name')->pluck('name','id');
         
         //dd($role);
         return view('admin.roles.show',compact('role','permissions','users'));//

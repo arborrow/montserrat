@@ -27,6 +27,12 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(GateContract $gate)
     {
         parent::registerPolicies($gate);
+        $gate->before(function ($user) {
+            $superuser = \montserrat\Permission::whereName('superuser')->firstOrFail();
+            if ($user->hasRole($superuser->roles)) {
+                return true;
+            } 
+        });
         
         foreach ($this->getPermissions() as $permission) {
             $gate->define($permission->name, function($user) use ($permission) {
