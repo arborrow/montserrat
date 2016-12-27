@@ -5,7 +5,13 @@
     <div class="jumbotron text-left">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span><h2><a href="{{url('touchpoint/'.$touchpoint->id.'/edit')}}">Touchpoint details</a> 
+                <span>
+                    <h2>
+                        @can('update-touchpoint')
+                            <a href="{{url('touchpoint/'.$touchpoint->id.'/edit')}}">Touchpoint details</a> 
+                        @else
+                            Touchpoint details
+                        @endCan
                         for {!!$touchpoint->person->contact_link_full_name!!}
                 </span>                
             </div>
@@ -20,12 +26,20 @@
                 </div>
             </div></div>
             <div class='row'>
-                <div class='col-md-1'><a href="{{ action('TouchpointsController@edit', $touchpoint->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
-                <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['touchpoint.destroy', $touchpoint->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
-                {!! Form::close() !!}</div><div class="clearfix"> </div>
+                @can('update-touchpoint')
+                    <div class='col-md-1'>
+                        <a href="{{ action('TouchpointsController@edit', $touchpoint->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                    </div>
+                @endCan
+                @can('delete-touchpoint')
+                    <div class='col-md-1'>
+                        {!! Form::open(['method' => 'DELETE', 'route' => ['touchpoint.destroy', $touchpoint->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                        {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                        {!! Form::close() !!}
+                    </div>
+                @endCan
+                <div class="clearfix"> </div>
             </div>
-        
     </div>
 </section>
 @stop

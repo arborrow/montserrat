@@ -6,7 +6,11 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h2>
-                    Retreat {!!Html::link(url('retreat/'.$retreat->id.'/edit'),$retreat->idnumber.' - '.$retreat->title)!!} 
+                    @can('update-retreat')
+                        Retreat {!!Html::link(url('retreat/'.$retreat->id.'/edit'),$retreat->idnumber.' - '.$retreat->title)!!} 
+                    @else
+                        Retreat {{$retreat->idnumber.' - '.$retreat->title}} 
+                    @endCan
                 </h2>
                 {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-primary')) !!}
                 {!! Html::link(url('retreat'),'Retreat index',array('class' => 'btn btn-primary')) !!}

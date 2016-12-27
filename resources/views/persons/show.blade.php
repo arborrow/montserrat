@@ -31,9 +31,11 @@
                         @if ($person->is_superior) <span class="back"><a href={{ action('PersonsController@superiors') }}>{!! Html::image('img/superior.png', 'Superiors Group',array('title'=>"Superiors Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
                         @if ($person->is_jesuit) <span class="back"><a href={{ action('PersonsController@jesuits') }}>{!! Html::image('img/jesuit.png', 'Jesuits Group',array('title'=>"Jesuits Group",'class' => 'btn btn-default')) !!}</a></span> @endIf                        
                         <br/>
-                        <span class="btn btn-default">
-                            <a href={{ action('TouchpointsController@add',$person->id) }}>Add Touchpoint</a>
-                        </span>
+                        @can('create-touchpoint')
+                            <span class="btn btn-default">
+                                <a href={{ action('TouchpointsController@add',$person->id) }}>Add Touchpoint</a>
+                            </span>
+                        @endCan
                         <span class="btn btn-default">
                             <a href={{ action('RegistrationsController@add',$person->id) }}>Add Registration</a> 
                         </span>                
@@ -238,38 +240,40 @@
             <div class="clearfix"> </div>
         
         <div class='row'>
-        <div class='col-md-8'>
-            <div class='panel-heading'><h2><strong>Touchpoints for {{ $person->display_name }}</strong></h2>
-                <span class="btn btn-default">
-                   <a href={{ action('TouchpointsController@add',$person->id) }}>Add Touchpoint</a>
-                </span>
-           </div>
-                @if ($person->touchpoints->isEmpty())
-                        <p>It is a brand new world, there are no touchpoints for this person!</p>
-                    @else
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Contacted by</th>
-                                <th>Type of contact</th>
-                                <th>Notes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($person->touchpoints as $touchpoint)
-                            <tr>
-                                <td><a href="{{url('touchpoint/'.$touchpoint->id)}}">{{ $touchpoint->touched_at }}</a></td>
-                                <td><a href="{{url('person/'.$touchpoint->staff->id)}}">{{ $touchpoint->staff->display_name }}</a></td>
-                                <td>{{ $touchpoint->type }}</td>
-                                <td>{{ $touchpoint->notes }}</td>
-                            </tr>
-                            @endforeach
+        @can('show-touchpoint')
+            <div class='col-md-8'>
+                <div class='panel-heading'><h2><strong>Touchpoints for {{ $person->display_name }}</strong></h2>
+                    <span class="btn btn-default">
+                       <a href={{ action('TouchpointsController@add',$person->id) }}>Add Touchpoint</a>
+                    </span>
+               </div>
+                    @if ($person->touchpoints->isEmpty())
+                            <p>It is a brand new world, there are no touchpoints for this person!</p>
+                        @else
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Contacted by</th>
+                                    <th>Type of contact</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($person->touchpoints as $touchpoint)
+                                <tr>
+                                    <td><a href="{{url('touchpoint/'.$touchpoint->id)}}">{{ $touchpoint->touched_at }}</a></td>
+                                    <td><a href="{{url('person/'.$touchpoint->staff->id)}}">{{ $touchpoint->staff->display_name }}</a></td>
+                                    <td>{{ $touchpoint->type }}</td>
+                                    <td>{{ $touchpoint->notes }}</td>
+                                </tr>
+                                @endforeach
 
-                        </tbody>
-                    </table>
-                @endif
-        </div>
+                            </tbody>
+                        </table>
+                    @endif
+            </div>
+        @endCan
         </div>
          @can('show-attachment')   
         <div class='row'>

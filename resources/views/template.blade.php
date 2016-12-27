@@ -49,17 +49,18 @@
                 
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-            {{ Form::open(['action' => ['SearchController@getuser'], 'method' => 'GET']) }}
-            {{ Form::text('q', '', ['id' =>  'q', 'placeholder' =>  'Find contact by name','autofocus'=>'autofocus','class'=>'col-md-6'])}}
-            {{ Form::hidden('response', '', array('id' =>'response')) }}
-            {{ Form::submit('Find Person', array('class' => 'btn btn-default','id'=>'btnSearch','style'=>'display:none')) }}
-            <a href="{{action('SearchController@search')}}">{!! Html::image('img/search.png', 'Advanced search',array('title'=>"Advanced search",'class' => 'btn btn-link')) !!}</a>
-            {{ Form::close() }}
+        @can('show-contact')
+            <div class="row">
+                <div class="col-md-6">
+                {{ Form::open(['action' => ['SearchController@getuser'], 'method' => 'GET']) }}
+                {{ Form::text('q', '', ['id' =>  'q', 'placeholder' =>  'Find contact by name','autofocus'=>'autofocus','class'=>'col-md-6'])}}
+                {{ Form::hidden('response', '', array('id' =>'response')) }}
+                {{ Form::submit('Find Person', array('class' => 'btn btn-default','id'=>'btnSearch','style'=>'display:none')) }}
+                <a href="{{action('SearchController@search')}}">{!! Html::image('img/search.png', 'Advanced search',array('title'=>"Advanced search",'class' => 'btn btn-link')) !!}</a>
+                {{ Form::close() }}
+                </div>
             </div>
-        </div>
-    
+        @endCan
         <div class="clearfix"> </div>
         <nav class="navbar navbar-default">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -75,15 +76,34 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-left">
-                <li><a href={{ route('retreat.index') }}>Retreats</a></li>
+                @can('show-retreat')
+                    <li>
+                        <a href={{ route('retreat.index') }}>Retreats</a>
+                    </li>
+                @endCan
                 <!-- <li><a href={{ route('registration.index') }}>Registrations</a></li> -->
                 <!-- <li><a href={{ route('reservation') }}> {!! Html::image('img/reservation.png', 'Reservation',array('title'=>"Reservation")) !!}</a></li> -->
-                <li><a href={{ route('rooms') }}>Rooms</a></li> 
-                <li><a href={{ route('person.index') }}>Persons</a></li>
-                <li><a href={{ route('parish.index') }}>Parishes</a></li>
-                <li><a href={{ route('diocese.index') }}>Dioceses</a></li>
-                <li><a href={{ route('organization.index') }}>Organizations</a></li>
-                <li><a href={{ route('vendor.index') }}>Vendors</a></li>
+                @can('show-room')
+                    <li>
+                        <a href={{ route('rooms') }}>Rooms</a>
+                    </li>
+                @endCan
+                @can('show-contact')
+                    <li>
+                        <a href={{ route('person.index') }}>Persons</a>
+                    </li>
+                    <li>
+                        <a href={{ route('parish.index') }}>Parishes</a>
+                    </li>
+                    <li>
+                        <a href={{ route('diocese.index') }}>Dioceses</a>
+                    </li>
+                    <li>
+                        <a href={{ route('organization.index') }}>Organizations</a></li>
+                    <li>
+                        <a href={{ route('vendor.index') }}>Vendors</a>
+                    </li>
+                @endCan
                 <!--          <li><a href={{ route('housekeeping') }}> {!! Html::image('img/housekeeping.png', 'Housekeeping',array('title'=>"Housekeeping")) !!}</a></li>
                 <li class="divider"></li>
                 <li><a href={{ route('maintenance') }}>{!! Html::image('img/maintenance.png', 'Maintenance',array('title'=>"Maintenance")) !!}</a></li>
@@ -95,10 +115,18 @@
                 <li class="divider"></li>
                 <li><a href={{ route('users') }}>{!! Html::image('img/users.png', 'Users',array('title'=>"Users")) !!}</a></li>
            -->             
-                <li><a href={{ route('touchpoint.index') }}>Touchpoints</a></li>
+                @can('show-touchpoint')
+                    <li>
+                        <a href={{ route('touchpoint.index') }}>Touchpoints</a>
+                    </li>
+                @endCan
                 @can('show-admin-menu')
-                <li><a href={{ route('admin.role.index') }}>Roles</a></li>
-                <li><a href={{ route('admin.permission.index') }}>Permissions</a></li>
+                    <li>
+                        <a href={{ route('admin.role.index') }}>Roles</a>
+                    </li>
+                    <li>
+                        <a href={{ route('admin.permission.index') }}>Permissions</a>
+                    </li>
                 @endCan
                 
  <!--

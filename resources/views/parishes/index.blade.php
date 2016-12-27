@@ -9,8 +9,12 @@
                 <div class="panel-heading">
                     <h1>
                         <span class="grey">Parish Index</span> 
-                        <span class="grey">({{$parishes->count()}} records)</span> 
-                        <span class="create"><a href={{ action('ParishesController@create') }}>{!! Html::image('img/create.png', 'Create a Parish',array('title'=>"Create Parish",'class' => 'btn btn-default')) !!}</a></span>
+                        <span class="grey">({{$parishes->count()}} records)</span>
+                        @can('create-contact')
+                            <span class="create">
+                                <a href={{ action('ParishesController@create') }}>{!! Html::image('img/create.png', 'Create a Parish',array('title'=>"Create Parish",'class' => 'btn btn-default')) !!}</a>
+                            </span>
+                        @endCan
                     </h1>
                     <span class="btn btn-default"><a href={{ action('ParishesController@dallasdiocese') }}>Diocese of Dallas</a></span>
                     <span class="btn btn-default"><a href={{ action('ParishesController@fortworthdiocese') }}>Diocese of Fort Worth</a></span>

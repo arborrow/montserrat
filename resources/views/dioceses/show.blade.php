@@ -8,9 +8,14 @@
                     <div class="col-md-12 col-sm-12">
                         {!!$diocese->avatar_large_link!!}
                         
-                    <h1 style="position: absolute; top:5px; left:175px; padding: 5px;"><strong>
-                        <a href="{{url('diocese/'.$diocese->id.'/edit')}}">{{ $diocese->organization_name }}</a> 
-                    </strong></h1>
+                    <h1 style="position: absolute; top:5px; left:175px; padding: 5px;">
+                        <strong>
+                            @can('update-contact')
+                                <a href="{{url('diocese/'.$diocese->id.'/edit')}}">{{ $diocese->organization_name }}</a> 
+                            @else
+                                {{ $diocese->organization_name }}
+                            @endCan
+                        </strong></h1>
                     </div>
                     
                     <span><a href={{ action('DiocesesController@index') }}>{!! Html::image('img/diocese.png', 'Diocese Index',array('title'=>"Diocese Index",'class' => 'btn btn-default')) !!}</a></span>
@@ -214,10 +219,17 @@
             
             </div>            
                 <div class='row'>
-                    <div class='col-md-1'><a href="{{ action('DiocesesController@edit', $diocese->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
-                    <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['diocese.destroy', $diocese->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                    {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
-                    {!! Form::close() !!}</div><div class="clearfix"> </div>
+                    @can('update-contact')
+                        <div class='col-md-1'><a href="{{ action('DiocesesController@edit', $diocese->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
+                    @endCan
+                    @can('delete-contact')
+                        <div class='col-md-1'>
+                            {!! Form::open(['method' => 'DELETE', 'route' => ['diocese.destroy', $diocese->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                            {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                            {!! Form::close() !!}
+                        </div>
+                    @endCan
+                <div class="clearfix"> </div>
                 </div>
         </div>
     </section>

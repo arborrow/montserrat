@@ -8,9 +8,14 @@
                     <h1>
                         <span class="grey">Touchpoint Index</span> 
                         <span class="grey">({{$touchpoints->total()}} records)</span> 
-                        <span class="create"><a href={{ action('TouchpointsController@create') }}>{!! Html::image('img/create.png', 'Add Touchpoint',array('title'=>"Add Touchpoint",'class' => 'btn btn-primary')) !!}</a></span>
-                        <span class="create"><a href={{ action('TouchpointsController@add_group',0) }}>{!! Html::image('img/group_add.png', 'Add Group Touchpoint',array('title'=>"Add Group Touchpoint",'class' => 'btn btn-primary')) !!}</a></span>
-                    </h1>
+                        @can('update-touchpoint')
+                            <span class="create">
+                                <a href={{ action('TouchpointsController@create') }}>{!! Html::image('img/create.png', 'Add Touchpoint',array('title'=>"Add Touchpoint",'class' => 'btn btn-primary')) !!}</a>
+                            </span>
+                            <span class="create">
+                                <a href={{ action('TouchpointsController@add_group',0) }}>{!! Html::image('img/group_add.png', 'Add Group Touchpoint',array('title'=>"Add Group Touchpoint",'class' => 'btn btn-primary')) !!}</a>
+                            </span>
+                    </h1>@endCan
                     <span>{!! $touchpoints->render() !!}</span>
                 </div>
                 @if ($touchpoints->isEmpty())

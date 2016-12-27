@@ -7,8 +7,12 @@
                 <div class="panel-heading">
                     <h1>
                         <span class="grey">Person Index</span> 
-                        <span>({{$persons->total()}} records)</span> 
-                        <span class="create"><a href={{ action('PersonsController@create') }}>{!! Html::image('img/create.png', 'Add Person',array('title'=>"Add Person",'class' => 'btn btn-link')) !!}</a></span>
+                        <span>({{$persons->total()}} records)</span>
+                        @can('create-contact')
+                            <span class="create">
+                                <a href={{ action('PersonsController@create') }}>{!! Html::image('img/create.png', 'Add Person',array('title'=>"Add Person",'class' => 'btn btn-link')) !!}</a>
+                            </span>
+                        @endCan
                     </h1>
                     <span class="boards"><a href={{ action('PersonsController@boardmembers') }}>{!! Html::image('img/board.png', 'Board members',array('title'=>"Board members",'class' => 'btn btn-info')) !!}</a></span>
                     <span class="captains"><a href={{ action('PersonsController@captains') }}>{!! Html::image('img/captain.png', 'Captains',array('title'=>"Captains",'class' => 'btn btn-info')) !!}</a></span>

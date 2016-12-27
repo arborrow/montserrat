@@ -10,7 +10,12 @@
                     <h1>
                         <span class="grey">Vendor Index</span> 
                         <span class="grey">({{$vendors->count()}} records)</span> 
-                        <span class="create"><a href={{ action('VendorsController@create') }}>{!! Html::image('img/create.png', 'Create a Vendor',array('title'=>"Create Vendor",'class' => 'btn btn-primary')) !!}</a></span></h1>
+                        @can('update-contact')
+                            <span class="create">
+                                <a href={{ action('VendorsController@create') }}>{!! Html::image('img/create.png', 'Create a Vendor',array('title'=>"Create Vendor",'class' => 'btn btn-primary')) !!}</a>
+                            </span>
+                        @endCan
+                    </h1>
                     </h1>
              
                 </div>

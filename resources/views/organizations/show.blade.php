@@ -7,16 +7,23 @@
                 <div class="panel-heading">
                     <div class="col-md-12 col-sm-12">
                         {!!$organization->avatar_large_link!!}
-                        
-                    <h1 style="position: absolute; top:5px; left:175px; padding: 5px;"><strong>
-                            <a href="{{url('organization/'.$organization->id.'/edit')}}">{{ $organization->organization_name }} </a>({{ $organization->subcontact_type_label }})
-                    </strong></h1>
+                        <h1 style="position: absolute; top:5px; left:175px; padding: 5px;">
+                            <strong>
+                                @can('update-contact')
+                                    <a href="{{url('organization/'.$organization->id.'/edit')}}">{{ $organization->organization_name }} </a>({{ $organization->subcontact_type_label }})
+                                @else
+                                    {{ $organization->organization_name }} ({{ $organization->subcontact_type_label }})
+                                @endCan
+                            </strong>
+                        </h1>
                     </div>
                     
                     <span><a href={{ action('OrganizationsController@index') }}>{!! Html::image('img/organization.png', 'Organization Index',array('title'=>"Organization Index",'class' => 'btn btn-default')) !!}</a></span>
+                    @can('create-touchpoint')
                     <span class="btn btn-default">
                         <a href={{ action('TouchpointsController@add',$organization->id) }}>Add Touchpoint</a>
                     </span>
+                    @endCan
                     <span class="btn btn-default">
                     <a href={{ action('RegistrationsController@add',$organization->id) }}>Add Registration</a> 
                 </span>                
@@ -179,10 +186,17 @@
             </div>
             
             <div class='row'>
-                <div class='col-md-1'><a href="{{ action('OrganizationsController@edit', $organization->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
-                <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['organization.destroy', $organization->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
-                {!! Form::close() !!}</div><div class="clearfix"> </div>
+                @can('update-contact')
+                    <div class='col-md-1'><a href="{{ action('OrganizationsController@edit', $organization->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
+                @endCan
+                @can('delete-contact')
+                    <div class='col-md-1'>
+                        {!! Form::open(['method' => 'DELETE', 'route' => ['organization.destroy', $organization->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                        {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                        {!! Form::close() !!}
+                    </div>
+                @endCan
+                <div class="clearfix"> </div>
             </div>
         </div>
     </section>

@@ -9,15 +9,23 @@
                     <div class="col-md-12 col-sm-12">
                         {!!$parish->avatar_large_link!!}
                         
-                    <h1 style="position: absolute; top:5px; left:175px; padding: 5px;"><strong>
-                            <a href="{{url('parish/'.$parish->id.'/edit')}}">{!! $parish->organization_name !!}</a> (<a href="../diocese/{{$parish->diocese_id}}">{{ $parish->diocese_name}}</a>)
-                    </strong></h1>
+                    <h1 style="position: absolute; top:5px; left:175px; padding: 5px;">
+                        <strong>
+                            @can('update-contact')
+                                <a href="{{url('parish/'.$parish->id.'/edit')}}">{!! $parish->organization_name !!}</a> (<a href="../diocese/{{$parish->diocese_id}}">{{ $parish->diocese_name}}</a>)
+                            @else
+                                {{ $parish->organization_name }} (<a href="../diocese/{{$parish->diocese_id}}">{{ $parish->diocese_name}}</a>)
+                            @endCan
+                        </strong>
+                    </h1>
                     </div>
                 </div>
                     <span class="back"><a href={{ action('ParishesController@index') }}>{!! Html::image('img/parish.png', 'Parish Index',array('title'=>"Parish Index",'class' => 'btn btn-default')) !!}</a></span></h1>
-                    <span class="btn btn-default">
-                        <a href={{ action('TouchpointsController@add',$parish->id) }}>Add Touchpoint</a>
-                    </span>
+                    @can('create-touchpoint')
+                        <span class="btn btn-default">
+                            <a href={{ action('TouchpointsController@add',$parish->id) }}>Add Touchpoint</a>
+                        </span>
+                    @endCan
                     <span class="btn btn-default">
                         <a href={{ action('RegistrationsController@add',$parish->id) }}>Add Registration</a> 
                     </span>                
@@ -265,14 +273,20 @@
             </div>
             </div>
             <div class='row'>
-                <div class='col-md-1'><a href="{{ action('ParishesController@edit', $parish->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
-                <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['parish.destroy', $parish->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
-                {!! Form::close() !!}</div><div class="clearfix"> </div>
+                @can('update-contact')
+                    <div class='col-md-1'>
+                        <a href="{{ action('ParishesController@edit', $parish->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                    </div>
+                @endCan
+                @can('delete-contact')
+                    <div class='col-md-1'>
+                        {!! Form::open(['method' => 'DELETE', 'route' => ['parish.destroy', $parish->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                        {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                        {!! Form::close() !!}
+                    </div>
+                @endCan
+                <div class="clearfix"> </div>
             </div>
-                        
-        
-            
         </div>
     </section>
 @stop

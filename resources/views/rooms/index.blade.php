@@ -9,7 +9,13 @@
                 <div class="panel-heading">
                     <h1>
                     <span class="grey">Room Index</span> 
-                    <span class="create"><a href={{ action('RoomsController@create') }}>{!! Html::image('img/create.png', 'Create a Room',array('title'=>"Create Room",'class' => 'btn btn-primary')) !!}</a></span></h1>
+                        @can('room-create')
+                            <span class="create">
+                                <a href={{ action('RoomsController@create') }}>{!! Html::image('img/create.png', 'Create a Room',array('title'=>"Create Room",'class' => 'btn btn-primary')) !!}</a>
+                            </span>
+                        @endCan
+                    </h1>
+                    
                 </div>
                 @if ($roomsort->isEmpty())
                     <p> Yikes, there are no rooms at this retreat house!</p>
