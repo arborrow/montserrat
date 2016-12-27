@@ -1649,8 +1649,14 @@ class PersonsController extends Controller
         
         $contact = \montserrat\Contact::findOrFail($contact_id);
         $similar = \montserrat\Contact::whereSortName($contact->sort_name)->get();
+        
         $duplicates = $similar->keyBy('id');
         $duplicates->forget($contact->id);
+        
+        //if there are no duplicates for the user go back to duplicates list
+        if (!$duplicates->count()) {
+            return Redirect::action('PersonsController@duplicates');
+        }
         
         if (!empty($merge_id)) {
             $merge = \montserrat\Contact::findOrFail($merge_id);
