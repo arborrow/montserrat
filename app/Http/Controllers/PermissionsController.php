@@ -25,8 +25,8 @@ class PermissionsController extends Controller
             '' => 'N/A',
             'create'=>'create',
             'delete'=>'delete',
-            'edit'=>'edit',
             'manage'=>'manage',
+            'show'=>'show',
             'update'=>'update'        
         );
         $models = array (
