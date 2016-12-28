@@ -69,6 +69,11 @@ class Handler extends ExceptionHandler
             return $e->getResponse();
         } elseif ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException($e->getMessage(), $e);
+            Mail::send('emails.error', ['error' => $this->convertExceptionToResponse($e)], function($message) use ($fullurl, $username, $ip_address) {
+                $message->to('anthony.borrow@montserratretreat.org');
+                $message->subject('Polanco 404 Error @'.$fullurl.' by: '.$username.' from: '.$ip_address);
+                $message->from('polanco@montserratretreat.org');
+            });
         } elseif ($e instanceof AuthenticationException) {
             return $this->unauthenticated($request, $e);
         } elseif ($e instanceof AuthorizationException) {
