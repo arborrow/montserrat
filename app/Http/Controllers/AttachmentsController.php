@@ -359,7 +359,7 @@ class AttachmentsController extends Controller
     }
 
     public function get_event_group_photo($event_id) {
-        $this->authorize('show-event-photo');
+        $this->authorize('show-event-group-photo');
         return $this->show_attachment('event',$event_id,'group_photo',NULL);
     
     }    
