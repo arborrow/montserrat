@@ -19,7 +19,7 @@ class RelationshipsController extends Controller
      */
     public function index()
     {
-        $relationships = \montserrat\Relationship::paginate();
+        $relationships = \montserrat\Relationship::paginate(100);
         return view('relationships.index',compact('relationships'));   //
     
     }

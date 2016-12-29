@@ -91,13 +91,6 @@ class PagesController extends Controller
                 ->orderBy('participant.notes', 'asc')
                 ->get();
         
-//dd($registrations[2]);        
-//$registrations = $registrations->sortBy($registrations->retreatant->lastname);
-//products = Shop\Product::join('shop_products_options as po', 'po.product_id', '=', 'products.id')
-  // ->orderBy('po.pinned', 'desc')
-  //  ->select('products.*')       // just to avoid fetching anything from joined table
-  // ->with('options')         // if you need options data anyway
-  // ->paginate(5);
         return view('reports.retreatantinfo2',compact('registrations'));   //
     }
     

@@ -109,7 +109,7 @@ class RelationshipTypesController extends Controller
     public function show($id)
     {   
         $relationship_type = \montserrat\RelationshipType::findOrFail($id);
-        $relationships = \montserrat\Relationship::whereRelationshipTypeId($id)->orderBy('contact_id_a')->with('contact_a','contact_b')->paginate(50);
+        $relationships = \montserrat\Relationship::whereRelationshipTypeId($id)->orderBy('contact_id_a')->with('contact_a','contact_b')->paginate(100);
         return view('relationships.types.show',compact('relationship_type','relationships'));//
     }
 
