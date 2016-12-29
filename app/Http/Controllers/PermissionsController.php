@@ -102,7 +102,7 @@ class PermissionsController extends Controller
     public function show($id) {
         $this->authorize('show-permission');
         $permission = \montserrat\Permission::with('roles')->findOrFail($id);
-        $roles = \montserrat\Role::pluck('name','id');
+        $roles = \montserrat\Role::orderBy('name')->pluck('name','id');
         return view('admin.permissions.show',compact('permission','roles'));
     }
 

@@ -15,6 +15,7 @@
                         @endCan
                     </div>
                 </div>
+                    @can('show-group')
                         @if ($person->is_board_member) <span class="back"><a href={{ action('PersonsController@boardmembers') }}>{!! Html::image('img/board.png', 'Board Members Group',array('title'=>"Board Members Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
                         @if ($person->is_captain) <span class="back"><a href={{ action('PersonsController@captains') }}>{!! Html::image('img/captain.png', 'Captains Group',array('title'=>"Captains Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
                         @if ($person->is_staff) <span class="back"><a href={{ action('PersonsController@staff') }}>{!! Html::image('img/employee.png', 'Staff Group',array('title'=>"Employees Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
@@ -31,6 +32,7 @@
                         @if ($person->is_superior) <span class="back"><a href={{ action('PersonsController@superiors') }}>{!! Html::image('img/superior.png', 'Superiors Group',array('title'=>"Superiors Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
                         @if ($person->is_jesuit) <span class="back"><a href={{ action('PersonsController@jesuits') }}>{!! Html::image('img/jesuit.png', 'Jesuits Group',array('title'=>"Jesuits Group",'class' => 'btn btn-default')) !!}</a></span> @endIf                        
                         <br/>
+                    @endCan
                         @can('create-touchpoint')
                             <span class="btn btn-default">
                                 <a href={{ action('TouchpointsController@add',$person->id) }}>Add Touchpoint</a>
@@ -178,7 +180,8 @@
                         <strong>Room Preference: </strong>{{$person->note_room_preference}}<br />
                 </div>
                 
-            </div><div class="clearfix"> </div>  
+            </div><div class="clearfix"> </div>
+            @can('show-group')
             <div class='row'>
                 <div class='col-md-8'>
                     <div class='panel-heading'><h2><strong>Groups</strong></h2></div>
@@ -190,7 +193,9 @@
                         
                 </div>
             </div>
+            @endCan
             <div class='row'>
+                @can('show-relationship')
                 <div class='col-md-8'>
                     <div class='panel-heading'>
                         <h2><strong>Relationships</strong></h2>
@@ -225,9 +230,11 @@
                         
                             </ul>
                 </div>
+                @endCan
             </div>
             <div class="clearfix"> </div>
-        <div class='row'>
+            @can('show-registration');
+            <div class='row'>
                 <div class='col-md-8'>
                     <div class='panel-heading'><h2><strong>Retreat Participation for {{ $person->display_name }}</strong></h2></div>
                             <ul>    
@@ -237,6 +244,7 @@
                             </ul>
                     </div>
             </div>
+            @endCan
             <div class="clearfix"> </div>
         
         <div class='row'>
