@@ -211,11 +211,14 @@
                             <ul>    
                                 @foreach($person->a_relationships as $a_relationship)
                                 <li>
-                                    {!!$person->contact_link_full_name!!} is {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link_full_name !!} 
                                     @can('delete-relationship')
                                         {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $a_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                                        {!!$person->contact_link_full_name!!} is {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link_full_name !!} 
                                         {!! Form::image('img/delete.png','btnDelete',['title'=>'Delete Relationship '.$a_relationship->id, 'style'=>'padding-left: 50px;']) !!} 
                                         {!! Form::close() !!}
+                                    @else
+                                        {!!$person->contact_link_full_name!!} is {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link_full_name !!} 
+                                    
                                     @endCan
                                 </li>
                                 @endforeach
@@ -223,11 +226,14 @@
                    
                                 @foreach($person->b_relationships as $b_relationship)
                                 <li>    
-                                    {!!$person->contact_link_full_name!!} is {{ $b_relationship->relationship_type->label_b_a }} {!! $b_relationship->contact_a->contact_link_full_name!!}
                                     @can('delete-relationship')    
                                         {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $b_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                                        {!!$person->contact_link_full_name!!} is {{ $b_relationship->relationship_type->label_b_a }} {!! $b_relationship->contact_a->contact_link_full_name!!}
                                         {!! Form::image('img/delete.png','btnDelete',['title'=>'Delete Relationship '.$b_relationship->id,'style'=>'padding-left: 50px;']) !!} 
                                         {!! Form::close() !!}
+                                    @else
+                                        {!!$person->contact_link_full_name!!} is {{ $b_relationship->relationship_type->label_b_a }} {!! $b_relationship->contact_a->contact_link_full_name!!}
+                                    
                                     @endCan
                                 </li>
                                 @endforeach
