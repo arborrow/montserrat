@@ -38,9 +38,11 @@
                                 <a href={{ action('TouchpointsController@add',$person->id) }}>Add Touchpoint</a>
                             </span>
                         @endCan
+                        @can('create-registration')
                         <span class="btn btn-default">
                             <a href={{ action('RegistrationsController@add',$person->id) }}>Add Registration</a> 
                         </span>                
+                        @endCan
                         <span class="btn btn-default">
                             <a href={{ action('PagesController@contact_info_report',$person->id) }}>Contact Info Report</a> 
                         </span>                
@@ -261,9 +263,11 @@
         @can('show-touchpoint')
             <div class='col-md-8'>
                 <div class='panel-heading'><h2><strong>Touchpoints for {{ $person->display_name }}</strong></h2>
+                    @can('create-touchpoint')
                     <span class="btn btn-default">
                        <a href={{ action('TouchpointsController@add',$person->id) }}>Add Touchpoint</a>
                     </span>
+                    @endCan('create-touchpoint')
                </div>
                     @if ($person->touchpoints->isEmpty())
                             <p>It is a brand new world, there are no touchpoints for this person!</p>
