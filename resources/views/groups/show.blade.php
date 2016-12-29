@@ -5,16 +5,26 @@
     <div class="jumbotron text-left">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span><h2>Group details</h2></span>  
+                <span>
+                    <h2><strong>
+                        @can('update-group')
+                            {!! Html::link(url('group/'.$group->id.'/edit'),$group->name.' group') !!} 
+                        @else
+                            {{$group->name}} group
+                        @endCan
+                        </strong></h2>
+                </span>
+                @can('create-touchpoint')
                 <span class="btn btn-default">
                     <a href={{ action('TouchpointsController@add_group',$group->id) }}>Add Group Touchpoint</a>
                 </span>
+                @endCan
                 <span class="btn btn-default">
                     <a href={{ action('RegistrationsController@add_group',$group->id) }}>Add Group Registration</a>
                 </span>
-                        
             </div>
-            
+            <div class="clearfix"> </div>
+                
             <div class='row'>
                 <div class='col-md-4'>
                         <strong>Name: </strong>{{$group->name}}
@@ -26,26 +36,37 @@
                     
                 </div>
             </div>
-            
-             <div class='col-md-4'>
-                    <span><h2><strong>Members of the {{$group->name}} Group</strong></h2>
-                        <div class="scroll">
-                            @foreach($members as $member)
-                                <a href="../person/{{$member->id}}">{{$member->sort_name}}</a><br />
-                            @endforeach
-                        </div>
-                    </span>
-                </div>
-            </div><div class="clearfix"> </div>
-
-        </div>
-            <div class='row'>
-                <div class='col-md-1'><a href="{{ action('GroupsController@edit', $group->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
-                <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['group.destroy', $group->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
-                {!! Form::close() !!}</div><div class="clearfix"> </div>
+            <div class="clearfix"> </div>
+            <div class="panel-heading">
+                <span>
+                    <h2><strong>Members of the {{$group->name}} Group</strong></h2>
             </div>
+            <div class='row'>
+                <div class="col-md-4 scroll">
+                    @foreach($members as $member)
+                        {!!$member->contact_link_full_name !!}<br />
+                    @endforeach
+                </div>
+            </div>
+            
+            <div class="clearfix"> </div>
+        </div>
         
+        <div class='row'>
+            @can('update-group')
+                <div class='col-md-1'>
+                    <a href="{{ action('GroupsController@edit', $group->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                </div>
+            @endCan
+            @can('delete-group')
+                <div class='col-md-1'>
+                    {!! Form::open(['method' => 'DELETE', 'route' => ['group.destroy', $group->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                    {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                    {!! Form::close() !!}
+                </div>
+            @endCan
+            <div class="clearfix"> </div>
+        </div>
     </div>
 </section>
 @stop

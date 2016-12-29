@@ -6,9 +6,16 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                    <span class="grey">Group Index</span> 
-                    <span class="create"><a href={{ action('GroupsController@create') }}>{!! Html::image('img/create.png', 'Add Group',array('title'=>"Add Group",'class' => 'btn btn-primary')) !!}</a></span></h1>
-                
+                        <span class="grey">Group Index</span>
+                        @can('create-group')
+                            <span class="create">
+                                <a href="{{ action('GroupsController@create') }}">
+                                   {!! Html::image('img/create.png', 'Add Group',array('title'=>"Add Group",'class' => 'btn btn-primary')) !!}
+                                </a>
+                 
+                            </span>
+                        @endCan
+                    </h1>
                 </div>
                 @if ($groups->isEmpty())
                     <p>It is a brand new world, there are no groups!</p>
