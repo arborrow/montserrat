@@ -60,8 +60,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 
 
 Route::get('bookstore',['as' => 'bookstore','uses' => 'PagesController@bookstore']);
-//TODO: remove deprecated contact controller and resources
-Route::resource('contact','ContactsController');
 Route::resource('diocese','DiocesesController');
 Route::get('donation',['as' => 'donation','uses' => 'PagesController@donation']);
 

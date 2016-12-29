@@ -22,9 +22,8 @@ class RelationshipTypesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        // TODO: figure out how to get parish information
+    public function index() {
+        $this->authorize('show-relationshiptype');
         $relationship_types = \montserrat\RelationshipType::whereIsActive(1)->orderBy('description')->get();
         return view('relationships.types.index',compact('relationship_types'));   //
     }
@@ -34,11 +33,10 @@ class RelationshipTypesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-     $contact_types = \montserrat\ContactType::OrderBy('name')->pluck('name','name');
+    public function create() {
+        $this->authorize('create-relationshiptype');
+        $contact_types = \montserrat\ContactType::OrderBy('name')->pluck('name','name');
         return view('relationships.types.create', compact('contact_types')); 
-    
     }
 
     /**
@@ -47,8 +45,8 @@ class RelationshipTypesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
+        $this->authorize('create-relationshiptype');
         $this->validate($request, [
             'description' => 'required',
             'name_a_b' => 'required',
@@ -106,8 +104,8 @@ class RelationshipTypesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {   
+    public function show($id) {
+        $this->authorize('show-relationshiptype');
         $relationship_type = \montserrat\RelationshipType::findOrFail($id);
         $relationships = \montserrat\Relationship::whereRelationshipTypeId($id)->orderBy('contact_id_a')->with('contact_a','contact_b')->paginate(100);
         return view('relationships.types.show',compact('relationship_type','relationships'));//
@@ -119,12 +117,11 @@ class RelationshipTypesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id) {
+        $this->authorize('update-relationshiptype');
         $relationship_type = \montserrat\RelationshipType::findOrFail($id);
         //dd($relationship_type);
         return view('relationships.types.edit',compact('relationship_type'));
-    
     }
 
     /**
@@ -134,8 +131,8 @@ class RelationshipTypesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
+        $this->authorize('update-relationshiptype');
         $this->validate($request, [
             'description' => 'required',
             'name_a_b' => 'required',
@@ -166,15 +163,15 @@ class RelationshipTypesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+        $this->authorize('delete-relationshiptype');
         \montserrat\RelationshipType::destroy($id);
         return Redirect::action('RelationshipTypesController@index');
     
     }
     
     public function add($id, $a = NULL, $b = NULL) {
+        $this->authorize('create-relationship');
         $relationship_type = \montserrat\RelationshipType::findOrFail($id);
         $ignored_subtype = array();
             $ignored_subtype["Child"] = RELATIONSHIP_TYPE_CHILD_PARENT;
@@ -207,10 +204,11 @@ class RelationshipTypesController extends Controller
             $contactb = \montserrat\Contact::findOrFail($b);
             $contact_b_list[$contactb->id] = $contactb->sort_name;
         }
-        //dd($contact_b_list);
+        
         return view('relationships.types.add',compact('relationship_type','contact_a_list','contact_b_list'));//
     }
     public function addme(Request $request) {
+        $this->authorize('create-relationship');
         $this->validate($request, [
             'contact_id' => 'integer|min:1|required',
             'relationship_type' => 'required|in:Child,Parent,Husband,Wife,Sibling,Employee,Volunteer,Parishioner'
@@ -255,7 +253,7 @@ class RelationshipTypesController extends Controller
     }
     
     public function make(Request $request) {
-        
+        $this->authorize('create-relationship');
         $this->validate($request, [
             'contact_a_id' => 'integer|min:0|required',
             'contact_b_id' => 'integer|min:0|required'
@@ -287,7 +285,7 @@ class RelationshipTypesController extends Controller
 
     }
     public function get_contact_type_list($contact_type='Individual', $contact_subtype = NULL) {
-        //dd($contact_type,$contact_subtype);
+        $this->authorize('show-contact');
         switch ($contact_type) {
             case 'Household': 
                 $households = \montserrat\Contact::whereContactType(CONTACT_TYPE_HOUSEHOLD)->orderBy('organization_name', 'asc')->pluck('organization_name','id');
