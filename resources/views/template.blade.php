@@ -211,16 +211,21 @@
         placeholder: 'Choose group(s)'
     });
    $("#roles").select2({
-        placeholder: 'Choose role(s)'
+        placeholder: 'Choose role(s)',
+        closeOnSelect: false
     });
    $("#permissions").select2({
-        placeholder: 'Choose permission(s)'
+        placeholder: 'Choose permission(s)',
+        closeOnSelect: false
     });
    $("#users").select2({
-        placeholder: 'Choose user(s)'
+        placeholder: 'Choose user(s)',
+        closeOnSelect: false
     });
+    
         
   });
+  
   
   </script>
 </body>

@@ -161,9 +161,9 @@
     </tr>
     <tr>
         <td><strong>Deceased</strong></td>
-        <td>{{$contact->deceased_date}}</td>
+        <td>{{$contact->is_deceased}}:{{$contact->deceased_date}}</td>
         @foreach ($duplicates as $duplicate)
-            <td>{{$duplicate->deceased_date}}</td>
+            <td>{{$duplicate->is_deceased}}:{{$duplicate->deceased_date}}</td>
         @endforeach
     </tr>
     <tr>
