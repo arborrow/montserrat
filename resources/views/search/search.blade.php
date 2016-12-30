@@ -140,6 +140,10 @@
                     
                         {!! Form::label('preferred_language_id', 'Preferred Language:', ['class' => 'col-md-2'])  !!}
                         {!! Form::select('preferred_language_id', $languages, 0, ['class' => 'col-md-3']) !!}
+                        <div class="clearfix"> </div>
+                        {!! Form::label('referrals', 'Referral source(s):', ['class' => 'col-md-2'])  !!}
+                        {!! Form::select('referrals[]', $referrals, NULL, ['id'=>'referrals','class' => 'form-control col-md-4','multiple' => 'multiple','style'=>'width: auto; font-size: inherit;']) !!}
+                        
                     </div>
                 <div class="clearfix"> </div>
                     <div class="form-group">                        

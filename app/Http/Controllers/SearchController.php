@@ -113,6 +113,8 @@ public function search()
 
         $languages = \montserrat\Language::orderBy('label')->whereIsActive(1)->pluck('label','id');
         $languages->prepend('N/A',0);
+        $referrals = \montserrat\Referral::orderBy('name')->whereIsActive(1)->pluck('name','id');
+        $referrals->prepend('N/A',0);
         $prefixes= \montserrat\Prefix::orderBy('name')->pluck('name','id');
         $prefixes->prepend('N/A',0); 
         $religions = \montserrat\Religion::orderBy('name')->whereIsActive(1)->pluck('name','id');
@@ -190,7 +192,7 @@ public function search()
         }
         //dd($person);
 
-        return view('search.search',compact('prefixes','suffixes','person','parish_list','ethnicities','states','countries','genders','languages','defaults','religions','occupations','contact_types','subcontact_types','groups'));
+        return view('search.search',compact('prefixes','suffixes','person','parish_list','ethnicities','states','countries','genders','languages','defaults','religions','occupations','contact_types','subcontact_types','groups','referrals'));
     
     }
 

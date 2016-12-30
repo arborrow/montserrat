@@ -832,6 +832,15 @@ public function getContactLinkFullNameAttribute() {
                     }
                 }
             }
+            if ($filter=='referrals' && !empty($value)) {
+                foreach ($value as $referral) {
+                    if ($referral> 0) {
+                        $query->whereHas('referrals', function($q) use ($referral) {
+                            $q->whereReferralId($referral);
+                        });
+                    }
+                }
+            }
             if ($filter=='groups' && !empty($value)) {
                 foreach ($value as $group) {
                     if ($group > 0) {
