@@ -136,6 +136,11 @@
                        
                         {!! Form::label('preferred_language_id', 'Preferred Language:', ['class' => 'col-md-2'])  !!}
                         {!! Form::select('preferred_language_id', $languages, 45, ['class' => 'col-md-3']) !!}
+                        <div class="clearfix"> </div>
+                       
+                        {!! Form::label('referrals', 'Referrals:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::select('referrals[]', $referrals, NULL, ['id' => 'referrals', 'class' => 'form-control col-md-2','multiple' => 'multiple','style'=>'width: auto; font-size: inherit;']) !!}
+                        
                     </div>
                     {!! Form::label('deceased_date', 'Deceased Date:', ['class' => 'col-md-3'])  !!}
                         {!! Form::text('deceased_date', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}

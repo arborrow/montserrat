@@ -660,6 +660,9 @@ public function getContactLinkFullNameAttribute() {
     public function prefix() {
         return $this->hasOne('\montserrat\Prefix','id','prefix_id');
     }
+    public function referrals() {
+        return $this->belongsToMany('\montserrat\Referral','contact_referral','contact_id','referral_id');
+    }
     public function retreat_assistants() {
         return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_ASSISTANT)->whereIsActive(1);
     }

@@ -201,6 +201,9 @@
     $("#languages").select2({
         placeholder: 'Choose language(s)'
     });
+    $("#referrals").select2({
+        placeholder: 'Choose referral source(s)'
+    });
    $("#directors").select2({
         placeholder: 'Choose retreat director(s)'
     });

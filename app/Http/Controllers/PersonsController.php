@@ -60,6 +60,8 @@ class PersonsController extends Controller
         $genders ->prepend('N/A',0); 
         $languages = \montserrat\Language::orderBy('label')->whereIsActive(1)->pluck('label','id');
         $languages->prepend('N/A',0);
+        $referrals = \montserrat\Referral::orderBy('name')->whereIsActive(1)->pluck('name','id');
+        $referrals->prepend('N/A',0);
         $prefixes= \montserrat\Prefix::orderBy('name')->pluck('name','id');
         $prefixes->prepend('N/A',0); 
         $religions = \montserrat\Religion::orderBy('name')->whereIsActive(1)->pluck('name','id');
@@ -75,7 +77,7 @@ class PersonsController extends Controller
         $subcontact_types->prepend('N/A',0); 
         
         //dd($subcontact_types);
-        return view('persons.create',compact('parish_list','ethnicities','states','countries','suffixes','prefixes','languages','genders','religions','occupations','contact_types','subcontact_types')); 
+        return view('persons.create',compact('parish_list','ethnicities','states','countries','suffixes','prefixes','languages','genders','religions','occupations','contact_types','subcontact_types','referrals')); 
     
     }
 
@@ -103,7 +105,7 @@ class PersonsController extends Controller
             'url_twitter' => 'url|regex:/twitter\.com\/.+/i',
             'url_instagram' => 'url|regex:/instagram\.com\/.+/i',
             'url_linkedin' => 'url|regex:/linkedin\.com\/.+/i',
-           'parish_id' => 'integer|min:0',
+            'parish_id' => 'integer|min:0',
             'gender_id' => 'integer|min:0',
             'ethnicity_id' => 'integer|min:0',
             'religion_id' => 'integer|min:0',
@@ -464,6 +466,11 @@ class PersonsController extends Controller
         } else {
             $person->languages()->sync($request->input('languages'));
         }
+        if (empty($request->input('referrals')) or in_array(0,$request->input('referrals'))) {
+            $person->referrals()->detach();
+        } else {
+            $person->referrals()->sync($request->input('referrals'));
+        }
         
         $home_address= new \montserrat\Address;
             $home_address->contact_id=$person->id;
@@ -766,6 +773,8 @@ class PersonsController extends Controller
         $genders ->prepend('N/A',0); 
         $languages = \montserrat\Language::orderBy('label')->whereIsActive(1)->pluck('label','id');
         $languages->prepend('N/A',0);
+        $referrals = \montserrat\Referral::orderBy('name')->whereIsActive(1)->pluck('name','id');
+        $referrals->prepend('N/A',0);
         $prefixes= \montserrat\Prefix::orderBy('name')->pluck('name','id');
         $prefixes->prepend('N/A',0); 
         $religions = \montserrat\Religion::orderBy('name')->whereIsActive(1)->pluck('name','id');
@@ -843,7 +852,7 @@ class PersonsController extends Controller
         }
         //dd($person);
 
-        return view('persons.edit',compact('prefixes','suffixes','person','parish_list','ethnicities','states','countries','genders','languages','defaults','religions','occupations','contact_types','subcontact_types'));
+        return view('persons.edit',compact('prefixes','suffixes','person','parish_list','ethnicities','states','countries','genders','languages','defaults','religions','occupations','contact_types','subcontact_types','referrals'));
     
     }
     
@@ -936,6 +945,11 @@ class PersonsController extends Controller
             $person->languages()->detach();
         } else {
             $person->languages()->sync($request->input('languages'));
+        }
+        if (empty($request->input('referrals')) or in_array(0,$request->input('referrals'))) {
+            $person->referrals()->detach();
+        } else {
+            $person->referrals()->sync($request->input('referrals'));
         }
         
         // CiviCRM stores the language name rather than the language id in the contact's preferred_language field

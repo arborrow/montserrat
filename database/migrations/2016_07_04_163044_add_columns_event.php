@@ -20,13 +20,7 @@ class AddColumnsEvent extends Migration
             $table->integer('attending')->unsigned()->nullable()->default(NULL);
         });
 
-        Schema::table('event', function ($table) {
-            $table->dropColumn('type');
-            $table->dropColumn('silent');
-            $table->dropColumn('amount');
-            $table->dropColumn('year');
-            $table->dropColumn('attending');
-        });
+        
     
     }
 
@@ -37,6 +31,12 @@ class AddColumnsEvent extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('event', function ($table) {
+            $table->dropColumn('type');
+            $table->dropColumn('silent');
+            $table->dropColumn('amount');
+            $table->dropColumn('year');
+            $table->dropColumn('attending');
+        });
     }
 }

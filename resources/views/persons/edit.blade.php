@@ -173,6 +173,10 @@
                        
                         {!! Form::label('preferred_language_id', 'Preferred Language:', ['class' => 'col-md-2'])  !!}
                         {!! Form::select('preferred_language_id', $languages, $person->preferred_language_id, ['class' => 'col-md-3']) !!}
+                        <div class="clearfix"> </div>
+                        {!! Form::label('referrals', 'Referral sources:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::select('referrals[]', $referrals, $person->referrals->pluck('id')->toArray(), ['id'=>'referrals','class' => 'form-control col-md-2','multiple' => 'multiple','style'=>'width: auto; font-size: inherit;']) !!}
+                        
                     </div>
                 <div class="clearfix"> </div>
                     <div class="form-group">                        

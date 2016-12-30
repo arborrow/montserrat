@@ -157,7 +157,13 @@
                         </ul>
                     <strong>Preferred Language: </strong>
                         {{ !empty($person->preferred_language) ? $person->preferred_language_label: 'N/A' }}
-                    <br />
+                    <br /><strong>Referral sources: </strong>
+                        <ul>
+                            @foreach($person->referrals as $referral)
+                                <li>{{$referral->name}}</li> 
+                            @endforeach
+                        </ul>
+                    
                     <strong>Deceased?: </strong>
                     @if ($person->is_deceased)
                         Yes
