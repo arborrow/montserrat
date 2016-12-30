@@ -44,7 +44,21 @@ class CreateContribution extends Migration
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
-        });
+            $table->unique('trxn_id','UI_contrib_trxn_id');
+            $table->unique('invoice_id','UI_contrib_invoice_id');
+            $table->index('payment_instrument_id','UI_contrib_payment_instrument_id');
+            $table->index('contribution_status_id','index_contribution_status');
+            $table->index('receive_date','received_date');
+            $table->index('check_number','check_number');
+            $table->foreign('contact_id')->references('id')->on('contact');        
+            // $table->foreign('financial_type_id')->references('id')->on('financial_type');        
+            // $table->foreign('contribution_page_id')->references('id')->on('contribution_page');        
+            // $table->foreign('contribution_recur_id')->references('id')->on('contribution_recur');        
+            $table->foreign('honor_type_id')->references('id')->on('contact');        
+            $table->foreign('address_id')->references('id')->on('address');        
+            // $table->foreign('campaign_id')->references('id')->on('campaign');        
+        
+            });
     }
 
     /**
