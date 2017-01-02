@@ -23,34 +23,34 @@ class Contact extends Model
     }
 */
     public function a_relationships() {
-        return $this->hasMany('\montserrat\Relationship','contact_id_a','id');
+        return $this->hasMany(Relationship::class,'contact_id_a','id');
     }
     public function b_relationships() {
-        return $this->hasMany('\montserrat\Relationship','contact_id_b','id');
+        return $this->hasMany(Relationship::class,'contact_id_b','id');
     }
     public function addresses() {
-        return $this->hasMany('\montserrat\Address','contact_id','id');
+        return $this->hasMany(Address::class,'contact_id','id');
     }
     public function address_primary() {
-        return $this->hasOne('\montserrat\Address','contact_id','id')->whereIsPrimary(1);
+        return $this->hasOne(Address::class,'contact_id','id')->whereIsPrimary(1);
     }
     public function bishops() {
-        return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_BISHOP);
+        return $this->hasMany(Relationship::class,'contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_BISHOP);
     }
     public function contacttype() {
-        return $this->hasOne('\montserrat\ContactType','id','contact_type');
+        return $this->hasOne(ContactType::class,'id','contact_type');
     }
     public function subcontacttype() {
-        return $this->hasOne('\montserrat\ContactType','id','subcontact_type');
+        return $this->hasOne(ContactType::class,'id','subcontact_type');
     }
     public function diocese() {
-        return $this->hasOne('\montserrat\Relationship','contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_DIOCESE);
+        return $this->hasOne(Relationship::class,'contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_DIOCESE);
     }
     public function emails() {
-        return $this->hasMany('\montserrat\Email','contact_id','id');
+        return $this->hasMany(Email::class,'contact_id','id');
     }
     public function attachments() {
-        return $this->hasMany('\montserrat\Attachment','entity_id','id')->whereEntity('contact');
+        return $this->hasMany(Attachment::class,'entity_id','id')->whereEntity('contact');
     }
     public function avatar() {
         return $this->hasOne('\montserrat\Attachment','entity_id','id')->whereFileTypeId(FILE_TYPE_CONTACT_AVATAR);

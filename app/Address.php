@@ -13,19 +13,19 @@ class Address extends Model
     
     // the contact for whom this is an address for
     public function addressee() {
-        return $this->belongsTo('\montserrat\Contact','contact_id','id');
+        return $this->belongsTo(Contact::class,'contact_id','id');
     }
     
     public function location() {
-        return $this->hasOne('\montserrat\LocationType','id','location_type_id');
+        return $this->hasOne(LocationType::class,'id','location_type_id');
     }
     
     public function state() {
-        return $this->hasOne('\montserrat\StateProvince','id','state_province_id');
+        return $this->hasOne(StateProvince::class,'id','state_province_id');
     }
     
     public function country() {
-        return $this->hasOne('\montserrat\Country','id','country_id');
+        return $this->hasOne(Country::class,'id','country_id');
     }
     
     public function getGoogleMapAttribute() {
@@ -39,7 +39,4 @@ class Address extends Model
         } 
         return $gmap;
     }
-
-    
-    
 }

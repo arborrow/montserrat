@@ -7,22 +7,20 @@ use Illuminate\Http\Request;
 use montserrat\Http\Requests;
 use montserrat\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
+use montserrat\Role;
 
 class RolesController extends Controller
 {
     //
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('auth');
         if ('cli' != php_sapi_name()) {
             $this->authorize('show-admin-menu');
         }
-                
     }
     
-    public function index()
-    {
-        //
+    public function index() {
+        $this->authorize('show-role');
         $roles = \montserrat\Role::orderBy('name')->get();
         return view('admin.roles.index',compact('roles'));   
     }
@@ -32,12 +30,9 @@ class RolesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-        
+    public function create() {
+        $this->authorize('create-role');
         return view('admin.roles.create');  
-
     }
     
     /**
@@ -46,18 +41,17 @@ class RolesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        $this->authorize('create-role');
 
-    $role = new \montserrat\Role;
-    $role->name= $request->input('name');
-    $role->display_name= $request->input('display_name');
-    $role->description = $request->input('description');
-    
-    $role->save();
-    
-    return Redirect::action('RolesController@index');
+        $role = new \montserrat\Role;
+        $role->name= $request->input('name');
+        $role->display_name= $request->input('display_name');
+        $role->description = $request->input('description');
+
+        $role->save();
+
+        return Redirect::action('RolesController@index');
     }
     
 
@@ -67,14 +61,13 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show($id) {
+        $this->authorize('show-role');
+        
         $role = \montserrat\Role::with('users','permissions')->findOrFail($id);
         $permissions = \montserrat\Permission::orderBy('name')->pluck('name','id');
         $users = \montserrat\User::orderBy('name')->pluck('name','id');
         
-        //dd($role);
         return view('admin.roles.show',compact('role','permissions','users'));//
 
     }
@@ -85,13 +78,11 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-        $role = \montserrat\Role::findOrFail($id);
+    public function edit($id) {
+        $this->authorize('update-role');
         
+        $role = \montserrat\Role::findOrFail($id);
         return view('admin.roles.edit',compact('role'));//
-
     }
 
     /**
@@ -101,19 +92,16 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id) {
+        $this->authorize('update-role');
+        
         $role = \montserrat\Role::findOrFail($request->input('id'));
-    
         $role->name= $request->input('name');
         $role->display_name= $request->input('display_name');
         $role->description= $request->input('description');
-
         $role->save();
     
-    return Redirect::action('RolesController@index');
-
+        return Redirect::action('RolesController@index');
     }
 
     /**
@@ -122,13 +110,13 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
-        \montserrat\Role::destroy($id);
+    public function destroy($id) {
+        $this->authorize('delete-role');
+        
+       \montserrat\Role::destroy($id);
        return Redirect::action('RolesController@index');
-    
     }
+
     public function update_permissions(Request $request) {
         $role = \montserrat\Role::findOrFail($request->input('id'));
         $role->permissions()->detach();

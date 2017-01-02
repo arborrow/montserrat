@@ -12,8 +12,7 @@ use Response;
 
 class PersonsController extends Controller
 {
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('auth');
     }
 
@@ -23,15 +22,14 @@ class PersonsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {   $this->authorize('show-contact');
+    public function index() {
+        $this->authorize('show-contact');
         $persons = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name', 'asc')->with('addresses.state','phones','emails','websites','parish.contact_a')->paginate(100);
        
         return view('persons.index',compact('persons'));   //
     }
 
-    public function lastnames($lastname=NULL)
-    {
+    public function lastnames($lastname=NULL) {
        
        $persons = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name', 'asc')->with('addresses.state','phones','emails','websites','parish.contact_a')->where('last_name','LIKE',$lastname.'%')->paginate(100);
        //dd($persons);
@@ -87,8 +85,7 @@ class PersonsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $this->authorize('create-contact');
         $this->validate($request, [
             'first_name' => 'required',

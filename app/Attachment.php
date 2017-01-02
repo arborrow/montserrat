@@ -15,7 +15,7 @@ class Attachment extends Model
     
     
     public function file_type() {
-        return $this->hasOne('\montserrat\FileType','id','file_type_id');
+        return $this->hasOne(FileType::class,'id','file_type_id');
     }
       
 }
