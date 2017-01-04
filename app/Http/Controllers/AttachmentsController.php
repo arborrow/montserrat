@@ -39,7 +39,7 @@ class AttachmentsController extends Controller
                 $path = storage_path() . '/app/'.$entity.'/'.$entity_id. '/'.$file_name;
                 break;
             case 'schedule' :
-                $this->authorize('show-attachment');
+                $this->authorize('show-schedule');
                 $file_name = 'schedule.pdf';
                 $path = storage_path() . '/app/'.$entity.'/'.$entity_id. '/'.$file_name;
                 break;
