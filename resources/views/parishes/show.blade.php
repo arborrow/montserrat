@@ -76,7 +76,7 @@
                 <div class='row'>
                     <div class='col-md-6'><strong>Pastor: </strong>
                         @if (isset($parish->pastor->contact_b))
-                            <a href="../person/{{ $parish->pastor->contact_b->id}}">{{ $parish->pastor->contact_b->full_name or 'No pastor assigned'}}</a>
+                            {!! $parish->pastor->contact_b->contact_link_full_name !!}
                         @else
                             No pastor assigned
                         @endIf
@@ -122,7 +122,7 @@
                                     @if($parishioner->contact_b->is_captain) 
                                         {!! Html::image('img/captain.png', 'Captain',array('title'=>"Captain",'class' => 'btn btn-default')) !!}
                                     @endIf
-                                    {{ $parishioner->contact_b->full_name }}
+                                    {!! $parishioner->contact_b->contact_link_full_name !!}
                                 </a>
                             </td>
                             @if(isset($parishioner->contact_b->address_primary))
