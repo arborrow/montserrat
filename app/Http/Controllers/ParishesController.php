@@ -243,7 +243,12 @@ return Redirect::action('ParishesController@index');
         $defaults['Instagram']['url']='';
         $defaults['LinkedIn']['url']='';
         $defaults['Twitter']['url']='';
-
+        $defaults['email_primary']='';
+        
+        if (isset($parish->email_primary->email)) {
+            $defaults['email_primary'] = $parish->email_primary->email;
+        }
+            
         foreach($parish->websites as $website) {
             $defaults[$website->website_type]['url'] = $website->url;
         }

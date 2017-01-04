@@ -74,7 +74,7 @@
     <div class="clearfix"> </div>
     <div class="form-group">
         {!! Form::label('email_primary', 'Email:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('email_primary', $parish->email_primary->email, ['class' => 'col-md-2']) !!}
+        {!! Form::text('email_primary', $defaults['email_primary'], ['class' => 'col-md-2']) !!}
     </div>
     <div class="clearfix"> </div>
     
