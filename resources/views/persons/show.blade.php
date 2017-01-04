@@ -291,7 +291,7 @@
                                 @foreach($person->touchpoints as $touchpoint)
                                 <tr>
                                     <td><a href="{{url('touchpoint/'.$touchpoint->id)}}">{{ $touchpoint->touched_at }}</a></td>
-                                    <td><a href="{{url('person/'.$touchpoint->staff->id)}}">{{ $touchpoint->staff->display_name }}</a></td>
+                                    <td>{!! $touchpoint->staff->contact_link_full_name !!}</td>
                                     <td>{{ $touchpoint->type }}</td>
                                     <td>{{ $touchpoint->notes }}</td>
                                 </tr>

@@ -737,7 +737,7 @@ public function getContactLinkFullNameAttribute() {
         return $this->hasOne('\montserrat\Suffix','id','suffix_id');
     }
     public function touchpoints() {
-        return $this->hasMany('\montserrat\Touchpoint','person_id','id');
+        return $this->hasMany(Touchpoint::class,'person_id','id');
     }
     public function websites() {
         return $this->hasMany('\montserrat\Website','contact_id','id');
