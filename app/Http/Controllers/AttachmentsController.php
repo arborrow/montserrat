@@ -325,7 +325,7 @@ class AttachmentsController extends Controller
     }    
 
     public function get_event_schedule($event_id) {
-        $this->authorize('show-event-attachment');
+        $this->authorize('show-event-schedule');
         return $this->show_attachment('event',$event_id,'schedule',NULL);
     }    
 
