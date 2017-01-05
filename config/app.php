@@ -211,7 +211,7 @@ return [
         'Entrust' => \Zizaco\Entrust\EntrustFacade::class,
         'GoogleCalendar' => Spatie\GoogleCalendar\GoogleCalendarFacade::class,
         // 'Menu' => Spatie\Menu\Laravel\MenuFacade::class,
-
+        'Mailgun' => Mailgun\Mailgun::class,
     ],
 
 ];

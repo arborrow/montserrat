@@ -5,6 +5,6 @@
 - Locations (Buildings) - (add, edit, view and delete)
 - Touchpoints - Create, edit, view, delete
 - Reports - Retreatant Information Report, Retreat Roster, Retreat Listing
-
+- Permissions, Users and Roles - ability to define permissions and assign to roles, ability to assign users to multiple role(s)
 --upcoming
 Donations - create, edit, view and delete

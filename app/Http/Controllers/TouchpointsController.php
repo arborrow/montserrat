@@ -141,6 +141,7 @@ class TouchpointsController extends Controller
 
         return Redirect::action('TouchpointsController@index');
     }
+   
     
     public function store_group(Request $request) {
         $this->authorize('create-touchpoint');
