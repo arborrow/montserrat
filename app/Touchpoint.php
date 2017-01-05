@@ -19,7 +19,7 @@ class Touchpoint extends Model
     }
     
     public function person() {
-        return $this->belongsTo(Contact::staff,'person_id','id');
+        return $this->belongsTo(Contact::class,'person_id','id');
     }
     
     public function staff() {
