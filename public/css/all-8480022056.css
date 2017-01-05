@@ -8723,6 +8723,11 @@ td {
     /* background-color: transparent; */
     line-height: 1.5;
     background-color: #b7a99a;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 15px;
+    color: inherit;
+    background-color: #eee;
 }
 
 .navbar-default {
