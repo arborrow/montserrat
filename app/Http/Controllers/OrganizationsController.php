@@ -13,8 +13,7 @@ use Intervention\Image\Facades\Image;
 
 class OrganizationsController extends Controller
 {
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('auth');
     }
 

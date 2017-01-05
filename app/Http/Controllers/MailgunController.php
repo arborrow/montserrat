@@ -12,7 +12,10 @@ use montserrat\Touchpoint;
 use montserrat\Message;
 
 class MailgunController extends Controller
-{
+{   public function __construct() {
+        $this->middleware('auth');
+    }
+
 
     public function get() {
         $mg = new Mailgun(env('MAILGUN_SECRET'));
