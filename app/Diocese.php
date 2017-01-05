@@ -10,9 +10,9 @@ class Diocese extends Model
 {   use SoftDeletes; 
     //
     public function parishes() {
-        return $this->hasMany('\montserrat\Parish','diocese_id','id');
+        return $this->hasMany(Parish::class,'diocese_id','id');
     }
     public function bishops() {
-        return $this->hasMany('\montserrat\Contact','id','bishop_id');
+        return $this->hasMany(Contact::class,'id','bishop_id');
     }
 }

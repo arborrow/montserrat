@@ -39,27 +39,27 @@ class Retreat extends Model
     }
 
     public function assistant() {
-        return $this->belongsTo('\montserrat\Contact','assistant_id','id')->whereContactType(CONTACT_TYPE_INDIVIDUAL);
+        return $this->belongsTo(Contact::class,'assistant_id','id')->whereContactType(CONTACT_TYPE_INDIVIDUAL);
     }
     public function captains() {
         // TODO: handle with participants of role Retreat Director or Master - be careful with difference between (registration table) retreat_id and (participant table) event_id
-        return $this->belongsToMany('\montserrat\Contact','captain_retreat','event_id','contact_id')->whereContactType(CONTACT_TYPE_INDIVIDUAL);
+        return $this->belongsToMany(Contact::class,'captain_retreat','event_id','contact_id')->whereContactType(CONTACT_TYPE_INDIVIDUAL);
     }
     
     public function innkeeper() {
-        return $this->belongsTo('\montserrat\Contact','innkeeper_id','id')->whereContactType(CONTACT_TYPE_INDIVIDUAL);
+        return $this->belongsTo(Contact::class,'innkeeper_id','id')->whereContactType(CONTACT_TYPE_INDIVIDUAL);
     }
     public function event_type() {
-        return $this->hasOne('\montserrat\EventType','id','event_type_id');
+        return $this->hasOne(EventType::class,'id','event_type_id');
     }
     
     public function retreatmasters() {
         // TODO: handle with participants of role Retreat Director or Master - be careful with difference between (registration table) retreat_id and (participant table) event_id
-        return $this->belongsToMany('\montserrat\Contact','retreatmasters','retreat_id','person_id')->whereContactType(CONTACT_TYPE_INDIVIDUAL);
+        return $this->belongsToMany(Contact::class,'retreatmasters','retreat_id','person_id')->whereContactType(CONTACT_TYPE_INDIVIDUAL);
     }
     
     public function registrations() {
-        return $this->hasMany('\montserrat\Registration','event_id','id');
+        return $this->hasMany(Registration::class,'event_id','id');
     }
 
     public function retreatants() {

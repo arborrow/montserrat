@@ -12,11 +12,11 @@ class Email extends Model
     protected $fillable =  ['contact_id', 'location_type_id', 'is_primary', 'email'];
     
     public function owner() {
-        return $this->belongsTo('\montserrat\Person','contact_id','id');
+        return $this->belongsTo(Contact::class,'contact_id','id');
     }
     
     public function location() {
-        return $this->belongsTo('\montserrat\LocationType','location_type_id','id');
+        return $this->belongsTo(LocationType::class,'location_type_id','id');
     }
     
 }

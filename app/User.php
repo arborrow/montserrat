@@ -43,7 +43,7 @@ class User extends Model implements AuthenticatableContract,
     protected $hidden = ['password', 'remember_token'];
     
     public function roles() {
-        return $this->belongsToMany('\montserrat\Role');
+        return $this->belongsToMany(Role::class);
     }
     
     

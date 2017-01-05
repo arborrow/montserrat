@@ -15,7 +15,7 @@ class Roomstate extends Model
 
     //
     public function room() {
-        return $this->belongsTo('\montserrat\Room','room_id','id');
+        return $this->belongsTo(Room::class,'room_id','id');
     }
     
 }

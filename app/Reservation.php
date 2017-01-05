@@ -14,11 +14,11 @@ class Reservation extends Model
 
     public function registration()
     {
-        return $this->belongsTo('montserrat\Registration','registration_id','id');
+        return $this->belongsTo(Registration::class,'registration_id','id');
     }
     public function room()
     {
-        return $this->belongsTo('montserrat\Room','room_id','id');
+        return $this->belongsTo(Room::class,'room_id','id');
     }
 
 }

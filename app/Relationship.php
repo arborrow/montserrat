@@ -11,15 +11,15 @@ class Relationship extends Model
     protected $fillable = ['contact_id_a','contact_id_b','relationship_type_id','is_active','description'];
             
     public function relationship_type() {
-        return $this->hasOne('\montserrat\RelationshipType','id','relationship_type_id');
+        return $this->hasOne(RelationshipType::class,'id','relationship_type_id');
     }
     
     public function contact_a() {
-        return $this->hasOne('\montserrat\Contact','id','contact_id_a');
+        return $this->hasOne(Contact::class,'id','contact_id_a');
     }
     
     public function contact_b() {
-        return $this->hasOne('\montserrat\Contact','id','contact_id_b');
+        return $this->hasOne(Contact::class,'id','contact_id_b');
     }
     
     public function getContactADisplayNameAttribute () {

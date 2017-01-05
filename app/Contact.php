@@ -53,16 +53,16 @@ class Contact extends Model
         return $this->hasMany(Attachment::class,'entity_id','id')->whereEntity('contact');
     }
     public function avatar() {
-        return $this->hasOne('\montserrat\Attachment','entity_id','id')->whereFileTypeId(FILE_TYPE_CONTACT_AVATAR);
+        return $this->hasOne(Attachment::class,'entity_id','id')->whereFileTypeId(FILE_TYPE_CONTACT_AVATAR);
     }
     public function email_primary() {
-        return $this->hasOne('\montserrat\Email','contact_id','id')->whereIsPrimary(1);
+        return $this->hasOne(Email::class,'contact_id','id')->whereIsPrimary(1);
     }
     public function emergency_contact() {
-        return $this->hasOne('\montserrat\EmergencyContact','contact_id','id');
+        return $this->hasOne(EmergencyContact::class,'contact_id','id');
     }
     public function ethnicity() {
-        return $this->hasOne('\montserrat\Ethnicity','id','ethnicity_id');
+        return $this->hasOne(Ethnicity::class,'id','ethnicity_id');
     }
     public function getAddressPrimaryStreetAttribute() {
         if (isset($this->address_primary->street_address)) {
@@ -535,180 +535,180 @@ public function getContactLinkFullNameAttribute() {
         }
     }
     public function gender() {
-        return $this->hasOne('\montserrat\Gender','id','gender_id');
+        return $this->hasOne(Gender::class,'id','gender_id');
     }
     public function group_captain() {
-        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_CAPTAIN);
+        return $this->hasOne(GroupContact::class,'contact_id','id')->whereGroupId(GROUP_ID_CAPTAIN);
     }
     public function group_volunteer() {
-        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_VOLUNTEER);
+        return $this->hasOne(GroupContact::class,'contact_id','id')->whereGroupId(GROUP_ID_VOLUNTEER);
     }
     public function group_bishop() {
-        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_BISHOP);
+        return $this->hasOne(GroupContact::class,'contact_id','id')->whereGroupId(GROUP_ID_BISHOP);
     }
     public function group_priest() {
-        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_PRIEST);
+        return $this->hasOne(GroupContact::class,'contact_id','id')->whereGroupId(GROUP_ID_PRIEST);
     }
     public function group_deacon() {
-        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_DEACON);
+        return $this->hasOne(GroupContact::class,'contact_id','id')->whereGroupId(GROUP_ID_DEACON);
     }
     public function group_pastor() {
-        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_PASTOR);
+        return $this->hasOne(GroupContact::class,'contact_id','id')->whereGroupId(GROUP_ID_PASTOR);
     }
     public function group_jesuit() {
-        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_JESUIT);
+        return $this->hasOne(GroupContact::class,'contact_id','id')->whereGroupId(GROUP_ID_JESUIT);
     }
     public function group_provincial() {
-        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_PROVINCIAL);
+        return $this->hasOne(GroupContact::class,'contact_id','id')->whereGroupId(GROUP_ID_PROVINCIAL);
     }
     public function group_superior() {
-        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_SUPERIOR);
+        return $this->hasOne(GroupContact::class,'contact_id','id')->whereGroupId(GROUP_ID_SUPERIOR);
     }
     public function group_board_member() {
-        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_BOARD)->whereStatus('Added');
+        return $this->hasOne(GroupContact::class,'contact_id','id')->whereGroupId(GROUP_ID_BOARD)->whereStatus('Added');
     }
     public function group_staff() {
-        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_STAFF);
+        return $this->hasOne(GroupContact::class,'contact_id','id')->whereGroupId(GROUP_ID_STAFF);
     }
     public function group_steward() {
-        return $this->hasOne('\montserrat\GroupContact','contact_id','id')->whereGroupId(GROUP_ID_STEWARD);
+        return $this->hasOne(GroupContact::class,'contact_id','id')->whereGroupId(GROUP_ID_STEWARD);
     }
     public function groups() {
-        return $this->hasMany('\montserrat\GroupContact','contact_id','id');
+        return $this->hasMany(GroupContact::class,'contact_id','id');
     }
     public function languages() {
-        return $this->belongsToMany('\montserrat\Language','contact_languages','contact_id','language_id');
+        return $this->belongsToMany(Language::class,'contact_languages','contact_id','language_id');
     }
     public function notes() {
-        return $this->hasMany('\montserrat\Note','entity_id','id')->whereEntityTable('contact');
+        return $this->hasMany(Note::class,'entity_id','id')->whereEntityTable('contact');
     }
     public function note_dietary() {
-        return $this->hasOne('\montserrat\Note','entity_id','id')->whereEntityTable('contact')->whereSubject('Dietary Note'); 
+        return $this->hasOne(Note::class,'entity_id','id')->whereEntityTable('contact')->whereSubject('Dietary Note'); 
     }
     public function note_health() {
-        return $this->hasOne('\montserrat\Note','entity_id','id')->whereEntityTable('contact')->whereSubject('Health Note'); 
+        return $this->hasOne(Note::class,'entity_id','id')->whereEntityTable('contact')->whereSubject('Health Note'); 
     }
     public function note_room_preference() {
-        return $this->hasOne('\montserrat\Note','entity_id','id')->whereEntityTable('contact')->whereSubject('Room Preference'); 
+        return $this->hasOne(Note::class,'entity_id','id')->whereEntityTable('contact')->whereSubject('Room Preference'); 
     }
     public function note_general() {
-        return $this->hasOne('\montserrat\Note','entity_id','id')->whereEntityTable('contact')->whereSubject('Contact Note'); 
+        return $this->hasOne(Note::class,'entity_id','id')->whereEntityTable('contact')->whereSubject('Contact Note'); 
     }
     public function note_organization() {
-        return $this->hasOne('\montserrat\Note','entity_id','id')->whereEntityTable('contact')->whereSubject('Organization Note'); 
+        return $this->hasOne(Note::class,'entity_id','id')->whereEntityTable('contact')->whereSubject('Organization Note'); 
     }
     public function note_registration() {
-        return $this->hasOne('\montserrat\Note','entity_id','id')->whereEntityTable('contact')->whereSubject('Registration Note'); 
+        return $this->hasOne(Note::class,'entity_id','id')->whereEntityTable('contact')->whereSubject('Registration Note'); 
     }
     public function occupation() {
-        return $this->hasOne('\montserrat\Ppd_occupation','id','occupation_id');
+        return $this->hasOne(Ppd_occupation::class,'id','occupation_id');
     }
     public function parish() {
-        return $this->hasOne('\montserrat\Relationship','contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_PARISHIONER);
+        return $this->hasOne(Relationship::class,'contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_PARISHIONER);
     }
     public function parishes() {
-        return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_DIOCESE);
+        return $this->hasMany(Relationship::class,'contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_DIOCESE);
     }
     public function parishioners() {
-        return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_PARISHIONER);
+        return $this->hasMany(Relationship::class,'contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_PARISHIONER);
     }
     public function pastor() {
-        return $this->hasOne('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_PASTOR);
+        return $this->hasOne(Relationship::class,'contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_PASTOR);
     }
     public function phones() {
-        return $this->hasMany('\montserrat\Phone','contact_id','id');
+        return $this->hasMany(Phone::class,'contact_id','id');
     }
     public function phone_primary() {
-        return $this->hasOne('\montserrat\Phone','contact_id','id')->whereIsPrimary(1);
+        return $this->hasOne(Phone::class,'contact_id','id')->whereIsPrimary(1);
     }
     public function phone_main_phone() {
-        return $this->hasOne('\montserrat\Phone','contact_id','id')->wherePhoneType('Phone')->whereLocationTypeId(LOCATION_TYPE_MAIN); 
+        return $this->hasOne(Phone::class,'contact_id','id')->wherePhoneType('Phone')->whereLocationTypeId(LOCATION_TYPE_MAIN); 
     }
     public function phone_main_mobile() {
-        return $this->hasOne('\montserrat\Phone','contact_id','id')->wherePhoneType('Mobile')->whereLocationTypeId(LOCATION_TYPE_MAIN); 
+        return $this->hasOne(Phone::class,'contact_id','id')->wherePhoneType('Mobile')->whereLocationTypeId(LOCATION_TYPE_MAIN); 
     }
     public function phone_main_fax() {
-        return $this->hasOne('\montserrat\Phone','contact_id','id')->wherePhoneType('Fax')->whereLocationTypeId(LOCATION_TYPE_MAIN); 
+        return $this->hasOne(Phone::class,'contact_id','id')->wherePhoneType('Fax')->whereLocationTypeId(LOCATION_TYPE_MAIN); 
     }
     public function phone_home_phone() {
-        return $this->hasOne('\montserrat\Phone','contact_id','id')->wherePhoneType('Phone')->whereLocationTypeId(LOCATION_TYPE_HOME); 
+        return $this->hasOne(Phone::class,'contact_id','id')->wherePhoneType('Phone')->whereLocationTypeId(LOCATION_TYPE_HOME); 
     }
     public function phone_home_mobile() {
-        return $this->hasOne('\montserrat\Phone','contact_id','id')->wherePhoneType('Mobile')->whereLocationTypeId(LOCATION_TYPE_HOME); 
+        return $this->hasOne(Phone::class,'contact_id','id')->wherePhoneType('Mobile')->whereLocationTypeId(LOCATION_TYPE_HOME); 
     }
     public function phone_home_fax() {
-        return $this->hasOne('\montserrat\Phone','contact_id','id')->wherePhoneType('Fax')->whereLocationTypeId(LOCATION_TYPE_HOME); 
+        return $this->hasOne(Phone::class,'contact_id','id')->wherePhoneType('Fax')->whereLocationTypeId(LOCATION_TYPE_HOME); 
     }
     public function phone_work_phone() {
-        return $this->hasOne('\montserrat\Phone','contact_id','id')->wherePhoneType('Phone')->whereLocationTypeId(LOCATION_TYPE_WORK); 
+        return $this->hasOne(Phone::class,'contact_id','id')->wherePhoneType('Phone')->whereLocationTypeId(LOCATION_TYPE_WORK); 
     }
     public function phone_work_mobile() {
-        return $this->hasOne('\montserrat\Phone','contact_id','id')->wherePhoneType('Mobile')->whereLocationTypeId(LOCATION_TYPE_WORK); 
+        return $this->hasOne(Phone::class,'contact_id','id')->wherePhoneType('Mobile')->whereLocationTypeId(LOCATION_TYPE_WORK); 
     }
     public function phone_work_fax() {
-        return $this->hasOne('\montserrat\Phone','contact_id','id')->wherePhoneType('Fax')->whereLocationTypeId(LOCATION_TYPE_WORK); 
+        return $this->hasOne(Phone::class,'contact_id','id')->wherePhoneType('Fax')->whereLocationTypeId(LOCATION_TYPE_WORK); 
     }
     public function phone_other_phone() {
-        return $this->hasOne('\montserrat\Phone','contact_id','id')->wherePhoneType('Phone')->whereLocationTypeId(LOCATION_TYPE_OTHER); 
+        return $this->hasOne(Phone::class,'contact_id','id')->wherePhoneType('Phone')->whereLocationTypeId(LOCATION_TYPE_OTHER); 
     }
     public function phone_other_mobile() {
-        return $this->hasOne('\montserrat\Phone','contact_id','id')->wherePhoneType('Mobile')->whereLocationTypeId(LOCATION_TYPE_OTHER); 
+        return $this->hasOne(Phone::class,'contact_id','id')->wherePhoneType('Mobile')->whereLocationTypeId(LOCATION_TYPE_OTHER); 
     }
     public function phone_other_fax() {
-        return $this->hasOne('\montserrat\Phone','contact_id','id')->wherePhoneType('Fax')->whereLocationTypeId(LOCATION_TYPE_OTHER); 
+        return $this->hasOne(Phone::class,'contact_id','id')->wherePhoneType('Fax')->whereLocationTypeId(LOCATION_TYPE_OTHER); 
     }
     public function prefix() {
-        return $this->hasOne('\montserrat\Prefix','id','prefix_id');
+        return $this->hasOne(Prefix::class,'id','prefix_id');
     }
     public function referrals() {
-        return $this->belongsToMany('\montserrat\Referral','contact_referral','contact_id','referral_id');
+        return $this->belongsToMany(Referral::class,'contact_referral','contact_id','referral_id');
     }
     public function retreat_assistants() {
-        return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_ASSISTANT)->whereIsActive(1);
+        return $this->hasMany(Relationship::class,'contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_ASSISTANT)->whereIsActive(1);
     }
     public function retreat_directors() {
-        return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_DIRECTOR);
+        return $this->hasMany(Relationship::class,'contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_DIRECTOR);
     }
     public function retreat_innkeepers() {
-        return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_INNKEEPER);
+        return $this->hasMany(Relationship::class,'contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_INNKEEPER);
     }
     public function retreat_captains() {
         // TODO: handle with participants of role Retreat Director or Master - be careful with difference between (registration table) retreat_id and (participant table) event_id
-        return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_CAPTAIN);
+        return $this->hasMany(Relationship::class,'contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_CAPTAIN);
     }
     public function event_registrations() {
         // the events (retreats) for which this contact has participated  
-        return $this->hasMany('\montserrat\Registration','contact_id','id');
+        return $this->hasMany(Registration::class,'contact_id','id');
     }
     public function event_captains() {
         // the events (retreats) for which this contact has been a retreatant  
-        return $this->hasMany('\montserrat\Registration','contact_id','id')->whereRoleId(PARTICIPANT_ROLE_ID_CAPTAIN);
+        return $this->hasMany(Registration::class,'contact_id','id')->whereRoleId(PARTICIPANT_ROLE_ID_CAPTAIN);
     }
     public function event_retreatants() {
         // the events (retreats) for which this contact has been a retreatant  
-        return $this->hasMany('\montserrat\Registration','contact_id','id')->whereRoleId(PARTICIPANT_ROLE_ID_RETREATANT);
+        return $this->hasMany(Registration::class,'contact_id','id')->whereRoleId(PARTICIPANT_ROLE_ID_RETREATANT);
     }
     public function relationship_mjrh_former_board_member() {
-        return $this->hasOne('\montserrat\Relationship','contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_BOARD_MEMBER)->whereNotNull('end_date');
+        return $this->hasOne(Relationship::class,'contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_BOARD_MEMBER)->whereNotNull('end_date');
     }   
     
     public function relationship_mjrh_donor() {
-        return $this->hasOne('\montserrat\Relationship','contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_DONOR);
+        return $this->hasOne(Relationship::class,'contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_DONOR);
     }   
     public function relationship_mjrh_retreatant() {
-        return $this->hasOne('\montserrat\Relationship','contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREATANT)->whereIsActive(1)->whereContactIdA(CONTACT_MONTSERRAT);
+        return $this->hasOne(Relationship::class,'contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREATANT)->whereIsActive(1)->whereContactIdA(CONTACT_MONTSERRAT);
     }
     public function relationship_mjrh_retreat_assistant() {
-        return $this->hasOne('\montserrat\Relationship','contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_ASSISTANT)->whereContactIdA(CONTACT_MONTSERRAT)->whereIsActive(1);
+        return $this->hasOne(Relationship::class,'contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_ASSISTANT)->whereContactIdA(CONTACT_MONTSERRAT)->whereIsActive(1);
     }
     public function relationship_mjrh_retreat_director() {
-        return $this->hasOne('\montserrat\Relationship','contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_DIRECTOR)->whereContactIdA(CONTACT_MONTSERRAT)->whereIsActive(1);
+        return $this->hasOne(Relationship::class,'contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_DIRECTOR)->whereContactIdA(CONTACT_MONTSERRAT)->whereIsActive(1);
     }
     public function relationship_mjrh_retreat_innkeeper() {
-        return $this->hasOne('\montserrat\Relationship','contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_INNKEEPER)->whereContactIdA(CONTACT_MONTSERRAT)->whereIsActive(1);
+        return $this->hasOne(Relationship::class,'contact_id_b','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_INNKEEPER)->whereContactIdA(CONTACT_MONTSERRAT)->whereIsActive(1);
     }
     public function religion() {
-        return $this->hasOne('\montserrat\Religion','id','religion_id');
+        return $this->hasOne(Religion::class,'id','religion_id');
     }
     public function setBirthDateAttribute($date) {
         if (strlen($date)) {
@@ -734,16 +734,16 @@ public function getContactLinkFullNameAttribute() {
         $this->attributes['middle_name'] = trim($middle_name) !== '' ? $middle_name : null;
     }
     public function suffix() {
-        return $this->hasOne('\montserrat\Suffix','id','suffix_id');
+        return $this->hasOne(Suffix::class,'id','suffix_id');
     }
     public function touchpoints() {
         return $this->hasMany(Touchpoint::class,'person_id','id');
     }
     public function websites() {
-        return $this->hasMany('\montserrat\Website','contact_id','id');
+        return $this->hasMany(Website::class,'contact_id','id');
     }
     public function website_main() {
-        return $this->hasOne('\montserrat\Website','contact_id','id')->whereWebsiteType('Main');
+        return $this->hasOne(Website::class,'contact_id','id')->whereWebsiteType('Main');
     }
     public function scopeOrganizations_Generic($query) {
         return $query->where([

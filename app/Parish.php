@@ -13,14 +13,14 @@ class Parish extends Model
 
     //
     public function diocese() {
-        return $this->belongsTo('\montserrat\Diocese','diocese_id','id');
+        return $this->belongsTo(Diocese::class,'diocese_id','id');
     }
 
     public function parishioners() {
-        return $this->hasMany('\montserrat\Relationship','contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_PARISHIONER);
+        return $this->hasMany(Relationship::class,'contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_PARISHIONER);
     }
     
     public function pastor() {
-        return $this->hasOne('\montserrat\Person','id','pastor_id');
+        return $this->hasOne(Person::class,'id','pastor_id');
     }
 }

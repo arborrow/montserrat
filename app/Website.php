@@ -14,7 +14,7 @@ class Website extends Model
     protected $fillable =  ['contact_id', 'url', 'website_type'];
     
     public function owner() {
-        return $this->belongsTo('\montserrat\Person','contact_id','id');
+        return $this->belongsTo(Contact::class,'contact_id','id');
     }
     
 }

@@ -14,11 +14,11 @@ class Phone extends Model
     
     
     public function owner() {
-        return $this->belongsTo('\montserrat\Person','contact_id','id');
+        return $this->belongsTo(Contact::class,'contact_id','id');
     }
     
     public function location() {
-        return $this->belongsTo('\montserrat\LocationType','location_type_id','id');
+        return $this->belongsTo(LocationType::class,'location_type_id','id');
     }
     public function getPhoneExtensionAttribute() {
         if (empty($this->phone_ext)) {

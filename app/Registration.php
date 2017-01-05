@@ -184,21 +184,21 @@ class Registration extends Model
     }
     
     public function event() {
-        return $this->hasOne('\montserrat\Retreat','id','event_id'); 
+        return $this->hasOne(Retreat::class,'id','event_id'); 
     }
     public function contact() {
-        return $this->hasOne('\montserrat\Contact','id','contact_id'); 
+        return $this->hasOne(Contact::class,'id','contact_id'); 
     }
     public function participant_role_type() {
-        return $this->hasOne('montserrat\ParticipantRoleType','id','role_id');
+        return $this->hasOne(ParticipantRoleType::class,'id','role_id');
     }
     public function retreat()    {
-        return $this->belongsTo('montserrat\Retreat','event_id','id');
+        return $this->belongsTo(Retreat::class,'event_id','id');
     }
     public function retreatant()    {
-        return $this->belongsTo('montserrat\Contact','contact_id','id');
+        return $this->belongsTo(Contact::class,'contact_id','id');
     }
     public function room()    {
-        return $this->hasOne('montserrat\Room','id','room_id');
+        return $this->hasOne(Room::class,'id','room_id');
     }
 }

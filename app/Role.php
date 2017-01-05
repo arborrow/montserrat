@@ -13,7 +13,7 @@ class Role extends EntrustRole
     use SoftDeletes;
     
     public function users() {
-        return $this->belongsToMany('\montserrat\User');
+        return $this->belongsToMany(User::class);
     }
     public function permissions() {
         return $this->belongsToMany(Permission::class);

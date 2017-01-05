@@ -15,11 +15,11 @@ class Room extends Model
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];  //
 
     public function location() {
-        return $this->belongsTo('\montserrat\Location','building_id','id');
+        return $this->belongsTo(Location::class,'building_id','id');
     }
     
     public function roomstates() {
-        return $this->hasMany('\montserrat\Roomstate','room_id','id');
+        return $this->hasMany(Roomstate::class,'room_id','id');
     }
         
 }

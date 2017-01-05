@@ -12,10 +12,10 @@ class GroupContact extends Model
     protected $fillable =  ['contact_id', 'group_id', 'status'];
     
     public function group() {
-        return $this->belongsTo('\montserrat\Group','group_id','id');
+        return $this->belongsTo(Group::class,'group_id','id');
     }
     public function contact() {
-        return $this->belongsTo('\montserrat\Contact','contact_id','id');
+        return $this->belongsTo(Contact::class,'contact_id','id');
     }
     
     public function getContactSortNameAttribute() {

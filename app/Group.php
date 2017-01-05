@@ -11,6 +11,6 @@ class Group extends Model
     protected $table = 'group';
 
     public function members() {
-        return $this->hasMany('\montserrat\GroupContact','group_id','id');
+        return $this->hasMany(GroupContact::class,'group_id','id');
     }
 }

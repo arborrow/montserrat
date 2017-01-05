@@ -44,19 +44,19 @@ class RelationshipType extends Model
     
     
     public function contacttype_a() {
-        return $this->hasOne('\montserrat\ContactType','name','contact_type_a');
+        return $this->hasOne(ContactType::class,'name','contact_type_a');
     }
     
     public function contacttype_b() {
-        return $this->hasOne('\montserrat\ContactType','name','contact_type_b');
+        return $this->hasOne(ContactType::class,'name','contact_type_b');
     }
     
        public function contactsubtype_a() {
-        return $this->hasOne('\montserrat\ContactType','name','contact_sub_type_a');
+        return $this->hasOne(ContactType::class,'name','contact_sub_type_a');
     }
     
     public function contactsubtype_b() {
-        return $this->hasOne('\montserrat\ContactType','name','contact_sub_type_b');
+        return $this->hasOne(ContactType::class,'name','contact_sub_type_b');
     }
     
             

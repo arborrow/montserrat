@@ -13,6 +13,6 @@ class Location extends Model
      use SoftDeletes; 
 
      public function rooms() {
-        return $this->hasMany('\montserrat\Room','room_id','id');
+        return $this->hasMany(Room::class,'room_id','id');
     }
 }
