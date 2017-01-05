@@ -1821,6 +1821,11 @@ class PersonsController extends Controller
             foreach ($merge->attachments as $attachment) {
                 $path = 'contact/' . $merge_id . '/attachments/'.$attachment->uri;
                 $newpath = 'contact/' . $contact_id . '/attachments/'.$attachment->uri;
+                //check for avatar.png and move appropriately otherwise move the attachment
+                if ($attachment->uri == 'avatar.png') {
+                    $path = 'contact/' . $merge_id . '/'.$attachment->uri;
+                    $newpath = 'contact/' . $contact_id . '/'.$attachment->uri;
+                }
                 Storage::move($path,$newpath);
                 $attachment->entity_id = $contact->id;
                 $attachment->save();
