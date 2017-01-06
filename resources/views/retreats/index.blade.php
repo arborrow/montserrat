@@ -65,13 +65,17 @@
                                 @endIf
                             </td>
                             <td>{{$retreat->retreatant_count }}</td>
-                            <td> {!!$retreat->retreat_contract_link!!} {!!$retreat->retreat_schedule_link!!} {!!$retreat->retreat_evaluations_link!!}</td>
-                            <!--<td>{{ $retreat->silent ? 'Yes' : 'No'}}</td>
-                            <td><a href="{{ action('RetreatsController@edit', $retreat->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></td>
-<td>{!! Form::open(['method' => 'DELETE', 'route' => ['retreat.destroy', $retreat->id],'onsubmit'=>'return ConfirmDelete()']) !!}
- {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
-{!! Form::close() !!}
-</td>-->
+                            <td> 
+                                @can('show-event-contract')
+                                    {!!$retreat->retreat_contract_link!!}
+                                @endCan
+                                @can('show-event-schedule')
+                                    {!!$retreat->retreat_schedule_link!!} 
+                                @endCan
+                                @can('show-event-evaluation')
+                                    {!!$retreat->retreat_evaluations_link!!}
+                                @endCan
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -139,8 +143,18 @@
                                 @endIf
                             </td>
                             <td>{{ $oldretreat->retreatant_count}}</td>
-                            <td> {!!$oldretreat->retreat_contract_link!!} {!!$oldretreat->retreat_schedule_link!!} {!!$oldretreat->retreat_evaluations_link!!}</td>
-                        </tr>
+                            <td> 
+                                @can('show-event-contract')
+                                    {!!$oldretreat->retreat_contract_link!!}
+                                @endCan
+                                @can('show-event-schedule')
+                                    {!!$oldretreat->retreat_schedule_link!!} 
+                                @endCan
+                                @can('show-event-evaluation')
+                                    {!!$oldretreat->retreat_evaluations_link!!}
+                                @endCan
+                            </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>

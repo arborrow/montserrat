@@ -4,7 +4,7 @@ namespace montserrat\Http\Controllers;
 
 use Illuminate\Http\Request;
 use montserrat\Http\Controllers\Controller;
-
+use Carbon;
 class PagesController extends Controller
 {
      public function __construct()
@@ -72,9 +72,10 @@ class PagesController extends Controller
     {
      return view('pages.support');   //
     }
-    public function welcome()
-    {
-     return view('welcome');   //
+    public function welcome() {
+        $retreats = \montserrat\Retreat::where('start_date','<=', date('Y-m-d'))->where('end_date','>=',date('Y-m-d'))->get();
+        //dd($retreats);
+        return view('welcome',compact('retreats'));   //
     }
     public function retreatantinforeport($id)
     {
