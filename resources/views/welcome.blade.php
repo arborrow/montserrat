@@ -49,7 +49,7 @@
                                     N/A
                                 @endIf
                             </td>
-                            <td>{{$retreat->retreatant_count }}</td>
+                            <td><a href="retreat/{{ $retreat->id}}#registrations">{{$retreat->retreatant_count }}</a></td>
                             <td> 
                                 @can('show-event-contract')
                                     {!!$retreat->retreat_contract_link!!}
