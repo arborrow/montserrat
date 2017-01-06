@@ -152,6 +152,8 @@ Route::get('touchpoint/add/{id?}',['uses' => 'TouchpointsController@add']);
 Route::get('users',['as' => 'users','uses' => 'PagesController@user']);
 Route::resource('vendor','VendorsController');
 
+Route::get('calendar',['as' => 'calendar','uses' => 'RetreatsController@calendar']);
+
 Route::get('mailgun/get',['as' => 'mailgun.get','uses' => 'MailgunController@get']);
 Route::get('mailgun/process',['as' => 'mailgun.process','uses' => 'MailgunController@process']);
 

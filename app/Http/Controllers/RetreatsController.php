@@ -27,9 +27,6 @@ class RetreatsController extends Controller
         $this->authorize('show-retreat');
         $retreats = \montserrat\Retreat::whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date','asc')->with('retreatmasters','innkeeper','assistant')->get();
         $oldretreats = \montserrat\Retreat::whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date','desc')->with('retreatmasters','innkeeper','assistant')->paginate(100);
-        // $events = Event::get();
-        // dd($events[4]);
-        //dd($oldretreats);    
         return view('retreats.index',compact('retreats','oldretreats'));   //
     }
     
@@ -330,5 +327,10 @@ class RetreatsController extends Controller
             }
         }
         return Redirect::action('RetreatsController@index');
-    }    
+    }  
+    public function calendar() {
+        $calendar_events = \Spatie\GoogleCalendar\Event::get();
+        return view('calendar.index',compact('calendar_events'));
+        
+    }
 }
