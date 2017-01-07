@@ -90,6 +90,8 @@ class RetreatsController extends Controller
           ]);
         
         $retreat = new \montserrat\Retreat;
+        $calendar_event = new Event;
+        
         $retreat->idnumber = $request->input('idnumber');
         $retreat->start_date = $request->input('start_date');
         $retreat->end_date = $request->input('end_date');
@@ -107,7 +109,20 @@ class RetreatsController extends Controller
         //$retreat->year = $request->input('year');
         $retreat->innkeeper_id = $request->input('innkeeper_id');
         $retreat->assistant_id = $request->input('assistant_id');
+        $calendar_event->id = uniqid();
+        $retreat->calendar_id = $calendar_event->id;
         $retreat->save();
+        
+        $calendar_event->name = $retreat->title. ' ('.$retreat->idnumber.')';
+        $calendar_event->summary = $retreat->title. ' ('.$retreat->idnumber.')';
+        $calendar_event->startDateTime = $retreat->start_date;
+        $calendar_event->endDateTime = $retreat->end_date;
+        $retreat_url = url('retreat/'.$retreat->id);
+        $calendar_event->description = "<a href='". $retreat_url . "'>".$retreat->idnumber." - ".$retreat->title."</a> : " .$retreat->description;
+        $calendar_event->save();  
+        $retreat->save();
+        
+        
         if (empty($request->input('directors')) or in_array(0,$request->input('directors'))) {
             $retreat->retreatmasters()->detach();
         } else {
@@ -225,6 +240,9 @@ class RetreatsController extends Controller
         //$retreat->year = $request->input('year');
         $retreat->innkeeper_id = $request->input('innkeeper_id');
         $retreat->assistant_id = $request->input('assistant_id');
+        if (null !==$request->input('calendar_id')) {
+            $retreat->calendar_id = $request->input('calendar_id');
+        }
         $retreat->save();
 
         if (null !== $request->file('contract')) {
@@ -261,6 +279,20 @@ class RetreatsController extends Controller
         } else {
             $retreat->captains()->sync($request->input('captains'));
         }
+        if (!empty($retreat->calendar_id)) {
+            //dd($retreat->calendar_id);
+            $calendar_event = Event::find($retreat->calendar_id);
+            if (!empty($calendar_event)) {
+                $calendar_event->name = $retreat->title. '('.$retreat->idnumber.')';
+                $calendar_event->startDateTime = $retreat->start_date;
+                $calendar_event->endDateTime = $retreat->end_date;
+                $retreat_url = url('retreat/'.$retreat->id);
+                $calendar_event->description = "<a href='". $retreat_url . "'>".$retreat->idnumber." - ".$retreat->title."</a> : " .$retreat->description;
+                //dd($calendar_event);
+                $calendar_event->save();
+            }
+        }
+            
        
         return Redirect::action('RetreatsController@index');
     }
@@ -273,6 +305,14 @@ class RetreatsController extends Controller
      */
     public function destroy($id) {
         $this->authorize('delete-retreat');
+        if (!empty($retreat->calendar_id)) {
+            //dd($retreat->calendar_id);
+            $calendar_event = Event::find($retreat->calendar_id);
+            if (!empty($calendar_event)) {
+                $calendar_event->name = '[CANCELLED] '.$retreat->title. '('.$retreat->idnumber.')';
+                $calendar_event->save();
+            }
+        }
         \montserrat\Retreat::destroy($id);
         return Redirect::action('RetreatsController@index');
     }
