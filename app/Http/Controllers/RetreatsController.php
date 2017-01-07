@@ -119,7 +119,7 @@ class RetreatsController extends Controller
         $calendar_event->endDateTime = $retreat->end_date;
         $retreat_url = url('retreat/'.$retreat->id);
         $calendar_event->description = "<a href='". $retreat_url . "'>".$retreat->idnumber." - ".$retreat->title."</a> : " .$retreat->description;
-        $calendar_event->save();  
+        $calendar_event->save('insertEvent');  
         $retreat->save();
         
         
@@ -283,7 +283,7 @@ class RetreatsController extends Controller
             //dd($retreat->calendar_id);
             $calendar_event = Event::find($retreat->calendar_id);
             if (!empty($calendar_event)) {
-                $calendar_event->name = $retreat->title. '('.$retreat->idnumber.')';
+                $calendar_event->name = $retreat->title. ' ('.$retreat->idnumber.')';
                 $calendar_event->startDateTime = $retreat->start_date;
                 $calendar_event->endDateTime = $retreat->end_date;
                 $retreat_url = url('retreat/'.$retreat->id);
@@ -305,11 +305,12 @@ class RetreatsController extends Controller
      */
     public function destroy($id) {
         $this->authorize('delete-retreat');
+        $retreat = \montserrat\Retreat::findOrFail($id);
+        
         if (!empty($retreat->calendar_id)) {
-            //dd($retreat->calendar_id);
             $calendar_event = Event::find($retreat->calendar_id);
             if (!empty($calendar_event)) {
-                $calendar_event->name = '[CANCELLED] '.$retreat->title. '('.$retreat->idnumber.')';
+                $calendar_event->name = '[CANCELLED] '.$retreat->title. ' ('.$retreat->idnumber.')';
                 $calendar_event->save();
             }
         }
