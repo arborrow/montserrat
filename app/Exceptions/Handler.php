@@ -92,15 +92,12 @@ class Handler extends ExceptionHandler
             return $this->toIlluminateResponse($this->renderHttpException($e), $e);
         } else {
             
-           /* Mail::send('emails.error', ['error' => $this->convertExceptionToResponse($e)], function($message) use ($fullurl, $username, $ip_address) {
+            Mail::send('emails.error', ['error' => $this->convertExceptionToResponse($e)], function($message) use ($fullurl, $username, $ip_address) {
             $message->to('anthony.borrow@montserratretreat.org');
             $message->subject('Polanco Error @'.$fullurl.' by: '.$username.' from: '.$ip_address);
             $message->from('polanco@montserratretreat.org');
             });
             return view('errors.default');
-            * 
-            */
-            return $this->convertExceptionToResponse($e);
         }
         
     }
