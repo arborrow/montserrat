@@ -23,51 +23,47 @@
                     </thead>
                     <tbody>
                         @foreach($retreats as $retreat)
-                        <tr>
-                            <td><a href="retreat/{{ $retreat->id}}">{{$retreat->idnumber}} - {{ $retreat->title }}</a></td>
-                            <td>{{ date('M j, Y', strtotime($retreat->start_date)) }} - {{ date('M j, Y', strtotime($retreat->end_date)) }}</td>
-                            <td>                            
-                                @if ($retreat->retreatmasters->isEmpty())
-                                N/A
-                                @else
-                                    @foreach($retreat->retreatmasters as $rm)
-                                        {!!$rm->contact_link_full_name!!}<br /> 
-                                    @endforeach
-                                @endif
-                            </td>
-                            <td>
-                                @if ($retreat->innkeeper_id > 0)
-                                    {!!$retreat->innkeeper->contact_link_full_name!!}
-                                @else
-                                    N/A
-                                @endIf
-                            </td>
-                            <td>
-                                @if ($retreat->assistant_id > 0)
-                                    {!!$retreat->assistant->contact_link_full_name!!}
-                                @else
-                                    N/A
-                                @endIf
-                            </td>
-                            <td><a href="retreat/{{ $retreat->id}}#registrations">{{$retreat->retreatant_count }}</a></td>
-                            <td> 
-                                @can('show-event-contract')
-                                    {!!$retreat->retreat_contract_link!!}
-                                @endCan
-                                @can('show-event-schedule')
-                                    {!!$retreat->retreat_schedule_link!!} 
-                                @endCan
-                                @can('show-event-evaluation')
-                                    {!!$retreat->retreat_evaluations_link!!}
-                                @endCan
-                            </td>
-                            <!--<td>{{ $retreat->silent ? 'Yes' : 'No'}}</td>
-                            <td><a href="{{ action('RetreatsController@edit', $retreat->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></td>
-<td>{!! Form::open(['method' => 'DELETE', 'route' => ['retreat.destroy', $retreat->id],'onsubmit'=>'return ConfirmDelete()']) !!}
- {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
-{!! Form::close() !!}
-</td>-->
-                        </tr>
+                            @if ($retreat->id<>1442) <!-- hacky way of avoiding showing open deposits, could probably use $retreat->type in some way -->
+                                <tr>
+                                    <td><a href="retreat/{{ $retreat->id}}">{{$retreat->idnumber}} - {{ $retreat->title }}</a></td>
+                                    <td>{{ date('M j, Y', strtotime($retreat->start_date)) }} - {{ date('M j, Y', strtotime($retreat->end_date)) }}</td>
+                                    <td>                            
+                                        @if ($retreat->retreatmasters->isEmpty())
+                                        N/A
+                                        @else
+                                            @foreach($retreat->retreatmasters as $rm)
+                                                {!!$rm->contact_link_full_name!!}<br /> 
+                                            @endforeach
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($retreat->innkeeper_id > 0)
+                                            {!!$retreat->innkeeper->contact_link_full_name!!}
+                                        @else
+                                            N/A
+                                        @endIf
+                                    </td>
+                                    <td>
+                                        @if ($retreat->assistant_id > 0)
+                                            {!!$retreat->assistant->contact_link_full_name!!}
+                                        @else
+                                            N/A
+                                        @endIf
+                                    </td>
+                                    <td><a href="retreat/{{ $retreat->id}}#registrations">{{$retreat->retreatant_count }}</a></td>
+                                    <td> 
+                                        @can('show-event-contract')
+                                            {!!$retreat->retreat_contract_link!!}
+                                        @endCan
+                                        @can('show-event-schedule')
+                                            {!!$retreat->retreat_schedule_link!!} 
+                                        @endCan
+                                        @can('show-event-evaluation')
+                                            {!!$retreat->retreat_evaluations_link!!}
+                                        @endCan
+                                    </td>
+                                </tr>
+                            @endIf
                         @endforeach
                     </tbody>
                 </table>

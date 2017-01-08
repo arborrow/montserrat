@@ -75,7 +75,6 @@ class PagesController extends Controller
     public function welcome() {
         $next_week=(Carbon\Carbon::now()->addWeeks(1));
         $retreats = \montserrat\Retreat::where('start_date','<=', $next_week)->where('end_date','>=',date('Y-m-d'))->orderBy('start_date')->get();
-        //dd($retreats);
         return view('welcome',compact('retreats'));   //
     }
     public function retreatantinforeport($id)
