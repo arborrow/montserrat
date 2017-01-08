@@ -23,7 +23,7 @@
                     </thead>
                     <tbody>
                         @foreach($retreats as $retreat)
-                            @if ($retreat->id<>1442) <!-- hacky way of avoiding showing open deposits, could probably use $retreat->type in some way -->
+                            @if ($retreat->id<>1422) <!-- hacky way of avoiding showing open deposits, could probably use $retreat->type in some way -->
                                 <tr>
                                     <td><a href="retreat/{{ $retreat->id}}">{{$retreat->idnumber}} - {{ $retreat->title }}</a></td>
                                     <td>{{ date('M j, Y', strtotime($retreat->start_date)) }} - {{ date('M j, Y', strtotime($retreat->end_date)) }}</td>
