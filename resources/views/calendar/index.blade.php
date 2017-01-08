@@ -24,9 +24,9 @@
                             <th>Start</th>
                             <th>End</th>
                             <th>Summary</th>
+                            <th>ID</th>
                             <th>Description</th>
                             <th>Kind</th>
-                            <th>ID</th>
                             <th>Created</th>
                             <th>LastUpdated</th>
                             
@@ -38,9 +38,9 @@
                             <td>{{ $event->startDateTime }}</td>
                             <td>{{ $event->endDateTime }}  </td>
                             <td>{{ $event->summary }} </td>
+                            <td><a href="{{$event->htmlLink}}">{{ $event->id }}</a></td>
                             <td>{!! $event->description !!}</td>
                             <td>{{ $event->kind }}</td>
-                            <td><a href="{{$event->htmlLink}}">{{ $event->id }}</a></td>
                             <td>{{ $event->created }}</td>
                             <td>{{ $event->updated }}</td>
                             
