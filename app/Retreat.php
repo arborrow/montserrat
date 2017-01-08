@@ -110,4 +110,24 @@ class Retreat extends Model
             return NULL;
         }
     }
+    
+    public function getRetreatTeamAttribute () {
+        $team = ''; 
+        $directors = $this->retreatmasters()->get();
+        //dd($directors);
+        foreach ($directors as $director) {
+            // dd($director);
+            $team .= $director->last_name.'(D) ';
+        }
+        $innkeeper = $this->innkeeper()->first();
+        //dd($innkeeper->last_name);
+        if (isset($innkeeper->last_name)) {
+            $team .= $innkeeper->last_name.'(I) ';
+        }
+        $assistant = $this->assistant()->first();
+        if (isset($assistant->last_name)) {
+            $team .= $assistant->last_name.'(A) ';
+        }
+        return $team;
+    }
 }
