@@ -73,7 +73,8 @@ class PagesController extends Controller
      return view('pages.support');   //
     }
     public function welcome() {
-        $retreats = \montserrat\Retreat::where('start_date','<=', date('Y-m-d'))->where('end_date','>=',date('Y-m-d'))->get();
+        $next_week=(Carbon\Carbon::now()->addWeeks(1));
+        $retreats = \montserrat\Retreat::where('start_date','<=', $next_week)->where('end_date','>=',date('Y-m-d'))->orderBy('start_date')->get();
         //dd($retreats);
         return view('welcome',compact('retreats'));   //
     }
