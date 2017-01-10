@@ -70,18 +70,18 @@ class Handler extends ExceptionHandler
         } elseif ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException($e->getMessage(), $e);
             Mail::send('emails.error', ['error' => $this->convertExceptionToResponse($e)], function($message) use ($fullurl, $username, $ip_address) {
-                $message->to('anthony.borrow@montserratretreat.org');
+                $message->to(config('polanco.admin_email'));
                 $message->subject('Polanco 404 Error @'.$fullurl.' by: '.$username.' from: '.$ip_address);
-                $message->from('polanco@montserratretreat.org');
+                $message->from(config('polanco.site_email'));
             });
         } elseif ($e instanceof AuthenticationException) {
             return $this->unauthenticated($request, $e);
         } elseif ($e instanceof AuthorizationException) {
             $e = new HttpException(403, $e->getMessage());
             Mail::send('emails.error', ['error' => $this->convertExceptionToResponse($e)], function($message) use ($fullurl, $username, $ip_address) {
-                $message->to('anthony.borrow@montserratretreat.org');
+                $message->to(config('polanco.admin_email'));
                 $message->subject('Polanco 403 Error @'.$fullurl.' by: '.$username.' from: '.$ip_address);
-                $message->from('polanco@montserratretreat.org');
+                $message->from(config('polanco.site_email'));
             });
         } elseif ($e instanceof ValidationException && $e->getResponse()) {
             return $e->getResponse();
@@ -93,9 +93,9 @@ class Handler extends ExceptionHandler
         } else {
             
             Mail::send('emails.error', ['error' => $this->convertExceptionToResponse($e)], function($message) use ($fullurl, $username, $ip_address) {
-            $message->to('anthony.borrow@montserratretreat.org');
+            $message->to(config('polanco.admin_email'));
             $message->subject('Polanco Error @'.$fullurl.' by: '.$username.' from: '.$ip_address);
-            $message->from('polanco@montserratretreat.org');
+            $message->from(config('polanco.site_email'));
             });
             return view('errors.default');
         }

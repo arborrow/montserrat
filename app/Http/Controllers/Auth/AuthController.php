@@ -94,8 +94,7 @@ class AuthController extends Controller
 
         if (isset($user->user['domain'])) { 
             $domain = $user->user['domain'];
-            //dd(!($domain == "montserratretreat.org"));
-            if (!($domain == "montserratretreat.org")) {
+                if (!($domain == config('polanco.socialite_domain_restriction'))) {
                 return Redirect::to('restricted');
             }
         } else {
