@@ -17,7 +17,7 @@
                 <div class='col-md-3'><strong>Retreat Dates: </strong>{{ date('F d, Y', strtotime($registration->retreat->start_date))}} - {{ date('F d, Y', strtotime($registration->retreat->end_date))}}</div>
                 </div><div class="clearfix"> </div> 
                 <div class='row'>
-                    <div class='col-md-3'><strong>Registered: </strong>{{ date('F d, Y', strtotime($registration->register_date))}}</div>
+                    <div class='col-md-3'><strong>Registered: </strong>{{ date('F d, Y h:i A', strtotime($registration->register_date))}}</div>
                 </div><div class="clearfix"> </div>
                 <div class='row'>
                     <div class='col-md-3'><strong>Registration Confirmed: </strong>
