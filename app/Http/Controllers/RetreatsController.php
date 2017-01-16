@@ -27,18 +27,21 @@ class RetreatsController extends Controller
         $this->authorize('show-retreat');
         $defaults = array();
         $defaults['type']='Retreat';
+        $event_types = \montserrat\EventType::whereIsActive(1)->orderBy('name')->pluck('id','name');
+        
         $retreats = \montserrat\Retreat::whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date','asc')->with('retreatmasters','innkeeper','assistant')->get();
         $oldretreats = \montserrat\Retreat::whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date','desc')->with('retreatmasters','innkeeper','assistant')->paginate(100);
-        return view('retreats.index',compact('retreats','oldretreats','defaults'));   //
+        return view('retreats.index',compact('retreats','oldretreats','defaults','event_types'));   //
     }
     public function index_type($event_type_id) {
         $this->authorize('show-retreat');
+        $event_types = \montserrat\EventType::whereIsActive(1)->orderBy('name')->pluck('id','name');
         $event_type = \montserrat\EventType::findOrFail($event_type_id);
         $defaults = array();
         $defaults['type'] = $event_type->label; 
         $retreats = \montserrat\Retreat::type($event_type_id)->whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date','asc')->with('retreatmasters','innkeeper','assistant')->get();
         $oldretreats = \montserrat\Retreat::type($event_type_id)->whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date','desc')->with('retreatmasters','innkeeper','assistant')->paginate(100);
-        return view('retreats.index',compact('retreats','oldretreats','defaults'));   //
+        return view('retreats.index',compact('retreats','oldretreats','defaults','event_types'));   //
     }
     
     
