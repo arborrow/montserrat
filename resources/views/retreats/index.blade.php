@@ -6,8 +6,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                        <span class="grey" id="upcoming_retreats">Upcoming retreats ({{$retreats->count()}}) </span> 
-                        <span class="previous">{!! Html::link('#previous_retreats','Previous retreats',array('class' => 'btn btn-primary'))!!}</span>
+                        <span class="grey" id="upcoming_retreats">Upcoming {{ $defaults['type'] }} ({{$retreats->count()}}) </span> 
+                        <span class="previous">{!! Html::link('#previous_retreats','Previous '.$defaults['type'],array('class' => 'btn btn-primary'))!!}</span>
                         @can('create-retreat')
                             <span class="create">
                                 <a href={{ action('RetreatsController@create') }}>{!! Html::image('img/create.png', 'Create a Retreat',array('title'=>"Create Retreat",'class' => 'btn btn-primary')) !!}</a>
@@ -17,7 +17,7 @@
 
                 </div>
                 @if ($retreats->isEmpty())
-                    <p> Currently, there are no upcoming retreats!</p>
+                    <p> Currently, there are no upcoming {{$defaults['type']}}!</p>
                 @else
                 <table class="table table-bordered table-striped table-hover">
                     <thead>
@@ -83,13 +83,13 @@
                 @endif
 <hr>            <div class="panel-heading">
                     <h1>
-                    <span class="grey" id="previous_retreats">Previous retreats ({{$oldretreats->total()}})</span> 
-                    <span class="grey">{!! Html::link('#upcoming_retreats','Upcoming retreats',array('class' => 'btn btn-primary'))!!}</span>
+                    <span class="grey" id="previous_retreats">Previous {{ $defaults['type'] }} ({{$oldretreats->total()}})</span> 
+                    <span class="grey">{!! Html::link('#upcoming_retreats','Upcoming '.$defaults['type'],array('class' => 'btn btn-primary'))!!}</span>
                     </h1>
                 </div>
                 
                 @if ($oldretreats->isEmpty())
-                    <p> Currently, there are no previous retreats!</p>
+                    <p> Currently, there are no previous {{$defaults['type']}}!</p>
                 @else
                 <table class="table">
                     

@@ -130,4 +130,9 @@ class Retreat extends Model
         }
         return $team;
     }
+    
+    public function scopeType($query, $event_type_id)
+    {
+        return $query->where('event_type_id', $event_type_id);
+    }
 }

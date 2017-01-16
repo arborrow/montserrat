@@ -26,7 +26,7 @@ class RegistrationsController extends Controller
         $registrations = \montserrat\Registration::whereHas('retreat', function($query) {
             $query->where('end_date','>=',date('Y-m-d'));
             
-        })->orderBy('register_date','desc')->with('retreatant','retreat','room')->get();
+        })->orderBy('created_at','desc')->with('retreatant','retreat','room')->get();
         //dd($registrations);
         return view('registrations.index',compact('registrations'));
     }
