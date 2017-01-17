@@ -183,12 +183,11 @@
                             {!! $registration->retreatant->parish_link!!}
                             @endif
                         </td>
-                        <td>{{ $registration->notes }}</td>
-                        <td>{{ (!empty($registration->retreatant->note_health->note)) ? $registration->retreatant->note_health->note : null }}</td>
-                        <td>{{ (!empty($registration->retreatant->note_dietary->note)) ? $registration->retreatant->note_dietary->note : null }}</td>
+                        <td> {{ $registration->notes }}</td>
+                        <td> {!! (!empty($registration->retreatant->note_health->note)) ? "<div class=\"alert alert-danger\">" . $registration->retreatant->note_health->note . "</div>" : null !!}</div></td>
+                        <td> {!! (!empty($registration->retreatant->note_dietary->note)) ? "<div class=\"alert alert-info\">" . $registration->retreatant->note_dietary->note . "</div>" : null !!}</div></td>
                         <td>{!! $registration->registration_status_buttons!!}
                         </td>
-
                     </tr>
                     @endforeach
             </tbody>
