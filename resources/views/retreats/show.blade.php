@@ -153,7 +153,9 @@
                         <th>Deposit</th>
                         <th>Mobile Phone</th>
                         <th>Parish</th>
-                        <th>Notes</th>
+                        <th>General Notes</th>
+                        <th>Health notes</th>
+                        <th>Dietary notes</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -182,6 +184,8 @@
                             @endif
                         </td>
                         <td>{{ $registration->notes }}</td>
+                        <td>{{ (!empty($registration->retreatant->note_health->note)) ? $registration->retreatant->note_health->note : null }}</td>
+                        <td>{{ (!empty($registration->retreatant->note_dietary->note)) ? $registration->retreatant->note_dietary->note : null }}</td>
                         <td>{!! $registration->registration_status_buttons!!}
                         </td>
 
