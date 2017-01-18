@@ -130,6 +130,34 @@ class Retreat extends Model
         }
         return $team;
     }
+    /*
+     * Returns an array of attendee email addresses to be added to a Google Calendar event
+     * see https://developers.google.com/google-apps/calendar/create-events (for PHP section)
+     *  'attendees' => array(
+            array('email' => 'lpage@example.com'),
+            array('email' => 'sbrin@example.com'),
+        )
+     */
+    public function getRetreatAttendeesAttribute () {
+        $attendees = []; 
+        $directors = $this->retreatmasters()->get();
+        //dd($directors);
+        foreach ($directors as $director) {
+            if (!empty($director->email_primary->email)) {
+                array_push($attendees,array('email'=>$director->email_primary->email)); 
+            }
+        }
+        $innkeeper = $this->innkeeper()->first();
+        //dd($innkeeper->last_name);
+        if (!empty($innkeeper->email_primary->email)) {
+            array_push($attendees, array('email'=>$innkeeper->email_primary->email));
+        }
+        $assistant = $this->assistant()->first();
+        if (!empty($assistant->email_primary->email)) {
+            array_push($attendees, array('email'=>$assistant->email_primary->email));
+        }
+        return $attendees;
+    }
     
     public function scopeType($query, $event_type_id)
     {

@@ -296,6 +296,13 @@ class RetreatsController extends Controller
         if (!empty($retreat->calendar_id)) {
             //dd($retreat->calendar_id);
             $calendar_event = Event::find($retreat->calendar_id);
+            /*
+             * Initial work to manage attendees from Polanco
+             * Need to clean up management of primary emails
+             * Should this be limited to montserratretreat.org emails?
+             * What about guest directors? 
+             */
+            //$calendar_event->attendees = $retreat->retreat_attendees;
             if (!empty($calendar_event)) {
                 $calendar_event->name = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
                 $calendar_event->summary = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
