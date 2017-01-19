@@ -72,7 +72,7 @@
                                     N/A
                                 @endIf
                             </td>
-                            <td><a href="retreat/{{ $retreat->id}}#registrations">{{$retreat->retreatant_count }}</a></td>
+                            <td><a href="{{url('retreat/'.$retreat->id.'#registrations')}}">{{ $retreat->retreatant_count}}</a></td>
                             <td> 
                                 @can('show-event-contract')
                                     {!!$retreat->retreat_contract_link!!}
@@ -150,7 +150,7 @@
                                     N/A
                                 @endIf
                             </td>
-                            <td><a href="retreat/{{ $oldretreat->id}}#registrations">{{ $oldretreat->retreatant_count}}</a></td>
+                            <td><a href="{{url('retreat/'.$oldretreat->id.'#registrations')}}">{{ $oldretreat->retreatant_count}}</a></td>
                             <td> 
                                 @can('show-event-contract')
                                     {!!$oldretreat->retreat_contract_link!!}
