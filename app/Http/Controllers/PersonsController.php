@@ -1322,6 +1322,7 @@ class PersonsController extends Controller
             $group_volunteer->contact_id = $person->id;
             $group_volunteer->group_id = GROUP_ID_VOLUNTEER;
             $group_volunteer->status = 'Added';
+            $group_volunteer->deleted_at = NULL;
             $group_volunteer->save();
         }
         $group_bishop = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_BISHOP,'status'=>'Added']);
@@ -1331,6 +1332,7 @@ class PersonsController extends Controller
             $group_bishop->contact_id = $person->id;
             $group_bishop->group_id = GROUP_ID_BISHOP;
             $group_bishop->status = 'Added';
+            $group_bishop->deleted_at = NULL;
             $group_bishop->save();
         }
         $group_priest = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_PRIEST,'status'=>'Added']);
@@ -1340,6 +1342,7 @@ class PersonsController extends Controller
             $group_priest->contact_id = $person->id;
             $group_priest->group_id = GROUP_ID_PRIEST;
             $group_priest->status = 'Added';
+            $group_priest->deleted_at = NULL;
             $group_priest->save();
         }
         $group_deacon = \montserrat\GroupContact::withTrashed()->irstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_DEACON,'status'=>'Added']);
@@ -1349,6 +1352,7 @@ class PersonsController extends Controller
             $group_deacon->contact_id = $person->id;
             $group_deacon->group_id = GROUP_ID_DEACON;
             $group_deacon->status = 'Added';
+            $group_deacon->deleted_at = NULL;
             $group_deacon->save();
         }
         $group_pastor = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_PASTOR,'status'=>'Added']);
@@ -1358,6 +1362,7 @@ class PersonsController extends Controller
             $group_pastor->contact_id = $person->id;
             $group_pastor->group_id = GROUP_ID_PASTOR;
             $group_pastor->status = 'Added';
+            $group_pastor->deleted_at = NULL;
             $group_pastor->save();
         }
         $group_jesuit = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_JESUIT,'status'=>'Added']);
@@ -1367,6 +1372,7 @@ class PersonsController extends Controller
             $group_jesuit->contact_id = $person->id;
             $group_jesuit->group_id = GROUP_ID_JESUIT;
             $group_jesuit->status = 'Added';
+            $group_jesuit->deleted_at = NULL;
             $group_jesuit->save();
         }
         $group_provincial = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_PROVINCIAL,'status'=>'Added']);
@@ -1376,6 +1382,7 @@ class PersonsController extends Controller
             $group_provincial->contact_id = $person->id;
             $group_provincial->group_id = GROUP_ID_PROVINCIAL;
             $group_provincial->status = 'Added';
+            $group_provincial->deleted_at = NULL;
             $group_provincial->save();
         }
         $group_superior = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_SUPERIOR,'status'=>'Added']);
@@ -1385,6 +1392,7 @@ class PersonsController extends Controller
             $group_superior->contact_id = $person->id;
             $group_superior->group_id = GROUP_ID_SUPERIOR;
             $group_superior->status = 'Added';
+            $group_superior->deleted_at = NULL;
             $group_superior->save();
         }
         $group_board = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_BOARD]);
@@ -1397,6 +1405,7 @@ class PersonsController extends Controller
             $group_board->contact_id = $person->id;
             $group_board->group_id = GROUP_ID_BOARD;
             $group_board->status = 'Added';
+            $group_board->deleted_at = NULL;
             $group_board->save();
         }
         $group_staff = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_STAFF,'status'=>'Added']);
@@ -1406,6 +1415,7 @@ class PersonsController extends Controller
             $group_staff->contact_id = $person->id;
             $group_staff->group_id = GROUP_ID_STAFF;
             $group_staff->status = 'Added';
+            $group_staff->deleted_at = NULL;
             $group_staff->save();
         }
         $group_steward = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_STEWARD,'status'=>'Added']);
@@ -1415,6 +1425,7 @@ class PersonsController extends Controller
             $group_steward->contact_id = $person->id;
             $group_steward->group_id = GROUP_ID_STEWARD;
             $group_steward->status = 'Added';
+            $group_steward->deleted_at = NULL;
             $group_steward->save();
         }
         $group_director = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_DIRECTOR,'status'=>'Added']);
@@ -1424,6 +1435,7 @@ class PersonsController extends Controller
             $group_director->contact_id = $person->id;
             $group_director->group_id = GROUP_ID_DIRECTOR;
             $group_director->status = 'Added';
+            $group_director->deleted_at = NULL;
             $group_director->save();
         }
         $group_innkeeper = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_INNKEEPER,'status'=>'Added']);
@@ -1433,6 +1445,7 @@ class PersonsController extends Controller
             $group_innkeeper->contact_id = $person->id;
             $group_innkeeper->group_id = GROUP_ID_INNKEEPER;
             $group_innkeeper->status = 'Added';
+            $group_innkeeper->deleted_at = NULL;
             $group_innkeeper->save();
         }
         $group_assistant = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_ASSISTANT,'status'=>'Added']);
@@ -1442,10 +1455,9 @@ class PersonsController extends Controller
             $group_assistant->contact_id = $person->id;
             $group_assistant->group_id = GROUP_ID_ASSISTANT;
             $group_assistant->status = 'Added';
+            $group_assistant->deleted_at = NULL;
             $group_assistant->save();
         }
-        
-        
         
         return Redirect::action('PersonsController@show', $person->id);//
         
