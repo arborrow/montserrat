@@ -1345,7 +1345,7 @@ class PersonsController extends Controller
             $group_priest->deleted_at = NULL;
             $group_priest->save();
         }
-        $group_deacon = \montserrat\GroupContact::withTrashed()->irstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_DEACON,'status'=>'Added']);
+        $group_deacon = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_DEACON,'status'=>'Added']);
         if ($request->input('is_deacon')==0) {
             $group_deacon->delete();
         } else {
