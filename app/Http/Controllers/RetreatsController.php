@@ -336,7 +336,10 @@ class RetreatsController extends Controller
                 $calendar_event->save();
             }
         }
+        $calendar_event = Event::find($retreat->calendar_id);
+        $calendar_event->delete();    
         \montserrat\Retreat::destroy($id);
+        
         return Redirect::action('RetreatsController@index');
     }
  

@@ -16,7 +16,7 @@
                         
                     </h1>
                     <select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-                        <option value="">Select type of retreats...</option>
+                        <option value="">Filter by retreat type...</option>
                         <option value="{{url('retreat')}}">All retreats</option>
                         @foreach($event_types as $event_type=>$value)
                             <option value="{{url('retreat/type/'.$value)}}">{{$event_type}}</option>
