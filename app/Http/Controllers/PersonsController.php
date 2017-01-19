@@ -1305,16 +1305,17 @@ class PersonsController extends Controller
         }
         
             //groups: 
-        $group_captain = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_CAPTAIN,'status'=>'Added']);
+        $group_captain = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_CAPTAIN,'status'=>'Added']);
         if ($request->input('is_captain')==0) {
             $group_captain->delete();
         } else {
             $group_captain->contact_id = $person->id;
             $group_captain->group_id = GROUP_ID_CAPTAIN;
             $group_captain->status = 'Added';
+            $group_captain->deleted_at = NULL;
             $group_captain->save();
         }
-        $group_volunteer = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_VOLUNTEER,'status'=>'Added']);
+        $group_volunteer = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_VOLUNTEER,'status'=>'Added']);
         if ($request->input('is_volunteer')==0) {
             $group_volunteer->delete();
         } else {
@@ -1323,7 +1324,7 @@ class PersonsController extends Controller
             $group_volunteer->status = 'Added';
             $group_volunteer->save();
         }
-        $group_bishop = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_BISHOP,'status'=>'Added']);
+        $group_bishop = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_BISHOP,'status'=>'Added']);
         if ($request->input('is_bishop')==0) {
             $group_bishop->delete();
         } else {
@@ -1332,7 +1333,7 @@ class PersonsController extends Controller
             $group_bishop->status = 'Added';
             $group_bishop->save();
         }
-        $group_priest = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_PRIEST,'status'=>'Added']);
+        $group_priest = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_PRIEST,'status'=>'Added']);
         if ($request->input('is_priest')==0) {
             $group_priest->delete();
         } else {
@@ -1341,7 +1342,7 @@ class PersonsController extends Controller
             $group_priest->status = 'Added';
             $group_priest->save();
         }
-        $group_deacon = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_DEACON,'status'=>'Added']);
+        $group_deacon = \montserrat\GroupContact::withTrashed()->irstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_DEACON,'status'=>'Added']);
         if ($request->input('is_deacon')==0) {
             $group_deacon->delete();
         } else {
@@ -1350,7 +1351,7 @@ class PersonsController extends Controller
             $group_deacon->status = 'Added';
             $group_deacon->save();
         }
-        $group_pastor = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_PASTOR,'status'=>'Added']);
+        $group_pastor = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_PASTOR,'status'=>'Added']);
         if ($request->input('is_pastor')==0) {
             $group_pastor->delete();
         } else {
@@ -1359,7 +1360,7 @@ class PersonsController extends Controller
             $group_pastor->status = 'Added';
             $group_pastor->save();
         }
-        $group_jesuit = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_JESUIT,'status'=>'Added']);
+        $group_jesuit = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_JESUIT,'status'=>'Added']);
         if ($request->input('is_jesuit')==0) {
             $group_jesuit->delete();
         } else {
@@ -1368,7 +1369,7 @@ class PersonsController extends Controller
             $group_jesuit->status = 'Added';
             $group_jesuit->save();
         }
-        $group_provincial = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_PROVINCIAL,'status'=>'Added']);
+        $group_provincial = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_PROVINCIAL,'status'=>'Added']);
         if ($request->input('is_provincial')==0) {
             $group_provincial->delete();
         } else {
@@ -1377,7 +1378,7 @@ class PersonsController extends Controller
             $group_provincial->status = 'Added';
             $group_provincial->save();
         }
-        $group_superior = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_SUPERIOR,'status'=>'Added']);
+        $group_superior = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_SUPERIOR,'status'=>'Added']);
         if ($request->input('is_superior')==0) {
             $group_superior->delete();
         } else {
@@ -1386,7 +1387,7 @@ class PersonsController extends Controller
             $group_superior->status = 'Added';
             $group_superior->save();
         }
-        $group_board = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_BOARD]);
+        $group_board = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_BOARD]);
         if ($request->input('is_board')==0) {
             if (isset($group_board->id)) {
                 $group_board->status='Removed';
@@ -1398,7 +1399,7 @@ class PersonsController extends Controller
             $group_board->status = 'Added';
             $group_board->save();
         }
-        $group_staff = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_STAFF,'status'=>'Added']);
+        $group_staff = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_STAFF,'status'=>'Added']);
         if ($request->input('is_staff')==0) {
             $group_staff->delete();
         } else {
@@ -1407,7 +1408,7 @@ class PersonsController extends Controller
             $group_staff->status = 'Added';
             $group_staff->save();
         }
-        $group_steward = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_STEWARD,'status'=>'Added']);
+        $group_steward = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_STEWARD,'status'=>'Added']);
         if ($request->input('is_steward')==0) {
             $group_steward->delete();
         } else {
@@ -1416,7 +1417,7 @@ class PersonsController extends Controller
             $group_steward->status = 'Added';
             $group_steward->save();
         }
-        $group_director = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_DIRECTOR,'status'=>'Added']);
+        $group_director = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_DIRECTOR,'status'=>'Added']);
         if ($request->input('is_director')==0) {
             $group_director->delete();
         } else {
@@ -1425,7 +1426,7 @@ class PersonsController extends Controller
             $group_director->status = 'Added';
             $group_director->save();
         }
-        $group_innkeeper = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_INNKEEPER,'status'=>'Added']);
+        $group_innkeeper = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_INNKEEPER,'status'=>'Added']);
         if ($request->input('is_innkeeper')==0) {
             $group_innkeeper->delete();
         } else {
@@ -1434,7 +1435,7 @@ class PersonsController extends Controller
             $group_innkeeper->status = 'Added';
             $group_innkeeper->save();
         }
-        $group_assistant = \montserrat\GroupContact::firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_ASSISTANT,'status'=>'Added']);
+        $group_assistant = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_ASSISTANT,'status'=>'Added']);
         if ($request->input('is_assistant')==0) {
             $group_assistant->delete();
         } else {
