@@ -1630,11 +1630,11 @@ class PersonsController extends Controller
         $email_list = "";
         foreach ($persons as $person) {
             if (!empty($person->email_primary_text)) {
-                $email_list .= $person->display_name. ' <'.$person->email_primary_text.'>,';
+                $email_list .= addslashes($person->display_name). ' <'.$person->email_primary_text.'>,';
             }
             
             if (!empty($email_list)) {
-                $role['email_link'] = "<a href=\"mailto:?bcc=".$email_list."\">E-mail ".$group->name." Group</a>";
+                $role['email_link'] = "<a href=\"mailto:?bcc=".htmlspecialchars($email_list,ENT_QUOTES)."\">E-mail ".$group->name." Group</a>";
                          
             } else {
                 $role['email_link'] = NULL;
@@ -1642,6 +1642,8 @@ class PersonsController extends Controller
             }
             
         }
+        //dd($email_list,$role['email_link']);
+                
         
         return view('persons.role',compact('persons','role'));   //
     
