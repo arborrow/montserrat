@@ -46,7 +46,7 @@
                     <tbody>
                         @foreach($retreats as $retreat)
                         <tr>
-                            <td><a href="retreat/{{ $retreat->id}}">{{ $retreat->idnumber}}</a></td>
+                            <td><a href="{{url('retreat/'.$retreat->id)}}">{{ $retreat->idnumber}}</a></td>
                             <td>{{ $retreat->title }}</td>
                             <td>{{ date('M j, Y', strtotime($retreat->start_date)) }} - {{ date('M j, Y', strtotime($retreat->end_date)) }}</td>
                             <td>                            
@@ -119,7 +119,7 @@
                     <tbody>
                         @foreach($oldretreats as $oldretreat)
                         <tr>
-                            <td><a href="retreat/{{ $oldretreat->id}}">{{ $oldretreat->idnumber}}</a></td>
+                            <td><a href="{{url('retreat/'.$oldretreat->id)}}">{{ $oldretreat->idnumber}}</a></td>
                             <td>{{ $oldretreat->title }}</td>
                             <td>{{ date('M j, Y', strtotime($oldretreat->start_date)) }} - {{ date('M j, Y', strtotime($oldretreat->end_date)) }}</td>
                             <td>                            
