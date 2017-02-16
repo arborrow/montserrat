@@ -15,13 +15,15 @@
                         </strong></h2>
                 </span>
                 @can('create-touchpoint')
-                <span class="btn btn-default">
-                    <a href={{ action('TouchpointsController@add_group',$group->id) }}>Add Group Touchpoint</a>
-                </span>
+                    <span class="btn btn-default">
+                        <a href={{ action('TouchpointsController@add_group',$group->id) }}>Add Group Touchpoint</a>
+                    </span>
                 @endCan
-                <span class="btn btn-default">
-                    <a href={{ action('RegistrationsController@add_group',$group->id) }}>Add Group Registration</a>
-                </span>
+                @can('create-registration')
+                    <span class="btn btn-default">
+                        <a href={{ action('RegistrationsController@add_group',$group->id) }}>Add Group Registration</a>
+                    </span>
+                @endCan
             </div>
             <div class="clearfix"> </div>
                 

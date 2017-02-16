@@ -17,6 +17,12 @@
                     @if (isset($role['email_link']))
                         <span class="btn btn-default">{!! $role['email_link'] !!}</span>
                     @endif
+                    @can('create-registration')
+                        <span class="btn btn-default">
+                            <a href={{ action('RegistrationsController@add_group',$role['group_id']) }}>Add Group Registration</a>
+                        </span>
+                    @endCan
+            
             
                 </div>
                 @if ($persons->isEmpty())

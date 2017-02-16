@@ -1624,6 +1624,7 @@ class PersonsController extends Controller
         
         $persons = \montserrat\Contact::with('groups','address_primary')->whereHas('groups', function ($query) use ($group_id) {$query->where('group_id','=',$group_id)->whereStatus('Added');})->orderBy('sort_name')->get();
         $group = \montserrat\Group::findOrFail($group_id);
+        $role['group_id'] = $group->id;
         $role['name']= $group->name;
         $role['email_link']= "";
         
@@ -1642,9 +1643,6 @@ class PersonsController extends Controller
             }
             
         }
-        //dd($email_list,$role['email_link']);
-                
-        
         return view('persons.role',compact('persons','role'));   //
     
     }

@@ -21,8 +21,9 @@ class RegistrationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
+        $this->authorize('show-registration');
+        
         $registrations = \montserrat\Registration::whereHas('retreat', function($query) {
             $query->where('end_date','>=',date('Y-m-d'));
             
@@ -36,10 +37,9 @@ class RegistrationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-        //$retreats = \montserrat\Retreat::where('end','>',\Carbon\Carbon::today())->pluck('idnumber','title','id');
+    public function create() {
+        $this->authorize('create-registration');
+
         $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date",">",\Carbon\Carbon::today()->subWeek())->orderBy('start_date')->pluck('description','id');
         $retreats->prepend('Unassigned',0);
         $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->pluck('sort_name','id');
@@ -55,10 +55,8 @@ class RegistrationsController extends Controller
         
     }
 
-    public function add($id)
-    {
-        //
-        //$retreats = \montserrat\Retreat::where('end','>',\Carbon\Carbon::today())->pluck('idnumber','title','id');
+    public function add($id) {
+        $this->authorize('create-registration');
         $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date",">",\Carbon\Carbon::today()->subWeek())->orderBy('start_date')->pluck('description','id');
         $retreats->prepend('Unassigned',0);
         $retreatant = \montserrat\Contact::findOrFail($id);
@@ -78,13 +76,11 @@ class RegistrationsController extends Controller
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
         
         return view('registrations.create',compact('retreats','retreatants','rooms','defaults')); 
-        //dd($retreatants);
     }
 
-    public function add_group($id)
-    {
-        //
-        //$retreats = \montserrat\Retreat::where('end','>',\Carbon\Carbon::today())->pluck('idnumber','title','id');
+    public function add_group($id) {
+        $this->authorize('create-registration');
+
         $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date",">",\Carbon\Carbon::today()->subWeek())->orderBy('start_date')->pluck('description','id');
         $retreats->prepend('Unassigned',0);
         $groups = \montserrat\Group::orderBy('title')->pluck('title','id');
@@ -101,10 +97,8 @@ class RegistrationsController extends Controller
         //dd($retreatants);
     }
 
-        public function register($retreat_id = 0, $contact_id = 0)
-    {
-        //
-        //$retreats = \montserrat\Retreat::where('end','>',\Carbon\Carbon::today())->pluck('idnumber','title','id');
+    public function register($retreat_id = 0, $contact_id = 0) {
+        $this->authorize('create-registration');
 
         if ($retreat_id > 0) {
             $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date",">",\Carbon\Carbon::today())->whereId($retreat_id)->orderBy('start_date')->pluck('description','id');
@@ -138,8 +132,9 @@ class RegistrationsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
+    $this->authorize('create-registration');
+
     $this->validate($request, [
         'register_date' => 'required|date',
         'attendance_confirm_date' => 'date',
@@ -178,8 +173,9 @@ class RegistrationsController extends Controller
     return Redirect::action('RegistrationsController@index');
     }
 
-    public function store_group(Request $request)
-    {
+    public function store_group(Request $request) {
+    $this->authorize('create-registration');
+
     $this->validate($request, [
         'register_date' => 'required|date',
         'attendance_confirm_date' => 'date',
@@ -223,13 +219,10 @@ class RegistrationsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-        //dd(date('F d, Y', strtotime(NULL)));
-        $registration= \montserrat\Registration::with('retreat','retreatant','room')->findOrFail($id);
-        //dd($registration);
-       return view('registrations.show',compact('registration'));//
+    public function show($id) {
+        $this->authorize('show-registration');
+       $registration= \montserrat\Registration::with('retreat','retreatant','room')->findOrFail($id);
+        return view('registrations.show',compact('registration'));//
     }
 
     /**
@@ -238,14 +231,13 @@ class RegistrationsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+    public function edit($id) {
+        $this->authorize('update-registration');
+
         $registration= \montserrat\Registration::with('retreatant','retreat','room')->findOrFail($id);
-//        $retreat = \montserrat\Retreat::findOrFail($registration->event_id);
         $retreatant = \montserrat\Contact::findOrFail($registration->contact_id);
         $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date",">",\Carbon\Carbon::today())->orderBy('start_date')->pluck('description','id');
-        //dd($retreats);
+
         //TODO: we will want to be able to switch between types when going from a group registration to individual room assignment
         if ($retreatant->contact_type == CONTACT_TYPE_INDIVIDUAL) {
             $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->pluck('sort_name','id');
@@ -267,14 +259,13 @@ class RegistrationsController extends Controller
         return view('registrations.edit',compact('registration','retreats','rooms'));
     }
 
-    public function edit_group($id)
-    {
-        //
+    public function edit_group($id) {
+        $this->authorize('update-registration');
+
         $registration= \montserrat\Registration::with('retreatant','retreat','room')->findOrFail($id);
-//        $retreat = \montserrat\Retreat::findOrFail($registration->event_id);
         $retreatant = \montserrat\Contact::findOrFail($registration->contact_id);
         $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date",">",\Carbon\Carbon::today())->orderBy('start_date')->pluck('description','id');
-        //dd($retreats);
+
         //TODO: we will want to be able to switch between types when going from a group registration to individual room assignment
         if ($retreatant->contact_type == CONTACT_TYPE_INDIVIDUAL) {
             $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->pluck('sort_name','id');
@@ -304,87 +295,86 @@ class RegistrationsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id) {
+        $this->authorize('update-registration');
         
-    $this->validate($request, [
-        'register_date' => 'required|date',
-        'attendance_confirm_date' => 'date',
-        'registration_confirm_date' => 'date',
-        'canceled_at' => 'date',
-        'arrived_at' => 'date',
-        'departed_at' => 'date',
-        'event_id' => 'required|integer|min:0',
-        'room_id' => 'required|integer|min:0',
-        'deposit' => 'required|numeric|min:0|max:10000',
-        ]);
+        $this->validate($request, [
+            'register_date' => 'required|date',
+            'attendance_confirm_date' => 'date',
+            'registration_confirm_date' => 'date',
+            'canceled_at' => 'date',
+            'arrived_at' => 'date',
+            'departed_at' => 'date',
+            'event_id' => 'required|integer|min:0',
+            'room_id' => 'required|integer|min:0',
+            'deposit' => 'required|numeric|min:0|max:10000',
+            ]);
 
 
-    $registration = \montserrat\Registration::findOrFail($request->input('id'));
-    $retreat = \montserrat\Retreat::findOrFail($request->input('event_id'));
+        $registration = \montserrat\Registration::findOrFail($request->input('id'));
+        $retreat = \montserrat\Retreat::findOrFail($request->input('event_id'));
 
-    $registration->event_id= $request->input('event_id');
-    // TODO: pull this from the retreat's start_date and end_date
-    //$registration->start = $retreat->start;
-    //$registration->end = $retreat->end;
-    //$registration->contact_id= $request->input('contact_id');
-    $registration->register_date = $request->input('register_date');
-    $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
-    $registration->registration_confirm_date = $request->input('registration_confirm_date');
-    $registration->confirmed_by = $request->input('confirmed_by');
-    $registration->deposit = $request->input('deposit');
-    $registration->notes = $request->input('notes');
-    $registration->canceled_at = $request->input('canceled_at');
-    $registration->arrived_at= $request->input('arrived_at');
-    $registration->departed_at= $request->input('departed_at');
-    
-    $registration->room_id= $request->input('room_id');
-    $registration->save();
-    
-    return Redirect::action('RegistrationsController@index');
+        $registration->event_id= $request->input('event_id');
+        // TODO: pull this from the retreat's start_date and end_date
+        //$registration->start = $retreat->start;
+        //$registration->end = $retreat->end;
+        //$registration->contact_id= $request->input('contact_id');
+        $registration->register_date = $request->input('register_date');
+        $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
+        $registration->registration_confirm_date = $request->input('registration_confirm_date');
+        $registration->confirmed_by = $request->input('confirmed_by');
+        $registration->deposit = $request->input('deposit');
+        $registration->notes = $request->input('notes');
+        $registration->canceled_at = $request->input('canceled_at');
+        $registration->arrived_at= $request->input('arrived_at');
+        $registration->departed_at= $request->input('departed_at');
+
+        $registration->room_id= $request->input('room_id');
+        $registration->save();
+
+        return Redirect::action('RegistrationsController@index');
     
     }
-    public function update_group(Request $request, $id)
-    {
-        //
-    $this->validate($request, [
-        'register_date' => 'required|date',
-        'attendance_confirm_date' => 'date',
-        'registration_confirm_date' => 'date',
-        'canceled_at' => 'date',
-        'arrived_at' => 'date',
-        'departed_at' => 'date',
-        'contact_id' => 'required|integer|min:0',
-        'event_id' => 'required|integer|min:0',
-        'room_id' => 'required|integer|min:0',
-        'deposit' => 'required|numeric|min:0|max:10000',
-        ]);
+    public function update_group(Request $request, $id) {
+        $this->authorize('update-registration');
+
+        $this->validate($request, [
+            'register_date' => 'required|date',
+            'attendance_confirm_date' => 'date',
+            'registration_confirm_date' => 'date',
+            'canceled_at' => 'date',
+            'arrived_at' => 'date',
+            'departed_at' => 'date',
+            'contact_id' => 'required|integer|min:0',
+            'event_id' => 'required|integer|min:0',
+            'room_id' => 'required|integer|min:0',
+            'deposit' => 'required|numeric|min:0|max:10000',
+            ]);
 
 
-    $registration = \montserrat\Registration::findOrFail($request->input('id'));
-    $retreat = \montserrat\Retreat::findOrFail($request->input('event_id'));
+        $registration = \montserrat\Registration::findOrFail($request->input('id'));
+        $retreat = \montserrat\Retreat::findOrFail($request->input('event_id'));
 
-    $registration->event_id= $request->input('event_id');
-    // TODO: pull this from the retreat's start_date and end_date
-    //$registration->start = $retreat->start;
-    //$registration->end = $retreat->end;
-    $registration->contact_id= $request->input('contact_id');
-    $registration->register_date = $request->input('register_date');
-    $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
-    $registration->registration_confirm_date = $request->input('registration_confirm_date');
-    $registration->confirmed_by = $request->input('confirmed_by');
-    $registration->deposit = $request->input('deposit');
-    $registration->notes = $request->input('notes');
-    $registration->canceled_at = $request->input('canceled_at');
-    $registration->arrived_at= $request->input('arrived_at');
-    $registration->departed_at= $request->input('departed_at');
-    
-    $registration->room_id= $request->input('room_id');
-    $registration->save();
-    
-    return Redirect::action('RegistrationsController@index');
-    
+        $registration->event_id= $request->input('event_id');
+        // TODO: pull this from the retreat's start_date and end_date
+        //$registration->start = $retreat->start;
+        //$registration->end = $retreat->end;
+        $registration->contact_id= $request->input('contact_id');
+        $registration->register_date = $request->input('register_date');
+        $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
+        $registration->registration_confirm_date = $request->input('registration_confirm_date');
+        $registration->confirmed_by = $request->input('confirmed_by');
+        $registration->deposit = $request->input('deposit');
+        $registration->notes = $request->input('notes');
+        $registration->canceled_at = $request->input('canceled_at');
+        $registration->arrived_at= $request->input('arrived_at');
+        $registration->departed_at= $request->input('departed_at');
+
+        $registration->room_id= $request->input('room_id');
+        $registration->save();
+
+        return Redirect::action('RegistrationsController@index');
+
     }
 
     /**
@@ -393,11 +383,11 @@ class RegistrationsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
-         $registration= \montserrat\Registration::findOrFail($id);
-         $retreat = \montserrat\Retreat::findOrFail($registration->event_id);
+    public function destroy($id) {
+        $this->authorize('delete-registration');
+        
+        $registration= \montserrat\Registration::findOrFail($id);
+        $retreat = \montserrat\Retreat::findOrFail($registration->event_id);
          
         \montserrat\Registration::destroy($id);
         $countregistrations = \montserrat\Registration::where('event_id','=',$registration->event_id)->count();
@@ -405,7 +395,10 @@ class RegistrationsController extends Controller
         $retreat->save();
         return Redirect::action('RegistrationsController@index');
     }
+    
     public function confirm($id) {
+        $this->authorize('update-registration');
+
         $registration = \montserrat\Registration::findOrFail($id);
         $registration->registration_confirm_date = \Carbon\Carbon::now();
         $registration->save();
@@ -413,6 +406,7 @@ class RegistrationsController extends Controller
     }
        
     public function attend($id) {
+        $this->authorize('update-registration');
         $registration = \montserrat\Registration::findOrFail($id);
         $registration->attendance_confirm_date = \Carbon\Carbon::now();
         $registration->save();
@@ -420,6 +414,7 @@ class RegistrationsController extends Controller
     }
     
     public function arrive($id) {
+        $this->authorize('update-registration');
         $registration = \montserrat\Registration::findOrFail($id);
         $registration->arrived_at = \Carbon\Carbon::now();
         $registration->save();
@@ -427,12 +422,14 @@ class RegistrationsController extends Controller
     }
     
     public function depart($id) {
+        $this->authorize('update-registration');
         $registration = \montserrat\Registration::findOrFail($id);
         $registration->departed_at = \Carbon\Carbon::now();
         $registration->save();
         return Redirect::back();
     }
     public function cancel($id) {
+        $this->authorize('update-registration');
         $registration = \montserrat\Registration::findOrFail($id);
         $registration->canceled_at = \Carbon\Carbon::now();
         $registration->save();
