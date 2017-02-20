@@ -8,8 +8,13 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                    <span class="grey">Registration Index</span> 
-                    <span class="create"><a href={{ action('RegistrationsController@create') }}>{!! Html::image('img/create.png', 'Create a Registration',array('title'=>"Create a Registration",'class' => 'btn btn-primary')) !!}</a></span></h1>
+                        <span class="grey">Registration Index</span> 
+                        @can('create-registration')
+                            <span class="create">
+                                <a href={{ action('RegistrationsController@create') }}>{!! Html::image('img/create.png', 'Create a Registration',array('title'=>"Create a Registration",'class' => 'btn btn-primary')) !!}</a>
+                            </span>
+                        @endCan
+                    </h1>
                 </div>
                 @if ($registrations->isEmpty())
                     <p> Yikes, there are no registrations!</p>

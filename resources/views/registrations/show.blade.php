@@ -5,9 +5,16 @@
         <div class="jumbotron text-left">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span><h2>Details for 
-                            <a href="{{url('registration/'.$registration->id.'/edit')}}">Registration #{{ $registration->id }}</a></span>
-                    <span class="back"><a href={{ action('RegistrationsController@index') }}>{!! Html::image('img/registration.png', 'Registration Index',array('title'=>"Registration Index",'class' => 'btn btn-primary')) !!}</a></span></h1>
+                    <h2>
+                        <span>Details for
+                            @can('update-registration')
+                                <a href="{{url('registration/'.$registration->id.'/edit')}}">Registration #{{ $registration->id }}</a>
+                            @else
+                                Registration #{{ $registration->id }}
+                            @endCan
+                        </span>
+                    <span class="back"><a href={{ action('RegistrationsController@index') }}>{!! Html::image('img/registration.png', 'Registration Index',array('title'=>"Registration Index",'class' => 'btn btn-primary')) !!}</a>
+                    </span></h2>
                 </div>
                 <div class='row'>
                     <div class='col-md-3'><strong>Retreatant: </strong><a href="../person/{{ $registration->retreatant->id}}">{{ $registration->retreatant->full_name}}</a></div>
@@ -72,10 +79,19 @@
                     <div class='col-md-3'><strong>Deposit: </strong>${{ $registration->deposit}}</div>
                 </div><div class="clearfix"> </div>
                 <div class='row'>
-                    <div class='col-md-1'><a href="{{ action('RegistrationsController@edit', $registration->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
-                    <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['registration.destroy', $registration->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                    {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
-                    {!! Form::close() !!}</div><div class="clearfix"> </div>
+                    @can('update-registration')
+                        <div class='col-md-1'>
+                            <a href="{{ action('RegistrationsController@edit', $registration->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                        </div>
+                    @endCan
+                    @can('delete-registration')
+                        <div class='col-md-1'>
+                            {!! Form::open(['method' => 'DELETE', 'route' => ['registration.destroy', $registration->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                            {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                            {!! Form::close() !!}
+                        </div>
+                    @endCan
+                    <div class="clearfix"> </div>
                 </div>
             </div>
         </div>
