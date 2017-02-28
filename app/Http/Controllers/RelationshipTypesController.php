@@ -296,9 +296,10 @@ class RelationshipTypesController extends Controller
                     case 'Parish' :
                         $parish_list = array();
                         $parishes = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('address_primary.state','diocese.contact_a')->get();
-                        foreach($parishes as $parish) {
+                        $parish_list = array_pluck($parishes->toArray(), 'full_name_with_city','id');
+                        /* foreach($parishes as $parish) {
                             $parish_list[$parish->id] = $parish->organization_name.' ('.$parish->address_primary_city.') - '.$parish->diocese_name;
-                        }
+                        } */
                         return $parish_list;
                         break;
                     case 'Diocese':
@@ -336,8 +337,10 @@ class RelationshipTypesController extends Controller
                     //default NULL (generic organization)
                         
                     default :
-                        $organizations = \montserrat\Contact::whereContactType(CONTACT_TYPE_ORGANIZATION)->orderBy('organization_name', 'asc')->pluck('organization_name','id');
-                        return $organizations;
+                        $organizations = \montserrat\Contact::whereContactType(CONTACT_TYPE_ORGANIZATION)->orderBy('organization_name', 'asc')->get();
+                        $organization_list = array_pluck($organizations->toArray(), 'full_name_with_city','id');
+                        //dd($temp);
+                        return $organization_list;
                         break;
                     }
                 break;
