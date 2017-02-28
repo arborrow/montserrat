@@ -23,7 +23,7 @@ class Relationship extends Model
     }
     
     public function getContactADisplayNameAttribute () {
-        if (isset($this->contact_a)) {
+        if (isset($this->contact_a) && $this->contact_a > 0) {
             //default is individual person
             $display_name = '<a href="'.$this->contact_a->id.'">'.$this->contact_a->display_name.'</a>';
             //diocese
@@ -40,7 +40,7 @@ class Relationship extends Model
         }
     }
     public function getContactBDisplayNameAttribute () {
-        if (isset($this->contact_b)) {
+        if (isset($this->contact_b) && $this->contact_b > 0) {
             //default is individual person
             $display_name = '<a href="'.$this->contact_b->id.'">'.$this->contact_b->display_name.'</a>';
             //diocese

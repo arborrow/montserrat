@@ -300,6 +300,11 @@ return Redirect::action('ParishesController@index');
             $diocese->contact_id_a = $request->input('diocese_id');
             $diocese->save();
             
+            /*  
+             * if there is not currently a pastor, create a new relationship
+             * if there is a pastor, get the current relationship to update it
+             * if we are unassigning a pastor, delete the relationship record
+             */
             if (empty($parish->pastor)) {
                 $pastor = new \montserrat\Relationship;
             } else {
@@ -310,6 +315,10 @@ return Redirect::action('ParishesController@index');
             $pastor->relationship_type_id = RELATIONSHIP_TYPE_PASTOR;
             $pastor->is_active = 1;
             $pastor->save();
+            // if there is no pastor assigned then delete the relationship
+            if ($pastor->contact_id_b == 0) {
+                $pastor->delete();
+            }
             
             if (empty($parish->address_primary)) {
                 $address_primary = new \montserrat\Address;
