@@ -91,7 +91,7 @@ class RetreatsController extends Controller
     public function store(Request $request) { 
         $this->authorize('create-retreat');
         $this->validate($request, [
-            'idnumber' => 'required|unique:retreats',
+            'idnumber' => 'required|unique:event,idnumber',
             'start_date' => 'required|date|before:end_date',
             'end_date' => 'required|date|after:start_date',
             'title' => 'required',
@@ -222,7 +222,7 @@ class RetreatsController extends Controller
     public function update(Request $request, $id) {
         $this->authorize('update-retreat');
         $this->validate($request, [
-            'idnumber' => 'required|unique:retreats,idnumber,'.$id,
+            'idnumber' => 'required|unique:event,idnumber,'.$id,
             'start_date' => 'required|date|before:end_date',
             'end_date' => 'required|date|after:start_date',
             'title' => 'required',
