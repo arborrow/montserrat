@@ -345,7 +345,7 @@ class RetreatsController extends Controller
  
 
     public function assign_rooms($id) {
-        $this->authorize('update-retreat');
+        $this->authorize('update-registration');
         //get this retreat's information
         $retreat = \montserrat\Retreat::with('retreatmasters','assistant','innkeeper','captains')->findOrFail($id);
         $registrations = \montserrat\Registration::where('event_id','=',$id)->with('retreatant.parish')->orderBy('register_date','DESC')->get();
@@ -357,7 +357,7 @@ class RetreatsController extends Controller
 
       public function checkout($id) {
         /* checkout all registrations for a retreat where the arrived_at is not NULL and the departed is NULL for a particular event */
-        $this->authorize('update-retreat');
+        $this->authorize('update-registration');
         $retreat = \montserrat\Retreat::findOrFail($id); //verifies that it is a valid retreat id
         $registrations = \montserrat\Registration::whereEventId($id)->whereDepartedAt(NULL)->whereNotNull('arrived_at')->get();
         foreach ($registrations as $registration) {
@@ -369,7 +369,7 @@ class RetreatsController extends Controller
       
 
     public function room_update(Request $request) {
-        $this->authorize('update-retreat');
+        $this->authorize('update-registration');
         $this->validate($request, [
             'retreat_id' => 'integer|min:0',
             

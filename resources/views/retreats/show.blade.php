@@ -130,15 +130,30 @@
         <div class="panel panel-default">  
         <div class="panel-heading" id='registrations'>
             <h2>Retreatants Registered for {!!Html::link(url('retreat/'.$retreat->id.'/edit'),$retreat->idnumber.' - '.$retreat->title)!!} </h2>
-            {!! Html::link(action('RegistrationsController@register',$retreat->id),'Register a retreatant',array('class' => 'btn btn-default'))!!}
-            {!! Html::link($retreat->email_registered_retreatants,'Email registered retreatants',array('class' => 'btn btn-default'))!!}
-            {!! Html::link(action('RetreatsController@assign_rooms',$retreat->id),'Assign rooms',array('class' => 'btn btn-default'))!!}
-            {!! Html::link(action('RetreatsController@checkout',$retreat->id),'Checkout',array('class' => 'btn btn-default'))!!}
-            {!! Html::link(action('PagesController@retreatantinforeport',$retreat->idnumber),'Retreatant information report',array('class' => 'btn btn-default'))!!}
-            {!! Html::link(action('PagesController@retreatrosterreport',$retreat->idnumber),'Retreat roster',array('class' => 'btn btn-default'))!!}
-            {!! Html::link(action('PagesController@retreatlistingreport',$retreat->idnumber),'Retreat listing',array('class' => 'btn btn-default'))!!}
-            {!! Html::link(action('TouchpointsController@add_retreat',$retreat->id),'Retreat touchpoint',array('class' => 'btn btn-default'))!!}
-                
+            @can('create-registration')
+                {!! Html::link(action('RegistrationsController@register',$retreat->id),'Register a retreatant',array('class' => 'btn btn-default'))!!}
+            @endCan
+            @can('show-contact')
+                {!! Html::link($retreat->email_registered_retreatants,'Email registered retreatants',array('class' => 'btn btn-default'))!!}
+            @endCan
+            @can('update-registration')
+                {!! Html::link(action('RetreatsController@assign_rooms',$retreat->id),'Assign rooms',array('class' => 'btn btn-default'))!!}
+            @endCan
+            @can('update-registration')
+                {!! Html::link(action('RetreatsController@checkout',$retreat->id),'Checkout',array('class' => 'btn btn-default'))!!}
+            @endCan
+            @can('show-contact')
+                {!! Html::link(action('PagesController@retreatantinforeport',$retreat->idnumber),'Retreatant information report',array('class' => 'btn btn-default'))!!}
+            @endCan
+            @can('show-contact')
+                {!! Html::link(action('PagesController@retreatrosterreport',$retreat->idnumber),'Retreat roster',array('class' => 'btn btn-default'))!!}
+            @endCan
+            @can('show-contact')
+                {!! Html::link(action('PagesController@retreatlistingreport',$retreat->idnumber),'Retreat listing',array('class' => 'btn btn-default'))!!}
+            @endCan
+            @can('create-touchpoint')
+                {!! Html::link(action('TouchpointsController@add_retreat',$retreat->id),'Retreat touchpoint',array('class' => 'btn btn-default'))!!}
+            @endCan    
         </div>
             @if ($registrations->isEmpty())
                 <p> Currently, there are no registrations for this retreat.</p>
