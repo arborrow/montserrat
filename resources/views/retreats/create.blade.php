@@ -50,7 +50,12 @@
                 {!! Form::label('event_type', 'Type: ', ['class' => 'col-md-2']) !!}
                 {!! Form::select('event_type', $event_types, EVENT_TYPE_WEEKEND, ['class' => 'col-md-3']) !!}
             </div><div class="clearfix"> </div>
-    
+            <!-- # it doesn't make much sense to have this when creating it
+            <div class="form-group">
+                    {!! Form::label('is_active', 'Cancelled?:', ['class' => 'col-md-2'])  !!}
+                    {!! Form::checkbox('is_active', 1, false, ['class' => 'col-md-1']) !!}
+            </div><div class="clearfix"> </div>
+            -->
 <!--                
                 {!! Form::select('type', [
                             'Unspecified' => 'Unspecified',

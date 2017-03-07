@@ -45,7 +45,11 @@
                     </thead>
                     <tbody>
                         @foreach($retreats as $retreat)
-                        <tr>
+                        @if ($retreat->is_active == 0)
+                            <tr style="text-decoration:line-through">
+                        @else
+                            <tr>
+                        @endIf
                             <td><a href="{{url('retreat/'.$retreat->id)}}">{{ $retreat->idnumber}}</a></td>
                             <td>{{ $retreat->title }}</td>
                             <td>{{ date('M j, Y', strtotime($retreat->start_date)) }} - {{ date('M j, Y', strtotime($retreat->end_date)) }}</td>
@@ -118,7 +122,11 @@
                     </thead>
                     <tbody>
                         @foreach($oldretreats as $oldretreat)
-                        <tr>
+                        @if ($oldretreat->is_active == 0)
+                            <tr style="text-decoration:line-through">
+                        @else
+                            <tr>
+                        @endIf
                             <td><a href="{{url('retreat/'.$oldretreat->id)}}">{{ $oldretreat->idnumber}}</a></td>
                             <td>{{ $oldretreat->title }}</td>
                             <td>{{ date('M j, Y', strtotime($oldretreat->start_date)) }} - {{ date('M j, Y', strtotime($oldretreat->end_date)) }}</td>

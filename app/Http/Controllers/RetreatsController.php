@@ -100,7 +100,8 @@ class RetreatsController extends Controller
             'year' => 'integer|min:1990|max:2020',
             'amount' => 'numeric|min:0|max:100000',
             'attending' => 'integer|min:0|max:150',
-            'silent' => 'boolean'
+            'silent' => 'boolean',
+            'is_active' => 'boolean'
           ]);
         
         $retreat = new \montserrat\Retreat;
@@ -111,8 +112,8 @@ class RetreatsController extends Controller
         $retreat->end_date = $request->input('end_date');
         $retreat->title = $request->input('title');
         $retreat->description = $request->input('description');
-        // TODO: create dropdown list of retreat types - disable for now
         $retreat->event_type_id = $request->input('event_type');
+        $retreat->is_active = 1; #assume active event upon creation
         // TODO: find a way to tag silent retreats, perhaps with event_type_id - for now disabled
         //$retreat->silent = $request->input('silent');
         // amount will be related to default_fee_id?
@@ -181,7 +182,9 @@ class RetreatsController extends Controller
         //get this retreat's information
         $retreat = \montserrat\Retreat::with('retreatmasters','assistant','innkeeper','captains')->findOrFail($id);
         $event_types = \montserrat\EventType::whereIsActive(1)->orderBy('name')->pluck('name','id');
-
+        $is_active[0]='Cancelled';  
+        $is_active[1]='Active';  
+        
         //create lists of retreat directors, innkeepers, and assistants from relationship to retreat house 
         $retreat_house = \montserrat\Contact::with('retreat_directors.contact_b','retreat_innkeepers.contact_b','retreat_assistants.contact_b')->findOrFail(CONTACT_MONTSERRAT);
 
@@ -209,7 +212,7 @@ class RetreatsController extends Controller
         asort($c);
         $c=array(0=>'N/A')+$c;
         
-        return view('retreats.edit',compact('retreat','d','i','a','c','event_types'));
+        return view('retreats.edit',compact('retreat','d','i','a','c','event_types','is_active'));
       }
 
     /**
@@ -232,6 +235,7 @@ class RetreatsController extends Controller
             'amount' => 'numeric|min:0|max:100000',
             'attending' => 'integer|min:0|max:150',
             'silent' => 'boolean',
+            'is_active' => 'boolean',
             'contract' => 'file|mimes:pdf|max:5000',
             'schedule' => 'file|mimes:pdf|max:5000',
             'evaluations' => 'file|mimes:pdf|max:10000',
@@ -246,6 +250,7 @@ class RetreatsController extends Controller
         $retreat->title = $request->input('title');
         $retreat->description = $request->input('description');
         $retreat->event_type_id = $request->input('event_type');
+        $retreat->is_active = $request->input('is_active');
         //TODO: Figure out how to use event type or some other way of tracking the silent retreats, possibly silent boolean field in event table
         //$retreat->silent = $request->input('silent');
         //$retreat->amount = $request->input('amount');

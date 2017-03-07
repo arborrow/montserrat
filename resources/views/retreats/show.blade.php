@@ -72,8 +72,11 @@
             </div>
             <div class='row'>
                 <div class='col-md-3'><strong>Type: </strong>{{ $retreat->retreat_type}}</div>
-                <div class='col-md-3'><strong>Silent: </strong>{{ $retreat->silent}}</div>
+                <div class='col-md-3'><strong>Status: </strong>{{ $retreat->is_active == 0 ? 'Cancelled' : 'Active' }}</div>
+<!--                <div class='col-md-3'><strong>Silent: </strong>{{ $retreat->silent}}</div> -->
                 <div class='col-md-3'><strong>Donation: </strong>{{ $retreat->amount}}</div>
+            </div><div class="clearfix"> </div>
+            <div class='row'>
             </div><div class="clearfix"> </div>
             <div class='row'>
                 <div class='col-md-2'><strong>Year: </strong>{{ $retreat->year}}</div>

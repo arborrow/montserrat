@@ -40,7 +40,7 @@ class RegistrationsController extends Controller
     public function create() {
         $this->authorize('create-registration');
 
-        $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date",">",\Carbon\Carbon::today()->subWeek())->orderBy('start_date')->pluck('description','id');
+        $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date",">",\Carbon\Carbon::today()->subWeek())->where("is_active","=",1)->orderBy('start_date')->pluck('description','id');
         $retreats->prepend('Unassigned',0);
         $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->pluck('sort_name','id');
         
@@ -57,7 +57,7 @@ class RegistrationsController extends Controller
 
     public function add($id) {
         $this->authorize('create-registration');
-        $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date",">",\Carbon\Carbon::today()->subWeek())->orderBy('start_date')->pluck('description','id');
+        $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date",">",\Carbon\Carbon::today()->subWeek())->where("is_active","=",1)->orderBy('start_date')->pluck('description','id');
         $retreats->prepend('Unassigned',0);
         $retreatant = \montserrat\Contact::findOrFail($id);
         if ($retreatant->contact_type == CONTACT_TYPE_INDIVIDUAL) {
