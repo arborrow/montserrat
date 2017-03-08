@@ -54,6 +54,14 @@
                 {!! Form::label('rooms', 'Room(s):', ['class' => 'col-md-2']) !!}
                 {!! Form::select('rooms[]', $rooms, 0, ['class' => 'col-md-2','multiple' => 'multiple','style'=>'font-size: inherit;']) !!}
             </div><div class="clearfix"> </div>
+            
+            @if ($is_multi_registration)
+            <div class="form-group">
+                {!! Form::label('num_registrants', 'Number of participants:', ['class' => 'col-md-2']) !!}
+                {!! Form::selectRange('num_registrants', 0, 99, NULL, ['class'=>'col-md-2']) !!}
+            </div><div class="clearfix"> </div>
+                
+            @endIf
                     
             <div class="form-group">
                 {!! Form::label('deposit', 'Deposit:', ['class' => 'col-md-2']) !!}

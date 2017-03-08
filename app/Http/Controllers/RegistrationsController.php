@@ -106,7 +106,19 @@ class RegistrationsController extends Controller
             $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date",">",\Carbon\Carbon::today())->orderBy('start_date')->pluck('description','id');
         }
         $retreats->prepend('Unassigned',0);
+        /* get the current retreat to determine the type of retreat
+         * based on the type of retreat, determine if we should allow multiple registrations
+         * multiple registrations should not have a room assignment (use assign rooms if needed)
+         */
+        $retreat = \montserrat\Retreat::findOrFail($retreat_id);
         
+        // Day , Conference, Contract, Diocesan, Meeting, Workshop
+        $multi_registration_event_types = array(EVENT_TYPE_DAY, EVENT_TYPE_CONTRACT, EVENT_TYPE_CONFERENCE, EVENT_TYPE_DIOCESAN, EVENT_TYPE_MEETING, EVENT_TYPE_WORKSHOP);
+        if (in_array($retreat->event_type_id, $multi_registration_event_types)) {
+            $is_multi_registration = TRUE;
+        } else {
+            $is_multi_registration = FALSE;
+        }
         if ($contact_id > 0) {
             $retreatants = \montserrat\Contact::whereId($contact_id)->orderBy('sort_name')->pluck('sort_name','id');
         } else {
@@ -121,8 +133,7 @@ class RegistrationsController extends Controller
         $defaults['retreat_id'] = $retreat_id;
         $defaults['contact_id'] = $contact_id;
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
-        
-        return view('registrations.create',compact('retreats','retreatants','rooms','defaults')); 
+        return view('registrations.create',compact('retreats','retreatants','rooms','defaults','is_multi_registration')); 
         //dd($retreatants);
     }
 
@@ -145,31 +156,60 @@ class RegistrationsController extends Controller
         'event_id' => 'required|integer|min:1',
         'contact_id' => 'required|integer|min:1',
         'deposit' => 'required|numeric|min:0|max:10000',
+        'num_registrants' => 'integer|min:0|max:99',
         ]);
     
     $rooms = $request->input('rooms');
+    $num_registrants = $request->input('num_registrants');
     //TODO: Should we check and verify that the contact type is an organization to allow multiselect or just allow any registration to book multiple rooms?
     $retreat = \montserrat\Retreat::findOrFail($request->input('event_id'));
     $contact = \montserrat\Contact::findOrFail($request->input('contact_id'));
-    foreach($rooms as $room) {
-        //ensure that it is a valid room (not N/A)
-        $registration = new \montserrat\Registration;
-        $registration->event_id= $request->input('event_id');
-        $registration->contact_id= $request->input('contact_id');
-        $registration->register_date = $request->input('register_date');
-        $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
-        if (!empty($request->input('canceled_at'))) {$registration->canceled_at= $request->input('canceled_at'); }
-        if (!empty($request->input('arrived_at'))) {$registration->arrived_at = $request->input('arrived_at'); }
-        if (!empty($request->input('departed_at'))) {$registration->departed_at = $request->input('departed_at'); }
-        $registration->room_id= $room;
-        $registration->registration_confirm_date= $request->input('registration_confirm_date');
-        $registration->confirmed_by = $request->input('confirmed_by');
-        $registration->deposit = $request->input('deposit');
-        $registration->notes = $request->input('notes');
-        $registration->save();
-        //TODO: verify that the newly created room assignment does not conflict with an existing one
+    /* 
+     * Used primarily for registering groups
+     * If a number of registrants is selected, then add that many registrations
+     * num_registrants causes rooms to be ignored (either use num_registrants and assign rooms later
+     * or reserve rooms - for double occupancy rooms you have to do this twice to get the number or retreatants correct
+     * 
+     */
+    if ($num_registrants > 0) {
+        for ($i=1; $i<=$num_registrants; $i++) {
+            $registration = new \montserrat\Registration;
+            $registration->event_id= $request->input('event_id');
+            $registration->contact_id= $request->input('contact_id');
+            $registration->register_date = $request->input('register_date');
+            $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
+            if (!empty($request->input('canceled_at'))) {$registration->canceled_at= $request->input('canceled_at'); }
+            if (!empty($request->input('arrived_at'))) {$registration->arrived_at = $request->input('arrived_at'); }
+            if (!empty($request->input('departed_at'))) {$registration->departed_at = $request->input('departed_at'); }
+            $registration->room_id= NULL;
+            $registration->registration_confirm_date= $request->input('registration_confirm_date');
+            $registration->confirmed_by = $request->input('confirmed_by');
+            $registration->deposit = $request->input('deposit');
+            $registration->notes = $request->input('notes');
+            $registration->save();
+        }
+         
+    } else {
+        
+        foreach($rooms as $room) {
+            //ensure that it is a valid room (not N/A)
+            $registration = new \montserrat\Registration;
+            $registration->event_id= $request->input('event_id');
+            $registration->contact_id= $request->input('contact_id');
+            $registration->register_date = $request->input('register_date');
+            $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
+            if (!empty($request->input('canceled_at'))) {$registration->canceled_at= $request->input('canceled_at'); }
+            if (!empty($request->input('arrived_at'))) {$registration->arrived_at = $request->input('arrived_at'); }
+            if (!empty($request->input('departed_at'))) {$registration->departed_at = $request->input('departed_at'); }
+            $registration->room_id= $room;
+            $registration->registration_confirm_date= $request->input('registration_confirm_date');
+            $registration->confirmed_by = $request->input('confirmed_by');
+            $registration->deposit = $request->input('deposit');
+            $registration->notes = $request->input('notes');
+            $registration->save();
+            //TODO: verify that the newly created room assignment does not conflict with an existing one
+        }
     }
-    
     return Redirect::action('RegistrationsController@index');
     }
 
