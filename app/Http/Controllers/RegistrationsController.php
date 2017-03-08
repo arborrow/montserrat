@@ -50,7 +50,7 @@ class RegistrationsController extends Controller
         $dt_today =  \Carbon\Carbon::today();
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
         $defaults['retreat_id']=0;
-        
+        $defaults['is_multi_registration'] = FALSE;
         return view('registrations.create',compact('retreats','retreatants','rooms','defaults')); 
         
     }
@@ -74,7 +74,7 @@ class RegistrationsController extends Controller
         $defaults['retreat_id']=0;
         $dt_today =  \Carbon\Carbon::today();
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
-        
+        $defaults['is_multi_registration'] = FALSE;
         return view('registrations.create',compact('retreats','retreatants','rooms','defaults')); 
     }
 
@@ -115,9 +115,9 @@ class RegistrationsController extends Controller
         // Day , Conference, Contract, Diocesan, Meeting, Workshop
         $multi_registration_event_types = array(EVENT_TYPE_DAY, EVENT_TYPE_CONTRACT, EVENT_TYPE_CONFERENCE, EVENT_TYPE_DIOCESAN, EVENT_TYPE_MEETING, EVENT_TYPE_WORKSHOP);
         if (in_array($retreat->event_type_id, $multi_registration_event_types)) {
-            $is_multi_registration = TRUE;
+            $defaults['is_multi_registration'] = TRUE;
         } else {
-            $is_multi_registration = FALSE;
+            $defaults['is_multi_registration'] = FALSE;
         }
         if ($contact_id > 0) {
             $retreatants = \montserrat\Contact::whereId($contact_id)->orderBy('sort_name')->pluck('sort_name','id');
@@ -133,7 +133,7 @@ class RegistrationsController extends Controller
         $defaults['retreat_id'] = $retreat_id;
         $defaults['contact_id'] = $contact_id;
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
-        return view('registrations.create',compact('retreats','retreatants','rooms','defaults','is_multi_registration')); 
+        return view('registrations.create',compact('retreats','retreatants','rooms','defaults')); 
         //dd($retreatants);
     }
 
