@@ -13,16 +13,21 @@
                     @endCan
                     @can('show-contact')
                         <span class="person"><a href={{ action('PersonsController@index') }}>{!! Html::image('img/person.png', 'Show Persons',array('title'=>"Show Persons",'class' => 'btn btn-primary')) !!}</a></span></h1>
-                    @endCan
                     @if (isset($role['email_link']))
                         <span class="btn btn-default">{!! $role['email_link'] !!}</span>
                     @endif
+                    @endCan
                     @can('create-registration')
                         <span class="btn btn-default">
                             <a href={{ action('RegistrationsController@add_group',$role['group_id']) }}>Add Group Registration</a>
                         </span>
                     @endCan
-            
+                    @can('create-touchpoint')
+                    <span class="btn btn-default">
+                        <a href={{ action('TouchpointsController@add_group',$role['group_id']) }}>Add Group Touchpoint</a>
+                    </span>
+                    @endCan
+                
             
                 </div>
                 @if ($persons->isEmpty())
