@@ -696,9 +696,9 @@ class PersonsController extends Controller
         else {
             $person->preferred_language_label = 'N/A';
         }
-
-       //dd($person->a_relationships);
-       return view('persons.show',compact('person','files','relationship_types'));//
+        $touchpoints = \montserrat\Touchpoint::wherePersonId($person->id)->orderBy('touched_at')->with('staff')->get();    
+       //dd($touchpoints);
+       return view('persons.show',compact('person','files','relationship_types','touchpoints'));//
     
     }
 

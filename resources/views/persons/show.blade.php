@@ -275,7 +275,7 @@
                     </span>
                     @endCan('create-touchpoint')
                </div>
-                    @if ($person->touchpoints->isEmpty())
+                    @if ($touchpoints->isEmpty())
                             <p>It is a brand new world, there are no touchpoints for this person!</p>
                         @else
                         <table class="table">
@@ -288,7 +288,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($person->touchpoints as $touchpoint)
+                                @foreach($touchpoints as $touchpoint)
                                 <tr>
                                     <td><a href="{{url('touchpoint/'.$touchpoint->id)}}">{{ $touchpoint->touched_at }}</a></td>
                                     <td>{!! $touchpoint->staff->contact_link_full_name or 'Unknown staff member' !!}</td>
