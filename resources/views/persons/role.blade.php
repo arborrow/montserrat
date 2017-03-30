@@ -44,6 +44,9 @@
                             <th>Work phone</th>
                             <th>Email</th>
                             <th>Parish (City)</th>
+                            @if ($role['group_id'] == GROUP_ID_CAPTAIN)
+                                <th>Captain for</th>
+                            @endIf
                         </tr>
                     </thead>
                     <tbody>
@@ -61,6 +64,16 @@
                             <td>{{ $person->phone_work_phone_number }}</td>
                             <td><a href="mailto:{{$person->email_primary_text}}">{{ $person->email_primary_text }}</a></td>
                             <td>{!! $person->parish_link !!}</td>
+                            @if ($role['group_id'] == GROUP_ID_CAPTAIN)
+                            <td>
+                                <ul>
+                                    @foreach ($person->captain_events as $event)
+                                        <li>  
+                                            <a href="{{url('retreat/'.$event->id)}}" title="{{$event->idnumber}}">{{$event->title}}</a>
+                                        </li>
+                                    @endforeach
+                                </ul></td>
+                            @endIf
                         </tr>
                         @endforeach
                     </tbody>
