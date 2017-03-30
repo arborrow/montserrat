@@ -1622,7 +1622,7 @@ class PersonsController extends Controller
     {
         $this->authorize('show-contact');
         
-        $persons = \montserrat\Contact::with('groups','address_primary','captain_events')->whereHas('groups', function ($query) use ($group_id) {$query->where('group_id','=',$group_id)->whereStatus('Added');})->orderBy('sort_name')->paginate(10);
+        $persons = \montserrat\Contact::with('groups','address_primary','captain_events')->whereHas('groups', function ($query) use ($group_id) {$query->where('group_id','=',$group_id)->whereStatus('Added');})->orderBy('sort_name')->get();
         
         $group = \montserrat\Group::findOrFail($group_id);
         $role['group_id'] = $group->id;
