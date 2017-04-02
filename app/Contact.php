@@ -491,28 +491,28 @@ public function getContactLinkFullNameAttribute() {
     }
     public function getPhoneHomeMobileNumberAttribute () {
         if (isset($this->phone_home_mobile->phone)) {
-            return $this->phone_home_mobile->phone;
+            return $this->phone_home_mobile->phone.$this->phone_home_mobile->phone_extension;
         } else {
             return NULL;
         }
     }
     public function getPhoneHomePhoneNumberAttribute () {
         if (isset($this->phone_home_phone->phone)) {
-            return $this->phone_home_phone->phone;
+            return $this->phone_home_phone->phone.$this->phone_home_phone->phone_extension;
         } else {
             return NULL;
         }
     }
     public function getPhoneWorkPhoneNumberAttribute () {
         if (isset($this->phone_work_phone)) {
-            return $this->phone_work_phone->phone;
+            return $this->phone_work_phone->phone.$this->phone_work_phone->phone_extension;
         } else {
             return NULL;
         }
     }
     public function getPhoneMainPhoneNumberAttribute () {
         if (isset($this->phone_main_phone)) {
-            return $this->phone_main_phone->phone;
+            return $this->phone_main_phone->phone.$this->phone_main_phone->phone_extension;
         } else {
             return NULL;
         }
