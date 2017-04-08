@@ -27,7 +27,7 @@
                             <th>Address</th>
                             <th>Phone</th>
                             <th>Donor ID</th>
-                            <th>Contact ID</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,7 +37,7 @@
                             <td>{{ $donor->Address.' '.$donor->Address2.' '.$donor->City.', '.$donor->State.' '.$donor->Zip }}</td>
                             <td>{{ 'H:'.$donor->HomePhone.' W:'.$donor->WorkPhone.' M:'.$donor->cell_phone }}</td>
                             <td>{{ $donor->donor_id }}</td>
-                            <td>{{ $donor->contact_id }}</td>
+                            <td><!-- Add to Polanco (not yet implemented)--></td>
                             
                         </tr>
                         @endforeach
