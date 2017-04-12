@@ -341,7 +341,7 @@ return Redirect::action('ParishesController@index');
             $address_primary->save();
         
             if (empty($parish->phone_primary)) {
-                $phone_primary = new \montserrat\Address;
+                $phone_primary = new \montserrat\Phone;
             } else {
                 $phone_primary = \montserrat\Phone::findOrNew($parish->phone_primary->id);
             }
