@@ -27,6 +27,7 @@
                             <th>Work phone</th>
                             <th>Cell phone</th>
                             <th>Email</th>
+                            <th>Action</th>
                             
                         </tr>
                     </thead>
@@ -39,6 +40,11 @@
                             <td>{{$donor->Workphone}}</td>
                             <td>{{$donor->cell_phone}}</td>
                             <td>{{$donor->EMailAddress}}</td>
+                            <td> 
+                                <span class="btn btn-default">
+                                    <a href="{{ url('donor/'.$donor->donor_id.'/add') }}">Add {{$donor->sort_name}} to Polanco</a>
+                                </span>
+                            </td>
                             
                         </tr>
                      

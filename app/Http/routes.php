@@ -65,6 +65,7 @@ Route::resource('diocese','DiocesesController');
 Route::get('donation',['as' => 'donation','uses' => 'PagesController@donation']);
 
 Route::get('donor/{donor_id?}/assign/{contact_id?}',['uses' => 'DonorsController@assign']);
+Route::get('donor/{donor_id?}/add',['uses' => 'DonorsController@add']);
 Route::resource('donor','DonorsController');
 
 Route::get('group/{group_id?}/touchpoint',['uses' => 'TouchpointsController@add_group']);

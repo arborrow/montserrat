@@ -37,7 +37,9 @@
                             <td>{{ $donor->Address.' '.$donor->Address2.' '.$donor->City.', '.$donor->State.' '.$donor->Zip }}</td>
                             <td>{{ 'H:'.$donor->HomePhone.' W:'.$donor->WorkPhone.' M:'.$donor->cell_phone }}</td>
                             <td>{{ $donor->donor_id }}</td>
-                            <td><!-- Add to Polanco (not yet implemented)--></td>
+                            <td>
+                                <!-- Add to Polanco (not yet implemented)-->
+                            </td>
                             
                         </tr>
                         @endforeach
