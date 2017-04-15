@@ -7,6 +7,8 @@
                 <div class="panel-heading">
                     <h1>
                         <span class="grey">PPD Donor Index</span>
+                        <span>({{$donors->total()}} records)</span>
+                        
                         @can('create-donor')
                             <span class="create">
                                 <a href="{{ action('DonorsController@create') }}">
