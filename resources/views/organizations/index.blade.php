@@ -16,6 +16,14 @@
                         </span>
                     @endCan
                     </h1>
+                    <select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                        <option value="">Filter by organization type...</option>
+                        <option value="{{url('organization')}}">All organizations</option>
+                        @foreach($subcontact_types as $subcontact_type=>$value)
+                            <option value="{{url('organization/type/'.$value)}}">{{$subcontact_type}}</option>
+                        @endForeach
+                    </select>
+
                 </div>
                 @if ($organizations->isEmpty())
                     <p>No Organizations are currently in the database.</p>

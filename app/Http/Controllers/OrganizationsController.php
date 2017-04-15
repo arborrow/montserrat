@@ -28,8 +28,21 @@ class OrganizationsController extends Controller
     public function index() {
         $this->authorize('show-contact');
         $organizations = \montserrat\Contact::organizations_generic()->orderBy('organization_name', 'asc')->paginate(100);
-        return view('organizations.index',compact('organizations'));   //
+        $subcontact_types = \montserrat\ContactType::generic()->whereIsActive(1)->orderBy('label')->pluck('id','label');
+        //dd($subcontact_types);
+        return view('organizations.index',compact('organizations','subcontact_types'));   //
     }
+    public function index_type($subcontact_type_id) {
+        $this->authorize('show-contact');
+        $subcontact_types = \montserrat\ContactType::generic()->whereIsActive(1)->orderBy('label')->pluck('id','label');
+        $subcontact_type = \montserrat\ContactType::findOrFail($subcontact_type_id);
+        $defaults = array();
+        $defaults['type'] = $subcontact_type->label; 
+        $organizations = \montserrat\Contact::organizations_generic()->whereSubcontactType($subcontact_type_id)->orderBy('organization_name', 'asc')->paginate(100);
+        
+        return view('organizations.index',compact('organizations','subcontact_types','subcontact_types','defaults'));
+    }
+    
 
     /**
      * Show the form for creating a new resource.
