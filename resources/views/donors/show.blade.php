@@ -36,8 +36,8 @@
                         <tr>
                             <td>{{$donor->LName.', '.$donor->FName}}</td>
                             <td>{{$donor->Address.' '.$donor->Address2.' '.$donor->City.', '.$donor->State.' '.$donor->Zip}}</td>
-                            <td>{{$donor->Homephone}} </td>
-                            <td>{{$donor->Workphone}}</td>
+                            <td>{{$donor->HomePhone}} </td>
+                            <td>{{$donor->WorkPhone}}</td>
                             <td>{{$donor->cell_phone}}</td>
                             <td>{{$donor->EMailAddress}}</td>
                             <td> 
