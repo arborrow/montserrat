@@ -254,7 +254,7 @@
             @can('show-registration');
             <div class='row'>
                 <div class='col-md-8'>
-                    <div class='panel-heading'><h2><strong>Retreat Participation for {{ $person->display_name }}</strong></h2></div>
+                    <div class='panel-heading'><h2><strong>Retreat Participation for {{ $person->display_name }}</strong> ({{$person->event_registrations->count()}})</h2></div>
                             <ul>    
                                 @foreach($person->event_registrations as $registration)
                                 <li>{!!$registration->event_link!!} ({{date('F j, Y', strtotime($registration->event->start_date))}} - {{date('F j, Y', strtotime($registration->event->end_date))}}) - {{$registration->participant_role_name}} ({{$registration->participant_status}}) </li>
