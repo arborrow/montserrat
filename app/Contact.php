@@ -489,6 +489,14 @@ public function getContactLinkFullNameAttribute() {
             return NULL;
         }
     }
+    public function getParticipantCountAttribute () {
+        if (isset($this->event_registrations)) {
+           return $this->event_registrations->count();
+        } else {
+            return 0;
+        }
+    }
+    
     public function getPhoneHomeMobileNumberAttribute () {
         if (isset($this->phone_home_mobile->phone)) {
             return $this->phone_home_mobile->phone.$this->phone_home_mobile->phone_extension;
