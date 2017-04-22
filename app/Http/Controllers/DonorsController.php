@@ -13,12 +13,12 @@ class DonorsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
         $this->authorize('show-donor');
         //only show donors that do not have a contact_id
-        $donors = \montserrat\Donor::whereContactId(NULL)->orderBy('sort_name')->paginate(100);
-        return view('donors.index',compact('donors'));   //
-    
+        $donors = \montserrat\Donor::whereContactId(null)->orderBy('sort_name')->paginate(100);
+        return view('donors.index', compact('donors'));   //
     }
 
     /**
@@ -26,7 +26,8 @@ class DonorsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         // will not be creating any PPD donor records
     }
 
@@ -36,9 +37,9 @@ class DonorsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         // will not be creating any PPD donor records
-    
     }
 
     /**
@@ -47,15 +48,15 @@ class DonorsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id)
+    {
         $this->authorize('show-donor');
         $donor = \montserrat\Donor::whereDonorId($id)->first();
         //dd($donor);
         $sortnames = \montserrat\Contact::whereSortName($donor->sort_name)->get();
         $lastnames = \montserrat\Contact::whereLastName($donor->LName)->get();
                 
-        return view('donors.show',compact('donor','sortnames','lastnames'));//
-
+        return view('donors.show', compact('donor', 'sortnames', 'lastnames'));//
     }
 
     /**
@@ -92,7 +93,8 @@ class DonorsController extends Controller
         //
     }
     
-    public function assign($donor_id, $contact_id) {
+    public function assign($donor_id, $contact_id)
+    {
         // dd($donor_id, $contact_id);
         $donor = \montserrat\Donor::whereDonorId($donor_id)->first();
         if (empty($donor->contact_id)) {
@@ -102,7 +104,8 @@ class DonorsController extends Controller
         return redirect()->action('DonorsController@index');
     }
     
-    public function add($donor_id) {
+    public function add($donor_id)
+    {
         $this->authorize('create-contact');
         $person = new \montserrat\Contact;
         $donor = \montserrat\Donor::findOrFail($donor_id);
@@ -132,14 +135,14 @@ class DonorsController extends Controller
             $state = \montserrat\StateProvince::whereAbbreviation($donor->State)->whereCountryId(COUNTRY_ID_USA)->first();
 
             $home_address->contact_id=$person->id;
-            $home_address->location_type_id=LOCATION_TYPE_HOME; 
+            $home_address->location_type_id=LOCATION_TYPE_HOME;
             $home_address->is_primary=1;
             $home_address->street_address=$donor->Address;
             $home_address->supplemental_address_1=$donor->Address2;
             $home_address->city=$donor->City;
             $home_address->state_province_id=$state->id;
             $home_address->postal_code=$donor->Zip;
-            $home_address->country_id=COUNTRY_ID_USA;  
+            $home_address->country_id=COUNTRY_ID_USA;
             $home_address->save();
         }
         

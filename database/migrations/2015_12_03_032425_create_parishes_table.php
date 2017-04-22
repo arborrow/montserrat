@@ -31,7 +31,7 @@ class CreateParishesTable extends Migration
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
-        });
+         });
     }
     /**
      * Reverse the migrations.
@@ -43,5 +43,4 @@ class CreateParishesTable extends Migration
         //
         Schema::drop('parishes');
     }
-    
 }

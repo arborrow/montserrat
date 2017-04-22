@@ -21,7 +21,6 @@ class CreateTouchcategoriesTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
-
     }
 
     /**
@@ -33,6 +32,5 @@ class CreateTouchcategoriesTable extends Migration
     {
         //
         Schema::drop('touchcategories');
-
     }
 }

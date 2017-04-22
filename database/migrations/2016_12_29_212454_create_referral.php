@@ -17,11 +17,10 @@ class CreateReferral extends Migration
             $table->string('name');
             $table->boolean('is_active')->nullable()->default(0);
             $table->boolean('is_default')->nullable()->default(0);
-            $table->integer('weight')->nullable()->default(NULL)->unsigned;
+            $table->integer('weight')->nullable()->default(null)->unsigned;
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
-        
         });
     }
 

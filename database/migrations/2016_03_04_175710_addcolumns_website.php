@@ -14,8 +14,7 @@ class AddcolumnsWebsite extends Migration
     {
         //
         Schema::table('website', function ($table) {
-           $table->enum('website_type',['Personal','Work','Main','Facebook','Google','Other','Instagram','LinkedIn','MySpace','Pinterest','SnapChat','Tumblr','Twitter','Vine'])->nullable()->default(NULL);
-           
+            $table->enum('website_type', ['Personal','Work','Main','Facebook','Google','Other','Instagram','LinkedIn','MySpace','Pinterest','SnapChat','Tumblr','Twitter','Vine'])->nullable()->default(null);
         });
     }
 

@@ -5,7 +5,6 @@ namespace montserrat;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-
 class Website extends Model
 {
     //
@@ -13,8 +12,8 @@ class Website extends Model
     protected $table = 'website';
     protected $fillable =  ['contact_id', 'url', 'website_type'];
     
-    public function owner() {
-        return $this->belongsTo(Contact::class,'contact_id','id');
+    public function owner()
+    {
+        return $this->belongsTo(Contact::class, 'contact_id', 'id');
     }
-    
 }

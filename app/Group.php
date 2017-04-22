@@ -10,7 +10,8 @@ class Group extends Model
     use SoftDeletes;
     protected $table = 'group';
 
-    public function members() {
-        return $this->hasMany(GroupContact::class,'group_id','id');
+    public function members()
+    {
+        return $this->hasMany(GroupContact::class, 'group_id', 'id');
     }
 }

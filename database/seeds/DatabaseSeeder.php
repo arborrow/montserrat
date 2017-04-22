@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use \montserrat\Retreat;
+
 class DatabaseSeeder extends Seeder
 {
     /**

@@ -26,8 +26,7 @@ class CreateRoomsTable extends Migration
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
-        });
-    
+         });
     }
 
     /**

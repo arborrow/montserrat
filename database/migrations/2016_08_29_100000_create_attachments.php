@@ -15,15 +15,15 @@ class CreateAttachments extends Migration
     {
         Schema::create('file', function (Blueprint $table) {
             $table->BigIncrements('id')->unsigned;
-            $table->integer('file_type_id')->nullable()->default(NULL);
-            $table->string('mime_type')->nullable()->default(NULL);
-            $table->string('uri')->nullable()->default(NULL);
-            $table->string('description')->nullable()->default(NULL);
-            $table->dateTime('upload_date')->nullable()->default(NULL);
+            $table->integer('file_type_id')->nullable()->default(null);
+            $table->string('mime_type')->nullable()->default(null);
+            $table->string('uri')->nullable()->default(null);
+            $table->string('description')->nullable()->default(null);
+            $table->dateTime('upload_date')->nullable()->default(null);
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
-            $table->string('entity')->nullable()->default(NULL);
+            $table->string('entity')->nullable()->default(null);
             $table->integer('entity_id')->unsigned;
         });
         DB::statement("ALTER TABLE file ADD document MEDIUMBLOB AFTER uri");

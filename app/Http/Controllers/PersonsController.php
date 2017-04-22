@@ -12,7 +12,8 @@ use Response;
 
 class PersonsController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
     }
 
@@ -22,18 +23,20 @@ class PersonsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
         $this->authorize('show-contact');
-        $persons = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name', 'asc')->with('addresses.state','phones','emails','websites','parish.contact_a')->paginate(100);
+        $persons = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'parish.contact_a')->paginate(100);
        
-        return view('persons.index',compact('persons'));   //
+        return view('persons.index', compact('persons'));   //
     }
 
-    public function lastnames($lastname=NULL) {
+    public function lastnames($lastname = null)
+    {
        
-       $persons = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name', 'asc')->with('addresses.state','phones','emails','websites','parish.contact_a')->where('last_name','LIKE',$lastname.'%')->paginate(100);
+        $persons = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'parish.contact_a')->where('last_name', 'LIKE', $lastname.'%')->paginate(100);
        //dd($persons);
-       return view('persons.index',compact('persons'));   //
+        return view('persons.index', compact('persons'));   //
     }
 
     /**
@@ -41,42 +44,42 @@ class PersonsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         $this->authorize('create-contact');
-        $parishes = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('address_primary.state','diocese.contact_a')->get();
-        $parish_list[0]='N/A';  
+        $parishes = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
+        $parish_list[0]='N/A';
         // while probably not the most efficient way of doing this it gets me the result
-        foreach($parishes as $parish) {
+        foreach ($parishes as $parish) {
             $parish_list[$parish->id] = $parish->organization_name.' ('.$parish->address_primary_city.') - '.$parish->diocese_name;
         }
 
-        $countries = \montserrat\Country::orderBy('iso_code')->pluck('iso_code','id');
-        $countries->prepend('N/A',0); 
-        $ethnicities = \montserrat\Ethnicity::orderBy('ethnicity')->pluck('ethnicity','id');
-        $ethnicities->prepend('N/A',0); 
-        $genders = \montserrat\Gender::orderBy('name')->pluck('name','id');
-        $genders ->prepend('N/A',0); 
-        $languages = \montserrat\Language::orderBy('label')->whereIsActive(1)->pluck('label','id');
-        $languages->prepend('N/A',0);
-        $referrals = \montserrat\Referral::orderBy('name')->whereIsActive(1)->pluck('name','id');
-        $referrals->prepend('N/A',0);
-        $prefixes= \montserrat\Prefix::orderBy('name')->pluck('name','id');
-        $prefixes->prepend('N/A',0); 
-        $religions = \montserrat\Religion::orderBy('name')->whereIsActive(1)->pluck('name','id');
-        $religions->prepend('N/A',0);
-        $states = \montserrat\StateProvince::orderBy('name')->whereCountryId(1228)->pluck('name','id');
-        $states->prepend('N/A',0); 
-        $suffixes = \montserrat\Suffix::orderBy('name')->pluck('name','id');
-        $suffixes->prepend('N/A',0); 
-        $occupations = \montserrat\Ppd_occupation::orderBy('name')->pluck('name','id');
-        $occupations->prepend('N/A',0); 
-        $contact_types = \montserrat\ContactType::whereIsReserved(TRUE)->orderBy('label')->pluck('label','id');
-        $subcontact_types = \montserrat\ContactType::whereIsReserved(FALSE)->whereIsActive(TRUE)->orderBy('label')->pluck('label','id');
-        $subcontact_types->prepend('N/A',0); 
+        $countries = \montserrat\Country::orderBy('iso_code')->pluck('iso_code', 'id');
+        $countries->prepend('N/A', 0);
+        $ethnicities = \montserrat\Ethnicity::orderBy('ethnicity')->pluck('ethnicity', 'id');
+        $ethnicities->prepend('N/A', 0);
+        $genders = \montserrat\Gender::orderBy('name')->pluck('name', 'id');
+        $genders ->prepend('N/A', 0);
+        $languages = \montserrat\Language::orderBy('label')->whereIsActive(1)->pluck('label', 'id');
+        $languages->prepend('N/A', 0);
+        $referrals = \montserrat\Referral::orderBy('name')->whereIsActive(1)->pluck('name', 'id');
+        $referrals->prepend('N/A', 0);
+        $prefixes= \montserrat\Prefix::orderBy('name')->pluck('name', 'id');
+        $prefixes->prepend('N/A', 0);
+        $religions = \montserrat\Religion::orderBy('name')->whereIsActive(1)->pluck('name', 'id');
+        $religions->prepend('N/A', 0);
+        $states = \montserrat\StateProvince::orderBy('name')->whereCountryId(1228)->pluck('name', 'id');
+        $states->prepend('N/A', 0);
+        $suffixes = \montserrat\Suffix::orderBy('name')->pluck('name', 'id');
+        $suffixes->prepend('N/A', 0);
+        $occupations = \montserrat\Ppd_occupation::orderBy('name')->pluck('name', 'id');
+        $occupations->prepend('N/A', 0);
+        $contact_types = \montserrat\ContactType::whereIsReserved(true)->orderBy('label')->pluck('label', 'id');
+        $subcontact_types = \montserrat\ContactType::whereIsReserved(false)->whereIsActive(true)->orderBy('label')->pluck('label', 'id');
+        $subcontact_types->prepend('N/A', 0);
         
         //dd($subcontact_types);
-        return view('persons.create',compact('parish_list','ethnicities','states','countries','suffixes','prefixes','languages','genders','religions','occupations','contact_types','subcontact_types','referrals')); 
-    
+        return view('persons.create', compact('parish_list', 'ethnicities', 'states', 'countries', 'suffixes', 'prefixes', 'languages', 'genders', 'religions', 'occupations', 'contact_types', 'subcontact_types', 'referrals'));
     }
 
     /**
@@ -85,7 +88,8 @@ class PersonsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $this->authorize('create-contact');
         $this->validate($request, [
             'first_name' => 'required',
@@ -93,8 +97,8 @@ class PersonsController extends Controller
             'email_home' => 'email',
             'email_work' => 'email',
             'email_other' => 'email',
-            'birth_date' => 'date',            
-            'deceased_date' => 'date',            
+            'birth_date' => 'date',
+            'deceased_date' => 'date',
             'url_main' => 'url',
             'url_work' => 'url',
             'url_facebook' => 'url|regex:/facebook\.com\/.+/i',
@@ -189,7 +193,7 @@ class PersonsController extends Controller
             $person->is_deceased = $request->input('is_deceased');
         }
         if (empty($request->input('deceased_date'))) {
-                $person->deceased_date = NULL;
+                $person->deceased_date = null;
         } else {
             $person->deceased_date = $request->input('deceased_date');
         }
@@ -198,9 +202,9 @@ class PersonsController extends Controller
         if (null !== $request->file('avatar')) {
             $description = 'Avatar for '.$person->full_name;
             $attachment = new AttachmentsController;
-            $attachment->store_attachment($request->file('avatar'),'contact',$person->id,'avatar',$description);
+            $attachment->store_attachment($request->file('avatar'), 'contact', $person->id, 'avatar', $description);
         }
-        // emergency contact information - not part of CiviCRM squema 
+        // emergency contact information - not part of CiviCRM squema
         $emergency_contact = new \montserrat\EmergencyContact;
             $emergency_contact->contact_id=$person->id;
             $emergency_contact->name=$request->input('emergency_contact_name');
@@ -211,7 +215,7 @@ class PersonsController extends Controller
        
         // relationships: parishioner, donor, retreatant, volunteer, captain, director, innkeeper, assistant, staff, board
         
-        // save parishioner relationship    
+        // save parishioner relationship
         if ($request->input('parish_id')>0) {
             $relationship_parishioner = new \montserrat\Relationship;
                 $relationship_parishioner->contact_id_a = $request->input('parish_id');
@@ -221,7 +225,7 @@ class PersonsController extends Controller
             $relationship_parishioner->save();
         }
         
-        // save donor relationship    
+        // save donor relationship
         if ($request->input('is_donor')>0) {
             $relationship_donor = new \montserrat\Relationship;
                 $relationship_donor->contact_id_a = CONTACT_MONTSERRAT;
@@ -231,7 +235,7 @@ class PersonsController extends Controller
             $relationship_donor->save();
         }
         
-        // save retreatant relationship    
+        // save retreatant relationship
         if ($request->input('is_retreatant')>0) {
             $relationship_retreatant = new \montserrat\Relationship;
                 $relationship_retreatant->contact_id_a = CONTACT_MONTSERRAT;
@@ -241,7 +245,7 @@ class PersonsController extends Controller
             $relationship_retreatant->save();
         }
         
-        // save volunteer relationship    
+        // save volunteer relationship
         if ($request->input('is_volunteer')>0) {
             $relationship_volunteer= new \montserrat\Relationship;
                 $relationship_volunteer->contact_id_a = CONTACT_MONTSERRAT;
@@ -256,7 +260,7 @@ class PersonsController extends Controller
             $group_volunteer->save();
         }
         
-        // save captain relationship    
+        // save captain relationship
         if ($request->input('is_captain')>0) {
             $relationship_captain= new \montserrat\Relationship;
                 $relationship_captain->contact_id_a = CONTACT_MONTSERRAT;
@@ -270,7 +274,7 @@ class PersonsController extends Controller
                 $group_captain->status = 'Added';
             $group_captain->save();
         }
-        // save retreat director relationship    
+        // save retreat director relationship
         if ($request->input('is_director')>0) {
             $relationship_director= new \montserrat\Relationship;
                 $relationship_director->contact_id_a = CONTACT_MONTSERRAT;
@@ -284,7 +288,7 @@ class PersonsController extends Controller
                 $group_director->status = 'Added';
             $group_director->save();
         }
-        // save retreat innkeeper relationship    
+        // save retreat innkeeper relationship
         if ($request->input('is_innkeeper')>0) {
             $relationship_innkeeper= new \montserrat\Relationship;
                 $relationship_innkeeper->contact_id_a = CONTACT_MONTSERRAT;
@@ -298,7 +302,7 @@ class PersonsController extends Controller
                 $group_innkeeper->status = 'Added';
             $group_innkeeper->save();
         }
-        // save retreat assistant relationship    
+        // save retreat assistant relationship
         if ($request->input('is_assistant')>0) {
             $relationship_assistant= new \montserrat\Relationship;
                 $relationship_assistant->contact_id_a = CONTACT_MONTSERRAT;
@@ -311,9 +315,8 @@ class PersonsController extends Controller
                 $group_assistant->contact_id = $person->id;
                 $group_assistant->status = 'Added';
             $group_assistant->save();
-            
         }
-        // save staff relationship - nb that the individual is contact_a and organization is contact_b   
+        // save staff relationship - nb that the individual is contact_a and organization is contact_b
         if ($request->input('is_staff')>0) {
             $relationship_staff= new \montserrat\Relationship;
                 $relationship_staff->contact_id_a = $person->id;
@@ -326,7 +329,6 @@ class PersonsController extends Controller
                 $group_staff->contact_id = $person->id;
                 $group_staff->status = 'Added';
             $group_staff->save();
-        
         }
         // save steward group
         if ($request->input('is_steward')>0) {
@@ -335,9 +337,8 @@ class PersonsController extends Controller
                 $group_steward->contact_id = $person->id;
                 $group_steward->status = 'Added';
             $group_steward->save();
-        
         }
-        // save board member relationship    
+        // save board member relationship
         if ($request->input('is_board')>0) {
             $relationship_board= new \montserrat\Relationship;
                 $relationship_board->contact_id_a = CONTACT_MONTSERRAT;
@@ -351,7 +352,6 @@ class PersonsController extends Controller
                 $group_board->contact_id = $person->id;
                 $group_board->status = 'Added';
             $group_board->save();
-        
         }
         
         //groups: deacon, priest, bishop, pastor, jesuit, provincial, superior, captain, board, innkeeper, director, assistant, staff
@@ -407,7 +407,7 @@ class PersonsController extends Controller
         }
         
         
-        /* 
+        /*
         $this->save_relationship('parish_id',$parish_id,$person->id,RELATIONSHIP_TYPE_PARISHIONER);
         $this->save_relationship('is_donor',CONTACT_MONTSERRAT,$person->id,RELATIONSHIP_TYPE_DONOR);
         $this->save_relationship('is_retreatant',CONTACT_MONTSERRAT,$person->id,RELATIONSHIP_TYPE_RETREATANT);
@@ -458,12 +458,12 @@ class PersonsController extends Controller
             $person_note_room_preference->save();
         }
         
-        if (empty($request->input('languages')) or in_array(0,$request->input('languages'))) {
+        if (empty($request->input('languages')) or in_array(0, $request->input('languages'))) {
             $person->languages()->detach();
         } else {
             $person->languages()->sync($request->input('languages'));
         }
-        if (empty($request->input('referrals')) or in_array(0,$request->input('referrals'))) {
+        if (empty($request->input('referrals')) or in_array(0, $request->input('referrals'))) {
             $person->referrals()->detach();
         } else {
             $person->referrals()->sync($request->input('referrals'));
@@ -471,14 +471,14 @@ class PersonsController extends Controller
         
         $home_address= new \montserrat\Address;
             $home_address->contact_id=$person->id;
-            $home_address->location_type_id=LOCATION_TYPE_HOME; 
+            $home_address->location_type_id=LOCATION_TYPE_HOME;
             $home_address->is_primary=1;
             $home_address->street_address=$request->input('address_home_address1');
             $home_address->supplemental_address_1=$request->input('address_home_address2');
             $home_address->city=$request->input('address_home_city');
             $home_address->state_province_id=$request->input('address_home_state');
             $home_address->postal_code=$request->input('address_home_zip');
-            $home_address->country_id=$request->input('address_home_country');  
+            $home_address->country_id=$request->input('address_home_country');
             $home_address->save();
         
         $work_address= new \montserrat\Address;
@@ -490,7 +490,7 @@ class PersonsController extends Controller
             $work_address->city=$request->input('address_work_city');
             $work_address->state_province_id=$request->input('address_work_state');
             $work_address->postal_code=$request->input('address_work_zip');
-            $work_address->country_id=$request->input('address_work_country');  
+            $work_address->country_id=$request->input('address_work_country');
         $work_address->save();
         
         $other_address= new \montserrat\Address;
@@ -502,7 +502,7 @@ class PersonsController extends Controller
             $other_address->city=$request->input('address_other_city');
             $other_address->state_province_id=$request->input('address_other_state');
             $other_address->postal_code=$request->input('address_other_zip');
-            $other_address->country_id=$request->input('address_other_country');  
+            $other_address->country_id=$request->input('address_other_country');
         $other_address->save();
         
         $phone_home_phone= new \montserrat\Phone;
@@ -632,7 +632,6 @@ class PersonsController extends Controller
         return Redirect::action('PersonsController@show', $person->id);//
         
         //return Redirect::action('PersonsController@index');//
-
     }
 
     /**
@@ -643,17 +642,17 @@ class PersonsController extends Controller
      */
     public function show($id)
     {
-       $this->authorize('show-contact');
-       $person = \montserrat\Contact::with('addresses.country','addresses.location','addresses.state','emails.location','emergency_contact','ethnicity','languages','notes','occupation','parish.contact_a.address_primary','parish.contact_a.diocese.contact_a','phones.location','prefix','suffix','religion','touchpoints.staff','websites','groups.group','a_relationships.relationship_type','a_relationships.contact_b','b_relationships.relationship_type','b_relationships.contact_a','event_registrations')->findOrFail($id);
-       $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($person->id)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->get();
-       $relationship_types = array();
-       $relationship_types["Child"] = "Child";
-       $relationship_types["Employee"] = "Employee";
-       $relationship_types["Husband"] = "Husband";
-       $relationship_types["Parent"] = "Parent";
-       $relationship_types["Parishioner"] = "Parishioner";
-       $relationship_types["Sibling"] = "Sibling";
-       $relationship_types["Wife"] = "Wife";
+        $this->authorize('show-contact');
+        $person = \montserrat\Contact::with('addresses.country', 'addresses.location', 'addresses.state', 'emails.location', 'emergency_contact', 'ethnicity', 'languages', 'notes', 'occupation', 'parish.contact_a.address_primary', 'parish.contact_a.diocese.contact_a', 'phones.location', 'prefix', 'suffix', 'religion', 'touchpoints.staff', 'websites', 'groups.group', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations')->findOrFail($id);
+        $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($person->id)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->get();
+        $relationship_types = [];
+        $relationship_types["Child"] = "Child";
+        $relationship_types["Employee"] = "Employee";
+        $relationship_types["Husband"] = "Husband";
+        $relationship_types["Parent"] = "Parent";
+        $relationship_types["Parishioner"] = "Parishioner";
+        $relationship_types["Sibling"] = "Sibling";
+        $relationship_types["Wife"] = "Wife";
        
         //dd($files);
         //not at all elegant but this parses out the notes for easy display and use in the edit blade
@@ -662,7 +661,7 @@ class PersonsController extends Controller
         $person->note_contact='';
         $person->note_room_preference='';
         if (!empty($person->notes)) {
-            foreach($person->notes as $note) {
+            foreach ($person->notes as $note) {
                 if ($note->subject=="Health Note") {
                     $person->note_health = $note->note;
                 }
@@ -679,7 +678,7 @@ class PersonsController extends Controller
                     $person->note_room_preference = $note->note;
                 }
             }
-        } 
+        }
         
         //not pretty but moves some of the processing to the controller rather than the blade
         $person->parish_id='';
@@ -692,14 +691,12 @@ class PersonsController extends Controller
         $preferred_language = \montserrat\Language::whereName($person->preferred_language)->first();
         if (!empty($preferred_language)) {
             $person->preferred_language_label=$preferred_language->label;
-        }
-        else {
+        } else {
             $person->preferred_language_label = 'N/A';
         }
-        $touchpoints = \montserrat\Touchpoint::wherePersonId($person->id)->orderBy('touched_at','desc')->with('staff')->get();    
+        $touchpoints = \montserrat\Touchpoint::wherePersonId($person->id)->orderBy('touched_at', 'desc')->with('staff')->get();
        //dd($touchpoints);
-       return view('persons.show',compact('person','files','relationship_types','touchpoints'));//
-    
+        return view('persons.show', compact('person', 'files', 'relationship_types', 'touchpoints'));//
     }
 
     /**
@@ -711,16 +708,16 @@ class PersonsController extends Controller
     public function edit($id)
     {
         $this->authorize('update-contact');
-        $person = \montserrat\Contact::with('prefix','suffix','addresses.location','emails.location','phones.location','websites','parish','emergency_contact','notes')->findOrFail($id);
+        $person = \montserrat\Contact::with('prefix', 'suffix', 'addresses.location', 'emails.location', 'phones.location', 'websites', 'parish', 'emergency_contact', 'notes')->findOrFail($id);
         //dd($person);
         
-        $parishes = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('address_primary.state','diocese.contact_a')->get();
+        $parishes = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
         $parish_list[0]='N/A';
-        $contact_types = \montserrat\ContactType::whereIsReserved(TRUE)->pluck('label','id');
-        $subcontact_types = \montserrat\ContactType::whereIsReserved(FALSE)->whereIsActive(TRUE)->pluck('label','id');
-        $subcontact_types->prepend('N/A',0); 
+        $contact_types = \montserrat\ContactType::whereIsReserved(true)->pluck('label', 'id');
+        $subcontact_types = \montserrat\ContactType::whereIsReserved(false)->whereIsActive(true)->pluck('label', 'id');
+        $subcontact_types->prepend('N/A', 0);
         // while probably not the most efficient way of doing this it gets me the result
-        foreach($parishes as $parish) {
+        foreach ($parishes as $parish) {
             $parish_list[$parish->id] = $parish->organization_name.' ('.$parish->address_primary_city.') - '.$parish->diocese_name;
         }
         if (!empty($person->parish)) {
@@ -731,8 +728,7 @@ class PersonsController extends Controller
         $preferred_language = \montserrat\Language::whereName($person->preferred_language)->first();
         if (!empty($preferred_language)) {
             $person->preferred_language_id=$preferred_language->id;
-        }
-        else {
+        } else {
             $person->preferred_language_id = 0;
         }
         
@@ -743,7 +739,7 @@ class PersonsController extends Controller
         $person->note_room_preference='';
         
         if (!empty($person->notes)) {
-            foreach($person->notes as $note) {
+            foreach ($person->notes as $note) {
                 if ($note->subject=="Health Note") {
                     $person->note_health = $note->note;
                 }
@@ -760,32 +756,32 @@ class PersonsController extends Controller
                     $person->note_room_preference = $note->note;
                 }
             }
-        } 
+        }
         //dd($person);
-        $countries = \montserrat\Country::orderBy('iso_code')->pluck('iso_code','id');
-        $countries->prepend('N/A',0); 
-        $ethnicities = \montserrat\Ethnicity::orderBy('ethnicity')->pluck('ethnicity','id');
-        $ethnicities->prepend('N/A',0); 
-        $genders = \montserrat\Gender::orderBy('name')->pluck('name','id');
-        $genders ->prepend('N/A',0); 
-        $languages = \montserrat\Language::orderBy('label')->whereIsActive(1)->pluck('label','id');
-        $languages->prepend('N/A',0);
-        $referrals = \montserrat\Referral::orderBy('name')->whereIsActive(1)->pluck('name','id');
-        $referrals->prepend('N/A',0);
-        $prefixes= \montserrat\Prefix::orderBy('name')->pluck('name','id');
-        $prefixes->prepend('N/A',0); 
-        $religions = \montserrat\Religion::orderBy('name')->whereIsActive(1)->pluck('name','id');
-        $religions->prepend('N/A',0);
-        $states = \montserrat\StateProvince::orderBy('name')->whereCountryId(1228)->pluck('name','id');
-        $states->prepend('N/A',0); 
-        $suffixes = \montserrat\Suffix::orderBy('name')->pluck('name','id');
-        $suffixes->prepend('N/A',0); 
-        $occupations = \montserrat\Ppd_occupation::orderBy('name')->pluck('name','id');
-        $occupations->prepend('N/A',0); 
+        $countries = \montserrat\Country::orderBy('iso_code')->pluck('iso_code', 'id');
+        $countries->prepend('N/A', 0);
+        $ethnicities = \montserrat\Ethnicity::orderBy('ethnicity')->pluck('ethnicity', 'id');
+        $ethnicities->prepend('N/A', 0);
+        $genders = \montserrat\Gender::orderBy('name')->pluck('name', 'id');
+        $genders ->prepend('N/A', 0);
+        $languages = \montserrat\Language::orderBy('label')->whereIsActive(1)->pluck('label', 'id');
+        $languages->prepend('N/A', 0);
+        $referrals = \montserrat\Referral::orderBy('name')->whereIsActive(1)->pluck('name', 'id');
+        $referrals->prepend('N/A', 0);
+        $prefixes= \montserrat\Prefix::orderBy('name')->pluck('name', 'id');
+        $prefixes->prepend('N/A', 0);
+        $religions = \montserrat\Religion::orderBy('name')->whereIsActive(1)->pluck('name', 'id');
+        $religions->prepend('N/A', 0);
+        $states = \montserrat\StateProvince::orderBy('name')->whereCountryId(1228)->pluck('name', 'id');
+        $states->prepend('N/A', 0);
+        $suffixes = \montserrat\Suffix::orderBy('name')->pluck('name', 'id');
+        $suffixes->prepend('N/A', 0);
+        $occupations = \montserrat\Ppd_occupation::orderBy('name')->pluck('name', 'id');
+        $occupations->prepend('N/A', 0);
         
         //create defaults array for easier pre-populating of default values on edit/update blade
         // initialize defaults to avoid undefined index errors
-        $defaults = array();
+        $defaults = [];
         $defaults['Home']['street_address']='';
         $defaults['Home']['supplemental_address_1']='';
         $defaults['Home']['city']='';
@@ -827,7 +823,7 @@ class PersonsController extends Controller
         $defaults['LinkedIn']['url']='';
         $defaults['Twitter']['url']='';
         
-        foreach($person->addresses as $address) {
+        foreach ($person->addresses as $address) {
             $defaults[$address->location->name]['street_address'] = $address->street_address;
             $defaults[$address->location->name]['supplemental_address_1'] = $address->supplemental_address_1;
             $defaults[$address->location->name]['city'] = $address->city;
@@ -836,21 +832,20 @@ class PersonsController extends Controller
             $defaults[$address->location->name]['country_id'] = $address->country_id;
         }
         
-        foreach($person->phones as $phone) {
+        foreach ($person->phones as $phone) {
             $defaults[$phone->location->name][$phone->phone_type] = $phone->phone;
         }
         
-        foreach($person->emails as $email) {
+        foreach ($person->emails as $email) {
             $defaults[$email->location->name]['email'] = $email->email;
         }
         
-        foreach($person->websites as $website) {
+        foreach ($person->websites as $website) {
             $defaults[$website->website_type]['url'] = $website->url;
         }
         //dd($person);
 
-        return view('persons.edit',compact('prefixes','suffixes','person','parish_list','ethnicities','states','countries','genders','languages','defaults','religions','occupations','contact_types','subcontact_types','referrals'));
-    
+        return view('persons.edit', compact('prefixes', 'suffixes', 'person', 'parish_list', 'ethnicities', 'states', 'countries', 'genders', 'languages', 'defaults', 'religions', 'occupations', 'contact_types', 'subcontact_types', 'referrals'));
     }
     
     /**
@@ -870,8 +865,8 @@ class PersonsController extends Controller
             'email_home' => 'email',
             'email_work' => 'email',
             'email_other' => 'email',
-            'birth_date' => 'date',            
-            'deceased_date' => 'date',            
+            'birth_date' => 'date',
+            'deceased_date' => 'date',
             'url_main' => 'url',
             'url_work' => 'url',
             'url_facebook' => 'url|regex:/facebook\.com\/.+/i',
@@ -903,8 +898,8 @@ class PersonsController extends Controller
         
             ]);
         //dd($request);
-        //name 
-        $person = \montserrat\Contact::with('addresses.location','emails.location','phones.location','websites','emergency_contact','parish')->findOrFail($id);
+        //name
+        $person = \montserrat\Contact::with('addresses.location', 'emails.location', 'phones.location', 'websites', 'emergency_contact', 'parish')->findOrFail($id);
         $person->prefix_id = $request->input('prefix_id');
         $person->first_name = $request->input('first_name');
         $person->middle_name = $request->input('middle_name');
@@ -938,12 +933,12 @@ class PersonsController extends Controller
         $person->do_not_phone = $request->input('do_not_phone');
         $person->do_not_sms = $request->input('do_not_sms');
         
-        if (empty($request->input('languages')) or in_array(0,$request->input('languages'))) {
+        if (empty($request->input('languages')) or in_array(0, $request->input('languages'))) {
             $person->languages()->detach();
         } else {
             $person->languages()->sync($request->input('languages'));
         }
-        if (empty($request->input('referrals')) or in_array(0,$request->input('referrals'))) {
+        if (empty($request->input('referrals')) or in_array(0, $request->input('referrals'))) {
             $person->referrals()->detach();
         } else {
             $person->referrals()->sync($request->input('referrals'));
@@ -960,7 +955,7 @@ class PersonsController extends Controller
             $person->is_deceased = $request->input('is_deceased');
         }
         if (empty($request->input('deceased_date'))) {
-                $person->deceased_date = NULL;
+                $person->deceased_date = null;
         } else {
             $person->deceased_date = $request->input('deceased_date');
         }
@@ -969,15 +964,14 @@ class PersonsController extends Controller
         if (null !== $request->file('avatar')) {
             $description = 'Avatar for '.$person->full_name;
             $attachment = new AttachmentsController;
-            $attachment->update_attachment($request->file('avatar'),'contact',$person->id,'avatar',$description);
-
+            $attachment->update_attachment($request->file('avatar'), 'contact', $person->id, 'avatar', $description);
         }
 
         //dd($request);
         if (null !== $request->file('attachment')) {
             $description = $request->input('attachment_description');
             $attachment = new AttachmentsController;
-            $attachment->update_attachment($request->file('attachment'),'contact',$person->id,'attachment',$description); 
+            $attachment->update_attachment($request->file('attachment'), 'contact', $person->id, 'attachment', $description);
         }
         
         //emergency contact info
@@ -990,7 +984,7 @@ class PersonsController extends Controller
         $emergency_contact->save();
         
         //dd($person);
-        // save parishioner relationship  
+        // save parishioner relationship
         // TEST: does unset work?
         if ($request->input('parish_id')>0) {
                 $relationship_parishioner = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_PARISHIONER,'is_active'=>1]);
@@ -1002,9 +996,9 @@ class PersonsController extends Controller
         }
         if ($request->input('parish_id')==0) {
                 $relationship_parishioner = \montserrat\Relationship::whereContactIdB($person->id)->whereRelationshipTypeId(RELATIONSHIP_TYPE_PARISHIONER)->whereIsActive(1)->first();
-                if(isset($relationship_parishioner)) {
-                        $relationship_parishioner->delete();
-                }
+            if (isset($relationship_parishioner)) {
+                $relationship_parishioner->delete();
+            }
         }
         
         
@@ -1018,7 +1012,7 @@ class PersonsController extends Controller
             $person_note_health->note=$request->input('note_health');
             $person_note_health->subject='Health Note';
             $person_note_health->save();
-        } 
+        }
         
         if (null !== ($request->input('note_dietary'))) {
             $person_note_dietary = \montserrat\Note::firstOrNew(['entity_table'=>'contact','entity_id'=>$person->id,'subject'=>'Dietary Note']);
@@ -1045,7 +1039,7 @@ class PersonsController extends Controller
             $person_note_room_preference->note=$request->input('note_room_preference');
             $person_note_room_preference->subject='Room Preference';
             $person_note_room_preference->save();
-        }        
+        }
                 
         $home_address= \montserrat\Address::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_HOME]);
             $home_address->contact_id=$person->id;
@@ -1056,7 +1050,7 @@ class PersonsController extends Controller
             $home_address->city=$request->input('address_home_city');
             $home_address->state_province_id=$request->input('address_home_state');
             $home_address->postal_code=$request->input('address_home_zip');
-            $home_address->country_id=$request->input('address_home_country');  
+            $home_address->country_id=$request->input('address_home_country');
         $home_address->save();
          
         $work_address= \montserrat\Address::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_WORK]);
@@ -1068,7 +1062,7 @@ class PersonsController extends Controller
             $work_address->city=$request->input('address_work_city');
             $work_address->state_province_id=$request->input('address_work_state');
             $work_address->postal_code=$request->input('address_work_zip');
-            $work_address->country_id=$request->input('address_work_country');  
+            $work_address->country_id=$request->input('address_work_country');
         $work_address->save();
         
         $other_address= \montserrat\Address::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_OTHER]);
@@ -1080,7 +1074,7 @@ class PersonsController extends Controller
             $other_address->city=$request->input('address_other_city');
             $other_address->state_province_id=$request->input('address_other_state');
             $other_address->postal_code=$request->input('address_other_zip');
-            $other_address->country_id=$request->input('address_other_country');  
+            $other_address->country_id=$request->input('address_other_country');
         $other_address->save();
         
         $phone_home_phone= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_HOME,'phone_type'=>'Phone']);
@@ -1304,7 +1298,7 @@ class PersonsController extends Controller
             $relationship_board->save();
         }
         
-            //groups: 
+            //groups:
         $group_captain = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_CAPTAIN,'status'=>'Added']);
         if ($request->input('is_captain')==0) {
             $group_captain->delete();
@@ -1312,7 +1306,7 @@ class PersonsController extends Controller
             $group_captain->contact_id = $person->id;
             $group_captain->group_id = GROUP_ID_CAPTAIN;
             $group_captain->status = 'Added';
-            $group_captain->deleted_at = NULL;
+            $group_captain->deleted_at = null;
             $group_captain->save();
         }
         $group_volunteer = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_VOLUNTEER,'status'=>'Added']);
@@ -1322,7 +1316,7 @@ class PersonsController extends Controller
             $group_volunteer->contact_id = $person->id;
             $group_volunteer->group_id = GROUP_ID_VOLUNTEER;
             $group_volunteer->status = 'Added';
-            $group_volunteer->deleted_at = NULL;
+            $group_volunteer->deleted_at = null;
             $group_volunteer->save();
         }
         $group_bishop = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_BISHOP,'status'=>'Added']);
@@ -1332,7 +1326,7 @@ class PersonsController extends Controller
             $group_bishop->contact_id = $person->id;
             $group_bishop->group_id = GROUP_ID_BISHOP;
             $group_bishop->status = 'Added';
-            $group_bishop->deleted_at = NULL;
+            $group_bishop->deleted_at = null;
             $group_bishop->save();
         }
         $group_priest = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_PRIEST,'status'=>'Added']);
@@ -1342,7 +1336,7 @@ class PersonsController extends Controller
             $group_priest->contact_id = $person->id;
             $group_priest->group_id = GROUP_ID_PRIEST;
             $group_priest->status = 'Added';
-            $group_priest->deleted_at = NULL;
+            $group_priest->deleted_at = null;
             $group_priest->save();
         }
         $group_deacon = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_DEACON,'status'=>'Added']);
@@ -1352,7 +1346,7 @@ class PersonsController extends Controller
             $group_deacon->contact_id = $person->id;
             $group_deacon->group_id = GROUP_ID_DEACON;
             $group_deacon->status = 'Added';
-            $group_deacon->deleted_at = NULL;
+            $group_deacon->deleted_at = null;
             $group_deacon->save();
         }
         $group_pastor = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_PASTOR,'status'=>'Added']);
@@ -1362,7 +1356,7 @@ class PersonsController extends Controller
             $group_pastor->contact_id = $person->id;
             $group_pastor->group_id = GROUP_ID_PASTOR;
             $group_pastor->status = 'Added';
-            $group_pastor->deleted_at = NULL;
+            $group_pastor->deleted_at = null;
             $group_pastor->save();
         }
         $group_jesuit = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_JESUIT,'status'=>'Added']);
@@ -1372,7 +1366,7 @@ class PersonsController extends Controller
             $group_jesuit->contact_id = $person->id;
             $group_jesuit->group_id = GROUP_ID_JESUIT;
             $group_jesuit->status = 'Added';
-            $group_jesuit->deleted_at = NULL;
+            $group_jesuit->deleted_at = null;
             $group_jesuit->save();
         }
         $group_provincial = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_PROVINCIAL,'status'=>'Added']);
@@ -1382,7 +1376,7 @@ class PersonsController extends Controller
             $group_provincial->contact_id = $person->id;
             $group_provincial->group_id = GROUP_ID_PROVINCIAL;
             $group_provincial->status = 'Added';
-            $group_provincial->deleted_at = NULL;
+            $group_provincial->deleted_at = null;
             $group_provincial->save();
         }
         $group_superior = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_SUPERIOR,'status'=>'Added']);
@@ -1392,7 +1386,7 @@ class PersonsController extends Controller
             $group_superior->contact_id = $person->id;
             $group_superior->group_id = GROUP_ID_SUPERIOR;
             $group_superior->status = 'Added';
-            $group_superior->deleted_at = NULL;
+            $group_superior->deleted_at = null;
             $group_superior->save();
         }
         $group_board = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_BOARD]);
@@ -1405,7 +1399,7 @@ class PersonsController extends Controller
             $group_board->contact_id = $person->id;
             $group_board->group_id = GROUP_ID_BOARD;
             $group_board->status = 'Added';
-            $group_board->deleted_at = NULL;
+            $group_board->deleted_at = null;
             $group_board->save();
         }
         $group_staff = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_STAFF,'status'=>'Added']);
@@ -1415,7 +1409,7 @@ class PersonsController extends Controller
             $group_staff->contact_id = $person->id;
             $group_staff->group_id = GROUP_ID_STAFF;
             $group_staff->status = 'Added';
-            $group_staff->deleted_at = NULL;
+            $group_staff->deleted_at = null;
             $group_staff->save();
         }
         $group_steward = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_STEWARD,'status'=>'Added']);
@@ -1425,7 +1419,7 @@ class PersonsController extends Controller
             $group_steward->contact_id = $person->id;
             $group_steward->group_id = GROUP_ID_STEWARD;
             $group_steward->status = 'Added';
-            $group_steward->deleted_at = NULL;
+            $group_steward->deleted_at = null;
             $group_steward->save();
         }
         $group_director = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_DIRECTOR,'status'=>'Added']);
@@ -1435,7 +1429,7 @@ class PersonsController extends Controller
             $group_director->contact_id = $person->id;
             $group_director->group_id = GROUP_ID_DIRECTOR;
             $group_director->status = 'Added';
-            $group_director->deleted_at = NULL;
+            $group_director->deleted_at = null;
             $group_director->save();
         }
         $group_innkeeper = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_INNKEEPER,'status'=>'Added']);
@@ -1445,7 +1439,7 @@ class PersonsController extends Controller
             $group_innkeeper->contact_id = $person->id;
             $group_innkeeper->group_id = GROUP_ID_INNKEEPER;
             $group_innkeeper->status = 'Added';
-            $group_innkeeper->deleted_at = NULL;
+            $group_innkeeper->deleted_at = null;
             $group_innkeeper->save();
         }
         $group_assistant = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_ASSISTANT,'status'=>'Added']);
@@ -1455,13 +1449,11 @@ class PersonsController extends Controller
             $group_assistant->contact_id = $person->id;
             $group_assistant->group_id = GROUP_ID_ASSISTANT;
             $group_assistant->status = 'Added';
-            $group_assistant->deleted_at = NULL;
+            $group_assistant->deleted_at = null;
             $group_assistant->save();
         }
         
         return Redirect::action('PersonsController@show', $person->id);//
-        
-
     }
 
     /**
@@ -1471,7 +1463,8 @@ class PersonsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {   $this->authorize('delete-contact');
+    {
+        $this->authorize('delete-contact');
         
         // TODO: consider creating a restore/{id} or undelete/{id}
         
@@ -1492,7 +1485,6 @@ class PersonsController extends Controller
         \montserrat\Contact::destroy($id);
         
         return Redirect::action('PersonsController@index');
-    
     }
     public function merge_destroy($id, $return_id)
     {
@@ -1514,8 +1506,7 @@ class PersonsController extends Controller
         \montserrat\Registration::whereContactId($id)->delete();
         \montserrat\Contact::destroy($id);
         
-        return Redirect::action('PersonsController@merge',$return_id);
-    
+        return Redirect::action('PersonsController@merge', $return_id);
     }
     
     public function assistants()
@@ -1552,7 +1543,6 @@ class PersonsController extends Controller
         $role['name'] = 'Deceased';
         $role['field'] = 'is_deceased';
         return $this->role($role);
-    
     }
 
     public function directors()
@@ -1565,7 +1555,6 @@ class PersonsController extends Controller
         $role['name'] = 'Donors';
         $role['field'] = 'is_donor';
         return $this->role($role);
-    
     }
     public function staff()
     {
@@ -1577,9 +1566,8 @@ class PersonsController extends Controller
         $role['name'] = 'Former Board Members';
         $role['field'] = 'is_formerboard';
         return $this->role($role);
-    
     }
-   public function innkeepers()
+    public function innkeepers()
     {
         return $this->role(GROUP_ID_INNKEEPER);
     }
@@ -1600,7 +1588,8 @@ class PersonsController extends Controller
         return $this->role(GROUP_ID_PROVINCIAL);
     }
     public function retreatants()
-    {//relationship (not a group)
+    {
+//relationship (not a group)
         return $this->role($role);
     }
     public function superiors()
@@ -1622,7 +1611,9 @@ class PersonsController extends Controller
     {
         $this->authorize('show-contact');
         
-        $persons = \montserrat\Contact::with('groups','address_primary','captain_events')->whereHas('groups', function ($query) use ($group_id) {$query->where('group_id','=',$group_id)->whereStatus('Added');})->orderBy('sort_name')->get();
+        $persons = \montserrat\Contact::with('groups', 'address_primary', 'captain_events')->whereHas('groups', function ($query) use ($group_id) {
+            $query->where('group_id', '=', $group_id)->whereStatus('Added');
+        })->orderBy('sort_name')->get();
         
         $group = \montserrat\Group::findOrFail($group_id);
         $role['group_id'] = $group->id;
@@ -1636,19 +1627,16 @@ class PersonsController extends Controller
             }
             
             if (!empty($email_list)) {
-                $role['email_link'] = "<a href=\"mailto:?bcc=".htmlspecialchars($email_list,ENT_QUOTES)."\">E-mail ".$group->name." Group</a>";
-                         
+                $role['email_link'] = "<a href=\"mailto:?bcc=".htmlspecialchars($email_list, ENT_QUOTES)."\">E-mail ".$group->name." Group</a>";
             } else {
-                $role['email_link'] = NULL;
-                
+                $role['email_link'] = null;
             }
-            
         }
-        return view('persons.role',compact('persons','role'));   //
-    
+        return view('persons.role', compact('persons', 'role'));   //
     }
     
-    public function save_relationship($field, $contact_id_a, $contact_id_b, $relationship_type) {
+    public function save_relationship($field, $contact_id_a, $contact_id_b, $relationship_type)
+    {
         $this->authorize('update-contact');
         
         if ($request->input($field)>0) {
@@ -1660,16 +1648,18 @@ class PersonsController extends Controller
             $relationship->save();
         }
     }
-    public function duplicates() {
+    public function duplicates()
+    {
         $this->authorize('update-contact');
         
-        $duplicates = \montserrat\Contact::whereIn('id',function($query) {
-        $query->select('id')->from('contact')->groupBy('sort_name')->whereDeletedAt(NULL)->havingRaw('count(*)>1');})->orderBy('sort_name')->paginate(100);
+        $duplicates = \montserrat\Contact::whereIn('id', function ($query) {
+            $query->select('id')->from('contact')->groupBy('sort_name')->whereDeletedAt(null)->havingRaw('count(*)>1');
+        })->orderBy('sort_name')->paginate(100);
         //dd($duplicates);
-        return view('persons.duplicates',compact('duplicates'));
-        
+        return view('persons.duplicates', compact('duplicates'));
     }
-    public function merge($contact_id,$merge_id=NULL) {
+    public function merge($contact_id, $merge_id = null)
+    {
         $this->authorize('update-contact');
         
         $contact = \montserrat\Contact::findOrFail($contact_id);
@@ -1725,7 +1715,7 @@ class PersonsController extends Controller
             $contact->save();
             
             //addresses
-            if (NULL === $contact->address_primary) {
+            if (null === $contact->address_primary) {
                 $contact->address_primary = new \montserrat\Address;
                 $contact->address_primary->contact_id = $contact->id;
                 $contact->address_primary->is_primary = 1;
@@ -1751,8 +1741,7 @@ class PersonsController extends Controller
             $contact->address_primary->save();
             
             //emergency_contact_info
-            if (NULL === $contact->emergency_contact) {
-                
+            if (null === $contact->emergency_contact) {
                 $contact->emergency_contact = new \montserrat\EmergencyContact;
                 $contact->emergency_contact->contact_id = $contact->id;
             }
@@ -1840,14 +1829,12 @@ class PersonsController extends Controller
                     $path = 'contact/' . $merge_id . '/'.$attachment->uri;
                     $newpath = 'contact/' . $contact_id . '/'.$attachment->uri;
                 }
-                Storage::move($path,$newpath);
+                Storage::move($path, $newpath);
                 $attachment->entity_id = $contact->id;
                 $attachment->save();
             }
-       
         }
                 
-        return view('persons.merge',compact('contact','duplicates'));
-        
+        return view('persons.merge', compact('contact', 'duplicates'));
     }
 }

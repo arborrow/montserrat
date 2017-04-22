@@ -15,10 +15,10 @@ class CreateMessageAttachments extends Migration
         Schema::create('message_attachments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('mailgun_id')->index();
-            $table->integer('attachment_id')->unsigned()->nullable()->default(NULL);
+            $table->integer('attachment_id')->unsigned()->nullable()->default(null);
             $table->timestamp('mailgun_timestamp');
-            $table->string('url')->nullable()->default(NULL);
-            $table->string('content_type')->nullable()->default(NULL);
+            $table->string('url')->nullable()->default(null);
+            $table->string('content_type')->nullable()->default(null);
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

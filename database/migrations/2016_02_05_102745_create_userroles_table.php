@@ -21,7 +21,6 @@ class CreateUserrolesTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
-
     }
 
     /**
@@ -33,6 +32,5 @@ class CreateUserrolesTable extends Migration
     {
         //
         Schema::drop('userroles');
-
     }
 }

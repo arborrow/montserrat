@@ -15,14 +15,13 @@ class CreateWebsite extends Migration
         //
         Schema::create('website', function (Blueprint $table) {
             $table->BigIncrements('id')->unsigned;
-            $table->integer('contact_id')->nullable()->default(NULL);
-            $table->string('url')->nullable()->default(NULL);
-            $table->integer('website_type_id')->nullable()->default(NULL);
+            $table->integer('contact_id')->nullable()->default(null);
+            $table->string('url')->nullable()->default(null);
+            $table->integer('website_type_id')->nullable()->default(null);
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
-        
-    });
+        });
     }
 
     /**

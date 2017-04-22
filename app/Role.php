@@ -12,15 +12,17 @@ class Role extends EntrustRole
     //
     use SoftDeletes;
     
-    public function users() {
+    public function users()
+    {
         return $this->belongsToMany(User::class);
     }
-    public function permissions() {
+    public function permissions()
+    {
         return $this->belongsToMany(Permission::class);
     }
     
-    public function givePermissionTo (Permission $permission) {
+    public function givePermissionTo(Permission $permission)
+    {
         return $this->permissions->save();
     }
-    
 }

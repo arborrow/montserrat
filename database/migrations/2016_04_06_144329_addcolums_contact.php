@@ -13,9 +13,9 @@ class AddcolumsContact extends Migration
     public function up()
     {
         Schema::table('contact', function ($table) {
-           $table->integer('ethnicity_id')->unsigned()->nullable()->default(NULL);
-           $table->integer('religion_id')->unsigned()->nullable()->default(NULL);
-           $table->integer('occupation_id')->unsigned()->nullable()->default(NULL);        
+            $table->integer('ethnicity_id')->unsigned()->nullable()->default(null);
+            $table->integer('religion_id')->unsigned()->nullable()->default(null);
+            $table->integer('occupation_id')->unsigned()->nullable()->default(null);
         });
     }
 

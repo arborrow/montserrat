@@ -13,15 +13,12 @@ class AddColumnsEvent extends Migration
     public function up()
     {
         Schema::table('event', function ($table) {
-            $table->string('type')->nullable()->default(NULL);
-            $table->boolean('silent')->nullable()->default(NULL);
-            $table->decimal('amount',6,2)->nullable()->default(NULL);
-            $table->integer('year')->unsigned()->nullable()->default(NULL);
-            $table->integer('attending')->unsigned()->nullable()->default(NULL);
+            $table->string('type')->nullable()->default(null);
+            $table->boolean('silent')->nullable()->default(null);
+            $table->decimal('amount', 6, 2)->nullable()->default(null);
+            $table->integer('year')->unsigned()->nullable()->default(null);
+            $table->integer('attending')->unsigned()->nullable()->default(null);
         });
-
-        
-    
     }
 
     /**

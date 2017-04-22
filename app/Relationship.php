@@ -4,25 +4,30 @@ namespace montserrat;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Relationship extends Model
 {
     use SoftDeletes;
     protected $table = 'relationship';
     protected $fillable = ['contact_id_a','contact_id_b','relationship_type_id','is_active','description'];
             
-    public function relationship_type() {
-        return $this->hasOne(RelationshipType::class,'id','relationship_type_id');
+    public function relationship_type()
+    {
+        return $this->hasOne(RelationshipType::class, 'id', 'relationship_type_id');
     }
     
-    public function contact_a() {
-        return $this->hasOne(Contact::class,'id','contact_id_a');
+    public function contact_a()
+    {
+        return $this->hasOne(Contact::class, 'id', 'contact_id_a');
     }
     
-    public function contact_b() {
-        return $this->hasOne(Contact::class,'id','contact_id_b');
+    public function contact_b()
+    {
+        return $this->hasOne(Contact::class, 'id', 'contact_id_b');
     }
     
-    public function getContactADisplayNameAttribute () {
+    public function getContactADisplayNameAttribute()
+    {
         if (isset($this->contact_a) && $this->contact_a > 0) {
             //default is individual person
             $display_name = '<a href="'.$this->contact_a->id.'">'.$this->contact_a->display_name.'</a>';
@@ -36,10 +41,11 @@ class Relationship extends Model
             }
             return $display_name;
         } else {
-            return NULL;
+            return null;
         }
     }
-    public function getContactBDisplayNameAttribute () {
+    public function getContactBDisplayNameAttribute()
+    {
         if (isset($this->contact_b) && $this->contact_b > 0) {
             //default is individual person
             $display_name = '<a href="'.$this->contact_b->id.'">'.$this->contact_b->display_name.'</a>';
@@ -53,8 +59,7 @@ class Relationship extends Model
             }
             return $display_name;
         } else {
-            return NULL;
+            return null;
         }
     }
-
 }

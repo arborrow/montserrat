@@ -21,8 +21,7 @@ class CreateCapabilitiesTable extends Migration
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
-        });
-
+         });
     }
 
     /**
@@ -34,6 +33,5 @@ class CreateCapabilitiesTable extends Migration
     {
         //
         Schema::drop('capabilities');
-
     }
 }

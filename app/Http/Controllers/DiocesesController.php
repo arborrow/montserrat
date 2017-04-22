@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 
-
-
 class DiocesesController extends Controller
 {
     public function __construct()
@@ -25,13 +23,13 @@ class DiocesesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
         $this->authorize('show-contact');
         
-        $dioceses = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_DIOCESE)->orderBy('sort_name', 'asc')->with('addresses.state','phones','emails','websites','bishops.contact_b','parishes.contact_a')->get();
+        $dioceses = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_DIOCESE)->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'bishops.contact_b', 'parishes.contact_a')->get();
         
-        return view('dioceses.index',compact('dioceses'));   //
-    
+        return view('dioceses.index', compact('dioceses'));   //
     }
 
     /**
@@ -39,22 +37,24 @@ class DiocesesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         $this->authorize('create-contact');
-        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name','id');
-        $states->prepend('N/A',0); 
+        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name', 'id');
+        $states->prepend('N/A', 0);
         
-        $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code','id');
-        $countries->prepend('N/A',0); 
+        $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code', 'id');
+        $countries->prepend('N/A', 0);
         
         $defaults['state_province_id'] = STATE_PROVINCE_ID_TX;
         $defaults['country_id'] = COUNTRY_ID_USA;
         
-        $bishops = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_BISHOP);})->pluck('display_name','id');
-        $bishops->prepend('N/A',0); 
+        $bishops = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+            $query->where('group_id', '=', GROUP_ID_BISHOP);
+        })->pluck('display_name', 'id');
+        $bishops->prepend('N/A', 0);
         
-        return view('dioceses.create',compact('bishops','states','countries','defaults'));  
-    
+        return view('dioceses.create', compact('bishops', 'states', 'countries', 'defaults'));
     }
 
     /**
@@ -63,7 +63,8 @@ class DiocesesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $this->authorize('create-contact');
         $this->validate($request, [
             'organization_name' => 'required',
@@ -96,7 +97,7 @@ class DiocesesController extends Controller
             $diocese_address->city=$request->input('city');
             $diocese_address->state_province_id=$request->input('state_province_id');
             $diocese_address->postal_code=$request->input('postal_code');
-            $diocese_address->country_id=$request->input('country_id');  
+            $diocese_address->country_id=$request->input('country_id');
         $diocese_address->save();
         
         $diocese_main_phone= new \montserrat\Phone;
@@ -165,7 +166,9 @@ class DiocesesController extends Controller
 
 
         //TODO: add contact_id which is the id of the creator of the note
-        if (!empty($request->input('note'))); {
+        if (!empty($request->input('note'))) {
+            ;
+        } {
             $diocese_note = new \montserrat\Note;
             $diocese_note->entity_table = 'contact';
             $diocese_note->entity_id = $diocese->id;
@@ -183,7 +186,7 @@ class DiocesesController extends Controller
             $relationship_bishop->save();
         }
    
-return Redirect::action('DiocesesController@index');
+        return Redirect::action('DiocesesController@index');
     }
 
     /**
@@ -192,14 +195,14 @@ return Redirect::action('DiocesesController@index');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id)
+    {
         $this->authorize('show-contact');
-        $diocese = \montserrat\Contact::with('bishops.contact_b','parishes.contact_b','addresses.state','addresses.location','phones.location','emails.location','websites','notes','a_relationships.relationship_type','a_relationships.contact_b','b_relationships.relationship_type','b_relationships.contact_a','event_registrations')->findOrFail($id);
+        $diocese = \montserrat\Contact::with('bishops.contact_b', 'parishes.contact_b', 'addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations')->findOrFail($id);
         $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($diocese->id)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->get();
-        $relationship_types = array();
+        $relationship_types = [];
         $relationship_types["Primary Contact"] = "Primary Contact";
-        return view('dioceses.show',compact('diocese','relationship_types','files'));//
-    
+        return view('dioceses.show', compact('diocese', 'relationship_types', 'files'));//
     }
 
     /**
@@ -207,29 +210,32 @@ return Redirect::action('DiocesesController@index');
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     * 
+     *
      *  // TODO: make create and edit bishop id multi-select with all bishops defaulting to selected on edit
         // TODO: consider making one primary bishop with multi-select for seperate auxilary bishops (new relationship)
      */
-    public function edit($id) {
+    public function edit($id)
+    {
         $this->authorize('update-contact');
-        $diocese = \montserrat\Contact::with('bishops.contact_b','parishes.contact_b','address_primary.state','address_primary.location','phone_primary.location','phone_main_fax.location','email_primary.location','website_main','notes')->findOrFail($id);
+        $diocese = \montserrat\Contact::with('bishops.contact_b', 'parishes.contact_b', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
         if (empty($diocese->bishop)) {
             $diocese->bishop_id=0;
         } else {
             $diocese->bishop_id = $diocese->bishop->contact_id_b;
         }
-        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name','id');
-        $states->prepend('N/A',0); 
+        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name', 'id');
+        $states->prepend('N/A', 0);
         
-        $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code','id');
-        $countries->prepend('N/A',0); 
+        $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code', 'id');
+        $countries->prepend('N/A', 0);
         
         $defaults['state_province_id'] = STATE_PROVINCE_ID_TX;
         $defaults['country_id'] = COUNTRY_ID_USA;
         
-        $bishops = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {$query->where('group_id','=',GROUP_ID_BISHOP);})->pluck('display_name','id');
-        $bishops->prepend('N/A',0); 
+        $bishops = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+            $query->where('group_id', '=', GROUP_ID_BISHOP);
+        })->pluck('display_name', 'id');
+        $bishops->prepend('N/A', 0);
         //dd($diocese);
         $defaults['Main']['url']='';
         $defaults['Work']['url']='';
@@ -240,11 +246,11 @@ return Redirect::action('DiocesesController@index');
         $defaults['Twitter']['url']='';
 
 
-        foreach($diocese->websites as $website) {
+        foreach ($diocese->websites as $website) {
             $defaults[$website->website_type]['url'] = $website->url;
         }
               
-       return view('dioceses.edit',compact('diocese','bishops','states','countries','defaults'));
+        return view('dioceses.edit', compact('diocese', 'bishops', 'states', 'countries', 'defaults'));
     }
 
     /**
@@ -254,7 +260,8 @@ return Redirect::action('DiocesesController@index');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $this->authorize('update-contact');
         $this->validate($request, [
             'organization_name' => 'required',
@@ -276,7 +283,7 @@ return Redirect::action('DiocesesController@index');
 
         ]);
 
-        $diocese = \montserrat\Contact::with('bishops.contact_b','parishes.contact_b','address_primary.state','address_primary.location','phone_primary.location','phone_main_fax.location','email_primary.location','website_main','notes')->findOrFail($id);
+        $diocese = \montserrat\Contact::with('bishops.contact_b', 'parishes.contact_b', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
         $diocese->organization_name = $request->input('organization_name');
         $diocese->display_name  = $request->input('display_name');
         $diocese->sort_name  = $request->input('sort_name');
@@ -308,8 +315,8 @@ return Redirect::action('DiocesesController@index');
         
         if (empty($diocese->phone_main_fax)) {
                 $phone_main_fax = new \montserrat\Phone;
-            } else {
-                $phone_main_fax = \montserrat\Phone::findOrNew($diocese->phone_main_fax->id);
+        } else {
+            $phone_main_fax = \montserrat\Phone::findOrNew($diocese->phone_main_fax->id);
         }
         $phone_main_fax->contact_id=$diocese->id;
         $phone_main_fax->location_type_id=LOCATION_TYPE_MAIN;
@@ -379,17 +386,16 @@ return Redirect::action('DiocesesController@index');
         if (null !== $request->file('avatar')) {
             $description = 'Avatar for '.$diocese->organization_name;
             $attachment = new AttachmentsController;
-            $attachment->update_attachment($request->file('avatar'),'contact',$diocese->id,'avatar',$description);
+            $attachment->update_attachment($request->file('avatar'), 'contact', $diocese->id, 'avatar', $description);
         }
 
         if (null !== $request->file('attachment')) {
             $description = $request->input('attachment_description');
             $attachment = new AttachmentsController;
-            $attachment->update_attachment($request->file('attachment'),'contact',$diocese->id,'attachment',$description); 
+            $attachment->update_attachment($request->file('attachment'), 'contact', $diocese->id, 'attachment', $description);
         }
 
         return Redirect::action('DiocesesController@index');
-        
     }
 
     /**
@@ -398,7 +404,8 @@ return Redirect::action('DiocesesController@index');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $this->authorize('delete-contact');
          \montserrat\Contact::destroy($id);
         return Redirect::action('DiocesesController@index');

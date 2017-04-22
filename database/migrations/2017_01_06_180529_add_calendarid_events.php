@@ -10,11 +10,11 @@ class AddCalendaridEvents extends Migration
      *
      * @return void
      */
-    public function up() {
+    public function up()
+    {
         Schema::table('event', function ($table) {
-            $table->string('calendar_id')->nullable()->default(NULL);
+            $table->string('calendar_id')->nullable()->default(null);
         });
-
     }
 
     /**
@@ -27,6 +27,5 @@ class AddCalendaridEvents extends Migration
         Schema::table('event', function ($table) {
             $table->dropColumn('calendar_id');
         });
-    
     }
 }

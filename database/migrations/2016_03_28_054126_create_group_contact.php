@@ -16,9 +16,9 @@ class CreateGroupContact extends Migration
             $table->Increments('id')->unsigned;
             $table->integer('group_id');
             $table->integer('contact_id');
-            $table->enum('status',['Added','Removed','Pending'])->nullable()->default(NULL);
-            $table->integer('location_id')->nullable()->default(NULL);
-            $table->integer('email_id')->nullable()->default(NULL);
+            $table->enum('status', ['Added','Removed','Pending'])->nullable()->default(null);
+            $table->integer('location_id')->nullable()->default(null);
+            $table->integer('email_id')->nullable()->default(null);
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

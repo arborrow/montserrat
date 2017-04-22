@@ -17,7 +17,6 @@ class AddcolumnIsformerboardPersons extends Migration
             $table->Boolean('is_formerboard')->default('0')->nullable();
             $table->Boolean('is_jesuit')->default('0')->nullable();
         });
-
     }
 
     /**

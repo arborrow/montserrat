@@ -13,39 +13,42 @@ class Phone extends Model
     protected $fillable =  ['contact_id', 'location_type_id', 'is_primary', 'phone', 'phone_type'];
     
     
-    public function owner() {
-        return $this->belongsTo(Contact::class,'contact_id','id');
+    public function owner()
+    {
+        return $this->belongsTo(Contact::class, 'contact_id', 'id');
     }
     
-    public function location() {
-        return $this->belongsTo(LocationType::class,'location_type_id','id');
+    public function location()
+    {
+        return $this->belongsTo(LocationType::class, 'location_type_id', 'id');
     }
-    public function getPhoneExtensionAttribute() {
+    public function getPhoneExtensionAttribute()
+    {
         if (empty($this->phone_ext)) {
-            return NULL; 
-        }
-        else {
+            return null;
+        } else {
             return ','.$this->phone_ext;
         }
     }
 
-    public function setPhoneAttribute($phone) {
+    public function setPhoneAttribute($phone)
+    {
         $phone_extension = '';
         $phone_numeric = $phone;
-        $phone_numeric = str_replace(" ","",$phone_numeric);
-        $phone_numeric = str_replace("(","",$phone_numeric);
-        $phone_numeric = str_replace(")","",$phone_numeric);
-        $phone_numeric = str_replace("-","",$phone_numeric);
-        $phone_numeric = str_replace("ext.",",",$phone_numeric);
-        $phone_numeric = str_replace("x",",",$phone_numeric);
+        $phone_numeric = str_replace(" ", "", $phone_numeric);
+        $phone_numeric = str_replace("(", "", $phone_numeric);
+        $phone_numeric = str_replace(")", "", $phone_numeric);
+        $phone_numeric = str_replace("-", "", $phone_numeric);
+        $phone_numeric = str_replace("ext.", ",", $phone_numeric);
+        $phone_numeric = str_replace("x", ",", $phone_numeric);
         
-        if (strpos($phone_numeric,',') > 0) {
-            $phone_extension = substr($phone_numeric,strpos($phone_numeric,',')+1);
-            $phone_numeric = substr($phone_numeric,0,strpos($phone_numeric,','));
+        if (strpos($phone_numeric, ',') > 0) {
+            $phone_extension = substr($phone_numeric, strpos($phone_numeric, ',')+1);
+            $phone_numeric = substr($phone_numeric, 0, strpos($phone_numeric, ','));
         }
         
         if (strlen($phone_numeric) == 10) { // if US number then format
-            $phone_formatted = '('.substr($phone_numeric,0,3).') '.substr($phone_numeric,3,3).'-'.substr($phone_numeric,6,4);
+            $phone_formatted = '('.substr($phone_numeric, 0, 3).') '.substr($phone_numeric, 3, 3).'-'.substr($phone_numeric, 6, 4);
         } else { //if International then store as all numbers
             $phone_formatted = $phone_numeric;
         }
@@ -57,8 +60,6 @@ class Phone extends Model
             $this->attributes['phone'] = $phone_formatted;
             $this->attributes['phone_ext'] = $phone_extension;
             $this->attributes['phone_numeric'] = $phone_numeric;
-
-            }
+        }
     }
-
 }

@@ -13,8 +13,7 @@ class CreateTouchpointsTable extends Migration
     public function up()
     {
         //
-        Schema::create('touchpoints', function (Blueprint $table) 
-        {
+        Schema::create('touchpoints', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('person_id')->unsigned;
             $table->integer('staff_id')->unsigned;
@@ -25,7 +24,7 @@ class CreateTouchpointsTable extends Migration
             $table->timestamps();
            
         //
-        });  
+        });
     }
 
     /**
@@ -36,6 +35,6 @@ class CreateTouchpointsTable extends Migration
     public function down()
     {
         //
-         Schema::drop('touchpoints'); 
+         Schema::drop('touchpoints');
     }
 }

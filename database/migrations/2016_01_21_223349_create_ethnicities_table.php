@@ -14,12 +14,12 @@ class CreateEthnicitiesTable extends Migration
     {
         //
             Schema::create('ethnicities', function (Blueprint $table) {
-            $table->increments('id')->unsigned;
-            $table->string('ethnicity');
-            $table->Text('description');
-            $table->softDeletes();
-            $table->rememberToken();
-            $table->timestamps();
+                $table->increments('id')->unsigned;
+                $table->string('ethnicity');
+                $table->Text('description');
+                $table->softDeletes();
+                $table->rememberToken();
+                $table->timestamps();
             });
     }
 
@@ -33,5 +33,4 @@ class CreateEthnicitiesTable extends Migration
         //
            Schema::drop('ethnicities');
     }
-    
 }

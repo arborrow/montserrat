@@ -9,5 +9,4 @@ class DonationType extends Model
 {
     use SoftDeletes;
     protected $table = 'donation_type';
-
 }

@@ -15,19 +15,17 @@ class CreateLocationType extends Migration
         //
         Schema::create('location_type', function (Blueprint $table) {
             $table->Increments('id')->unsigned;
-            $table->string('name')->nullable()->default(NULL);
-            $table->string('display_name')->nullable()->default(NULL);
-            $table->string('vcard_name')->nullable()->default(NULL);
-            $table->text('description')->nullable()->default(NULL);
-            $table->Boolean('is_reserved')->nullable()->default(NULL);
-            $table->Boolean('is_active')->nullable()->default(NULL);
-            $table->Boolean('is_default')->nullable()->default(NULL);
+            $table->string('name')->nullable()->default(null);
+            $table->string('display_name')->nullable()->default(null);
+            $table->string('vcard_name')->nullable()->default(null);
+            $table->text('description')->nullable()->default(null);
+            $table->Boolean('is_reserved')->nullable()->default(null);
+            $table->Boolean('is_active')->nullable()->default(null);
+            $table->Boolean('is_default')->nullable()->default(null);
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
-        
-    });
-
+        });
     }
 
     /**
@@ -39,6 +37,5 @@ class CreateLocationType extends Migration
     {
         //
         Schema::drop('location_type');
-
     }
 }

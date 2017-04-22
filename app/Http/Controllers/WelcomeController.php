@@ -16,7 +16,7 @@ class WelcomeController extends Controller
     public function index()
     {
 
-    echo 'The Welcome Controller welcomes you!';   //
+        echo 'The Welcome Controller welcomes you!';   //
     }
 
     /**

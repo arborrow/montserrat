@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Gender extends Model
 {
-    use SoftDeletes; 
+    use SoftDeletes;
     protected $table = 'gender';
 }

@@ -9,5 +9,4 @@ class StateProvince extends Model
 {
     use SoftDeletes;
     protected $table = 'state_province';
-    
 }

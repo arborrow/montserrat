@@ -16,12 +16,11 @@ class AddcolumnRegistrations extends Migration
         
         //
         Schema::table('registrations', function ($table) {
-            $table->Timestamp('canceled_at')->nullable()->default(NULL);
-            $table->Timestamp('arrived_at')->nullable()->default(NULL);
-            $table->Timestamp('departed_at')->nullable()->default(NULL);
-            $table->Integer('room_id')->unsigned()->nullable()->default(NULL);
+            $table->Timestamp('canceled_at')->nullable()->default(null);
+            $table->Timestamp('arrived_at')->nullable()->default(null);
+            $table->Timestamp('departed_at')->nullable()->default(null);
+            $table->Integer('room_id')->unsigned()->nullable()->default(null);
         });
-    
     }
 
     /**

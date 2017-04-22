@@ -15,13 +15,11 @@ class CreateSuffixes extends Migration
             
         Schema::create('suffix', function (Blueprint $table) {
             $table->Increments('id')->unsigned;
-            $table->string('name')->nullable()->default(NULL);
+            $table->string('name')->nullable()->default(null);
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
-        
-    });
-    
+        });
     }
 
     /**

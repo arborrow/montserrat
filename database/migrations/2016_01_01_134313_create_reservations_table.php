@@ -26,8 +26,7 @@ class CreateReservationsTable extends Migration
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
-        });
-    
+         });
     }
 
     /**

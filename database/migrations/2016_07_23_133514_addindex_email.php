@@ -14,8 +14,7 @@ class AddindexEmail extends Migration
     {
         Schema::table('email', function ($table) {
             $table->index('contact_id');
-            });
-    
+        });
     }
 
     /**
@@ -27,7 +26,6 @@ class AddindexEmail extends Migration
     {
         Schema::table('email', function ($table) {
             $table->dropIndex('contact_id');
-            });
-    
+        });
     }
 }

@@ -21,7 +21,6 @@ class CreateRolecapsTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
-
     }
 
     /**
@@ -33,6 +32,5 @@ class CreateRolecapsTable extends Migration
     {
         //
         Schema::drop('rolecaps');
-
     }
 }

@@ -13,7 +13,8 @@ use Intervention\Image\Facades\Image;
 
 class OrganizationsController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
     }
 
@@ -21,26 +22,28 @@ class OrganizationsController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     * 
-     * //TODO: subcontact_type dependent on order in database which is less than ideal really looking for where not a parish or diocese organization 
-     * 
+     *
+     * //TODO: subcontact_type dependent on order in database which is less than ideal really looking for where not a parish or diocese organization
+     *
      */
-    public function index() {
+    public function index()
+    {
         $this->authorize('show-contact');
         $organizations = \montserrat\Contact::organizations_generic()->orderBy('organization_name', 'asc')->paginate(100);
-        $subcontact_types = \montserrat\ContactType::generic()->whereIsActive(1)->orderBy('label')->pluck('id','label');
+        $subcontact_types = \montserrat\ContactType::generic()->whereIsActive(1)->orderBy('label')->pluck('id', 'label');
         //dd($subcontact_types);
-        return view('organizations.index',compact('organizations','subcontact_types'));   //
+        return view('organizations.index', compact('organizations', 'subcontact_types'));   //
     }
-    public function index_type($subcontact_type_id) {
+    public function index_type($subcontact_type_id)
+    {
         $this->authorize('show-contact');
-        $subcontact_types = \montserrat\ContactType::generic()->whereIsActive(1)->orderBy('label')->pluck('id','label');
+        $subcontact_types = \montserrat\ContactType::generic()->whereIsActive(1)->orderBy('label')->pluck('id', 'label');
         $subcontact_type = \montserrat\ContactType::findOrFail($subcontact_type_id);
-        $defaults = array();
-        $defaults['type'] = $subcontact_type->label; 
+        $defaults = [];
+        $defaults['type'] = $subcontact_type->label;
         $organizations = \montserrat\Contact::organizations_generic()->whereSubcontactType($subcontact_type_id)->orderBy('organization_name', 'asc')->paginate(100);
         
-        return view('organizations.index',compact('organizations','subcontact_types','subcontact_types','defaults'));
+        return view('organizations.index', compact('organizations', 'subcontact_types', 'subcontact_types', 'defaults'));
     }
     
 
@@ -49,23 +52,23 @@ class OrganizationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         $this->authorize('create-contact');
-        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name','id');
-        $states->prepend('N/A',0); 
+        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name', 'id');
+        $states->prepend('N/A', 0);
         
-        $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code','id');
-        $countries->prepend('N/A',0); 
+        $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code', 'id');
+        $countries->prepend('N/A', 0);
         
         $defaults['state_province_id'] = STATE_PROVINCE_ID_TX;
         $defaults['country_id'] = COUNTRY_ID_USA;
                 
-        $subcontact_types = \montserrat\ContactType::whereIsReserved(FALSE)->whereIsActive(TRUE)->pluck('label','id');
-        $subcontact_types->prepend('N/A',0); 
+        $subcontact_types = \montserrat\ContactType::whereIsReserved(false)->whereIsActive(true)->pluck('label', 'id');
+        $subcontact_types->prepend('N/A', 0);
 
       
-        return view('organizations.create',compact('subcontact_types','states','countries','defaults'));  
-    
+        return view('organizations.create', compact('subcontact_types', 'states', 'countries', 'defaults'));
     }
 
     /**
@@ -74,7 +77,8 @@ class OrganizationsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $this->authorize('show-contact');
         $this->validate($request, [
             'organization_name' => 'required',
@@ -107,7 +111,7 @@ class OrganizationsController extends Controller
             $organization_address->city=$request->input('city');
             $organization_address->state_province_id=$request->input('state_province_id');
             $organization_address->postal_code=$request->input('postal_code');
-            $organization_address->country_id=$request->input('country_id');  
+            $organization_address->country_id=$request->input('country_id');
         $organization_address->save();
         
         $organization_main_phone= new \montserrat\Phone;
@@ -134,7 +138,9 @@ class OrganizationsController extends Controller
         
         
         //TODO: add contact_id which is the id of the creator of the note
-        if (!empty($request->input('note'))); {
+        if (!empty($request->input('note'))) {
+            ;
+        } {
             $organization_note = new \montserrat\Note;
             $organization_note->entity_table = 'contact';
             $organization_note->entity_id = $organization->id;
@@ -194,17 +200,17 @@ class OrganizationsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id)
+    {
         $this->authorize('show-contact');
-        $organization = \montserrat\Contact::with('addresses.state','addresses.location','phones.location','emails.location','websites','notes','phone_main_phone.location','a_relationships.relationship_type','a_relationships.contact_b','b_relationships.relationship_type','b_relationships.contact_a','event_registrations')->findOrFail($id);
+        $organization = \montserrat\Contact::with('addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'phone_main_phone.location', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations')->findOrFail($id);
        
         $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($organization->id)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->get();
-        $relationship_types = array();
+        $relationship_types = [];
         $relationship_types["Employer"] = "Employer";
         $relationship_types["Primary Contact"] = "Primary Contact";
 
-       return view('organizations.show',compact('organization','files','relationship_types'));//
-    
+        return view('organizations.show', compact('organization', 'files', 'relationship_types'));//
     }
 
     /**
@@ -212,20 +218,21 @@ class OrganizationsController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     * 
+     *
      * // TODO: make create and edit bishop id multi-select with all bishops defaulting to selected on edit
-     * // TODO: consider making one primary bishop with multi-select for seperate auxilary bishops (new relationship) 
-     * 
+     * // TODO: consider making one primary bishop with multi-select for seperate auxilary bishops (new relationship)
+     *
      */
-    public function edit($id) {
+    public function edit($id)
+    {
         $this->authorize('update-contact');
-        $organization = \montserrat\Contact::with('address_primary.state','address_primary.location','phone_main_phone.location','phone_main_fax.location','email_primary.location','website_main','notes')->findOrFail($id);
+        $organization = \montserrat\Contact::with('address_primary.state', 'address_primary.location', 'phone_main_phone.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
 
-        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name','id');
-        $states->prepend('N/A',0); 
+        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name', 'id');
+        $states->prepend('N/A', 0);
         
-        $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code','id');
-        $countries->prepend('N/A',0); 
+        $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code', 'id');
+        $countries->prepend('N/A', 0);
         
         $defaults['state_province_id'] = STATE_PROVINCE_ID_TX;
         $defaults['country_id'] = COUNTRY_ID_USA;
@@ -239,16 +246,16 @@ class OrganizationsController extends Controller
         $defaults['Twitter']['url']='';
 
 
-        foreach($organization->websites as $website) {
+        foreach ($organization->websites as $website) {
             $defaults[$website->website_type]['url'] = $website->url;
         }
 
-        $subcontact_types = \montserrat\ContactType::whereIsReserved(FALSE)->whereIsActive(TRUE)->pluck('label','id');
-        $subcontact_types->prepend('N/A',0); 
+        $subcontact_types = \montserrat\ContactType::whereIsReserved(false)->whereIsActive(true)->pluck('label', 'id');
+        $subcontact_types->prepend('N/A', 0);
         
         //dd($organization);
               
-       return view('organizations.edit',compact('organization','states','countries','defaults','subcontact_types'));
+        return view('organizations.edit', compact('organization', 'states', 'countries', 'defaults', 'subcontact_types'));
     }
 
     /**
@@ -258,7 +265,8 @@ class OrganizationsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $this->authorize('update-contact');
         $this->validate($request, [
             'organization_name' => 'required',
@@ -277,7 +285,7 @@ class OrganizationsController extends Controller
             'attachment_description' => 'string|max:200',
         ]);
 
-        $organization = \montserrat\Contact::with('address_primary.state','address_primary.location','phone_main_phone.location','phone_main_fax.location','email_primary.location','website_main','note_organization')->findOrFail($id);
+        $organization = \montserrat\Contact::with('address_primary.state', 'address_primary.location', 'phone_main_phone.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'note_organization')->findOrFail($id);
         $organization->organization_name = $request->input('organization_name');
         $organization->display_name = $request->input('organization_name');
         $organization->sort_name  = $request->input('sort_name');
@@ -307,7 +315,6 @@ class OrganizationsController extends Controller
             $phone_primary = new \montserrat\Phone;
         } else {
             $phone_primary = \montserrat\Phone::findOrNew($organization->phone_main_phone->id);
-        
         }
         $phone_primary->contact_id=$organization->id;
         $phone_primary->location_type_id=LOCATION_TYPE_MAIN;
@@ -318,8 +325,8 @@ class OrganizationsController extends Controller
         
         if (empty($organization->phone_main_fax)) {
                 $phone_main_fax = new \montserrat\Phone;
-            } else {
-                $phone_main_fax = \montserrat\Phone::findOrNew($organization->phone_main_fax->id);
+        } else {
+            $phone_main_fax = \montserrat\Phone::findOrNew($organization->phone_main_fax->id);
         }
         $phone_main_fax->contact_id=$organization->id;
         $phone_main_fax->location_type_id=LOCATION_TYPE_MAIN;
@@ -352,14 +359,13 @@ class OrganizationsController extends Controller
         if (null !== $request->file('avatar')) {
             $description = 'Avatar for '.$organization->organization_name;
             $attachment = new AttachmentsController;
-            $attachment->update_attachment($request->file('avatar'),'contact',$organization->id,'avatar',$description);
-
+            $attachment->update_attachment($request->file('avatar'), 'contact', $organization->id, 'avatar', $description);
         }
 
         if (null !== $request->file('attachment')) {
             $description = $request->input('attachment_description');
             $attachment = new AttachmentsController;
-            $attachment->update_attachment($request->file('attachment'),'contact',$organization->id,'attachment',$description); 
+            $attachment->update_attachment($request->file('attachment'), 'contact', $organization->id, 'attachment', $description);
         }
                 
         $url_main = \montserrat\Website::firstOrNew(['contact_id'=>$organization->id,'website_type'=>'Main']);
@@ -404,8 +410,7 @@ class OrganizationsController extends Controller
             $url_twitter->website_type='Twitter';
         $url_twitter->save();
 
-       return Redirect::action('OrganizationsController@index');
-        
+        return Redirect::action('OrganizationsController@index');
     }
 
     /**
@@ -413,9 +418,9 @@ class OrganizationsController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     * 
+     *
      * // TODO: delete addresses, emails, webpages, and phone numbers for persons, parishes, dioceses and organizations
-     * 
+     *
      */
     public function destroy($id)
     {
