@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace montserrat\Http\Controllers\Auth;
 
-use App\User;
+use montserrat\User;
 use Validator;
-use App\Http\Controllers\Controller;
+use montserrat\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
