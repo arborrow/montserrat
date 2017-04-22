@@ -2,6 +2,7 @@
 
 namespace montserrat;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -17,6 +18,7 @@ class User extends Model implements
     AuthorizableContract,
     CanResetPasswordContract
 {
+    use Notifiable;
     use Authenticatable, Authorizable, CanResetPassword, HasRoles;
 //    use Authenticatable, Authorizable, CanResetPassword, EntrustUserTrait 
 //            {EntrustUserTrait::can as may;
