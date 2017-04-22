@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Religion extends Model
 {
-    use SoftDeletes; 
+    use SoftDeletes;
     protected $table = 'religion';
 }

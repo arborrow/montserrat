@@ -14,9 +14,8 @@ class AddcolumnDonoridPersons extends Migration
     {
         //
         Schema::table('persons', function ($table) {
-            $table->Integer('donor_id')->unique()->nullable()->default(NULL);
+            $table->Integer('donor_id')->unique()->nullable()->default(null);
         });
-    
     }
 
     /**
@@ -29,6 +28,6 @@ class AddcolumnDonoridPersons extends Migration
         //
          Schema::table('persons', function ($table) {
             $table->dropColumn('donor_id');
-        });
+         });
     }
 }

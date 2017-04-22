@@ -15,19 +15,18 @@ class CreateCountry extends Migration
         //
         Schema::create('country', function (Blueprint $table) {
             $table->Increments('id')->unsigned;
-            $table->string('name')->nullable()->default(NULL);
-            $table->string('iso_code')->nullable()->default(NULL);
-            $table->string('country_code')->nullable()->default(NULL);
-            $table->integer('address_format_id')->nullable()->default(NULL);
-            $table->string('idd_prefix')->nullable()->default(NULL);
-            $table->string('ndd_prefix')->nullable()->default(NULL);
-            $table->integer('region_id')->nullable()->default(NULL);
+            $table->string('name')->nullable()->default(null);
+            $table->string('iso_code')->nullable()->default(null);
+            $table->string('country_code')->nullable()->default(null);
+            $table->integer('address_format_id')->nullable()->default(null);
+            $table->string('idd_prefix')->nullable()->default(null);
+            $table->string('ndd_prefix')->nullable()->default(null);
+            $table->integer('region_id')->nullable()->default(null);
             $table->boolean('is_province_abbreviated')->default(0);
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
-        
-    });
+        });
     }
 
     /**

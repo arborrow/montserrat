@@ -23,7 +23,6 @@ class CreateJesuitsTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
-
     }
 
     /**
@@ -35,6 +34,5 @@ class CreateJesuitsTable extends Migration
     {
         //
              Schema::drop('jesuits');
-
     }
 }

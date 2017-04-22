@@ -30,7 +30,7 @@ class CreateDiocesesTable extends Migration
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
-    });
+         });
     }
 
     /**

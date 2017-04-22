@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Redirect;
 
 class RelationshipsController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
     }
     /**
@@ -16,11 +17,11 @@ class RelationshipsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
         $this->authorize('show-relationship');
         $relationships = \montserrat\Relationship::paginate(100);
-        return view('relationships.index',compact('relationships'));   //
-    
+        return view('relationships.index', compact('relationships'));   //
     }
 
     /**
@@ -28,9 +29,9 @@ class RelationshipsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         $this->authorize('create-relationship');
-        
     }
 
     /**
@@ -39,7 +40,8 @@ class RelationshipsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $this->authorize('create-relationship');
     }
 
@@ -49,7 +51,8 @@ class RelationshipsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id)
+    {
         $this->authorize('show-relationship');
     }
 
@@ -59,7 +62,8 @@ class RelationshipsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit($id)
+    {
         $this->authorize('update-relationship');
     }
 
@@ -70,7 +74,8 @@ class RelationshipsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $this->authorize('update-relationship');
     }
 
@@ -80,7 +85,8 @@ class RelationshipsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $this->authorize('delete-relationship');
         \montserrat\Relationship::destroy($id);
         return Redirect::back();

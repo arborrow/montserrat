@@ -11,7 +11,8 @@ use Carbon\Carbon;
 
 class RoomsController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
     }
 
@@ -20,16 +21,17 @@ class RoomsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
         $this->authorize('show-room');
-        $rooms = \montserrat\Room::orderBy('building_id', 'asc','name','asc')->get();
+        $rooms = \montserrat\Room::orderBy('building_id', 'asc', 'name', 'asc')->get();
         foreach ($rooms as $room) {
             $room->building = \montserrat\Location::findOrFail($room->building_id)->name;
-           
         }
-        $roomsort = $rooms->sortBy(function($building) {
-         return sprintf('%-12s%s',$building->building,$building->name);});
-        return view('rooms.index',compact('roomsort'));   //
+        $roomsort = $rooms->sortBy(function ($building) {
+            return sprintf('%-12s%s', $building->building, $building->name);
+        });
+        return view('rooms.index', compact('roomsort'));   //
     }
 
     /**
@@ -37,10 +39,11 @@ class RoomsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         $this->authorize('create-room');
-        $locations = \montserrat\Location::orderby('name')->pluck('name','id');
-        return view('rooms.create',compact('locations'));  
+        $locations = \montserrat\Location::orderby('name')->pluck('name', 'id');
+        return view('rooms.create', compact('locations'));
     }
 
     /**
@@ -49,7 +52,8 @@ class RoomsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $this->authorize('create-room');
         $this->validate($request, [
             'name' => 'required',
@@ -77,12 +81,13 @@ class RoomsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id)
+    {
         $this->authorize('show-room');
         $room = \montserrat\Room::findOrFail($id);
         $building =  \montserrat\Room::findOrFail($id)->location;
         $room->building = $building->name;
-        return view('rooms.show',compact('room'));//
+        return view('rooms.show', compact('room'));//
     }
 
     /**
@@ -91,11 +96,12 @@ class RoomsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit($id)
+    {
         $this->authorize('update-room');
-        $locations = \montserrat\Location::orderby('name')->pluck('name','id');
+        $locations = \montserrat\Location::orderby('name')->pluck('name', 'id');
         $room= \montserrat\Room::findOrFail($id);
-        return view('rooms.edit',compact('room','locations'));
+        return view('rooms.edit', compact('room', 'locations'));
     }
 
     /**
@@ -105,7 +111,8 @@ class RoomsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $this->authorize('update-room');
         $this->validate($request, [
             'name' => 'required',
@@ -133,7 +140,8 @@ class RoomsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $this->authorize('delete-room');
         \montserrat\Room::destroy($id);
         return Redirect::action('RoomsController@index');
@@ -145,12 +153,13 @@ class RoomsController extends Controller
      * @param  int  $ym
      * @return \Illuminate\Http\Response
      */
-    public function schedule($ym = null, $building = null) {   
+    public function schedule($ym = null, $building = null)
+    {
         $this->authorize('show-room');
         if ((!isset($ym)) or ($ym==0)) {
             $dt = Carbon::now();
             //dd($dt);
-        } else{
+        } else {
             if (!$dt = Carbon::parse($ym)) {
                     return view('404');
             }
@@ -158,26 +167,26 @@ class RoomsController extends Controller
         $upcoming = clone $dt;
         $previous_dt = clone $dt;
         $prev_path=url('rooms/'.$previous_dt->subDays(31)->format('Ymd'));
-        $previous_link = '<a href="'.$prev_path.'">&#171;</a>'; 
+        $previous_link = '<a href="'.$prev_path.'">&#171;</a>';
         $dts[0] = $dt;
         //dd($dts);
-        for ($i=1; $i<=31;$i++) {
+        for ($i=1; $i<=31; $i++) {
             $dts[$i] = Carbon::parse($upcoming->addDays((1)));
         }
         
         $next_path=url('rooms/'.$upcoming->format('Ymd'));
-        $next_link = '<a href="'.$next_path.'">&#187;</a>'; 
+        $next_link = '<a href="'.$next_path.'">&#187;</a>';
         
         $rooms = \montserrat\Room::with('location')->get();
-        $roomsort = $rooms->sortBy(function($room) {
+        $roomsort = $rooms->sortBy(function ($room) {
             return sprintf('%-12s%s', $room->building_id, $room->name);
         });
         
-        $registrations_start = \montserrat\Registration::with('room','room.location','retreatant','retreat')->whereNull('canceled_at')->where('room_id','>',0)->whereHas('retreat', function($query) use ($dts) {
-            $query->where('start_date','>=',$dts[0])->where('start_date','<=',$dts[30]);
+        $registrations_start = \montserrat\Registration::with('room', 'room.location', 'retreatant', 'retreat')->whereNull('canceled_at')->where('room_id', '>', 0)->whereHas('retreat', function ($query) use ($dts) {
+            $query->where('start_date', '>=', $dts[0])->where('start_date', '<=', $dts[30]);
         })->get();
-        $registrations_end = \montserrat\Registration::with('room','room.location','retreatant','retreat')->whereNull('canceled_at')->where('room_id','>',0)->whereHas('retreat', function($query) use ($dts) {
-            $query->where('end_date','>=',$dts[0])->where('start_date','<=',$dts[0]);
+        $registrations_end = \montserrat\Registration::with('room', 'room.location', 'retreatant', 'retreat')->whereNull('canceled_at')->where('room_id', '>', 0)->whereHas('retreat', function ($query) use ($dts) {
+            $query->where('end_date', '>=', $dts[0])->where('start_date', '<=', $dts[0]);
         })->get();
         
         // create matrix of rooms and dates
@@ -185,35 +194,31 @@ class RoomsController extends Controller
             foreach ($dts as $dt) {
                 //dd($dt);
                 $m[$room->id][$dt->toDateString()]['status'] = 'A';
-                $m[$room->id][$dt->toDateString()]['registration_id'] = NULL;
-                $m[$room->id][$dt->toDateString()]['retreatant_id'] = NULL;
-                $m[$room->id][$dt->toDateString()]['retreatant_name'] = NULL;
+                $m[$room->id][$dt->toDateString()]['registration_id'] = null;
+                $m[$room->id][$dt->toDateString()]['retreatant_id'] = null;
+                $m[$room->id][$dt->toDateString()]['retreatant_name'] = null;
                 
                 $m[$room->id]['room'] = $room->name;
                 $m[$room->id]['building'] = $room->location->name;
                 $m[$room->id]['occupancy'] = $room->occupancy;
-                
-            
             }
         }
         
-        /* 
+        /*
          * for each registration, get the number of days 
          * for each day, check if the status is set (in other words it is in the room schedule matrix)
          * if it is in the matrix update the status to reserved
          */
         
         foreach ($registrations_start as $registration) {
-            
             $numdays = ($registration->retreat->end_date->diffInDays($registration->retreat->start_date));
-            for ($i=0; $i<=$numdays;$i++) {
+            for ($i=0; $i<=$numdays; $i++) {
                 $matrixdate = $registration->retreat->start_date->copy()->addDays($i);
-                if (array_key_exists($matrixdate->toDateString(),$m[$registration->room_id])) {
+                if (array_key_exists($matrixdate->toDateString(), $m[$registration->room_id])) {
                         $m[$registration->room_id][$matrixdate->toDateString()]['status']='R';
-                        if (!empty($registration->arrived_at) && empty($registration->departed_at)) {
-                            $m[$registration->room_id][$matrixdate->toDateString()]['status']='O';
-                        
-                        }
+                    if (!empty($registration->arrived_at) && empty($registration->departed_at)) {
+                        $m[$registration->room_id][$matrixdate->toDateString()]['status']='O';
+                    }
                         $m[$registration->room_id][$matrixdate->toDateString()]['registration_id']=$registration->id;
                         $m[$registration->room_id][$matrixdate->toDateString()]['retreatant_id']=$registration->contact_id;
                         $m[$registration->room_id][$matrixdate->toDateString()]['retreatant_name']= $registration->retreatant->display_name;
@@ -223,22 +228,20 @@ class RoomsController extends Controller
                          * I am thinking about using diffInDays to see if the retreatant arrived on the day that we are looking at or sooner
                          * If they have not yet arrived then the first day should be reserved but not occupied. 
                          * Occupied will be the same link to the registration. 
-                         */                  
-                     }
-        
+                         */
+                }
             }
         }
         foreach ($registrations_end as $registration) {
-            
             $numdays = ($registration->retreat->end_date->diffInDays($registration->retreat->start_date));
             
-            for ($i=0; $i<=$numdays;$i++) {
+            for ($i=0; $i<=$numdays; $i++) {
                 $matrixdate = $registration->retreat->start_date->copy()->addDays($i);
-                if (array_key_exists($matrixdate->toDateString(),$m[$registration->room_id])) {
+                if (array_key_exists($matrixdate->toDateString(), $m[$registration->room_id])) {
                         $m[$registration->room_id][$matrixdate->toDateString()]['status']='R';
-                        if (!empty($registration->arrived_at) && empty($registration->departed_at)) {
-                            $m[$registration->room_id][$matrixdate->toDateString()]['status']='O';
-                        }
+                    if (!empty($registration->arrived_at) && empty($registration->departed_at)) {
+                        $m[$registration->room_id][$matrixdate->toDateString()]['status']='O';
+                    }
                         $m[$registration->room_id][$matrixdate->toDateString()]['registration_id']=$registration->id;
                         $m[$registration->room_id][$matrixdate->toDateString()]['retreatant_id']=$registration->contact_id;
                         $m[$registration->room_id][$matrixdate->toDateString()]['retreatant_name']= $registration->retreatant->display_name;
@@ -248,11 +251,10 @@ class RoomsController extends Controller
                          * I am thinking about using diffInDays to see if the retreatant arrived on the day that we are looking at or sooner
                          * If they have not yet arrived then the first day should be reserved but not occupied. 
                          * Occupied will be the same link to the registration. 
-                         */                  
-                     }
-        
+                         */
+                }
             }
         }
-        return view('rooms.sched2',compact('dts','roomsort','m','previous_link','next_link'));
+        return view('rooms.sched2', compact('dts', 'roomsort', 'm', 'previous_link', 'next_link'));
     }
 }

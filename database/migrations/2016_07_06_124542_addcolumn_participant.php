@@ -13,17 +13,16 @@ class AddcolumnParticipant extends Migration
     public function up()
     {
         Schema::table('participant', function ($table) {
-            $table->datetime('registration_confirm_date')->nullable()->default(NULL);
-            $table->datetime('attendance_confirm_date')->nullable()->default(NULL);
-            $table->string('confirmed_by')->nullable()->default(NULL);
-            $table->text('notes')->nullable()->default(NULL);
-            $table->decimal('deposit',7,2)->default(0.00);
-            $table->datetime('canceled_at')->nullable()->default(NULL);
-            $table->datetime('arrived_at')->nullable()->default(NULL);
-            $table->datetime('departed_at')->nullable()->default(NULL);
-            $table->Integer('room_id')->unsigned()->nullable()->default(NULL);
+            $table->datetime('registration_confirm_date')->nullable()->default(null);
+            $table->datetime('attendance_confirm_date')->nullable()->default(null);
+            $table->string('confirmed_by')->nullable()->default(null);
+            $table->text('notes')->nullable()->default(null);
+            $table->decimal('deposit', 7, 2)->default(0.00);
+            $table->datetime('canceled_at')->nullable()->default(null);
+            $table->datetime('arrived_at')->nullable()->default(null);
+            $table->datetime('departed_at')->nullable()->default(null);
+            $table->Integer('room_id')->unsigned()->nullable()->default(null);
         });
-    
     }
 
     /**
@@ -44,7 +43,6 @@ class AddcolumnParticipant extends Migration
             $table->dropColumn('departed_at');
             $table->dropColumn('room_id');
             $table->dropColumn('');
-            });
-
+         });
     }
 }

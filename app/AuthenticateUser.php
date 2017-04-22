@@ -1,38 +1,45 @@
 <?php namespace montserrat;
+
 // AuthenticateUser.php 
-use Illuminate\Contracts\Auth\Guard; 
-use Laravel\Socialite\Contracts\Factory as Socialite; 
-use montserrat\UserRepository; 
-use Request; 
+use Illuminate\Contracts\Auth\Guard;
+use Laravel\Socialite\Contracts\Factory as Socialite;
+use montserrat\UserRepository;
+use Request;
 
-class AuthenticateUser {     
+class AuthenticateUser
+{
 
-     private $socialite;
-     private $auth;
-     private $users;
+    private $socialite;
+    private $auth;
+    private $users;
 
-     public function __construct(Socialite $socialite, Guard $auth, UserRepository $users) {   
+    public function __construct(Socialite $socialite, Guard $auth, UserRepository $users)
+    {
         $this->socialite = $socialite;
         $this->users = $users;
         $this->auth = $auth;
     }
 
-    public function execute($request, $listener, $provider) {
+    public function execute($request, $listener, $provider)
+    {
        
-       if (!$request) return $this->getAuthorizationFirst($provider);
-       $user = $this->users->findByUserNameOrCreate($this->getSocialUser($provider));
+        if (!$request) {
+            return $this->getAuthorizationFirst($provider);
+        }
+        $user = $this->users->findByUserNameOrCreate($this->getSocialUser($provider));
 
-       $this->auth->login($user, true);
+        $this->auth->login($user, true);
 
-       return $listener->userHasLoggedIn($user);
+        return $listener->userHasLoggedIn($user);
     }
 
-    private function getAuthorizationFirst($provider) { 
+    private function getAuthorizationFirst($provider)
+    {
         return $this->socialite->driver($provider)->redirect();
     }
 
-    private function getSocialUser($provider) {
+    private function getSocialUser($provider)
+    {
         return $this->socialite->driver($provider)->user();
     }
 }
-

@@ -14,8 +14,8 @@ class AddcolumnsPhone extends Migration
     {
         //
         Schema::table('phone', function ($table) {
-           $table->enum('phone_type',['Phone','Mobile','Fax','Pager','Voicemail','Other'])->nullable()->default(NULL);
-           $table->enum('mobile_provider',['Sprint','Verizon','Cingular','AT&T','T-Mobile','MetroPCS','US Cellular','Other'])->nullable()->default(NULL);  
+            $table->enum('phone_type', ['Phone','Mobile','Fax','Pager','Voicemail','Other'])->nullable()->default(null);
+            $table->enum('mobile_provider', ['Sprint','Verizon','Cingular','AT&T','T-Mobile','MetroPCS','US Cellular','Other'])->nullable()->default(null);
         });
     }
 
@@ -30,6 +30,6 @@ class AddcolumnsPhone extends Migration
          Schema::table('phone', function ($table) {
             $table->dropColumn('phone_type');
             $table->dropColumn('mobile_provider');
-        });
+         });
     }
 }

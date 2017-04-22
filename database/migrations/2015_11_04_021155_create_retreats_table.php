@@ -12,8 +12,7 @@ class CreateRetreatsTable extends Migration
      */
     public function up()
     {
-     Schema::create('retreats', function (Blueprint $table) 
-        {
+        Schema::create('retreats', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('idnumber')->unsigned;
             $table->string('title');
@@ -22,7 +21,7 @@ class CreateRetreatsTable extends Migration
             $table->timestamp('end');
             $table->string('type');
             $table->boolean('silent');
-            $table->decimal('amount',6,2);
+            $table->decimal('amount', 6, 2);
             $table->integer('year')->unsigned;
             $table->integer('attending')->unsigned;
             $table->integer('directorid')->unsigned;
@@ -31,9 +30,9 @@ class CreateRetreatsTable extends Migration
             $table->softDeletes();
             $table->timestamps();
            
-        //
-        });  
-     }
+              //
+        });
+    }
 
     /**
      * Reverse the migrations.
@@ -43,6 +42,5 @@ class CreateRetreatsTable extends Migration
     public function down()
     {
         Schema::drop('retreats'); //
-        
     }
 }

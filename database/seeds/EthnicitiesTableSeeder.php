@@ -12,33 +12,32 @@ class EthnicitiesTableSeeder extends Seeder
     {
         // TestDummy::times(20)->create('App\Post');
           Ethnicity::create([
-			'ethnicity' => 'Unspecified',
+            'ethnicity' => 'Unspecified',
                         
-		]);
+          ]);
           Ethnicity::create([
-			'ethnicity' => 'Asian',
+            'ethnicity' => 'Asian',
                         
-		]);
+          ]);
           Ethnicity::create([
-			'ethnicity' => 'Black',
+            'ethnicity' => 'Black',
                         
-		]);
+          ]);
           Ethnicity::create([
-			'ethnicity' => 'Native',
+            'ethnicity' => 'Native',
                         
-		]);
+          ]);
           Ethnicity::create([
-			'ethnicity' => 'Pacific',
+            'ethnicity' => 'Pacific',
                         
-		]);
+          ]);
           Ethnicity::create([
-			'ethnicity' => 'White',
+            'ethnicity' => 'White',
                         
-		]);
+          ]);
           Ethnicity::create([
-			'ethnicity' => 'Other',
+            'ethnicity' => 'Other',
                         
-		]);
-        
+          ]);
     }
 }

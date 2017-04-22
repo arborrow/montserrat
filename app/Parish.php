@@ -12,15 +12,18 @@ class Parish extends Model
     protected $table = 'parishes';
 
     //
-    public function diocese() {
-        return $this->belongsTo(Diocese::class,'diocese_id','id');
+    public function diocese()
+    {
+        return $this->belongsTo(Diocese::class, 'diocese_id', 'id');
     }
 
-    public function parishioners() {
-        return $this->hasMany(Relationship::class,'contact_id_a','id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_PARISHIONER);
+    public function parishioners()
+    {
+        return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_PARISHIONER);
     }
     
-    public function pastor() {
-        return $this->hasOne(Person::class,'id','pastor_id');
+    public function pastor()
+    {
+        return $this->hasOne(Person::class, 'id', 'pastor_id');
     }
 }

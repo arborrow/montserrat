@@ -14,15 +14,15 @@ class CreateLocationsTable extends Migration
     {
         //
             Schema::create('locations', function (Blueprint $table) {
-            $table->bigIncrements('id')->unsigned;
-            $table->string('name')->unique();
-            $table->text('description')->nullable();
-            $table->integer('occupancy')->nullable();
-            $table->mediumText('notes')->nullable();
-            $table->softDeletes();
-            $table->rememberToken();
-            $table->timestamps();
-        });
+                $table->bigIncrements('id')->unsigned;
+                $table->string('name')->unique();
+                $table->text('description')->nullable();
+                $table->integer('occupancy')->nullable();
+                $table->mediumText('notes')->nullable();
+                $table->softDeletes();
+                $table->rememberToken();
+                $table->timestamps();
+            });
     }
 
     /**

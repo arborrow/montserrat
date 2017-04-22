@@ -15,17 +15,16 @@ class CreateGender extends Migration
         
         Schema::create('gender', function (Blueprint $table) {
             $table->increments('id')->unsigned;
-            $table->string('label')->nullable()->default(NULL);
-            $table->string('value')->nullable()->default(NULL);
-            $table->string('name')->nullable()->default(NULL);
+            $table->string('label')->nullable()->default(null);
+            $table->string('value')->nullable()->default(null);
+            $table->string('name')->nullable()->default(null);
             $table->boolean('is_active')->nullable()->default(0);
             $table->boolean('is_default')->nullable()->default(0);
-            $table->integer('weight')->nullable()->default(NULL)->unsigned;
+            $table->integer('weight')->nullable()->default(null)->unsigned;
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
-        
-    });
+        });
     }
 
     /**

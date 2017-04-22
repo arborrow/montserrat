@@ -16,16 +16,15 @@ class CreateNote extends Migration
             $table->Increments('id')->unsigned;
             $table->string('entity_table');
             $table->integer('entity_id');
-            $table->text('note')->nullable()->default(NULL);
-            $table->integer('contact_id')->nullable()->default(NULL);
+            $table->text('note')->nullable()->default(null);
+            $table->integer('contact_id')->nullable()->default(null);
             $table->timestamp('modified_date');
-            $table->string('subject')->nullable()->default(NULL);
-            $table->string('privacy')->nullable()->default(NULL);
+            $table->string('subject')->nullable()->default(null);
+            $table->string('privacy')->nullable()->default(null);
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
-        
-    });
+        });
     }
 
     /**

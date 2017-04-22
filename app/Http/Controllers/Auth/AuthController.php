@@ -4,14 +4,14 @@ namespace montserrat\Http\Controllers\Auth;
 
 use montserrat\User;
 use montserrat\AuthenticateUser;
-use montserrat\UserRepository; 
+use montserrat\UserRepository;
 use Validator;
 use montserrat\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Socialite;
 use Illuminate\Http\Request;
-use Auth; 
+use Auth;
 use Session;
 use Redirect;
 
@@ -92,9 +92,9 @@ class AuthController extends Controller
             return Redirect::to('login/google');
         }
 
-        if (isset($user->user['domain'])) { 
+        if (isset($user->user['domain'])) {
             $domain = $user->user['domain'];
-                if (!($domain == config('polanco.socialite_domain_restriction'))) {
+            if (!($domain == config('polanco.socialite_domain_restriction'))) {
                 return Redirect::to('restricted');
             }
         } else {
@@ -105,29 +105,29 @@ class AuthController extends Controller
         $currentuser = $authuser->findByUserNameOrCreate($user);
         //dd($currentuser);
        //$this->auth->login($user, true);
-       Auth::login($currentuser, true);
-       return $this->userHasLoggedIn($currentuser);
+        Auth::login($currentuser, true);
+        return $this->userHasLoggedIn($currentuser);
         // return redirect('/');
         // echo $user->name.' ('.$user->email.') is logged in';
 
         // $user->token;
     }
     
-    public function login(AuthenticateUser $authenticateUser, Request $request, $provider = 'google') 
+    public function login(AuthenticateUser $authenticateUser, Request $request, $provider = 'google')
     {
-       //dd($provider); 
-       return $authenticateUser->execute($request->all(), $this, $provider);
+       //dd($provider);
+        return $authenticateUser->execute($request->all(), $this, $provider);
     }
-    public function logout(AuthenticateUser $authenticateUser, Request $request, $provider = 'google') 
+    public function logout(AuthenticateUser $authenticateUser, Request $request, $provider = 'google')
     {
         Auth::logout();
         return redirect('/');
     }
     
-    public function userHasLoggedIn($user) 
+    public function userHasLoggedIn($user)
     {
     //    dd($user);
-    Session::flash('message', 'Welcome, ' . $user->username);
-    return redirect()->route('welcome');
+        Session::flash('message', 'Welcome, ' . $user->username);
+        return redirect()->route('welcome');
     }
 }

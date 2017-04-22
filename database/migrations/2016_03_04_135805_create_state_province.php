@@ -15,14 +15,13 @@ class CreateStateProvince extends Migration
         //
         Schema::create('state_province', function (Blueprint $table) {
             $table->Increments('id')->unsigned;
-            $table->string('name')->nullable()->default(NULL);
-            $table->string('abbreviation')->nullable()->default(NULL);
-            $table->Integer('country_id')->nullable()->default(NULL);
+            $table->string('name')->nullable()->default(null);
+            $table->string('abbreviation')->nullable()->default(null);
+            $table->Integer('country_id')->nullable()->default(null);
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
-        
-    });
+        });
     }
 
     /**

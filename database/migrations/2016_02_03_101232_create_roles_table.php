@@ -21,7 +21,6 @@ class CreateRolesTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
-    
     }
 
     
@@ -35,5 +34,5 @@ class CreateRolesTable extends Migration
     {
         //
              Schema::drop('roles');
-}
+    }
 }

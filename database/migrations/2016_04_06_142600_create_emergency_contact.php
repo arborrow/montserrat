@@ -15,16 +15,14 @@ class CreateEmergencyContact extends Migration
         Schema::create('emergency_contact', function (Blueprint $table) {
             $table->Increments('id')->unsigned;
             $table->integer('contact_id');
-            $table->string('name')->nullable()->default(NULL);
-            $table->string('relationship')->nullable()->default(NULL);
-            $table->string('phone')->nullable()->default(NULL);
-            $table->string('phone_alternate')->nullable()->default(NULL);
+            $table->string('name')->nullable()->default(null);
+            $table->string('relationship')->nullable()->default(null);
+            $table->string('phone')->nullable()->default(null);
+            $table->string('phone_alternate')->nullable()->default(null);
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
-        
         });
-
     }
 
     /**

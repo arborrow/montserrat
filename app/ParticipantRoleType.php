@@ -9,5 +9,4 @@ class ParticipantRoleType extends Model
 {
     use SoftDeletes;
     protected $table = 'participant_role_type';
-    
 }

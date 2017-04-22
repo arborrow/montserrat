@@ -1,5 +1,6 @@
 <?php
 namespace montserrat\Http\Controllers;
+
 //require '\vendor\autoload.php';
 
 use Illuminate\Http\Request;
@@ -12,12 +13,15 @@ use montserrat\Touchpoint;
 use montserrat\Message;
 
 class MailgunController extends Controller
-{   public function __construct() {
+{
+    public function __construct()
+    {
         $this->middleware('auth');
     }
 
 
-    public function get() {
+    public function get()
+    {
         $mg = new Mailgun(env('MAILGUN_SECRET'));
         $domain = env('MAILGUN_DOMAIN');
         $queryString = array('event' => 'stored');
@@ -26,7 +30,7 @@ class MailgunController extends Controller
         
 #    
         $results = $mg->get("$domain/events", $queryString);
-        //dd($results);
+    //dd($results);
         if (array_key_exists("http_response_body", $results)) {
             //dd('found');
             foreach ($results->http_response_body as $body) {
@@ -42,15 +46,15 @@ class MailgunController extends Controller
                         $messages->push($email);
                         
                         $email->staff = \montserrat\Contact::whereHas('groups', function ($query) {
-                                    $query->where('group_id','=',GROUP_ID_STAFF);
-                                })
-                                ->whereHas('emails', function ($query) use ($email) {
-                                    $query->whereEmail($email->from);
-                                })->first();
+                                $query->where('group_id', '=', GROUP_ID_STAFF);
+                        })
+                            ->whereHas('emails', function ($query) use ($email) {
+                                $query->whereEmail($email->from);
+                            })->first();
                         $email->contact = \montserrat\Contact::whereHas('emails', function ($query) use ($email) {
-                                    $query->whereEmail($email->to);
-                                })->first();
-                        //dd($email->id);                                
+                                $query->whereEmail($email->to);
+                        })->first();
+                        //dd($email->id);
                         $message = \montserrat\Message::firstOrCreate(['mailgun_id'=>$email->id]);
                         $message->from = $email->from;
                         if (isset($email->staff['id'])) {
@@ -62,13 +66,12 @@ class MailgunController extends Controller
                         }
                         
                         if (isset($email->message->headers->subject)) {
-                            $message->subject = substr($email->message->headers->subject,0,255);
+                            $message->subject = substr($email->message->headers->subject, 0, 255);
                         }
                         
                         $message->mailgun_timestamp = $email->timestamp;
                         if (isset($email->storage->url)) {
                             $message->storage_url = $email->storage->url;
-                                
                         }
                         
                         if (isset($email->headers->subject)) {
@@ -82,7 +85,7 @@ class MailgunController extends Controller
         } else {
             //dd('No items');
         }
-        return view('mailgun.index',  compact('messages','staff','contact'));
+        return view('mailgun.index', compact('messages', 'staff', 'contact'));
     }
     
     
@@ -96,19 +99,20 @@ class MailgunController extends Controller
      * returns string
      */
      
-    public function clean_email($full_email=NULL) {
-        if (strpos($full_email,'<') && strpos($full_email,'>')) {
-            return substr($full_email, strpos($full_email,"<")+1,(strpos($full_email,">")-strpos($full_email,"<"))-1);
+    public function clean_email($full_email = null)
+    {
+        if (strpos($full_email, '<') && strpos($full_email, '>')) {
+            return substr($full_email, strpos($full_email, "<")+1, (strpos($full_email, ">")-strpos($full_email, "<"))-1);
         } else {
             return $full_email;
         }
-    
     }
     /*
      * Processes stored mailgun emails after get which saves them to messages in db
      * 
      */
-    public function process() {
+    public function process()
+    {
         
         $messages = \montserrat\Message::whereIsProcessed(0)->get();
         
@@ -123,7 +127,7 @@ class MailgunController extends Controller
             $output = curl_exec($ch);
             //dd($output);
             curl_close($ch);
-            $json=json_decode($output,true);
+            $json=json_decode($output, true);
 
             $message->body = $json['body-plain'];
             $message->is_processed=1;
@@ -131,21 +135,18 @@ class MailgunController extends Controller
             
             // if we have from and to ids for contacts go ahead and create a touchpoint
             if (($message->from_id > 0) && ($message->to_id>0)) {
-
-                    $touch = new \montserrat\Touchpoint();
-                    $touch->person_id = $message->to_id;
-                    $touch->staff_id=  $message->from_id;
-                    $touch->touched_at= $message->timestamp;
-                    $touch->type = 'Email';
-                    $touch->notes= $message->subject.' - '.$message->body;
-                    $touch->save();
-                    
+                $touch = new \montserrat\Touchpoint();
+                $touch->person_id = $message->to_id;
+                $touch->staff_id=  $message->from_id;
+                $touch->touched_at= $message->timestamp;
+                $touch->type = 'Email';
+                $touch->notes= $message->subject.' - '.$message->body;
+                $touch->save();
             }
         }
         
         $messages = \montserrat\Message::whereIsProcessed(1)->get();
         //dd($messages);
-        return view('mailgun.processed',  compact('messages'));
-    
+        return view('mailgun.processed', compact('messages'));
     }
 }

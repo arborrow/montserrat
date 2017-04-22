@@ -8,6 +8,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class EventType extends Model
 {
     use SoftDeletes;
-      protected $table = 'event_type';
-
+    protected $table = 'event_type';
 }

@@ -12,7 +12,7 @@ class AssistantsTableSeeder extends Seeder
     {
         // TestDummy::times(20)->create('App\Post');
          Assistant::create([
-			'title' => 'Fr.',
+            'title' => 'Fr.',
                         'firstname' => 'Ron',
                         'lastname' => 'Boudreaux',
                         'suffix' => 'S.J.',
@@ -27,12 +27,12 @@ class AssistantsTableSeeder extends Seeder
                         'mobilephone' => '940-395-7447',
                         'gender' => 'Male',
                         'languages' => 'English, Spanish',
-			'email' => 'ron.boudreaux@montserratretreat.org',
-			'password' => bcrypt('admin')
-		]);
+            'email' => 'ron.boudreaux@montserratretreat.org',
+            'password' => bcrypt('admin')
+         ]);
         
          Assistant::create([
-			'title' => 'Fr.',
+            'title' => 'Fr.',
                         'firstname' => 'Anthony',
                         'lastname' => 'Borrow',
                         'suffix' => 'S.J.',
@@ -48,12 +48,12 @@ class AssistantsTableSeeder extends Seeder
                         'url' => 'https://arborrow.org',
                         'gender' => 'Male',
                         'languages' => 'English/Spanish',
-			'email' => 'anthony.borrow@montserratretreat.org',
-			'password' => bcrypt('admin')
-		]);
+            'email' => 'anthony.borrow@montserratretreat.org',
+            'password' => bcrypt('admin')
+         ]);
          
             Assistant::create([
-			'title' => 'Fr.',
+            'title' => 'Fr.',
                         'firstname' => 'John',
                         'lastname' => 'Payne',
                         'suffix' => 'S.J.',
@@ -68,10 +68,8 @@ class AssistantsTableSeeder extends Seeder
                         'mobilephone' => '512-289-3370',
                         'gender' => 'Male',
                         'languages' => 'English',
-			'email' => 'john.payne@montserratretreat.org',
-			'password' => bcrypt('admin')
-		]);
-            
-            
+            'email' => 'john.payne@montserratretreat.org',
+            'password' => bcrypt('admin')
+            ]);
     }
 }

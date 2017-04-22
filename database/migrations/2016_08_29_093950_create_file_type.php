@@ -16,15 +16,14 @@ class CreateFileType extends Migration
             $table->increments('id')->unsigned();
             $table->string('label');
             $table->string('value');
-            $table->string('name')->nullable()->default(NULL);
-            $table->text('description')->nullable()->default(NULL);
+            $table->string('name')->nullable()->default(null);
+            $table->text('description')->nullable()->default(null);
             $table->boolean('is_default')->nullable()->default(0);
             $table->boolean('is_reserved')->nullable()->default(0);
             $table->boolean('is_active')->nullable()->default(1);
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
-        
         });
     }
 

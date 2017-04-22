@@ -8,7 +8,6 @@ use montserrat\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Input;
 
-
 class GroupsController extends Controller
 {
     public function __construct()
@@ -22,13 +21,14 @@ class GroupsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
         $this->authorize('show-group');
         $groups = \montserrat\Group::whereIsActive(1)->orderBy('name')->with('members')->get();
         foreach ($groups as $group) {
             $group->count = $group->members()->count();
         }
-        return view('groups.index',compact('groups'));   //
+        return view('groups.index', compact('groups'));   //
     }
 
     /**
@@ -36,10 +36,10 @@ class GroupsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         $this->authorize('create-group');
-        return view('groups.create'); 
-    
+        return view('groups.create');
     }
 
     /**
@@ -48,7 +48,8 @@ class GroupsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $this->authorize('create-group');
         $this->validate($request, [
             'name' => 'required',
@@ -69,7 +70,6 @@ class GroupsController extends Controller
         $group->save();
        
         return Redirect::action('GroupsController@index');//
-
     }
 
     /**
@@ -78,13 +78,14 @@ class GroupsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
-       $this->authorize('show-group');
-       $group = \montserrat\Group::findOrFail($id);
-       $members = \montserrat\Contact::whereHas('groups', function($query) use ($id) {
-            $query->whereGroupId($id)->whereStatus('Added');})->orderby('sort_name')->get();
-       return view('groups.show',compact('group','members'));//
-    
+    public function show($id)
+    {
+        $this->authorize('show-group');
+        $group = \montserrat\Group::findOrFail($id);
+        $members = \montserrat\Contact::whereHas('groups', function ($query) use ($id) {
+            $query->whereGroupId($id)->whereStatus('Added');
+        })->orderby('sort_name')->get();
+        return view('groups.show', compact('group', 'members'));//
     }
 
     /**
@@ -93,10 +94,11 @@ class GroupsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit($id)
+    {
         $this->authorize('update-group');
         $group = \montserrat\Group::findOrFail($id);
-        return view('groups.edit',compact('group'));
+        return view('groups.edit', compact('group'));
     }
 
     /**
@@ -106,7 +108,8 @@ class GroupsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $this->authorize('update-group');
         $this->validate($request, [
             'name' => 'required',
@@ -135,7 +138,8 @@ class GroupsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $this->authorize('delete-group');
         \montserrat\Group::destroy($id);
         return Redirect::action('GroupsController@index');

@@ -19,9 +19,7 @@ class CreateContactLanguages extends Migration
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
-        
-    });
-
+        });
     }
 
     /**

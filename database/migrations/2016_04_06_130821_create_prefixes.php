@@ -13,14 +13,12 @@ class CreatePrefixes extends Migration
     public function up()
     {
             Schema::create('prefix', function (Blueprint $table) {
-            $table->Increments('id')->unsigned;
-            $table->string('name')->nullable()->default(NULL);
-            $table->softDeletes();
-            $table->rememberToken();
-            $table->timestamps();
-        
-    });
-    
+                $table->Increments('id')->unsigned;
+                $table->string('name')->nullable()->default(null);
+                $table->softDeletes();
+                $table->rememberToken();
+                $table->timestamps();
+            });
     }
 
     /**

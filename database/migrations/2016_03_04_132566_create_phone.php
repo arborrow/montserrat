@@ -15,20 +15,19 @@ class CreatePhone extends Migration
         //
         Schema::create('phone', function (Blueprint $table) {
             $table->BigIncrements('id')->unsigned;
-            $table->integer('contact_id')->nullable()->default(NULL);
-            $table->integer('location_type_id')->nullable()->default(NULL);
+            $table->integer('contact_id')->nullable()->default(null);
+            $table->integer('location_type_id')->nullable()->default(null);
             $table->integer('is_primary')->default(0);
             $table->integer('is_billing')->default(0);
-            $table->integer('mobile_provider_id')->nullable()->default(NULL);
-            $table->string('phone')->nullable()->default(NULL);
-            $table->string('phone_ext')->nullable()->default(NULL);
-            $table->string('phone_numeric')->nullable()->default(NULL);
-            $table->integer('phone_type_id')->nullable()->default(NULL);
+            $table->integer('mobile_provider_id')->nullable()->default(null);
+            $table->string('phone')->nullable()->default(null);
+            $table->string('phone_ext')->nullable()->default(null);
+            $table->string('phone_numeric')->nullable()->default(null);
+            $table->integer('phone_type_id')->nullable()->default(null);
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
-        
-    });
+        });
     }
 
     /**

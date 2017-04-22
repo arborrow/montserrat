@@ -14,16 +14,15 @@ class CreateDomain extends Migration
     {
         Schema::create('domain', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',64)->nullable()->default(NULL)->index('UI_name');
-            $table->string('description')->nullable()->default(NULL);
-            $table->text('config_backend')->nullable()->default(NULL);
-            $table->string('version',32)->nullable()->default(NULL);
-            $table->integer('contact_id')->unsigned()->nullable()->default(NULL);
-            $table->text('locales')->nullable()->default(NULL);
-            $table->text('locale_custom_strings')->nullable()->default(NULL);
+            $table->string('name', 64)->nullable()->default(null)->index('UI_name');
+            $table->string('description')->nullable()->default(null);
+            $table->text('config_backend')->nullable()->default(null);
+            $table->string('version', 32)->nullable()->default(null);
+            $table->integer('contact_id')->unsigned()->nullable()->default(null);
+            $table->text('locales')->nullable()->default(null);
+            $table->text('locale_custom_strings')->nullable()->default(null);
             $table->timestamps();
             $table->foreign('contact_id')->references('id')->on('contact');
-            
         });
     }
 

@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Referral extends Model
 {
-    use SoftDeletes; 
+    use SoftDeletes;
     protected $table = 'referral';
-
 }

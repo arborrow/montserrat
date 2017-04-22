@@ -13,8 +13,7 @@ class CreateRoomstatesTable extends Migration
     public function up()
     {
         //
-        Schema::create('roomstates', function (Blueprint $table) 
-        {
+        Schema::create('roomstates', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('room_id')->unsigned;
             $table->timestamp('statechange_at');
@@ -24,8 +23,7 @@ class CreateRoomstatesTable extends Migration
             $table->timestamps();
            
         //
-        });  
-     
+        });
     }
 
     /**

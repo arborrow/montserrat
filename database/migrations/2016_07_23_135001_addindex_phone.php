@@ -14,8 +14,7 @@ class AddindexPhone extends Migration
     {
            Schema::table('phone', function ($table) {
             $table->index('contact_id');
-            });
-    
+           });
     }
 
     /**
@@ -27,7 +26,6 @@ class AddindexPhone extends Migration
     {
            Schema::table('phone', function ($table) {
             $table->dropIndex('contact_id');
-            });
-    
+           });
     }
 }

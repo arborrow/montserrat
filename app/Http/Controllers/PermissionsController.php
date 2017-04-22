@@ -10,16 +10,16 @@ use Illuminate\Support\Facades\Redirect;
 class PermissionsController extends Controller
 {
     //
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
         if ('cli' != php_sapi_name()) {
             $this->authorize('show-admin-menu');
         }
-        
-        
     }
     
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         $this->authorize('show-permission');
         $actions = array (
             '' => 'N/A',
@@ -27,7 +27,7 @@ class PermissionsController extends Controller
             'delete'=>'delete',
             'manage'=>'manage',
             'show'=>'show',
-            'update'=>'update'        
+            'update'=>'update'
         );
         $models = array (
             '' => 'N/A',
@@ -60,9 +60,9 @@ class PermissionsController extends Controller
         if (empty($term)) {
             $permissions = \montserrat\Permission::orderBy('name')->get();
         } else {
-            $permissions = \montserrat\Permission::orderBy('name')->where('name','like','%'.$term.'%')->get();
+            $permissions = \montserrat\Permission::orderBy('name')->where('name', 'like', '%'.$term.'%')->get();
         }
-        return view('admin.permissions.index',compact('permissions','actions','models'));   
+        return view('admin.permissions.index', compact('permissions', 'actions', 'models'));
     }
 
     /**
@@ -70,10 +70,10 @@ class PermissionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         $this->authorize('create-permission');
-        return view('admin.permissions.create');  
-
+        return view('admin.permissions.create');
     }
     
     /**
@@ -82,7 +82,8 @@ class PermissionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $this->authorize('create-permission');
         $permission = new \montserrat\Permission;
         $permission->name= $request->input('name');
@@ -99,11 +100,12 @@ class PermissionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id)
+    {
         $this->authorize('show-permission');
         $permission = \montserrat\Permission::with('roles')->findOrFail($id);
-        $roles = \montserrat\Role::orderBy('name')->pluck('name','id');
-        return view('admin.permissions.show',compact('permission','roles'));
+        $roles = \montserrat\Role::orderBy('name')->pluck('name', 'id');
+        return view('admin.permissions.show', compact('permission', 'roles'));
     }
 
     /**
@@ -112,10 +114,11 @@ class PermissionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit($id)
+    {
         $this->authorize('update-permission');
         $permission = \montserrat\Permission::findOrFail($id);
-        return view('admin.permissions.edit',compact('permission'));
+        return view('admin.permissions.edit', compact('permission'));
     }
 
     /**
@@ -125,7 +128,8 @@ class PermissionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $this->authorize('update-permission');
         $permission = \montserrat\Permission::findOrFail($request->input('id'));
         $permission->name= $request->input('name');
@@ -142,13 +146,15 @@ class PermissionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $this->authorize('delete-permission');
         \montserrat\Permission::destroy($id);
-       return Redirect::action('PermissionsController@index');
+        return Redirect::action('PermissionsController@index');
     }
     
-    public function update_roles(Request $request) {
+    public function update_roles(Request $request)
+    {
         $this->authorize('update-permission');
         $this->authorize('update-role');
         $permission = \montserrat\Permission::findOrFail($request->input('id'));
@@ -156,5 +162,5 @@ class PermissionsController extends Controller
         $permission->roles()->sync($request->input('roles'));
     
         return Redirect::action('PermissionsController@index');
-    }   
+    }
 }

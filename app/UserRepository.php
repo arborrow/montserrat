@@ -4,17 +4,19 @@ namespace montserrat;
 
 use montserrat\User;
 
-class UserRepository {
-    public function findByUserNameOrCreate($userData) {
+class UserRepository
+{
+    public function findByUserNameOrCreate($userData)
+    {
         if (isset($userData->user['domain'])) {
             if (!$userData->user['domain']=="montserratretreat.org") {
                 redirect('/restricted');
-            }}
-        else {
-           redirect('/restricted');
+            }
+        } else {
+            redirect('/restricted');
         }
         $user = User::where('provider_id', '=', $userData->id)->first();
-        if(!$user) {
+        if (!$user) {
             $user = User::create([
                 'provider' => 'google',
                 'provider_id' => $userData->id,
@@ -31,7 +33,8 @@ class UserRepository {
         return $user;
     }
 
-    public function checkIfUserNeedsUpdating($userData, $user) {
+    public function checkIfUserNeedsUpdating($userData, $user)
+    {
 
         $socialData = [
             'avatar' => $userData->avatar,
