@@ -27,7 +27,7 @@ class RetreatsController extends Controller
     public function index()
     {
         $this->authorize('show-retreat');
-        $defaults = array();
+        $defaults = [];
         $defaults['type']='Retreat';
         $event_types = \montserrat\EventType::whereIsActive(1)->orderBy('name')->pluck('id', 'name');
         
@@ -40,7 +40,7 @@ class RetreatsController extends Controller
         $this->authorize('show-retreat');
         $event_types = \montserrat\EventType::whereIsActive(1)->orderBy('name')->pluck('id', 'name');
         $event_type = \montserrat\EventType::findOrFail($event_type_id);
-        $defaults = array();
+        $defaults = [];
         $defaults['type'] = $event_type->label;
         $retreats = \montserrat\Retreat::type($event_type_id)->whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc')->with('retreatmasters', 'innkeeper', 'assistant')->get();
         $oldretreats = \montserrat\Retreat::type($event_type_id)->whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date', 'desc')->with('retreatmasters', 'innkeeper', 'assistant')->paginate(100);
@@ -63,25 +63,25 @@ class RetreatsController extends Controller
             $i[$innkeeper->contact_id_b]=$innkeeper->contact_b->sort_name;
         }
         asort($i);
-        $i=array(0=>'N/A')+$i;
+        $i=[0=>'N/A']+$i;
         
         foreach ($retreat_house->retreat_directors as $director) {
             $d[$director->contact_id_b]=$director->contact_b->sort_name;
         }
         asort($d);
-        $d=array(0=>'N/A')+$d;
+        $d=[0=>'N/A']+$d;
         
         foreach ($retreat_house->retreat_assistants as $assistant) {
             $a[$assistant->contact_id_b]=$assistant->contact_b->sort_name;
         }
         asort($a);
-        $a=array(0=>'N/A')+$a;
+        $a=[0=>'N/A']+$a;
         
         foreach ($retreat_house->retreat_captains as $captain) {
             $c[$captain->contact_id_b]=$captain->contact_b->sort_name;
         }
         asort($c);
-        $c=array(0=>'N/A')+$c;
+        $c=[0=>'N/A']+$c;
         //dd($retreat_house);
         return view('retreats.create', compact('d', 'i', 'a', 'c', 'event_types'));
     }
@@ -199,25 +199,25 @@ class RetreatsController extends Controller
             $i[$innkeeper->contact_id_b]=$innkeeper->contact_b->sort_name;
         }
         asort($i);
-        $i=array(0=>'N/A')+$i;
+        $i=[0=>'N/A']+$i;
 
         foreach ($retreat_house->retreat_directors as $director) {
             $d[$director->contact_id_b]=$director->contact_b->sort_name;
         }
         asort($d);
-        $d=array(0=>'N/A')+$d;
+        $d=[0=>'N/A']+$d;
 
         foreach ($retreat_house->retreat_assistants as $assistant) {
             $a[$assistant->contact_id_b]=$assistant->contact_b->sort_name;
         }
         asort($a);
-        $a=array(0=>'N/A')+$a;
+        $a=[0=>'N/A']+$a;
 
         foreach ($retreat_house->retreat_captains as $captain) {
             $c[$captain->contact_id_b]=$captain->contact_b->sort_name;
         }
         asort($c);
-        $c=array(0=>'N/A')+$c;
+        $c=[0=>'N/A']+$c;
         
         return view('retreats.edit', compact('retreat', 'd', 'i', 'a', 'c', 'event_types', 'is_active'));
     }

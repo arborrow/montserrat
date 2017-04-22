@@ -24,7 +24,7 @@ class MailgunController extends Controller
     {
         $mg = new Mailgun(env('MAILGUN_SECRET'));
         $domain = env('MAILGUN_DOMAIN');
-        $queryString = array('event' => 'stored');
+        $queryString = ['event' => 'stored'];
         $emails= "";
         $messages = new \Illuminate\Support\Collection;
         

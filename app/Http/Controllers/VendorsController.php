@@ -178,7 +178,7 @@ class VendorsController extends Controller
         $this->authorize('show-contact');
         $vendor = \montserrat\Contact::with('addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'touchpoints')->findOrFail($id);
         $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($vendor->id)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->get();
-        $relationship_types = array();
+        $relationship_types = [];
         $relationship_types["Primary Contact"] = "Primary Contact";
         return view('vendors.show', compact('vendor', 'relationship_types', 'files'));//
     }

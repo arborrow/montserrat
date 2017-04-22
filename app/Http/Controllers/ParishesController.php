@@ -205,7 +205,7 @@ class ParishesController extends Controller
         $this->authorize('show-contact');
         $parish = \montserrat\Contact::with('pastor.contact_b', 'diocese.contact_a', 'addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'parishioners.contact_b.address_primary.state', 'parishioners.contact_b.emails.location', 'parishioners.contact_b.phones.location', 'touchpoints', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations')->findOrFail($id);
         $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($parish->id)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->get();
-        $relationship_types = array();
+        $relationship_types = [];
         $relationship_types["Primary Contact"] = "Primary Contact";
 
         return view('parishes.show', compact('parish', 'files', 'relationship_types'));//

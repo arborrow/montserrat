@@ -99,7 +99,7 @@ class Retreat extends Model
     public function getRetreatScheduleLinkAttribute()
     {
         if (Storage::has('event/'.$this->id.'/schedule.pdf')) {
-            $img = Html::image('img/schedule.png', 'Schedule', array('title'=>"Schedule"));
+            $img = Html::image('img/schedule.png', 'Schedule', ['title'=>"Schedule"]);
             $link = '<a href="'.url('retreat/'.$this->id.'/schedule" ').'class="btn btn-default" style="padding: 3px;">'.$img.'</a>';
             return $link;
         } else {
@@ -110,7 +110,7 @@ class Retreat extends Model
     public function getRetreatContractLinkAttribute()
     {
         if (Storage::has('event/'.$this->id.'/contract.pdf')) {
-            $img = Html::image('img/contract.png', 'Contract', array('title'=>"Contract"));
+            $img = Html::image('img/contract.png', 'Contract', ['title'=>"Contract"]);
             $link = '<a href="'.url('retreat/'.$this->id.'/contract" ').'class="btn btn-default" style="padding: 3px;">'.$img.'</a>';
             return $link;
         } else {
@@ -121,7 +121,7 @@ class Retreat extends Model
     public function getRetreatEvaluationsLinkAttribute()
     {
         if (Storage::has('event/'.$this->id.'/evaluations.pdf')) {
-            $img = Html::image('img/evaluation.png', 'Evaluations', array('title'=>"Evaluations"));
+            $img = Html::image('img/evaluation.png', 'Evaluations', ['title'=>"Evaluations"]);
             $link = '<a href="'.url('retreat/'.$this->id.'/evaluations" ').'class="btn btn-default" style="padding: 3px;">'.$img.'</a>';
             return $link;
         } else {
@@ -164,17 +164,17 @@ class Retreat extends Model
         //dd($directors);
         foreach ($directors as $director) {
             if (!empty($director->email_primary->email)) {
-                array_push($attendees, array('email'=>$director->email_primary->email));
+                array_push($attendees, ['email'=>$director->email_primary->email]);
             }
         }
         $innkeeper = $this->innkeeper()->first();
         //dd($innkeeper->last_name);
         if (!empty($innkeeper->email_primary->email)) {
-            array_push($attendees, array('email'=>$innkeeper->email_primary->email));
+            array_push($attendees, ['email'=>$innkeeper->email_primary->email]);
         }
         $assistant = $this->assistant()->first();
         if (!empty($assistant->email_primary->email)) {
-            array_push($attendees, array('email'=>$assistant->email_primary->email));
+            array_push($attendees, ['email'=>$assistant->email_primary->email]);
         }
         return $attendees;
     }

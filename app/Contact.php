@@ -16,7 +16,7 @@ class Contact extends Model
         'contact_type' => 'integer',
         'subcontact_type' => 'integer',
     ];
-    protected $appends = array('full_name_with_city');
+    protected $appends = ['full_name_with_city'];
 
     // TODO: refactor to lookup based on relationship
     //TODO: rename person_id to contact_id

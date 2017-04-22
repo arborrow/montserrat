@@ -39,7 +39,7 @@ class OrganizationsController extends Controller
         $this->authorize('show-contact');
         $subcontact_types = \montserrat\ContactType::generic()->whereIsActive(1)->orderBy('label')->pluck('id', 'label');
         $subcontact_type = \montserrat\ContactType::findOrFail($subcontact_type_id);
-        $defaults = array();
+        $defaults = [];
         $defaults['type'] = $subcontact_type->label;
         $organizations = \montserrat\Contact::organizations_generic()->whereSubcontactType($subcontact_type_id)->orderBy('organization_name', 'asc')->paginate(100);
         
@@ -206,7 +206,7 @@ class OrganizationsController extends Controller
         $organization = \montserrat\Contact::with('addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'phone_main_phone.location', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations')->findOrFail($id);
        
         $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($organization->id)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->get();
-        $relationship_types = array();
+        $relationship_types = [];
         $relationship_types["Employer"] = "Employer";
         $relationship_types["Primary Contact"] = "Primary Contact";
 

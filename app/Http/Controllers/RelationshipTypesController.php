@@ -177,7 +177,7 @@ class RelationshipTypesController extends Controller
     {
         $this->authorize('create-relationship');
         $relationship_type = \montserrat\RelationshipType::findOrFail($id);
-        $ignored_subtype = array();
+        $ignored_subtype = [];
             $ignored_subtype["Child"] = RELATIONSHIP_TYPE_CHILD_PARENT;
             $ignored_subtype["Parent"] = RELATIONSHIP_TYPE_CHILD_PARENT;
             $ignored_subtype["Husband"] = RELATIONSHIP_TYPE_HUSBAND_WIFE;
@@ -300,7 +300,7 @@ class RelationshipTypesController extends Controller
             case 'Organization':
                 switch ($contact_subtype) {
                     case 'Parish':
-                        $parish_list = array();
+                        $parish_list = [];
                         $parishes = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
                         $parish_list = array_pluck($parishes->toArray(), 'full_name_with_city', 'id');
                         /* foreach($parishes as $parish) {

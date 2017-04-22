@@ -116,7 +116,7 @@ class RegistrationsController extends Controller
         $retreat = \montserrat\Retreat::findOrFail($retreat_id);
         
         // Day , Conference, Contract, Diocesan, Meeting, Workshop
-        $multi_registration_event_types = array(EVENT_TYPE_DAY, EVENT_TYPE_CONTRACT, EVENT_TYPE_CONFERENCE, EVENT_TYPE_DIOCESAN, EVENT_TYPE_MEETING, EVENT_TYPE_WORKSHOP);
+        $multi_registration_event_types = [EVENT_TYPE_DAY, EVENT_TYPE_CONTRACT, EVENT_TYPE_CONFERENCE, EVENT_TYPE_DIOCESAN, EVENT_TYPE_MEETING, EVENT_TYPE_WORKSHOP];
         if (in_array($retreat->event_type_id, $multi_registration_event_types)) {
             $defaults['is_multi_registration'] = true;
         } else {

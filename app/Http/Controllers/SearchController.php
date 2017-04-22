@@ -21,7 +21,7 @@ class SearchController extends Controller
     public function autocomplete()
     {
         $term = Input::get('term');
-        $results = array();
+        $results = [];
         $queries = \montserrat\Contact::orderBy('sort_name')->where('display_name', 'LIKE', '%'.$term.'%')->whereDeletedAt(null)->take(20)->get();
         if (($queries->count() == 0)) {
             $results[0]='Add new contact (No results)';
@@ -136,7 +136,7 @@ class SearchController extends Controller
         
         //create defaults array for easier pre-populating of default values on edit/update blade
         // initialize defaults to avoid undefined index errors
-        $defaults = array();
+        $defaults = [];
         $defaults['Home']['street_address']='';
         $defaults['Home']['supplemental_address_1']='';
         $defaults['Home']['city']='';
