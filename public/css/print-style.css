@@ -1,0 +1,134 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jan 27, 2016, 12:54:48 PM
+    Author     : anthonyb
+*/
+
+ 
+@media print {
+    @page {
+        size: 8.5in 11in ;
+        margin: 1cm;
+        @top-right {
+        content: "Page " counter(page);
+        }
+    } 
+     @page rotated { size : landscape }
+    .page-break	{ display: block; page-break-before: always; };
+
+    
+}
+@font-face {
+
+    font-family: perpetua;
+
+    src: local(perpetua), url('fonts/perpetua.ttf') format('opentype');
+
+    }       
+body { 
+    background: white;
+    font-family: "perpetua";
+    font-size: 13pt;
+}
+
+
+
+td {
+    width: 50%;
+    padding: 0in;
+    margin: 0in;
+}
+
+h2 {
+    margin: 0;
+    font-weight: 700;
+}
+
+td.box {
+    border: solid black;
+    height: .5in;
+    vertical-align: top;
+}
+#menu { display: none; }
+ 
+#wrapper, #content {
+ width: auto;
+ border: 0;
+ margin: 0 2%;
+ padding: 0;
+ float: none !important;
+ }
+
+.pagefooter {
+     font-size: 10pt;
+     bottom: 0in;
+ }
+ 
+ .logo {
+     bottom: 0in;
+     right: 0in;
+     height: 62px;
+     width: 200px;
+ }
+ .square {
+     font-size: 12pt;
+ }
+ .retreatlisting { 
+        page : rotated;
+        font-size: 9pt;
+ }
+        td {
+            width: auto;
+        }
+        th {
+           text-align: left; 
+           font-weight: 700;
+        }
+        h2 {
+            position: relative;
+        }
+        table {
+            table-layout: fixed;
+            width: 100%;
+            white-space: normal
+        }
+        .row-name {
+            width: 15%
+        }
+        .row-address {
+            width: 20%
+        }
+        .row-city {
+            width: 18%
+        }
+        .row-phone {
+            width: 9%
+        }
+        .row-notes {
+            width: 20%
+        }
+    
+
+
+ .retreatroster { 
+        page : rotated;
+        font-size: 12pt;
+    }
+ .retreatroster row-cancel {
+            width: 15%
+        }
+ .retreatroster row-room {
+            width: 20%
+        }
+.retreatroster .row-name {
+            width: 65%
+        }
+        
+    
+
+
+

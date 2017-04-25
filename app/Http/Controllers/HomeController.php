@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace montserrat\Http\Controllers;
 
 use Illuminate\Http\Request;
 
@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     /**
@@ -24,5 +24,9 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+    public function goodbye()
+    {
+        return view('pages.goodbye');
     }
 }

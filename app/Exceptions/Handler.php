@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions;
+namespace montserrat\Exceptions;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;
@@ -32,6 +32,7 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
+        //dd($exception); 
         parent::report($exception);
     }
 

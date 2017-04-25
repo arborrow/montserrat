@@ -1,17 +1,5 @@
-@extends('layouts.app')
-
+@extends('template')
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
-
-                <div class="panel-body">
-                    You are logged in!
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
+<h1>Welcome to Polanco, the Montserrat Jesuit Retreat House Database!</h1>
+<p>Polanco is a work in progress and is intended to be an in-house tool for managing information and making all of our lives easier.</p>
+@stop

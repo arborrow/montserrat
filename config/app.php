@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Polanco54'),
 
     /*
     |--------------------------------------------------------------------------
@@ -25,7 +25,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
+    'env' => env('APP_ENV', 'development'),
 
     /*
     |--------------------------------------------------------------------------
@@ -38,7 +38,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -51,7 +51,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://localhost/p54/polanco/public'),
 
     /*
     |--------------------------------------------------------------------------
@@ -151,6 +151,9 @@ return [
         Illuminate\Filesystem\FilesystemServiceProvider::class,
         Illuminate\Foundation\Providers\FoundationServiceProvider::class,
         Illuminate\Hashing\HashServiceProvider::class,
+        
+        Collective\Html\HtmlServiceProvider::class,
+
         Illuminate\Mail\MailServiceProvider::class,
         Illuminate\Notifications\NotificationServiceProvider::class,
         Illuminate\Pagination\PaginationServiceProvider::class,
@@ -171,12 +174,21 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        montserrat\Providers\AppServiceProvider::class,
+        montserrat\Providers\AuthServiceProvider::class,
+        // montserrat\Providers\BroadcastServiceProvider::class,
+        montserrat\Providers\EventServiceProvider::class,
+        montserrat\Providers\RouteServiceProvider::class,
 
+        // Other service providers..
+        
+        Laravel\Socialite\SocialiteServiceProvider::class,
+        Spatie\GoogleCalendar\GoogleCalendarServiceProvider::class,
+        Zizaco\Entrust\EntrustServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+        StuYam\PhoneValidator\PhoneValidatorServiceProvider::class,
+
+        
     ],
 
     /*
@@ -225,6 +237,14 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        
+        'Entrust' => \Zizaco\Entrust\EntrustFacade::class,
+        'Form'      => Collective\Html\FormFacade::class,
+        'GoogleCalendar' => Spatie\GoogleCalendar\GoogleCalendarFacade::class,
+        'Image' => Intervention\Image\Facades\Image::class,
+        'Html'      => Collective\Html\HtmlFacade::class,
+        'Mailgun' => Mailgun\Mailgun::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 
     ],
 

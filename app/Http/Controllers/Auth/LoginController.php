@@ -1,9 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace montserrat\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use montserrat\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Socialite; 
+use montserrat\AuthenticateUser;
+use Symfony\Component\HttpFoundation\Request;
+// use Redirect; 
+use Auth; 
 
 class LoginController extends Controller
 {
@@ -25,7 +30,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -36,4 +41,49 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+    
+    /**
+     * Redirect the user to the GitHub authentication page.
+     *
+     * @return Response
+     */
+    public function redirectToProvider()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    /**
+     * Obtain the user information from GitHub.
+     *
+     * @return Response
+     */
+    public function handleProviderCallback()
+    {
+        $user = Socialite::driver('google')->user();
+        if (isset($user->user['domain'])) {
+            if ($user->user['domain']=='montserratretreat.org') {
+                $authuser = new \montserrat\UserRepository;
+                $currentuser = $authuser->findByUserNameOrCreate($user);
+                Auth::login($currentuser, true);
+                return redirect('/welcome');
+                //return $this->userHasLoggedIn($currentuser);
+                
+            } else {
+                // dd('Oops, wrong domain!');
+               return redirect('restricted');
+            }
+            
+        } else { 
+            // dd('Oops, no domain!');
+            return redirect('restricted');
+        
+        }
+        // $user->token;
+    }
+    public function logout(AuthenticateUser $authenticateUser, Request $request, $provider = 'google')
+    {
+        Auth::logout();
+        return redirect('/goodbye');
+    }
+    
 }

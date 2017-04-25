@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Providers;
+namespace montserrat\Providers;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use montserrat\Permission;
+use Illuminate\Contracts\Auth\Access\Gate as GateContract;
+use montserrat\User;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -13,7 +16,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
+        'montserrat\Model' => 'montserrat\Policies\ModelPolicy',
+        'montserrat\Attachment' => 'montserrat\Policies\AttachmentPolicy',
+
     ];
 
     /**
@@ -21,10 +26,28 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
-    {
-        $this->registerPolicies();
+    public function boot() 
+    {   
+        parent::registerPolicies();
+        Gate::before(function ($user) {
+            $superuser = \montserrat\Permission::whereName('superuser')->firstOrFail();
+            
+            if ($user->hasRole($superuser->roles)) {
+                return true;
+            }
+        });
+        
+        foreach ($this->getPermissions() as $permission) {
+            Gate::define($permission->name, function ($user) use ($permission) {
+                return $user->hasRole($permission->roles);
+            });
+        }
 
         //
     }
+    protected function getPermissions()
+    {
+        return Permission::with('roles')->get();
+    }
+
 }
