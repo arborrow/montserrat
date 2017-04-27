@@ -4,7 +4,17 @@ namespace montserrat\Exceptions;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Auth\Access\AuthorizationException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use montserrat\Mail\WebError;
+// use Illuminate\Http\Request;
+
 
 class Handler extends ExceptionHandler
 {
@@ -43,11 +53,11 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    /* public function render($request, Exception $exception)
     {
         return parent::render($request, $exception);
     }
-
+    */
     /**
      * Convert an authentication exception into an unauthenticated response.
      *
@@ -61,6 +71,69 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
-        return redirect()->guest(route('login'));
+        return redirect()->guest(route('login/google'));
+    }
+    
+    public function render($request, Exception $e)
+    {   
+        // check for authentication exception
+        if ($e instanceof AuthenticationException) {
+            return $this->unauthenticated($request, $e);
+        }
+        // check for validation exception
+        if ($e instanceof ValidationException && $e->getResponse()) {
+            return $e->getResponse();
+        }
+         
+        $fullurl = $request->fullUrl();
+        if (isset(Auth::User()->name)) {
+            $username = Auth::User()->name;
+        } else {
+            $username = 'Unknown user';
+        }
+        
+        // dd($request->user(), Auth::user(), $username);
+        $ip_address = 'Unspecified IP Address';
+        if (!empty($request->ip())) {
+            $ip_address = $request->ip();
+        }
+        
+        if ($e instanceof AuthorizationException) {
+                $web_error = array();
+                $web_error['subject'] = 'Polanco 403 Error @ '.$fullurl.' by: '.$username.' from: '.$ip_address;
+                $web_error['body'] = $this->convertExceptionToResponse($e);
+                
+                Mail::to(['address' => config('polanco.admin_email')])
+                        ->send(new WebError($web_error));
+                $e = new HttpException(403, $e->getMessage());
+                // parent::render($request, $e);
+        } 
+        // check for 404 error
+        if ($e instanceof NotFoundHttpException || $e instanceof ModelNotFoundException)  {
+                $e = new NotFoundHttpException($e->getMessage(), $e);
+                $web_error = array();
+                $web_error['subject'] = 'Polanco 404 Error @ '.$fullurl.' by: '.$username.' from: '.$ip_address;
+                $web_error['body'] = $this->convertExceptionToResponse($e);
+                Mail::to(['address' => config('polanco.admin_email')])
+                        ->send(new WebError($web_error));
+                parent::render($request, $e);
+        }
+        
+        $e->debug=true;
+        
+        if ($e instanceof \ErrorException) {
+            $web_error = array();
+            $web_error['subject'] = 'Polanco 500 Error @ '.$fullurl.' by: '.$username.' from: '.$ip_address;
+            $web_error['body'] = $this->convertExceptionToResponse($e);
+            Mail::to(['address' => config('polanco.admin_email')])
+                        ->send(new WebError($web_error));
+            parent::render($request, $e);
+            return view('errors.default');
+        
+        } else {
+            if ($this->isHttpException($e)) {
+                return $this->toIlluminateResponse($this->renderHttpException($e), $e);
+            }  
+        }
     }
 }

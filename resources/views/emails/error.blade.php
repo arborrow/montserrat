@@ -1,1 +1,1 @@
-{!!$error!!}
+{!! $web_error['body'] !!}

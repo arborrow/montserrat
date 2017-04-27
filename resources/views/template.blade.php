@@ -22,11 +22,15 @@
     <header>
         <div class="row">
             <div class="col-md-10">
-                <a href={{ route('welcome') }}>{!! Html::image('img/mrhlogoblack.png','Home',array('title'=>'Home','class'=>'logo')) !!}</a>
+                @if (isset(Auth::user()->name))
+                   <a href={{ route('welcome') }}>{!! Html::image('img/mrhlogoblack.png','Home',array('title'=>'Home','class'=>'logo')) !!}</a>
+                @else
+                   <a href={{ route('home') }}>{!! Html::image('img/mrhlogoblack.png','Home',array('title'=>'Home','class'=>'logo')) !!}</a>
+                @endif
             </div>
             <div class="col-md-2">
-                @if (isset(Auth::User()->avatar))
-                    {!! Html::image(Auth::User()->avatar, Auth::User()->name,array('title'=>Auth::User()->name)) !!}
+                @if (isset(Auth::user()->avatar))
+                    {!! Html::image(Auth::user()->avatar, Auth::user()->name,array('title'=>Auth::user()->name)) !!}
                     <a href={{ route('logout') }}>{!! Html::image('img/logout.png', 'Logout',array('title'=>"Logout")) !!}</a>
                 @else
                     <a href="login/google">{!! Html::image('img/login.png', 'Login',array('title'=>"Login")) !!}</a>

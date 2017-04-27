@@ -244,10 +244,10 @@ class RetreatsController extends Controller
             'attending' => 'integer|min:0|max:150',
             'silent' => 'boolean',
             'is_active' => 'boolean',
-            'contract' => 'file|mimes:pdf|max:5000',
-            'schedule' => 'file|mimes:pdf|max:5000',
-            'evaluations' => 'file|mimes:pdf|max:10000',
-            'group_photo' => 'image|max:10000',
+            'contract' => 'file|mimes:pdf|max:5000|nullable',
+            'schedule' => 'file|mimes:pdf|max:5000|nullable',
+            'evaluations' => 'file|mimes:pdf|max:10000|nullable',
+            'group_photo' => 'image|max:10000|nullable',
             
         ]);
         
