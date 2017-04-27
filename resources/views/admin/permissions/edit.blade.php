@@ -5,7 +5,7 @@
 <div class="jumbotron text-left">
     <span><h2><strong>Edit Permission:</strong></h2></span>
 
-    {!! Form::open(['method' => 'PUT', 'route' => ['admin.permission.update', $permission->id]]) !!}
+    {!! Form::open(['method' => 'PUT', 'route' => ['permission.update', $permission->id]]) !!}
     {!! Form::hidden('id', $permission->id) !!}
     
         <span>
