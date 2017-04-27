@@ -15,7 +15,7 @@ class ParishesController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('auth');
+        $this->middleware('auth');
     }
 
     /**
@@ -25,7 +25,7 @@ class ParishesController extends Controller
      */
     public function index()
     {
-        // $this->authorize('show-contact');
+        $this->authorize('show-contact');
         $parishes = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'pastor.contact_b', 'diocese.contact_a')->get();
         $parishes = $parishes->sortBy(function ($parish) {
             return sprintf('%-12s%s', $parish->diocese_name, $parish->organization_name);

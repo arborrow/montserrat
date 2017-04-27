@@ -71,15 +71,11 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
-        return redirect()->guest(route('login/google'));
+        return redirect()->guest(route('login'));
     }
     
     public function render($request, Exception $e)
     {   
-        // check for authentication exception
-        if ($e instanceof AuthenticationException) {
-            return $this->unauthenticated($request, $e);
-        }
         // check for validation exception
         if ($e instanceof ValidationException && $e->getResponse()) {
             return $e->getResponse();
@@ -98,6 +94,26 @@ class Handler extends ExceptionHandler
             $ip_address = $request->ip();
         }
         
+        /* check for authentication exception
+         * user will be redirected to (Google) login page
+         * will alert me to when an unauthenticated user tries to access secured content
+         */
+        if ($e instanceof AuthenticationException) {
+            $web_error = array();
+            $web_error['subject'] = 'Polanco Authentication Error @ '.$fullurl.' by: '.$username.' from: '.$ip_address;
+            $web_error['body'] = $this->convertExceptionToResponse($e);
+            Mail::to(['address' => config('polanco.admin_email')])
+                ->send(new WebError($web_error));
+                
+            return $this->unauthenticated($request, $e);
+        }
+        
+        /* check for 403 error
+         * user will be redirected to 403 error page (banned)
+         * will alert me to when an authenticated user tries to access content not intended for them
+         * generally this means that a link has not been checked with a 'can' check
+         * I prefer to not give the user the option to do things they are not supposed to do
+         */
         if ($e instanceof AuthorizationException) {
                 $web_error = array();
                 $web_error['subject'] = 'Polanco 403 Error @ '.$fullurl.' by: '.$username.' from: '.$ip_address;
@@ -106,9 +122,12 @@ class Handler extends ExceptionHandler
                 Mail::to(['address' => config('polanco.admin_email')])
                         ->send(new WebError($web_error));
                 $e = new HttpException(403, $e->getMessage());
-                // parent::render($request, $e);
+                parent::render($request, $e);
         } 
-        // check for 404 error
+        /* check for 404 error
+         * user will be redirected to 404 error page (St. Anthony not found)
+         * will alert me to bad links or bad user input to non-existing routes or records
+         */
         if ($e instanceof NotFoundHttpException || $e instanceof ModelNotFoundException)  {
                 $e = new NotFoundHttpException($e->getMessage(), $e);
                 $web_error = array();
@@ -118,9 +137,11 @@ class Handler extends ExceptionHandler
                         ->send(new WebError($web_error));
                 parent::render($request, $e);
         }
-        
+        /* check for 500 error
+         * user will be redirected to 500 error page (Jason Bourne)
+         * alerts me to pages with internal/code errors - usually undefined variables
+         */
         $e->debug=true;
-        
         if ($e instanceof \ErrorException) {
             $web_error = array();
             $web_error['subject'] = 'Polanco 500 Error @ '.$fullurl.' by: '.$username.' from: '.$ip_address;
@@ -133,7 +154,9 @@ class Handler extends ExceptionHandler
         } else {
             if ($this->isHttpException($e)) {
                 return $this->toIlluminateResponse($this->renderHttpException($e), $e);
-            }  
+            } else {
+                return $this->toIlluminateResponse($this->convertExceptionToResponse($e), $e);
+            }
         }
     }
 }
