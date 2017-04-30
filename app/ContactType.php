@@ -15,7 +15,7 @@ class ContactType extends Model
     public function scopeGeneric($query)
     {
         return $query->where([
-            ['id','>=',CONTACT_TYPE_PROVINCE],
+            ['id','>=',config('polanco.contact_type.province')],
             ['is_active','=',true],
         ]);
     }

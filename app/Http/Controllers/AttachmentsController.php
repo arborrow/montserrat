@@ -111,7 +111,7 @@ class AttachmentsController extends Controller
                 break;
             case 'attachment':
                 $this->authorize('create-attachment');
-                $attachment->file_type_id = FILE_TYPE_CONTACT_ATTACHMENT;
+                $attachment->file_type_id = config('polanco.file_type.contact_attachment');
                 $attachment->uri = $file_name;
                 break;
             case 'avatar':
@@ -161,7 +161,7 @@ class AttachmentsController extends Controller
             case 'attachment':
                 $this->authorize('create-attachment');
                 $path = $entity.'/'.$entity_id.'/attachments/';
-                $file_type_id = FILE_TYPE_CONTACT_ATTACHMENT;
+                $file_type_id = config('polanco.file_type.contact_attachment');
                 $file_name = $this->sanitize_filename($file->getClientOriginalName());
                 $file_extension = $file->getExtension();
                 $updated_file_name= $file->getBasename('.'.$file_extension).'-updated-'.time().'.'.$file_extension;
@@ -273,7 +273,7 @@ class AttachmentsController extends Controller
                 $updated_file_name = 'evaluations-deleted-'.time().'.pdf';
                 break;
             case 'attachment':
-                $attachment = \montserrat\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->firstOrFail();
+                $attachment = \montserrat\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->firstOrFail();
                 $path = $entity.'/'.$entity_id.'/attachments/';
                 $file_extension = File::extension($path.$file_name);
                 $file_basename = File::name($path.$file_name);

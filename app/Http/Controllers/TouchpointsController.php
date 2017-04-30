@@ -39,7 +39,7 @@ class TouchpointsController extends Controller
     {
         $this->authorize('create-touchpoint');
         $staff = \montserrat\Contact::with('groups')->whereHas('groups', function ($query) {
-            $query->where('group_id', '=', GROUP_ID_STAFF);
+            $query->where('group_id', '=', config('polanco.group_id.staff'));
         })->orderBy('sort_name')->pluck('sort_name', 'id');
         // TODO: replace this with an autocomplete text box for performance rather than a dropdown box
         $persons = \montserrat\Contact::orderBy('sort_name')->pluck('sort_name', 'id');
@@ -58,7 +58,7 @@ class TouchpointsController extends Controller
     {
         $this->authorize('create-touchpoint');
         $staff = \montserrat\Contact::with('groups')->whereHas('groups', function ($query) {
-            $query->where('group_id', '=', GROUP_ID_STAFF);
+            $query->where('group_id', '=', config('polanco.group_id.staff'));
         })->orderBy('sort_name')->pluck('sort_name', 'id');
         $groups = \montserrat\Group::orderBy('title')->pluck('title', 'id');
         $current_user = Auth::user();
@@ -76,7 +76,7 @@ class TouchpointsController extends Controller
     {
         $this->authorize('create-touchpoint');
         $staff = \montserrat\Contact::with('groups')->whereHas('groups', function ($query) {
-            $query->where('group_id', '=', GROUP_ID_STAFF);
+            $query->where('group_id', '=', config('polanco.group_id.staff'));
         })->orderBy('sort_name')->pluck('sort_name', 'id');
         $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->orderBy('start_date', 'desc')->pluck('description', 'id');
         $retreats->prepend('Unassigned', 0);
@@ -117,7 +117,7 @@ class TouchpointsController extends Controller
             $persons = \montserrat\Contact::whereContactType($contact->contact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
         }
         $staff = \montserrat\Contact::with('groups')->whereHas('groups', function ($query) {
-            $query->where('group_id', '=', GROUP_ID_STAFF);
+            $query->where('group_id', '=', config('polanco.group_id.staff'));
         })->orderBy('sort_name')->pluck('sort_name', 'id');
         // TODO: replace this with an autocomplete text box for performance rather than a dropdown box
         return view('touchpoints.create', compact('staff', 'persons', 'defaults'));
@@ -224,7 +224,7 @@ class TouchpointsController extends Controller
         $touchpoint = \montserrat\Touchpoint::with('staff', 'person')->findOrFail($id);
         
         $staff = \montserrat\Contact::with('groups')->whereHas('groups', function ($query) {
-            $query->where('group_id', '=', GROUP_ID_STAFF);
+            $query->where('group_id', '=', config('polanco.group_id.staff'));
         })->orderBy('sort_name')->pluck('sort_name', 'id');
         //consider renaming touchpoint table's person_id field to contact_id
         $contact = \montserrat\Contact::findOrFail($touchpoint->person_id);
@@ -233,7 +233,7 @@ class TouchpointsController extends Controller
         } else {
             $persons = \montserrat\Contact::whereContactType($contact->contact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
         }
-        //$persons = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->pluck('sort_name','id');
+        //$persons = \montserrat\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name','id');
 // check contact type and if parish get list of parishes if individual get list of persons
         return view('touchpoints.edit', compact('touchpoint', 'staff', 'persons'));//
     }

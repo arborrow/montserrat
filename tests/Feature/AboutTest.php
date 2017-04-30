@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
+// use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
@@ -17,13 +17,10 @@ class AboutTest extends TestCase
     protected $preserveGlobalState = FALSE;
     protected $runTestInSeparateProcess = TRUE;
 
-    //setup and teardown functions
-    protected function setUp() { }
-    protected function tearDown() { }
-
+    
     public function testAbout()
     {
         $response = $this->get('/about');
-        $this->assertTrue(true);
+        $response->assertStatus(404);
     }
 }

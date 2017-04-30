@@ -25,6 +25,112 @@ return [
     
     'admin_name' => 'Anthony Borrow',
     'admin_email' => 'anthony.borrow@montserratretreat.org',
+
+    'relationship_type' => [
+        'child_parent' => '1',
+        'husband_wife' => '2',
+        'sibling' => '4',
+        'staff' => '5',
+        'volunteer' => '6',
+        'parishioner' => '11',
+        'bishop' => '12',
+        'diocese' => '13',
+        'pastor' => '14',
+        'superior' => '15',
+        'provincial' => '16',
+        'community_member' => '17',
+        'board_member' => '18',
+        'retreat_director' => '19',
+        'retreat_assistant' => '20',
+        'retreat_innkeeper' => '21',
+        'retreatant' => '22',
+        'donor' => '23',
+        'captain' => '24',
+        'priest' => '25',
+        'deacon' => '26'
+    ],
     
+    'contact_type' => [
+        'individual' => '1',
+        'household' => '2',
+        'organization' => '3',
+        'parish' => '4',
+        'diocese' => '5',
+        'province' => '6',
+        'community' => '7',
+        'retreat_house' => '8',
+        'vendor' => '9',
+        'religious_catholic' => '10',
+        'religious_noncatholic' => '11',
+        'contract' => '12',
+        'foundation' => '13'
+    ],
     
+    'location_type' => [
+        'home' => '1',
+        'work' => '2',
+        'main' => '3',
+        'other' => '4',
+        'billing' => '5'    
+    ],
+    
+    'country_id_usa' => '1228',
+    'state_province_id_tx' => '1042',
+
+    'contact' => [
+        'diocese_dallas' => '3',
+        'diocese_fortworth' => '1',
+        'diocese_tyler' => '2',
+        'montserrat' => '620'
+    ], 
+
+    'event_type' => [
+        'conference' => '1',
+        'exhibition' => '2',
+        'fundraiser' => '3',
+        'meeting' => '4',
+        'performance' => '5',
+        'workshop' => '6',
+        'ignatian' => '7',
+        'diocesan' => '8',
+        'other' => '9',
+        'day' => '10',
+        'contract' => '11',
+        'directed' => '12'
+    ],
+
+    'file_type' => [
+        'contact_attachment' => '1',
+        'event_schedule' => '2',
+        'event_evaluation' => '3',
+        'event_contract' => '4',
+        'event_group_photo' => '5',
+        'contact_avatar' => '6'
+    ], 
+
+    'group_id' => [
+        'innkeeper' => '1',
+        'director' => '2',
+        'assistant' => '3',
+        'bishop' => '4',
+        'priest' => '5',
+        'deacon' => '6',
+        'jesuit' => '7',
+        'provincial' => '8',
+        'superior' => '9',
+        'pastor' => '10',
+        'captain' => '11',
+        'board' => '12',
+        'staff' => '13',
+        'steward' => '15',
+        'volunteer' => '14'
+    ],
+    
+    'participant_role_id' => [
+        'captain' => '11',
+        'retreatant' => '5',
+        'retreat_director' => '8',
+        'retreat_innkeeper' => '9',
+        'retreat_assistant' => '10'    
+    ] 
 ];

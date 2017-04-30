@@ -45,17 +45,17 @@ class Retreat extends Model
 
     public function assistant()
     {
-        return $this->belongsTo(Contact::class, 'assistant_id', 'id')->whereContactType(CONTACT_TYPE_INDIVIDUAL);
+        return $this->belongsTo(Contact::class, 'assistant_id', 'id')->whereContactType(config('polanco.contact_type.individual'));
     }
     public function captains()
     {
         // TODO: handle with participants of role Retreat Director or Master - be careful with difference between (registration table) retreat_id and (participant table) event_id
-        return $this->belongsToMany(Contact::class, 'captain_retreat', 'event_id', 'contact_id')->whereContactType(CONTACT_TYPE_INDIVIDUAL);
+        return $this->belongsToMany(Contact::class, 'captain_retreat', 'event_id', 'contact_id')->whereContactType(config('polanco.contact_type.individual'));
     }
     
     public function innkeeper()
     {
-        return $this->belongsTo(Contact::class, 'innkeeper_id', 'id')->whereContactType(CONTACT_TYPE_INDIVIDUAL);
+        return $this->belongsTo(Contact::class, 'innkeeper_id', 'id')->whereContactType(config('polanco.contact_type.individual'));
     }
     public function event_type()
     {
@@ -65,7 +65,7 @@ class Retreat extends Model
     public function retreatmasters()
     {
         // TODO: handle with participants of role Retreat Director or Master - be careful with difference between (registration table) retreat_id and (participant table) event_id
-        return $this->belongsToMany(Contact::class, 'retreatmasters', 'retreat_id', 'person_id')->whereContactType(CONTACT_TYPE_INDIVIDUAL);
+        return $this->belongsToMany(Contact::class, 'retreatmasters', 'retreat_id', 'person_id')->whereContactType(config('polanco.contact_type.individual'));
     }
     
     public function registrations()

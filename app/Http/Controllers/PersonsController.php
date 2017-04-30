@@ -26,7 +26,7 @@ class PersonsController extends Controller
     public function index()
     {
         $this->authorize('show-contact');
-        $persons = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'parish.contact_a')->paginate(100);
+        $persons = \montserrat\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'parish.contact_a')->paginate(100);
        
         return view('persons.index', compact('persons'));   //
     }
@@ -34,7 +34,7 @@ class PersonsController extends Controller
     public function lastnames($lastname = null)
     {
        
-        $persons = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'parish.contact_a')->where('last_name', 'LIKE', $lastname.'%')->paginate(100);
+        $persons = \montserrat\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'parish.contact_a')->where('last_name', 'LIKE', $lastname.'%')->paginate(100);
        //dd($persons);
         return view('persons.index', compact('persons'));   //
     }
@@ -47,7 +47,7 @@ class PersonsController extends Controller
     public function create()
     {
         $this->authorize('create-contact');
-        $parishes = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
+        $parishes = \montserrat\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
         $parish_list[0]='N/A';
         // while probably not the most efficient way of doing this it gets me the result
         foreach ($parishes as $parish) {
@@ -220,7 +220,7 @@ class PersonsController extends Controller
             $relationship_parishioner = new \montserrat\Relationship;
                 $relationship_parishioner->contact_id_a = $request->input('parish_id');
                 $relationship_parishioner->contact_id_b = $person->id;
-                $relationship_parishioner->relationship_type_id = RELATIONSHIP_TYPE_PARISHIONER;
+                $relationship_parishioner->relationship_type_id = config('polanco.relationship_type.parishioner');
                 $relationship_parishioner->is_active = 1;
             $relationship_parishioner->save();
         }
@@ -228,9 +228,9 @@ class PersonsController extends Controller
         // save donor relationship
         if ($request->input('is_donor')>0) {
             $relationship_donor = new \montserrat\Relationship;
-                $relationship_donor->contact_id_a = CONTACT_MONTSERRAT;
+                $relationship_donor->contact_id_a = config('polanco.contact.montserrat');
                 $relationship_donor->contact_id_b = $person->id;
-                $relationship_donor->relationship_type_id = RELATIONSHIP_TYPE_DONOR;
+                $relationship_donor->relationship_type_id = config('polanco.relationship_type.donor');
                 $relationship_donor->is_active = 1;
             $relationship_donor->save();
         }
@@ -238,9 +238,9 @@ class PersonsController extends Controller
         // save retreatant relationship
         if ($request->input('is_retreatant')>0) {
             $relationship_retreatant = new \montserrat\Relationship;
-                $relationship_retreatant->contact_id_a = CONTACT_MONTSERRAT;
+                $relationship_retreatant->contact_id_a = config('polanco.contact.montserrat');
                 $relationship_retreatant->contact_id_b = $person->id;
-                $relationship_retreatant->relationship_type_id = RELATIONSHIP_TYPE_RETREATANT;
+                $relationship_retreatant->relationship_type_id = config('polanco.relationship_type.retreatant');
                 $relationship_retreatant->is_active = 1;
             $relationship_retreatant->save();
         }
@@ -248,13 +248,13 @@ class PersonsController extends Controller
         // save volunteer relationship
         if ($request->input('is_volunteer')>0) {
             $relationship_volunteer= new \montserrat\Relationship;
-                $relationship_volunteer->contact_id_a = CONTACT_MONTSERRAT;
+                $relationship_volunteer->contact_id_a = config('polanco.contact.montserrat');
                 $relationship_volunteer->contact_id_b = $person->id;
-                $relationship_volunteer->relationship_type_id = RELATIONSHIP_TYPE_VOLUNTEER;
+                $relationship_volunteer->relationship_type_id = config('polanco.relationship_type.volunteer');
                 $relationship_volunteer->is_active = 1;
             $relationship_volunteer->save();
             $group_volunteer = new \montserrat\GroupContact;
-                $group_volunteer->group_id = GROUP_ID_VOLUNTEER;
+                $group_volunteer->group_id = config('polanco.group_id.volunteer');
                 $group_volunteer->contact_id = $person->id;
                 $group_volunteer->status = 'Added';
             $group_volunteer->save();
@@ -263,13 +263,13 @@ class PersonsController extends Controller
         // save captain relationship
         if ($request->input('is_captain')>0) {
             $relationship_captain= new \montserrat\Relationship;
-                $relationship_captain->contact_id_a = CONTACT_MONTSERRAT;
+                $relationship_captain->contact_id_a = config('polanco.contact.montserrat');
                 $relationship_captain->contact_id_b = $person->id;
-                $relationship_captain->relationship_type_id = RELATIONSHIP_TYPE_CAPTAIN;
+                $relationship_captain->relationship_type_id = config('polanco.relationship_type.captain');
                 $relationship_captain->is_active = 1;
             $relationship_captain->save();
             $group_captain = new \montserrat\GroupContact;
-                $group_captain->group_id = GROUP_ID_CAPTAIN;
+                $group_captain->group_id = config('polanco.group_id.captain');
                 $group_captain->contact_id = $person->id;
                 $group_captain->status = 'Added';
             $group_captain->save();
@@ -277,9 +277,9 @@ class PersonsController extends Controller
         // save retreat director relationship
         if ($request->input('is_director')>0) {
             $relationship_director= new \montserrat\Relationship;
-                $relationship_director->contact_id_a = CONTACT_MONTSERRAT;
+                $relationship_director->contact_id_a = config('polanco.contact.montserrat');
                 $relationship_director->contact_id_b = $person->id;
-                $relationship_director->relationship_type_id = RELATIONSHIP_TYPE_RETREAT_DIRECTOR;
+                $relationship_director->relationship_type_id = config('polanco.relationship_type.retreat_director');
                 $relationship_director->is_active = 1;
             $relationship_director->save();
             $group_director = new \montserrat\GroupContact;
@@ -291,9 +291,9 @@ class PersonsController extends Controller
         // save retreat innkeeper relationship
         if ($request->input('is_innkeeper')>0) {
             $relationship_innkeeper= new \montserrat\Relationship;
-                $relationship_innkeeper->contact_id_a = CONTACT_MONTSERRAT;
+                $relationship_innkeeper->contact_id_a = config('polanco.contact.montserrat');
                 $relationship_innkeeper->contact_id_b = $person->id;
-                $relationship_innkeeper->relationship_type_id = RELATIONSHIP_TYPE_RETREAT_INNKEEPER;
+                $relationship_innkeeper->relationship_type_id = config('polanco.relationship_type.retreat_innkeeper');
                 $relationship_innkeeper->is_active = 1;
             $relationship_innkeeper->save();
             $group_innkeeper = new \montserrat\GroupContact;
@@ -305,9 +305,9 @@ class PersonsController extends Controller
         // save retreat assistant relationship
         if ($request->input('is_assistant')>0) {
             $relationship_assistant= new \montserrat\Relationship;
-                $relationship_assistant->contact_id_a = CONTACT_MONTSERRAT;
+                $relationship_assistant->contact_id_a = config('polanco.contact.montserrat');
                 $relationship_assistant->contact_id_b = $person->id;
-                $relationship_assistant->relationship_type_id = RELATIONSHIP_TYPE_RETREAT_ASSISTANT;
+                $relationship_assistant->relationship_type_id = config('polanco.relationship_type.retreat_assistant');
                 $relationship_assistant->is_active = 1;
             $relationship_assistant->save();
             $group_assistant = new \montserrat\GroupContact;
@@ -320,12 +320,12 @@ class PersonsController extends Controller
         if ($request->input('is_staff')>0) {
             $relationship_staff= new \montserrat\Relationship;
                 $relationship_staff->contact_id_a = $person->id;
-                $relationship_staff->contact_id_b = CONTACT_MONTSERRAT;
-                $relationship_staff->relationship_type_id = RELATIONSHIP_TYPE_STAFF;
+                $relationship_staff->contact_id_b = config('polanco.contact.montserrat');
+                $relationship_staff->relationship_type_id = config('polanco.relationship_type.staff');
                 $relationship_staff->is_active = 1;
             $relationship_staff->save();
             $group_staff = new \montserrat\GroupContact;
-                $group_staff->group_id = GROUP_ID_STAFF;
+                $group_staff->group_id = config('polanco.group_id.staff');
                 $group_staff->contact_id = $person->id;
                 $group_staff->status = 'Added';
             $group_staff->save();
@@ -333,7 +333,7 @@ class PersonsController extends Controller
         // save steward group
         if ($request->input('is_steward')>0) {
             $group_steward = new \montserrat\GroupContact;
-                $group_steward->group_id = GROUP_ID_STEWARD;
+                $group_steward->group_id = config('polanco.group_id.steward');
                 $group_steward->contact_id = $person->id;
                 $group_steward->status = 'Added';
             $group_steward->save();
@@ -341,14 +341,14 @@ class PersonsController extends Controller
         // save board member relationship
         if ($request->input('is_board')>0) {
             $relationship_board= new \montserrat\Relationship;
-                $relationship_board->contact_id_a = CONTACT_MONTSERRAT;
+                $relationship_board->contact_id_a = config('polanco.contact.montserrat');
                 $relationship_board->contact_id_b = $person->id;
-                $relationship_board->relationship_type_id = RELATIONSHIP_TYPE_BOARD_MEMBER;
+                $relationship_board->relationship_type_id = config('polanco.relationship_type.board_member');
                 $relationship_board->start_date = \Carbon\Carbon::now();
                 $relationship_board->is_active = 1;
             $relationship_board->save();
             $group_board = new \montserrat\GroupContact;
-                $group_board->group_id = GROUP_ID_BOARD;
+                $group_board->group_id = config('polanco.group_id.board');
                 $group_board->contact_id = $person->id;
                 $group_board->status = 'Added';
             $group_board->save();
@@ -358,49 +358,49 @@ class PersonsController extends Controller
         
         if ($request->input('is_bishop')>0) {
             $group_bishop = new \montserrat\GroupContact;
-                $group_bishop->group_id = GROUP_ID_BISHOP;
+                $group_bishop->group_id = config('polanco.group_id.bishop');
                 $group_bishop->contact_id = $person->id;
                 $group_bishop->status = 'Added';
             $group_bishop->save();
         }
         if ($request->input('is_priest')>0) {
             $group_priest = new \montserrat\GroupContact;
-                $group_priest->group_id = GROUP_ID_PRIEST;
+                $group_priest->group_id = config('polanco.group_id.priest');
                 $group_priest->contact_id = $person->id;
                 $group_priest->status = 'Added';
             $group_priest->save();
         }
         if ($request->input('is_deacon')>0) {
             $group_deacon = new \montserrat\GroupContact;
-                $group_deacon->group_id = GROUP_ID_DEACON;
+                $group_deacon->group_id = config('polanco.group_id.deacon');
                 $group_deacon->contact_id = $person->id;
                 $group_deacon->status = 'Added';
             $group_deacon->save();
         }
         if ($request->input('is_pastor')>0) {
             $group_pastor = new \montserrat\GroupContact;
-                $group_pastor->group_id = GROUP_ID_PASTOR;
+                $group_pastor->group_id = config('polanco.group_id.pastor');
                 $group_pastor->contact_id = $person->id;
                 $group_pastor->status = 'Added';
             $group_pastor->save();
         }
         if ($request->input('is_jesuit')>0) {
             $group_jesuit = new \montserrat\GroupContact;
-                $group_jesuit->group_id = GROUP_ID_JESUIT;
+                $group_jesuit->group_id = config('polanco.group_id.jesuit');
                 $group_jesuit->contact_id = $person->id;
                 $group_jesuit->status = 'Added';
             $group_jesuit->save();
         }
         if ($request->input('is_superior')>0) {
             $group_superior = new \montserrat\GroupContact;
-                $group_superior->group_id = GROUP_ID_SUPERIOR;
+                $group_superior->group_id = config('polanco.group_id.superior');
                 $group_superior->contact_id = $person->id;
                 $group_superior->status = 'Added';
             $group_superior->save();
         }
         if ($request->input('is_provincial')>0) {
             $group_provincial = new \montserrat\GroupContact;
-                $group_provincial->group_id = GROUP_ID_PROVINCIAL;
+                $group_provincial->group_id = config('polanco.group_id.provincial');
                 $group_provincial->contact_id = $person->id;
                 $group_provincial->status = 'Added';
             $group_provincial->save();
@@ -408,16 +408,16 @@ class PersonsController extends Controller
         
         
         /*
-        $this->save_relationship('parish_id',$parish_id,$person->id,RELATIONSHIP_TYPE_PARISHIONER);
-        $this->save_relationship('is_donor',CONTACT_MONTSERRAT,$person->id,RELATIONSHIP_TYPE_DONOR);
-        $this->save_relationship('is_retreatant',CONTACT_MONTSERRAT,$person->id,RELATIONSHIP_TYPE_RETREATANT);
-        $this->save_relationship('is_volunteer',CONTACT_MONTSERRAT,$person->id,RELATIONSHIP_TYPE_VOLUNTEER);
-        $this->save_relationship('is_captain',CONTACT_MONTSERRAT,$person->id,RELATIONSHIP_TYPE_CAPTAIN);
-        $this->save_relationship('is_director',CONTACT_MONTSERRAT,$person->id,RELATIONSHIP_TYPE_RETREAT_DIRECTOR);
-        $this->save_relationship('is_innkeeper',CONTACT_MONTSERRAT,$person->id,RELATIONSHIP_TYPE_RETREAT_INNKEEPER);
-        $this->save_relationship('is_assistant',CONTACT_MONTSERRAT,$person->id,RELATIONSHIP_TYPE_RETREAT_ASSISTANT);
-        $this->save_relationship('is_staff',CONTACT_MONTSERRAT,$person->id,RELATIONSHIP_TYPE_STAFF);
-        $this->save_relationship('is_board',CONTACT_MONTSERRAT,$person->id,RELATIONSHIP_TYPE_BOARD_MEMBER);
+        $this->save_relationship('parish_id',$parish_id,$person->id,config('polanco.relationship_type.parishioner'));
+        $this->save_relationship('is_donor',config('polanco.contact.montserrat'),$person->id,config('polanco.relationship_type.donor'));
+        $this->save_relationship('is_retreatant',config('polanco.contact.montserrat'),$person->id,config('polanco.relationship_type.retreatant'));
+        $this->save_relationship('is_volunteer',config('polanco.contact.montserrat'),$person->id,config('polanco.relationship_type.volunteer'));
+        $this->save_relationship('is_captain',config('polanco.contact.montserrat'),$person->id,config('polanco.relationship_type.captain'));
+        $this->save_relationship('is_director',config('polanco.contact.montserrat'),$person->id,config('polanco.relationship_type.retreat_director'));
+        $this->save_relationship('is_innkeeper',config('polanco.contact.montserrat'),$person->id,config('polanco.relationship_type.retreat_innkeeper'));
+        $this->save_relationship('is_assistant',config('polanco.contact.montserrat'),$person->id,config('polanco.relationship_type.retreat_assistant'));
+        $this->save_relationship('is_staff',config('polanco.contact.montserrat'),$person->id,config('polanco.relationship_type.staff'));
+        $this->save_relationship('is_board',config('polanco.contact.montserrat'),$person->id,config('polanco.relationship_type.board_member'));
         */
             
         // save health, dietary, general and room preference notes
@@ -471,7 +471,7 @@ class PersonsController extends Controller
         
         $home_address= new \montserrat\Address;
             $home_address->contact_id=$person->id;
-            $home_address->location_type_id=LOCATION_TYPE_HOME;
+            $home_address->location_type_id=config('polanco.location_type.home');
             $home_address->is_primary=1;
             $home_address->street_address=$request->input('address_home_address1');
             $home_address->supplemental_address_1=$request->input('address_home_address2');
@@ -483,7 +483,7 @@ class PersonsController extends Controller
         
         $work_address= new \montserrat\Address;
         $work_address->contact_id=$person->id;
-            $work_address->location_type_id=LOCATION_TYPE_WORK;
+            $work_address->location_type_id=config('polanco.location_type.work');
             $work_address->is_primary=0;
             $work_address->street_address=$request->input('address_work_address1');
             $work_address->supplemental_address_1=$request->input('address_work_address2');
@@ -495,7 +495,7 @@ class PersonsController extends Controller
         
         $other_address= new \montserrat\Address;
         $other_address->contact_id=$person->id;
-            $other_address->location_type_id=LOCATION_TYPE_OTHER;
+            $other_address->location_type_id=config('polanco.location_type.other');
             $other_address->is_primary=0;
             $other_address->street_address=$request->input('address_other_address1');
             $other_address->supplemental_address_1=$request->input('address_other_address2');
@@ -507,83 +507,83 @@ class PersonsController extends Controller
         
         $phone_home_phone= new \montserrat\Phone;
             $phone_home_phone->contact_id=$person->id;
-            $phone_home_phone->location_type_id=LOCATION_TYPE_HOME;
+            $phone_home_phone->location_type_id=config('polanco.location_type.home');
             $phone_home_phone->phone=$request->input('phone_home_phone');
             $phone_home_phone->phone_type='Phone';
         $phone_home_phone->save();
         
         $phone_home_mobile= new \montserrat\Phone;
             $phone_home_mobile->contact_id=$person->id;
-            $phone_home_mobile->location_type_id=LOCATION_TYPE_HOME;
+            $phone_home_mobile->location_type_id=config('polanco.location_type.home');
             $phone_home_mobile->phone=$request->input('phone_home_mobile');
             $phone_home_mobile->phone_type='Mobile';
         $phone_home_mobile->save();
         
         $phone_home_fax= new \montserrat\Phone;
             $phone_home_fax->contact_id=$person->id;
-            $phone_home_fax->location_type_id=LOCATION_TYPE_HOME;
+            $phone_home_fax->location_type_id=config('polanco.location_type.home');
             $phone_home_fax->phone=$request->input('phone_home_fax');
             $phone_home_fax->phone_type='Fax';
         $phone_home_fax->save();
         
         $phone_work_phone= new \montserrat\Phone;
             $phone_work_phone->contact_id=$person->id;
-            $phone_work_phone->location_type_id=LOCATION_TYPE_WORK;
+            $phone_work_phone->location_type_id=config('polanco.location_type.work');
             $phone_work_phone->phone=$request->input('phone_work_phone');
             $phone_work_phone->phone_type='Phone';
         $phone_work_phone->save();
         
         $phone_work_mobile= new \montserrat\Phone;
             $phone_work_mobile->contact_id=$person->id;
-            $phone_work_mobile->location_type_id=LOCATION_TYPE_WORK;
+            $phone_work_mobile->location_type_id=config('polanco.location_type.work');
             $phone_work_mobile->phone=$request->input('phone_work_mobile');
             $phone_work_mobile->phone_type='Mobile';
         $phone_work_mobile->save();
         
         $phone_work_fax= new \montserrat\Phone;
             $phone_work_fax->contact_id=$person->id;
-            $phone_work_fax->location_type_id=LOCATION_TYPE_WORK;
+            $phone_work_fax->location_type_id=config('polanco.location_type.work');
             $phone_work_fax->phone=$request->input('phone_work_fax');
             $phone_work_fax->phone_type='Fax';
         $phone_work_fax->save();
         
         $phone_other_phone= new \montserrat\Phone;
             $phone_other_phone->contact_id=$person->id;
-            $phone_other_phone->location_type_id=LOCATION_TYPE_OTHER;
+            $phone_other_phone->location_type_id=config('polanco.location_type.other');
             $phone_other_phone->phone=$request->input('phone_other_phone');
             $phone_other_phone->phone_type='Phone';
         $phone_other_phone->save();
         
         $phone_other_mobile= new \montserrat\Phone;
             $phone_other_mobile->contact_id=$person->id;
-            $phone_other_mobile->location_type_id=LOCATION_TYPE_OTHER;
+            $phone_other_mobile->location_type_id=config('polanco.location_type.other');
             $phone_other_mobile->phone=$request->input('phone_other_mobile');
             $phone_other_mobile->phone_type='Mobile';
         $phone_other_mobile->save();
         
         $phone_other_fax= new \montserrat\Phone;
             $phone_other_fax->contact_id=$person->id;
-            $phone_other_fax->location_type_id=LOCATION_TYPE_OTHER;
+            $phone_other_fax->location_type_id=config('polanco.location_type.other');
             $phone_other_fax->phone=$request->input('phone_other_fax');
             $phone_other_fax->phone_type='Fax';
         $phone_other_fax->save();
         
         $email_home = new \montserrat\Email;
             $email_home->contact_id=$person->id;
-            $email_home->location_type_id=LOCATION_TYPE_HOME;
+            $email_home->location_type_id=config('polanco.location_type.home');
             $email_home->email=$request->input('email_home');
             $email_home->is_primary=1;
         $email_home->save();
         
         $email_work= new \montserrat\Email;
             $email_work->contact_id=$person->id;
-            $email_work->location_type_id=LOCATION_TYPE_WORK;
+            $email_work->location_type_id=config('polanco.location_type.work');
             $email_work->email=$request->input('email_work');
         $email_work->save();
         
         $email_other = new \montserrat\Email;
             $email_other->contact_id=$person->id;
-            $email_other->location_type_id=LOCATION_TYPE_OTHER;
+            $email_other->location_type_id=config('polanco.location_type.other');
             $email_other->email=$request->input('email_other');
         $email_other->save();
         
@@ -644,7 +644,7 @@ class PersonsController extends Controller
     {
         $this->authorize('show-contact');
         $person = \montserrat\Contact::with('addresses.country', 'addresses.location', 'addresses.state', 'emails.location', 'emergency_contact', 'ethnicity', 'languages', 'notes', 'occupation', 'parish.contact_a.address_primary', 'parish.contact_a.diocese.contact_a', 'phones.location', 'prefix', 'suffix', 'religion', 'touchpoints.staff', 'websites', 'groups.group', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations')->findOrFail($id);
-        $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($person->id)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->get();
+        $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($person->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
         $relationship_types = [];
         $relationship_types["Child"] = "Child";
         $relationship_types["Employee"] = "Employee";
@@ -711,7 +711,7 @@ class PersonsController extends Controller
         $person = \montserrat\Contact::with('prefix', 'suffix', 'addresses.location', 'emails.location', 'phones.location', 'websites', 'parish', 'emergency_contact', 'notes')->findOrFail($id);
         //dd($person);
         
-        $parishes = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
+        $parishes = \montserrat\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
         $parish_list[0]='N/A';
         $contact_types = \montserrat\ContactType::whereIsReserved(true)->pluck('label', 'id');
         $subcontact_types = \montserrat\ContactType::whereIsReserved(false)->whereIsActive(true)->pluck('label', 'id');
@@ -987,15 +987,15 @@ class PersonsController extends Controller
         // save parishioner relationship
         // TEST: does unset work?
         if ($request->input('parish_id')>0) {
-                $relationship_parishioner = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_PARISHIONER,'is_active'=>1]);
+                $relationship_parishioner = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>config('polanco.relationship_type.parishioner'),'is_active'=>1]);
                 $relationship_parishioner->contact_id_a = $request->input('parish_id');
                 $relationship_parishioner->contact_id_b = $person->id;
-                $relationship_parishioner->relationship_type_id = RELATIONSHIP_TYPE_PARISHIONER;
+                $relationship_parishioner->relationship_type_id = config('polanco.relationship_type.parishioner');
                 $relationship_parishioner->is_active = 1;
             $relationship_parishioner->save();
         }
         if ($request->input('parish_id')==0) {
-                $relationship_parishioner = \montserrat\Relationship::whereContactIdB($person->id)->whereRelationshipTypeId(RELATIONSHIP_TYPE_PARISHIONER)->whereIsActive(1)->first();
+                $relationship_parishioner = \montserrat\Relationship::whereContactIdB($person->id)->whereRelationshipTypeId(config('polanco.relationship_type.parishioner'))->whereIsActive(1)->first();
             if (isset($relationship_parishioner)) {
                 $relationship_parishioner->delete();
             }
@@ -1041,9 +1041,9 @@ class PersonsController extends Controller
             $person_note_room_preference->save();
         }
                 
-        $home_address= \montserrat\Address::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_HOME]);
+        $home_address= \montserrat\Address::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>config('polanco.location_type.home')]);
             $home_address->contact_id=$person->id;
-            $home_address->location_type_id=LOCATION_TYPE_HOME;
+            $home_address->location_type_id=config('polanco.location_type.home');
             $home_address->is_primary=1;
             $home_address->street_address=$request->input('address_home_address1');
             $home_address->supplemental_address_1=$request->input('address_home_address2');
@@ -1053,9 +1053,9 @@ class PersonsController extends Controller
             $home_address->country_id=$request->input('address_home_country');
         $home_address->save();
          
-        $work_address= \montserrat\Address::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_WORK]);
+        $work_address= \montserrat\Address::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>config('polanco.location_type.work')]);
             $work_address->contact_id=$person->id;
-            $work_address->location_type_id=LOCATION_TYPE_WORK;
+            $work_address->location_type_id=config('polanco.location_type.work');
             $work_address->is_primary=0;
             $work_address->street_address=$request->input('address_work_address1');
             $work_address->supplemental_address_1=$request->input('address_work_address2');
@@ -1065,9 +1065,9 @@ class PersonsController extends Controller
             $work_address->country_id=$request->input('address_work_country');
         $work_address->save();
         
-        $other_address= \montserrat\Address::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_OTHER]);
+        $other_address= \montserrat\Address::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>config('polanco.location_type.other')]);
             $other_address->contact_id=$person->id;
-            $other_address->location_type_id=LOCATION_TYPE_OTHER;
+            $other_address->location_type_id=config('polanco.location_type.other');
             $other_address->is_primary=0;
             $other_address->street_address=$request->input('address_other_address1');
             $other_address->supplemental_address_1=$request->input('address_other_address2');
@@ -1077,84 +1077,84 @@ class PersonsController extends Controller
             $other_address->country_id=$request->input('address_other_country');
         $other_address->save();
         
-        $phone_home_phone= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_HOME,'phone_type'=>'Phone']);
+        $phone_home_phone= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>config('polanco.location_type.home'),'phone_type'=>'Phone']);
             $phone_home_phone->contact_id=$person->id;
-            $phone_home_phone->location_type_id=LOCATION_TYPE_HOME;
+            $phone_home_phone->location_type_id=config('polanco.location_type.home');
             $phone_home_phone->phone=$request->input('phone_home_phone');
             $phone_home_phone->phone_type='Phone';
         $phone_home_phone->save();
         
-        $phone_home_mobile= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_HOME,'phone_type'=>'Mobile']);
+        $phone_home_mobile= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>config('polanco.location_type.home'),'phone_type'=>'Mobile']);
             $phone_home_mobile->contact_id=$person->id;
-            $phone_home_mobile->location_type_id=LOCATION_TYPE_HOME;
+            $phone_home_mobile->location_type_id=config('polanco.location_type.home');
             $phone_home_mobile->phone=$request->input('phone_home_mobile');
             $phone_home_mobile->phone_type='Mobile';
         $phone_home_mobile->save();
         
-        $phone_home_fax= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_HOME,'phone_type'=>'Fax']);
+        $phone_home_fax= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>config('polanco.location_type.home'),'phone_type'=>'Fax']);
             $phone_home_fax->contact_id=$person->id;
-            $phone_home_fax->location_type_id=LOCATION_TYPE_HOME;
+            $phone_home_fax->location_type_id=config('polanco.location_type.home');
             $phone_home_fax->phone=$request->input('phone_home_fax');
             $phone_home_fax->phone_type='Fax';
         $phone_home_fax->save();
         
-        $phone_work_phone= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_WORK,'phone_type'=>'Phone']);
+        $phone_work_phone= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>config('polanco.location_type.work'),'phone_type'=>'Phone']);
             $phone_work_phone->contact_id=$person->id;
-            $phone_work_phone->location_type_id=LOCATION_TYPE_WORK;
+            $phone_work_phone->location_type_id=config('polanco.location_type.work');
             $phone_work_phone->phone=$request->input('phone_work_phone');
             $phone_work_phone->phone_type='Phone';
         $phone_work_phone->save();
         
-        $phone_work_mobile= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_WORK,'phone_type'=>'Mobile']);
+        $phone_work_mobile= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>config('polanco.location_type.work'),'phone_type'=>'Mobile']);
             $phone_work_mobile->contact_id=$person->id;
-            $phone_work_mobile->location_type_id=LOCATION_TYPE_WORK;
+            $phone_work_mobile->location_type_id=config('polanco.location_type.work');
             $phone_work_mobile->phone=$request->input('phone_work_mobile');
             $phone_work_mobile->phone_type='Mobile';
         $phone_work_mobile->save();
         
-        $phone_work_fax= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_WORK,'phone_type'=>'Fax']);
+        $phone_work_fax= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>config('polanco.location_type.work'),'phone_type'=>'Fax']);
             $phone_work_fax->contact_id=$person->id;
-            $phone_work_fax->location_type_id=LOCATION_TYPE_WORK;
+            $phone_work_fax->location_type_id=config('polanco.location_type.work');
             $phone_work_fax->phone=$request->input('phone_work_fax');
             $phone_work_fax->phone_type='Fax';
         $phone_work_fax->save();
         
-        $phone_other_phone= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_OTHER,'phone_type'=>'Phone']);
+        $phone_other_phone= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>config('polanco.location_type.other'),'phone_type'=>'Phone']);
             $phone_other_phone->contact_id=$person->id;
-            $phone_other_phone->location_type_id=LOCATION_TYPE_OTHER;
+            $phone_other_phone->location_type_id=config('polanco.location_type.other');
             $phone_other_phone->phone=$request->input('phone_other_phone');
             $phone_other_phone->phone_type='Phone';
         $phone_other_phone->save();
         
-        $phone_other_mobile= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_OTHER,'phone_type'=>'Mobile']);
+        $phone_other_mobile= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>config('polanco.location_type.other'),'phone_type'=>'Mobile']);
             $phone_other_mobile->contact_id=$person->id;
-            $phone_other_mobile->location_type_id=LOCATION_TYPE_OTHER;
+            $phone_other_mobile->location_type_id=config('polanco.location_type.other');
             $phone_other_mobile->phone=$request->input('phone_other_mobile');
             $phone_other_mobile->phone_type='Mobile';
         $phone_other_mobile->save();
         
-        $phone_other_fax= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_OTHER,'phone_type'=>'Fax']);
+        $phone_other_fax= \montserrat\Phone::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>config('polanco.location_type.other'),'phone_type'=>'Fax']);
             $phone_other_fax->contact_id=$person->id;
-            $phone_other_fax->location_type_id=LOCATION_TYPE_OTHER;
+            $phone_other_fax->location_type_id=config('polanco.location_type.other');
             $phone_other_fax->phone=$request->input('phone_other_fax');
             $phone_other_fax->phone_type='Fax';
         $phone_other_fax->save();
         
-        $email_home = \montserrat\Email::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_HOME]);
+        $email_home = \montserrat\Email::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>config('polanco.location_type.home')]);
             $email_home->contact_id=$person->id;
-            $email_home->location_type_id=LOCATION_TYPE_HOME;
+            $email_home->location_type_id=config('polanco.location_type.home');
             $email_home->email=$request->input('email_home');
         $email_home->save();
         
-        $email_work= \montserrat\Email::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_WORK]);
+        $email_work= \montserrat\Email::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>config('polanco.location_type.work')]);
             $email_work->contact_id=$person->id;
-            $email_work->location_type_id=LOCATION_TYPE_WORK;
+            $email_work->location_type_id=config('polanco.location_type.work');
             $email_work->email=$request->input('email_work');
         $email_work->save();
         
-        $email_other = \montserrat\Email::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>LOCATION_TYPE_OTHER]);
+        $email_other = \montserrat\Email::firstOrNew(['contact_id'=>$person->id,'location_type_id'=>config('polanco.location_type.other')]);
             $email_other->contact_id=$person->id;
-            $email_other->location_type_id=LOCATION_TYPE_OTHER;
+            $email_other->location_type_id=config('polanco.location_type.other');
             $email_other->email=$request->input('email_other');
         $email_other->save();
         
@@ -1201,88 +1201,88 @@ class PersonsController extends Controller
         $url_twitter->save();
         
         // relationships: donor, retreatant, volunteer, captain, director, innkeeper, assistant, staff, board
-        $relationship_donor = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_DONOR,'is_active'=>1]);
+        $relationship_donor = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>config('polanco.relationship_type.donor'),'is_active'=>1]);
         if ($request->input('is_donor')==0) {
             $relationship_donor->delete();
         } else {
-            $relationship_donor->contact_id_a = CONTACT_MONTSERRAT;
+            $relationship_donor->contact_id_a = config('polanco.contact.montserrat');
             $relationship_donor->contact_id_b = $person->id;
-            $relationship_donor->relationship_type_id = RELATIONSHIP_TYPE_DONOR;
+            $relationship_donor->relationship_type_id = config('polanco.relationship_type.donor');
             $relationship_donor->is_active = 1;
             $relationship_donor->save();
         }
-        $relationship_retreatant = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_RETREATANT,'is_active'=>1]);
+        $relationship_retreatant = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>config('polanco.relationship_type.retreatant'),'is_active'=>1]);
         if ($request->input('is_retreatant')==0) {
             $relationship_retreatant->delete();
         } else {
-            $relationship_retreatant->contact_id_a = CONTACT_MONTSERRAT;
+            $relationship_retreatant->contact_id_a = config('polanco.contact.montserrat');
             $relationship_retreatant->contact_id_b = $person->id;
-            $relationship_retreatant->relationship_type_id = RELATIONSHIP_TYPE_RETREATANT;
+            $relationship_retreatant->relationship_type_id = config('polanco.relationship_type.retreatant');
             $relationship_retreatant->is_active = 1;
             $relationship_retreatant->save();
         }
-        $relationship_volunteer = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_VOLUNTEER,'is_active'=>1]);
+        $relationship_volunteer = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>config('polanco.relationship_type.volunteer'),'is_active'=>1]);
         if ($request->input('is_volunteer')==0) {
             $relationship_volunteer->delete();
         } else {
-            $relationship_volunteer->contact_id_a = CONTACT_MONTSERRAT;
+            $relationship_volunteer->contact_id_a = config('polanco.contact.montserrat');
             $relationship_volunteer->contact_id_b = $person->id;
-            $relationship_volunteer->relationship_type_id = RELATIONSHIP_TYPE_VOLUNTEER;
+            $relationship_volunteer->relationship_type_id = config('polanco.relationship_type.volunteer');
             $relationship_volunteer->is_active = 1;
             $relationship_volunteer->save();
         }
-        $relationship_captain = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_CAPTAIN,'is_active'=>1]);
+        $relationship_captain = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>config('polanco.relationship_type.captain'),'is_active'=>1]);
         if ($request->input('is_captain')==0) {
             $relationship_captain->delete();
         } else {
-            $relationship_captain->contact_id_a = CONTACT_MONTSERRAT;
+            $relationship_captain->contact_id_a = config('polanco.contact.montserrat');
             $relationship_captain->contact_id_b = $person->id;
-            $relationship_captain->relationship_type_id = RELATIONSHIP_TYPE_CAPTAIN;
+            $relationship_captain->relationship_type_id = config('polanco.relationship_type.captain');
             $relationship_captain->is_active = 1;
             $relationship_captain->save();
         }
-        $relationship_director = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_RETREAT_DIRECTOR,'is_active'=>1]);
+        $relationship_director = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>config('polanco.relationship_type.retreat_director'),'is_active'=>1]);
         if ($request->input('is_director')==0) {
             $relationship_director->delete();
         } else {
-            $relationship_director->contact_id_a = CONTACT_MONTSERRAT;
+            $relationship_director->contact_id_a = config('polanco.contact.montserrat');
             $relationship_director->contact_id_b = $person->id;
-            $relationship_director->relationship_type_id = RELATIONSHIP_TYPE_RETREAT_DIRECTOR;
+            $relationship_director->relationship_type_id = config('polanco.relationship_type.retreat_director');
             $relationship_director->is_active = 1;
             $relationship_director->save();
         }
-        $relationship_innkeeper = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_RETREAT_INNKEEPER,'is_active'=>1]);
+        $relationship_innkeeper = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>config('polanco.relationship_type.retreat_innkeeper'),'is_active'=>1]);
         if ($request->input('is_innkeeper')==0) {
             $relationship_innkeeper->delete();
         } else {
-            $relationship_innkeeper->contact_id_a = CONTACT_MONTSERRAT;
+            $relationship_innkeeper->contact_id_a = config('polanco.contact.montserrat');
             $relationship_innkeeper->contact_id_b = $person->id;
-            $relationship_innkeeper->relationship_type_id = RELATIONSHIP_TYPE_RETREAT_INNKEEPER;
+            $relationship_innkeeper->relationship_type_id = config('polanco.relationship_type.retreat_innkeeper');
             $relationship_innkeeper->is_active = 1;
             $relationship_innkeeper->save();
         }
-        $relationship_assistant = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_RETREAT_ASSISTANT,'is_active'=>1]);
+        $relationship_assistant = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>config('polanco.relationship_type.retreat_assistant'),'is_active'=>1]);
         if ($request->input('is_assistant')==0) {
             $relationship_assistant->delete();
         } else {
-            $relationship_assistant->contact_id_a = CONTACT_MONTSERRAT;
+            $relationship_assistant->contact_id_a = config('polanco.contact.montserrat');
             $relationship_assistant->contact_id_b = $person->id;
-            $relationship_assistant->relationship_type_id = RELATIONSHIP_TYPE_RETREAT_ASSISTANT;
+            $relationship_assistant->relationship_type_id = config('polanco.relationship_type.retreat_assistant');
             $relationship_assistant->is_active = 1;
             $relationship_assistant->save();
         }
-        $relationship_staff = \montserrat\Relationship::firstOrNew(['contact_id_a'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_STAFF,'is_active'=>1]);
+        $relationship_staff = \montserrat\Relationship::firstOrNew(['contact_id_a'=>$person->id,'relationship_type_id'=>config('polanco.relationship_type.staff'),'is_active'=>1]);
         if ($request->input('is_staff')==0) {
             $relationship_staff->delete();
         } else {
             $relationship_staff->contact_id_a = $person->id;
-            $relationship_staff->contact_id_b = CONTACT_MONTSERRAT;
-            $relationship_staff->relationship_type_id = RELATIONSHIP_TYPE_STAFF;
+            $relationship_staff->contact_id_b = config('polanco.contact.montserrat');
+            $relationship_staff->relationship_type_id = config('polanco.relationship_type.staff');
             $relationship_staff->is_active = 1;
             $relationship_staff->save();
         }
         // for Board Members we are not deleting the relationship but ending it and making it inactive
-        $relationship_board = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>RELATIONSHIP_TYPE_BOARD_MEMBER]);
+        $relationship_board = \montserrat\Relationship::firstOrNew(['contact_id_b'=>$person->id,'relationship_type_id'=>config('polanco.relationship_type.board_member')]);
         if ($request->input('is_board')==0) {
             if (isset($relationship_board->id)) {
                 $relationship_board->end_date = \Carbon\Carbon::now();
@@ -1290,106 +1290,106 @@ class PersonsController extends Controller
                 $relationship_board->save();
             }
         } else {
-            $relationship_board->contact_id_a = CONTACT_MONTSERRAT;
+            $relationship_board->contact_id_a = config('polanco.contact.montserrat');
             $relationship_board->contact_id_b = $person->id;
-            $relationship_board->relationship_type_id = RELATIONSHIP_TYPE_BOARD_MEMBER;
+            $relationship_board->relationship_type_id = config('polanco.relationship_type.board_member');
             $relationship_board->start_date = \Carbon\Carbon::now();
             $relationship_board->is_active = 1;
             $relationship_board->save();
         }
         
             //groups:
-        $group_captain = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_CAPTAIN,'status'=>'Added']);
+        $group_captain = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>config('polanco.group_id.captain'),'status'=>'Added']);
         if ($request->input('is_captain')==0) {
             $group_captain->delete();
         } else {
             $group_captain->contact_id = $person->id;
-            $group_captain->group_id = GROUP_ID_CAPTAIN;
+            $group_captain->group_id = config('polanco.group_id.captain');
             $group_captain->status = 'Added';
             $group_captain->deleted_at = null;
             $group_captain->save();
         }
-        $group_volunteer = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_VOLUNTEER,'status'=>'Added']);
+        $group_volunteer = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>config('polanco.group_id.volunteer'),'status'=>'Added']);
         if ($request->input('is_volunteer')==0) {
             $group_volunteer->delete();
         } else {
             $group_volunteer->contact_id = $person->id;
-            $group_volunteer->group_id = GROUP_ID_VOLUNTEER;
+            $group_volunteer->group_id = config('polanco.group_id.volunteer');
             $group_volunteer->status = 'Added';
             $group_volunteer->deleted_at = null;
             $group_volunteer->save();
         }
-        $group_bishop = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_BISHOP,'status'=>'Added']);
+        $group_bishop = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>config('polanco.group_id.bishop'),'status'=>'Added']);
         if ($request->input('is_bishop')==0) {
             $group_bishop->delete();
         } else {
             $group_bishop->contact_id = $person->id;
-            $group_bishop->group_id = GROUP_ID_BISHOP;
+            $group_bishop->group_id = config('polanco.group_id.bishop');
             $group_bishop->status = 'Added';
             $group_bishop->deleted_at = null;
             $group_bishop->save();
         }
-        $group_priest = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_PRIEST,'status'=>'Added']);
+        $group_priest = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>config('polanco.group_id.priest'),'status'=>'Added']);
         if ($request->input('is_priest')==0) {
             $group_priest->delete();
         } else {
             $group_priest->contact_id = $person->id;
-            $group_priest->group_id = GROUP_ID_PRIEST;
+            $group_priest->group_id = config('polanco.group_id.priest');
             $group_priest->status = 'Added';
             $group_priest->deleted_at = null;
             $group_priest->save();
         }
-        $group_deacon = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_DEACON,'status'=>'Added']);
+        $group_deacon = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>config('polanco.group_id.deacon'),'status'=>'Added']);
         if ($request->input('is_deacon')==0) {
             $group_deacon->delete();
         } else {
             $group_deacon->contact_id = $person->id;
-            $group_deacon->group_id = GROUP_ID_DEACON;
+            $group_deacon->group_id = config('polanco.group_id.deacon');
             $group_deacon->status = 'Added';
             $group_deacon->deleted_at = null;
             $group_deacon->save();
         }
-        $group_pastor = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_PASTOR,'status'=>'Added']);
+        $group_pastor = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>config('polanco.group_id.pastor'),'status'=>'Added']);
         if ($request->input('is_pastor')==0) {
             $group_pastor->delete();
         } else {
             $group_pastor->contact_id = $person->id;
-            $group_pastor->group_id = GROUP_ID_PASTOR;
+            $group_pastor->group_id = config('polanco.group_id.pastor');
             $group_pastor->status = 'Added';
             $group_pastor->deleted_at = null;
             $group_pastor->save();
         }
-        $group_jesuit = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_JESUIT,'status'=>'Added']);
+        $group_jesuit = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>config('polanco.group_id.jesuit'),'status'=>'Added']);
         if ($request->input('is_jesuit')==0) {
             $group_jesuit->delete();
         } else {
             $group_jesuit->contact_id = $person->id;
-            $group_jesuit->group_id = GROUP_ID_JESUIT;
+            $group_jesuit->group_id = config('polanco.group_id.jesuit');
             $group_jesuit->status = 'Added';
             $group_jesuit->deleted_at = null;
             $group_jesuit->save();
         }
-        $group_provincial = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_PROVINCIAL,'status'=>'Added']);
+        $group_provincial = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>config('polanco.group_id.provincial'),'status'=>'Added']);
         if ($request->input('is_provincial')==0) {
             $group_provincial->delete();
         } else {
             $group_provincial->contact_id = $person->id;
-            $group_provincial->group_id = GROUP_ID_PROVINCIAL;
+            $group_provincial->group_id = config('polanco.group_id.provincial');
             $group_provincial->status = 'Added';
             $group_provincial->deleted_at = null;
             $group_provincial->save();
         }
-        $group_superior = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_SUPERIOR,'status'=>'Added']);
+        $group_superior = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>config('polanco.group_id.superior'),'status'=>'Added']);
         if ($request->input('is_superior')==0) {
             $group_superior->delete();
         } else {
             $group_superior->contact_id = $person->id;
-            $group_superior->group_id = GROUP_ID_SUPERIOR;
+            $group_superior->group_id = config('polanco.group_id.superior');
             $group_superior->status = 'Added';
             $group_superior->deleted_at = null;
             $group_superior->save();
         }
-        $group_board = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_BOARD]);
+        $group_board = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>config('polanco.group_id.board')]);
         if ($request->input('is_board')==0) {
             if (isset($group_board->id)) {
                 $group_board->status='Removed';
@@ -1397,27 +1397,27 @@ class PersonsController extends Controller
             }
         } else {
             $group_board->contact_id = $person->id;
-            $group_board->group_id = GROUP_ID_BOARD;
+            $group_board->group_id = config('polanco.group_id.board');
             $group_board->status = 'Added';
             $group_board->deleted_at = null;
             $group_board->save();
         }
-        $group_staff = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_STAFF,'status'=>'Added']);
+        $group_staff = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>config('polanco.group_id.staff'),'status'=>'Added']);
         if ($request->input('is_staff')==0) {
             $group_staff->delete();
         } else {
             $group_staff->contact_id = $person->id;
-            $group_staff->group_id = GROUP_ID_STAFF;
+            $group_staff->group_id = config('polanco.group_id.staff');
             $group_staff->status = 'Added';
             $group_staff->deleted_at = null;
             $group_staff->save();
         }
-        $group_steward = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_STEWARD,'status'=>'Added']);
+        $group_steward = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>config('polanco.group_id.steward'),'status'=>'Added']);
         if ($request->input('is_steward')==0) {
             $group_steward->delete();
         } else {
             $group_steward->contact_id = $person->id;
-            $group_steward->group_id = GROUP_ID_STEWARD;
+            $group_steward->group_id = config('polanco.group_id.steward');
             $group_steward->status = 'Added';
             $group_steward->deleted_at = null;
             $group_steward->save();
@@ -1515,16 +1515,16 @@ class PersonsController extends Controller
     }
     public function bishops()
     {
-        return $this->role(GROUP_ID_BISHOP);
+        return $this->role(config('polanco.group_id.bishop'));
     }
 
     public function boardmembers()
     {
-        return $this->role(GROUP_ID_BOARD);
+        return $this->role(config('polanco.group_id.board'));
     }
     public function captains()
     {
-        return $this->role(GROUP_ID_CAPTAIN);
+        return $this->role(config('polanco.group_id.captain'));
     }
     public function catholics()
     {
@@ -1535,7 +1535,7 @@ class PersonsController extends Controller
     
     public function deacons()
     {
-        return $this->role(GROUP_ID_DEACON);
+        return $this->role(config('polanco.group_id.deacon'));
     }
     public function deceased()
     {
@@ -1558,7 +1558,7 @@ class PersonsController extends Controller
     }
     public function staff()
     {
-        return $this->role(GROUP_ID_STAFF);
+        return $this->role(config('polanco.group_id.staff'));
     }
     public function formerboard()
     {
@@ -1573,19 +1573,19 @@ class PersonsController extends Controller
     }
     public function jesuits()
     {
-        return $this->role(GROUP_ID_JESUIT);
+        return $this->role(config('polanco.group_id.jesuit'));
     }
     public function pastors()
     {
-        return $this->role(GROUP_ID_PASTOR);
+        return $this->role(config('polanco.group_id.pastor'));
     }
     public function priests()
     {
-        return $this->role(GROUP_ID_PRIEST);
+        return $this->role(config('polanco.group_id.priest'));
     }
     public function provincials()
     {
-        return $this->role(GROUP_ID_PROVINCIAL);
+        return $this->role(config('polanco.group_id.provincial'));
     }
     public function retreatants()
     {
@@ -1594,17 +1594,17 @@ class PersonsController extends Controller
     }
     public function superiors()
     {
-        return $this->role(GROUP_ID_SUPERIOR);
+        return $this->role(config('polanco.group_id.superior'));
     }
     public function stewards()
     {
-        return $this->role(GROUP_ID_STEWARD);
+        return $this->role(config('polanco.group_id.steward'));
     }
     
         
     public function volunteers()
     {
-        return $this->role(GROUP_ID_VOLUNTEER);
+        return $this->role(config('polanco.group_id.volunteer'));
     }
     
     public function role($group_id)

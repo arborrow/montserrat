@@ -43,7 +43,7 @@ class RegistrationsController extends Controller
 
         $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date", ">", \Carbon\Carbon::today()->subWeek())->where("is_active", "=", 1)->orderBy('start_date')->pluck('description', 'id');
         $retreats->prepend('Unassigned', 0);
-        $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->pluck('sort_name', 'id');
+        $retreatants = \montserrat\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name', 'id');
         
         $rooms= \montserrat\Room::orderby('name')->pluck('name', 'id');
         $rooms->prepend('Unassigned', 0);
@@ -61,11 +61,11 @@ class RegistrationsController extends Controller
         $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date", ">", \Carbon\Carbon::today()->subWeek())->where("is_active", "=", 1)->orderBy('start_date')->pluck('description', 'id');
         $retreats->prepend('Unassigned', 0);
         $retreatant = \montserrat\Contact::findOrFail($id);
-        if ($retreatant->contact_type == CONTACT_TYPE_INDIVIDUAL) {
-            $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->pluck('sort_name', 'id');
+        if ($retreatant->contact_type == config('polanco.contact_type.individual')) {
+            $retreatants = \montserrat\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name', 'id');
         }
-        if ($retreatant->contact_type == CONTACT_TYPE_ORGANIZATION) {
-            $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_ORGANIZATION)->whereSubcontactType($retreatant->subcontact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
+        if ($retreatant->contact_type == config('polanco.contact_type.organization')) {
+            $retreatants = \montserrat\Contact::whereContactType(config('polanco.contact_type.organization'))->whereSubcontactType($retreatant->subcontact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
         }
         
         $rooms= \montserrat\Room::orderby('name')->pluck('name', 'id');
@@ -116,7 +116,7 @@ class RegistrationsController extends Controller
         $retreat = \montserrat\Retreat::findOrFail($retreat_id);
         
         // Day , Conference, Contract, Diocesan, Meeting, Workshop
-        $multi_registration_event_types = [EVENT_TYPE_DAY, EVENT_TYPE_CONTRACT, EVENT_TYPE_CONFERENCE, EVENT_TYPE_DIOCESAN, EVENT_TYPE_MEETING, EVENT_TYPE_WORKSHOP];
+        $multi_registration_event_types = [EVENT_TYPE_DAY, EVENT_TYPE_CONTRACT, config('polanco.event_type.conference'), EVENT_TYPE_DIOCESAN, config('polanco.event_type.meeting'), config('polanco.event_type.workshop')];
         if (in_array($retreat->event_type_id, $multi_registration_event_types)) {
             $defaults['is_multi_registration'] = true;
         } else {
@@ -302,11 +302,11 @@ class RegistrationsController extends Controller
         $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date", ">", \Carbon\Carbon::today())->orderBy('start_date')->pluck('description', 'id');
 
         //TODO: we will want to be able to switch between types when going from a group registration to individual room assignment
-        if ($retreatant->contact_type == CONTACT_TYPE_INDIVIDUAL) {
-            $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->pluck('sort_name', 'id');
+        if ($retreatant->contact_type == config('polanco.contact_type.individual')) {
+            $retreatants = \montserrat\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name', 'id');
         }
-        if ($retreatant->contact_type == CONTACT_TYPE_ORGANIZATION) {
-            $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_ORGANIZATION)->whereSubcontactType($retreatant->subcontact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
+        if ($retreatant->contact_type == config('polanco.contact_type.organization')) {
+            $retreatants = \montserrat\Contact::whereContactType(config('polanco.contact_type.organization'))->whereSubcontactType($retreatant->subcontact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
         }
         
         $rooms= \montserrat\Room::orderby('name')->pluck('name', 'id');
@@ -330,11 +330,11 @@ class RegistrationsController extends Controller
         $retreats = \montserrat\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date", ">", \Carbon\Carbon::today())->orderBy('start_date')->pluck('description', 'id');
 
         //TODO: we will want to be able to switch between types when going from a group registration to individual room assignment
-        if ($retreatant->contact_type == CONTACT_TYPE_INDIVIDUAL) {
-            $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_INDIVIDUAL)->orderBy('sort_name')->pluck('sort_name', 'id');
+        if ($retreatant->contact_type == config('polanco.contact_type.individual')) {
+            $retreatants = \montserrat\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name', 'id');
         }
-        if ($retreatant->contact_type == CONTACT_TYPE_ORGANIZATION) {
-            $retreatants = \montserrat\Contact::whereContactType(CONTACT_TYPE_ORGANIZATION)->whereSubcontactType($retreatant->subcontact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
+        if ($retreatant->contact_type == config('polanco.contact_type.organization')) {
+            $retreatants = \montserrat\Contact::whereContactType(config('polanco.contact_type.organization'))->whereSubcontactType($retreatant->subcontact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
         }
         
         $rooms= \montserrat\Room::orderby('name')->pluck('name', 'id');

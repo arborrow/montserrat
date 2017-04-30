@@ -55,14 +55,14 @@ class OrganizationsController extends Controller
     public function create()
     {
         $this->authorize('create-contact');
-        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name', 'id');
+        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
         
         $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code', 'id');
         $countries->prepend('N/A', 0);
         
-        $defaults['state_province_id'] = STATE_PROVINCE_ID_TX;
-        $defaults['country_id'] = COUNTRY_ID_USA;
+        $defaults['state_province_id'] = config('polanco.state_province_id_tx');
+        $defaults['country_id'] = config('polanco.country_id_usa');
                 
         $subcontact_types = \montserrat\ContactType::whereIsReserved(false)->whereIsActive(true)->pluck('label', 'id');
         $subcontact_types->prepend('N/A', 0);
@@ -98,13 +98,13 @@ class OrganizationsController extends Controller
         $organization->organization_name = $request->input('organization_name');
         $organization->display_name  = $request->input('organization_name');
         $organization->sort_name  = $request->input('organization_name');
-        $organization->contact_type = CONTACT_TYPE_ORGANIZATION;
+        $organization->contact_type = config('polanco.contact_type.organization');
         $organization->subcontact_type = $request->input('subcontact_type');
         $organization->save();
         
         $organization_address= new \montserrat\Address;
             $organization_address->contact_id=$organization->id;
-            $organization_address->location_type_id=LOCATION_TYPE_MAIN;
+            $organization_address->location_type_id=config('polanco.location_type.main');
             $organization_address->is_primary=1;
             $organization_address->street_address=$request->input('street_address');
             $organization_address->supplemental_address_1=$request->input('supplemental_address_1');
@@ -116,7 +116,7 @@ class OrganizationsController extends Controller
         
         $organization_main_phone= new \montserrat\Phone;
             $organization_main_phone->contact_id=$organization->id;
-            $organization_main_phone->location_type_id=LOCATION_TYPE_MAIN;
+            $organization_main_phone->location_type_id=config('polanco.location_type.main');
             $organization_main_phone->is_primary=1;
             $organization_main_phone->phone=$request->input('phone_main_phone');
             $organization_main_phone->phone_type='Phone';
@@ -124,7 +124,7 @@ class OrganizationsController extends Controller
         
         $organization_fax_phone= new \montserrat\Phone;
             $organization_fax_phone->contact_id=$organization->id;
-            $organization_fax_phone->location_type_id=LOCATION_TYPE_MAIN;
+            $organization_fax_phone->location_type_id=config('polanco.location_type.main');
             $organization_fax_phone->phone=$request->input('phone_main_fax');
             $organization_fax_phone->phone_type='Fax';
         $organization_fax_phone->save();
@@ -132,7 +132,7 @@ class OrganizationsController extends Controller
         $organization_email_main = new \montserrat\Email;
             $organization_email_main->contact_id=$organization->id;
             $organization_email_main->is_primary=1;
-            $organization_email_main->location_type_id=LOCATION_TYPE_MAIN;
+            $organization_email_main->location_type_id=config('polanco.location_type.main');
             $organization_email_main->email=$request->input('email_main');
         $organization_email_main->save();
         
@@ -205,7 +205,7 @@ class OrganizationsController extends Controller
         $this->authorize('show-contact');
         $organization = \montserrat\Contact::with('addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'phone_main_phone.location', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations')->findOrFail($id);
        
-        $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($organization->id)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->get();
+        $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($organization->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
         $relationship_types = [];
         $relationship_types["Employer"] = "Employer";
         $relationship_types["Primary Contact"] = "Primary Contact";
@@ -228,14 +228,14 @@ class OrganizationsController extends Controller
         $this->authorize('update-contact');
         $organization = \montserrat\Contact::with('address_primary.state', 'address_primary.location', 'phone_main_phone.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
 
-        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name', 'id');
+        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
         
         $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code', 'id');
         $countries->prepend('N/A', 0);
         
-        $defaults['state_province_id'] = STATE_PROVINCE_ID_TX;
-        $defaults['country_id'] = COUNTRY_ID_USA;
+        $defaults['state_province_id'] = config('polanco.state_province_id_tx');
+        $defaults['country_id'] = config('polanco.country_id_usa');
         
         $defaults['Main']['url']='';
         $defaults['Work']['url']='';
@@ -289,7 +289,7 @@ class OrganizationsController extends Controller
         $organization->organization_name = $request->input('organization_name');
         $organization->display_name = $request->input('organization_name');
         $organization->sort_name  = $request->input('sort_name');
-        $organization->contact_type = CONTACT_TYPE_ORGANIZATION;
+        $organization->contact_type = config('polanco.contact_type.organization');
         $organization->subcontact_type = $request->input('subcontact_type');
         $organization->save();
       
@@ -299,7 +299,7 @@ class OrganizationsController extends Controller
             $address_primary = \montserrat\Address::findOrNew($organization->address_primary->id);
         }
         $address_primary->contact_id=$organization->id;
-        $address_primary->location_type_id=LOCATION_TYPE_MAIN;
+        $address_primary->location_type_id=config('polanco.location_type.main');
         $address_primary->is_primary=1;
             
         $address_primary->street_address = $request->input('street_address');
@@ -307,7 +307,7 @@ class OrganizationsController extends Controller
         $address_primary->city = $request->input('city');
         $address_primary->state_province_id = $request->input('state_province_id');
         $address_primary->postal_code = $request->input('postal_code');
-        $address_primary->country_id = COUNTRY_ID_USA;
+        $address_primary->country_id = config('polanco.country_id_usa');
         $address_primary->is_primary = 1;
         $address_primary->save();
 //        dd($organization->phone_main_phone);
@@ -317,7 +317,7 @@ class OrganizationsController extends Controller
             $phone_primary = \montserrat\Phone::findOrNew($organization->phone_main_phone->id);
         }
         $phone_primary->contact_id=$organization->id;
-        $phone_primary->location_type_id=LOCATION_TYPE_MAIN;
+        $phone_primary->location_type_id=config('polanco.location_type.main');
         $phone_primary->is_primary=1;
         $phone_primary->phone=$request->input('phone_main_phone');
         $phone_primary->phone_type='Phone';
@@ -329,7 +329,7 @@ class OrganizationsController extends Controller
             $phone_main_fax = \montserrat\Phone::findOrNew($organization->phone_main_fax->id);
         }
         $phone_main_fax->contact_id=$organization->id;
-        $phone_main_fax->location_type_id=LOCATION_TYPE_MAIN;
+        $phone_main_fax->location_type_id=config('polanco.location_type.main');
         $phone_main_fax->phone=$request->input('phone_main_fax');
         $phone_main_fax->phone_type='Fax';
         $phone_main_fax->save();
@@ -341,7 +341,7 @@ class OrganizationsController extends Controller
         }
         $email_primary->contact_id=$organization->id;
         $email_primary ->is_primary=1;
-        $email_primary ->location_type_id=LOCATION_TYPE_MAIN;
+        $email_primary ->location_type_id=config('polanco.location_type.main');
         $email_primary ->email=$request->input('email_primary');
         $email_primary->save();
         

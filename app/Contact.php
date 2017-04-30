@@ -42,7 +42,7 @@ class Contact extends Model
     }
     public function bishops()
     {
-        return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_BISHOP);
+        return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.bishop'));
     }
     public function captain_events()
     {
@@ -58,7 +58,7 @@ class Contact extends Model
     }
     public function diocese()
     {
-        return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_DIOCESE);
+        return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.diocese'));
     }
     public function emails()
     {
@@ -168,20 +168,20 @@ class Contact extends Model
     {
         
         switch ($this->subcontact_type) {
-            case CONTACT_TYPE_PARISH:
+            case config('polanco.contact_type.parish'):
                 $path = url("parish/".$this->id);
                 break;
-            case CONTACT_TYPE_DIOCESE:
+            case config('polanco.contact_type.diocese'):
                 $path = url("diocese/".$this->id);
                 break;
-            case CONTACT_TYPE_VENDOR:
+            case config('polanco.contact_type.vendor'):
                 $path = url("vendor/".$this->id);
                 break;
             default:
                 $path = url("organization/".$this->id);
         }
         
-        if ($this->contact_type == CONTACT_TYPE_INDIVIDUAL) {
+        if ($this->contact_type == config('polanco.contact_type.individual')) {
             $path=url("person/".$this->id);
         }
         
@@ -191,19 +191,19 @@ class Contact extends Model
     public function getContactLinkFullNameAttribute()
     {
         switch ($this->subcontact_type) {
-            case CONTACT_TYPE_PARISH:
+            case config('polanco.contact_type.parish'):
                 $path = url("parish/".$this->id);
                 break;
-            case CONTACT_TYPE_DIOCESE:
+            case config('polanco.contact_type.diocese'):
                 $path = url("diocese/".$this->id);
                 break;
-            case CONTACT_TYPE_VENDOR:
+            case config('polanco.contact_type.vendor'):
                 $path = url("vendor/".$this->id);
                 break;
             default:
                 $path = url("organization/".$this->id);
         }
-        if ($this->contact_type == CONTACT_TYPE_INDIVIDUAL) {
+        if ($this->contact_type == config('polanco.contact_type.individual')) {
             $path=url("person/".$this->id);
         }
         
@@ -294,7 +294,7 @@ class Contact extends Model
     }
     public function getFullNameAttribute()
     {
-        if ($this->contact_type == CONTACT_TYPE_INDIVIDUAL) {
+        if ($this->contact_type == config('polanco.contact_type.individual')) {
             $full_name = '';
             if (isset($this->prefix->name)) {
                 $full_name .= $this->prefix->name. ' ';
@@ -316,7 +316,7 @@ class Contact extends Model
                 $full_name .= ', '.$this->suffix->name;
             }
         }
-        if ($this->contact_type == CONTACT_TYPE_ORGANIZATION) {
+        if ($this->contact_type == config('polanco.contact_type.organization')) {
             $full_name = $this->display_name;
         }
         
@@ -629,51 +629,51 @@ class Contact extends Model
     }
     public function group_captain()
     {
-        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(GROUP_ID_CAPTAIN);
+        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.captain'));
     }
     public function group_volunteer()
     {
-        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(GROUP_ID_VOLUNTEER);
+        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.volunteer'));
     }
     public function group_bishop()
     {
-        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(GROUP_ID_BISHOP);
+        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.bishop'));
     }
     public function group_priest()
     {
-        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(GROUP_ID_PRIEST);
+        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.priest'));
     }
     public function group_deacon()
     {
-        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(GROUP_ID_DEACON);
+        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.deacon'));
     }
     public function group_pastor()
     {
-        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(GROUP_ID_PASTOR);
+        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.pastor'));
     }
     public function group_jesuit()
     {
-        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(GROUP_ID_JESUIT);
+        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.jesuit'));
     }
     public function group_provincial()
     {
-        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(GROUP_ID_PROVINCIAL);
+        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.provincial'));
     }
     public function group_superior()
     {
-        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(GROUP_ID_SUPERIOR);
+        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.superior'));
     }
     public function group_board_member()
     {
-        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(GROUP_ID_BOARD)->whereStatus('Added');
+        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.board'))->whereStatus('Added');
     }
     public function group_staff()
     {
-        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(GROUP_ID_STAFF);
+        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.staff'));
     }
     public function group_steward()
     {
-        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(GROUP_ID_STEWARD);
+        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.steward'));
     }
     public function groups()
     {
@@ -717,19 +717,19 @@ class Contact extends Model
     }
     public function parish()
     {
-        return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_PARISHIONER);
+        return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.parishioner'));
     }
     public function parishes()
     {
-        return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_DIOCESE);
+        return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.diocese'));
     }
     public function parishioners()
     {
-        return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_PARISHIONER);
+        return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.parishioner'));
     }
     public function pastor()
     {
-        return $this->hasOne(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_PASTOR);
+        return $this->hasOne(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.pastor'));
     }
     public function phones()
     {
@@ -741,51 +741,51 @@ class Contact extends Model
     }
     public function phone_main_phone()
     {
-        return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Phone')->whereLocationTypeId(LOCATION_TYPE_MAIN);
+        return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Phone')->whereLocationTypeId(config('polanco.location_type.main'));
     }
     public function phone_main_mobile()
     {
-        return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Mobile')->whereLocationTypeId(LOCATION_TYPE_MAIN);
+        return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Mobile')->whereLocationTypeId(config('polanco.location_type.main'));
     }
     public function phone_main_fax()
     {
-        return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Fax')->whereLocationTypeId(LOCATION_TYPE_MAIN);
+        return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Fax')->whereLocationTypeId(config('polanco.location_type.main'));
     }
     public function phone_home_phone()
     {
-        return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Phone')->whereLocationTypeId(LOCATION_TYPE_HOME);
+        return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Phone')->whereLocationTypeId(config('polanco.location_type.home'));
     }
     public function phone_home_mobile()
     {
-        return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Mobile')->whereLocationTypeId(LOCATION_TYPE_HOME);
+        return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Mobile')->whereLocationTypeId(config('polanco.location_type.home'));
     }
     public function phone_home_fax()
     {
-        return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Fax')->whereLocationTypeId(LOCATION_TYPE_HOME);
+        return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Fax')->whereLocationTypeId(config('polanco.location_type.home'));
     }
     public function phone_work_phone()
     {
-        return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Phone')->whereLocationTypeId(LOCATION_TYPE_WORK);
+        return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Phone')->whereLocationTypeId(config('polanco.location_type.work'));
     }
     public function phone_work_mobile()
     {
-        return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Mobile')->whereLocationTypeId(LOCATION_TYPE_WORK);
+        return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Mobile')->whereLocationTypeId(config('polanco.location_type.work'));
     }
     public function phone_work_fax()
     {
-        return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Fax')->whereLocationTypeId(LOCATION_TYPE_WORK);
+        return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Fax')->whereLocationTypeId(config('polanco.location_type.work'));
     }
     public function phone_other_phone()
     {
-        return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Phone')->whereLocationTypeId(LOCATION_TYPE_OTHER);
+        return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Phone')->whereLocationTypeId(config('polanco.location_type.other'));
     }
     public function phone_other_mobile()
     {
-        return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Mobile')->whereLocationTypeId(LOCATION_TYPE_OTHER);
+        return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Mobile')->whereLocationTypeId(config('polanco.location_type.other'));
     }
     public function phone_other_fax()
     {
-        return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Fax')->whereLocationTypeId(LOCATION_TYPE_OTHER);
+        return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Fax')->whereLocationTypeId(config('polanco.location_type.other'));
     }
     public function prefix()
     {
@@ -797,20 +797,20 @@ class Contact extends Model
     }
     public function retreat_assistants()
     {
-        return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_ASSISTANT)->whereIsActive(1);
+        return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.retreat_assistant'))->whereIsActive(1);
     }
     public function retreat_directors()
     {
-        return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_DIRECTOR);
+        return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.retreat_director'));
     }
     public function retreat_innkeepers()
     {
-        return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_INNKEEPER);
+        return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.retreat_innkeeper'));
     }
     public function retreat_captains()
     {
         // TODO: handle with participants of role Retreat Director or Master - be careful with difference between (registration table) retreat_id and (participant table) event_id
-        return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_CAPTAIN);
+        return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.captain'));
     }
     public function event_registrations()
     {
@@ -829,28 +829,28 @@ class Contact extends Model
     }
     public function relationship_mjrh_former_board_member()
     {
-        return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_BOARD_MEMBER)->whereNotNull('end_date');
+        return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.board_member'))->whereNotNull('end_date');
     }
     
     public function relationship_mjrh_donor()
     {
-        return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_DONOR);
+        return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.donor'));
     }
     public function relationship_mjrh_retreatant()
     {
-        return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREATANT)->whereIsActive(1)->whereContactIdA(CONTACT_MONTSERRAT);
+        return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.retreatant'))->whereIsActive(1)->whereContactIdA(config('polanco.contact.montserrat'));
     }
     public function relationship_mjrh_retreat_assistant()
     {
-        return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_ASSISTANT)->whereContactIdA(CONTACT_MONTSERRAT)->whereIsActive(1);
+        return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.retreat_assistant'))->whereContactIdA(config('polanco.contact.montserrat'))->whereIsActive(1);
     }
     public function relationship_mjrh_retreat_director()
     {
-        return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_DIRECTOR)->whereContactIdA(CONTACT_MONTSERRAT)->whereIsActive(1);
+        return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.retreat_director'))->whereContactIdA(config('polanco.contact.montserrat'))->whereIsActive(1);
     }
     public function relationship_mjrh_retreat_innkeeper()
     {
-        return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_RETREAT_INNKEEPER)->whereContactIdA(CONTACT_MONTSERRAT)->whereIsActive(1);
+        return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.retreat_innkeeper'))->whereContactIdA(config('polanco.contact.montserrat'))->whereIsActive(1);
     }
     public function religion()
     {
@@ -900,8 +900,8 @@ class Contact extends Model
     public function scopeOrganizations_Generic($query)
     {
         return $query->where([
-            ['contact_type','>=',CONTACT_TYPE_ORGANIZATION],
-            ['subcontact_type','>=',CONTACT_TYPE_PROVINCE],
+            ['contact_type','>=',config('polanco.contact_type.organization')],
+            ['subcontact_type','>=',config('polanco.contact_type.province')],
             ]);
     }
     public function scopeFiltered($query, $filters)

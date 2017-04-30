@@ -57,7 +57,7 @@ class RetreatsController extends Controller
     {
         $this->authorize('create-retreat');
                 
-        $retreat_house = \montserrat\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b', 'retreat_captains.contact_b')->findOrFail(CONTACT_MONTSERRAT);
+        $retreat_house = \montserrat\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b', 'retreat_captains.contact_b')->findOrFail(config('polanco.contact.montserrat'));
         $event_types = \montserrat\EventType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
         foreach ($retreat_house->retreat_innkeepers as $innkeeper) {
             $i[$innkeeper->contact_id_b]=$innkeeper->contact_b->sort_name;
@@ -200,7 +200,7 @@ class RetreatsController extends Controller
         $is_active[1]='Active';
         
         //create lists of retreat directors, innkeepers, and assistants from relationship to retreat house
-        $retreat_house = \montserrat\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b')->findOrFail(CONTACT_MONTSERRAT);
+        $retreat_house = \montserrat\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b')->findOrFail(config('polanco.contact.montserrat'));
 
         foreach ($retreat_house->retreat_innkeepers as $innkeeper) {
             $i[$innkeeper->contact_id_b]=$innkeeper->contact_b->sort_name;

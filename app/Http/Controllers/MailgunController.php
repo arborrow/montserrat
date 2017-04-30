@@ -46,7 +46,7 @@ class MailgunController extends Controller
                         $messages->push($email);
                         
                         $email->staff = \montserrat\Contact::whereHas('groups', function ($query) {
-                                $query->where('group_id', '=', GROUP_ID_STAFF);
+                                $query->where('group_id', '=', config('polanco.group_id.staff'));
                         })
                             ->whereHas('emails', function ($query) use ($email) {
                                 $query->whereEmail($email->from);

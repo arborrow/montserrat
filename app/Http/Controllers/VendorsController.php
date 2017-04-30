@@ -26,7 +26,7 @@ class VendorsController extends Controller
     public function index()
     {
         $this->authorize('show-contact');
-        $vendors = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_VENDOR)->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites')->get();
+        $vendors = \montserrat\Contact::whereSubcontactType(config('polanco.contact_type.vendor'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites')->get();
         return view('vendors.index', compact('vendors'));   //
     }
 
@@ -39,11 +39,11 @@ class VendorsController extends Controller
     {
         $this->authorize('create-contact');
 
-        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name', 'id');
+        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
         $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code', 'id');
-        $defaults['state_province_id'] = STATE_PROVINCE_ID_TX;
-        $defaults['country_id'] = COUNTRY_ID_USA;
+        $defaults['state_province_id'] = config('polanco.state_province_id_tx');
+        $defaults['country_id'] = config('polanco.country_id_usa');
         $countries->prepend('N/A', 0);
         return view('vendors.create', compact('states', 'countries', 'defaults'));
     }
@@ -74,13 +74,13 @@ class VendorsController extends Controller
         $vendor->organization_name = $request->input('organization_name');
         $vendor->display_name  = $request->input('organization_name');
         $vendor->sort_name  = $request->input('organization_name');
-        $vendor->contact_type = CONTACT_TYPE_ORGANIZATION;
-        $vendor->subcontact_type = CONTACT_TYPE_VENDOR;
+        $vendor->contact_type = config('polanco.contact_type.organization');
+        $vendor->subcontact_type = config('polanco.contact_type.vendor');
         $vendor->save();
         
         $vendor_address= new \montserrat\Address;
             $vendor_address->contact_id=$vendor->id;
-            $vendor_address->location_type_id=LOCATION_TYPE_MAIN;
+            $vendor_address->location_type_id=config('polanco.location_type.main');
             $vendor_address->is_primary=1;
             $vendor_address->street_address=$request->input('street_address');
             $vendor_address->supplemental_address_1=$request->input('supplemental_address_1');
@@ -92,7 +92,7 @@ class VendorsController extends Controller
         
         $vendor_main_phone= new \montserrat\Phone;
             $vendor_main_phone->contact_id=$vendor->id;
-            $vendor_main_phone->location_type_id=LOCATION_TYPE_MAIN;
+            $vendor_main_phone->location_type_id=config('polanco.location_type.main');
             $vendor_main_phone->is_primary=1;
             $vendor_main_phone->phone=$request->input('phone_main_phone');
             $vendor_main_phone->phone_type='Phone';
@@ -100,7 +100,7 @@ class VendorsController extends Controller
         
         $vendor_fax_phone= new \montserrat\Phone;
             $vendor_fax_phone->contact_id=$vendor->id;
-            $vendor_fax_phone->location_type_id=LOCATION_TYPE_MAIN;
+            $vendor_fax_phone->location_type_id=config('polanco.location_type.main');
             $vendor_fax_phone->phone=$request->input('phone_main_fax');
             $vendor_fax_phone->phone_type='Fax';
         $vendor_fax_phone->save();
@@ -108,7 +108,7 @@ class VendorsController extends Controller
         $vendor_email_main = new \montserrat\Email;
             $vendor_email_main->contact_id=$vendor->id;
             $vendor_email_main->is_primary=1;
-            $vendor_email_main->location_type_id=LOCATION_TYPE_MAIN;
+            $vendor_email_main->location_type_id=config('polanco.location_type.main');
             $vendor_email_main->email=$request->input('email_main');
         $vendor_email_main->save();
         
@@ -177,7 +177,7 @@ class VendorsController extends Controller
     {
         $this->authorize('show-contact');
         $vendor = \montserrat\Contact::with('addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'touchpoints')->findOrFail($id);
-        $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($vendor->id)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->get();
+        $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($vendor->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
         $relationship_types = [];
         $relationship_types["Primary Contact"] = "Primary Contact";
         return view('vendors.show', compact('vendor', 'relationship_types', 'files'));//
@@ -193,11 +193,11 @@ class VendorsController extends Controller
     {
         $this->authorize('update-contact');
 
-        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name', 'id');
+        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
         $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code', 'id');
-        $defaults['state_province_id'] = STATE_PROVINCE_ID_TX;
-        $defaults['country_id'] = COUNTRY_ID_USA;
+        $defaults['state_province_id'] = config('polanco.state_province_id_tx');
+        $defaults['country_id'] = config('polanco.country_id_usa');
         $countries->prepend('N/A', 0);
                 
         $defaults['Main']['url']='';
@@ -259,7 +259,7 @@ class VendorsController extends Controller
         }
 
         $address_primary->contact_id=$vendor->id;
-        $address_primary->location_type_id=LOCATION_TYPE_MAIN;
+        $address_primary->location_type_id=config('polanco.location_type.main');
         $address_primary->is_primary=1;
         $address_primary->street_address = $request->input('street_address');
         $address_primary->supplemental_address_1 = $request->input('supplemental_address_1');
@@ -276,7 +276,7 @@ class VendorsController extends Controller
         }
 
         $phone_primary->contact_id=$vendor->id;
-        $phone_primary->location_type_id=LOCATION_TYPE_MAIN;
+        $phone_primary->location_type_id=config('polanco.location_type.main');
         $phone_primary->is_primary=1;
         $phone_primary->phone_type='Phone';
         $phone_primary->phone = $request->input('phone_main_phone');
@@ -288,7 +288,7 @@ class VendorsController extends Controller
             $phone_main_fax = \montserrat\Phone::findOrNew($vendor->phone_main_fax->id);
         }
         $phone_main_fax->contact_id=$vendor->id;
-        $phone_main_fax->location_type_id=LOCATION_TYPE_MAIN;
+        $phone_main_fax->location_type_id=config('polanco.location_type.main');
         $phone_main_fax->phone_type='Fax';
         $phone_main_fax->phone = $request->input('phone_main_fax');
         $phone_main_fax->save();
@@ -301,7 +301,7 @@ class VendorsController extends Controller
 
         $email_primary->contact_id=$vendor->id;
         $email_primary->is_primary=1;
-        $email_primary->location_type_id=LOCATION_TYPE_MAIN;
+        $email_primary->location_type_id=config('polanco.location_type.main');
         $email_primary->email = $request->input('email_primary');
         $email_primary->save();
                 

@@ -19,7 +19,7 @@ class Parish extends Model
 
     public function parishioners()
     {
-        return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(RELATIONSHIP_TYPE_PARISHIONER);
+        return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.parishioner'));
     }
     
     public function pastor()

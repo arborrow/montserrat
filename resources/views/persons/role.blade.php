@@ -44,7 +44,7 @@
                             <th>Work phone</th>
                             <th>Email</th>
                             <th>Parish (City)</th>
-                            @if ($role['group_id'] == GROUP_ID_CAPTAIN)
+                            @if ($role['group_id'] == config('polanco.group_id.captain'))
                                 <th>Captain for</th>
                             @endIf
                         </tr>
@@ -64,7 +64,7 @@
                             <td>{{ $person->phone_work_phone_number }}</td>
                             <td><a href="mailto:{{$person->email_primary_text}}">{{ $person->email_primary_text }}</a></td>
                             <td>{!! $person->parish_link !!}</td>
-                            @if ($role['group_id'] == GROUP_ID_CAPTAIN)
+                            @if ($role['group_id'] == config('polanco.group_id.captain'))
                             <td>
                                 <ul>
                                     @foreach ($person->captain_events as $event)

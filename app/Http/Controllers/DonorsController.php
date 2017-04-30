@@ -138,24 +138,24 @@ class DonorsController extends Controller
         
         if (isset($donor->Address)) {
             $home_address= new \montserrat\Address;
-            $state = \montserrat\StateProvince::whereAbbreviation($donor->State)->whereCountryId(COUNTRY_ID_USA)->first();
+            $state = \montserrat\StateProvince::whereAbbreviation($donor->State)->whereCountryId(config('polanco.country_id_usa'))->first();
 
             $home_address->contact_id=$person->id;
-            $home_address->location_type_id=LOCATION_TYPE_HOME;
+            $home_address->location_type_id=config('polanco.location_type.home');
             $home_address->is_primary=1;
             $home_address->street_address=$donor->Address;
             $home_address->supplemental_address_1=$donor->Address2;
             $home_address->city=$donor->City;
             $home_address->state_province_id=$state->id;
             $home_address->postal_code=$donor->Zip;
-            $home_address->country_id=COUNTRY_ID_USA;
+            $home_address->country_id=config('polanco.country_id_usa');
             $home_address->save();
         }
         
         if (isset($donor->HomePhone)) {
             $phone_home_phone= new \montserrat\Phone;
                 $phone_home_phone->contact_id=$person->id;
-                $phone_home_phone->location_type_id=LOCATION_TYPE_HOME;
+                $phone_home_phone->location_type_id=config('polanco.location_type.home');
                 $phone_home_phone->phone=$donor->HomePhone;
                 $phone_home_phone->phone_type='Phone';
             $phone_home_phone->save();
@@ -163,7 +163,7 @@ class DonorsController extends Controller
         if (isset($donor->cell_phone)) {
             $phone_home_mobile= new \montserrat\Phone;
                 $phone_home_mobile->contact_id=$person->id;
-                $phone_home_mobile->location_type_id=LOCATION_TYPE_HOME;
+                $phone_home_mobile->location_type_id=config('polanco.location_type.home');
                 $phone_home_mobile->phone=$donor->cell_phone;
                 $phone_home_mobile->phone_type='Mobile';
             $phone_home_mobile->save();
@@ -172,7 +172,7 @@ class DonorsController extends Controller
         if (isset($donor->WorkPhone)) {
             $phone_work_phone= new \montserrat\Phone;
                 $phone_work_phone->contact_id=$person->id;
-                $phone_work_phone->location_type_id=LOCATION_TYPE_WORK;
+                $phone_work_phone->location_type_id=config('polanco.location_type.work');
                 $phone_work_phone->phone=$donor->WorkPhone;
                 $phone_work_phone->phone_type='Phone';
             $phone_work_phone->save();
@@ -180,7 +180,7 @@ class DonorsController extends Controller
         if (isset($donor->EMailAddress)) {
             $email_home = new \montserrat\Email;
                 $email_home->contact_id=$person->id;
-                $email_home->location_type_id=LOCATION_TYPE_HOME;
+                $email_home->location_type_id=config('polanco.location_type.home');
                 $email_home->email=$donor->EMailAddress;
                 $email_home->is_primary=1;
             $email_home->save();

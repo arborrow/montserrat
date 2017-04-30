@@ -44,17 +44,17 @@ class SearchController extends Controller
             return redirect()->action('PersonsController@create');
         } else {
             $contact = \montserrat\Contact::findOrFail($id);
-            if ($contact->contact_type == CONTACT_TYPE_INDIVIDUAL) {
+            if ($contact->contact_type == config('polanco.contact_type.individual')) {
                 return redirect()->action('PersonsController@show', $id);
             }
             switch ($contact->subcontact_type) {
-                case CONTACT_TYPE_PARISH:
+                case config('polanco.contact_type.parish'):
                     return redirect()->action('ParishesController@show', $id);
                 break;
-                case CONTACT_TYPE_DIOCESE:
+                case config('polanco.contact_type.diocese'):
                     return redirect()->action('DiocesesController@show', $id);
                 break;
-                case CONTACT_TYPE_VENDOR:
+                case config('polanco.contact_type.vendor'):
                     return redirect()->action('VendorsController@show', $id);
                 break;
                 default:
@@ -97,7 +97,7 @@ class SearchController extends Controller
     public function search()
     {
         $person = new \montserrat\Contact;
-        $parishes = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
+        $parishes = \montserrat\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
         $parish_list[0]='N/A';
         $contact_types = \montserrat\ContactType::whereIsReserved(true)->pluck('label', 'id');
         $contact_types->prepend('N/A', 0);

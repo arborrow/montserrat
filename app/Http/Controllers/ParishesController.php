@@ -26,7 +26,7 @@ class ParishesController extends Controller
     public function index()
     {
         $this->authorize('show-contact');
-        $parishes = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'pastor.contact_b', 'diocese.contact_a')->get();
+        $parishes = \montserrat\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'pastor.contact_b', 'diocese.contact_a')->get();
         $parishes = $parishes->sortBy(function ($parish) {
             return sprintf('%-12s%s', $parish->diocese_name, $parish->organization_name);
         });
@@ -41,16 +41,16 @@ class ParishesController extends Controller
     public function create()
     {
         $this->authorize('create-contact');
-        $dioceses = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_DIOCESE)->orderby('organization_name')->pluck('organization_name', 'id');
+        $dioceses = \montserrat\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderby('organization_name')->pluck('organization_name', 'id');
         $pastors = \montserrat\Contact::whereHas('b_relationships', function ($query) {
-            $query->whereRelationshipTypeId(RELATIONSHIP_TYPE_PASTOR)->whereIsActive(1);
+            $query->whereRelationshipTypeId(config('polanco.relationship_type.pastor'))->whereIsActive(1);
         })->orderby('sort_name')->pluck('sort_name', 'id');
         $pastors[0] = 'No pastor assigned';
-        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name', 'id');
+        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
         $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code', 'id');
-        $defaults['state_province_id'] = STATE_PROVINCE_ID_TX;
-        $defaults['country_id'] = COUNTRY_ID_USA;
+        $defaults['state_province_id'] = config('polanco.state_province_id_tx');
+        $defaults['country_id'] = config('polanco.country_id_usa');
         $countries->prepend('N/A', 0);
 
         return view('parishes.create', compact('dioceses', 'pastors', 'states', 'countries', 'defaults'));
@@ -83,13 +83,13 @@ class ParishesController extends Controller
         $parish->organization_name = $request->input('organization_name');
         $parish->display_name  = $request->input('organization_name');
         $parish->sort_name  = $request->input('organization_name');
-        $parish->contact_type = CONTACT_TYPE_ORGANIZATION;
-        $parish->subcontact_type = CONTACT_TYPE_PARISH;
+        $parish->contact_type = config('polanco.contact_type.organization');
+        $parish->subcontact_type = config('polanco.contact_type.parish');
         $parish->save();
         
         $parish_address= new \montserrat\Address;
             $parish_address->contact_id=$parish->id;
-            $parish_address->location_type_id=LOCATION_TYPE_MAIN;
+            $parish_address->location_type_id=config('polanco.location_type.main');
             $parish_address->is_primary=1;
             $parish_address->street_address=$request->input('street_address');
             $parish_address->supplemental_address_1=$request->input('supplemental_address_1');
@@ -101,7 +101,7 @@ class ParishesController extends Controller
         
         $parish_main_phone= new \montserrat\Phone;
             $parish_main_phone->contact_id=$parish->id;
-            $parish_main_phone->location_type_id=LOCATION_TYPE_MAIN;
+            $parish_main_phone->location_type_id=config('polanco.location_type.main');
             $parish_main_phone->is_primary=1;
             $parish_main_phone->phone=$request->input('phone_main_phone');
             $parish_main_phone->phone_type='Phone';
@@ -109,7 +109,7 @@ class ParishesController extends Controller
         
         $parish_fax_phone= new \montserrat\Phone;
             $parish_fax_phone->contact_id=$parish->id;
-            $parish_fax_phone->location_type_id=LOCATION_TYPE_MAIN;
+            $parish_fax_phone->location_type_id=config('polanco.location_type.main');
             $parish_fax_phone->phone=$request->input('phone_main_fax');
             $parish_fax_phone->phone_type='Fax';
         $parish_fax_phone->save();
@@ -117,7 +117,7 @@ class ParishesController extends Controller
         $parish_email_main = new \montserrat\Email;
             $parish_email_main->contact_id=$parish->id;
             $parish_email_main->is_primary=1;
-            $parish_email_main->location_type_id=LOCATION_TYPE_MAIN;
+            $parish_email_main->location_type_id=config('polanco.location_type.main');
             $parish_email_main->email=$request->input('email_main');
         $parish_email_main->save();
         
@@ -178,7 +178,7 @@ class ParishesController extends Controller
             $relationship_diocese = new \montserrat\Relationship;
                 $relationship_diocese->contact_id_a = $request->input('diocese_id');
                 $relationship_diocese->contact_id_b = $parish->id;
-                $relationship_diocese->relationship_type_id = RELATIONSHIP_TYPE_DIOCESE;
+                $relationship_diocese->relationship_type_id = config('polanco.relationship_type.diocese');
                 $relationship_diocese->is_active = 1;
             $relationship_diocese->save();
         }
@@ -186,7 +186,7 @@ class ParishesController extends Controller
             $relationship_pastor = new \montserrat\Relationship;
                 $relationship_pastor->contact_id_a = $parish->id;
                 $relationship_pastor->contact_id_b = $request->input('pastor_id');
-                $relationship_pastor->relationship_type_id = RELATIONSHIP_TYPE_PASTOR;
+                $relationship_pastor->relationship_type_id = config('polanco.relationship_type.pastor');
                 $relationship_pastor->is_active = 1;
             $relationship_pastor->save();
         }
@@ -204,7 +204,7 @@ class ParishesController extends Controller
     {
         $this->authorize('show-contact');
         $parish = \montserrat\Contact::with('pastor.contact_b', 'diocese.contact_a', 'addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'parishioners.contact_b.address_primary.state', 'parishioners.contact_b.emails.location', 'parishioners.contact_b.phones.location', 'touchpoints', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations')->findOrFail($id);
-        $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($parish->id)->whereFileTypeId(FILE_TYPE_CONTACT_ATTACHMENT)->get();
+        $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($parish->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
         $relationship_types = [];
         $relationship_types["Primary Contact"] = "Primary Contact";
 
@@ -221,22 +221,22 @@ class ParishesController extends Controller
     {
         $this->authorize('update-contact');
 
-        $dioceses = \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_DIOCESE)->orderby('organization_name')->pluck('organization_name', 'id');
+        $dioceses = \montserrat\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderby('organization_name')->pluck('organization_name', 'id');
         $dioceses[0] = 'No Diocese assigned';
  
         $pastors = \montserrat\Contact::whereHas('group_pastor', function ($query) {
-            $query->whereGroupId(GROUP_ID_PASTOR)->whereStatus('Added');
+            $query->whereGroupId(config('polanco.group_id.pastor'))->whereStatus('Added');
         })->orderby('sort_name')->pluck('sort_name', 'id');
         $pastors[0] = 'No pastor assigned';
 
-        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(COUNTRY_ID_USA)->pluck('name', 'id');
+        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
 
         $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code', 'id');
         $countries->prepend('N/A', 0);
 
-        $defaults['state_province_id'] = STATE_PROVINCE_ID_TX;
-        $defaults['country_id'] = COUNTRY_ID_USA;
+        $defaults['state_province_id'] = config('polanco.state_province_id_tx');
+        $defaults['country_id'] = config('polanco.country_id_usa');
 
         $parish = \montserrat\Contact::with('pastor.contact_b', 'diocese.contact_a', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
         
@@ -300,7 +300,7 @@ class ParishesController extends Controller
             $diocese = \montserrat\Relationship::findOrNew($parish->diocese->id);
         }
             $diocese->contact_id_b = $parish->id;
-            $diocese->relationship_type_id = RELATIONSHIP_TYPE_DIOCESE;
+            $diocese->relationship_type_id = config('polanco.relationship_type.diocese');
             $diocese->is_active = 1;
             $diocese->contact_id_a = $request->input('diocese_id');
             $diocese->save();
@@ -317,7 +317,7 @@ class ParishesController extends Controller
         }
             $pastor->contact_id_a = $parish->id;
             $pastor->contact_id_b = $request->input('pastor_id');
-            $pastor->relationship_type_id = RELATIONSHIP_TYPE_PASTOR;
+            $pastor->relationship_type_id = config('polanco.relationship_type.pastor');
             $pastor->is_active = 1;
             // avoid creating relationship if no pastor is assigned
         if ($pastor->contact_id_b > 0) {
@@ -335,7 +335,7 @@ class ParishesController extends Controller
         }
             
             $address_primary->contact_id=$parish->id;
-            $address_primary->location_type_id=LOCATION_TYPE_MAIN;
+            $address_primary->location_type_id=config('polanco.location_type.main');
             $address_primary->is_primary=1;
             $address_primary->street_address = $request->input('street_address');
             $address_primary->supplemental_address_1 = $request->input('supplemental_address_1');
@@ -351,7 +351,7 @@ class ParishesController extends Controller
             $phone_primary = \montserrat\Phone::findOrNew($parish->phone_primary->id);
         }
             $phone_primary->contact_id=$parish->id;
-            $phone_primary->location_type_id=LOCATION_TYPE_MAIN;
+            $phone_primary->location_type_id=config('polanco.location_type.main');
             $phone_primary->is_primary=1;
             $phone_primary->phone_type='Phone';
             $phone_primary->phone = $request->input('phone_main_phone');
@@ -363,7 +363,7 @@ class ParishesController extends Controller
             $phone_main_fax = \montserrat\Phone::findOrNew($parish->phone_main_fax->id);
         }
             $phone_main_fax->contact_id=$parish->id;
-            $phone_main_fax->location_type_id=LOCATION_TYPE_MAIN;
+            $phone_main_fax->location_type_id=config('polanco.location_type.main');
             $phone_main_fax->phone_type='Fax';
             $phone_main_fax->phone = $request->input('phone_main_fax');
             $phone_main_fax->save();
@@ -377,7 +377,7 @@ class ParishesController extends Controller
             
             $email_primary->contact_id=$parish->id;
             $email_primary->is_primary=1;
-            $email_primary->location_type_id=LOCATION_TYPE_MAIN;
+            $email_primary->location_type_id=config('polanco.location_type.main');
             $email_primary->email = $request->input('email_primary');
             $email_primary->save();
             
@@ -454,24 +454,24 @@ class ParishesController extends Controller
     public function fortworthdiocese()
     {
         $this->authorize('show-contact');
-        $parishes= \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'pastor.contact_b', 'diocese.contact_a')->whereHas('diocese.contact_a', function ($query) {
-            $query->where('contact_id_a', '=', CONTACT_DIOCESE_FORTWORTH);
+        $parishes= \montserrat\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'pastor.contact_b', 'diocese.contact_a')->whereHas('diocese.contact_a', function ($query) {
+            $query->where('contact_id_a', '=', config('polanco.contact.diocese_fortworth'));
         })->get();
         return view('parishes.fortworthdiocese', compact('parishes'));   //
     }
     public function dallasdiocese()
     {
         $this->authorize('show-contact');
-        $parishes= \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'pastor.contact_b', 'diocese.contact_a')->whereHas('diocese.contact_a', function ($query) {
-            $query->where('contact_id_a', '=', CONTACT_DIOCESE_DALLAS);
+        $parishes= \montserrat\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'pastor.contact_b', 'diocese.contact_a')->whereHas('diocese.contact_a', function ($query) {
+            $query->where('contact_id_a', '=', config('polanco.contact.diocese_dallas'));
         })->get();
         return view('parishes.dallasdiocese', compact('parishes'));   //
     }
     public function tylerdiocese()
     {
         $this->authorize('show-contact');
-        $parishes= \montserrat\Contact::whereSubcontactType(CONTACT_TYPE_PARISH)->orderBy('organization_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'pastor.contact_b', 'diocese.contact_a')->whereHas('diocese.contact_a', function ($query) {
-            $query->where('contact_id_a', '=', CONTACT_DIOCESE_TYLER);
+        $parishes= \montserrat\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'pastor.contact_b', 'diocese.contact_a')->whereHas('diocese.contact_a', function ($query) {
+            $query->where('contact_id_a', '=', config('polanco.contact.diocese_tyler'));
         })->get();
         return view('parishes.tylerdiocese', compact('parishes'));   //
     }
