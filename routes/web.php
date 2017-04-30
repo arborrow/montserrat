@@ -148,6 +148,8 @@ Route::group(['prefix' => 'report'], function () {
 
 Route::get('reservation', ['as' => 'reservation','uses' => 'PagesController@reservation']);
 Route::get('restricted', ['as' => 'restricted','uses' => 'PagesController@restricted']);
+
+Route::get('retreat/id/{id_number}', ['as' => 'get_event_by_id_number','uses' => 'RetreatsController@get_event_by_id_number']);
 Route::get('retreat/{retreat_id}/register/{contact_id?}', ['as'=>'registration.register','uses' => 'RegistrationsController@register']);
 Route::get('retreat/{id}/assign_rooms', ['as'=>'retreat.assign_rooms','uses' => 'RetreatsController@assign_rooms']);
 Route::post('retreat/room_update', ['as' => 'retreat.room_update', 'uses' => 'RetreatsController@room_update']);

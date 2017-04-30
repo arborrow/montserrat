@@ -1,10 +1,10 @@
 @extends('template')
 @section('content')
 
-    <section class="section-padding">
-        <div class="jumbotron text-left">
-            <div class="panel panel-default">
-                <div class="panel-heading">
+<section class="section-padding">
+    <div class="jumbotron text-left">
+        <div class="panel panel-default">
+            <div class="panel-heading">
                     <span>
                         <h2>
                             @can('update-room')
@@ -52,3 +52,4 @@
             </div>
         </div>
     </section>
+@stop

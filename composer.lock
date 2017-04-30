@@ -570,16 +570,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.4.19",
+            "version": "v5.4.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "02444b7450350db17a7607c8a52f7268ebdb0dad"
+                "reference": "2ed668f96d1a6ca42f50d5c87ee9ceecfc0a6eee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/02444b7450350db17a7607c8a52f7268ebdb0dad",
-                "reference": "02444b7450350db17a7607c8a52f7268ebdb0dad",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/2ed668f96d1a6ca42f50d5c87ee9ceecfc0a6eee",
+                "reference": "2ed668f96d1a6ca42f50d5c87ee9ceecfc0a6eee",
                 "shasum": ""
             },
             "require": {
@@ -695,7 +695,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2017-04-16 13:33:34"
+            "time": "2017-04-28 15:40:01"
         },
         {
             "name": "laravel/socialite",
@@ -865,16 +865,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.38",
+            "version": "1.0.40",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "4ba6e13f5116204b21c3afdf400ecf2b9eb1c482"
+                "reference": "3828f0b24e2c1918bb362d57a53205d6dc8fde61"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/4ba6e13f5116204b21c3afdf400ecf2b9eb1c482",
-                "reference": "4ba6e13f5116204b21c3afdf400ecf2b9eb1c482",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/3828f0b24e2c1918bb362d57a53205d6dc8fde61",
+                "reference": "3828f0b24e2c1918bb362d57a53205d6dc8fde61",
                 "shasum": ""
             },
             "require": {
@@ -944,7 +944,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2017-04-22 18:59:19"
+            "time": "2017-04-28 10:15:08"
         },
         {
             "name": "league/oauth1-client",
@@ -1989,16 +1989,16 @@
         },
         {
             "name": "spatie/laravel-google-calendar",
-            "version": "1.0.3",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-google-calendar.git",
-                "reference": "ba7698d87618a685e84d258f7b80bf72db15aecd"
+                "reference": "298be834bb34c3f9bd45b8f9ebac09c4d64ce60b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-google-calendar/zipball/ba7698d87618a685e84d258f7b80bf72db15aecd",
-                "reference": "ba7698d87618a685e84d258f7b80bf72db15aecd",
+                "url": "https://api.github.com/repos/spatie/laravel-google-calendar/zipball/298be834bb34c3f9bd45b8f9ebac09c4d64ce60b",
+                "reference": "298be834bb34c3f9bd45b8f9ebac09c4d64ce60b",
                 "shasum": ""
             },
             "require": {
@@ -2040,7 +2040,7 @@
                 "schedule",
                 "spatie"
             ],
-            "time": "2016-11-26 15:39:42"
+            "time": "2017-04-26 13:05:38"
         },
         {
             "name": "stuyam/laravel-phone-validator",
@@ -3675,16 +3675,16 @@
         },
         {
             "name": "phpspec/phpspec",
-            "version": "3.2.3",
+            "version": "3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/phpspec.git",
-                "reference": "97246d90708cf98983d95d609bbe6f4b039b8600"
+                "reference": "1c77d11878c4bd475bc66f0eaa2686df0fcfa30f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/phpspec/zipball/97246d90708cf98983d95d609bbe6f4b039b8600",
-                "reference": "97246d90708cf98983d95d609bbe6f4b039b8600",
+                "url": "https://api.github.com/repos/phpspec/phpspec/zipball/1c77d11878c4bd475bc66f0eaa2686df0fcfa30f",
+                "reference": "1c77d11878c4bd475bc66f0eaa2686df0fcfa30f",
                 "shasum": ""
             },
             "require": {
@@ -3693,7 +3693,7 @@
                 "php": "^5.6 || ^7.0",
                 "phpspec/php-diff": "^1.0.0",
                 "phpspec/prophecy": "^1.5",
-                "sebastian/exporter": "^1.0 || ^2.0",
+                "sebastian/exporter": "^1.0 || ^2.0 || ^3.0",
                 "symfony/console": "^2.7 || ^3.0",
                 "symfony/event-dispatcher": "^2.7 || ^3.0",
                 "symfony/finder": "^2.7 || ^3.0",
@@ -3701,9 +3701,9 @@
                 "symfony/yaml": "^2.7 || ^3.0"
             },
             "require-dev": {
-                "behat/behat": "^3.1",
+                "behat/behat": "^3.3",
                 "ciaranmcnulty/versionbasedtestskipper": "^0.2.1",
-                "phpunit/phpunit": "^5.4",
+                "phpunit/phpunit": "^5.5|^6.0",
                 "symfony/filesystem": "^3.0"
             },
             "suggest": {
@@ -3753,7 +3753,7 @@
                 "testing",
                 "tests"
             ],
-            "time": "2017-01-29 12:28:48"
+            "time": "2017-04-27 12:40:39"
         },
         {
             "name": "phpspec/prophecy",

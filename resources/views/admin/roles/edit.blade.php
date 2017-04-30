@@ -5,7 +5,7 @@
 <div class="jumbotron text-left">
     <span><h2><strong>Edit Role:</strong></h2></span>
 
-    {!! Form::open(['method' => 'PUT', 'route' => ['admin.role.update', $role->id]]) !!}
+    {!! Form::open(['method' => 'PUT', 'route' => ['role.update', $role->id]]) !!}
     {!! Form::hidden('id', $role->id) !!}
     
         <span>

@@ -172,6 +172,13 @@ class RetreatsController extends Controller
         return view('retreats.show', compact('retreat', 'registrations'));//
     }
 
+    public function get_event_by_id_number($id_number)
+    {   $this->authorize('show-retreat');
+        $retreat = \montserrat\Retreat::with('retreatmasters', 'innkeeper', 'assistant', 'captains')->whereIdnumber($id_number)->firstOrFail();
+        $registrations = \montserrat\Registration::where('event_id', '=', $retreat->id)->with('retreatant.parish')->orderBy('register_date', 'ASC')->get();
+        return view('retreats.show', compact('retreat', 'registrations'));//
+    }
+    
     /**
      * Show the form for editing the specified resource.
      *

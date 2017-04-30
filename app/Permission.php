@@ -2,9 +2,7 @@
 
 namespace montserrat;
 
-// use Illuminate\Database\Eloquent\Model;
 use Zizaco\Entrust\EntrustPermission;
-use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 

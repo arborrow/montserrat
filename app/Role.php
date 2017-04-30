@@ -2,10 +2,8 @@
 
 namespace montserrat;
 
-// use Illuminate\Database\Eloquent\Model;
 use Zizaco\Entrust\EntrustRole;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use montserrat\Permission;
 
 class Role extends EntrustRole
 {

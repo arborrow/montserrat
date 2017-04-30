@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8"> 
@@ -144,9 +144,7 @@
         </ul>
     </div>
     @endif
-
     @yield('content')
-
     <hr />
     <div class='footer'>
         <p>
@@ -158,9 +156,6 @@
             <a href='http://montserratretreat.org/' target='_blank'>montserratretreat.org</a>
         </p>
     </div>
-  <!-- <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-  -->
   
   <script type="text/javascript" src="{{asset('js/all.js')}}"></script> 
         

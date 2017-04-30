@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class ExampleTest extends TestCase
+class AboutTest extends TestCase
 {
     /**
      * A basic test example.
@@ -21,10 +21,9 @@ class ExampleTest extends TestCase
     protected function setUp() { }
     protected function tearDown() { }
 
-    public function testBasicTest()
+    public function testAbout()
     {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
+        $response = $this->get('/about');
+        $this->assertTrue(true);
     }
 }
