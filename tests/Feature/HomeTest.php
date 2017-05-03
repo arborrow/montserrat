@@ -19,7 +19,7 @@ class HomeTest extends TestCase
     {
         // $this->action('GET', 'HomeController@index');
         // $this->assertResponseOk();
-        $response = $this->get('/home');
+        $response = $this->get('public/home');
         $response->assertStatus(404);
         
     }

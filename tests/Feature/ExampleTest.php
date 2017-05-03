@@ -21,8 +21,7 @@ class ExampleTest extends TestCase
     
     public function testBasicTest()
     {
-        $response = $this->get('/home');
-
+        // $response = $this->get('/home');
         $this->assertTrue(true);
     }
 }
