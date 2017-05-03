@@ -91,22 +91,22 @@ class AttachmentsController extends Controller
         switch ($type) {
             case 'contract':
                 $this->authorize('create-event-contract');
-                $attachment->file_type_id = FILE_TYPE_EVENT_CONTRACT;
+                $attachment->file_type_id = config('polanco.file_type.event_contract');
                 $attachment->uri = 'contract.pdf';
                 break;
             case 'schedule':
                 $this->authorize('create-event-schedule');
-                $attachment->file_type_id = FILE_TYPE_EVENT_SCHEDULE;
+                $attachment->file_type_id = config('polanco.file_type.event_schedule');
                 $attachment->uri = 'schedule.pdf';
                 break;
             case 'evaluation':
                 $this->authorize('create-event-evaluation');
-                $attachment->file_type_id = FILE_TYPE_EVENT_EVALUATION;
+                $attachment->file_type_id = config('polanco.file_type.event_evaluation');
                 $attachment->uri = 'evaluations.pdf';
                 break;
             case 'group_photo':
                 $this->authorize('create-event-group-photo');
-                $attachment->file_type_id = FILE_TYPE_EVENT_GROUP_PHOTO;
+                $attachment->file_type_id = config('polanco.file_type.event_group_photo');
                 $attachment->uri = 'group_photo.png';
                 break;
             case 'attachment':
@@ -117,7 +117,7 @@ class AttachmentsController extends Controller
             case 'avatar':
                 $this->authorize('create-avatar');
                 $avatar = Image::make($file->getRealPath())->fit(150, 150)->orientate();
-                $attachment->file_type_id = FILE_TYPE_CONTACT_AVATAR;
+                $attachment->file_type_id = config('polanco.file_type.contact_avatar');
                 $attachment->uri = 'avatar.png';
                 break;
             default:
@@ -144,7 +144,7 @@ class AttachmentsController extends Controller
         switch ($type) {
             case 'avatar':
                 $this->authorize('create-avatar'); //if you can create it you can update it
-                $file_type_id = FILE_TYPE_CONTACT_AVATAR;
+                $file_type_id = config('polanco.file_type.contact_avatar');
                 $file_name = 'avatar.png';
                 $updated_file_name= 'avatar-updated-'.time().'.png';
                 $avatar = Image::make($file->getRealPath())->fit(150, 150)->orientate();
@@ -176,7 +176,7 @@ class AttachmentsController extends Controller
             case 'schedule':
                 $this->authorize('create-event-schedule');
                 $path = $entity.'/'.$entity_id.'/';
-                $file_type_id = FILE_TYPE_EVENT_SCHEDULE;
+                $file_type_id = config('polanco.file_type.event_schedule');
                 $file_name = 'schedule.pdf';
                 $updated_file_name= 'schedule-updated-'.time().'.pdf';
 
@@ -190,7 +190,7 @@ class AttachmentsController extends Controller
             case 'contract':
                 $this->authorize('create-event-contract');
                 $path = $entity.'/'.$entity_id.'/';
-                $file_type_id = FILE_TYPE_EVENT_CONTRACT;
+                $file_type_id = config('polanco.file_type.event_contract');
                 $file_name = 'contract.pdf';
                 $updated_file_name= 'contract-updated-'.time().'.pdf';
 
@@ -204,7 +204,7 @@ class AttachmentsController extends Controller
             case 'evaluations':
                 $this->authorize('create-event-evaluation');
                 $path = $entity.'/'.$entity_id.'/';
-                $file_type_id = FILE_TYPE_EVENT_EVALUATION;
+                $file_type_id = config('polanco.file_type.event_evaluation');
                 $file_name = 'evaluations.pdf';
                 $updated_file_name= 'evaluations-updated-'.time().'.pdf';
 
@@ -218,7 +218,7 @@ class AttachmentsController extends Controller
             case 'group_photo':
                 $this->authorize('create-event-group-photo');
                 $path = $entity.'/'.$entity_id.'/';
-                $file_type_id = FILE_TYPE_EVENT_GROUP_PHOTO;
+                $file_type_id = config('polanco.file_type.event_group_photo');
                 $file_name = 'group_photo.jpg';
                 $updated_file_name= 'group_photo-updated-'.time().'.pdf';
                 $group_photo = Image::make($file->getRealPath());
@@ -250,25 +250,25 @@ class AttachmentsController extends Controller
         switch ($type) {
             case 'group_photo':
                 $file_name='group_photo.jpg';
-                $attachment = \montserrat\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(FILE_TYPE_EVENT_GROUP_PHOTO)->firstOrFail();
+                $attachment = \montserrat\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(config('polanco.file_type.event_group_photo'))->firstOrFail();
                 $path = $entity.'/'.$entity_id.'/';
                 $updated_file_name = 'group_photo-deleted-'.time().'.jpg';
                 break;
             case 'contract':
                 $file_name='contract.pdf';
-                $attachment = \montserrat\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(FILE_TYPE_EVENT_CONTRACT)->firstOrFail();
+                $attachment = \montserrat\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(config('polanco.file_type.event_contract'))->firstOrFail();
                 $path = $entity.'/'.$entity_id.'/';
                 $updated_file_name = 'contract-deleted-'.time().'.pdf';
                 break;
             case 'schedule':
                 $file_name='schedule.pdf';
-                $attachment = \montserrat\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(FILE_TYPE_EVENT_SCHEDULE)->firstOrFail();
+                $attachment = \montserrat\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(config('polanco.file_type.event_schedule'))->firstOrFail();
                 $path = $entity.'/'.$entity_id.'/';
                 $updated_file_name = 'schedule-deleted-'.time().'.pdf';
                 break;
             case 'evaluations':
                 $file_name='evaluations.pdf';
-                $attachment = \montserrat\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(FILE_TYPE_EVENT_EVALUATION)->firstOrFail();
+                $attachment = \montserrat\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(config('polanco.file_type.event_evaluation'))->firstOrFail();
                 $path = $entity.'/'.$entity_id.'/';
                 $updated_file_name = 'evaluations-deleted-'.time().'.pdf';
                 break;
@@ -280,7 +280,7 @@ class AttachmentsController extends Controller
                 $updated_file_name= $file_basename.'-deleted-'.time().'.'.$file_extension;
                 break;
             case 'avatar':
-                $attachment = \montserrat\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(FILE_TYPE_CONTACT_AVATAR)->firstOrFail();
+                $attachment = \montserrat\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(config('polanco.file_type.contact_avatar'))->firstOrFail();
                 $path = $entity.'/'.$entity_id.'/';
                 $updated_file_name= 'avatar-deleted-'.time().'.png';
                 break;

@@ -283,7 +283,7 @@ class PersonsController extends Controller
                 $relationship_director->is_active = 1;
             $relationship_director->save();
             $group_director = new \montserrat\GroupContact;
-                $group_director->group_id = GROUP_ID_DIRECTOR;
+                $group_director->group_id = config('polanco.group_id.director');
                 $group_director->contact_id = $person->id;
                 $group_director->status = 'Added';
             $group_director->save();
@@ -297,7 +297,7 @@ class PersonsController extends Controller
                 $relationship_innkeeper->is_active = 1;
             $relationship_innkeeper->save();
             $group_innkeeper = new \montserrat\GroupContact;
-                $group_innkeeper->group_id = GROUP_ID_INNKEEPER;
+                $group_innkeeper->group_id = config('polanco.group_id.innkeeper');
                 $group_innkeeper->contact_id = $person->id;
                 $group_innkeeper->status = 'Added';
             $group_innkeeper->save();
@@ -311,7 +311,7 @@ class PersonsController extends Controller
                 $relationship_assistant->is_active = 1;
             $relationship_assistant->save();
             $group_assistant = new \montserrat\GroupContact;
-                $group_assistant->group_id = GROUP_ID_ASSISTANT;
+                $group_assistant->group_id = config('polanco.group_id.assistant');
                 $group_assistant->contact_id = $person->id;
                 $group_assistant->status = 'Added';
             $group_assistant->save();
@@ -1422,32 +1422,32 @@ class PersonsController extends Controller
             $group_steward->deleted_at = null;
             $group_steward->save();
         }
-        $group_director = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_DIRECTOR,'status'=>'Added']);
+        $group_director = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>config('polanco.group_id.director'),'status'=>'Added']);
         if ($request->input('is_director')==0) {
             $group_director->delete();
         } else {
             $group_director->contact_id = $person->id;
-            $group_director->group_id = GROUP_ID_DIRECTOR;
+            $group_director->group_id = config('polanco.group_id.director');
             $group_director->status = 'Added';
             $group_director->deleted_at = null;
             $group_director->save();
         }
-        $group_innkeeper = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_INNKEEPER,'status'=>'Added']);
+        $group_innkeeper = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>config('polanco.group_id.innkeeper'),'status'=>'Added']);
         if ($request->input('is_innkeeper')==0) {
             $group_innkeeper->delete();
         } else {
             $group_innkeeper->contact_id = $person->id;
-            $group_innkeeper->group_id = GROUP_ID_INNKEEPER;
+            $group_innkeeper->group_id = config('polanco.group_id.innkeeper');
             $group_innkeeper->status = 'Added';
             $group_innkeeper->deleted_at = null;
             $group_innkeeper->save();
         }
-        $group_assistant = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>GROUP_ID_ASSISTANT,'status'=>'Added']);
+        $group_assistant = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>config('polanco.group_id.assistant'),'status'=>'Added']);
         if ($request->input('is_assistant')==0) {
             $group_assistant->delete();
         } else {
             $group_assistant->contact_id = $person->id;
-            $group_assistant->group_id = GROUP_ID_ASSISTANT;
+            $group_assistant->group_id = config('polanco.group_id.assistant');
             $group_assistant->status = 'Added';
             $group_assistant->deleted_at = null;
             $group_assistant->save();
@@ -1511,7 +1511,7 @@ class PersonsController extends Controller
     
     public function assistants()
     {
-        return $this->role(GROUP_ID_ASSISTANT);
+        return $this->role(config('polanco.group_id.assistant'));
     }
     public function bishops()
     {
@@ -1547,7 +1547,7 @@ class PersonsController extends Controller
 
     public function directors()
     {
-        return $this->role(GROUP_ID_DIRECTOR);
+        return $this->role(config('polanco.group_id.director'));
     }
     public function donors()
     {
@@ -1569,7 +1569,7 @@ class PersonsController extends Controller
     }
     public function innkeepers()
     {
-        return $this->role(GROUP_ID_INNKEEPER);
+        return $this->role(config('polanco.group_id.innkeeper'));
     }
     public function jesuits()
     {

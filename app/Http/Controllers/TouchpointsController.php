@@ -185,7 +185,7 @@ class TouchpointsController extends Controller
             'type' => 'in:Email,Call,Letter,Face,Other'
         ]);
         $event_id = $request->input('event_id');
-        $participants = \montserrat\Registration::whereEventId($event_id)->whereRoleId(PARTICIPANT_ROLE_ID_RETREATANT)->whereNull('canceled_at')->get();
+        $participants = \montserrat\Registration::whereEventId($event_id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
         foreach ($participants as $participant) {
             $touchpoint = new \montserrat\Touchpoint;
             $touchpoint->person_id= $participant->contact_id;

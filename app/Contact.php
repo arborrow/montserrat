@@ -70,7 +70,7 @@ class Contact extends Model
     }
     public function avatar()
     {
-        return $this->hasOne(Attachment::class, 'entity_id', 'id')->whereFileTypeId(FILE_TYPE_CONTACT_AVATAR);
+        return $this->hasOne(Attachment::class, 'entity_id', 'id')->whereFileTypeId(config('polanco.file_type.contact_avatar'));
     }
     public function email_primary()
     {
@@ -820,12 +820,12 @@ class Contact extends Model
     public function event_captains()
     {
         // the events (retreats) for which this contact has been a retreatant
-        return $this->hasMany(Registration::class, 'contact_id', 'id')->whereRoleId(PARTICIPANT_ROLE_ID_CAPTAIN);
+        return $this->hasMany(Registration::class, 'contact_id', 'id')->whereRoleId(config('polanco.participant_role_id.captain'));
     }
     public function event_retreatants()
     {
         // the events (retreats) for which this contact has been a retreatant
-        return $this->hasMany(Registration::class, 'contact_id', 'id')->whereRoleId(PARTICIPANT_ROLE_ID_RETREATANT);
+        return $this->hasMany(Registration::class, 'contact_id', 'id')->whereRoleId(config('polanco.participant_role_id.retreatant'));
     }
     public function relationship_mjrh_former_board_member()
     {

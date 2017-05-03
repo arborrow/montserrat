@@ -379,19 +379,19 @@ class RelationshipTypesController extends Controller
                         break;
                     case 'Innkeeper':
                         $innkeepers = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
-                            $query->where('group_id', '=', GROUP_ID_INNKEEPER);
+                            $query->where('group_id', '=', config('polanco.group_id.innkeeper'));
                         })->pluck('sort_name', 'id');
                         return $innkeepers;
                         break;
                     case 'Assistant':
                         $assistants = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
-                            $query->where('group_id', '=', GROUP_ID_ASSISTANT);
+                            $query->where('group_id', '=', config('polanco.group_id.assistant'));
                         })->pluck('sort_name', 'id');
                         return $assistants;
                         break;
                     case 'Director':
                         $directors = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
-                            $query->where('group_id', '=', GROUP_ID_DIRECTOR);
+                            $query->where('group_id', '=', config('polanco.group_id.director'));
                         })->pluck('sort_name', 'id');
                         return $directors;
                         break;
