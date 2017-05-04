@@ -6,7 +6,15 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <span>
-                    <h2>Permission details: {{$permission->name}}</h2>
+                    @can('update-permission')
+                        <h2>
+                            Permission details: <strong><a href="{{url('admin/permission/'.$permission->id.'/edit')}}">{{ $permission->name }}</a></strong>
+                        </h2>
+                    @else
+                        <h2>
+                            Permission details: <strong>{{$permission->name}}</strong>
+                        </h2>
+                    @endCan
                 </span>                
             </div>
             

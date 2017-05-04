@@ -6,7 +6,15 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <span>
-                    <h2>Role details: {{$role->name}}</h2>
+                    @can('update-role')
+                        <h2>
+                            Role details: <strong><a href="{{url('admin/role/'.$role->id.'/edit')}}">{{ $role->name }}</a></strong>
+                        </h2>
+                    @else
+                        <h2>
+                            Role details: <strong>{{$role->name}}</strong>
+                        </h2>
+                    @endCan
                 </span>                
             </div>
             
