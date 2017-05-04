@@ -49,8 +49,7 @@
             </div>
             <div class='row'>
                 <div class='col-md-4'>
-                <div class='panel-heading'><h2><strong>Names</strong></h2></div>
-                    <div>
+                    <div class='panel-heading'><h2><strong>Names</strong></h2></div>
                         <span>
                             <strong>Title: </strong>{{ (!empty($person->prefix_name)) ? $person->prefix_name : null }} <br />
                             <strong>First Name: </strong>{{ (!empty($person->first_name)) ? $person->first_name : null }} <br /> 
@@ -65,32 +64,29 @@
                         <strong>Contact type: </strong>{{ $person->contact_type_label }}   <br />
                         <strong>Subcontact type: </strong>{{ $person->subcontact_type_label }}   
                         </span>
-                    </div>
+                    
                 </div>
-                <div class='row'>
-                <div class='col-md-4' style="background-color: lightcoral;" >
-                    <div class='panel-heading' style="background-color: lightcoral;">
+                <div class='col-md-4' style="background-color: lightcoral;">
+                    <div class='panel-heading' style="background-color: lightcoral;" >
                         <h2>
                             <strong>Emergency Contact Information</strong>
                         </h2>
                     </div>
-                    <div class='col-md-4'>
-                    
+                    <div >
                         <strong>Name: </strong>{{ !empty($person->emergency_contact->name) ? $person->emergency_contact->name : 'N/A' }}
                         <br /><strong>Relationship: </strong>{{ !empty($person->emergency_contact->relationship) ? $person->emergency_contact->relationship : 'N/A' }}
                         <br /><strong>Phone:</strong> {{ !empty($person->emergency_contact->phone) ? $person->emergency_contact->phone : 'N/A' }}
                         <br /><strong>Alt phone:</strong> {{ !empty($person->emergency_contact->phone_alternate) ? $person->emergency_contact->phone_alternate: 'N/A' }}
                     </div>
-                </div>
-                <div class='col-md-4' style="background-color: lightcoral;" >
                     
                     <div class="panel-heading" style="background-color: lightcoral;">
                         <h2><strong>Health and Dietary Information</strong></h2>
                     </div>
-                    <div class='col-md-4'>
+                    <div>
                         <strong>Health notes: </strong>{{$person->note_health}}<br />
                         <strong>Dietary notes: </strong>{{$person->note_dietary}}   
                     </div>
+                
                 </div>
             </div><div class="clearfix"> </div>
 
