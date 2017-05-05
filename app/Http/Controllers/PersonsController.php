@@ -1635,6 +1635,41 @@ class PersonsController extends Controller
         return view('persons.role', compact('persons', 'role'));   //
     }
     
+    /*
+     * Used to get all persons with a particular relatioship type - need to work out contact_a vs contact_b
+     * Similar to the role method where we can display all members of a group this will show all people with a type or relationship
+     * Commented out because it is merely a work in progress to address routes like  person/retreatants                              
+
+     */
+/*        public function relationship_type($relationship_type_id)
+    {
+        $this->authorize('show-contact');
+        
+        $persons = \montserrat\Contact::with('relationships', 'address_primary', 'captain_events')->whereHas('relationships', function ($query) use ($relationship_type_id) {
+            $query->where('relationship_type_id', '=', $relationship_type_id)->whereIsActive(1);
+        })->orderBy('sort_name')->get();
+        
+        $relationship_type = \montserrat\RelationshipType::findOrFail($relationship_type_id);
+        $relationship['relationship_type_id'] = $relationship_type->id;
+        $relationship['name']= $relationship_type->description;
+        $relationship['email_link']= "";
+        
+        $email_list = "";
+        foreach ($persons as $person) {
+            if (!empty($person->email_primary_text)) {
+                $email_list .= addslashes($person->display_name). ' <'.$person->email_primary_text.'>,';
+            }
+            
+            if (!empty($email_list)) {
+                $relationship['email_link'] = "<a href=\"mailto:?bcc=".htmlspecialchars($email_list, ENT_QUOTES)."\">E-mail ".$group->name." Group</a>";
+            } else {
+                $relationship['email_link'] = null;
+            }
+        }
+        return view('persons.relationship', compact('persons', 'relationship'));   //
+    }
+*/
+    
     public function save_relationship($field, $contact_id_a, $contact_id_b, $relationship_type)
     {
         $this->authorize('update-contact');
