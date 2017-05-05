@@ -217,12 +217,13 @@ class DiocesesController extends Controller
     public function edit($id)
     {
         $this->authorize('update-contact');
-        $diocese = \montserrat\Contact::with('bishops.contact_b', 'parishes.contact_b', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
-        if (empty($diocese->bishop)) {
+        $diocese = \montserrat\Contact::with('primary_bishop.contact_b','bishops.contact_b', 'parishes.contact_b', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
+        if (empty($diocese->primary_bishop)) {
             $diocese->bishop_id=0;
         } else {
-            $diocese->bishop_id = $diocese->bishop->contact_id_b;
+            $diocese->bishop_id = $diocese->primary_bishop->contact_id_b;
         }
+        // dd($diocese->bishop_id, $diocese->bishops,$diocese->primary_bishop);
         $states = \montserrat\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
         

@@ -20,8 +20,10 @@ class AboutTest extends TestCase
     
     public function testAbout()
     {
-        //$response = $this->get('/about');
-        //$response->assertStatus(404);
-        $this->assertTrue(true);
+        // test attempt to see about page without authentication
+        $route = route('about');
+        $response = $this->get($route);
+        $response->assertStatus(302);
+        
     }
 }

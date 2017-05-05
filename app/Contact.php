@@ -44,6 +44,10 @@ class Contact extends Model
     {
         return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.bishop'));
     }
+    public function primary_bishop()
+    {
+        return $this->hasOne(Relationship::class, 'contact_id_a','id')->whereRelationshipTypeId(config('polanco.relationship_type.bishop'));
+    }
     public function captain_events()
     {
          return $this->belongsToMany(Retreat::class, 'captain_retreat', 'contact_id', 'event_id');

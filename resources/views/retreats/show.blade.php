@@ -208,6 +208,8 @@
                             <td>
                                 @can('update-registration')
                                     {!! $registration->registration_status_buttons!!}
+                                @else
+                                    {!! $registration->registration_status!!}
                                 @endCan
                             </td>
                         </tr>

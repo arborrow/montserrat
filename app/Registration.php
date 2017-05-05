@@ -166,6 +166,26 @@ class Registration extends Model
         }
         return $status;
     }
+    public function getRegistrationStatusAttribute()
+    {
+        $status = '';
+        if (isset($this->register_date) && (!isset($this->canceled_at)) && (!isset($this->arrived_at))) {
+            $status .= '<span class="btn btn-default">Registered: '.$this->register_date.'</span>';
+        }
+        if (isset($this->registration_confirm_date) && (!isset($this->canceled_at)) && (!isset($this->arrived_at))) {
+            $status .= '<span class="btn btn-default">Confirmed: '.$this->registration_confirm_date.'</span>';
+        }
+        if (isset($this->arrived_at) && (!isset($this->canceled_at))) {
+            $status .= '<span class="btn btn-success">Arrived: '.$this->arrived_at.'</span>';
+        }
+        if (isset($this->canceled_at)) {
+            $status .= '<span class="btn btn-danger">Canceled: '.$this->canceled_at.'</span>';
+        }
+        if (isset($this->departed_at)) {
+            $status .= '<span class="btn btn-warning">Departed: '.$this->departed_at.'</span>';
+        }
+        return $status;
+    }
     public function getRetreatNameAttribute()
     {
         if (!empty($this->retreat)) {

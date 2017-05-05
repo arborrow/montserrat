@@ -19,8 +19,9 @@ class HomeTest extends TestCase
     {
         // $this->action('GET', 'HomeController@index');
         // $this->assertResponseOk();
-        $response = $this->get('public/home');
-        $response->assertStatus(404);
+        $route = route('home');
+        $response = $this->get($route)->assertSee('Welcome to Polanco');
+        $response->assertStatus(200);
         
     }
 }
