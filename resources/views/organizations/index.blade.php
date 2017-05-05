@@ -44,7 +44,7 @@
                        @foreach($organizations as $organization)
                         <tr>
                             <td>{!!$organization->avatar_small_link!!}</td>
-                            <td><a href="organization/{{$organization->id}}">{{ $organization->display_name }} </a></td>
+                            <td><a href="{{url('organization/'.$organization->id)}}">{{ $organization->display_name }} </a></td>
                             <td>{{$organization->subcontact_type_label}}</td>
                             <td>
                                 @foreach($organization->addresses as $address)
