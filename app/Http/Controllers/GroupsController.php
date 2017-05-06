@@ -52,7 +52,7 @@ class GroupsController extends Controller
     {
         $this->authorize('create-group');
         $this->validate($request, [
-            'name' => 'required',
+            'name' => 'required|unique:group',
             'title' => 'required',
             'is_active' => 'integer|min:0|max:1',
             'is_hidden' => 'integer|min:0|max:1',
@@ -69,7 +69,7 @@ class GroupsController extends Controller
        
         $group->save();
        
-        return Redirect::action('GroupsController@index');//
+        return Redirect::action('GroupsController@show',$group->id);//
     }
 
     /**
@@ -128,8 +128,9 @@ class GroupsController extends Controller
         $group->is_reserved = $request->input('is_reserved');
        
         $group->save();
-    
-        return Redirect::action('PersonsController@index');//
+        return redirect()->intended('group/'.$group->id);
+                
+        //return Redirect::action('GroupsController@index');//
     }
 
     /**

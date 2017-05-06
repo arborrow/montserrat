@@ -22,7 +22,7 @@
             </div>             
             <div class="form-group">
                 {!! Form::label('is_active', 'Active:', ['class' => 'col-md-1'])  !!}
-                {!! Form::checkbox('is_active', 1, false,['class' => 'col-md-1']) !!}
+                {!! Form::checkbox('is_active', 1, true,['class' => 'col-md-1']) !!}
                 {!! Form::label('is_hidden', 'Hidden:', ['class' => 'col-md-1'])  !!}
                 {!! Form::checkbox('is_hidden', 0, false,['class' => 'col-md-1']) !!}
                 {!! Form::label('is_reserved', 'Reserved:', ['class' => 'col-md-1'])  !!}
