@@ -7,6 +7,8 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite; 
 use montserrat\AuthenticateUser;
 use Symfony\Component\HttpFoundation\Request;
+//use Illuminate\Support\Facades\Session;
+
 // use Redirect; 
 use Auth; 
 
@@ -49,6 +51,7 @@ class LoginController extends Controller
      */
     public function redirectToProvider()
     {
+        
         return Socialite::driver('google')->redirect();
     }
 
@@ -65,7 +68,7 @@ class LoginController extends Controller
                 $authuser = new \montserrat\UserRepository;
                 $currentuser = $authuser->findByUserNameOrCreate($user);
                 Auth::login($currentuser, true);
-                return redirect('/welcome');
+                return redirect()->intended('/welcome');
                 //return $this->userHasLoggedIn($currentuser);
                 
             } else {

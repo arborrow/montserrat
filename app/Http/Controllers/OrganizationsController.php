@@ -3,13 +3,8 @@
 namespace montserrat\Http\Controllers;
 
 use Illuminate\Http\Request;
-use montserrat\Http\Requests;
 use montserrat\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
-use Input;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
-use Intervention\Image\Facades\Image;
 
 class OrganizationsController extends Controller
 {
