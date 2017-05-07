@@ -7,7 +7,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class AboutTest extends TestCase
+class UnauthenticatedAboutTest extends TestCase
 {
     /**
      * A basic test example.

@@ -24,7 +24,7 @@ Route::get('/home', ['as' => 'home','uses' => 'HomeController@index']);
  // Route::get('auth/google/callback', 'Auth\AuthController@handleProviderCallback');
  Route::get('logout', ['as' => 'logout','uses' => 'Auth\LoginController@logout']);
  Route::get('login/google', ['as'=> 'login', 'uses' => 'Auth\LoginController@redirectToProvider']);
- Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback');
+ Route::get('login/google/callback', ['as'=>'login.google_callback','uses' => 'Auth\LoginController@handleProviderCallback']);
 
 Route::get('search/autocomplete', 'SearchController@autocomplete');
 Route::get('search/getuser', 'SearchController@getuser');
