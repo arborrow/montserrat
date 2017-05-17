@@ -695,8 +695,12 @@ class PersonsController extends Controller
             $person->preferred_language_label = 'N/A';
         }
         $touchpoints = \montserrat\Touchpoint::wherePersonId($person->id)->orderBy('touched_at', 'desc')->with('staff')->get();
-       //dd($touchpoints);
-        return view('persons.show', compact('person', 'files', 'relationship_types', 'touchpoints'));//
+        $registrations = \montserrat\Registration::whereContactId($person->id)->whereCanceledAt(NULL)->get();
+        $registrations = $registrations->sortByDesc(function($registration) {
+                return $registration->retreat_start_date;
+                });
+        //dd($registrations);
+        return view('persons.show', compact('person', 'files', 'relationship_types', 'touchpoints','registrations'));//
     }
 
     /**
@@ -1689,7 +1693,7 @@ class PersonsController extends Controller
         
         $duplicates = \montserrat\Contact::whereIn('id', function ($query) {
             $query->select('id')->from('contact')->groupBy('sort_name')->whereDeletedAt(null)->havingRaw('count(*)>1');
-        })->orderBy('sort_name')->paginate(100);
+        })->orderBy('sort_name')->get();
         //dd($duplicates);
         return view('persons.duplicates', compact('duplicates'));
     }

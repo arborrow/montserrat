@@ -17,3 +17,4 @@
 --tweaks and improvements
 -Diocese: add ability to select more than one Bishop for a diocese using is_active as the primary bishop
 -Registration: allow custom arrival and departure times for participants
+-Review home page and desired behavior; currently home is unauthenticated and welcome is authenticated
