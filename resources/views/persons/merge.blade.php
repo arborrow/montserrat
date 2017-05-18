@@ -208,6 +208,13 @@
             <td>{{$duplicate->attachments->count()}}</td>
         @endforeach
     </tr>
+    <tr>
+        <td><strong># of Event Registrations</strong></td>
+        <td>{{$contact->event_registrations->count()}}</td>
+        @foreach ($duplicates as $duplicate)
+            <td>{{$duplicate->event_registrations->count()}}</td>
+        @endforeach
+    </tr>
     
     
     <tr>

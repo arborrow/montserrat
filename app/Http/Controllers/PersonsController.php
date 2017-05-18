@@ -1872,6 +1872,11 @@ class PersonsController extends Controller
                 $attachment->entity_id = $contact->id;
                 $attachment->save();
             }
+            //event registrations
+            foreach ($merge->event_registrations as $registration) {
+                $registration->contact_id = $contact_id;
+                $registration->save();
+            }
         }
                 
         return view('persons.merge', compact('contact', 'duplicates'));
