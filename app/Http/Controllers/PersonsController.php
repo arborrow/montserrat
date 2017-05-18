@@ -1693,8 +1693,8 @@ class PersonsController extends Controller
         
         $duplicates = \montserrat\Contact::whereIn('id', function ($query) {
             $query->select('id')->from('contact')->groupBy('sort_name')->whereDeletedAt(null)->havingRaw('count(*)>1');
-        })->orderBy('sort_name')->get();
-        //dd($duplicates);
+        })->orderBy('sort_name')->paginate(100);
+        // dd($duplicates,$duplicates->total());
         return view('persons.duplicates', compact('duplicates'));
     }
     public function merge($contact_id, $merge_id = null)
