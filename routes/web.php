@@ -66,6 +66,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('phpinfo', ['as' => 'phpinfo','uses' => 'SystemController@phpinfo']);
 });
 
+Route::resource('activity', 'ActivitiesController');
 
 Route::get('bookstore', ['as' => 'bookstore','uses' => 'PagesController@bookstore']);
 Route::resource('diocese', 'DiocesesController');

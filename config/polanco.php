@@ -73,6 +73,31 @@ return [
         'other' => '4',
         'billing' => '5'    
     ],
+    'activity_contacts_type' => [
+        'assignee' => '1',
+        'creator' => '2',
+        'target' => '3'    
+    ],
+    'activity_type' => [
+        'meeting' => '1',
+        'call' => '2',
+        'email' => '3',
+        'text' => '4',
+        'letter' => '5',
+        'other' => '8'
+    ],
+    'medium' => [
+        'in person' => '1',
+        'phone' => '2',
+        'email' => '3',
+        'fax' => '4',
+        'letter' => '5'
+    ],
+    'priority' => [
+        'urgent' => '1',
+        'normal' => '2',
+        'low' => '3'
+    ],
     
     'country_id_usa' => '1228',
     'state_province_id_tx' => '1042',
