@@ -369,6 +369,14 @@ class Contact extends Model
             return false;
         }
     }
+    public function getIsHLM2017Attribute()
+    {
+        if (isset($this->group_hlm2017->id)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     public function getIsVolunteerAttribute()
     {
         if (isset($this->group_volunteer->id)) {
@@ -634,6 +642,10 @@ class Contact extends Model
     public function group_captain()
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.captain'));
+    }
+    public function group_hlm2017()
+    {
+        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.hlm2017'));
     }
     public function group_volunteer()
     {

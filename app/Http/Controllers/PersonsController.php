@@ -405,6 +405,14 @@ class PersonsController extends Controller
                 $group_provincial->status = 'Added';
             $group_provincial->save();
         }
+        if ($request->input('is_hlm2017')>0) {
+            $group_hlm2017 = new \montserrat\GroupContact;
+                $group_hlm2017->group_id = config('polanco.group_id.hlm2017');
+                $group_hlm2017->contact_id = $person->id;
+                $group_hlm2017->status = 'Added';
+            $group_hlm2017->save();
+        }
+        
         
         
         /*
@@ -1312,6 +1320,16 @@ class PersonsController extends Controller
             $group_captain->status = 'Added';
             $group_captain->deleted_at = null;
             $group_captain->save();
+        }
+        $group_hlm2017 = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>config('polanco.group_id.hlm2017'),'status'=>'Added']);
+        if ($request->input('is_hlm2017')==0) {
+            $group_hlm2017->delete();
+        } else {
+            $group_hlm2017->contact_id = $person->id;
+            $group_hlm2017->group_id = config('polanco.group_id.hlm2017');
+            $group_hlm2017->status = 'Added';
+            $group_hlm2017->deleted_at = null;
+            $group_hlm2017->save();
         }
         $group_volunteer = \montserrat\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id,'group_id'=>config('polanco.group_id.volunteer'),'status'=>'Added']);
         if ($request->input('is_volunteer')==0) {

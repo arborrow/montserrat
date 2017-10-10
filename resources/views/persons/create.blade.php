@@ -197,6 +197,8 @@
                         {!! Form::checkbox('is_retreatant', 1, true,['class' => 'col-md-1']) !!}
                         {!! Form::label('is_captain', 'Captain:', ['class' => 'col-md-2'])  !!}
                         {!! Form::checkbox('is_captain', 1, false,['class' => 'col-md-1']) !!}
+                        {!! Form::label('is_hlm2017', 'HLM 2017:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::checkbox('is_hlm2017', 1, false,['class' => 'col-md-1']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('is_bishop', 'Bishop:', ['class' => 'col-md-2'])  !!}

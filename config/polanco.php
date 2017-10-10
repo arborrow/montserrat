@@ -148,7 +148,8 @@ return [
         'board' => '12',
         'staff' => '13',
         'steward' => '15',
-        'volunteer' => '14'
+        'volunteer' => '14',
+        'hlm2017' => '17',
     ],
     
     'participant_role_id' => [
