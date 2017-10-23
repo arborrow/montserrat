@@ -85,8 +85,8 @@ class OrganizationsController extends Controller
             'url_twitter' => 'url|regex:/twitter\.com\/.+/i|nullable',
             'url_instagram' => 'url|regex:/instagram\.com\/.+/i|nullable',
             'url_linkedin' => 'url|regex:/linkedin\.com\/.+/i|nullable',
-            'phone_main_phone' => 'phone|nullable',
-            'phone_main_fax' => 'phone|nullable',
+            /* 'phone_main_phone' => 'phone|nullable',
+            'phone_main_fax' => 'phone|nullable', */
         ]);
             
         $organization = new \montserrat\Contact;
@@ -273,8 +273,8 @@ class OrganizationsController extends Controller
             'url_twitter' => 'url|regex:/twitter\.com\/.+/i|nullable',
             'url_instagram' => 'url|regex:/instagram\.com\/.+/i|nullable',
             'url_linkedin' => 'url|regex:/linkedin\.com\/.+/i|nullable',
-            'phone_main_phone' => 'phone|nullable',
-            'phone_main_fax' => 'phone|nullable',
+        /*    'phone_main_phone' => 'phone|nullable',
+            'phone_main_fax' => 'phone|nullable', */
             'avatar' => 'image|max:5000|nullable',
             'attachment' => 'file|mimes:pdf,doc,docx|max:10000|nullable',
             'attachment_description' => 'string|max:200|nullable',

@@ -76,8 +76,8 @@ class ParishesController extends Controller
             'url_twitter' => 'url|regex:/twitter\.com\/.+/i|nullable',
             'url_instagram' => 'url|regex:/instagram\.com\/.+/i|nullable',
             'url_linkedin' => 'url|regex:/linkedin\.com\/.+/i|nullable',
-            'phone_main_phone' => 'phone|nullable',
-            'phone_main_fax' => 'phone|nullable',
+           /* 'phone_main_phone' => 'phone|nullable',
+            'phone_main_fax' => 'phone|nullable', */
         ]);
         $parish = new \montserrat\Contact;
         $parish->organization_name = $request->input('organization_name');
