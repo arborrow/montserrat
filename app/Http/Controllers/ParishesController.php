@@ -76,8 +76,8 @@ class ParishesController extends Controller
             'url_twitter' => 'url|regex:/twitter\.com\/.+/i|nullable',
             'url_instagram' => 'url|regex:/instagram\.com\/.+/i|nullable',
             'url_linkedin' => 'url|regex:/linkedin\.com\/.+/i|nullable',
-           /* 'phone_main_phone' => 'phone|nullable',
-            'phone_main_fax' => 'phone|nullable', */
+            'phone_main_phone' => 'phone|nullable',
+            'phone_main_fax' => 'phone|nullable', 
         ]);
         $parish = new \montserrat\Contact;
         $parish->organization_name = $request->input('organization_name');
@@ -286,8 +286,11 @@ class ParishesController extends Controller
             'avatar' => 'image|max:5000|nullable',
             'attachment' => 'file|mimes:pdf,doc,docx|max:10000|nullable',
             'attachment_description' => 'string|max:200|nullable',
-
+            'phone_main_phone' => 'phone|nullable',
+            'phone_main_fax' => 'phone|nullable', 
+            'parish_email_main' => 'email|nullable',
         ]);
+        
         $parish = \montserrat\Contact::with('pastor.contact_a', 'diocese.contact_a', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'notes')->findOrFail($request->input('id'));
         $parish->organization_name = $request->input('organization_name');
         $parish->display_name = $request->input('display_name');
