@@ -25,9 +25,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $client = new \GuzzleHttp\Client();
-        $result = $client->get('http://labs.bible.org/api/?passage=random')->getBody();
+        /* $client = new \GuzzleHttp\Client();
+         $result = $client->get('http://labs.bible.org/api/?passage=random')->getBody();
         $quote = strip_tags($result->getContents(),'<b>');
+         * 
+         */
+        $quote = 'Jesus loves me this I know';
         return view('home',compact('quote'));
     }
     public function goodbye()
