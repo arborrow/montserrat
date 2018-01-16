@@ -179,7 +179,7 @@
                 </thead>
                 <tbody>
                 @can('show-registration')    
-                    @foreach($registrations as $registration)
+                    @foreach($registrations->sortBy('retreatant.sort_name') as $registration)
                         <tr>
                             <td id='registration-{{$registration->id}}'><a href="{{action('RegistrationsController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }}</a></td>
                             <td> {!!$registration->retreatant->avatar_small_link!!} </td>
