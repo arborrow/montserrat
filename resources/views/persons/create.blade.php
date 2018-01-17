@@ -236,15 +236,16 @@
                     </div>
                 
                 </span>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        {!! Form::submit('Add Person', ['class'=>'btn btn-default']) !!}
+                    </div>
+                    {!! Form::close() !!}
+                </div>
             </div>
-        </div><div class="clearfix"> </div>
-        
-        <div class="col-md-1">
-            <div class="form-group">
-                {!! Form::submit('Add Person', ['class'=>'btn btn-default']) !!}
-            </div>
-            {!! Form::close() !!}
+            <div class="clearfix"> </div>
         </div>
     </div>
+        
 </section>
 @stop
