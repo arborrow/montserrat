@@ -29,7 +29,6 @@
                 @endif
                 
             </div>
-
             <div class='row'>
                 {!! Form::label('type', 'Type of Contact:', ['class' => 'col-md-3'])  !!}
                 {!! Form::select('type', [
@@ -45,15 +44,14 @@
                 {!! Form::label('notes', 'Notes:', ['class' => 'col-md-3'])  !!}
                 {!! Form::textarea('notes', NULL, ['class' => 'col-md-3']) !!}                   
             </div>             
-
-        <div class="clearfix"> </div>
-     <div class="col-md-1">
-            <div class="form-group">
-                {!! Form::submit('Add Touchpoint', ['class'=>'btn btn-primary']) !!}
+            <div class="col-md-1">
+                <div class="form-group">
+                    {!! Form::submit('Add Touchpoint', ['class'=>'btn btn-primary']) !!}
+                </div>
+                    {!! Form::close() !!}
             </div>
-                {!! Form::close() !!}
-        </div>
-    </span>
+            <div class="clearfix"></div>
+        </span>
     </div>
 </section>
 @stop
