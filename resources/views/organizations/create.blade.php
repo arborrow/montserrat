@@ -57,7 +57,7 @@
             <div class="clearfix"> </div>
             <div class="col-md-1"><div class="form-group">
                 {!! Form::submit('Add Organization', ['class'=>'btn btn-primary']) !!}
-            </div></div>
+            </div></div><div class="clearfix"> </div>
                 {!! Form::close() !!}
         </div>
     </section>

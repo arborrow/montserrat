@@ -79,7 +79,7 @@
             
             <div class="col-md-2"><div class="form-group">
                 {!! Form::submit('Add Retreat', ['class'=>'btn btn-primary']) !!}
-            </div></div>
+            </div></div><div class="clearfix"> </div>
                 {!! Form::close() !!}
         </div>
     </section>

@@ -42,7 +42,7 @@
                 {!! Form::submit('Add Relationship Type', ['class'=>'btn btn-primary']) !!}
             </div>
                 {!! Form::close() !!}
-        </div>
+        </div><div class="clearfix"> </div>
     </span>
     </div>
 </section>

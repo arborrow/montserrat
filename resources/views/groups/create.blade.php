@@ -36,6 +36,7 @@
             </div>
                 {!! Form::close() !!}
         </div>
+        <div class="clearfix"> </div>
     </span>
     </div>
 </section>

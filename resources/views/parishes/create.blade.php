@@ -73,7 +73,7 @@
                 <div class="form-group">
                     {!! Form::submit('Add Parish', ['class'=>'btn btn-default']) !!}
                 </div>
-            </div>
+            </div><div class="clearfix"> </div>
             {!! Form::close() !!}
         </div>
     </section>
