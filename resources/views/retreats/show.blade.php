@@ -79,7 +79,7 @@
             <div class='row'>
             </div><div class="clearfix"> </div>
             <div class='row'>
-                <div class='col-md-2'><strong>Year: </strong>{{ $retreat->year}}</div>
+                <div class='col-md-2'><strong>Last updated: </strong>{{ $retreat->updated_at->format('D F j, Y')}}</div>
             </div><div class="clearfix"> </div>
             <div class='row'>
                 <div class="col-md-1">
