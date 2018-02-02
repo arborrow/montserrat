@@ -20,17 +20,20 @@
     
     <body>
     <header>
-        <div class="row">
-            <div class="col-md-10">
+        <nav class="navbar navbar-default" style="background: #b7a99a;">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">
                 @if (isset(Auth::user()->name))
                    <a href={{ route('welcome') }}>{!! Html::image('img/mrhlogoblack.png','Home',array('title'=>'Home','class'=>'logo')) !!}</a>
                 @else
                    <a href={{ route('home') }}>{!! Html::image('img/mrhlogoblack.png','Home',array('title'=>'Home','class'=>'logo')) !!}</a>
                 @endif
+              </a>
             </div>
-            <div class="col-md-2">
+            <div class="navbar-right">
                 @if (isset(Auth::user()->avatar))
-                    {!! Html::image(Auth::user()->avatar, Auth::user()->name,array('title'=>Auth::user()->name)) !!}
+                    {!! Html::image(Auth::user()->avatar, Auth::user()->name,array('title'=>Auth::user()->name, 'class' => "img-circle")) !!}
                     <a href={{ route('logout') }}>{!! Html::image('img/logout.png', 'Logout',array('title'=>"Logout")) !!}</a>
                 @else
                     <a href="login/google">{!! Html::image('img/login.png', 'Login',array('title'=>"Login")) !!}</a>
@@ -38,7 +41,8 @@
              <br />
             
             </div>
-        </div>
+          </div>
+        </nav>
         @can('show-contact')
             <div class="row">
                 <div class="col-md-6">
