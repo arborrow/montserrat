@@ -14,6 +14,16 @@
 
 // Auth::routes();
 
+Route::get('/agcletters', function() {
+     $touchpoints = \montserrat\Touchpoint::where('notes', 'LIKE', '%Mailed 2017-2018 AGC thank you letter.%')
+                    ->select('notes', 'person_id', 'created_at')
+                    ->with('person')
+                    ->orderBy('created_at', 'desc')
+                    ->get(); 
+                    // return $touchpoints;
+
+     return view('agcletters', compact('touchpoints'));
+});
 Route::get('/', 'HomeController@index');
 Route::get('/welcome', ['as' => 'welcome','uses' => 'PagesController@welcome']);
 Route::get('/goodbye', 'HomeController@goodbye');
