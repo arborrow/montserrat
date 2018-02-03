@@ -36,11 +36,11 @@ class Address extends Model
     {
         //dd($this);
         if (isset($this->state->abbreviation)) {
-            $gmap = '<a href="http://maps.google.com/?q='.$this->street_address.' '.$this->supplemental_address.' '.$this->city.' '.$this->state->abbreviation.' '.$this->postal_code.'" target="_blank">'.
-                    $this->street_address.' '.$this->supplemental_address.' '.$this->city.', '.$this->state->abbreviation.' '.$this->postal_code.'</a>';
+            $gmap = '<a href="http://maps.google.com/?q='.$this->street_address.' '.$this->supplemental_address_1.' '.$this->city.' '.$this->state->abbreviation.' '.$this->postal_code.'" target="_blank">'.
+                    $this->street_address.' '.$this->supplemental_address_1.' '.$this->city.', '.$this->state->abbreviation.' '.$this->postal_code.'</a>';
         } else {
-            $gmap = '<a href="http://maps.google.com/?q='.$this->street_address.' '.$this->supplemental_address.' '.$this->city.' '.$this->postal_code.'">'.
-                    $this->street_address.' '.$this->supplemental_address.' '.$this->city.' '.$this->postal_code.'</a>';
+            $gmap = '<a href="http://maps.google.com/?q='.$this->street_address.' '.$this->supplemental_address_1.' '.$this->city.' '.$this->postal_code.'">'.
+                    $this->street_address.' '.$this->supplemental_address_1.' '.$this->city.' '.$this->postal_code.'</a>';
         }
         return $gmap;
     }

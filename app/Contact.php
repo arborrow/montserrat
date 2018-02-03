@@ -91,8 +91,8 @@ class Contact extends Model
     public function getAddressPrimaryStreetAttribute()
     {
         if (isset($this->address_primary->street_address)) {
-            if (isset($this->address_primary->supplemental_address)) {
-                return $this->address_primary->street_address.' '.$this->address_primary->supplemental_address;
+            if (isset($this->address_primary->supplemental_address_1)) {
+                return $this->address_primary->street_address.' '.$this->address_primary->supplemental_address_1;
             } else {
                 return $this->address_primary->street_address;
             }

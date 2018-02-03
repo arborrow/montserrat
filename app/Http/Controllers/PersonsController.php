@@ -1779,8 +1779,8 @@ class PersonsController extends Controller
             if ((empty($contact->address_primary->street_address)) && (!empty($merge->address_primary->street_address))) {
                 $contact->address_primary->street_address = $merge->address_primary->street_address;
             }
-            if ((empty($contact->address_primary->supplemental_address)) && (!empty($merge->address_primary->supplemental_address))) {
-                $contact->address_primary->supplemental_address = $merge->address_primary->supplemental_address;
+            if ((empty($contact->address_primary->supplemental_address_1)) && (!empty($merge->address_primary->supplemental_address_1))) {
+                $contact->address_primary->supplemental_address_1 = $merge->address_primary->supplemental_address_1;
             }
             if ((empty($contact->address_primary->city)) && (!empty($merge->address_primary->city))) {
                 $contact->address_primary->city = $merge->address_primary->city;
