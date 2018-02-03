@@ -5,7 +5,7 @@
 			<h1>AGC Letters</h1>
 		</div>
 		<div class="panel panel-body">
-			<table class="table">
+			<table class="table table-striped" style="table-layout: fixed; width: 100%">
 				<tr>
 					<th>Name</th>
 					<th>Date</th>
