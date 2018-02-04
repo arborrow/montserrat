@@ -23,7 +23,7 @@ Route::get('/agcletters', function() {
                     // return $touchpoints;
 
      return view('agcletters', compact('touchpoints'));
-});
+})->middleware('auth');
 Route::get('/', 'HomeController@index');
 Route::get('/welcome', ['as' => 'welcome','uses' => 'PagesController@welcome']);
 Route::get('/goodbye', 'HomeController@goodbye');
