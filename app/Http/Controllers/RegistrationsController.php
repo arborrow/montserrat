@@ -16,7 +16,7 @@ class RegistrationsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('confirmAttendance');
     }
 
     /**
@@ -542,11 +542,13 @@ class RegistrationsController extends Controller
     public function confirmAttendance($token)
     {
         $registration = \montserrat\Registration::where('remember_token', $token)->first();
+
         if ($registration) {
             $registration->registration_confirm_date = \Carbon\Carbon::now();
             $registration->remember_token = '';
             $registration->save();
-            return 'thank you for confirming attendance';
         };
+
+        return redirect()->away('https://montserratretreat.org/retreat-attendance');
     }
 }
