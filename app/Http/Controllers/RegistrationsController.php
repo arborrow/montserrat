@@ -508,7 +508,7 @@ class RegistrationsController extends Controller
     }
     public function registrationEmail(Registration $participant)
     {
-        $user = auth()->user();
+        $primaryEmail = $participant->contact->primaryEmail()->first();
         $alfonso = \montserrat\Contact::where('display_name', 'Juan Alfonso de Polanco')->first();
 
         $touchpoint = new \montserrat\Touchpoint;
@@ -519,9 +519,9 @@ class RegistrationsController extends Controller
 
         $missingRegistrationEmail = $touchpoint->missingRegistrationEmail($participant->contact->id, $participant->retreat->idnumber);
 
-        if ($missingRegistrationEmail) {
+        if ($missingRegistrationEmail && $primaryEmail) {
             try {
-                \Mail::to($user)->send(new RetreatRegistration($participant));
+                \Mail::to($primaryEmail)->send(new RetreatRegistration($participant));
             } catch ( \Exception $e ) {
                 $touchpoint->notes = $participant->retreat->idnumber." registration email failed." ;
             }

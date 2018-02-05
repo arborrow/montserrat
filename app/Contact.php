@@ -68,6 +68,10 @@ class Contact extends Model
     {
         return $this->hasMany(Email::class, 'contact_id', 'id');
     }
+    public function primaryEmail()
+    {
+        return $this->hasMany(Email::class, 'contact_id', 'id')->where('email', '!=', null);
+    }
     public function attachments()
     {
         return $this->hasMany(Attachment::class, 'entity_id', 'id')->whereEntity('contact');
