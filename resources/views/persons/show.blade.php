@@ -263,8 +263,11 @@
                             <ul>    
                                 @foreach($registrations as $registration)
                                 <li>
-                                    <a href="{{ url('registration/'.$registration->id)}}" class="btn btn-default">
+                                    <a href="{{ url('registration/'.$registration->id) }}" class="btn btn-default">
                                         Edit
+                                    </a>
+                                    <a href="{{ url('registration/'.$registration->id).'/email' }}" class="btn btn-default">
+                                        Send Registration Email
                                     </a> 
                                     {!!$registration->event_link!!} ({{date('F j, Y', strtotime($registration->retreat_start_date))}} - {{date('F j, Y', strtotime($registration->retreat_end_date))}}) - {{$registration->participant_role_name}} ({{$registration->participant_status}}) </li>
                                 @endforeach

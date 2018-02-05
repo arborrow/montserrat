@@ -508,25 +508,32 @@ class RegistrationsController extends Controller
     }
     public function registrationEmail(Registration $participant)
     {
+        // 1. Get a primary email address for participant.
         $primaryEmail = $participant->contact->primaryEmail()->first();
-        $alfonso = \montserrat\Contact::where('display_name', 'Juan Alfonso de Polanco')->first();
 
-        $touchpoint = new \montserrat\Touchpoint;
-        $touchpoint->person_id = $participant->contact->id;
-        $touchpoint->staff_id = $alfonso->id;
-        $touchpoint->touched_at = Carbon::now();
-        $touchpoint->type = 'Email';
+        if ($primaryEmail) {
+            // 2. Find Polanco contact for use with touchpoint.
+            $alfonso = \montserrat\Contact::where('display_name', 'Juan Alfonso de Polanco')->first();
 
-        $missingRegistrationEmail = $touchpoint->missingRegistrationEmail($participant->contact->id, $participant->retreat->idnumber);
+            // 3. Setup infomration to be used with touchpoint for sending out registration email.
+            $touchpoint = new \montserrat\Touchpoint;
+            $touchpoint->person_id = $participant->contact->id;
+            $touchpoint->staff_id = $alfonso->id;
+            $touchpoint->touched_at = Carbon::now();
+            $touchpoint->type = 'Email';
 
-        if ($missingRegistrationEmail && $primaryEmail) {
-            try {
-                \Mail::to($primaryEmail)->send(new RetreatRegistration($participant));
-            } catch ( \Exception $e ) {
-                $touchpoint->notes = $participant->retreat->idnumber." registration email failed." ;
+            // 4. Only send out email if registration email is missing.
+            $missingRegistrationEmail = $touchpoint->missingRegistrationEmail($participant->contact->id, $participant->retreat->idnumber);
+
+            if ($missingRegistrationEmail) {
+                try {
+                    \Mail::to($primaryEmail)->send(new RetreatRegistration($participant));
+                } catch ( \Exception $e ) {
+                    $touchpoint->notes = $participant->retreat->idnumber." registration email failed." ;
+                }
+                $touchpoint->notes = $participant->retreat->idnumber." registration email sent.";
+                $touchpoint->save();
             }
-            $touchpoint->notes = $participant->retreat->idnumber." registration email sent.";
-            $touchpoint->save();
         }
 
         return redirect('person/'.$participant->contact->id);
