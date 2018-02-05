@@ -262,7 +262,11 @@
                     <div class='panel-heading'><h2><strong>Retreat Participation for {{ $person->display_name }}</strong> ({{$registrations->count()}})</h2></div>
                             <ul>    
                                 @foreach($registrations as $registration)
-                                <li>{!!$registration->event_link!!} ({{date('F j, Y', strtotime($registration->retreat_start_date))}} - {{date('F j, Y', strtotime($registration->retreat_end_date))}}) - {{$registration->participant_role_name}} ({{$registration->participant_status}}) </li>
+                                <li>
+                                    <a href="{{ url('registration/'.$registration->id)}}" class="btn btn-default">
+                                        Edit
+                                    </a> 
+                                    {!!$registration->event_link!!} ({{date('F j, Y', strtotime($registration->retreat_start_date))}} - {{date('F j, Y', strtotime($registration->retreat_end_date))}}) - {{$registration->participant_role_name}} ({{$registration->participant_status}}) </li>
                                 @endforeach
                             </ul>
                     </div>
