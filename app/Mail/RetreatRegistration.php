@@ -11,14 +11,16 @@ class RetreatRegistration extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $participant;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($participant)
     {
-        //
+        $this->participant = $participant;
     }
 
     /**
@@ -28,7 +30,10 @@ class RetreatRegistration extends Mailable
      */
     public function build()
     {
-        return $this->subject('Montserrat Jesuit Retreat House Registration')
+        return $this->subject('Preparing for your Upcoming Retreat #'
+                    .$this->participant->retreat->idnumber.' starting on '
+                    .$this->participant->retreat_start_date->format('l F nS'))
+                    ->replyTo('registration@montserratretreat.org')
                     ->view('emails.retreat-registration');
     }
 }

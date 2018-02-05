@@ -5,11 +5,11 @@
 </head>
 <body>
 	<p>
-		Dear [first name],<br><br>
+		Dear {{ $participant->retreatant->first_name }}, <br><br>
 
-		We are praying for you as your upcoming retreat approaches on [date]. You will find a beautiful campus, made holy by the thousands who have prayed here, that is both hospitable and restorative.<br><br>
+		We are praying for you as your upcoming retreat approaches on {{ $participant->retreat_start_date->format('F n, Y') }}. You will find a beautiful campus, made holy by the thousands who have prayed here, that is both hospitable and restorative.<br><br>
 
-		Check-in for your retreat is between 4:00 – 6:00 p.m. on [day,date]. Dinner will be served from 6:00 – 7:15 p.m. When you arrive, please come to Campion Hall to receive your room key and retreat packet. Below are some possible suggestions regarding what to bring. Some frequently asked questions can be found on our FAQs webpage but feel free to call or email should you need more information.<br><br>
+		Check-in for your retreat is between 4:00 – 6:00 p.m. on {{ $participant->retreat_start_date->format('l F n, Y') }}. Dinner will be served from 6:00 – 7:15 p.m. When you arrive, please come to Campion Hall to receive your room key and retreat packet. Below are some possible suggestions regarding what to bring. Some frequently asked questions can be found on our FAQs webpage but feel free to call or email should you need more information.<br><br>
 
 		We look forward to welcoming and accompanying you during the retreat.<br><br>
 
