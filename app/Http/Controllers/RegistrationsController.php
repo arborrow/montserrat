@@ -8,6 +8,9 @@ use montserrat\Http\Requests;
 use montserrat\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Input;
+use Illuminate\Mail\Mailable;
+use montserrat\Mail\RetreatRegistration;
+use montserrat\Registration;
 
 class RegistrationsController extends Controller
 {
@@ -502,5 +505,17 @@ class RegistrationsController extends Controller
         $registration->canceled_at = \Carbon\Carbon::now();
         $registration->save();
         return Redirect::back();
+    }
+    public function registrationEmail(Registration $participant)
+    {
+        $user = auth()->user();
+        // return $participant;
+        try {
+            \Mail::to($user)->send(new RetreatRegistration($participant));
+        } catch ( \Exception $e ) {
+            return $e;
+        }
+
+        return 'pretending to send email to'.$participant->id;
     }
 }
