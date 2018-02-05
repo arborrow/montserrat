@@ -37,4 +37,9 @@ class Touchpoint extends Model
             return null;
         }
     }
+
+    public function missingRegistrationEmail($contact, $retreat)
+    {
+        return !$this->where('person_id', $contact)->where('notes', 'like', $retreat.' registration email sent.')->first();
+    }
 }

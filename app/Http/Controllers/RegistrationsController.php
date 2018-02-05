@@ -509,13 +509,26 @@ class RegistrationsController extends Controller
     public function registrationEmail(Registration $participant)
     {
         $user = auth()->user();
-        // return $participant;
-        try {
-            \Mail::to($user)->send(new RetreatRegistration($participant));
-        } catch ( \Exception $e ) {
-            return $e;
+        $alfonso = \montserrat\Contact::where('display_name', 'Juan Alfonso de Polanco')->first();
+
+        $touchpoint = new \montserrat\Touchpoint;
+        $touchpoint->person_id = $participant->contact->id;
+        $touchpoint->staff_id = $alfonso->id;
+        $touchpoint->touched_at = Carbon::now();
+        $touchpoint->type = 'Email';
+
+        $missingRegistrationEmail = $touchpoint->missingRegistrationEmail($participant->contact->id, $participant->retreat->idnumber);
+
+        if ($missingRegistrationEmail) {
+            try {
+                \Mail::to($user)->send(new RetreatRegistration($participant));
+            } catch ( \Exception $e ) {
+                $touchpoint->notes = $participant->retreat->idnumber." registration email failed." ;
+            }
+            $touchpoint->notes = $participant->retreat->idnumber." registration email sent.";
+            $touchpoint->save();
         }
 
-        return 'pretending to send email to'.$participant->id;
+        return redirect('person/'.$participant->contact->id);
     }
 }
