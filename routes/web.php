@@ -134,6 +134,7 @@ Route::group(['prefix' => 'person'], function () {
 
 Route::resource('person', 'PersonsController');
 
+Route::get('registration/confirm/{token}', 'RegistrationsController@confirmAttendance');
 Route::get('registration/{participant}/email', 'RegistrationsController@registrationEmail');
 Route::get('registration/add/{id?}', ['uses' => 'RegistrationsController@add']);
 Route::get('registration/{id}/edit_group', ['url'=>'registration.edit_group', 'as' => 'registration.edit_group', 'uses' => 'RegistrationsController@edit_group']);

@@ -223,6 +223,7 @@ class RegistrationsController extends Controller
                 $registration->confirmed_by = $request->input('confirmed_by');
                 $registration->deposit = $request->input('deposit');
                 $registration->notes = $request->input('notes');
+                $registration->remember_token = str_random(60);
                 $registration->save();
                 //TODO: verify that the newly created room assignment does not conflict with an existing one
             }
@@ -537,5 +538,15 @@ class RegistrationsController extends Controller
         }
 
         return redirect('person/'.$participant->contact->id);
+    }
+    public function confirmAttendance($token)
+    {
+        $registration = \montserrat\Registration::where('remember_token', $token)->first();
+        if ($registration) {
+            $registration->registration_confirm_date = \Carbon\Carbon::now();
+            $registration->remember_token = '';
+            $registration->save();
+            return 'thank you for confirming attendance';
+        };
     }
 }
