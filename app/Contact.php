@@ -171,7 +171,14 @@ class Contact extends Model
             }
         }
     }
-    
+    public function getBirthdayAttribute()
+    {
+        if (isset($this->birth_date)) {
+            return $this->birth_date->format('m-d-Y');
+        } else {
+            return null;
+        }
+    }
     public function getContactLinkAttribute()
     {
         
@@ -884,6 +891,7 @@ class Contact extends Model
             $this->attributes['birth_date'] = null;
         }
     }
+    
     public function setDeceasedDateAttribute($date)
     {
         if (strlen($date)) {

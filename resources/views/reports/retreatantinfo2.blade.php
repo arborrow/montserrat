@@ -91,7 +91,7 @@
     </tr>
     
     <tr>    
-        <td><strong>Date of Birth: </strong>{{$registration->retreatant->birth_date}}</td>
+        <td><strong>Date of Birth: </strong>{{$registration->retreatant->birthday}}</td>
         <td><hr/></td>
     </tr>
     <tr>

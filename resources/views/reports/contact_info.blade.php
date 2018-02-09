@@ -87,7 +87,7 @@
     </tr>
     
     <tr>    
-        <td><strong>Date of Birth: </strong>{{$person->birth_date}}</td>
+        <td><strong>Date of Birth: </strong>{{$person->birthday}}</td>
         <td><hr/></td>
     </tr>
     <tr>
