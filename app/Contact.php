@@ -1008,11 +1008,22 @@ class Contact extends Model
                     $q->where('phone_numeric', 'like', '%'.$value.'%');
                 });
             }
+            if ($filter=='do_not_phone' && $value>0) {
+                $query->where($filter, $value);
+            }
+            if ($filter=='do_not_sms' && $value>0) {
+                $query->where($filter, $value);
+            }
+            
             if ($filter=='email'  && !empty($value)) {
                 $query->whereHas('emails', function ($q) use ($value) {
                     $q->where('email', 'like', '%'.$value.'%');
                 });
             }
+            if ($filter=='do_not_email' && $value>0) {
+                $query->where($filter, $value);
+            }
+            
             if ($filter=='street_address'  && !empty($value)) {
                 $query->whereHas('addresses', function ($q) use ($value) {
                     $q->where('street_address', 'like', '%'.$value.'%');
@@ -1032,6 +1043,9 @@ class Contact extends Model
                 $query->whereHas('addresses', function ($q) use ($value) {
                     $q->where('postal_code', 'like', '%'.$value.'%');
                 });
+            }
+            if ($filter=='do_not_mail' && $value>0) {
+                $query->where($filter, $value);
             }
             
             if ($filter=='languages' && !empty($value)) {

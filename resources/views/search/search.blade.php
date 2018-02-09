@@ -106,9 +106,28 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    {!! Form::label('do_not_phone', 'Do not phone:', ['class' => 'control-label col-sm-3'])  !!}
+                    <div class="col-sm-8">
+                    {!! Form::checkbox('do_not_phone', 1, 0,['class' => '']) !!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {!! Form::label('do_not_sms', 'Do not SMS:', ['class' => 'control-label col-sm-3'])  !!}
+                    <div class="col-sm-8">
+                    {!! Form::checkbox('do_not_sms', 1, 0,['class' => '']) !!}
+                    </div>
+                </div>
+
+                <div class="form-group">
                     {!! Form::label('email', 'Email:', ['class' => 'control-label col-sm-3'])  !!}
                     <div class="col-sm-8">
                         {!! Form::text('email', NULL, ['class' => 'form-control']) !!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {!! Form::label('do_not_email', 'Do not email:', ['class' => 'control-label col-sm-3'])  !!}
+                    <div class="col-sm-8">
+                    {!! Form::checkbox('do_not_email', 1, 0,['class' => '']) !!}
                     </div>
                 </div>
                 <div class="form-group">
@@ -135,6 +154,13 @@
                         {!! Form::text('postal_code', NULL, ['class' => 'form-control']) !!}
                     </div>
                 </div>
+                <div class="form-group">
+                    {!! Form::label('do_not_mail', 'Do not mail:', ['class' => 'control-label col-sm-3'])  !!}
+                    <div class="col-sm-8">
+                    {!! Form::checkbox('do_not_mail', 1, 0,['class' => '']) !!}
+                    </div>
+                </div>
+
                 <div class="form-group">
                     {!! Form::label('url', 'Website:', ['class' => 'control-label col-sm-3'])  !!}
                     <div class="col-sm-8">
