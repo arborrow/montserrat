@@ -3,7 +3,7 @@
 @section('content')
 
 @foreach($registrations as $registration)
-    <h2>Retreat {{$registration->retreat->title}} - Retreatant Information</h2> 
+    <h2>Retreatant Information for Retreat {{$registration->retreat->title}} - Room: {{$registration->room_name}}</h2> 
 
 
 <i>Please review the information below for accuracy and make changes as appropriate.</i>
