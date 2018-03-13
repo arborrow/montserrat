@@ -17,7 +17,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'montserrat\Model' => 'montserrat\Policies\ModelPolicy',
-        'montserrat\Attachment' => 'montserrat\Policies\AttachmentPolicy',
+        \montserrat\Attachment::class => \montserrat\Policies\AttachmentPolicy::class,
 
     ];
 
