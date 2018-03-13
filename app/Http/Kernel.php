@@ -19,7 +19,7 @@ class Kernel extends HttpKernel
         \montserrat\Http\Middleware\TrimStrings::class,
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        \App\Http\Middleware\TrustProxies::class,
+        \montserrat\Http\Middleware\TrustProxies::class,
     ];
 
     /**
