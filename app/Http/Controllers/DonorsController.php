@@ -31,7 +31,8 @@ class DonorsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {// will not be creating any PPD donor records
+    {
+// will not be creating any PPD donor records
 
         return $this->index();
     }
@@ -73,7 +74,6 @@ class DonorsController extends Controller
     public function edit($id)
     {
         return $this->index();
-    
     }
 
     /**

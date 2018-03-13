@@ -71,12 +71,12 @@ return [
         'work' => '2',
         'main' => '3',
         'other' => '4',
-        'billing' => '5'    
+        'billing' => '5'
     ],
     'activity_contacts_type' => [
         'assignee' => '1',
         'creator' => '2',
-        'target' => '3'    
+        'target' => '3'
     ],
     'activity_type' => [
         'meeting' => '1',
@@ -107,7 +107,7 @@ return [
         'diocese_fortworth' => '1',
         'diocese_tyler' => '2',
         'montserrat' => '620'
-    ], 
+    ],
 
     'event_type' => [
         'conference' => '1',
@@ -131,7 +131,7 @@ return [
         'event_contract' => '4',
         'event_group_photo' => '5',
         'contact_avatar' => '6'
-    ], 
+    ],
 
     'group_id' => [
         'innkeeper' => '1',
@@ -157,6 +157,6 @@ return [
         'retreatant' => '5',
         'retreat_director' => '8',
         'retreat_innkeeper' => '9',
-        'retreat_assistant' => '10'    
-    ] 
+        'retreat_assistant' => '10'
+    ]
 ];

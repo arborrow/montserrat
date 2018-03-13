@@ -9,6 +9,4 @@ class ActivityType extends Model
 {
     use SoftDeletes;
     protected $table = 'activity_type';
-        
-   
 }

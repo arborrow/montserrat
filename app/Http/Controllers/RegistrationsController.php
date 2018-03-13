@@ -529,7 +529,7 @@ class RegistrationsController extends Controller
             if ($missingRegistrationEmail) {
                 try {
                     \Mail::to($primaryEmail)->send(new RetreatRegistration($participant));
-                } catch ( \Exception $e ) {
+                } catch (\Exception $e) {
                     $touchpoint->notes = $participant->retreat->idnumber." registration email failed." ;
                 }
                 $touchpoint->notes = $participant->retreat->idnumber." registration email sent.";

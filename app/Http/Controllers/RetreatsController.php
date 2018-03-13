@@ -173,7 +173,8 @@ class RetreatsController extends Controller
     }
 
     public function get_event_by_id_number($id_number)
-    {   $this->authorize('show-retreat');
+    {
+        $this->authorize('show-retreat');
         $retreat = \montserrat\Retreat::with('retreatmasters', 'innkeeper', 'assistant', 'captains')->whereIdnumber($id_number)->firstOrFail();
         $registrations = \montserrat\Registration::where('event_id', '=', $retreat->id)->with('retreatant.parish')->orderBy('register_date', 'ASC')->get();
         return view('retreats.show', compact('retreat', 'registrations'));//

@@ -31,7 +31,7 @@ class HomeController extends Controller
          * 
          */
         $quote = 'Jesus loves me this I know';
-        return view('home',compact('quote'));
+        return view('home', compact('quote'));
     }
     public function goodbye()
     {

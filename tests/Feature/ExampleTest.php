@@ -14,8 +14,8 @@ class ExampleTest extends TestCase
      *
      * @return void
      */
-    protected $preserveGlobalState = FALSE;
-    protected $runTestInSeparateProcess = TRUE;
+    protected $preserveGlobalState = false;
+    protected $runTestInSeparateProcess = true;
 
     //setup and teardown functions
     

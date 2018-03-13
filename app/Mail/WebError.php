@@ -29,10 +29,10 @@ class WebError extends Mailable
      * @return $this
      */
     public function build()
-    {   $web_error = $this->web_error['body'];
+    {
+        $web_error = $this->web_error['body'];
         return $this->from(config('polanco.site_email'))
                 ->subject($this->web_error['subject'])
                 ->view('emails.error');
-                
     }
 }
