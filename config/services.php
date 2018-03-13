@@ -34,6 +34,7 @@ return [
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
+
     'google' => [
         'client_id' => getenv('GOOGLE_CLIENT_ID'),
         'client_secret' => getenv('GOOGLE_CLIENT_SECRET'),
