@@ -100,7 +100,7 @@ class Handler extends ExceptionHandler
          * will alert me to when an unauthenticated user tries to access secured content
          */
         if ($e instanceof AuthenticationException) {
-            $web_error = array();
+            $web_error = [];
             $web_error['subject'] = 'Polanco Authentication Error @ '.$fullurl.' by: '.$username.' from: '.$ip_address;
             $web_error['body'] = $this->convertExceptionToResponse($e);
             Mail::to(['address' => config('polanco.admin_email')])
@@ -116,7 +116,7 @@ class Handler extends ExceptionHandler
          * I prefer to not give the user the option to do things they are not supposed to do
          */
         if ($e instanceof AuthorizationException) {
-                $web_error = array();
+                $web_error = [];
                 $web_error['subject'] = 'Polanco 403 Error @ '.$fullurl.' by: '.$username.' from: '.$ip_address;
                 $web_error['body'] = $this->convertExceptionToResponse($e);
                 
@@ -131,7 +131,7 @@ class Handler extends ExceptionHandler
          */
         if ($e instanceof NotFoundHttpException || $e instanceof ModelNotFoundException) {
                 $e = new NotFoundHttpException($e->getMessage(), $e);
-                $web_error = array();
+                $web_error = [];
                 $web_error['subject'] = 'Polanco 404 Error @ '.$fullurl.' by: '.$username.' from: '.$ip_address;
                 $web_error['body'] = $this->convertExceptionToResponse($e);
                 Mail::to(['address' => config('polanco.admin_email')])
@@ -144,7 +144,7 @@ class Handler extends ExceptionHandler
          */
         $e->debug=true;
         if ($e instanceof \ErrorException) {
-            $web_error = array();
+            $web_error = [];
             $web_error['subject'] = 'Polanco 500 Error @ '.$fullurl.' by: '.$username.' from: '.$ip_address;
             $web_error['body'] = $this->convertExceptionToResponse($e);
             Mail::to(['address' => config('polanco.admin_email')])
