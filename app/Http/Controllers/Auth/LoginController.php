@@ -1,11 +1,11 @@
 <?php
 
-namespace montserrat\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth;
 
-use montserrat\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite; 
-use montserrat\AuthenticateUser;
+use App\AuthenticateUser;
 use Symfony\Component\HttpFoundation\Request;
 //use Illuminate\Support\Facades\Session;
 
@@ -65,7 +65,7 @@ class LoginController extends Controller
         $user = Socialite::driver('google')->user();
         if (isset($user->user['domain'])) {
             if ($user->user['domain']=='montserratretreat.org') {
-                $authuser = new \montserrat\UserRepository;
+                $authuser = new \App\UserRepository;
                 $currentuser = $authuser->findByUserNameOrCreate($user);
                 Auth::login($currentuser, true);
                 return redirect()->intended('/welcome');

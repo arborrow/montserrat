@@ -1,9 +1,9 @@
 <?php
 
-namespace montserrat\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use montserrat\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 use Carbon;
 
 class PagesController extends Controller
@@ -82,16 +82,16 @@ class PagesController extends Controller
          * 
          */
         $quote = 'Jesus loves me this I know';
-        // $retreats = \montserrat\Retreat::where('start_date', '<=', $next_week)->where('end_date', '>=', date('Y-m-d'))->orderBy('start_date')->get();
+        // $retreats = \App\Retreat::where('start_date', '<=', $next_week)->where('end_date', '>=', date('Y-m-d'))->orderBy('start_date')->get();
         return view('welcome',compact('quote'));   //
     }
     public function retreatantinforeport($id)
     {
-        $retreat = \montserrat\Retreat::where('idnumber', '=', $id)->first();
+        $retreat = \App\Retreat::where('idnumber', '=', $id)->first();
         //unsorted registrations
-        //$registrations = \montserrat\Registration::where('event_id','=',$retreat->id)->with('retreat','retreatant.languages','retreatant.parish.contact_a.address_primary','retreatant.prefix','retreatant.suffix','retreatant.address_primary.state','retreatant.phones.location','retreatant.emails.location','retreatant.emergency_contact','retreatant.notes','retreatant.occupation')->get();
+        //$registrations = \App\Registration::where('event_id','=',$retreat->id)->with('retreat','retreatant.languages','retreatant.parish.contact_a.address_primary','retreatant.prefix','retreatant.suffix','retreatant.address_primary.state','retreatant.phones.location','retreatant.emails.location','retreatant.emergency_contact','retreatant.notes','retreatant.occupation')->get();
         //registrations sorted by contact's sort_name
-        $registrations = \montserrat\Registration::select(\DB::raw('participant.*', 'contact.*'))
+        $registrations = \App\Registration::select(\DB::raw('participant.*', 'contact.*'))
                 ->join('contact', 'participant.contact_id', '=', 'contact.id')
                 ->where('participant.event_id', '=', $retreat->id)
                 ->whereCanceledAt(null)
@@ -105,15 +105,15 @@ class PagesController extends Controller
     
     public function contact_info_report($id)
     {
-        $person = \montserrat\Contact::findOrFail($id);
+        $person = \App\Contact::findOrFail($id);
         return view('reports.contact_info', compact('person'));   //
     }
     
     public function retreatlistingreport($id)
     {
-        $retreat = \montserrat\Retreat::where('idnumber', '=', $id)->first();
-        //$registrations = \montserrat\Registration::where('event_id','=',$retreat->id)->with('retreat','retreatant')->get();
-        $registrations = \montserrat\Registration::select(\DB::raw('participant.*', 'contact.*'))
+        $retreat = \App\Retreat::where('idnumber', '=', $id)->first();
+        //$registrations = \App\Registration::where('event_id','=',$retreat->id)->with('retreat','retreatant')->get();
+        $registrations = \App\Registration::select(\DB::raw('participant.*', 'contact.*'))
                 ->join('contact', 'participant.contact_id', '=', 'contact.id')
                 ->where('participant.event_id', '=', $retreat->id)
                 ->whereCanceledAt(null)
@@ -126,10 +126,10 @@ class PagesController extends Controller
     }
     public function retreatrosterreport($id)
     {
-        $retreat = \montserrat\Retreat::where('idnumber', '=', $id)->first();
-  //        $registrations = \montserrat\Registration::where('event_id','=',$retreat->id)->with('retreat','retreatant.suffix','retreatant.address_primary','retreatant.prefix')->get();
+        $retreat = \App\Retreat::where('idnumber', '=', $id)->first();
+  //        $registrations = \App\Registration::where('event_id','=',$retreat->id)->with('retreat','retreatant.suffix','retreatant.address_primary','retreatant.prefix')->get();
         //dd($registrations);
-        $registrations = \montserrat\Registration::select(\DB::raw('participant.*', 'contact.*'))
+        $registrations = \App\Registration::select(\DB::raw('participant.*', 'contact.*'))
                 ->join('contact', 'participant.contact_id', '=', 'contact.id')
                 ->where('participant.event_id', '=', $retreat->id)
                 ->whereCanceledAt(null)

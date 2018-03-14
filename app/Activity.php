@@ -1,6 +1,6 @@
 <?php
 
-namespace montserrat;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -79,7 +79,7 @@ class Activity extends Model
     }
 
     public function getStatusLabelAttribute () {
-        $status = \montserrat\ActivityStatus::findOrFail($this->status_id);
+        $status = \App\ActivityStatus::findOrFail($this->status_id);
         return $status->label;
     }
     

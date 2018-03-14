@@ -1,10 +1,10 @@
 <?php
 
-namespace montserrat\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use montserrat\Http\Requests;
-use montserrat\Http\Controllers\Controller;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Input;
 use Illuminate\Support\Facades\Storage;
@@ -26,7 +26,7 @@ class VendorsController extends Controller
     public function index()
     {
         $this->authorize('show-contact');
-        $vendors = \montserrat\Contact::whereSubcontactType(config('polanco.contact_type.vendor'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites')->get();
+        $vendors = \App\Contact::whereSubcontactType(config('polanco.contact_type.vendor'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites')->get();
         return view('vendors.index', compact('vendors'));   //
     }
 
@@ -39,9 +39,9 @@ class VendorsController extends Controller
     {
         $this->authorize('create-contact');
 
-        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
+        $states = \App\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
-        $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code', 'id');
+        $countries = \App\Country::orderby('iso_code')->pluck('iso_code', 'id');
         $defaults['state_province_id'] = config('polanco.state_province_id_tx');
         $defaults['country_id'] = config('polanco.country_id_usa');
         $countries->prepend('N/A', 0);
@@ -70,7 +70,7 @@ class VendorsController extends Controller
             'phone_main_fax' => 'phone|nullable',
         ]);
         
-        $vendor = new \montserrat\Contact;
+        $vendor = new \App\Contact;
         $vendor->organization_name = $request->input('organization_name');
         $vendor->display_name  = $request->input('organization_name');
         $vendor->sort_name  = $request->input('organization_name');
@@ -78,7 +78,7 @@ class VendorsController extends Controller
         $vendor->subcontact_type = config('polanco.contact_type.vendor');
         $vendor->save();
         
-        $vendor_address= new \montserrat\Address;
+        $vendor_address= new \App\Address;
             $vendor_address->contact_id=$vendor->id;
             $vendor_address->location_type_id=config('polanco.location_type.main');
             $vendor_address->is_primary=1;
@@ -90,7 +90,7 @@ class VendorsController extends Controller
             $vendor_address->country_id=$request->input('country_id');
         $vendor_address->save();
         
-        $vendor_main_phone= new \montserrat\Phone;
+        $vendor_main_phone= new \App\Phone;
             $vendor_main_phone->contact_id=$vendor->id;
             $vendor_main_phone->location_type_id=config('polanco.location_type.main');
             $vendor_main_phone->is_primary=1;
@@ -98,14 +98,14 @@ class VendorsController extends Controller
             $vendor_main_phone->phone_type='Phone';
         $vendor_main_phone->save();
         
-        $vendor_fax_phone= new \montserrat\Phone;
+        $vendor_fax_phone= new \App\Phone;
             $vendor_fax_phone->contact_id=$vendor->id;
             $vendor_fax_phone->location_type_id=config('polanco.location_type.main');
             $vendor_fax_phone->phone=$request->input('phone_main_fax');
             $vendor_fax_phone->phone_type='Fax';
         $vendor_fax_phone->save();
         
-        $vendor_email_main = new \montserrat\Email;
+        $vendor_email_main = new \App\Email;
             $vendor_email_main->contact_id=$vendor->id;
             $vendor_email_main->is_primary=1;
             $vendor_email_main->location_type_id=config('polanco.location_type.main');
@@ -114,7 +114,7 @@ class VendorsController extends Controller
         
         //TODO: add contact_id which is the id of the creator of the note
         if (!empty($request->input('note'))) {
-            $vendor_note = new \montserrat\Note;
+            $vendor_note = new \App\Note;
             $vendor_note->entity_table = 'contact';
             $vendor_note->entity_id = $vendor->id;
             $vendor_note->note=$request->input('note');
@@ -122,43 +122,43 @@ class VendorsController extends Controller
             $vendor_note->save();
         }
                 
-        $url_main = new \montserrat\Website;
+        $url_main = new \App\Website;
             $url_main->contact_id=$vendor->id;
             $url_main->url=$request->input('url_main');
             $url_main->website_type='Main';
         $url_main->save();
         
-        $url_work= new \montserrat\Website;
+        $url_work= new \App\Website;
             $url_work->contact_id=$vendor->id;
             $url_work->url=$request->input('url_work');
             $url_work->website_type='Work';
         $url_work->save();
         
-        $url_facebook= new \montserrat\Website;
+        $url_facebook= new \App\Website;
             $url_facebook->contact_id=$vendor->id;
             $url_facebook->url=$request->input('url_facebook');
             $url_facebook->website_type='Facebook';
         $url_facebook->save();
         
-        $url_google = new \montserrat\Website;
+        $url_google = new \App\Website;
             $url_google->contact_id=$vendor->id;
             $url_google->url=$request->input('url_google');
             $url_google->website_type='Google';
         $url_google->save();
         
-        $url_instagram= new \montserrat\Website;
+        $url_instagram= new \App\Website;
             $url_instagram->contact_id=$vendor->id;
             $url_instagram->url=$request->input('url_instagram');
             $url_instagram->website_type='Instagram';
         $url_instagram->save();
         
-        $url_linkedin= new \montserrat\Website;
+        $url_linkedin= new \App\Website;
             $url_linkedin->contact_id=$vendor->id;
             $url_linkedin->url=$request->input('url_linkedin');
             $url_linkedin->website_type='LinkedIn';
         $url_linkedin->save();
         
-        $url_twitter= new \montserrat\Website;
+        $url_twitter= new \App\Website;
             $url_twitter->contact_id=$vendor->id;
             $url_twitter->url=$request->input('url_twitter');
             $url_twitter->website_type='Twitter';
@@ -176,8 +176,8 @@ class VendorsController extends Controller
     public function show($id)
     {
         $this->authorize('show-contact');
-        $vendor = \montserrat\Contact::with('addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'touchpoints')->findOrFail($id);
-        $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($vendor->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
+        $vendor = \App\Contact::with('addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'touchpoints')->findOrFail($id);
+        $files = \App\Attachment::whereEntity('contact')->whereEntityId($vendor->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
         $relationship_types = [];
         $relationship_types["Primary Contact"] = "Primary Contact";
         return view('vendors.show', compact('vendor', 'relationship_types', 'files'));//
@@ -193,9 +193,9 @@ class VendorsController extends Controller
     {
         $this->authorize('update-contact');
 
-        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
+        $states = \App\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
-        $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code', 'id');
+        $countries = \App\Country::orderby('iso_code')->pluck('iso_code', 'id');
         $defaults['state_province_id'] = config('polanco.state_province_id_tx');
         $defaults['country_id'] = config('polanco.country_id_usa');
         $countries->prepend('N/A', 0);
@@ -208,7 +208,7 @@ class VendorsController extends Controller
         $defaults['LinkedIn']['url']='';
         $defaults['Twitter']['url']='';
 
-        $vendor = \montserrat\Contact::with('address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
+        $vendor = \App\Contact::with('address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
         
         foreach ($vendor->websites as $website) {
             $defaults[$website->website_type]['url'] = $website->url;
@@ -246,16 +246,16 @@ class VendorsController extends Controller
 
         ]);
         
-        $vendor = \montserrat\Contact::with('address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'notes')->findOrFail($request->input('id'));
+        $vendor = \App\Contact::with('address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'notes')->findOrFail($request->input('id'));
         $vendor->organization_name = $request->input('organization_name');
         $vendor->display_name = $request->input('display_name');
         $vendor->sort_name = $request->input('sort_name');
         $vendor->save();
 
         if (empty($vendor->address_primary)) {
-            $address_primary = new \montserrat\Address;
+            $address_primary = new \App\Address;
         } else {
-            $address_primary = \montserrat\Address::findOrNew($vendor->address_primary->id);
+            $address_primary = \App\Address::findOrNew($vendor->address_primary->id);
         }
 
         $address_primary->contact_id=$vendor->id;
@@ -270,9 +270,9 @@ class VendorsController extends Controller
         $address_primary->save();
         
         if (empty($vendor->phone_primary)) {
-            $phone_primary = new \montserrat\Address;
+            $phone_primary = new \App\Address;
         } else {
-            $phone_primary = \montserrat\Phone::findOrNew($vendor->phone_primary->id);
+            $phone_primary = \App\Phone::findOrNew($vendor->phone_primary->id);
         }
 
         $phone_primary->contact_id=$vendor->id;
@@ -283,9 +283,9 @@ class VendorsController extends Controller
         $phone_primary->save();
 
         if (empty($vendor->phone_main_fax)) {
-            $phone_main_fax = new \montserrat\Phone;
+            $phone_main_fax = new \App\Phone;
         } else {
-            $phone_main_fax = \montserrat\Phone::findOrNew($vendor->phone_main_fax->id);
+            $phone_main_fax = \App\Phone::findOrNew($vendor->phone_main_fax->id);
         }
         $phone_main_fax->contact_id=$vendor->id;
         $phone_main_fax->location_type_id=config('polanco.location_type.main');
@@ -294,9 +294,9 @@ class VendorsController extends Controller
         $phone_main_fax->save();
 
         if (empty($vendor->email_primary)) {
-            $email_primary= new \montserrat\Email;
+            $email_primary= new \App\Email;
         } else {
-            $email_primary = \montserrat\Email::findOrNew($vendor->email_primary->id);
+            $email_primary = \App\Email::findOrNew($vendor->email_primary->id);
         }
 
         $email_primary->contact_id=$vendor->id;
@@ -317,43 +317,43 @@ class VendorsController extends Controller
             $attachment->update_attachment($request->file('attachment'), 'contact', $vendor->id, 'attachment', $description);
         }
                 
-        $url_main = \montserrat\Website::firstOrNew(['contact_id'=>$vendor->id,'website_type'=>'Main']);
+        $url_main = \App\Website::firstOrNew(['contact_id'=>$vendor->id,'website_type'=>'Main']);
             $url_main->contact_id=$vendor->id;
             $url_main->url=$request->input('url_main');
             $url_main->website_type='Main';
         $url_main->save();
 
-        $url_work= \montserrat\Website::firstOrNew(['contact_id'=>$vendor->id,'website_type'=>'Work']);
+        $url_work= \App\Website::firstOrNew(['contact_id'=>$vendor->id,'website_type'=>'Work']);
             $url_work->contact_id=$vendor->id;
             $url_work->url=$request->input('url_work');
             $url_work->website_type='Work';
         $url_work->save();
 
-        $url_facebook= \montserrat\Website::firstOrNew(['contact_id'=>$vendor->id,'website_type'=>'Facebook']);
+        $url_facebook= \App\Website::firstOrNew(['contact_id'=>$vendor->id,'website_type'=>'Facebook']);
             $url_facebook->contact_id=$vendor->id;
             $url_facebook->url=$request->input('url_facebook');
             $url_facebook->website_type='Facebook';
         $url_facebook->save();
 
-        $url_google = \montserrat\Website::firstOrNew(['contact_id'=>$vendor->id,'website_type'=>'Google']);
+        $url_google = \App\Website::firstOrNew(['contact_id'=>$vendor->id,'website_type'=>'Google']);
             $url_google->contact_id=$vendor->id;
             $url_google->url=$request->input('url_google');
             $url_google->website_type='Google';
         $url_google->save();
 
-        $url_instagram= \montserrat\Website::firstOrNew(['contact_id'=>$vendor->id,'website_type'=>'Instagram']);
+        $url_instagram= \App\Website::firstOrNew(['contact_id'=>$vendor->id,'website_type'=>'Instagram']);
             $url_instagram->contact_id=$vendor->id;
             $url_instagram->url=$request->input('url_instagram');
             $url_instagram->website_type='Instagram';
         $url_instagram->save();
 
-        $url_linkedin= \montserrat\Website::firstOrNew(['contact_id'=>$vendor->id,'website_type'=>'LinkedIn']);
+        $url_linkedin= \App\Website::firstOrNew(['contact_id'=>$vendor->id,'website_type'=>'LinkedIn']);
             $url_linkedin->contact_id=$vendor->id;
             $url_linkedin->url=$request->input('url_linkedin');
             $url_linkedin->website_type='LinkedIn';
         $url_linkedin->save();
 
-        $url_twitter= \montserrat\Website::firstOrNew(['contact_id'=>$vendor->id,'website_type'=>'Twitter']);
+        $url_twitter= \App\Website::firstOrNew(['contact_id'=>$vendor->id,'website_type'=>'Twitter']);
             $url_twitter->contact_id=$vendor->id;
             $url_twitter->url=$request->input('url_twitter');
             $url_twitter->website_type='Twitter';
@@ -371,21 +371,21 @@ class VendorsController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-contact');
-         \montserrat\Relationship::whereContactIdA($id)->delete();
-        \montserrat\Relationship::whereContactIdB($id)->delete();
-        \montserrat\GroupContact::whereContactId($id)->delete();
+         \App\Relationship::whereContactIdA($id)->delete();
+        \App\Relationship::whereContactIdB($id)->delete();
+        \App\GroupContact::whereContactId($id)->delete();
         //delete address, email, phone, website, emergency contact, notes for deleted users
-        \montserrat\Address::whereContactId($id)->delete();
-        \montserrat\Email::whereContactId($id)->delete();
-        \montserrat\Phone::whereContactId($id)->delete();
-        \montserrat\Website::whereContactId($id)->delete();
-        \montserrat\EmergencyContact::whereContactId($id)->delete();
-        \montserrat\Note::whereContactId($id)->delete();
-        \montserrat\Touchpoint::wherePersonId($id)->delete();
+        \App\Address::whereContactId($id)->delete();
+        \App\Email::whereContactId($id)->delete();
+        \App\Phone::whereContactId($id)->delete();
+        \App\Website::whereContactId($id)->delete();
+        \App\EmergencyContact::whereContactId($id)->delete();
+        \App\Note::whereContactId($id)->delete();
+        \App\Touchpoint::wherePersonId($id)->delete();
         //delete registrations
-        \montserrat\Registration::whereContactId($id)->delete();
+        \App\Registration::whereContactId($id)->delete();
        
-        \montserrat\Contact::destroy($id);
+        \App\Contact::destroy($id);
         return Redirect::action('VendorsController@index');
     }
 }

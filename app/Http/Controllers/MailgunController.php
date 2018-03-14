@@ -1,16 +1,16 @@
 <?php
-namespace montserrat\Http\Controllers;
+namespace App\Http\Controllers;
 
 //require '\vendor\autoload.php';
 
 use Illuminate\Http\Request;
 
-use montserrat\Http\Requests;
+use App\Http\Requests;
 use Mailgun\Mailgun;
 use Illuminate\Http\Response;
 use Carbon\Carbon;
-use montserrat\Touchpoint;
-use montserrat\Message;
+use App\Touchpoint;
+use App\Message;
 
 class MailgunController extends Controller
 {
@@ -45,17 +45,17 @@ class MailgunController extends Controller
                         }
                         $messages->push($email);
                         
-                        $email->staff = \montserrat\Contact::whereHas('groups', function ($query) {
+                        $email->staff = \App\Contact::whereHas('groups', function ($query) {
                                 $query->where('group_id', '=', config('polanco.group_id.staff'));
                         })
                             ->whereHas('emails', function ($query) use ($email) {
                                 $query->whereEmail($email->from);
                             })->first();
-                        $email->contact = \montserrat\Contact::whereHas('emails', function ($query) use ($email) {
+                        $email->contact = \App\Contact::whereHas('emails', function ($query) use ($email) {
                                 $query->whereEmail($email->to);
                         })->first();
                         //dd($email->id);
-                        $message = \montserrat\Message::firstOrCreate(['mailgun_id'=>$email->id]);
+                        $message = \App\Message::firstOrCreate(['mailgun_id'=>$email->id]);
                         $message->from = $email->from;
                         if (isset($email->staff['id'])) {
                             $message->from_id = $email->staff['id'];
@@ -114,7 +114,7 @@ class MailgunController extends Controller
     public function process()
     {
         
-        $messages = \montserrat\Message::whereIsProcessed(0)->get();
+        $messages = \App\Message::whereIsProcessed(0)->get();
         
         foreach ($messages as $message) {
             $ch = curl_init($message->storage_url);
@@ -135,7 +135,7 @@ class MailgunController extends Controller
             
             // if we have from and to ids for contacts go ahead and create a touchpoint
             if (($message->from_id > 0) && ($message->to_id>0)) {
-                $touch = new \montserrat\Touchpoint();
+                $touch = new \App\Touchpoint();
                 $touch->person_id = $message->to_id;
                 $touch->staff_id=  $message->from_id;
                 $touch->touched_at= $message->timestamp;
@@ -145,7 +145,7 @@ class MailgunController extends Controller
             }
         }
         
-        $messages = \montserrat\Message::whereIsProcessed(1)->get();
+        $messages = \App\Message::whereIsProcessed(1)->get();
         //dd($messages);
         return view('mailgun.processed', compact('messages'));
     }

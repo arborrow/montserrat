@@ -1,10 +1,10 @@
 <?php
 
-namespace montserrat\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use montserrat\Http\Requests;
-use montserrat\Http\Controllers\Controller;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Input;
 use Illuminate\Support\Facades\URL;
@@ -25,7 +25,7 @@ class RelationshipTypesController extends Controller
     public function index()
     {
         $this->authorize('show-relationshiptype');
-        $relationship_types = \montserrat\RelationshipType::whereIsActive(1)->orderBy('description')->get();
+        $relationship_types = \App\RelationshipType::whereIsActive(1)->orderBy('description')->get();
         return view('relationships.types.index', compact('relationship_types'));   //
     }
 
@@ -37,7 +37,7 @@ class RelationshipTypesController extends Controller
     public function create()
     {
         $this->authorize('create-relationshiptype');
-        $contact_types = \montserrat\ContactType::OrderBy('name')->pluck('name', 'name');
+        $contact_types = \App\ContactType::OrderBy('name')->pluck('name', 'name');
         return view('relationships.types.create', compact('contact_types'));
     }
 
@@ -62,13 +62,13 @@ class RelationshipTypesController extends Controller
             'is_reserved' => 'integer|min:0|max:1'
         ]);
         
-        $relationship_type = new \montserrat\RelationshipType;
+        $relationship_type = new \App\RelationshipType;
         $relationship_type->description = $request->input('description');
         $relationship_type->name_a_b = $request->input('name_a_b');
         $relationship_type->label_a_b = $request->input('label_a_b');
         
-        $contact_type_a = \montserrat\ContactType::whereName($request->input('contact_type_a'))->firstOrFail();
-        $contact_type_b = \montserrat\ContactType::whereName($request->input('contact_type_b'))->firstOrFail();
+        $contact_type_a = \App\ContactType::whereName($request->input('contact_type_a'))->firstOrFail();
+        $contact_type_b = \App\ContactType::whereName($request->input('contact_type_b'))->firstOrFail();
         
         if ($contact_type_a->is_reserved>0) {   // Explanation: primary type of Individual, Organization, or Household
             $relationship_type->contact_type_a = $contact_type_a->name;
@@ -107,8 +107,8 @@ class RelationshipTypesController extends Controller
     public function show($id)
     {
         $this->authorize('show-relationshiptype');
-        $relationship_type = \montserrat\RelationshipType::findOrFail($id);
-        $relationships = \montserrat\Relationship::whereRelationshipTypeId($id)->orderBy('contact_id_a')->with('contact_a', 'contact_b')->paginate(100);
+        $relationship_type = \App\RelationshipType::findOrFail($id);
+        $relationships = \App\Relationship::whereRelationshipTypeId($id)->orderBy('contact_id_a')->with('contact_a', 'contact_b')->paginate(100);
         return view('relationships.types.show', compact('relationship_type', 'relationships'));//
     }
 
@@ -121,7 +121,7 @@ class RelationshipTypesController extends Controller
     public function edit($id)
     {
         $this->authorize('update-relationshiptype');
-        $relationship_type = \montserrat\RelationshipType::findOrFail($id);
+        $relationship_type = \App\RelationshipType::findOrFail($id);
         //dd($relationship_type);
         return view('relationships.types.edit', compact('relationship_type'));
     }
@@ -146,7 +146,7 @@ class RelationshipTypesController extends Controller
             'is_reserved' => 'integer|min:0|max:1'
         ]);
         
-        $relationship_type = \montserrat\RelationshipType::findOrFail($request->input('id'));
+        $relationship_type = \App\RelationshipType::findOrFail($request->input('id'));
         $relationship_type->description = $request->input('description');
         $relationship_type->name_a_b = $request->input('name_a_b');
         $relationship_type->label_a_b = $request->input('label_a_b');
@@ -169,14 +169,14 @@ class RelationshipTypesController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-relationshiptype');
-        \montserrat\RelationshipType::destroy($id);
+        \App\RelationshipType::destroy($id);
         return Redirect::action('RelationshipTypesController@index');
     }
     
     public function add($id, $a = null, $b = null)
     {
         $this->authorize('create-relationship');
-        $relationship_type = \montserrat\RelationshipType::findOrFail($id);
+        $relationship_type = \App\RelationshipType::findOrFail($id);
         $ignored_subtype = [];
             $ignored_subtype["Child"] = config('polanco.relationship_type.child_parent');
             $ignored_subtype["Parent"] = config('polanco.relationship_type.child_parent');
@@ -199,13 +199,13 @@ class RelationshipTypesController extends Controller
         if (!isset($a) or $a==0) {
             $contact_a_list = $this->get_contact_type_list($relationship_type->contact_type_a, $subtype_a_name);
         } else {
-            $contacta = \montserrat\Contact::findOrFail($a);
+            $contacta = \App\Contact::findOrFail($a);
             $contact_a_list[$contacta->id] = $contacta->sort_name;
         }
         if (!isset($b) or $b==0) {
             $contact_b_list = $this->get_contact_type_list($relationship_type->contact_type_b, $subtype_b_name);
         } else {
-            $contactb = \montserrat\Contact::findOrFail($b);
+            $contactb = \App\Contact::findOrFail($b);
             $contact_b_list[$contactb->id] = $contactb->sort_name;
         }
         
@@ -280,7 +280,7 @@ class RelationshipTypesController extends Controller
             $contact_id = $url_a_param;
         }
         //dd($url_right,$url_a_param, $url_b_param);
-        $relationship = new \montserrat\Relationship;
+        $relationship = new \App\Relationship;
         $relationship->contact_id_a = $request->input('contact_a_id');
         $relationship->contact_id_b = $request->input('contact_b_id');
         $relationship->relationship_type_id = $request->input('relationship_type_id');
@@ -294,14 +294,14 @@ class RelationshipTypesController extends Controller
         $this->authorize('show-contact');
         switch ($contact_type) {
             case 'Household':
-                $households = \montserrat\Contact::whereContactType(config('polanco.contact_type.household'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+                $households = \App\Contact::whereContactType(config('polanco.contact_type.household'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
                 return $households;
                 break;
             case 'Organization':
                 switch ($contact_subtype) {
                     case 'Parish':
                         $parish_list = [];
-                        $parishes = \montserrat\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
+                        $parishes = \App\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
                         $parish_list = array_pluck($parishes->toArray(), 'full_name_with_city', 'id');
                         /* foreach($parishes as $parish) {
                             $parish_list[$parish->id] = $parish->organization_name.' ('.$parish->address_primary_city.') - '.$parish->diocese_name;
@@ -309,41 +309,41 @@ class RelationshipTypesController extends Controller
                         return $parish_list;
                         break;
                     case 'Diocese':
-                        $dioceses = \montserrat\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+                        $dioceses = \App\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
                         return $dioceses;
                         break;
                     case 'Province':
-                        $provinces = \montserrat\Contact::whereSubcontactType(config('polanco.contact_type.province'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+                        $provinces = \App\Contact::whereSubcontactType(config('polanco.contact_type.province'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
                         return $provinces;
                         break;
                     case 'Community':
-                        $communities = \montserrat\Contact::whereSubcontactType(config('polanco.contact_type.community'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+                        $communities = \App\Contact::whereSubcontactType(config('polanco.contact_type.community'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
                         return $communities;
                         break;
                     case 'Retreat House':
-                        $retreat_houses = \montserrat\Contact::whereSubcontactType(config('polanco.contact_type.retreat_house'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+                        $retreat_houses = \App\Contact::whereSubcontactType(config('polanco.contact_type.retreat_house'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
                         return $retreat_houses;
                         break;
                     case 'Vendor':
-                        $vendors = \montserrat\Contact::whereSubcontactType(config('polanco.contact_type.vendor'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+                        $vendors = \App\Contact::whereSubcontactType(config('polanco.contact_type.vendor'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
                         return $vendors;
                         break;
                     case 'Religious-Catholic':
-                        $religious_catholic = \montserrat\Contact::whereSubcontactType(config('polanco.contact_type.religious_catholic'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+                        $religious_catholic = \App\Contact::whereSubcontactType(config('polanco.contact_type.religious_catholic'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
                         return $religious_catholic;
                         break;
                     case 'Religious-Non-Catholic':
-                        $religious_non_catholic = \montserrat\Contact::whereSubcontactType(config('polanco.contact_type.religious_noncatholic'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+                        $religious_non_catholic = \App\Contact::whereSubcontactType(config('polanco.contact_type.religious_noncatholic'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
                         return $religious_non_catholic;
                         break;
                     case 'Foundation':
-                        $foundations = \montserrat\Contact::whereSubcontactType(config('polanco.contact_type.foundation'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+                        $foundations = \App\Contact::whereSubcontactType(config('polanco.contact_type.foundation'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
                         return $religious_non_catholic;
                         break;
                     //default NULL (generic organization)
                         
                     default:
-                        $organizations = \montserrat\Contact::whereContactType(config('polanco.contact_type.organization'))->orderBy('organization_name', 'asc')->get();
+                        $organizations = \App\Contact::whereContactType(config('polanco.contact_type.organization'))->orderBy('organization_name', 'asc')->get();
                         $organization_list = array_pluck($organizations->toArray(), 'full_name_with_city', 'id');
                         //dd($temp);
                         return $organization_list;
@@ -354,85 +354,85 @@ class RelationshipTypesController extends Controller
             default:
                 switch ($contact_subtype) {
                     case 'Bishop':
-                        $bishops = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $bishops = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.bishop'));
                         })->pluck('sort_name', 'id');
                         return $bishops;
                         break;
                     case 'Priest':
-                        $priests = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $priests = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.priest'));
                         })->pluck('sort_name', 'id');
                         return $priests;
                         break;
                     case 'Deacon':
-                        $deacons = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $deacons = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.deacon'));
                         })->pluck('sort_name', 'id');
                         return $deacons;
                         break;
                     case 'Pastor':
-                        $pastors = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $pastors = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.pastor'));
                         })->pluck('sort_name', 'id');
                         return $pastors;
                         break;
                     case 'Innkeeper':
-                        $innkeepers = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $innkeepers = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.innkeeper'));
                         })->pluck('sort_name', 'id');
                         return $innkeepers;
                         break;
                     case 'Assistant':
-                        $assistants = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $assistants = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.assistant'));
                         })->pluck('sort_name', 'id');
                         return $assistants;
                         break;
                     case 'Director':
-                        $directors = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $directors = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.director'));
                         })->pluck('sort_name', 'id');
                         return $directors;
                         break;
                     case 'Captain':
-                        $captains = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $captains = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.captain'));
                         })->pluck('sort_name', 'id');
                         return $captains;
                         break;
                     case 'Jesuit':
-                        $jesuits = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $jesuits = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.jesuit'));
                         })->pluck('sort_name', 'id');
                         return $jesuits;
                         break;
                     case 'Provincial':
-                        $provincials = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $provincials = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.provincial'));
                         })->pluck('sort_name', 'id');
                         return $provincials;
                         break;
                     case 'Superior':
-                        $superiors = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $superiors = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.superior'));
                         })->pluck('sort_name', 'id');
                         return $superiors;
                         break;
                     case 'Board member':
-                        $board_members = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $board_members = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.board'));
                         })->pluck('sort_name', 'id');
                         return $board_members;
                         break;
                     case 'Employee':
-                        $staff = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $staff = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.staff'));
                         })->pluck('sort_name', 'id');
                         return $staff;
                         break;
                     case 'Volunteer':
-                        $volunteers = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $volunteers = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.volunteer'));
                         })->pluck('sort_name', 'id');
                         return $volunteers;
@@ -440,7 +440,7 @@ class RelationshipTypesController extends Controller
                     
                     //default null
                     default:
-                        $individuals = \montserrat\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->pluck('sort_name', 'id');
+                        $individuals = \App\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->pluck('sort_name', 'id');
                         return $individuals;
                         break;
                 }

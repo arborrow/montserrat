@@ -1,10 +1,10 @@
 <?php
 
-namespace montserrat\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use montserrat\Http\Requests;
-use montserrat\Http\Controllers\Controller;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Input;
 use Illuminate\Support\Facades\Storage;
@@ -27,7 +27,7 @@ class DiocesesController extends Controller
     {
         $this->authorize('show-contact');
         
-        $dioceses = \montserrat\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'bishops.contact_b', 'parishes.contact_a')->get();
+        $dioceses = \App\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'bishops.contact_b', 'parishes.contact_a')->get();
         
         return view('dioceses.index', compact('dioceses'));   //
     }
@@ -40,16 +40,16 @@ class DiocesesController extends Controller
     public function create()
     {
         $this->authorize('create-contact');
-        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
+        $states = \App\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
         
-        $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code', 'id');
+        $countries = \App\Country::orderby('iso_code')->pluck('iso_code', 'id');
         $countries->prepend('N/A', 0);
         
         $defaults['state_province_id'] = config('polanco.state_province_id_tx');
         $defaults['country_id'] = config('polanco.country_id_usa');
         
-        $bishops = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+        $bishops = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
             $query->where('group_id', '=', config('polanco.group_id.bishop'));
         })->pluck('display_name', 'id');
         $bishops->prepend('N/A', 0);
@@ -80,7 +80,7 @@ class DiocesesController extends Controller
             'phone_main_fax' => 'phone|nullable',
         ]);
 
-        $diocese = new \montserrat\Contact;
+        $diocese = new \App\Contact;
         $diocese->organization_name = $request->input('organization_name');
         $diocese->display_name  = $request->input('organization_name');
         $diocese->sort_name  = $request->input('organization_name');
@@ -88,7 +88,7 @@ class DiocesesController extends Controller
         $diocese->subcontact_type = config('polanco.contact_type.diocese');
         $diocese->save();
         
-        $diocese_address= new \montserrat\Address;
+        $diocese_address= new \App\Address;
             $diocese_address->contact_id=$diocese->id;
             $diocese_address->location_type_id=config('polanco.location_type.main');
             $diocese_address->is_primary=1;
@@ -100,7 +100,7 @@ class DiocesesController extends Controller
             $diocese_address->country_id=$request->input('country_id');
         $diocese_address->save();
         
-        $diocese_main_phone= new \montserrat\Phone;
+        $diocese_main_phone= new \App\Phone;
             $diocese_main_phone->contact_id=$diocese->id;
             $diocese_main_phone->location_type_id=config('polanco.location_type.main');
             $diocese_main_phone->is_primary=1;
@@ -108,57 +108,57 @@ class DiocesesController extends Controller
             $diocese_main_phone->phone_type='Phone';
         $diocese_main_phone->save();
         
-        $diocese_fax_phone= new \montserrat\Phone;
+        $diocese_fax_phone= new \App\Phone;
             $diocese_fax_phone->contact_id=$diocese->id;
             $diocese_fax_phone->location_type_id=config('polanco.location_type.main');
             $diocese_fax_phone->phone=$request->input('phone_main_fax');
             $diocese_fax_phone->phone_type='Fax';
         $diocese_fax_phone->save();
         
-        $diocese_email_main = new \montserrat\Email;
+        $diocese_email_main = new \App\Email;
             $diocese_email_main->contact_id=$diocese->id;
             $diocese_email_main->is_primary=1;
             $diocese_email_main->location_type_id=config('polanco.location_type.main');
             $diocese_email_main->email=$request->input('email_main');
         $diocese_email_main->save();
         
-        $url_main = new \montserrat\Website;
+        $url_main = new \App\Website;
             $url_main->contact_id=$diocese->id;
             $url_main->url=$request->input('url_main');
             $url_main->website_type='Main';
         $url_main->save();
         
-        $url_work= new \montserrat\Website;
+        $url_work= new \App\Website;
             $url_work->contact_id=$diocese->id;
             $url_work->url=$request->input('url_work');
             $url_work->website_type='Work';
         $url_work->save();
         
-        $url_facebook= new \montserrat\Website;
+        $url_facebook= new \App\Website;
             $url_facebook->contact_id=$diocese->id;
             $url_facebook->url=$request->input('url_facebook');
             $url_facebook->website_type='Facebook';
         $url_facebook->save();
         
-        $url_google = new \montserrat\Website;
+        $url_google = new \App\Website;
             $url_google->contact_id=$diocese->id;
             $url_google->url=$request->input('url_google');
             $url_google->website_type='Google';
         $url_google->save();
         
-        $url_instagram= new \montserrat\Website;
+        $url_instagram= new \App\Website;
             $url_instagram->contact_id=$diocese->id;
             $url_instagram->url=$request->input('url_instagram');
             $url_instagram->website_type='Instagram';
         $url_instagram->save();
         
-        $url_linkedin= new \montserrat\Website;
+        $url_linkedin= new \App\Website;
             $url_linkedin->contact_id=$diocese->id;
             $url_linkedin->url=$request->input('url_linkedin');
             $url_linkedin->website_type='LinkedIn';
         $url_linkedin->save();
         
-        $url_twitter= new \montserrat\Website;
+        $url_twitter= new \App\Website;
             $url_twitter->contact_id=$diocese->id;
             $url_twitter->url=$request->input('url_twitter');
             $url_twitter->website_type='Twitter';
@@ -169,7 +169,7 @@ class DiocesesController extends Controller
         if (!empty($request->input('note'))) {
             ;
         } {
-            $diocese_note = new \montserrat\Note;
+            $diocese_note = new \App\Note;
             $diocese_note->entity_table = 'contact';
             $diocese_note->entity_id = $diocese->id;
             $diocese_note->note=$request->input('note');
@@ -178,7 +178,7 @@ class DiocesesController extends Controller
         }
         
         if ($request->input('bishop_id')>0) {
-            $relationship_bishop= new \montserrat\Relationship;
+            $relationship_bishop= new \App\Relationship;
             $relationship_bishop->contact_id_a = $diocese->id;
             $relationship_bishop->contact_id_b = $request->input('bishop_id');
             $relationship_bishop->relationship_type_id = config('polanco.relationship_type.bishop');
@@ -198,8 +198,8 @@ class DiocesesController extends Controller
     public function show($id)
     {
         $this->authorize('show-contact');
-        $diocese = \montserrat\Contact::with('bishops.contact_b', 'parishes.contact_b', 'addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations')->findOrFail($id);
-        $files = \montserrat\Attachment::whereEntity('contact')->whereEntityId($diocese->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
+        $diocese = \App\Contact::with('bishops.contact_b', 'parishes.contact_b', 'addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations')->findOrFail($id);
+        $files = \App\Attachment::whereEntity('contact')->whereEntityId($diocese->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
         $relationship_types = [];
         $relationship_types["Primary Contact"] = "Primary Contact";
         return view('dioceses.show', compact('diocese', 'relationship_types', 'files'));//
@@ -217,23 +217,23 @@ class DiocesesController extends Controller
     public function edit($id)
     {
         $this->authorize('update-contact');
-        $diocese = \montserrat\Contact::with('primary_bishop.contact_b','bishops.contact_b', 'parishes.contact_b', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
+        $diocese = \App\Contact::with('primary_bishop.contact_b','bishops.contact_b', 'parishes.contact_b', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
         if (empty($diocese->primary_bishop)) {
             $diocese->bishop_id=0;
         } else {
             $diocese->bishop_id = $diocese->primary_bishop->contact_id_b;
         }
         // dd($diocese->bishop_id, $diocese->bishops,$diocese->primary_bishop);
-        $states = \montserrat\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
+        $states = \App\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
         
-        $countries = \montserrat\Country::orderby('iso_code')->pluck('iso_code', 'id');
+        $countries = \App\Country::orderby('iso_code')->pluck('iso_code', 'id');
         $countries->prepend('N/A', 0);
         
         $defaults['state_province_id'] = config('polanco.state_province_id_tx');
         $defaults['country_id'] = config('polanco.country_id_usa');
         
-        $bishops = \montserrat\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+        $bishops = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
             $query->where('group_id', '=', config('polanco.group_id.bishop'));
         })->pluck('display_name', 'id');
         $bishops->prepend('N/A', 0);
@@ -284,7 +284,7 @@ class DiocesesController extends Controller
 
         ]);
 
-        $diocese = \montserrat\Contact::with('bishops.contact_b', 'parishes.contact_b', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
+        $diocese = \App\Contact::with('bishops.contact_b', 'parishes.contact_b', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
         $diocese->organization_name = $request->input('organization_name');
         $diocese->display_name  = $request->input('display_name');
         $diocese->sort_name  = $request->input('sort_name');
@@ -292,7 +292,7 @@ class DiocesesController extends Controller
         $diocese->subcontact_type = config('polanco.contact_type.diocese');
         $diocese->save();
       
-        $address_primary = \montserrat\Address::findOrNew($diocese->address_primary->id);
+        $address_primary = \App\Address::findOrNew($diocese->address_primary->id);
         $address_primary->contact_id=$diocese->id;
         $address_primary->location_type_id=config('polanco.location_type.main');
         $address_primary->is_primary=1;
@@ -306,7 +306,7 @@ class DiocesesController extends Controller
         $address_primary->is_primary = 1;
         $address_primary->save();
         
-        $phone_primary = \montserrat\Phone::findOrNew($diocese->phone_primary->id);
+        $phone_primary = \App\Phone::findOrNew($diocese->phone_primary->id);
         $phone_primary->contact_id=$diocese->id;
         $phone_primary->location_type_id=config('polanco.location_type.main');
         $phone_primary->is_primary=1;
@@ -315,9 +315,9 @@ class DiocesesController extends Controller
         $phone_primary->save();
         
         if (empty($diocese->phone_main_fax)) {
-                $phone_main_fax = new \montserrat\Phone;
+                $phone_main_fax = new \App\Phone;
         } else {
-            $phone_main_fax = \montserrat\Phone::findOrNew($diocese->phone_main_fax->id);
+            $phone_main_fax = \App\Phone::findOrNew($diocese->phone_main_fax->id);
         }
         $phone_main_fax->contact_id=$diocese->id;
         $phone_main_fax->location_type_id=config('polanco.location_type.main');
@@ -325,50 +325,50 @@ class DiocesesController extends Controller
         $phone_main_fax->phone_type='Fax';
         $phone_main_fax->save();
         
-        $email_primary = \montserrat\Email::findOrNew($diocese->email_primary->id);
+        $email_primary = \App\Email::findOrNew($diocese->email_primary->id);
         $email_primary->contact_id=$diocese->id;
         $email_primary ->is_primary=1;
         $email_primary ->location_type_id=config('polanco.location_type.main');
         $email_primary ->email=$request->input('email_primary');
         $email_primary->save();
         
-        $url_main = \montserrat\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'Main']);
+        $url_main = \App\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'Main']);
             $url_main->contact_id=$diocese->id;
             $url_main->url=$request->input('url_main');
             $url_main->website_type='Main';
         $url_main->save();
 
-        $url_work= \montserrat\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'Work']);
+        $url_work= \App\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'Work']);
             $url_work->contact_id=$diocese->id;
             $url_work->url=$request->input('url_work');
             $url_work->website_type='Work';
         $url_work->save();
 
-        $url_facebook= \montserrat\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'Facebook']);
+        $url_facebook= \App\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'Facebook']);
             $url_facebook->contact_id=$diocese->id;
             $url_facebook->url=$request->input('url_facebook');
             $url_facebook->website_type='Facebook';
         $url_facebook->save();
 
-        $url_google = \montserrat\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'Google']);
+        $url_google = \App\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'Google']);
             $url_google->contact_id=$diocese->id;
             $url_google->url=$request->input('url_google');
             $url_google->website_type='Google';
         $url_google->save();
 
-        $url_instagram= \montserrat\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'Instagram']);
+        $url_instagram= \App\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'Instagram']);
             $url_instagram->contact_id=$diocese->id;
             $url_instagram->url=$request->input('url_instagram');
             $url_instagram->website_type='Instagram';
         $url_instagram->save();
 
-        $url_linkedin= \montserrat\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'LinkedIn']);
+        $url_linkedin= \App\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'LinkedIn']);
             $url_linkedin->contact_id=$diocese->id;
             $url_linkedin->url=$request->input('url_linkedin');
             $url_linkedin->website_type='LinkedIn';
         $url_linkedin->save();
 
-            $url_twitter= \montserrat\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'Twitter']);
+            $url_twitter= \App\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'Twitter']);
                 $url_twitter->contact_id=$diocese->id;
                 $url_twitter->url=$request->input('url_twitter');
                 $url_twitter->website_type='Twitter';
@@ -376,7 +376,7 @@ class DiocesesController extends Controller
         
         if ($request->input('bishop_id')>0) {
             $bishop_id = $request->input('bishop_id');
-            $relationship_bishop = \montserrat\Relationship::firstOrNew(['contact_id_a'=>$diocese->id,'contact_id_b'=>$bishop_id,'relationship_type_id'=>config('polanco.relationship_type.bishop'),'is_active'=>1]);
+            $relationship_bishop = \App\Relationship::firstOrNew(['contact_id_a'=>$diocese->id,'contact_id_b'=>$bishop_id,'relationship_type_id'=>config('polanco.relationship_type.bishop'),'is_active'=>1]);
             $relationship_bishop->contact_id_a = $diocese->id;
             $relationship_bishop->contact_id_b = $bishop_id;
             $relationship_bishop->relationship_type_id = config('polanco.relationship_type.bishop');
@@ -408,21 +408,21 @@ class DiocesesController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-contact');
-         \montserrat\Relationship::whereContactIdA($id)->delete();
-        \montserrat\Relationship::whereContactIdB($id)->delete();
-        \montserrat\GroupContact::whereContactId($id)->delete();
+         \App\Relationship::whereContactIdA($id)->delete();
+        \App\Relationship::whereContactIdB($id)->delete();
+        \App\GroupContact::whereContactId($id)->delete();
         //delete address, email, phone, website, emergency contact, notes for deleted users
-        \montserrat\Address::whereContactId($id)->delete();
-        \montserrat\Email::whereContactId($id)->delete();
-        \montserrat\Phone::whereContactId($id)->delete();
-        \montserrat\Website::whereContactId($id)->delete();
-        \montserrat\EmergencyContact::whereContactId($id)->delete();
-        \montserrat\Note::whereContactId($id)->delete();
-        \montserrat\Touchpoint::wherePersonId($id)->delete();
+        \App\Address::whereContactId($id)->delete();
+        \App\Email::whereContactId($id)->delete();
+        \App\Phone::whereContactId($id)->delete();
+        \App\Website::whereContactId($id)->delete();
+        \App\EmergencyContact::whereContactId($id)->delete();
+        \App\Note::whereContactId($id)->delete();
+        \App\Touchpoint::wherePersonId($id)->delete();
         //delete registrations
-        \montserrat\Registration::whereContactId($id)->delete();
+        \App\Registration::whereContactId($id)->delete();
        
-         \montserrat\Contact::destroy($id);
+         \App\Contact::destroy($id);
         return Redirect::action('DiocesesController@index');
     }
 }

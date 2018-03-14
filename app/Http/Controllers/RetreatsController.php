@@ -1,16 +1,16 @@
 <?php
 
-namespace montserrat\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use montserrat\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Spatie\GoogleCalendar\Event;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Response;
 use Image;
-use montserrat\Http\Controllers\AttachmentsController;
+use App\Http\Controllers\AttachmentsController;
 
 class RetreatsController extends Controller
 {
@@ -29,21 +29,21 @@ class RetreatsController extends Controller
         $this->authorize('show-retreat');
         $defaults = [];
         $defaults['type']='Retreat';
-        $event_types = \montserrat\EventType::whereIsActive(1)->orderBy('name')->pluck('id', 'name');
+        $event_types = \App\EventType::whereIsActive(1)->orderBy('name')->pluck('id', 'name');
         
-        $retreats = \montserrat\Retreat::whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc')->with('retreatmasters', 'innkeeper', 'assistant')->get();
-        $oldretreats = \montserrat\Retreat::whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date', 'desc')->with('retreatmasters', 'innkeeper', 'assistant')->paginate(100);
+        $retreats = \App\Retreat::whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc')->with('retreatmasters', 'innkeeper', 'assistant')->get();
+        $oldretreats = \App\Retreat::whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date', 'desc')->with('retreatmasters', 'innkeeper', 'assistant')->paginate(100);
         return view('retreats.index', compact('retreats', 'oldretreats', 'defaults', 'event_types'));   //
     }
     public function index_type($event_type_id)
     {
         $this->authorize('show-retreat');
-        $event_types = \montserrat\EventType::whereIsActive(1)->orderBy('name')->pluck('id', 'name');
-        $event_type = \montserrat\EventType::findOrFail($event_type_id);
+        $event_types = \App\EventType::whereIsActive(1)->orderBy('name')->pluck('id', 'name');
+        $event_type = \App\EventType::findOrFail($event_type_id);
         $defaults = [];
         $defaults['type'] = $event_type->label;
-        $retreats = \montserrat\Retreat::type($event_type_id)->whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc')->with('retreatmasters', 'innkeeper', 'assistant')->get();
-        $oldretreats = \montserrat\Retreat::type($event_type_id)->whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date', 'desc')->with('retreatmasters', 'innkeeper', 'assistant')->paginate(100);
+        $retreats = \App\Retreat::type($event_type_id)->whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc')->with('retreatmasters', 'innkeeper', 'assistant')->get();
+        $oldretreats = \App\Retreat::type($event_type_id)->whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date', 'desc')->with('retreatmasters', 'innkeeper', 'assistant')->paginate(100);
         return view('retreats.index', compact('retreats', 'oldretreats', 'defaults', 'event_types'));   //
     }
     
@@ -57,8 +57,8 @@ class RetreatsController extends Controller
     {
         $this->authorize('create-retreat');
                 
-        $retreat_house = \montserrat\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b', 'retreat_captains.contact_b')->findOrFail(config('polanco.contact.montserrat'));
-        $event_types = \montserrat\EventType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
+        $retreat_house = \App\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b', 'retreat_captains.contact_b')->findOrFail(config('polanco.contact.montserrat'));
+        $event_types = \App\EventType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
         foreach ($retreat_house->retreat_innkeepers as $innkeeper) {
             $i[$innkeeper->contact_id_b]=$innkeeper->contact_b->sort_name;
         }
@@ -109,7 +109,7 @@ class RetreatsController extends Controller
             'is_active' => 'boolean'
           ]);
         
-        $retreat = new \montserrat\Retreat;
+        $retreat = new \App\Retreat;
         $calendar_event = new Event;
         
         $retreat->idnumber = $request->input('idnumber');
@@ -167,15 +167,15 @@ class RetreatsController extends Controller
     public function show($id)
     {
         $this->authorize('show-retreat');
-        $retreat = \montserrat\Retreat::with('retreatmasters', 'innkeeper', 'assistant', 'captains')->findOrFail($id);
-        $registrations = \montserrat\Registration::where('event_id', '=', $id)->with('retreatant.parish')->orderBy('register_date', 'ASC')->get();
+        $retreat = \App\Retreat::with('retreatmasters', 'innkeeper', 'assistant', 'captains')->findOrFail($id);
+        $registrations = \App\Registration::where('event_id', '=', $id)->with('retreatant.parish')->orderBy('register_date', 'ASC')->get();
         return view('retreats.show', compact('retreat', 'registrations'));//
     }
 
     public function get_event_by_id_number($id_number)
     {   $this->authorize('show-retreat');
-        $retreat = \montserrat\Retreat::with('retreatmasters', 'innkeeper', 'assistant', 'captains')->whereIdnumber($id_number)->firstOrFail();
-        $registrations = \montserrat\Registration::where('event_id', '=', $retreat->id)->with('retreatant.parish')->orderBy('register_date', 'ASC')->get();
+        $retreat = \App\Retreat::with('retreatmasters', 'innkeeper', 'assistant', 'captains')->whereIdnumber($id_number)->firstOrFail();
+        $registrations = \App\Registration::where('event_id', '=', $retreat->id)->with('retreatant.parish')->orderBy('register_date', 'ASC')->get();
         return view('retreats.show', compact('retreat', 'registrations'));//
     }
     
@@ -187,20 +187,20 @@ class RetreatsController extends Controller
      */
     //public function edit($id)
     //{
-    //   $retreats = \montserrat\Retreat::();
+    //   $retreats = \App\Retreat::();
     //   return view('retreats.edit',compact('retreats'));
     //  }
     public function edit($id)
     {
         $this->authorize('update-retreat');
         //get this retreat's information
-        $retreat = \montserrat\Retreat::with('retreatmasters', 'assistant', 'innkeeper', 'captains')->findOrFail($id);
-        $event_types = \montserrat\EventType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
+        $retreat = \App\Retreat::with('retreatmasters', 'assistant', 'innkeeper', 'captains')->findOrFail($id);
+        $event_types = \App\EventType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
         $is_active[0]='Cancelled';
         $is_active[1]='Active';
         
         //create lists of retreat directors, innkeepers, and assistants from relationship to retreat house
-        $retreat_house = \montserrat\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b')->findOrFail(config('polanco.contact.montserrat'));
+        $retreat_house = \App\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b')->findOrFail(config('polanco.contact.montserrat'));
 
         foreach ($retreat_house->retreat_innkeepers as $innkeeper) {
             $i[$innkeeper->contact_id_b]=$innkeeper->contact_b->sort_name;
@@ -258,7 +258,7 @@ class RetreatsController extends Controller
             
         ]);
         
-        $retreat = \montserrat\Retreat::findOrFail($request->input('id'));
+        $retreat = \App\Retreat::findOrFail($request->input('id'));
         $retreat->idnumber = $request->input('idnumber');
         $retreat->start_date = $request->input('start_date');
         $retreat->end_date = $request->input('end_date');
@@ -348,7 +348,7 @@ class RetreatsController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-retreat');
-        $retreat = \montserrat\Retreat::findOrFail($id);
+        $retreat = \App\Retreat::findOrFail($id);
         
         if (!empty($retreat->calendar_id)) {
             $calendar_event = Event::find($retreat->calendar_id);
@@ -359,7 +359,7 @@ class RetreatsController extends Controller
         }
         $calendar_event = Event::find($retreat->calendar_id);
         $calendar_event->delete();
-        \montserrat\Retreat::destroy($id);
+        \App\Retreat::destroy($id);
         
         return Redirect::action('RetreatsController@index');
     }
@@ -369,9 +369,9 @@ class RetreatsController extends Controller
     {
         $this->authorize('update-registration');
         //get this retreat's information
-        $retreat = \montserrat\Retreat::with('retreatmasters', 'assistant', 'innkeeper', 'captains')->findOrFail($id);
-        $registrations = \montserrat\Registration::where('event_id', '=', $id)->with('retreatant.parish')->orderBy('register_date', 'DESC')->get();
-        $rooms= \montserrat\Room::orderby('name')->pluck('name', 'id');
+        $retreat = \App\Retreat::with('retreatmasters', 'assistant', 'innkeeper', 'captains')->findOrFail($id);
+        $registrations = \App\Registration::where('event_id', '=', $id)->with('retreatant.parish')->orderBy('register_date', 'DESC')->get();
+        $rooms= \App\Room::orderby('name')->pluck('name', 'id');
         $rooms->prepend('Unassigned', 0);
        
         return view('retreats.assign_rooms', compact('retreat', 'registrations', 'rooms'));
@@ -381,8 +381,8 @@ class RetreatsController extends Controller
     {
         /* checkout all registrations for a retreat where the arrived_at is not NULL and the departed is NULL for a particular event */
         $this->authorize('update-registration');
-        $retreat = \montserrat\Retreat::findOrFail($id); //verifies that it is a valid retreat id
-        $registrations = \montserrat\Registration::whereEventId($id)->whereDepartedAt(null)->whereNotNull('arrived_at')->get();
+        $retreat = \App\Retreat::findOrFail($id); //verifies that it is a valid retreat id
+        $registrations = \App\Registration::whereEventId($id)->whereDepartedAt(null)->whereNotNull('arrived_at')->get();
         foreach ($registrations as $registration) {
                 $registration->departed_at = $registration->retreat_end_date;
                 $registration->save();
@@ -400,7 +400,7 @@ class RetreatsController extends Controller
         ]);
         if (null !== $request->input('registrations')) {
             foreach ($request->input('registrations') as $key => $value) {
-                $registration = \montserrat\Registration::findOrFail($key);
+                $registration = \App\Registration::findOrFail($key);
                 $registration->room_id = $value;
                 $registration->save();
                 //dd($registration,$value);
@@ -408,7 +408,7 @@ class RetreatsController extends Controller
         }
         if (null !== $request->input('notes')) {
             foreach ($request->input('notes') as $key => $value) {
-                $registration = \montserrat\Registration::findOrFail($key);
+                $registration = \App\Registration::findOrFail($key);
                 $registration->notes = $value;
                 $registration->save();
                 //dd($registration,$value);

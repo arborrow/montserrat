@@ -1,10 +1,10 @@
 <?php
 
-namespace montserrat\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use montserrat\Http\Requests;
+use App\Http\Requests;
 
 class DonorsController extends Controller
 {
@@ -21,7 +21,7 @@ class DonorsController extends Controller
     {
         $this->authorize('show-donor');
         //only show donors that do not have a contact_id
-        $donors = \montserrat\Donor::whereContactId(null)->orderBy('sort_name')->paginate(100);
+        $donors = \App\Donor::whereContactId(null)->orderBy('sort_name')->paginate(100);
         return view('donors.index', compact('donors'));   //
     }
 
@@ -56,10 +56,10 @@ class DonorsController extends Controller
     public function show($id)
     {
         $this->authorize('show-donor');
-        $donor = \montserrat\Donor::whereDonorId($id)->first();
+        $donor = \App\Donor::whereDonorId($id)->first();
         //dd($donor);
-        $sortnames = \montserrat\Contact::whereSortName($donor->sort_name)->get();
-        $lastnames = \montserrat\Contact::whereLastName($donor->LName)->get();
+        $sortnames = \App\Contact::whereSortName($donor->sort_name)->get();
+        $lastnames = \App\Contact::whereLastName($donor->LName)->get();
                 
         return view('donors.show', compact('donor', 'sortnames', 'lastnames'));//
     }
@@ -102,7 +102,7 @@ class DonorsController extends Controller
     public function assign($donor_id, $contact_id)
     {
         // dd($donor_id, $contact_id);
-        $donor = \montserrat\Donor::whereDonorId($donor_id)->first();
+        $donor = \App\Donor::whereDonorId($donor_id)->first();
         if (empty($donor->contact_id)) {
             $donor->contact_id = $contact_id;
             $donor->save();
@@ -113,8 +113,8 @@ class DonorsController extends Controller
     public function add($donor_id)
     {
         $this->authorize('create-contact');
-        $person = new \montserrat\Contact;
-        $donor = \montserrat\Donor::findOrFail($donor_id);
+        $person = new \App\Contact;
+        $donor = \App\Donor::findOrFail($donor_id);
         //dd($donor);
         
         if (isset($donor->FName)) {
@@ -137,8 +137,8 @@ class DonorsController extends Controller
         $person->save();
         
         if (isset($donor->Address)) {
-            $home_address= new \montserrat\Address;
-            $state = \montserrat\StateProvince::whereAbbreviation($donor->State)->whereCountryId(config('polanco.country_id_usa'))->first();
+            $home_address= new \App\Address;
+            $state = \App\StateProvince::whereAbbreviation($donor->State)->whereCountryId(config('polanco.country_id_usa'))->first();
 
             $home_address->contact_id=$person->id;
             $home_address->location_type_id=config('polanco.location_type.home');
@@ -153,7 +153,7 @@ class DonorsController extends Controller
         }
         
         if (isset($donor->HomePhone)) {
-            $phone_home_phone= new \montserrat\Phone;
+            $phone_home_phone= new \App\Phone;
                 $phone_home_phone->contact_id=$person->id;
                 $phone_home_phone->location_type_id=config('polanco.location_type.home');
                 $phone_home_phone->phone=$donor->HomePhone;
@@ -161,7 +161,7 @@ class DonorsController extends Controller
             $phone_home_phone->save();
         }
         if (isset($donor->cell_phone)) {
-            $phone_home_mobile= new \montserrat\Phone;
+            $phone_home_mobile= new \App\Phone;
                 $phone_home_mobile->contact_id=$person->id;
                 $phone_home_mobile->location_type_id=config('polanco.location_type.home');
                 $phone_home_mobile->phone=$donor->cell_phone;
@@ -170,7 +170,7 @@ class DonorsController extends Controller
         }
         
         if (isset($donor->WorkPhone)) {
-            $phone_work_phone= new \montserrat\Phone;
+            $phone_work_phone= new \App\Phone;
                 $phone_work_phone->contact_id=$person->id;
                 $phone_work_phone->location_type_id=config('polanco.location_type.work');
                 $phone_work_phone->phone=$donor->WorkPhone;
@@ -178,7 +178,7 @@ class DonorsController extends Controller
             $phone_work_phone->save();
         }
         if (isset($donor->EMailAddress)) {
-            $email_home = new \montserrat\Email;
+            $email_home = new \App\Email;
                 $email_home->contact_id=$person->id;
                 $email_home->location_type_id=config('polanco.location_type.home');
                 $email_home->email=$donor->EMailAddress;

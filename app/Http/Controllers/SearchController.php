@@ -1,10 +1,10 @@
 <?php
 
-namespace montserrat\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use montserrat\Http\Requests;
-use montserrat\Http\Controllers\Controller;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
 use Auth;
 use DB;
@@ -22,7 +22,7 @@ class SearchController extends Controller
     {
         $term = Input::get('term');
         $results = [];
-        $queries = \montserrat\Contact::orderBy('sort_name')->where('display_name', 'LIKE', '%'.$term.'%')->whereDeletedAt(null)->take(20)->get();
+        $queries = \App\Contact::orderBy('sort_name')->where('display_name', 'LIKE', '%'.$term.'%')->whereDeletedAt(null)->take(20)->get();
         if (($queries->count() == 0)) {
             $results[0]='Add new contact (No results)';
         }
@@ -43,7 +43,7 @@ class SearchController extends Controller
         if ($id==0) {
             return redirect()->action('PersonsController@create');
         } else {
-            $contact = \montserrat\Contact::findOrFail($id);
+            $contact = \App\Contact::findOrFail($id);
             if ($contact->contact_type == config('polanco.contact_type.individual')) {
                 return redirect()->action('PersonsController@show', $id);
             }
@@ -88,7 +88,7 @@ class SearchController extends Controller
         ]);
 */
         if (!empty($request)) {
-            $persons = \montserrat\Contact::filtered($request)->orderBy('sort_name')->with('attachments')->paginate(100);
+            $persons = \App\Contact::filtered($request)->orderBy('sort_name')->with('attachments')->paginate(100);
             $persons->appends(Input::except('page'));
         }
         return view('search.results', compact('persons'));
@@ -96,42 +96,42 @@ class SearchController extends Controller
 
     public function search()
     {
-        $person = new \montserrat\Contact;
-        $parishes = \montserrat\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
+        $person = new \App\Contact;
+        $parishes = \App\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
         $parish_list[0]='N/A';
-        $contact_types = \montserrat\ContactType::whereIsReserved(true)->pluck('label', 'id');
+        $contact_types = \App\ContactType::whereIsReserved(true)->pluck('label', 'id');
         $contact_types->prepend('N/A', 0);
-        $subcontact_types = \montserrat\ContactType::whereIsReserved(false)->whereIsActive(true)->pluck('label', 'id');
+        $subcontact_types = \App\ContactType::whereIsReserved(false)->whereIsActive(true)->pluck('label', 'id');
         $subcontact_types->prepend('N/A', 0);
         // while probably not the most efficient way of doing this it gets me the result
         foreach ($parishes as $parish) {
             $parish_list[$parish->id] = $parish->organization_name.' ('.$parish->address_primary_city.') - '.$parish->diocese_name;
         }
 
-        $countries = \montserrat\Country::orderBy('iso_code')->pluck('iso_code', 'id');
+        $countries = \App\Country::orderBy('iso_code')->pluck('iso_code', 'id');
         $countries->prepend('N/A', 0);
 
-        $ethnicities = \montserrat\Ethnicity::orderBy('ethnicity')->pluck('ethnicity', 'id');
+        $ethnicities = \App\Ethnicity::orderBy('ethnicity')->pluck('ethnicity', 'id');
         $ethnicities->prepend('N/A', 0);
 
-        $genders = \montserrat\Gender::orderBy('name')->pluck('name', 'id');
+        $genders = \App\Gender::orderBy('name')->pluck('name', 'id');
         $genders ->prepend('N/A', 0);
-        $groups = \montserrat\Group::orderBy('name')->pluck('name', 'id');
+        $groups = \App\Group::orderBy('name')->pluck('name', 'id');
         $groups->prepend('N/A', 0);
 
-        $languages = \montserrat\Language::orderBy('label')->whereIsActive(1)->pluck('label', 'id');
+        $languages = \App\Language::orderBy('label')->whereIsActive(1)->pluck('label', 'id');
         $languages->prepend('N/A', 0);
-        $referrals = \montserrat\Referral::orderBy('name')->whereIsActive(1)->pluck('name', 'id');
+        $referrals = \App\Referral::orderBy('name')->whereIsActive(1)->pluck('name', 'id');
         $referrals->prepend('N/A', 0);
-        $prefixes= \montserrat\Prefix::orderBy('name')->pluck('name', 'id');
+        $prefixes= \App\Prefix::orderBy('name')->pluck('name', 'id');
         $prefixes->prepend('N/A', 0);
-        $religions = \montserrat\Religion::orderBy('name')->whereIsActive(1)->pluck('name', 'id');
+        $religions = \App\Religion::orderBy('name')->whereIsActive(1)->pluck('name', 'id');
         $religions->prepend('N/A', 0);
-        $states = \montserrat\StateProvince::orderBy('name')->whereCountryId(1228)->pluck('name', 'id');
+        $states = \App\StateProvince::orderBy('name')->whereCountryId(1228)->pluck('name', 'id');
         $states->prepend('N/A', 0);
-        $suffixes = \montserrat\Suffix::orderBy('name')->pluck('name', 'id');
+        $suffixes = \App\Suffix::orderBy('name')->pluck('name', 'id');
         $suffixes->prepend('N/A', 0);
-        $occupations = \montserrat\Ppd_occupation::orderBy('name')->pluck('name', 'id');
+        $occupations = \App\Ppd_occupation::orderBy('name')->pluck('name', 'id');
         $occupations->prepend('N/A', 0);
         
         //create defaults array for easier pre-populating of default values on edit/update blade
