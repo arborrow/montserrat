@@ -13,6 +13,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\WebError;
+
 // use Illuminate\Http\Request;
 
 
@@ -42,7 +43,7 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
-        //dd($exception); 
+        //dd($exception);
         parent::report($exception);
     }
 
@@ -75,7 +76,7 @@ class Handler extends ExceptionHandler
     }
     
     public function render($request, Exception $e)
-    {   
+    {
         // check for validation exception
         if ($e instanceof ValidationException && $e->getResponse()) {
             return $e->getResponse();
@@ -123,12 +124,12 @@ class Handler extends ExceptionHandler
                         ->send(new WebError($web_error));
                 $e = new HttpException(403, $e->getMessage());
                 parent::render($request, $e);
-        } 
+        }
         /* check for 404 error
          * user will be redirected to 404 error page (St. Anthony not found)
          * will alert me to bad links or bad user input to non-existing routes or records
          */
-        if ($e instanceof NotFoundHttpException || $e instanceof ModelNotFoundException)  {
+        if ($e instanceof NotFoundHttpException || $e instanceof ModelNotFoundException) {
                 $e = new NotFoundHttpException($e->getMessage(), $e);
                 $web_error = array();
                 $web_error['subject'] = 'Polanco 404 Error @ '.$fullurl.' by: '.$username.' from: '.$ip_address;
@@ -150,7 +151,6 @@ class Handler extends ExceptionHandler
                         ->send(new WebError($web_error));
             parent::render($request, $e);
             return view('errors.default');
-        
         } else {
             if ($this->isHttpException($e)) {
                 return $this->toIlluminateResponse($this->renderHttpException($e), $e);

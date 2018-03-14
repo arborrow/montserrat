@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ActivityContact extends Model
 {
     use SoftDeletes;
-        protected $table = 'activity_contact';
+    protected $table = 'activity_contact';
         
     public function activity()
     {
@@ -19,11 +19,12 @@ class ActivityContact extends Model
         return $this->hasOne(Contact::class, 'id', 'contact_id');
     }
     
-    public function getDetailsAttribute() {
+    public function getDetailsAttribute()
+    {
         return $this->activity->details;
     }
-    public function getTouchedAtAttribute() {
+    public function getTouchedAtAttribute()
+    {
         return $this->activity->activity_date_time;
     }
-
 }

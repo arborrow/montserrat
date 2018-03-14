@@ -77,7 +77,7 @@ class ParishesController extends Controller
             'url_instagram' => 'url|regex:/instagram\.com\/.+/i|nullable',
             'url_linkedin' => 'url|regex:/linkedin\.com\/.+/i|nullable',
             'phone_main_phone' => 'phone|nullable',
-            'phone_main_fax' => 'phone|nullable', 
+            'phone_main_fax' => 'phone|nullable',
         ]);
         $parish = new \App\Contact;
         $parish->organization_name = $request->input('organization_name');
@@ -287,7 +287,7 @@ class ParishesController extends Controller
             'attachment' => 'file|mimes:pdf,doc,docx|max:10000|nullable',
             'attachment_description' => 'string|max:200|nullable',
             'phone_main_phone' => 'phone|nullable',
-            'phone_main_fax' => 'phone|nullable', 
+            'phone_main_fax' => 'phone|nullable',
             'parish_email_main' => 'email|nullable',
         ]);
         

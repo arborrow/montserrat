@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Socialite; 
+use Socialite;
 use App\AuthenticateUser;
 use Symfony\Component\HttpFoundation\Request;
 //use Illuminate\Support\Facades\Session;
 
 // use Redirect; 
-use Auth; 
+use Auth;
 
 class LoginController extends Controller
 {
@@ -70,16 +70,13 @@ class LoginController extends Controller
                 Auth::login($currentuser, true);
                 return redirect()->intended('/welcome');
                 //return $this->userHasLoggedIn($currentuser);
-                
             } else {
                 // dd('Oops, wrong domain!');
-               return redirect('restricted');
+                return redirect('restricted');
             }
-            
-        } else { 
+        } else {
             // dd('Oops, no domain!');
             return redirect('restricted');
-        
         }
         // $user->token;
     }
@@ -88,5 +85,4 @@ class LoginController extends Controller
         Auth::logout();
         return redirect('/goodbye');
     }
-    
 }

@@ -83,7 +83,7 @@ class PagesController extends Controller
          */
         $quote = 'Jesus loves me this I know';
         // $retreats = \App\Retreat::where('start_date', '<=', $next_week)->where('end_date', '>=', date('Y-m-d'))->orderBy('start_date')->get();
-        return view('welcome',compact('quote'));   //
+        return view('welcome', compact('quote'));   //
     }
     public function retreatantinforeport($id)
     {
