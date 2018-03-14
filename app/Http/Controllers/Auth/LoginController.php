@@ -1,16 +1,16 @@
 <?php
 
-namespace montserrat\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth;
 
-use montserrat\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Socialite; 
-use montserrat\AuthenticateUser;
+use Socialite;
+use App\AuthenticateUser;
 use Symfony\Component\HttpFoundation\Request;
 //use Illuminate\Support\Facades\Session;
 
 // use Redirect; 
-use Auth; 
+use Auth;
 
 class LoginController extends Controller
 {
@@ -65,21 +65,18 @@ class LoginController extends Controller
         $user = Socialite::driver('google')->user();
         if (isset($user->user['domain'])) {
             if ($user->user['domain']=='montserratretreat.org') {
-                $authuser = new \montserrat\UserRepository;
+                $authuser = new \App\UserRepository;
                 $currentuser = $authuser->findByUserNameOrCreate($user);
                 Auth::login($currentuser, true);
                 return redirect()->intended('/welcome');
                 //return $this->userHasLoggedIn($currentuser);
-                
             } else {
                 // dd('Oops, wrong domain!');
-               return redirect('restricted');
+                return redirect('restricted');
             }
-            
-        } else { 
+        } else {
             // dd('Oops, no domain!');
             return redirect('restricted');
-        
         }
         // $user->token;
     }
@@ -88,5 +85,4 @@ class LoginController extends Controller
         Auth::logout();
         return redirect('/goodbye');
     }
-    
 }

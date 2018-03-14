@@ -1,6 +1,6 @@
 <?php
 
-namespace montserrat\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Exception\GuzzleException;
@@ -31,7 +31,7 @@ class HomeController extends Controller
          * 
          */
         $quote = 'Jesus loves me this I know';
-        return view('home',compact('quote'));
+        return view('home', compact('quote'));
     }
     public function goodbye()
     {

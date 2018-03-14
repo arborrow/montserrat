@@ -16,14 +16,14 @@ class AuthenticatedAboutTest extends TestCase
      *
      * @return void
      */
-    protected $preserveGlobalState = FALSE;
-    protected $runTestInSeparateProcess = TRUE;
+    protected $preserveGlobalState = false;
+    protected $runTestInSeparateProcess = true;
 
     
     public function testAbout()
     {
-         $abstractUser = Mockery::mock('Laravel\Socialite\Two\User');         
-         $abstractUser->shouldReceive('getId') 
+         $abstractUser = Mockery::mock('Laravel\Socialite\Two\User');
+         $abstractUser->shouldReceive('getId')
          ->andReturn(1234567890)
          ->shouldReceive('getEmail')
          ->andReturn(str_random(10).'@montserratretreat.org')
@@ -45,6 +45,5 @@ class AuthenticatedAboutTest extends TestCase
         // test attempt to see about page without authentication
         
          $response->assertStatus(302);
-        
     }
 }

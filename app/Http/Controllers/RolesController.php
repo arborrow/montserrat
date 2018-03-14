@@ -1,9 +1,9 @@
 <?php
 
-namespace montserrat\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use montserrat\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 
 class RolesController extends Controller
@@ -12,13 +12,12 @@ class RolesController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        
     }
     
     public function index()
     {
         $this->authorize('show-role');
-        $roles = \montserrat\Role::orderBy('name')->get();
+        $roles = \App\Role::orderBy('name')->get();
         return view('admin.roles.index', compact('roles'));
     }
 
@@ -43,7 +42,7 @@ class RolesController extends Controller
     {
         $this->authorize('create-role');
 
-        $role = new \montserrat\Role;
+        $role = new \App\Role;
         $role->name= $request->input('name');
         $role->display_name= $request->input('display_name');
         $role->description = $request->input('description');
@@ -64,9 +63,9 @@ class RolesController extends Controller
     {
         $this->authorize('show-role');
         
-        $role = \montserrat\Role::with('users', 'permissions')->findOrFail($id);
-        $permissions = \montserrat\Permission::orderBy('name')->pluck('name', 'id');
-        $users = \montserrat\User::orderBy('name')->pluck('name', 'id');
+        $role = \App\Role::with('users', 'permissions')->findOrFail($id);
+        $permissions = \App\Permission::orderBy('name')->pluck('name', 'id');
+        $users = \App\User::orderBy('name')->pluck('name', 'id');
         
         return view('admin.roles.show', compact('role', 'permissions', 'users'));//
     }
@@ -81,7 +80,7 @@ class RolesController extends Controller
     {
         $this->authorize('update-role');
         
-        $role = \montserrat\Role::findOrFail($id);
+        $role = \App\Role::findOrFail($id);
         return view('admin.roles.edit', compact('role'));//
     }
 
@@ -96,7 +95,7 @@ class RolesController extends Controller
     {
         $this->authorize('update-role');
         
-        $role = \montserrat\Role::findOrFail($request->input('id'));
+        $role = \App\Role::findOrFail($request->input('id'));
         $role->name= $request->input('name');
         $role->display_name= $request->input('display_name');
         $role->description= $request->input('description');
@@ -115,13 +114,13 @@ class RolesController extends Controller
     {
         $this->authorize('delete-role');
         
-        \montserrat\Role::destroy($id);
+        \App\Role::destroy($id);
         return Redirect::action('RolesController@index');
     }
 
     public function update_permissions(Request $request)
     {
-        $role = \montserrat\Role::findOrFail($request->input('id'));
+        $role = \App\Role::findOrFail($request->input('id'));
         $role->permissions()->detach();
         $role->permissions()->sync($request->input('permissions'));
     
@@ -129,7 +128,7 @@ class RolesController extends Controller
     }
     public function update_users(Request $request)
     {
-        $role = \montserrat\Role::findOrFail($request->input('id'));
+        $role = \App\Role::findOrFail($request->input('id'));
         $role->users()->detach();
         $role->users()->sync($request->input('users'));
     

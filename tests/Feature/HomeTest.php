@@ -22,6 +22,5 @@ class HomeTest extends TestCase
         $route = route('home');
         $response = $this->get($route)->assertSee('Welcome to Polanco');
         $response->assertStatus(200);
-        
     }
 }

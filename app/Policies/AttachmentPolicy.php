@@ -1,11 +1,10 @@
 <?php
 
-namespace montserrat\Policies;
+namespace App\Policies;
 
-use montserrat\User;
+use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use montserrat\User;
-use montserrat\Attachment;
+use App\Attachment;
 
 class AttachmentPolicy
 {

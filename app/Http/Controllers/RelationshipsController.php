@@ -1,9 +1,9 @@
 <?php
 
-namespace montserrat\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use montserrat\Http\Requests;
+use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 
 class RelationshipsController extends Controller
@@ -20,7 +20,7 @@ class RelationshipsController extends Controller
     public function index()
     {
         $this->authorize('show-relationship');
-        $relationships = \montserrat\Relationship::paginate(100);
+        $relationships = \App\Relationship::paginate(100);
         return view('relationships.index', compact('relationships'));   //
     }
 
@@ -88,7 +88,7 @@ class RelationshipsController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-relationship');
-        \montserrat\Relationship::destroy($id);
+        \App\Relationship::destroy($id);
         return Redirect::back();
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace montserrat;
+namespace App;
 
 use Illuminate\Notifications\Notifiable;
 //use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -17,7 +17,8 @@ class User54 extends Model implements
     CanResetPasswordContract
 
 // class User extends Authenticatable
-{   
+{
+
     use Notifiable, Authorizable, CanResetPassword, HasRoles;
 
       /**
@@ -47,5 +48,3 @@ class User54 extends Model implements
         return $this->belongsToMany(Role::class);
     }
 }
-
-    

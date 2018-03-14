@@ -1,6 +1,6 @@
 <?php
 
-namespace montserrat;
+namespace App;
 
 use Zizaco\Entrust\EntrustRole;
 use Illuminate\Database\Eloquent\SoftDeletes;

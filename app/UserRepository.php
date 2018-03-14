@@ -1,8 +1,8 @@
 <?php
 
-namespace montserrat;
+namespace App;
 
-use montserrat\User;
+use App\User;
 
 class UserRepository
 {

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace montserrat\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -82,7 +82,7 @@ class AttachmentsController extends Controller
     {
         $this->authorize('create-attachment');
         $file_name = $this->sanitize_filename($file->getClientOriginalName());
-        $attachment = new \montserrat\Attachment;
+        $attachment = new \App\Attachment;
         $attachment->mime_type = $file->getClientMimeType();
         $attachment->description = $description;
         $attachment->upload_date = \Carbon\Carbon::now();
@@ -234,7 +234,7 @@ class AttachmentsController extends Controller
                 $this->authorize('create-attachment');
                 break;
         }
-        $attachment = \montserrat\Attachment::firstOrNew(['entity'=>$entity,'entity_id'=>$entity_id,'file_type_id'=>$file_type_id,'uri'=>$file_name]);
+        $attachment = \App\Attachment::firstOrNew(['entity'=>$entity,'entity_id'=>$entity_id,'file_type_id'=>$file_type_id,'uri'=>$file_name]);
         $attachment->upload_date = \Carbon\Carbon::now();
         $attachment->description = $description;
         $attachment->mime_type = $file->getClientMimeType();
@@ -250,37 +250,37 @@ class AttachmentsController extends Controller
         switch ($type) {
             case 'group_photo':
                 $file_name='group_photo.jpg';
-                $attachment = \montserrat\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(config('polanco.file_type.event_group_photo'))->firstOrFail();
+                $attachment = \App\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(config('polanco.file_type.event_group_photo'))->firstOrFail();
                 $path = $entity.'/'.$entity_id.'/';
                 $updated_file_name = 'group_photo-deleted-'.time().'.jpg';
                 break;
             case 'contract':
                 $file_name='contract.pdf';
-                $attachment = \montserrat\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(config('polanco.file_type.event_contract'))->firstOrFail();
+                $attachment = \App\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(config('polanco.file_type.event_contract'))->firstOrFail();
                 $path = $entity.'/'.$entity_id.'/';
                 $updated_file_name = 'contract-deleted-'.time().'.pdf';
                 break;
             case 'schedule':
                 $file_name='schedule.pdf';
-                $attachment = \montserrat\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(config('polanco.file_type.event_schedule'))->firstOrFail();
+                $attachment = \App\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(config('polanco.file_type.event_schedule'))->firstOrFail();
                 $path = $entity.'/'.$entity_id.'/';
                 $updated_file_name = 'schedule-deleted-'.time().'.pdf';
                 break;
             case 'evaluations':
                 $file_name='evaluations.pdf';
-                $attachment = \montserrat\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(config('polanco.file_type.event_evaluation'))->firstOrFail();
+                $attachment = \App\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(config('polanco.file_type.event_evaluation'))->firstOrFail();
                 $path = $entity.'/'.$entity_id.'/';
                 $updated_file_name = 'evaluations-deleted-'.time().'.pdf';
                 break;
             case 'attachment':
-                $attachment = \montserrat\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->firstOrFail();
+                $attachment = \App\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->firstOrFail();
                 $path = $entity.'/'.$entity_id.'/attachments/';
                 $file_extension = File::extension($path.$file_name);
                 $file_basename = File::name($path.$file_name);
                 $updated_file_name= $file_basename.'-deleted-'.time().'.'.$file_extension;
                 break;
             case 'avatar':
-                $attachment = \montserrat\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(config('polanco.file_type.contact_avatar'))->firstOrFail();
+                $attachment = \App\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(config('polanco.file_type.contact_avatar'))->firstOrFail();
                 $path = $entity.'/'.$entity_id.'/';
                 $updated_file_name= 'avatar-deleted-'.time().'.png';
                 break;
