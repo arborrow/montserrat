@@ -1,6 +1,6 @@
 <?php
 
-namespace montserrat;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -21,7 +21,7 @@ class Contact extends Model
     // TODO: refactor to lookup based on relationship
     //TODO: rename person_id to contact_id
 /*    public function retreatmasters() {
-        return $this->belongsToMany('\montserrat\Retreat','retreatmasters','person_id','retreat_id');
+        return $this->belongsToMany('\App\Retreat','retreatmasters','person_id','retreat_id');
     }
 */
     public function a_relationships()
@@ -975,7 +975,7 @@ class Contact extends Model
                 $query->where($filter, $value);
             }
             if ($filter=='preferred_language_id' && $value>0) {
-                    $lang = \montserrat\Language::findOrFail($value);
+                    $lang = \App\Language::findOrFail($value);
                     $query->wherePreferredLanguage($lang->name);
             }
             if ($filter=='occupation_id' && $value>0) {

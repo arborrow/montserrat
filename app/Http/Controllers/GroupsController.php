@@ -1,10 +1,10 @@
 <?php
 
-namespace montserrat\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use montserrat\Http\Requests;
-use montserrat\Http\Controllers\Controller;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Input;
 
@@ -24,7 +24,7 @@ class GroupsController extends Controller
     public function index()
     {
         $this->authorize('show-group');
-        $groups = \montserrat\Group::whereIsActive(1)->orderBy('name')->with('members')->get();
+        $groups = \App\Group::whereIsActive(1)->orderBy('name')->with('members')->get();
         foreach ($groups as $group) {
             $group->count = $group->members()->count();
         }
@@ -59,7 +59,7 @@ class GroupsController extends Controller
             'is_reserved' => 'integer|min:0|max:1'
         ]);
         
-        $group = new \montserrat\Group;
+        $group = new \App\Group;
         $group->name = $request->input('name');
         $group->title = $request->input('title');
         $group->description = $request->input('description');
@@ -81,8 +81,8 @@ class GroupsController extends Controller
     public function show($id)
     {
         $this->authorize('show-group');
-        $group = \montserrat\Group::findOrFail($id);
-        $members = \montserrat\Contact::whereHas('groups', function ($query) use ($id) {
+        $group = \App\Group::findOrFail($id);
+        $members = \App\Contact::whereHas('groups', function ($query) use ($id) {
             $query->whereGroupId($id)->whereStatus('Added');
         })->orderby('sort_name')->get();
         return view('groups.show', compact('group', 'members'));//
@@ -97,7 +97,7 @@ class GroupsController extends Controller
     public function edit($id)
     {
         $this->authorize('update-group');
-        $group = \montserrat\Group::findOrFail($id);
+        $group = \App\Group::findOrFail($id);
         return view('groups.edit', compact('group'));
     }
 
@@ -119,7 +119,7 @@ class GroupsController extends Controller
             'is_reserved' => 'integer|min:0|max:1'
         ]);
     
-        $group = \montserrat\Group::findOrFail($request->input('id'));
+        $group = \App\Group::findOrFail($request->input('id'));
         $group->name = $request->input('name');
         $group->title = $request->input('title');
         $group->description = $request->input('description');
@@ -142,7 +142,7 @@ class GroupsController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-group');
-        \montserrat\Group::destroy($id);
+        \App\Group::destroy($id);
         return Redirect::action('GroupsController@index');
     }
 }

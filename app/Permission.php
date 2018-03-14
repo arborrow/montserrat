@@ -1,6 +1,6 @@
 <?php
 
-namespace montserrat;
+namespace App;
 
 use Zizaco\Entrust\EntrustPermission;
 use Carbon\Carbon;

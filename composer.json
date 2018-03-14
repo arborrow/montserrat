@@ -36,7 +36,7 @@
             "database"
         ],
         "psr-4": {
-            "montserrat\\": "app/"
+            "App\\": "app/"
         }
     },
     "autoload-dev": {

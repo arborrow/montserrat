@@ -1,9 +1,9 @@
-<?php namespace montserrat;
+<?php namespace App;
 
 // AuthenticateUser.php 
 use Illuminate\Contracts\Auth\Guard;
 use Laravel\Socialite\Contracts\Factory as Socialite;
-use montserrat\UserRepository;
+use App\UserRepository;
 use Request;
 
 class AuthenticateUser

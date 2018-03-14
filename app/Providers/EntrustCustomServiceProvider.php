@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace montserrat\Providers;
+namespace App\Providers;
 
 /**
  * Description of EntrustCustomServiceProvider
