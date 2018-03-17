@@ -703,12 +703,12 @@ class PersonsController extends Controller
             $person->preferred_language_label = 'N/A';
         }
         $touchpoints = \App\Touchpoint::wherePersonId($person->id)->orderBy('touched_at', 'desc')->with('staff')->get();
-        $registrations = \App\Registration::whereContactId($person->id)->whereCanceledAt(NULL)->get();
-        $registrations = $registrations->sortByDesc(function($registration) {
+        $registrations = \App\Registration::whereContactId($person->id)->whereCanceledAt(null)->get();
+        $registrations = $registrations->sortByDesc(function ($registration) {
                 return $registration->retreat_start_date;
-                });
+        });
         //dd($registrations);
-        return view('persons.show', compact('person', 'files', 'relationship_types', 'touchpoints','registrations'));//
+        return view('persons.show', compact('person', 'files', 'relationship_types', 'touchpoints', 'registrations'));//
     }
 
     /**
@@ -939,7 +939,7 @@ class PersonsController extends Controller
         $person->occupation_id = $request->input('occupation_id');
         
         // communication preferences
-    $person->do_not_mail = $request->input('do_not_mail') ?: 0;
+        $person->do_not_mail = $request->input('do_not_mail') ?: 0;
         $person->do_not_email = $request->input('do_not_email') ?: 0;
         $person->do_not_phone = $request->input('do_not_phone') ?: 0;
         $person->do_not_sms = $request->input('do_not_sms')?: 0;

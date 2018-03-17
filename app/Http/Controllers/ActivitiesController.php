@@ -41,17 +41,16 @@ class ActivitiesController extends Controller
         } else {
             $defaults['user_id'] = $user_email->contact_id;
         }
-        $status = \App\ActivityStatus::whereIsActive(1)->orderBy('label')->pluck('label','id');
+        $status = \App\ActivityStatus::whereIsActive(1)->orderBy('label')->pluck('label', 'id');
         $status->prepend('N/A', 0);
-        $activity_type = \App\ActivityType::whereIsActive(1)->orderBy('label')->pluck('label','id');
+        $activity_type = \App\ActivityType::whereIsActive(1)->orderBy('label')->pluck('label', 'id');
         $activity_type->prepend('N/A', 0);
         $medium = array_flip(config('polanco.medium'));
         $medium[0] = "Unspecified";
-        $medium = array_map('ucfirst',$medium);
+        $medium = array_map('ucfirst', $medium);
         //$medium->prepend('N/A', 0);
         
-        return view('activities.create', compact('staff', 'persons', 'defaults','status','activity_type','medium'));
-    
+        return view('activities.create', compact('staff', 'persons', 'defaults', 'status', 'activity_type', 'medium'));
     }
 
     /**
@@ -70,8 +69,8 @@ class ActivitiesController extends Controller
             'activity_type_id' => 'required|integer|min:1',
             'status_id' => 'required|integer|min:0',
             'priority_id' => 'required|integer|min:0',
-            'medium_id' => 'required|integer|min:1',     
-            'duration' => 'integer|min:0'     
+            'medium_id' => 'required|integer|min:1',
+            'duration' => 'integer|min:0'
         ]);
         $activity_type = \App\ActivityType::findOrFail($request->input('activity_type_id'));
         $activity = new \App\Activity;
@@ -106,7 +105,6 @@ class ActivitiesController extends Controller
         $activity_assignee->save();
         
         return Redirect::action('ActivitiesController@index');
-
     }
 
     /**
@@ -118,9 +116,8 @@ class ActivitiesController extends Controller
     public function show($id)
     {
         $this->authorize('show-activity');
-        $activity = \App\Activity::with('assignees', 'creators','targets')->findOrFail($id);
+        $activity = \App\Activity::with('assignees', 'creators', 'targets')->findOrFail($id);
         return view('activities.show', compact('activity'));//
-
     }
 
     /**
@@ -141,15 +138,15 @@ class ActivitiesController extends Controller
             $query->where('group_id', '=', config('polanco.group_id.staff'));
         })->orderBy('sort_name')->pluck('sort_name', 'id');
 
-        $activity_type = \App\ActivityType::whereIsActive(1)->orderBy('label')->pluck('label','id');
+        $activity_type = \App\ActivityType::whereIsActive(1)->orderBy('label')->pluck('label', 'id');
         $activity_type->prepend('N/A', 0);
 
-        $status = \App\ActivityStatus::whereIsActive(1)->orderBy('label')->pluck('label','id');
+        $status = \App\ActivityStatus::whereIsActive(1)->orderBy('label')->pluck('label', 'id');
         $status->prepend('N/A', 0);
 
         $medium = array_flip(config('polanco.medium'));
         $medium[0] = "Unspecified";
-        $medium = array_map('ucfirst',$medium);
+        $medium = array_map('ucfirst', $medium);
         
         $contact = \App\Contact::findOrFail($target->contact_id);
         if (isset($contact->subcontact_type)) {
@@ -157,8 +154,7 @@ class ActivitiesController extends Controller
         } else {
             $persons = \App\Contact::whereContactType($contact->contact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
         }
-        return view('activities.edit', compact('activity', 'staff', 'persons','target','assignee','creator','activity_type','status','medium'));
-
+        return view('activities.edit', compact('activity', 'staff', 'persons', 'target', 'assignee', 'creator', 'activity_type', 'status', 'medium'));
     }
 
     /**
@@ -179,8 +175,8 @@ class ActivitiesController extends Controller
             'activity_type_id' => 'required|integer|min:1',
             'status_id' => 'required|integer|min:0',
             'priority_id' => 'required|integer|min:0',
-            'medium_id' => 'required|integer|min:1',     
-            'duration' => 'integer|min:0'     
+            'medium_id' => 'required|integer|min:1',
+            'duration' => 'integer|min:0'
         ]);
         $activity_type = \App\ActivityType::findOrFail($request->input('activity_type_id'));
         $activity = \App\Activity::findOrFail($id);
@@ -209,7 +205,7 @@ class ActivitiesController extends Controller
             $activity_assignee->contact_id = $request->input('creator_id');
         $activity_assignee->save();
         
-        return Redirect::action('ActivitiesController@show',$id);
+        return Redirect::action('ActivitiesController@show', $id);
     }
 
     /**
@@ -219,13 +215,13 @@ class ActivitiesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {   // delete activity contacts and then the activity (could be handled in model with cascading deletes)
+    {
+   // delete activity contacts and then the activity (could be handled in model with cascading deletes)
         
         $this->authorize('delete-activity');
         \App\ActivityContact::whereActivityId($id)->delete();
         \App\Activity::destroy($id);
 
         return Redirect::action('ActivitiesController@index');
-
     }
 }

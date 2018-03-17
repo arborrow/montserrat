@@ -46,7 +46,7 @@ class Contact extends Model
     }
     public function primary_bishop()
     {
-        return $this->hasOne(Relationship::class, 'contact_id_a','id')->whereRelationshipTypeId(config('polanco.relationship_type.bishop'));
+        return $this->hasOne(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.bishop'));
     }
     public function captain_events()
     {

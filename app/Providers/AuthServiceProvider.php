@@ -17,7 +17,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
-        'App\Attachment' => 'App\Policies\AttachmentPolicy',
+        \App\Attachment::class => \App\Policies\AttachmentPolicy::class,
 
     ];
 
@@ -26,8 +26,8 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot() 
-    {   
+    public function boot()
+    {
         parent::registerPolicies();
         Gate::before(function ($user) {
             $superuser = \App\Permission::whereName('superuser')->firstOrFail();
@@ -49,5 +49,4 @@ class AuthServiceProvider extends ServiceProvider
     {
         return Permission::with('roles')->get();
     }
-
 }

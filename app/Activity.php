@@ -32,15 +32,17 @@ class Activity extends Model
         return $this->hasOne(ActivityType::class, 'id', 'activity_type_id');
     }
     
-    public function getActivityTypeLabelAttribute () {
+    public function getActivityTypeLabelAttribute()
+    {
         //dd($this->activity_type);
         return $this->activity_type->label;
     }
-    public function getTargetsFullNameLinkAttribute () {
+    public function getTargetsFullNameLinkAttribute()
+    {
         $target_list = '';
         $targets = $this->targets;
-        foreach($targets as $target) {
-            if($targets->last() === $target) {
+        foreach ($targets as $target) {
+            if ($targets->last() === $target) {
                 $target_list .= $target->contact->contact_link_full_name;
                 //$target_list .= $target->contact_id;
             } else {
@@ -49,11 +51,12 @@ class Activity extends Model
         }
         return $target_list;
     }
-    public function getAssigneesFullNameLinkAttribute () {
+    public function getAssigneesFullNameLinkAttribute()
+    {
         $assignee_list = '';
         $assignees = $this->assignees;
-        foreach($assignees as $assignee) {
-            if($assignees->last() === $assignee) {
+        foreach ($assignees as $assignee) {
+            if ($assignees->last() === $assignee) {
                 $assignee_list .= $assignee->contact->contact_link_full_name;
             } else {
                 $assignee_list .= $assignee->contact->contact_link_full_name.', ';
@@ -61,11 +64,12 @@ class Activity extends Model
         }
         return $assignee_list;
     }
-    public function getSourcesFullNameLinkAttribute () {
+    public function getSourcesFullNameLinkAttribute()
+    {
         $source_list = '';
         $sources = $this->creators;
-        foreach($sources as $source) {
-            if($sources->last() === $source) {
+        foreach ($sources as $source) {
+            if ($sources->last() === $source) {
                 $source_list .= $source->contact->contact_link_full_name;
             } else {
                 $source_list .= $source->contact->contact_link_full_name.', ';
@@ -74,31 +78,34 @@ class Activity extends Model
         return $source_list;
     }
     // alias for previous touchpoint field
-    public function getTouchedAtAttribute () {
+    public function getTouchedAtAttribute()
+    {
         return $this->activity_date_time;
     }
 
-    public function getStatusLabelAttribute () {
+    public function getStatusLabelAttribute()
+    {
         $status = \App\ActivityStatus::findOrFail($this->status_id);
         return $status->label;
     }
     
-    public function getPriorityLabelAttribute () {
+    public function getPriorityLabelAttribute()
+    {
         $priority = config('polanco.priority');
-        if (array_search($this->priority_id,$priority)) {
-            return ucfirst(array_search($this->priority_id,$priority));
+        if (array_search($this->priority_id, $priority)) {
+            return ucfirst(array_search($this->priority_id, $priority));
         } else {
             return 'Unspecified';
         }
     }
     
-    public function getMediumLabelAttribute () {
+    public function getMediumLabelAttribute()
+    {
         $medium = config('polanco.medium');
-        if (array_search($this->medium_id,$medium)) {
-            return ucfirst(array_search($this->medium_id,$medium));
+        if (array_search($this->medium_id, $medium)) {
+            return ucfirst(array_search($this->medium_id, $medium));
         } else {
             return 'Unspecified';
         }
     }
-
 }

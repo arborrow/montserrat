@@ -9,6 +9,4 @@ class ActivityStatus extends Model
 {
     use SoftDeletes;
     protected $table = 'activity_status';
-        
-   
 }

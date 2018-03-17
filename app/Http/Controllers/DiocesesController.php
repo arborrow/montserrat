@@ -217,7 +217,7 @@ class DiocesesController extends Controller
     public function edit($id)
     {
         $this->authorize('update-contact');
-        $diocese = \App\Contact::with('primary_bishop.contact_b','bishops.contact_b', 'parishes.contact_b', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
+        $diocese = \App\Contact::with('primary_bishop.contact_b', 'bishops.contact_b', 'parishes.contact_b', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
         if (empty($diocese->primary_bishop)) {
             $diocese->bishop_id=0;
         } else {

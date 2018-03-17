@@ -69,7 +69,7 @@ class GroupsController extends Controller
        
         $group->save();
        
-        return Redirect::action('GroupsController@show',$group->id);//
+        return Redirect::action('GroupsController@show', $group->id);//
     }
 
     /**
