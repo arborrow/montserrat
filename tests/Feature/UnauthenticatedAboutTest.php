@@ -14,8 +14,8 @@ class UnauthenticatedAboutTest extends TestCase
      *
      * @return void
      */
-    protected $preserveGlobalState = FALSE;
-    protected $runTestInSeparateProcess = TRUE;
+    protected $preserveGlobalState = false;
+    protected $runTestInSeparateProcess = true;
 
     
     public function testAbout()
@@ -24,6 +24,5 @@ class UnauthenticatedAboutTest extends TestCase
         $route = route('about');
         $response = $this->get($route);
         $response->assertStatus(302);
-        
     }
 }

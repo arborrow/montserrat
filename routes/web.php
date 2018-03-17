@@ -14,12 +14,12 @@
 
 // Auth::routes();
 
-Route::get('/agcletters', function() {
+Route::get('/agcletters', function () {
      $touchpoints = \montserrat\Touchpoint::where('notes', 'LIKE', '%AGC thank you letter%')
                     ->select('notes', 'person_id', 'created_at')
                     ->with('person')
                     ->orderBy('created_at', 'desc')
-                    ->get(); 
+                    ->get();
                     // return $touchpoints;
 
      return view('agcletters', compact('touchpoints'));
@@ -187,4 +187,3 @@ Route::get('mailgun/process', ['as' => 'mailgun.process','uses' => 'MailgunContr
 Route::post('mailgun/callback', function () {
     return 'Mailgun callback';
 });
-
