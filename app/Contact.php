@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use DB;
 
 class Contact extends Model
 {
@@ -1131,5 +1132,27 @@ class Contact extends Model
         }
         
         return $query;
+    }
+    public function birthdayEmailReceivers()
+    {
+        $sql = "SELECT 
+            contact.id, display_name, birth_date, email.email
+        FROM
+            contact
+                INNER JOIN
+            email ON email.contact_id = contact.id
+                AND email.email != ''
+                AND email.is_primary
+        WHERE
+            MONTH(contact.birth_date) = MONTH(NOW())
+                AND DAY(contact.birth_date) = DAY(NOW())
+                AND contact.do_not_email = 0
+                AND contact.is_deceased = 0
+                AND contact.deceased_date IS NULL
+                AND contact.deleted_at IS NULL";
+                
+        $data = DB::select(DB::raw($sql));
+
+        return $data;
     }
 }
