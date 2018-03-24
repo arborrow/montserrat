@@ -3,16 +3,7 @@
 <head>
 	<title></title>
 </head>
-<body>
-
-	You are the light of the world!  
-	Matthew 5:14   
-	The Jesuits and Staff of 
-	Montserrat Jesuit Retreat House 
-	wish you many birthday blessings. 
-	May your light shine brightly now and always!   
-	We look forward to welcoming you to Montserrat again very soon!   
- 
+<body> 
 	<div dir="ltr"><u></u>
 		<div>
 			<h2>
