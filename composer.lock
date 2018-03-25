@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "93bbdd738bff90d702e9cae4fd84c0f2",
+    "content-hash": "a25e59d3fb753c5b68b4e0afeb6f7897",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -1064,16 +1064,16 @@
         },
         {
             "name": "laravelcollective/html",
-            "version": "v5.6.3",
+            "version": "v5.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LaravelCollective/html.git",
-                "reference": "41cd9291a69bd24f2184e504be041348a87308a8"
+                "reference": "623a150c91e2d3f92eeee9f9eda58a841e3cb548"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LaravelCollective/html/zipball/41cd9291a69bd24f2184e504be041348a87308a8",
-                "reference": "41cd9291a69bd24f2184e504be041348a87308a8",
+                "url": "https://api.github.com/repos/LaravelCollective/html/zipball/623a150c91e2d3f92eeee9f9eda58a841e3cb548",
+                "reference": "623a150c91e2d3f92eeee9f9eda58a841e3cb548",
                 "shasum": ""
             },
             "require": {
@@ -1128,7 +1128,7 @@
             ],
             "description": "HTML and Form Builders for the Laravel Framework",
             "homepage": "https://laravelcollective.com",
-            "time": "2018-02-12T14:19:42+00:00"
+            "time": "2018-03-16T16:57:31+00:00"
         },
         {
             "name": "league/flysystem",
@@ -1614,6 +1614,62 @@
                 "httplug"
             ],
             "time": "2017-11-30T11:06:59+00:00"
+        },
+        {
+            "name": "php-http/curl-client",
+            "version": "v1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-http/curl-client.git",
+                "reference": "0972ad0d7d37032a52077a5cbe27cf370f2007d8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-http/curl-client/zipball/0972ad0d7d37032a52077a5cbe27cf370f2007d8",
+                "reference": "0972ad0d7d37032a52077a5cbe27cf370f2007d8",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": "^5.5 || ^7.0",
+                "php-http/discovery": "^1.0",
+                "php-http/httplug": "^1.0",
+                "php-http/message": "^1.2",
+                "php-http/message-factory": "^1.0.2"
+            },
+            "provide": {
+                "php-http/async-client-implementation": "1.0",
+                "php-http/client-implementation": "1.0"
+            },
+            "require-dev": {
+                "guzzlehttp/psr7": "^1.0",
+                "php-http/client-integration-tests": "^0.5.1",
+                "phpunit/phpunit": "^4.8.27",
+                "zendframework/zend-diactoros": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Http\\Client\\Curl\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Михаил Красильников",
+                    "email": "m.krasilnikov@yandex.ru"
+                }
+            ],
+            "description": "cURL client for PHP-HTTP",
+            "homepage": "http://php-http.org",
+            "keywords": [
+                "curl",
+                "http"
+            ],
+            "time": "2017-02-09T15:18:33+00:00"
         },
         {
             "name": "php-http/discovery",
@@ -3381,16 +3437,16 @@
         },
         {
             "name": "twilio/sdk",
-            "version": "5.16.6",
+            "version": "5.16.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twilio/twilio-php.git",
-                "reference": "aaea23f724102e3596ed70b840a5ec39dde8931a"
+                "reference": "41f96d9839afb584737f26103cfecded2d9fee50"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/aaea23f724102e3596ed70b840a5ec39dde8931a",
-                "reference": "aaea23f724102e3596ed70b840a5ec39dde8931a",
+                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/41f96d9839afb584737f26103cfecded2d9fee50",
+                "reference": "41f96d9839afb584737f26103cfecded2d9fee50",
                 "shasum": ""
             },
             "require": {
@@ -3423,7 +3479,7 @@
                 "sms",
                 "twilio"
             ],
-            "time": "2018-03-10T01:39:39+00:00"
+            "time": "2018-03-22T23:41:51+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
