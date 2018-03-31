@@ -80,11 +80,12 @@ Route::resource('activity', 'ActivitiesController');
 
 Route::get('bookstore', ['as' => 'bookstore','uses' => 'PagesController@bookstore']);
 Route::resource('diocese', 'DiocesesController');
-Route::get('donation', ['as' => 'donation','uses' => 'PagesController@donation']);
+//Route::get('donation', ['as' => 'donation','uses' => 'PagesController@donation']);
 
 Route::get('donor/{donor_id?}/assign/{contact_id?}', ['uses' => 'DonorsController@assign']);
 Route::get('donor/{donor_id?}/add', ['uses' => 'DonorsController@add']);
 Route::resource('donor', 'DonorsController');
+Route::resource('donation', 'DonationsController');
 
 Route::get('group/{group_id?}/touchpoint', ['uses' => 'TouchpointsController@add_group']);
 Route::get('group/{group_id?}/registration', ['uses' => 'RegistrationsController@add_group']);
