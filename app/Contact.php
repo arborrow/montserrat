@@ -65,6 +65,11 @@ class Contact extends Model
     {
         return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.diocese'));
     }
+    public function donations()
+    {
+        return $this->hasMany(Donation::class, 'contact_id', 'id');
+    }
+   
     public function emails()
     {
         return $this->hasMany(Email::class, 'contact_id', 'id');

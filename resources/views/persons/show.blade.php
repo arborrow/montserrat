@@ -347,6 +347,46 @@
             </div>
         </div>
         @endCan
+    
+        <div class='row'>
+        @can('show-donation')
+            <div class='col-md-8'>
+                <div class='panel-heading'><h2><strong>Donations for {{ $person->display_name }} ({{$person->donations->count() }} donations totaling:  ${{ number_format($person->donations->sum('donation_amount'),2)}})</strong></h2>
+                    
+               </div>
+                    @if ($person->donations->isEmpty())
+                            <p>No donations for this person!</p>
+                        @else
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Paid / Pledged</th>
+                                    <th>Terms</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($person->donations as $donation)
+                                <tr>
+                                    <td> {{ $donation->donation_date }}</td>
+                                    <td> {{ $donation->donation_description }}</td>
+                                    <td> ${{number_format($donation->payments->sum('payment_amount'),2)}} / ${{ number_format($donation->donation_amount,2) }} </td>
+                                    <td> {{ $donation->terms }}</td>
+                                    <td> {{ $donation->Notes }}</td>
+                                </tr>
+                                @endforeach
+                                
+
+                            </tbody>
+                        </table>
+                    @endif
+            </div>
+        </div>
+        @endCan
+        </div>
+
         <div class='row'>
             @can('update-contact')
                 <div class='col-md-1'>
