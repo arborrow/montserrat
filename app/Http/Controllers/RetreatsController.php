@@ -378,6 +378,18 @@ class RetreatsController extends Controller
         return view('retreats.assign_rooms', compact('retreat', 'registrations', 'rooms'));
     }
 
+    public function payments($id)
+    {
+        $this->authorize('update-payment');
+        //get this retreat's information
+        $retreat = \App\Retreat::findOrFail($id);
+        $registrations = \App\Registration::where('event_id', '=', $id)->with('retreatant.parish')->orderBy('register_date', 'DESC')->get();
+        $donation_description = ['Unassigned'=>0];
+        $payment_description = ['Unassigned'=>0];
+       // dd($registrations);
+        return view('retreats.payments', compact('retreat', 'registrations', 'donation_description','payment_description'));
+    }
+
     public function checkout($id)
     {
         /* checkout all registrations for a retreat where the arrived_at is not NULL and the departed is NULL for a particular event */
