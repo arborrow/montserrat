@@ -370,7 +370,7 @@
                             <tbody>
                                 @foreach($person->donations as $donation)
                                 <tr>
-                                    <td> {{ $donation->donation_date }}</td>
+                                    <td><a href="../donation/{{$donation->donation_id}}"> {{ $donation->donation_date }} </a></td>
                                     <td> {{ $donation->donation_description }}</td>
                                     <td> ${{number_format($donation->payments->sum('payment_amount'),2)}} / ${{ number_format($donation->donation_amount,2) }} </td>
                                     <td> {{ $donation->terms }}</td>
