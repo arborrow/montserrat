@@ -8,7 +8,7 @@
                 <span>
                     <h2>
                         @can('update-donation')
-                            <a href="{{url('donation/'.$donation->id.'/edit')}}">Donation details</a> 
+                            <a href="{{url('donation/'.$donation->donation_id.'/edit')}}">Donation details</a> 
                         @else
                             Donation details
                         @endCan
