@@ -84,8 +84,10 @@ class DonationsController extends Controller
         $this->authorize('update-donation');
         //get this retreat's information
         $donation = \App\Donation::with('payments', 'contact')->findOrFail($id);
-        
-        return view('donations.edit', compact('donation'));
+        $descriptions = \App\DonationType::orderby('name')->pluck('name', 'id');
+        $descriptions->prepend('Unassigned', 0);
+
+        return view('donations.edit', compact('donation','descriptions'));
    
     }
 
