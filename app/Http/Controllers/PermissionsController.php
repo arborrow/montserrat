@@ -31,6 +31,7 @@ class PermissionsController extends Controller
             'address'=>'address',
             'attachment'=>'attachment',
             'contact'=>'contact',
+            'donation'=>'donation',
             'email'=>'email',
             'group'=>'group',
             'note'=>'note',
