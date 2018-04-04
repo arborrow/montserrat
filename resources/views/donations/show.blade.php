@@ -20,7 +20,7 @@
                 <div class='col-md-4'>
                         <strong>Date: </strong>{{$donation->donation_date}}
                         <br /><strong>Description: </strong>{{$donation->donation_description}}  
-                        <br /><strong>Amount: </strong>{{$donation->donation_amount}}     
+                        <br /><strong>Pledged/Paid: </strong>${{number_format($donation->donation_amount,2)}} / ${{number_format($donation->payments->sum('payment_amount'),2)}}      
                         <br /><strong>Terms: </strong>{{$donation->terms}}
                         <br /><strong>Notes: </strong>{{$donation->notes}}
                         <br /><strong>Start date: </strong>{{$donation->start_date}}
@@ -28,15 +28,41 @@
                         <br /><strong>Donation install: </strong>{{$donation->donation_install}}
                     
                 </div>
-                <div>
-                    <strong>Payments: (Date,Amount,Description,Ck#,CC#) </strong>
-                    <ul>
+            </div>
+            <hr />
+            <div class='row'>
+                <div class='col-md-8'>
+                    <table class="table table-bordered table-striped table-hover"><caption><h2>Payments for Donation #{{$donation->donation_id}} - Total payments: ${{number_format($donation->payments->sum('payment_amount'),2)}}</h2></caption>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Description</th>
+                            <th>Check#</th>
+                            <th>CC#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
                         @foreach($donation->payments as $payment)
-                            <li>    {{$payment->payment_date}}, {{$payment->payment_amount}}, {{$payment->payment_description}}, {{$payment->cknumber}},{{$payment->ccnumber}}</li>
+                        <tr>
+
+                            <td style="width:10%"><a href="../payment/{{ $payment->payment_id}}">{{ date('M d, Y g:i A', strtotime($payment->payment_date)) }}</a></td>
+                            <td style="width:10%">${{ $payment->payment_amount }} </td>
+                            <td style="width:10%">{{$payment->payment_description}}</td>
+                            <td style="width:10%">{{ $payment->cknumber}}</td>
+                            <td style="width:10%">{{ $payment->ccnumber }}</td>
+                            
+                        </tr>
                         @endforeach
-                    </ul>
+                        
+                    </tbody>
+                    
+                </table>
+                
+                   
                 </div>
-            </div></div>
+            </div>
             <div class='row'>
                 @can('update-donation')
                     <div class='col-md-1'>
