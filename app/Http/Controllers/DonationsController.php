@@ -84,38 +84,8 @@ class DonationsController extends Controller
         $this->authorize('update-donation');
         //get this retreat's information
         $donation = \App\Donation::with('payments', 'contact')->findOrFail($id);
-        $event_types = \App\EventType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
-        $is_active[0]='Cancelled';
-        $is_active[1]='Active';
         
-        //create lists of retreat directors, innkeepers, and assistants from relationship to retreat house
-        $retreat_house = \App\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b')->findOrFail(config('polanco.contact.montserrat'));
-
-        foreach ($retreat_house->retreat_innkeepers as $innkeeper) {
-            $i[$innkeeper->contact_id_b]=$innkeeper->contact_b->sort_name;
-        }
-        asort($i);
-        $i=[0=>'N/A']+$i;
-
-        foreach ($retreat_house->retreat_directors as $director) {
-            $d[$director->contact_id_b]=$director->contact_b->sort_name;
-        }
-        asort($d);
-        $d=[0=>'N/A']+$d;
-
-        foreach ($retreat_house->retreat_assistants as $assistant) {
-            $a[$assistant->contact_id_b]=$assistant->contact_b->sort_name;
-        }
-        asort($a);
-        $a=[0=>'N/A']+$a;
-
-        foreach ($retreat_house->retreat_captains as $captain) {
-            $c[$captain->contact_id_b]=$captain->contact_b->sort_name;
-        }
-        asort($c);
-        $c=[0=>'N/A']+$c;
-        
-        return view('retreats.edit', compact('retreat', 'd', 'i', 'a', 'c', 'event_types', 'is_active'));
+        return view('donations.edit', compact('donation'));
    
     }
 
