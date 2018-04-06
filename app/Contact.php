@@ -1141,7 +1141,12 @@ class Contact extends Model
     public function birthdayEmailReceivers()
     {
         $sql = "SELECT 
-            contact.id, display_name, birth_date, email.email
+            contact.id,
+            display_name,
+            birth_date,
+            email.email,
+            contact.nick_name,
+            contact.first_name
         FROM
             contact
                 INNER JOIN

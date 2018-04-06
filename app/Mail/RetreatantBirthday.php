@@ -29,9 +29,10 @@ class RetreatantBirthday extends Mailable
      * @return $this
      */
     public function build()
-    {
+    {   
+        $nameToUse = $this->retreatant->nick_name != NULL ? $this->retreatant->nick_name : $this->retreatant->first_name;
         return $this->replyTo('director@montserratretreat.org')
-                    ->subject('Monserrat Jesuit Retreat House wishes you a Happy Birthday!')
+                    ->subject('Happy Birthday '.$nameToUse.'!')
                     ->view('emails.retreatant-birthday');
     }
 }
