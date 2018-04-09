@@ -13,32 +13,26 @@
                     <thead>
                         <tr>
                             <th>Retreatant</th>
+                            <th>Deposit</th>
                             <th>Description</th>
-                            <th>Method</th>
                             <th>Pledge</th>
                             <th>Paid</th>
+                            <th>Method</th>
                             <th>Terms</th>
-                            <th>ID</th>
-                            <th>Start</th>
-                            <th>End</th>
-                            <th>Expire</th>
-                            <th>Authorization</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($registrations ->sortBy('retreatant.sort_name') as $registration)
                             <tr>
-                            <td><a href="{{url('person/'.$registration->retreatant->id)}}">{{ $registration->retreatant->sort_name}}</a></td>
-                            <td>{!! Form::select('description', $donation_description, 0, ['class' => 'col-md-3']) !!}</td>
-                            <td>{!! Form::select('method', $payment_description, 0, ['class' => 'col-md-3']) !!}</td>
-                            <td> {!! Form::number('pledge', 0, ['id' => 'pledge', 'class' => 'col-md-3']) !!}</td>
-                            <td> {!! Form::number('paid', 0, ['id' => 'paid', 'class' => 'col-md-3']) !!}</td>
-                            <td> {!! Form::text('terms', null, ['id' => 'terms', 'class' => 'col-md-3']) !!}</td>
-                            <td> {!! Form::text('id', null, ['id' => 'id', 'class' => 'col-md-3']) !!}</td>
-                            <td> {!! Form::text('start_date', null, ['id' => 'start_date', 'class' => 'col-md-3']) !!}</td>
-                            <td> {!! Form::text('end_date', null, ['id' => 'end_date', 'class' => 'col-md-3']) !!}</td>
-                            <td> {!! Form::text('expire_date', null, ['id' => 'expire_date', 'class' => 'col-md-3']) !!}</td>
-                            <td> {!! Form::text('authorization', null, ['id' => 'authorization', 'class' => 'col-md-3']) !!}</td>
+                         
+                        
+                            <td width="20%"><a href="{{url('person/'.$registration->retreatant->id)}}">{{ $registration->retreatant->sort_name}}</a></td>
+                            <td width="7%"> <a href="{{url('registration/'.$registration->id)}}">{{$registration->deposit}}</a></td>
+                            <td width="20%">{!! Form::select('description['.$registration->id.']', $donation_description, 0) !!}</td>
+                            <td width="7%"> {!! Form::number('pledge['.$registration->id.']', 0, ['id' => 'pledge['.$registration->id.']']) !!}</td>
+                            <td width="7%"> {!! Form::number('paid['.$registration->id.']', 0, ['id' => 'paid['.$registration->id.']']) !!}</td>
+                            <td width="15%">{!! Form::select('method['.$registration->id.']', $payment_description, 0) !!}</td>
+                            <td width="20%"> {!! Form::text('terms['.$registration->id.']', null, ['id' => 'terms['.$registration->id.']']) !!}</td>
                         </tr>
                         @endforeach
                     </tbody>
