@@ -34,12 +34,12 @@
                     <tbody>
                         
                         <tr>
-                            <td>{{$donor->LName.', '.$donor->FName}}</td>
-                            <td>{{$donor->Address.' '.$donor->Address2.' '.$donor->City.', '.$donor->State.' '.$donor->Zip}}</td>
-                            <td>{{$donor->HomePhone}} </td>
-                            <td>{{$donor->WorkPhone}}</td>
-                            <td>{{$donor->cell_phone}}</td>
-                            <td>{{$donor->EMailAddress}}</td>
+                            <td>{{$donor->LName}} <a href="../results?first_name={{$donor->FName}}">{{$donor->FName}}</a></td>
+                            <td><a href="../results?street_address={{substr($donor->Address,0,5)}}">{{$donor->Address}}</a> {{$donor->Address2}} <a href="../results?city={{$donor->City}}">{{$donor->City}}</a> {{$donor->State}} {{$donor->Zip}}</td>
+                            <td><a href="../results?phone={{$donor->HomePhone}}">{{$donor->HomePhone}}</a></td>
+                            <td><a href="../results?phone={{$donor->WorkPhone}}">{{$donor->WorkPhone}}</a></td>
+                            <td><a href="../results?phone={{$donor->cell_phone}}">{{$donor->cell_phone}}</a></td>
+                            <td><a href="../results?email={{$donor->EMailAddress}}">{{$donor->EMailAddress}}</a></td>
                             <td> 
                                 <span class="btn btn-default">
                                     <a href="{{ url('donor/'.$donor->donor_id.'/add') }}">Add {{$donor->sort_name}} to Polanco</a>

@@ -13,6 +13,7 @@
             <h2>Name and Address</h2>
         </td>
     </tr>
+	<tr><td>{!!$registration->retreatant->avatar_small_link!!}</td></tr>
     <tr>
         <td><strong>{{$registration->retreatant->prefix_name}} {{$registration->retreatant->display_name}} {{$registration->retreatant->suffix_name}}</strong></td>
         <td><hr/></td>
