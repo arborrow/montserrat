@@ -6,7 +6,7 @@
     <h2>Retreatant Information for Retreat {{$registration->retreat->title}} - Room: {{$registration->room_name}}</h2> 
 
 
-<i>Please review the information below for accuracy and make changes as appropriate.</i>
+<i>Please review and update the information below and leave this form at the registration desk.</i>
 <table width="100%">
     <tr>
         <td>
