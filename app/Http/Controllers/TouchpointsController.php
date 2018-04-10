@@ -172,7 +172,7 @@ class TouchpointsController extends Controller
             $touchpoint->notes= $request->input('notes');
             $touchpoint->save();
         }
-        return Redirect::action('GroupsController@show', $touchpoint->group_id);
+        return Redirect::action('GroupsController@show', $group_id);
     }
     
     public function store_retreat(Request $request)
