@@ -79,6 +79,7 @@ class RegistrationsController extends Controller
         $dt_today =  \Carbon\Carbon::today();
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
         $defaults['is_multi_registration'] = false;
+        $defaults['registration_source'] = ['Squarespace', 'Phone', 'Email', 'In person'];
         return view('registrations.create', compact('retreats', 'retreatants', 'rooms', 'defaults'));
     }
 
@@ -183,6 +184,7 @@ class RegistrationsController extends Controller
                 $registration = new \App\Registration;
                 $registration->event_id= $request->input('event_id');
                 $registration->contact_id= $request->input('contact_id');
+                $registration->source = $request->input('source');
                 $registration->register_date = $request->input('register_date');
                 $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
                 if (!empty($request->input('canceled_at'))) {
@@ -207,6 +209,7 @@ class RegistrationsController extends Controller
                 $registration = new \App\Registration;
                 $registration->event_id= $request->input('event_id');
                 $registration->contact_id= $request->input('contact_id');
+                $registration->source = $request->input('source');
                 $registration->register_date = $request->input('register_date');
                 $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
                 if (!empty($request->input('canceled_at'))) {
