@@ -325,7 +325,9 @@ class RegistrationsController extends Controller
         if ($registration->retreat->end < \Carbon\Carbon::now()) {
             $retreats[$registration->event_id] = $registration->retreat->idnumber.'-'.$registration->retreat->title." (".date('m-d-Y', strtotime($registration->retreat->start_date)).")";
         }
-        return view('registrations.edit', compact('registration', 'retreats', 'rooms'));
+
+        $defaults['registration_source'] = ['Squarespace', 'Phone', 'Email', 'In person'];
+        return view('registrations.edit', compact('registration', 'retreats', 'rooms', 'defaults'));
     }
 
     public function edit_group($id)
@@ -392,6 +394,7 @@ class RegistrationsController extends Controller
         $registration->register_date = $request->input('register_date');
         $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
         $registration->registration_confirm_date = $request->input('registration_confirm_date');
+        $registration->source = $request->input('source');
         $registration->confirmed_by = $request->input('confirmed_by');
         $registration->deposit = $request->input('deposit');
         $registration->notes = $request->input('notes');

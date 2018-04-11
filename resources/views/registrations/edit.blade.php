@@ -19,6 +19,20 @@
                 {!! Form::text('register_date', $registration->register_date, ['class'=>'col-md-3','data-provide'=>'datepicker']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
+                {!! Form::label('source', 'Registration from:', ['class' => 'col-md-2']) !!}
+                @if (isset($defaults['registration_source']))
+                    <select class="col-md-2" id="source" name="source">
+                        @foreach($defaults['registration_source'] as $source)
+                            <option value="{{ $source }}" {{ $source == $registration->source ? 'selected="selected"' : ''}}>{{ $source }}</option>
+                        @endforeach
+                    </select>
+                @else
+                    <select class="col-md-2" id="source" name="source">
+                        <option value="N/A">N/A</option>
+                    </select>
+                @endif         
+            </div><div class="clearfix"> </div>
+            <div class="form-group">
                 {!! Form::label('registration_confirm_date', 'Registration Confirmed:', ['class' => 'col-md-2']) !!}
                 @if ($registration->registration_confirm_date == NULL)
                     {!! Form::text('registration_confirm_date', NULL, ['class'=>'col-md-3','data-provide'=>'datepicker']) !!}
