@@ -18,14 +18,29 @@
                 </div>
                 <div class='row'>
                     <div class='col-md-3'><strong>Retreatant: </strong><a href="../person/{{ $registration->retreatant->id}}">{{ $registration->retreatant->full_name}}</a></div>
-                </div><div class="clearfix"> </div>
-                         <div class='row'>
-                    <div class='col-md-3'><strong>Retreat: </strong><a href="../retreat/{{ $registration->event_id}}">{{ $registration->retreat->title}} ({{ $registration->retreat->idnumber}})</a></div>
-                <div class='col-md-3'><strong>Retreat Dates: </strong>{{ date('F d, Y', strtotime($registration->retreat->start_date))}} - {{ date('F d, Y', strtotime($registration->retreat->end_date))}}</div>
-                </div><div class="clearfix"> </div> 
+                </div>
+                <div class="clearfix"> </div>
                 <div class='row'>
-                    <div class='col-md-3'><strong>Registered: </strong>{{ date('F d, Y h:i A', strtotime($registration->register_date))}}</div>
-                </div><div class="clearfix"> </div>
+                    <div class='col-md-3'>
+                        <strong>Retreat: </strong><a href="../retreat/{{ $registration->event_id}}">{{ $registration->retreat->title}} ({{ $registration->retreat->idnumber}})</a>
+                    </div>
+                    <div class='col-md-3'>
+                        <strong>Retreat Dates: </strong>{{ date('F d, Y', strtotime($registration->retreat->start_date))}} - {{ date('F d, Y', strtotime($registration->retreat->end_date))}}
+                    </div>
+                </div>
+                <div class="clearfix"> </div> 
+                <div class='row'>
+                    <div class='col-md-3'>
+                        <strong>Registered: </strong>{{ date('F d, Y h:i A', strtotime($registration->register_date))}}
+                    </div>
+                </div>
+                <div class="clearfix"> </div>
+                <div class='row'>
+                    <div class='col-md-3'>
+                        <strong>Registration from: </strong>{{ $registration->source ? $registration->source : 'N/A' }}
+                    </div>
+                </div>
+                <div class="clearfix"> </div>
                 <div class='row'>
                     <div class='col-md-3'><strong>Registration Confirmed: </strong>
                         @if ($registration->registration_confirm_date == NULL)
@@ -33,8 +48,9 @@
                         @else
                             {{date('F d, Y', strtotime($registration->registration_confirm_date))}}
                         @endif
-                    </div><div class="clearfix"> </div>
+                    </div>
                 </div>
+                <div class="clearfix"> </div>
                 <div class='row'>
                     
                     <div class='col-md-3'><strong>Confirmed by: </strong>{{ $registration->confirmed_by}}</div>
