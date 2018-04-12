@@ -265,7 +265,7 @@
                                 <li>
                                     {!!$registration->event_link!!} ({{date('F j, Y', strtotime($registration->retreat_start_date))}} - {{date('F j, Y', strtotime($registration->retreat_end_date))}}) - {{$registration->participant_role_name}} ({{$registration->participant_status}}) 
                                     <a href="{{ url('registration/'.$registration->id) }}">
-                                        View Registration[{{ $registration->source ? $registration->source : 'N/A' }}]
+                                        View Registration
                                     </a>
                                 </li>
                                 @endforeach
