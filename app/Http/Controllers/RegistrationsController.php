@@ -79,7 +79,7 @@ class RegistrationsController extends Controller
         $dt_today =  \Carbon\Carbon::today();
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
         $defaults['is_multi_registration'] = false;
-        $defaults['registration_source'] = ['Squarespace', 'Phone', 'Email', 'In person'];
+        $defaults['registration_source'] = ['N/A','Squarespace', 'Phone', 'Email', 'In person'];
         return view('registrations.create', compact('retreats', 'retreatants', 'rooms', 'defaults'));
     }
 
@@ -98,7 +98,7 @@ class RegistrationsController extends Controller
         $defaults['retreat_id']=0;
         $dt_today =  \Carbon\Carbon::today();
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
-        
+        $defaults['registration_source'] = ['N/A','Squarespace', 'Phone', 'Email', 'In person']; 
         return view('registrations.add_group', compact('retreats', 'groups', 'rooms', 'defaults'));
         //dd($retreatants);
     }
@@ -326,7 +326,7 @@ class RegistrationsController extends Controller
             $retreats[$registration->event_id] = $registration->retreat->idnumber.'-'.$registration->retreat->title." (".date('m-d-Y', strtotime($registration->retreat->start_date)).")";
         }
 
-        $defaults['registration_source'] = ['Squarespace', 'Phone', 'Email', 'In person'];
+        $defaults['registration_source'] = ['N/A','Squarespace', 'Phone', 'Email', 'In person'];
         return view('registrations.edit', compact('registration', 'retreats', 'rooms', 'defaults'));
     }
 
@@ -354,8 +354,10 @@ class RegistrationsController extends Controller
         
         if ($registration->retreat->end < \Carbon\Carbon::now()) {
             $retreats[$registration->event_id] = $registration->retreat->idnumber.'-'.$registration->retreat->title." (".date('m-d-Y', strtotime($registration->retreat->start_date)).")";
-        }
-        return view('registrations.edit_group', compact('registration', 'retreats', 'rooms', 'retreatants'));
+	}
+
+        $defaults['registration_source'] = ['N/A','Squarespace', 'Phone', 'Email', 'In person'];
+        return view('registrations.edit_group', compact('registration', 'retreats', 'rooms', 'retreatants','defaults'));
     }
 
 
@@ -432,7 +434,8 @@ class RegistrationsController extends Controller
         // TODO: pull this from the retreat's start_date and end_date
         //$registration->start = $retreat->start;
         //$registration->end = $retreat->end;
-        $registration->contact_id= $request->input('contact_id');
+	$registration->contact_id= $request->input('contact_id');
+	$registration->source = $request->input('source');
         $registration->register_date = $request->input('register_date');
         $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
         $registration->registration_confirm_date = $request->input('registration_confirm_date');

@@ -23,7 +23,13 @@
                 {!! Form::label('register_date', 'Registered:', ['class' => 'col-md-2']) !!}
                 {!! Form::text('register_date', $registration->register_date, ['class'=>'col-md-3','data-provide'=>'datepicker']) !!}
             </div><div class="clearfix"> </div>
-            <div class="form-group">
+
+   	    <div class="form-group">
+                {!! Form::label('source', 'Registration from:', ['class' => 'col-md-2']) !!}
+		{!! Form::select('source', $defaults['registration_source'], 'N/A', ['class' => 'col-md-3']) !!}
+            </div><div class="clearfix"> </div>
+
+	    <div class="form-group">
                 {!! Form::label('registration_confirm_date', 'Registration Confirmed:', ['class' => 'col-md-2']) !!}
                 @if ($registration->registration_confirm_date == NULL)
                     {!! Form::text('registration_confirm_date', NULL, ['class'=>'col-md-3','data-provide'=>'datepicker']) !!}
