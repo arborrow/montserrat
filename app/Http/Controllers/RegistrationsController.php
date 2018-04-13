@@ -155,7 +155,6 @@ class RegistrationsController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create-registration');
-dd($request);
         $this->validate($request, [
         'register_date' => 'required|date',
         'attendance_confirm_date' => 'date|nullable',
