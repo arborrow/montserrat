@@ -55,6 +55,7 @@ class RegistrationsController extends Controller
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
         $defaults['retreat_id']=0;
         $defaults['is_multi_registration'] = false;
+        $defaults['registration_source'] = ['N/A','Squarespace', 'Phone', 'Email', 'In person'];
         return view('registrations.create', compact('retreats', 'retreatants', 'rooms', 'defaults'));
     }
 
@@ -140,6 +141,7 @@ class RegistrationsController extends Controller
         $defaults['retreat_id'] = $retreat_id;
         $defaults['contact_id'] = $contact_id;
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
+        $defaults['registration_source'] = ['N/A','Squarespace', 'Phone', 'Email', 'In person'];
         return view('registrations.create', compact('retreats', 'retreatants', 'rooms', 'defaults'));
         //dd($retreatants);
     }
@@ -153,7 +155,7 @@ class RegistrationsController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create-registration');
-
+dd($request);
         $this->validate($request, [
         'register_date' => 'required|date',
         'attendance_confirm_date' => 'date|nullable',
