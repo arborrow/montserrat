@@ -55,7 +55,7 @@ class RegistrationsController extends Controller
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
         $defaults['retreat_id']=0;
         $defaults['is_multi_registration'] = false;
-        $defaults['registration_source'] = ['N/A','Squarespace', 'Phone', 'Email', 'In person'];
+        $defaults['registration_source'] = config('polanco.registration_source');
         return view('registrations.create', compact('retreats', 'retreatants', 'rooms', 'defaults'));
     }
 
@@ -80,7 +80,7 @@ class RegistrationsController extends Controller
         $dt_today =  \Carbon\Carbon::today();
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
         $defaults['is_multi_registration'] = false;
-        $defaults['registration_source'] = ['N/A','Squarespace', 'Phone', 'Email', 'In person'];
+        $defaults['registration_source'] = config('polanco.registration_source');
         return view('registrations.create', compact('retreats', 'retreatants', 'rooms', 'defaults'));
     }
 
@@ -99,7 +99,7 @@ class RegistrationsController extends Controller
         $defaults['retreat_id']=0;
         $dt_today =  \Carbon\Carbon::today();
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
-        $defaults['registration_source'] = ['N/A','Squarespace', 'Phone', 'Email', 'In person']; 
+        $defaults['registration_source'] = config('polanco.registration_source');
         return view('registrations.add_group', compact('retreats', 'groups', 'rooms', 'defaults'));
         //dd($retreatants);
     }
@@ -141,7 +141,7 @@ class RegistrationsController extends Controller
         $defaults['retreat_id'] = $retreat_id;
         $defaults['contact_id'] = $contact_id;
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
-        $defaults['registration_source'] = ['N/A','Squarespace', 'Phone', 'Email', 'In person'];
+        $defaults['registration_source'] = config('polanco.registration_source');
         return view('registrations.create', compact('retreats', 'retreatants', 'rooms', 'defaults'));
         //dd($retreatants);
     }
@@ -327,7 +327,8 @@ class RegistrationsController extends Controller
             $retreats[$registration->event_id] = $registration->retreat->idnumber.'-'.$registration->retreat->title." (".date('m-d-Y', strtotime($registration->retreat->start_date)).")";
         }
 
-        $defaults['registration_source'] = ['N/A','Squarespace', 'Phone', 'Email', 'In person'];
+        $defaults['registration_source'] = config('polanco.registration_source');
+
         return view('registrations.edit', compact('registration', 'retreats', 'rooms', 'defaults'));
     }
 
@@ -356,8 +357,7 @@ class RegistrationsController extends Controller
         if ($registration->retreat->end < \Carbon\Carbon::now()) {
             $retreats[$registration->event_id] = $registration->retreat->idnumber.'-'.$registration->retreat->title." (".date('m-d-Y', strtotime($registration->retreat->start_date)).")";
 	}
-
-        $defaults['registration_source'] = ['N/A','Squarespace', 'Phone', 'Email', 'In person'];
+        $defaults['registration_source'] = config('polanco.registration_source');
         return view('registrations.edit_group', compact('registration', 'retreats', 'rooms', 'retreatants','defaults'));
     }
 
