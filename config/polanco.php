@@ -158,5 +158,14 @@ return [
         'retreat_director' => '8',
         'retreat_innkeeper' => '9',
         'retreat_assistant' => '10'
+    ],
+    
+    'registration_source' => [
+        'N/A' => 'N/A',
+        'Squarespace' => 'Squarespace',
+        'Phone' => 'Phone',
+        'Email' => 'Email',
+        'In person' => 'In person'
     ]
+            
 ];
