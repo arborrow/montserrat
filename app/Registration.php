@@ -94,6 +94,18 @@ class Registration extends Model
             return 'N/A';
         }
     }
+    public function getDonationPledgeLinkAttribute()
+    {
+        if (!empty($this->donation_id)) {
+            $path=url('donation/'.$this->donation_id);
+            $pledged = is_null($this->donation) ? number_format(0,2) : number_format($this->donation->donation_amount,2);
+            return '<a href="'.$path.'">'.$pledged.'</a>';
+        } else {
+            return number_format(0,2);
+        }
+         
+        
+    }
     public function getEventLinkAttribute()
     {
         if (!empty($this->event)) {

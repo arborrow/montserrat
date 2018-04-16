@@ -378,7 +378,7 @@ class RetreatsController extends Controller
         return view('retreats.assign_rooms', compact('retreat', 'registrations', 'rooms'));
     }
 
-    public function payments($id)
+    public function edit_payments($id)
     {
         $this->authorize('update-payment');
         //get this retreat's information
@@ -388,7 +388,14 @@ class RetreatsController extends Controller
         $donation_description = \App\DonationType::whereIsActive(1)->orderby('name')->pluck('name', 'id');
         $donation_description->prepend('Unassigned', 0);
        
-        return view('retreats.payments', compact('retreat', 'registrations', 'donation_description','payment_description'));
+        return view('retreats.payments.edit', compact('retreat', 'registrations', 'donation_description','payment_description'));
+    }
+    public function show_payments($id)
+    {
+        $this->authorize('show-payment');
+        $retreat = \App\Retreat::findOrFail($id);
+        $registrations = \App\Registration::where('event_id', '=', $id)->whereCanceledAt(null)->with('retreatant.parish','donation')->orderBy('register_date', 'DESC')->get();
+        return view('retreats.payments.show', compact('retreat', 'registrations'));
     }
 
     public function checkout($id)
