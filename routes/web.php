@@ -168,7 +168,9 @@ Route::get('retreat/{retreat_id}/register/{contact_id?}', ['as'=>'registration.r
 Route::get('retreat/{id}/assign_rooms', ['as'=>'retreat.assign_rooms','uses' => 'RetreatsController@assign_rooms']);
 Route::get('retreat/{id}/payments', ['as'=>'retreat.payments','uses' => 'RetreatsController@payments']);
 Route::post('retreat/room_update', ['as' => 'retreat.room_update', 'uses' => 'RetreatsController@room_update']);
+Route::post('retreat/payments_update', ['as' => 'retreat.payments_update', 'uses' => 'DonationsController@retreat_payments_update']);
 Route::get('retreat/{id}/checkout', ['as'=>'retreat.checkout','uses' => 'RetreatsController@checkout']);
+Route::get('retreat/{id}/checkin', ['as'=>'retreat.checkin','uses' => 'RetreatsController@checkin']);
 
 Route::resource('retreat', 'RetreatsController');
 

@@ -166,6 +166,15 @@ return [
         'Phone' => 'Phone',
         'Email' => 'Email',
         'In person' => 'In person'
+    ],
+    
+    'payment_method' => [
+        'Unassigned' => 'Unassigned',
+        'Cash' => 'Cash',
+        'Check' => 'Check',
+        'Credit card' => 'Credit card',
+        'Gift certificate' => 'Gift certificate',
+        'Other' => 'Other'
     ]
             
 ];

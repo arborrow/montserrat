@@ -383,10 +383,11 @@ class RetreatsController extends Controller
         $this->authorize('update-payment');
         //get this retreat's information
         $retreat = \App\Retreat::findOrFail($id);
-        $registrations = \App\Registration::where('event_id', '=', $id)->with('retreatant.parish')->orderBy('register_date', 'DESC')->get();
-        $donation_description = ['Unassigned'=>0];
-        $payment_description = ['Unassigned'=>0];
-       // dd($registrations);
+        $registrations = \App\Registration::where('event_id', '=', $id)->with('retreatant.parish','donation')->orderBy('register_date', 'DESC')->get();
+        $payment_description = config('polanco.payment_method');
+        $donation_description = \App\DonationType::whereIsActive(1)->orderby('name')->pluck('name', 'id');
+        $donation_description->prepend('Unassigned', 0);
+       
         return view('retreats.payments', compact('retreat', 'registrations', 'donation_description','payment_description'));
     }
 
@@ -402,10 +403,22 @@ class RetreatsController extends Controller
         }
         return Redirect::back();
     }
+    public function checkin($id)
+    {
+        /* checkout all registrations for a retreat where the arrived_at is not NULL and the departed is NULL for a particular event */
+        $this->authorize('update-registration');
+        $retreat = \App\Retreat::findOrFail($id); //verifies that it is a valid retreat id
+        $registrations = \App\Registration::whereEventId($id)->whereDepartedAt(null)->whereNull('arrived_at')->get();
+        foreach ($registrations as $registration) {
+                $registration->arrived_at = $registration->retreat_start_date;
+                $registration->save();
+        }
+        return Redirect::back();
+    }
       
 
     public function room_update(Request $request)
-    {
+    { dd($request);
         $this->authorize('update-registration');
         $this->validate($request, [
             'retreat_id' => 'integer|min:0',
