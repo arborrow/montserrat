@@ -3,7 +3,7 @@
 
     <section class="section-padding">
         <div class="jumbotron text-left">
-            {!! Form::open(['url' => 'retreat/payments_update', 'method' => 'POST', 'route' => ['retreat.payments_update']]) !!}
+            {!! Form::open(['url' => 'retreat/payments/update', 'method' => 'POST', 'route' => ['retreat.payments.update']]) !!}
             {!! Form::hidden('event_id', $retreat->id) !!}
                         
             <h2><strong>Retreat Offerings for {{$retreat->title}}</strong></h2>
