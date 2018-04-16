@@ -244,4 +244,26 @@ class Registration extends Model
     {
         return $this->hasOne(Room::class, 'id', 'room_id');
     }
+    public function donation()
+    {
+        return $this->hasOne(Donation::class, 'donation_id', 'donation_id');
+    }
+    public function getDonationPledgeAttribute() {
+        
+        if (!is_null($this->donation)) {
+            return $this->donation->donation_amount; 
+            
+        } else {
+            return 0;
+        }
+    }
+    public function getPaymentPaidAttribute() {
+        
+        if ((!is_null($this->donation) && (!is_null($this->donation->retreat_offering)))) {
+            return $this->donation->retreat_offering->payment_amount; 
+            
+        } else {
+            return 0;
+        }
+    }
 }

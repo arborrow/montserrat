@@ -22,6 +22,10 @@ class Donation extends Model
     {
         return $this->hasMany(Payment::class, 'donation_id', 'donation_id');
     }
+    public function getRetreatOfferingAttribute()
+    {
+        return $this->payments()->first();
+    }
     
     public static function boot()
     {

@@ -115,7 +115,83 @@ class DonationsController extends Controller
         $donation= \App\Donation::findOrFail($id);
         //deletion of payments implied on the model 
         \App\Donation::destroy($id);
+        // disassociate registration with a donation that is being deleted - there should only be one
+        $registration = \App\Registration::whereDonationId($id)->first();
+        $registration->donation_id = NULL;
+        $registration->save();        
         return Redirect::action('DonationsController@index');
 
     }
+    
+     /**
+     * Process retreat payments from retreat.payments 
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * $request contains a $donations array with fields for id, pledge, paid, method and terms
+      * this method will only be used for retreat offerings - other types of donations should be handled elsewhere
+      * primary use is for creating retreat offering donations but will have ability to edit existing retreat offerings 
+     * @return \Illuminate\Http\Response
+     */
+    public function retreat_payments_update(Request $request)
+    {   $this->authorize('update-donation');
+        $this->authorize('update-payment');
+        $event_id = $request->input('event_id');
+        if (!is_null($request->input('donations'))) {
+            foreach ($request->input('donations') as $key => $value) {
+                $registration = \App\Registration::findOrFail($key);
+                // if there is not already an existing donation and there is a pledge
+                if (is_null($registration->donation_id))  { //create a new donation
+                    if ($value['pledge']>0) {
+                        $donation = new \App\Donation; 
+                        $donation->contact_id = $registration->contact_id;
+
+                        /* n.b  that in PPD Donations retreat_id referred to Retreats and not the events table
+                         * will need to convert data to in Donations to use events_id before moving into production
+                         * which means resolving all those that do not have an event id (if any) 
+                         * and ensuring start and end date for all events
+                         */
+                        $donation->event_id = $registration->event_id; 
+
+                        /*
+                         * Ideally I would like this to be the donation description id but for now I will keep the descriptioon field a varchar rather than integer
+                         */
+
+                        $donation->donation_description = 'Retreat Offering'; // this page/method is only handling retreat offerings
+                        $donation->donation_date = $registration->retreat_end_date;
+                        $donation->donation_amount = $value['pledge'];
+                        $donation->terms = $value['terms'];
+                        $donation->save();
+                        $registration->donation_id = $donation->donation_id;
+                        $registration->save();
+
+                        // create donation_payments
+                        $payment = new \App\Payment;
+                        $payment->donation_id = $donation->donation_id;
+                        $payment->payment_amount = $value['paid'];
+                        $payment->payment_date = $donation->donation_date;
+                        $payment->payment_description = $value['method']; 
+                        if ($value['method'] == 'Credit card') {
+                            $payment->ccnumber = substr($value['idnumber'],-4);
+                        }
+                        if ($value['method'] == 'Check') {
+                            $payment->cknumber = $value['idnumber'];
+                        }
+                        //dd($payment, $donation);
+                        $payment->save();
+                    }
+                } else {
+                    $donation = \App\Donation::findOrFail($registration->donation_id); // update an existing donation
+                    $donation->donation_amount = $value['pledge'];
+                    $donation->terms = $value['terms'];
+                    $donation->save();
+                        
+                    
+                }
+                
+            }
+        }
+        
+        return Redirect::action('RetreatsController@show',$request->input('event_id'));
+    }
+
 }
