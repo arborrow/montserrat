@@ -425,7 +425,7 @@ class RetreatsController extends Controller
       
 
     public function room_update(Request $request)
-    { dd($request);
+    { 
         $this->authorize('update-registration');
         $this->validate($request, [
             'retreat_id' => 'integer|min:0',
