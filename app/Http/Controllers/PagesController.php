@@ -76,12 +76,9 @@ class PagesController extends Controller
     public function welcome()
     {
         $next_week=(Carbon\Carbon::now()->addWeeks(1));
-        /* $client = new \GuzzleHttp\Client();
+        $client = new \GuzzleHttp\Client();
         $result = $client->get('http://labs.bible.org/api/?passage=random')->getBody();
         $quote = strip_tags($result->getContents(),'<b>');
-         * 
-         */
-        $quote = 'Jesus loves me this I know';
         // $retreats = \App\Retreat::where('start_date', '<=', $next_week)->where('end_date', '>=', date('Y-m-d'))->orderBy('start_date')->get();
         return view('welcome', compact('quote'));   //
     }

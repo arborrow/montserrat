@@ -24,7 +24,7 @@ Route::get('/agcletters', function () {
 
      return view('agcletters', compact('touchpoints'));
 })->middleware('auth');
-Route::get('/', 'HomeController@index');
+Route::get('/', 'PagesController@welcome');
 Route::get('/welcome', ['as' => 'welcome','uses' => 'PagesController@welcome']);
 Route::get('/goodbye', 'HomeController@goodbye');
 Route::get('/home', ['as' => 'home','uses' => 'HomeController@index']);
