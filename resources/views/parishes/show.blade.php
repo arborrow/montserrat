@@ -122,7 +122,7 @@
                                     @if($parishioner->contact_b->is_captain) 
                                         {!! Html::image('img/captain.png', 'Captain',array('title'=>"Captain",'class' => 'btn btn-default')) !!}
                                     @endIf
-                                    {!! $parishioner->contact_b->contact_link_full_name !!}
+                                    {!! $parishioner->contact_b->contact_link_full_name !!} ({{$parishioner->contact_b->participant_count}})
                                 </a>
                             </td>
                             @if(isset($parishioner->contact_b->address_primary))
