@@ -228,7 +228,7 @@ return [
         'Html'      => Collective\Html\HtmlFacade::class,
         'Mailgun' => Mailgun\Mailgun::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
-
+	'Hashids' => Vinkla\Hashids\Facades\Hashids::class
     ],
 
 ];

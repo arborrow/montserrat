@@ -20,6 +20,7 @@
         "php-http/curl-client": "^1.7",
         "spatie/laravel-google-calendar": "^1.0",
         "stuyam/laravel-phone-validator": "^1.0",
+        "vinkla/hashids": "^5.0",
         "zizaco/entrust": "5.2.x-dev"
     },
     "require-dev": {

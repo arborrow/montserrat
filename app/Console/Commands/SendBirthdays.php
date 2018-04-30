@@ -40,7 +40,8 @@ class SendBirthdays extends Command
     public function handle()
     {
         $receivers = new Contact;
-        $receivers = $receivers->birthdayEmailReceivers();//dd($receivers);
+	$receivers = $receivers->birthdayEmailReceivers();
+	// dd($receivers);
         foreach ($receivers as $key => $receiver) {
             try {
                 \Mail::to($receiver->email)->queue(new RetreatantBirthday($receiver));
