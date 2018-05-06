@@ -227,17 +227,44 @@ class RetreatsController extends Controller
         asort($c);
         $c=[0=>'N/A']+$c;
         
-        /* prevent losing former captain when editing retreat
-         * loop through currently assigned captains
-         * verify that they are currently a captain already found in $c above
-         * if not found in $c array then add them and resort the array adding 'former' to the end of their name 
-         * so that they visually standout on the list
+        /* prevent losing former retreatmasters, innkeeper, assistant, or captain when editing retreat
+         * loop through currently assigned retreatmasters, innkeeper, assistant, and captain assignments
+         * verify that they are currently in appropriate array as defined above (d, i, a or c)
+         * if not found in the array then add them and resort the array adding 'former' to the end of their name 
+         * so that they visually standout on the dropdown list as being a former member of that group
          */
+        
+        foreach ($retreat->retreatmasters as $director) {
+            if (!array_has($d,$director->id)) {
+                $d[$director->id] = $director->sort_name. ' (former)';
+                asort($d);
+                // dd($director->sort_name.' is not currently a retreat director: '.$director->id, $d);
+            }
+        }
+        
+        if (isset($retreat->innkeeper->id)) {
+            if (!array_has($i,$retreat->innkeeper->id)) {
+                $i[$retreat->innkeeper->id] = $retreat->innkeeper->sort_name. ' (former)';
+                asort($i);
+                // dd($retreat->innkeeper->sort_name.' is not currently an innkeeper: '.$retreat->innkeeper->id, $i);
+            }
+        }
+        
+        if (isset($retreat->assistant->id)) {
+           if (!array_has($a,$retreat->assistant->id)) {
+                $a[$retreat->assistant->id] = $retreat->assistant->sort_name. ' (former)';
+                asort($a);
+                // dd($retreat->assistant->sort_name.' is not currently an assistant: '.$retreat->assistant->id, $a);
+            }
+        }
+        
         
         foreach ($retreat->captains as $captain) {
             if (!array_has($c,$captain->id)) {
                 $c[$captain->id] = $captain->sort_name. ' (former)';
                 asort($c);
+                // dd($captain->sort_name.' is not currently a captain: '.$captain->id, $c);
+            
             }
         }
         
