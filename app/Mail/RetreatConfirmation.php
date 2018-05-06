@@ -6,8 +6,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Registration;
 
-class RetreatRegistration extends Mailable
+class RetreatConfirmation extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -30,8 +31,10 @@ class RetreatRegistration extends Mailable
      */
     public function build()
     {
-        return $this->subject('Registration email')
+        return $this->subject('Preparing for your Upcoming Retreat #'
+                    .$this->participant->retreat->idnumber.' starting on '
+                    .$this->participant->retreat_start_date->format('l F jS'))
                     ->replyTo('registration@montserratretreat.org')
-                    ->view('emails.retreat-registration');
+                    ->view('emails.retreat-confirmation');
     }
 }
