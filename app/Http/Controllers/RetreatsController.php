@@ -227,6 +227,20 @@ class RetreatsController extends Controller
         asort($c);
         $c=[0=>'N/A']+$c;
         
+        /* prevent losing former captain when editing retreat
+         * loop through currently assigned captains
+         * verify that they are currently a captain already found in $c above
+         * if not found in $c array then add them and resort the array adding 'former' to the end of their name 
+         * so that they visually standout on the list
+         */
+        
+        foreach ($retreat->captains as $captain) {
+            if (!array_has($c,$captain->id)) {
+                $c[$captain->id] = $captain->sort_name. ' (former)';
+                asort($c);
+            }
+        }
+        
         return view('retreats.edit', compact('retreat', 'd', 'i', 'a', 'c', 'event_types', 'is_active'));
     }
 
