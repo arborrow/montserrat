@@ -109,7 +109,7 @@ class RegistrationsController extends Controller
         $this->authorize('create-registration');
 
         if ($retreat_id > 0) {
-            $retreats = \App\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date", ">", \Carbon\Carbon::today())->whereId($retreat_id)->orderBy('start_date')->pluck('description', 'id');
+            $retreats = \App\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->whereId($retreat_id)->orderBy('start_date')->pluck('description', 'id');
         } else {
             $retreats = \App\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date", ">", \Carbon\Carbon::today())->orderBy('start_date')->pluck('description', 'id');
         }
