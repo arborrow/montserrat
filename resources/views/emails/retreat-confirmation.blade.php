@@ -17,7 +17,7 @@
 		Fr. Anthony Borrow, S.J.<br>
 		Director<br><br>
 
-		P.S. If you have a moment, it is helpful to confirm your attendance by <a href="{{ url('registration/confirm/'.$participant->remember_token) }}">clicking here</a>. If your plans have changed and you need to reschedule your retreat please call us at 940-321-6020 or send an email to registration@montserratretreat.org.<br><br>
+		P.S. If you have a moment, it is helpful to confirm your attendance by <a href="{{ url('intercept/'.$encodedUrl ) }}">clicking here</a>. If your plans have changed and you need to reschedule your retreat please call us at 940-321-6020 or send an email to registration@montserratretreat.org.<br><br>
 
 		What is provided:<br> 
 		• All meals, snacks and beverages<br>
