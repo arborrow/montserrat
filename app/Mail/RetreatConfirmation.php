@@ -13,6 +13,7 @@ class RetreatConfirmation extends Mailable
     use Queueable, SerializesModels;
 
     public $participant;
+    public $encodedUrl;
 
     /**
      * Create a new message instance.
@@ -22,6 +23,7 @@ class RetreatConfirmation extends Mailable
     public function __construct($participant)
     {
         $this->participant = $participant;
+        $this->encodedUrl = base64_encode("registration/confirm/$participant->remember_token");
     }
 
     /**
