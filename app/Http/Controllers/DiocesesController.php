@@ -235,8 +235,22 @@ class DiocesesController extends Controller
         
         $bishops = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
             $query->where('group_id', '=', config('polanco.group_id.bishop'));
-        })->pluck('display_name', 'id');
-        $bishops->prepend('N/A', 0);
+        })->pluck('sort_name', 'id')->toArray();
+        
+        /* ensure that a bishop  has not been removed */
+        if (isset($diocese->primary_bishop->id)) {
+            if (!array_has($bishops,$diocese->primary_bishop->id)) {
+                $bishops[$diocese->primary_bishop->id] = $diocese->primary_bishop->contact_b->sort_name. ' (former)';
+                $diocese->bishop_id = $diocese->primary_bishop->id;
+                asort($bishops);
+                // dd($touchpoint->staff->sort_name.' is not currently a staff member: '.$touchpoint->staff->id, $staff);
+            }
+        }
+        
+        $bishops = array_prepend($bishops,'N/A',0);
+        
+        // dd($bishops);
+        
         //dd($diocese);
         $defaults['Main']['url']='';
         $defaults['Work']['url']='';
@@ -291,6 +305,7 @@ class DiocesesController extends Controller
         $diocese->contact_type = config('polanco.contact_type.organization');
         $diocese->subcontact_type = config('polanco.contact_type.diocese');
         $diocese->save();
+        $bishop_id = $request->input('bishop_id');
       
         $address_primary = \App\Address::findOrNew($diocese->address_primary->id);
         $address_primary->contact_id=$diocese->id;
@@ -374,8 +389,10 @@ class DiocesesController extends Controller
                 $url_twitter->website_type='Twitter';
             $url_twitter->save();
         
+        /* current behavior will add a bishop to a diocese
+         * to remove a bishop delete the relationship in contacts
+         */
         if ($request->input('bishop_id')>0) {
-            $bishop_id = $request->input('bishop_id');
             $relationship_bishop = \App\Relationship::firstOrNew(['contact_id_a'=>$diocese->id,'contact_id_b'=>$bishop_id,'relationship_type_id'=>config('polanco.relationship_type.bishop'),'is_active'=>1]);
             $relationship_bishop->contact_id_a = $diocese->id;
             $relationship_bishop->contact_id_b = $bishop_id;
@@ -383,6 +400,23 @@ class DiocesesController extends Controller
             $relationship_bishop->is_active = 1;
             $relationship_bishop->save();
         }
+        
+        /* if unsetting a Bishop for a diocese
+         * remove bishop_id from diocese record
+         * remove relationship 
+         * save diocese
+         */
+        
+        if ($request->input('bishop_id')==0) {
+            
+            $active_bishops = \App\Relationship::whereContactIdA($diocese->id)->whereRelationshipTypeId(config('polanco.relationship_type.bishop'))->whereIsActive(1)->get();
+            // dd($active_bishops);
+            foreach($active_bishops as $bishop) {
+                $bishop->is_active = 0;
+                $bishop->save();
+            }
+        }
+           
 
         if (null !== $request->file('avatar')) {
             $description = 'Avatar for '.$diocese->organization_name;
