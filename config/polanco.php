@@ -47,7 +47,9 @@ return [
         'donor' => '23',
         'captain' => '24',
         'priest' => '25',
-        'deacon' => '26'
+        'deacon' => '26',
+        'community' => '27',
+        'primary_contact' => '28',
     ],
     
     'contact_type' => [

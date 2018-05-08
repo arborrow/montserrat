@@ -209,6 +209,29 @@ class Contact extends Model
         
         return "<a href='".$path."'>".$this->display_name."</a>";
     }
+    public function getContactUrlAttribute()
+    {
+        
+        switch ($this->subcontact_type) {
+            case config('polanco.contact_type.parish'):
+                $path = url("parish/".$this->id);
+                break;
+            case config('polanco.contact_type.diocese'):
+                $path = url("diocese/".$this->id);
+                break;
+            case config('polanco.contact_type.vendor'):
+                $path = url("vendor/".$this->id);
+                break;
+            default:
+                $path = url("organization/".$this->id);
+        }
+        
+        if ($this->contact_type == config('polanco.contact_type.individual')) {
+            $path=url("person/".$this->id);
+        }
+        
+        return $path;
+    }
     
     public function getContactLinkFullNameAttribute()
     {
