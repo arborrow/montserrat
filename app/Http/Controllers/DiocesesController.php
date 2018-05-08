@@ -340,13 +340,19 @@ class DiocesesController extends Controller
         $phone_main_fax->phone_type='Fax';
         $phone_main_fax->save();
         
-        $email_primary = \App\Email::findOrNew($diocese->email_primary->id);
+        if (isset($diocese->email_primary->id) ) {
+            $email_id = $diocese->email_primary->id;
+        } else {
+            $email_id = 0;
+        }
+        
+        $email_primary = \App\Email::firstOrNew(['id'=>$email_id]);
         $email_primary->contact_id=$diocese->id;
         $email_primary ->is_primary=1;
         $email_primary ->location_type_id=config('polanco.location_type.main');
         $email_primary ->email=$request->input('email_primary');
         $email_primary->save();
-        
+
         $url_main = \App\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'Main']);
             $url_main->contact_id=$diocese->id;
             $url_main->url=$request->input('url_main');
