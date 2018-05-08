@@ -14,6 +14,17 @@
 
 // Auth::routes();
 
+
+Route::get('intercept/{code}', function($code) {
+    $url = base64_decode($code);
+    dd($url);
+    try {
+        return redirect($url);
+    } catch ( \Exception $e ) {
+        abort(404);
+    }
+});
+
 Route::get('/agcletters', function () {
      $touchpoints = \montserrat\Touchpoint::where('notes', 'LIKE', '%AGC thank you letter%')
                     ->select('notes', 'person_id', 'created_at')

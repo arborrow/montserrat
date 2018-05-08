@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use App\Mail\RetreatConfirmation;
 use Carbon\Carbon;
 use App\Retreat;
+use App\Touchpoint;
 use Illuminate\Mail\Mailer;
 
 class ConfirmationEmails extends Command
@@ -51,18 +52,45 @@ class ConfirmationEmails extends Command
 
         if ($retreats->count() >= 1) {
             foreach ($retreats as $retreat) {
+                $automaticSuccessMessage = "Automatic confirmation email has been sent for retreat #".$retreat->idnumber.".";
+                $automaticErrorMessage = "Automatic confirmation email failed to send for retreat #".$retreat->idnumber.".";
+
                 $retreatants = $retreat->registrations()
+                    ->where('canceled_at', null)
                     ->with('contact')
                     ->whereHas('contact', function($query) {
                         $query->where('do_not_email', 0);
                     })
+                    ->with('contact.touchpoints')
+                    ->whereDoesntHave('contact.touchpoints', function($query) use ($automaticSuccessMessage){
+                        $query->where('notes', 'like', $automaticSuccessMessage);
+                    })
                     ->get();
+
                 foreach ($retreatants as $retreatant) {
-                    $primaryEmail = $retreatant->contact->primaryEmail()->first()->email;    
+                    $primaryEmail = $retreatant->contact->primaryEmail()->first()->email;
+
+                    // For automatic emails, remember_token must be set for all participants in retreat. 
+                    if (!$retreatant->remember_token) {
+                        $retreatant->remember_token = str_random(60);
+                        $retreatant->save();
+                    }
+
+                    $alfonso = \App\Contact::where('display_name', 'Juan Alfonso de Polanco')->first();
+
+                    $touchpoint = new Touchpoint();
+                    $touchpoint->person_id = $retreatant->contact->id;
+                    $touchpoint->staff_id = $alfonso->id;
+                    $touchpoint->touched_at = Carbon::now();
+                    $touchpoint->type = 'Email';
+
                     try {
                         $this->mailer->to($primaryEmail)->queue(new RetreatConfirmation($retreatant));
+                        $touchpoint->notes = $automaticSuccessMessage;
+                        $touchpoint->save();
                     } catch ( \Exception $e ) {
-
+                        $$touchpoint->notes = $automaticErrorMessage;
+                        $touchpoint->save();
                     }
                 }
             }
