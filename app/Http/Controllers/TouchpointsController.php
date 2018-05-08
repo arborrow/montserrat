@@ -225,7 +225,16 @@ class TouchpointsController extends Controller
         
         $staff = \App\Contact::with('groups')->whereHas('groups', function ($query) {
             $query->where('group_id', '=', config('polanco.group_id.staff'));
-        })->orderBy('sort_name')->pluck('sort_name', 'id');
+        })->orderBy('sort_name')->pluck('sort_name', 'id')->toArray();
+        /* ensure that a staff member has not been removed */
+        if (isset($touchpoint->staff->id)) {
+            if (!array_has($staff,$touchpoint->staff->id)) {
+                $staff[$touchpoint->staff->id] = $touchpoint->staff->sort_name. ' (former)';
+                asort($staff);
+                // dd($touchpoint->staff->sort_name.' is not currently a staff member: '.$touchpoint->staff->id, $staff);
+            }
+        }
+        
         //consider renaming touchpoint table's person_id field to contact_id
         $contact = \App\Contact::findOrFail($touchpoint->person_id);
         if (isset($contact->subcontact_type)) {
