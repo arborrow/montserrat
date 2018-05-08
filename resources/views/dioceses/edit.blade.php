@@ -66,7 +66,7 @@
     <div class="clearfix"> </div>
     <div class="form-group">
         {!! Form::label('email_primary', 'Email:', ['class' => 'col-md-1']) !!}
-        {!! Form::text('email_primary', $diocese->email_primary->email, ['class' => 'col-md-2']) !!}
+        {!! Form::text('email_primary', $diocese->email_primary_text, ['class' => 'col-md-2']) !!}
     </div>
     <div class="clearfix"> </div>
     <div class="clearfix"> </div>
