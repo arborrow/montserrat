@@ -220,15 +220,28 @@ class ParishesController extends Controller
     public function edit($id)
     {
         $this->authorize('update-contact');
-
+        
+        $parish = \App\Contact::with('pastor.contact_b', 'diocese.contact_a', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
+        
         $dioceses = \App\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderby('organization_name')->pluck('organization_name', 'id');
         $dioceses[0] = 'No Diocese assigned';
  
         $pastors = \App\Contact::whereHas('group_pastor', function ($query) {
             $query->whereGroupId(config('polanco.group_id.pastor'))->whereStatus('Added');
-        })->orderby('sort_name')->pluck('sort_name', 'id');
+        })->orderby('sort_name')->pluck('sort_name', 'id')->toArray();
         $pastors[0] = 'No pastor assigned';
 
+        /* ensure that a pastor has not been removed */
+        // dd($parish->pastor->contact_b->id);
+        if (isset($parish->pastor->contact_b->id)) {
+            $pastor_id = $parish->pastor->contact_b->id;
+            if (!array_has($pastors,$pastor_id)) {
+                $pastors[$pastor_id] = $parish->pastor->contact_b->sort_name. ' (former)';
+                asort($pastors);
+                // dd($parish->pastor->contact_b->sort_name.' is not currently listed as a pastor: '.$pastor_id, $pastors);
+            }
+        }
+        
         $states = \App\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
 
@@ -238,7 +251,6 @@ class ParishesController extends Controller
         $defaults['state_province_id'] = config('polanco.state_province_id_tx');
         $defaults['country_id'] = config('polanco.country_id_usa');
 
-        $parish = \App\Contact::with('pastor.contact_b', 'diocese.contact_a', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
         
         $defaults['Main']['url']='';
         $defaults['Work']['url']='';
