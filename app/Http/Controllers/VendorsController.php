@@ -179,7 +179,7 @@ class VendorsController extends Controller
         $vendor = \App\Contact::with('addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'touchpoints')->findOrFail($id);
         $files = \App\Attachment::whereEntity('contact')->whereEntityId($vendor->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
         $relationship_types = [];
-        $relationship_types["Primary Contact"] = "Primary Contact";
+        $relationship_types["Primary contact"] = "Primary contact";
         return view('vendors.show', compact('vendor', 'relationship_types', 'files'));//
     }
 

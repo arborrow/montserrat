@@ -174,7 +174,7 @@ class RelationshipTypesController extends Controller
     }
     
     public function add($id, $a = null, $b = null)
-    {
+    {   
         $this->authorize('create-relationship');
         $relationship_type = \App\RelationshipType::findOrFail($id);
         $ignored_subtype = [];
@@ -184,7 +184,7 @@ class RelationshipTypesController extends Controller
             $ignored_subtype["Wife"] = config('polanco.relationship_type.husband_wife');
             $ignored_subtype["Sibling"] = config('polanco.relationship_type.sibling');
             $ignored_subtype["Parishioner"] = config('polanco.relationship_type.parishioner');
-
+        
         if (in_array($relationship_type->name_a_b, $ignored_subtype)) {
             $subtype_a_name = null;
         } else {
@@ -216,7 +216,7 @@ class RelationshipTypesController extends Controller
         $this->authorize('create-relationship');
         $this->validate($request, [
             'contact_id' => 'integer|min:1|required',
-            'relationship_type' => 'required|in:Child,Parent,Husband,Wife,Sibling,Employee,Volunteer,Parishioner'
+            'relationship_type' => 'required|in:Child,Parent,Husband,Wife,Sibling,Employee,Volunteer,Parishioner,Primary contact,Employer'
         ]);
         $relationship_type = $request->input('relationship_type');
         $contact_id = $request->input('contact_id');
@@ -245,6 +245,10 @@ class RelationshipTypesController extends Controller
                 $relationship_type_id = config('polanco.relationship_type.staff');
                 return Redirect::route('relationship_type.add', ['id' => $relationship_type_id,'a' => $contact_id]);
                 break;
+            case 'Employer':
+                $relationship_type_id = config('polanco.relationship_type.staff');
+               return Redirect::route('relationship_type.add', ['id' => $relationship_type_id,'a'=> 0, 'b' => $contact_id]);
+                break;
             case 'Volunteer':
                 $relationship_type_id = config('polanco.relationship_type.volunteer');
                 return Redirect::route('relationship_type.add', ['id' => $relationship_type_id,'a' => 0, 'b'=> $contact_id]);
@@ -253,13 +257,17 @@ class RelationshipTypesController extends Controller
                 $relationship_type_id = config('polanco.relationship_type.parishioner');
                 return Redirect::route('relationship_type.add', ['id' => $relationship_type_id,'a' => 0, 'b'=> $contact_id]);
                 break;
+            case 'Primary contact':
+                $relationship_type_id = config('polanco.relationship_type.primary_contact');
+                return Redirect::route('relationship_type.add', ['id' => $relationship_type_id,'a' => 0, 'b' => $contact_id]);
+                break;
             default:
                 abort(404);
         }
     }
     
     public function make(Request $request)
-    {
+    {   // dd($request);
         $this->authorize('create-relationship');
         $this->validate($request, [
             'contact_a_id' => 'integer|min:0|required',
@@ -270,6 +278,7 @@ class RelationshipTypesController extends Controller
         $url_previous = URL::previous();
         $url_param = strpos($url_previous, 'add')+4;
         $url_right = substr($url_previous, $url_param);
+        
         if (strpos($url_right, '/')>0) {
             $url_a_param = substr($url_right, 0, strpos($url_right, '/'));
             $url_b_param = substr($url_right, strpos($url_right, '/')+1);
@@ -280,15 +289,18 @@ class RelationshipTypesController extends Controller
             $contact_id = $url_a_param;
         }
         //dd($url_right,$url_a_param, $url_b_param);
+        $contact = \App\Contact::findOrFail($contact_id);
+        //dd(url($contact->ContactLink));
         $relationship = new \App\Relationship;
         $relationship->contact_id_a = $request->input('contact_a_id');
         $relationship->contact_id_b = $request->input('contact_b_id');
         $relationship->relationship_type_id = $request->input('relationship_type_id');
         $relationship->is_active = 1;
         $relationship->save();
-       
-        return Redirect::route('person.show', ['id' => $contact_id]);
+    
+        return redirect($contact->contact_url);
     }
+    
     public function get_contact_type_list($contact_type = 'Individual', $contact_subtype = null)
     {
         $this->authorize('show-contact');
