@@ -97,7 +97,7 @@ Route::get('donor/{donor_id?}/assign/{contact_id?}', ['uses' => 'DonorsControlle
 Route::get('donor/{donor_id?}/add', ['uses' => 'DonorsController@add']);
 Route::resource('donor', 'DonorsController');
 Route::resource('donation', 'DonationsController');
-
+Route::get('donation/create/{id?}/{type?}', ['uses'=> 'DonationsController@create']);
 Route::get('group/{group_id?}/touchpoint', ['uses' => 'TouchpointsController@add_group']);
 Route::get('group/{group_id?}/registration', ['uses' => 'RegistrationsController@add_group']);
 Route::post('touchpoint/add_group', ['uses' => 'TouchpointsController@store_group']);

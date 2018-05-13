@@ -30,19 +30,31 @@ class DonationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id = NULL, $type = NULL)
     {
         $this->authorize('create-donation');
-
+        
+        $subcontact_type_id = config('polanco.contact_type.'.$type);
+        // dd($subcontact_type_id,$id);
+        if ($id>0) {
+            $donors = \App\Contact::whereId($id)->pluck('sort_name','id');
+        } else {
+            $donors = \App\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name', 'id');
+        }
+        if (isset($subcontact_type_id) && ($id==0)) {
+            $donors = \App\Contact::whereSubcontactType($subcontact_type_id)->orderBy('sort_name')->pluck('sort_name', 'id');
+        }
         $retreats = \App\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date", ">", \Carbon\Carbon::today()->subWeek())->where("is_active", "=", 1)->orderBy('start_date')->pluck('description', 'id');
         $retreats->prepend('Unassigned', 0);
-        $donors = \App\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name', 'id');
+        
+        //dd($donors);
+        $payment_methods = config('polanco.payment_method');
         $descriptions = \App\DonationType::orderby('name')->pluck('name', 'name');
         $dt_today =  \Carbon\Carbon::today();
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
         $defaults['retreat_id']=0;
 
-        return view('donations.create', compact('retreats', 'donors', 'descriptions', 'defaults'));
+        return view('donations.create', compact('retreats', 'donors', 'descriptions', 'payment_methods', 'defaults'));
     }
 
     /**
@@ -64,7 +76,9 @@ class DonationsController extends Controller
         $this->validate($request, [
         'donor_id' => 'required|integer|min:0',
         'donation_date' => 'required|date',
-        'donation_amount' => 'required|integer|min:0',
+        'donation_amount' => 'required|numeric|min:0',
+        'payment_amount' => 'required|numeric|min:0',
+        'payment_idnumber' => 'nullable|integer|min:0',
         'start_date' => 'date|nullable',
         'end_date' => 'date|nullable',
         'donation_install' => 'integer|min:0|nullable'
@@ -80,6 +94,22 @@ class DonationsController extends Controller
         $donation->donation_install = $request->input('donation_install');
         $donation->terms= $request->input('terms');
         $donation->save();
+        
+         // create donation_payments
+        $payment = new \App\Payment;
+        $payment->donation_id = $donation->donation_id;
+        $payment->payment_amount = $request->input('payment_amount');
+        $payment->payment_date = $donation->donation_date;
+        $payment->payment_description = $request->input('payment_description'); 
+        if ($request->input('payment_description') == 'Credit card') {
+            $payment->ccnumber = substr($request->input('payment_idnumber'),-4);
+        }
+        if ($request->input('payment_description') == 'Check') {
+            $payment->cknumber = $request->input('payment_idnumber');
+        }
+        //dd($payment, $donation);
+        $payment->save();
+
         
         return Redirect::action('DonationsController@index');
           
