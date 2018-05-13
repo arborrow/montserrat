@@ -6,7 +6,8 @@
     <span><h2><strong>Edit Donation:</strong></h2></span>
 
     {!! Form::open(['method' => 'PUT', 'route' => ['donation.update', $donation->donation_id]]) !!}
-    {!! Form::hidden('id', $donation->donation_id) !!}
+    {!! Form::hidden('donation_id', $donation->donation_id) !!}
+    {!! Form::hidden('donor_id', $donation->contact_id) !!}
     
         <span>
             <h2>Donation details</h2>
@@ -26,7 +27,7 @@
                     
                     <div class='row'>
                         {!! Form::label('donation_amount', 'Amount:', ['class' => 'col-md-3'])  !!}
-                        {!! Form::number('donation_amount', $donation->donation_amount, ['class' => 'col-md-3']) !!}
+                        {!! Form::number('donation_amount', $donation->donation_amount, ['class' => 'col-md-3','step'=>'0.01']) !!}
                     </div>
                     
                     <div class='row'>

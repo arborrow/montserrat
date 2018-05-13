@@ -3,50 +3,56 @@
 
 <section class="section-padding">
     <div class="jumbotron text-left">
-        <h2><strong>Create Touchpoint</strong></h2>
-        {!! Form::open(['url' => 'touchpoint', 'method' => 'post', 'class' => 'form-horizontal panel']) !!}
+        <h2><strong>Create donation</strong></h2>
+        {!! Form::open(['url' => 'donation', 'method' => 'post', 'class' => 'form-horizontal panel']) !!}
         <span>
+            
             <div class='row'>
-                {!! Form::label('touched_at', 'Date of contact:', ['class' => 'col-md-3'])  !!}
-                {!! Form::text('touched_at',date('F j, Y g:i A', strtotime(\Carbon\Carbon::now())) , ['class' => 'col-md-3']) !!}
-            </div>
-            <div class='row'>
-                {!! Form::label('person_id', 'Name of Contact:', ['class' => 'col-md-3'])  !!}
-                @if (isset($defaults['contact_id']))
-                    {!! Form::select('person_id', $persons, $defaults['contact_id'], ['class' => 'col-md-3']) !!}
+                {!! Form::label('donor_id', 'Donor:', ['class' => 'col-md-3'])  !!}
+                @if (isset($defaults['donor_id']))
+                    {!! Form::select('donor_id', $donors, $defaults['donor_id'], ['class' => 'col-md-3']) !!}
                 @else
-                    {!! Form::select('person_id', $persons, NULL, ['class' => 'col-md-3']) !!}
+                    {!! Form::select('donor_id', $donors, NULL, ['class' => 'col-md-3']) !!}
                 @endif
                         
             </div>
             <div class='row'>
-                {!! Form::label('staff_id', 'Contacted by:', ['class' => 'col-md-3'])  !!}
-                @if (isset($defaults['user_id']))
-                    {!! Form::select('staff_id', $staff, $defaults['user_id'], ['class' => 'col-md-3']) !!}
-                @else
-                    {!! Form::select('staff_id', $staff, NULL, ['class' => 'col-md-3']) !!}
-                
-                @endif
-                
+                {!! Form::label('donation_date', 'Date of donation:', ['class' => 'col-md-3'])  !!}
+                {!! Form::text('donation_date',date('F j, Y g:i A', strtotime(\Carbon\Carbon::now())) , ['class' => 'col-md-3']) !!}
             </div>
+            
             <div class='row'>
-                {!! Form::label('type', 'Type of Contact:', ['class' => 'col-md-3'])  !!}
-                {!! Form::select('type', [
-                'Call' => 'Call',
-                'Email' => 'Email',
-                'Face' => 'Face to Face',
-                'Letter' => 'Letter',
-                'Other' => 'Other',
-                ], NULL, ['class' => 'col-md-3']) !!}
+                {!! Form::label('donation_amount', 'Amount:', ['class' => 'col-md-3'])  !!}
+                {!! Form::number('donation_amount', NULL, ['class' => 'col-md-3','step'=>'0.01']) !!}
+            </div>
 
-            </div>
             <div class='row'>
-                {!! Form::label('notes', 'Notes:', ['class' => 'col-md-3'])  !!}
-                {!! Form::textarea('notes', NULL, ['class' => 'col-md-3']) !!}                   
-            </div>             
+                {!! Form::label('donation_description', 'Description:', ['class' => 'col-md-3'])  !!}
+                {!! Form::select('donation_description', $descriptions, 0, ['class' => 'col-md-3']) !!}
+            </div>
+
+            <div class='row'>
+                {!! Form::label('terms', 'Terms:', ['class' => 'col-md-3'])  !!}
+                {!! Form::text('terms', NULL, ['class' => 'col-md-3']) !!}                   
+            </div> 
+
+            <div class='row'>
+                {!! Form::label('start_date', 'Start date:', ['class' => 'col-md-3'])  !!}
+                {!! Form::date('start_date', NULL, ['class' => 'col-md-3']) !!}                   
+            </div> 
+            <div class='row'>
+                {!! Form::label('end_date', 'End date:', ['class' => 'col-md-3'])  !!}
+                {!! Form::date('end_date', NULL, ['class' => 'col-md-3']) !!}                   
+            </div> 
+            <div class='row'>
+                {!! Form::label('donation_install', 'Installment:', ['class' => 'col-md-3'])  !!}
+                {!! Form::number('donation_install', NULL, ['class' => 'col-md-3']) !!}
+            </div>
+
+            
             <div class="col-md-1">
                 <div class="form-group">
-                    {!! Form::submit('Add Touchpoint', ['class'=>'btn btn-primary']) !!}
+                    {!! Form::submit('Add donation', ['class'=>'btn btn-primary']) !!}
                 </div>
                     {!! Form::close() !!}
             </div>
