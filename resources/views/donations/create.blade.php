@@ -22,13 +22,25 @@
             </div>
             
             <div class='row'>
-                {!! Form::label('donation_amount', 'Amount:', ['class' => 'col-md-3'])  !!}
-                {!! Form::number('donation_amount', NULL, ['class' => 'col-md-3','step'=>'0.01']) !!}
+                {!! Form::label('donation_amount', 'Donation amount (pledged):', ['class' => 'col-md-3'])  !!}
+                {!! Form::number('donation_amount', 0, ['class' => 'col-md-3','step'=>'0.01']) !!}
             </div>
-
+            <div class='row'>
+                {!! Form::label('payment_amount', 'Payment amount (paid):', ['class' => 'col-md-3'])  !!}
+                {!! Form::number('payment_amount', 0, ['class' => 'col-md-3','step'=>'0.01']) !!}
+            </div>
+            <div class='row'>
+                {!! Form::label('payment_description', 'Payment method:', ['class' => 'col-md-3'])  !!}
+                {!! Form::select('payment_description', $payment_methods, NULL, ['class' => 'col-md-3']) !!}
+            </div>
+            <div class='row'>
+                {!! Form::label('payment_idnumber', 'Check/CC Number:', ['class' => 'col-md-3'])  !!}
+                {!! Form::number('payment_idnumber', NULL, ['class' => 'col-md-3']) !!}
+            </div>
+            
             <div class='row'>
                 {!! Form::label('donation_description', 'Description:', ['class' => 'col-md-3'])  !!}
-                {!! Form::select('donation_description', $descriptions, 0, ['class' => 'col-md-3']) !!}
+                {!! Form::select('donation_description', $descriptions, 'Retreat Offering', ['class' => 'col-md-3']) !!}
             </div>
 
             <div class='row'>
