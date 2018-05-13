@@ -13,7 +13,11 @@ class PaymentsController extends Controller
      */
     public function index()
     {
-        //
+        $this->authorize('show-payment');
+        $payments = \App\Payment::orderBy('payment_date', 'desc')->with('donation.retreat')->paginate(100);
+        //dd($donations);
+        return view('payments.index', compact('payments'));
+    
     }
 
     /**
@@ -45,7 +49,10 @@ class PaymentsController extends Controller
      */
     public function show($id)
     {
-        //
+        $this->authorize('show-payment');
+        $payment= \App\Payment::with('donation.retreat', 'donation.contact')->findOrFail($id);
+        //dd($donation);
+        return view('payments.show', compact('payment'));//
     }
 
     /**

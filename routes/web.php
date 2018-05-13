@@ -114,6 +114,8 @@ Route::get('organization/type/{subcontact_type_id}', ['uses' => 'OrganizationsCo
 
 Route::resource('organization', 'OrganizationsController');
 Route::resource('parish', 'ParishesController');
+Route::resource('payment', 'PaymentsController');
+
 Route::get('parishes/dallas', ['as' => 'dallasparishes','uses' => 'ParishesController@dallasdiocese']);
 Route::get('parishes/fortworth', ['as' => 'fortworthparishes','uses' => 'ParishesController@fortworthdiocese']);
 Route::get('parishes/tyler', ['as' => 'tylerparishes','uses' => 'ParishesController@tylerdiocese']);
