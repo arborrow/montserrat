@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Carbon\Carbon;
 
 class DonationsController extends Controller
 {
@@ -22,7 +23,6 @@ class DonationsController extends Controller
         $donations = \App\Donation::orderBy('donation_date', 'desc')->with('contact')->paginate(100);
         //dd($donations);
         return view('donations.index', compact('donations'));
-   
     }
 
     /**
@@ -32,21 +32,17 @@ class DonationsController extends Controller
      */
     public function create()
     {
-        
         $this->authorize('create-donation');
 
         $retreats = \App\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date", ">", \Carbon\Carbon::today()->subWeek())->where("is_active", "=", 1)->orderBy('start_date')->pluck('description', 'id');
         $retreats->prepend('Unassigned', 0);
         $donors = \App\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name', 'id');
-        
-        $descriptions = \App\DonationType::orderby('name')->pluck('name', 'id');
-        $descriptions->prepend('Unassigned', 0);
-        
+        $descriptions = \App\DonationType::orderby('name')->pluck('name', 'name');
         $dt_today =  \Carbon\Carbon::today();
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
         $defaults['retreat_id']=0;
+
         return view('donations.create', compact('retreats', 'donors', 'descriptions', 'defaults'));
-    
     }
 
     /**
@@ -54,10 +50,39 @@ class DonationsController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     * 
+     * authorize (permission check)
+     * validate input
+     * create and save new donation record
+     * redirect to donation.index
+     * 
      */
     public function store(Request $request)
-    {
-        //
+    {   
+        $this->authorize('create-donation');
+        
+        $this->validate($request, [
+        'donor_id' => 'required|integer|min:0',
+        'donation_date' => 'required|date',
+        'donation_amount' => 'required|integer|min:0',
+        'start_date' => 'date|nullable',
+        'end_date' => 'date|nullable',
+        'donation_install' => 'integer|min:0|nullable'
+        ]);
+
+        $donation = new \App\Donation;
+        $donation->contact_id= $request->input('donor_id');
+        $donation->donation_date= Carbon::parse($request->input('donation_date'));
+        $donation->donation_amount= $request->input('donation_amount');
+        $donation->donation_description = $request->input('donation_description');
+        $donation->start_date= Carbon::parse($request->input('start_date'));
+        $donation->end_date= Carbon::parse($request->input('end_date'));
+        $donation->donation_install = $request->input('donation_install');
+        $donation->terms= $request->input('terms');
+        $donation->save();
+        
+        return Redirect::action('DonationsController@index');
+          
     }
 
     /**
@@ -68,7 +93,7 @@ class DonationsController extends Controller
      */
     public function show($id)
     {
-         $this->authorize('show-donation');
+        $this->authorize('show-donation');
         $donation= \App\Donation::with('payments', 'contact')->findOrFail($id);
         return view('donations.show', compact('donation'));//
     }
@@ -100,7 +125,31 @@ class DonationsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->authorize('update-donation');
+        
+        $this->validate($request, [
+        'donor_id' => 'required|integer|min:0',
+        'donation_date' => 'required|date',
+        'donation_amount' => 'required|integer|min:0',
+        'start_date' => 'date|nullable',
+        'end_date' => 'date|nullable',
+        'donation_install' => 'integer|min:0|nullable'
+        ]);
+
+        $donation = \App\Donation::findOrFail($id);
+        $donation->contact_id= $request->input('donor_id');
+        $donation->donation_date= $request->input('donation_date') ? Carbon::parse($request->input('donation_date')) : NULL;
+        $donation->donation_amount= $request->input('donation_amount');
+        $donation->donation_description = $request->input('donation_description');
+        $donation->start_date= $request->input('start_date') ? Carbon::parse($request->input('start_date')) : NULL;
+        $donation->end_date= $request->input('end_date') ? Carbon::parse($request->input('end_date')) : NULL;
+        $donation->donation_install = $request->input('donation_install');
+        $donation->terms= $request->input('terms');
+        $donation->save();
+        
+        return Redirect::action('DonationsController@index');
+          
+    
     }
 
     /**
@@ -117,8 +166,11 @@ class DonationsController extends Controller
         \App\Donation::destroy($id);
         // disassociate registration with a donation that is being deleted - there should only be one
         $registration = \App\Registration::whereDonationId($id)->first();
-        $registration->donation_id = NULL;
-        $registration->save();        
+        if (isset($registration->donation_id)) {
+            $registration->donation_id = NULL;
+            $registration->save();
+        }
+                
         return Redirect::action('DonationsController@index');
 
     }

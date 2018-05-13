@@ -26,7 +26,16 @@ class Donation extends Model
     {
         return $this->payments()->first();
     }
-    
+    public function getPercentPaidAttribute() {
+        if ($this->donation_amount > 0) {
+            return ($this->payments->sum('payment_amount')/$this->donation_amount)*100;
+        } else {
+            return 0;
+        }
+            
+            
+            
+    }
     public static function boot()
     {
         parent::boot();    

@@ -20,7 +20,8 @@
                 <div class='col-md-4'>
                         <strong>Date: </strong>{{$donation->donation_date}}
                         <br /><strong>Description: </strong>{{$donation->donation_description}}  
-                        <br /><strong>Pledged/Paid: </strong>${{number_format($donation->donation_amount,2)}} / ${{number_format($donation->payments->sum('payment_amount'),2)}}      
+                        <br /><strong>Pledged/Paid: </strong>${{number_format($donation->donation_amount,2)}} / ${{number_format($donation->payments->sum('payment_amount'),2)}}  
+                        ({{number_format($donation->percent_paid,0)}}%)
                         <br /><strong>Terms: </strong>{{$donation->terms}}
                         <br /><strong>Notes: </strong>{{$donation->notes}}
                         <br /><strong>Start date: </strong>{{$donation->start_date}}
