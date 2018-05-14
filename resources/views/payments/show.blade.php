@@ -23,7 +23,7 @@
                         <strong>Date: </strong>{{$payment->payment_date}}
                         <br /><strong>Amount: </strong>${{ number_format($payment->payment_amount,2)}}  
                         <br /><strong>Method: </strong>{{$payment->payment_description}}  
-                        <br /><strong>ID#: </strong>{{ $payment->ccnumber or $payment->cknumber}}
+                        <br /><strong>Check/CC#: </strong>{{ $payment->ccnumber or $payment->cknumber}}
                         <br /><strong>Note: </strong>{{$payment->note}}
                     
                 </div>

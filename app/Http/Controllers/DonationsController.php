@@ -37,6 +37,7 @@ class DonationsController extends Controller
         $subcontact_type_id = config('polanco.contact_type.'.$type);
         // dd($subcontact_type_id,$id);
         if ($id>0) {
+            $donor = \App\Contact::findOrFail($id); // a lazy way to fail if no donor
             $donors = \App\Contact::whereId($id)->pluck('sort_name','id');
         } else {
             $donors = \App\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name', 'id');
