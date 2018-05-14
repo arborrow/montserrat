@@ -144,7 +144,6 @@ class DonationsController extends Controller
         $descriptions->prepend('Unassigned', 0);
 
         return view('donations.edit', compact('donation','descriptions'));
-   
     }
 
     /**

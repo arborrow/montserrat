@@ -40,7 +40,7 @@
                             <th>Amount</th>
                             <th>Description</th>
                             <th>Check or CC#</th>
-                            
+                            <th>Note</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,9 +50,9 @@
 
                             <td><a href="../payment/{{ $payment->payment_id}}">{{ date('M d, Y g:i A', strtotime($payment->payment_date)) }}</a></td>
                             <td>${{ $payment->payment_amount }} </td>
-                            <td>{{$payment->payment_description}}</td>
-                            <td>{{ $payment->cknumber or $payment->ccnumber}}</td>
-                            
+                            <td>{{ $payment->payment_description }}</td>
+                            <td>{{ $payment->cknumber or $payment->ccnumber }}</td>
+                            <td>{{ $payment->note }}
                         </tr>
                         @endforeach
                         
