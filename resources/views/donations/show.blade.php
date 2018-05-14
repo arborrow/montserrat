@@ -39,8 +39,8 @@
                             <th>Date</th>
                             <th>Amount</th>
                             <th>Description</th>
-                            <th>Check#</th>
-                            <th>CC#</th>
+                            <th>Check or CC#</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -48,11 +48,10 @@
                         @foreach($donation->payments as $payment)
                         <tr>
 
-                            <td style="width:10%"><a href="../payment/{{ $payment->payment_id}}">{{ date('M d, Y g:i A', strtotime($payment->payment_date)) }}</a></td>
-                            <td style="width:10%">${{ $payment->payment_amount }} </td>
-                            <td style="width:10%">{{$payment->payment_description}}</td>
-                            <td style="width:10%">{{ $payment->cknumber}}</td>
-                            <td style="width:10%">{{ $payment->ccnumber }}</td>
+                            <td><a href="../payment/{{ $payment->payment_id}}">{{ date('M d, Y g:i A', strtotime($payment->payment_date)) }}</a></td>
+                            <td>${{ $payment->payment_amount }} </td>
+                            <td>{{$payment->payment_description}}</td>
+                            <td>{{ $payment->cknumber or $payment->ccnumber}}</td>
                             
                         </tr>
                         @endforeach
