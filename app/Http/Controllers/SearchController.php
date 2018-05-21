@@ -52,7 +52,7 @@ class SearchController extends Controller
                     return redirect()->action('ParishesController@show', $id);
                 break;
                 case config('polanco.contact_type.diocese'):
-                    return redirect()->action('DiocesesController@show', $id);
+                    return redirect()->action('DioceseController@show', $id);
                 break;
                 case config('polanco.contact_type.vendor'):
                     return redirect()->action('VendorsController@show', $id);

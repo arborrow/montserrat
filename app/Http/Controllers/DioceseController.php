@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 
-class DiocesesController extends Controller
+class DioceseController extends Controller
 {
     public function __construct()
     {
@@ -186,7 +186,7 @@ class DiocesesController extends Controller
             $relationship_bishop->save();
         }
    
-        return Redirect::action('DiocesesController@index');
+        return Redirect::action('DioceseController@index');
     }
 
     /**
@@ -436,7 +436,7 @@ class DiocesesController extends Controller
             $attachment->update_attachment($request->file('attachment'), 'contact', $diocese->id, 'attachment', $description);
         }
 
-        return Redirect::action('DiocesesController@index');
+        return Redirect::action('DioceseController@index');
     }
 
     /**
@@ -463,6 +463,6 @@ class DiocesesController extends Controller
         \App\Registration::whereContactId($id)->delete();
        
          \App\Contact::destroy($id);
-        return Redirect::action('DiocesesController@index');
+        return Redirect::action('DioceseController@index');
     }
 }
