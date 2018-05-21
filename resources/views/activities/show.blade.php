@@ -37,7 +37,7 @@
             <div class='row'>
                 @can('update-activity')
                     <div class='col-md-1'>
-                        <a href="{{ action('ActivitiesController@edit', $activity->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                        <a href="{{ action('ActivityController@edit', $activity->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                     </div>
                 @endCan
                 @can('delete-activity')

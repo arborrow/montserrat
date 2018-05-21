@@ -10,7 +10,7 @@
                         <span class="grey">({{$activities->total()}} records)</span> 
                         @can('update-activity')
                             <span class="create">
-                                <a href={{ action('ActivitiesController@create') }}>{!! Html::image('img/create.png', 'Add Activity',array('title'=>"Add Activity",'class' => 'btn btn-primary')) !!}</a>
+                                <a href={{ action('ActivityController@create') }}>{!! Html::image('img/create.png', 'Add Activity',array('title'=>"Add Activity",'class' => 'btn btn-primary')) !!}</a>
                             </span>
                          @endCan   
                     </h1>

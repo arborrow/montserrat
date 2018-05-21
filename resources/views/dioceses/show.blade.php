@@ -18,7 +18,7 @@
                         </strong></h1>
                     </div>
                     
-                    <span><a href={{ action('DiocesesController@index') }}>{!! Html::image('img/diocese.png', 'Diocese Index',array('title'=>"Diocese Index",'class' => 'btn btn-default')) !!}</a></span>
+                    <span><a href={{ action('DioceseController@index') }}>{!! Html::image('img/diocese.png', 'Diocese Index',array('title'=>"Diocese Index",'class' => 'btn btn-default')) !!}</a></span>
                     <span class="btn btn-default">
                         <a href={{ action('TouchpointsController@add',$diocese->id) }}>Add Touchpoint</a>
                     </span>
@@ -220,7 +220,7 @@
             </div>            
                 <div class='row'>
                     @can('update-contact')
-                        <div class='col-md-1'><a href="{{ action('DiocesesController@edit', $diocese->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
+                        <div class='col-md-1'><a href="{{ action('DioceseController@edit', $diocese->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
                     @endCan
                     @can('delete-contact')
                         <div class='col-md-1'>
