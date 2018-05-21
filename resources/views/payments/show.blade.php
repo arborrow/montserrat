@@ -50,7 +50,7 @@
             <div class='row'>
                 @can('update-payment')
                     <div class='col-md-1'>
-                        <a href="{{ action('PaymentsController@edit', $payment->payment_id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                        <a href="{{ action('PaymentController@edit', $payment->payment_id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                     </div>
                 @endCan
                 @can('delete-payment')

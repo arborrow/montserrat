@@ -41,15 +41,15 @@ class SearchController extends Controller
         }
             // TODO: check contact_type field and redirect to appropriate parish, diocese, person, etc.
         if ($id==0) {
-            return redirect()->action('PersonsController@create');
+            return redirect()->action('PersonController@create');
         } else {
             $contact = \App\Contact::findOrFail($id);
             if ($contact->contact_type == config('polanco.contact_type.individual')) {
-                return redirect()->action('PersonsController@show', $id);
+                return redirect()->action('PersonController@show', $id);
             }
             switch ($contact->subcontact_type) {
                 case config('polanco.contact_type.parish'):
-                    return redirect()->action('ParishesController@show', $id);
+                    return redirect()->action('ParishController@show', $id);
                 break;
                 case config('polanco.contact_type.diocese'):
                     return redirect()->action('DioceseController@show', $id);
