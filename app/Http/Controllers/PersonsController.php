@@ -201,7 +201,7 @@ class PersonsController extends Controller
         $person->save();
         if (null !== $request->file('avatar')) {
             $description = 'Avatar for '.$person->full_name;
-            $attachment = new AttachmentsController;
+            $attachment = new AttachmentController;
             $attachment->store_attachment($request->file('avatar'), 'contact', $person->id, 'avatar', $description);
         }
         // emergency contact information - not part of CiviCRM squema
@@ -975,14 +975,14 @@ class PersonsController extends Controller
         $person->save();
         if (null !== $request->file('avatar')) {
             $description = 'Avatar for '.$person->full_name;
-            $attachment = new AttachmentsController;
+            $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('avatar'), 'contact', $person->id, 'avatar', $description);
         }
 
         //dd($request);
         if (null !== $request->file('attachment')) {
             $description = $request->input('attachment_description');
-            $attachment = new AttachmentsController;
+            $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('attachment'), 'contact', $person->id, 'attachment', $description);
         }
         

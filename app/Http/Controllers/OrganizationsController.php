@@ -353,13 +353,13 @@ class OrganizationsController extends Controller
                 
         if (null !== $request->file('avatar')) {
             $description = 'Avatar for '.$organization->organization_name;
-            $attachment = new AttachmentsController;
+            $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('avatar'), 'contact', $organization->id, 'avatar', $description);
         }
 
         if (null !== $request->file('attachment')) {
             $description = $request->input('attachment_description');
-            $attachment = new AttachmentsController;
+            $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('attachment'), 'contact', $organization->id, 'attachment', $description);
         }
                 

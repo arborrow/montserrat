@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Response;
 use Image;
-use App\Http\Controllers\AttachmentsController;
+use App\Http\Controllers\AttachmentController;
 
 class RetreatsController extends Controller
 {
@@ -323,25 +323,25 @@ class RetreatsController extends Controller
 
         if (null !== $request->file('contract')) {
             $description = 'Contract for '.$retreat->idnumber.'-'.$retreat->title;
-            $attachment = new AttachmentsController;
+            $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('contract'), 'event', $retreat->id, 'contract', $description);
         }
         
         if (null !== $request->file('schedule')) {
             $description = 'Schedule for '.$retreat->idnumber.'-'.$retreat->title;
-            $attachment = new AttachmentsController;
+            $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('schedule'), 'event', $retreat->id, 'schedule', $description);
         }
             
         if (null !== $request->file('evaluations')) {
             $description = 'Evaluations for '.$retreat->idnumber.'-'.$retreat->title;
-            $attachment = new AttachmentsController;
+            $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('evaluations'), 'event', $retreat->id, 'evaluations', $description);
         }
         
         if (null !== $request->file('group_photo')) {
             $description = 'Group photo for '.$retreat->idnumber.'-'.$retreat->title;
-            $attachment = new AttachmentsController;
+            $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('group_photo'), 'event', $retreat->id, 'group_photo', $description);
         }
         

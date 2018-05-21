@@ -307,13 +307,13 @@ class VendorsController extends Controller
                 
         if (null !== $request->file('avatar')) {
             $description = 'Avatar for '.$vendor->organization_name;
-            $attachment = new AttachmentsController;
+            $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('avatar'), 'contact', $vendor->id, 'avatar', $description);
         }
 
         if (null !== $request->file('attachment')) {
             $description = $request->input('attachment_description');
-            $attachment = new AttachmentsController;
+            $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('attachment'), 'contact', $vendor->id, 'attachment', $description);
         }
                 

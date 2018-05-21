@@ -10,7 +10,7 @@ use Image;
 use Illuminate\Support\Facades\Redirect;
 use Gate;
 
-class AttachmentsController extends Controller
+class AttachmentController extends Controller
 {
     /* used to manage file attachments for contacts, events, etc.
      * every attachment should have a record in the files table 
