@@ -10,7 +10,7 @@
                         <span class="grey">({{$donations->total()}} records)</span> 
                         @can('create-donation')
                             <span class="create">
-                                <a href={{ action('DonationsController@create') }}>{!! Html::image('img/create.png', 'Add Donation',array('title'=>"Add Donation",'class' => 'btn btn-primary')) !!}</a>
+                                <a href={{ action('DonationController@create') }}>{!! Html::image('img/create.png', 'Add Donation',array('title'=>"Add Donation",'class' => 'btn btn-primary')) !!}</a>
                             </span>
                         @endCan
                     </h1>
