@@ -7,7 +7,7 @@
                 <div class="panel-heading">
                     <h1>
                     <span class="grey">Roles Index</span> 
-                    <span class="create"><a href={{ action('RolesController@create') }}>{!! Html::image('img/create.png', 'Add Role',array('title'=>"Add Role",'class' => 'btn btn-primary')) !!}</a></span></h1>
+                    <span class="create"><a href={{ action('RoleController@create') }}>{!! Html::image('img/create.png', 'Add Role',array('title'=>"Add Role",'class' => 'btn btn-primary')) !!}</a></span></h1>
                 
                 </div>
                 @if ($roles->isEmpty())

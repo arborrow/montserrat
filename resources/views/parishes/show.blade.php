@@ -23,7 +23,7 @@
                     <span class="back"><a href={{ action('ParishesController@index') }}>{!! Html::image('img/parish.png', 'Parish Index',array('title'=>"Parish Index",'class' => 'btn btn-default')) !!}</a></span></h1>
                     @can('create-touchpoint')
                         <span class="btn btn-default">
-                            <a href={{ action('TouchpointsController@add',$parish->id) }}>Add Touchpoint</a>
+                            <a href={{ action('TouchpointController@add',$parish->id) }}>Add Touchpoint</a>
                         </span>
                     @endCan
                     <span class="btn btn-default">
@@ -173,7 +173,7 @@
             <div class="panel-heading">
                 <h2><span class="grey">Touchpoints for {{ $parish->display_name }} </span></h2> 
             <span class="btn btn-default">
-                   <a href={{ action('TouchpointsController@add',$parish->id) }}>Add Touchpoint</a>
+                   <a href={{ action('TouchpointController@add',$parish->id) }}>Add Touchpoint</a>
                 </span>
             
             </div>

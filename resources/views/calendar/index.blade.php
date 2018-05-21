@@ -8,7 +8,7 @@
                     <h1>
                         <span class="grey">Index of Google Master Calendar Events</span>
                         <span class="create">
-                            <a href="{{ action('RetreatsController@calendar') }}">
+                            <a href="{{ action('RetreatController@calendar') }}">
                                {!! Html::image('img/create.png', 'Add Group',array('title'=>"Add Group",'class' => 'btn btn-primary')) !!}
                             </a>
 

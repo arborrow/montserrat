@@ -273,7 +273,7 @@ class DonationController extends Controller
             }
         }
         
-        return Redirect::action('RetreatsController@show',$request->input('event_id'));
+        return Redirect::action('RetreatController@show',$request->input('event_id'));
     }
 
 }

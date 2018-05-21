@@ -12,7 +12,7 @@ use Response;
 use Image;
 use App\Http\Controllers\AttachmentController;
 
-class RetreatsController extends Controller
+class RetreatController extends Controller
 {
     public function __construct()
     {
@@ -155,7 +155,7 @@ class RetreatsController extends Controller
         
        
         
-        return Redirect::action('RetreatsController@index');//
+        return Redirect::action('RetreatController@index');//
     }
 
     /**
@@ -378,7 +378,7 @@ class RetreatsController extends Controller
         }
             
        
-        return Redirect::action('RetreatsController@index');
+        return Redirect::action('RetreatController@index');
     }
 
     /**
@@ -403,7 +403,7 @@ class RetreatsController extends Controller
         $calendar_event->delete();
         \App\Retreat::destroy($id);
         
-        return Redirect::action('RetreatsController@index');
+        return Redirect::action('RetreatController@index');
     }
  
 
@@ -488,7 +488,7 @@ class RetreatsController extends Controller
                 //dd($registration,$value);
             }
         }
-        return Redirect::action('RetreatsController@index');
+        return Redirect::action('RetreatController@index');
     }
     public function calendar()
     {

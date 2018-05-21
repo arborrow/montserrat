@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 
-class VendorsController extends Controller
+class VendorController extends Controller
 {
     public function __construct()
     {
@@ -164,7 +164,7 @@ class VendorsController extends Controller
             $url_twitter->website_type='Twitter';
         $url_twitter->save();
  
-        return Redirect::action('VendorsController@index');
+        return Redirect::action('VendorController@index');
     }
 
     /**
@@ -359,7 +359,7 @@ class VendorsController extends Controller
             $url_twitter->website_type='Twitter';
         $url_twitter->save();
 
-        return Redirect::action('VendorsController@index');
+        return Redirect::action('VendorController@index');
     }
 
     /**
@@ -386,6 +386,6 @@ class VendorsController extends Controller
         \App\Registration::whereContactId($id)->delete();
        
         \App\Contact::destroy($id);
-        return Redirect::action('VendorsController@index');
+        return Redirect::action('VendorController@index');
     }
 }

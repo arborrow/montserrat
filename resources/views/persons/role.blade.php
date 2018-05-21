@@ -24,7 +24,7 @@
                     @endCan
                     @can('create-touchpoint')
                     <span class="btn btn-default">
-                        <a href={{ action('TouchpointsController@add_group',$role['group_id']) }}>Add Group Touchpoint</a>
+                        <a href={{ action('TouchpointController@add_group',$role['group_id']) }}>Add Group Touchpoint</a>
                     </span>
                     @endCan
                 

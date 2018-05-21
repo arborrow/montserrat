@@ -20,7 +20,7 @@
                     
                     <span><a href={{ action('DioceseController@index') }}>{!! Html::image('img/diocese.png', 'Diocese Index',array('title'=>"Diocese Index",'class' => 'btn btn-default')) !!}</a></span>
                     <span class="btn btn-default">
-                        <a href={{ action('TouchpointsController@add',$diocese->id) }}>Add Touchpoint</a>
+                        <a href={{ action('TouchpointController@add',$diocese->id) }}>Add Touchpoint</a>
                     </span>
                     <span class="btn btn-default">
                     <a href={{ action('RegistrationsController@add',$diocese->id) }}>Add Registration</a> 
@@ -109,7 +109,7 @@
             <div class="panel-heading">
                 <h2><span class="grey">Touchpoints for {{ $diocese->display_name }} </span></h2> 
             <span class="btn btn-default">
-                   <a href={{ action('TouchpointsController@add',$diocese->id) }}>Add Touchpoint</a>
+                   <a href={{ action('TouchpointController@add',$diocese->id) }}>Add Touchpoint</a>
                 </span>
             
             </div>

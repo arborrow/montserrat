@@ -21,7 +21,7 @@
                     <span><a href={{ action('OrganizationsController@index') }}>{!! Html::image('img/organization.png', 'Organization Index',array('title'=>"Organization Index",'class' => 'btn btn-default')) !!}</a></span>
                     @can('create-touchpoint')
                     <span class="btn btn-default">
-                        <a href={{ action('TouchpointsController@add',$organization->id) }}>Add Touchpoint</a>
+                        <a href={{ action('TouchpointController@add',$organization->id) }}>Add Touchpoint</a>
                     </span>
                     @endCan
                     <span class="btn btn-default">

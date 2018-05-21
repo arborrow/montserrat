@@ -35,7 +35,7 @@
                     @endCan
                         @can('create-touchpoint')
                             <span class="btn btn-default">
-                                <a href={{ action('TouchpointsController@add',$person->id) }}>Add Touchpoint</a>
+                                <a href={{ action('TouchpointController@add',$person->id) }}>Add Touchpoint</a>
                             </span>
                         @endCan
                         @can('create-registration')
@@ -281,7 +281,7 @@
                 <div class='panel-heading'><h2><strong>Touchpoints for {{ $person->display_name }}</strong></h2>
                     @can('create-touchpoint')
                     <span class="btn btn-default">
-                       <a href={{ action('TouchpointsController@add',$person->id) }}>Add Touchpoint</a>
+                       <a href={{ action('TouchpointController@add',$person->id) }}>Add Touchpoint</a>
                     </span>
                     @endCan('create-touchpoint')
                </div>

@@ -55,7 +55,7 @@ class SearchController extends Controller
                     return redirect()->action('DioceseController@show', $id);
                 break;
                 case config('polanco.contact_type.vendor'):
-                    return redirect()->action('VendorsController@show', $id);
+                    return redirect()->action('VendorController@show', $id);
                 break;
                 default:
                     return redirect()->action('OrganizationsController@show', $id);

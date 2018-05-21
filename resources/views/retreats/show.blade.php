@@ -119,7 +119,7 @@
             <div class='row'>
                 @can('update-retreat')
                     <div class='col-md-1'>
-                        <a href="{{ action('RetreatsController@edit', $retreat->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                        <a href="{{ action('RetreatController@edit', $retreat->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                     </div>
                 @endCan
                 @can('delete-retreat')
@@ -140,10 +140,10 @@
                 {!! Html::link($retreat->email_registered_retreatants,'Email registered retreatants',array('class' => 'btn btn-default'))!!}
             @endCan
             @can('update-registration')
-                {!! Html::link(action('RetreatsController@assign_rooms',$retreat->id),'Assign rooms',array('class' => 'btn btn-default'))!!}
+                {!! Html::link(action('RetreatController@assign_rooms',$retreat->id),'Assign rooms',array('class' => 'btn btn-default'))!!}
             @endCan
             @can('update-registration')
-                {!! Html::link(action('RetreatsController@checkout',$retreat->id),'Checkout',array('class' => 'btn btn-default'))!!}
+                {!! Html::link(action('RetreatController@checkout',$retreat->id),'Checkout',array('class' => 'btn btn-default'))!!}
             @endCan
             @can('show-contact')
                 {!! Html::link(action('PagesController@retreatantinforeport',$retreat->idnumber),'Retreatant information report',array('class' => 'btn btn-default'))!!}
@@ -155,7 +155,7 @@
                 {!! Html::link(action('PagesController@retreatlistingreport',$retreat->idnumber),'Retreat listing',array('class' => 'btn btn-default'))!!}
             @endCan
             @can('create-touchpoint')
-                {!! Html::link(action('TouchpointsController@add_retreat',$retreat->id),'Retreat touchpoint',array('class' => 'btn btn-default'))!!}
+                {!! Html::link(action('TouchpointController@add_retreat',$retreat->id),'Retreat touchpoint',array('class' => 'btn btn-default'))!!}
             @endCan    
         </div>
             @if ($registrations->isEmpty())
@@ -188,7 +188,7 @@
                                 @if (empty($registration->room->name))
                                     N/A
                                 @else
-                                <a href="{{action('RoomsController@show', $registration->room->id)}}">{{ $registration->room->name}}</a>
+                                <a href="{{action('RoomController@show', $registration->room->id)}}">{{ $registration->room->name}}</a>
                                 @endif
                             </td>
                             <td>{{ $registration->deposit }}</td>

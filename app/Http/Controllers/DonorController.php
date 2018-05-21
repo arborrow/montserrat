@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
-class DonorsController extends Controller
+class DonorController extends Controller
 {
     public function __construct()
     {
@@ -107,7 +107,7 @@ class DonorsController extends Controller
             $donor->contact_id = $contact_id;
             $donor->save();
         }
-        return redirect()->action('DonorsController@index');
+        return redirect()->action('DonorController@index');
     }
     
     public function add($donor_id)
@@ -190,6 +190,6 @@ class DonorsController extends Controller
             $donor->contact_id = $person->id;
             $donor->save();
         }
-        return redirect()->action('DonorsController@index');
+        return redirect()->action('DonorController@index');
     }
 }
