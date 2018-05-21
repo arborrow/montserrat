@@ -10,7 +10,7 @@
                         <span class="previous">{!! Html::link('#previous_retreats','Previous '.$defaults['type'],array('class' => 'btn btn-primary'))!!}</span>
                         @can('create-retreat')
                             <span class="create">
-                                <a href={{ action('RetreatsController@create') }}>{!! Html::image('img/create.png', 'Create a Retreat',array('title'=>"Create Retreat",'class' => 'btn btn-primary')) !!}</a>
+                                <a href={{ action('RetreatController@create') }}>{!! Html::image('img/create.png', 'Create a Retreat',array('title'=>"Create Retreat",'class' => 'btn btn-primary')) !!}</a>
                             </span>
                         @endCan
                         

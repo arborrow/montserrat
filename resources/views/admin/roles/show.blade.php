@@ -59,7 +59,7 @@
         </div>
 
         <div class='row'>
-            <div class='col-md-1'><a href="{{ action('RolesController@edit', $role->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
+            <div class='col-md-1'><a href="{{ action('RoleController@edit', $role->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
             <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['role.destroy', $role->id],'onsubmit'=>'return ConfirmDelete()']) !!}
                 {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
                 {!! Form::close() !!}

@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Input;
 
-class GroupsController extends Controller
+class GroupController extends Controller
 {
     public function __construct()
     {
@@ -69,7 +69,7 @@ class GroupsController extends Controller
        
         $group->save();
        
-        return Redirect::action('GroupsController@show', $group->id);//
+        return Redirect::action('GroupController@show', $group->id);//
     }
 
     /**
@@ -130,7 +130,7 @@ class GroupsController extends Controller
         $group->save();
         return redirect()->intended('group/'.$group->id);
                 
-        //return Redirect::action('GroupsController@index');//
+        //return Redirect::action('GroupController@index');//
     }
 
     /**
@@ -143,6 +143,6 @@ class GroupsController extends Controller
     {
         $this->authorize('delete-group');
         \App\Group::destroy($id);
-        return Redirect::action('GroupsController@index');
+        return Redirect::action('GroupController@index');
     }
 }

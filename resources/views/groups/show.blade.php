@@ -16,7 +16,7 @@
                 </span>
                 @can('create-touchpoint')
                     <span class="btn btn-default">
-                        <a href={{ action('TouchpointsController@add_group',$group->id) }}>Add Group Touchpoint</a>
+                        <a href={{ action('TouchpointController@add_group',$group->id) }}>Add Group Touchpoint</a>
                     </span>
                 @endCan
                 @can('create-registration')
@@ -57,7 +57,7 @@
         <div class='row'>
             @can('update-group')
                 <div class='col-md-1'>
-                    <a href="{{ action('GroupsController@edit', $group->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                    <a href="{{ action('GroupController@edit', $group->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                 </div>
             @endCan
             @can('delete-group')

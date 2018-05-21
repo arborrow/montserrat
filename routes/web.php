@@ -71,19 +71,19 @@ Route::get('retreat/{event_id}/evaluations', ['as' => 'get_event_evaluations','u
 Route::get('retreat/{event_id}/evaluations/delete', ['as' => 'delete_event_evaluations','uses' => 'AttachmentController@delete_event_evaluations']);
 Route::get('retreat/{event_id}/photo', ['as' => 'get_event_group_photo','uses' => 'AttachmentController@get_event_group_photo']);
 Route::get('retreat/{event_id}/photo/delete', ['as' => 'delete_event_group_photo','uses' => 'AttachmentController@delete_event_group_photo']);
-Route::get('retreat/{event_id}/touchpoint', ['uses' => 'TouchpointsController@add_retreat']);
-Route::get('retreat/type/{event_type_id}', ['uses' => 'RetreatsController@index_type']);
+Route::get('retreat/{event_id}/touchpoint', ['uses' => 'TouchpointController@add_retreat']);
+Route::get('retreat/type/{event_type_id}', ['uses' => 'RetreatController@index_type']);
 
 // General routes including groups, resources, etc. 
 Route::get('about', ['as' => 'about','uses' => 'PagesController@about']);
 Route::get('admin', ['as' => 'admin','uses' => 'PagesController@admin']);
 Route::post('admin/permission/update_roles', ['as' => 'admin.permission.update_roles', 'uses' => 'PermissionsController@update_roles']);
-Route::post('admin/role/update_permissions', ['as' => 'admin.role.update_permissions', 'uses' => 'RolesController@update_permissions']);
-Route::post('admin/role/update_users', ['as' => 'admin.role.update_users', 'uses' => 'RolesController@update_users']);
+Route::post('admin/role/update_permissions', ['as' => 'admin.role.update_permissions', 'uses' => 'RoleController@update_permissions']);
+Route::post('admin/role/update_users', ['as' => 'admin.role.update_users', 'uses' => 'RoleController@update_users']);
     
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('permission', 'PermissionsController');
-    Route::resource('role', 'RolesController');
+    Route::resource('role', 'RoleController');
     Route::get('phpinfo', ['as' => 'phpinfo','uses' => 'SystemController@phpinfo']);
 });
 
@@ -93,19 +93,19 @@ Route::get('bookstore', ['as' => 'bookstore','uses' => 'PagesController@bookstor
 Route::resource('diocese', 'DioceseController');
 //Route::get('donation', ['as' => 'donation','uses' => 'PagesController@donation']);
 
-Route::get('donor/{donor_id?}/assign/{contact_id?}', ['uses' => 'DonorsController@assign']);
-Route::get('donor/{donor_id?}/add', ['uses' => 'DonorsController@add']);
-Route::resource('donor', 'DonorsController');
+Route::get('donor/{donor_id?}/assign/{contact_id?}', ['uses' => 'DonorController@assign']);
+Route::get('donor/{donor_id?}/add', ['uses' => 'DonorController@add']);
+Route::resource('donor', 'DonorController');
 Route::resource('donation', 'DonationController');
 Route::get('donation/create/{id?}/{type?}', ['uses'=> 'DonationController@create']);
-Route::get('group/{group_id?}/touchpoint', ['uses' => 'TouchpointsController@add_group']);
+Route::get('group/{group_id?}/touchpoint', ['uses' => 'TouchpointController@add_group']);
 Route::get('group/{group_id?}/registration', ['uses' => 'RegistrationsController@add_group']);
-Route::post('touchpoint/add_group', ['uses' => 'TouchpointsController@store_group']);
-Route::post('touchpoint/add_retreat', ['uses' => 'TouchpointsController@store_retreat']);
+Route::post('touchpoint/add_group', ['uses' => 'TouchpointController@store_group']);
+Route::post('touchpoint/add_retreat', ['uses' => 'TouchpointController@store_retreat']);
 Route::post('registration/add_group', ['uses' => 'RegistrationsController@store_group']);
 
 
-Route::resource('group', 'GroupsController');
+Route::resource('group', 'GroupController');
 Route::get('grounds', ['as' => 'grounds','uses' => 'PagesController@grounds']);
 Route::get('housekeeping', ['as' => 'housekeeping','uses' => 'PagesController@housekeeping']);
 Route::get('kitchen', ['as' => 'kitchen','uses' => 'PagesController@kitchen']);
@@ -177,28 +177,28 @@ Route::group(['prefix' => 'report'], function () {
 Route::get('reservation', ['as' => 'reservation','uses' => 'PagesController@reservation']);
 Route::get('restricted', ['as' => 'restricted','uses' => 'PagesController@restricted']);
 
-Route::get('retreat/id/{id_number}', ['as' => 'get_event_by_id_number','uses' => 'RetreatsController@get_event_by_id_number']);
+Route::get('retreat/id/{id_number}', ['as' => 'get_event_by_id_number','uses' => 'RetreatController@get_event_by_id_number']);
 Route::get('retreat/{retreat_id}/register/{contact_id?}', ['as'=>'registration.register','uses' => 'RegistrationsController@register']);
-Route::get('retreat/{id}/assign_rooms', ['as'=>'retreat.assign_rooms','uses' => 'RetreatsController@assign_rooms']);
-Route::get('retreat/{id}/payments/edit', ['as'=>'retreat.payments.edit','uses' => 'RetreatsController@edit_payments']);
-Route::get('retreat/{id}/payments', ['as'=>'retreat.payments','uses' => 'RetreatsController@show_payments']);
-Route::post('retreat/room_update', ['as' => 'retreat.room_update', 'uses' => 'RetreatsController@room_update']);
+Route::get('retreat/{id}/assign_rooms', ['as'=>'retreat.assign_rooms','uses' => 'RetreatController@assign_rooms']);
+Route::get('retreat/{id}/payments/edit', ['as'=>'retreat.payments.edit','uses' => 'RetreatController@edit_payments']);
+Route::get('retreat/{id}/payments', ['as'=>'retreat.payments','uses' => 'RetreatController@show_payments']);
+Route::post('retreat/room_update', ['as' => 'retreat.room_update', 'uses' => 'RetreatController@room_update']);
 Route::post('retreat/payments/update', ['as' => 'retreat.payments.update', 'uses' => 'DonationController@retreat_payments_update']);
-Route::get('retreat/{id}/checkout', ['as'=>'retreat.checkout','uses' => 'RetreatsController@checkout']);
-Route::get('retreat/{id}/checkin', ['as'=>'retreat.checkin','uses' => 'RetreatsController@checkin']);
+Route::get('retreat/{id}/checkout', ['as'=>'retreat.checkout','uses' => 'RetreatController@checkout']);
+Route::get('retreat/{id}/checkin', ['as'=>'retreat.checkin','uses' => 'RetreatController@checkin']);
 
-Route::resource('retreat', 'RetreatsController');
+Route::resource('retreat', 'RetreatController');
 
 Route::get('retreats', ['as' => 'retreats','uses' => 'PagesController@retreat']);
-Route::resource('room', 'RoomsController');
-Route::get('rooms/{ym?}/{building?}', ['as' => 'rooms','uses' => 'RoomsController@schedule']);
+Route::resource('room', 'RoomController');
+Route::get('rooms/{ym?}/{building?}', ['as' => 'rooms','uses' => 'RoomController@schedule']);
 Route::get('support', ['as' => 'support','uses' => 'PagesController@support']);
-Route::resource('touchpoint', 'TouchpointsController');
-Route::get('touchpoint/add/{id?}', ['uses' => 'TouchpointsController@add']);
+Route::resource('touchpoint', 'TouchpointController');
+Route::get('touchpoint/add/{id?}', ['uses' => 'TouchpointController@add']);
 Route::get('users', ['as' => 'users','uses' => 'PagesController@user']);
-Route::resource('vendor', 'VendorsController');
+Route::resource('vendor', 'VendorController');
 
-Route::get('calendar', ['as' => 'calendar','uses' => 'RetreatsController@calendar']);
+Route::get('calendar', ['as' => 'calendar','uses' => 'RetreatController@calendar']);
 
 Route::get('mailgun/get', ['as' => 'mailgun.get','uses' => 'MailgunController@get']);
 Route::get('mailgun/process', ['as' => 'mailgun.process','uses' => 'MailgunController@process']);

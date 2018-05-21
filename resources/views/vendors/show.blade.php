@@ -17,10 +17,10 @@
                         </strong>
                     </h1>
                 </div>
-                <span class="back"><a href={{ action('VendorsController@index') }}>{!! Html::image('img/vendor.png', 'Vendor Index',array('title'=>"Vendor Index",'class' => 'btn btn-primary')) !!}</a></span></h1>
+                <span class="back"><a href={{ action('VendorController@index') }}>{!! Html::image('img/vendor.png', 'Vendor Index',array('title'=>"Vendor Index",'class' => 'btn btn-primary')) !!}</a></span></h1>
                 @can('create-touchpoint')
                     <span class="btn btn-primary">
-                        <a href={{ action('TouchpointsController@add',$vendor->id) }}>Add Touchpoint</a>
+                        <a href={{ action('TouchpointController@add',$vendor->id) }}>Add Touchpoint</a>
                     </span>
                 @endCan
             </div>
@@ -194,7 +194,7 @@
                                 <span class="grey">Touchpoints for {{ $vendor->display_name }} </span>
                             </h2> 
                             <span class="btn btn-primary">
-                               <a href={{ action('TouchpointsController@add',$vendor->id) }}>Add Touchpoint</a>
+                               <a href={{ action('TouchpointController@add',$vendor->id) }}>Add Touchpoint</a>
                             </span>
                         </div>
                         <table class="table">
@@ -225,7 +225,7 @@
         <div class='row'>
             @can('update-contact')
             <div class='col-md-1'>
-                <a href="{{ action('VendorsController@edit', $vendor->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                <a href="{{ action('VendorController@edit', $vendor->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
             </div>
             @endCan
             @can('delete-contact')

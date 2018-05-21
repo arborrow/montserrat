@@ -8,7 +8,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <span><h2>Retreat #<a href="{{url('retreat/'.$retreat->id)}}">{{ $retreat->idnumber }} - {{ $retreat->title }}</a></span>
-                <span class="back"><a href={{ action('RetreatsController@index') }}>{!! Html::image('img/retreat.png', 'Retreat Index',array('title'=>"Retreat Index",'class' => 'btn btn-default')) !!}</a></span></h1>
+                <span class="back"><a href={{ action('RetreatController@index') }}>{!! Html::image('img/retreat.png', 'Retreat Index',array('title'=>"Retreat Index",'class' => 'btn btn-default')) !!}</a></span></h1>
                 <div class='row'>
                     <div class='col-md-3'><strong>Starts: </strong>{{date('F j, Y g:i A', strtotime($retreat->start_date))}}</div>
                     <div class='col-md-3'><strong>Ends: </strong>{{date('F j, Y g:i A', strtotime($retreat->end_date))}}</div>

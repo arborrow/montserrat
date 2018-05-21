@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Redirect;
 use Socialite;
 use Auth;
 
-class TouchpointsController extends Controller
+class TouchpointController extends Controller
 {
     public function __construct()
     {
@@ -148,7 +148,7 @@ class TouchpointsController extends Controller
 
         $touchpoint->save();
 
-        return Redirect::action('TouchpointsController@index');
+        return Redirect::action('TouchpointController@index');
     }
    
     
@@ -172,7 +172,7 @@ class TouchpointsController extends Controller
             $touchpoint->notes= $request->input('notes');
             $touchpoint->save();
         }
-        return Redirect::action('GroupsController@show', $group_id);
+        return Redirect::action('GroupController@show', $group_id);
     }
     
     public function store_retreat(Request $request)
@@ -195,7 +195,7 @@ class TouchpointsController extends Controller
             $touchpoint->notes= $request->input('notes');
             $touchpoint->save();
         }
-        return Redirect::action('RetreatsController@show', $event_id);
+        return Redirect::action('RetreatController@show', $event_id);
     }
     
 
@@ -271,7 +271,7 @@ class TouchpointsController extends Controller
         $touchpoint->notes= $request->input('notes');
         $touchpoint->save();
     
-        return Redirect::action('TouchpointsController@index');
+        return Redirect::action('TouchpointController@index');
     }
 
     /**
@@ -284,6 +284,6 @@ class TouchpointsController extends Controller
     {
         $this->authorize('delete-touchpoint');
         \App\Touchpoint::destroy($id);
-        return Redirect::action('TouchpointsController@index');
+        return Redirect::action('TouchpointController@index');
     }
 }

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 //use Input;
 use Carbon\Carbon;
 
-class RoomsController extends Controller
+class RoomController extends Controller
 {
     public function __construct()
     {
@@ -72,7 +72,7 @@ class RoomsController extends Controller
         $room->status= $request->input('status');
         $room->save();
         
-        return Redirect::action('RoomsController@index');
+        return Redirect::action('RoomController@index');
     }
 
     /**
@@ -131,7 +131,7 @@ class RoomsController extends Controller
         $room->status = $request->input('status');
         $room->save();
 
-        return Redirect::action('RoomsController@index');
+        return Redirect::action('RoomController@index');
     }
 
     /**
@@ -144,7 +144,7 @@ class RoomsController extends Controller
     {
         $this->authorize('delete-room');
         \App\Room::destroy($id);
-        return Redirect::action('RoomsController@index');
+        return Redirect::action('RoomController@index');
     }
     
     /**

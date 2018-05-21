@@ -278,7 +278,7 @@ class RegistrationsController extends Controller
             //TODO: verify that the newly created room assignment does not conflict with an existing one
         }
     
-        return Redirect::action('RetreatsController@show'
+        return Redirect::action('RetreatController@show'
             . '', $retreat->id);
     }
 

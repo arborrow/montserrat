@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 
-class RolesController extends Controller
+class RoleController extends Controller
 {
     //
     public function __construct()
@@ -49,7 +49,7 @@ class RolesController extends Controller
 
         $role->save();
 
-        return Redirect::action('RolesController@index');
+        return Redirect::action('RoleController@index');
     }
     
 
@@ -101,7 +101,7 @@ class RolesController extends Controller
         $role->description= $request->input('description');
         $role->save();
     
-        return Redirect::action('RolesController@index');
+        return Redirect::action('RoleController@index');
     }
 
     /**
@@ -115,7 +115,7 @@ class RolesController extends Controller
         $this->authorize('delete-role');
         
         \App\Role::destroy($id);
-        return Redirect::action('RolesController@index');
+        return Redirect::action('RoleController@index');
     }
 
     public function update_permissions(Request $request)
@@ -124,7 +124,7 @@ class RolesController extends Controller
         $role->permissions()->detach();
         $role->permissions()->sync($request->input('permissions'));
     
-        return Redirect::action('RolesController@index');
+        return Redirect::action('RoleController@index');
     }
     public function update_users(Request $request)
     {
@@ -132,6 +132,6 @@ class RolesController extends Controller
         $role->users()->detach();
         $role->users()->sync($request->input('users'));
     
-        return Redirect::action('RolesController@index');
+        return Redirect::action('RoleController@index');
     }
 }
