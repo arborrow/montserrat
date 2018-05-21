@@ -7,7 +7,7 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
 
-class ActivitiesController extends Controller
+class ActivityController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -104,7 +104,7 @@ class ActivitiesController extends Controller
             $activity_assignee->record_type_id = config('polanco.activity_contacts_type.assignee');
         $activity_assignee->save();
         
-        return Redirect::action('ActivitiesController@index');
+        return Redirect::action('ActivityController@index');
     }
 
     /**
@@ -205,7 +205,7 @@ class ActivitiesController extends Controller
             $activity_assignee->contact_id = $request->input('creator_id');
         $activity_assignee->save();
         
-        return Redirect::action('ActivitiesController@show', $id);
+        return Redirect::action('ActivityController@show', $id);
     }
 
     /**
@@ -222,6 +222,6 @@ class ActivitiesController extends Controller
         \App\ActivityContact::whereActivityId($id)->delete();
         \App\Activity::destroy($id);
 
-        return Redirect::action('ActivitiesController@index');
+        return Redirect::action('ActivityController@index');
     }
 }

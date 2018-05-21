@@ -441,13 +441,13 @@ class ParishesController extends Controller
         
         if (null !== $request->file('avatar')) {
             $description = 'Avatar for '.$parish->organization_name;
-            $attachment = new AttachmentsController;
+            $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('avatar'), 'contact', $parish->id, 'avatar', $description);
         }
 
         if (null !== $request->file('attachment')) {
             $description = $request->input('attachment_description');
-            $attachment = new AttachmentsController;
+            $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('attachment'), 'contact', $parish->id, 'attachment', $description);
         }
         return Redirect::action('ParishesController@show', $parish->id);
