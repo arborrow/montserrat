@@ -110,9 +110,9 @@ Route::get('grounds', ['as' => 'grounds','uses' => 'PagesController@grounds']);
 Route::get('housekeeping', ['as' => 'housekeeping','uses' => 'PagesController@housekeeping']);
 Route::get('kitchen', ['as' => 'kitchen','uses' => 'PagesController@kitchen']);
 Route::get('maintenance', ['as' => 'maintenance','uses' => 'PagesController@maintenance']);
-Route::get('organization/type/{subcontact_type_id}', ['uses' => 'OrganizationsController@index_type']);
+Route::get('organization/type/{subcontact_type_id}', ['uses' => 'OrganizationController@index_type']);
 
-Route::resource('organization', 'OrganizationsController');
+Route::resource('organization', 'OrganizationController');
 Route::resource('parish', 'ParishesController');
 Route::resource('payment', 'PaymentsController');
 Route::get('payment/create/{donation_id}', ['uses'=> 'PaymentsController@create']);
