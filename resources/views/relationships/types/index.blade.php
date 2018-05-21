@@ -7,7 +7,7 @@
                 <div class="panel-heading">
                     <h1>
                     <span class="grey">Relationship Type Index</span> 
-                    <span class="create"><a href={{ action('RelationshipTypesController@create') }}>{!! Html::image('img/create.png', 'Add Group',array('title'=>"Add Group",'class' => 'btn btn-primary')) !!}</a></span></h1>
+                    <span class="create"><a href={{ action('RelationshipTypeController@create') }}>{!! Html::image('img/create.png', 'Add Group',array('title'=>"Add Group",'class' => 'btn btn-primary')) !!}</a></span></h1>
                 
                 </div>
                 @if ($relationship_types->isEmpty())

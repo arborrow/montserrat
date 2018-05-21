@@ -87,7 +87,7 @@
                 @foreach($registrations->sortBy('retreatant.sort_name') as $registration)
                     <tr>
                         <td class='col-md-3'>{!!$registration->retreatant->contact_link!!}</td>
-                        <td class='col-md-2'><a href="{{action('RegistrationsController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }}</a></td>
+                        <td class='col-md-2'><a href="{{action('RegistrationController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }}</a></td>
                         <td class='col-md-2'>{{$registration->retreatant->note_room_preference_text}}</td>
                         <td class='col-md-2'>
                             @if($registration->canceled_at === NULL)

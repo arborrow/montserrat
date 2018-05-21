@@ -19,7 +19,7 @@
                     @endCan
                     @can('create-registration')
                         <span class="btn btn-default">
-                            <a href={{ action('RegistrationsController@add_group',$role['group_id']) }}>Add Group Registration</a>
+                            <a href={{ action('RegistrationController@add_group',$role['group_id']) }}>Add Group Registration</a>
                         </span>
                     @endCan
                     @can('create-touchpoint')

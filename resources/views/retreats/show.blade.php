@@ -134,7 +134,7 @@
         <div class="panel-heading" id='registrations'>
             <h2>Retreatants Registered for {!!Html::link(url('retreat/'.$retreat->id.'/edit'),$retreat->idnumber.' - '.$retreat->title)!!} </h2>
             @can('create-registration')
-                {!! Html::link(action('RegistrationsController@register',$retreat->id),'Register a retreatant',array('class' => 'btn btn-default'))!!}
+                {!! Html::link(action('RegistrationController@register',$retreat->id),'Register a retreatant',array('class' => 'btn btn-default'))!!}
             @endCan
             @can('show-contact')
                 {!! Html::link($retreat->email_registered_retreatants,'Email registered retreatants',array('class' => 'btn btn-default'))!!}
@@ -181,7 +181,7 @@
                 @can('show-registration')    
                     @foreach($registrations->sortBy('retreatant.sort_name') as $registration)
                         <tr>
-                            <td id='registration-{{$registration->id}}'><a href="{{action('RegistrationsController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }}</a></td>
+                            <td id='registration-{{$registration->id}}'><a href="{{action('RegistrationController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }}</a></td>
                             <td> {!!$registration->retreatant->avatar_small_link!!} </td>
                             <td>{!!$registration->retreatant->contact_link_full_name!!} ({{$registration->retreatant->participant_count}})</td>
                             <td>

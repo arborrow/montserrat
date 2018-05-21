@@ -13,7 +13,7 @@
                                 Registration #{{ $registration->id }}
                             @endCan
                         </span>
-                    <span class="back"><a href={{ action('RegistrationsController@index') }}>{!! Html::image('img/registration.png', 'Registration Index',array('title'=>"Registration Index",'class' => 'btn btn-primary')) !!}</a>
+                    <span class="back"><a href={{ action('RegistrationController@index') }}>{!! Html::image('img/registration.png', 'Registration Index',array('title'=>"Registration Index",'class' => 'btn btn-primary')) !!}</a>
                     </span></h2>
                 </div>
                 <div class='row'>
@@ -97,7 +97,7 @@
                 <div class='row'>
                     @can('update-registration')
                         <div class='col-md-1'>
-                            <a href="{{ action('RegistrationsController@edit', $registration->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                            <a href="{{ action('RegistrationController@edit', $registration->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                         </div>
                     @endCan
                     @can('delete-registration')

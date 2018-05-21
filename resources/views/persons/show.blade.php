@@ -40,7 +40,7 @@
                         @endCan
                         @can('create-registration')
                         <span class="btn btn-default">
-                            <a href={{ action('RegistrationsController@add',$person->id) }}>Add Registration</a> 
+                            <a href={{ action('RegistrationController@add',$person->id) }}>Add Registration</a> 
                         </span>                
                         @endCan
                         <span class="btn btn-default">
