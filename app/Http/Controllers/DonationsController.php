@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Carbon\Carbon;
 
-class DonationsController extends Controller
+class DonationController extends Controller
 {
     public function __construct()
     {
@@ -112,7 +112,7 @@ class DonationsController extends Controller
         $payment->save();
 
         
-        return Redirect::action('DonationsController@index');
+        return Redirect::action('DonationController@index');
           
     }
 
@@ -177,7 +177,7 @@ class DonationsController extends Controller
         $donation->terms= $request->input('terms');
         $donation->save();
         
-        return Redirect::action('DonationsController@index');
+        return Redirect::action('DonationController@index');
           
     
     }
@@ -201,7 +201,7 @@ class DonationsController extends Controller
             $registration->save();
         }
                 
-        return Redirect::action('DonationsController@index');
+        return Redirect::action('DonationController@index');
 
     }
     

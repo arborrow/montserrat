@@ -71,7 +71,7 @@ class PaymentsController extends Controller
         }
         $payment->save();
         
-        return Redirect::action('DonationsController@show',$donation->donation_id);
+        return Redirect::action('DonationController@show',$donation->donation_id);
           
     }
 
@@ -137,7 +137,7 @@ class PaymentsController extends Controller
         // dd($payment);
         $payment->save();
         
-        return Redirect::action('DonationsController@show',$payment->donation_id);
+        return Redirect::action('DonationController@show',$payment->donation_id);
         
     }
 
@@ -156,7 +156,7 @@ class PaymentsController extends Controller
         //deletion of payments implied on the model 
         \App\Payment::destroy($id);
         // disassociate registration with a donation that is being deleted - there should only be one
-       return Redirect::action('DonationsController@show',$payment->donation_id);
+       return Redirect::action('DonationController@show',$payment->donation_id);
 
     }
 }

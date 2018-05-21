@@ -96,8 +96,8 @@ Route::resource('diocese', 'DioceseController');
 Route::get('donor/{donor_id?}/assign/{contact_id?}', ['uses' => 'DonorsController@assign']);
 Route::get('donor/{donor_id?}/add', ['uses' => 'DonorsController@add']);
 Route::resource('donor', 'DonorsController');
-Route::resource('donation', 'DonationsController');
-Route::get('donation/create/{id?}/{type?}', ['uses'=> 'DonationsController@create']);
+Route::resource('donation', 'DonationController');
+Route::get('donation/create/{id?}/{type?}', ['uses'=> 'DonationController@create']);
 Route::get('group/{group_id?}/touchpoint', ['uses' => 'TouchpointsController@add_group']);
 Route::get('group/{group_id?}/registration', ['uses' => 'RegistrationsController@add_group']);
 Route::post('touchpoint/add_group', ['uses' => 'TouchpointsController@store_group']);
@@ -183,7 +183,7 @@ Route::get('retreat/{id}/assign_rooms', ['as'=>'retreat.assign_rooms','uses' => 
 Route::get('retreat/{id}/payments/edit', ['as'=>'retreat.payments.edit','uses' => 'RetreatsController@edit_payments']);
 Route::get('retreat/{id}/payments', ['as'=>'retreat.payments','uses' => 'RetreatsController@show_payments']);
 Route::post('retreat/room_update', ['as' => 'retreat.room_update', 'uses' => 'RetreatsController@room_update']);
-Route::post('retreat/payments/update', ['as' => 'retreat.payments.update', 'uses' => 'DonationsController@retreat_payments_update']);
+Route::post('retreat/payments/update', ['as' => 'retreat.payments.update', 'uses' => 'DonationController@retreat_payments_update']);
 Route::get('retreat/{id}/checkout', ['as'=>'retreat.checkout','uses' => 'RetreatsController@checkout']);
 Route::get('retreat/{id}/checkin', ['as'=>'retreat.checkin','uses' => 'RetreatsController@checkin']);
 
