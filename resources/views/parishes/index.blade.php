@@ -12,13 +12,13 @@
                         <span class="grey">({{$parishes->count()}} records)</span>
                         @can('create-contact')
                             <span class="create">
-                                <a href={{ action('ParishesController@create') }}>{!! Html::image('img/create.png', 'Create a Parish',array('title'=>"Create Parish",'class' => 'btn btn-default')) !!}</a>
+                                <a href={{ action('ParishController@create') }}>{!! Html::image('img/create.png', 'Create a Parish',array('title'=>"Create Parish",'class' => 'btn btn-default')) !!}</a>
                             </span>
                         @endCan
                     </h1>
-                    <span class="btn btn-default"><a href={{ action('ParishesController@dallasdiocese') }}>Diocese of Dallas</a></span>
-                    <span class="btn btn-default"><a href={{ action('ParishesController@fortworthdiocese') }}>Diocese of Fort Worth</a></span>
-                    <span class="btn btn-default"><a href={{ action('ParishesController@tylerdiocese') }}>Diocese of Tyler</a></span>
+                    <span class="btn btn-default"><a href={{ action('ParishController@dallasdiocese') }}>Diocese of Dallas</a></span>
+                    <span class="btn btn-default"><a href={{ action('ParishController@fortworthdiocese') }}>Diocese of Fort Worth</a></span>
+                    <span class="btn btn-default"><a href={{ action('ParishController@tylerdiocese') }}>Diocese of Tyler</a></span>
                     
              
                 </div>

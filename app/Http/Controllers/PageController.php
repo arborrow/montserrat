@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon;
 
-class PagesController extends Controller
+class PageController extends Controller
 {
     public function __construct()
     {

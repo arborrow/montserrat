@@ -146,13 +146,13 @@
                 {!! Html::link(action('RetreatController@checkout',$retreat->id),'Checkout',array('class' => 'btn btn-default'))!!}
             @endCan
             @can('show-contact')
-                {!! Html::link(action('PagesController@retreatantinforeport',$retreat->idnumber),'Retreatant information report',array('class' => 'btn btn-default'))!!}
+                {!! Html::link(action('PageController@retreatantinforeport',$retreat->idnumber),'Retreatant information report',array('class' => 'btn btn-default'))!!}
             @endCan
             @can('show-contact')
-                {!! Html::link(action('PagesController@retreatrosterreport',$retreat->idnumber),'Retreat roster',array('class' => 'btn btn-default'))!!}
+                {!! Html::link(action('PageController@retreatrosterreport',$retreat->idnumber),'Retreat roster',array('class' => 'btn btn-default'))!!}
             @endCan
             @can('show-contact')
-                {!! Html::link(action('PagesController@retreatlistingreport',$retreat->idnumber),'Retreat listing',array('class' => 'btn btn-default'))!!}
+                {!! Html::link(action('PageController@retreatlistingreport',$retreat->idnumber),'Retreat listing',array('class' => 'btn btn-default'))!!}
             @endCan
             @can('create-touchpoint')
                 {!! Html::link(action('TouchpointController@add_retreat',$retreat->id),'Retreat touchpoint',array('class' => 'btn btn-default'))!!}

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
 
-class PaymentsController extends Controller
+class PaymentController extends Controller
 {
     /**
      * Display a listing of the resource.

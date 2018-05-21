@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 
-class ParishesController extends Controller
+class ParishController extends Controller
 {
     public function __construct()
     {
@@ -191,7 +191,7 @@ class ParishesController extends Controller
             $relationship_pastor->save();
         }
         
-        return Redirect::action('ParishesController@index');
+        return Redirect::action('ParishController@index');
     }
 
     /**
@@ -450,7 +450,7 @@ class ParishesController extends Controller
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('attachment'), 'contact', $parish->id, 'attachment', $description);
         }
-        return Redirect::action('ParishesController@show', $parish->id);
+        return Redirect::action('ParishController@show', $parish->id);
     }
 
     /**
@@ -477,7 +477,7 @@ class ParishesController extends Controller
         \App\Registration::whereContactId($id)->delete();
        
         \App\Contact::destroy($id);
-        return Redirect::action('ParishesController@index');
+        return Redirect::action('ParishController@index');
     }
 
     public function fortworthdiocese()

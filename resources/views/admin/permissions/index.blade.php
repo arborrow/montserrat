@@ -7,7 +7,7 @@
                 <div class="panel-heading">
                     <h1>
                     <span class="grey">Permissions Index</span> 
-                    <span class="create"><a href={{ action('PermissionsController@create') }}>{!! Html::image('img/create.png', 'Add Permission',array('title'=>"Add Permission",'class' => 'btn btn-primary')) !!}</a></span></h1>
+                    <span class="create"><a href={{ action('PermissionController@create') }}>{!! Html::image('img/create.png', 'Add Permission',array('title'=>"Add Permission",'class' => 'btn btn-primary')) !!}</a></span></h1>
                 
                 </div>
                 @can('manage-permission')

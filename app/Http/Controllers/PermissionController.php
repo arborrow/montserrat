@@ -7,7 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 
-class PermissionsController extends Controller
+class PermissionController extends Controller
 {
     //
     public function __construct()
@@ -135,7 +135,7 @@ class PermissionsController extends Controller
         $permission->description= $request->input('description');
         $permission->save();
     
-        return Redirect::action('PermissionsController@index');
+        return Redirect::action('PermissionController@index');
     }
 
     /**
@@ -148,7 +148,7 @@ class PermissionsController extends Controller
     {
         $this->authorize('delete-permission');
         \App\Permission::destroy($id);
-        return Redirect::action('PermissionsController@index');
+        return Redirect::action('PermissionController@index');
     }
     
     public function update_roles(Request $request)
@@ -159,6 +159,6 @@ class PermissionsController extends Controller
         $permission->roles()->detach();
         $permission->roles()->sync($request->input('roles'));
     
-        return Redirect::action('PermissionsController@index');
+        return Redirect::action('PermissionController@index');
     }
 }

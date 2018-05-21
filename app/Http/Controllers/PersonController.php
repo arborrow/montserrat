@@ -10,7 +10,7 @@ use Image;
 use Illuminate\Support\Facades\File;
 use Response;
 
-class PersonsController extends Controller
+class PersonController extends Controller
 {
     public function __construct()
     {
@@ -637,9 +637,9 @@ class PersonsController extends Controller
             $url_twitter->website_type='Twitter';
         $url_twitter->save();
 
-        return Redirect::action('PersonsController@show', $person->id);//
+        return Redirect::action('PersonController@show', $person->id);//
         
-        //return Redirect::action('PersonsController@index');//
+        //return Redirect::action('PersonController@index');//
     }
 
     /**
@@ -1475,7 +1475,7 @@ class PersonsController extends Controller
             $group_assistant->save();
         }
         
-        return Redirect::action('PersonsController@show', $person->id);//
+        return Redirect::action('PersonController@show', $person->id);//
     }
 
     /**
@@ -1506,7 +1506,7 @@ class PersonsController extends Controller
         \App\Registration::whereContactId($id)->delete();
         \App\Contact::destroy($id);
         
-        return Redirect::action('PersonsController@index');
+        return Redirect::action('PersonController@index');
     }
     public function merge_destroy($id, $return_id)
     {
@@ -1528,7 +1528,7 @@ class PersonsController extends Controller
         \App\Registration::whereContactId($id)->delete();
         \App\Contact::destroy($id);
         
-        return Redirect::action('PersonsController@merge', $return_id);
+        return Redirect::action('PersonController@merge', $return_id);
     }
     
     public function assistants()
@@ -1727,7 +1727,7 @@ class PersonsController extends Controller
         
         //if there are no duplicates for the user go back to duplicates list
         if (!$duplicates->count()) {
-            return Redirect::action('PersonsController@duplicates');
+            return Redirect::action('PersonController@duplicates');
         }
         
         if (!empty($merge_id)) {

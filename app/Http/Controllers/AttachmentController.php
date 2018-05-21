@@ -310,7 +310,7 @@ class AttachmentController extends Controller
         $this->authorize('delete-attachment');
         $this->delete_attachment($attachment, 'contact', $user_id, 'attachment');
         // TODO: get contact type and redirect to person, parish, organization, vendor as appropriate
-        return Redirect::action('PersonsController@show', $user_id);
+        return Redirect::action('PersonController@show', $user_id);
     }
     
     public function get_avatar($user_id)
@@ -323,7 +323,7 @@ class AttachmentController extends Controller
     {
         $this->authorize('delete-attachment');
         $this->delete_attachment('avatar.png', 'contact', $user_id, 'avatar');
-        return Redirect::action('PersonsController@show', $user_id);
+        return Redirect::action('PersonController@show', $user_id);
     }
 
     public function get_event_contract($event_id)
