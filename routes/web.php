@@ -17,7 +17,7 @@
 
 Route::get('intercept/{code}', function($code) {
     $url = base64_decode($code);
-    dd($url);
+    // dd($url);
     try {
         return redirect($url);
     } catch ( \Exception $e ) {
@@ -57,20 +57,20 @@ Route::get('results', ['as' => 'results', 'uses' => 'SearchController@results'])
 
 // Attachment routes
 
-Route::get('avatar/{user_id}', ['as' => 'get_avatar','uses' => 'AttachmentsController@get_avatar']);
-Route::get('avatar/{user_id}/delete', ['as' => 'delete_avatar','uses' => 'AttachmentsController@delete_avatar']);
+Route::get('avatar/{user_id}', ['as' => 'get_avatar','uses' => 'AttachmentController@get_avatar']);
+Route::get('avatar/{user_id}/delete', ['as' => 'delete_avatar','uses' => 'AttachmentController@delete_avatar']);
 
-Route::get('contact/{user_id}/attachment/{file_name}', ['as' => 'show_contact_attachment','uses' => 'AttachmentsController@show_contact_attachment']);
-Route::get('contact/{user_id}/attachment/{file_name}/delete', ['as' => 'delete_contact_attachment','uses' => 'AttachmentsController@delete_contact_attachment']);
+Route::get('contact/{user_id}/attachment/{file_name}', ['as' => 'show_contact_attachment','uses' => 'AttachmentController@show_contact_attachment']);
+Route::get('contact/{user_id}/attachment/{file_name}/delete', ['as' => 'delete_contact_attachment','uses' => 'AttachmentController@delete_contact_attachment']);
 
-Route::get('retreat/{event_id}/contract', ['as' => 'get_event_contract','uses' => 'AttachmentsController@get_event_contract']);
-Route::get('retreat/{event_id}/contract/delete', ['as' => 'delete_event_contract','uses' => 'AttachmentsController@delete_event_contract']);
-Route::get('retreat/{event_id}/schedule', ['as' => 'get_event_schedule','uses' => 'AttachmentsController@get_event_schedule']);
-Route::get('retreat/{event_id}/schedule/delete', ['as' => 'delete_event_schedule','uses' => 'AttachmentsController@delete_event_schedule']);
-Route::get('retreat/{event_id}/evaluations', ['as' => 'get_event_evaluations','uses' => 'AttachmentsController@get_event_evaluations']);
-Route::get('retreat/{event_id}/evaluations/delete', ['as' => 'delete_event_evaluations','uses' => 'AttachmentsController@delete_event_evaluations']);
-Route::get('retreat/{event_id}/photo', ['as' => 'get_event_group_photo','uses' => 'AttachmentsController@get_event_group_photo']);
-Route::get('retreat/{event_id}/photo/delete', ['as' => 'delete_event_group_photo','uses' => 'AttachmentsController@delete_event_group_photo']);
+Route::get('retreat/{event_id}/contract', ['as' => 'get_event_contract','uses' => 'AttachmentController@get_event_contract']);
+Route::get('retreat/{event_id}/contract/delete', ['as' => 'delete_event_contract','uses' => 'AttachmentController@delete_event_contract']);
+Route::get('retreat/{event_id}/schedule', ['as' => 'get_event_schedule','uses' => 'AttachmentController@get_event_schedule']);
+Route::get('retreat/{event_id}/schedule/delete', ['as' => 'delete_event_schedule','uses' => 'AttachmentController@delete_event_schedule']);
+Route::get('retreat/{event_id}/evaluations', ['as' => 'get_event_evaluations','uses' => 'AttachmentController@get_event_evaluations']);
+Route::get('retreat/{event_id}/evaluations/delete', ['as' => 'delete_event_evaluations','uses' => 'AttachmentController@delete_event_evaluations']);
+Route::get('retreat/{event_id}/photo', ['as' => 'get_event_group_photo','uses' => 'AttachmentController@get_event_group_photo']);
+Route::get('retreat/{event_id}/photo/delete', ['as' => 'delete_event_group_photo','uses' => 'AttachmentController@delete_event_group_photo']);
 Route::get('retreat/{event_id}/touchpoint', ['uses' => 'TouchpointsController@add_retreat']);
 Route::get('retreat/type/{event_type_id}', ['uses' => 'RetreatsController@index_type']);
 
@@ -87,10 +87,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('phpinfo', ['as' => 'phpinfo','uses' => 'SystemController@phpinfo']);
 });
 
-Route::resource('activity', 'ActivitiesController');
+Route::resource('activity', 'ActivityController');
 
 Route::get('bookstore', ['as' => 'bookstore','uses' => 'PagesController@bookstore']);
-Route::resource('diocese', 'DiocesesController');
+Route::resource('diocese', 'DioceseController');
 //Route::get('donation', ['as' => 'donation','uses' => 'PagesController@donation']);
 
 Route::get('donor/{donor_id?}/assign/{contact_id?}', ['uses' => 'DonorsController@assign']);
