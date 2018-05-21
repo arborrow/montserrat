@@ -21,7 +21,7 @@
                 @endCan
                 @can('create-registration')
                     <span class="btn btn-default">
-                        <a href={{ action('RegistrationsController@add_group',$group->id) }}>Add Group Registration</a>
+                        <a href={{ action('RegistrationController@add_group',$group->id) }}>Add Group Registration</a>
                     </span>
                 @endCan
             </div>

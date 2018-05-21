@@ -12,7 +12,7 @@ use Illuminate\Mail\Mailable;
 use App\Mail\RetreatRegistration;
 use App\Registration;
 
-class RegistrationsController extends Controller
+class RegistrationController extends Controller
 {
     public function __construct()
     {
@@ -232,7 +232,7 @@ class RegistrationsController extends Controller
                 //TODO: verify that the newly created room assignment does not conflict with an existing one
             }
         }
-        return Redirect::action('RegistrationsController@index');
+        return Redirect::action('RegistrationController@index');
     }
 
     public function store_group(Request $request)
@@ -408,7 +408,7 @@ class RegistrationsController extends Controller
         $registration->room_id= $request->input('room_id');
         $registration->save();
 
-        return Redirect::action('RegistrationsController@index');
+        return Redirect::action('RegistrationController@index');
     }
     public function update_group(Request $request, $id)
     {
@@ -450,7 +450,7 @@ class RegistrationsController extends Controller
         $registration->room_id= $request->input('room_id');
         $registration->save();
 
-        return Redirect::action('RegistrationsController@index');
+        return Redirect::action('RegistrationController@index');
     }
 
     /**
@@ -470,7 +470,7 @@ class RegistrationsController extends Controller
         $countregistrations = \App\Registration::where('event_id', '=', $registration->event_id)->count();
         //$retreat->attending = $countregistrations;
         $retreat->save();
-        return Redirect::action('RegistrationsController@index');
+        return Redirect::action('RegistrationController@index');
     }
     
     public function confirm($id)

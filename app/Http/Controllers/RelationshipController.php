@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 
-class RelationshipsController extends Controller
+class RelationshipController extends Controller
 {
     public function __construct()
     {

@@ -11,7 +11,7 @@
                         <span class="grey">Registration Index</span> 
                         @can('create-registration')
                             <span class="create">
-                                <a href={{ action('RegistrationsController@create') }}>{!! Html::image('img/create.png', 'Create a Registration',array('title'=>"Create a Registration",'class' => 'btn btn-primary')) !!}</a>
+                                <a href={{ action('RegistrationController@create') }}>{!! Html::image('img/create.png', 'Create a Registration',array('title'=>"Create a Registration",'class' => 'btn btn-primary')) !!}</a>
                             </span>
                         @endCan
                     </h1>

@@ -27,7 +27,7 @@
                         </span>
                     @endCan
                     <span class="btn btn-default">
-                        <a href={{ action('RegistrationsController@add',$parish->id) }}>Add Registration</a> 
+                        <a href={{ action('RegistrationController@add',$parish->id) }}>Add Registration</a> 
                     </span>                
                 </div>
                 <div class='row'><div class='col-md-4'>

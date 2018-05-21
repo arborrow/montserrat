@@ -99,10 +99,10 @@ Route::resource('donor', 'DonorController');
 Route::resource('donation', 'DonationController');
 Route::get('donation/create/{id?}/{type?}', ['uses'=> 'DonationController@create']);
 Route::get('group/{group_id?}/touchpoint', ['uses' => 'TouchpointController@add_group']);
-Route::get('group/{group_id?}/registration', ['uses' => 'RegistrationsController@add_group']);
+Route::get('group/{group_id?}/registration', ['uses' => 'RegistrationController@add_group']);
 Route::post('touchpoint/add_group', ['uses' => 'TouchpointController@store_group']);
 Route::post('touchpoint/add_retreat', ['uses' => 'TouchpointController@store_retreat']);
-Route::post('registration/add_group', ['uses' => 'RegistrationsController@store_group']);
+Route::post('registration/add_group', ['uses' => 'RegistrationController@store_group']);
 
 
 Route::resource('group', 'GroupController');
@@ -149,23 +149,23 @@ Route::group(['prefix' => 'person'], function () {
 
 Route::resource('person', 'PersonController');
 
-Route::get('registration/confirm/{token}', 'RegistrationsController@confirmAttendance');
-Route::get('registration/{participant}/email', 'RegistrationsController@registrationEmail');
-Route::get('registration/add/{id?}', ['uses' => 'RegistrationsController@add']);
-Route::get('registration/{id}/edit_group', ['url'=>'registration.edit_group', 'as' => 'registration.edit_group', 'uses' => 'RegistrationsController@edit_group']);
-Route::post('relationship/add', ['uses' => 'RelationshipTypesController@make']);
-Route::post('registration/{id}/update_group', ['as' => 'registration.update_group', 'uses' => 'RegistrationsController@update_group']);
-Route::get('registration/{id}/confirm', ['as' => 'registration.confirm', 'uses' => 'RegistrationsController@confirm']);
-Route::get('registration/{id}/attend', ['as' => 'registration.attend', 'uses' => 'RegistrationsController@attend']);
-Route::get('registration/{id}/arrive', ['as' => 'registration.arrive', 'uses' => 'RegistrationsController@arrive']);
-Route::get('registration/{id}/cancel', ['as' => 'registration.cancel', 'uses' => 'RegistrationsController@cancel']);
-Route::get('registration/{id}/depart', ['as' => 'registration.depart', 'uses' => 'RegistrationsController@depart']);
-Route::resource('registration', 'RegistrationsController');
-Route::resource('relationship', 'RelationshipsController');
+Route::get('registration/confirm/{token}', 'RegistrationController@confirmAttendance');
+Route::get('registration/{participant}/email', 'RegistrationController@registrationEmail');
+Route::get('registration/add/{id?}', ['uses' => 'RegistrationController@add']);
+Route::get('registration/{id}/edit_group', ['url'=>'registration.edit_group', 'as' => 'registration.edit_group', 'uses' => 'RegistrationController@edit_group']);
+Route::post('relationship/add', ['uses' => 'RelationshipTypeController@make']);
+Route::post('registration/{id}/update_group', ['as' => 'registration.update_group', 'uses' => 'RegistrationController@update_group']);
+Route::get('registration/{id}/confirm', ['as' => 'registration.confirm', 'uses' => 'RegistrationController@confirm']);
+Route::get('registration/{id}/attend', ['as' => 'registration.attend', 'uses' => 'RegistrationController@attend']);
+Route::get('registration/{id}/arrive', ['as' => 'registration.arrive', 'uses' => 'RegistrationController@arrive']);
+Route::get('registration/{id}/cancel', ['as' => 'registration.cancel', 'uses' => 'RegistrationController@cancel']);
+Route::get('registration/{id}/depart', ['as' => 'registration.depart', 'uses' => 'RegistrationController@depart']);
+Route::resource('registration', 'RegistrationController');
+Route::resource('relationship', 'RelationshipController');
 
-Route::post('relationship_type/addme', ['as' => 'relationship_type.addme', 'uses' => 'RelationshipTypesController@addme']);
-Route::get('relationship_type/{id}/add/{a?}/{b?}', ['as'=>'relationship_type.add','uses' => 'RelationshipTypesController@add']);
-Route::resource('relationship_type', 'RelationshipTypesController');
+Route::post('relationship_type/addme', ['as' => 'relationship_type.addme', 'uses' => 'RelationshipTypeController@addme']);
+Route::get('relationship_type/{id}/add/{a?}/{b?}', ['as'=>'relationship_type.add','uses' => 'RelationshipTypeController@add']);
+Route::resource('relationship_type', 'RelationshipTypeController');
 
 Route::group(['prefix' => 'report'], function () {
     Route::get('retreatantinfo/{retreat_id}', ['uses' => 'PageController@retreatantinforeport']);
@@ -178,7 +178,7 @@ Route::get('reservation', ['as' => 'reservation','uses' => 'PageController@reser
 Route::get('restricted', ['as' => 'restricted','uses' => 'PageController@restricted']);
 
 Route::get('retreat/id/{id_number}', ['as' => 'get_event_by_id_number','uses' => 'RetreatController@get_event_by_id_number']);
-Route::get('retreat/{retreat_id}/register/{contact_id?}', ['as'=>'registration.register','uses' => 'RegistrationsController@register']);
+Route::get('retreat/{retreat_id}/register/{contact_id?}', ['as'=>'registration.register','uses' => 'RegistrationController@register']);
 Route::get('retreat/{id}/assign_rooms', ['as'=>'retreat.assign_rooms','uses' => 'RetreatController@assign_rooms']);
 Route::get('retreat/{id}/payments/edit', ['as'=>'retreat.payments.edit','uses' => 'RetreatController@edit_payments']);
 Route::get('retreat/{id}/payments', ['as'=>'retreat.payments','uses' => 'RetreatController@show_payments']);

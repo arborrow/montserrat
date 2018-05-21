@@ -23,7 +23,7 @@
                         <a href={{ action('TouchpointController@add',$diocese->id) }}>Add Touchpoint</a>
                     </span>
                     <span class="btn btn-default">
-                    <a href={{ action('RegistrationsController@add',$diocese->id) }}>Add Registration</a> 
+                    <a href={{ action('RegistrationController@add',$diocese->id) }}>Add Registration</a> 
                 </span>                
 
                 </div>

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 use Input;
 use Illuminate\Support\Facades\URL;
 
-class RelationshipTypesController extends Controller
+class RelationshipTypeController extends Controller
 {
     public function __construct()
     {
@@ -95,7 +95,7 @@ class RelationshipTypesController extends Controller
        
         $relationship_type->save();
        
-        return Redirect::action('RelationshipTypesController@index');//
+        return Redirect::action('RelationshipTypeController@index');//
     }
 
     /**
@@ -157,7 +157,7 @@ class RelationshipTypesController extends Controller
        
         $relationship_type->save();
     
-        return Redirect::action('RelationshipTypesController@index');//
+        return Redirect::action('RelationshipTypeController@index');//
     }
 
     /**
@@ -170,7 +170,7 @@ class RelationshipTypesController extends Controller
     {
         $this->authorize('delete-relationshiptype');
         \App\RelationshipType::destroy($id);
-        return Redirect::action('RelationshipTypesController@index');
+        return Redirect::action('RelationshipTypeController@index');
     }
     
     public function add($id, $a = null, $b = null)

@@ -25,7 +25,7 @@
                     </span>
                     @endCan
                     <span class="btn btn-default">
-                    <a href={{ action('RegistrationsController@add',$organization->id) }}>Add Registration</a> 
+                    <a href={{ action('RegistrationController@add',$organization->id) }}>Add Registration</a> 
                 </span>                
 
                 </div>
