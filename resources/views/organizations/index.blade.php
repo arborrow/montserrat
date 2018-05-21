@@ -12,7 +12,7 @@
                     <span class="grey">({{$organizations->total()}} records)</span> 
                     @can('create-contact')
                         <span class="create">
-                            <a href={{ action('OrganizationsController@create') }}>{!! Html::image('img/create.png', 'Create a Diocese',array('title'=>"Create Diocese",'class' => 'btn btn-primary')) !!}</a>
+                            <a href={{ action('OrganizationController@create') }}>{!! Html::image('img/create.png', 'Create a Diocese',array('title'=>"Create Diocese",'class' => 'btn btn-primary')) !!}</a>
                         </span>
                     @endCan
                     </h1>

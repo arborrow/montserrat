@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 
-class OrganizationsController extends Controller
+class OrganizationController extends Controller
 {
     public function __construct()
     {
@@ -186,7 +186,7 @@ class OrganizationsController extends Controller
             $url_twitter->website_type='Twitter';
         $url_twitter->save();
    
-        return Redirect::action('OrganizationsController@index');
+        return Redirect::action('OrganizationController@index');
     }
 
     /**
@@ -405,7 +405,7 @@ class OrganizationsController extends Controller
             $url_twitter->website_type='Twitter';
         $url_twitter->save();
 
-        return Redirect::action('OrganizationsController@index');
+        return Redirect::action('OrganizationController@index');
     }
 
     /**
@@ -435,6 +435,6 @@ class OrganizationsController extends Controller
         \App\Registration::whereContactId($id)->delete();
        
         \App\Contact::destroy($id);
-        return Redirect::action('OrganizationsController@index');
+        return Redirect::action('OrganizationController@index');
     }
 }

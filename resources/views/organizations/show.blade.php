@@ -18,7 +18,7 @@
                         </h1>
                     </div>
                     
-                    <span><a href={{ action('OrganizationsController@index') }}>{!! Html::image('img/organization.png', 'Organization Index',array('title'=>"Organization Index",'class' => 'btn btn-default')) !!}</a></span>
+                    <span><a href={{ action('OrganizationController@index') }}>{!! Html::image('img/organization.png', 'Organization Index',array('title'=>"Organization Index",'class' => 'btn btn-default')) !!}</a></span>
                     @can('create-touchpoint')
                     <span class="btn btn-default">
                         <a href={{ action('TouchpointController@add',$organization->id) }}>Add Touchpoint</a>
@@ -187,7 +187,7 @@
             
             <div class='row'>
                 @can('update-contact')
-                    <div class='col-md-1'><a href="{{ action('OrganizationsController@edit', $organization->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
+                    <div class='col-md-1'><a href="{{ action('OrganizationController@edit', $organization->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
                 @endCan
                 @can('delete-contact')
                     <div class='col-md-1'>

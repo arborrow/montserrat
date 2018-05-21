@@ -58,7 +58,7 @@ class SearchController extends Controller
                     return redirect()->action('VendorController@show', $id);
                 break;
                 default:
-                    return redirect()->action('OrganizationsController@show', $id);
+                    return redirect()->action('OrganizationController@show', $id);
             }
         }
     }
