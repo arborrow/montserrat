@@ -9,10 +9,11 @@
 <hr />
  <table width="100%">
      <tr>
-        <th class="row-1 row-name" style='width: 25%'>Full name</th>
-        <th class="row-2 row-note" style='width: 35%'>Notes</th>
-        <td align='center' class="row-3 row-room" style='width: 20%'><strong>Assigned Room</strong></td>
+        <th class="row-1 row-name" style='width: 20%'>Full name</th>
+        <th class="row-2 row-note" style='width: 25%'>Notes</th>
+        <td align='center' class="row-3 row-room" style='width: 15%'><strong>Assigned Room</strong></td>
         <th class="row-4 row-room_preference" style='width: 20%'>Room Preference</th>
+        <th class="row-5 row-dietary" style='width: 20%'>Dietary Preference</th>
      <tr>   
     @foreach($registrations as $registration)
     
@@ -21,6 +22,7 @@
         <td>{{$registration->notes}}</td>
         <td align='center'>{{ $registration->room_name}}</td>
         <td>{{$registration->retreatant->note_room_preference_text}}</td>
+        <td>{{$registration->retreatant->note_dietary_text}}</td>
        
     </tr>    
     @endforeach
