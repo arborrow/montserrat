@@ -168,12 +168,10 @@
                         <th>Picture</th>
                         <th>Name</th>
                         <th>Room</th>
-                        <th>Deposit</th>
+                        <th>Email</th>
                         <th>Mobile Phone</th>
                         <th>Parish</th>
-                        <th>General Notes</th>
-                        <th>Health notes</th>
-                        <th>Dietary notes</th>
+                        <th>Notes</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -191,7 +189,7 @@
                                 <a href="{{action('RoomController@show', $registration->room->id)}}">{{ $registration->room->name}}</a>
                                 @endif
                             </td>
-                            <td>{{ $registration->deposit }}</td>
+                            <td>{{ $registration->retreatant->email_primary_text }}</td>
                             <td>
                                 {!!$registration->retreatant->phone_home_mobile_number!!}
                             </td>
@@ -202,9 +200,10 @@
                                 {!! $registration->retreatant->parish_link!!}
                                 @endif
                             </td>
-                            <td> {{ $registration->notes }}</td>
-                            <td> {!! (!empty($registration->retreatant->note_health->note)) ? "<div class=\"alert alert-danger\">" . $registration->retreatant->note_health->note . "</div>" : null !!}</div></td>
-                            <td> {!! (!empty($registration->retreatant->note_dietary->note)) ? "<div class=\"alert alert-info\">" . $registration->retreatant->note_dietary->note . "</div>" : null !!}</div></td>
+                            <td> {{ $registration->notes }} <br />
+                                <strong>Health:</strong> {!! (!empty($registration->retreatant->note_health->note)) ? "<div class=\"alert alert-danger\">" . $registration->retreatant->note_health->note . "</div>" : null !!}</div><br />
+                                <strong>Dietary:</strong> {!! (!empty($registration->retreatant->note_dietary->note)) ? "<div class=\"alert alert-info\">" . $registration->retreatant->note_dietary->note . "</div>" : null !!}</div>
+                            </td>
                             <td>
                                 @can('update-registration')
                                     {!! $registration->registration_status_buttons!!}
