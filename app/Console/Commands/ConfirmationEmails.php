@@ -57,6 +57,7 @@ class ConfirmationEmails extends Command
 
                 $retreatants = $retreat->registrations()
                     ->where('canceled_at', null)
+                    ->where('status_id', 1)
                     ->with('contact')
                     ->whereHas('contact', function($query) {
                         $query->where('do_not_email', 0);
