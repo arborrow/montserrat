@@ -162,7 +162,7 @@ return [
         'retreat_assistant' => '10'
     ],
 
-    'participant_status_id' => [
+    'registration_status_id' => [
         'registered' => '1',
         'attended' => '2',
         'no_show' => '3',

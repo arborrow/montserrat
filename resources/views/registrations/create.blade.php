@@ -31,7 +31,11 @@
 		{!! Form::select('source', $defaults['registration_source'],'N/A', ['class' => 'col-md-2']) !!}
             </div><div class="clearfix"> </div>
  
-
+            <div class="form-group">
+                {!! Form::label('status_id', 'Status:', ['class' => 'col-md-2']) !!}
+		{!! Form::select('status_id', $defaults['participant_status_type'],1, ['class' => 'col-md-2']) !!}
+            </div><div class="clearfix"> </div>
+ 
 	    <div class="form-group">
                 {!! Form::label('registration_confirm_date', 'Registration Confirmed:', ['class' => 'col-md-2']) !!}
                 {!! Form::text('registration_confirm_date', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
