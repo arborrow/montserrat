@@ -181,7 +181,11 @@
                 <tbody>
                 @can('show-registration')    
                     @foreach($registrations->sortBy('retreatant.sort_name') as $registration)
-                        <tr>
+                        @if ($registration->status_id == config('polanco.registration_status_id.waitlist'))
+                            <tr class="warning">
+                        @else
+                            <tr>
+                        @endif
                             <td id='registration-{{$registration->id}}'><a href="{{action('RegistrationController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }}</a></td>
                             <td> {!!$registration->retreatant->avatar_small_link!!} </td>
                             <td>{!!$registration->retreatant->contact_link_full_name!!} ({{$registration->retreatant->participant_count}})</td>
