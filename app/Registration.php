@@ -168,16 +168,16 @@ class Registration extends Model
     public function getRegistrationStatusButtonsAttribute()
     {
         $status = '';
-        if ((!isset($this->arrived_at)) && (!isset($this->canceled_at)) && (!isset($this->registration_confirm_date))) {
+        if ((!isset($this->arrived_at)) && (!isset($this->canceled_at)) && (!isset($this->registration_confirm_date)) && ($this->status_id==config('polanco.registration_status_id.registered'))) {
             $status .= '<span class="btn btn-default"><a href="'.url("registration/".$this->id."/confirm").'">Confirmed</a></span>';
         }
-        if (!isset($this->arrived_at) && (!isset($this->canceled_at))) {
+        if (!isset($this->arrived_at) && (!isset($this->canceled_at)) && ($this->status_id==config('polanco.registration_status_id.registered'))) {
             $status .= '<span class="btn btn-success"><a href="'.url("registration/".$this->id."/arrive").'">Arrived</a></span>';
         }
-        if (!isset($this->arrived_at) && (!isset($this->canceled_at))) {
+        if (!isset($this->arrived_at) && (!isset($this->canceled_at)) && ($this->status_id==config('polanco.registration_status_id.registered'))) {
             $status .= '<span class="btn btn-danger"><a href="'.url("registration/".$this->id."/cancel").'">Canceled</a></span>';
         }
-        if ((isset($this->arrived_at)) && (!isset($this->departed_at))) {
+        if ((isset($this->arrived_at)) && (!isset($this->departed_at))&& ($this->status_id==config('polanco.registration_status_id.registered'))) {
             $status .= '<span class="btn btn-warning"><a href="'.url("registration/".$this->id."/depart").'">Departed</a></span>';
         }
         if (isset($this->canceled_at)) {
@@ -186,18 +186,21 @@ class Registration extends Model
         if (isset($this->departed_at)) {
             $status .= 'Departed at '.$this->departed_at;
         }
+        if (($this->status_id == config('polanco.registration_status_id.waitlist'))  && (!isset($this->canceled_at))) {
+            $status .= '<span class="btn btn-warning"><a href="'.url("registration/".$this->id."/offwaitlist").'">Take off Waitlist</a></span>';
+        }
         return $status;
     }
     public function getRegistrationStatusAttribute()
     {
         $status = '';
-        if (isset($this->register_date) && (!isset($this->canceled_at)) && (!isset($this->arrived_at))) {
+        if (isset($this->register_date) && (!isset($this->canceled_at)) && (!isset($this->arrived_at)) && ($this->status_id==config('polanco.registration_status_id.registered'))) {
             $status .= '<span class="btn btn-default">Registered: '.$this->register_date.'</span>';
         }
-        if (isset($this->registration_confirm_date) && (!isset($this->canceled_at)) && (!isset($this->arrived_at))) {
+        if (isset($this->registration_confirm_date) && (!isset($this->canceled_at)) && (!isset($this->arrived_at)) && ($this->status_id==config('polanco.registration_status_id.registered'))) {
             $status .= '<span class="btn btn-default">Confirmed: '.$this->registration_confirm_date.'</span>';
         }
-        if (isset($this->arrived_at) && (!isset($this->canceled_at))) {
+        if (isset($this->arrived_at) && (!isset($this->canceled_at)) && ($this->status_id==config('polanco.registration_status_id.registered'))) {
             $status .= '<span class="btn btn-success">Arrived: '.$this->arrived_at.'</span>';
         }
         if (isset($this->canceled_at)) {
@@ -206,6 +209,10 @@ class Registration extends Model
         if (isset($this->departed_at)) {
             $status .= '<span class="btn btn-warning">Departed: '.$this->departed_at.'</span>';
         }
+        if (($this->status_id == config('polanco.registration_status_id.waitlist')) && (!isset($this->canceled_at)) ) {
+            $status .= '<span class="btn btn-warning">Waitlist: '.$this->register_date.'</span>';
+        }
+        
         return $status;
     }
     public function getRetreatNameAttribute()
