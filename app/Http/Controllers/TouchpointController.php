@@ -108,7 +108,7 @@ class TouchpointController extends Controller
         
         $retreat = \App\Retreat::findOrFail($event_id);
         // TODO: replace this with an autocomplete text box for performance rather than a dropdown box
-        $participants = \App\Registration::whereEventId($event_id)->WhereStatusId(config('polanco.registration_status_id.waitlist'))->whereCanceledAt(null)->get();
+        $participants = \App\Registration::whereEventId($event_id)->whereStatusId(config('polanco.registration_status_id.waitlist'))->whereCanceledAt(null)->get();
         $current_user = Auth::user();
         $user_email = \App\Email::whereEmail($current_user->email)->first();
         
@@ -119,7 +119,7 @@ class TouchpointController extends Controller
         } else {
             $defaults['user_id'] = $user_email->contact_id;
         }
-        return view('touchpoints.add_retreat', compact('staff', 'retreat', 'retreats', 'participants', 'defaults'));
+        return view('touchpoints.add_retreat_waitlist', compact('staff', 'retreat', 'retreats', 'participants', 'defaults'));
     }
 
     public function add($id)
@@ -210,7 +210,30 @@ class TouchpointController extends Controller
             'type' => 'in:Email,Call,Letter,Face,Other'
         ]);
         $event_id = $request->input('event_id');
-        $participants = \App\Registration::whereEventId($event_id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
+        $participants = \App\Registration::whereStatusId(config('polanco.registration_status_id.registered'))->whereEventId($event_id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
+        foreach ($participants as $participant) {
+            $touchpoint = new \App\Touchpoint;
+            $touchpoint->person_id= $participant->contact_id;
+            $touchpoint->staff_id= $request->input('staff_id');
+            $touchpoint->touched_at= Carbon::parse($request->input('touched_at'));
+            $touchpoint->type = $request->input('type');
+            $touchpoint->notes= $request->input('notes');
+            $touchpoint->save();
+        }
+        return Redirect::action('RetreatController@show', $event_id);
+    }
+    
+    public function store_retreat_waitlist(Request $request)
+    {
+        $this->authorize('create-touchpoint');
+        $this->validate($request, [
+            'event_id' => 'required|integer|min:0',
+            'touched_at' => 'required|date',
+            'staff_id' => 'required|integer|min:0',
+            'type' => 'in:Email,Call,Letter,Face,Other'
+        ]);
+        $event_id = $request->input('event_id');
+        $participants = \App\Registration::whereStatusId(config('polanco.registration_status_id.waitlist'))->whereEventId($event_id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
         foreach ($participants as $participant) {
             $touchpoint = new \App\Touchpoint;
             $touchpoint->person_id= $participant->contact_id;

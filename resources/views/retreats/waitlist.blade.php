@@ -25,7 +25,11 @@
             </div><div class="clearfix"> </div>
             <div class='row'>
                 <div class='col-md-3'><strong>Title: </strong>{{ $retreat->title}}</div>
-                <div class='col-md-3'><strong>Attending: </strong>{{ $retreat->retreatant_count}}</div>
+                <div class='col-md-3'><strong>Attending: </strong>{{ $retreat->retreatant_count}}
+                @if ($retreat->retreatant_waitlist_count > 0)
+                    ({{ $retreat->retreatant_waitlist_count }})
+                @endif
+                </div>
             </div><div class="clearfix"> </div>
             <div class='row'>
                 <div class='col-md-6'><strong>Description: </strong>{{ $retreat->description}}</div>
@@ -132,7 +136,7 @@
             </div><br />
         <div class="panel panel-default">  
         <div class="panel-heading" id='registrations'>
-            <h2>Retreatants Currently on Waitlist for {!!Html::link(url('retreat/'.$retreat->id.'/edit'),$retreat->idnumber.' - '.$retreat->title)!!} </h2>
+            <h2>Waitlist for {!!Html::link(url('retreat/'.$retreat->id),$retreat->idnumber.' - '.$retreat->title)!!} </h2>
             
             @can('show-contact')
                 {!! Html::link($retreat->email_waitlist_retreatants,'Email retreatants on waitlist',array('class' => 'btn btn-default'))!!}
@@ -160,7 +164,7 @@
                 </thead>
                 <tbody>
                 @can('show-registration')    
-                    @foreach($registrations->sortBy('retreatant.sort_name') as $registration)
+                    @foreach($registrations->sortBy('register_date') as $registration)
                         <tr>
                             <td id='registration-{{$registration->id}}'><a href="{{action('RegistrationController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }}</a></td>
                             <td> {!!$registration->retreatant->avatar_small_link!!} </td>
@@ -189,9 +193,11 @@
                             </td>
                             <td>
                                 @can('update-registration')
-                                    {!! $registration->registration_status_buttons!!}
+                                <span class="btn btn-danger">
+                                    {!!Html::link(url('registration/'.$registration->id.'/offwaitlist'),'Register')!!}
+                                </span>
                                 @else
-                                    {!! $registration->registration_status!!}
+                                    {{ $registration->status_name }}
                                 @endCan
                             </td>
                         </tr>
