@@ -17,7 +17,7 @@
 		Fr. Anthony Borrow, S.J.<br>
 		Director<br><br>
 
-		P.S. If you have a moment, kindly <a href="http://polanco.montserratretreat.org/intercept/{{$encodedUrl}}">click here to confirm your attendance</a>. If your plans have changed kindly let us know by calling us at 940-321-6020 or emailing us at registration@montserratretreat.org. We would be happy to help you reschedule your retreat.<br><br>
+		P.S. If you have a moment, kindly <a href="{{ url('intercept/'.$encodedUrl ) }}">click here to confirm your attendance</a>. If your plans have changed kindly let us know by calling us at 940-321-6020 or emailing us at registration@montserratretreat.org. We would be happy to help you reschedule your retreat.<br><br>
 
 		What is provided:<br> 
 		• All meals, snacks and beverages<br>
