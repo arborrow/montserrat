@@ -171,6 +171,14 @@ class RetreatController extends Controller
         $registrations = \App\Registration::where('event_id', '=', $id)->with('retreatant.parish')->orderBy('register_date', 'ASC')->get();
         return view('retreats.show', compact('retreat', 'registrations'));//
     }
+    
+    public function show_waitlist($id)
+    {
+        $this->authorize('show-retreat');
+        $retreat = \App\Retreat::with('retreatmasters', 'innkeeper', 'assistant', 'captains')->findOrFail($id);
+        $registrations = \App\Registration::where('event_id', '=', $id)->whereStatusId(config('polanco.registration_status_id.waitlist'))->with('retreatant.parish')->orderBy('register_date', 'ASC')->get();
+        return view('retreats.waitlist', compact('retreat', 'registrations'));//
+    }
 
     public function get_event_by_id_number($id_number)
     {

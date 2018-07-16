@@ -42,6 +42,11 @@ class Retreat extends Model
         // keep in mind that if/when innkeeper and other not retreatant roles are added will not to use where clause to keep the count accurate and exclude non-participating participants
         return $this->retreatants->count();
     }
+    public function getRetreatantWaitlistCountAttribute()
+    {
+        // keep in mind that if/when innkeeper and other not retreatant roles are added will not to use where clause to keep the count accurate and exclude non-participating participants
+        return $this->retreatants_waitlist->count();
+    }
 
     public function assistant()
     {
@@ -75,7 +80,11 @@ class Retreat extends Model
 
     public function retreatants()
     {
-        return $this->registrations()->whereCanceledAt(null);
+        return $this->registrations()->whereCanceledAt(null)->whereStatusId(config('polanco.registration_status_id.registered'));
+    }
+    public function retreatants_waitlist()
+    {
+        return $this->registrations()->whereCanceledAt(null)->whereStatusId(config('polanco.registration_status_id.waitlist'));
     }
     public function getEmailRegisteredRetreatantsAttribute()
     {
@@ -84,6 +93,19 @@ class Retreat extends Model
             if (!empty($registration->retreatant->email_primary_text) && is_null($registration->canceled_at)) {
                 $bcc_list .= $registration->retreatant->email_primary_text.',';
             }
+        }
+        return "mailto:?bcc=".$bcc_list;
+    }
+    public function getEmailWaitlistRetreatantsAttribute()
+    {
+        $bcc_list = '';
+        foreach ($this->registrations as $registration) {
+            if ($registration->status_id == config('polanco.registration_status_id.waitlist')) {
+                if (!empty($registration->retreatant->email_primary_text) && is_null($registration->canceled_at)) {
+                    $bcc_list .= $registration->retreatant->email_primary_text.',';
+                }    
+            }
+            
         }
         return "mailto:?bcc=".$bcc_list;
     }

@@ -161,6 +161,17 @@ return [
         'retreat_innkeeper' => '9',
         'retreat_assistant' => '10'
     ],
+
+    'registration_status_id' => [
+        'registered' => '1',
+        'attended' => '2',
+        'no_show' => '3',
+        'canceled' => '4',
+        'pending' => '5',
+        'waitlist' => '7',
+        'rejected' => '11'
+    ],
+
     
     'registration_source' => [
         'N/A' => 'N/A',
