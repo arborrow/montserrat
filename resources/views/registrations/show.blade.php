@@ -34,6 +34,11 @@
                         <strong>Registered: </strong>{{ date('F d, Y h:i A', strtotime($registration->register_date))}}
                     </div>
                 </div>
+                <div class='row'>
+                    <div class='col-md-3'>
+                        <strong>Status: </strong>{{ $registration->status_name }}
+                    </div>
+                </div>
                 <div class="clearfix"> </div>
                 <div class='row'>
                     <div class='col-md-3'>
