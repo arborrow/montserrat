@@ -147,6 +147,16 @@ class Registration extends Model
         }
         return 'Unspecified status';
     }
+    
+    public function getStatusNameAttribute()
+    {
+        if (isset($this->status_id)) {
+            return $this->participant_status_type->name;
+        } else {
+            return 'Unassigned status';
+        }
+    }
+    
     public function getRegistrationConfirmDateTextAttribute()
     {
         if (isset($this->registration_confirm_date)) {
@@ -243,6 +253,10 @@ class Registration extends Model
     public function participant_role_type()
     {
         return $this->hasOne(ParticipantRoleType::class, 'id', 'role_id');
+    }
+    public function participant_status_type()
+    {
+        return $this->hasOne(ParticipantStatus::class, 'id', 'status_id');
     }
     public function retreat()
     {

@@ -56,6 +56,8 @@ class RegistrationController extends Controller
         $defaults['retreat_id']=0;
         $defaults['is_multi_registration'] = false;
         $defaults['registration_source'] = config('polanco.registration_source');
+        $defaults['participant_status_type'] = \App\ParticipantStatus::whereIsActive(1)->pluck('name','id');
+        
         return view('registrations.create', compact('retreats', 'retreatants', 'rooms', 'defaults'));
     }
 
@@ -81,6 +83,8 @@ class RegistrationController extends Controller
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
         $defaults['is_multi_registration'] = false;
         $defaults['registration_source'] = config('polanco.registration_source');
+        $defaults['participant_status_type'] = \App\ParticipantStatus::whereIsActive(1)->pluck('name','id');
+        
         return view('registrations.create', compact('retreats', 'retreatants', 'rooms', 'defaults'));
     }
 
@@ -100,6 +104,8 @@ class RegistrationController extends Controller
         $dt_today =  \Carbon\Carbon::today();
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
         $defaults['registration_source'] = config('polanco.registration_source');
+        $defaults['participant_status_type'] = \App\ParticipantStatus::whereIsActive(1)->pluck('name','id');
+
         return view('registrations.add_group', compact('retreats', 'groups', 'rooms', 'defaults'));
         //dd($retreatants);
     }
@@ -142,6 +148,8 @@ class RegistrationController extends Controller
         $defaults['contact_id'] = $contact_id;
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
         $defaults['registration_source'] = config('polanco.registration_source');
+        $defaults['participant_status_type'] = \App\ParticipantStatus::whereIsActive(1)->pluck('name','id');
+
         return view('registrations.create', compact('retreats', 'retreatants', 'rooms', 'defaults'));
         //dd($retreatants);
     }
@@ -163,6 +171,7 @@ class RegistrationController extends Controller
         'arrived_at' => 'date|nullable',
         'departed_at' => 'date|nullable',
         'event_id' => 'required|integer|min:1',
+        'status_id' => 'required|integer|min:1',
         'contact_id' => 'required|integer|min:1',
         'deposit' => 'required|numeric|min:0|max:10000',
         'num_registrants' => 'integer|min:0|max:99|nullable',
@@ -186,6 +195,7 @@ class RegistrationController extends Controller
                 $registration->event_id= $request->input('event_id');
                 $registration->contact_id= $request->input('contact_id');
                 $registration->source = $request->input('source');
+                $registration->status_id = $request->input('status_id');
                 $registration->register_date = $request->input('register_date');
                 $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
                 if (!empty($request->input('canceled_at'))) {
@@ -211,6 +221,7 @@ class RegistrationController extends Controller
                 $registration->event_id= $request->input('event_id');
                 $registration->contact_id= $request->input('contact_id');
                 $registration->source = $request->input('source');
+                $registration->status_id = $request->input('status_id');
                 $registration->register_date = $request->input('register_date');
                 $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
                 if (!empty($request->input('canceled_at'))) {
@@ -243,6 +254,7 @@ class RegistrationController extends Controller
         'register_date' => 'required|date',
         'attendance_confirm_date' => 'date|nullable',
         'registration_confirm_date' => 'date|nullable',
+        'status_id' => 'required|integer|min:1',
         'canceled_at' => 'date|nullable',
         'arrived_at' => 'date|nullable',
         'departed_at' => 'date|nullable',
@@ -258,6 +270,7 @@ class RegistrationController extends Controller
             $registration = new \App\Registration;
             $registration->event_id= $request->input('event_id');
             $registration->contact_id= $group_member->contact_id;
+            $registration->status_id= $request->input('status_id');
             $registration->register_date = $request->input('register_date');
             $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
             if (!empty($request->input('canceled_at'))) {
@@ -278,8 +291,7 @@ class RegistrationController extends Controller
             //TODO: verify that the newly created room assignment does not conflict with an existing one
         }
     
-        return Redirect::action('RetreatController@show'
-            . '', $retreat->id);
+        return Redirect::action('RetreatController@show', $retreat->id);
     }
 
     /**
@@ -294,6 +306,7 @@ class RegistrationController extends Controller
         $registration= \App\Registration::with('retreat', 'retreatant', 'room')->findOrFail($id);
         return view('registrations.show', compact('registration'));//
     }
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -328,7 +341,8 @@ class RegistrationController extends Controller
         }
 
         $defaults['registration_source'] = config('polanco.registration_source');
-
+        $defaults['participant_status_type'] = \App\ParticipantStatus::whereIsActive(1)->pluck('name','id');
+        
         return view('registrations.edit', compact('registration', 'retreats', 'rooms', 'defaults'));
     }
 
@@ -358,6 +372,8 @@ class RegistrationController extends Controller
             $retreats[$registration->event_id] = $registration->retreat->idnumber.'-'.$registration->retreat->title." (".date('m-d-Y', strtotime($registration->retreat->start_date)).")";
 	}
         $defaults['registration_source'] = config('polanco.registration_source');
+        $defaults['participant_status_type'] = \App\ParticipantStatus::whereIsActive(1)->pluck('name','id');
+
         return view('registrations.edit_group', compact('registration', 'retreats', 'rooms', 'retreatants','defaults'));
     }
 
@@ -381,6 +397,7 @@ class RegistrationController extends Controller
             'arrived_at' => 'date|nullable',
             'departed_at' => 'date|nullable',
             'event_id' => 'required|integer|min:0',
+            'status_id' => 'required|integer|min:1',
             'room_id' => 'required|integer|min:0',
             'deposit' => 'required|numeric|min:0|max:10000',
             ]);
@@ -394,6 +411,7 @@ class RegistrationController extends Controller
         //$registration->start = $retreat->start;
         //$registration->end = $retreat->end;
         //$registration->contact_id= $request->input('contact_id');
+        $registration->status_id= $request->input('status_id');
         $registration->register_date = $request->input('register_date');
         $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
         $registration->registration_confirm_date = $request->input('registration_confirm_date');
@@ -423,6 +441,7 @@ class RegistrationController extends Controller
             'departed_at' => 'date|nullable',
             'contact_id' => 'required|integer|min:0',
             'event_id' => 'required|integer|min:0',
+            'status_id' => 'required|integer|min:0',
             'room_id' => 'required|integer|min:0',
             'deposit' => 'required|numeric|min:0|max:10000',
             ]);
@@ -437,6 +456,7 @@ class RegistrationController extends Controller
         //$registration->end = $retreat->end;
 	$registration->contact_id= $request->input('contact_id');
 	$registration->source = $request->input('source');
+        $registration->status_id = $request->input('status_id');
         $registration->register_date = $request->input('register_date');
         $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
         $registration->registration_confirm_date = $request->input('registration_confirm_date');

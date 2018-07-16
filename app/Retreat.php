@@ -87,6 +87,19 @@ class Retreat extends Model
         }
         return "mailto:?bcc=".$bcc_list;
     }
+    public function getEmailWaitlistRetreatantsAttribute()
+    {
+        $bcc_list = '';
+        foreach ($this->registrations as $registration) {
+            if ($registration->status_id == config('polanco.registration_status_id.waitlist')) {
+                if (!empty($registration->retreatant->email_primary_text) && is_null($registration->canceled_at)) {
+                    $bcc_list .= $registration->retreatant->email_primary_text.',';
+                }    
+            }
+            
+        }
+        return "mailto:?bcc=".$bcc_list;
+    }
     public function getRetreatTypeAttribute()
     {
         //dd($this->event_type);

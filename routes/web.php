@@ -72,6 +72,8 @@ Route::get('retreat/{event_id}/evaluations/delete', ['as' => 'delete_event_evalu
 Route::get('retreat/{event_id}/photo', ['as' => 'get_event_group_photo','uses' => 'AttachmentController@get_event_group_photo']);
 Route::get('retreat/{event_id}/photo/delete', ['as' => 'delete_event_group_photo','uses' => 'AttachmentController@delete_event_group_photo']);
 Route::get('retreat/{event_id}/touchpoint', ['uses' => 'TouchpointController@add_retreat']);
+Route::get('retreat/{event_id}/waitlist_touchpoint', ['uses' => 'TouchpointController@add_retreat_waitlist']);
+Route::get('retreat/{event_id}/waitlist', ['uses' => 'RetreatController@show_waitlist']);
 Route::get('retreat/type/{event_type_id}', ['uses' => 'RetreatController@index_type']);
 
 // General routes including groups, resources, etc. 
