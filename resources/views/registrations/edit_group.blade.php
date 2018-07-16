@@ -29,6 +29,11 @@
 		{!! Form::select('source', $defaults['registration_source'], 'N/A', ['class' => 'col-md-3']) !!}
             </div><div class="clearfix"> </div>
 
+            <div class="form-group">
+                {!! Form::label('status_id', 'Status:', ['class' => 'col-md-2']) !!}
+                {!! Form::select('status_id', $defaults['participant_status_type'], $registration->status_id, ['class' => 'col-md-3']) !!} 
+           </div><div class="clearfix"> </div>
+            
 	    <div class="form-group">
                 {!! Form::label('registration_confirm_date', 'Registration Confirmed:', ['class' => 'col-md-2']) !!}
                 @if ($registration->registration_confirm_date == NULL)
