@@ -90,8 +90,10 @@ class Retreat extends Model
     {
         $bcc_list = '';
         foreach ($this->registrations as $registration) {
-            if (!empty($registration->retreatant->email_primary_text) && is_null($registration->canceled_at)) {
-                $bcc_list .= $registration->retreatant->email_primary_text.',';
+            if ($registration->status_id == config('polanco.registration_status_id.registered')) {
+                if (!empty($registration->retreatant->email_primary_text) && is_null($registration->canceled_at)) {
+                    $bcc_list .= $registration->retreatant->email_primary_text.',';
+                }
             }
         }
         return "mailto:?bcc=".$bcc_list;
