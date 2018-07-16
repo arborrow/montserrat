@@ -7,12 +7,12 @@
             <div class="panel-heading">
                 <h2>
                     @can('update-retreat')
-                        Retreat {!!Html::link(url('retreat/'.$retreat->id.'/edit'),$retreat->idnumber.' - '.$retreat->title)!!} 
+                        Retreat {!!Html::link(url('retreat/'.$retreat->id.'/edit'),$retreat->idnumber.' - '.$retreat->title.' Waitlist')!!} 
                     @else
-                        Retreat {{$retreat->idnumber.' - '.$retreat->title}} 
+                        Retreat {{$retreat->idnumber.' - '.$retreat->title}} Waitlist
                     @endCan
                 </h2>
-                {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-primary')) !!}
+                {!! Html::link('#registrations','Waitlist Registrations',array('class' => 'btn btn-primary')) !!}
                 {!! Html::link(url('retreat'),'Retreat index',array('class' => 'btn btn-primary')) !!}
             
             </div>
@@ -27,9 +27,10 @@
                 <div class='col-md-3'><strong>Title: </strong>{{ $retreat->title}}</div>
                 <div class='col-md-3'><strong>Attending: </strong>{{ $retreat->retreatant_count}}
                 @if ($retreat->retreatant_waitlist_count > 0)
-                    ({!!Html::link(url('retreat/'.$retreat->id.'/waitlist'), $retreat->retreatant_waitlist_count) !!})
+                    ({{ $retreat->retreatant_waitlist_count }})
                 @endif
-                </div></div><div class="clearfix"> </div>
+                </div>
+            </div><div class="clearfix"> </div>
             <div class='row'>
                 <div class='col-md-6'><strong>Description: </strong>{{ $retreat->description}}</div>
             </div><div class="clearfix"> </div>
@@ -135,34 +136,17 @@
             </div><br />
         <div class="panel panel-default">  
         <div class="panel-heading" id='registrations'>
-            <h2>Retreatants Registered for {!!Html::link(url('retreat/'.$retreat->id.'/edit'),$retreat->idnumber.' - '.$retreat->title)!!} </h2>
-            @can('create-registration')
-                {!! Html::link(action('RegistrationController@register',$retreat->id),'Register a retreatant',array('class' => 'btn btn-default'))!!}
-            @endCan
+            <h2>Waitlist for {!!Html::link(url('retreat/'.$retreat->id),$retreat->idnumber.' - '.$retreat->title)!!} </h2>
+            
             @can('show-contact')
-                {!! Html::link($retreat->email_registered_retreatants,'Email registered retreatants',array('class' => 'btn btn-default'))!!}
-            @endCan
-            @can('update-registration')
-                {!! Html::link(action('RetreatController@assign_rooms',$retreat->id),'Assign rooms',array('class' => 'btn btn-default'))!!}
-            @endCan
-            @can('update-registration')
-                {!! Html::link(action('RetreatController@checkout',$retreat->id),'Checkout',array('class' => 'btn btn-default'))!!}
-            @endCan
-            @can('show-contact')
-                {!! Html::link(action('PageController@retreatantinforeport',$retreat->idnumber),'Retreatant information report',array('class' => 'btn btn-default'))!!}
-            @endCan
-            @can('show-contact')
-                {!! Html::link(action('PageController@retreatrosterreport',$retreat->idnumber),'Retreat roster',array('class' => 'btn btn-default'))!!}
-            @endCan
-            @can('show-contact')
-                {!! Html::link(action('PageController@retreatlistingreport',$retreat->idnumber),'Retreat listing',array('class' => 'btn btn-default'))!!}
+                {!! Html::link($retreat->email_waitlist_retreatants,'Email retreatants on waitlist',array('class' => 'btn btn-default'))!!}
             @endCan
             @can('create-touchpoint')
-                {!! Html::link(action('TouchpointController@add_retreat',$retreat->id),'Retreat touchpoint',array('class' => 'btn btn-default'))!!}
+                {!! Html::link(action('TouchpointController@add_retreat_waitlist',$retreat->id),'Waitlist touchpoint',array('class' => 'btn btn-default'))!!}
             @endCan    
         </div>
             @if ($registrations->isEmpty())
-                <p> Currently, there are no registrations for this retreat.</p>
+                <p> Currently, there is no waitlist for this retreat.</p>
             @else
             <table class="table">
                 <thead>
@@ -180,7 +164,7 @@
                 </thead>
                 <tbody>
                 @can('show-registration')    
-                    @foreach($registrations->sortBy('retreatant.sort_name') as $registration)
+                    @foreach($registrations->sortBy('register_date') as $registration)
                         <tr>
                             <td id='registration-{{$registration->id}}'><a href="{{action('RegistrationController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }}</a></td>
                             <td> {!!$registration->retreatant->avatar_small_link!!} </td>
@@ -209,9 +193,11 @@
                             </td>
                             <td>
                                 @can('update-registration')
-                                    {!! $registration->registration_status_buttons!!}
+                                <span class="btn btn-danger">
+                                    {!!Html::link(url('registration/'.$registration->id.'/offwaitlist'),'Register')!!}
+                                </span>
                                 @else
-                                    {!! $registration->registration_status!!}
+                                    {{ $registration->status_name }}
                                 @endCan
                             </td>
                         </tr>
