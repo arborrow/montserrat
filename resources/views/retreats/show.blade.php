@@ -25,8 +25,11 @@
             </div><div class="clearfix"> </div>
             <div class='row'>
                 <div class='col-md-3'><strong>Title: </strong>{{ $retreat->title}}</div>
-                <div class='col-md-3'><strong>Attending: </strong>{{ $retreat->retreatant_count}}</div>
-            </div><div class="clearfix"> </div>
+                <div class='col-md-3'><strong>Attending: </strong>{{ $retreat->retreatant_count}}
+                @if ($retreat->retreatant_waitlist_count > 0)
+                    ({!!Html::link(url('retreat/'.$retreat->id.'/waitlist'), $retreat->retreatant_waitlist_count) !!})
+                @endif
+                </div></div><div class="clearfix"> </div>
             <div class='row'>
                 <div class='col-md-6'><strong>Description: </strong>{{ $retreat->description}}</div>
             </div><div class="clearfix"> </div>

@@ -42,6 +42,11 @@ class Retreat extends Model
         // keep in mind that if/when innkeeper and other not retreatant roles are added will not to use where clause to keep the count accurate and exclude non-participating participants
         return $this->retreatants->count();
     }
+    public function getRetreatantWaitlistCountAttribute()
+    {
+        // keep in mind that if/when innkeeper and other not retreatant roles are added will not to use where clause to keep the count accurate and exclude non-participating participants
+        return $this->retreatants_waitlist->count();
+    }
 
     public function assistant()
     {
@@ -75,7 +80,11 @@ class Retreat extends Model
 
     public function retreatants()
     {
-        return $this->registrations()->whereCanceledAt(null);
+        return $this->registrations()->whereCanceledAt(null)->whereStatusId(config('polanco.registration_status_id.registered'));
+    }
+    public function retreatants_waitlist()
+    {
+        return $this->registrations()->whereCanceledAt(null)->whereStatusId(config('polanco.registration_status_id.waitlist'));
     }
     public function getEmailRegisteredRetreatantsAttribute()
     {

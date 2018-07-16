@@ -104,6 +104,7 @@ Route::get('group/{group_id?}/touchpoint', ['uses' => 'TouchpointController@add_
 Route::get('group/{group_id?}/registration', ['uses' => 'RegistrationController@add_group']);
 Route::post('touchpoint/add_group', ['uses' => 'TouchpointController@store_group']);
 Route::post('touchpoint/add_retreat', ['uses' => 'TouchpointController@store_retreat']);
+Route::post('touchpoint/add_retreat_waitlist', ['uses' => 'TouchpointController@store_retreat_waitlist']);
 Route::post('registration/add_group', ['uses' => 'RegistrationController@store_group']);
 
 
@@ -158,6 +159,8 @@ Route::get('registration/{id}/edit_group', ['url'=>'registration.edit_group', 'a
 Route::post('relationship/add', ['uses' => 'RelationshipTypeController@make']);
 Route::post('registration/{id}/update_group', ['as' => 'registration.update_group', 'uses' => 'RegistrationController@update_group']);
 Route::get('registration/{id}/confirm', ['as' => 'registration.confirm', 'uses' => 'RegistrationController@confirm']);
+Route::get('registration/{id}/waitlist', ['as' => 'registration.waitlist', 'uses' => 'RegistrationController@waitlist']);
+Route::get('registration/{id}/offwaitlist', ['as' => 'registration.register', 'uses' => 'RegistrationController@offwaitlist']);
 Route::get('registration/{id}/attend', ['as' => 'registration.attend', 'uses' => 'RegistrationController@attend']);
 Route::get('registration/{id}/arrive', ['as' => 'registration.arrive', 'uses' => 'RegistrationController@arrive']);
 Route::get('registration/{id}/cancel', ['as' => 'registration.cancel', 'uses' => 'RegistrationController@cancel']);

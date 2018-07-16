@@ -537,6 +537,22 @@ class RegistrationController extends Controller
         $registration->save();
         return Redirect::back();
     }
+    public function waitlist($id)
+    {
+        $this->authorize('update-registration');
+        $registration = \App\Registration::findOrFail($id);
+        $registration->status_id = config('polanco.registration_status_id.waitlist');
+        $registration->save();
+        return Redirect::back();
+    }
+    public function offwaitlist($id)
+    {
+        $this->authorize('update-registration');
+        $registration = \App\Registration::findOrFail($id);
+        $registration->status_id = config('polanco.registration_status_id.registered');
+        $registration->save();
+        return Redirect::back();
+    }
     public function registrationEmail(Registration $participant)
     {
         // 1. Get a primary email address for participant.
