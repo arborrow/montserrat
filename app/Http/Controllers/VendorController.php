@@ -270,7 +270,7 @@ class VendorController extends Controller
         $address_primary->save();
         
         if (empty($vendor->phone_primary)) {
-            $phone_primary = new \App\Address;
+            $phone_primary = new \App\Phone;
         } else {
             $phone_primary = \App\Phone::findOrNew($vendor->phone_primary->id);
         }

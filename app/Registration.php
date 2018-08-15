@@ -239,7 +239,17 @@ class Registration extends Model
             return null;
         }
     }
+    public function getRetreatStartDateEsAttribute()
+    {
+	    if (!empty($this->retreat->start_date)) {
+		    setlocale(LC_ALL,'es_US.utf8');
+		    return $this->retreat->start_date->formatLocalized('%e de %B de %Y');
+        } else {
+            return null;
+        }
+    }
     
+
     public function getRoomNameAttribute()
     {
         if (isset($this->room->name)) {

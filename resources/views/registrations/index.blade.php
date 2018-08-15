@@ -34,7 +34,7 @@
                     <tbody>
                         @foreach($registrations as $registration)
                         <tr>
-                            <td><a href="registration/{{$registration->id}}">{{ date('F d, Y h:i A', strtotime($registration->created_at)) }}</a></td>
+                            <td><a href="registration/{{$registration->id}}">{{ date('F d, Y h:i A', strtotime($registration->register_date)) }}</a></td>
                             <td>
                                 @if (isset($registration->retreatant->display_name))
                                     {!!$registration->retreatant->contact_link_full_name!!}

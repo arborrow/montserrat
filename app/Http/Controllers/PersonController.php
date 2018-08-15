@@ -704,7 +704,7 @@ class PersonController extends Controller
             $person->preferred_language_label = 'N/A';
         }
         $touchpoints = \App\Touchpoint::wherePersonId($person->id)->orderBy('touched_at', 'desc')->with('staff')->get();
-        $registrations = \App\Registration::whereContactId($person->id)->whereCanceledAt(null)->get();
+        $registrations = \App\Registration::whereContactId($person->id)->get();
         $registrations = $registrations->sortByDesc(function ($registration) {
                 return $registration->retreat_start_date;
         });

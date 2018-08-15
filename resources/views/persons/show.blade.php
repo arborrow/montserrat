@@ -262,8 +262,12 @@
                     <div class='panel-heading'><h2><strong>Retreat Participation for {{ $person->display_name }}</strong> ({{$registrations->count()}})</h2></div>
                             <ul>    
                                 @foreach($registrations as $registration)
-                                <li>
-                                    {!!$registration->event_link!!} ({{date('F j, Y', strtotime($registration->retreat_start_date))}} - {{date('F j, Y', strtotime($registration->retreat_end_date))}}) - {{$registration->participant_role_name}} ({{$registration->participant_status}}) 
+					@if($registration->canceled_at)
+						<li class="list-group-item list-group-item-danger">
+					@else 
+						<li class="list-group-item list-group-item-success">
+					@endIf
+				    {!!$registration->event_link!!} ({{date('F j, Y', strtotime($registration->retreat_start_date))}} - {{date('F j, Y', strtotime($registration->retreat_end_date))}}) - {{$registration->participant_role_name}} ({{$registration->participant_status}}) 
                                     <a href="{{ url('registration/'.$registration->id) }}">
                                         View Registration
                                     </a> [{{ $registration->source ? $registration->source : 'N/A' }}]
@@ -371,7 +375,7 @@
                                 @foreach($person->donations as $donation)
                                 <tr>
                                     <td><a href="../donation/{{$donation->donation_id}}"> {{ $donation->donation_date }} </a></td>
-                                    <td> {{ $donation->donation_description }}</td>
+                                    <td> {{ $donation->donation_description.': #'.optional($donation->retreat)->idnumber }}</td>
                                     <td> ${{number_format($donation->payments->sum('payment_amount'),2)}} / ${{ number_format($donation->donation_amount,2) }} </td>
                                     <td> {{ $donation->terms }}</td>
                                     <td> {{ $donation->Notes }}</td>
