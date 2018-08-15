@@ -30,7 +30,7 @@ class RegistrationController extends Controller
         
         $registrations = \App\Registration::whereHas('retreat', function ($query) {
             $query->where('end_date', '>=', date('Y-m-d'));
-        })->orderBy('created_at', 'desc')->with('retreatant', 'retreat', 'room')->get();
+        })->orderBy('register_date', 'desc')->with('retreatant', 'retreat', 'room')->get();
         //dd($registrations);
         return view('registrations.index', compact('registrations'));
     }
@@ -426,7 +426,7 @@ class RegistrationController extends Controller
         $registration->room_id= $request->input('room_id');
         $registration->save();
 
-        return Redirect::action('RegistrationController@index');
+        return Redirect::action('PersonController@show',$registration->contact_id);
     }
     public function update_group(Request $request, $id)
     {

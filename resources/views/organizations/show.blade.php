@@ -184,7 +184,46 @@
                     @endif
                 </div>
             </div>
-            
+
+<div class='row'>
+        @can('show-donation')
+            <div class='col-md-8'>
+                <div class='panel-heading'><h2><strong>Donations for {{ $organization->display_name }} ({{$organization->donations->count() }} donations totaling:  ${{ number_format($organization->donations->sum('donation_amount'),2)}})</strong></h2>
+                    
+               </div>
+                    @if ($organization->donations->isEmpty())
+                            <p>No donations for this person!</p>
+                        @else
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Paid / Pledged</th>
+                                    <th>Terms</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($organization->donations as $donation)
+                                <tr>
+                                    <td><a href="../donation/{{$donation->donation_id}}"> {{ $donation->donation_date }} </a></td>
+                                    <td> {{ $donation->donation_description }}</td>
+                                    <td> ${{number_format($donation->payments->sum('payment_amount'),2)}} / ${{ number_format($donation->donation_amount,2) }} </td>
+                                    <td> {{ $donation->terms }}</td>
+                                    <td> {{ $donation->Notes }}</td>
+                                </tr>
+                                @endforeach
+                                
+
+                            </tbody>
+                        </table>
+                    @endif
+            </div>
+        </div>
+        @endCan
+</div>
+
             <div class='row'>
                 @can('update-contact')
                     <div class='col-md-1'><a href="{{ action('OrganizationController@edit', $organization->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>

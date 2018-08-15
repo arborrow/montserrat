@@ -30,7 +30,7 @@
 
             <div class="form-group">
                 {!! Form::label('status_id', 'Status:', ['class' => 'col-md-2']) !!}
-                {!! Form::select('status_id', $defaults['participant_status_type'], $registration->status_id, ['class' => 'col-md-3']) !!} 
+                {!! Form::select('status_id', $defaults['participant_status_type'], NULL, ['class' => 'col-md-3']) !!} 
            </div><div class="clearfix"> </div>
             
 
