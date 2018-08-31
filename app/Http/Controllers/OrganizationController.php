@@ -282,7 +282,7 @@ class OrganizationController extends Controller
 
         $organization = \App\Contact::with('address_primary.state', 'address_primary.location', 'phone_main_phone.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'note_organization')->findOrFail($id);
         $organization->organization_name = $request->input('organization_name');
-        $organization->display_name = $request->input('organization_name');
+        $organization->display_name = $request->input('display_name');
         $organization->sort_name  = $request->input('sort_name');
         $organization->contact_type = config('polanco.contact_type.organization');
         $organization->subcontact_type = $request->input('subcontact_type');
