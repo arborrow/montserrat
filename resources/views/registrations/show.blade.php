@@ -99,7 +99,12 @@
                 <div class='row'>
                     <div class='col-md-3'><strong>Deposit: </strong>${{ $registration->deposit}}</div>
                 </div><div class="clearfix"> </div>
-                <div class='row'>
+		<div class='row'>
+		@can('delete-registration')
+                    <div class='col-md-3'><strong>Encoded Registration Link: </strong> {{  url('intercept/'.base64_encode("registration/confirm/$registration->remember_token")) }}
+                </div><div class="clearfix"> </div>
+ 		@endCan
+		<div class='row'>
                     @can('update-registration')
                         <div class='col-md-1'>
                             <a href="{{ action('RegistrationController@edit', $registration->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
