@@ -49,7 +49,47 @@
                         </tr>
                      
                     </tbody>
-                </table>
+	    </table>
+
+      <div class='row'>
+        @can('show-donation')
+            <div class='col-md-8'>
+                <div class='panel-heading'><h2><strong>Donations for {{ $donor->sort_name }} ({{$donor->donations->count() }} donations totaling:  ${{ number_format($donor->donations->sum('donation_amount'),2)}})</strong></h2>
+                    
+               </div>
+                    @if ($donor->donations->isEmpty())
+                            <p>No donations for this donor!</p>
+                        @else
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Paid / Pledged</th>
+                                    <th>Terms</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($donor->donations->sortBy('donation_date') as $donation)
+                                <tr>
+                                    <td><a href="../donation/{{$donation->donation_id}}"> {{ $donation->donation_date }} </a></td>
+                                    <td> {{ $donation->donation_description.': #'.optional($donation->retreat)->idnumber }}</td>
+                                    <td> ${{number_format($donation->payments->sum('payment_amount'),2)}} / ${{ number_format($donation->donation_amount,2) }} </td>
+                                    <td> {{ $donation->terms }}</td>
+                                    <td> {{ $donation->Notes }}</td>
+                                </tr>
+                                @endforeach
+                                
+
+                            </tbody>
+                        </table>
+                    @endif
+            </div>
+        </div>
+        @endCan
+        </div>
+
                 
             <div class="clearfix"> </div>
                 <table class="table table-striped table-bordered table-hover"><caption><h2>Matching Polanco Contact sort_name(s)</h2></caption>

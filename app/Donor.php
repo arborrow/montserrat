@@ -12,4 +12,10 @@ class Donor extends Model
     protected $table = 'Donors';
     protected $primaryKey = 'donor_id';
     public $timestamps = false;
+
+    public function donations()
+        {
+            return $this->hasMany(Donation::class, 'donation_id', 'donor_id');
+        }
+
 }
