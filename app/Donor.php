@@ -15,7 +15,7 @@ class Donor extends Model
 
     public function donations()
         {
-            return $this->hasMany(Donation::class, 'donation_id', 'donor_id');
+            return $this->hasMany(Donation::class, 'donor_id', 'donor_id');
         }
 
 }
