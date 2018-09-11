@@ -13,5 +13,8 @@ A retreat management application written in Laravel.
 ### Installing the dependencies
 * Run `composer i`
 
+### Setup the database
+* Run `php artisan migrate`
+
 ### .env file
 You will need to create/modify your `.env` file in order to set up your development environment.
