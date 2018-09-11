@@ -54,16 +54,18 @@
         }
     },
     "scripts": {
-        "post-root-package-install": [
+        "post-install-cmd": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate"
         ],
-        "post-autoload-dump": [
-            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover"
-        ]
+	"pre-update-cmd": [
+	    "php artisan clear-compiled"
+	],
+	"post-update-cmd": [
+	    "php artisan optimize"
+	]
     },
     "config": {
         "preferred-install": "dist",
