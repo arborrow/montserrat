@@ -63,22 +63,28 @@ class LoginController extends Controller
     public function handleProviderCallback()
     {
         $user = Socialite::driver('google')->user();
-        if (isset($user->user['domain'])) {
-            if ($user->user['domain']=='montserratretreat.org') {
-                $authuser = new \App\UserRepository;
-                $currentuser = $authuser->findByUserNameOrCreate($user);
-                Auth::login($currentuser, true);
-                return redirect()->intended('/welcome');
+        $socialite_restrict_domain = env('SOCIALITE_RESTRICT_DOMAIN');
+        // dd($socialite_retrict_domain,$user);
+        if (isset($socialite_restrict_domain)) {
+            if (isset($user->user['domain'])) {
+                if ($user->user['domain']==$socialite_restrict_domain) { // the user domain matches the social restrict domain so authenticate successfully
+                    $authuser = new \App\UserRepository;
+                    $currentuser = $authuser->findByUserNameOrCreate($user);
+                    Auth::login($currentuser, true);
+                    return redirect()->intended('/welcome');
                 //return $this->userHasLoggedIn($currentuser);
-            } else {
-                // dd('Oops, wrong domain!');
+                } else { // the user has a domain but it does not match the socialite restrict domain so do not authenticate
+                    return redirect('restricted');
+                }
+            } else { // no domain specified for the user but one is required so do not authenticate
                 return redirect('restricted');
             }
-        } else {
-            // dd('Oops, no domain!');
-            return redirect('restricted');
+        } else { // not using socialite restrict domain - all domains can authenticate
+            $authuser = new \App\UserRepository;
+            $currentuser = $authuser->findByUserNameOrCreate($user);
+            Auth::login($currentuser, true);
+            return redirect('welcome');
         }
-        // $user->token;
     }
     public function logout(AuthenticateUser $authenticateUser, Request $request, $provider = 'google')
     {
