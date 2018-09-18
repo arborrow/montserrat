@@ -29,20 +29,21 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::registerPolicies();
-        Gate::before(function ($user) {
-            $superuser = \App\Permission::whereName('superuser')->firstOrFail();
-            
-            if ($user->hasRole($superuser->roles)) {
-                return true;
-            }
-        });
         
-        foreach ($this->getPermissions() as $permission) {
-            Gate::define($permission->name, function ($user) use ($permission) {
-                return $user->hasRole($permission->roles);
-            });
-        }
+            Gate::before(function ($user) {
+                $superuser = \App\Permission::whereName('superuser')->firstOrFail();
 
+                if ($user->hasRole($superuser->roles)) {
+                    return true;
+                }
+            });
+
+            foreach ($this->getPermissions() as $permission) {
+                Gate::define($permission->name, function ($user) use ($permission) {
+                    return $user->hasRole($permission->roles);
+                });
+            }
+        
         //
     }
     protected function getPermissions()
