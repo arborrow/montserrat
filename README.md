@@ -5,7 +5,7 @@ A retreat management application written in Laravel based in part on CiviCRM
 
 * Run the following command to switch to the updated Polanco branch:
 ```
-`git checkout polanco_56`
+git checkout polanco_56
 ```
 
 ### Development Environment
