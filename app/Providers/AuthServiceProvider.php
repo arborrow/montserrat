@@ -29,7 +29,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::registerPolicies();
-	if (isset(env('APP_KEY'))) { //prior to installing the app ignore checking for superuser or permissions        
+	if (NULL !== env('APP_KEY')) { //prior to installing the app ignore checking for superuser or permissions        
             Gate::before(function ($user) {
                 $superuser = \App\Permission::whereName('superuser')->firstOrFail();
 
