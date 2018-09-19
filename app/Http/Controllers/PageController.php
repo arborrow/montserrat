@@ -108,15 +108,20 @@ class PageController extends Controller
         $person = \App\Contact::findOrFail($id);
         return view('reports.contact_info', compact('person'));   //
     }
-    public function finance_bankdeposit($day)
+    public function finance_bankdeposit($day = NULL)
     {
         $this->authorize('show-donation');
+        if (is_null($day)) {
+            $day = \Carbon\Carbon::now();
+        }
         $report_date = \Carbon\Carbon::parse($day);
         if (isset($report_date))
         {
             $donations = \App\Payment::whereIn('payment_description',['Cash','Credit'])->with('Donation')->get();
             dd($donations);
         return view('reports.finance.bankdeposit', compact('report_date'));   //
+        } else {
+            return back();//
         }
     }
     
