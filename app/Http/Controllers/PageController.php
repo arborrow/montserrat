@@ -118,9 +118,7 @@ class PageController extends Controller
         $report_date = \Carbon\Carbon::parse($day);
         if (isset($report_date))
         {
-            $payments = \App\Payment::whereHas('donation', function ($query) use ($report_date) {
-                $query->with('donation')->whereDonationDate($report_date); 
-            })->whereIn('payment_description',['Cash','Check'])->get();
+            $payments = \App\Payment::wherePaymentDate($report_date)->whereIn('payment_description',['Cash','Check'])->with('donation')->get();
             $grouped_payments = $payments->groupBy('donation.donation_description');
             //dd($report_date, $payments,$grouped_payments);
         return view('reports.finance.bankdeposit', compact('report_date','grouped_payments'));   //
