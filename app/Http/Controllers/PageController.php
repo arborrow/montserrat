@@ -119,7 +119,7 @@ class PageController extends Controller
         if (isset($report_date))
         {
             $payments = \App\Payment::wherePaymentDate($report_date)->whereIn('payment_description',['Cash','Check'])->with('donation')->get();
-            $grouped_payments = $payments->groupBy('donation.donation_description');
+            $grouped_payments = $payments->sortBy('donation.donation_description')->groupBy('donation.donation_description');
             //dd($report_date, $payments,$grouped_payments);
         return view('reports.finance.bankdeposit', compact('report_date','grouped_payments'));   //
         } else {
