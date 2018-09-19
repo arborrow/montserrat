@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon;
+use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
@@ -117,9 +118,12 @@ class PageController extends Controller
         $report_date = \Carbon\Carbon::parse($day);
         if (isset($report_date))
         {
-            $donations = \App\Payment::whereIn('payment_description',['Cash','Credit'])->with('Donation')->get();
-            dd($donations);
-        return view('reports.finance.bankdeposit', compact('report_date'));   //
+            $payments = \App\Payment::whereHas('donation', function ($query) use ($report_date) {
+                $query->with('donation')->whereDonationDate($report_date); 
+            })->whereIn('payment_description',['Cash','Check'])->get();
+            $grouped_payments = $payments->groupBy('donation.donation_description');
+            //dd($report_date, $payments,$grouped_payments);
+        return view('reports.finance.bankdeposit', compact('report_date','grouped_payments'));   //
         } else {
             return back();//
         }
