@@ -11,12 +11,18 @@ use Illuminate\Http\Response;
 use Carbon\Carbon;
 use App\Touchpoint;
 use App\Message;
+use App\Http\Controllers\SystemController;
+use Illuminate\Support\Facades\Redirect;
 
 class MailgunController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+        //dd(SystemController::is_mailgun_enabled());
+        if (!SystemController::is_mailgun_enabled()) {
+            Redirect('admin/config/mailgun')->send();
+        }
     }
 
 

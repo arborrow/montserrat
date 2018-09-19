@@ -28,7 +28,31 @@ class SystemController extends Controller
 	    phpinfo();
     }
 
- 
+    public static function is_twilio_enabled()
+    {
+	    if (NULL !==  env('TWILIO_SID') && NULL !== env('TWILIO_TOKEN')) {
+                return TRUE;
+            } else {
+                return FALSE;
+            }
+    }
+    public static function is_google_client_enabled()
+    {
+	    if (NULL !== env('GOOGLE_CLIENT_ID') && NULL !== env('GOOGLE_CLIENT_SECRET') && NULL !== env('GOOGLE_REDIRECT')) {
+                return TRUE;
+            } else {
+                return FALSE;
+            }
+    }
+    public static function is_mailgun_enabled()
+    {
+	    if (NULL !== env('MAILGUN_DOMAIN') && NULL !== env('MAILGUN_SECRET')) {
+                return TRUE;
+            } else {
+                return FALSE;
+            }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
