@@ -32,6 +32,7 @@
 <strong>Total of {{$payments->count()}} payments for {{$donation_description}} totaling ${{number_format($payments->sum('payment_amount'),2)}} </strong>
     <hr />
    @endforeach
+   <strong>Grand total of all payments: ${{number_format($grand_total,2)}} <br />
    @endIf    
 <br />
 
