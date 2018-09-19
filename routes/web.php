@@ -180,7 +180,7 @@ Route::group(['prefix' => 'report'], function () {
     Route::get('retreatlisting/{retreat_id}', ['uses' => 'PageController@retreatlistingreport']);
     Route::get('retreatroster/{retreat_id}', ['uses' => 'PageController@retreatrosterreport']);
     Route::get('contact_info_report/{id}', ['uses' => 'PageController@contact_info_report']);
-    Route::get('finance/bankdeposit/{day}', ['uses' => 'PageController@finance_bankdeposit']);
+    Route::get('finance/bankdeposit/{day?}', ['uses' => 'PageController@finance_bankdeposit']);
 });
 
 Route::get('reservation', ['as' => 'reservation','uses' => 'PageController@reservation']);
