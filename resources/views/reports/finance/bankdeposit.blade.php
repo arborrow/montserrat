@@ -2,8 +2,8 @@
 @section('content')
 
 <div class ="bankdeposit">
-@if (!$grouped_payments->isEmpty())
 <h2>Bank Deposit Report for {{$report_date}}</h2> 
+@if (!$grouped_payments->isEmpty())
      
 <hr />
 @foreach($grouped_payments as $donation_description => $payments)
