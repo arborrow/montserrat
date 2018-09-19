@@ -82,6 +82,9 @@ Route::get('admin', ['as' => 'admin','uses' => 'PageController@admin']);
 Route::post('admin/permission/update_roles', ['as' => 'admin.permission.update_roles', 'uses' => 'PermissionController@update_roles']);
 Route::post('admin/role/update_permissions', ['as' => 'admin.role.update_permissions', 'uses' => 'RoleController@update_permissions']);
 Route::post('admin/role/update_users', ['as' => 'admin.role.update_users', 'uses' => 'RoleController@update_users']);
+Route::get('admin/config/google_client', ['as' => 'admin.config.google_client','uses' => 'PageController@config_google_client']);
+Route::get('admin/config/mailgun', ['as' => 'admin.config.mailgun','uses' => 'PageController@config_mailgun']);
+Route::get('admin/config/twilio', ['as' => 'admin.config.twilio','uses' => 'PageController@config_twilio']);
     
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('permission', 'PermissionController');
@@ -177,6 +180,7 @@ Route::group(['prefix' => 'report'], function () {
     Route::get('retreatlisting/{retreat_id}', ['uses' => 'PageController@retreatlistingreport']);
     Route::get('retreatroster/{retreat_id}', ['uses' => 'PageController@retreatrosterreport']);
     Route::get('contact_info_report/{id}', ['uses' => 'PageController@contact_info_report']);
+    Route::get('finance/bankdeposit/{day?}', ['uses' => 'PageController@finance_bankdeposit']);
 });
 
 Route::get('reservation', ['as' => 'reservation','uses' => 'PageController@reservation']);

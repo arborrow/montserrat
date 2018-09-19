@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Image;
 use Illuminate\Support\Facades\File;
 use Response;
+use App\Http\Controllers\SystemController;
 
 class PersonController extends Controller
 {

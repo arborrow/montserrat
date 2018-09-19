@@ -304,7 +304,16 @@ class VendorController extends Controller
         $email_primary->location_type_id=config('polanco.location_type.main');
         $email_primary->email = $request->input('email_primary');
         $email_primary->save();
-                
+        
+        if (null !== ($request->input('note_vendor'))) {
+            $vendor_note = \App\Note::firstOrNew(['entity_table'=>'contact','entity_id'=>$vendor->id,'subject'=>'Vendor note']);
+            $vendor_note->entity_table = 'contact';
+            $vendor_note->entity_id = $vendor->id;
+            $vendor_note->note=$request->input('note_vendor');
+            $vendor_note->subject='Vendor note';
+            $vendor_note->save();
+        }
+        
         if (null !== $request->file('avatar')) {
             $description = 'Avatar for '.$vendor->organization_name;
             $attachment = new AttachmentController;
@@ -380,7 +389,7 @@ class VendorController extends Controller
         \App\Phone::whereContactId($id)->delete();
         \App\Website::whereContactId($id)->delete();
         \App\EmergencyContact::whereContactId($id)->delete();
-        \App\Note::whereContactId($id)->delete();
+        \App\Note::whereEntityId($id)->whereEntityTable('contact')->whereSubject('Vendor note')->delete();
         \App\Touchpoint::wherePersonId($id)->delete();
         //delete registrations
         \App\Registration::whereContactId($id)->delete();
