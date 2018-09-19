@@ -128,7 +128,27 @@ td.box {
             width: 65%
         }
         
-    
+.bankdeposit {
+          font-size: 10pt;
+        }
 
-
-
+.bankdeposit th.row-donor  {
+            width: 15%
+        }
+        
+.bankdeposit th.row-retreat {
+            width: 41%
+        }
+        
+.bankdeposit th.row-pledged_amount  {
+            width: 14%
+        }
+        
+.bankdeposit th.row-payment_amount  {
+            width: 14%
+        }
+        
+.bankdeposit th.row-payment_description  {
+            width: 16%
+        }
+        
