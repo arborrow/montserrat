@@ -65,6 +65,11 @@
         {!! Form::text('email_primary', $vendor->email_primary_text, ['class' => 'col-md-2']) !!}
     </div>
     <div class="clearfix"> </div>
+    <div class="form-group">
+    {!! Form::label('note_vendor', 'Vendor note:', ['class' => 'col-md-2'])  !!}
+    {!! Form::textarea('note_vendor', $vendor->note_vendor_text, ['class' => 'col-md-3','size'=>'50x5']) !!}
+    <div class="clearfix"> </div>
+                       
     
      <div class="form-group">
     

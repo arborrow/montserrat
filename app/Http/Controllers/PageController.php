@@ -84,6 +84,8 @@ class PageController extends Controller
     }
     public function retreatantinforeport($id)
     {
+        $this->authorize('show-contact');
+        $this->authorize('show-registration');
         $retreat = \App\Retreat::where('idnumber', '=', $id)->first();
         //unsorted registrations
         //$registrations = \App\Registration::where('event_id','=',$retreat->id)->with('retreat','retreatant.languages','retreatant.parish.contact_a.address_primary','retreatant.prefix','retreatant.suffix','retreatant.address_primary.state','retreatant.phones.location','retreatant.emails.location','retreatant.emergency_contact','retreatant.notes','retreatant.occupation')->get();
@@ -102,12 +104,31 @@ class PageController extends Controller
     
     public function contact_info_report($id)
     {
+        $this->authorize('show-contact');
         $person = \App\Contact::findOrFail($id);
         return view('reports.contact_info', compact('person'));   //
+    }
+    public function finance_bankdeposit($day = NULL)
+    {
+        $this->authorize('show-donation');
+        if (is_null($day)) {
+            $day = \Carbon\Carbon::now();
+        }
+        $report_date = \Carbon\Carbon::parse($day);
+        if (isset($report_date))
+        {
+            $donations = \App\Payment::whereIn('payment_description',['Cash','Credit'])->with('Donation')->get();
+            dd($donations);
+        return view('reports.finance.bankdeposit', compact('report_date'));   //
+        } else {
+            return back();//
+        }
     }
     
     public function retreatlistingreport($id)
     {
+        $this->authorize('show-contact');
+        
         $retreat = \App\Retreat::where('idnumber', '=', $id)->first();
         //$registrations = \App\Registration::where('event_id','=',$retreat->id)->with('retreat','retreatant')->get();
         $registrations = \App\Registration::select(\DB::raw('participant.*', 'contact.*'))
@@ -123,6 +144,7 @@ class PageController extends Controller
     }
     public function retreatrosterreport($id)
     {
+        $this->authorize('show-contact');
         $retreat = \App\Retreat::where('idnumber', '=', $id)->first();
   //        $registrations = \App\Registration::where('event_id','=',$retreat->id)->with('retreat','retreatant.suffix','retreatant.address_primary','retreatant.prefix')->get();
         //dd($registrations);
@@ -211,5 +233,20 @@ class PageController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function config_google_client()
+    {
+        $this->authorize('show-admin-menu');
+        return view('admin.config.google_client');
+    }
+    public function config_mailgun()
+    {
+        $this->authorize('show-admin-menu');
+        return view('admin.config.mailgun');
+    }
+    public function config_twilio()
+    {
+        $this->authorize('show-admin-menu');
+        return view('admin.config.twilio');
     }
 }
