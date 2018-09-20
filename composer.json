@@ -56,17 +56,18 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "homestead make"
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate"
         ],
-	"pre-update-cmd": [
-	    "php artisan clear-compiled"
-	],
-	"post-update-cmd": [
-	    "php artisan optimize"
-	]
+        "pre-update-cmd": [
+            "php artisan clear-compiled"
+        ],
+        "post-update-cmd": [
+            "php artisan optimize"
+        ]
     },
     "config": {
         "preferred-install": "dist",
