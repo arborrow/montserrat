@@ -38,7 +38,7 @@ class Donation extends Model
         }
     }
     public function getPaymentsPaidAttribute() {
-        if ($this->donation_amount > 0) {
+        if (isset($this->payments)) {
             return ($this->payments->sum('payment_amount'));
         } else {
             return 0;
