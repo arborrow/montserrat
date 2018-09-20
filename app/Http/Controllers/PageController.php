@@ -128,6 +128,24 @@ class PageController extends Controller
         }
     }
     
+    public function finance_retreatdonations($retreat_id = NULL)
+    {
+        $this->authorize('show-donation');
+        if (is_null($retreat_id)) {
+            $retreat_id = NULL;
+        }
+        $retreat = \App\Retreat::whereIdnumber($retreat_id)->firstOrFail();
+        if (isset($retreat))
+        {   $donations = \App\Donation::whereEventId($retreat->id)->with('contact','payments')->get();
+            $grouped_donations = $donations->sortBy('donation_description')->groupBy('donation_description');
+            
+            //dd($retreat,$grouped_donations);
+        return view('reports.finance.retreatdonations', compact('retreat','grouped_donations'));   //
+        } else {
+            return back();//
+        }
+    }
+    
     public function retreatlistingreport($id)
     {
         $this->authorize('show-contact');
