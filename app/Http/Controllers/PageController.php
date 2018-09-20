@@ -140,7 +140,7 @@ class PageController extends Controller
             $grouped_donations = $donations->sortBy('donation_description')->groupBy('donation_description');
             
             //dd($retreat,$grouped_donations);
-        return view('reports.finance.retreatdonations', compact('retreat','grouped_donations'));   //
+        return view('reports.finance.retreatdonations', compact('retreat','grouped_donations','donations'));   //
         } else {
             return back();//
         }
