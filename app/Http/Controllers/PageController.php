@@ -138,7 +138,6 @@ class PageController extends Controller
         if (isset($retreat))
         {   $donations = \App\Donation::whereEventId($retreat->id)->with('contact','payments')->get();
             $grouped_donations = $donations->sortBy('donation_description')->groupBy('donation_description');
-            
             //dd($retreat,$grouped_donations);
         return view('reports.finance.retreatdonations', compact('retreat','grouped_donations','donations'));   //
         } else {
