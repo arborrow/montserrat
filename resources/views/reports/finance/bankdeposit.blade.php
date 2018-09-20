@@ -36,7 +36,6 @@
 
     <span class='pagefooter'>
             Report run on {{date('l, F j, Y H:i')}}
-        
     </span>
 </div>
 @stop
