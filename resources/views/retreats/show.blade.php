@@ -7,14 +7,28 @@
             <div class="panel-heading">
                 <h2>
                     @can('update-retreat')
-                        Retreat {!!Html::link(url('retreat/'.$retreat->id.'/edit'),$retreat->idnumber.' - '.$retreat->title)!!} 
+                        Retreat {!!Html::link(url('retreat/'.$retreat->id.'/edit'),$retreat->title.' ('.$retreat->idnumber.')')!!} 
                     @else
-                        Retreat {{$retreat->idnumber.' - '.$retreat->title}} 
+                        Retreat {{$retreat->title.' ('.$retreat->idnumber.')'}} 
                     @endCan
                 </h2>
-                {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-primary')) !!}
-                {!! Html::link(url('retreat'),'Retreat index',array('class' => 'btn btn-primary')) !!}
-            
+                {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-default')) !!}
+                @can('create-touchpoint')
+                    {!! Html::link(action('TouchpointController@add_retreat',$retreat->id),'Retreat touchpoint',array('class' => 'btn btn-default'))!!}
+                @endCan    
+                @can('show-contact')
+                    {!! Html::link(action('PageController@retreatantinforeport',$retreat->idnumber),'Retreatant information',array('class' => 'btn btn-default'))!!}
+                @endCan
+                @can('show-contact')
+                    {!! Html::link(action('PageController@retreatrosterreport',$retreat->idnumber),'Retreatant roster',array('class' => 'btn btn-default'))!!}
+                @endCan
+                @can('show-contact')
+                    {!! Html::link(action('PageController@retreatlistingreport',$retreat->idnumber),'Retreatant listing',array('class' => 'btn btn-default'))!!}
+                @endCan
+                @can('show-donation')
+                         {!! Html::link('report/finance/retreatdonations/'.$retreat->idnumber,'Donations report',array('class' => 'btn btn-default')) !!}
+                @endCan
+
             </div>
             <div class='row'>
                 <div class='col-md-2'><strong>ID#: </strong>{{ $retreat->idnumber}}</div>
@@ -146,20 +160,10 @@
                 {!! Html::link(action('RetreatController@assign_rooms',$retreat->id),'Assign rooms',array('class' => 'btn btn-default'))!!}
             @endCan
             @can('update-registration')
+                @if ($retreat->end_date < now())
                 {!! Html::link(action('RetreatController@checkout',$retreat->id),'Checkout',array('class' => 'btn btn-default'))!!}
+                @endIf
             @endCan
-            @can('show-contact')
-                {!! Html::link(action('PageController@retreatantinforeport',$retreat->idnumber),'Retreatant information report',array('class' => 'btn btn-default'))!!}
-            @endCan
-            @can('show-contact')
-                {!! Html::link(action('PageController@retreatrosterreport',$retreat->idnumber),'Retreat roster',array('class' => 'btn btn-default'))!!}
-            @endCan
-            @can('show-contact')
-                {!! Html::link(action('PageController@retreatlistingreport',$retreat->idnumber),'Retreat listing',array('class' => 'btn btn-default'))!!}
-            @endCan
-            @can('create-touchpoint')
-                {!! Html::link(action('TouchpointController@add_retreat',$retreat->id),'Retreat touchpoint',array('class' => 'btn btn-default'))!!}
-            @endCan    
         </div>
             @if ($registrations->isEmpty())
                 <p> Currently, there are no registrations for this retreat.</p>
