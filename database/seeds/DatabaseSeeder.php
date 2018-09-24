@@ -38,5 +38,6 @@ class DatabaseSeeder extends Seeder
         $this->call(StateProvinceTableSeeder::class);
         $this->call(SuffixTableSeeder::class);
         $this->call(TouchcategoriesTableSeeder::class);
+        $this->call(DonationTypeTableSeeder::class);
     }
 }
