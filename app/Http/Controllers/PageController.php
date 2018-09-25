@@ -145,6 +145,17 @@ class PageController extends Controller
         }
     }
     
+     public function finance_deposits()
+    {
+        $this->authorize('show-donation');
+        $donations = \App\Donation::where('donation_description','Deposit')->whereDeletedAt(NULL)->where('donation_amount','>',0)->with('contact','payments','retreat')->get();
+	$grouped_donations = $donations->groupBy('retreat.idnumber')->sortBy(function ($d) {
+		return $d[0]->retreat->start_date;
+			});
+	// dd($donations,$grouped_donations);
+        return view('reports.finance.deposits', compact('grouped_donations','donations'));  
+    }
+    
     public function retreatlistingreport($id)
     {
         $this->authorize('show-contact');
