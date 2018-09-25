@@ -21,6 +21,7 @@
         "spatie/laravel-google-calendar": "^1.0",
         "stuyam/laravel-phone-validator": "^1.0",
         "vinkla/hashids": "^5.0",
+        "orangehill/iseed": "dev-master",
         "zizaco/entrust": "5.2.x-dev"
     },
     "require-dev": {
@@ -62,9 +63,6 @@
         ],
 	"pre-update-cmd": [
 	    "php artisan clear-compiled"
-	],
-	"post-update-cmd": [
-	    "php artisan optimize"
 	]
     },
     "config": {
