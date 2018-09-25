@@ -182,6 +182,7 @@ Route::group(['prefix' => 'report'], function () {
     Route::get('contact_info_report/{id}', ['uses' => 'PageController@contact_info_report']);
     Route::get('finance/bankdeposit/{day?}', ['uses' => 'PageController@finance_bankdeposit']);
     Route::get('finance/retreatdonations/{retreat_id?}', ['uses' => 'PageController@finance_retreatdonations']);
+    Route::get('finance/deposits', ['uses' => 'PageController@finance_deposits']);
 });
 
 Route::get('reservation', ['as' => 'reservation','uses' => 'PageController@reservation']);
