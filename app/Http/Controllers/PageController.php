@@ -149,11 +149,24 @@ class PageController extends Controller
     {
         $this->authorize('show-donation');
         $donations = \App\Donation::where('donation_description','Deposit')->whereDeletedAt(NULL)->where('donation_amount','>',0)->with('contact','payments','retreat')->get();
-	$grouped_donations = $donations->groupBy('retreat.idnumber')->sortBy(function ($d) {
-		return $d[0]->retreat->start_date;
+        $payments = \App\Payment::where('payment_amount','>',0)->whereHas('donation', function($query) {
+            $query->where('donation_description','=','Deposit');
+        })->with('donation.retreat','donation.contact')->get();
+        //dd($payments);
+        $grouped_payments = $payments->groupBy(function ($c) {
+            //dd($c);
+            if (isset($c->donation->retreat->start_date)) {
+                $start_date = $c->donation->retreat->start_date->format('m/d/Y');
+            } else {
+                $start_date = NULL;
+            }
+            return '#'.$c->donation->retreat->idnumber.'-'.$c->donation->retreat->title.' ('.$start_date.')';
+        })->sortBy(function ($d) {
+            //dd($d[0]->donation->retreat->start_date);
+            return $d[0]->donation->retreat->start_date;
 			});
-	// dd($donations,$grouped_donations);
-        return view('reports.finance.deposits', compact('grouped_donations','donations'));  
+	//dd($grouped_payments);
+        return view('reports.finance.deposits', compact('grouped_payments','payments'));  
     }
     
     public function retreatlistingreport($id)
