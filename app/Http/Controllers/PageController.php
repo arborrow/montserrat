@@ -54,9 +54,9 @@ class PageController extends Controller
     {
         return view('pages.kitchen');   //
     }
-    public function donation()
+    public function finance()
     {
-        return view('pages.donation');   //
+        return view('pages.finance');   //
     }
     public function bookstore()
     {

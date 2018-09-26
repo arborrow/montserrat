@@ -113,6 +113,7 @@ Route::post('registration/add_group', ['uses' => 'RegistrationController@store_g
 
 Route::resource('group', 'GroupController');
 Route::get('grounds', ['as' => 'grounds','uses' => 'PageController@grounds']);
+Route::get('finance', ['as' => 'finance','uses' => 'PageController@finance']);
 Route::get('housekeeping', ['as' => 'housekeeping','uses' => 'PageController@housekeeping']);
 Route::get('kitchen', ['as' => 'kitchen','uses' => 'PageController@kitchen']);
 Route::get('maintenance', ['as' => 'maintenance','uses' => 'PageController@maintenance']);
@@ -180,7 +181,7 @@ Route::group(['prefix' => 'report'], function () {
     Route::get('retreatlisting/{retreat_id}', ['uses' => 'PageController@retreatlistingreport']);
     Route::get('retreatroster/{retreat_id}', ['uses' => 'PageController@retreatrosterreport']);
     Route::get('contact_info_report/{id}', ['uses' => 'PageController@contact_info_report']);
-    Route::get('finance/bankdeposit/{day?}', ['uses' => 'PageController@finance_bankdeposit']);
+    Route::get('finance/bankdeposit/{day?}', ['as' => 'report.finance.bankdeposit', 'uses' => 'PageController@finance_bankdeposit']);
     Route::get('finance/retreatdonations/{retreat_id?}', ['uses' => 'PageController@finance_retreatdonations']);
     Route::get('finance/deposits', ['uses' => 'PageController@finance_deposits']);
 });
