@@ -121,6 +121,11 @@
                         <a href={{ route('permission.index') }}>Permissions</a>
                     </li>
                 @endCan
+                @can('show-donation')
+                    <li>
+                        <a href={{ route('finance') }}>Finance</a>
+                    </li>
+                @endCan
                 
  <!--
                 <li><a href={{ route('support') }}>{!! Html::image('img/support.png', 'Support',array('title'=>"Support")) !!}</a></li>
