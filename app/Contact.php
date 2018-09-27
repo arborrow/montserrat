@@ -89,7 +89,7 @@ class Contact extends Model
     }
     public function email_primary()
     {
-        return $this->hasOne(Email::class, 'contact_id', 'id')->whereIsPrimary(1);
+        return $this->hasOne(Email::class, 'contact_id', 'id')->whereIsPrimary(1)->whereIsPrimary(1)->whereNotNull('email');
     }
     public function emergency_contact()
     {
@@ -586,6 +586,14 @@ class Contact extends Model
             return null;
         }
     }
+    public function getNoteVendorTextAttribute()
+    {
+        if (isset($this->note_vendor->note)) {
+            return $this->note_vendor->note;
+        } else {
+            return null;
+        }
+    }
     public function getOccupationNameAttribute()
     {
         if (isset($this->occupation_id)&&($this->occupation_id>0)) {
@@ -755,6 +763,10 @@ class Contact extends Model
     public function note_room_preference()
     {
         return $this->hasOne(Note::class, 'entity_id', 'id')->whereEntityTable('contact')->whereSubject('Room Preference');
+    }
+    public function note_vendor()
+    {
+        return $this->hasOne(Note::class, 'entity_id', 'id')->whereEntityTable('contact')->whereSubject('Vendor note');
     }
     public function note_general()
     {

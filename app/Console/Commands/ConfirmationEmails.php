@@ -46,7 +46,7 @@ class ConfirmationEmails extends Command
     public function handle()
     {
         $startDate = Carbon::today()->addDays(7);
-        $retreats = Retreat::whereDate('start_date', $startDate)
+        $retreats = \App\Retreat::whereDate('start_date', $startDate)
             ->where('event_type_id', 7)
             ->get();
 
@@ -69,7 +69,7 @@ class ConfirmationEmails extends Command
                     ->get();
 
                 foreach ($retreatants as $retreatant) {
-                    $primaryEmail = $retreatant->contact->primaryEmail()->first()->email;
+                    $primaryEmail = $retreatant->contact->primary_email_text;
 
                     // For automatic emails, remember_token must be set for all participants in retreat. 
                     if (!$retreatant->remember_token) {
@@ -79,7 +79,7 @@ class ConfirmationEmails extends Command
 
                     $alfonso = \App\Contact::where('display_name', 'Juan Alfonso de Polanco')->first();
 
-                    $touchpoint = new Touchpoint();
+                    $touchpoint = new \App\Touchpoint();
                     $touchpoint->person_id = $retreatant->contact->id;
                     $touchpoint->staff_id = $alfonso->id;
                     $touchpoint->touched_at = Carbon::now();

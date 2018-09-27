@@ -120,6 +120,15 @@ class Retreat extends Model
             return null;
         }
     }
+    public function getRetreatNameAttribute()
+    {
+        //dd($this->event_type);
+        if (isset($this->title)) {
+            return $this->title;
+        } else {
+            return null;
+        }
+    }
     public function getRetreatScheduleLinkAttribute()
     {
         if (Storage::has('event/'.$this->id.'/schedule.pdf')) {

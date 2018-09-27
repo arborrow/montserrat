@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon;
+use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
@@ -53,9 +54,9 @@ class PageController extends Controller
     {
         return view('pages.kitchen');   //
     }
-    public function donation()
+    public function finance()
     {
-        return view('pages.donation');   //
+        return view('pages.finance');   //
     }
     public function bookstore()
     {
@@ -108,16 +109,82 @@ class PageController extends Controller
         $person = \App\Contact::findOrFail($id);
         return view('reports.contact_info', compact('person'));   //
     }
-    public function finance_bankdeposit($day)
+    public function finance_cash_deposit($day = NULL)
     {
         $this->authorize('show-donation');
+        if (is_null($day)) {
+            $day = \Carbon\Carbon::now();
+        }
         $report_date = \Carbon\Carbon::parse($day);
         if (isset($report_date))
         {
-            $donations = \App\Payment::whereIn('payment_description',['Cash','Credit'])->with('Donation')->get();
-            dd($donations);
-        return view('reports.finance.bankdeposit', compact('report_date'));   //
+            $payments = \App\Payment::wherePaymentDate($report_date)->whereIn('payment_description',['Cash','Check'])->with('donation')->get();
+            $grand_total = $payments->sum('payment_amount');
+            $grouped_payments = $payments->sortBy('donation.donation_description')->groupBy('donation.donation_description');
+            //dd($report_date, $grouped_payments,$grand_total);
+        return view('reports.finance.cash_deposit', compact('report_date','grouped_payments','grand_total'));   //
+        } else {
+            return back();//
         }
+    }
+    public function finance_cc_deposit($day = NULL)
+    {
+        $this->authorize('show-donation');
+        if (is_null($day)) {
+            $day = \Carbon\Carbon::now();
+        }
+        $report_date = \Carbon\Carbon::parse($day);
+        if (isset($report_date))
+        {
+            $payments = \App\Payment::wherePaymentDate($report_date)->where('payment_description','like',['%Internet%'])->with('donation')->get();
+            $grand_total = $payments->sum('payment_amount');
+            $grouped_payments = $payments->sortBy('donation.donation_description')->groupBy('donation.donation_description');
+            //dd($report_date, $grouped_payments,$grand_total);
+        return view('reports.finance.cc_deposit', compact('report_date','grouped_payments','grand_total'));   //
+        } else {
+            return back();//
+        }
+    }
+    
+    public function finance_retreatdonations($retreat_id = NULL)
+    {
+        $this->authorize('show-donation');
+        if (is_null($retreat_id)) {
+            $retreat_id = NULL;
+        }
+        $retreat = \App\Retreat::whereIdnumber($retreat_id)->firstOrFail();
+        if (isset($retreat))
+        {   $donations = \App\Donation::whereEventId($retreat->id)->with('contact','payments')->get();
+            $grouped_donations = $donations->sortBy('donation_description')->groupBy('donation_description');
+            //dd($retreat,$grouped_donations);
+        return view('reports.finance.retreatdonations', compact('retreat','grouped_donations','donations'));   //
+        } else {
+            return back();//
+        }
+    }
+    
+     public function finance_deposits()
+    {
+        $this->authorize('show-donation');
+        $donations = \App\Donation::where('donation_description','Deposit')->whereDeletedAt(NULL)->where('donation_amount','>',0)->with('contact','payments','retreat')->get();
+        $payments = \App\Payment::where('payment_amount','>',0)->whereHas('donation', function($query) {
+            $query->where('donation_description','=','Deposit');
+        })->with('donation.retreat','donation.contact')->get();
+        //dd($payments);
+        $grouped_payments = $payments->groupBy(function ($c) {
+            //dd($c);
+            if (isset($c->donation->retreat->start_date)) {
+                $start_date = $c->donation->retreat->start_date->format('m/d/Y');
+            } else {
+                $start_date = NULL;
+            }
+            return '#'.$c->donation->retreat->idnumber.'-'.$c->donation->retreat->title.' ('.$start_date.')';
+        })->sortBy(function ($d) {
+            //dd($d[0]->donation->retreat->start_date);
+            return $d[0]->donation->retreat->start_date;
+			});
+	//dd($grouped_payments);
+        return view('reports.finance.deposits', compact('grouped_payments','payments'));  
     }
     
     public function retreatlistingreport($id)

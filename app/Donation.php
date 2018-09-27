@@ -36,9 +36,20 @@ class Donation extends Model
         } else {
             return 0;
         }
-            
-            
-            
+    }
+    public function getPaymentsPaidAttribute() {
+        if (isset($this->payments)) {
+            return ($this->payments->sum('payment_amount'));
+        } else {
+            return 0;
+        }
+    }
+    public function getRetreatNameAttribute() {
+        if (isset($this->retreat->title)) {
+            return $this->retreat->title;
+        } else {
+            return NULL;
+        }
     }
     public static function boot()
     {
