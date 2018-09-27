@@ -15,7 +15,7 @@ composer install
 npm install
 ```
 
-#### Getting Started with Laravel Homestead
+### Getting Started with Laravel Homestead
 Must have the following installed:
 * [VirtualBox 5.2](https://www.virtualbox.org/wiki/Downloads) installed.
 * [Vagrant](https://www.vagrantup.com/downloads.html)
@@ -30,10 +30,10 @@ Once the command has executed sucessfully `ssh` into the Vagrant box by running 
 vagrant ssh
 ```
 
-#### Setting up the Database
+### Setting up the Database
 **Following commands must be executed inside your vagrant box**
 * Run `php artisan migrate`
 * Seed the database (base seed for retreat types, etc. and an option for fake development data) 
 
-#### Generating application key
+### Generating application key
 * Run `php artisan key:generate`
