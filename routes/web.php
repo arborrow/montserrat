@@ -181,7 +181,8 @@ Route::group(['prefix' => 'report'], function () {
     Route::get('retreatlisting/{retreat_id}', ['uses' => 'PageController@retreatlistingreport']);
     Route::get('retreatroster/{retreat_id}', ['uses' => 'PageController@retreatrosterreport']);
     Route::get('contact_info_report/{id}', ['uses' => 'PageController@contact_info_report']);
-    Route::get('finance/bankdeposit/{day?}', ['as' => 'report.finance.bankdeposit', 'uses' => 'PageController@finance_bankdeposit']);
+    Route::get('finance/cash_deposit/{day?}', ['as' => 'report.finance.cash_deposit', 'uses' => 'PageController@finance_cash_deposit']);
+    Route::get('finance/cc_deposit/{day?}', ['as' => 'report.finance.cc_deposit', 'uses' => 'PageController@finance_cc_deposit']);
     Route::get('finance/retreatdonations/{retreat_id?}', ['uses' => 'PageController@finance_retreatdonations']);
     Route::get('finance/deposits', ['uses' => 'PageController@finance_deposits']);
 });

@@ -2,7 +2,7 @@
 @section('content')
 
 <div class ="bankdeposit">
-<h2>Bank Deposit Report for {{$report_date->format('F d, Y')}}</h2> 
+<h2>Credit Card (Internet) Bank Deposit Report for {{$report_date->format('F d, Y')}}</h2> 
 @if (!$grouped_payments->isEmpty())
      
 <hr />
