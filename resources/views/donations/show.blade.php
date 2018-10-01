@@ -24,7 +24,7 @@
                         ({{number_format($donation->percent_paid,0)}}%)
                         <br /><strong>Retreat: </strong>{{optional($donation->retreat)->title}} ({{$donation->retreat_id}})
                         <br /><strong>Terms: </strong>{{$donation->terms}}
-                        <br /><strong>Notes: </strong>{{$donation->notes}}
+                        <br /><strong>Notes: </strong>{{$donation->Notes}}
                         <br /><strong>Start date: </strong>{{$donation->start_date}}
                         <br /><strong>End date: </strong>{{$donation->end_date}}
                         <br /><strong>Donation install: </strong>{{$donation->donation_install}}
