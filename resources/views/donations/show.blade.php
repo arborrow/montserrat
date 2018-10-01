@@ -12,9 +12,10 @@
                         @else
                             Donation details
                         @endCan
-                        for {!!$donation->contact->contact_link_full_name!!}
+                        for {!!$donation->contact->contact_link_full_name!!} <br />
                 </span>                
-            </div>
+                    {!! Html::link(action('PageController@finance_invoice',$donation->donation_id),'Invoice',array('class' => 'btn btn-default'))!!}
+	    </div>
             
             <div class='row'>
                 <div class='col-md-4'>
