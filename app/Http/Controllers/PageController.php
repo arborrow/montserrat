@@ -145,6 +145,15 @@ class PageController extends Controller
             return back();//
         }
     }
+     
+    public function finance_invoice($donation_id = NULL)
+    {
+        $this->authorize('show-donation');
+        
+        $donation = \App\Donation::with('payments','contact','retreat')->findOrFail($donation_id);
+        // dd($donation);
+	return view('reports.finance.invoice', compact('donation'));   //
+    }
     
     public function finance_retreatdonations($retreat_id = NULL)
     {
