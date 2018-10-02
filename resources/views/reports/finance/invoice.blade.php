@@ -15,7 +15,8 @@
             montserratretreat.org <br /> <br />
         </td>
         <td>
-            <h3 style="text-align: right">Invoice# {{$donation->donation_id}}</h3>
+            <h3 style="text-align: right">Date: {{date('m/d/Y')}}<br />
+                Invoice #{{$donation->donation_id}}</h3>
         </td>
     </tr>
 </table>
