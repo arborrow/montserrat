@@ -69,7 +69,10 @@
 <br />
 <strong>Terms:</strong> {{$donation->terms}} <br /> <br />
 <br />
-<i>Make payments payable to: <strong>Montserrat Jesuit Retreat House</strong></i> <br /><br />
+<i>Make payments to: <br />
+    <strong>Montserrat Jesuit Retreat House</strong></i> <br />
+    PO Box 1390<br />
+    Lake Dallas, TX 75065-1390<br>
 
 <span class='pagefooter'>
     Invoice date: {{date('l, F j, Y H:i')}}
