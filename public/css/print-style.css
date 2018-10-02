@@ -167,9 +167,9 @@ td.box {
 }
 
 .invoice-totals table {
-    width: 35%;
+    width: 40%;
     margin-right: 0%;
-    margin-left: 65%;
+    margin-left: 60%;
     padding: 5px;
     
 }
@@ -195,16 +195,16 @@ td.box {
 }
 
 th.row-payment_description {
-    width: 60%;
+    width: 50%;
 }
 
 th.row-payment_amount, td.row {
     width: 15%;
 }
 th.row-payment_date {
-    width: 10%;
+    width: 15%;
 }
 
 th.row-payment_method, td.row-payment_method {
-    width: 15%;
+    width: 20%;
 }
