@@ -21,29 +21,29 @@
 </table>
         </div>
 <br /> 
-<br />
 {{$donation->contact->display_name}}<br />
 {{$donation->Notes1}} <br />
 {{$donation->contact->address_primary_street}} <br />     
 {{$donation->contact->address_primary_city}}, {{$donation->contact->address_primary_state}}  {{$donation->contact->address_primary_postal_code}} 
 <br /><br />
-Event: {{$donation->retreat->title}} ({{$donation->retreat->idnumber}})
+<strong>Event:</strong> {{$donation->retreat->title}} ({{$donation->retreat->idnumber}})
 <div class="payments">
-    <h3>Payments</h3>   
+<br />    
+<strong>Notes:</strong> {{$donation->Notes}} <br /><br />
+
  <table>
+     <caption style="text-align:left"><strong>Payments</strong></caption>
         <th class="row-payment_date">Date</th>
+        <th class="row-payment_note">Description</th>
         <th class="row-payment_type">Payment method</th>
-        <th class="row-payment_number">Reference #</th>
         <th class="row-payment_amount">Amount</th>
-        <th class="row-payment_note">Notes</th>
                 
     @foreach($donation->payments->sortBy('payment_date') as $payment)
     <tr>
         <td>{{$payment->payment_date->format('m/d/Y')}}</td>
-        <td>{{$payment->payment_description}}</td>
-        <td>{{$payment->payment_number}}</td>
-        <td class="row-payment_amount">${{number_format($payment->payment_amount,2)}}</td>
         <td>{{$payment->note}}</td>
+        <td>{{$payment->payment_description}} #{{$payment->payment_number}}</td>
+        <td class="row-payment_amount">${{number_format($payment->payment_amount,2)}}</td>
     </tr>    
     @endforeach  
  </table>
@@ -67,7 +67,6 @@ Event: {{$donation->retreat->title}} ({{$donation->retreat->idnumber}})
 </table>
 </div>
 <br />
-<strong>Notes:</strong> {{$donation->Notes}} <br /><br />
 <strong>Terms:</strong> {{$donation->terms}} <br /> <br />
 <br />
 <i>Make payments payable to: <strong>Montserrat Jesuit Retreat House</strong></i> <br /><br />
