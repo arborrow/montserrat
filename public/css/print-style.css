@@ -208,3 +208,7 @@ th.row-payment_date {
 th.row-payment_method, td.row-payment_method {
     width: 20%;
 }
+
+.invoice.pagefooter {
+   margin-bottom: 2px; 
+}
