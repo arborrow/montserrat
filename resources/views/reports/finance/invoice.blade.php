@@ -34,7 +34,7 @@
  <table>
      <caption style="text-align:left"><strong>Payments</strong></caption>
         <th class="row-payment_date">Date</th>
-        <th class="row-payment_note">Description</th>
+        <th class="row-payment_description">Description</th>
         <th class="row-payment_type">Payment method</th>
         <th class="row-payment_amount">Amount</th>
                 
