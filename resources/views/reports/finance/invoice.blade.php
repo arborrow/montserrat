@@ -15,7 +15,7 @@
             montserratretreat.org <br /> <br />
         </td>
         <td>
-            <h3>Invoice# {{$donation->donation_id}} for {{$donation->retreat->title}}</h3>
+            <h3>Invoice# {{$donation->donation_id}}</h3>
         </td>
     </tr>
 </table>
@@ -25,7 +25,9 @@
 {{$donation->contact->display_name}}<br />
 {{$donation->Notes1}} <br />
 {{$donation->contact->address_primary_street}} <br />     
-{{$donation->contact->address_primary_city}}, {{$donation->contact->address_primary_state}}  {{$donation->contact->address_primary_postal_code}} <br /><br />    
+{{$donation->contact->address_primary_city}}, {{$donation->contact->address_primary_state}}  {{$donation->contact->address_primary_postal_code}} 
+<br /><br />
+RE: {{$donation->retreat->title}} ({{$donation->retreat->idnumber}})
 <div class="payments">
     <h3>Payments</h3>   
  <table>
@@ -58,14 +60,13 @@
         <td class="row-payment_amount">${{number_format($donation->payments_paid,2)}} </td>
     </tr>
     <tr>
-        <td>Current amount due:</td>
-        <td class="row-payment_amount">${{number_format(($donation->donation_amount - $donation->payments_paid),2)}} </td>
+        <td><strong>Current amount due:</strong></td>
+        <td class="row-payment_amount"><strong>${{number_format(($donation->donation_amount - $donation->payments_paid),2)}}</strong> </td>
     </tr>    
  
 </table>
 </div>
 <br />
-<strong>Description:</strong> {{$donation->donation_description}} <br /><br />
 <strong>Notes:</strong> {{$donation->Notes}} <br /><br />
 <strong>Terms:</strong> {{$donation->terms}} <br /> <br />
 <br />
