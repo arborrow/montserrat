@@ -15,7 +15,7 @@
             montserratretreat.org <br /> <br />
         </td>
         <td>
-            <h3>Invoice# {{$donation->donation_id}}</h3>
+            <h3 style="text-align: right">Invoice# {{$donation->donation_id}}</h3>
         </td>
     </tr>
 </table>
@@ -27,7 +27,7 @@
 {{$donation->contact->address_primary_street}} <br />     
 {{$donation->contact->address_primary_city}}, {{$donation->contact->address_primary_state}}  {{$donation->contact->address_primary_postal_code}} 
 <br /><br />
-RE: {{$donation->retreat->title}} ({{$donation->retreat->idnumber}})
+Event: {{$donation->retreat->title}} ({{$donation->retreat->idnumber}})
 <div class="payments">
     <h3>Payments</h3>   
  <table>
