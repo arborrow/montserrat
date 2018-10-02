@@ -8,12 +8,13 @@ Lake Dallas, TX 75065 <br />
 (940) 321-6020 <br />
 (940) 321-6040 - Fax <br />
 montserratretreat.org <br /> <br /> 
-<h2>Invoice# {{$donation->donation_id}} for {{$donation->retreat->title}}<br /> 
+<div style="text-align: center">><h2>Invoice# {{$donation->donation_id}} for {{$donation->retreat->title}}</h2></div><br /> 
+<br />
 {{$donation->contact->display_name}}<br />
+{{$donation->Notes1}} <br />
 {{$donation->contact->address_primary_street}} <br />     
 {{$donation->contact->address_primary_city}}, {{$donation->contact->address_primary_state}}  {{$donation->contact->address_primary_postal_code}} <br /><br />    
-</h2>
- <h1>Payments</h1>   
+<h2>Payments</h2>   
  <table width="100%" style="border: 1px solid black">
         <th class="row-payment_date">Date</th>
         <th class="row-payment_type">Payment type</th>
