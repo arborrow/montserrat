@@ -152,3 +152,44 @@ td.box {
             width: 16%
         }
         
+ .invoice table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 2px;
+}
+
+.invoice th {
+    text-align: center;
+}
+
+.invoice td.row-payment_amount {
+    text-align: right;
+}
+
+.invoice-totals table {
+    width: 50%;
+    margin-right: 0%;
+    margin-left: 45%;
+    padding: 5px;
+    
+}
+
+.invoice-totals th td {
+    padding: 5px;
+}
+
+.pageheader table, .pageheader td {
+    border: 0px solid white;
+}
+
+.invoice.pageheader tr{
+    border: 0px solid white;
+}
+
+.invoice.pageheader td{
+    border: 0px solid white;
+}    
+
+.invoice.pageheader th{
+    border: 0px solid white;
+}
