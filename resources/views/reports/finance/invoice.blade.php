@@ -23,7 +23,9 @@
         </div>
 <br /> 
 {{$donation->contact->display_name}}<br />
-{{$donation->Notes1}} <br />
+@if (isset($donation->Notes1))
+    {{$donation->Notes1}} <br />
+@endIf
 {{$donation->contact->address_primary_street}} <br />     
 {{$donation->contact->address_primary_city}}, {{$donation->contact->address_primary_state}}  {{$donation->contact->address_primary_postal_code}} 
 <br /><br />
@@ -70,7 +72,7 @@
 <br />
 <strong>Terms:</strong> {{$donation->terms}} <br /> <br />
 <br />
-<i>Make payments to: <br />
+<i>Please remit payment to: <br />
     <strong>Montserrat Jesuit Retreat House</strong></i> <br />
     PO Box 1390<br />
     Lake Dallas, TX 75065-1390<br>

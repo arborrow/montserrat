@@ -26,6 +26,7 @@
                     {!! Html::link(action('PageController@retreatlistingreport',$retreat->idnumber),'Retreatant listing',array('class' => 'btn btn-default'))!!}
                 @endCan
                 @can('show-donation')
+                         {!! Html::link('retreat/'.$retreat->id.'/payments','Retreat donations',array('class' => 'btn btn-default')) !!}
                          {!! Html::link('report/finance/retreatdonations/'.$retreat->idnumber,'Donations report',array('class' => 'btn btn-default')) !!}
                 @endCan
 
