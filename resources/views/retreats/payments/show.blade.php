@@ -4,7 +4,7 @@
     <section class="section-padding">
         <div class="jumbotron text-left">
                         
-            <h2><strong><a href="{{url('retreat/'.$retreat->id.'/payments/edit')}}">Retreat Offerings</a> for <a href="{{url('retreat/'.$retreat->id)}}">{{$retreat->title}}</a></strong></h2>
+            <h2><strong><a href="{{url('retreat/'.$retreat->id.'/payments/edit')}}">Retreat Offerings</a> for <a href="{{url('retreat/'.$retreat->id)}}">{{$retreat->title}} ({{$retreat->idnumber}})</a></strong></h2>
              @if ($registrations->isEmpty())
                     <p> Bummer, there are no retreatants registered for this retreat </p>
                 @else

@@ -51,6 +51,12 @@ class Donation extends Model
             return NULL;
         }
     }
+    public function getRetreatLinkAttribute() {
+        if (isset($this->retreat->title)) {
+            $path = url('retreat/'.$this->retreat->id);
+            return "<a href='".$path."'>".$this->retreat_name."</a>";
+        }
+    }
     public static function boot()
     {
         parent::boot();    

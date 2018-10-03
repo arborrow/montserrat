@@ -17,6 +17,15 @@
                         
             </div>
             <div class='row'>
+                {!! Form::label('event_id', 'Retreat:', ['class' => 'col-md-3'])  !!}
+                @if (isset($defaults['event_id']))
+                    {!! Form::select('event_id', $retreats, $defaults['event_id'], ['class' => 'col-md-3']) !!}
+                @else
+                    {!! Form::select('event_id', $retreats, NULL, ['class' => 'col-md-3']) !!}
+                @endif
+                        
+            </div>
+            <div class='row'>
                 {!! Form::label('donation_date', 'Date of donation:', ['class' => 'col-md-3'])  !!}
                 {!! Form::text('donation_date',date('F j, Y g:i A', strtotime(\Carbon\Carbon::now())) , ['class' => 'col-md-3']) !!}
             </div>

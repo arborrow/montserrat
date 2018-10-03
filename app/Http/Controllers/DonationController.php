@@ -30,7 +30,7 @@ class DonationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id = NULL, $type = NULL)
+    public function create($id = NULL, $event_id = NULL, $type = NULL)
     {
         $this->authorize('create-donation');
         
@@ -45,15 +45,21 @@ class DonationController extends Controller
         if (isset($subcontact_type_id) && ($id==0)) {
             $donors = \App\Contact::whereSubcontactType($subcontact_type_id)->orderBy('sort_name')->pluck('sort_name', 'id');
         }
-        $retreats = \App\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date", ">", \Carbon\Carbon::today()->subWeek())->where("is_active", "=", 1)->orderBy('start_date')->pluck('description', 'id');
-        $retreats->prepend('Unassigned', 0);
+        if (isset($event_id)) {
+            $retreats = \App\Retreat::findOrFail($event_id);
+            $retreats = \App\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->whereId($event_id)->pluck('description', 'id');
+            
+        } else {
+            $retreats = \App\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date", ">", \Carbon\Carbon::today()->subWeek())->where("is_active", "=", 1)->orderBy('start_date')->pluck('description', 'id');
+            $retreats->prepend('Unassigned', 0);
+        }
         
         //dd($donors);
         $payment_methods = config('polanco.payment_method');
         $descriptions = \App\DonationType::orderby('name')->pluck('name', 'name');
         $dt_today =  \Carbon\Carbon::today();
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
-        $defaults['retreat_id']=0;
+        $defaults['retreat_id']= $event_id;
 
         return view('donations.create', compact('retreats', 'donors', 'descriptions', 'payment_methods', 'defaults'));
     }
@@ -76,6 +82,7 @@ class DonationController extends Controller
         
         $this->validate($request, [
         'donor_id' => 'required|integer|min:0',
+        'event_id' => 'integer|min:0',
         'donation_date' => 'required|date',
         'donation_amount' => 'required|numeric|min:0',
         'payment_amount' => 'required|numeric|min:0',
@@ -94,6 +101,7 @@ class DonationController extends Controller
         $donation->end_date= Carbon::parse($request->input('end_date'));
         $donation->donation_install = $request->input('donation_install');
         $donation->terms= $request->input('terms');
+        $donation->event_id = $request->input('event_id');
         $donation->save();
         
          // create donation_payments
@@ -169,12 +177,14 @@ class DonationController extends Controller
         $donation = \App\Donation::findOrFail($id);
         $donation->contact_id= $request->input('donor_id');
         $donation->donation_date= $request->input('donation_date') ? Carbon::parse($request->input('donation_date')) : NULL;
-        $donation->donation_amount= $request->input('donation_amount');
         $donation->donation_description = $request->input('donation_description');
+        $donation->donation_amount= $request->input('donation_amount');
+        $donation->notes1= $request->input('notes1'); //primary_contact
+        $donation->notes= $request->input('notes');
+        $donation->terms= $request->input('terms');
         $donation->start_date= $request->input('start_date') ? Carbon::parse($request->input('start_date')) : NULL;
         $donation->end_date= $request->input('end_date') ? Carbon::parse($request->input('end_date')) : NULL;
         $donation->donation_install = $request->input('donation_install');
-        $donation->terms= $request->input('terms');
         $donation->save();
         
         return Redirect::action('DonationController@index');

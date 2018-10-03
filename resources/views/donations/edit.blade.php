@@ -16,10 +16,6 @@
                         {!! Form::label('donation_date', 'Date:', ['class' => 'col-md-3'])  !!}
                         {!! Form::text('donation_date', date('F j, Y', strtotime($donation->donation_date)), ['class' => 'col-md-3']) !!}
                     </div>
-                    <!-- <div class='row'>
-                        {!! Form::label('donation_description', 'Description:', ['class' => 'col-md-3'])  !!}
-                        {!! Form::select('donation_description', $descriptions, $donation->donation_description, ['class' => 'col-md-3']) !!}
-                    </div> -->
                     <div class='row'>
                         {!! Form::label('donation_description', 'Description:', ['class' => 'col-md-3'])  !!}
                         {!! Form::text('donation_description', $donation->donation_description, ['class' => 'col-md-3']) !!}
@@ -29,7 +25,14 @@
                         {!! Form::label('donation_amount', 'Amount:', ['class' => 'col-md-3'])  !!}
                         {!! Form::number('donation_amount', $donation->donation_amount, ['class' => 'col-md-3','step'=>'0.01']) !!}
                     </div>
-                    
+                    <div class='row'>
+                        {!! Form::label('notes1', 'Primary contact:', ['class' => 'col-md-3'])  !!}
+                        {!! Form::text('notes1', $donation->Notes1, ['class' => 'col-md-3']) !!}                   
+                    </div> 
+                    <div class='row'>
+                        {!! Form::label('notes', 'Notes:', ['class' => 'col-md-3'])  !!}
+                        {!! Form::text('notes', $donation->Notes, ['class' => 'col-md-3']) !!}                   
+                    </div> 
                     <div class='row'>
                         {!! Form::label('terms', 'Terms:', ['class' => 'col-md-3'])  !!}
                         {!! Form::text('terms', $donation->terms, ['class' => 'col-md-3']) !!}                   
