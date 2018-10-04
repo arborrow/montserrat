@@ -76,3 +76,4 @@ GOOGLE_CLIENT_SECRET={google_client_secret}
 Replace `{google_client_id}` with your `client ID` and `{google_client_secret}` with your `client secret`.
 
 ### Step 7: Follow Good Coding Practices!! 🤗
+You're all set!
