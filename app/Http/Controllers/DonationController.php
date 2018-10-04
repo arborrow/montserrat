@@ -98,6 +98,7 @@ class DonationController extends Controller
         $donation->donation_description = $request->input('donation_description');
         $donation->start_date= Carbon::parse($request->input('start_date'));
         $donation->end_date= Carbon::parse($request->input('end_date'));
+        $donation->donation_amount = $request->input('donation_amount');
         $donation->donation_install = $request->input('donation_install');
         $donation->terms= $request->input('terms');
         $donation->event_id = $request->input('event_id');
