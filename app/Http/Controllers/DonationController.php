@@ -94,14 +94,15 @@ class DonationController extends Controller
 
         $donation = new \App\Donation;
         $donation->contact_id= $request->input('donor_id');
+        $donation->event_id = $request->input('event_id');
         $donation->donation_date= Carbon::parse($request->input('donation_date'));
+        $donation->donation_amount = $request->input('donation_amount');
         $donation->donation_description = $request->input('donation_description');
+        $donation->Notes= $request->input('notes');
+        $donation->terms= $request->input('terms');
         $donation->start_date= Carbon::parse($request->input('start_date'));
         $donation->end_date= Carbon::parse($request->input('end_date'));
-        $donation->donation_amount = $request->input('donation_amount');
         $donation->donation_install = $request->input('donation_install');
-        $donation->terms= $request->input('terms');
-        $donation->event_id = $request->input('event_id');
         $donation->save();
         
          // create donation_payments
@@ -200,14 +201,13 @@ class DonationController extends Controller
         if (isset($donation_description)) {
             $donation->donation_description = $donation_description->label;
         }
-        $donation->donation_amount= $request->input('donation_amount');
         $donation->notes1= $request->input('notes1'); //primary_contact
         $donation->notes= $request->input('notes');
         $donation->terms= $request->input('terms');
         $donation->start_date= $request->input('start_date') ? Carbon::parse($request->input('start_date')) : NULL;
         $donation->end_date= $request->input('end_date') ? Carbon::parse($request->input('end_date')) : NULL;
         $donation->donation_install = $request->input('donation_install');
-        // dd($)
+        
         $donation->save();
         
         return Redirect::action('DonationController@index');
