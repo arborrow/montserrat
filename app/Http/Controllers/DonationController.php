@@ -100,8 +100,8 @@ class DonationController extends Controller
         $donation->donation_description = $request->input('donation_description');
         $donation->Notes= $request->input('notes');
         $donation->terms= $request->input('terms');
-        $donation->start_date= Carbon::parse($request->input('start_date'));
-        $donation->end_date= Carbon::parse($request->input('end_date'));
+        $donation->start_date= $request->input('start_date_only');
+        $donation->end_date= $request->input('end_date_only');
         $donation->donation_install = $request->input('donation_install');
         $donation->save();
         
@@ -109,7 +109,7 @@ class DonationController extends Controller
         $payment = new \App\Payment;
         $payment->donation_id = $donation->donation_id;
         $payment->payment_amount = $request->input('payment_amount');
-        $payment->payment_date = Carbon::now();
+        $payment->payment_date = Carbon::now()->toDateString();
         $payment->payment_description = $request->input('payment_description'); 
         if ($request->input('payment_description') == 'Credit card') {
             $payment->ccnumber = substr($request->input('payment_idnumber'),-4);
@@ -204,8 +204,8 @@ class DonationController extends Controller
         $donation->notes1= $request->input('notes1'); //primary_contact
         $donation->notes= $request->input('notes');
         $donation->terms= $request->input('terms');
-        $donation->start_date= $request->input('start_date') ? Carbon::parse($request->input('start_date')) : NULL;
-        $donation->end_date= $request->input('end_date') ? Carbon::parse($request->input('end_date')) : NULL;
+        $donation->start_date= $request->input('start_date_only') ? Carbon::parse($request->input('start_date_only')) : NULL;
+        $donation->end_date= $request->input('end_date_only') ? Carbon::parse($request->input('end_date_only')) : NULL;
         $donation->donation_install = $request->input('donation_install');
         
         $donation->save();

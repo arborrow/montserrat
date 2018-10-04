@@ -11,7 +11,7 @@
             <h2>Payment detail</h2>
             <div class='row'>
                 {!! Form::label('payment_date', 'Payment date:', ['class' => 'col-md-3'])  !!}
-                {!! Form::text('payment_date', date('F j, Y', strtotime($payment->payment_date)), ['class' => 'col-md-3']) !!}    
+                {!! Form::date('payment_date', $payment->payment_date, ['class' => 'col-md-3','data-provide'=>'datepicker']) !!}    
             </div>
                            
             <div class='row'>
@@ -35,7 +35,7 @@
             <hr />
             
             <h2>Donation detail</h2>
-            <br /><strong>Date: </strong>{{$payment->donation->donation_date}}
+            <br /><strong>Date: </strong>{{$payment->donation->donation_date->format('m/d/Y')}}
             <br /><strong>Description: </strong>{{$payment->donation->donation_description}}  
             <br /><strong>Pledged/Paid: </strong>${{number_format($payment->donation->donation_amount,2)}} / ${{number_format($payment->donation->payments->sum('payment_amount'),2)}}  
             ({{number_format($payment->donation->percent_paid,0)}}%)

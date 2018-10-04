@@ -175,8 +175,10 @@
         datetimeFormat:'N d, Y h:M a'});
     $( "#end_date" ).datetimeEntry({
         datetimeFormat:'N d, Y h:M a'});
-    $( "#donation_date" ).datetimeEntry({
-        datetimeFormat:'N d, Y h:M a'});
+    $( "#donation_date" ).datepicker();
+    $( "#payment_date" ).datepicker();
+    $( "#start_date_only" ).datepicker();
+    $( "#end_date_only" ).datepicker();
     $( "#register_date" ).datepicker();
     $( "#registration_confirm_date" ).datepicker();
     $( "#attendance_confirm_date" ).datepicker();
