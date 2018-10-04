@@ -27,7 +27,7 @@
             </div>
             <div class='row'>
                 {!! Form::label('donation_date', 'Date of donation:', ['class' => 'col-md-3'])  !!}
-                {!! Form::text('donation_date',date('F j, Y g:i A', strtotime(\Carbon\Carbon::now())) , ['class' => 'col-md-3','data-provide'=>'datepicker']) !!}
+                {!! Form::text('donation_date',(\Carbon\Carbon::now()->format('m/d/Y')) , ['class' => 'col-md-3','data-provide'=>'datepicker']) !!}
             </div>
             
             <div class='row'>
@@ -66,12 +66,12 @@
             </div> 
 
             <div class='row'>
-                {!! Form::label('start_date', 'Start date:', ['class' => 'col-md-3'])  !!}
-                {!! Form::text('start_date', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+                {!! Form::label('start_date_only', 'Start date:', ['class' => 'col-md-3'])  !!}
+                {!! Form::text('start_date_only', NULL, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
             </div> 
             <div class='row'>
-                {!! Form::label('end_date', 'End date:', ['class' => 'col-md-3'])  !!}
-                {!! Form::text('end_date', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+                {!! Form::label('end_date_only', 'End date:', ['class' => 'col-md-3'])  !!}
+                {!! Form::text('end_date_only', NULL, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
             </div> 
             <div class='row'>
                 {!! Form::label('donation_install', 'Installment:', ['class' => 'col-md-3'])  !!}

@@ -20,7 +20,7 @@
             
             <div class='row'>
                 <div class='col-md-4'>
-                        <strong>Date: </strong>{{$payment->payment_date}}
+                        <strong>Date: </strong>{{$payment->payment_date->format('m/d/Y')}}
                         <br /><strong>Amount: </strong>${{ number_format($payment->payment_amount,2)}}  
                         <br /><strong>Method: </strong>{{$payment->payment_description}}  
                         <br /><strong>Check/CC#: </strong>{{ $payment->ccnumber or $payment->cknumber}}
@@ -33,7 +33,7 @@
             <h2>Donation details:</h2>
             <div class='row'>
                 <div class='col-md-4'>
-                        <strong>Date: </strong> {{$payment->donation->donation_date}}
+                        <strong>Date: </strong> {{$payment->donation->donation_date->format('m/d/Y')}}
                         <br /><strong>Description: </strong>{{$payment->donation->donation_description}}  
                         <br /><strong>Amount pledged (% paid): </strong>${{number_format($payment->donation->donation_amount,2)}}
                         ({{number_format($payment->donation->percent_paid,0)}}%)

@@ -49,12 +49,12 @@
                     </div> 
                     
                     <div class='row'>
-                        {!! Form::label('start_date', 'Start date:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::date('start_date', $donation->start_date, ['class' => 'col-md-3','data-provide'=>'datepicker']) !!}                   
+                        {!! Form::label('start_date_only', 'Start date:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::text('start_date_only', $donation->start_date, ['class' => 'col-md-3','data-provide'=>'datepicker']) !!}                   
                     </div> 
                     <div class='row'>
-                        {!! Form::label('end_date', 'End date:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::date('end_date', $donation->end_date, ['class' => 'col-md-3','data-provide'=>'datepicker']) !!}                   
+                        {!! Form::label('end_date_only', 'End date:', ['class' => 'col-md-2'])  !!}
+                        {!! Form::text('end_date_only', $donation->end_date, ['class' => 'col-md-3','data-provide'=>'datepicker']) !!}                   
                     </div> 
                     <div class='row'>
                         {!! Form::label('donation_install', 'Installment:', ['class' => 'col-md-2'])  !!}
