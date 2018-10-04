@@ -28,6 +28,7 @@
         "filp/whoops": "~2.0",
         "fzaninotto/faker": "~1.4",
         "laracasts/generators": "^1.1",
+        "laravel/homestead": "^7.17",
         "mockery/mockery": "~1.0",
         "nunomaduro/collision": "~1.1",
         "phpunit/phpunit": "~6.0",
@@ -56,14 +57,18 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "homestead make"
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate"
         ],
-	"pre-update-cmd": [
-	    "php artisan clear-compiled"
-	]
+        "pre-update-cmd": [
+            "php artisan clear-compiled"
+        ],
+        "post-update-cmd": [
+            "php artisan optimize"
+        ]
     },
     "config": {
         "preferred-install": "dist",

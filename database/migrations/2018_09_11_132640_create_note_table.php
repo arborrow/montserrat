@@ -17,7 +17,7 @@ class CreateNoteTable extends Migration {
 			$table->increments('id');
 			$table->string('entity_table');
 			$table->integer('entity_id');
-			$table->text('note', 65535)->nullable()->index('idx_note');
+			$table->text('note', 65535)->nullable();
 			$table->integer('contact_id')->nullable();
 			$table->timestamp('modified_date')->default(DB::raw('CURRENT_TIMESTAMP'));
 			$table->string('subject')->nullable()->index('idx_subject');
