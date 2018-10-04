@@ -53,7 +53,7 @@ class PaymentController extends Controller
         'donation_id' => 'required|integer|min:0',
         'payment_date' => 'required|date',
         'payment_amount' => 'required|numeric|min:0',
-        'payment_idnumber' => 'nullable|integer|min:0'
+        'payment_idnumber' => 'nullable|numeric|min:0'
         ]);
 
         $donation = \App\Donation::findOrFail($request->input('donation_id'));
@@ -120,7 +120,7 @@ class PaymentController extends Controller
         'donation_id' => 'required|integer|min:0',
         'payment_date' => 'required|date',
         'payment_amount' => 'required|numeric|min:0',
-        'payment_idnumber' => 'nullable|integer|min:0'
+        'payment_idnumber' => 'nullable|numeric|min:0'
         ]);
 
         $payment = \App\Payment::findOrFail($id);
