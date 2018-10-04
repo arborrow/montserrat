@@ -175,6 +175,8 @@
         datetimeFormat:'N d, Y h:M a'});
     $( "#end_date" ).datetimeEntry({
         datetimeFormat:'N d, Y h:M a'});
+    $( "#donation_date" ).datetimeEntry({
+        datetimeFormat:'N d, Y h:M a'});
     $( "#register_date" ).datepicker();
     $( "#registration_confirm_date" ).datepicker();
     $( "#attendance_confirm_date" ).datepicker();

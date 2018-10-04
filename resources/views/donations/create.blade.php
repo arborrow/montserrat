@@ -27,7 +27,7 @@
             </div>
             <div class='row'>
                 {!! Form::label('donation_date', 'Date of donation:', ['class' => 'col-md-3'])  !!}
-                {!! Form::text('donation_date',date('F j, Y g:i A', strtotime(\Carbon\Carbon::now())) , ['class' => 'col-md-3']) !!}
+                {!! Form::text('donation_date',date('F j, Y g:i A', strtotime(\Carbon\Carbon::now())) , ['class' => 'col-md-3','data-provide'=>'datepicker']) !!}
             </div>
             
             <div class='row'>
@@ -51,7 +51,15 @@
                 {!! Form::label('donation_description', 'Description:', ['class' => 'col-md-3'])  !!}
                 {!! Form::select('donation_description', $descriptions, 'Retreat Offering', ['class' => 'col-md-3']) !!}
             </div>
-
+            <div class='row'>
+                {!! Form::label('notes1', 'Primary contact:', ['class' => 'col-md-3'])  !!}
+                {!! Form::text('notes1', NULL, ['class' => 'col-md-3']) !!}                   
+            </div> 
+            <div class='row'>
+                {!! Form::label('notes', 'Notes:', ['class' => 'col-md-3'])  !!}
+                {!! Form::text('notes', NULL, ['class' => 'col-md-3']) !!}                   
+            </div> 
+                          
             <div class='row'>
                 {!! Form::label('terms', 'Terms:', ['class' => 'col-md-3'])  !!}
                 {!! Form::text('terms', NULL, ['class' => 'col-md-3']) !!}                   
@@ -59,11 +67,11 @@
 
             <div class='row'>
                 {!! Form::label('start_date', 'Start date:', ['class' => 'col-md-3'])  !!}
-                {!! Form::date('start_date', NULL, ['class' => 'col-md-3']) !!}                   
+                {!! Form::text('start_date', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
             </div> 
             <div class='row'>
                 {!! Form::label('end_date', 'End date:', ['class' => 'col-md-3'])  !!}
-                {!! Form::date('end_date', NULL, ['class' => 'col-md-3']) !!}                   
+                {!! Form::text('end_date', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
             </div> 
             <div class='row'>
                 {!! Form::label('donation_install', 'Installment:', ['class' => 'col-md-3'])  !!}
