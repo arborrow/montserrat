@@ -86,7 +86,7 @@ class DonationController extends Controller
         'donation_date' => 'required|date',
         'donation_amount' => 'required|numeric|min:0',
         'payment_amount' => 'required|numeric|min:0',
-        'payment_idnumber' => 'nullable|integer|min:0',
+        'payment_idnumber' => 'nullable|numeric|min:0',
         'start_date' => 'date|nullable|before:end_date',
         'end_date' => 'date|nullable|after:start_date',
         'donation_install' => 'integer|min:0|nullable'
