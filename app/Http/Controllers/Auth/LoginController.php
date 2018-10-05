@@ -62,7 +62,7 @@ class LoginController extends Controller
      */
     public function handleProviderCallback()
     {
-        $user = Socialite::driver('google')->user();
+        $user = Socialite::driver('google')->stateless()->user();
         $socialite_restrict_domain = env('SOCIALITE_RESTRICT_DOMAIN');
         // dd($socialite_retrict_domain,$user);
         if (isset($socialite_restrict_domain)) {
