@@ -13,6 +13,11 @@
             <h2>Donation details</h2>
                 <div class="form-group">
                     <div class='row'>
+                        {!! Form::label('donation_description', 'Description: ', ['class' => 'col-md-2'])  !!}
+                        {!! Form::select('donation_description', $descriptions, $defaults['description_key'], ['class' => 'col-md-3']) !!}
+            
+                    </div>
+                    <div class='row'>
                         {!! Form::label('event_id', 'Retreat:', ['class' => 'col-md-2'])  !!}
                         @if (isset($defaults['event_id']))
                             {!! Form::select('event_id', $retreats, $defaults['event_id'], ['class' => 'col-md-3']) !!}
@@ -28,11 +33,6 @@
                     <div class='row'>
                         {!! Form::label('donation_amount', 'Amount:', ['class' => 'col-md-2'])  !!}
                         {!! Form::number('donation_amount', $donation->donation_amount, ['class' => 'col-md-3','step'=>'0.01']) !!}
-                    </div>
-                    <div class='row'>
-                        {!! Form::label('donation_description', 'Description: ', ['class' => 'col-md-2'])  !!}
-                        {!! Form::select('donation_description', $descriptions, $defaults['description_key'], ['class' => 'col-md-3']) !!}
-            
                     </div>
                     
                     <div class='row'>
