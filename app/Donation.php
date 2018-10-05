@@ -60,7 +60,7 @@ class Donation extends Model
     }
     public function getRetreatStartDateAttribute() {
         if (isset($this->retreat->start_date)) {
-            return $this->retreat->start_date;
+            return $this->retreat->start_date->format('m/d/Y');
         } else {
             return NULL;
         }
