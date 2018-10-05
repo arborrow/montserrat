@@ -94,7 +94,9 @@ class DonationController extends Controller
 
         $donation = new \App\Donation;
         $donation->contact_id= $request->input('donor_id');
-        $donation->event_id = $request->input('event_id');
+        if ($request->input('event_id') > 0) {
+            $donation->event_id = $request->input('event_id');
+        }
         $donation->donation_date= Carbon::parse($request->input('donation_date'));
         $donation->donation_amount = $request->input('donation_amount');
         $donation->donation_description = $request->input('donation_description');
