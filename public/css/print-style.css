@@ -130,7 +130,8 @@ td.box {
         
 .bankdeposit {
           font-size: 10pt;
-        }
+	  margin-top: 25px;
+	  }
 
 .bankdeposit th.row-donor  {
             width: 15%
