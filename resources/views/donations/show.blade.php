@@ -15,7 +15,10 @@
                         for {!!$donation->contact->contact_link_full_name!!} <br />
                 </span>                
                     {!! Html::link(action('PageController@finance_invoice',$donation->donation_id),'Invoice',array('class' => 'btn btn-default'))!!}
-	    </div>
+                    @can('create-payment')
+                        {!! Html::link(action('PaymentController@create',$donation->donation_id),'Add payment',array('class' => 'btn btn-default'))!!}
+                    @endCan    
+            </div>
             
             <div class='row'>
                 <div class='col-md-4'>
@@ -34,9 +37,11 @@
                 </div>
             </div>
             <hr />
+                
             <div class='row'>
                 <div class='col-md-8'>
-                    <table class="table table-bordered table-striped table-hover"><caption><h2>Payments for Donation #{{$donation->donation_id}} - Total payments: ${{number_format($donation->payments->sum('payment_amount'),2)}}</h2></caption>
+                    <table class="table table-bordered table-striped table-hover">
+                        <caption><h2>Payments for Donation #{{$donation->donation_id}} - Total payments: ${{number_format($donation->payments->sum('payment_amount'),2)}}</h2></caption>
                     <thead>
                         <tr>
                             <th>Date</th>
