@@ -29,7 +29,7 @@
 {{$donation->contact->address_primary_street}} <br />     
 {{$donation->contact->address_primary_city}}, {{$donation->contact->address_primary_state}}  {{$donation->contact->address_primary_postal_code}} 
 <br /><br />
-<strong>Event:</strong> {{$donation->retreat->title}} ({{$donation->retreat->idnumber}})
+<strong>Event:</strong> {{$donation->retreat_name}} ({{$donation->retreat_idnumber}})
 <div class="payments">
 <br />    
 <strong>Notes:</strong> {{$donation->Notes}} <br /><br />
