@@ -20,8 +20,12 @@
     @foreach($payments as $payment)
     <tr>
         <td>{{$payment->donation->contact->display_name}}</td>
-        <td>{{$payment->donation->retreat_idnumber}} - {{$payment->donation->retreat_name}} ({{$payment->donation->retreat_start_date}})</td>
-        <td>${{number_format($payment->donation->donation_amount,2)}}</td>
+	<td>
+	@if (isset($payment->donation->retreat))
+		{{$payment->donation->retreat_idnumber}} - {{$payment->donation->retreat_name}} ({{$payment->donation->retreat_start_date}})
+	@endIf
+	</td>
+	<td>${{number_format($payment->donation->donation_amount,2)}}</td>
         <td>${{number_format($payment->payment_amount,2)}}</td> 
         <td>{{$payment->payment_description}}</td>
     </tr>    

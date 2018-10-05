@@ -16,7 +16,12 @@
                 @endif
                         
             </div>
+             
             <div class='row'>
+                {!! Form::label('donation_description', 'Description:', ['class' => 'col-md-3'])  !!}
+                {!! Form::select('donation_description', $descriptions, 'Retreat Offering', ['class' => 'col-md-3']) !!}
+            </div>
+        <div class='row'>
                 {!! Form::label('event_id', 'Retreat:', ['class' => 'col-md-3'])  !!}
                 @if (isset($defaults['event_id']))
                     {!! Form::select('event_id', $retreats, $defaults['event_id'], ['class' => 'col-md-3']) !!}
@@ -51,10 +56,6 @@
                 {!! Form::number('payment_idnumber', NULL, ['class' => 'col-md-3']) !!}
             </div>
             
-            <div class='row'>
-                {!! Form::label('donation_description', 'Description:', ['class' => 'col-md-3'])  !!}
-                {!! Form::select('donation_description', $descriptions, 'Retreat Offering', ['class' => 'col-md-3']) !!}
-            </div>
             <div class='row'>
                 {!! Form::label('notes1', 'Primary contact:', ['class' => 'col-md-3'])  !!}
                 {!! Form::text('notes1', NULL, ['class' => 'col-md-3']) !!}                   
