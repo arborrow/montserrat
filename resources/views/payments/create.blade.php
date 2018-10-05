@@ -11,7 +11,7 @@
             <h2>Payment detail</h2>
             <div class='row'>
                 {!! Form::label('payment_date', 'Payment date:', ['class' => 'col-md-3'])  !!}
-                {!! Form::text('payment_date',date('F j, Y g:i A', strtotime(\Carbon\Carbon::now())) , ['class' => 'col-md-3']) !!}
+                {!! Form::date('payment_date',\Carbon\Carbon::now() , ['class' => 'col-md-3','data-provide'=>'datepicker']) !!}
             </div>
                            
             <div class='row'>
