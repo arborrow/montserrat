@@ -121,7 +121,7 @@ class PageController extends Controller
             $payments = \App\Payment::wherePaymentDate($report_date)->whereIn('payment_description',['Cash','Check'])->with('donation')->get();
             $grand_total = $payments->sum('payment_amount');
             $grouped_payments = $payments->sortBy('donation.donation_description')->groupBy('donation.donation_description');
-            //dd($report_date, $grouped_payments,$grand_total);
+            // dd($report_date, $grouped_payments,$grand_total);
         return view('reports.finance.cash_deposit', compact('report_date','grouped_payments','grand_total'));   //
         } else {
             return back();//
