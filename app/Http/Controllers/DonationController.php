@@ -124,7 +124,7 @@ class DonationController extends Controller
         $payment->save();
 
         
-        return Redirect::action('DonationController@index');
+        return Redirect::action('PersonController@show',$donation->contact_id.'#donations');
           
     }
 

@@ -354,7 +354,7 @@
     
         <div class='row'>
         @can('show-donation')
-            <div class='col-md-8'>
+            <div class='col-md-8' id='donations'>
                 <div class='panel-heading'><h2><strong>Donations for {{ $person->display_name }} ({{$person->donations->count() }} donations totaling:  ${{ number_format($person->donations->sum('donation_amount'),2)}})</strong></h2>
                 @can('create-donation')
                     {!! Html::link(action('DonationController@create',$person->id),'Create donation',array('class' => 'btn btn-default'))!!}
