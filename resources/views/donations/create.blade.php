@@ -35,6 +35,10 @@
                 {!! Form::number('donation_amount', 0, ['class' => 'col-md-3','step'=>'0.01']) !!}
             </div>
             <div class='row'>
+                {!! Form::label('payment_date', 'Date of payment:', ['class' => 'col-md-3'])  !!}
+                {!! Form::text('payment_date',(\Carbon\Carbon::now()->format('m/d/Y')) , ['class' => 'col-md-3','data-provide'=>'datepicker']) !!}
+            </div>
+            <div class='row'>
                 {!! Form::label('payment_amount', 'Payment amount (paid):', ['class' => 'col-md-3'])  !!}
                 {!! Form::number('payment_amount', 0, ['class' => 'col-md-3','step'=>'0.01']) !!}
             </div>
