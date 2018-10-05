@@ -5,7 +5,7 @@
     <div class="jumbotron text-left">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <div class='row' style="height: 175px;">
+                <div class='row' style="height: 200px;">
                     <div class="col-md-12 col-sm-12">
                         {!!$person->avatar_large_link!!}
                         @can('update-contact')
@@ -14,7 +14,13 @@
                             <h1 style="position: absolute; top:5px; left:175px; padding: 5px;"><strong>{{ $person->full_name }}</strong></h1>
                         @endCan
                     </div>
-                </div>
+                    {!! Html::link('#demographics','Demographics',array('class' => 'btn btn-default')) !!}
+                    {!! Html::link('#notes','Notes',array('class' => 'btn btn-default')) !!}
+                    {!! Html::link('#relationships','Relationships',array('class' => 'btn btn-default')) !!}
+                    {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-default')) !!}
+                    {!! Html::link('#touchpoints','Touchpoints',array('class' => 'btn btn-default')) !!}
+                    {!! Html::link('#attachments','Attachments',array('class' => 'btn btn-default')) !!}
+                    {!! Html::link('#donations','Donations',array('class' => 'btn btn-default')) !!}
                     @can('show-group')
                         @if ($person->is_board_member) <span class="back"><a href={{ action('PersonController@boardmembers') }}>{!! Html::image('img/board.png', 'Board Members Group',array('title'=>"Board Members Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
                         @if ($person->is_captain) <span class="back"><a href={{ action('PersonController@captains') }}>{!! Html::image('img/captain.png', 'Captains Group',array('title'=>"Captains Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
@@ -33,6 +39,9 @@
                         @if ($person->is_jesuit) <span class="back"><a href={{ action('PersonController@jesuits') }}>{!! Html::image('img/jesuit.png', 'Jesuits Group',array('title'=>"Jesuits Group",'class' => 'btn btn-default')) !!}</a></span> @endIf                        
                         <br/>
                     @endCan
+                    <br />            
+                </div>
+               <div class='row'>     
                         @can('create-touchpoint')
                             <span class="btn btn-default">
                                 <a href={{ action('TouchpointController@add',$person->id) }}>Add Touchpoint</a>
@@ -45,7 +54,8 @@
                         @endCan
                         <span class="btn btn-default">
                             <a href={{ action('PageController@contact_info_report',$person->id) }}>Contact Info Report</a> 
-                        </span>                
+                        </span> 
+               </div>
             </div>
             <div class='row'>
                 <div class='col-md-4'>
@@ -139,7 +149,7 @@
                 </div>
             </div><div class="clearfix"> </div>
 
-            <div class='row'><span>
+            <div class='row' id='demographics'><span>
                     <div class='col-md-8'>
                         <div class='panel-heading'><h2><strong>Demographics:</strong></h2></div>
                     <strong>Gender: </strong>{{$person->gender_name}}  
@@ -185,7 +195,7 @@
                 </div>
             </div><div class="clearfix"> </div>
 
-            <div class='row'>
+            <div class='row' id='notes'>
 
                 <div class='col-md-8'>
                     <div class='panel-heading'><h2><strong>Notes</strong></h2></div>
@@ -207,7 +217,7 @@
                 </div>
             </div>
             @endCan
-            <div class='row'>
+            <div class='row' id='relationships'>
                 @can('show-relationship')
                 <div class='col-md-8'>
                     <div class='panel-heading'>
@@ -257,7 +267,7 @@
             </div>
             <div class="clearfix"> </div>
             @can('show-registration');
-            <div class='row'>
+            <div class='row' id='registrations'>
                 <div class='col-md-8'>
                     <div class='panel-heading'><h2><strong>Retreat Participation for {{ $person->display_name }}</strong> ({{$registrations->count()}})</h2></div>
                             <ul>    
@@ -279,7 +289,7 @@
             @endCan
             <div class="clearfix"> </div>
         
-        <div class='row'>
+        <div class='row' id='touchpoints'>
         @can('show-touchpoint')
             <div class='col-md-8'>
                 <div class='panel-heading'><h2><strong>Touchpoints for {{ $person->display_name }}</strong></h2>
@@ -318,7 +328,7 @@
         @endCan
         </div>
          @can('show-attachment')   
-        <div class='row'>
+        <div class='row' id='attachments'>
             <div class='col-md-8'>
                 <div class='panel-heading'>
                     <h2><strong>Attachments for {{ $person->display_name }} </strong></h2>
@@ -352,7 +362,7 @@
         </div>
         @endCan
     
-        <div class='row'>
+        <div class='row' id='donations'>
         @can('show-donation')
             <div class='col-md-8' id='donations'>
                 <div class='panel-heading'><h2><strong>Donations for {{ $person->display_name }} ({{$person->donations->count() }} donations totaling:  ${{ number_format($person->donations->sum('donation_amount'),2)}})</strong></h2>
