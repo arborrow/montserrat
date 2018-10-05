@@ -51,6 +51,20 @@ class Donation extends Model
             return NULL;
         }
     }
+    public function getRetreatIdnumberAttribute() {
+        if (isset($this->retreat->idnumber)) {
+            return $this->retreat->idnumber;
+        } else {
+            return NULL;
+        }
+    }
+    public function getRetreatStartDateAttribute() {
+        if (isset($this->retreat->start_date)) {
+            return $this->retreat->start_date;
+        } else {
+            return NULL;
+        }
+    }
     public function getRetreatLinkAttribute() {
         if (isset($this->retreat->title)) {
             $path = url('retreat/'.$this->retreat->id);
