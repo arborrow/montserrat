@@ -136,7 +136,7 @@ class PageController extends Controller
         $report_date = \Carbon\Carbon::parse($day);
         if (isset($report_date))
         {
-            $payments = \App\Payment::wherePaymentDate($report_date)->where('payment_description','like',['%Internet%'])->with('donation')->get();
+            $payments = \App\Payment::wherePaymentDate($report_date)->where('payment_description','=','Credit Card')->with('donation')->get();
             $grand_total = $payments->sum('payment_amount');
             $grouped_payments = $payments->sortBy('donation.donation_description')->groupBy('donation.donation_description');
             //dd($report_date, $grouped_payments,$grand_total);
