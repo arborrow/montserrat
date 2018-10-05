@@ -375,7 +375,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($person->donations->sortBy('donation_date') as $donation)
+                                @foreach($person->donations->sortByDesc('donation_date') as $donation)
                                 <tr>
                                     <td><a href="../donation/{{$donation->donation_id}}"> {{ $donation->donation_date }} </a></td>
                                     <td> {{ $donation->donation_description.': #'.optional($donation->retreat)->idnumber }}</td>
