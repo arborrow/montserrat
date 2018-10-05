@@ -84,6 +84,7 @@ class DonationController extends Controller
         'donor_id' => 'required|integer|min:0',
         'event_id' => 'integer|min:0',
         'donation_date' => 'required|date',
+        'payment_date' => 'required|date',
         'donation_amount' => 'required|numeric',
         'payment_amount' => 'required|numeric',
         'payment_idnumber' => 'nullable|numeric|min:0',
@@ -111,7 +112,7 @@ class DonationController extends Controller
         $payment = new \App\Payment;
         $payment->donation_id = $donation->donation_id;
         $payment->payment_amount = $request->input('payment_amount');
-        $payment->payment_date = Carbon::now()->toDateString();
+        $payment->payment_date = Carbon::parse($request->input('payment_date'));
         $payment->payment_description = $request->input('payment_description'); 
         if ($request->input('payment_description') == 'Credit card') {
             $payment->ccnumber = substr($request->input('payment_idnumber'),-4);
