@@ -52,7 +52,7 @@ class PaymentController extends Controller
         $this->validate($request, [
         'donation_id' => 'required|integer|min:0',
         'payment_date' => 'required|date',
-        'payment_amount' => 'required|numeric|min:0',
+        'payment_amount' => 'required|numeric',
         'payment_idnumber' => 'nullable|numeric|min:0'
         ]);
 
@@ -61,6 +61,7 @@ class PaymentController extends Controller
         $payment = new \App\Payment;
         $payment->donation_id = $donation->donation_id;
         $payment->payment_amount = $request->input('payment_amount');
+        $payment->note = $request->input('note');
         $payment->payment_date = Carbon::parse($request->input('payment_date'));
         $payment->payment_description = $request->input('payment_description'); 
         if ($request->input('payment_description') == 'Credit card') {
@@ -119,7 +120,7 @@ class PaymentController extends Controller
         $this->validate($request, [
         'donation_id' => 'required|integer|min:0',
         'payment_date' => 'required|date',
-        'payment_amount' => 'required|numeric|min:0',
+        'payment_amount' => 'required|numeric',
         'payment_idnumber' => 'nullable|numeric|min:0'
         ]);
 
