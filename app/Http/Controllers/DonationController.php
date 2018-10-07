@@ -123,8 +123,7 @@ class DonationController extends Controller
         //dd($payment, $donation);
         $payment->save();
 
-        
-        return Redirect::action('PersonController@show',$donation->contact_id.'#donations');
+        return redirect($donation->contact->contact_url);
           
     }
 
