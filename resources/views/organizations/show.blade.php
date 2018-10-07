@@ -5,7 +5,8 @@
         <div class="jumbotron text-left">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <div class="col-md-12 col-sm-12">
+                    <div class='row' >
+                        <div class="col-md-12 col-sm-12">
                         {!!$organization->avatar_large_link!!}
                         <h1 style="position: absolute; top:5px; left:175px; padding: 5px;">
                             <strong>
@@ -16,18 +17,27 @@
                                 @endCan
                             </strong>
                         </h1>
+                        </div>
+                        {!! Html::link('#notes','Notes',array('class' => 'btn btn-default')) !!}
+                        {!! Html::link('#relationships','Relationships',array('class' => 'btn btn-default')) !!}
+                        {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-default')) !!}
+                        {!! Html::link('#touchpoints','Touchpoints',array('class' => 'btn btn-default')) !!}
+                        {!! Html::link('#attachments','Attachments',array('class' => 'btn btn-default')) !!}
+                        {!! Html::link('#donations','Donations',array('class' => 'btn btn-default')) !!}
                     </div>
                     
-                    <span><a href={{ action('OrganizationController@index') }}>{!! Html::image('img/organization.png', 'Organization Index',array('title'=>"Organization Index",'class' => 'btn btn-default')) !!}</a></span>
-                    @can('create-touchpoint')
-                    <span class="btn btn-default">
-                        <a href={{ action('TouchpointController@add',$organization->id) }}>Add Touchpoint</a>
-                    </span>
-                    @endCan
-                    <span class="btn btn-default">
-                    <a href={{ action('RegistrationController@add',$organization->id) }}>Add Registration</a> 
-                </span>                
-
+                    <div class="row">
+                        
+                        <span><a href={{ action('OrganizationController@index') }}>{!! Html::image('img/organization.png', 'Organization Index',array('title'=>"Organization Index",'class' => 'btn btn-default')) !!}</a></span>
+                        @can('create-touchpoint')
+                        <span class="btn btn-default">
+                            <a href={{ action('TouchpointController@add',$organization->id) }}>Add Touchpoint</a>
+                        </span>
+                        @endCan
+                        <span class="btn btn-default">
+                            <a href={{ action('RegistrationController@add',$organization->id) }}>Add Registration</a> 
+                        </span>                
+                    </div>
                 </div>
                 <div class="row">
                     <div class='col-md-6'>
@@ -79,11 +89,13 @@
                 </div>
                 <div class="clearfix"> </div>
                 
-                <div class='row'>
+                <div class='row' id='notes'>
                     <div class='col-md-6'>
                         <h2>Note:</h2> {{ $organization->note_organization_text }}
                         
                     </div>
+                </div>
+                <div class='row' id='touchpoints'>
                     <div class="col-md-12">
                         @if ($organization->touchpoints->isEmpty())
                             <h2>It is a brand new world, there are no touchpoints for this organization!</h2>
@@ -114,7 +126,7 @@
                 </div>
                 <div class="clearfix"> </div>
             
-                <div class='row'>
+                <div class='row' id='relationships'>
                     <div class='col-md-8'>
                         <div class='panel-heading'>
                             <h2><strong>Relationships</strong></h2>
@@ -141,7 +153,7 @@
                 </div>
                 <div class="clearfix"> </div>
 
-                <div class='row'>
+                <div class='row' id='registrations'>
                 <div class='col-md-8'>
                     <div class='panel-heading'><h2><strong>Retreat Participation for {{ $organization->display_name }}</strong></h2></div>
                             <ul>    
@@ -151,91 +163,93 @@
                             </ul>
                     </div>
             </div>
-            <div class="clearfix"> </div>
-        
-        <div class='row'>
-            <div class='col-md-8'>
-                <div class='panel-heading'>
-                    <h2><strong>Attachments for {{ $organization->display_name }} </strong></h2>
-                </div>
-                    @if ($files->isEmpty())
-                        <p>This user currently has no attachments</p>
-                    @else
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Uploaded date</th>
-                                    <th>MIME type</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($files as $file)
-                                <tr>
-                                    <td><a href="{{url('contact/'.$organization->id.'/attachment/'.$file->uri)}}">{{ $file->uri }}</a></td>
-                                    <td>{{$file->description}}</td>
-                                    <td>{{ $file->upload_date}}</td>
-                                    <td>{{ $file->mime_type }}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    @endif
-                </div>
-            </div>
-
-<div class='row'>
-        @can('show-donation')
-            <div class='col-md-8'>
-                <div class='panel-heading'><h2><strong>Donations for {{ $organization->display_name }} ({{$organization->donations->count() }} donations totaling:  ${{ number_format($organization->donations->sum('donation_amount'),2)}})</strong></h2>
-                    
-               </div>
-                    @if ($organization->donations->isEmpty())
-                            <p>No donations for this person!</p>
-                        @else
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Description</th>
-                                    <th>Paid / Pledged</th>
-                                    <th>Terms</th>
-                                    <th>Notes</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($organization->donations as $donation)
-                                <tr>
-                                    <td><a href="../donation/{{$donation->donation_id}}"> {{ $donation->donation_date }} </a></td>
-                                    <td> {{ $donation->donation_description }}</td>
-                                    <td> ${{number_format($donation->payments->sum('payment_amount'),2)}} / ${{ number_format($donation->donation_amount,2) }} </td>
-                                    <td> {{ $donation->terms }}</td>
-                                    <td> {{ $donation->Notes }}</td>
-                                </tr>
-                                @endforeach
-                                
-
-                            </tbody>
-                        </table>
-                    @endif
-            </div>
-        </div>
-        @endCan
-</div>
-
-            <div class='row'>
-                @can('update-contact')
-                    <div class='col-md-1'><a href="{{ action('OrganizationController@edit', $organization->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
-                @endCan
-                @can('delete-contact')
-                    <div class='col-md-1'>
-                        {!! Form::open(['method' => 'DELETE', 'route' => ['organization.destroy', $organization->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                        {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
-                        {!! Form::close() !!}
-                    </div>
-                @endCan
                 <div class="clearfix"> </div>
+        
+                <div class='row' id='attachments'>
+                    <div class='col-md-8'>
+                        <div class='panel-heading'>
+                            <h2><strong>Attachments for {{ $organization->display_name }} </strong></h2>
+                        </div>
+                        @if ($files->isEmpty())
+                            <p>This user currently has no attachments</p>
+                        @else
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Uploaded date</th>
+                                        <th>MIME type</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($files as $file)
+                                    <tr>
+                                        <td><a href="{{url('contact/'.$organization->id.'/attachment/'.$file->uri)}}">{{ $file->uri }}</a></td>
+                                        <td>{{$file->description}}</td>
+                                        <td>{{ $file->upload_date}}</td>
+                                        <td>{{ $file->mime_type }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endif
+                    </div>
+                </div>
+
+                @can('show-donation')
+                <div class='row' id='donations'>
+                    <div class='col-md-8'>
+                        <div class='panel-heading'>
+                            <h2><strong>Donations for {{ $organization->display_name }} ({{$organization->donations->count() }} donations totaling:  ${{ number_format($organization->donations->sum('donation_amount'),2)}})</strong></h2>
+                            @can('create-donation')
+                                {!! Html::link(action('DonationController@create',$organization->id),'Create donation',array('class' => 'btn btn-default'))!!}
+                            @endCan
+                        </div>
+                        @if ($organization->donations->isEmpty())
+                                <p>No donations for this organization!</p>
+                        @else
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Description</th>
+                                        <th>Paid / Pledged</th>
+                                        <th>Terms</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                @foreach($organization->donations as $donation)
+                                    <tr>
+                                        <td><a href="../donation/{{$donation->donation_id}}"> {{ $donation->donation_date }} </a></td>
+                                        <td> {{ $donation->donation_description }}</td>
+                                        <td> ${{number_format($donation->payments->sum('payment_amount'),2)}} / ${{ number_format($donation->donation_amount,2) }} </td>
+                                        <td> {{ $donation->terms }}</td>
+                                        <td> {{ $donation->Notes }}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        @endif
+                    </div>
+                </div>
+                @endCan
+
+                <div class='row'>
+                    @can('update-contact')
+                        <div class='col-md-1'><a href="{{ action('OrganizationController@edit', $organization->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
+                    @endCan
+                    @can('delete-contact')
+                        <div class='col-md-1'>
+                            {!! Form::open(['method' => 'DELETE', 'route' => ['organization.destroy', $organization->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                            {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                            {!! Form::close() !!}
+                        </div>
+                    @endCan
+                    <div class="clearfix"> </div>
+                </div>
             </div>
         </div>
     </section>
