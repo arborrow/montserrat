@@ -157,8 +157,8 @@ td.box {
     margin-top: 25px;
 }
 
-.invoice body {
-    font-size: 14pt;
+.invoice {
+    font-size: 15pt;
 }        
  .invoice table, .invoice th, .invoice td {
     border: 1px solid black;
