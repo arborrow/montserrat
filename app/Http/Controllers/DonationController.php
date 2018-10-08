@@ -90,7 +90,7 @@ class DonationController extends Controller
         'payment_idnumber' => 'nullable|numeric|min:0',
         'start_date' => 'date|nullable|before:end_date',
         'end_date' => 'date|nullable|after:start_date',
-        'donation_install' => 'integer|min:0|nullable'
+        'donation_install' => 'numeric|min:0|nullable'
         ]);
 
         $donation = new \App\Donation;
@@ -187,7 +187,7 @@ class DonationController extends Controller
         'donation_amount' => 'required|integer',
         'start_date' => 'date|nullable|before:end_date',
         'end_date' => 'date|nullable|after:start_date',
-        'donation_install' => 'integer|min:0|nullable'
+        'donation_install' => 'numeric|min:0|nullable'
         ]);
         //dd($request->input('donation_description'));
         if ($request->input('donation_description')>0) {
