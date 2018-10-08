@@ -153,6 +153,13 @@ td.box {
             width: 16%
         }
         
+.invoice {
+    margin-top: 25px;
+}
+
+.invoice body {
+    font-size: 14pt;
+}        
  .invoice table, .invoice th, .invoice td {
     border: 1px solid black;
     border-collapse: collapse;
