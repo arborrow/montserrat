@@ -251,7 +251,7 @@
 
             <div class='row' id='donations'>
             @can('show-donation')
-                <div class='col-md-8'>
+                <div class='col-md-12'>
                     <div class='panel-heading'>
                         <h2><strong>Donations for {{ $vendor->display_name }} ({{$vendor->donations->count() }} donations totaling:  ${{ number_format($vendor->donations->sum('donation_amount'),2)}})</strong></h2>
                         @can('create-donation')
@@ -274,7 +274,7 @@
                             </thead>
                             <tbody>
 
-                            @foreach($vendor->donations as $donation)
+                            @foreach($vendor->donations->sortByDesc('donation_date') as $donation)
                                 <tr>
                                     <td><a href="../donation/{{$donation->donation_id}}"> {{ $donation->donation_date }} </a></td>
                                     <td> {{ $donation->donation_description }}</td>

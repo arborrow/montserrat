@@ -63,10 +63,15 @@
         <td class="row-payment_amount">${{number_format($donation->payments_paid,2)}} </td>
     </tr>
     <tr>
-        <td><strong>Current amount due:</strong></td>
+        <td><strong>Balance due:</strong></td>
         <td class="row-payment_amount"><strong>${{number_format(($donation->donation_amount - $donation->payments_paid),2)}}</strong> </td>
     </tr>    
- 
+ @if(isset($donation->donation_install))
+ <tr>
+     <td><strong>Current amount due:</strong></td>
+     <td class="row-payment_amount"><strong>${{number_format(($donation->donation_install),2)}}</strong></td>
+ </tr>
+ @endif
 </table>
 </div>
 <br />
