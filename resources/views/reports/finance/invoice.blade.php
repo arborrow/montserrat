@@ -2,7 +2,7 @@
 @section('content')
 
 <div class ="invoice">
-    <div class ="pageheader">
+<div class ="pageheader">
         
 <table>
     <tr>
