@@ -40,6 +40,5 @@ class DatabaseSeeder extends Seeder
         $this->call(TouchcategoriesTableSeeder::class);
         $this->call(DonationTypeTableSeeder::class);
         $this->call(PermissionRoleTableSeeder::class);
-        $this->call(RoleUserTableSeeder::class);
     }
 }
