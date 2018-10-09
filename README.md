@@ -75,5 +75,15 @@ GOOGLE_CLIENT_SECRET={google_client_secret}
 ```
 Replace `{google_client_id}` with your `client ID` and `{google_client_secret}` with your `client secret`.
 
-### Step 7: Follow Good Coding Practices!! 🤗
+### Step 7: Get Proper Permissions
+Once you have done everything above navigate to `localhost:8000`. Once you login using Google Auth, your user will not have any role assigned to it. Hence you will not be able to do anything.
+
+#### Become the Superuser
+Run the following command to assign yourself (given that you are the first user to login) as the `superuser`.
+```
+php artisan db:seed --class=RoleUserTableSeeder
+```
+The command above will assign the very first user as the superuser. The command will fail if no user exists.
+
+### Step 8: Follow Good Coding Practices!! 🤗
 You're all set!
