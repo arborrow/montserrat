@@ -158,7 +158,7 @@ td.box {
 }
 
 .invoice {
-    font-size: 15pt;
+    font-size: 13pt;
 }        
  .invoice table, .invoice th, .invoice td {
     border: 1px solid black;
@@ -175,9 +175,9 @@ td.box {
 }
 
 .invoice-totals table {
-    width: 40%;
+    width: 35%;
     margin-right: 0%;
-    margin-left: 60%;
+    margin-left: 65%;
     padding: 5px;
     
 }
