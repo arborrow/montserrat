@@ -52,70 +52,18 @@ class SystemController extends Controller
                 return FALSE;
             }
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function offeringdedup_index() {
+        $this->authorize('show-offeringdedup');
+        
+        $offeringdedup =  \App\Offeringdedup::orderBy('count', 'desc')->paginate(50);
+        // dd($dioceses);
+        return view('offeringdedup.index', compact('offeringdedup'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    public function offeringdedup_show($contact_id = NULL, $event_id = NULL) {
+        $this->authorize('show-offeringdedup');
+        $donations = \App\Donation::whereEventId($event_id)->whereContactId($contact_id)->whereDonationDescription('Retreat Offering')->get();
+        $combo = $contact_id.'-'.$event_id;
+        return view('offeringdedup.show', compact('donations','combo'));
     }
 }

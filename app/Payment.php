@@ -31,5 +31,12 @@ class Payment extends Model
       
     
     }
+    public function getPaymentDateFormattedAttribute() {
+        if (isset($this->payment_date)) {
+            return $this->payment_date->format('m/d/Y');
+        } else {
+            return NULL;
+        }
+    }
 
 }
