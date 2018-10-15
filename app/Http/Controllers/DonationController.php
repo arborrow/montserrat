@@ -123,7 +123,7 @@ class DonationController extends Controller
         //dd($payment, $donation);
         $payment->save();
 
-        return redirect($donation->contact->contact_url);
+        return redirect($donation->contact->contact_url.'#donations');
           
     }
 
@@ -212,7 +212,7 @@ class DonationController extends Controller
         
         $donation->save();
         
-        return Redirect::action('DonationController@index');
+        return Redirect::action('DonationController@show',$donation->donation_id);
           
     
     }
@@ -227,6 +227,7 @@ class DonationController extends Controller
     {
         $this->authorize('delete-donation');
         $donation= \App\Donation::findOrFail($id);
+        $contact = \App\Contact::findOrFail($donation->contact_id);
         //deletion of payments implied on the model 
         \App\Donation::destroy($id);
         // disassociate registration with a donation that is being deleted - there should only be one
@@ -236,7 +237,7 @@ class DonationController extends Controller
             $registration->save();
         }
                 
-        return Redirect::action('DonationController@index');
+        return redirect($contact->contact_url);
 
     }
     
