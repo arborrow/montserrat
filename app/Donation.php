@@ -46,7 +46,7 @@ class Donation extends Model
     }
     public function getPercentPaidAttribute() {
         if ($this->donation_amount > 0) {
-            return ($this->payments->sum('payment_amount')/$this->donation_amount)*100;
+            return number_format(($this->payments->sum('payment_amount')/$this->donation_amount),2)*100;
         } else {
             return 0;
         }
@@ -82,7 +82,7 @@ class Donation extends Model
     public function getRetreatLinkAttribute() {
         if (isset($this->retreat->title)) {
             $path = url('retreat/'.$this->retreat->id);
-            return "<a href='".$path."'>".$this->retreat_name."</a>";
+            return "<a href='".$path."'>".'#'.$this->retreat_idnumber.' - '.$this->retreat_name."</a>";
         }
     }
     public static function boot()

@@ -22,12 +22,12 @@
             
             <div class='row'>
                 <div class='col-md-4'>
-                        <strong>Date: </strong>{{$donation->donation_date}}
+                        <strong>Date: </strong>{{$donation->donation_date->format('m/d/Y')}}
                         <br /><strong>Description: </strong>{{$donation->donation_description}}  
                         <br /><strong>Pledged/Paid: </strong>${{number_format($donation->donation_amount,2)}} / ${{number_format($donation->payments->sum('payment_amount'),2)}}  
                         ({{number_format($donation->percent_paid,0)}}%)
                         <br /><strong>Primary contact: </strong>{{$donation->Notes1}}
-                        <br /><strong>Retreat: </strong>{!!$donation->retreat_link!!} ({{$donation->retreat_id}})
+                        <br /><strong>Event: </strong>{!!$donation->retreat_link!!} ({{$donation->retreat_start_date}}) 
                         <br /><strong>Notes: </strong>{{$donation->Notes}}
                         <br /><strong>Terms: </strong>{{$donation->terms}}
                         <br /><strong>Start date: </strong>{{$donation->start_date}}
@@ -56,7 +56,7 @@
                         @foreach($donation->payments as $payment)
                         <tr>
 
-                            <td><a href="../payment/{{ $payment->payment_id}}">{{ date('M d, Y g:i A', strtotime($payment->payment_date)) }}</a></td>
+                            <td><a href="../payment/{{ $payment->payment_id}}">{{$payment->payment_date->format('m/d/Y')}}</a></td>
                             <td>${{ $payment->payment_amount }} </td>
                             <td>{{ $payment->payment_description }}</td>
                             <td>{{ $payment->cknumber or $payment->ccnumber }}</td>
