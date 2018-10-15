@@ -68,7 +68,7 @@ class Donation extends Model
     public function getRetreatLinkAttribute() {
         if (isset($this->retreat->title)) {
             $path = url('retreat/'.$this->retreat->id);
-            return "<a href='".$path."'>".$this->retreat_name."</a>";
+            return "<a href='".$path."'>".'#'.$this->retreat_idnumber.' - '.$this->retreat_name."</a>";
         }
     }
     public static function boot()
