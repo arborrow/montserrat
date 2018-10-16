@@ -390,7 +390,7 @@
                             <tbody>
                                 @foreach($person->donations->sortByDesc('donation_date') as $donation)
                                 <tr>
-                                    <td><a href="../donation/{{$donation->donation_id}}"> {{ $donation->donation_date->format('m/d/Y') }} </a></td>
+                                    <td><a href="../donation/{{$donation->donation_id}}"> {{ $donation->donation_date_formatted}} </a></td>
                                     <td> {{ $donation->donation_description.': #'.optional($donation->retreat)->idnumber }}</td>
                                     <td> ${{number_format($donation->payments->sum('payment_amount'),2)}}
                                         / ${{ number_format($donation->donation_amount,2) }}

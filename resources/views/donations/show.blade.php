@@ -56,7 +56,7 @@
                         @foreach($donation->payments as $payment)
                         <tr>
 
-                            <td><a href="../payment/{{ $payment->payment_id}}">{{$payment->payment_date->format('m/d/Y')}}</a></td>
+                            <td><a href="../payment/{{ $payment->payment_id}}">{{$payment->payment_date_formatted}}</a></td>
                             <td>${{ $payment->payment_amount }} </td>
                             <td>{{ $payment->payment_description }}</td>
                             <td>{{ $payment->cknumber or $payment->ccnumber }}</td>

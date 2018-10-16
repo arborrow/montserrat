@@ -85,6 +85,13 @@ class Donation extends Model
             return "<a href='".$path."'>".'#'.$this->retreat_idnumber.' - '.$this->retreat_name."</a>";
         }
     }
+    public function getDonationDateFormattedAttribute() {
+        if (isset($this->donation_date)) {
+            return $this->donation_date->format('m/d/Y'); 
+        } else {
+            return NULL;
+        }
+    }
     public static function boot()
     {
         parent::boot();    
