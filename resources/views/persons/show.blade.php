@@ -368,9 +368,12 @@
                 <div class='panel-heading'>
                     <h2><strong>{{$person->donations->count() }}  Donations for {{ $person->display_name }}
                             - ${{number_format($person->donations->sum('payments_paid'),2)}} paid of 
-                            ${{number_format($person->donations->sum('donation_amount'),2) }} pledged  
-                            [{{number_format(($person->donations->sum('payments_paid')/$person->donations->sum('donation_amount')),2)*100}}%]</strong></h2>
-                    @can('create-donation')
+				${{number_format($person->donations->sum('donation_amount'),2) }} pledged  
+			    @if ($person->donations->sum('donation_amount') > 0)
+				[{{number_format($person->donations->sum('payments_paid') / $person->donations->sum('donation_amount'),2)*100}}%]
+			@endIf
+			    </strong></h2>
+			@can('create-donation')
                         {!! Html::link(action('DonationController@create',$person->id),'Create donation',array('class' => 'btn btn-default'))!!}
                     @endCan
                 </div>
