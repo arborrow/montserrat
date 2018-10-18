@@ -366,7 +366,7 @@
 		@can('show-donation')
 			<div class='col-md-8' id='donations'>
 				<div class='panel-heading'>
-					<h2 class="font-weight-bold">
+					<h2 style="font-weight: bold">
 						{{ $person->donations->count() }} Donations for {{ $person->display_name }} | 
 						${{number_format($person->donations->sum('payments_paid'),2)}} paid of 
 						${{number_format($person->donations->sum('donation_amount'),2) }} pledged
