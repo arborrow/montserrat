@@ -429,6 +429,5 @@
 			@endCan
 			<div class="clearfix"> </div>
 		</div>
-	</div>
 </section>
 @stop
