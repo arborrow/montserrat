@@ -27,11 +27,14 @@
 				</div>
 				<div class="col-6 text-right">
 					@if (isset(Auth::user()->avatar))
-					{!! Html::image(Auth::user()->avatar, Auth::user()->name,array('title'=>Auth::user()->name, 'class' =>
-					"img-circle")) !!}
-					<a href={{ route('logout') }}>{!! Html::image('img/logout.png', 'Logout',array('title'=>"Logout")) !!}</a>
+					<img src={{ Auth::user()->avatar }} alt={{ Auth::user()->name }} class="rounded-circle">
+					<a href={{ route('logout') }}>
+						<img src="img/logout.png" alt="Logout">
+					</a>
 					@else
-					<a href="login/google">{!! Html::image('img/login.png', 'Login',array('title'=>"Login")) !!}</a>
+					<a href={{ route('login') }}>
+						<img src="img/login.png" alt="Login">
+					</a>
 					@endif
 					<br />
 				</div>
