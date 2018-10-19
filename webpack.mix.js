@@ -1,4 +1,5 @@
 const { mix } = require('laravel-mix');
+const glob = require('@alexbinary/glob');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,9 +12,14 @@ const { mix } = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+mix.js('resources/assets/js/app.js', 'public/dist/js')
+   .sass('resources/assets/sass/app.scss', 'public/dist/css');
 
-mix.styles(['public/css/app.css',
-            'public/css/all.css'], 'public/css/bundle.css');
+glob('public/dist/css/*.css').then((files) => {
+  mix.styles(files, 'public/dist/bundle.css').version();
+});
+
+glob('public/dist/css/*.js').then((files) => {
+  mix.styles(files, 'public/dist/bundle.js').version();
+});
    
