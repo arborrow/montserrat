@@ -4,8 +4,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Montserrat Retreat House Database</title>
-	<link rel="stylesheet" type="text/css" href="{{asset('css/bundle.css')}}">
-
+	<link rel="stylesheet" type="text/css" href="{{ mix('/dist/bundle.css') }}">
+	<script src="{{ mix('/dist/bundle.js') }}"></script>
 	<script>
 		function ConfirmDelete() {
 			var x = confirm("Are you sure you want to delete?");
