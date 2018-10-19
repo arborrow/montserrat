@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-
 <head>
 	<meta charset="UTF-8">
 	<title>Montserrat Retreat House Database</title>
@@ -22,14 +21,8 @@
 		<header>
 			<div class="row">
 				<div class="col-6">
-					<a>
-						@if (isset(Auth::user()->name))
-						<a href={{ route('welcome') }}>{!!
-							Html::image('img/mrhlogoblack.png','Home',array('title'=>'Home','class'=>'logo')) !!}</a>
-						@else
-						<a href={{ route('home') }}>{!! Html::image('img/mrhlogoblack.png','Home',array('title'=>'Home','class'=>'logo'))
-							!!}</a>
-						@endif
+					<a href = {{ ( isset(Auth::user()->name) ) ? route('welcome') : route('home') }}>
+						<img src="img/mrhlogoblack.png" alt="Home" class="logo">
 					</a>
 				</div>
 				<div class="col-6 text-right">
