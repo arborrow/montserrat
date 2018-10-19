@@ -1,5 +1,6 @@
 {
-  "/js/app.js": "/js/app.js",
-  "/css/app.css": "/css/app.css",
-  "/css/bundle.css": "/css/bundle.css"
+  "/dist/js/app.js": "/dist/js/app.js",
+  "/dist/css/app.css": "/dist/css/app.css",
+  "/dist/bundle.css": "/dist/bundle.be7e201f42cbb3eaab9509e7644de377.css",
+  "/dist/bundle.js": "/dist/bundle.d41d8cd98f00b204e9800998ecf8427e.js"
 }
