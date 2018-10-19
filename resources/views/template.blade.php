@@ -21,7 +21,7 @@
 		<header>
 			<div class="row">
 				<div class="col-6">
-					<a href = {{ ( isset(Auth::user()->name) ) ? route('welcome') : route('home') }}>
+					<a href = {{ ( Auth::check() ) ? route('welcome') : route('home') }}>
 						<img src="img/mrhlogoblack.png" alt="Home" class="logo">
 					</a>
 				</div>
