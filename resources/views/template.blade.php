@@ -18,99 +18,95 @@
 
 <body>
 	<div class="container-fluid">
-		<header>
-			<div class="row">
-				<div class="col-6">
-					<a href = {{ ( Auth::check() ) ? route('welcome') : route('home') }}>
-						<img src="img/mrhlogoblack.png" alt="Home" class="logo">
-					</a>
-				</div>
-				<div class="col-6 text-right">
-					@if (isset(Auth::user()->avatar))
-					<img src={{ Auth::user()->avatar }} alt={{ Auth::user()->name }} class="rounded-circle">
-					<a href={{ route('logout') }}>
-						<img src="img/logout.png" alt="Logout">
-					</a>
-					@else
-					<a href={{ route('login') }}>
-						<img src="img/login.png" alt="Login">
-					</a>
-					@endif
-					<br />
-				</div>
+		<div class="row">
+			<div class="col-6">
+				<a href = {{ ( Auth::check() ) ? route('welcome') : route('home') }}>
+					<img src="img/mrhlogoblack.png" alt="Home" class="logo">
+				</a>
 			</div>
-			<hr/>
-			@can('show-contact')
-			<div class="row">
-				<div class="col-md-6">
-					{{ Form::open(['action' => ['SearchController@getuser'], 'method' => 'GET']) }}
-					{{ Form::text('q', '', ['id' => 'q', 'placeholder' => 'Find contact by name','class'=>'col-md-6'])}}
-					{{ Form::hidden('response', '', array('id' =>'response')) }}
-					{{ Form::submit('Find Person', array('class' => 'btn btn-default','id'=>'btnSearch','style'=>'display:none')) }}
-					<a href="{{action('SearchController@search')}}">{!! Html::image('img/search.png', 'Advanced
-						search',array('title'=>"Advanced search",'class' => 'btn btn-link')) !!}</a>
-					{{ Form::close() }}
-				</div>
+			<div class="col-6 text-right">
+				@if (isset(Auth::user()->avatar))
+				<img src={{ Auth::user()->avatar }} alt={{ Auth::user()->name }} class="rounded-circle">
+				<a href={{ route('logout') }}>
+					<img src="img/logout.png" alt="Logout">
+				</a>
+				@else
+				<a href={{ route('login') }}>
+					<img src="img/login.png" alt="Login">
+				</a>
+				@endif
 			</div>
-			@endCan
+		</div>
+		<hr/>
+		@can('show-contact')
+		<div class="row">
+			<div class="col-md-6">
+				{{ Form::open(['action' => ['SearchController@getuser'], 'method' => 'GET']) }}
+				{{ Form::text('q', '', ['id' =>  'q', 'placeholder' =>  'Find contact by name','class'=>'col-md-6', 'autocomplete'=>'off'])}}
+				{{ Form::hidden('response', '', array('id' =>'response')) }}
+				{{ Form::submit('Find Person', array('class' => 'btn btn-default','id'=>'btnSearch','style'=>'display:none')) }}
+				<a href="{{action('SearchController@search')}}">{!! Html::image('img/search.png', 'Advanced search',array('title'=>"Advanced search",'class' => 'btn btn-link')) !!}</a>
+				{{ Form::close() }}
+			</div>
+		</div>
+		@endCan
 
-			@if (Auth::check())
-			<nav class="navbar navbar-expand-lg navbar-light bg-light">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul class="navbar-nav">
-						@can('show-retreat')
-						<li class="nav-item">
-							<a class="nav-link" href={{ route('retreat.index') }}>Retreats</a>
-						</li>
-						@endCan
-						@can('show-room')
-						<li class="nav-item">
-							<a class="nav-link" href={{ route('rooms') }}>Rooms</a>
-						</li>
-						@endCan
-						@can('show-contact')
-						<li class="nav-item">
-							<a class="nav-link" href={{ route('person.index') }}>Persons</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href={{ route('parish.index') }}>Parishes</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href={{ route('diocese.index') }}>Dioceses</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href={{ route('organization.index') }}>Organizations</a></li>
-						<li class="nav-item">
-							<a class="nav-link" href={{ route('vendor.index') }}>Vendors</a>
-						</li>
-						@endCan
-						@can('show-touchpoint')
-						<li class="nav-item">
-							<a class="nav-link" href={{ route('touchpoint.index') }}>Touchpoints</a>
-						</li>
-						@endCan
-						@can('show-admin-menu')
-						<li class="nav-item">
-							<a class="nav-link" href={{ route('role.index') }}>Roles</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href={{ route('permission.index') }}>Permissions</a>
-						</li>
-						@endCan
-						@can('show-donation')
-						<li class="nav-item">
-							<a class="nav-link" href={{ route('finance') }}>Finance</a>
-						</li>
-						@endCan
-					</ul>
-				</div>
-			</nav>
-			@endif
-		</header>
+		@if (Auth::check())
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand" href="#">Navbar</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarContent">
+				<ul class="navbar-nav mr-auto">
+					@can('show-retreat')
+					<li class="nav-item">
+						<a class="nav-link" href={{ route('retreat.index') }}>Retreats</a>
+					</li>
+					@endCan
+					@can('show-room')
+					<li class="nav-item">
+						<a class="nav-link" href={{ route('rooms') }}>Rooms</a>
+					</li>
+					@endCan
+					@can('show-contact')
+					<li class="nav-item">
+						<a class="nav-link" href={{ route('person.index') }}>Persons</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href={{ route('parish.index') }}>Parishes</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href={{ route('diocese.index') }}>Dioceses</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href={{ route('organization.index') }}>Organizations</a></li>
+					<li class="nav-item">
+						<a class="nav-link" href={{ route('vendor.index') }}>Vendors</a>
+					</li>
+					@endCan
+					@can('show-touchpoint')
+					<li class="nav-item">
+						<a class="nav-link" href={{ route('touchpoint.index') }}>Touchpoints</a>
+					</li>
+					@endCan
+					@can('show-admin-menu')
+					<li class="nav-item">
+						<a class="nav-link" href={{ route('role.index') }}>Roles</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href={{ route('permission.index') }}>Permissions</a>
+					</li>
+					@endCan
+					@can('show-donation')
+					<li class="nav-item">
+						<a class="nav-link" href={{ route('finance') }}>Finance</a>
+					</li>
+					@endCan
+				</ul>
+			</div>
+		</nav>
+		@endif
 
 		@if (isset($errors) && count($errors) > 0)
 		<div class="alert alert-danger">
@@ -121,21 +117,25 @@
 			</ul>
 		</div>
 		@endif
-		@yield('content')
-		<hr />
-		<div class='footer'>
-			<p>
-				<a href='https://goo.gl/QmEUut' target='_blank'>
-					600 N Shady Shores Drive<br />
-					Lake Dallas, TX 75065<br />
-				</a>
-				(940) 321-6020<br />
-				<a href='http://montserratretreat.org/' target='_blank'>montserratretreat.org</a>
-			</p>
+		<div class="container">
+			@yield('content')
+		</div>
+		<hr/>
+		<div class="footer row">
+			<div class="col-12 text-center">
+				<p>
+					<a href='https://goo.gl/QmEUut' target='_blank'>
+						600 N Shady Shores Drive<br />
+						Lake Dallas, TX 75065<br />
+					</a>
+					(940) 321-6020<br />
+					<a href='http://montserratretreat.org/' target='_blank'>montserratretreat.org</a>
+				</p>
+			</div>
 		</div>
 	</div>
 
-	<script type="text/javascript" src="{{asset('js/all.js')}}"></script>
+	{{-- <script type="text/javascript" src="{{asset('js/all.js')}}"></script> --}}
 
 	<script type="text/javascript">
 		var APP_URL = {!!json_encode(url('/')) !!
