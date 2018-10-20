@@ -19,7 +19,7 @@ glob('public/dist/css/*.css').then((files) => {
   mix.styles(files, 'public/dist/bundle.css').version();
 });
 
-glob('public/dist/css/*.js').then((files) => {
+glob('public/dist/js/*.js').then((files) => {
   mix.styles(files, 'public/dist/bundle.js').version();
 });
    
