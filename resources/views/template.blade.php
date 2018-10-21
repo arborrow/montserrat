@@ -21,14 +21,14 @@
 		<div class="row">
 			<div class="col-6">
 				<a href = {{ ( Auth::check() ) ? route('welcome') : route('home') }}>
-					<img src="img/mrhlogoblack.png" alt="Home" class="logo">
+					<img src="/img/mrhlogoblack.png" alt="Home" class="logo">
 				</a>
 			</div>
 			<div class="col-6 text-right">
 				@if (isset(Auth::user()->avatar))
 				<img src={{ Auth::user()->avatar }} alt={{ Auth::user()->name }} class="rounded-circle">
 				<a href={{ route('logout') }}>
-					<img src="img/logout.png" alt="Logout">
+					<img src="/img/logout.png" alt="Logout">
 				</a>
 				@else
 				<a href={{ route('login') }}>
@@ -38,22 +38,21 @@
 			</div>
 		</div>
 		<hr/>
-		@can('show-contact')
+		{{-- @can('show-contact')
 		<div class="row">
 			<div class="col-md-6">
 				{{ Form::open(['action' => ['SearchController@getuser'], 'method' => 'GET']) }}
-				{{ Form::text('q', '', ['id' =>  'q', 'placeholder' =>  'Find contact by name','class'=>'col-md-6', 'autocomplete'=>'off'])}}
+				{{ Form::text('q', '', ['id' =>  'contactSearch', 'placeholder' =>  'Find contact by name','class'=>'col-md-6'])}}
 				{{ Form::hidden('response', '', array('id' =>'response')) }}
 				{{ Form::submit('Find Person', array('class' => 'btn btn-default','id'=>'btnSearch','style'=>'display:none')) }}
 				<a href="{{action('SearchController@search')}}">{!! Html::image('img/search.png', 'Advanced search',array('title'=>"Advanced search",'class' => 'btn btn-link')) !!}</a>
 				{{ Form::close() }}
 			</div>
 		</div>
-		@endCan
+		@endCan --}}
 
 		@if (Auth::check())
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="#">Navbar</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -104,6 +103,14 @@
 					</li>
 					@endCan
 				</ul>
+				@can('show-contact')
+				{{ Form::open(['action' => ['SearchController@getuser'], 'method' => 'GET', 'class' => 'form-inline my-2 my-lg-0']) }}
+				{{ Form::text('contactSearch', '', ['id' =>  'contactSearch', 'placeholder' =>  'Find contact by name','class'=>'form-control mr-sm-2'])}}
+				{{ Form::hidden('response', '', array('id' =>'response')) }}
+				{{ Form::submit('Find Person', array('class' => 'btn btn-outline-success my-2 my-sm-0','id'=>'btnSearch','style'=>'display:none')) }}
+				<a href="{{action('SearchController@search')}}">{!! Html::image('img/search.png', 'Advanced search',array('title'=>"Advanced search",'class' => 'btn btn-link')) !!}</a>
+				{{ Form::close() }}
+				@endcan
 			</div>
 		</nav>
 		@endif
@@ -135,19 +142,26 @@
 		</div>
 	</div>
 
-	{{-- <script type="text/javascript" src="{{asset('js/all.js')}}"></script> --}}
-
 	<script type="text/javascript">
-		var APP_URL = {!!json_encode(url('/')) !!
-		};
+	$("#contactSearch").autocomplete({
+				source: "{{ url('search/autocomplete') }}",
+				minLength: 3,
+				autoFocus: true,
+				select: function (event, ui) {
+					$('#contactSearch').val(ui.item.value);
+					$('#response').val(ui.item.id);
+					$('#btnSearch').click();
+				}
+			});
+			console.log($("#q"));
 		$(function () {
 
-			$("#start_date").datetimeEntry({
-				datetimeFormat: 'N d, Y h:M a'
-			});
-			$("#end_date").datetimeEntry({
-				datetimeFormat: 'N d, Y h:M a'
-			});
+			// $("#start_date").datetimeEntry({
+			// 	datetimeFormat: 'N d, Y h:M a'
+			// });
+			// $("#end_date").datetimeEntry({
+			// 	datetimeFormat: 'N d, Y h:M a'
+			// });
 			$("#donation_date").datepicker();
 			$("#payment_date").datepicker();
 			$("#start_date_only").datepicker();
@@ -160,46 +174,36 @@
 			$("#canceled_at").datepicker();
 			$("#birth_date").datepicker();
 			$("#deceased_date").datepicker();
-			$("#touched_at").datetimeEntry({
-				datetimeFormat: 'N d, Y h:M a'
-			});
-			$("#q").autocomplete({
-				source: "{{ url('search/autocomplete') }}",
-				minLength: 3,
-				autoFocus: true,
-				select: function (event, ui) {
-					$('#q').val(ui.item.value);
-					$('#response').val(ui.item.id);
-					$('#btnSearch').click();
-				}
-			});
-			$("#languages").select2({
-				placeholder: 'Choose language(s)'
-			});
-			$("#referrals").select2({
-				placeholder: 'Choose referral source(s)'
-			});
-			$("#directors").select2({
-				placeholder: 'Choose retreat director(s)'
-			});
-			$("#captains").select2({
-				placeholder: 'Choose captain(s)'
-			});
-			$("#groups").select2({
-				placeholder: 'Choose group(s)'
-			});
-			$("#roles").select2({
-				placeholder: 'Choose role(s)',
-				closeOnSelect: false
-			});
-			$("#permissions").select2({
-				placeholder: 'Choose permission(s)',
-				closeOnSelect: false
-			});
-			$("#users").select2({
-				placeholder: 'Choose user(s)',
-				closeOnSelect: false
-			});
+			// $("#touched_at").datetimeEntry({
+			// 	datetimeFormat: 'N d, Y h:M a'
+			// });
+			// $("#languages").select2({
+			// 	placeholder: 'Choose language(s)'
+			// });
+			// $("#referrals").select2({
+			// 	placeholder: 'Choose referral source(s)'
+			// });
+			// $("#directors").select2({
+			// 	placeholder: 'Choose retreat director(s)'
+			// });
+			// $("#captains").select2({
+			// 	placeholder: 'Choose captain(s)'
+			// });
+			// $("#groups").select2({
+			// 	placeholder: 'Choose group(s)'
+			// });
+			// $("#roles").select2({
+			// 	placeholder: 'Choose role(s)',
+			// 	closeOnSelect: false
+			// });
+			// $("#permissions").select2({
+			// 	placeholder: 'Choose permission(s)',
+			// 	closeOnSelect: false
+			// });
+			// $("#users").select2({
+			// 	placeholder: 'Choose user(s)',
+			// 	closeOnSelect: false
+			// });
 
 
 		});
