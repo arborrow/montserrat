@@ -5,8 +5,8 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
-//require('./jquery-ui.js');
+require('./bootstrap'); // jQuery being loaded here
+require('jquery-ui-bundle'); // jQuery UI
 //require('./jquery.datetimeentry.js');
 //require('./jquery.js');
 //require('./jquery.plugin.js');
