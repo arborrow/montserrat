@@ -15,7 +15,6 @@
 		}
 	</script>
 </head>
-
 <body>
 	<div class="container-fluid">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -98,6 +97,7 @@
 				@endif
 			</div>
 		</nav>
+	</div>
 
 		@if (isset($errors) && count($errors) > 0)
 		<div class="alert alert-danger">
@@ -110,21 +110,20 @@
 		@endif
 		<div class="container">
 			@yield('content')
-		</div>
-		<hr/>
-		<div class="footer row">
-			<div class="col-12 text-center">
-				<p>
-					<a href='https://goo.gl/QmEUut' target='_blank'>
-						600 N Shady Shores Drive<br />
-						Lake Dallas, TX 75065<br />
-					</a>
-					(940) 321-6020<br />
-					<a href='http://montserratretreat.org/' target='_blank'>montserratretreat.org</a>
-				</p>
+			<hr/>
+			<div class="footer row">
+				<div class="col-12 text-center">
+					<p>
+						<a href='https://goo.gl/QmEUut' target='_blank'>
+							600 N Shady Shores Drive<br />
+							Lake Dallas, TX 75065<br />
+						</a>
+						(940) 321-6020<br />
+						<a href='http://montserratretreat.org/' target='_blank'>montserratretreat.org</a>
+					</p>
+				</div>
 			</div>
 		</div>
-	</div>
 
 	<script type="text/javascript">
 	$("#contactSearch").autocomplete({
