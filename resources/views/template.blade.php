@@ -18,28 +18,10 @@
 
 <body>
 	<div class="container-fluid">
-		<div class="row">
-			<div class="col-6">
-				<a href = {{ ( Auth::check() ) ? route('welcome') : route('home') }}>
-					<img src="/img/mrhlogoblack.png" alt="Home" class="logo">
-				</a>
-			</div>
-			<div class="col-6 text-right">
-				@if (isset(Auth::user()->avatar))
-				<img src={{ Auth::user()->avatar }} alt={{ Auth::user()->name }} class="rounded-circle">
-				<a href={{ route('logout') }}>
-					<img src="/img/logout.png" alt="Logout">
-				</a>
-				@else
-				<a href={{ route('login') }}>
-					<img src="img/login.png" alt="Login">
-				</a>
-				@endif
-			</div>
-		</div>
-		<hr/>
-		@if (Auth::check())
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand" href={{ ( Auth::check() ) ? route('welcome') : route('home') }}>
+				<img src="/img/mrhlogoblack.png" alt="Home" class="logo">
+			</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -98,9 +80,24 @@
 				<a href="{{action('SearchController@search')}}">{!! Html::image('img/search.png', 'Advanced search',array('title'=>"Advanced search",'class' => 'btn btn-link')) !!}</a>
 				{{ Form::close() }}
 				@endcan
+				@if (Auth::check())
+				<div class="dropdown">
+					<div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<img src={{ Auth::user()->avatar }} alt={{ Auth::user()->name }} class="rounded-circle">
+					</div>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<a href={{ route('logout') }}>Logout</a>
+					</div>
+				</div>
+				
+				
+				@else
+				<a href={{ route('login') }}>
+					Login
+				</a>
+				@endif
 			</div>
 		</nav>
-		@endif
 
 		@if (isset($errors) && count($errors) > 0)
 		<div class="alert alert-danger">
