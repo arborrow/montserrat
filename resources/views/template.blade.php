@@ -38,19 +38,6 @@
 			</div>
 		</div>
 		<hr/>
-		{{-- @can('show-contact')
-		<div class="row">
-			<div class="col-md-6">
-				{{ Form::open(['action' => ['SearchController@getuser'], 'method' => 'GET']) }}
-				{{ Form::text('q', '', ['id' =>  'contactSearch', 'placeholder' =>  'Find contact by name','class'=>'col-md-6'])}}
-				{{ Form::hidden('response', '', array('id' =>'response')) }}
-				{{ Form::submit('Find Person', array('class' => 'btn btn-default','id'=>'btnSearch','style'=>'display:none')) }}
-				<a href="{{action('SearchController@search')}}">{!! Html::image('img/search.png', 'Advanced search',array('title'=>"Advanced search",'class' => 'btn btn-link')) !!}</a>
-				{{ Form::close() }}
-			</div>
-		</div>
-		@endCan --}}
-
 		@if (Auth::check())
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
