@@ -84,8 +84,8 @@
 					<div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<img src={{ Auth::user()->avatar }} alt={{ Auth::user()->name }} class="rounded-circle">
 					</div>
-					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<a href={{ route('logout') }}>Logout</a>
+					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+						<a class="dropdown-item" href={{ route('logout') }}>Logout</a>
 					</div>
 				</div>
 				
