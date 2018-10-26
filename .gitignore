@@ -14,5 +14,6 @@ npm-debug.log
 .env
 .DS_Store
 
-# Complied/Transpiled Code
+# Complied/transpiled code files/resources
 /public/dist
+mix-manifest.json
