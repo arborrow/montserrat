@@ -1,7 +1,5 @@
 @extends('template')
 @section('content')
-
-<section class="section-padding">
 	<div class="jumbotron text-left">
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -14,45 +12,45 @@
 							<h1 style="position: absolute; top:5px; left:175px; padding: 5px;"><strong>{{ $person->full_name }}</strong></h1>
 						@endCan
 					</div>
-					{!! Html::link('#demographics','Demographics',array('class' => 'btn btn-default')) !!}
-					{!! Html::link('#notes','Notes',array('class' => 'btn btn-default')) !!}
-					{!! Html::link('#relationships','Relationships',array('class' => 'btn btn-default')) !!}
-					{!! Html::link('#registrations','Registrations',array('class' => 'btn btn-default')) !!}
-					{!! Html::link('#touchpoints','Touchpoints',array('class' => 'btn btn-default')) !!}
-					{!! Html::link('#attachments','Attachments',array('class' => 'btn btn-default')) !!}
-					{!! Html::link('#donations','Donations',array('class' => 'btn btn-default')) !!}
+					{!! Html::link('#demographics','Demographics',array('class' => 'btn btn-primary')) !!}
+					{!! Html::link('#notes','Notes',array('class' => 'btn btn-primary')) !!}
+					{!! Html::link('#relationships','Relationships',array('class' => 'btn btn-primary')) !!}
+					{!! Html::link('#registrations','Registrations',array('class' => 'btn btn-primary')) !!}
+					{!! Html::link('#touchpoints','Touchpoints',array('class' => 'btn btn-primary')) !!}
+					{!! Html::link('#attachments','Attachments',array('class' => 'btn btn-primary')) !!}
+					{!! Html::link('#donations','Donations',array('class' => 'btn btn-primary')) !!}
 					@can('show-group')
-						@if ($person->is_board_member) <span class="back"><a href={{ action('PersonController@boardmembers') }}>{!! Html::image('img/board.png', 'Board Members Group',array('title'=>"Board Members Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
-						@if ($person->is_captain) <span class="back"><a href={{ action('PersonController@captains') }}>{!! Html::image('img/captain.png', 'Captains Group',array('title'=>"Captains Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
-						@if ($person->is_staff) <span class="back"><a href={{ action('PersonController@staff') }}>{!! Html::image('img/employee.png', 'Staff Group',array('title'=>"Employees Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
-						@if ($person->is_steward) <span class="back"><a href={{ action('PersonController@stewards') }}>{!! Html::image('img/steward.png', 'Steward Group',array('title'=>"Stewards Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
-						@if ($person->is_volunteer) <span class="back"><a href={{ action('PersonController@volunteers') }}>{!! Html::image('img/volunteer.png', 'Volunteers Group',array('title'=>"Volunteers Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
-						@if ($person->is_retreat_director) <span class="back"><a href={{ action('PersonController@directors') }}>{!! Html::image('img/director.png', 'Retreat Directors Group',array('title'=>"Directors Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
-						@if ($person->is_retreat_innkeeper) <span class="back"><a href={{ action('PersonController@innkeepers') }}>{!! Html::image('img/innkeeper.png', 'Retreat Innkeepers Group',array('title'=>"Innkeepers Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
-						@if ($person->is_retreat_assistant) <span class="back"><a href={{ action('PersonController@assistants') }}>{!! Html::image('img/assistant.png', 'Retreat Assistants Group',array('title'=>"Assistants Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
-						@if ($person->is_bishop) <span class="back"><a href={{ action('PersonController@bishops') }}>{!! Html::image('img/bishop.png', 'Bishops Group',array('title'=>"Bishop Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
-						@if ($person->is_pastor) <span class="back"><a href={{ action('PersonController@pastors') }}>{!! Html::image('img/pastor.png', 'Pastors Group',array('title'=>"Pastors Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
-						@if ($person->is_priest) <span class="back"><a href={{ action('PersonController@priests') }}>{!! Html::image('img/priest.png', 'Priests Group',array('title'=>"Priests Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
-						@if ($person->is_deacon) <span class="back"><a href={{ action('PersonController@deacons') }}>{!! Html::image('img/deacon.png', 'Deacons Group',array('title'=>"Deacons Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
-						@if ($person->is_provincial) <span class="back"><a href={{ action('PersonController@provincials') }}>{!! Html::image('img/provincial.png', 'Provincials Group',array('title'=>"Provincials Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
-						@if ($person->is_superior) <span class="back"><a href={{ action('PersonController@superiors') }}>{!! Html::image('img/superior.png', 'Superiors Group',array('title'=>"Superiors Group",'class' => 'btn btn-default')) !!}</a></span> @endIf
-						@if ($person->is_jesuit) <span class="back"><a href={{ action('PersonController@jesuits') }}>{!! Html::image('img/jesuit.png', 'Jesuits Group',array('title'=>"Jesuits Group",'class' => 'btn btn-default')) !!}</a></span> @endIf                        
+						@if ($person->is_board_member) <span class="back"><a href={{ action('PersonController@boardmembers') }}>{!! Html::image('img/board.png', 'Board Members Group',array('title'=>"Board Members Group",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+						@if ($person->is_captain) <span class="back"><a href={{ action('PersonController@captains') }}>{!! Html::image('img/captain.png', 'Captains Group',array('title'=>"Captains Group",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+						@if ($person->is_staff) <span class="back"><a href={{ action('PersonController@staff') }}>{!! Html::image('img/employee.png', 'Staff Group',array('title'=>"Employees Group",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+						@if ($person->is_steward) <span class="back"><a href={{ action('PersonController@stewards') }}>{!! Html::image('img/steward.png', 'Steward Group',array('title'=>"Stewards Group",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+						@if ($person->is_volunteer) <span class="back"><a href={{ action('PersonController@volunteers') }}>{!! Html::image('img/volunteer.png', 'Volunteers Group',array('title'=>"Volunteers Group",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+						@if ($person->is_retreat_director) <span class="back"><a href={{ action('PersonController@directors') }}>{!! Html::image('img/director.png', 'Retreat Directors Group',array('title'=>"Directors Group",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+						@if ($person->is_retreat_innkeeper) <span class="back"><a href={{ action('PersonController@innkeepers') }}>{!! Html::image('img/innkeeper.png', 'Retreat Innkeepers Group',array('title'=>"Innkeepers Group",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+						@if ($person->is_retreat_assistant) <span class="back"><a href={{ action('PersonController@assistants') }}>{!! Html::image('img/assistant.png', 'Retreat Assistants Group',array('title'=>"Assistants Group",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+						@if ($person->is_bishop) <span class="back"><a href={{ action('PersonController@bishops') }}>{!! Html::image('img/bishop.png', 'Bishops Group',array('title'=>"Bishop Group",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+						@if ($person->is_pastor) <span class="back"><a href={{ action('PersonController@pastors') }}>{!! Html::image('img/pastor.png', 'Pastors Group',array('title'=>"Pastors Group",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+						@if ($person->is_priest) <span class="back"><a href={{ action('PersonController@priests') }}>{!! Html::image('img/priest.png', 'Priests Group',array('title'=>"Priests Group",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+						@if ($person->is_deacon) <span class="back"><a href={{ action('PersonController@deacons') }}>{!! Html::image('img/deacon.png', 'Deacons Group',array('title'=>"Deacons Group",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+						@if ($person->is_provincial) <span class="back"><a href={{ action('PersonController@provincials') }}>{!! Html::image('img/provincial.png', 'Provincials Group',array('title'=>"Provincials Group",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+						@if ($person->is_superior) <span class="back"><a href={{ action('PersonController@superiors') }}>{!! Html::image('img/superior.png', 'Superiors Group',array('title'=>"Superiors Group",'class' => 'btn btn-primary')) !!}</a></span> @endIf
+						@if ($person->is_jesuit) <span class="back"><a href={{ action('PersonController@jesuits') }}>{!! Html::image('img/jesuit.png', 'Jesuits Group',array('title'=>"Jesuits Group",'class' => 'btn btn-primary')) !!}</a></span> @endIf                        
 						<br/>
 					@endCan
 					<br />            
 				</div>
 			   <div class='row'>     
 						@can('create-touchpoint')
-							<span class="btn btn-default">
+							<span class="btn btn-primary">
 								<a href={{ action('TouchpointController@add',$person->id) }}>Add Touchpoint</a>
 							</span>
 						@endCan
 						@can('create-registration')
-						<span class="btn btn-default">
+						<span class="btn btn-primary">
 							<a href={{ action('RegistrationController@add',$person->id) }}>Add Registration</a> 
 						</span>                
 						@endCan
-						<span class="btn btn-default">
+						<span class="btn btn-primary">
 							<a href={{ action('PageController@contact_info_report',$person->id) }}>Contact Info Report</a> 
 						</span> 
 			   </div>
@@ -294,7 +292,7 @@
 			<div class='col-md-8'>
 				<div class='panel-heading'><h2><strong>Touchpoints for {{ $person->display_name }}</strong></h2>
 					@can('create-touchpoint')
-					<span class="btn btn-default">
+					<span class="btn btn-primary">
 					   <a href={{ action('TouchpointController@add',$person->id) }}>Add Touchpoint</a>
 					</span>
 					@endCan('create-touchpoint')
@@ -375,7 +373,7 @@
 						@endif
 					</h2>
 					@can('create-donation')
-						{!! Html::link(action('DonationController@create',$person->id),'Create donation',array('class' => 'btn btn-default'))!!}
+						{!! Html::link(action('DonationController@create',$person->id),'Create donation',array('class' => 'btn btn-primary'))!!}
 					@endCan
 				</div>
 					@if ($person->donations->isEmpty())
@@ -414,14 +412,14 @@
 		@endCan
 		</div>
 
-		<div class='row'>
-			@can('update-contact')
-				<div class='col-md-1'>
+		<div class="row">
+			@can("update-contact")
+				<div class="col-1">
 					<a href="{{ action('PersonController@edit', $person->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
 				</div>
 			@endCan
-			@can('delete-contact')
-				<div class='col-md-1'>
+			@can("delete-contact")
+				<div class="col-1">
 					{!! Form::open(['method' => 'DELETE', 'route' => ['person.destroy', $person->id],'onsubmit'=>'return ConfirmDelete()']) !!}
 					{!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
 					{!! Form::close() !!}
@@ -429,5 +427,4 @@
 			@endCan
 			<div class="clearfix"> </div>
 		</div>
-</section>
 @stop
