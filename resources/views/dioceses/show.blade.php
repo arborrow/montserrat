@@ -30,7 +30,7 @@
                 
                     <div class='row'>
                         <span>
-                            <a href={{ action('DioceseController@index') }}>{!! Html::image('img/diocese.png', 'Diocese Index',array('title'=>"Diocese Index",'class' => 'btn btn-default')) !!}</a>
+                            <a href={{ action('DioceseController@index') }}>{!! Html::image('/images/diocese.png', 'Diocese Index',array('title'=>"Diocese Index",'class' => 'btn btn-default')) !!}</a>
                         </span>
                         <span class="btn btn-default">
                             <a href={{ action('TouchpointController@add',$diocese->id) }}>Add Touchpoint</a>
@@ -180,7 +180,7 @@
                                 <li>
                                     {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $a_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
                                     {!!$diocese->contact_link!!} {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link !!} 
-                                    {!! Form::image('img/delete.png','btnDelete',['title'=>'Delete Relationship '.$a_relationship->id, 'style'=>'padding-left: 50px;']) !!} 
+                                    {!! Form::image('/images/delete.png','btnDelete',['title'=>'Delete Relationship '.$a_relationship->id, 'style'=>'padding-left: 50px;']) !!} 
                                     {!! Form::close() !!}
                                 </li>
                             @endforeach
@@ -189,7 +189,7 @@
                                 <li>
                                     {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $b_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
                                     {!!$diocese->contact_link!!} is {{ $b_relationship->relationship_type->label_a_b }} {!! $b_relationship->contact_b->contact_link !!} 
-                                    {!! Form::image('img/delete.png','btnDelete',['title'=>'Delete Relationship '.$b_relationship->id, 'style'=>'padding-left: 50px;']) !!} 
+                                    {!! Form::image('/images/delete.png','btnDelete',['title'=>'Delete Relationship '.$b_relationship->id, 'style'=>'padding-left: 50px;']) !!} 
                                     {!! Form::close() !!}
                                 </li>
                             @endforeach
@@ -290,12 +290,12 @@
         
                 <div class='row'>
                     @can('update-contact')
-                        <div class='col-md-1'><a href="{{ action('DioceseController@edit', $diocese->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
+                        <div class='col-md-1'><a href="{{ action('DioceseController@edit', $diocese->id) }}" class="btn btn-info">{!! Html::image('/images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
                     @endCan
                     @can('delete-contact')
                         <div class='col-md-1'>
                             {!! Form::open(['method' => 'DELETE', 'route' => ['diocese.destroy', $diocese->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                            {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                            {!! Form::image('/images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
                             {!! Form::close() !!}
                         </div>
                     @endCan

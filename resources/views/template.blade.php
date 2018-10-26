@@ -19,7 +19,7 @@
 	<div class="container-fluid">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<a class="navbar-brand" href={{ ( Auth::check() ) ? route('welcome') : route('home') }}>
-				<img src="/img/mrhlogoblack.png" alt="Home" class="logo">
+				<img src="/images/mrhlogoblack.png" alt="Home" class="logo">
 			</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
@@ -76,7 +76,7 @@
 				{{ Form::text('contactSearch', '', ['id' =>  'contactSearch', 'placeholder' =>  'Find contact by name','class'=>'form-control mr-sm-2'])}}
 				{{ Form::hidden('response', '', array('id' =>'response')) }}
 				{{ Form::submit('Find Person', array('class' => 'btn btn-outline-success my-2 my-sm-0','id'=>'btnSearch','style'=>'display:none')) }}
-				<a href="{{action('SearchController@search')}}">{!! Html::image('img/search.png', 'Advanced search',array('title'=>"Advanced search",'class' => 'btn btn-link')) !!}</a>
+				<a href="{{action('SearchController@search')}}">{!! Html::image('/images/search.png', 'Advanced search',array('title'=>"Advanced search",'class' => 'btn btn-link')) !!}</a>
 				{{ Form::close() }}
 				@endcan
 				@if (Auth::check())

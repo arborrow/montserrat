@@ -34,7 +34,7 @@
                         {!! Form::hidden('id',$permission->id) !!}
                         {!! Form::label('roles', 'Assigned roles:', ['class' => 'col-md-2'])  !!}
                         {!! Form::select('roles[]', $roles, $permission->roles->pluck('id')->toArray(), ['id'=>'roles','class' => 'form-control col-md-6','multiple' => 'multiple']) !!}
-                        Update role assignments {!! Form::image('img/save.png','btnSave',['class' => 'btn btn-default']) !!}
+                        Update role assignments {!! Form::image('/images/save.png','btnSave',['class' => 'btn btn-default']) !!}
                         {!! Form::close() !!}
                     @endCan
                 </div>
@@ -43,9 +43,9 @@
         </div>
         <div class='row'>
 
-            <div class='col-md-1'><a href="{{ action('PermissionController@edit', $permission->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
+            <div class='col-md-1'><a href="{{ action('PermissionController@edit', $permission->id) }}" class="btn btn-info">{!! Html::image('/images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
             <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['permission.destroy', $permission->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-            {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+            {!! Form::image('/images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
             {!! Form::close() !!}</div><div class="clearfix"> </div>
         </div>
     </div>

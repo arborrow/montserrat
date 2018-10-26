@@ -10,27 +10,27 @@
                         <span>({{$persons->total()}} records)</span>
                         @can('create-contact')
                             <span class="create">
-                                <a href={{ action('PersonController@create') }}>{!! Html::image('img/create.png', 'Add Person',array('title'=>"Add Person",'class' => 'btn btn-link')) !!}</a>
+                                <a href={{ action('PersonController@create') }}>{!! Html::image('/images/create.png', 'Add Person',array('title'=>"Add Person",'class' => 'btn btn-link')) !!}</a>
                             </span>
                         @endCan
                     </h1>
-                    <span class="boards"><a href={{ action('PersonController@boardmembers') }}>{!! Html::image('img/board.png', 'Board members',array('title'=>"Board members",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="captains"><a href={{ action('PersonController@captains') }}>{!! Html::image('img/captain.png', 'Captains',array('title'=>"Captains",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="staff"><a href={{ action('PersonController@staff') }}>{!! Html::image('img/employee.png', 'Employees',array('title'=>"Employees",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="steward"><a href={{ action('PersonController@stewards') }}>{!! Html::image('img/steward.png', 'Stewards',array('title'=>"Stewards",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="volunteers"><a href={{ action('PersonController@volunteers') }}>{!! Html::image('img/volunteer.png', 'Volunteers',array('title'=>"Volunteers",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="directors"><a href={{ action('PersonController@directors') }}>{!! Html::image('img/director.png', 'Directors',array('title'=>"Directors",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="innkeepers"><a href={{ action('PersonController@innkeepers') }}>{!! Html::image('img/innkeeper.png', 'Innkeepers',array('title'=>"Innkeepers",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="assistants"><a href={{ action('PersonController@assistants') }}>{!! Html::image('img/assistant.png', 'Assistants',array('title'=>"Assistants",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="bishops"><a href={{ action('PersonController@bishops') }}>{!! Html::image('img/bishop.png', 'Bishops',array('title'=>"Bishops",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="pastors"><a href={{ action('PersonController@pastors') }}>{!! Html::image('img/pastor.png', 'Pastors',array('title'=>"Pastors",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="priests"><a href={{ action('PersonController@priests') }}>{!! Html::image('img/priest.png', 'Priests',array('title'=>"Priests",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="deacons"><a href={{ action('PersonController@deacons') }}>{!! Html::image('img/deacon.png', 'Deacons',array('title'=>"Deacons",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="provincials"><a href={{ action('PersonController@provincials') }}>{!! Html::image('img/provincial.png', 'Provincials',array('title'=>"Provincials",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="superiors"><a href={{ action('PersonController@superiors') }}>{!! Html::image('img/superior.png', 'Superiors',array('title'=>"Superiors",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="jesuits"><a href={{ action('PersonController@jesuits') }}>{!! Html::image('img/jesuit.png', 'Jesuits',array('title'=>"Jesuits",'class' => 'btn btn-info')) !!}</a></span>
-                    <!-- <span class="donors"><a href={{ action('PersonController@donors') }}>{!! Html::image('img/donor.png', 'Donors',array('title'=>"Donors",'class' => 'btn btn-info')) !!}</a></span></h1> -->
-                    <!-- <span class="retreatants"><a href={{ action('PersonController@retreatants') }}>{!! Html::image('img/retreatant.png', 'Retreatants',array('title'=>"Retreatants",'class' => 'btn btn-info')) !!}</a></span></h1> -->
+                    <span class="boards"><a href={{ action('PersonController@boardmembers') }}>{!! Html::image('/images/board.png', 'Board members',array('title'=>"Board members",'class' => 'btn btn-info')) !!}</a></span>
+                    <span class="captains"><a href={{ action('PersonController@captains') }}>{!! Html::image('/images/captain.png', 'Captains',array('title'=>"Captains",'class' => 'btn btn-info')) !!}</a></span>
+                    <span class="staff"><a href={{ action('PersonController@staff') }}>{!! Html::image('/images/employee.png', 'Employees',array('title'=>"Employees",'class' => 'btn btn-info')) !!}</a></span>
+                    <span class="steward"><a href={{ action('PersonController@stewards') }}>{!! Html::image('/images/steward.png', 'Stewards',array('title'=>"Stewards",'class' => 'btn btn-info')) !!}</a></span>
+                    <span class="volunteers"><a href={{ action('PersonController@volunteers') }}>{!! Html::image('/images/volunteer.png', 'Volunteers',array('title'=>"Volunteers",'class' => 'btn btn-info')) !!}</a></span>
+                    <span class="directors"><a href={{ action('PersonController@directors') }}>{!! Html::image('/images/director.png', 'Directors',array('title'=>"Directors",'class' => 'btn btn-info')) !!}</a></span>
+                    <span class="innkeepers"><a href={{ action('PersonController@innkeepers') }}>{!! Html::image('/images/innkeeper.png', 'Innkeepers',array('title'=>"Innkeepers",'class' => 'btn btn-info')) !!}</a></span>
+                    <span class="assistants"><a href={{ action('PersonController@assistants') }}>{!! Html::image('/images/assistant.png', 'Assistants',array('title'=>"Assistants",'class' => 'btn btn-info')) !!}</a></span>
+                    <span class="bishops"><a href={{ action('PersonController@bishops') }}>{!! Html::image('/images/bishop.png', 'Bishops',array('title'=>"Bishops",'class' => 'btn btn-info')) !!}</a></span>
+                    <span class="pastors"><a href={{ action('PersonController@pastors') }}>{!! Html::image('/images/pastor.png', 'Pastors',array('title'=>"Pastors",'class' => 'btn btn-info')) !!}</a></span>
+                    <span class="priests"><a href={{ action('PersonController@priests') }}>{!! Html::image('/images/priest.png', 'Priests',array('title'=>"Priests",'class' => 'btn btn-info')) !!}</a></span>
+                    <span class="deacons"><a href={{ action('PersonController@deacons') }}>{!! Html::image('/images/deacon.png', 'Deacons',array('title'=>"Deacons",'class' => 'btn btn-info')) !!}</a></span>
+                    <span class="provincials"><a href={{ action('PersonController@provincials') }}>{!! Html::image('/images/provincial.png', 'Provincials',array('title'=>"Provincials",'class' => 'btn btn-info')) !!}</a></span>
+                    <span class="superiors"><a href={{ action('PersonController@superiors') }}>{!! Html::image('/images/superior.png', 'Superiors',array('title'=>"Superiors",'class' => 'btn btn-info')) !!}</a></span>
+                    <span class="jesuits"><a href={{ action('PersonController@jesuits') }}>{!! Html::image('/images/jesuit.png', 'Jesuits',array('title'=>"Jesuits",'class' => 'btn btn-info')) !!}</a></span>
+                    <!-- <span class="donors"><a href={{ action('PersonController@donors') }}>{!! Html::image('/images/donor.png', 'Donors',array('title'=>"Donors",'class' => 'btn btn-info')) !!}</a></span></h1> -->
+                    <!-- <span class="retreatants"><a href={{ action('PersonController@retreatants') }}>{!! Html::image('/images/retreatant.png', 'Retreatants',array('title'=>"Retreatants",'class' => 'btn btn-info')) !!}</a></span></h1> -->
                 
                 </div>
                 

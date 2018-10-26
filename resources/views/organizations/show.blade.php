@@ -28,7 +28,7 @@
                     
                     <div class="row">
                         
-                        <span><a href={{ action('OrganizationController@index') }}>{!! Html::image('img/organization.png', 'Organization Index',array('title'=>"Organization Index",'class' => 'btn btn-default')) !!}</a></span>
+                        <span><a href={{ action('OrganizationController@index') }}>{!! Html::image('/images/organization.png', 'Organization Index',array('title'=>"Organization Index",'class' => 'btn btn-default')) !!}</a></span>
                         @can('create-touchpoint')
                         <span class="btn btn-default">
                             <a href={{ action('TouchpointController@add',$organization->id) }}>Add Touchpoint</a>
@@ -239,12 +239,12 @@
 
                 <div class='row'>
                     @can('update-contact')
-                        <div class='col-md-1'><a href="{{ action('OrganizationController@edit', $organization->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
+                        <div class='col-md-1'><a href="{{ action('OrganizationController@edit', $organization->id) }}" class="btn btn-info">{!! Html::image('/images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
                     @endCan
                     @can('delete-contact')
                         <div class='col-md-1'>
                             {!! Form::open(['method' => 'DELETE', 'route' => ['organization.destroy', $organization->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                            {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                            {!! Form::image('/images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
                             {!! Form::close() !!}
                         </div>
                     @endCan
