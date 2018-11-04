@@ -187,6 +187,7 @@ return [
         'Check' => 'Check',
         'Credit card' => 'Credit card',
         'Gift certificate' => 'Gift certificate',
+        'Journal' => 'Journal',
         'Other' => 'Other'
     ]
             
