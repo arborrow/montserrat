@@ -439,12 +439,16 @@ class RetreatController extends Controller
        
         return view('retreats.payments.edit', compact('retreat', 'registrations', 'donation_description','payment_description'));
     }
-    public function show_payments($id)
+    public function show_payments($id, $donation_description_id = NULL)
     {
         $this->authorize('show-payment');
+        if (!isset($donation_description_id)) {
+            $donation_description_id = 1; // Retreat offering
+        } 
+        $donation_description = \App\DonationType::findOrFail($donation_description_id);
         $retreat = \App\Retreat::findOrFail($id);
         $registrations = \App\Registration::where('event_id', '=', $id)->whereCanceledAt(null)->with('retreatant.parish','donation')->orderBy('register_date', 'DESC')->get();
-        return view('retreats.payments.show', compact('retreat', 'registrations'));
+        return view('retreats.payments.show', compact('retreat', 'registrations','donation_description'));
     }
 
     public function checkout($id)
