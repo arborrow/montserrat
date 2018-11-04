@@ -447,6 +447,11 @@ class RetreatController extends Controller
         } 
         $donation_description = \App\DonationType::findOrFail($donation_description_id);
         $retreat = \App\Retreat::findOrFail($id);
+        /*
+         *  in order to implement donation_description_id usage we will need to get the donations separately 
+         * $donations = \App\Donation::whereDonationDescription($donation_description->name)->whereEventId($id)
+         * once we have the data, then we need to rework the show and edit blades accordingly
+         */
         $registrations = \App\Registration::where('event_id', '=', $id)->whereCanceledAt(null)->with('retreatant.parish','donation')->orderBy('register_date', 'DESC')->get();
         return view('retreats.payments.show', compact('retreat', 'registrations','donation_description'));
     }
