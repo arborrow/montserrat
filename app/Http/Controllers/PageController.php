@@ -177,7 +177,7 @@ class PageController extends Controller
         $this->authorize('show-donation');
         $donations = \App\Donation::where('donation_description','Deposit')->whereDeletedAt(NULL)->where('donation_amount','>',0)->with('contact','payments','retreat')->get();
         $payments = \App\Payment::where('payment_amount','>',0)->whereHas('donation', function($query) {
-            $query->where('donation_description','=','Deposit');
+            $query->where('donation_description','Deposit');
         })->with('donation.retreat','donation.contact')->get();
         //dd($payments);
         $grouped_payments = $payments->groupBy(function ($c) {
@@ -187,10 +187,10 @@ class PageController extends Controller
             } else {
                 $start_date = NULL;
             }
-            return '#'.$c->donation->retreat->idnumber.'-'.$c->donation->retreat->title.' ('.$start_date.')';
+            return '#'.$c->donation->retreat_idnumber.'-'.$c->donation->retreat_title.' ('.$start_date.')';
         })->sortBy(function ($d) {
             //dd($d[0]->donation->retreat->start_date);
-            return $d[0]->donation->retreat->start_date;
+            return $d[0]->donation->retreat_start_date;
 			});
 	//dd($grouped_payments);
         return view('reports.finance.deposits', compact('grouped_payments','payments'));  
