@@ -89,7 +89,7 @@ class Contact extends Model
     }
     public function email_primary()
     {
-        return $this->hasOne(Email::class, 'contact_id', 'id')->whereIsPrimary(1)->whereIsPrimary(1)->whereNotNull('email');
+        return $this->hasOne(Email::class, 'contact_id', 'id')->whereIsPrimary(1)->whereNotNull('email');
     }
     public function emergency_contact()
     {
