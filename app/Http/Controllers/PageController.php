@@ -182,15 +182,10 @@ class PageController extends Controller
         //dd($payments);
         $grouped_payments = $payments->groupBy(function ($c) {
             //dd($c);
-            if (isset($c->donation->retreat->start_date)) {
-                $start_date = $c->donation->retreat->start_date->format('m/d/Y');
-            } else {
-                $start_date = NULL;
-            }
-            return '#'.$c->donation->retreat->idnumber.'-'.$c->donation->retreat->title.' ('.$start_date.')';
+            return '#'.$c->donation->retreat_idnumber.'-'.$c->donation->retreat_name.' ('.$c->donation->retreat_start_date.')';
         })->sortBy(function ($d) {
             //dd($d[0]->donation->retreat->start_date);
-            return $d[0]->donation->retreat->start_date;
+            return $d[0]->donation->retreat_start_date;
 			});
 	//dd($grouped_payments);
         return view('reports.finance.deposits', compact('grouped_payments','payments'));  
