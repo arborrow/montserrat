@@ -179,15 +179,11 @@ class PageController extends Controller
         $payments = \App\Payment::where('payment_amount','>',0)->whereHas('donation', function($query) {
             $query->where('donation_description','=','Deposit');
         })->with('donation.retreat','donation.contact')->get();
-        //dd($payments);
         $grouped_payments = $payments->groupBy(function ($c) {
-            //dd($c);
             return '#'.$c->donation->retreat_idnumber.'-'.$c->donation->retreat_name.' ('.$c->donation->retreat_start_date.')';
         })->sortBy(function ($d) {
-            //dd($d[0]->donation->retreat->start_date);
-            return $d[0]->donation->retreat_start_date;
+		return \Carbon\Carbon::parse($d[0]->donation->retreat_start_date);
 			});
-	//dd($grouped_payments);
         return view('reports.finance.deposits', compact('grouped_payments','payments'));  
     }
     
