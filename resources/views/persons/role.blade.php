@@ -7,7 +7,7 @@
                 @can('create-contact')
                     <span class="create">
                         <a href={{ action('PersonController@create') }}>
-                            <img src="images/create.png" alt="Add" class="btn btn-light" title="Add">
+                            <img src="{{URL::asset('images/create.png')}}" alt="Add" class="btn btn-light" title="Add">
                         </a>
                     </span>
                 @endCan
