@@ -1,16 +1,26 @@
 @extends('template')
 @section('content')
-
+    <div class="row">
+        <div class="col-12">
+            <h2>
+                {{$role['name']}}
+                @can('create-contact')
+                    <span class="create">
+                        <a href={{ action('PersonController@create') }}>
+                            <img src="images/create.png" alt="Add" class="btn btn-light" title="Add">
+                        </a>
+                    </span>
+                @endCan
+            </h2>
+            <p class="lead">
+                {{$persons->count()}} records
+            </p>
+        </div>
+    </div>
     <section class="section-padding">
         <div class="jumbotron text-left">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h1>
-                    <span class="grey">{{$role['name']}} Index</span> 
-                    <span class="grey">({{$persons->count()}} records)</span>
-                    @can('create-contact')
-                        <span class="create"><a href={{ action('PersonController@create') }}>{!! Html::image('/images/create.png', 'Add Person',array('title'=>"Add Person",'class' => 'btn btn-primary')) !!}</a></span></h1>
-                    @endCan
                     @can('show-contact')
                         <span class="person"><a href={{ action('PersonController@index') }}>{!! Html::image('/images/person.png', 'Show Persons',array('title'=>"Show Persons",'class' => 'btn btn-primary')) !!}</a></span></h1>
                     @if (isset($role['email_link']))
@@ -33,7 +43,7 @@
                 @if ($persons->isEmpty())
                     <p>Currently, there are no {{$role['name']}}</p>
                 @else
-                <table class="table"><caption><h2>{{$role['name']}}</h2></caption>
+                <table class="table">
                     <thead>
                         <tr>
                             <th>Picture</th>
