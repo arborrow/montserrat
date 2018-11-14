@@ -1,113 +1,171 @@
 @extends('template')
 @section('content')
 
-    <section class="section-padding">
-        <div class="jumbotron text-left">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h1>
-                        <span class="grey">Person Index</span> 
-                        <span>({{$persons->total()}} records)</span>
-                        @can('create-contact')
-                            <span class="create">
-                                <a href={{ action('PersonController@create') }}>{!! Html::image('/images/create.png', 'Add Person',array('title'=>"Add Person",'class' => 'btn btn-link')) !!}</a>
-                            </span>
-                        @endCan
-                    </h1>
-                    <span class="boards"><a href={{ action('PersonController@boardmembers') }}>{!! Html::image('/images/board.png', 'Board members',array('title'=>"Board members",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="captains"><a href={{ action('PersonController@captains') }}>{!! Html::image('/images/captain.png', 'Captains',array('title'=>"Captains",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="staff"><a href={{ action('PersonController@staff') }}>{!! Html::image('/images/employee.png', 'Employees',array('title'=>"Employees",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="steward"><a href={{ action('PersonController@stewards') }}>{!! Html::image('/images/steward.png', 'Stewards',array('title'=>"Stewards",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="volunteers"><a href={{ action('PersonController@volunteers') }}>{!! Html::image('/images/volunteer.png', 'Volunteers',array('title'=>"Volunteers",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="directors"><a href={{ action('PersonController@directors') }}>{!! Html::image('/images/director.png', 'Directors',array('title'=>"Directors",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="innkeepers"><a href={{ action('PersonController@innkeepers') }}>{!! Html::image('/images/innkeeper.png', 'Innkeepers',array('title'=>"Innkeepers",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="assistants"><a href={{ action('PersonController@assistants') }}>{!! Html::image('/images/assistant.png', 'Assistants',array('title'=>"Assistants",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="bishops"><a href={{ action('PersonController@bishops') }}>{!! Html::image('/images/bishop.png', 'Bishops',array('title'=>"Bishops",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="pastors"><a href={{ action('PersonController@pastors') }}>{!! Html::image('/images/pastor.png', 'Pastors',array('title'=>"Pastors",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="priests"><a href={{ action('PersonController@priests') }}>{!! Html::image('/images/priest.png', 'Priests',array('title'=>"Priests",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="deacons"><a href={{ action('PersonController@deacons') }}>{!! Html::image('/images/deacon.png', 'Deacons',array('title'=>"Deacons",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="provincials"><a href={{ action('PersonController@provincials') }}>{!! Html::image('/images/provincial.png', 'Provincials',array('title'=>"Provincials",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="superiors"><a href={{ action('PersonController@superiors') }}>{!! Html::image('/images/superior.png', 'Superiors',array('title'=>"Superiors",'class' => 'btn btn-info')) !!}</a></span>
-                    <span class="jesuits"><a href={{ action('PersonController@jesuits') }}>{!! Html::image('/images/jesuit.png', 'Jesuits',array('title'=>"Jesuits",'class' => 'btn btn-info')) !!}</a></span>
-                    <!-- <span class="donors"><a href={{ action('PersonController@donors') }}>{!! Html::image('/images/donor.png', 'Donors',array('title'=>"Donors",'class' => 'btn btn-info')) !!}</a></span></h1> -->
-                    <!-- <span class="retreatants"><a href={{ action('PersonController@retreatants') }}>{!! Html::image('/images/retreatant.png', 'Retreatants',array('title'=>"Retreatants",'class' => 'btn btn-info')) !!}</a></span></h1> -->
-                
-                </div>
-                
-                @if ($persons->isEmpty())
-                    <p>It is a brand new world, there are no persons. Let there be light!</p>
-                @else
-                <table class="table table-striped table-bordered table-hover"><caption><h2>Persons</h2></caption>
-                    <thead>
-                        <tr>
-                            <th>Picture</th>
-                            <th>Name</th>
-                            <th>Address (City)</th>
-                            <th>Home phone</th>
-                            <th>Cell phone</th>
-                            <th>Email</th>
-                            <th>Parish (City)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($persons as $person)
-                        <tr>
-                            <td>{!!$person->avatar_small_link!!}</td>
-                            <td>{!!$person->contact_link_full_name!!}</td>
-                            <td>
-                                @if($person->do_not_mail)
-                                    <div class="alert alert-warning"><strong>Do Not Mail</strong></div>
-                                @endIf
-                                {!!$person->address_primary_google_map!!} 
-                            </td>
-                            <td>
-                                @if($person->do_not_phone)
-                                    <div class="alert alert-warning"><strong>Do Not Call</strong></div>
-                                @endIf
-                                @if($person->do_not_sms)
-                                    <div class="alert alert-warning"><strong>Do Not Text</strong></div>
-                                @endIf
-                                @foreach($person->phones as $phone)
-                                @if (($phone->location_type_id==1) and ($phone->phone_type=="Phone"))  
-                                <a href="tel:{{ $phone->phone }}">{{ $phone->phone }}</a> 
-                                @endif
-                                @endforeach
-                                
-                            <td>
-                                
-                                @if($person->do_not_phone)
-                                    <div class="alert alert-warning"><strong>Do Not Call</strong></div>
-                                @endIf
-                                @if($person->do_not_sms)
-                                    <div class="alert alert-warning"><strong>Do Not Text</strong></div>
-                                @endIf
-                                @foreach($person->phones as $phone)
-                                @if (($phone->location_type_id==1) and ($phone->phone_type=="Mobile"))  
-                                <a href="tel:{{ $phone->phone }}">{{ $phone->phone }}</a> 
-                                @endif
-                                @endforeach
-                            </td>
-                            <td>
-                                
-                                @if($person->do_not_email)
-                                    <div class="alert alert-warning"><strong>Do Not Email</strong></div>
-                                @endIf
-                                @foreach($person->emails as $email)
-                                @if ($email->is_primary)  
-                                <a href="mailto:{{ $email->email }}">{{ $email->email }}</a> 
-                                @endif
-                                @endforeach
-                            </td>
-                            <td>
-                                {!! $person->parish_link !!}
-                            </td>
-                        </tr>
-                        @endforeach
-                    {!! $persons->render() !!}    
-                    </tbody>
-                </table>
-                @endif
-            </div>
+<div class="row">
+    <div class="col-12">
+        <h2>
+            Persons
+            @can('create-contact')
+            <span class="create">
+                <a href={{ action('PersonController@create') }}>
+                    <img src="images/create.png" alt="Add" class="btn btn-light" title="Add">
+                </a>
+            </span>
+            @endCan
+        </h2>
+        <p class="lead">{{$persons->total()}} records</p>
+        <div class="filters">
+            <span>
+                <a href={{ action('PersonController@boardmembers') }}>
+                    <img src="images/board.png" class="btn btn-info" alt="Board Members" title="Board Members">
+                </a>
+            </span>
+            <span>
+                <a href={{ action('PersonController@captains') }}>
+                    <img src="images/captain.png" alt="Captains" class="btn btn-info" title="Captains">
+                </a>
+            </span>
+            <span>
+                <a href={{ action('PersonController@staff') }}>
+                    <img src="images/employee.png" alt="Employees" class="btn btn-info" title="Employees">
+                </a>
+            </span>
+            <span>
+                <a href={{ action('PersonController@stewards') }}>
+                    <img src="images/steward.png" alt="Stewards" class="btn btn-info" title="Stewards">
+                </a>
+            </span>
+            <span>
+                <a href={{ action('PersonController@volunteers') }}>
+                    <img src="images/volunteer.png" alt="Volunteers" class="btn btn-info" title="Volunteers">
+                </a>
+            </span>
+            <span>
+                <a href={{ action('PersonController@directors') }}>
+                    <img src="images/director.png" alt="Directors" class="btn btn-info" title="Directors">
+                </a>
+            </span>
+            <span>
+                <a href={{ action('PersonController@innkeepers') }}>
+                    <img src="images/innkeeper.png" alt="Innkeepers" class="btn btn-info" title="Innkeepers">
+                </a>
+            </span>
+            <span>
+                <a href={{ action('PersonController@assistants') }}>
+                    <img src="images/assistant.png" alt="Assistants" class="btn btn-info" title="Assistants">
+                </a>
+            </span>
+            <span>
+                <a href={{ action('PersonController@bishops') }}>
+                    <img src="images/bishop.png" alt="Bishops" class="btn btn-info" title="Bishops">
+                </a>
+            </span>
+            <span>
+                <a href={{ action('PersonController@pastors') }}>
+                    <img src="images/pastor.png" alt="Pastor" class="btn btn-info" title="Pastor">
+                </a>
+            </span>
+            <span class="priests">
+                <a href={{ action('PersonController@priests') }}>
+                    <img src="images/priest.png" alt="Priests" class="btn btn-info" title="Priests">
+                </a>
+            </span>
+            <span>
+                <a href={{ action('PersonController@deacons') }}>
+                    <img src="images/deacon.png" alt="Deacons" class="btn btn-info" title="Deacons">
+                </a>
+            </span>
+            <span class="provincials">
+                <a href={{ action('PersonController@provincials') }}>
+                    <img src="images/provincial.png" alt="Provincials" class="btn btn-info" title="Provincials">
+                </a>
+            </span>
+            <span>
+                <a href={{ action('PersonController@superiors') }}>
+                    <img src="images/superior.png" alt="Superiors" class="btn btn-info" title="Superiors">
+                </a>
+            </span>
+            <span>
+                <a href={{ action('PersonController@jesuits') }}>
+                    <img src="images/jesuit.png" alt="Jesuits" class="btn btn-info" title="Jesuits">
+                </a>
+            </span>
         </div>
-    </section>
+    </div>
+    <div class="col-12">
+        @if ($persons->isEmpty())
+        <p>It is a brand new world, there are no persons. Let there be light!</p>
+        @else
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Picture</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Address (City)</th>
+                    <th scope="col">Home phone</th>
+                    <th scope="col">Cell phone</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Parish (City)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($persons as $person)
+                <tr>
+                    <th scope="row">{!!$person->avatar_small_link!!}</th>
+                    <td>{!!$person->contact_link_full_name!!}</td>
+                    <td>
+                        @if($person->do_not_mail)
+                        <div class="alert alert-warning"><strong>Do Not Mail</strong></div>
+                        @endIf
+                        {!!$person->address_primary_google_map!!}
+                    </td>
+                    <td>
+                        @if($person->do_not_phone)
+                        <div class="alert alert-warning"><strong>Do Not Call</strong></div>
+                        @endIf
+                        @if($person->do_not_sms)
+                        <div class="alert alert-warning"><strong>Do Not Text</strong></div>
+                        @endIf
+                        @foreach($person->phones as $phone)
+                        @if (($phone->location_type_id==1) and ($phone->phone_type=="Phone"))
+                        <a href="tel:{{ $phone->phone }}">{{ $phone->phone }}</a>
+                        @endif
+                        @endforeach
+
+                    <td>
+
+                        @if($person->do_not_phone)
+                        <div class="alert alert-warning"><strong>Do Not Call</strong></div>
+                        @endIf
+                        @if($person->do_not_sms)
+                        <div class="alert alert-warning"><strong>Do Not Text</strong></div>
+                        @endIf
+                        @foreach($person->phones as $phone)
+                        @if (($phone->location_type_id==1) and ($phone->phone_type=="Mobile"))
+                        <a href="tel:{{ $phone->phone }}">{{ $phone->phone }}</a>
+                        @endif
+                        @endforeach
+                    </td>
+                    <td>
+
+                        @if($person->do_not_email)
+                        <div class="alert alert-warning"><strong>Do Not Email</strong></div>
+                        @endIf
+                        @foreach($person->emails as $email)
+                        @if ($email->is_primary)
+                        <a href="mailto:{{ $email->email }}">{{ $email->email }}</a>
+                        @endif
+                        @endforeach
+                    </td>
+                    <td>
+                        {!! $person->parish_link !!}
+                    </td>
+                </tr>
+                @endforeach
+                {!! $persons->render() !!}
+            </tbody>
+        </table>
+        @endif
+    </div>
+</div>
 @stop
