@@ -16,7 +16,7 @@
 	</script>
 </head>
 <body>
-	<div class="container-fluid">
+	<div class="container pt-0">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<a class="navbar-brand" href={{ ( Auth::check() ) ? route('welcome') : route('home') }}>
 				<img src="/images/mrhlogoblack.png" alt="Home" class="logo">
@@ -37,19 +37,18 @@
 					</li>
 					@endCan
 					@can('show-contact')
-					<li class="nav-item">
-						<a class="nav-link" href={{ route('person.index') }}>Persons</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href={{ route('parish.index') }}>Parishes</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href={{ route('diocese.index') }}>Dioceses</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href={{ route('organization.index') }}>Organizations</a></li>
-					<li class="nav-item">
-						<a class="nav-link" href={{ route('vendor.index') }}>Vendors</a>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Contacts
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href={{ route('person.index') }}>Persons</a>
+							<a class="dropdown-item" href={{ route('parish.index') }}>Parishes</a>
+							<a class="dropdown-item"  href={{ route('diocese.index') }}>Dioceses</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href={{ route('organization.index') }}>Organizations</a>
+							<a class="dropdown-item" href={{ route('vendor.index') }}>Vendors</a>
+						</div>
 					</li>
 					@endCan
 					@can('show-touchpoint')
@@ -57,17 +56,20 @@
 						<a class="nav-link" href={{ route('touchpoint.index') }}>Touchpoints</a>
 					</li>
 					@endCan
-					@can('show-admin-menu')
-					<li class="nav-item">
-						<a class="nav-link" href={{ route('role.index') }}>Roles</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href={{ route('permission.index') }}>Permissions</a>
-					</li>
-					@endCan
 					@can('show-donation')
 					<li class="nav-item">
 						<a class="nav-link" href={{ route('finance') }}>Finance</a>
+					</li>
+					@endCan
+					@can('show-admin-menu')
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Admin
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href={{ route('role.index') }}>Roles</a>
+							<a class="dropdown-item" href={{ route('permission.index') }}>Permissions</a>
+						</div>
 					</li>
 					@endCan
 				</ul>
