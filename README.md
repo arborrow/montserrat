@@ -73,6 +73,7 @@ Navigate to [Twilio](https://www.twilio.com/) and login/signup.
 
 * Navigate to your console.
 * Navigate to your dashboard where you will see `ACCOUNT SID` and `AUTH TOKEN`.
+* Navigate to Phone Numbers and under Active Numbers create a new number.
 
 #### Set .env variables
 Uncomment the following lines in your `.env` file
@@ -85,7 +86,7 @@ TWILIO_TOKEN={twilio_token}
 ```
 For **Google+ API** replace `{google_client_id}` with your `client ID` and `{google_client_secret}` with your `client secret`.
 
-For **Twilio** replace `{twilio_sid}` with your `ACCOUNT SID` and `{twilio_token}` with your `AUTH TOKEN`.
+For **Twilio** replace `{twilio_sid}` with your `ACCOUNT SID`, `{twilio_token}` with your `AUTH TOKEN`, and `{twilio_number}` with your Twilio phone number. (Do not add dashes and parentheses.)
 
 ### Step 7: Get Proper Permissions
 Once you have done everything above navigate to `localhost:8000`. Once you login using Google Auth, your user will not have any role assigned to it. Hence you will not be able to do anything.
