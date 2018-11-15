@@ -16,53 +16,50 @@
                 {{$persons->count()}} records
             </p>
         </div>
-    </div>
-    <section class="section-padding">
-        <div class="jumbotron text-left">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    @can('show-contact')
-                        <span class="person"><a href={{ action('PersonController@index') }}>{!! Html::image('/images/person.png', 'Show Persons',array('title'=>"Show Persons",'class' => 'btn btn-primary')) !!}</a></span></h1>
-                    @if (isset($role['email_link']))
-                        <span class="btn btn-default">{!! $role['email_link'] !!}</span>
-                    @endif
-                    @endCan
-                    @can('create-registration')
-                        <span class="btn btn-default">
-                            <a href={{ action('RegistrationController@add_group',$role['group_id']) }}>Add Group Registration</a>
-                        </span>
-                    @endCan
-                    @can('create-touchpoint')
-                    <span class="btn btn-default">
-                        <a href={{ action('TouchpointController@add_group',$role['group_id']) }}>Add Group Touchpoint</a>
-                    </span>
-                    @endCan
-                
-            
+        <div class="col-12">
+            @can('show-contact')
+                <span class="person">
+                    <a href={{ action('PersonController@index') }} class="btn btn-light">
+                        {!! Html::image('images/person.png', 'Show Persons',array('title'=>"Show Persons")) !!}
+                    </a>
+                </span>
+            @if(isset($role['email_link']))
+                <span class="btn btn-link">{!! $role['email_link'] !!}</span>
+            @endif
+            @endCan
+            @can('create-registration')
+                <a href={{ action('RegistrationController@add_group',$role['group_id']) }} class="btn btn-link">Add Group Registration</a>
+            @endCan
+            @can('create-touchpoint')
+                <a href={{ action('TouchpointController@add_group',$role['group_id']) }} class="btn btn-link">Add Group Touchpoint</a>
+            @endCan
+        </div>
+        <div class="col-12">
+            @if ($persons->isEmpty())
+                <div class="col-12 text-center py-5">
+                    <h3>Currently, there are no {{$role['name']}}s.</h3>
                 </div>
-                @if ($persons->isEmpty())
-                    <p>Currently, there are no {{$role['name']}}</p>
-                @else
-                <table class="table">
+            @else
+                <table class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th>Picture</th>
-                            <th>Name</th>
-                            <th>Address (City)</th>
-                            <th>Home phone</th>
-                            <th>Cell phone</th>
-                            <th>Work phone</th>
-                            <th>Email</th>
-                            <th>Parish (City)</th>
+                            <th scope="col">Picture</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Address (City)</th>
+                            <th scope="col">Home phone</th>
+                            <th scope="col">Cell phone</th>
+                            <th scope="col">Work phone</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Parish (City)</th>
                             @if ($role['group_id'] == config('polanco.group_id.captain'))
-                                <th>Captain for</th>
+                                <th scope="col">Captain for</th>
                             @endIf
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($persons as $person)
                         <tr>
-                            <td>{!!$person->avatar_small_link!!}</td>
+                            <th scope="row">{!!$person->avatar_small_link!!}</th>
                             <td>
                                 {!!$person->contact_link_full_name!!}
                             </td>
@@ -88,8 +85,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                @endif
-            </div>
+            @endif
         </div>
-    </section>
+    </div>
 @stop
