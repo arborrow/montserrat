@@ -26,16 +26,6 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarContent">
 				<ul class="navbar-nav mr-auto">
-					@can('show-retreat')
-					<li class="nav-item">
-						<a class="nav-link" href={{ route('retreat.index') }}>Retreats</a>
-					</li>
-					@endCan
-					@can('show-room')
-					<li class="nav-item">
-						<a class="nav-link" href={{ route('rooms') }}>Rooms</a>
-					</li>
-					@endCan
 					@can('show-contact')
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -51,9 +41,14 @@
 						</div>
 					</li>
 					@endCan
-					@can('show-touchpoint')
+					@can('show-retreat')
 					<li class="nav-item">
-						<a class="nav-link" href={{ route('touchpoint.index') }}>Touchpoints</a>
+						<a class="nav-link" href={{ route('retreat.index') }}>Events</a>
+					</li>
+					@endCan
+					@can('show-room')
+					<li class="nav-item">
+						<a class="nav-link" href={{ route('rooms') }}>Rooms</a>
 					</li>
 					@endCan
 					@can('show-donation')
