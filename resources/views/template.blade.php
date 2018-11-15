@@ -3,8 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Montserrat Retreat House Database</title>
-	<link rel="stylesheet" type="text/css" href="{{ mix('/dist/bundle.css') }}">
-	<script src="{{ mix('/dist/bundle.js') }}"></script>
+	<link rel="stylesheet" type="text/css" href="{{ url(mix('dist/bundle.css')) }}">
+	<script src="{{ url(mix('dist/bundle.css')) }}"></script>
 	<script>
 		function ConfirmDelete() {
 			var x = confirm("Are you sure you want to delete?");
