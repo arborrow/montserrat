@@ -189,7 +189,7 @@ class DonationController extends Controller
         'donor_id' => 'required|integer|min:0',
         'event_id' => 'integer|min:0',
         'donation_date' => 'required|date',
-        'donation_amount' => 'required|integer',
+        'donation_amount' => 'required|numeric',
         'start_date' => 'date|nullable|before:end_date',
         'end_date' => 'date|nullable|after:start_date',
         'donation_install' => 'numeric|min:0|nullable'

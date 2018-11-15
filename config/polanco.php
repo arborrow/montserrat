@@ -183,11 +183,15 @@ return [
     
     'payment_method' => [
         'Unassigned' => 'Unassigned',
+        'Bank charges' => 'Bank charges',
         'Cash' => 'Cash',
         'Check' => 'Check',
         'Credit card' => 'Credit card',
-        'Gift certificate' => 'Gift certificate',
+        'Gift cert funded' => 'Gift cert funded',
+        'Gift cert unfunded' => 'Gift cert unfunded',
         'Journal' => 'Journal',
+        'NSF' => 'NSF',
+        'Refund' => 'Refund',
         'Other' => 'Other'
     ]
             
