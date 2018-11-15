@@ -1,6 +1,6 @@
 @extends('template')
 @section('content')
-    <div class="row">
+    <div class="row bg-cover">
         <div class="col-12">
             <h2>
                 {{$role['name']}}

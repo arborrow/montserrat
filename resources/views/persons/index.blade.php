@@ -1,14 +1,14 @@
 @extends('template')
 @section('content')
 
-<div class="row">
+<div class="row bg-cover">
     <div class="col-12">
         <h2>
             Persons
             @can('create-contact')
             <span class="create">
                 <a href={{ action('PersonController@create') }}>
-                    <img src="images/create.png" alt="Add" class="btn btn-light" title="Add">
+                    <img src="{{ URL::asset('images/create.png') }}" alt="Add" class="btn btn-light" title="Add">
                 </a>
             </span>
             @endCan
@@ -19,84 +19,86 @@
         <div class="filters">
             <span>
                 <a href={{ action('PersonController@boardmembers') }}>
-                    <img src="images/board.png" class="btn btn-info" alt="Board Members" title="Board Members">
+                    <img src="{{ URL::asset('images/board.png')}}" class="btn btn-info" alt="Board Members" title="Board Members">
                 </a>
             </span>
             <span>
                 <a href={{ action('PersonController@captains') }}>
-                    <img src="images/captain.png" alt="Captains" class="btn btn-info" title="Captains">
+                    <img src="{{ URL::asset('images/captain.png') }}" alt="Captains" class="btn btn-info" title="Captains">
                 </a>
             </span>
             <span>
                 <a href={{ action('PersonController@staff') }}>
-                    <img src="images/employee.png" alt="Employees" class="btn btn-info" title="Employees">
+                    <img src="{{ URL::asset('images/employee.png') }}" alt="Employees" class="btn btn-info" title="Employees">
                 </a>
             </span>
             <span>
                 <a href={{ action('PersonController@stewards') }}>
-                    <img src="images/steward.png" alt="Stewards" class="btn btn-info" title="Stewards">
+                    <img src="{{ URL::asset('images/steward.png') }}" alt="Stewards" class="btn btn-info" title="Stewards">
                 </a>
             </span>
             <span>
                 <a href={{ action('PersonController@volunteers') }}>
-                    <img src="images/volunteer.png" alt="Volunteers" class="btn btn-info" title="Volunteers">
+                    <img src="{{ URL::asset('images/volunteer.png') }}" alt="Volunteers" class="btn btn-info" title="Volunteers">
                 </a>
             </span>
             <span>
                 <a href={{ action('PersonController@directors') }}>
-                    <img src="images/director.png" alt="Directors" class="btn btn-info" title="Directors">
+                    <img src="{{ URL::asset('images/director.png') }}" alt="Directors" class="btn btn-info" title="Directors">
                 </a>
             </span>
             <span>
                 <a href={{ action('PersonController@innkeepers') }}>
-                    <img src="images/innkeeper.png" alt="Innkeepers" class="btn btn-info" title="Innkeepers">
+                    <img src="{{ URL::asset('images/innkeeper.png') }}" alt="Innkeepers" class="btn btn-info" title="Innkeepers">
                 </a>
             </span>
             <span>
                 <a href={{ action('PersonController@assistants') }}>
-                    <img src="images/assistant.png" alt="Assistants" class="btn btn-info" title="Assistants">
+                    <img src="{{ URL::asset('images/assistant.png') }}" alt="Assistants" class="btn btn-info" title="Assistants">
                 </a>
             </span>
             <span>
                 <a href={{ action('PersonController@bishops') }}>
-                    <img src="images/bishop.png" alt="Bishops" class="btn btn-info" title="Bishops">
+                    <img src="{{ URL::asset('images/bishop.png') }}" alt="Bishops" class="btn btn-info" title="Bishops">
                 </a>
             </span>
             <span>
                 <a href={{ action('PersonController@pastors') }}>
-                    <img src="images/pastor.png" alt="Pastor" class="btn btn-info" title="Pastor">
+                    <img src="{{ URL::asset('images/pastor.png') }}" alt="Pastor" class="btn btn-info" title="Pastor">
                 </a>
             </span>
             <span class="priests">
                 <a href={{ action('PersonController@priests') }}>
-                    <img src="images/priest.png" alt="Priests" class="btn btn-info" title="Priests">
+                    <img src="{{ URL::asset('images/priest.png') }}" alt="Priests" class="btn btn-info" title="Priests">
                 </a>
             </span>
             <span>
                 <a href={{ action('PersonController@deacons') }}>
-                    <img src="images/deacon.png" alt="Deacons" class="btn btn-info" title="Deacons">
+                    <img src="{{ URL::asset('images/deacon.png') }}" alt="Deacons" class="btn btn-info" title="Deacons">
                 </a>
             </span>
             <span class="provincials">
                 <a href={{ action('PersonController@provincials') }}>
-                    <img src="images/provincial.png" alt="Provincials" class="btn btn-info" title="Provincials">
+                    <img src="{{ URL::asset('images/provincial.png') }}" alt="Provincials" class="btn btn-info" title="Provincials">
                 </a>
             </span>
             <span>
                 <a href={{ action('PersonController@superiors') }}>
-                    <img src="images/superior.png" alt="Superiors" class="btn btn-info" title="Superiors">
+                    <img src="{{ URL::asset('images/superior.png') }}" alt="Superiors" class="btn btn-info" title="Superiors">
                 </a>
             </span>
             <span>
                 <a href={{ action('PersonController@jesuits') }}>
-                    <img src="images/jesuit.png" alt="Jesuits" class="btn btn-info" title="Jesuits">
+                    <img src="{{ URL::asset('images/jesuit.png') }}" alt="Jesuits" class="btn btn-info" title="Jesuits">
                 </a>
             </span>
         </div>
     </div>
     <div class="col-12">
         @if ($persons->isEmpty())
-            <p>It is a brand new world, there are no persons. Let there be light!</p>
+            <div class="col-12 text-center py-5">
+                <p>It is a brand new world, there are no persons. Let there be light!</p>
+            </div>
         @else
             <table class="table table-striped table-bordered table-hover">
                 <thead>

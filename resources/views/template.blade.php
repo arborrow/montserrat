@@ -17,7 +17,7 @@
 </head>
 <body>
 	<div class="container pt-0">
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<nav class="navbar navbar-expand-lg navbar-light">
 			<a class="navbar-brand" href={{ ( Auth::check() ) ? route('welcome') : route('home') }}>
 				<img src="/images/mrhlogoblack.png" alt="Home" class="logo">
 			</a>
