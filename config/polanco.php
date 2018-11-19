@@ -191,6 +191,7 @@ return [
         'Gift cert unfunded' => 'Gift cert unfunded',
         'Journal' => 'Journal',
         'NSF' => 'NSF',
+        'Reallocation' => 'Reallocation',
         'Refund' => 'Refund',
         'Other' => 'Other'
     ]
