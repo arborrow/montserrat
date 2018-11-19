@@ -47,19 +47,19 @@
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-                    <th>Picture</th>
-                    <th>Name</th> 
-                    <th>Type</th>
-                    <th>Address</th> 
-                    <th>Main phone</th> 
-                    <th>Email(s)</th> 
-                    <th>Website(s)</th> 
+                    <th scope="col">Picture</th>
+                    <th scope="col">Name</th> 
+                    <th scope="col">Type</th>
+                    <th scope="col">Address</th> 
+                    <th scope="col">Main phone</th> 
+                    <th scope="col">Email(s)</th> 
+                    <th scope="col">Website(s)</th> 
                </tr>
             </thead>
             <tbody>
                @foreach($organizations as $organization)
                 <tr>
-                    <td>{!!$organization->avatar_small_link!!}</td>
+                    <th scope="row">{!!$organization->avatar_small_link!!}</th>
                     <td><a href="{{url('organization/'.$organization->id)}}">{{ $organization->display_name }} </a></td>
                     <td>{{$organization->subcontact_type_label}}</td>
                     <td>
