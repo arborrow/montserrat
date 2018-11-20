@@ -51,10 +51,10 @@ class ConfirmationEmails extends Command
             ->get();
 
         if ($retreats->count() >= 1) {
-            $automaticSuccessMessage = "Automatic confirmation email has been sent for retreat #".$retreat->idnumber.".";
-            $automaticErrorMessage = "Automatic confirmation email failed to send for retreat #".$retreat->idnumber.".";
-
             foreach ($retreats as $retreat) {
+                $automaticSuccessMessage = "Automatic confirmation email has been sent for retreat #".$retreat->idnumber.".";
+                $automaticErrorMessage = "Automatic confirmation email failed to send for retreat #".$retreat->idnumber.".";
+
                 $registrations = $retreat->registrations()
                     ->where('canceled_at', null)
                     ->where('status_id', config('polanco.registration_status_id.registered'))
@@ -86,7 +86,7 @@ class ConfirmationEmails extends Command
                     $touchpoint->type = 'Email';
 
                     try {
-                        $this->mailer->to($primaryEmail)->queue(new RetreatConfirmation($retreatant));
+                        $this->mailer->to($primaryEmail)->queue(new RetreatConfirmation($registration));
                         $touchpoint->notes = $automaticSuccessMessage;
                         $touchpoint->save();
                     } catch ( \Exception $e ) {
