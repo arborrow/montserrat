@@ -153,13 +153,18 @@ class DonationController extends Controller
         $donation = \App\Donation::with('payments', 'contact')->findOrFail($id);
         $descriptions = \App\DonationType::orderby('name')->pluck('name', 'id');
 
-        $retreats = \App\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("end_date", ">", $donation->donation_date)->where("is_active", "=", 1)->orderBy('start_date')->pluck('description', 'id');
+        $retreats = \App\Retreat::select(\DB::raw('CONCAT_WS(" ",CONCAT(idnumber," -"), title, CONCAT("(",DATE_FORMAT(start_date,"%m-%d-%Y"),")")) as description'), 'id')->where("end_date", ">", $donation->donation_date)->where("is_active", "=", 1)->orderBy('start_date')->pluck('description', 'id');
         $retreats->prepend('Unassigned', 0);
         $defaults['event_id'] = $donation->event_id;
         $descriptions->prepend('Unassigned', 0);
         //$descriptions->toArray();
         $defaults['description_key'] = $descriptions->search($donation->donation_description);
-        // dd($defaults);
+        
+        // check if current event is further in the past and if so add it
+        if (!isset($retreats[$donation->event_id])) {
+            $retreats[$donation->event_id] = $donation->retreat_idnumber.' - '.$donation->retreat_name." (".$donation->retreat_start_date.")";
+        }
+        
         return view('donations.edit', compact('donation','descriptions','defaults','retreats'));
     }
 
@@ -184,7 +189,7 @@ class DonationController extends Controller
         'donor_id' => 'required|integer|min:0',
         'event_id' => 'integer|min:0',
         'donation_date' => 'required|date',
-        'donation_amount' => 'required|integer',
+        'donation_amount' => 'required|numeric',
         'start_date' => 'date|nullable|before:end_date',
         'end_date' => 'date|nullable|after:start_date',
         'donation_install' => 'numeric|min:0|nullable'
