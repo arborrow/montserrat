@@ -59,8 +59,8 @@ class OrganizationController extends Controller
         $defaults['state_province_id'] = config('polanco.state_province_id_tx');
         $defaults['country_id'] = config('polanco.country_id_usa');
                 
-        $subcontact_types = \App\ContactType::whereIsReserved(false)->whereIsActive(true)->pluck('label', 'id');
-        $subcontact_types->prepend('N/A', 0);
+	$subcontact_types = \App\ContactType::whereIsReserved(false)->whereIsActive(true)->where('id','>=',config('polanco.contact_type.province'))->pluck('label', 'id');
+	$subcontact_types->prepend('N/A', 0);
 
       
         return view('organizations.create', compact('subcontact_types', 'states', 'countries', 'defaults'));
