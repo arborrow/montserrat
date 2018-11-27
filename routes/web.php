@@ -85,7 +85,9 @@ Route::post('admin/role/update_users', ['as' => 'admin.role.update_users', 'uses
 Route::get('admin/config/google_client', ['as' => 'admin.config.google_client','uses' => 'PageController@config_google_client']);
 Route::get('admin/config/mailgun', ['as' => 'admin.config.mailgun','uses' => 'PageController@config_mailgun']);
 Route::get('admin/config/twilio', ['as' => 'admin.config.twilio','uses' => 'PageController@config_twilio']);
-    
+Route::get('admin/offeringdedup', ['as' => 'offeringdedup','uses' => 'SystemController@offeringdedup_index']);
+Route::get('admin/offeringdedup/show/{contact_id}/{event_id}', ['as' => 'offeringdedup.show','uses' => 'SystemController@offeringdedup_show']);
+   
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('permission', 'PermissionController');
     Route::resource('role', 'RoleController');

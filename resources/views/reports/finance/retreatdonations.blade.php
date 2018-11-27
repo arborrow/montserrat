@@ -2,7 +2,7 @@
 @section('content')
 
 <div class ="retreatdonations">
-<h2>Donations for {{$retreat->retreat_name}} (#{{$retreat->idnumber}}) - {{$retreat->start_date->format('F d, Y')}}</h2> 
+<h2>Donations for {{$retreat->retreat_name}} (#{{$retreat->idnumber}}) - {{$retreat->start_date}}</h2> 
 @if (!$grouped_donations->isEmpty())
      
 <hr />

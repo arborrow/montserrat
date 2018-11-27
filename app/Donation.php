@@ -26,6 +26,20 @@ class Donation extends Model
     {
         return $this->hasOne(Retreat::class, 'id', 'event_id');
     }
+    public function getDonationStartDate() {
+        if (isset($this->start_date)) {
+            return $this->start_date->format('m/d/Y');
+        } else {
+            return NULL;
+        }
+    }
+    public function getDonationEndDate() {
+        if (isset($this->end_date)) {
+            return $this->end_date->format('m/d/Y');
+        } else {
+            return NULL;
+        }
+    }
     public function getRetreatOfferingAttribute()
     {
         return $this->payments()->first();
@@ -69,6 +83,13 @@ class Donation extends Model
         if (isset($this->retreat->title)) {
             $path = url('retreat/'.$this->retreat->id);
             return "<a href='".$path."'>".'#'.$this->retreat_idnumber.' - '.$this->retreat_name."</a>";
+        }
+    }
+    public function getDonationDateFormattedAttribute() {
+        if (isset($this->donation_date)) {
+            return $this->donation_date->format('m/d/Y'); 
+        } else {
+            return NULL;
         }
     }
     public static function boot()
