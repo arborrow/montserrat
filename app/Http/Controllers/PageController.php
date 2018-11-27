@@ -180,7 +180,7 @@ class PageController extends Controller
             $query->where('donation_description','=','Deposit');
         })->with('donation.retreat','donation.contact')->get();
         $grouped_payments = $payments->groupBy(function ($c) {
-            return '#'.$c->donation->retreat_idnumber.'-'.$c->donation->retreat_name.' ('.$c->donation->retreat_start_date.')';
+		return '#'.$c->donation->retreat_idnumber.'-'.$c->donation->retreat_name.' ('.$c->donation->retreat_start_date.')';
         })->sortBy(function ($d) {
 		return \Carbon\Carbon::parse($d[0]->donation->retreat_start_date);
 			});
