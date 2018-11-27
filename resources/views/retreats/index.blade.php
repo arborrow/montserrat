@@ -1,14 +1,17 @@
 @extends('template')
 @section('content')
 
-<div class="row bg-cover">
+<div class="row bg-cover" id="upcoming">
     <div class="col-12">
         <h2>
             Upcoming {{ $defaults['type'] }}s
             @can('create-retreat')
-                <span class="create">
+                <span class="options">
                     <a href={{ action('RetreatController@create') }}>
                         {!! Html::image('images/create.png', 'Create a Retreat',array('title'=>"Create Retreat",'class' => 'btn btn-light')) !!}
+                    </a>
+                    <a href="#previous">
+                        <i class="fas fa-history" title="Previous Retreats"></i>
                     </a>
                 </span>
             @endCan
@@ -85,10 +88,17 @@
     </div>
 </div>
 
-<div class="row bg-cover">
+<hr>
+
+<div class="row bg-cover" id="previous">
     <div class="col-12">
         <h2>
             Previous {{ $defaults['type'] }}s
+            <span class="options">
+                <a href="#upcoming">
+                    <i class="fas fa-chevron-circle-up"></i>
+                </a>
+            </span>
         </h2>
         <p class="lead">{{$oldretreats->total()}} records</p>
     </div>
@@ -122,14 +132,14 @@
                     <td>                            
                     @if ($oldretreat->retreatmasters->isEmpty())
                         N/A
-                        @else
-                            @foreach($oldretreat->retreatmasters as $rm)
-                                @if (!empty($rm->display_name))
-                                    {!!$rm->contact_link_full_name!!}
-                                @else
-                                    N/A
-                                @endIf
-                            @endforeach
+                    @else
+                        @foreach($oldretreat->retreatmasters as $rm)
+                            @if (!empty($rm->display_name))
+                                {!!$rm->contact_link_full_name!!}
+                            @else
+                                N/A
+                            @endIf
+                        @endforeach
                     @endif
                     </td>
                 
@@ -167,29 +177,4 @@
         @endif
     </div>
 </div>
-    <section class="section-padding">
-        <div class="jumbotron text-left">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-                        <option value="">Filter by retreat type...</option>
-                        <option value="{{url('retreat')}}">All retreats</option>
-                        @foreach($event_types as $event_type=>$value)
-                            <option value="{{url('retreat/type/'.$value)}}">{{$event_type}}</option>
-                        @endForeach
-                    </select>
-
-                </div>
-                
-<hr>            <div class="panel-heading">
-                    <h1>
-                    <span class="grey" id="previous_retreats">Previous {{ $defaults['type'] }} ()</span> 
-                    <span class="grey">{!! Html::link('#upcoming_retreats','Upcoming '.$defaults['type'],array('class' => 'btn btn-primary'))!!}</span>
-                    </h1>
-                </div>
-                
-                
-            </div>
-        </div>
-    </section>
 @stop

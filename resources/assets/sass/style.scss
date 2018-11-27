@@ -15,3 +15,18 @@
   padding: 2rem;
   border-radius: 10px;
 }
+
+span.options {
+  a {
+    text-decoration: none;
+    margin: .5rem;
+  }
+
+  i {
+    font-size: 1.5rem;
+  }
+
+  img {
+    height: 2rem;
+  }
+}
