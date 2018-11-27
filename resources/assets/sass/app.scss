@@ -4,11 +4,17 @@
 // Variables
 @import "variables";
 
+$fa-font-path: "../webfonts";
+
 // Bootstrap
 @import "~bootstrap/scss/bootstrap.scss";
 
 // jQuery UI
 @import "~jquery-ui-bundle/jquery-ui.css";
+
+// Font Awesome
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
 
 // Custom Styles
 @import "style";
