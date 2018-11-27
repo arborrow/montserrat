@@ -193,7 +193,8 @@ return [
         'NSF' => 'NSF',
         'Reallocation' => 'Reallocation',
         'Refund' => 'Refund',
-        'Other' => 'Other'
+	'Other' => 'Other',
+	'Wire transfer' => 'Wire transfer'
     ]
             
 ];
