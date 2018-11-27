@@ -10,11 +10,11 @@
             {!!$next_link!!}
         </h2>
         <p class="lead">
-            <span class="bg-success">A=Available</span>
-            <span class="bg-warning">R=Reserved</span>
-            <span class="bg-warning">O=Occupied</span>
-            <span class="bg-danger">C=Cleaning Needed</span>
-            <span class="bg-danger">M=Maintenance Required</span>
+            <span class="table-success">A=Available</span>
+            <span class="table-warning">R=Reserved</span>
+            <span class="table-warning">O=Occupied</span>
+            <span class="table-danger">C=Cleaning Needed</span>
+            <span class="table-danger">M=Maintenance Required</span>
         </p>
     </div>
 
@@ -47,10 +47,10 @@
                             
                             @foreach($dts as $dt)
                                 @if (($m[$room->id][$dt->toDateString()]['status'] == 'R') OR ($m[$room->id][$dt->toDateString()]['status'] == 'O')) 
-                                <td class="bg-warning">
+                                <td class="table-warning">
                                 {!! Html::link('registration/'.$m[$room->id][$dt->toDateString()]['registration_id'], $m[$room->id][$dt->toDateString()]['status'] , array('title'=>$m[$room->id][$dt->toDateString()]['retreat_name'].' ('.$m[$room->id][$dt->toDateString()]['retreatant_name'].')')) !!} 
                                 @else
-                                <td class="bg-success">
+                                <td class="table-success">
                                     A
                                 @endif
                                 </td>
