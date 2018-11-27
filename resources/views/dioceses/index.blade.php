@@ -6,7 +6,7 @@
         <h2>
             Diocese
             @can('create-contact')
-                <span class="create">
+                <span class="options">
                     <a href={{ action('DioceseController@create') }}>
                         {!! Html::image('images/create.png', 'Create a Diocese',array('title'=>"Create Diocese",'class' => 'btn btn-light')) !!}
                     </a>

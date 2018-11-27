@@ -5,7 +5,7 @@
             <h2>
                 Parish
                 @can('create-contact')
-                <span class="create">
+                <span class="options">
                     <a href={{ action('ParishController@create') }}>
                         {!! Html::image('images/create.png', 'Create a Parish',array('title'=>"Create Parish",'class' => 'btn btn-light')) !!}
                     </a>
