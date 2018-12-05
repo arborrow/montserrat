@@ -1170,6 +1170,11 @@ class Contact extends Model
                     $q->where('phone', 'LIKE', '%'.$value.'%')->orWhere('phone_alternate', 'LIKE', '%'.$value.'%');
                 });
             }
+            if ($filter=='url' && !empty($value)) {
+                $query->whereHas('websites', function ($q) use ($value) {
+                    $q->where('url', 'like', '%'.$value.'%');
+                });
+            }
         }
         
         return $query;
