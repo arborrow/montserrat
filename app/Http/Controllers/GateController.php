@@ -11,7 +11,8 @@ use Twilio\Rest\Client;
      public function open($hours = NULL)
     {   
         $this->authorize('show-gate'); // Check to see if the user has permissions
-         $account_sid = env('TWILIO_SID');
+        
+        $account_sid = env('TWILIO_SID');
         $auth_token = env('TWILIO_TOKEN');
         $twilio_number = env('TWILIO_NUMBER');
         $to_number = env('GATE_NUMBER');
