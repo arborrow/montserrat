@@ -17,7 +17,7 @@ class GateController extends Controller
         $account_sid = env('TWILIO_SID');
         $auth_token = env('TWILIO_TOKEN');
         $twilio_number = env('TWILIO_NUMBER');
-        $to_number = '+14693484531'; // +19404972989
+        $to_number = env('GATE_NUMBER');
         $client = new Client($account_sid, $auth_token);
         try {
             if ($hours) {
@@ -26,7 +26,7 @@ class GateController extends Controller
                 $to_number,
                 $twilio_number,
                 array(
-                    'sendDigits' => "ww1#ww001540#ww80#".$hours."#ww99#",
+                    'sendDigits' => env('OPEN_HOURS_DIGITS').$hours.env('END_CALL_DIGITS'),
                     'url' => "http://demo.twilio.com/docs/voice.xml")
                 );
             } else {
@@ -34,7 +34,7 @@ class GateController extends Controller
                 $to_number,
                 $twilio_number,
                 array(
-                    'sendDigits' => "ww1#ww001540#ww81#ww99#",
+                    'sendDigits' => env('OPEN_DIGITS').env('END_CALL_DIGITS'),
                     'url' => "http://demo.twilio.com/docs/voice.xml")
                 );
             }
@@ -51,14 +51,14 @@ class GateController extends Controller
         $account_sid = env('TWILIO_SID');
         $auth_token = env('TWILIO_TOKEN');
         $twilio_number = env('TWILIO_NUMBER');
-        $to_number = "+14693484531";
+        $to_number = env('GATE_NUMBER');
         $client = new Client($account_sid, $auth_token);
         try {
-            $client->calls->create(  
+            $client->calls->create(
             $to_number,
             $twilio_number,
             array(
-            'sendDigits' => "ww1#ww001540#ww83#ww99#",
+            'sendDigits' => env('CLOSE_DIGITS').env('END_CALL_DIGITS'),
             'url' => "http://demo.twilio.com/docs/voice.xml")
             );
         } catch (Exception $e) {
