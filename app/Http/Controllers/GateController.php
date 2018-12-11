@@ -9,12 +9,15 @@ class GateController extends Controller
     {
         $this->middleware('auth');
     }
+
     public function open($hours = NULL)
     {   
+        $this->authorize('show-gate'); // Check to see if the user has permissions
+
         $account_sid = env('TWILIO_SID');
         $auth_token = env('TWILIO_TOKEN');
         $twilio_number = env('TWILIO_NUMBER');
-        $to_number = '+19404972989'; // +19404972989
+        $to_number = '+14693484531'; // +19404972989
         $client = new Client($account_sid, $auth_token);
         try {
             if ($hours) {
@@ -43,10 +46,12 @@ class GateController extends Controller
 
     public function close()
     {
+        $this->authorize('show-gate'); // Check to see if the user has permissions
+        
         $account_sid = env('TWILIO_SID');
         $auth_token = env('TWILIO_TOKEN');
         $twilio_number = env('TWILIO_NUMBER');
-        $to_number = "+19404972989";
+        $to_number = "+14693484531";
         $client = new Client($account_sid, $auth_token);
         try {
             $client->calls->create(  
