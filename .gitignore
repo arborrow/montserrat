@@ -16,4 +16,6 @@ npm-debug.log
 
 # Complied/transpiled code files/resources
 /public/dist
+/public/fonts
+/public/images
 mix-manifest.json
