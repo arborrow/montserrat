@@ -89,7 +89,7 @@ class Contact extends Model
     }
     public function email_primary()
     {
-        return $this->hasOne(Email::class, 'contact_id', 'id')->whereIsPrimary(1)->whereIsPrimary(1)->whereNotNull('email');
+        return $this->hasOne(Email::class, 'contact_id', 'id')->whereIsPrimary(1)->whereNotNull('email');
     }
     public function emergency_contact()
     {
@@ -1168,6 +1168,11 @@ class Contact extends Model
             if ($filter=='emergency_contact_phone' && !empty($value)) {
                 $query->whereHas('emergency_contact', function ($q) use ($value) {
                     $q->where('phone', 'LIKE', '%'.$value.'%')->orWhere('phone_alternate', 'LIKE', '%'.$value.'%');
+                });
+            }
+            if ($filter=='url' && !empty($value)) {
+                $query->whereHas('websites', function ($q) use ($value) {
+                    $q->where('url', 'like', '%'.$value.'%');
                 });
             }
         }

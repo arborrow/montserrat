@@ -20,7 +20,7 @@ composer install
 ```
 #### Frontend Dependencies
 ```
-npm install
+yarn install
 ```
 
 ### Step 3: Setup Laravel Homestead
@@ -76,7 +76,7 @@ GOOGLE_CLIENT_SECRET={google_client_secret}
 Replace `{google_client_id}` with your `client ID` and `{google_client_secret}` with your `client secret`.
 
 ### Step 7: Get Proper Permissions
-Once you have done everything above navigate to `localhost:8000`. Once you login using Google Auth, your user will not have any role assigned to it. Hence you will not be able to do anything.
+Once you have done everything above navigate to `localhost:8000`. Once you login using Google Auth, your user will not have any role assigned to it. Hence you will not be able to do anything. **You must do this before trying to get superuser access**
 
 #### Become the Superuser
 Run the following command to assign yourself (given that you are the first user to login) as the `superuser`.

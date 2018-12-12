@@ -47,7 +47,7 @@ class ConfirmationEmails extends Command
     {
         $startDate = Carbon::today()->addDays(7);
         $retreats = \App\Retreat::whereDate('start_date', $startDate)
-            ->where('event_type_id', 7)
+            ->where('event_type_id', config('polanco.event_type.ignatian'))
             ->get();
 
         if ($retreats->count() >= 1) {
@@ -55,9 +55,9 @@ class ConfirmationEmails extends Command
                 $automaticSuccessMessage = "Automatic confirmation email has been sent for retreat #".$retreat->idnumber.".";
                 $automaticErrorMessage = "Automatic confirmation email failed to send for retreat #".$retreat->idnumber.".";
 
-                $retreatants = $retreat->registrations()
+                $registrations = $retreat->registrations()
                     ->where('canceled_at', null)
-                    ->where('status_id', 1)
+                    ->where('status_id', config('polanco.registration_status_id.registered'))
                     ->with('contact')
                     ->whereHas('contact', function($query) {
                         $query->where('do_not_email', 0);
@@ -68,29 +68,29 @@ class ConfirmationEmails extends Command
                     })
                     ->get();
 
-                foreach ($retreatants as $retreatant) {
-                    $primaryEmail = $retreatant->contact->primary_email_text;
+                foreach ($registrations as $registration) {
+                    $primaryEmail = $registration->retreatant->email_primary_text;
 
                     // For automatic emails, remember_token must be set for all participants in retreat. 
-                    if (!$retreatant->remember_token) {
-                        $retreatant->remember_token = str_random(60);
-                        $retreatant->save();
+                    if (!$registration->remember_token) {
+                        $registration->remember_token = str_random(60);
+                        $registration->save();
                     }
 
                     $alfonso = \App\Contact::where('display_name', 'Juan Alfonso de Polanco')->first();
 
                     $touchpoint = new \App\Touchpoint();
-                    $touchpoint->person_id = $retreatant->contact->id;
+                    $touchpoint->person_id = $registration->contact->id;
                     $touchpoint->staff_id = $alfonso->id;
                     $touchpoint->touched_at = Carbon::now();
                     $touchpoint->type = 'Email';
 
                     try {
-                        $this->mailer->to($primaryEmail)->queue(new RetreatConfirmation($retreatant));
+                        $this->mailer->to($primaryEmail)->queue(new RetreatConfirmation($registration));
                         $touchpoint->notes = $automaticSuccessMessage;
                         $touchpoint->save();
                     } catch ( \Exception $e ) {
-                        $$touchpoint->notes = $automaticErrorMessage;
+                        $touchpoint->notes = $automaticErrorMessage;
                         $touchpoint->save();
                     }
                 }
