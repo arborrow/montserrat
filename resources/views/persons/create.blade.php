@@ -62,7 +62,19 @@
                                     {!! Form::file('avatar', ['class' => 'form-control-file']); !!}
                                 @endCan 
                             </div>
-                        </div>    
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-4">
+                                <div class="form-check mt-4">
+                                    {!! Form::checkbox('is_deceased', 1, false,['class' => 'form-check-input', 'id' => 'is_deceased']) !!}
+                                    {!! Form::label('is_deceased', 'Is Deceased', ['class' => 'form-check-label', 'for' => 'is_deceased'])  !!}
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                {!! Form::label('deceased_date', 'Deceased Date:')  !!}
+                                {!! Form::text('deceased_date', null, ['class'=>'form-control','data-provide'=>'datepicker']) !!}
+                            </div>
+                        </div>   
                     </div>
                 </div>
             </div>
@@ -200,128 +212,137 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <h3>Notes</h3>
+                </div>
+                <div class="col-6">
+                    {!! Form::label('note_health', 'Health Notes:')  !!}
+                    {!! Form::textarea('note_health', null, ['class' => 'form-control', 'rows' => '3']) !!}
+                </div>
+                <div class="col-6">
+                    {!! Form::label('note_dietary', 'Dietary Notes:')  !!}
+                    {!! Form::textarea('note_dietary', null, ['class' => 'form-control', 'rows' => '3']) !!}
+                </div>
+                <div class="col-6">
+                    {!! Form::label('note_contact', 'General Notes:')  !!}
+                    {!! Form::textarea('note_contact', null, ['class' => 'form-control', 'rows' => '3']) !!}
+                </div>
+                <div class="col-6">
+                    {!! Form::label('note_room_preference', 'Room Preference:')  !!}
+                    {!! Form::textarea('note_room_preference', null, ['class' => 'form-control', 'rows' => '3']) !!}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <h3>Groups and Relationships</h3>
+                </div>
+                <div class="col-2">
+                    <div class="form-check">
+                        {!! Form::checkbox('is_retreatant', 1, true,['class' => 'form-check-input']) !!}
+                        {!! Form::label('is_retreatant', 'Retreatant', ['class' => 'form-check-label']) !!}
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check">
+                        {!! Form::checkbox('is_captain', 1, false,['class' => 'form-check-input']) !!}
+                        {!! Form::label('is_captain', 'Captain', ['class' => 'form-check-label']) !!}
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check">
+                        {!! Form::checkbox('is_hlm2017', 1, false,['class' => 'form-check-input']) !!}
+                        {!! Form::label('is_hlm2017', 'HLM 2017', ['class' => 'form-check-label']) !!}
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check">
+                        {!! Form::checkbox('is_bishop', 1, false,['class' => 'form-check-input']) !!}   
+                        {!! Form::label('is_bishop', 'Bishop', ['class' => 'form-check-label']) !!}
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check">
+                        {!! Form::checkbox('is_priest', 1, false,['class' => 'form-check-input']) !!}
+                        {!! Form::label('is_priest', 'Priest', ['class' => 'form-check-label'])  !!}
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check">
+                        {!! Form::checkbox('is_deacon', 1, false,['class' => 'form-check-input']) !!}
+                        {!! Form::label('is_deacon', 'Deacon', ['class' => 'form-check-label'])  !!}
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check">
+                        {!! Form::checkbox('is_pastor', 1, false,['class' => 'form-check-input']) !!}
+                        {!! Form::label('is_pastor', 'Pastor', ['class' => 'form-check-label'])  !!}
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check">
+                        {!! Form::checkbox('is_jesuit', 1, false,['class' => 'form-check-input']) !!}  
+                        {!! Form::label('is_jesuit', 'Jesuit', ['class' => 'form-check-label']) !!}
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check">
+                        {!! Form::checkbox('is_provincial', 1, false,['class' => 'form-check-input']) !!}
+                        {!! Form::label('is_provincial', 'Provincial', ['class' => 'form-check-label']) !!}
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check">
+                        {!! Form::checkbox('is_superior', 1, false,['class' => 'form-check-input']) !!}
+                        {!! Form::label('is_superior', 'Superior', ['class' => 'form-check-label']) !!}
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check">
+                        {!! Form::checkbox('is_board', 1, false,['class' => 'form-check-input']) !!}
+                        {!! Form::label('is_board', 'Board Member', ['class' => 'form-check-label'])  !!}
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check">
+                        {!! Form::checkbox('is_formerboard', 1, false,['class' => 'form-check-input']) !!}
+                        {!! Form::label('is_formerboard', 'Former Board', ['class' => 'form-check-label']) !!}
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check">
+                        {!! Form::checkbox('is_staff', 1, false,['class' => 'form-check-input']) !!}
+                        {!! Form::label('is_staff', 'Staff', ['class' => 'form-check-label'])  !!}
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check">
+                        {!! Form::checkbox('is_director', 1, false,['class' => 'form-check-input']) !!} 
+                        {!! Form::label('is_director', 'Retreat Director', ['class' => 'form-check-label'])  !!}
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check">
+                        {!! Form::checkbox('is_innkeeper', 1, false,['class' => 'form-check-input']) !!} 
+                        {!! Form::label('is_innkeeper', 'Retreat Innkeeper', ['class' => 'form-check-label'])  !!}
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check">
+                        {!! Form::checkbox('is_assistant', 1, false,['class' => 'form-check-input']) !!}
+                        {!! Form::label('is_assistant', 'Retreat Assistant', ['class' => 'form-check-label'])  !!}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 mt-5">
+                    {!! Form::submit('Add Person', ['class'=>'btn btn-default']) !!}
+                </div>
+            </div>
         {!! Form::close() !!}
     </div>
 </div>
-
-<section class="section-padding">
-    <div class="jumbotron text-left">
-     <div class='row'>
-        <div class='row'>
-            <div class='col-md-8'>
-                <span>
-                    <div class="form-group">
-                        
-                        
-                    </div>
-                        {!! Form::label('deceased_date', 'Deceased Date:', ['class' => 'col-md-3'])  !!}
-                        {!! Form::text('deceased_date', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
-                        {!! Form::label('is_deceased', 'Is Deceased:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_deceased', 1, false,['class' => 'col-md-1']) !!}
-                    <div class="clearfix"> 
-
-                    </div>
-
-                </span>
-            </div>
-        </div>
-        <div class="clearfix"> </div>
-
-        <div class='row'>
-            <div class='col-md-8'>
-                <span>
-                    <h2>Health Notes</h2>
-                    <div class="form-group">
-                        {!! Form::label('note_health', 'Health Notes:', ['class' => 'col-md-3'])  !!}
-                        {!! Form::textarea('note_health', null, ['class' => 'col-md-3']) !!}
-                        {!! Form::label('note_dietary', 'Dietary Notes:', ['class' => 'col-md-3'])  !!}
-                        {!! Form::textarea('note_dietary', null, ['class' => 'col-md-3']) !!}
-                    </div>
-                </span>
-            </div>
-        </div>
-        <div class="clearfix"> </div>
-
-        <div class='row'>
-            <div class='col-md-8'>
-                <span>
-                    <h2>General Notes</h2>
-                    <div class="form-group">
-                        {!! Form::label('note_contact', 'General Notes:', ['class' => 'col-md-3'])  !!}
-                        {!! Form::textarea('note_contact', null, ['class' => 'col-md-3']) !!}
-                        {!! Form::label('note_room_preference', 'Room Preference:', ['class' => 'col-md-3'])  !!}
-                        {!! Form::textarea('note_room_preference', null, ['class' => 'col-md-3']) !!}
-                    </div>
-                </span>
-            </div>
-        </div><div class="clearfix"> </div>
-    
-        <div class='row'>
-            <div class='col-md-8'>
-                <span>
-                    <h2>Groups and Relationships</h2>
-                    <div class="form-group">
-                        {!! Form::label('is_donor', 'Donor:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_donor', 1, true, ['class' => 'col-md-1']) !!}
-                        {!! Form::label('is_steward', 'Steward:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_steward', 1, false, ['class' => 'col-md-1']) !!}
-                        {!! Form::label('is_volunteer', 'Volunteer:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_volunteer', 1, false,['class' => 'col-md-1']) !!}
-                                        </div>
-                    <div class="form-group">
-                        {!! Form::label('is_retreatant', 'Retreatant:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_retreatant', 1, true,['class' => 'col-md-1']) !!}
-                        {!! Form::label('is_captain', 'Captain:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_captain', 1, false,['class' => 'col-md-1']) !!}
-                        {!! Form::label('is_hlm2017', 'HLM 2017:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_hlm2017', 1, false,['class' => 'col-md-1']) !!}
-                    </div>
-                    <div class="form-group">
-                        {!! Form::label('is_bishop', 'Bishop:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_bishop', 1, false,['class' => 'col-md-1']) !!}
-                        {!! Form::label('is_priest', 'Priest:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_priest', 1, false,['class' => 'col-md-1']) !!}
-                        {!! Form::label('is_deacon', 'Deacon:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_deacon', 1, false,['class' => 'col-md-1']) !!}
-                        {!! Form::label('is_pastor', 'Pastor:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_pastor', 1, false,['class' => 'col-md-1']) !!}
-                    </div>
-                    <div class="form-group">
-                        {!! Form::label('is_jesuit', 'Jesuit:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_jesuit', 1, false,['class' => 'col-md-1']) !!}
-                        {!! Form::label('is_provincial', 'Provincial:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_provincial', 1, false,['class' => 'col-md-1']) !!}
-                        {!! Form::label('is_superior', 'Superior:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_superior', 1, false,['class' => 'col-md-1']) !!}
-                    </div>    
-                    <div class="form-group">
-                        {!! Form::label('is_board', 'Board Member:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_board', 1, false,['class' => 'col-md-1']) !!}
-                        {!! Form::label('is_formerboard', 'Former Board:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_formerboard', 1, false,['class' => 'col-md-1']) !!}
-                    </div>
-                    <div class="form-group">
-                        {!! Form::label('is_staff', 'Staff:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_staff', 1, false,['class' => 'col-md-1']) !!}
-                        {!! Form::label('is_director', 'Retreat Director:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_director', 1, false,['class' => 'col-md-1']) !!}
-                        {!! Form::label('is_innkeeper', 'Retreat Innkeeper:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_innkeeper', 1, false,['class' => 'col-md-1']) !!}
-                        {!! Form::label('is_assistant', 'Retreat Assistant:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::checkbox('is_assistant', 1, false,['class' => 'col-md-1']) !!}
-                    </div>
-                
-                </span>
-                <div class="col-md-1">
-                    <div class="form-group">
-                        {!! Form::submit('Add Person', ['class'=>'btn btn-default']) !!}
-                    </div>
-                    
-                </div>
-            </div>
-            <div class="clearfix"> </div>
-        </div>
-    </div>
-        
-</section>
 @stop
