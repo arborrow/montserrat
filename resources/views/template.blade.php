@@ -135,13 +135,6 @@
 			});
 			console.log($("#q"));
 		$(function () {
-
-			// $("#start_date").datetimeEntry({
-			// 	datetimeFormat: 'N d, Y h:M a'
-			// });
-			// $("#end_date").datetimeEntry({
-			// 	datetimeFormat: 'N d, Y h:M a'
-			// });
 			$("#donation_date").datepicker();
 			$("#payment_date").datepicker();
 			$("#start_date_only").datepicker();
@@ -154,38 +147,6 @@
 			$("#canceled_at").datepicker();
 			$("#birth_date").datepicker();
 			$("#deceased_date").datepicker();
-			// $("#touched_at").datetimeEntry({
-			// 	datetimeFormat: 'N d, Y h:M a'
-			// });
-			// $("#languages").select2({
-			// 	placeholder: 'Choose language(s)'
-			// });
-			// $("#referrals").select2({
-			// 	placeholder: 'Choose referral source(s)'
-			// });
-			// $("#directors").select2({
-			// 	placeholder: 'Choose retreat director(s)'
-			// });
-			// $("#captains").select2({
-			// 	placeholder: 'Choose captain(s)'
-			// });
-			// $("#groups").select2({
-			// 	placeholder: 'Choose group(s)'
-			// });
-			// $("#roles").select2({
-			// 	placeholder: 'Choose role(s)',
-			// 	closeOnSelect: false
-			// });
-			// $("#permissions").select2({
-			// 	placeholder: 'Choose permission(s)',
-			// 	closeOnSelect: false
-			// });
-			// $("#users").select2({
-			// 	placeholder: 'Choose user(s)',
-			// 	closeOnSelect: false
-			// });
-
-
 		});
 	</script>
 </body>
