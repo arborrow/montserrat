@@ -97,17 +97,7 @@
                     <li>
                         <a href={{ route('vendor.index') }}>Vendors</a>
                     </li>
-                @endCan
-                <!--          <li><a href={{ route('housekeeping') }}> {!! Html::image('img/housekeeping.png', 'Housekeeping',array('title'=>"Housekeeping")) !!}</a></li>
-                <li class="divider"></li>
-                <li><a href={{ route('maintenance') }}>{!! Html::image('img/maintenance.png', 'Maintenance',array('title'=>"Maintenance")) !!}</a></li>
-                <li><a href={{ route('grounds') }}>{!! Html::image('img/grounds.png', 'Grounds',array('title'=>"Grounds")) !!}</a></li>
-                <li><a href={{ route('kitchen') }}>{!! Html::image('img/kitchen.png', 'Kitchen',array('title'=>"Kitchen")) !!}</a></li>
-                <li class="divider"></li>
-                <li><a href={{ route('bookstore') }}>{!! Html::image('img/bookstore.png', 'Bookstore',array('title'=>"Bookstore")) !!}</a></li>
-                <li class="divider"></li>
-                <li><a href={{ route('users') }}>{!! Html::image('img/users.png', 'Users',array('title'=>"Users")) !!}</a></li>
-           -->             
+                @endCan    
                 @can('show-touchpoint')
                     <li>
                         <a href={{ route('touchpoint.index') }}>Touchpoints</a>
