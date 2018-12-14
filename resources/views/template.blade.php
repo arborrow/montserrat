@@ -115,20 +115,9 @@
                     <li>
                         <a href={{ route('finance') }}>Finance</a>
                     </li>
-                @endCan
-                
- <!--
-                <li><a href={{ route('support') }}>{!! Html::image('img/support.png', 'Support',array('title'=>"Support")) !!}</a></li>
-                <li><a href={{ route('about') }}>{!! Html::image('img/about.png', 'About',array('title' => 'About')) !!}</a></li>
-                <!-- @if (isset(Auth::User()->email))
-                     <li><a href={{ route('logout') }}>{!! Html::image('img/logout.png', 'Logout',array('title' => 'Logout')) !!}</a></li>
-                @else
-                <li><a href='login/google'>{!! Html::image('img/login.png', 'Login',array('title' => 'Login')) !!}</a></li>
-                @endif
-                -->
-              
+                @endCan 
             </ul>
-        </div><!-- /.navbar-collapse -->
+        </div>
         </nav>
     </header>
         
