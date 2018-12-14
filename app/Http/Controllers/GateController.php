@@ -39,7 +39,8 @@ use Twilio\Rest\Client;
         } catch (Exception $e) {
             report($e);
         }
-        dd('Open gate call: '.$to_number, $client);
+
+        return view('gate.open', compact('hours'));
     }
      public function close()
     {
@@ -61,6 +62,6 @@ use Twilio\Rest\Client;
         } catch (Exception $e) {
             report($e);
         }
-        dd('Close gate call: '.$to_number, $client);
+        return view('gate.close');
   }
 }
