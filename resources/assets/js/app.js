@@ -7,10 +7,12 @@
 
 require('./bootstrap'); // jQuery being loaded here
 require('jquery-ui-bundle'); // jQuery UI
-//require('./jquery.datetimeentry.js');
-//require('./jquery.js');
-//require('./jquery.plugin.js');
-//require('./select2.js');
+require('select2');
+require('./main');
+// require('./jquery.datetimeentry.js');
+// require('./jquery.js');
+// require('./jquery.plugin.js');
+// require('./select2.js');
 
 
 // window.Vue = require('vue');
