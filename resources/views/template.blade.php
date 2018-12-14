@@ -119,6 +119,25 @@
             </ul>
         </div>
         </nav>
+        <div>
+        @can('show-gate')
+            <a href={{ route('gate.open') }} class="btn btn-success">Open gate</a>
+            <a href={{ route('gate.close') }} class="btn btn-danger">Close gate</a>
+            <div class="dropdown" style="display: inline">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Open gate for...
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li><a href={{ route('gate.open', ['hours' => 1]) }}>1 hour</a></li>
+                    <li><a href={{ route('gate.open', ['hours' => 2]) }}>2 hours</a></li>
+                    <li><a href={{ route('gate.open', ['hours' => 3]) }}>3 hours</a></li>
+                    <li><a href={{ route('gate.open', ['hours' => 4]) }}>4 hours</a></li>
+                    <li><a href={{ route('gate.open', ['hours' => 5]) }}>5 hours</a></li>
+                </ul>
+            </div>
+        @endcan
+        </div>
     </header>
         
     @if (isset($errors) && count($errors) > 0)
