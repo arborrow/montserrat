@@ -222,3 +222,7 @@ Route::get('mailgun/process', ['as' => 'mailgun.process','uses' => 'MailgunContr
 Route::post('mailgun/callback', function () {
     return 'Mailgun callback';
 });
+
+// Gate routes
+Route::get('gate/open/{hours?}', ['as' => 'gate.open','uses' => 'GateController@open']);
+Route::get('gate/close', ['as' => 'gate.close','uses' => 'GateController@close']);

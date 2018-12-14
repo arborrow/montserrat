@@ -97,17 +97,7 @@
                     <li>
                         <a href={{ route('vendor.index') }}>Vendors</a>
                     </li>
-                @endCan
-                <!--          <li><a href={{ route('housekeeping') }}> {!! Html::image('img/housekeeping.png', 'Housekeeping',array('title'=>"Housekeeping")) !!}</a></li>
-                <li class="divider"></li>
-                <li><a href={{ route('maintenance') }}>{!! Html::image('img/maintenance.png', 'Maintenance',array('title'=>"Maintenance")) !!}</a></li>
-                <li><a href={{ route('grounds') }}>{!! Html::image('img/grounds.png', 'Grounds',array('title'=>"Grounds")) !!}</a></li>
-                <li><a href={{ route('kitchen') }}>{!! Html::image('img/kitchen.png', 'Kitchen',array('title'=>"Kitchen")) !!}</a></li>
-                <li class="divider"></li>
-                <li><a href={{ route('bookstore') }}>{!! Html::image('img/bookstore.png', 'Bookstore',array('title'=>"Bookstore")) !!}</a></li>
-                <li class="divider"></li>
-                <li><a href={{ route('users') }}>{!! Html::image('img/users.png', 'Users',array('title'=>"Users")) !!}</a></li>
-           -->             
+                @endCan    
                 @can('show-touchpoint')
                     <li>
                         <a href={{ route('touchpoint.index') }}>Touchpoints</a>
@@ -125,21 +115,29 @@
                     <li>
                         <a href={{ route('finance') }}>Finance</a>
                     </li>
-                @endCan
-                
- <!--
-                <li><a href={{ route('support') }}>{!! Html::image('img/support.png', 'Support',array('title'=>"Support")) !!}</a></li>
-                <li><a href={{ route('about') }}>{!! Html::image('img/about.png', 'About',array('title' => 'About')) !!}</a></li>
-                <!-- @if (isset(Auth::User()->email))
-                     <li><a href={{ route('logout') }}>{!! Html::image('img/logout.png', 'Logout',array('title' => 'Logout')) !!}</a></li>
-                @else
-                <li><a href='login/google'>{!! Html::image('img/login.png', 'Login',array('title' => 'Login')) !!}</a></li>
-                @endif
-                -->
-              
+                @endCan 
             </ul>
-        </div><!-- /.navbar-collapse -->
+        </div>
         </nav>
+        <div>
+        @can('show-gate')
+            <a href={{ route('gate.open') }} class="btn btn-success">Open gate</a>
+            <a href={{ route('gate.close') }} class="btn btn-danger">Close gate</a>
+            <div class="dropdown" style="display: inline">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Open gate for...
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li><a href={{ route('gate.open', ['hours' => 1]) }}>1 hour</a></li>
+                    <li><a href={{ route('gate.open', ['hours' => 2]) }}>2 hours</a></li>
+                    <li><a href={{ route('gate.open', ['hours' => 3]) }}>3 hours</a></li>
+                    <li><a href={{ route('gate.open', ['hours' => 4]) }}>4 hours</a></li>
+                    <li><a href={{ route('gate.open', ['hours' => 5]) }}>5 hours</a></li>
+                </ul>
+            </div>
+        @endcan
+        </div>
     </header>
         
     @if (isset($errors) && count($errors) > 0)
