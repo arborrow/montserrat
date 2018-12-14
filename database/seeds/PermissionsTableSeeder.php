@@ -687,6 +687,56 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2018-04-04 15:07:59',
                 'deleted_at' => NULL,
             ),
+            67 => 
+            array (
+                'id' => 68,
+                'name' => 'create-payment',
+                'display_name' => 'create-payment',
+                'description' => 'Create payment',
+                'created_at' => '2018-10-12 14:52:40',
+                'updated_at' => '2018-10-12 14:52:40',
+                'deleted_at' => NULL,
+            ),
+            68 => 
+            array (
+                'id' => 69,
+                'name' => 'show-payment',
+                'display_name' => 'show-payment',
+                'description' => 'Show payment',
+                'created_at' => '2018-10-12 14:52:52',
+                'updated_at' => '2018-10-12 14:52:52',
+                'deleted_at' => NULL,
+            ),
+            69 => 
+            array (
+                'id' => 70,
+                'name' => 'update-payment',
+                'display_name' => 'update-payment',
+                'description' => 'Update payment',
+                'created_at' => '2018-10-12 14:53:03',
+                'updated_at' => '2018-10-12 14:53:03',
+                'deleted_at' => NULL,
+            ),
+            70 => 
+            array (
+                'id' => 71,
+                'name' => 'delete-payment',
+                'display_name' => 'delete-payment',
+                'description' => 'Delete payment',
+                'created_at' => '2018-10-12 14:53:20',
+                'updated_at' => '2018-10-12 14:53:20',
+                'deleted_at' => NULL,
+            ),
+            71 => 
+            array (
+                'id' => 72,
+                'name' => 'show-gate',
+                'display_name' => 'Show gate',
+                'description' => 'Show main gate control options',
+                'created_at' => '2018-12-06 12:53:51',
+                'updated_at' => '2018-12-06 12:55:38',
+                'deleted_at' => NULL,
+            )
         ));
         
         
