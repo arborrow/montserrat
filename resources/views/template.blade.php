@@ -62,11 +62,19 @@
 							Gate Controls
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href={{ route('role.index') }}>Open</a>
-                            <a class="dropdown-item" href={{ route('permission.index') }}>Close</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropright" href="#"></a>
-                            <a class="dropdown-item" href={{ route('role.index') }}>Open for...</a>
+							<a class="dropdown-item" href={{ route('gate.open') }}>Open</a>
+							<a class="dropdown-item" href={{ route('gate.close') }}>Close</a>
+							<div class="dropdown-divider"></div>
+							<div class="dropright dropdown-submenu">
+								<a class="dropdown-item dropdown-toggle" href="#" role="button" data-toggle="dropdown">Open for...</a>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href={{ route('gate.open', 1) }}>1 hour</a>
+									<a class="dropdown-item" href={{ route('gate.open', 2) }}>2 hours</a>
+									<a class="dropdown-item" href={{ route('gate.open', 3) }}>3 hours</a>
+									<a class="dropdown-item" href={{ route('gate.open', 4) }}>4 hours</a>
+									<a class="dropdown-item" href={{ route('gate.open', 5) }}>5 hours</a>
+								</div>
+							</div>
 						</div>
 					</li>
                     @endcan
