@@ -55,7 +55,21 @@
 					<li class="nav-item">
 						<a class="nav-link" href={{ route('finance') }}>Finance</a>
 					</li>
-					@endCan
+                    @endCan
+                    @can('show-gate')
+                    <li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Gate Controls
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href={{ route('role.index') }}>Open</a>
+                            <a class="dropdown-item" href={{ route('permission.index') }}>Close</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropright" href="#"></a>
+                            <a class="dropdown-item" href={{ route('role.index') }}>Open for...</a>
+						</div>
+					</li>
+                    @endcan
 					@can('show-admin-menu')
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
