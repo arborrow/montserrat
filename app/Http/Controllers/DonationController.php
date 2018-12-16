@@ -38,7 +38,7 @@ class DonationController extends Controller
         // dd($subcontact_type_id,$id);
         if ($id>0) {
             $donor = \App\Contact::findOrFail($id); // a lazy way to fail if no donor
-	    $donor_events = \App\Registration::whereContactId($id)->get();
+	        $donor_events = \App\Registration::whereContactId($id)->get();
             $donors = \App\Contact::whereId($id)->pluck('sort_name','id');
         } else {
             $donors = \App\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name', 'id');
@@ -47,7 +47,7 @@ class DonationController extends Controller
             $donors = \App\Contact::whereSubcontactType($subcontact_type_id)->orderBy('sort_name')->pluck('sort_name', 'id');
         }
         if (isset($event_id)) {
-	    $retreats = \App\Retreat::findOrFail($event_id); // a lazy way to fail if unknown event_id
+	        $retreats = \App\Retreat::findOrFail($event_id); // a lazy way to fail if unknown event_id
             $retreats = \App\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->whereId($event_id)->pluck('description', 'id');
             
         } else {
