@@ -1,91 +1,91 @@
 @extends('template')
 @section('content')
-    <div class="row bg-cover">
-        <div class="col-12">
-            <h2>
-                {{$role['name']}}
-                @can('create-contact')
-                    <span class="create">
-                        <a href={{ action('PersonController@create') }}>
-                            <img src="{{URL::asset('images/create.png')}}" alt="Add" class="btn btn-light" title="Add">
-                        </a>
-                    </span>
-                @endCan
-            </h2>
-            <p class="lead">
-                {{$persons->count()}} records
-            </p>
-        </div>
-        <div class="col-12">
-            @can('show-contact')
-                <span class="person">
-                    <a href={{ action('PersonController@index') }} class="btn btn-light">
-                        {!! Html::image('images/person.png', 'Show Persons',array('title'=>"Show Persons")) !!}
+<div class="row bg-cover">
+    <div class="col-12">
+        <h2>
+            {{$role['name']}}
+            @can('create-contact')
+                <span class="create">
+                    <a href={{ action('PersonController@create') }}>
+                        <img src="{{URL::asset('images/create.png')}}" alt="Add" class="btn btn-light" title="Add">
                     </a>
                 </span>
-            @if(isset($role['email_link']))
-                <span class="btn btn-link">{!! $role['email_link'] !!}</span>
-            @endif
             @endCan
-            @can('create-registration')
-                <a href={{ action('RegistrationController@add_group',$role['group_id']) }} class="btn btn-link">Add Group Registration</a>
-            @endCan
-            @can('create-touchpoint')
-                <a href={{ action('TouchpointController@add_group',$role['group_id']) }} class="btn btn-link">Add Group Touchpoint</a>
-            @endCan
-        </div>
-        <div class="col-12">
-            @if ($persons->isEmpty())
-                <div class="col-12 text-center py-5">
-                    <h3>Currently, there are no {{$role['name']}}s.</h3>
-                </div>
-            @else
-                <table class="table table-striped table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">Picture</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Address (City)</th>
-                            <th scope="col">Home phone</th>
-                            <th scope="col">Cell phone</th>
-                            <th scope="col">Work phone</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Parish (City)</th>
-                            @if ($role['group_id'] == config('polanco.group_id.captain'))
-                                <th scope="col">Captain for</th>
-                            @endIf
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($persons as $person)
-                        <tr>
-                            <th scope="row">{!!$person->avatar_small_link!!}</th>
-                            <td>
-                                {!!$person->contact_link_full_name!!}
-                            </td>
-                            <td>
-                                {!!$person->address_primary_google_map!!} 
-                            </td>
-                            <td>{{ $person->phone_home_phone_number }}</td>
-                            <td>{{ $person->phone_home_mobile_number }}</td>
-                            <td>{{ $person->phone_work_phone_number }}</td>
-                            <td><a href="mailto:{{$person->email_primary_text}}">{{ $person->email_primary_text }}</a></td>
-                            <td>{!! $person->parish_link !!}</td>
-                            @if ($role['group_id'] == config('polanco.group_id.captain'))
-                            <td>
-                                <ul>
-                                    @foreach ($person->captain_events as $event)
-                                        <li>  
-                                            <a href="{{url('retreat/'.$event->id)}}" title="{{$event->idnumber}}">{{$event->title}}</a>
-                                        </li>
-                                    @endforeach
-                                </ul></td>
-                            @endIf
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            @endif
-        </div>
+        </h2>
+        <p class="lead">
+            {{$persons->count()}} records
+        </p>
     </div>
+    <div class="col-12">
+        @can('show-contact')
+            <span class="person">
+                <a href={{ action('PersonController@index') }} class="btn btn-light">
+                    {!! Html::image('images/person.png', 'Show Persons',array('title'=>"Show Persons")) !!}
+                </a>
+            </span>
+        @if(isset($role['email_link']))
+            <span class="btn btn-link">{!! $role['email_link'] !!}</span>
+        @endif
+        @endCan
+        @can('create-registration')
+            <a href={{ action('RegistrationController@add_group',$role['group_id']) }} class="btn btn-link">Add Group Registration</a>
+        @endCan
+        @can('create-touchpoint')
+            <a href={{ action('TouchpointController@add_group',$role['group_id']) }} class="btn btn-link">Add Group Touchpoint</a>
+        @endCan
+    </div>
+    <div class="col-12">
+        @if ($persons->isEmpty())
+            <div class="col-12 text-center py-5">
+                <h3>Currently, there are no {{$role['name']}}s.</h3>
+            </div>
+        @else
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Picture</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Address (City)</th>
+                        <th scope="col">Home phone</th>
+                        <th scope="col">Cell phone</th>
+                        <th scope="col">Work phone</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Parish (City)</th>
+                        @if ($role['group_id'] == config('polanco.group_id.captain'))
+                            <th scope="col">Captain for</th>
+                        @endIf
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($persons as $person)
+                    <tr>
+                        <th scope="row">{!!$person->avatar_small_link!!}</th>
+                        <td>
+                            {!!$person->contact_link_full_name!!}
+                        </td>
+                        <td>
+                            {!!$person->address_primary_google_map!!} 
+                        </td>
+                        <td>{{ $person->phone_home_phone_number }}</td>
+                        <td>{{ $person->phone_home_mobile_number }}</td>
+                        <td>{{ $person->phone_work_phone_number }}</td>
+                        <td><a href="mailto:{{$person->email_primary_text}}">{{ $person->email_primary_text }}</a></td>
+                        <td>{!! $person->parish_link !!}</td>
+                        @if ($role['group_id'] == config('polanco.group_id.captain'))
+                        <td>
+                            <ul>
+                                @foreach ($person->captain_events as $event)
+                                    <li>  
+                                        <a href="{{url('retreat/'.$event->id)}}" title="{{$event->idnumber}}">{{$event->title}}</a>
+                                    </li>
+                                @endforeach
+                            </ul></td>
+                        @endIf
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
+    </div>
+</div>
 @stop
