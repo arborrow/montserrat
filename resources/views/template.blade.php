@@ -55,9 +55,9 @@
 					<li class="nav-item">
 						<a class="nav-link" href={{ route('finance') }}>Finance</a>
 					</li>
-                    @endCan
-                    @can('show-gate')
-                    <li class="nav-item dropdown">
+					@endCan
+					@can('show-gate')
+					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Gate Controls
 						</a>
