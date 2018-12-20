@@ -106,6 +106,7 @@ Route::resource('donor', 'DonorController');
 Route::resource('donation', 'DonationController');
 Route::get('donation/create/{id?}/{event_id?}/{type?}', ['uses'=> 'DonationController@create']);
 Route::get('donation/{id?}/invoice', ['uses'=> 'PageController@finance_invoice']);
+Route::get('donation/{id?}/agcacknowledge', ['uses'=> 'PageController@finance_agcacknowledge']);
 Route::get('group/{group_id?}/touchpoint', ['uses' => 'TouchpointController@add_group']);
 Route::get('group/{group_id?}/registration', ['uses' => 'RegistrationController@add_group']);
 Route::post('touchpoint/add_group', ['uses' => 'TouchpointController@store_group']);
