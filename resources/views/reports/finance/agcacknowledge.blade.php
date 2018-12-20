@@ -1,6 +1,6 @@
 @extends('report')
 @section('content')
-
+<meta name="format-detection" content="telephone=no">
 <div class ="agcacknowledge">
 <div class ="pageheader">
         
@@ -27,8 +27,8 @@ Jeannette Santos <br />
 Fr. Tim Thompson <br /><br />
 
 <strong>Jesuit Community</strong><br /><br />
-Anthony Borrow, S.J.<br />
-John Payne, S.J.<br />
+Fr. Anthony Borrow, S.J.<br />
+Fr. John Payne, S.J.<br />
 
         </td>
         <td class="main" style="padding-right: 20px; padding-left:20px;">
@@ -61,7 +61,7 @@ Director <br />
     </tr>      
     <tr>
         <td></td>
-        <td style="font-size: 10pt;"><i><br /><br />Montserrat Jesuit Retreat House is a ministry of the Society of Jesus UCS Province<br />
+        <td style="font-size: 10pt; padding-left:20px;"><i><br /><br />Montserrat Jesuit Retreat House is a ministry of the Society of Jesus UCS Province<br />
                 No goods or services have been provided to the donor. <br />
                 Your donation is deductible to the extent allowed by law.</i></td>
     </tr>
@@ -71,7 +71,7 @@ Director <br />
 </div>
 <br /><br />
 
-<span class='pagefooter'>
+<span class='pagefooter' style="font-size:12pt;">
     <table style="width:70%; margin:auto;">
         <tr>
             <td style="width:25%; margin:auto">PO Box 1390</td>
