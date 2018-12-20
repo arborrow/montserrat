@@ -31,8 +31,8 @@ Anthony Borrow, S.J.<br />
 John Payne, S.J.<br />
 
         </td>
-        <td class="main">
-            {{date('F d, Y')}}<br /><br />
+        <td class="main" style="padding-right: 20px; padding-left:20px;">
+            <div style="position:absolute; right: 0px; padding-right:20px;">{{date('F d, Y')}}</div><br /><br />
             {{$donation->contact->display_name}} <br />
             {{$donation->contact->address_primary_street}} <br />
             {{$donation->contact->address_primary_city}}, {{$donation->contact->address_primary_state}} {{$donation->contact->address_primary_postal_code}}
@@ -61,23 +61,24 @@ Director <br />
     </tr>      
     <tr>
         <td></td>
-        <td><i><br /><br />Montserrat Jesuit Retreat House is a ministry of the Society of Jesus UCS Province<br />
+        <td style="font-size: 10pt;"><i><br /><br />Montserrat Jesuit Retreat House is a ministry of the Society of Jesus UCS Province<br />
                 No goods or services have been provided to the donor. <br />
                 Your donation is deductible to the extent allowed by law.</i></td>
     </tr>
+        
 </table>
 
 </div>
 <br /><br />
 
 <span class='pagefooter'>
-    <table>
+    <table style="width:70%; margin:auto;">
         <tr>
-            <td>PO Box 1390</td>
-            <td>600 N. Shady Shores Dr</td>
-            <td>Lake Dallas, TX 75065<td>
+            <td style="width:25%; margin:auto">PO Box 1390</td>
+            <td style="width:50%; margin:auto">600 N. Shady Shores Dr</td>
+            <td style="width:25%; margin:auto">Lake Dallas, TX 75065<td>
         </tr>
-        <tr>
+            <tr>
             <td>(940) 321-6020</td>
             <td> </td>
             <td>montserratretreat.org </td>
