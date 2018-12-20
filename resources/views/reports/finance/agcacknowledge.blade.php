@@ -11,7 +11,7 @@
 <div class ="letter">
 <table>
     <tr>
-        <td class="board"><strong>Board of Trustees</strong> <br /><br />
+        <td class="board" style="font-size:11pt; line-height:1.3; padding-top:50px;"><div style="font-variant:small-caps"><strong>Board of Trustees</strong></div> <br /><br />
 Susie Andrews <br />
 <i>President</i> <br /><br />
 Mark Vehslage <br />
@@ -26,13 +26,13 @@ Richard Rolland <br />
 Jeannette Santos <br />
 Fr. Tim Thompson <br /><br />
 
-<strong>Jesuit Community</strong><br /><br />
+<div style="font-variant:small-caps"><strong>Jesuit Community</strong></div><br /><br />
 Fr. Anthony Borrow, S.J.<br />
 Fr. John Payne, S.J.<br />
 
         </td>
-        <td class="main" style="padding-right: 20px; padding-left:20px;">
-            <div style="position:absolute; right: 0px; padding-right:20px;">{{date('F d, Y')}}</div><br /><br />
+        <td class="main" style="padding-right: 50px; padding-left:20px; padding-top:20px;">
+            <div style="position:absolute; right: 0px; padding-right:60px;">{{date('F d, Y')}}</div><br /><br />
             {{$donation->contact->display_name}} <br />
             {{$donation->contact->address_primary_street}} <br />
             {{$donation->contact->address_primary_city}}, {{$donation->contact->address_primary_state}} {{$donation->contact->address_primary_postal_code}}
@@ -71,17 +71,17 @@ Director <br />
 </div>
 <br /><br />
 
-<span class='pagefooter' style="font-size:12pt;">
-    <table style="width:70%; margin:auto;">
+<span class='pagefooter' style="font-size:11pt;">
+    <table style="width:100%; margin:auto;">
         <tr>
-            <td style="width:25%; margin:auto">PO Box 1390</td>
-            <td style="width:50%; margin:auto">600 N. Shady Shores Dr</td>
-            <td style="width:25%; margin:auto">Lake Dallas, TX 75065<td>
+            <td style="width:33%; margin:auto; text-align:center">PO Box 1390</td>
+            <td style="width:33%; margin:auto; text-align:center">600 N. Shady Shores Dr</td>
+            <td style="width:33%; margin:auto; text-align:center">Lake Dallas, TX 75065<td>
         </tr>
             <tr>
-            <td>(940) 321-6020</td>
+            <td style="text-align:center">(940) 321-6020</td>
             <td> </td>
-            <td>montserratretreat.org </td>
+            <td style="text-align:center">montserratretreat.org </td>
 
         </tr>
     </table>
