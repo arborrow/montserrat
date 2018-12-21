@@ -714,6 +714,19 @@ class PersonController extends Controller
     }
 
     /**
+     * Display the name and mailing address for a contact.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function envelope10($id)
+    {
+        $this->authorize('show-contact');
+        $person = \App\Contact::findOrFail($id);
+        return view('persons.envelope10', compact('person'));//
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
