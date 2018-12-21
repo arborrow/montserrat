@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Carbon\Carbon;
+use Illuminate\Validation\Rule;
 
 class DonationController extends Controller
 {
@@ -204,7 +205,8 @@ class DonationController extends Controller
         'donation_amount' => 'required|numeric',
         'start_date' => 'date|nullable|before:end_date',
         'end_date' => 'date|nullable|after:start_date',
-        'donation_install' => 'numeric|min:0|nullable'
+        'donation_install' => 'numeric|min:0|nullable',
+        'donation_thank_you' => Rule::in(['Y','N'])
         ]);
         //dd($request->input('donation_description'));
         if ($request->input('donation_description')>0) {
@@ -225,8 +227,12 @@ class DonationController extends Controller
         $donation->terms= $request->input('terms');
         $donation->start_date= $request->input('start_date_only') ? Carbon::parse($request->input('start_date_only')) : NULL;
         $donation->end_date= $request->input('end_date_only') ? Carbon::parse($request->input('end_date_only')) : NULL;
-        $donation->donation_install = $request->input('donation_install');
-        
+	$donation->donation_install = $request->input('donation_install');
+	if ($request->input('donation_thank_you') == "Y") {
+       	    $donation['Thank You'] = $request->input('donation_thank_you'); //field has space in database and should be changed at some point
+	} else {
+	    $donation['Thank You'] = NULL;
+	}
         $donation->save();
         
         return Redirect::action('DonationController@show',$donation->donation_id);
