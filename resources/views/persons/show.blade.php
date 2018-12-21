@@ -71,6 +71,7 @@
                         <strong>Nick name:</strong> {{ (!empty($person->nick_name)) ? $person->nick_name : null }} <br />
                         <strong>Display name: </strong>{{ (!empty($person->display_name)) ? $person->display_name : null }}   <br />
                         <strong>Sort name: </strong>{{ (!empty($person->sort_name)) ? $person->sort_name : null }} <br />   
+                        <strong>AGC Household name: </strong>{{ (!empty($person->agc_household_name)) ? $person->agc_household_name : null }} <br />   
                         <strong>Contact type: </strong>{{ $person->contact_type_label }}   <br />
                         <strong>Subcontact type: </strong>{{ $person->subcontact_type_label }}   
                         </span>

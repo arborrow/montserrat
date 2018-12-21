@@ -1487,7 +1487,14 @@ class PersonController extends Controller
             $group_assistant->status = 'Added';
             $group_assistant->deleted_at = null;
             $group_assistant->save();
-        }
+	}
+	if (null !== $request->input('agc_household_name')) {
+		$agc2019 = \App\Agc2019::find($person->id);
+		if (isset($agc2019->contact_id)) {
+			$agc2019->household_name = $request->input('agc_household_name');
+			$agc2019->save();
+		}
+	}
         
         return Redirect::action('PersonController@show', $person->id);//
     }
