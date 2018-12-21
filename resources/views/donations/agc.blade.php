@@ -37,7 +37,11 @@
 				@if(isset($donation['Thank You']))
 					{{$donation['Thank You']}}
 				@else
+				    @if ($donation->percent_paid == 100)
 					<a href="donation/{{$donation->donation_id}}/agcacknowledge">Print AGC Acknowledgement</a>
+				    @else
+				        Awaiting full payment 
+			    	    @endIf
 				@endIf
 			    </td>
                         </tr>
