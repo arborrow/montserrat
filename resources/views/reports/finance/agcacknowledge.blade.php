@@ -11,7 +11,7 @@
 <div class ="letter">
 <table>
     <tr>
-        <td class="board" style="font-size:11pt; line-height:1.3; padding-top:50px;"><div style="font-variant:small-caps"><strong>Board of Trustees</strong></div> <br /><br />
+        <td class="board" style="font-size:11pt; line-height:1.3; padding-top:50px;"><div style="font-variant:small-caps"><strong>Board of Trustees</strong></div> <br />
 Susie Andrews <br />
 <i>President</i> <br /><br />
 Mark Vehslage <br />
@@ -26,22 +26,22 @@ Richard Rolland <br />
 Jeannette Santos <br />
 Fr. Tim Thompson <br /><br />
 
-<div style="font-variant:small-caps"><strong>Jesuit Community</strong></div><br /><br />
+<div style="font-variant:small-caps"><strong>Jesuit Community</strong></div><br />
 Fr. Anthony Borrow, S.J.<br />
 Fr. John Payne, S.J.<br />
 
         </td>
         <td class="main" style="padding-right: 50px; padding-left:20px; padding-top:20px;">
             <div style="position:absolute; right: 0px; padding-right:60px;">{{date('F d, Y')}}</div><br /><br />
-            {{$donation->contact->display_name}} <br />
+            {{$donation->contact->agc_household_name}} <br />
             {{$donation->contact->address_primary_street}} <br />
             {{$donation->contact->address_primary_city}}, {{$donation->contact->address_primary_state}} {{$donation->contact->address_primary_postal_code}}
             <br />
             <br />
-            Dear {{$donation->contact->display_name}},<br /><br />
+            Dear {{$donation->contact->agc_household_name}},<br /><br />
             Jesus promises the door will be opened to those who ask, seek, and knock.
 We knocked on your door and you generously answered. Thank you for
-your gift of ${{$donation->donation_amount}} received on {{$donation->donation_date->format("F d, Y")}} supporting Montserrat
+your gift of ${{number_format($donation->payments_paid,2)}} received on {{$donation->donation_date->format("F d, Y")}} supporting Montserrat
 Jesuit Retreat House. We promise you that it will be put to good use.
 <br /><br />
 People need a place to rest and space to pray. At Montserrat, we never get

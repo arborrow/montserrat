@@ -17,12 +17,20 @@ class DonationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+   public function index()
     {
         $this->authorize('show-donation');
         $donations = \App\Donation::orderBy('donation_date', 'desc')->with('contact')->paginate(100);
         //dd($donations);
         return view('donations.index', compact('donations'));
+    }
+
+   public function agc()
+    {
+        $this->authorize('show-donation');
+        $donations = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription("Annual Giving")->with('contact')->paginate(100);
+        // dd($donations);
+        return view('donations.agc', compact('donations'));
     }
 
     /**
