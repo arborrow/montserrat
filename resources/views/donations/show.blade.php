@@ -33,6 +33,7 @@
                         <br /><strong>Start date: </strong>{{$donation->start_date}}
                         <br /><strong>End date: </strong>{{$donation->end_date}}
                         <br /><strong>Donation install: </strong>{{$donation->donation_install}}
+                        <br /><strong>Thank you sent: </strong>{{$donation['Thank You']}}
                     
                 </div>
             </div>
