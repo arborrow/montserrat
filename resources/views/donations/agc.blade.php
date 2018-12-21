@@ -43,6 +43,8 @@
 				        Awaiting full payment 
 			    	    @endIf
 				@endIf
+				<a href="person/{{$donation->contact_id}}/envelope10">Print Envelope</a>
+
 			    </td>
                         </tr>
                         @endforeach
