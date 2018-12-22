@@ -18,7 +18,12 @@
                     @can('create-payment')
                         {!! Html::link(action('PaymentController@create',$donation->donation_id),'Add payment',array('class' => 'btn btn-default'))!!}
                     @endCan    
-            </div>
+		    @if ($donation->percent_paid == 100)
+			<a href="/donation/{{$donation->donation_id}}/agcacknowledge"><img src="/img/letter.png" alt="Print acknowledgement" title="Print acknowledgement"></a>
+		        <a href="/person/{{$donation->contact_id}}/envelope10"><img src="/img/envelope.png" alt="Print envelope" title="Print envelope"></a>
+		    @endIf
+				    
+	    </div>
             
             <div class='row'>
                 <div class='col-md-4'>

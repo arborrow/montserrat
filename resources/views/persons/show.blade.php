@@ -52,8 +52,11 @@
                             <a href={{ action('RegistrationController@add',$person->id) }}>Add Registration</a> 
                         </span>                
                         @endCan
-                        <span class="btn btn-default">
+                         <span class="btn btn-default">
                             <a href={{ action('PageController@contact_info_report',$person->id) }}>Contact Info Report</a> 
+                        </span> 
+                        <span class="btn btn-default">
+                            <a href={{ action('PersonController@envelope10',$person->id) }}><img src="/img/envelope.png" title="Print envelope" alt="Print envelope"></a> 
                         </span> 
                </div>
             </div>
