@@ -29,7 +29,7 @@ class DonationController extends Controller
    public function agc()
     {
         $this->authorize('show-donation');
-        $donations = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription("Annual Giving")->with('contact')->paginate(100);
+        $donations = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription("Annual Giving")->where("donation_date",">=","2018-07-01")->with('contact')->paginate(100);
         // dd($donations);
         return view('donations.agc', compact('donations'));
     }

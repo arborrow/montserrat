@@ -160,19 +160,20 @@ class PageController extends Controller
         $this->authorize('show-donation');
 	$current_user = Auth::user();
         $user_email = \App\Email::whereEmail($current_user->email)->first();
-        	
+ 
 	$donation = \App\Donation::with('payments','contact','retreat')->findOrFail($donation_id);
-	$donation['Thank You'] = "Y";
-	$donation->save();
+	if (NULL == $donation['Thank You']) { //avoid creating another touchpoint if acknowledgement letter has already been viewed (and presumably printed and mailed)
+	    $agc_touchpoint = new \App\Touchpoint;
+	    $agc_touchpoint->person_id = $donation->contact_id;
+	    $agc_touchpoint->staff_id = $user_email->contact_id;
+	    $agc_touchpoint->touched_at = Carbon::parse(now());
+	    $agc_touchpoint->type = 'Letter';
+	    $agc_touchpoint->notes = 'AGC Acknowledgement Letter for Donation #'.$donation->donation_id;
+   	    $agc_touchpoint->save();       	
+	    $donation['Thank You'] = "Y";
+	    $donation->save();
+	}
 
-	$agc_touchpoint = new \App\Touchpoint;
-	$agc_touchpoint->person_id = $donation->contact_id;
-	$agc_touchpoint->staff_id = $user_email->contact_id;
-	$agc_touchpoint->touched_at = Carbon::parse(now());
-	$agc_touchpoint->type = 'Letter';
-	$agc_touchpoint->notes = 'AGC Acknowledgement Letter for Donation #'.$donation->donation_id;
-	$agc_touchpoint->save();
-        // dd($donation);
 	return view('reports.finance.agcacknowledge', compact('donation'));   //
     }
     
