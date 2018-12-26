@@ -6,7 +6,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-			<span class="grey">AGC FY19 Index - ({{$donations->total()}} donations)<br />
+			<span class="grey">AGC FY {{$total['year']}} Index - ({{$donations->total()}} donations)<br />
  ${{number_format($total['paid'],2)}} of ${{number_format($total['pledged'],2)}} ({{number_format($total['percent'],0)}}%)</span> 
                    </h1>
                     <span>{!! $donations->render() !!}</span>

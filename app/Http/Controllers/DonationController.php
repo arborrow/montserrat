@@ -26,11 +26,22 @@ class DonationController extends Controller
         return view('donations.index', compact('donations'));
     }
 
-   public function agc()
-    {
+    public function agc($year = NULL) {
+  	if (!isset($year)) {
+   	    $year=date("Y");
+	}
+
+	// only show for FY 2008 and above because data does not exist
+	// this is rather hacky and particular to MJRH data
+	$year = (int) $year;
+	if (!($year >= 2007 && $year <= (date("Y")+1))) {
+		abort(404,'Invalid year');
+	}
+    	$prev_year = $year - 1;
+
         $this->authorize('show-donation');
-	$all_donations = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription("Annual Giving")->where("donation_date",">=","2018-07-01")->with('contact')->get();
-	$donations = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription("Annual Giving")->where("donation_date",">=","2018-07-01")->with('contact')->paginate(100);
+	$all_donations = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription("Annual Giving")->where("donation_date",">=",$prev_year."-07-01")->where("donation_date","<",$year."-07-01")->with('contact')->get();
+	$donations = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription("Annual Giving")->where("donation_date",">=",$prev_year."-07-01")->where("donation_date","<",$year."-07-01")->with('contact')->paginate(100);
 	$total['pledged'] = $all_donations->sum('donation_amount');
 	$total['paid'] = $all_donations->sum('payments_paid');
 	if ($total['pledged'] > 0) {
@@ -38,6 +49,7 @@ class DonationController extends Controller
 	} else {
 	    $total['percent'] = 0;
 	}
+	$total['year'] = $year;
         return view('donations.agc', compact('donations','total'));
     }
 
