@@ -29,9 +29,16 @@ class DonationController extends Controller
    public function agc()
     {
         $this->authorize('show-donation');
-        $donations = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription("Annual Giving")->where("donation_date",">=","2018-07-01")->with('contact')->paginate(100);
-        // dd($donations);
-        return view('donations.agc', compact('donations'));
+	$all_donations = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription("Annual Giving")->where("donation_date",">=","2018-07-01")->with('contact')->get();
+	$donations = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription("Annual Giving")->where("donation_date",">=","2018-07-01")->with('contact')->paginate(100);
+	$total['pledged'] = $all_donations->sum('donation_amount');
+	$total['paid'] = $all_donations->sum('payments_paid');
+	if ($total['pledged'] > 0) {
+		$total['percent'] = ($total['paid']/$total['pledged'])*100;
+	} else {
+	    $total['percent'] = 0;
+	}
+        return view('donations.agc', compact('donations','total'));
     }
 
     /**
