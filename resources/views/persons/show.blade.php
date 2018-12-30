@@ -114,6 +114,11 @@
                     @if (!empty($address->street_address))
                     <strong>{{$address->location->display_name}}:</strong>
                     <address>{!!$address->google_map!!}</address>
+                    @can('delete-contact')
+                        {!! Form::open(['method' => 'DELETE', 'route' => ['address.destroy', $address->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                        {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                        {!! Form::close() !!}
+                    @endCan
                     @endif
                     @endforeach
                 </div>

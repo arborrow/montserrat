@@ -78,6 +78,7 @@ Route::get('retreat/type/{event_type_id}', ['uses' => 'RetreatController@index_t
 
 // General routes including groups, resources, etc. 
 Route::get('about', ['as' => 'about','uses' => 'PageController@about']);
+Route::resource('address', 'AddressController');
 Route::get('admin', ['as' => 'admin','uses' => 'PageController@admin']);
 Route::post('admin/permission/update_roles', ['as' => 'admin.permission.update_roles', 'uses' => 'PermissionController@update_roles']);
 Route::post('admin/role/update_permissions', ['as' => 'admin.role.update_permissions', 'uses' => 'RoleController@update_permissions']);
