@@ -118,8 +118,8 @@ class DonationController extends Controller
         'donation_amount' => 'required|numeric',
         'payment_amount' => 'required|numeric',
         'payment_idnumber' => 'nullable|numeric|min:0',
-        'start_date' => 'date|nullable|before:end_date',
-        'end_date' => 'date|nullable|after:start_date',
+        'start_date_only' => 'date|nullable|before:end_date_only',
+        'end_date_only' => 'date|nullable|after:start_date_only',
         'donation_install' => 'numeric|min:0|nullable'
         ]);
 
@@ -133,8 +133,8 @@ class DonationController extends Controller
         $donation->donation_description = $request->input('donation_description');
         $donation->Notes= $request->input('notes');
         $donation->terms= $request->input('terms');
-        $donation->start_date= $request->input('start_date_only');
-        $donation->end_date= $request->input('end_date_only');
+        $donation->start_date= Carbon::parse($request->input('start_date_only'));
+        $donation->end_date= Carbon::parse($request->input('end_date_only'));
         $donation->donation_install = $request->input('donation_install');
         $donation->save();
         
@@ -149,8 +149,7 @@ class DonationController extends Controller
         }
         if ($request->input('payment_description') == 'Check') {
             $payment->cknumber = $request->input('payment_idnumber');
-        }
-        //dd($payment, $donation);
+        }        //dd($payment, $donation);
         $payment->save();
 
         return redirect($donation->contact->contact_url.'#donations');
