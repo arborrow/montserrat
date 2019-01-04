@@ -63,7 +63,7 @@ Navigate to [Google Cloud Console](https://console.cloud.google.com/) and login 
 * Create a new project
 * Navigate to `APIs & Service`
 * Once in `APIs & Service`, navigate to `Library`
-* Search for `Google+ API` and select it.
+* Search for `Google People API` and select it (Socialite previously used Google+ API; however, Google+ API was suspended in 2019)
 * Enable the API and create a new OAuth client ID.
 * Set your redirect URI as `http://localhost:8000/login/google/callback`
 
