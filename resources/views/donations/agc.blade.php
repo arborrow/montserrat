@@ -29,7 +29,7 @@
                         @foreach($donations as $donation)
                         <tr>
 
-                            <td style="width:10%"><a href="donation/{{ $donation->donation_id}}">{{ date('M d, Y', strtotime($donation->donation_date)) }}</a></td>
+                            <td style="width:10%"><a href="/donation/{{ $donation->donation_id}}">{{ date('M d, Y', strtotime($donation->donation_date)) }}</a></td>
                             <td style="width:20%">{!! $donation->contact->contact_link_full_name ?? 'Unknown contact' !!} ({{$donation->contact->agc_household_name}}) </td>
                             <td style="width:10%">{{ $donation->donation_description }} </td>
                             <td style="width:10%; text-align:right;">${{number_format($donation->payments_paid,2)}}/${{ number_format($donation->donation_amount,2) }}</td>
