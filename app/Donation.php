@@ -92,6 +92,13 @@ class Donation extends Model
             return NULL;
         }
     }
+    public function getDonationThankYouSentAttribute() {
+        if (isset($this['Thank You'])) {
+            return $this['Thank You']; 
+        } else {
+            return 'N';
+        }
+    }
     public static function boot()
     {
         parent::boot();    

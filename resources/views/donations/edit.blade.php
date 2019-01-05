@@ -61,7 +61,7 @@
                     </div>
                     <div class='row'>
                         {!! Form::label('donation_thank_you', 'Thank you letter: ', ['class' => 'col-md-2'])  !!}
-                        {!! Form::select('donation_thank_you', ['Y' => 'Yes','N' => 'No'], $donation['Thank You'], ['class' => 'col-md-3']) !!}
+                        {!! Form::select('donation_thank_you', ['Y' => 'Yes','N' => 'No'], $donation->donation_thank_you_sent, ['class' => 'col-md-3']) !!}
                     </div>
             
                 </div>
