@@ -57,7 +57,7 @@ Application key [...] set successfully.
 #### Setting the Key
 Copy the text inside the `[]` and uncomment `APP_KEY={app_key}` in your `.env` file. Replace `{app_key}` with the copied text.
 
-### Step 6: Generate a Google+ API for SocialLite Login
+### Step 6: Generate a Google People API for SocialLite Login
 Navigate to [Google Cloud Console](https://console.cloud.google.com/) and login in with your preferred Google account.
 
 * Create a new project
