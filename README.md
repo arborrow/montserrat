@@ -57,13 +57,13 @@ Application key [...] set successfully.
 #### Setting the Key
 Copy the text inside the `[]` and uncomment `APP_KEY={app_key}` in your `.env` file. Replace `{app_key}` with the copied text.
 
-### Step 6: Generate a Google+ API for SocialLite Login
+### Step 6: Generate a Google People API for SocialLite Login
 Navigate to [Google Cloud Console](https://console.cloud.google.com/) and login in with your preferred Google account.
 
 * Create a new project
 * Navigate to `APIs & Service`
 * Once in `APIs & Service`, navigate to `Library`
-* Search for `Google+ API` and select it.
+* Search for `Google People API` and select it (Socialite previously used Google+ API; however, Google+ API was suspended in 2019)
 * Enable the API and create a new OAuth client ID.
 * Set your redirect URI as `http://localhost:8000/login/google/callback`
 

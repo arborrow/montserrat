@@ -212,3 +212,12 @@ th.row-payment_method, td.row-payment_method {
 .invoice.pagefooter {
    margin-bottom: 2px; 
 }
+
+.agcacknowledge td.board {
+    width: 20%;
+    vertical-align: top;
+}
+.agcacknowledge td.main {
+    width: 80%;
+}
+

@@ -37,7 +37,7 @@
 
                             <td style="width:17%"><a href="donation/{{ $donation->donation_id}}">{{ date('M d, Y g:i A', strtotime($donation->donation_date)) }}</a></td>
                             <td style="width:17%">{!! $donation->contact->contact_link_full_name or 'Unknown contact' !!} </td>
-                            <td style="width:17%">{{ $donation->description }} </td>
+                            <td style="width:17%">{{ $donation->donation_description }} </td>
                             <td style="width:5%">{{ $donation->donation_amount }}</td>
                             <td style="width:44%">{{ $donation->terms }}</td>
                             <td style="width:44%">{{ $donation->retreat_id}}</td>

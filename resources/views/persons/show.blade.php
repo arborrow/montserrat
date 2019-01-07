@@ -52,8 +52,11 @@
                             <a href={{ action('RegistrationController@add',$person->id) }}>Add Registration</a> 
                         </span>                
                         @endCan
-                        <span class="btn btn-default">
+                         <span class="btn btn-default">
                             <a href={{ action('PageController@contact_info_report',$person->id) }}>Contact Info Report</a> 
+                        </span> 
+                        <span class="btn btn-default">
+                            <a href={{ action('PersonController@envelope10',$person->id) }}><img src="/img/envelope.png" title="Print envelope" alt="Print envelope"></a> 
                         </span> 
                </div>
             </div>
@@ -71,6 +74,7 @@
                         <strong>Nick name:</strong> {{ (!empty($person->nick_name)) ? $person->nick_name : null }} <br />
                         <strong>Display name: </strong>{{ (!empty($person->display_name)) ? $person->display_name : null }}   <br />
                         <strong>Sort name: </strong>{{ (!empty($person->sort_name)) ? $person->sort_name : null }} <br />   
+                        <strong>AGC Household name: </strong>{{ (!empty($person->agc_household_name)) ? $person->agc_household_name : null }} <br />   
                         <strong>Contact type: </strong>{{ $person->contact_type_label }}   <br />
                         <strong>Subcontact type: </strong>{{ $person->subcontact_type_label }}   
                         </span>
@@ -110,6 +114,11 @@
                     @if (!empty($address->street_address))
                     <strong>{{$address->location->display_name}}:</strong>
                     <address>{!!$address->google_map!!}</address>
+                    @can('delete-contact')
+                        {!! Form::open(['method' => 'DELETE', 'route' => ['address.destroy', $address->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                        {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                        {!! Form::close() !!}
+                    @endCan
                     @endif
                     @endforeach
                 </div>

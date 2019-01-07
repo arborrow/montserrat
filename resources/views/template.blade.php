@@ -33,7 +33,7 @@
             </div>
             <div class="navbar-right">
                 @if (isset(Auth::user()->avatar))
-                    {!! Html::image(Auth::user()->avatar, Auth::user()->name,array('title'=>Auth::user()->name, 'class' => "img-circle")) !!}
+                    {!! Html::image(Auth::user()->avatar, Auth::user()->name,array('title'=>Auth::user()->name, 'width'=>75, 'height'=>75, 'class' => "img-circle")) !!}
                     <a href={{ route('logout') }}>{!! Html::image('img/logout.png', 'Logout',array('title'=>"Logout")) !!}</a>
                 @else
                     <a href="login/google">{!! Html::image('img/login.png', 'Login',array('title'=>"Login")) !!}</a>

@@ -26,14 +26,14 @@ Route::get('intercept/{code}', function($code) {
 });
 
 Route::get('/agcletters', function () {
-     $touchpoints = \montserrat\Touchpoint::where('notes', 'LIKE', '%AGC thank you letter%')
-                    ->select('notes', 'person_id', 'created_at')
-                    ->with('person')
-                    ->orderBy('created_at', 'desc')
-                    ->get();
-                    // return $touchpoints;
+    $touchpoints = \montserrat\Touchpoint::where('notes', 'LIKE', '%AGC thank you letter%')
+    ->select('notes', 'person_id', 'created_at')
+    ->with('person')
+    ->orderBy('created_at', 'desc')
+    ->get();
+    // return $touchpoints;
 
-     return view('agcletters', compact('touchpoints'));
+    return view('agcletters', compact('touchpoints'));
 })->middleware('auth');
 Route::get('/', 'PageController@welcome');
 Route::get('/welcome', ['as' => 'welcome','uses' => 'PageController@welcome']);
@@ -41,11 +41,11 @@ Route::get('/goodbye', 'HomeController@goodbye');
 Route::get('/home', ['as' => 'home','uses' => 'HomeController@index']);
 
 // Authentication routes...
- // Route::get('login/{provider?}', 'Auth\AuthController@login');
- // Route::get('auth/google/callback', 'Auth\AuthController@handleProviderCallback');
- Route::get('logout', ['as' => 'logout','uses' => 'Auth\LoginController@logout']);
- Route::get('login/google', ['as'=> 'login', 'uses' => 'Auth\LoginController@redirectToProvider']);
- Route::get('login/google/callback', ['as'=>'login.google_callback','uses' => 'Auth\LoginController@handleProviderCallback']);
+// Route::get('login/{provider?}', 'Auth\AuthController@login');
+// Route::get('auth/google/callback', 'Auth\AuthController@handleProviderCallback');
+Route::get('logout', ['as' => 'logout','uses' => 'Auth\LoginController@logout']);
+Route::get('login/google', ['as'=> 'login', 'uses' => 'Auth\LoginController@redirectToProvider']);
+Route::get('login/google/callback', ['as'=>'login.google_callback','uses' => 'Auth\LoginController@handleProviderCallback']);
 
 Route::get('search/autocomplete', 'SearchController@autocomplete');
 Route::get('search/getuser', 'SearchController@getuser');
@@ -76,8 +76,9 @@ Route::get('retreat/{event_id}/waitlist_touchpoint', ['uses' => 'TouchpointContr
 Route::get('retreat/{event_id}/waitlist', ['uses' => 'RetreatController@show_waitlist']);
 Route::get('retreat/type/{event_type_id}', ['uses' => 'RetreatController@index_type']);
 
-// General routes including groups, resources, etc. 
+// General routes including groups, resources, etc.
 Route::get('about', ['as' => 'about','uses' => 'PageController@about']);
+Route::resource('address', 'AddressController');
 Route::get('admin', ['as' => 'admin','uses' => 'PageController@admin']);
 Route::post('admin/permission/update_roles', ['as' => 'admin.permission.update_roles', 'uses' => 'PermissionController@update_roles']);
 Route::post('admin/role/update_permissions', ['as' => 'admin.role.update_permissions', 'uses' => 'RoleController@update_permissions']);
@@ -87,7 +88,7 @@ Route::get('admin/config/mailgun', ['as' => 'admin.config.mailgun','uses' => 'Pa
 Route::get('admin/config/twilio', ['as' => 'admin.config.twilio','uses' => 'PageController@config_twilio']);
 Route::get('admin/offeringdedup', ['as' => 'offeringdedup','uses' => 'SystemController@offeringdedup_index']);
 Route::get('admin/offeringdedup/show/{contact_id}/{event_id}', ['as' => 'offeringdedup.show','uses' => 'SystemController@offeringdedup_show']);
-   
+
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('permission', 'PermissionController');
     Route::resource('role', 'RoleController');
@@ -106,6 +107,8 @@ Route::resource('donor', 'DonorController');
 Route::resource('donation', 'DonationController');
 Route::get('donation/create/{id?}/{event_id?}/{type?}', ['uses'=> 'DonationController@create']);
 Route::get('donation/{id?}/invoice', ['uses'=> 'PageController@finance_invoice']);
+Route::get('donation/{id?}/agcacknowledge', ['uses'=> 'PageController@finance_agcacknowledge']);
+Route::get('agc/{year?}', ['uses'=> 'DonationController@agc']);
 Route::get('group/{group_id?}/touchpoint', ['uses' => 'TouchpointController@add_group']);
 Route::get('group/{group_id?}/registration', ['uses' => 'RegistrationController@add_group']);
 Route::post('touchpoint/add_group', ['uses' => 'TouchpointController@store_group']);

@@ -15,7 +15,6 @@
                     <div class='row'>
                         {!! Form::label('donation_description', 'Description: ', ['class' => 'col-md-2'])  !!}
                         {!! Form::select('donation_description', $descriptions, $defaults['description_key'], ['class' => 'col-md-3']) !!}
-            
                     </div>
                     <div class='row'>
                         {!! Form::label('event_id', 'Retreat:', ['class' => 'col-md-2'])  !!}
@@ -60,7 +59,11 @@
                         {!! Form::label('donation_install', 'Installment:', ['class' => 'col-md-2'])  !!}
                         {!! Form::number('donation_install', $donation->install, ['class' => 'col-md-3']) !!}
                     </div>
-
+                    <div class='row'>
+                        {!! Form::label('donation_thank_you', 'Thank you letter: ', ['class' => 'col-md-2'])  !!}
+                        {!! Form::select('donation_thank_you', ['Y' => 'Yes','N' => 'No'], $donation->donation_thank_you_sent, ['class' => 'col-md-3']) !!}
+                    </div>
+            
                 </div>
             </span>
                 
