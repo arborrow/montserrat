@@ -66,8 +66,8 @@ class LoginController extends Controller
         $socialite_restrict_domain = env('SOCIALITE_RESTRICT_DOMAIN');
         // dd($socialite_retrict_domain,$user);
         if (isset($socialite_restrict_domain)) {
-            if (isset($user->user['domain'])) {
-                if ($user->user['domain']==$socialite_restrict_domain) { // the user domain matches the social restrict domain so authenticate successfully
+            if (isset($user->user['hd'])) {
+                if ($user->user['hd']==$socialite_restrict_domain) { // the user domain matches the social restrict domain so authenticate successfully
                     $authuser = new \App\UserRepository;
                     $currentuser = $authuser->findByUserNameOrCreate($user);
                     Auth::login($currentuser, true);

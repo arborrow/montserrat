@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Carbon;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class PageController extends Controller
 {
@@ -76,7 +77,7 @@ class PageController extends Controller
     }
     public function welcome()
     {
-        $next_week=(Carbon\Carbon::now()->addWeeks(1));
+        $next_week=(Carbon::now()->addWeeks(1));
         $client = new \GuzzleHttp\Client();
         $result = $client->get('http://labs.bible.org/api/?passage=random')->getBody();
         $quote = strip_tags($result->getContents(),'<b>');
@@ -113,9 +114,9 @@ class PageController extends Controller
     {
         $this->authorize('show-donation');
         if (is_null($day)) {
-            $day = \Carbon\Carbon::now();
+            $day = Carbon::now();
         }
-        $report_date = \Carbon\Carbon::parse($day);
+        $report_date = Carbon::parse($day);
         if (isset($report_date))
         {
             $payments = \App\Payment::wherePaymentDate($report_date)->whereIn('payment_description',['Cash','Check'])->with('donation')->get();
@@ -131,9 +132,9 @@ class PageController extends Controller
     {
         $this->authorize('show-donation');
         if (is_null($day)) {
-            $day = \Carbon\Carbon::now();
+            $day = Carbon::now();
         }
-        $report_date = \Carbon\Carbon::parse($day);
+        $report_date = Carbon::parse($day);
         if (isset($report_date))
         {
             $payments = \App\Payment::wherePaymentDate($report_date)->where('payment_description','=','Credit Card')->with('donation')->get();
@@ -153,6 +154,27 @@ class PageController extends Controller
         $donation = \App\Donation::with('payments','contact','retreat')->findOrFail($donation_id);
         // dd($donation);
 	return view('reports.finance.invoice', compact('donation'));   //
+    }
+    public function finance_agcacknowledge($donation_id = NULL)
+    {
+        $this->authorize('show-donation');
+	$current_user = Auth::user();
+        $user_email = \App\Email::whereEmail($current_user->email)->first();
+ 
+	$donation = \App\Donation::with('payments','contact','retreat')->findOrFail($donation_id);
+	if (NULL == $donation['Thank You']) { //avoid creating another touchpoint if acknowledgement letter has already been viewed (and presumably printed and mailed)
+	    $agc_touchpoint = new \App\Touchpoint;
+	    $agc_touchpoint->person_id = $donation->contact_id;
+	    $agc_touchpoint->staff_id = $user_email->contact_id;
+	    $agc_touchpoint->touched_at = Carbon::parse(now());
+	    $agc_touchpoint->type = 'Letter';
+	    $agc_touchpoint->notes = 'AGC Acknowledgement Letter for Donation #'.$donation->donation_id;
+   	    $agc_touchpoint->save();       	
+	    $donation['Thank You'] = "Y";
+	    $donation->save();
+	}
+
+	return view('reports.finance.agcacknowledge', compact('donation'));   //
     }
     
     public function finance_retreatdonations($retreat_id = NULL)
@@ -182,7 +204,7 @@ class PageController extends Controller
         $grouped_payments = $payments->groupBy(function ($c) {
 		return '#'.$c->donation->retreat_idnumber.'-'.$c->donation->retreat_name.' ('.$c->donation->retreat_start_date.')';
         })->sortBy(function ($d) {
-		return \Carbon\Carbon::parse($d[0]->donation->retreat_start_date);
+		return Carbon::parse($d[0]->donation->retreat_start_date);
 			});
         return view('reports.finance.deposits', compact('grouped_payments','payments'));  
     }
