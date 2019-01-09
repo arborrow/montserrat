@@ -133,8 +133,8 @@ class DonationController extends Controller
         $donation->donation_description = $request->input('donation_description');
         $donation->Notes= $request->input('notes');
         $donation->terms= $request->input('terms');
-        $donation->start_date= Carbon::parse($request->input('start_date_only'));
-        $donation->end_date= Carbon::parse($request->input('end_date_only'));
+        $donation->start_date= $request->filled('start_date_only') ? Carbon::parse($request->input('start_date_only')) : null;
+        $donation->end_date= $request->filled('end_date_only') ? Carbon::parse($request->input('end_date_only')) : null;
         $donation->donation_install = $request->input('donation_install');
         $donation->save();
 
@@ -200,12 +200,6 @@ class DonationController extends Controller
 
     /**
      * Update the specified resource in storage.
-        $defaults['description_key'] = array_search($donation->donation_description, $descriptions->toArray());
-        return view('donations.edit', compact('donation','descriptions','defaults','retreats'));
-    }
-
-    /**
-     * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -241,8 +235,8 @@ class DonationController extends Controller
         $donation->notes1= $request->input('notes1'); //primary_contact
         $donation->notes= $request->input('notes');
         $donation->terms= $request->input('terms');
-        $donation->start_date= $request->input('start_date_only') ? Carbon::parse($request->input('start_date_only')) : null;
-        $donation->end_date= $request->input('end_date_only') ? Carbon::parse($request->input('end_date_only')) : null;
+        $donation->start_date= $request->filled('start_date_only') ? Carbon::parse($request->input('start_date_only')) : null;
+        $donation->end_date= $request->filled('end_date_only') ? Carbon::parse($request->input('end_date_only')) : null;
         $donation->donation_install = $request->input('donation_install');
         if ($request->input('donation_thank_you') == "Y") {
             $donation['Thank You'] = $request->input('donation_thank_you'); //field has space in database and should be changed at some point
