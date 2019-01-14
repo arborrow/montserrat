@@ -3,6 +3,7 @@
 <h1>Welcome to the Finance Page</h1>
 @can('show-donation')
         {!! Html::link(action('DonationController@index'),'Donations',array('class' => 'btn btn-default'))!!}
+        {!! Html::link(action('DonationController@agc',2019),'AGC FY19',array('class' => 'btn btn-default'))!!}
 @endCan
 
 <p>Finance reports</p>

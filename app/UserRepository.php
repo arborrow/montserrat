@@ -8,8 +8,8 @@ class UserRepository
 {
     public function findByUserNameOrCreate($userData)
     {
-        if (isset($userData->user['domain'])) {
-            if (!$userData->user['domain']=="montserratretreat.org") {
+        if (isset($userData->user['hd'])) {
+            if (!$userData->user['hd']=="montserratretreat.org") {
                 redirect('/restricted');
             }
         } else {

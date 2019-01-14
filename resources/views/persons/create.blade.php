@@ -6,7 +6,7 @@
         <h2>Create Person</h2>
     </div>
     <div class="col-12">
-        {!! Form::open(['url' => 'person', 'files' => 'true', 'method' => 'post', 'class' => 'form-horizontal panel']) !!}
+        {!! Form::open(['url' => 'person', 'files' => 'true', 'method' => 'post']) !!}
             <div class="row">
                 <div class="col-12">
                     <h3>Basic Information</h3>
@@ -339,7 +339,7 @@
 
             <div class="row">
                 <div class="col-12 mt-5">
-                    {!! Form::submit('Add Person', ['class'=>'btn btn-default']) !!}
+                    {!! Form::submit('Add Person', ['class'=>'btn btn-light']) !!}
                 </div>
             </div>
         {!! Form::close() !!}

@@ -61,6 +61,9 @@
                     {!! Form::text('display_name', $person->display_name, ['class' => 'col-md-3']) !!}
                     {!! Form::label('sort_name', 'Sort name: ', ['class' => 'col-md-2'])  !!}
                     {!! Form::text('sort_name', $person->sort_name, ['class' => 'col-md-3']) !!}
+                    <div class="clearfix"> </div>
+		    {!! Form::label('agc_household_name', 'AGC Household name: ', ['class' => 'col-md-2'])  !!}
+                    {!! Form::text('agc_household_name', $person->agc_household_name, ['class' => 'col-md-3']) !!}
 
                     <div class="clearfix"> </div>
                     {!! Form::label('contact_type', 'Contact type: ', ['class' => 'col-md-2'])  !!}

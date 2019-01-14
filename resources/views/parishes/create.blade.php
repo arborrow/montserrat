@@ -1,81 +1,91 @@
 @extends('template')
 @section('content')
-
-    <section class="section-padding">
-        <div class="jumbotron text-left">
-            <h2><strong>Add A Parish</strong></h2>
-            {!! Form::open(['url' => 'parish', 'method' => 'post', 'class' => 'form-horizontal panel']) !!}
-           <div class="form-group">
-
-                {!! Form::label('diocese_id', 'Diocese:', ['class' => 'col-md-1']) !!}
-                {!! Form::select('diocese_id', $dioceses, 0, ['class' => 'col-md-2']) !!}
-                
-            </div><div class="clearfix"> </div>
-           <div class="form-group">
-
-                {!! Form::label('pastor_id', 'Pastor:', ['class' => 'col-md-1']) !!}
-                {!! Form::select('pastor_id', $pastors, 0, ['class' => 'col-md-2']) !!}
-               
-            </div><div class="clearfix"> </div>
+<div class="row bg-cover">
+    <div class="col-12">
+        <h2>Add A Parish</h2>
+    </div>
+    <div class="col-12">
+        {!! Form::open(['url' => 'parish', 'method' => 'post']) !!}
             <div class="form-group">
-                {!! Form::label('organization_name', 'Name:', ['class' => 'col-md-1']) !!}
-                {!! Form::text('organization_name', null, ['class'=>'col-md-2']) !!}
-            </div><div class="clearfix"> </div>
-            <div class="form-group">
-                {!! Form::label('street_address', 'Address:', ['class' => 'col-md-1']) !!}
-                {!! Form::text('street_address', null, ['class'=>'col-md-2']) !!}
-            </div><div class="clearfix"> </div>
-            <div class="form-group">
-                {!! Form::label('supplemental_address_1', 'Address2:', ['class' => 'col-md-1']) !!}
-                {!! Form::text('supplemental_address_1', null, ['class'=>'col-md-2']) !!}
-            </div><div class="clearfix"> </div>
-            <div class="form-group">
-                {!! Form::label('city', 'City:', ['class' => 'col-md-1']) !!}
-                {!! Form::text('city', null, ['class'=>'col-md-2']) !!}
-            </div><div class="clearfix"> </div>
-            <div class="form-group">
-                {!! Form::label('state_province_id', 'State:', ['class' => 'col-md-1'])  !!}
-                {!! Form::select('state_province_id', $states, $defaults['state_province_id'], ['class' => 'col-md-2']) !!}
-            </div><div class="clearfix"> </div>
-            <div class="form-group">
-                {!! Form::label('postal_code', 'Zip:', ['class' => 'col-md-1']) !!}
-                {!! Form::text('postal_code', null, ['class'=>'col-md-2']) !!}
-            </div><div class="clearfix"> </div>
-            <div class="form-group">
-                {!! Form::label('country_id', 'Country:', ['class' => 'col-md-1'])  !!}
-                {!! Form::select('country_id', $countries, $defaults['country_id'], ['class' => 'col-md-1']) !!}
-            </div><div class="clearfix"> </div>
-            <div class="form-group">
-                {!! Form::label('phone_main_phone', 'Phone:', ['class' => 'col-md-1']) !!}
-                {!! Form::text('phone_main_phone', null, ['class'=>'col-md-2']) !!}
-            </div><div class="clearfix"> </div>
-            <div class="form-group">
-                {!! Form::label('phone_main_fax', 'Fax:', ['class' => 'col-md-1']) !!}
-                {!! Form::text('phone_main_fax', null, ['class'=>'col-md-2']) !!}
-            </div><div class="clearfix"> </div>
-            <div class="form-group">
-                {!! Form::label('email_main', 'Email:', ['class' => 'col-md-1']) !!}
-                {!! Form::text('email_main', null, ['class'=>'col-md-2']) !!}
-            </div><div class="clearfix"> </div>
-            <div class="form-group">
-                {!! Form::label('note', 'Note:', ['class' => 'col-md-1']) !!}
-                {!! Form::textarea('note', null, ['class'=>'col-md-5', 'rows'=>'3']) !!}
-            </div><div class="clearfix"> </div>
-            
-            <div class='form-group'>
-                
-                        @include('parishes.create.urls')
-                                </div>
-            <div class="clearfix"> </div>
-    
-            
-            <div class="col-md-1">
-                <div class="form-group">
-                    {!! Form::submit('Add Parish', ['class'=>'btn btn-default']) !!}
+                <div class="row">
+                    <div class="col-4">
+                        {!! Form::label('diocese_id', 'Diocese:') !!}
+                        {!! Form::select('diocese_id', $dioceses, 0, ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="col-4">
+                        {!! Form::label('pastor_id', 'Pastor:') !!}
+                        {!! Form::select('pastor_id', $pastors, 0, ['class' => 'form-control']) !!}
+                    </div>
                 </div>
-            </div><div class="clearfix"> </div>
-            {!! Form::close() !!}
-        </div>
-    </section>
-
+                <div class="row">
+                    <div class="col-4">
+                        {!! Form::label('organization_name', 'Name:') !!}
+                        {!! Form::text('organization_name', null, ['class'=>'form-control']) !!}
+                    </div>
+                    <div class="col-4">
+                        {!! Form::label('street_address', 'Address Line 1:') !!}
+                        {!! Form::text('street_address', null, ['class'=>'form-control']) !!}
+                    </div>
+                    <div class="col-4">
+                        {!! Form::label('supplemental_address_1', 'Address Line 2:') !!}
+                        {!! Form::text('supplemental_address_1', null, ['class'=>'form-control']) !!}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        {!! Form::label('city', 'City:') !!}
+                        {!! Form::text('city', null, ['class'=>'form-control']) !!}
+                    </div>
+                    <div class="col-4">
+                        {!! Form::label('state_province_id', 'State:')  !!}
+                        {!! Form::select('state_province_id', $states, $defaults['state_province_id'], ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="col-4">
+                        {!! Form::label('postal_code', 'Zip:') !!}
+                        {!! Form::text('postal_code', null, ['class'=>'form-control']) !!}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        {!! Form::label('country_id', 'Country:')  !!}
+                        {!! Form::select('country_id', $countries, $defaults['country_id'], ['class' => 'form-control']) !!}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        {!! Form::label('phone_main_phone', 'Phone:') !!}
+                        {!! Form::text('phone_main_phone', null, ['class'=>'form-control']) !!}
+                    </div>
+                    <div class="col-4">
+                        {!! Form::label('phone_main_fax', 'Fax:') !!}
+                        {!! Form::text('phone_main_fax', null, ['class'=>'form-control']) !!}
+                    </div>
+                    <div class="col-4">
+                        {!! Form::label('email_main', 'Email:') !!}
+                        {!! Form::text('email_main', null, ['class'=>'form-control']) !!}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        {!! Form::label('note', 'Note:') !!}
+                        {!! Form::textarea('note', null, ['class'=>'form-control', 'rows'=>'3']) !!}
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h3>Websites (URLs)</h3>
+                    </div>
+                    <div class="col-12">
+                        @include('parishes.create.urls')
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        {!! Form::submit('Add Parish', ['class'=>'btn btn-light']) !!}
+                    </div>
+                </div>
+            </div>
+        {!! Form::close() !!}
+    </div>
+</div>
 @stop

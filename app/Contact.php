@@ -83,6 +83,10 @@ class Contact extends Model
     {
         return $this->hasMany(Attachment::class, 'entity_id', 'id')->whereEntity('contact');
     }
+    public function agc2019()
+    {
+        return $this->hasOne(Agc2019::class, 'contact_id', 'id');
+    }
     public function avatar()
     {
         return $this->hasOne(Attachment::class, 'entity_id', 'id')->whereFileTypeId(config('polanco.file_type.contact_avatar'));
@@ -576,6 +580,14 @@ class Contact extends Model
             return $this->note_registration->note;
         } else {
             return null;
+        }
+    }
+    public function getAgcHouseholdNameAttribute()
+    {
+        if (isset($this->agc2019->household_name)) {
+            return $this->agc2019->household_name;
+        } else {
+            return $this->full_name;
         }
     }
     public function getNoteRoomPreferenceTextAttribute()
