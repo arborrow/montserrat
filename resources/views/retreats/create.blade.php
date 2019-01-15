@@ -13,7 +13,7 @@
             
             <div class="form-group">
                 {!! Form::label('start_date', 'Starts: ', ['class' => 'col-md-2']) !!}
-                {!! Form::text('start_date', null, ['id' => 'start_date', 'class' => 'col-md-3']) !!}
+                {!! Form::text('start_date', null, ['id' => 'start_date datepicker', 'class' => 'col-md-3']) !!}
                 <!-- {!! Form::input('date', 'start', date('Y-m-d'), ['class'=>'col-md-2']) !!} -->
             
             </div>
