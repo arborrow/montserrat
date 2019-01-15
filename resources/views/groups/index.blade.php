@@ -10,7 +10,7 @@
                         @can('create-group')
                             <span class="create">
                                 <a href="{{ action('GroupController@create') }}">
-                                   {!! Html::image('img/create.png', 'Add Group',array('title'=>"Add Group",'class' => 'btn btn-primary')) !!}
+                                   {!! Html::image('images/create.png', 'Add Group',array('title'=>"Add Group",'class' => 'btn btn-primary')) !!}
                                 </a>
                  
                             </span>

@@ -19,8 +19,8 @@
                         {!! Html::link(action('PaymentController@create',$donation->donation_id),'Add payment',array('class' => 'btn btn-default'))!!}
                     @endCan    
 		    @if ($donation->percent_paid == 100)
-			<a href="/donation/{{$donation->donation_id}}/agcacknowledge"><img src="/img/letter.png" alt="Print acknowledgement" title="Print acknowledgement"></a>
-		        <a href="/person/{{$donation->contact_id}}/envelope10"><img src="/img/envelope.png" alt="Print envelope" title="Print envelope"></a>
+			<a href="/donation/{{$donation->donation_id}}/agcacknowledge"><img src="/images/letter.png" alt="Print acknowledgement" title="Print acknowledgement"></a>
+		        <a href="/person/{{$donation->contact_id}}/envelope10"><img src="/images/envelope.png" alt="Print envelope" title="Print envelope"></a>
 		    @endIf
 				    
 	    </div>
@@ -80,13 +80,13 @@
             <div class='row'>
                 @can('update-donation')
                     <div class='col-md-1'>
-                        <a href="{{ action('DonationController@edit', $donation->donation_id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                        <a href="{{ action('DonationController@edit', $donation->donation_id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                     </div>
                 @endCan
                 @can('delete-donation')
                     <div class='col-md-1'>
                         {!! Form::open(['method' => 'DELETE', 'route' => ['donation.destroy', $donation->donation_id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                        {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                        {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
                         {!! Form::close() !!}
                     </div>
                 @endCan

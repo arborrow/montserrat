@@ -13,7 +13,7 @@
                                 Registration #{{ $registration->id }}
                             @endCan
                         </span>
-                    <span class="back"><a href={{ action('RegistrationController@index') }}>{!! Html::image('img/registration.png', 'Registration Index',array('title'=>"Registration Index",'class' => 'btn btn-primary')) !!}</a>
+                    <span class="back"><a href={{ action('RegistrationController@index') }}>{!! Html::image('images/registration.png', 'Registration Index',array('title'=>"Registration Index",'class' => 'btn btn-primary')) !!}</a>
                     </span></h2>
                 </div>
                 <div class='row'>
@@ -107,13 +107,13 @@
 		<div class='row'>
                     @can('update-registration')
                         <div class='col-md-1'>
-                            <a href="{{ action('RegistrationController@edit', $registration->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                            <a href="{{ action('RegistrationController@edit', $registration->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                         </div>
                     @endCan
                     @can('delete-registration')
                         <div class='col-md-1'>
                             {!! Form::open(['method' => 'DELETE', 'route' => ['registration.destroy', $registration->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                            {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                            {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
                             {!! Form::close() !!}
                         </div>
                     @endCan

@@ -50,13 +50,13 @@
             <div class='row'>
                 @can('update-payment')
                     <div class='col-md-1'>
-                        <a href="{{ action('PaymentController@edit', $payment->payment_id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                        <a href="{{ action('PaymentController@edit', $payment->payment_id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                     </div>
                 @endCan
                 @can('delete-payment')
                     <div class='col-md-1'>
                         {!! Form::open(['method' => 'DELETE', 'route' => ['payment.destroy', $payment->payment_id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                        {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                        {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
                         {!! Form::close() !!}
                     </div>
                 @endCan

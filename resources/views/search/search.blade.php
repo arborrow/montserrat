@@ -15,7 +15,7 @@
             <div class='panel-heading'>
                 <h2>
                     <span>Name</span>
-                    <span>{!! Form::image('img/submit.png','btnSave',['class' => 'btn btn-default pull-right']) !!}</span>                    
+                    <span>{!! Form::image('images/submit.png','btnSave',['class' => 'btn btn-default pull-right']) !!}</span>                    
                 </h2>
             </div>
             <div class="panel-body">
@@ -364,9 +364,9 @@
  
 --}}
    </div>
-    <!-- <div class="form-group">
-        {!! Form::image('img/save.png','btnSave',['class' => 'btn btn-default']) !!}
-    </div> -->
+    {{-- <div class="form-group">
+        {!! Form::image('images/save.png','btnSave',['class' => 'btn btn-default']) !!}
+    </div> --}}
     {!! Form::close() !!}
 </div>
 
