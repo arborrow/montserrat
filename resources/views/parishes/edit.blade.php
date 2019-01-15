@@ -106,7 +106,7 @@
     <div class="clearfix"> </div>
     -->
     <div class="form-group">
-        {!! Form::image('/images/save.png','btnSave',['class' => 'btn btn-default']) !!}
+        {!! Form::image('/images/save.png','btnSave',['class' => 'btn btn-outline-dark']) !!}
     </div>
     {!! Form::close() !!}
 </div>

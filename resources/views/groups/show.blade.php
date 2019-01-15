@@ -15,12 +15,12 @@
                         </strong></h2>
                 </span>
                 @can('create-touchpoint')
-                    <span class="btn btn-default">
+                    <span class="btn btn-outline-dark">
                         <a href={{ action('TouchpointController@add_group',$group->id) }}>Add Group Touchpoint</a>
                     </span>
                 @endCan
                 @can('create-registration')
-                    <span class="btn btn-default">
+                    <span class="btn btn-outline-dark">
                         <a href={{ action('RegistrationController@add_group',$group->id) }}>Add Group Registration</a>
                     </span>
                 @endCan

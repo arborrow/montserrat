@@ -139,10 +139,10 @@
             <h2>Waitlist for {!!Html::link(url('retreat/'.$retreat->id),$retreat->idnumber.' - '.$retreat->title)!!} </h2>
             
             @can('show-contact')
-                {!! Html::link($retreat->email_waitlist_retreatants,'Email retreatants on waitlist',array('class' => 'btn btn-default'))!!}
+                {!! Html::link($retreat->email_waitlist_retreatants,'Email retreatants on waitlist',array('class' => 'btn btn-outline-dark'))!!}
             @endCan
             @can('create-touchpoint')
-                {!! Html::link(action('TouchpointController@add_retreat_waitlist',$retreat->id),'Waitlist touchpoint',array('class' => 'btn btn-default'))!!}
+                {!! Html::link(action('TouchpointController@add_retreat_waitlist',$retreat->id),'Waitlist touchpoint',array('class' => 'btn btn-outline-dark'))!!}
             @endCan    
         </div>
             @if ($registrations->isEmpty())

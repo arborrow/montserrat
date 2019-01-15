@@ -36,7 +36,7 @@
                         {!! Form::hidden('id',$role->id) !!}
                         {!! Form::label('permissions', 'Permissions granted to '.$role->name.' role:', ['class' => 'col-md-4'])  !!}
                         {!! Form::select('permissions[]', $permissions, $role->permissions->pluck('id')->toArray(), ['id'=>'permissions','class' => 'form-control col-md-6','multiple' => 'multiple']) !!}
-                        Update permissions {!! Form::image('/images/save.png','btnSave',['class' => 'btn btn-default']) !!}
+                        Update permissions {!! Form::image('/images/save.png','btnSave',['class' => 'btn btn-outline-dark']) !!}
                         {!! Form::close() !!}
                     @endCan
                 </div>
@@ -50,7 +50,7 @@
                         {!! Form::hidden('id',$role->id) !!}
                         {!! Form::label('users', 'Users with '.$role->name.' role:', ['class' => 'col-md-4'])  !!}
                         {!! Form::select('users[]', $users, $role->users->pluck('id')->toArray(), ['id'=>'users','class' => 'form-control col-md-6','multiple' => 'multiple']) !!}
-                        Update users {!! Form::image('/images/save.png','btnSave',['class' => 'btn btn-default']) !!}
+                        Update users {!! Form::image('/images/save.png','btnSave',['class' => 'btn btn-outline-dark']) !!}
                         {!! Form::close() !!}
                     @endCan
 

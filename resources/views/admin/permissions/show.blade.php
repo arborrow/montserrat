@@ -34,7 +34,7 @@
                         {!! Form::hidden('id',$permission->id) !!}
                         {!! Form::label('roles', 'Assigned roles:', ['class' => 'col-md-2'])  !!}
                         {!! Form::select('roles[]', $roles, $permission->roles->pluck('id')->toArray(), ['id'=>'roles','class' => 'form-control col-md-6','multiple' => 'multiple']) !!}
-                        Update role assignments {!! Form::image('/images/save.png','btnSave',['class' => 'btn btn-default']) !!}
+                        Update role assignments {!! Form::image('/images/save.png','btnSave',['class' => 'btn btn-outline-dark']) !!}
                         {!! Form::close() !!}
                     @endCan
                 </div>

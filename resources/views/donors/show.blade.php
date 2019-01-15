@@ -41,7 +41,7 @@
                             <td><a href="../results?phone={{$donor->cell_phone}}">{{$donor->cell_phone}}</a></td>
                             <td><a href="../results?email={{$donor->EMailAddress}}">{{$donor->EMailAddress}}</a></td>
                             <td> 
-                                <span class="btn btn-default">
+                                <span class="btn btn-outline-dark">
                                     <a href="{{ url('donor/'.$donor->donor_id.'/add') }}">Add {{$donor->sort_name}} to Polanco</a>
                                 </span>
                             </td>
@@ -130,7 +130,7 @@
                                 @endforeach
                             </td>
                             <td>
-                                <span class="btn btn-default">
+                                <span class="btn btn-outline-dark">
                                     <a href="{{ url('donor/'.$donor->donor_id.'/assign/'.$sortname->id) }}">Assign {{$sortname->id  }}</a>
                                 </span>
                                 
@@ -180,7 +180,7 @@
                                 @endforeach
                             </td>
                             <td>
-                                <span class="btn btn-default">
+                                <span class="btn btn-outline-dark">
                                     <a href="{{ url('donor/'.$donor->donor_id.'/assign/'.$lastname->id) }}">Assign {{$lastname->id  }}</a>
                                 </span>
                                 

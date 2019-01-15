@@ -19,12 +19,12 @@
                             </strong>
                         </h1>
                     </div>
-                    {!! Html::link('#notes','Notes',array('class' => 'btn btn-default')) !!}
-                    {!! Html::link('#relationships','Relationships',array('class' => 'btn btn-default')) !!}
-                    {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-default')) !!}
-                    {!! Html::link('#touchpoints','Touchpoints',array('class' => 'btn btn-default')) !!}
-                    {!! Html::link('#attachments','Attachments',array('class' => 'btn btn-default')) !!}
-                    {!! Html::link('#donations','Donations',array('class' => 'btn btn-default')) !!}
+                    {!! Html::link('#notes','Notes',array('class' => 'btn btn-outline-dark')) !!}
+                    {!! Html::link('#relationships','Relationships',array('class' => 'btn btn-outline-dark')) !!}
+                    {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-outline-dark')) !!}
+                    {!! Html::link('#touchpoints','Touchpoints',array('class' => 'btn btn-outline-dark')) !!}
+                    {!! Html::link('#attachments','Attachments',array('class' => 'btn btn-outline-dark')) !!}
+                    {!! Html::link('#donations','Donations',array('class' => 'btn btn-outline-dark')) !!}
                 </div>
                 <div class="clearfix"> </div>
                 
@@ -255,7 +255,7 @@
                     <div class='panel-heading'>
                         <h2><strong>Donations for {{ $vendor->display_name }} ({{$vendor->donations->count() }} donations totaling:  ${{ number_format($vendor->donations->sum('donation_amount'),2)}})</strong></h2>
                         @can('create-donation')
-                            {!! Html::link(action('DonationController@create',$vendor->id),'Create donation',array('class' => 'btn btn-default'))!!}
+                            {!! Html::link(action('DonationController@create',$vendor->id),'Create donation',array('class' => 'btn btn-outline-dark'))!!}
                         @endCan
                     </div>
 

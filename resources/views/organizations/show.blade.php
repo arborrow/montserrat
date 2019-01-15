@@ -18,23 +18,23 @@
                             </strong>
                         </h1>
                         </div>
-                        {!! Html::link('#notes','Notes',array('class' => 'btn btn-default')) !!}
-                        {!! Html::link('#relationships','Relationships',array('class' => 'btn btn-default')) !!}
-                        {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-default')) !!}
-                        {!! Html::link('#touchpoints','Touchpoints',array('class' => 'btn btn-default')) !!}
-                        {!! Html::link('#attachments','Attachments',array('class' => 'btn btn-default')) !!}
-                        {!! Html::link('#donations','Donations',array('class' => 'btn btn-default')) !!}
+                        {!! Html::link('#notes','Notes',array('class' => 'btn btn-outline-dark')) !!}
+                        {!! Html::link('#relationships','Relationships',array('class' => 'btn btn-outline-dark')) !!}
+                        {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-outline-dark')) !!}
+                        {!! Html::link('#touchpoints','Touchpoints',array('class' => 'btn btn-outline-dark')) !!}
+                        {!! Html::link('#attachments','Attachments',array('class' => 'btn btn-outline-dark')) !!}
+                        {!! Html::link('#donations','Donations',array('class' => 'btn btn-outline-dark')) !!}
                     </div>
                     
                     <div class="row">
                         
-                        <span><a href={{ action('OrganizationController@index') }}>{!! Html::image('/images/organization.png', 'Organization Index',array('title'=>"Organization Index",'class' => 'btn btn-default')) !!}</a></span>
+                        <span><a href={{ action('OrganizationController@index') }}>{!! Html::image('/images/organization.png', 'Organization Index',array('title'=>"Organization Index",'class' => 'btn btn-outline-dark')) !!}</a></span>
                         @can('create-touchpoint')
-                        <span class="btn btn-default">
+                        <span class="btn btn-outline-dark">
                             <a href={{ action('TouchpointController@add',$organization->id) }}>Add Touchpoint</a>
                         </span>
                         @endCan
-                        <span class="btn btn-default">
+                        <span class="btn btn-outline-dark">
                             <a href={{ action('RegistrationController@add',$organization->id) }}>Add Registration</a> 
                         </span>                
                     </div>
@@ -203,7 +203,7 @@
                         <div class='panel-heading'>
                             <h2><strong>Donations for {{ $organization->display_name }} ({{$organization->donations->count() }} donations totaling:  ${{ number_format($organization->donations->sum('donation_amount'),2)}})</strong></h2>
                             @can('create-donation')
-                                {!! Html::link(action('DonationController@create',$organization->id),'Create donation',array('class' => 'btn btn-default'))!!}
+                                {!! Html::link(action('DonationController@create',$organization->id),'Create donation',array('class' => 'btn btn-outline-dark'))!!}
                             @endCan
                         </div>
                         @if ($organization->donations->isEmpty())

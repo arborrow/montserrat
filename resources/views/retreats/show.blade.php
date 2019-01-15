@@ -12,22 +12,22 @@
                         Retreat {{$retreat->title.' ('.$retreat->idnumber.')'}} 
                     @endCan
                 </h2>
-                {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-default')) !!}
+                {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-outline-dark')) !!}
                 @can('create-touchpoint')
-                    {!! Html::link(action('TouchpointController@add_retreat',$retreat->id),'Retreat touchpoint',array('class' => 'btn btn-default'))!!}
+                    {!! Html::link(action('TouchpointController@add_retreat',$retreat->id),'Retreat touchpoint',array('class' => 'btn btn-outline-dark'))!!}
                 @endCan    
                 @can('show-contact')
-                    {!! Html::link(action('PageController@retreatantinforeport',$retreat->idnumber),'Retreatant information',array('class' => 'btn btn-default'))!!}
+                    {!! Html::link(action('PageController@retreatantinforeport',$retreat->idnumber),'Retreatant information',array('class' => 'btn btn-outline-dark'))!!}
                 @endCan
                 @can('show-contact')
-                    {!! Html::link(action('PageController@retreatrosterreport',$retreat->idnumber),'Retreatant roster',array('class' => 'btn btn-default'))!!}
+                    {!! Html::link(action('PageController@retreatrosterreport',$retreat->idnumber),'Retreatant roster',array('class' => 'btn btn-outline-dark'))!!}
                 @endCan
                 @can('show-contact')
-                    {!! Html::link(action('PageController@retreatlistingreport',$retreat->idnumber),'Retreatant listing',array('class' => 'btn btn-default'))!!}
+                    {!! Html::link(action('PageController@retreatlistingreport',$retreat->idnumber),'Retreatant listing',array('class' => 'btn btn-outline-dark'))!!}
                 @endCan
                 @can('show-donation')
-                         {!! Html::link('retreat/'.$retreat->id.'/payments','Retreat donations',array('class' => 'btn btn-default')) !!}
-                         {!! Html::link('report/finance/retreatdonations/'.$retreat->idnumber,'Donations report',array('class' => 'btn btn-default')) !!}
+                         {!! Html::link('retreat/'.$retreat->id.'/payments','Retreat donations',array('class' => 'btn btn-outline-dark')) !!}
+                         {!! Html::link('report/finance/retreatdonations/'.$retreat->idnumber,'Donations report',array('class' => 'btn btn-outline-dark')) !!}
                 @endCan
 
             </div>
@@ -152,17 +152,17 @@
         <div class="panel-heading" id='registrations'>
             <h2>Retreatants Registered for {!!Html::link(url('retreat/'.$retreat->id.'/edit'),$retreat->idnumber.' - '.$retreat->title)!!} </h2>
             @can('create-registration')
-                {!! Html::link(action('RegistrationController@register',$retreat->id),'Register a retreatant',array('class' => 'btn btn-default'))!!}
+                {!! Html::link(action('RegistrationController@register',$retreat->id),'Register a retreatant',array('class' => 'btn btn-outline-dark'))!!}
             @endCan
             @can('show-contact')
-                {!! Html::link($retreat->email_registered_retreatants,'Email registered retreatants',array('class' => 'btn btn-default'))!!}
+                {!! Html::link($retreat->email_registered_retreatants,'Email registered retreatants',array('class' => 'btn btn-outline-dark'))!!}
             @endCan
             @can('update-registration')
-                {!! Html::link(action('RetreatController@assign_rooms',$retreat->id),'Assign rooms',array('class' => 'btn btn-default'))!!}
+                {!! Html::link(action('RetreatController@assign_rooms',$retreat->id),'Assign rooms',array('class' => 'btn btn-outline-dark'))!!}
             @endCan
             @can('update-registration')
                 @if ($retreat->end_date < now())
-                {!! Html::link(action('RetreatController@checkout',$retreat->id),'Checkout',array('class' => 'btn btn-default'))!!}
+                {!! Html::link(action('RetreatController@checkout',$retreat->id),'Checkout',array('class' => 'btn btn-outline-dark'))!!}
                 @endIf
             @endCan
         </div>

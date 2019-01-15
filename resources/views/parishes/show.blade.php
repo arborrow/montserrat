@@ -18,23 +18,23 @@
                                 </strong>
                             </h1>
                         </div>
-                        {!! Html::link('#notes','Notes',array('class' => 'btn btn-default')) !!}
-                        {!! Html::link('#parishioners','Parishioners',array('class' => 'btn btn-default')) !!}
-                        {!! Html::link('#relationships','Relationships',array('class' => 'btn btn-default')) !!}
-                        {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-default')) !!}
-                        {!! Html::link('#touchpoints','Touchpoints',array('class' => 'btn btn-default')) !!}
-                        {!! Html::link('#attachments','Attachments',array('class' => 'btn btn-default')) !!}
-                        {!! Html::link('#donations','Donations',array('class' => 'btn btn-default')) !!}
+                        {!! Html::link('#notes','Notes',array('class' => 'btn btn-outline-dark')) !!}
+                        {!! Html::link('#parishioners','Parishioners',array('class' => 'btn btn-outline-dark')) !!}
+                        {!! Html::link('#relationships','Relationships',array('class' => 'btn btn-outline-dark')) !!}
+                        {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-outline-dark')) !!}
+                        {!! Html::link('#touchpoints','Touchpoints',array('class' => 'btn btn-outline-dark')) !!}
+                        {!! Html::link('#attachments','Attachments',array('class' => 'btn btn-outline-dark')) !!}
+                        {!! Html::link('#donations','Donations',array('class' => 'btn btn-outline-dark')) !!}
                     
                     </div>
                     <div class ='row'>
-                        <span class="back"><a href={{ action('ParishController@index') }}>{!! Html::image('/images/parish.png', 'Parish Index',array('title'=>"Parish Index",'class' => 'btn btn-default')) !!}</a></span></h1>
+                        <span class="back"><a href={{ action('ParishController@index') }}>{!! Html::image('/images/parish.png', 'Parish Index',array('title'=>"Parish Index",'class' => 'btn btn-outline-dark')) !!}</a></span></h1>
                         @can('create-touchpoint')
-                            <span class="btn btn-default">
+                            <span class="btn btn-outline-dark">
                                 <a href={{ action('TouchpointController@add',$parish->id) }}>Add Touchpoint</a>
                             </span>
                         @endCan
-                        <span class="btn btn-default">
+                        <span class="btn btn-outline-dark">
                             <a href={{ action('RegistrationController@add',$parish->id) }}>Add Registration</a> 
                         </span>
                     </div>
@@ -145,7 +145,7 @@
 
                                     <td><a href="../person/{{$parishioner->contact_b->id}}">
                                             @if($parishioner->contact_b->is_captain) 
-                                                {!! Html::image('/images/captain.png', 'Captain',array('title'=>"Captain",'class' => 'btn btn-default')) !!}
+                                                {!! Html::image('/images/captain.png', 'Captain',array('title'=>"Captain",'class' => 'btn btn-outline-dark')) !!}
                                             @endIf
                                             {!! $parishioner->contact_b->contact_link_full_name !!} ({{$parishioner->contact_b->participant_count}})
                                         </a>
@@ -197,7 +197,7 @@
                         @if ($parish->touchpoints->isEmpty())
                             <p>It is a brand new world, there are no touchpoints for this contact!</p>
                         @else
-                            <span class="btn btn-default">
+                            <span class="btn btn-outline-dark">
                                <a href={{ action('TouchpointController@add',$parish->id) }}>Add Touchpoint</a>
                             </span>
                 
@@ -307,7 +307,7 @@
                         <div class='panel-heading'>
                             <h2><strong>Donations for {{ $parish->display_name }} ({{$parish->donations->count() }} donations totaling:  ${{ number_format($parish->donations->sum('donation_amount'),2)}})</strong></h2>
                             @can('create-donation')
-                                {!! Html::link(action('DonationController@create',$parish->id),'Create donation',array('class' => 'btn btn-default'))!!}
+                                {!! Html::link(action('DonationController@create',$parish->id),'Create donation',array('class' => 'btn btn-outline-dark'))!!}
                             @endCan
                         </div>
                         

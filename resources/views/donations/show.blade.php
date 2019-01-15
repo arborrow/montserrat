@@ -14,9 +14,9 @@
                         @endCan
                         for {!!$donation->contact->contact_link_full_name!!} <br />
                 </span>                
-                    {!! Html::link(action('PageController@finance_invoice',$donation->donation_id),'Invoice',array('class' => 'btn btn-default'))!!}
+                    {!! Html::link(action('PageController@finance_invoice',$donation->donation_id),'Invoice',array('class' => 'btn btn-outline-dark'))!!}
                     @can('create-payment')
-                        {!! Html::link(action('PaymentController@create',$donation->donation_id),'Add payment',array('class' => 'btn btn-default'))!!}
+                        {!! Html::link(action('PaymentController@create',$donation->donation_id),'Add payment',array('class' => 'btn btn-outline-dark'))!!}
                     @endCan    
 		    @if ($donation->percent_paid == 100)
 			<a href="/donation/{{$donation->donation_id}}/agcacknowledge"><img src="/images/letter.png" alt="Print acknowledgement" title="Print acknowledgement"></a>

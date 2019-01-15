@@ -15,13 +15,13 @@
             <p class="lead">{{$parishes->count()}} records</p>
         </div>
         <div class="col-12">
-            <span class="btn btn-default">
+            <span class="btn btn-outline-dark">
                 <a href={{ action('ParishController@dallasdiocese') }}>Diocese of Dallas</a>
             </span>
-            <span class="btn btn-default">
+            <span class="btn btn-outline-dark">
                 <a href={{ action('ParishController@fortworthdiocese') }}>Diocese of Fort Worth</a>
             </span>
-            <span class="btn btn-default">
+            <span class="btn btn-outline-dark">
                 <a href={{ action('ParishController@tylerdiocese') }}>Diocese of Tyler</a>
             </span>
         </div>
