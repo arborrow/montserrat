@@ -57,7 +57,7 @@
                     </div>
                     <div class='row'>
                         {!! Form::label('donation_install', 'Installment:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::number('donation_install', $donation->install, ['class' => 'col-md-3','step'=>'0.01']) !!}
+                        {!! Form::number('donation_install', $donation->donation_install, ['class' => 'col-md-3','step'=>'0.01']) !!}
                     </div>
                     <div class='row'>
                         {!! Form::label('donation_thank_you', 'Thank you letter: ', ['class' => 'col-md-2'])  !!}
