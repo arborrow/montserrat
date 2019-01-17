@@ -41,8 +41,8 @@ class DonationController extends Controller
         $prev_year = $year - 1;
 
         $this->authorize('show-donation');
-        $all_donations = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription("Annual Giving")->where("donation_date", ">=", $prev_year."-07-01")->where("donation_date", "<", $year."-07-01")->with('contact')->get();
-        $donations = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription("Annual Giving")->where("donation_date", ">=", $prev_year."-07-01")->where("donation_date", "<", $year."-07-01")->with('contact')->paginate(100);
+        $all_donations = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description',["Annual Giving","Endowment","Scholarship","Buildings & Maintenance"])->where("donation_date", ">=", $prev_year."-07-01")->where("donation_date", "<", $year."-07-01")->with('contact')->get();
+        $donations = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description',["Annual Giving","Endowment","Scholarship","Buildings & Maintenance"])->where("donation_date", ">=", $prev_year."-07-01")->where("donation_date", "<", $year."-07-01")->with('contact')->paginate(100);
         $total['pledged'] = $all_donations->sum('donation_amount');
         $total['paid'] = $all_donations->sum('payments_paid');
         if ($total['pledged'] > 0) {
