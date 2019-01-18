@@ -3,11 +3,11 @@
 <meta name="format-detection" content="telephone=no">
 <div class ="agcacknowledge">
 <div class ="pageheader">
-        
+
             <img style="display: block;  margin-left: auto;  margin-right: auto;" src="https://polanco.montserratretreat.org/img/mrhlogoblack.png"> <br />
 </table>
 </div>
-<br /> 
+<br />
 <div class ="letter">
 <table>
     <tr>
@@ -18,7 +18,6 @@ Mark Vehslage <br />
 <i>Secretary Treasurer</i> <br /><br />
 
 Mary Del Olmo <br />
-Patricia Gaffney <br />
 Fr. Manuel Holguin <br />
 John Luna <br />
 Paul Pederson <br />
@@ -28,7 +27,7 @@ Fr. Tim Thompson <br /><br />
 
 <div style="font-variant:small-caps"><strong>Jesuit Community</strong></div><br />
 Fr. Anthony Borrow, S.J.<br />
-Fr. John Payne, S.J.<br />
+Fr. Mark McKenzie, S.J.<br />
 
         </td>
         <td class="main" style="padding-right: 50px; padding-left:20px; padding-top:20px;">
@@ -41,7 +40,7 @@ Fr. John Payne, S.J.<br />
             Dear {{$donation->contact->agc_household_name}},<br /><br />
             Jesus promises the door will be opened to those who ask, seek, and knock.
 We knocked on your door and you generously answered. Thank you for
-your gift of ${{number_format($donation->payments_paid,2)}} received on {{$donation->donation_date->format("F d, Y")}} supporting Montserrat
+your gift of ${{number_format($donation->payments_paid,2)}} for {{$donation->donation_description}} received on {{$donation->donation_date->format("F d, Y")}} supporting Montserrat
 Jesuit Retreat House. We promise you that it will be put to good use.
 <br /><br />
 People need a place to rest and space to pray. At Montserrat, we never get
@@ -58,14 +57,14 @@ Peace,<br /><br /><br /><br />
 Fr. Anthony Borrow, S.J.<br />
 Director <br />
         </td>
-    </tr>      
+    </tr>
     <tr>
         <td></td>
         <td style="font-size: 10pt; padding-left:20px;"><i><br /><br />Montserrat Jesuit Retreat House is a ministry of the Society of Jesus UCS Province<br />
                 No goods or services have been provided to the donor. <br />
                 Your donation is deductible to the extent allowed by law.</i></td>
     </tr>
-        
+
 </table>
 
 </div>
