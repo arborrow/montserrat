@@ -8,6 +8,7 @@
 require('./bootstrap'); // jQuery being loaded here
 require('jquery-ui-bundle'); // jQuery UI
 require('select2');
+require('flatpickr');
 require('./main');
 // require('./jquery.datetimeentry.js');
 // require('./jquery.js');
