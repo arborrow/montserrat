@@ -5,15 +5,6 @@
 	<title>Montserrat Retreat House Database</title>
 	<link rel="stylesheet" type="text/css" href="{{ url(mix('dist/bundle.css')) }}">
 	<script src="{{ url(mix('dist/bundle.js')) }}"></script>
-	<script>
-		function ConfirmDelete() {
-			var x = confirm("Are you sure you want to delete?");
-			if (x)
-				return true;
-			else
-			return false;
-		}
-	</script>
 </head>
 <body>
 	<div class="container pt-0">
