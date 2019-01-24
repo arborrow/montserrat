@@ -16,7 +16,7 @@
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('register_date', 'Registered:', ['class' => 'col-md-2']) !!}
-                {!! Form::text('register_date', $registration->register_date, ['class'=>'col-md-3','data-provide'=>'datepicker']) !!}
+                {!! Form::text('register_date', $registration->register_date, ['class'=>'col-md-3 flatpickr-date']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('source', 'Registration from:', ['class' => 'col-md-2']) !!}
@@ -29,9 +29,9 @@
             <div class="form-group">
                 {!! Form::label('registration_confirm_date', 'Registration Confirmed:', ['class' => 'col-md-2']) !!}
                 @if ($registration->registration_confirm_date == NULL)
-                    {!! Form::text('registration_confirm_date', NULL, ['class'=>'col-md-3','data-provide'=>'datepicker']) !!}
+                    {!! Form::text('registration_confirm_date', NULL, ['class'=>'col-md-3 flatpickr-date']) !!}
                 @else
-                    {!! Form::text('registration_confirm_date', $registration->registration_confirm_date, ['class'=>'col-md-3','data-provide'=>'datepicker']) !!}
+                    {!! Form::text('registration_confirm_date', $registration->registration_confirm_date, ['class'=>'col-md-3 flatpickr-date']) !!}
                 @endif
                     
             </div><div class="clearfix"> </div>
@@ -41,15 +41,15 @@
             </div><div class="clearfix"> </div>
                         <div class="form-group">
                 {!! Form::label('canceled_at', 'Canceled at:', ['class' => 'col-md-2']) !!}
-                {!! Form::text('canceled_at', $registration->canceled_at, ['class'=>'col-md-3','data-provide'=>'datepicker']) !!}
+                {!! Form::text('canceled_at', $registration->canceled_at, ['class'=>'col-md-3 flatpickr-date']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('arrived_at', 'Arrived at:', ['class' => 'col-md-2']) !!}
-                {!! Form::text('arrived_at', $registration->arrived_at, ['class'=>'col-md-3','data-provide'=>'datepicker']) !!}
+                {!! Form::text('arrived_at', $registration->arrived_at, ['class'=>'col-md-3 flatpickr-date']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('departed_at', 'Departed at:', ['class' => 'col-md-2']) !!}
-                {!! Form::text('departed_at', $registration->departed_at, ['class'=>'col-md-3']) !!}
+                {!! Form::text('departed_at', $registration->departed_at, ['class'=>'col-md-3 flatpickr-date']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('room_id', 'Room:', ['class' => 'col-md-2'])  !!}

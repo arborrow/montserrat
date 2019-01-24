@@ -72,7 +72,7 @@
                             </div>
                             <div class="col-4">
                                 {!! Form::label('deceased_date', 'Deceased Date:')  !!}
-                                {!! Form::text('deceased_date', null, ['class'=>'form-control','data-provide'=>'datepicker']) !!}
+                                {!! Form::text('deceased_date', null, ['class'=>'form-control flatpickr-date']) !!}
                             </div>
                         </div>   
                     </div>
@@ -160,7 +160,7 @@
                         <div class="row">
                             <div class="col-4">
                                 {!! Form::label('birth_date', 'Birth Date:') !!}
-                                {!! Form::text('birth_date', null, ['class'=>'form-control','data-provide'=>'datepicker', 'autocomplete' => 'off']) !!}
+                                {!! Form::text('birth_date', null, ['class'=>'form-control flatpickr-date', 'autocomplete' => 'off']) !!}
                             </div>
                         </div>
                         <div class="row">

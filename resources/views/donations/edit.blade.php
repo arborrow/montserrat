@@ -49,7 +49,7 @@
 
                     <div class='row'>
                         {!! Form::label('start_date_only', 'Start date:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::text('start_date_only', $donation->start_date, ['class' => 'col-md-3','data-provide'=>'datepicker']) !!}
+                        {!! Form::text('start_date_only', $donation->start_date, ['class' => 'col-md-3 flatpickr-date']) !!}
                     </div>
                     <div class='row'>
                         {!! Form::label('end_date_only', 'End date:', ['class' => 'col-md-2'])  !!}

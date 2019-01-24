@@ -21,7 +21,7 @@
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('register_date', 'Registered:', ['class' => 'col-md-2']) !!}
-                {!! Form::text('register_date', $defaults['today'], ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+                {!! Form::text('register_date', $defaults['today'], ['class'=>'col-md-2 flatpickr-date']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('source', 'Registration from:', ['class' => 'col-md-2']) !!}
@@ -37,7 +37,7 @@
 
 	    <div class="form-group">
                 {!! Form::label('registration_confirm_date', 'Registration Confirmed:', ['class' => 'col-md-2']) !!}
-                {!! Form::text('registration_confirm_date', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+                {!! Form::text('registration_confirm_date', null, ['class'=>'col-md-2 flatpickr-date']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('confirmed_by', 'Confirmed By:', ['class' => 'col-md-2']) !!}
@@ -45,15 +45,15 @@
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('canceled_at', 'Canceled at:', ['class' => 'col-md-2']) !!}
-                {!! Form::text('canceled_at', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+                {!! Form::text('canceled_at', null, ['class'=>'col-md-2 flatpickr-date']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('arrived_at', 'Arrived at:', ['class' => 'col-md-2']) !!}
-                {!! Form::text('arrived_at', null, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+                {!! Form::text('arrived_at', null, ['class'=>'col-md-2 flatpickr-date']) !!}
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('departed_at', 'Departed at:', ['class' => 'col-md-2']) !!}
-                {!! Form::text('departed_at', null, ['class'=>'col-md-2']) !!}
+                {!! Form::text('departed_at', null, ['class'=>'col-md-2 flatpickr-date']) !!}
             </div><div class="clearfix"> </div>
                     
             <div class="form-group">

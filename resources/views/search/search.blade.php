@@ -200,7 +200,7 @@
                 <div class="form-group">
                     {!! Form::label('birth_date', 'Birth Date:', ['class' => 'control-label col-sm-3']) !!}
                     <div class="col-sm-8">
-                        {!! Form::text('birth_date', NULL, ['class'=>'form-control','data-provide'=>'datepicker']) !!}
+                        {!! Form::text('birth_date', NULL, ['class'=>'form-control flatpickr-date']) !!}
                     </div>
                 </div>
                 <div class="form-group">
@@ -248,7 +248,7 @@
                 <div class="form-group">
                     {!! Form::label('deceased_date', 'Deceased Date:', ['class' => 'control-label col-sm-3'])  !!}
                     <div class="col-sm-8">  
-                        {!! Form::text('deceased_date', NULL, ['class'=>'form-control','data-provide'=>'datepicker']) !!}
+                        {!! Form::text('deceased_date', NULL, ['class'=>'form-control flatpickr-date']) !!}
                     </div>
                 </div>
                 <div class="form-group">

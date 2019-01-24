@@ -156,20 +156,6 @@
 				}
 			});
 			console.log($("#q"));
-		$(function () {
-			$("#donation_date").datepicker();
-			$("#payment_date").datepicker();
-			$("#start_date_only").datepicker();
-			$("#end_date_only").datepicker();
-			$("#register_date").datepicker();
-			$("#registration_confirm_date").datepicker();
-			$("#attendance_confirm_date").datepicker();
-			$("#arrived_at").datepicker();
-			$("#departed_at").datepicker();
-			$("#canceled_at").datepicker();
-			$("#birth_date").datepicker();
-			$("#deceased_date").datepicker();
-		});
 	</script>
 </body>
 

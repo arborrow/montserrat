@@ -149,7 +149,7 @@
                         {!! Form::select('gender_id', $genders, $person->gender_id, ['class' => 'col-md-2']) !!}
                         <div class="clearfix"> </div>
                         {!! Form::label('birth_date', 'Birth Date:', ['class' => 'col-md-2']) !!}
-                        {!! Form::text('birth_date', $person->birth_date, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+                        {!! Form::text('birth_date', $person->birth_date, ['class'=>'col-md-2 flatpickr-date']) !!}
                         <div class="clearfix"> </div>
 
 
@@ -184,7 +184,7 @@
                 <div class="clearfix"> </div>
                     <div class="form-group">                        
                         {!! Form::label('deceased_date', 'Deceased Date:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::text('deceased_date', $person->deceased_date, ['class'=>'col-md-2','data-provide'=>'datepicker']) !!}
+                        {!! Form::text('deceased_date', $person->deceased_date, ['class'=>'col-md-2 flatpickr-date']) !!}
                         {!! Form::label('is_deceased', 'Is Deceased:', ['class' => 'col-md-2'])  !!}
                         {!! Form::checkbox('is_deceased', 1, $person->is_deceased, ['class' => 'col-md-1']) !!}
                         <div class="clearfix"> </div>

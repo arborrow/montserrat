@@ -6,7 +6,7 @@
         <h2>Create Retreat</h2>
     </div>
     <div class="col-12">
-        {!! Form::open(['url' => 'retreat', 'method' => 'post', 'class' => 'form-horizontal panel']) !!}
+        {!! Form::open(['url' => 'retreat', 'method' => 'post']) !!}
             <div class="form-group">
                 <div class="row">
                     <div class="col-4">
@@ -21,11 +21,11 @@
                 <div class="row">
                     <div class="col-4">
                         {!! Form::label('start_date', 'Starts: ') !!}
-                        {!! Form::text('start_date', null, ['id' => 'start_date', 'class' => 'form-control', 'data-provide'=>'datepicker']) !!}
+                        {!! Form::text('start_date', null, ['id' => 'start_date', 'class' => 'form-control flatpickr-date-time']) !!}
                     </div>
                     <div class="col-4">
                         {!! Form::label('end_date', 'Ends: ') !!}
-                        {!! Form::text('end_date', null, ['id' => 'end_date', 'class' => 'form-control', 'data-provide'=>'datepicker']) !!}
+                        {!! Form::text('end_date', null, ['id' => 'end_date', 'class' => 'form-control flatpickr-date-time']) !!}
                     </div>
                 </div>
                 <div class="row">
