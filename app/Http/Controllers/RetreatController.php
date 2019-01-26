@@ -164,11 +164,32 @@ class RetreatController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $status = NULL)
     {
         $this->authorize('show-retreat');
         $retreat = \App\Retreat::with('retreatmasters', 'innkeeper', 'assistant', 'captains')->findOrFail($id);
-        $registrations = \App\Registration::where('event_id', '=', $id)->with('retreatant.parish')->orderBy('register_date', 'ASC')->get();
+
+        switch ($status) {
+            case 'active':
+                $registrations = \App\Registration::where('event_id', '=', $id)->whereNull('canceled_at')->with('retreatant.parish')->orderBy('register_date', 'ASC')->get();
+                break;
+            case 'cancel':
+                $registrations = \App\Registration::where('event_id', '=', $id)->whereNotNull('canceled_at')->with('retreatant.parish')->orderBy('register_date', 'ASC')->get();
+                break;
+            case 'confirm':
+                $registrations = \App\Registration::where('event_id', '=', $id)->whereNotNull('registration_confirm_date')->with('retreatant.parish')->orderBy('register_date', 'ASC')->get();
+                break;
+            case 'arrive':
+                $registrations = \App\Registration::where('event_id', '=', $id)->whereNotNull('arrived_at')->with('retreatant.parish')->orderBy('register_date', 'ASC')->get();
+                break;
+            case 'depart':
+                $registrations = \App\Registration::where('event_id', '=', $id)->whereNotNull('departed_at')->with('retreatant.parish')->orderBy('register_date', 'ASC')->get();
+                break;
+            default:
+                $registrations = \App\Registration::where('event_id', '=', $id)->with('retreatant.parish')->orderBy('register_date', 'ASC')->get();
+                break;
+        }
+
         return view('retreats.show', compact('retreat', 'registrations'));//
     }
 
