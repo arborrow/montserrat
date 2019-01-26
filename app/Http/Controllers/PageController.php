@@ -19,17 +19,17 @@ class PageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
+
     public function about()
     {
         return view('pages.about');   //
     }
-    
+
     public function retreat()
     {
         return view('pages.retreat');   //
     }
-    
+
     public function reservation()
     {
         return view('pages.reservation');   //
@@ -46,7 +46,7 @@ class PageController extends Controller
     {
         return view('pages.maintenance');   //
     }
-    
+
     public function grounds()
     {
         return view('pages.grounds');   //
@@ -100,10 +100,10 @@ class PageController extends Controller
                 ->orderBy('contact.sort_name', 'asc')
                 ->orderBy('participant.notes', 'asc')
                 ->get();
-        
+
         return view('reports.retreatantinfo2', compact('registrations'));   //
     }
-    
+
     public function contact_info_report($id)
     {
         $this->authorize('show-contact');
@@ -146,11 +146,11 @@ class PageController extends Controller
             return back();//
         }
     }
-     
+
     public function finance_invoice($donation_id = NULL)
     {
         $this->authorize('show-donation');
-        
+
         $donation = \App\Donation::with('payments','contact','retreat')->findOrFail($donation_id);
         // dd($donation);
 	return view('reports.finance.invoice', compact('donation'));   //
@@ -160,7 +160,7 @@ class PageController extends Controller
         $this->authorize('show-donation');
 	$current_user = Auth::user();
         $user_email = \App\Email::whereEmail($current_user->email)->first();
- 
+
 	$donation = \App\Donation::with('payments','contact','retreat')->findOrFail($donation_id);
 	if (NULL == $donation['Thank You']) { //avoid creating another touchpoint if acknowledgement letter has already been viewed (and presumably printed and mailed)
 	    $agc_touchpoint = new \App\Touchpoint;
@@ -169,14 +169,14 @@ class PageController extends Controller
 	    $agc_touchpoint->touched_at = Carbon::parse(now());
 	    $agc_touchpoint->type = 'Letter';
 	    $agc_touchpoint->notes = 'AGC Acknowledgement Letter for Donation #'.$donation->donation_id;
-   	    $agc_touchpoint->save();       	
+   	    $agc_touchpoint->save();
 	    $donation['Thank You'] = "Y";
 	    $donation->save();
 	}
 
 	return view('reports.finance.agcacknowledge', compact('donation'));   //
     }
-    
+
     public function finance_retreatdonations($retreat_id = NULL)
     {
         $this->authorize('show-donation');
@@ -193,26 +193,30 @@ class PageController extends Controller
             return back();//
         }
     }
-    
+
      public function finance_deposits()
     {
         $this->authorize('show-donation');
         $donations = \App\Donation::where('donation_description','Deposit')->whereDeletedAt(NULL)->where('donation_amount','>',0)->with('contact','payments','retreat')->get();
-        $payments = \App\Payment::where('payment_amount','>',0)->whereHas('donation', function($query) {
+        $payments = \App\Payment::where('payment_amount','>',0)
+        ->whereHas('donation', function($query) {
             $query->where('donation_description','=','Deposit');
+        })
+        ->whereHas('donation', function($query) {
+            $query->where('donation_amount','>',0);
         })->with('donation.retreat','donation.contact')->get();
         $grouped_payments = $payments->groupBy(function ($c) {
 		return '#'.$c->donation->retreat_idnumber.'-'.$c->donation->retreat_name.' ('.$c->donation->retreat_start_date.')';
         })->sortBy(function ($d) {
 		return Carbon::parse($d[0]->donation->retreat_start_date);
 			});
-        return view('reports.finance.deposits', compact('grouped_payments','payments'));  
+        return view('reports.finance.deposits', compact('grouped_payments','payments'));
     }
-    
+
     public function retreatlistingreport($id)
     {
         $this->authorize('show-contact');
-        
+
         $retreat = \App\Retreat::where('idnumber', '=', $id)->first();
         //$registrations = \App\Registration::where('event_id','=',$retreat->id)->with('retreat','retreatant')->get();
         $registrations = \App\Registration::select(\DB::raw('participant.*', 'contact.*'))
@@ -223,7 +227,7 @@ class PageController extends Controller
                 ->orderBy('contact.sort_name', 'asc')
                 ->orderBy('participant.notes', 'asc')
                 ->get();
-        
+
         return view('reports.retreatlisting', compact('registrations'));   //
     }
     public function retreatrosterreport($id)
@@ -240,7 +244,7 @@ class PageController extends Controller
                 ->orderBy('contact.sort_name', 'asc')
                 ->orderBy('participant.notes', 'asc')
                 ->get();
-        
+
         return view('reports.retreatroster', compact('registrations'));   //
     }
    /**
