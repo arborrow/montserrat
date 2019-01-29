@@ -9,9 +9,9 @@
             </div>
             <div class="col-12">
                 @can('update-contact')
-                    <h1><strong><a href="{{url('person/'.$person->id.'/edit')}}">{{ $person->full_name }}</a></strong></h1>
+                    <h1><span class="font-weight-bold"><a href="{{url('person/'.$person->id.'/edit')}}">{{ $person->full_name }}</a></span></h1>
                 @else
-                    <h1><strong>{{ $person->full_name }}</strong></h1>
+                    <h1><span class="font-weight-bold">{{ $person->full_name }}</span></h1>
                 @endCan
             </div>
             <div class="col-12">
