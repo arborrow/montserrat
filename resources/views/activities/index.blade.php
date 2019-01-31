@@ -19,7 +19,7 @@
                 @if ($activities->isEmpty())
                     <p>It is a brand new world, there are no activities!</p>
                 @else
-                <table class="table table-bordered table-striped table-hover"><caption><h2>Activities</h2></caption>
+                <table class="table table-bordered table-striped table-hover table-responsive"><caption><h2>Activities</h2></caption>
                     <thead>
                         <tr>
                             <th>Date</th>

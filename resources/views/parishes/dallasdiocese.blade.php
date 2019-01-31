@@ -16,7 +16,7 @@
                 @if ($parishes->isEmpty())
                     <p>No Diocese of Dallas parishes are currently in the database.</p>
                 @else
-                <table class="table table-bordered table-striped table-hover"><caption><h2>Diocese of Dallas Parishes</h2></caption>
+                <table class="table table-bordered table-striped table-hover table-responsive"><caption><h2>Diocese of Dallas Parishes</h2></caption>
                     <thead>
                         <tr>
                             <th>Name</th> 

@@ -20,7 +20,7 @@
                 @if ($groups->isEmpty())
                     <p>It is a brand new world, there are no groups!</p>
                 @else
-                <table class="table table-bordered table-striped"><caption><h2>Groups</h2></caption>
+                <table class="table table-bordered table-striped table-responsive"><caption><h2>Groups</h2></caption>
                     <thead>
                         <tr>
                             <th>Name</th>

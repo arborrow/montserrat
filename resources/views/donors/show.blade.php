@@ -18,7 +18,7 @@
             </div>
             <div class="clearfix"> </div>
              
-            <table class="table table-striped table-bordered table-hover"><caption><h2>PPD Donor Record: {{$donor->donor_id}}</h2></caption>
+            <table class="table table-striped table-bordered table-hover table-responsive"><caption><h2>PPD Donor Record: {{$donor->donor_id}}</h2></caption>
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -92,7 +92,7 @@
 
                 
             <div class="clearfix"> </div>
-                <table class="table table-striped table-bordered table-hover"><caption><h2>Matching Polanco Contact sort_name(s)</h2></caption>
+                <table class="table table-striped table-bordered table-hover table-responsive"><caption><h2>Matching Polanco Contact sort_name(s)</h2></caption>
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -142,7 +142,7 @@
                     </tbody>
                 </table>
                 
-                <table class="table table-striped table-bordered table-hover"><caption><h2>Matching Polanco Contact lastname(s)</h2></caption>
+                <table class="table table-striped table-bordered table-hover table-responsive"><caption><h2>Matching Polanco Contact lastname(s)</h2></caption>
                     <thead>
                         <tr>
                             <th>Name</th>

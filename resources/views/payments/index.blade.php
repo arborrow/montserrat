@@ -19,7 +19,7 @@
                 @if ($payments->isEmpty())
                     <p>It is an impoverished new world, there are no donations!</p>
                 @else
-                <table class="table table-bordered table-striped table-hover"><caption><h2>Payments</h2></caption>
+                <table class="table table-bordered table-striped table-hover table-responsive"><caption><h2>Payments</h2></caption>
                     <thead>
                         <tr>
                             <th>Date</th>

@@ -21,7 +21,7 @@
             <p>No Dioceses are currently in the database.</p>
         </div>
         @else
-        <table class="table table-striped table-bordered table-hover">
+        <table class="table table-striped table-bordered table-hover table-responsive">
             <thead>
                 <tr>
                     <th scope="col">Picture</th>

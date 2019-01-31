@@ -14,7 +14,7 @@
                     @if ($donations->isEmpty())
                         <p>It is an impoverished new world, there are no AGC donations!</p>
                     @else
-                        <table class="table table-bordered table-striped table-hover"><caption><h2>FY19 Annual Giving Donations</h2></caption>
+                        <table class="table table-bordered table-striped table-hover table-responsive"><caption><h2>FY19 Annual Giving Donations</h2></caption>
                             <thead>
                                 <tr>
                                     <th>Donation Date</th>

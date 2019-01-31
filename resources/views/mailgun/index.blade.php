@@ -18,7 +18,7 @@
                 @if ($messages->isEmpty())
                     <p>It is a brand new world, there are no stored messages!</p>
                 @else
-                <table class="table table-bordered table-striped"><caption><h2>Mailgun stored messages</h2></caption>
+                <table class="table table-bordered table-striped table-responsive"><caption><h2>Mailgun stored messages</h2></caption>
                     <thead>
                         <tr>
                             <th>Timestamp</th>

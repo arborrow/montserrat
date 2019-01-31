@@ -100,7 +100,7 @@
                 <p>It is a brand new world, there are no persons. Let there be light!</p>
             </div>
         @else
-            <table class="table table-striped table-bordered table-hover">
+            <table class="table table-striped table-bordered table-hover table-responsive">
                 <thead>
                     <tr>
                         <th scope="col">Picture</th>

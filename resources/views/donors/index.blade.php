@@ -22,7 +22,7 @@
                 @if ($donors->isEmpty())
                     <p>It is a brand new world, there are no PPD donors!</p>
                 @else
-                <table class="table table-bordered table-striped"><caption><h2>PPD Donors (with no Polanco Contact Id)</h2></caption>
+                <table class="table table-bordered table-striped table-responsive"><caption><h2>PPD Donors (with no Polanco Contact Id)</h2></caption>
                     <thead>
                         <tr>
                             <th>Name</th>

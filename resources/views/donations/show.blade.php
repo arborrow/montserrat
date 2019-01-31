@@ -46,7 +46,7 @@
                 
             <div class='row'>
                 <div class='col-md-8'>
-                    <table class="table table-bordered table-striped table-hover">
+                    <table class="table table-bordered table-striped table-hover table-responsive">
                         <caption><h2>Payments for Donation #{{$donation->donation_id}} - Total payments: ${{number_format($donation->payments->sum('payment_amount'),2)}}</h2></caption>
                     <thead>
                         <tr>

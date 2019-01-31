@@ -12,7 +12,7 @@
                 @if ($duplicates->isEmpty())
                     <p>It is a brand new world, there are no persons!</p>
                 @else
-                <table class="table table-striped table-bordered table-hover"><caption><h2>Persons</h2></caption>
+                <table class="table table-striped table-bordered table-hover table-responsive"><caption><h2>Persons</h2></caption>
                     <thead>
                         <tr>
                             <th>Picture</th>
