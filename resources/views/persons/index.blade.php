@@ -94,13 +94,13 @@
             </span>
         </div>
     </div>
-    <div class="col-12">
+    <div class="col-12 table-responsive">
         @if ($persons->isEmpty())
             <div class="col-12 text-center py-5">
                 <p>It is a brand new world, there are no persons. Let there be light!</p>
             </div>
         @else
-            <table class="table table-striped table-bordered table-hover table-responsive">
+            <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
                         <th scope="col">Picture</th>
