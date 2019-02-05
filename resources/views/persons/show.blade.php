@@ -276,7 +276,7 @@
             </div>
             @endCan
             @can('show-registration')
-            <div class="col-12 col-md-6" id="registrations">
+            <div class="col-12 mt-3" id="registrations">
                 <h2>Retreat Participation | {{$registrations->count()}}</h2>
                 @foreach($registrations as $registration)
                     <div class="p-3 mb-2 alert rounded {{ $registration->canceled_at ? 'alert-warning' : 'alert-success'}}">
@@ -290,7 +290,7 @@
             </div>
             @endCan
             @can('show-touchpoint')
-            <div class="col-12 col-md-6" id="touchpoints">
+            <div class="col-12 mt-3" id="touchpoints">
                 <h2>Touchpoints</h2>
                 @can('create-touchpoint')
                 <button class="btn btn-outline-dark"><a href={{ action('TouchpointController@add',$person->id) }}>Add Touchpoint</a></button>
@@ -322,7 +322,7 @@
             </div> 
             @endCan
             @can('show-attachment')
-            <div class="col-12 col-md-6" id="attachments">
+            <div class="col-12 mt-3" id="attachments">
                 <h2>Attachments</h2>
                 @if ($files->isEmpty())
                     <p>There are no attachments for this person.</p>
@@ -351,7 +351,7 @@
             </div>
             @endCan
             @can('show-donation')
-            <div class="col-12">
+            <div class="col-12 mt-3">
                 <h2>
                     {{$person->donations->count() }}  Donations for {{ $person->display_name }}
                         - ${{number_format($person->donations->sum('payments_paid'),2)}} paid of
