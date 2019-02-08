@@ -19,7 +19,7 @@
                 
     @foreach($payments as $payment)
     <tr>
-        <td>{{$payment->donation->contact->display_name}}</td>
+        <td>{{$payment->donation->contact->full_name}}</td>
 	<td>
 	@if (isset($payment->donation->retreat))
 		{{$payment->donation->retreat_idnumber}} - {{$payment->donation->retreat_name}} ({{$payment->donation->retreat_start_date}})
