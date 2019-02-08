@@ -18,7 +18,7 @@
                 
     @foreach($group_donations->sortBy('contact.sort_name') as $donation)
     <tr>
-        <td>{{$donation->contact->display_name}}</td>
+        <td>{{$donation->contact->full_name}}</td>
         <td>{{number_format($donation->donation_amount,2)}}</td>
         <td>{{number_format($donation->payments->sum('payment_amount'),2)}}</td>
         <td>${{number_format(($donation->donation_amount - $donation->payments->sum('payment_amount')),2)}}</td>

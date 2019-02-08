@@ -206,6 +206,7 @@ Route::post('retreat/room_update', ['as' => 'retreat.room_update', 'uses' => 'Re
 Route::post('retreat/payments/update', ['as' => 'retreat.payments.update', 'uses' => 'DonationController@retreat_payments_update']);
 Route::get('retreat/{id}/checkout', ['as'=>'retreat.checkout','uses' => 'RetreatController@checkout']);
 Route::get('retreat/{id}/checkin', ['as'=>'retreat.checkin','uses' => 'RetreatController@checkin']);
+Route::get('retreat/{id}/status/{status}', ['as'=>'retreat.show','uses' => 'RetreatController@show']);
 
 Route::resource('retreat', 'RetreatController');
 
