@@ -14,7 +14,7 @@
         <span class='btn btn-default'>
             <a href="{!!url('person/merge_delete/'.$duplicate->id.'/'.$contact->id)!!}">Delete</a>
         </span>
-        
+
     </th>
     @endforeach
     </tr>
@@ -116,7 +116,7 @@
             <td>{{$duplicate->emergency_contact_phone_alternate}}</td>
         @endforeach
     </tr>
-    
+
     <tr>
         <td><strong>Gender</strong></td>
         <td>{{$contact->gender_name}}</td>
@@ -215,8 +215,15 @@
             <td>{{$duplicate->event_registrations->count()}}</td>
         @endforeach
     </tr>
+    <tr>
+        <td><strong># of Donations</strong></td>
+        <td>{{$contact->donations->count()}}</td>
+        @foreach ($duplicates as $duplicate)
+            <td>{{$duplicate->donations->count()}}</td>
+        @endforeach
+    </tr>
     
-    
+
     <tr>
         <td><strong>Contact Type</strong></td>
         <td>{{$contact->contact_type_label}}</td>
@@ -232,5 +239,5 @@
         @endforeach
     </tr>
 
-</table>        
+</table>
 @stop
