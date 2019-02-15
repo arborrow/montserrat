@@ -37,10 +37,10 @@ class OrganizationController extends Controller
         $defaults = [];
         $defaults['type'] = $subcontact_type->label;
         $organizations = \App\Contact::organizations_generic()->whereSubcontactType($subcontact_type_id)->orderBy('organization_name', 'asc')->paginate(100);
-        
+
         return view('organizations.index', compact('organizations', 'subcontact_types', 'subcontact_types', 'defaults'));
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -52,17 +52,17 @@ class OrganizationController extends Controller
         $this->authorize('create-contact');
         $states = \App\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
-        
+
         $countries = \App\Country::orderby('iso_code')->pluck('iso_code', 'id');
         $countries->prepend('N/A', 0);
-        
+
         $defaults['state_province_id'] = config('polanco.state_province_id_tx');
         $defaults['country_id'] = config('polanco.country_id_usa');
-                
+
 	$subcontact_types = \App\ContactType::whereIsReserved(false)->whereIsActive(true)->where('id','>=',config('polanco.contact_type.province'))->pluck('label', 'id');
 	$subcontact_types->prepend('N/A', 0);
 
-      
+
         return view('organizations.create', compact('subcontact_types', 'states', 'countries', 'defaults'));
     }
 
@@ -88,7 +88,7 @@ class OrganizationController extends Controller
             'phone_main_phone' => 'phone|nullable',
             'phone_main_fax' => 'phone|nullable',
         ]);
-            
+
         $organization = new \App\Contact;
         $organization->organization_name = $request->input('organization_name');
         $organization->display_name  = $request->input('organization_name');
@@ -96,7 +96,7 @@ class OrganizationController extends Controller
         $organization->contact_type = config('polanco.contact_type.organization');
         $organization->subcontact_type = $request->input('subcontact_type');
         $organization->save();
-        
+
         $organization_address= new \App\Address;
             $organization_address->contact_id=$organization->id;
             $organization_address->location_type_id=config('polanco.location_type.main');
@@ -108,7 +108,7 @@ class OrganizationController extends Controller
             $organization_address->postal_code=$request->input('postal_code');
             $organization_address->country_id=$request->input('country_id');
         $organization_address->save();
-        
+
         $organization_main_phone= new \App\Phone;
             $organization_main_phone->contact_id=$organization->id;
             $organization_main_phone->location_type_id=config('polanco.location_type.main');
@@ -116,22 +116,22 @@ class OrganizationController extends Controller
             $organization_main_phone->phone=$request->input('phone_main_phone');
             $organization_main_phone->phone_type='Phone';
         $organization_main_phone->save();
-        
+
         $organization_fax_phone= new \App\Phone;
             $organization_fax_phone->contact_id=$organization->id;
             $organization_fax_phone->location_type_id=config('polanco.location_type.main');
             $organization_fax_phone->phone=$request->input('phone_main_fax');
             $organization_fax_phone->phone_type='Fax';
         $organization_fax_phone->save();
-        
+
         $organization_email_main = new \App\Email;
             $organization_email_main->contact_id=$organization->id;
             $organization_email_main->is_primary=1;
             $organization_email_main->location_type_id=config('polanco.location_type.main');
             $organization_email_main->email=$request->input('email_main');
         $organization_email_main->save();
-        
-        
+
+
         //TODO: add contact_id which is the id of the creator of the note
         if (!empty($request->input('note'))) {
             ;
@@ -143,49 +143,49 @@ class OrganizationController extends Controller
             $organization_note->subject='Organization Note';
             $organization_note->save();
         }
-        
+
         $url_main = new \App\Website;
             $url_main->contact_id=$organization->id;
             $url_main->url=$request->input('url_main');
             $url_main->website_type='Main';
         $url_main->save();
-        
+
         $url_work= new \App\Website;
             $url_work->contact_id=$organization->id;
             $url_work->url=$request->input('url_work');
             $url_work->website_type='Work';
         $url_work->save();
-        
+
         $url_facebook= new \App\Website;
             $url_facebook->contact_id=$organization->id;
             $url_facebook->url=$request->input('url_facebook');
             $url_facebook->website_type='Facebook';
         $url_facebook->save();
-        
+
         $url_google = new \App\Website;
             $url_google->contact_id=$organization->id;
             $url_google->url=$request->input('url_google');
             $url_google->website_type='Google';
         $url_google->save();
-        
+
         $url_instagram= new \App\Website;
             $url_instagram->contact_id=$organization->id;
             $url_instagram->url=$request->input('url_instagram');
             $url_instagram->website_type='Instagram';
         $url_instagram->save();
-        
+
         $url_linkedin= new \App\Website;
             $url_linkedin->contact_id=$organization->id;
             $url_linkedin->url=$request->input('url_linkedin');
             $url_linkedin->website_type='LinkedIn';
         $url_linkedin->save();
-        
+
         $url_twitter= new \App\Website;
             $url_twitter->contact_id=$organization->id;
             $url_twitter->url=$request->input('url_twitter');
             $url_twitter->website_type='Twitter';
         $url_twitter->save();
-   
+
         return Redirect::action('OrganizationController@index');
     }
 
@@ -199,7 +199,7 @@ class OrganizationController extends Controller
     {
         $this->authorize('show-contact');
         $organization = \App\Contact::with('addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'phone_main_phone.location', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations', 'donations')->findOrFail($id);
-       
+
         $files = \App\Attachment::whereEntity('contact')->whereEntityId($organization->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
         $relationship_types = [];
         $relationship_types["Employer"] = "Employer";
@@ -225,13 +225,13 @@ class OrganizationController extends Controller
 
         $states = \App\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
-        
+
         $countries = \App\Country::orderby('iso_code')->pluck('iso_code', 'id');
         $countries->prepend('N/A', 0);
-        
+
         $defaults['state_province_id'] = config('polanco.state_province_id_tx');
         $defaults['country_id'] = config('polanco.country_id_usa');
-        
+
         $defaults['Main']['url']='';
         $defaults['Work']['url']='';
         $defaults['Facebook']['url']='';
@@ -247,9 +247,9 @@ class OrganizationController extends Controller
 
         $subcontact_types = \App\ContactType::whereIsReserved(false)->whereIsActive(true)->pluck('label', 'id');
         $subcontact_types->prepend('N/A', 0);
-        
+
         //dd($organization);
-              
+
         return view('organizations.edit', compact('organization', 'states', 'countries', 'defaults', 'subcontact_types'));
     }
 
@@ -287,7 +287,7 @@ class OrganizationController extends Controller
         $organization->contact_type = config('polanco.contact_type.organization');
         $organization->subcontact_type = $request->input('subcontact_type');
         $organization->save();
-      
+
         if (empty($organization->address_primary)) {
             $address_primary = new \App\Address;
         } else {
@@ -296,7 +296,7 @@ class OrganizationController extends Controller
         $address_primary->contact_id=$organization->id;
         $address_primary->location_type_id=config('polanco.location_type.main');
         $address_primary->is_primary=1;
-            
+
         $address_primary->street_address = $request->input('street_address');
         $address_primary->supplemental_address_1 = $request->input('supplemental_address_1');
         $address_primary->city = $request->input('city');
@@ -317,7 +317,7 @@ class OrganizationController extends Controller
         $phone_primary->phone=$request->input('phone_main_phone');
         $phone_primary->phone_type='Phone';
         $phone_primary->save();
-        
+
         if (empty($organization->phone_main_fax)) {
                 $phone_main_fax = new \App\Phone;
         } else {
@@ -328,7 +328,7 @@ class OrganizationController extends Controller
         $phone_main_fax->phone=$request->input('phone_main_fax');
         $phone_main_fax->phone_type='Fax';
         $phone_main_fax->save();
-        
+
         if (empty($organization->email_primary)) {
             $email_primary = new \App\Email;
         } else {
@@ -339,7 +339,7 @@ class OrganizationController extends Controller
         $email_primary ->location_type_id=config('polanco.location_type.main');
         $email_primary ->email=$request->input('email_primary');
         $email_primary->save();
-        
+
         if (empty($organization->note_organization)) {
             $organization_note = new \App\Note;
         } else {
@@ -350,7 +350,7 @@ class OrganizationController extends Controller
         $organization_note->note=$request->input('note');
         $organization_note->subject='Organization Note';
         $organization_note->save();
-                
+
         if (null !== $request->file('avatar')) {
             $description = 'Avatar for '.$organization->organization_name;
             $attachment = new AttachmentController;
@@ -362,7 +362,7 @@ class OrganizationController extends Controller
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('attachment'), 'contact', $organization->id, 'attachment', $description);
         }
-                
+
         $url_main = \App\Website::firstOrNew(['contact_id'=>$organization->id,'website_type'=>'Main']);
             $url_main->contact_id=$organization->id;
             $url_main->url=$request->input('url_main');
@@ -433,7 +433,9 @@ class OrganizationController extends Controller
         \App\Touchpoint::wherePersonId($id)->delete();
         //delete registrations
         \App\Registration::whereContactId($id)->delete();
-       
+        // delete donations
+        \App\Donation::whereContactId($id)->delete();
+        
         \App\Contact::destroy($id);
         return Redirect::action('OrganizationController@index');
     }

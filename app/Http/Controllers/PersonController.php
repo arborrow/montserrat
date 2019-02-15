@@ -1525,6 +1525,8 @@ class PersonController extends Controller
         \App\Touchpoint::wherePersonId($id)->delete();
         //delete registrations
         \App\Registration::whereContactId($id)->delete();
+        // delete donations
+        \App\Donation::whereContactId($id)->delete();
         \App\Contact::destroy($id);
 
         return Redirect::action('PersonController@index');
