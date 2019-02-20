@@ -141,7 +141,7 @@
                         @endif
                     @endforeach
                 </p>
-                <p> 
+                <p>
                     @foreach($person->addresses as $address)
                         @if (!empty($address->street_address))
                             <span class="font-weight-bold">{{$address->location->display_name}}:</span>
