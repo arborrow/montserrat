@@ -241,7 +241,7 @@
                 </div>
                 <div class="col-2">
                     <div class="form-check">
-                        {!! Form::checkbox('is_retreatant', 1, true,['class' => 'form-check-input']) !!}
+                        {!! Form::checkbox('is_retreatant', 1, false,['class' => 'form-check-input']) !!}
                         {!! Form::label('is_retreatant', 'Retreatant', ['class' => 'form-check-label']) !!}
                     </div>
                 </div>
