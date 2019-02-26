@@ -31,7 +31,7 @@
                 <p>No parishes are currently in the database.</p>
             </div>
             @else
-            <table class="table table-bordered table-striped table-hover table-responsive"><caption><h2>Parishes</h2></caption>
+            <table class="table table-bordered table-striped table-hover table-responsive-lg">
                 <thead>
                     <tr>
                         <th>Picture</th>
