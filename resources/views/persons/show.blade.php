@@ -351,7 +351,7 @@
             </div>
             @endCan
             @can('show-donation')
-            <div class="col-12 mt-3">
+            <div class="col-12 mt-3" id="donations">
                 <h2>
                     {{$person->donations->count() }}  Donations for {{ $person->display_name }}
                         - ${{number_format($person->donations->sum('payments_paid'),2)}} paid of
