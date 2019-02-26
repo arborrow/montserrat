@@ -148,7 +148,7 @@
                             <address>{!!$address->google_map!!}</address>
                             @can('delete-contact')
                                 {!! Form::open(['method' => 'DELETE', 'route' => ['address.destroy', $address->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                                {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
+                                    <button type="submit" class="btn btn-outline-dark btn-sm"><i class="fas fa-trash"></i></button>
                                 {!! Form::close() !!}
                             @endCan
                         @endif
