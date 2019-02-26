@@ -64,8 +64,8 @@
     </div>
     <div class="col-12 mt-5">
         <div class="row">
-            <div class="col-12 col-md-6">
-                <h1>Basic Information</h1>
+            <div class="col-12 col-lg-6">
+                <h2>Basic Information</h2>
                 <p>
                     <span class="font-weight-bold">Title: </span>{{ (!empty($person->prefix_name)) ? $person->prefix_name : null }}
                     <br><span class="font-weight-bold">First Name: </span>{{ (!empty($person->first_name)) ? $person->first_name : null }}
@@ -80,7 +80,7 @@
                     <br><span class="font-weight-bold">Subcontact type: </span>{{ $person->subcontact_type_label }}
                 </p>
             </div>
-            <div class="col-12 col-md-6 alert alert-danger">
+            <div class="col-12 col-lg-6 alert alert-danger">
                 <h2>Emergency Contact Information</h2>
                 <p>
                     <span class="font-weight-bold">Name: </span>{{ !empty($person->emergency_contact->name) ? $person->emergency_contact->name : 'N/A' }}
@@ -96,7 +96,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-lg-6">
                 <h2>Contact Information</h2>
                 <div class="row">
                     @if($person->do_not_phone)
@@ -145,17 +145,17 @@
                     @foreach($person->addresses as $address)
                         @if (!empty($address->street_address))
                             <span class="font-weight-bold">{{$address->location->display_name}}:</span>
-                            <address>{!!$address->google_map!!}</address>
+                            <address class="d-inline">{!!$address->google_map!!}</address>
                             @can('delete-contact')
-                                {!! Form::open(['method' => 'DELETE', 'route' => ['address.destroy', $address->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                                {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
+                                {!! Form::open(['method' => 'DELETE', 'route' => ['address.destroy', $address->id],'onsubmit'=>'return ConfirmDelete()', 'class' => 'd-inline']) !!}
+                                    <button type="submit" class="btn btn-outline-dark btn-sm"><i class="fas fa-trash"></i></button>
                                 {!! Form::close() !!}
                             @endCan
                         @endif
                     @endforeach
                 </p>
             </div>
-            <div class="col-12 col-md-6" id="demographics">
+            <div class="col-12 col-lg-6" id="demographics">
                 <h2>Demographics</h2>
                 <p>
                     <span class="font-weight-bold">Gender: </span>{{ !empty($person->gender_name) ? $person->gender_name : 'N/A' }}
@@ -177,12 +177,12 @@
                     @endif
                 </p>
             </div>
-            <div class="col-12 col-md-6" id="notes">
+            <div class="col-12 col-lg-6" id="notes">
                 <h2>Notes</h2>
                 <p><span class="font-weight-bold">General: </span> {!! $person->note_contact ? $person->note_contact : 'N/A' !!}
                 <br><span class="font-weight-bold">Room Preference: </span> {!! $person->note_room_preference ? $person->note_room_preference : 'N/A' !!}</p>
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-lg-6">
                 <h2>Other</h2>
                 <p>
                     <span class="font-weight-bold">Referral sources: </span>
@@ -212,7 +212,7 @@
                 </p>
             </div>
             @can('show-group')
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-lg-6">
                 <h2>Roles</h2>
                 @if(!empty(array_filter((array)$person->groups)))
                     <ul>
@@ -226,7 +226,7 @@
             </div>
             @endCan
             @can('show-relationship')
-            <div class="col-12 col-md-6" id="relationships">
+            <div class="col-12 col-lg-6" id="relationships">
                 <h2>Relationships</h2>
                 @can('create-relationship')
                 {!! Form::open(['method' => 'POST', 'route' => ['relationship_type.addme']]) !!}
