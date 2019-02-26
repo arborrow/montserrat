@@ -26,7 +26,7 @@ class DioceseController extends Controller
     public function index()
     {
         $this->authorize('show-contact');
-        
+
         $dioceses = \App\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'bishops.contact_b', 'parishes.contact_a')->get();
         // dd($dioceses);
         return view('dioceses.index', compact('dioceses'));   //
@@ -42,18 +42,18 @@ class DioceseController extends Controller
         $this->authorize('create-contact');
         $states = \App\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
-        
+
         $countries = \App\Country::orderby('iso_code')->pluck('iso_code', 'id');
         $countries->prepend('N/A', 0);
-        
+
         $defaults['state_province_id'] = config('polanco.state_province_id_tx');
         $defaults['country_id'] = config('polanco.country_id_usa');
-        
+
         $bishops = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
             $query->where('group_id', '=', config('polanco.group_id.bishop'));
         })->pluck('display_name', 'id');
         $bishops->prepend('N/A', 0);
-        
+
         return view('dioceses.create', compact('bishops', 'states', 'countries', 'defaults'));
     }
 
@@ -87,7 +87,7 @@ class DioceseController extends Controller
         $diocese->contact_type = config('polanco.contact_type.organization');
         $diocese->subcontact_type = config('polanco.contact_type.diocese');
         $diocese->save();
-        
+
         $diocese_address= new \App\Address;
             $diocese_address->contact_id=$diocese->id;
             $diocese_address->location_type_id=config('polanco.location_type.main');
@@ -99,7 +99,7 @@ class DioceseController extends Controller
             $diocese_address->postal_code=$request->input('postal_code');
             $diocese_address->country_id=$request->input('country_id');
         $diocese_address->save();
-        
+
         $diocese_main_phone= new \App\Phone;
             $diocese_main_phone->contact_id=$diocese->id;
             $diocese_main_phone->location_type_id=config('polanco.location_type.main');
@@ -107,57 +107,57 @@ class DioceseController extends Controller
             $diocese_main_phone->phone=$request->input('phone_main_phone');
             $diocese_main_phone->phone_type='Phone';
         $diocese_main_phone->save();
-        
+
         $diocese_fax_phone= new \App\Phone;
             $diocese_fax_phone->contact_id=$diocese->id;
             $diocese_fax_phone->location_type_id=config('polanco.location_type.main');
             $diocese_fax_phone->phone=$request->input('phone_main_fax');
             $diocese_fax_phone->phone_type='Fax';
         $diocese_fax_phone->save();
-        
+
         $diocese_email_main = new \App\Email;
             $diocese_email_main->contact_id=$diocese->id;
             $diocese_email_main->is_primary=1;
             $diocese_email_main->location_type_id=config('polanco.location_type.main');
             $diocese_email_main->email=$request->input('email_main');
         $diocese_email_main->save();
-        
+
         $url_main = new \App\Website;
             $url_main->contact_id=$diocese->id;
             $url_main->url=$request->input('url_main');
             $url_main->website_type='Main';
         $url_main->save();
-        
+
         $url_work= new \App\Website;
             $url_work->contact_id=$diocese->id;
             $url_work->url=$request->input('url_work');
             $url_work->website_type='Work';
         $url_work->save();
-        
+
         $url_facebook= new \App\Website;
             $url_facebook->contact_id=$diocese->id;
             $url_facebook->url=$request->input('url_facebook');
             $url_facebook->website_type='Facebook';
         $url_facebook->save();
-        
+
         $url_google = new \App\Website;
             $url_google->contact_id=$diocese->id;
             $url_google->url=$request->input('url_google');
             $url_google->website_type='Google';
         $url_google->save();
-        
+
         $url_instagram= new \App\Website;
             $url_instagram->contact_id=$diocese->id;
             $url_instagram->url=$request->input('url_instagram');
             $url_instagram->website_type='Instagram';
         $url_instagram->save();
-        
+
         $url_linkedin= new \App\Website;
             $url_linkedin->contact_id=$diocese->id;
             $url_linkedin->url=$request->input('url_linkedin');
             $url_linkedin->website_type='LinkedIn';
         $url_linkedin->save();
-        
+
         $url_twitter= new \App\Website;
             $url_twitter->contact_id=$diocese->id;
             $url_twitter->url=$request->input('url_twitter');
@@ -176,7 +176,7 @@ class DioceseController extends Controller
             $diocese_note->subject='Diocese note';
             $diocese_note->save();
         }
-        
+
         if ($request->input('bishop_id')>0) {
             $relationship_bishop= new \App\Relationship;
             $relationship_bishop->contact_id_a = $diocese->id;
@@ -185,7 +185,7 @@ class DioceseController extends Controller
             $relationship_bishop->is_active = 1;
             $relationship_bishop->save();
         }
-   
+
         return Redirect::action('DioceseController@index');
     }
 
@@ -226,17 +226,17 @@ class DioceseController extends Controller
         // dd($diocese->bishop_id, $diocese->bishops,$diocese->primary_bishop);
         $states = \App\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
-        
+
         $countries = \App\Country::orderby('iso_code')->pluck('iso_code', 'id');
         $countries->prepend('N/A', 0);
-        
+
         $defaults['state_province_id'] = config('polanco.state_province_id_tx');
         $defaults['country_id'] = config('polanco.country_id_usa');
-        
+
         $bishops = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
             $query->where('group_id', '=', config('polanco.group_id.bishop'));
         })->pluck('sort_name', 'id')->toArray();
-        
+
         /* ensure that a bishop  has not been removed */
         if (isset($diocese->primary_bishop->id)) {
             if (!array_has($bishops,$diocese->primary_bishop->id)) {
@@ -246,11 +246,11 @@ class DioceseController extends Controller
                 // dd($touchpoint->staff->sort_name.' is not currently a staff member: '.$touchpoint->staff->id, $staff);
             }
         }
-        
+
         $bishops = array_prepend($bishops,'N/A',0);
-        
+
         // dd($bishops);
-        
+
         //dd($diocese);
         $defaults['Main']['url']='';
         $defaults['Work']['url']='';
@@ -264,7 +264,7 @@ class DioceseController extends Controller
         foreach ($diocese->websites as $website) {
             $defaults[$website->website_type]['url'] = $website->url;
         }
-              
+
         return view('dioceses.edit', compact('diocese', 'bishops', 'states', 'countries', 'defaults'));
     }
 
@@ -306,12 +306,12 @@ class DioceseController extends Controller
         $diocese->subcontact_type = config('polanco.contact_type.diocese');
         $diocese->save();
         $bishop_id = $request->input('bishop_id');
-      
+
         $address_primary = \App\Address::findOrNew($diocese->address_primary->id);
         $address_primary->contact_id=$diocese->id;
         $address_primary->location_type_id=config('polanco.location_type.main');
         $address_primary->is_primary=1;
-            
+
         $address_primary->street_address = $request->input('street_address');
         $address_primary->supplemental_address_1 = $request->input('supplemental_address_1');
         $address_primary->city = $request->input('city');
@@ -320,7 +320,7 @@ class DioceseController extends Controller
         $address_primary->country_id = config('polanco.country_id_usa');
         $address_primary->is_primary = 1;
         $address_primary->save();
-        
+
         $phone_primary = \App\Phone::findOrNew($diocese->phone_primary->id);
         $phone_primary->contact_id=$diocese->id;
         $phone_primary->location_type_id=config('polanco.location_type.main');
@@ -328,7 +328,7 @@ class DioceseController extends Controller
         $phone_primary->phone=$request->input('phone_main_phone');
         $phone_primary->phone_type='Phone';
         $phone_primary->save();
-        
+
         if (empty($diocese->phone_main_fax)) {
                 $phone_main_fax = new \App\Phone;
         } else {
@@ -339,13 +339,13 @@ class DioceseController extends Controller
         $phone_main_fax->phone=$request->input('phone_main_fax');
         $phone_main_fax->phone_type='Fax';
         $phone_main_fax->save();
-        
+
         if (isset($diocese->email_primary->id) ) {
             $email_id = $diocese->email_primary->id;
         } else {
             $email_id = 0;
         }
-        
+
         $email_primary = \App\Email::firstOrNew(['id'=>$email_id]);
         $email_primary->contact_id=$diocese->id;
         $email_primary ->is_primary=1;
@@ -394,7 +394,7 @@ class DioceseController extends Controller
                 $url_twitter->url=$request->input('url_twitter');
                 $url_twitter->website_type='Twitter';
             $url_twitter->save();
-        
+
         /* current behavior will add a bishop to a diocese
          * to remove a bishop delete the relationship in contacts
          */
@@ -406,15 +406,15 @@ class DioceseController extends Controller
             $relationship_bishop->is_active = 1;
             $relationship_bishop->save();
         }
-        
+
         /* if unsetting a Bishop for a diocese
          * remove bishop_id from diocese record
-         * remove relationship 
+         * remove relationship
          * save diocese
          */
-        
+
         if ($request->input('bishop_id')==0) {
-            
+
             $active_bishops = \App\Relationship::whereContactIdA($diocese->id)->whereRelationshipTypeId(config('polanco.relationship_type.bishop'))->whereIsActive(1)->get();
             // dd($active_bishops);
             foreach($active_bishops as $bishop) {
@@ -422,7 +422,7 @@ class DioceseController extends Controller
                 $bishop->save();
             }
         }
-           
+
 
         if (null !== $request->file('avatar')) {
             $description = 'Avatar for '.$diocese->organization_name;
@@ -461,7 +461,9 @@ class DioceseController extends Controller
         \App\Touchpoint::wherePersonId($id)->delete();
         //delete registrations
         \App\Registration::whereContactId($id)->delete();
-       
+        // delete donations
+        \App\Donation::whereContactId($id)->delete();
+        
          \App\Contact::destroy($id);
         return Redirect::action('DioceseController@index');
     }
