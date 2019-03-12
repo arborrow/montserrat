@@ -146,7 +146,7 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-12">
-                                <h3>Phone Number</h3>
+                                <h3>Phone Numbers</h3>
                             </div>
                             <div class="col-12">
                                 @include('persons.update.phones')
@@ -154,7 +154,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <h3>Email</h3>
+                                <h3>Emails</h3>
                             </div>
                             <div class="col-12">
                                 @include('persons.update.emails')
@@ -162,7 +162,15 @@
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <h3>Address</h3>
+                                <h3>Websites</h3>
+                            </div>
+                            <div class="col-12">
+                                @include('persons.update.urls')
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <h3>Addresses</h3>
                             </div>
                             <div class="col-12">
                                 @include('persons.update.addresses')
