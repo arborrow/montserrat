@@ -124,6 +124,7 @@
                     @foreach($person->phones as $phone)
                         @if(!empty($phone->phone))
                             <span class="font-weight-bold">{{$phone->location->display_name}} - {{$phone->phone_type}}: </span>{{$phone->phone}}{{$phone->phone_extension}}
+                            <br>
                         @endif
                     @endforeach
                 </p>
@@ -131,28 +132,31 @@
                     @foreach($person->emails as $email)
                         @if(!empty($email->email))
                             <span class="font-weight-bold">{{$email->location->display_name}} - Email: </span><a href="mailto:{{$email->email}}">{{$email->email}}</a>
+                            <br>
                         @endif
                     @endforeach
                 </p>
                 <p>
-                    @foreach($person->websites as $website)
-                        @if(!empty($website->url))
-                            <span class="font-weight-bold">{{$website->website_type}} - URL: </span><a href="{{$website->url}}" target="_blank">{{$website->url}}</a>
-                        @endif
-                    @endforeach
+                @foreach($person->websites as $website)
+                    @if(!empty($website->url))
+                        <span class="font-weight-bold">{{$website->website_type}} - URL: </span><a href="{{$website->url}}" target="_blank">{{$website->url}}</a>
+                        <br>
+                    @endif
+                @endforeach
                 </p>
                 <p>
-                    @foreach($person->addresses as $address)
-                        @if (!empty($address->street_address))
-                            <span class="font-weight-bold">{{$address->location->display_name}}:</span>
-                            <address class="d-inline">{!!$address->google_map!!}</address>
-                            @can('delete-contact')
-                                {!! Form::open(['method' => 'DELETE', 'route' => ['address.destroy', $address->id],'onsubmit'=>'return ConfirmDelete()', 'class' => 'd-inline']) !!}
-                                    <button type="submit" class="btn btn-outline-dark btn-sm"><i class="fas fa-trash"></i></button>
-                                {!! Form::close() !!}
-                            @endCan
-                        @endif
-                    @endforeach
+                @foreach($person->addresses as $address)
+                    @if (!empty($address->street_address))
+                        <span class="font-weight-bold">{{$address->location->display_name}}:</span>
+                        <address class="d-inline">{!!$address->google_map!!}</address>
+                        @can('delete-contact')
+                            {!! Form::open(['method' => 'DELETE', 'route' => ['address.destroy', $address->id],'onsubmit'=>'return ConfirmDelete()', 'class' => 'd-inline']) !!}
+                                <button type="submit" class="btn btn-outline-dark btn-sm"><i class="fas fa-trash"></i></button>
+                            {!! Form::close() !!}
+                        @endCan
+                        <br>
+                    @endif
+                @endforeach
                 </p>
             </div>
             <div class="col-12 col-lg-6" id="demographics">
