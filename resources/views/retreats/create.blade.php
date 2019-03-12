@@ -21,11 +21,11 @@
                 <div class="row">
                     <div class="col-4">
                         {!! Form::label('start_date', 'Starts: ') !!}
-                        {!! Form::text('start_date', null, ['id' => 'start_date', 'class' => 'form-control flatpickr-date-time']) !!}
+                        {!! Form::text('start_date', null, ['id' => 'start_date', 'class' => 'form-control flatpickr-date-time bg-white']) !!}
                     </div>
                     <div class="col-4">
                         {!! Form::label('end_date', 'Ends: ') !!}
-                        {!! Form::text('end_date', null, ['id' => 'end_date', 'class' => 'form-control flatpickr-date-time']) !!}
+                        {!! Form::text('end_date', null, ['id' => 'end_date', 'class' => 'form-control flatpickr-date-time bg-white']) !!}
                     </div>
                 </div>
                 <div class="row">
