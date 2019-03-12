@@ -44,8 +44,7 @@
     <div class="clearfix"> </div>
     <div class="form-group">
         {!! Form::label('state_province_id', 'State:', ['class' => 'col-md-1']) !!}
-        {!! Form::select('state_province_id', $states, $parish->address_primary_state, ['class' => 'col-md-2']) !!}
-            
+        {!! Form::select('state_province_id', $states, $parish->address_primary->state_province_id, ['class' => 'col-md-2']) !!}
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
