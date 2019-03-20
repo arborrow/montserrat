@@ -94,7 +94,7 @@
             </span>
         </div>
     </div>
-    <div class="col-12 table-responsive">
+    <div class="col-12 table-responsive-lg">
         @if ($persons->isEmpty())
             <div class="col-12 text-center py-5">
                 <p>It is a brand new world, there are no persons. Let there be light!</p>
