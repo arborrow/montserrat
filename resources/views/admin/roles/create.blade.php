@@ -1,35 +1,36 @@
 @extends('template')
 @section('content')
 
-<section class="section-padding">
-    <div class="jumbotron text-left">
-        <h2><strong>Create Roles</strong></h2>
-        {!! Form::open(['url' => 'admin/role', 'method' => 'post', 'class' => 'form-horizontal panel']) !!}
-        <span>
-            <div class='row'>
-                {!! Form::label('name', 'Name:', ['class' => 'col-md-3'])  !!}
-
-                {!! Form::text('name', NULL , ['class' => 'col-md-3']) !!}
-            </div>
-            <div class='row'>
-                {!! Form::label('display_name', 'Display Name:', ['class' => 'col-md-3'])  !!}
-
-                {!! Form::text('display_name', NULL , ['class' => 'col-md-3']) !!}
-            </div>
-            <div class='row'>
-                {!! Form::label('description', 'Description:', ['class' => 'col-md-3'])  !!}
-                {!! Form::textarea('description', NULL, ['class' => 'col-md-3']) !!}                   
-            </div>             
-
-        <div class="clearfix"> </div>
-     <div class="col-md-1">
-            <div class="form-group">
-                {!! Form::submit('Add Role', ['class'=>'btn btn-primary']) !!}
-            </div>
-                {!! Form::close() !!}
-        </div>
-        <div class="clearfix"> </div>
-    </span>
+<div class="row bg-cover">
+    <div class="col-12">
+        <h1>Create Role</h1>
     </div>
-</section>
+    <div class="col-12">
+        {!! Form::open(['url'=>'admin/role', 'method'=>'post']) !!}
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        {!! Form::label('name', 'Name') !!}
+                        {!! Form::text('name', NULL , ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="col-12 col-md-4">
+                        {!! Form::label('display_name', 'Display Name')  !!}
+                        {!! Form::text('display_name', NULL , ['class' => 'form-control']) !!}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        {!! Form::label('description', 'Description') !!}
+                        {!! Form::textarea('description', NULL, ['class' => 'form-control', 'rows' => 3]) !!}
+                    </div>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-12">
+                    {!! Form::submit('Add Role', ['class'=>'btn btn-outline-dark']) !!}
+                </div>
+            </div>
+        {!! Form::close() !!}
+    </div>
+</div>
 @stop
