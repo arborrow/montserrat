@@ -4,13 +4,13 @@
 <div class="row bg-cover">
     <div class="col-12">
         @can('update-role')
-            <h2>
+            <h1>
                 Role details: <strong><a href="{{url('admin/role/'.$role->id.'/edit')}}">{{ $role->name }}</a></strong>
-            </h2>
+            </h1>
         @else
-            <h2>
+            <h1>
                 Role details: <strong>{{$role->name}}</strong>
-            </h2>
+            </h1>
         @endCan
     </div>
     <div class="col-12 mb-4">
