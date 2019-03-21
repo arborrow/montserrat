@@ -111,23 +111,21 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-12">
-                                {{-- <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="customFile">
-                                    <label class="custom-file-label" for="customFile">Choose file</label>
-                                </div> --}}
-                                <div class="custom-file">
-                                    {!! Form::label('avatar', 'Picture (max 5M)', ['class' => 'custom-file-label']) !!}
-                                    {!! Form::file('avatar',['class' => 'custom-file-input']); !!}
+                                <div class="row">
+                                    <div class="col-12">
+                                        {!! Form::label('avatar', 'Picture (max 5M)') !!}
+                                        {!! Form::file('avatar'); !!}
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="row">
-                                    <div class="col-12 col-md-6">
+                                    <div class="col-12">
                                         {!! Form::label('attachment', 'Attachment (max 10M): ', ['class' => ''])  !!}
                                         {!! Form::file('attachment',['class' => '']); !!}
                                     </div>
-                                    <div class="col-12 col-md-6">
-                                        {!! Form::label('attachment_description', 'Description: (max 200)')  !!}
+                                    <div class="col-6">
+                                        {!! Form::label('attachment_description', 'Attachment Description (max 200)')  !!}
                                         {!! Form::text('attachment_description', NULL, ['class' => 'form-control']) !!}
                                     </div>
                                 </div>
@@ -136,87 +134,12 @@
                     </div>
                 </div>
             </div>
+            <div class="row text-center">
+                <div class="col-12">
+                    {!! Form::image('/images/save.png','btnSave',['class' => 'btn btn-outline-dark']) !!}
+                </div>
+            </div>
         {!! Form::close() !!}
     </div>
-</div>
-
-<div class="jumbotron text-left">
-    <h1>Edit Diocese: {!! $diocese->name !!}</h1>
-    
-    
-    <div class="form-group">
-        
-    </div><div class="clearfix"> </div>
-    <div class="form-group">
-        
-    </div>
-    <div class="form-group">
-        
-    </div>
-    <div class="form-group">
-        
-    </div>
-    <div class="clearfix"> </div>
-    <div class="form-group">
-        
-    </div>
-    <div class="clearfix"> </div>
-    <div class="form-group">
-        
-    </div>
-    <div class="clearfix"> </div>
-    <div class="form-group">
-        
-    </div>
-    <div class="clearfix"> </div>
-    <div class="form-group">
-        
-            
-    </div>
-    <div class="clearfix"> </div>
-    <div class="form-group">
-        
-    </div>
-    <div class="clearfix"> </div>
-    <div class="form-group">
-        
-    </div>
-    <div class="clearfix"> </div>
-    <div class="form-group">
-        
-        
-    </div>
-    <div class="clearfix"> </div>
-    <div class="form-group">
-        
-    </div>
-    <div class="clearfix"> </div>
-    <div class="clearfix"> </div>
-    <div class="form-group">
-    
-        
-    </div>
-    <div class="clearfix"> </div>
-    <div class="form-group">
-
-        
-    </div>
-    <div class="clearfix"> </div>
-    <div class='form-group'>
-        
-    </div>
-    <div class="clearfix"> </div>
-    
-    <!-- removing notes for now
-    <div class="form-group">
-        {!! Form::label('notes', 'Notes:', ['class' => 'col-md-1']) !!}
-        {!! Form::textarea('notes', $diocese->notes, ['class' => 'col-md-5', 'rows'=>'3']) !!}
-    </div>
-    <div class="clearfix"> </div>
-    -->
-    <div class="form-group">
-        {!! Form::image('/images/save.png','btnSave',['class' => 'btn btn-primary']) !!}
-    </div>
-    
 </div>
 @stop
