@@ -17,7 +17,7 @@
     <div class="col-12 my-3 table-responsive-md">
         @if ($roles->isEmpty())
             <div class="col-12 text-center py-5">
-                <p>It is a brand new world, there are no permissions!</p>
+                <p>It is a brand new world, there are no roles!</p>
             </div>
         @else
             <table class="table table-striped table-bordered table-hover">
