@@ -71,13 +71,13 @@
                     @endif
                 @endforeach
             </div>
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-6" id="notes">
                 <h2>Notes</h2> 
                 {{ $organization->note_organization_text }}
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-6" id="relationships">
                 <h2>Relationships</h2>
                 {!! Form::open(['method' => 'POST', 'route' => ['relationship_type.addme']]) !!}
                 <div class="form-group">
@@ -106,7 +106,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-12" id="touchpoints">
                 <h2>Touchpoints</h2>
                 @if ($organization->touchpoints->isEmpty())
                     <div class="text-center">
@@ -138,7 +138,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-12" id="registrations">
                 <h2>Retreat Participation for {{ $organization->display_name }}</h2>
                 <ul>    
                     @foreach($organization->event_registrations as $registration)
@@ -148,7 +148,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-12" id="attachments">
                 <h2>Attachments for {{ $organization->display_name }}</h2>
                 @if ($files->isEmpty())
                     <div class="text-center">
@@ -180,7 +180,7 @@
         </div>
         @can('show-donation')
             <div class="row">
-                <div class="col-12">
+                <div class="col-12" id="donations">
                     <h2>Donations for {{ $organization->display_name }} ({{$organization->donations->count() }} donations totaling:  ${{ number_format($organization->donations->sum('donation_amount'),2)}})</h2>
                     @can('create-donation')
                         {!! Html::link(action('DonationController@create',$organization->id),'Create donation',array('class' => 'btn btn-outline-dark'))!!}
