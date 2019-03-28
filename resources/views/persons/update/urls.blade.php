@@ -19,12 +19,6 @@
             </a>
         </li>
         <li class="nav-item" role="tab">
-            <a class="nav-link" data-toggle="tab" role="tab" href="#url_google">
-                <i class="fab fa-google-plus-square"></i>
-                <label>Google+</label>
-            </a>
-        </li>
-        <li class="nav-item" role="tab">
             <a class="nav-link" data-toggle="tab" role="tab" href="#url_instagram">
                 <i class="fab fa-instagram"></i>
                 <label>Instagram</label>
