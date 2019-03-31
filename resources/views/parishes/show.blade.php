@@ -92,7 +92,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-6" id="notes">
                 <h2>Notes</h2>
                 @foreach($parish->notes as $note)
                     @if(!empty($note->note))
@@ -102,7 +102,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-12" id="parishioners">
                 <h2>Parishioners of {{$parish->organization_name}}</h2>
             </div>
             <div class="col-12">
@@ -166,7 +166,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-12" id="touchpoints">
                 <h2>Touchpoints for {{ $parish->display_name }}</h2>
             </div>
             <div class="col-12">
@@ -200,7 +200,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-12" id="relationships">
                 <h2>Relationships</h2>
             </div>
             <div class="col-12 col-lg-6">
@@ -236,7 +236,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-12" id="registrations">
                 <h2>Retreat Participation for {{ $parish->display_name }}</h2>
             </div>
             <div class="col-12">
@@ -248,7 +248,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-12" id="attachments">
                 <h2>Attachments for {{ $parish->display_name }}</h2>
             </div>
             <div class="col-12">
@@ -279,7 +279,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-12" id="donations">
                 <h2>Donations for {{ $parish->display_name }} ({{$parish->donations->count() }} donations totaling:  ${{ number_format($parish->donations->sum('donation_amount'),2)}})</h2>
             </div>
             <div class="col-12">
