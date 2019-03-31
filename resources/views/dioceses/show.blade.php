@@ -89,7 +89,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-6" id="notes">
                 <h2>Notes for {{ $diocese->display_name }}</h2>
                 @foreach($diocese->notes as $note)
                     @if(!empty($note->note))
@@ -99,7 +99,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-12" id="touchpoints">
                 <h2>Touchpoints for {{ $diocese->display_name }}</h2>
                 @if ($diocese->touchpoints->isEmpty())
                     <div class="text-center">
@@ -135,7 +135,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-12" id="relationships">
                 <h2>Relationships for {{$diocese->display_name}}</h2>
             </div>
             <div class="col-12">
@@ -177,7 +177,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-12" id="registrations">
                 <h2>Retreat Participation for {{ $diocese->display_name }}</h2>
                 <ul>  
                     @foreach($diocese->event_registrations as $registration)
@@ -187,7 +187,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-12" id="attachments">
                 <h2>Attachments for {{ $diocese->display_name }}</h2>
                 @if ($files->isEmpty())
                     <div class="text-center">
@@ -219,7 +219,7 @@
         </div>
         @can('show-donation')
             <div class="row">
-                <div class="col-12">
+                <div class="col-12" id="donations">
                     <h2>Donations for {{ $diocese->display_name }} ({{$diocese->donations->count() }} donations totaling:  ${{ number_format($diocese->donations->sum('donation_amount'),2)}})</h2>
                     <div class="text-center">
                         @can('create-donation')
