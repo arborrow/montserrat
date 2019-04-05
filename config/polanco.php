@@ -183,7 +183,6 @@ return [
     
     'payment_method' => [
         'Unassigned' => 'Unassigned',
-        'Bank charges' => 'Bank charges',
         'Cash' => 'Cash',
         'Check' => 'Check',
         'Credit card' => 'Credit card',
