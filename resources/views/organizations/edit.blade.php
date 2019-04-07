@@ -35,9 +35,6 @@
                             {!! Form::label('sort_name', 'Sort Name') !!}
                             {!! Form::text('sort_name', $organization->sort_name, ['class' => 'form-control']) !!}
                         </div>
-                        <div class="col-12 col-lg-4">
-
-                        </div>
                     </div>
                 </div>
             </div>
