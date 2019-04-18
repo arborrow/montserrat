@@ -39,46 +39,44 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-12">
-                        <h2>Donation Details</h2>
-                    </div>
+            <div class="row">
+                <div class="col-12">
+                    <h2>Donation Details</h2>
                 </div>
-                <div class="row">
-                    <div class="col-12 col-md-4">
-                        <span class="font-weight-bold">Date: </span>{{$donation->donation_date}}
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <span class="font-weight-bold">Description: </span>{{$donation->donation_description}}  
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <span class="font-weight-bold">Pledged/Paid: </span>${{number_format($donation->donation_amount,2)}} / ${{number_format($donation->payments->sum('payment_amount'),2)}} ({{number_format($donation->percent_paid,0)}}%)
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    <span class="font-weight-bold">Date: </span>{{$donation->donation_date}}
                 </div>
-                <div class="row">
-                    <div class="col-12 col-md-4">
-                        <span class="font-weight-bold">Terms: </span>{{$donation->terms}}
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <span class="font-weight-bold">Notes: </span>{{$donation->notes}}
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <span class="font-weight-bold">Start date: </span>{{$donation->start_date}}
-                    </div>
+                <div class="col-12 col-md-4">
+                    <span class="font-weight-bold">Description: </span>{{$donation->donation_description}}  
                 </div>
-                <div class="row">
-                    <div class="col-12 col-md-4">
-                        <span class="font-weight-bold">End date: </span>{{$donation->end_date}}
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <span class="font-weight-bold">Donation install: </span>{{$donation->donation_install}}
-                    </div>
+                <div class="col-12 col-md-4">
+                    <span class="font-weight-bold">Pledged/Paid: </span>${{number_format($donation->donation_amount,2)}} / ${{number_format($donation->payments->sum('payment_amount'),2)}} ({{number_format($donation->percent_paid,0)}}%)
                 </div>
-                <div class="row mt-3 text-center">
-                    <div class="col-12">
-                        {!! Form::submit('Add payment', ['class'=>'btn btn-outline-dark']) !!}
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    <span class="font-weight-bold">Terms: </span>{{$donation->terms}}
+                </div>
+                <div class="col-12 col-md-4">
+                    <span class="font-weight-bold">Notes: </span>{{$donation->notes}}
+                </div>
+                <div class="col-12 col-md-4">
+                    <span class="font-weight-bold">Start date: </span>{{$donation->start_date}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    <span class="font-weight-bold">End date: </span>{{$donation->end_date}}
+                </div>
+                <div class="col-12 col-md-4">
+                    <span class="font-weight-bold">Donation install: </span>{{$donation->donation_install}}
+                </div>
+            </div>
+            <div class="row mt-3 text-center">
+                <div class="col-12">
+                    {!! Form::submit('Add payment', ['class'=>'btn btn-outline-dark']) !!}
                 </div>
             </div>
         {!! Form::close() !!}
