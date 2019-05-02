@@ -43,7 +43,7 @@ class Contact extends Model
     }
     public function bishops()
     {
-        return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.bishop'))->whereIsActive(1);
+        return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.bishop'));
     }
     public function primary_bishop()
     {
