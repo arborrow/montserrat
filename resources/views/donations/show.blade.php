@@ -8,42 +8,42 @@
                 <span>
                     <h2>
                         @can('update-donation')
-                            <a href="{{url('donation/'.$donation->donation_id.'/edit')}}">Donation details</a> 
+                            <a href="{{url('donation/'.$donation->donation_id.'/edit')}}">Donation details</a>
                         @else
                             Donation details
                         @endCan
                         for {!!$donation->contact->contact_link_full_name!!} <br />
-                </span>                
+                </span>
                     {!! Html::link(action('PageController@finance_invoice',$donation->donation_id),'Invoice',array('class' => 'btn btn-default'))!!}
                     @can('create-payment')
                         {!! Html::link(action('PaymentController@create',$donation->donation_id),'Add payment',array('class' => 'btn btn-default'))!!}
-                    @endCan    
+                    @endCan
 		    @if ($donation->percent_paid == 100)
 			<a href="/donation/{{$donation->donation_id}}/agcacknowledge"><img src="/img/letter.png" alt="Print acknowledgement" title="Print acknowledgement"></a>
 		        <a href="/person/{{$donation->contact_id}}/envelope10"><img src="/img/envelope.png" alt="Print envelope" title="Print envelope"></a>
 		    @endIf
-				    
+
 	    </div>
-            
+
             <div class='row'>
                 <div class='col-md-4'>
                         <strong>Date: </strong>{{$donation->donation_date->format('m/d/Y')}}
-                        <br /><strong>Description: </strong>{{$donation->donation_description}}  
-                        <br /><strong>Pledged/Paid: </strong>${{number_format($donation->donation_amount,2)}} / ${{number_format($donation->payments->sum('payment_amount'),2)}}  
+                        <br /><strong>Description: </strong>{{$donation->donation_description}}
+                        <br /><strong>Pledged/Paid: </strong>${{number_format($donation->donation_amount,2)}} / ${{number_format($donation->payments->sum('payment_amount'),2)}}
                         ({{number_format($donation->percent_paid,0)}}%)
                         <br /><strong>Primary contact: </strong>{{$donation->Notes1}}
-                        <br /><strong>Event: </strong>{!!$donation->retreat_link!!} ({{$donation->retreat_start_date}}) 
+                        <br /><strong>Event: </strong>{!!$donation->retreat_link!!} ({{$donation->retreat_start_date}})
                         <br /><strong>Notes: </strong>{{$donation->Notes}}
                         <br /><strong>Terms: </strong>{{$donation->terms}}
                         <br /><strong>Start date: </strong>{{$donation->start_date}}
                         <br /><strong>End date: </strong>{{$donation->end_date}}
                         <br /><strong>Donation install: </strong>{{$donation->donation_install}}
                         <br /><strong>Thank you sent: </strong>{{$donation['Thank You']}}
-                    
+
                 </div>
             </div>
             <hr />
-                
+
             <div class='row'>
                 <div class='col-md-8'>
                     <table class="table table-bordered table-striped table-hover">
@@ -65,16 +65,16 @@
                             <td><a href="../payment/{{ $payment->payment_id}}">{{$payment->payment_date_formatted}}</a></td>
                             <td>${{ $payment->payment_amount }} </td>
                             <td>{{ $payment->payment_description }}</td>
-                            <td>{{ $payment->cknumber or $payment->ccnumber }}</td>
+                            <td>{{ $payment->cknumber ?? $payment->ccnumber }}</td>
                             <td>{{ $payment->note }}
                         </tr>
                         @endforeach
-                        
+
                     </tbody>
-                    
+
                 </table>
-                
-                   
+
+
                 </div>
             </div>
             <div class='row'>
@@ -86,7 +86,7 @@
                 @can('delete-donation')
                     <div class='col-md-1'>
                         {!! Form::open(['method' => 'DELETE', 'route' => ['donation.destroy', $donation->donation_id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                        {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                        {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
                         {!! Form::close() !!}
                     </div>
                 @endCan

@@ -6,8 +6,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                        <span class="grey">Donation Index</span> 
-                        <span class="grey">({{$donations->total()}} records)</span> 
+                        <span class="grey">Donation Index</span>
+                        <span class="grey">({{$donations->total()}} records)</span>
                         @can('create-donation')
                             <span class="create">
                                 <a href={{ action('DonationController@create') }}>{!! Html::image('img/create.png', 'Add Donation',array('title'=>"Add Donation",'class' => 'btn btn-primary')) !!}</a>
@@ -36,19 +36,19 @@
                         <tr>
 
                             <td style="width:17%"><a href="donation/{{ $donation->donation_id}}">{{ date('M d, Y g:i A', strtotime($donation->donation_date)) }}</a></td>
-                            <td style="width:17%">{!! $donation->contact->contact_link_full_name or 'Unknown contact' !!} </td>
+                            <td style="width:17%">{!! $donation->contact->contact_link_full_name ?? 'Unknown contact' !!} </td>
                             <td style="width:17%">{{ $donation->donation_description }} </td>
                             <td style="width:5%">{{ $donation->donation_amount }}</td>
                             <td style="width:44%">{{ $donation->terms }}</td>
                             <td style="width:44%">{{ $donation->retreat_id}}</td>
                         </tr>
                         @endforeach
-                        
+
                     </tbody>
-                    
+
                 </table>
-                {!! $donations->render() !!}    
-                    
+                {!! $donations->render() !!}
+
                 @endif
             </div>
         </div>
