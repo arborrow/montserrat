@@ -370,7 +370,7 @@
                 @if ($person->donations->isEmpty())
                     <p>No donations for this person!</p>
                 @else
-                    <table class="table table-striped">
+                    <table class="table table-striped table-responsive-lg">
                         <thead>
                             <tr>
                                 <th>Date</th>
