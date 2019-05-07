@@ -238,10 +238,10 @@ class DioceseController extends Controller
         })->pluck('sort_name', 'id')->toArray();
 
         /* ensure that a bishop  has not been removed */
-        if (isset($diocese->primary_bishop->id)) {
-            if (!array_has($bishops,$diocese->primary_bishop->id)) {
-                $bishops[$diocese->primary_bishop->id] = $diocese->primary_bishop->contact_b->sort_name. ' (former)';
-                $diocese->bishop_id = $diocese->primary_bishop->id;
+        if (isset($diocese->primary_bishop->contact_id_b)) {
+            if (!array_has($bishops,$diocese->primary_bishop->contact_id_b)) {
+                $bishops[$diocese->primary_bishop->contact_id_b] = $diocese->primary_bishop->contact_b->sort_name. ' (former)';
+                $diocese->bishop_id = $diocese->primary_bishop->contact_id_b;
                 asort($bishops);
                 // dd($touchpoint->staff->sort_name.' is not currently a staff member: '.$touchpoint->staff->id, $staff);
             }
