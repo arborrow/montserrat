@@ -32,15 +32,15 @@
             <h4>Home phone numbers</h4>
 
             <div class="row">
-                <div class="col-4">
+                <div class="col-12 col-md-4">
                     {!! Form::label('phone_home_phone', 'Home:') !!}
                     {!! Form::text('phone_home_phone', null, ['class' => 'form-control']) !!}
                 </div>
-                <div class="col-4">
+                <div class="col-12 col-md-4">
                     {!! Form::label('phone_home_mobile', 'Mobile:') !!}
                     {!! Form::text('phone_home_mobile', null, ['class' => 'form-control']) !!}
                 </div>
-                <div class="col-4">
+                <div class="col-12 col-md-4">
                     {!! Form::label('phone_home_fax', 'Fax:') !!}
                     {!! Form::text('phone_home_fax', null, ['class' => 'form-control']) !!}
                 </div>
@@ -50,15 +50,15 @@
             <h4>Work phone numbers</h4>
             
             <div class="row">
-                <div class="col-4">
+                <div class="col-12 col-md-4">
                     {!! Form::label('phone_home_phone', 'Home:') !!}
                     {!! Form::text('phone_home_phone', null, ['class' => 'form-control']) !!}
                 </div>
-                <div class="col-4">
+                <div class="col-12 col-md-4">
                     {!! Form::label('phone_home_mobile', 'Mobile:') !!}
                     {!! Form::text('phone_home_mobile', null, ['class' => 'form-control']) !!}
                 </div>
-                <div class="col-4">
+                <div class="col-12 col-md-4">
                     {!! Form::label('phone_home_fax', 'Fax:') !!}
                     {!! Form::text('phone_home_fax', null, ['class' => 'form-control']) !!}
                 </div>
@@ -68,15 +68,15 @@
             <h4>Other phone numbers</h4>
             
             <div class="row">
-                <div class="col-4">
+                <div class="col-12 col-md-4">
                     {!! Form::label('phone_home_phone', 'Home:') !!}
                     {!! Form::text('phone_home_phone', null, ['class' => 'form-control']) !!}
                 </div>
-                <div class="col-4">
+                <div class="col-12 col-md-4">
                     {!! Form::label('phone_home_mobile', 'Mobile:') !!}
                     {!! Form::text('phone_home_mobile', null, ['class' => 'form-control']) !!}
                 </div>
-                <div class="col-4">
+                <div class="col-12 col-md-4">
                     {!! Form::label('phone_home_fax', 'Fax:') !!}
                     {!! Form::text('phone_home_fax', null, ['class' => 'form-control']) !!}
                 </div>

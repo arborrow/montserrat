@@ -27,7 +27,7 @@
         <div aria-labelledby="tab1-tab" id="email_home" class="tab-pane fade show active" role="tabpanel">
             <h4>Home email</h4>
             <div class="row">
-                <div class="col-4">
+                <div class="col-12 col-md-4">
                     {!! Form::label('email_home', 'Email:') !!}
                     {!! Form::text('email_home', null, ['class' => 'form-control']) !!}
                 </div>
@@ -36,7 +36,7 @@
         <div aria-labelledby="tab2-tab" id="email_work" class="tab-pane fade" role="tabpanel">
             <h4>Work email</h4>
             <div class="row">
-                <div class="col-4">
+                <div class="col-12 col-md-4">
                     {!! Form::label('email_work', 'Email:') !!}
                     {!! Form::text('email_work', null, ['class' => 'form-control']) !!}
                 </div>
@@ -45,7 +45,7 @@
         <div aria-labelledby="tab3-tab" id="email_other" class="tab-pane fade" role="tabpanel">
             <h4>Other email</h4>
             <div class="row">
-                <div class="col-4">
+                <div class="col-12 col-md-4">
                     {!! Form::label('email_other', 'Email:') !!}
                     {!! Form::text('email_other', null, ['class' => 'form-control']) !!}
                 </div>
