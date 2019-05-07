@@ -242,19 +242,19 @@
                 <div class="col-4 col-md-2">
                     <div class="form-check">
                         {!! Form::checkbox('is_donor', 1, false, ['class' => 'form-check-input']) !!}
-                        {!! Form::label('is_donor', 'Donor:', ['class' => 'form-check-label'])  !!}
+                        {!! Form::label('is_donor', 'Donor', ['class' => 'form-check-label'])  !!}
                     </div>
                 </div>
                 <div class="col-4 col-md-2">
                     <div class="form-check">
                         {!! Form::checkbox('is_steward', 1, false, ['class' => 'form-check-input']) !!}
-                        {!! Form::label('is_steward', 'Steward:', ['class' => 'form-check-label'])  !!}
+                        {!! Form::label('is_steward', 'Steward', ['class' => 'form-check-label'])  !!}
                     </div>
                 </div>
                 <div class="col-4 col-md-2">
                     <div class="form-check">
                         {!! Form::checkbox('is_volunteer', 1, false,['class' => 'form-check-input']) !!}
-                        {!! Form::label('is_volunteer', 'Volunteer:', ['class' => 'form-check-label'])  !!}
+                        {!! Form::label('is_volunteer', 'Volunteer', ['class' => 'form-check-label'])  !!}
                     </div>
                 </div>
                 <div class="col-4 col-md-2">
