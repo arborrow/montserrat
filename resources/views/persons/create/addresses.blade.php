@@ -65,34 +65,34 @@
 
             <div class="row">
                 <div class="col-12 col-md-4">
-                    {!! Form::label("address_home_address1", "Address Line 1:") !!}
-                    {!! Form::text("address_home_address1", null, ["class" => "form-control"]) !!}
+                    {!! Form::label("address_work_address1", "Address Line 1:") !!}
+                    {!! Form::text("address_work_address1", null, ["class" => "form-control"]) !!}
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 col-md-4">
-                    {!! Form::label("address_home_address2", "Address Line 2:") !!}
-                    {!! Form::text("address_home_address2", null, ["class" => "form-control"]) !!}
+                    {!! Form::label("address_work_address2", "Address Line 2:") !!}
+                    {!! Form::text("address_work_address2", null, ["class" => "form-control"]) !!}
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 col-md-4">
-                    {!! Form::label("address_home_city", "City:") !!}
-                    {!! Form::text("address_home_city", null, ["class" => "form-control"]) !!}
+                    {!! Form::label("address_work_city", "City:") !!}
+                    {!! Form::text("address_work_city", null, ["class" => "form-control"]) !!}
                 </div>
                 <div class="col-12 col-md-4">
-                    {!! Form::label("address_home_state", "State:") !!}
-                    {!! Form::select("address_home_state", $states, "1042", ["class" => "form-control"]) !!}
+                    {!! Form::label("address_work_state", "State:") !!}
+                    {!! Form::select("address_work_state", $states, "1042", ["class" => "form-control"]) !!}
                 </div>
                 <div class="col-12 col-md-4">
-                    {!! Form::label("address_home_zip", "Zip:") !!}
-                    {!! Form::text("address_home_zip", null, ["class" => "form-control"]) !!}
+                    {!! Form::label("address_work_zip", "Zip:") !!}
+                    {!! Form::text("address_work_zip", null, ["class" => "form-control"]) !!}
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 col-md-4">
-                    {!! Form::label("address_home_country", "Country:") !!}
-                    {!! Form::select("address_home_country", $countries, "1228", ["class" => "form-control"]) !!}
+                    {!! Form::label("address_work_country", "Country:") !!}
+                    {!! Form::select("address_work_country", $countries, "1228", ["class" => "form-control"]) !!}
                 </div>
             </div>
         </div>
@@ -101,34 +101,34 @@
 
             <div class="row">
                 <div class="col-12 col-md-4">
-                    {!! Form::label("address_home_address1", "Address Line 1:") !!}
-                    {!! Form::text("address_home_address1", null, ["class" => "form-control"]) !!}
+                    {!! Form::label("address_other_address1", "Address Line 1:") !!}
+                    {!! Form::text("address_other_address1", null, ["class" => "form-control"]) !!}
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 col-md-4">
-                    {!! Form::label("address_home_address2", "Address Line 2:") !!}
-                    {!! Form::text("address_home_address2", null, ["class" => "form-control"]) !!}
+                    {!! Form::label("address_other_address2", "Address Line 2:") !!}
+                    {!! Form::text("address_other_address2", null, ["class" => "form-control"]) !!}
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 col-md-4">
-                    {!! Form::label("address_home_city", "City:") !!}
-                    {!! Form::text("address_home_city", null, ["class" => "form-control"]) !!}
+                    {!! Form::label("address_other_city", "City:") !!}
+                    {!! Form::text("address_other_city", null, ["class" => "form-control"]) !!}
                 </div>
                 <div class="col-12 col-md-4">
-                    {!! Form::label("address_home_state", "State:") !!}
-                    {!! Form::select("address_home_state", $states, "1042", ["class" => "form-control"]) !!}
+                    {!! Form::label("address_other_state", "State:") !!}
+                    {!! Form::select("address_other_state", $states, "1042", ["class" => "form-control"]) !!}
                 </div>
                 <div class="col-12 col-md-4">
-                    {!! Form::label("address_home_zip", "Zip:") !!}
-                    {!! Form::text("address_home_zip", null, ["class" => "form-control"]) !!}
+                    {!! Form::label("address_other_zip", "Zip:") !!}
+                    {!! Form::text("address_other_zip", null, ["class" => "form-control"]) !!}
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 col-md-4">
-                    {!! Form::label("address_home_country", "Country:") !!}
-                    {!! Form::select("address_home_country", $countries, "1228", ["class" => "form-control"]) !!}
+                    {!! Form::label("address_other_country", "Country:") !!}
+                    {!! Form::select("address_other_country", $countries, "1228", ["class" => "form-control"]) !!}
                 </div>
             </div>
         </div>
