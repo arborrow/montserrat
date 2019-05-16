@@ -73,11 +73,11 @@
                     <h1>Room Schedules for</h1>
                     <h1>
                         {!!$previous_link!!}
-                        {{$dts[0]->format('F d, Y')}} - {{$dts[31]->format('F d, Y')}} 
+                        {{$dts[0]->format('F d, Y')}} - {{$dts[31]->format('F d, Y')}}
                         {!!$next_link!!}
                     </h1>
                 </div>
-                
+
                 @if (empty($m))
                     <p></p>
                 @else
