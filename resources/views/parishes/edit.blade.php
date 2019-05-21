@@ -45,6 +45,8 @@
                     {!! Form::label('street_address', 'Address:') !!}
                     {!! Form::text('street_address', $parish->address_primary_street, ['class' => 'form-control']) !!}
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-12 col-md-4">
                     {!! Form::label('city', 'City:') !!}
                     {!! Form::text('city', $parish->address_primary_city, ['class' => 'form-control']) !!}
