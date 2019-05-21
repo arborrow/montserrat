@@ -1,6 +1,6 @@
 @extends('template')
 @section('content')
-<h1>Merging users</h1> - <span class='btn btn-default'><a href="{!!url('person/duplicates')!!}">List of Duplicates</a></span>
+<h1>Merging users</h1> - <span class='btn btn-outline-dark'><a href="{!!url('person/duplicates')!!}">List of Duplicates</a></span>
 <table class="table table-bordered table-striped">
     <tr>
     <th>Contact ID</th>
@@ -8,10 +8,10 @@
     @foreach ($duplicates as $duplicate)
     <th><a href="{!!url('person/merge/'.$duplicate->id)!!}">{{$duplicate->id}}</a>
         <br />
-        <span class='btn btn-default'>
+        <span class='btn btn-outline-dark'>
             <a href="{!!url('person/merge/'.$contact->id.'/'.$duplicate->id)!!}">Merge</a>
         </span>
-        <span class='btn btn-default'>
+        <span class='btn btn-outline-dark'>
             <a href="{!!url('person/merge_delete/'.$duplicate->id.'/'.$contact->id)!!}">Delete</a>
         </span>
 

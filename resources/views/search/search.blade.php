@@ -15,7 +15,7 @@
             <div class='panel-heading'>
                 <h2>
                     <span>Name</span>
-                    <span>{!! Form::image('img/submit.png','btnSave',['class' => 'btn btn-default pull-right']) !!}</span>                    
+                    <span>{!! Form::image('images/submit.png','btnSave',['class' => 'btn btn-outline-dark pull-right']) !!}</span>                    
                 </h2>
             </div>
             <div class="panel-body">
@@ -200,7 +200,7 @@
                 <div class="form-group">
                     {!! Form::label('birth_date', 'Birth Date:', ['class' => 'control-label col-sm-3']) !!}
                     <div class="col-sm-8">
-                        {!! Form::text('birth_date', NULL, ['class'=>'form-control','data-provide'=>'datepicker']) !!}
+                        {!! Form::text('birth_date', NULL, ['class'=>'form-control flatpickr-date']) !!}
                     </div>
                 </div>
                 <div class="form-group">
@@ -248,7 +248,7 @@
                 <div class="form-group">
                     {!! Form::label('deceased_date', 'Deceased Date:', ['class' => 'control-label col-sm-3'])  !!}
                     <div class="col-sm-8">  
-                        {!! Form::text('deceased_date', NULL, ['class'=>'form-control','data-provide'=>'datepicker']) !!}
+                        {!! Form::text('deceased_date', NULL, ['class'=>'form-control flatpickr-date']) !!}
                     </div>
                 </div>
                 <div class="form-group">
@@ -364,9 +364,9 @@
  
 --}}
    </div>
-    <!-- <div class="form-group">
-        {!! Form::image('img/save.png','btnSave',['class' => 'btn btn-default']) !!}
-    </div> -->
+    {{-- <div class="form-group">
+        {!! Form::image('images/save.png','btnSave',['class' => 'btn btn-outline-dark']) !!}
+    </div> --}}
     {!! Form::close() !!}
 </div>
 

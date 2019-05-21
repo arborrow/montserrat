@@ -1,97 +1,84 @@
 @extends('template')
 @section('content')
 
-<section class="section-padding">
-    <div class="jumbotron text-left">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <span>
-                    <h2>
-                        @can('update-donation')
-                            <a href="{{url('donation/'.$donation->donation_id.'/edit')}}">Donation details</a>
-                        @else
-                            Donation details
-                        @endCan
-                        for {!!$donation->contact->contact_link_full_name!!} <br />
-                </span>
-                    {!! Html::link(action('PageController@finance_invoice',$donation->donation_id),'Invoice',array('class' => 'btn btn-default'))!!}
-                    @can('create-payment')
-                        {!! Html::link(action('PaymentController@create',$donation->donation_id),'Add payment',array('class' => 'btn btn-default'))!!}
-                    @endCan
-		    @if ($donation->percent_paid == 100)
-			<a href="/donation/{{$donation->donation_id}}/agcacknowledge"><img src="/img/letter.png" alt="Print acknowledgement" title="Print acknowledgement"></a>
-		        <a href="/person/{{$donation->contact_id}}/envelope10"><img src="/img/envelope.png" alt="Print envelope" title="Print envelope"></a>
-		    @endIf
-
-	    </div>
-
-            <div class='row'>
-                <div class='col-md-4'>
-                        <strong>Date: </strong>{{$donation->donation_date->format('m/d/Y')}}
-                        <br /><strong>Description: </strong>{{$donation->donation_description}}
-                        <br /><strong>Pledged/Paid: </strong>${{number_format($donation->donation_amount,2)}} / ${{number_format($donation->payments->sum('payment_amount'),2)}}
-                        ({{number_format($donation->percent_paid,0)}}%)
-                        <br /><strong>Primary contact: </strong>{{$donation->Notes1}}
-                        <br /><strong>Event: </strong>{!!$donation->retreat_link!!} ({{$donation->retreat_start_date}})
-                        <br /><strong>Notes: </strong>{{$donation->Notes}}
-                        <br /><strong>Terms: </strong>{{$donation->terms}}
-                        <br /><strong>Start date: </strong>{{$donation->start_date}}
-                        <br /><strong>End date: </strong>{{$donation->end_date}}
-                        <br /><strong>Donation install: </strong>{{$donation->donation_install}}
-                        <br /><strong>Thank you sent: </strong>{{$donation['Thank You']}}
-
-                </div>
-            </div>
-            <hr />
-
-            <div class='row'>
-                <div class='col-md-8'>
-                    <table class="table table-bordered table-striped table-hover">
-                        <caption><h2>Payments for Donation #{{$donation->donation_id}} - Total payments: ${{number_format($donation->payments->sum('payment_amount'),2)}}</h2></caption>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Amount</th>
-                            <th>Description</th>
-                            <th>Check or CC#</th>
-                            <th>Note</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @foreach($donation->payments as $payment)
-                        <tr>
-
-                            <td><a href="../payment/{{ $payment->payment_id}}">{{$payment->payment_date_formatted}}</a></td>
-                            <td>${{ $payment->payment_amount }} </td>
-                            <td>{{ $payment->payment_description }}</td>
-                            <td>{{ $payment->cknumber ?? $payment->ccnumber }}</td>
-                            <td>{{ $payment->note }}
-                        </tr>
-                        @endforeach
-
-                    </tbody>
-
-                </table>
-
-
-                </div>
-            </div>
-            <div class='row'>
-                @can('update-donation')
-                    <div class='col-md-1'>
-                        <a href="{{ action('DonationController@edit', $donation->donation_id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
-                    </div>
-                @endCan
-                @can('delete-donation')
-                    <div class='col-md-1'>
-                        {!! Form::open(['method' => 'DELETE', 'route' => ['donation.destroy', $donation->donation_id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                        {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
-                        {!! Form::close() !!}
-                    </div>
-                @endCan
-                <div class="clearfix"> </div>
-            </div>
+<div class="row bg-cover">
+    <div class="col-12">
+        <h1>
+            @can('update-donation')
+                <a href="{{url('donation/'.$donation->donation_id.'/edit')}}">Donation details</a> 
+            @else
+                Donation details
+            @endCan
+            for {!!$donation->contact->contact_link_full_name!!}
+        </h1>
+        {!! Html::link(action('PageController@finance_invoice',$donation->donation_id),'Invoice',array('class' => 'btn btn-outline-dark'))!!}
+        @can('create-payment')
+            {!! Html::link(action('PaymentController@create',$donation->donation_id),'Add payment',array('class' => 'btn btn-outline-dark'))!!}
+        @endCan
     </div>
-</section>
+    <div class="col-12 mt-2">
+        @if ($donation->percent_paid == 100)
+            <a href="/donation/{{$donation->donation_id}}/agcacknowledge"><img src="/images/letter.png" alt="Print acknowledgement" title="Print acknowledgement"></a>
+            <a href="/person/{{$donation->contact_id}}/envelope10"><img src="/images/envelope.png" alt="Print envelope" title="Print envelope"></a>
+        @endIf 
+    </div>
+    <div class="col-12 col-md-4">
+        <span class="font-weight-bold">Date: </span>{{$donation->donation_date->format('m/d/Y')}}
+        <br><span class="font-weight-bold">Description: </span>{{$donation->donation_description}}  
+        <br><span class="font-weight-bold">Pledged/Paid: </span>${{number_format($donation->donation_amount,2)}} / ${{number_format($donation->payments->sum('payment_amount'),2)}}  
+        ({{number_format($donation->percent_paid,0)}}%)
+        <br><span class="font-weight-bold">Primary contact: </span>{{$donation->Notes1}}
+    </div>
+    <div class="col-12 col-md-4">
+        <span class="font-weight-bold">Event: </span>{!!$donation->retreat_link!!} ({{$donation->retreat_start_date}}) 
+        <br><span class="font-weight-bold">Notes: </span>{{$donation->Notes}}
+        <br><span class="font-weight-bold">Terms: </span>{{$donation->terms}}
+        <br><span class="font-weight-bold">Start date: </span>{{$donation->start_date}}
+    </div>
+    <div class="col-12 col-md-4">
+        <span class="font-weight-bold">End date: </span>{{$donation->end_date}}
+        <br><span class="font-weight-bold">Donation install: </span>{{$donation->donation_install}}
+        <br><span class="font-weight-bold">Thank you sent: </span>{{$donation['Thank You']}}
+    </div>
+    <div class="col-12 mt-3">
+        <table class="table table-bordered table-striped table-hover table-responsive-md">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Description</th>
+                    <th>Check or CC#</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($donation->payments as $payment)
+                <tr>
+                    <td><a href="../payment/{{ $payment->payment_id}}">{{$payment->payment_date_formatted}}</a></td>
+                    <td>${{ $payment->payment_amount }} </td>
+                    <td>{{ $payment->payment_description }}</td>
+                    <td>{{ $payment->cknumber or $payment->ccnumber }}</td>
+                    <td>{{ $payment->note }}
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    <div class="col-12">
+        <div class="row">
+            <div class="col-6 text-right">
+                @can('update-donation')
+                    <a href="{{ action('DonationController@edit', $donation->donation_id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                @endCan
+            </div>
+            <div class="col-6 text-left">
+                @can('delete-donation')
+                    {!! Form::open(['method' => 'DELETE', 'route' => ['donation.destroy', $donation->donation_id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                    {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                    {!! Form::close() !!}
+                @endCan
+            </div>
+        </div>
+    </div>
+</div>
 @stop

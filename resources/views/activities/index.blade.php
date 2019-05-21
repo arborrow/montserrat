@@ -10,7 +10,7 @@
                         <span class="grey">({{$activities->total()}} records)</span>
                         @can('update-activity')
                             <span class="create">
-                                <a href={{ action('ActivityController@create') }}>{!! Html::image('img/create.png', 'Add Activity',array('title'=>"Add Activity",'class' => 'btn btn-primary')) !!}</a>
+                                <a href={{ action('ActivityController@create') }}>{!! Html::image('/images/create.png', 'Add Activity',array('title'=>"Add Activity",'class' => 'btn btn-primary')) !!}</a>
                             </span>
                          @endCan
                     </h1>
@@ -19,7 +19,7 @@
                 @if ($activities->isEmpty())
                     <p>It is a brand new world, there are no activities!</p>
                 @else
-                <table class="table table-bordered table-striped table-hover"><caption><h2>Activities</h2></caption>
+                <table class="table table-bordered table-striped table-hover table-responsive"><caption><h2>Activities</h2></caption>
                     <thead>
                         <tr>
                             <th>Date</th>

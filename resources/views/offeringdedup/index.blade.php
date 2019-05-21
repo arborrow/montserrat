@@ -15,7 +15,7 @@
                 @if ($offeringdedup->isEmpty())
                     <p>Success, there are no retreat offering duplicates (contact_id, event_id)!</p>
                 @else
-                <table class="table table-bordered table-striped"><caption><h2>Retreat Offering Duplicates</h2></caption>
+                <table class="table table-bordered table-striped table-responsive"><caption><h2>Retreat Offering Duplicates</h2></caption>
                     <thead>
                         <tr>
                             <th>Contact-Event Duplicate</th>

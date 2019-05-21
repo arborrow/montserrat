@@ -1,8 +1,11 @@
 @extends('template')
 @section('content')
-    <div class="content">
-        <div class="text-info"> Hasta la vista baby! - Looks like you have logged out.<br />
-        {!! Html::image('img/goodbye.png', 'Logged out',array('title'=>"Logged out")) !!}
-        </div>
-    </div>
+	<div class="row">
+		<div class="col-12 text-center">
+			<div class="text-info"> 
+				<p>Hasta la vista baby! - Looks like you have logged out.</p>
+				<img src="/images/goodbye.png" alt="Logged out">
+			</div>
+		</div>
+	</div>
 @stop

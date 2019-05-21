@@ -1,0 +1,75 @@
+body {
+  font-size: 1rem;
+}
+
+.navbar-brand .logo {
+  height: 2rem;
+}
+
+.container {
+  padding-top: 2rem;
+}
+
+.filters a {
+  text-decoration: none;
+}
+
+.bg-cover {
+  background-color: #e9ecef;
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+span.options {
+  a {
+    text-decoration: none;
+    margin: .5rem;
+  }
+
+  i {
+    font-size: 1.5rem;
+  }
+
+  img {
+    height: 2rem;
+  }
+}
+
+.dropdown-submenu:hover > .dropdown-menu {
+  display: block;
+}
+
+.dropdown-submenu > a::after {
+  display: block;
+  float: right;
+  margin-top: .45rem;
+}
+
+.avatar {
+  height: 2.5rem;
+}
+
+.btn.btn-outline-dark:hover {
+  background: #ffffff;
+  color: #000000;
+}
+
+.form-control.flatpickr-date {
+  background: #ffffff;
+}
+
+.pagination li {
+  padding-right: 1rem;
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {}

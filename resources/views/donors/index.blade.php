@@ -12,7 +12,7 @@
                         @can('create-donor')
                             <span class="create">
                                 <a href="{{ action('DonorController@create') }}">
-                                   {!! Html::image('img/create.png', 'Add Donor',array('title'=>"Add Donor",'class' => 'btn btn-primary')) !!}
+                                   {!! Html::image('images/create.png', 'Add Donor',array('title'=>"Add Donor",'class' => 'btn btn-primary')) !!}
                                 </a>
                  
                             </span>
@@ -22,7 +22,7 @@
                 @if ($donors->isEmpty())
                     <p>It is a brand new world, there are no PPD donors!</p>
                 @else
-                <table class="table table-bordered table-striped"><caption><h2>PPD Donors (with no Polanco Contact Id)</h2></caption>
+                <table class="table table-bordered table-striped table-responsive"><caption><h2>PPD Donors (with no Polanco Contact Id)</h2></caption>
                     <thead>
                         <tr>
                             <th>Name</th>

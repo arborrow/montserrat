@@ -436,7 +436,7 @@ class DioceseController extends Controller
             $attachment->update_attachment($request->file('attachment'), 'contact', $diocese->id, 'attachment', $description);
         }
 
-        return Redirect::action('DioceseController@index');
+        return Redirect::action('DioceseController@show', $diocese->id);
     }
 
     /**

@@ -10,7 +10,7 @@
                         <span class="grey">({{$payments->total()}} records)</span>
                         @can('create-payment')
                             <span class="create">
-                                <a href={{ action('PaymentController@create') }}>{!! Html::image('img/create.png', 'Add Donation',array('title'=>"Add Donation",'class' => 'btn btn-primary')) !!}</a>
+                                <a href={{ action('PaymentController@create') }}>{!! Html::image('images/create.png', 'Add Donation',array('title'=>"Add Donation",'class' => 'btn btn-primary')) !!}</a>
                             </span>
                         @endCan
                     </h1>
@@ -19,7 +19,7 @@
                 @if ($payments->isEmpty())
                     <p>It is an impoverished new world, there are no donations!</p>
                 @else
-                <table class="table table-bordered table-striped table-hover"><caption><h2>Payments</h2></caption>
+                <table class="table table-bordered table-striped table-hover table-responsive"><caption><h2>Payments</h2></caption>
                     <thead>
                         <tr>
                             <th>Date</th>

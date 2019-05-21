@@ -5,12 +5,15 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
-//require('./jquery-ui.js');
-//require('./jquery.datetimeentry.js');
-//require('./jquery.js');
-//require('./jquery.plugin.js');
-//require('./select2.js');
+require('./bootstrap'); // jQuery being loaded here
+require('jquery-ui-bundle'); // jQuery UI
+require('select2');
+require('flatpickr');
+require('./main');
+// require('./jquery.datetimeentry.js');
+// require('./jquery.js');
+// require('./jquery.plugin.js');
+// require('./select2.js');
 
 
 // window.Vue = require('vue');

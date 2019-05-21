@@ -37,13 +37,13 @@
             <div class='row'>
                 @can('update-activity')
                     <div class='col-md-1'>
-                        <a href="{{ action('ActivityController@edit', $activity->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                        <a href="{{ action('ActivityController@edit', $activity->id) }}" class="btn btn-info">{!! Html::image('/images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                     </div>
                 @endCan
                 @can('delete-activity')
                     <div class='col-md-1'>
                         {!! Form::open(['method' => 'DELETE', 'route' => ['activity.destroy', $activity->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                        {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
+                        {!! Form::image('/images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
                         {!! Form::close() !!}
                     </div>
                 @endCan

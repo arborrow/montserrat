@@ -58,9 +58,9 @@
         </div>
         </div>
             <div class='row'>
-                <div class='col-md-1'><a href="{{ action('RelationshipTypeController@edit', $relationship_type->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
+                <div class='col-md-1'><a href="{{ action('RelationshipTypeController@edit', $relationship_type->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
                 <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['relationship_type.destroy', $relationship_type->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
+                {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
                 {!! Form::close() !!}</div><div class="clearfix"> </div>
             </div>
 

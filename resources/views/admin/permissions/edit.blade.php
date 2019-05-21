@@ -1,35 +1,35 @@
 @extends('template')
 @section('content')
-    
-
-<div class="jumbotron text-left">
-    <span><h2><strong>Edit Permission:</strong></h2></span>
-
-    {!! Form::open(['method' => 'PUT', 'route' => ['permission.update', $permission->id]]) !!}
-    {!! Form::hidden('id', $permission->id) !!}
-    
-        <span>
-            <h2>Permission details</h2>
-                <div class="form-group">
-                    <div class='row'>
-                        {!! Form::label('name', 'Name:', ['class' => 'col-md-3'])  !!}
-                        {!! Form::text('name', $permission->name, ['class' => 'col-md-3']) !!}
+<div class="row bg-cover">
+    <div class="col-12">
+        <h1>Edit: {!! $permission->name !!}</h1>
+    </div>
+    <div class="col-12">
+        <h2>Permission details</h2>
+        {!! Form::open(['method' => 'PUT', 'route' => ['permission.update', $permission->id]]) !!}
+        {!! Form::hidden('id', $permission->id) !!}
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        {!! Form::label('name', 'Name')  !!}
+                        {!! Form::text('name', $permission->name, ['class' => 'form-control']) !!}
                     </div>
-                    <div class='row'>
-                        {!! Form::label('display_name', 'Display name:', ['class' => 'col-md-3'])  !!}
-                        {!! Form::text('display_name', $permission->display_name, ['class' => 'col-md-3']) !!}
+                    <div class="col-12 col-md-4">
+                        {!! Form::label('display_name', 'Display name')  !!}
+                        {!! Form::text('display_name', $permission->display_name, ['class' => 'form-control']) !!}
                     </div>
-                    <div class='row'>
-                        {!! Form::label('description', 'Description:', ['class' => 'col-md-3'])  !!}
-                        {!! Form::text('description', $permission->description, ['class' => 'col-md-3']) !!}
+                    <div class="col-12 col-md-4">
+                        {!! Form::label('description', 'Description')  !!}
+                        {!! Form::text('description', $permission->description, ['class' => 'form-control']) !!}
                     </div>
                 </div>
-            </span>
-                
-
-    <div class="form-group">
-        {!! Form::image('img/save.png','btnSave',['class' => 'btn btn-primary']) !!}
+            </div>
+            <div class="row text-center">
+                <div class="col-12">
+                    {!! Form::image('/images/save.png','btnSave',['class' => 'btn btn-outline-dark']) !!}
+                </div>
+            </div>
+        {!! Form::close() !!}
     </div>
-    {!! Form::close() !!}
 </div>
 @stop

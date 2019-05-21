@@ -1,71 +1,70 @@
 @extends('template')
 @section('content')
 
-<section class="section-padding">
-    <div class="jumbotron text-left">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <span>
-                    @can('update-role')
-                        <h2>
-                            Role details: <strong><a href="{{url('admin/role/'.$role->id.'/edit')}}">{{ $role->name }}</a></strong>
-                        </h2>
-                    @else
-                        <h2>
-                            Role details: <strong>{{$role->name}}</strong>
-                        </h2>
-                    @endCan
-                </span>                
-            </div>
-            
-            <div class='row'>
-                <div class='col-md-4'>
-                        <strong>Name: </strong>{{$role->name}}
-                        <br /><strong>Display name: </strong>{{$role->display_name}}     
-                        <br /><strong>Description: </strong>{{$role->description}}
-                    
-                </div>
-            </div>
-            <div class="clearfix"> </div>
-<hr />
-            <div class='row'>
-                <div class='col-md-8'>
-                
-                    @can('manage-permission')
-                        {!! Form::open(['url' => 'admin/role/update_permissions', 'method' => 'POST', 'route' => ['role.update_permissions']]) !!}
-                        {!! Form::hidden('id',$role->id) !!}
-                        {!! Form::label('permissions', 'Permissions granted to '.$role->name.' role:', ['class' => 'col-md-4'])  !!}
-                        {!! Form::select('permissions[]', $permissions, $role->permissions->pluck('id')->toArray(), ['id'=>'permissions','class' => 'form-control col-md-6','multiple' => 'multiple']) !!}
-                        Update permissions {!! Form::image('img/save.png','btnSave',['class' => 'btn btn-default']) !!}
-                        {!! Form::close() !!}
-                    @endCan
-                </div>
-            </div>
-<hr />
-            <div class='row'>
-                <div class='col-md-8'>
-
-                    @can('manage-permission')
-                        {!! Form::open(['url' => 'admin/role/update_users', 'method' => 'POST', 'route' => ['role.update_users']]) !!}
-                        {!! Form::hidden('id',$role->id) !!}
-                        {!! Form::label('users', 'Users with '.$role->name.' role:', ['class' => 'col-md-4'])  !!}
-                        {!! Form::select('users[]', $users, $role->users->pluck('id')->toArray(), ['id'=>'users','class' => 'form-control col-md-6','multiple' => 'multiple']) !!}
-                        Update users {!! Form::image('img/save.png','btnSave',['class' => 'btn btn-default']) !!}
-                        {!! Form::close() !!}
-                    @endCan
-
-                </div>
-            </div>
-        </div>
-
-        <div class='row'>
-            <div class='col-md-1'><a href="{{ action('RoleController@edit', $role->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
-            <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['role.destroy', $role->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
-                {!! Form::close() !!}
-            </div>
-            <div class="clearfix"> </div>
-        </div>
+<div class="row bg-cover">
+    <div class="col-12">
+        @can('update-role')
+            <h1>
+                Role details: <strong><a href="{{url('admin/role/'.$role->id.'/edit')}}">{{ $role->name }}</a></strong>
+            </h1>
+        @else
+            <h1>
+                Role details: <strong>{{$role->name}}</strong>
+            </h1>
+        @endCan
     </div>
-</section>
+    <div class="col-12 mb-4">
+        @can('update-role')
+            <a href="{{ action('RoleController@edit', $role->id) }}" class="btn btn-light">Update Role</a>
+        @endcan
+        @can('delete-role')
+            {!! Form::open(['method' => 'DELETE', 'route' => ['role.destroy', $role->id], 'onsubmit'=>'return ConfirmDelete()', 'class' => 'd-inline']) !!}
+                {!! Form::submit('Delete Role', ['class'=>'btn btn-danger']) !!} 
+            {!! Form::close() !!}
+        @endcan
+    </div>
+    <div class="col-12">
+        <h5>Name: {{$role->name}}</h5>
+        <h5>Display name: {{$role->display_name}}</h5>
+        <h5>Description: {{$role->description}}</h5>
+    </div>
+    @can('manage-permission')             
+        <div class="col-12">
+            {!! Form::open(['url' => 'admin/role/update_permissions', 'method' => 'POST', 'route' => ['role.update_permissions']]) !!}
+                {!! Form::hidden('id',$role->id) !!}
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-8">
+                            {!! Form::label('permissions',$role->name.' Permissions:')  !!}
+                            {!! Form::select('permissions[]', $permissions, $role->permissions->pluck('id')->toArray(), ['id'=>'permissions','class' => 'form-control select2','multiple' => 'multiple']) !!}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        {!! Form::submit('Update Permissions', ['class'=>'btn btn-light']) !!}
+                    </div>
+                </div>
+            {!! Form::close() !!}
+        </div>
+        <div class="col-12 mt-5">
+            {!! Form::open(['url' => 'admin/role/update_users', 'method' => 'POST', 'route' => ['role.update_users']]) !!}
+            {!! Form::hidden('id',$role->id) !!}
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-8">
+                            {!! Form::label('users', 'Users with '.$role->name.' role:')  !!}
+                            {!! Form::select('users[]', $users, $role->users->pluck('id')->toArray(), ['id'=>'users', 'class' => 'form-control select2','multiple' => 'multiple']) !!}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        {!! Form::submit('Update Users', ['class'=>'btn btn-light']) !!}
+                    </div>
+                </div>
+            {!! Form::close() !!}
+        </div>
+    @endCan
+</div>
 @stop

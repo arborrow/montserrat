@@ -10,7 +10,7 @@
                         @can('create-group')
                             <span class="create">
                                 <a href="{{ action('GroupController@create') }}">
-                                   {!! Html::image('img/create.png', 'Add Group',array('title'=>"Add Group",'class' => 'btn btn-primary')) !!}
+                                   {!! Html::image('images/create.png', 'Add Group',array('title'=>"Add Group",'class' => 'btn btn-primary')) !!}
                                 </a>
                  
                             </span>
@@ -20,7 +20,7 @@
                 @if ($groups->isEmpty())
                     <p>It is a brand new world, there are no groups!</p>
                 @else
-                <table class="table table-bordered table-striped"><caption><h2>Groups</h2></caption>
+                <table class="table table-bordered table-striped table-responsive"><caption><h2>Groups</h2></caption>
                     <thead>
                         <tr>
                             <th>Name</th>
