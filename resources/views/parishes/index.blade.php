@@ -31,7 +31,7 @@
                 <p>No parishes are currently in the database.</p>
             </div>
             @else
-            <table class="table table-bordered table-striped table-hover table-responsive-lg">
+            <table class="table table-bordered table-striped table-hover table-responsive">
                 <thead>
                     <tr>
                         <th>Picture</th>
@@ -40,7 +40,6 @@
                         <th>Pastor</th> 
                         <th>Address</th> 
                         <th>Phone</th> 
-                        <th>Email</th> 
                         <th>Webpage</th> 
                    </tr>
                 </thead>
@@ -68,13 +67,6 @@
                             @foreach($parish->phones as $phone)
                             @if (($phone->location_type_id==3) and ($phone->phone_type=="Phone"))  
                             <a href="tel:{{ $phone->phone }}"> {{ $phone->phone }}</a>
-                            @endif
-                            @endforeach
-                        </td>
-                        <td> 
-                            @foreach($parish->emails as $email)
-                            @if ($email->is_primary)  
-                            <a href="mailto:{{ $email->email }}">{{ $email->email }}</a> 
                             @endif
                             @endforeach
                         </td>
