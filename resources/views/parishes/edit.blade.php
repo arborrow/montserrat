@@ -14,20 +14,6 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-12 col-md-4">
-                    {!! Form::label('diocese_id', 'Diocese:')  !!}
-                    {!! Form::select('diocese_id', $dioceses, $parish->diocese_id, ['class' => 'form-control']) !!}
-                </div>
-                <div class="col-12 col-md-4">
-                    {!! Form::label('pastor_id', 'Pastor:')  !!} 
-                    @if (empty($parish->pastor->contact_b))
-                        {!! Form::select('pastor_id', $pastors, 0, ['class' => 'form-control']) !!}
-                    @else 
-                        {!! Form::select('pastor_id', $pastors, $parish->pastor->contact_b->id, ['class' => 'form-control']) !!}
-                    @endIf
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-4">
                     {!! Form::label('organization_name', 'Name:') !!}
                     {!! Form::text('organization_name', $parish->organization_name, ['class' => 'form-control']) !!}
                 </div>
@@ -38,6 +24,20 @@
                 <div class="col-12 col-md-4">
                     {!! Form::label('sort_name', 'Sort:') !!}
                     {!! Form::text('sort_name', $parish->sort_name, ['class' => 'form-control']) !!}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    {!! Form::label('diocese_id', 'Diocese:')  !!}
+                    {!! Form::select('diocese_id', $dioceses, $parish->diocese_id, ['class' => 'form-control']) !!}
+                </div>
+                <div class="col-12 col-md-4">
+                    {!! Form::label('pastor_id', 'Pastor:')  !!} 
+                    @if (empty($parish->pastor->contact_b))
+                        {!! Form::select('pastor_id', $pastors, 0, ['class' => 'form-control']) !!}
+                    @else 
+                        {!! Form::select('pastor_id', $pastors, $parish->pastor->contact_b->id, ['class' => 'form-control']) !!}
+                    @endIf
                 </div>
             </div>
             <div class="row">
