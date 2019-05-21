@@ -3,7 +3,7 @@
 
 <div class="row bg-cover">
     <div class="col-12">
-        <h2>
+        <h1>
             Diocese
             @can('create-contact')
                 <span class="options">
@@ -12,7 +12,7 @@
                     </a>
                 </span>
             @endCan
-        </h2>
+        </h1>
         <p class="lead">{{$dioceses->count()}} records</p>
     </div>
     <div class="col-12">
