@@ -40,7 +40,7 @@
                 <h3>Currently, there are no {{$role['name']}}s.</h3>
             </div>
         @else
-            <table class="table table-responsive-lg table-striped table-bordered table-hover">
+            <table class="table table-responsive table-striped table-bordered table-hover">
                 <thead>
                     <tr>
                         <th scope="col">Picture</th>
