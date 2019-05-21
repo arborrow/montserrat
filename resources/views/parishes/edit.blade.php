@@ -77,6 +77,8 @@
                     {!! Form::text('phone_main_fax', $parish->phone_main_fax->phone, ['class' => 'form-control']) !!}
                     @endif
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-12 col-md-4">
                     {!! Form::label('email_primary', 'Email:') !!}
                     {!! Form::text('email_primary', $defaults['email_primary'], ['class' => 'form-control']) !!}
