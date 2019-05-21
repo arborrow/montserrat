@@ -21,6 +21,8 @@
                         {!! Form::select('contact_id', $retreatants, 0, ['class'=>'form-control']) !!}
                     @endif  
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-12 col-md-4">
                     {!! Form::label('register_date', 'Registered:') !!}
                     {!! Form::text('register_date', $defaults['today'], ['class'=>'form-control flatpickr-date']) !!}
@@ -33,6 +35,8 @@
                     {!! Form::label('status_id', 'Status:') !!}
                     {!! Form::select('status_id', $defaults['participant_status_type'], 1, ['class'=>'form-control']) !!}
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-12 col-md-4">
                     {!! Form::label('registration_confirm_date', 'Registration Confirmed:') !!}
                     {!! Form::text('registration_confirm_date', null, ['class'=>'form-control flatpickr-date']) !!}
@@ -41,10 +45,8 @@
                     {!! Form::label('confirmed_by', 'Confirmed By:') !!}
                     {!! Form::text('confirmed_by', null, ['class'=>'form-control']) !!}
                 </div>
-                <div class="col-12 col-md-4">
-                    {!! Form::label('canceled_at', 'Canceled at:') !!}
-                    {!! Form::text('canceled_at', null, ['class'=>'form-control flatpickr-date']) !!}
-                </div>
+            </div>
+            <div class="row">
                 <div class="col-12 col-md-4">
                     {!! Form::label('arrived_at', 'Arrived at:') !!}
                     {!! Form::text('arrived_at', null, ['class'=>'form-control flatpickr-date']) !!}
@@ -54,8 +56,14 @@
                     {!! Form::text('departed_at', null, ['class'=>'form-control flatpickr-date']) !!}
                 </div>
                 <div class="col-12 col-md-4">
+                    {!! Form::label('canceled_at', 'Canceled at:') !!}
+                    {!! Form::text('canceled_at', null, ['class'=>'form-control flatpickr-date']) !!}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-4">
                     {!! Form::label('rooms', 'Room(s):') !!}
-                    {!! Form::select('rooms[]', $rooms, 0, ['class' => 'form-control select2','multiple' => 'multiple']) !!}
+                    {!! Form::select('rooms[]', $rooms, 0, ['class' => 'form-control','multiple' => 'multiple']) !!}
                 </div>
                 <div class="col-12 col-md-4">
                     @if ($defaults['is_multi_registration'])
@@ -63,14 +71,19 @@
                         {!! Form::selectRange('num_registrants', 0, 99, NULL, ['class'=>'form-control']) !!}    
                     @endIf
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-12 col-md-4">
                     {!! Form::label('deposit', 'Deposit:') !!}
                     {!! Form::text('deposit', '50.00', ['class'=>'form-control']) !!}
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-12">
                     {!! Form::label('notes', 'Notes:') !!}
                     {!! Form::textarea('notes', null, ['class'=>'form-control', 'rows'=>'3']) !!}
                 </div>
+            </div>
             </div>
             <div class="row mt-3">
                 <div class="col-12">
