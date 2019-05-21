@@ -166,7 +166,6 @@ Route::resource('person', 'PersonController');
 Route::get('registration/confirm/{token}', 'RegistrationController@confirmAttendance');
 Route::get('registration/{participant}/email', 'RegistrationController@registrationEmail');
 Route::get('registration/add/{id?}', ['uses' => 'RegistrationController@add']);
-Route::get('registration/{id}/edit_group', ['url'=>'registration.edit_group', 'as' => 'registration.edit_group', 'uses' => 'RegistrationController@edit_group']);
 Route::post('relationship/add', ['uses' => 'RelationshipTypeController@make']);
 Route::post('registration/{id}/update_group', ['as' => 'registration.update_group', 'uses' => 'RegistrationController@update_group']);
 Route::get('registration/{id}/confirm', ['as' => 'registration.confirm', 'uses' => 'RegistrationController@confirm']);
