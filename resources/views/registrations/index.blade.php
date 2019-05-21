@@ -60,23 +60,4 @@
         @endif
     </div>
 </div>
-
-
-    <section class="section-padding">
-        <div class="jumbotron text-left">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h1>
-                        <span class="grey">Registration Index</span> 
-                        @can('create-registration')
-                            <span class="create">
-                                <a href={{ action('RegistrationController@create') }}>{!! Html::image('images/create.png', 'Create a Registration',array('title'=>"Create a Registration",'class' => 'btn btn-primary')) !!}</a>
-                            </span>
-                        @endCan
-                    </h1>
-                </div>
-                
-            </div>
-        </div>
-    </section>
 @stop
