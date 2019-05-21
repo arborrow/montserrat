@@ -17,6 +17,17 @@
             @endCan
         </h2>
         <p class="lead">{{$retreats->count()}} records</p>
+        <div class="row">
+            <div class="col-md-4 col-12">
+                <select class="custom-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                    <option value="">Filter by retreat type...</option>
+                    <option value="{{url('retreat')}}">All retreats</option>
+                    @foreach($event_types as $event_type=>$value)
+                        <option value="{{url('retreat/type/'.$value)}}">{{$event_type}}</option>
+                    @endForeach
+                </select>
+            </div>
+        </div>
     </div>
     <div class="col-12">
         @if ($retreats->isEmpty())
