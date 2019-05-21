@@ -18,7 +18,7 @@
                 <p>Yikes, there are no registrations!</p>
             </div>
         @else
-            <table class="table table-bordered table-striped table-hover"><caption><h2>Registrations for Upcoming Retreats</h2></caption>
+            <table class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
                         <th>Registered</th> 
