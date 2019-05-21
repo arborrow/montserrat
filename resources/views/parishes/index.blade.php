@@ -2,7 +2,7 @@
 @section('content')
     <div class="row bg-cover">
         <div class="col-12">
-            <h2>
+            <h1>
                 Parish
                 @can('create-contact')
                 <span class="options">
@@ -11,7 +11,7 @@
                     </a>
                 </span>
                 @endCan
-            </h2>
+            </h1>
             <p class="lead">{{$parishes->count()}} records</p>
         </div>
         <div class="col-12">
