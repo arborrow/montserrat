@@ -97,7 +97,7 @@
                 </div>
                 <div class="col-12 col-md-4">
                     {!! Form::label('attachment_description', 'Description: (max 200)')  !!}
-                    {!! Form::text('attachment_description', NULL, ['class' => 'form-control']) !!}
+                    {!! Form::textarea('attachment_description', NULL, ['class' => 'form-control', 'rows' => 3]) !!}
                 </div>
             </div>
             <div class="row mt-3">
