@@ -3,7 +3,7 @@
 
 <div class="row bg-cover">
     <div class="col-12">
-        <h2>
+        <h1>
             Organizations
             @can('create-contact')
                 <span class="options">
@@ -12,7 +12,7 @@
                     </a>
                 </span>
             @endCan
-        </h2>
+        </h1>
         <p class="lead">{{$organizations->total()}} records</p>
         <form>
             <div class="form-row">
