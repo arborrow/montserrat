@@ -239,6 +239,8 @@
                 <div class="col-12">
                     <h3>Groups and Relationships</h3>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-4 col-md-2">
                     <div class="form-check">
                         {!! Form::checkbox('is_donor', 1, false, ['class' => 'form-check-input']) !!}
@@ -277,6 +279,20 @@
                 </div>
                 <div class="col-4 col-md-2">
                     <div class="form-check">
+                        {!! Form::checkbox('is_board', 1, false,['class' => 'form-check-input']) !!}
+                        {!! Form::label('is_board', 'Board Member', ['class' => 'form-check-label'])  !!}
+                    </div>
+                </div>
+                <div class="col-4 col-md-2">
+                    <div class="form-check">
+                        {!! Form::checkbox('is_formerboard', 1, false,['class' => 'form-check-input', 'disabled']) !!}
+                        {!! Form::label('is_formerboard', 'Former Board', ['class' => 'form-check-label']) !!}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 col-md-2">
+                    <div class="form-check">
                         {!! Form::checkbox('is_bishop', 1, false,['class' => 'form-check-input']) !!}   
                         {!! Form::label('is_bishop', 'Bishop', ['class' => 'form-check-label']) !!}
                     </div>
@@ -299,6 +315,8 @@
                         {!! Form::label('is_pastor', 'Pastor', ['class' => 'form-check-label'])  !!}
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-4 col-md-2">
                     <div class="form-check">
                         {!! Form::checkbox('is_jesuit', 1, false,['class' => 'form-check-input']) !!}  
@@ -317,18 +335,8 @@
                         {!! Form::label('is_superior', 'Superior', ['class' => 'form-check-label']) !!}
                     </div>
                 </div>
-                <div class="col-4 col-md-2">
-                    <div class="form-check">
-                        {!! Form::checkbox('is_board', 1, false,['class' => 'form-check-input']) !!}
-                        {!! Form::label('is_board', 'Board Member', ['class' => 'form-check-label'])  !!}
-                    </div>
-                </div>
-                <div class="col-4 col-md-2">
-                    <div class="form-check">
-                        {!! Form::checkbox('is_formerboard', 1, false,['class' => 'form-check-input', 'disabled']) !!}
-                        {!! Form::label('is_formerboard', 'Former Board', ['class' => 'form-check-label']) !!}
-                    </div>
-                </div>
+            </div>
+            <div class="row">
                 <div class="col-4 col-md-2">
                     <div class="form-check">
                         {!! Form::checkbox('is_staff', 1, false,['class' => 'form-check-input']) !!}
@@ -353,6 +361,7 @@
                         {!! Form::label('is_assistant', 'Retreat Assistant', ['class' => 'form-check-label'])  !!}
                     </div>
                 </div>
+            </div> 
             </div>
 
             <div class="row">
