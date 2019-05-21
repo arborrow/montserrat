@@ -48,7 +48,6 @@
                         <th scope="col">Address (City)</th>
                         <th scope="col">Home phone</th>
                         <th scope="col">Cell phone</th>
-                        <th scope="col">Work phone</th>
                         <th scope="col">Email</th>
                         <th scope="col">Parish (City)</th>
                         @if ($role['group_id'] == config('polanco.group_id.captain'))
@@ -68,7 +67,6 @@
                         </td>
                         <td>{{ $person->phone_home_phone_number }}</td>
                         <td>{{ $person->phone_home_mobile_number }}</td>
-                        <td>{{ $person->phone_work_phone_number }}</td>
                         <td><a href="mailto:{{$person->email_primary_text}}">{{ $person->email_primary_text }}</a></td>
                         <td>{!! $person->parish_link !!}</td>
                         @if ($role['group_id'] == config('polanco.group_id.captain'))
