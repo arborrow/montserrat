@@ -73,17 +73,17 @@
                     <div class="row">
                         <div class="col-12 col-lg-4">
                             {!! Form::label('phone_main_phone', 'Phone') !!}
-                            {!! Form::text('phone_main_phone', $organization->phone_main_phone->phone, ['class' => 'form-control']) !!}
+                            {!! Form::text('phone_main_phone', $organization->phone_main_phone_number, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-12 col-lg-4">
                             {!! Form::label('phone_main_fax', 'Fax') !!}
-                            {!! Form::text('phone_main_fax', $organization->phone_main_fax->phone, ['class' => 'form-control']) !!}
+                            {!! Form::text('phone_main_fax', $organization->phone_main_fax_number, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-12 col-lg-4">
                             {!! Form::label('email_primary', 'Email:', ['class' => 'col-md-2']) !!}
                             @if (isset($organization->email_primary))
                                 {!! Form::text('email_primary', $organization->email_primary->email, ['class' => 'form-control']) !!}
-                            @else 
+                            @else
                                 {!! Form::text('email_primary', NULL, ['class' => 'form-control']) !!}
                             @endIf
                         </div>

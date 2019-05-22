@@ -69,7 +69,7 @@ class Contact extends Model
     {
         return $this->hasMany(Donation::class, 'contact_id', 'id');
     }
-   
+
     public function emails()
     {
         return $this->hasMany(Email::class, 'contact_id', 'id');
@@ -155,10 +155,10 @@ class Contact extends Model
             return $this->display_name;
         }
     }
-    
+
     public function getAvatarLargeLinkAttribute()
     {
-         
+
         if (Storage::has('contact/'.$this->id.'/avatar.png')) {
             return "<img src='".url('avatar/'.$this->id)."' class='rounded-circle' style='height: 150px; padding:5px;'>";
         } else {
@@ -171,7 +171,7 @@ class Contact extends Model
     }
     public function getAvatarSmallLinkAttribute()
     {
-        
+
         if (Storage::has('contact/'.$this->id.'/avatar.png')) {
             return "<img src='".url('avatar/'.$this->id)."' class='rounded-circle' style='height: 75px; padding:5px;'>";
         } else {
@@ -192,7 +192,7 @@ class Contact extends Model
     }
     public function getContactLinkAttribute()
     {
-        
+
         switch ($this->subcontact_type) {
             case config('polanco.contact_type.parish'):
                 $path = url("parish/".$this->id);
@@ -206,16 +206,16 @@ class Contact extends Model
             default:
                 $path = url("organization/".$this->id);
         }
-        
+
         if ($this->contact_type == config('polanco.contact_type.individual')) {
             $path=url("person/".$this->id);
         }
-        
+
         return "<a href='".$path."'>".$this->display_name."</a>";
     }
     public function getContactUrlAttribute()
     {
-        
+
         switch ($this->subcontact_type) {
             case config('polanco.contact_type.parish'):
                 $path = url("parish/".$this->id);
@@ -229,14 +229,14 @@ class Contact extends Model
             default:
                 $path = url("organization/".$this->id);
         }
-        
+
         if ($this->contact_type == config('polanco.contact_type.individual')) {
             $path=url("person/".$this->id);
         }
-        
+
         return $path;
     }
-    
+
     public function getContactLinkFullNameAttribute()
     {
         switch ($this->subcontact_type) {
@@ -255,13 +255,13 @@ class Contact extends Model
         if ($this->contact_type == config('polanco.contact_type.individual')) {
             $path=url("person/".$this->id);
         }
-        
+
         return "<a href='".$path."'>".$this->full_name."</a>";
     }
 
     public function getContactTypeLabelAttribute()
     {
-        
+
         if (isset($this->contacttype->label)) {
             return $this->contacttype->label;
         } else {
@@ -270,7 +270,7 @@ class Contact extends Model
     }
     public function getSubcontactTypeLabelAttribute()
     {
-        
+
         if (isset($this->subcontacttype->label)) {
             return $this->subcontacttype->label;
         } else {
@@ -368,20 +368,20 @@ class Contact extends Model
         if ($this->contact_type == config('polanco.contact_type.organization')) {
             $full_name = $this->display_name;
         }
-        
+
         return $full_name;
     }
-    
+
     public function getFullNameWithCityAttribute()
     {
         $full_name = $this->full_name;
         if (isset($this->address_primary->city)) {
             $full_name .= ' ('.$this->address_primary->city.')';
         }
-        
+
         return $full_name;
     }
-    
+
     public function getGenderNameAttribute()
     {
         if (isset($this->gender_id)&&($this->gender_id>0)) {
@@ -639,7 +639,7 @@ class Contact extends Model
             return 0;
         }
     }
-    
+
     public function getPhoneHomeMobileNumberAttribute()
     {
         if (isset($this->phone_home_mobile->phone)) {
@@ -668,6 +668,14 @@ class Contact extends Model
     {
         if (isset($this->phone_main_phone)) {
             return $this->phone_main_phone->phone.$this->phone_main_phone->phone_extension;
+        } else {
+            return null;
+        }
+    }
+    public function getPhoneMainFaxNumberAttribute()
+    {
+        if (isset($this->phone_main_fax)) {
+            return $this->phone_main_fax->phone.$this->phone_main_fax->phone_extension;
         } else {
             return null;
         }
@@ -912,7 +920,7 @@ class Contact extends Model
     {
         return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.board_member'))->whereNotNull('end_date');
     }
-    
+
     public function relationship_mjrh_donor()
     {
         return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.donor'));
@@ -945,7 +953,7 @@ class Contact extends Model
             $this->attributes['birth_date'] = null;
         }
     }
-    
+
     public function setDeceasedDateAttribute($date)
     {
         if (strlen($date)) {
@@ -1014,7 +1022,7 @@ class Contact extends Model
             if ($filter=='sort_name'&& !empty($value)) {
                 $query->where($filter, 'like', '%'.$value.'%');
             }
-            
+
             if ($filter=='contact_type' && $value>0) {
                 $query->where($filter, $value);
             }
@@ -1024,7 +1032,7 @@ class Contact extends Model
             if ($filter=='gender_id' && $value>0) {
                 $query->where($filter, $value);
             }
-            
+
             if ($filter=='religion_id' && $value>0) {
                 $query->where($filter, $value);
             }
@@ -1057,7 +1065,7 @@ class Contact extends Model
                 $value= str_replace("(", "", $value);
                 $value= str_replace(")", "", $value);
                 $value= str_replace("-", "", $value);
-                        
+
                 $query->whereHas('phones', function ($q) use ($value) {
                     $q->where('phone_numeric', 'like', '%'.$value.'%');
                 });
@@ -1068,7 +1076,7 @@ class Contact extends Model
             if ($filter=='do_not_sms' && $value>0) {
                 $query->where($filter, $value);
             }
-            
+
             if ($filter=='email'  && !empty($value)) {
                 $query->whereHas('emails', function ($q) use ($value) {
                     $q->where('email', 'like', '%'.$value.'%');
@@ -1077,7 +1085,7 @@ class Contact extends Model
             if ($filter=='do_not_email' && $value>0) {
                 $query->where($filter, $value);
             }
-            
+
             if ($filter=='street_address'  && !empty($value)) {
                 $query->whereHas('addresses', function ($q) use ($value) {
                     $q->where('street_address', 'like', '%'.$value.'%');
@@ -1101,7 +1109,7 @@ class Contact extends Model
             if ($filter=='do_not_mail' && $value>0) {
                 $query->where($filter, $value);
             }
-            
+
             if ($filter=='languages' && !empty($value)) {
                 foreach ($value as $language) {
                     if ($language > 0) {
@@ -1188,12 +1196,12 @@ class Contact extends Model
                 });
             }
         }
-        
+
         return $query;
     }
     public function birthdayEmailReceivers()
     {
-        $sql = "SELECT 
+        $sql = "SELECT
             contact.id,
             display_name,
             birth_date,
@@ -1213,7 +1221,7 @@ class Contact extends Model
                 AND contact.is_deceased = 0
                 AND contact.deceased_date IS NULL
                 AND contact.deleted_at IS NULL";
-                
+
         $data = DB::select(DB::raw($sql));
 
         return $data;
