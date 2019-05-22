@@ -73,10 +73,10 @@
                     <br><span class="font-weight-bold">Last Name: </span>{{ (!empty($person->last_name)) ? $person->last_name : null}}
                     <br><span class="font-weight-bold">Suffix: </span>{{$person->suffix_name}}
                     <br><span class="font-weight-bold">Nick name:</span> {{ (!empty($person->nick_name)) ? $person->nick_name : null }}
-                    <br><span class="font-weight-bold">Display name: </span>{{ (!empty($person->display_name)) ? $person->display_name : null }}  
+                    <br><span class="font-weight-bold">Display name: </span>{{ (!empty($person->display_name)) ? $person->display_name : null }}
                     <br><span class="font-weight-bold">Sort name: </span>{{ (!empty($person->sort_name)) ? $person->sort_name : null }}
                     <br><span class="font-weight-bold">AGC Household name: </span>{{ (!empty($person->agc_household_name)) ? $person->agc_household_name : null }}
-                    <br><span class="font-weight-bold">Contact type: </span>{{ $person->contact_type_label }}  
+                    <br><span class="font-weight-bold">Contact type: </span>{{ $person->contact_type_label }}
                     <br><span class="font-weight-bold">Subcontact type: </span>{{ $person->subcontact_type_label }}
                 </p>
             </div>
@@ -315,7 +315,7 @@
                             @foreach($touchpoints as $touchpoint)
                             <tr>
                                 <td><a href="{{url('touchpoint/'.$touchpoint->id)}}">{{ $touchpoint->touched_at }}</a></td>
-                                <td>{!! $touchpoint->staff->contact_link_full_name or 'Unknown staff member' !!}</td>
+                                <td>{!! $touchpoint->staff->contact_link_full_name ?? 'Unknown staff member' !!}</td>
                                 <td>{{ $touchpoint->type }}</td>
                                 <td>{{ $touchpoint->notes }}</td>
                             </tr>
@@ -323,7 +323,7 @@
                         </tbody>
                     </table>
                 @endif
-            </div> 
+            </div>
             @endCan
             @can('show-attachment')
             <div class="col-12 mt-3" id="attachments">

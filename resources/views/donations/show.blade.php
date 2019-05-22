@@ -5,7 +5,7 @@
     <div class="col-12">
         <h1>
             @can('update-donation')
-                <a href="{{url('donation/'.$donation->donation_id.'/edit')}}">Donation details</a> 
+                <a href="{{url('donation/'.$donation->donation_id.'/edit')}}">Donation details</a>
             @else
                 Donation details
             @endCan
@@ -20,17 +20,17 @@
         @if ($donation->percent_paid == 100)
             <a href="/donation/{{$donation->donation_id}}/agcacknowledge"><img src="/images/letter.png" alt="Print acknowledgement" title="Print acknowledgement"></a>
             <a href="/person/{{$donation->contact_id}}/envelope10"><img src="/images/envelope.png" alt="Print envelope" title="Print envelope"></a>
-        @endIf 
+        @endIf
     </div>
     <div class="col-12 col-md-4">
         <span class="font-weight-bold">Date: </span>{{$donation->donation_date->format('m/d/Y')}}
-        <br><span class="font-weight-bold">Description: </span>{{$donation->donation_description}}  
-        <br><span class="font-weight-bold">Pledged/Paid: </span>${{number_format($donation->donation_amount,2)}} / ${{number_format($donation->payments->sum('payment_amount'),2)}}  
+        <br><span class="font-weight-bold">Description: </span>{{$donation->donation_description}}
+        <br><span class="font-weight-bold">Pledged/Paid: </span>${{number_format($donation->donation_amount,2)}} / ${{number_format($donation->payments->sum('payment_amount'),2)}}
         ({{number_format($donation->percent_paid,0)}}%)
         <br><span class="font-weight-bold">Primary contact: </span>{{$donation->Notes1}}
     </div>
     <div class="col-12 col-md-4">
-        <span class="font-weight-bold">Event: </span>{!!$donation->retreat_link!!} ({{$donation->retreat_start_date}}) 
+        <span class="font-weight-bold">Event: </span>{!!$donation->retreat_link!!} ({{$donation->retreat_start_date}})
         <br><span class="font-weight-bold">Notes: </span>{{$donation->Notes}}
         <br><span class="font-weight-bold">Terms: </span>{{$donation->terms}}
         <br><span class="font-weight-bold">Start date: </span>{{$donation->start_date}}
@@ -57,7 +57,7 @@
                     <td><a href="../payment/{{ $payment->payment_id}}">{{$payment->payment_date_formatted}}</a></td>
                     <td>${{ $payment->payment_amount }} </td>
                     <td>{{ $payment->payment_description }}</td>
-                    <td>{{ $payment->cknumber or $payment->ccnumber }}</td>
+                    <td>{{ $payment->cknumber ?? $payment->ccnumber }}</td>
                     <td>{{ $payment->note }}
                 </tr>
                 @endforeach
@@ -74,7 +74,7 @@
             <div class="col-6 text-left">
                 @can('delete-donation')
                     {!! Form::open(['method' => 'DELETE', 'route' => ['donation.destroy', $donation->donation_id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                    {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                    {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
                     {!! Form::close() !!}
                 @endCan
             </div>
