@@ -19,13 +19,13 @@
                         {!! Form::select('contact_id', $retreatants, $defaults['contact_id'], ['class'=>'form-control']) !!}
                     @else
                         {!! Form::select('contact_id', $retreatants, 0, ['class'=>'form-control']) !!}
-                    @endif  
+                    @endif
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 col-md-4">
                     {!! Form::label('register_date', 'Registered:') !!}
-                    {!! Form::text('register_date', $defaults['today'], ['class'=>'form-control flatpickr-date']) !!}
+                    {!! Form::text('register_date', now(), ['class'=>'form-control flatpickr-date']) !!}
                 </div>
                 <div class="col-12 col-md-4">
                     {!! Form::label('source', 'Registration from:') !!}
@@ -68,7 +68,7 @@
                 <div class="col-12 col-md-4">
                     @if ($defaults['is_multi_registration'])
                         {!! Form::label('num_registrants', 'Number of participants:') !!}
-                        {!! Form::selectRange('num_registrants', 0, 99, NULL, ['class'=>'form-control']) !!}    
+                        {!! Form::selectRange('num_registrants', 0, 99, NULL, ['class'=>'form-control']) !!}
                     @endIf
                 </div>
             </div>
