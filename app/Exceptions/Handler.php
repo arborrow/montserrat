@@ -47,11 +47,6 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
-		// dd($exception);
-		Mail::send('emails.error', ['error' => $exception], function ($m) {
-			$m->to('director@montserratretreat.org')->subject('Error Detected.');
-		});
-
         parent::report($exception);
     }
 
@@ -74,6 +69,12 @@ class Handler extends ExceptionHandler
 	 if (!empty($request->ip())) {
 	     $ip_address = $request->ip();
 	 }
+
+	//  dd($exception, $fullurl, $ip_address, $username);
+	 $subject = $exception->getStatusCode() . ' Error Detected on ' . config('polanco.site_name');
+	 Mail::send('emails.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address], function ($m) use ($subject) {
+		 $m->to(config('polanco.admin_email'))->subject($subject);
+	 });
 	 
 	 /* 
 	  * if ($exception instanceof ModelNotFoundException) {
