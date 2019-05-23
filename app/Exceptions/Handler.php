@@ -49,7 +49,7 @@ class Handler extends ExceptionHandler
     {
 		// dd($exception);
 		Mail::send('emails.error', ['error' => $exception], function ($m) {
-			$m->to('ata.gowani@montserratretreat.org')->subject('Error Detected.');
+			$m->to('director@montserratretreat.org')->subject('Error Detected.');
 		});
 
         parent::report($exception);
