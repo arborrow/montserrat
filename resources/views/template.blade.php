@@ -102,14 +102,14 @@
 				@if (Auth::check())
 				<div class="dropdown">
 					<div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<img src={{ Auth::user()->avatar }} alt={{ Auth::user()->name }} class="rounded-circle avatar">
+						<img src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->name }}" title="{{ Auth::user()->name }}" class="rounded-circle avatar">
 					</div>
 					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
 						<a class="dropdown-item" href={{ route('logout') }}>Logout</a>
 					</div>
 				</div>
-				
-				
+
+
 				@else
 				<a href={{ route('login') }}>
 					Login
