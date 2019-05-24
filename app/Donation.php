@@ -12,12 +12,12 @@ class Donation extends Model
     protected $fillable =  ['donation_id', 'donor_id', 'donation_description', 'donation_amount','payment_description','Notes','contact_id'];
     protected $dates = ['deleted_at','created_at','updated_at','start_date','end_date','donation_date'];
     protected $primaryKey = "donation_id";
-    
+
     public function contact()
     {
         return $this->belongsTo(Contact::class, 'contact_id', 'id');
     }
-    
+
     public function payments()
     {
         return $this->hasMany(Payment::class, 'donation_id', 'donation_id');
@@ -65,6 +65,13 @@ class Donation extends Model
             return NULL;
         }
     }
+    public function getDonorFullnameAttribute() {
+        if (isset($this->contact->full_name)) {
+            return $this->contact->full_name;
+        } else {
+            dd($this->contact_id);
+        }
+    }
     public function getRetreatIdnumberAttribute() {
         if (isset($this->retreat->idnumber)) {
             return $this->retreat->idnumber;
@@ -87,30 +94,27 @@ class Donation extends Model
     }
     public function getDonationDateFormattedAttribute() {
         if (isset($this->donation_date)) {
-            return $this->donation_date->format('m/d/Y'); 
+            return $this->donation_date->format('m/d/Y');
         } else {
             return NULL;
         }
     }
     public function getDonationThankYouSentAttribute() {
         if (isset($this['Thank You'])) {
-            return $this['Thank You']; 
+            return $this['Thank You'];
         } else {
             return 'N';
         }
     }
     public static function boot()
     {
-        parent::boot();    
-    
+        parent::boot();
+
         // cause a delete of a donation to cascade to children so payments are also deleted
         static::deleted(function($donation)
         {
             $donation->payments()->delete();
         });
-    }    
+    }
 
 }
-
-    
-    

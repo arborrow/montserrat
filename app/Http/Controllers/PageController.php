@@ -213,6 +213,33 @@ class PageController extends Controller
         return view('reports.finance.deposits', compact('grouped_payments','payments'));
     }
 
+    public function finance_reconcile_deposit_show($event_id = NULL)
+   {
+       $this->authorize('show-donation');
+       $this->authorize('show-registration');
+       if (!isset($event_id)) {
+         $event_id = 1422; //open deposit retreat id - currently hardcoded
+       }
+
+       $payments = \App\Payment::where('payment_amount','>',0)
+       ->whereHas('donation', function($query) {
+           $query->where('donation_description','=','Deposit');
+       })
+       ->whereHas('donation', function($query) use($event_id){
+           $query->where('event_id','=',$event_id);
+       })
+       ->whereHas('donation', function($query) {
+           $query->where('donation_amount','>',0);
+       })->with('donation.retreat','donation.contact')->get();
+       $grouped_payments = $payments->groupBy(function ($c) {
+         return '#'.$c->donation->retreat_idnumber.'-'.$c->donation->retreat_name.' ('.$c->donation->retreat_start_date.')';
+       })->sortBy(function ($d) {
+         return Carbon::parse($d[0]->donation->retreat_start_date);
+       });
+       dd($grouped_payments);
+       return view('reports.finance.reconcile_deposits', compact('grouped_payments','payments'));
+   }
+
     public function retreatlistingreport($id)
     {
         $this->authorize('show-contact');
