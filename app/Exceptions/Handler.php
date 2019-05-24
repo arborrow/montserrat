@@ -15,6 +15,7 @@ use Symfony\Component\Debug\Exception\FlattenException;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use function GuzzleHttp\Promise\exception_for;
 
 class Handler extends ExceptionHandler
 {
@@ -59,63 +60,28 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-         $fullurl = $request->fullUrl();
-	 if (isset(Auth::User()->name)) {
-	     $username = Auth::User()->name;
-	 } else {
-	     $username = 'Unknown user';
-	 }
-	 $ip_address = 'Unspecified IP Address';
-	 if (!empty($request->ip())) {
-	     $ip_address = $request->ip();
-	 }
+			$fullurl = $request->fullUrl();
+			$ip_address = 'Unspecified IP Address';
+			$username = 'Unknown user';
+			$subject =  'Error Detected on ' . config('polanco.site_name');
 
-	//  dd($exception, $fullurl, $ip_address, $username);
-	 $subject = $exception->getStatusCode() . ' Error Detected on ' . config('polanco.site_name');
-	 Mail::send('emails.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address], function ($m) use ($subject) {
-		 $m->to(config('polanco.admin_email'))->subject($subject);
-	 });
-	 
-	 /* 
-	  * if ($exception instanceof ModelNotFoundException) {
-	     $exception = new NotFoundHttpException($e->getMessage(), $e);
-	 }
+			if (isset(Auth::User()->name)) {
+				$username = Auth::User()->name;
+			}
 
-         if ($exception instanceof HttpResponseException) {
-	     return $exception->getResponse();
-	 } elseif ($exception instanceof NotFoundHttpException) {
-		$exception = new NotFoundHttpException($exception->getMessage(), $exception);
-		Mail::send('emails.error', ['error' => $this->convertExceptionToResponse($exception)], function ($message) use ($fullurl, $username, $ip_address) {
-			$message->to(config('polanco.admin_email'));
-			$message->subject('Polanco 404 Error @'.$fullurl.' by: '.$username.' from: '.$ip_address);
-			$message->from(config('polanco.site_email'));
-		});
-	 } elseif ($exception instanceof AuthenticationException) {
-		return $this->unauthenticated($request, $exception);
-	 } elseif ($exception instanceof AuthorizationException) {
-		$exception = new HttpException(403, $e->getMessage());
-		Mail::send('emails.error', ['error' => $this->convertExceptionToResponse($exception)], function ($message) use ($fullurl, $username, $ip_address) {
-			$message->to(config('polanco.admin_email'));
-			$message->subject('Polanco 403 Error @'.$fullurl.' by: '.$username.' from: '.$ip_address);
-			$message->from(config('polanco.site_email'));
-		});
-	} elseif ($exception instanceof ValidationException && $exception->getResponse()) {
-		return $exception->getResponse();
-	}
+			if (!empty($request->ip())) {
+				$ip_address = $request->ip();
+			}
 
-	$exception->debug=true;
-	if ($this->isHttpException($exception)) {
-		return $this->toIlluminateResponse($this->renderHttpException($exception), $exception);
-	} else {
-		Mail::send('emails.error', ['error' => $this->convertExceptionToResponse($exception)], function ($message) use ($fullurl, $username, $ip_address) {
-			$message->to(config('polanco.admin_email'));
-			$message->subject('Polanco Error @'.$fullurl.' by: '.$username.' from: '.$ip_address);
-			$message->from(config('polanco.site_email'));
-		});
-	return view('errors.default');
-	}	
-	dd($request, $exception);
-	  */ 
-	return parent::render($request, $exception);
-    }
+			if (method_exists($exception, 'getStatusCode')) {
+				$subject .= ' ' . $exception->getStatusCode();
+			}
+
+			Mail::send('emails.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address], function ($m) use ($subject, $exception, $request) {
+				$m->to(config('polanco.admin_email'))->subject($subject);
+				return parent::render($request, $exception);
+			});
+			
+			return parent::render($request, $exception);
+		}
 }
