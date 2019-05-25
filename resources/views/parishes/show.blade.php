@@ -9,9 +9,9 @@
             <div class="col-12">
                 <h1>
                 @can('update-contact')
-                    <a href="{{url('parish/'.$parish->id.'/edit')}}">{!! $parish->organization_name !!}</a> (<a href="../diocese/{{$parish->diocese_id}}">{{ $parish->diocese_name}}</a>)
+                    <a href="{{url('parish/'.$parish->id.'/edit')}}">{!! $parish->display_name !!}</a> (<a href="../diocese/{{$parish->diocese_id}}">{{ $parish->diocese_name}}</a>)
                 @else
-                    {{ $parish->organization_name }} (<a href="../diocese/{{$parish->diocese_id}}">{{ $parish->diocese_name}}</a>)
+                    {{ $parish->display_name }} (<a href="../diocese/{{$parish->diocese_id}}">{{ $parish->diocese_name}}</a>)
                 @endCan
                 </h1>
             </div>
@@ -20,9 +20,9 @@
             <div class="col-12">
                 {!! Html::link('#notes','Notes',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#parishioners','Parishioners',array('class' => 'btn btn-outline-dark')) !!}
+                {!! Html::link('#touchpoints','Touchpoints',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#relationships','Relationships',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#touchpoints','Touchpoints',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#attachments','Attachments',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#donations','Donations',array('class' => 'btn btn-outline-dark')) !!}
             </div>
@@ -40,7 +40,7 @@
                     </span>
                 @endCan
                 <span class="btn btn-outline-dark">
-                    <a href={{ action('RegistrationController@add',$parish->id) }}>Add Registration</a> 
+                    <a href={{ action('RegistrationController@add',$parish->id) }}>Add Registration</a>
                 </span>
             </div>
         </div>
@@ -54,7 +54,7 @@
                         <span class="font-weight-bold">{{$address->location->display_name}}:</span>
                         <address>
                             {!!$address->google_map!!}<br>
-                            @if ($address->country_id=1228) @else {{$address->country_id}} @endif 
+                            @if ($address->country_id=1228) @else {{$address->country_id}} @endif
                         </address>
                     @endif
                 @endforeach
@@ -92,8 +92,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-lg-6" id="notes">
-                <h2>Notes</h2>
+            <div class="col-12" id="notes">
+                <h2>Notes for {{ $parish->display_name }} ({{$parish->notes->count()}})</h2>
                 @foreach($parish->notes as $note)
                     @if(!empty($note->note))
                         <strong>{{$note->subject}}: </strong>{{$note->note}} (modified: {{$note->modified_date}})<br />
@@ -103,26 +103,26 @@
         </div>
         <div class="row">
             <div class="col-12" id="parishioners">
-                <h2>Parishioners of {{$parish->organization_name}}</h2>
+                <h2>Parishioners of {{$parish->display_name}} ({{$parish->parishioners->count()}})</h2>
             </div>
             <div class="col-12">
-                @if (!empty($parish->parishioners))
+                @if (empty($parish->parishioners))
                     <p>No parishioners are currently registered in the database.</p>
                 @else
                     <table class="table table-striped table-hover table-responsive-md">
                         <thead>
                             <tr>
-                                <th>Name</th> 
+                                <th>Name</th>
                                 <th>Primary Address</th>
-                                <th>Phone(s)</th> 
-                                <th>Email(s)</th> 
+                                <th>Phone(s)</th>
+                                <th>Email(s)</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($parish->parishioners as $parishioner)
                             <tr>
                                 <td><a href="../person/{{$parishioner->contact_b->id}}">
-                                        @if($parishioner->contact_b->is_captain) 
+                                        @if($parishioner->contact_b->is_captain)
                                             {!! Html::image('/images/captain.png', 'Captain',array('title'=>"Captain",'class' => 'btn btn-outline-dark')) !!}
                                         @endIf
                                         {!! $parishioner->contact_b->contact_link_full_name !!} ({{$parishioner->contact_b->participant_count}})
@@ -133,7 +133,7 @@
                                         {!!$parishioner->contact_b->address_primary->google_map!!}
                                         <br />
                                         @if ($parishioner->contact_b->address_primary->country_id=1228) @else {{$parishioner->contact_b->address_primary->country_id}} @endif
-                                    </td> 
+                                    </td>
                                 @else <td> </td>
                                 @endif
                                 <td>
@@ -141,7 +141,7 @@
                                     @if (!empty($phone->phone))
                                     <strong>{{$phone->location->name}}-{{$phone->phone_type}}:</strong><a href="tel:{{$phone->phone}}">{{$phone->phone }}</a><br />
                                     @endif
-                                    @endforeach    
+                                    @endforeach
                                 </td>
                                 <td>
                                     @foreach($parishioner->contact_b->emails as $email)
@@ -156,7 +156,7 @@
                                         @endif
                                     @endif
 
-                                    @endforeach   
+                                    @endforeach
                                 </td>
                             </tr>
                             @endforeach
@@ -167,7 +167,7 @@
         </div>
         <div class="row">
             <div class="col-12" id="touchpoints">
-                <h2>Touchpoints for {{ $parish->display_name }}</h2>
+                <h2>Touchpoints for {{ $parish->display_name }} ({{$parish->touchpoints->count()}})</h2>
             </div>
             <div class="col-12">
                 @if ($parish->touchpoints->isEmpty())
@@ -201,7 +201,7 @@
         </div>
         <div class="row">
             <div class="col-12" id="relationships">
-                <h2>Relationships</h2>
+                <h2>Relationships for {{ $parish->display_name }} ({{$parish->a_relationships->count()+$parish->b_relationships->count()}})</h2>
             </div>
             <div class="col-12 col-lg-6">
                 @can('create-relationship')
@@ -224,7 +224,7 @@
                 @endcan
             </div>
             <div class="col-12">
-                <ul>    
+                <ul>
                     @foreach($parish->a_relationships as $a_relationship)
                         <li>{!!$parish->contact_link!!} is {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link !!}</li>
                     @endforeach
@@ -240,7 +240,7 @@
                 <h2>Retreat Participation for {{ $parish->display_name }}</h2>
             </div>
             <div class="col-12">
-                <ul>    
+                <ul>
                     @foreach($parish->event_registrations as $registration)
                         <li>{!!$registration->event_link!!} ({{date('F j, Y', strtotime($registration->event->start_date))}} - {{date('F j, Y', strtotime($registration->event->end_date))}}) </li>
                     @endforeach
@@ -249,7 +249,7 @@
         </div>
         <div class="row">
             <div class="col-12" id="attachments">
-                <h2>Attachments for {{ $parish->display_name }}</h2>
+                <h2>Attachments for {{ $parish->display_name }} ({{$files->count()}})</h2>
             </div>
             <div class="col-12">
                 @if ($files->isEmpty())
@@ -324,7 +324,7 @@
             </div>
             <div class="col-6 text-left">
                 {!! Form::open(['method' => 'DELETE', 'route' => ['parish.destroy', $parish->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                {!! Form::image('/images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                {!! Form::image('/images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
                 {!! Form::close() !!}
             </div>
         </div>
