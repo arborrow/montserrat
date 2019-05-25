@@ -36,11 +36,11 @@
                     @if (!empty($address->street_address))
                         <strong>{{$address->location->display_name}}:</strong>
                         <address>
-                            {!!$address->google_map!!} 
+                            {!!$address->google_map!!}
                             <br>
-                            @if ($address->country_id=1228) 
-                            @else {{$address->country_id}} 
-                            @endif 
+                            @if ($address->country_id=1228)
+                            @else {{$address->country_id}}
+                            @endif
                         </address>
                     @endif
                 @endforeach
@@ -66,7 +66,7 @@
                     @endif
                 @endforeach
             </div>
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-6" id="notes">
                 <h2>Notes</h2>
                 @foreach($vendor->notes as $note)
                     @if(!empty($note->note))
@@ -74,8 +74,8 @@
                     @endif
                 @endforeach
             </div>
-            <div class="col-12 col-lg-6">
-                <h2>Relationships</h2>
+            <div class="col-12 col-lg-6" id="relationships">
+                <h2>Relationships for {{ $vendor->display_name }} ({{ $vendor->a_relationships->count() + $vendor->b_relationships->count() }})</h2>
                 {!! Form::open(['method' => 'POST', 'route' => ['relationship_type.addme']]) !!}
                 <div class="form-group">
                     <div class="row">
@@ -97,11 +97,11 @@
                     <li>
                         @can('delete-relationship')
                             {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $a_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                                {!!$vendor->contact_link!!} {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link !!}  
-                                {!! Form::image('/images/delete.png','btnDelete',['title'=>'Delete Relationship '.$a_relationship->id, 'style'=>'padding-left: 50px;']) !!} 
+                                {!!$vendor->contact_link!!} {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link !!}
+                                {!! Form::image('/images/delete.png','btnDelete',['title'=>'Delete Relationship '.$a_relationship->id, 'style'=>'padding-left: 50px;']) !!}
                             {!! Form::close() !!}
                         @else
-                            {!!$vendor->contact_link!!} {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link !!}  
+                            {!!$vendor->contact_link!!} {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link !!}
                         @endCan
                     </li>
                 @endforeach
@@ -111,7 +111,7 @@
                         @can('delete-relationship')
                             {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $b_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
                             {!!$vendor->contact_link!!} {{ $b_relationship->relationship_type->label_b_a }} {!! $b_relationship->contact_a->contact_link!!}
-                            {!! Form::image('/images/delete.png','btnDelete',['title'=>'Delete Relationship '.$b_relationship->id, 'style'=>'padding-left: 50px;']) !!} 
+                            {!! Form::image('/images/delete.png','btnDelete',['title'=>'Delete Relationship '.$b_relationship->id, 'style'=>'padding-left: 50px;']) !!}
                             {!! Form::close() !!}
                         @else
                             {!!$vendor->contact_link!!} {{ $b_relationship->relationship_type->label_b_a }} {!! $b_relationship->contact_a->contact_link!!}
@@ -119,8 +119,8 @@
                     </li>
                 @endforeach
             </div>
-            <div class="col-12">
-                <h2>Retreat Participation for {{ $vendor->display_name }}</h2>
+            <div class="col-12" id="registrations">
+                <h2>Retreat Participation for {{ $vendor->display_name }} ({{ $vendor->event_registrations->count() }})</h2>
                 <ul>
                     @foreach($vendor->event_registrations as $registration)
                         <li>{!!$registration->event_link!!} ({{date('F j, Y', strtotime($registration->event->start_date))}} - {{date('F j, Y', strtotime($registration->event->end_date))}}) </li>
@@ -128,8 +128,8 @@
                 </ul>
             </div>
             @can('show-touchpoint')
-            <div class="col-12">
-                <h2>Touchpoints for {{ $vendor->display_name }}</h2>
+            <div class="col-12" id="touchpoints">
+                <h2>Touchpoints for {{ $vendor->display_name }} ({{ $vendor->touchpoints->count() }})</h2>
                 @can('create-touchpoint')
                     <span class="btn btn-outline-dark">
                         <a href={{ action('TouchpointController@add',$vendor->id) }}>Add Touchpoint</a>
@@ -163,7 +163,7 @@
                 @endif
             </div>
             @endcan
-            <div class="col-12">
+            <div class="col-12" id="attachments">
                 <h2>Attachments for {{ $vendor->display_name }}</h2>
                 @if ($files->isEmpty())
                     <div class="text-center">
@@ -193,7 +193,7 @@
                 @endif
             </div>
             @can('show-donation')
-            <div class="col-12">
+            <div class="col-12" id="donations">
                 <h2>Donations for {{ $vendor->display_name }} ({{$vendor->donations->count() }} donations totaling:  ${{ number_format($vendor->donations->sum('donation_amount'),2)}})</h2>
                 @can('create-donation')
                     {!! Html::link(action('DonationController@create',$vendor->id),'Create donation',array('class' => 'btn btn-outline-dark'))!!}
@@ -239,7 +239,7 @@
             <div class="col-6 text-left">
                 @can('delete-contact')
                     {!! Form::open(['method' => 'DELETE', 'route' => ['vendor.destroy', $vendor->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                    {!! Form::image('/images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                    {!! Form::image('/images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
                     {!! Form::close() !!}
                 @endCan
             </div>

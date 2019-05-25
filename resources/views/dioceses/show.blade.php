@@ -8,17 +8,17 @@
                 {!!$diocese->avatar_large_link!!}
                 <h1>
                     @can('update-contact')
-                        <a href="{{url('diocese/'.$diocese->id.'/edit')}}">{{ $diocese->organization_name }}</a> 
+                        <a href="{{url('diocese/'.$diocese->id.'/edit')}}">{{ $diocese->display_name }}</a>
                     @else
-                        {{ $diocese->organization_name }}
+                        {{ $diocese->display_name }}
                     @endCan
                 </h1>
             </div>
             <div class="col-12">
                 {!! Html::link('#notes','Notes',array('class' => 'btn btn-outline-dark')) !!}
+                {!! Html::link('#touchpoints','Touchpoints',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#relationships','Relationships',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#touchpoints','Touchpoints',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#attachments','Attachments',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#donations','Donations',array('class' => 'btn btn-outline-dark')) !!}
             </div>
@@ -31,7 +31,7 @@
                 </a>
                 <a href={{ action('RegistrationController@add',$diocese->id) }} class="btn btn-outline-dark">
                     Add Registration
-                </a>  
+                </a>
             </div>
         </div>
     </div>
@@ -54,11 +54,11 @@
                         <span class="font-weight-bold">{{$address->location->display_name}}</span>
 
                         <address>
-                            {!!$address->google_map!!}  
+                            {!!$address->google_map!!}
                         <br />
                         @if ($address->country_id=1228)
-                        @else {{$address->country_id}} 
-                        @endif 
+                        @else {{$address->country_id}}
+                        @endif
                         </address>
                     @endif
                 @endforeach
@@ -89,8 +89,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-lg-6" id="notes">
-                <h2>Notes for {{ $diocese->display_name }}</h2>
+            <div class="col-12" id="notes">
+                <h2>Notes for {{ $diocese->display_name }} ({{ $diocese->notes->count() }})</h2>
                 @foreach($diocese->notes as $note)
                     @if(!empty($note->note))
                         <span class="font-weight-bold">{{$note->subject}}: </span>{{$note->note}} (modified: {{$note->modified_date}})<br>
@@ -100,7 +100,7 @@
         </div>
         <div class="row">
             <div class="col-12" id="touchpoints">
-                <h2>Touchpoints for {{ $diocese->display_name }}</h2>
+                <h2>Touchpoints for {{ $diocese->display_name }} ({{ $diocese->touchpoints->count() }})</h2>
                 @if ($diocese->touchpoints->isEmpty())
                     <div class="text-center">
                         <p>It is a brand new world, there are no touchpoints for this contact!</p>
@@ -136,7 +136,7 @@
         </div>
         <div class="row">
             <div class="col-12" id="relationships">
-                <h2>Relationships for {{$diocese->display_name}}</h2>
+                <h2>Relationships for {{$diocese->display_name}} ({{ $diocese->a_relationships->count() + $diocese->b_relationships->count() }})</h2>
             </div>
             <div class="col-12">
                 <div class="form-group">
@@ -159,16 +159,16 @@
                     @foreach($diocese->a_relationships as $a_relationship)
                         <li>
                             {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $a_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                                {!!$diocese->contact_link!!} {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link !!} 
+                                {!!$diocese->contact_link!!} {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link !!}
                                 <button type="submit" class="btn btn-outline-dark btn-sm"><i class="fas fa-trash"></i></button>
                             {!! Form::close() !!}
                         </li>
                     @endforeach
-    
+
                     @foreach($diocese->b_relationships as $b_relationship)
                         <li>
                             {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $b_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                                {!!$diocese->contact_link!!} is {{ $b_relationship->relationship_type->label_a_b }} {!! $b_relationship->contact_b->contact_link !!} 
+                                {!!$diocese->contact_link!!} is {{ $b_relationship->relationship_type->label_a_b }} {!! $b_relationship->contact_b->contact_link !!}
                                 <button type="submit" class="btn btn-outline-dark btn-sm"><i class="fas fa-trash"></i></button>
                             {!! Form::close() !!}
                         </li>
@@ -178,8 +178,8 @@
         </div>
         <div class="row">
             <div class="col-12" id="registrations">
-                <h2>Retreat Participation for {{ $diocese->display_name }}</h2>
-                <ul>  
+                <h2>Retreat Participation for {{ $diocese->display_name }} ({{ $diocese->event_registrations->count() }})</h2>
+                <ul>
                     @foreach($diocese->event_registrations as $registration)
                         <li>{!!$registration->event_link!!} ({{date('F j, Y', strtotime($registration->event->start_date))}} - {{date('F j, Y', strtotime($registration->event->end_date))}}) </li>
                     @endforeach
@@ -188,7 +188,7 @@
         </div>
         <div class="row">
             <div class="col-12" id="attachments">
-                <h2>Attachments for {{ $diocese->display_name }}</h2>
+                <h2>Attachments for {{ $diocese->display_name }} ({{ $files->count() }})</h2>
                 @if ($files->isEmpty())
                     <div class="text-center">
                         <p>This user currently has no attachments</p>
@@ -267,7 +267,7 @@
             <div class="col-6 text-left">
                 @can('delete-contact')
                     {!! Form::open(['method' => 'DELETE', 'route' => ['diocese.destroy', $diocese->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                    {!! Form::image('/images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                    {!! Form::image('/images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
                     {!! Form::close() !!}
                 @endCan
             </div>

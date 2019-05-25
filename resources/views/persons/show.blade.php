@@ -181,11 +181,6 @@
                     @endif
                 </p>
             </div>
-            <div class="col-12 col-lg-6" id="notes">
-                <h2>Notes</h2>
-                <p><span class="font-weight-bold">General: </span> {!! $person->note_contact ? $person->note_contact : 'N/A' !!}
-                <br><span class="font-weight-bold">Room Preference: </span> {!! $person->note_room_preference ? $person->note_room_preference : 'N/A' !!}</p>
-            </div>
             <div class="col-12 col-lg-6">
                 <h2>Other</h2>
                 <p>
@@ -229,9 +224,15 @@
                 @endif
             </div>
             @endCan
+            <div class="col-12 col-lg-6" id="notes">
+                <h2>Notes</h2>
+                <p><span class="font-weight-bold">General: </span> {!! $person->note_contact ? $person->note_contact : 'N/A' !!}
+                <br><span class="font-weight-bold">Room Preference: </span> {!! $person->note_room_preference ? $person->note_room_preference : 'N/A' !!}</p>
+            </div>
+
             @can('show-relationship')
             <div class="col-12 col-lg-6" id="relationships">
-                <h2>Relationships</h2>
+                <h2>Relationships ({{ $person->a_relationships->count() + $person->b_relationships->count() }})</h2>
                 @can('create-relationship')
                 {!! Form::open(['method' => 'POST', 'route' => ['relationship_type.addme']]) !!}
                     <div class="form-group">
@@ -281,7 +282,7 @@
             @endCan
             @can('show-registration')
             <div class="col-12 mt-3" id="registrations">
-                <h2>Retreat Participation | {{$registrations->count()}}</h2>
+                <h2>Retreat Participation ({{$registrations->count()}})</h2>
                 @foreach($registrations as $registration)
                     <div class="p-3 mb-2 alert rounded {{ $registration->canceled_at ? 'alert-warning' : 'alert-success'}}">
                         {!!$registration->event_link!!} ({{date('F j, Y', strtotime($registration->retreat_start_date))}} - {{date('F j, Y', strtotime($registration->retreat_end_date))}}) - {{$registration->participant_role_name}} ({{$registration->participant_status}})
@@ -295,14 +296,14 @@
             @endCan
             @can('show-touchpoint')
             <div class="col-12 mt-3" id="touchpoints">
-                <h2>Touchpoints</h2>
+                <h2>Touchpoints ({{ $person->touchpoints->count() }})</h2>
                 @can('create-touchpoint')
                 <button class="btn btn-outline-dark"><a href={{ action('TouchpointController@add',$person->id) }}>Add Touchpoint</a></button>
                 @endCan
                 @if ($touchpoints->isEmpty())
                     <p>There are no touchpoints for this person.</p>
                 @else
-                    <table class="table">
+                    <table class="table table-striped table-responsive-lg">
                         <thead>
                             <tr>
                                 <th>Date</th>
@@ -327,7 +328,7 @@
             @endCan
             @can('show-attachment')
             <div class="col-12 mt-3" id="attachments">
-                <h2>Attachments</h2>
+                <h2>Attachments ({{ $files->count() }})</h2>
                 @if ($files->isEmpty())
                     <p>There are no attachments for this person.</p>
                 @else
@@ -357,7 +358,7 @@
             @can('show-donation')
             <div class="col-12 mt-3" id="donations">
                 <h2>
-                    {{$person->donations->count() }}  Donations for {{ $person->display_name }}
+                    {{$person->donations->count() }}  Donation(s) for {{ $person->display_name }}
                         - ${{number_format($person->donations->sum('payments_paid'),2)}} paid of
                     ${{number_format($person->donations->sum('donation_amount'),2) }} pledged
                     @if ($person->donations->sum('donation_amount') > 0)

@@ -15,8 +15,8 @@
             <div class="col-12">
                 {!! Html::link('#notes','Notes',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#relationships','Relationships',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#touchpoints','Touchpoints',array('class' => 'btn btn-outline-dark')) !!}
+                {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#attachments','Attachments',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#donations','Donations',array('class' => 'btn btn-outline-dark')) !!}
             </div>
@@ -28,8 +28,8 @@
                 </span>
                 @endCan
                 <span class="btn btn-outline-dark">
-                    <a href={{ action('RegistrationController@add',$organization->id) }}>Add Registration</a> 
-                </span> 
+                    <a href={{ action('RegistrationController@add',$organization->id) }}>Add Registration</a>
+                </span>
             </div>
         </div>
     </div>
@@ -40,10 +40,10 @@
                 @foreach($organization->addresses as $address)
                     @if (!empty($address->street_address))
                         <strong>{{$address->location->display_name}}:</strong>
-        
+
                         <address>
-                            {!!$address->google_map!!}  
-                            <br />@if ($address->country_id=1228) @else {{$address->country_id}} @endif 
+                            {!!$address->google_map!!}
+                            <br />@if ($address->country_id=1228) @else {{$address->country_id}} @endif
                         </address>
                     @endif
                 @endforeach
@@ -72,13 +72,13 @@
                 @endforeach
             </div>
             <div class="col-12 col-lg-6" id="notes">
-                <h2>Notes</h2> 
+                <h2>Note</h2>
                 {{ $organization->note_organization_text }}
             </div>
         </div>
         <div class="row">
             <div class="col-12 col-lg-6" id="relationships">
-                <h2>Relationships</h2>
+                <h2>Relationships ({{ $organization->a_relationships->count() + $organization->b_relationships->count() }})</h2>
                 {!! Form::open(['method' => 'POST', 'route' => ['relationship_type.addme']]) !!}
                 <div class="form-group">
                     <div class="row">
@@ -95,7 +95,7 @@
                     </div>
                 </div>
                 {!! Form::close() !!}
-                <ul>    
+                <ul>
                     @foreach($organization->a_relationships as $a_relationship)
                         <li>{!!$organization->contact_link!!} is {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link !!}  </li>
                     @endforeach
@@ -107,7 +107,7 @@
         </div>
         <div class="row">
             <div class="col-12" id="touchpoints">
-                <h2>Touchpoints</h2>
+                <h2>Touchpoints for {{ $organization->display_name }} ({{ $organization->touchpoints->count() }})</h2>
                 @if ($organization->touchpoints->isEmpty())
                     <div class="text-center">
                         <p>It is a brand new world, there are no touchpoints for this organization!</p>
@@ -139,8 +139,8 @@
         </div>
         <div class="row">
             <div class="col-12" id="registrations">
-                <h2>Retreat Participation for {{ $organization->display_name }}</h2>
-                <ul>    
+                <h2>Retreat Participation for {{ $organization->display_name }} ({{ $organization->event_registrations->count() }})</h2>
+                <ul>
                     @foreach($organization->event_registrations as $registration)
                         <li>{!!$registration->event_link!!}  ({{date('F j, Y', strtotime($registration->retreat_start_date))}} - {{date('F j, Y', strtotime($registration->retreat_end_date))}})</li>
                     @endforeach
@@ -226,7 +226,7 @@
             <div class="col-6 text-left">
                 @can('delete-contact')
                     {!! Form::open(['method' => 'DELETE', 'route' => ['organization.destroy', $organization->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                    {!! Form::image('/images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                    {!! Form::image('/images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
                     {!! Form::close() !!}
                 @endCan
             </div>
