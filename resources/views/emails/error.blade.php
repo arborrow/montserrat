@@ -1,4 +1,4 @@
-<h1>{{ config('polanco.site_name') }} {{ $error->getStatusCode() }} Error Detected</h1>
+<h1>{{ $subject }}</h1>
 
 <h4>User Details</h4>
 <p>Username: {{ $user }}</p>

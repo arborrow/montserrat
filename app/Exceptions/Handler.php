@@ -60,28 +60,37 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-			$fullurl = $request->fullUrl();
-			$ip_address = 'Unspecified IP Address';
-			$username = 'Unknown user';
-			$subject =  'Error Detected on ' . config('polanco.site_name');
+			$mailable = 0; //initialize to false
+      $subject =  'Error Detected on ' . config('polanco.site_name');
+      $fullurl = $request->fullUrl();
+			(isset(Auth::User()->name) ? $username = Auth::User()->name : $username = 'Unknown user');
+      (!empty($request->ip()) ? $ip_address = $request->ip() : $ip_address = 'Unspecified IP Address');
 
-			if (isset(Auth::User()->name)) {
-				$username = Auth::User()->name;
-			}
+      //403
+      if ($exception instanceof AuthorizationException) {
+        $mailable = 1;
+        $subject = '403 '.$subject.': ('.$username.') '.$fullurl;
+        // dd("403",$subject,$request,$exception->getMessage(),$exception->getFile(),$this->isHttpException($exception));
+      }
+      // 404
+      if ($exception instanceof NotFoundHttpException) {
+        $mailable = 1;
+        $subject = '404 '.$subject.': '.$fullurl;
+        // dd("404",$subject,$request,$exception->getMessage(),$exception->getFile(),$this->isHttpException($exception));
+      }
+      // 500
+      if ($exception instanceof \ErrorException) {
+        $mailable = 1;
+        $subject = '500 '.$subject.': '.$exception->getMessage();
+        // dd("500",$subject,$request,$exception->getMessage(),$exception->getFile());
+      }
+      if ($mailable) {
+        Mail::send('emails.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject], function ($m) use ($subject, $exception, $request) {
+  				$m->to(config('polanco.admin_email'))->subject($subject);
+  			});
 
-			if (!empty($request->ip())) {
-				$ip_address = $request->ip();
-			}
+      }
 
-			if (method_exists($exception, 'getStatusCode')) {
-				$subject .= ' ' . $exception->getStatusCode();
-			}
-
-			Mail::send('emails.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address], function ($m) use ($subject, $exception, $request) {
-				$m->to(config('polanco.admin_email'))->subject($subject);
-				return parent::render($request, $exception);
-			});
-			
 			return parent::render($request, $exception);
 		}
 }
