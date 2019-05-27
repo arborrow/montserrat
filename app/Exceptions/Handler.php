@@ -71,13 +71,13 @@ class Handler extends ExceptionHandler
             $mailable = 1;
             $subject = '403 '.$subject.': ('.$username.') '.$fullurl;
         }
-      
+
         // 404
         if ($exception instanceof NotFoundHttpException) {
             $mailable = 1;
             $subject = '404 '.$subject.': '.$fullurl;
         }
-      
+
         // 500
         if ($exception instanceof \ErrorException) {
             $mailable = 1;
