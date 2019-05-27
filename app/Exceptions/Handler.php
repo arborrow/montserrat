@@ -84,12 +84,16 @@ class Handler extends ExceptionHandler
         $subject = '500 '.$subject.': '.$exception->getMessage();
         // dd("500",$subject,$request,$exception->getMessage(),$exception->getFile());
       }
+      // dd(config('app.debug'));
       if ($mailable) {
         Mail::send('emails.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject], function ($m) use ($subject, $exception, $request) {
   				$m->to(config('polanco.admin_email'))->subject($subject);
   			});
-
       }
+      if (($exception instanceof \ErrorException) && (!config('app.debug'))) { // avoid displaying error details to the user unless debugging
+        return view('errors.default');
+      }
+
 
 			return parent::render($request, $exception);
 		}
