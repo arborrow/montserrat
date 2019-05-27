@@ -71,13 +71,13 @@ class Handler extends ExceptionHandler
             $mailable = 1;
             $subject = '403 '.$subject.': ('.$username.') '.$fullurl;
         }
-      
+
         // 404
         if ($exception instanceof NotFoundHttpException) {
             $mailable = 1;
             $subject = '404 '.$subject.': '.$fullurl;
         }
-      
+
         // 500
         if ($exception instanceof \ErrorException) {
             $mailable = 1;
@@ -86,7 +86,7 @@ class Handler extends ExceptionHandler
 
         if ($mailable) {
             Mail::send('emails.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject], function ($m) use ($subject, $exception, $request) {
-                $m->to('ata.gowani@montserratretreat.org')->subject($subject);
+                $m->to(config('polanco.admin_email'))->subject($subject);
             });
         }
 
