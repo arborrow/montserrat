@@ -60,41 +60,40 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-			$mailable = 0; //initialize to false
-      $subject =  'Error Detected on ' . config('polanco.site_name');
-      $fullurl = $request->fullUrl();
-			(isset(Auth::User()->name) ? $username = Auth::User()->name : $username = 'Unknown user');
-      (!empty($request->ip()) ? $ip_address = $request->ip() : $ip_address = 'Unspecified IP Address');
+        $mailable = 0; //initialize to false
+        $subject =  'Error Detected on ' . config('polanco.site_name');
+        $fullurl = $request->fullUrl();
+        (isset(Auth::User()->name) ? $username = Auth::User()->name : $username = 'Unknown user');
+        (!empty($request->ip()) ? $ip_address = $request->ip() : $ip_address = 'Unspecified IP Address');
 
-      //403
-      if ($exception instanceof AuthorizationException) {
-        $mailable = 1;
-        $subject = '403 '.$subject.': ('.$username.') '.$fullurl;
-        // dd("403",$subject,$request,$exception->getMessage(),$exception->getFile(),$this->isHttpException($exception));
-      }
-      // 404
-      if ($exception instanceof NotFoundHttpException) {
-        $mailable = 1;
-        $subject = '404 '.$subject.': '.$fullurl;
-        // dd("404",$subject,$request,$exception->getMessage(),$exception->getFile(),$this->isHttpException($exception));
-      }
-      // 500
-      if ($exception instanceof \ErrorException) {
-        $mailable = 1;
-        $subject = '500 '.$subject.': '.$exception->getMessage();
-        // dd("500",$subject,$request,$exception->getMessage(),$exception->getFile());
-      }
-      // dd(config('app.debug'));
-      if ($mailable) {
-        Mail::send('emails.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject], function ($m) use ($subject, $exception, $request) {
-  				$m->to(config('polanco.admin_email'))->subject($subject);
-  			});
-      }
-      if (($exception instanceof \ErrorException) && (!config('app.debug'))) { // avoid displaying error details to the user unless debugging
-        return view('errors.default');
-      }
+        //403
+        if ($exception instanceof AuthorizationException) {
+            $mailable = 1;
+            $subject = '403 '.$subject.': ('.$username.') '.$fullurl;
+        }
+      
+        // 404
+        if ($exception instanceof NotFoundHttpException) {
+            $mailable = 1;
+            $subject = '404 '.$subject.': '.$fullurl;
+        }
+      
+        // 500
+        if ($exception instanceof \ErrorException) {
+            $mailable = 1;
+            $subject = '500 '.$subject.': '.$exception->getMessage();
+        }
 
+        if ($mailable) {
+            Mail::send('emails.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject], function ($m) use ($subject, $exception, $request) {
+                $m->to('ata.gowani@montserratretreat.org')->subject($subject);
+            });
+        }
 
-			return parent::render($request, $exception);
-		}
+        if (($exception instanceof \ErrorException) && (!config('app.debug'))) { // avoid displaying error details to the user unless debugging
+            return view('errors.default');
+        }
+
+        return parent::render($request, $exception);
+    }
 }
