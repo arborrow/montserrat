@@ -75,7 +75,15 @@ GOOGLE_CLIENT_SECRET={google_client_secret}
 ```
 Replace `{google_client_id}` with your `client ID` and `{google_client_secret}` with your `client secret`.
 
-### Step 7: Get Proper Permissions
+### OPTIONAL Step 7: Setup Google Calendar to Automatically Sync Events
+Uncomment the following lines in your `.env` file
+```
+GOOGLE_CALENDAR_ID={google_calendar_id}
+SERVICE_ACCOUNT_CREDENTIALS_PATH={path_to_json}
+```
+Replace `{google_calendar_id}` with your `Calendar ID` and `{path_to_json}` with the path to your `.json` credentials file. See [here](https://github.com/spatie/laravel-google-calendar#how-to-obtain-the-credentials-to-communicate-with-google-calendar) for more instructions on how to optain those.
+
+### Step 8: Get Proper Permissions
 Once you have done everything above navigate to `localhost:8000`. Once you login using Google Auth, your user will not have any role assigned to it. Hence you will not be able to do anything. **You must do this before trying to get superuser access**
 
 #### Become the Superuser
@@ -85,5 +93,5 @@ php artisan db:seed --class=RoleUserTableSeeder
 ```
 The command above will assign the very first user as the superuser. The command will fail if no user exists.
 
-### Step 8: Follow Good Coding Practices!! 🤗
+### Step 9: Follow Good Coding Practices!! 🤗
 You're all set!
