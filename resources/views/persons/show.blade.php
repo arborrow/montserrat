@@ -64,7 +64,7 @@
     </div>
     <div class="col-12 mt-5">
         <div class="row">
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-6" id="basic_info">
                 <h2>Basic Information</h2>
                 <p>
                     <span class="font-weight-bold">Title: </span>{{ (!empty($person->prefix_name)) ? $person->prefix_name : null }}
@@ -80,7 +80,7 @@
                     <br><span class="font-weight-bold">Subcontact type: </span>{{ $person->subcontact_type_label }}
                 </p>
             </div>
-            <div class="col-12 col-lg-6 alert alert-danger">
+            <div class="col-12 col-lg-6 alert alert-danger" id="safety_info">
                 <h2>Emergency Contact Information</h2>
                 <p>
                     <span class="font-weight-bold">Name: </span>{{ !empty($person->emergency_contact->name) ? $person->emergency_contact->name : 'N/A' }}
@@ -96,7 +96,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-6" id="contact_info">
                 <h2>Contact Information</h2>
                 <div class="row">
                     @if($person->do_not_phone)
@@ -181,7 +181,7 @@
                     @endif
                 </p>
             </div>
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-6" id="other_info">
                 <h2>Other</h2>
                 <p>
                     <span class="font-weight-bold">Referral sources: </span>
@@ -211,8 +211,8 @@
                 </p>
             </div>
             @can('show-group')
-            <div class="col-12 col-lg-6">
-                <h2>Roles</h2>
+            <div class="col-12 col-lg-6" id="groups">
+                <h2>Groups</h2>
                 @if(!empty(array_filter((array)$person->groups)))
                     <ul>
                     @foreach($person->groups as $group)
@@ -220,7 +220,7 @@
                     @endforeach
                     </ul>
                 @else
-                    This person does not belong to any roles.
+                    This person does not belong to any groups.
                 @endif
             </div>
             @endCan
@@ -400,7 +400,7 @@
             </div>
             @endCan
         </div>
-        <div class="row">
+        <div class="row" id="commands">
             @can('update-contact')
             <div class='col-6 text-right'>
                 <a href="{{ action('PersonController@edit', $person->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
