@@ -150,7 +150,7 @@ class RetreatController extends Controller
             $retreat->captains()->sync($request->input('captains'));
         }
 
-        if (env("IMAP_HOSTNAME_TEST")) {
+        if (env('GOOGLE_CAL')) {
             $calendar_event->name = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
             $calendar_event->summary = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
             $calendar_event->startDateTime = $retreat->start_date;
