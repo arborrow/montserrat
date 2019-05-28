@@ -75,7 +75,7 @@ GOOGLE_CLIENT_SECRET={google_client_secret}
 ```
 Replace `{google_client_id}` with your `client ID` and `{google_client_secret}` with your `client secret`.
 
-### OPTIONAL Step 7: Setup Google Calendar to Automatically Sync Events
+### Step 7[OPTIONAL]: Setup Google Calendar to Automatically Sync Events
 Uncomment the following lines in your `.env` file
 ```
 GOOGLE_CALENDAR_ID={google_calendar_id}
