@@ -91,7 +91,7 @@ class Handler extends ExceptionHandler
         }
 
         if (($exception instanceof \ErrorException) && (!config('app.debug'))) { // avoid displaying error details to the user unless debugging
-            return view('errors.default');
+            abort(500);
         }
 
         return parent::render($request, $exception);
