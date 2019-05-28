@@ -150,15 +150,15 @@ class RetreatController extends Controller
             $retreat->captains()->sync($request->input('captains'));
         }
 
-        $calendar_event->name = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
-        $calendar_event->summary = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
-        $calendar_event->startDateTime = $retreat->start_date;
-        $calendar_event->endDateTime = $retreat->end_date;
-        $retreat_url = url('retreat/'.$retreat->id);
-        $calendar_event->description = "<a href='". $retreat_url . "'>".$retreat->idnumber." - ".$retreat->title."</a> : " .$retreat->description;
-        $calendar_event->save('insertEvent');
-
-
+        if (env("IMAP_HOSTNAME_TEST")) {
+            $calendar_event->name = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
+            $calendar_event->summary = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
+            $calendar_event->startDateTime = $retreat->start_date;
+            $calendar_event->endDateTime = $retreat->end_date;
+            $retreat_url = url('retreat/'.$retreat->id);
+            $calendar_event->description = "<a href='". $retreat_url . "'>".$retreat->idnumber." - ".$retreat->title."</a> : " .$retreat->description;
+            $calendar_event->save('insertEvent');
+        }
 
         return Redirect::action('RetreatController@index');//
     }
