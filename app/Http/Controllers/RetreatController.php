@@ -59,30 +59,35 @@ class RetreatController extends Controller
 
         $retreat_house = \App\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b', 'retreat_captains.contact_b')->findOrFail(config('polanco.contact.montserrat'));
         $event_types = \App\EventType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
+        $i = [];
+        $d = [];
+        $a = [];
+        $c = [];
+
         foreach ($retreat_house->retreat_innkeepers as $innkeeper) {
             $i[$innkeeper->contact_id_b]=$innkeeper->contact_b->sort_name;
         }
-        asort($i);
+        !empty($i) ? asort($i) : null;
         $i=[0=>'N/A']+$i;
 
         foreach ($retreat_house->retreat_directors as $director) {
             $d[$director->contact_id_b]=$director->contact_b->sort_name;
         }
-        asort($d);
+        !empty($d) ? asort($d) : null;
         $d=[0=>'N/A']+$d;
 
         foreach ($retreat_house->retreat_assistants as $assistant) {
             $a[$assistant->contact_id_b]=$assistant->contact_b->sort_name;
         }
-        asort($a);
+        !empty($a) ? asort($a) : null;
         $a=[0=>'N/A']+$a;
 
         foreach ($retreat_house->retreat_captains as $captain) {
             $c[$captain->contact_id_b]=$captain->contact_b->sort_name;
         }
-        asort($c);
+        !empty($c) ? asort($c) : null;
         $c=[0=>'N/A']+$c;
-        //dd($retreat_house);
+        
         return view('retreats.create', compact('d', 'i', 'a', 'c', 'event_types'));
     }
 
