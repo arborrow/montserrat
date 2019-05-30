@@ -127,7 +127,7 @@ class RegistrationController extends Controller
         $retreat = \App\Retreat::findOrFail($retreat_id);
 
         // Day , Conference, Contract, Diocesan, Meeting, Workshop
-        $multi_registration_event_types = [config('polanco.event_type.day'), config('polanco.event_type.contract'), config('polanco.event_type.conference'), config('polanco.event_type.diocesan'), config('polanco.event_type.meeting'), config('polanco.event_type.workshop')];
+        $multi_registration_event_types = [config('polanco.event_type.day'), config('polanco.event_type.contract'), config('polanco.event_type.conference'), config('polanco.event_type.diocesan'), config('polanco.event_type.meeting'), config('polanco.event_type.workshop'), config('polanco.event_type.jesuit')];
         if (in_array($retreat->event_type_id, $multi_registration_event_types)) {
             $defaults['is_multi_registration'] = true;
         } else {

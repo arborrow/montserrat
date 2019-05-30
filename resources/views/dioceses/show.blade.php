@@ -178,7 +178,7 @@
         </div>
         <div class="row">
             <div class="col-12" id="registrations">
-                <h2>Retreat Participation for {{ $diocese->display_name }} ({{ $diocese->event_registrations->count() }})</h2>
+                <h2>Registrations for {{ $diocese->display_name }} ({{ $diocese->event_registrations->count() }})</h2>
                 <ul>
                     @foreach($diocese->event_registrations as $registration)
                         <li>{!!$registration->event_link!!} ({{date('F j, Y', strtotime($registration->event->start_date))}} - {{date('F j, Y', strtotime($registration->event->end_date))}}) </li>

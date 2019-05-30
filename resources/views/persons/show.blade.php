@@ -15,7 +15,9 @@
                 @endCan
             </div>
             <div class="col-12">
+                {!! Html::link('#contact_info','Contact',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#demographics','Demographics',array('class' => 'btn btn-outline-dark')) !!}
+                {!! Html::link('#groups','Groups',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#notes','Notes',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#relationships','Relationships',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-outline-dark')) !!}
@@ -64,7 +66,7 @@
     </div>
     <div class="col-12 mt-5">
         <div class="row">
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-6" id="basic_info">
                 <h2>Basic Information</h2>
                 <p>
                     <span class="font-weight-bold">Title: </span>{{ (!empty($person->prefix_name)) ? $person->prefix_name : null }}
@@ -80,7 +82,7 @@
                     <br><span class="font-weight-bold">Subcontact type: </span>{{ $person->subcontact_type_label }}
                 </p>
             </div>
-            <div class="col-12 col-lg-6 alert alert-danger">
+            <div class="col-12 col-lg-6 alert alert-danger" id="safety_info">
                 <h2>Emergency Contact Information</h2>
                 <p>
                     <span class="font-weight-bold">Name: </span>{{ !empty($person->emergency_contact->name) ? $person->emergency_contact->name : 'N/A' }}
@@ -96,7 +98,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-6" id="contact_info">
                 <h2>Contact Information</h2>
                 <div class="row">
                     @if($person->do_not_phone)
@@ -120,31 +122,7 @@
                         </div>
                     @endIf
                 </div>
-                <p>
-                    @foreach($person->phones as $phone)
-                        @if(!empty($phone->phone))
-                            <span class="font-weight-bold">{{$phone->location->display_name}} - {{$phone->phone_type}}: </span>{{$phone->phone}}{{$phone->phone_extension}}
-                            <br>
-                        @endif
-                    @endforeach
-                </p>
-                <p>
-                    @foreach($person->emails as $email)
-                        @if(!empty($email->email))
-                            <span class="font-weight-bold">{{$email->location->display_name}} - Email: </span><a href="mailto:{{$email->email}}">{{$email->email}}</a>
-                            <br>
-                        @endif
-                    @endforeach
-                </p>
-                <p>
-                @foreach($person->websites as $website)
-                    @if(!empty($website->url))
-                        <span class="font-weight-bold">{{$website->website_type}} - URL: </span><a href="{{$website->url}}" target="_blank">{{$website->url}}</a>
-                        <br>
-                    @endif
-                @endforeach
-                </p>
-                <p>
+                <div><h3>Address(es)</h3>
                 @foreach($person->addresses as $address)
                     @if (!empty($address->street_address))
                         <span class="font-weight-bold">{{$address->location->display_name}}:</span>
@@ -157,7 +135,31 @@
                         <br>
                     @endif
                 @endforeach
-                </p>
+            </div>
+                <div><h3>Phone(s)</h3>
+                    @foreach($person->phones as $phone)
+                        @if(!empty($phone->phone))
+                            <span class="font-weight-bold">{{$phone->location->display_name}} - {{$phone->phone_type}}: </span>{{$phone->phone}}{{$phone->phone_extension}}
+                            <br>
+                        @endif
+                    @endforeach
+                </div>
+                <div><h3>Email(s)</h3>
+                    @foreach($person->emails as $email)
+                        @if(!empty($email->email))
+                            <span class="font-weight-bold">{{$email->location->display_name}} - Email: </span><a href="mailto:{{$email->email}}">{{$email->email}}</a>
+                            <br>
+                        @endif
+                    @endforeach
+                </div>
+                <div><h3>Website(s)</h3>
+                @foreach($person->websites as $website)
+                    @if(!empty($website->url))
+                        <span class="font-weight-bold">{{$website->website_type}} - URL: </span><a href="{{$website->url}}" target="_blank">{{$website->url}}</a>
+                        <br>
+                    @endif
+                @endforeach
+                </div>
             </div>
             <div class="col-12 col-lg-6" id="demographics">
                 <h2>Demographics</h2>
@@ -181,7 +183,7 @@
                     @endif
                 </p>
             </div>
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-6" id="other_info">
                 <h2>Other</h2>
                 <p>
                     <span class="font-weight-bold">Referral sources: </span>
@@ -211,8 +213,8 @@
                 </p>
             </div>
             @can('show-group')
-            <div class="col-12 col-lg-6">
-                <h2>Roles</h2>
+            <div class="col-12 col-lg-6" id="groups">
+                <h2>Groups</h2>
                 @if(!empty(array_filter((array)$person->groups)))
                     <ul>
                     @foreach($person->groups as $group)
@@ -220,7 +222,7 @@
                     @endforeach
                     </ul>
                 @else
-                    This person does not belong to any roles.
+                    This person does not belong to any groups.
                 @endif
             </div>
             @endCan
@@ -400,7 +402,7 @@
             </div>
             @endCan
         </div>
-        <div class="row">
+        <div class="row" id="commands">
             @can('update-contact')
             <div class='col-6 text-right'>
                 <a href="{{ action('PersonController@edit', $person->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>

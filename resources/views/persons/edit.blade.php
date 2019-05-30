@@ -21,7 +21,7 @@
         @if ($person->is_deacon) <span><a href={{ action('PersonController@deacons') }}>{!! Html::image('/images/deacon.png', 'Deacons Group',array('title'=>"Deacons Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
         @if ($person->is_provincial) <span><a href={{ action('PersonController@provincials') }}>{!! Html::image('/images/provincial.png', 'Provincials Group',array('title'=>"Provincials Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
         @if ($person->is_superior) <span><a href={{ action('PersonController@superiors') }}>{!! Html::image('/images/superior.png', 'Superiors Group',array('title'=>"Superiors Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
-        @if ($person->is_jesuit) <span><a href={{ action('PersonController@jesuits') }}>{!! Html::image('/images/jesuit.png', 'Jesuits Group',array('title'=>"Jesuits Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf 
+        @if ($person->is_jesuit) <span><a href={{ action('PersonController@jesuits') }}>{!! Html::image('/images/jesuit.png', 'Jesuits Group',array('title'=>"Jesuits Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
     </div>
     <div class="col-12">
         {!! Form::open(['method' => 'PUT', 'files'=>'true', 'route' => ['person.update', $person->id]]) !!}
@@ -32,7 +32,17 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 col-lg-6">
+                <div class="col-12 text-center my-2">
+                {!! Html::link('#contact_info','Contact',array('class' => 'btn btn-outline-dark')) !!}
+                {!! Html::link('#demographics','Demographics',array('class' => 'btn btn-outline-dark')) !!}
+                {!! Html::link('#notes','Notes',array('class' => 'btn btn-outline-dark')) !!}
+                {!! Html::link('#attachments','Attachments',array('class' => 'btn btn-outline-dark')) !!}
+                {!! Html::link('#groups','Groups',array('class' => 'btn btn-outline-dark')) !!}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-lg-6" id="basic_info">
                     <h2>Basic Information</h2>
                     <div class="form-group">
                         <div class="row">
@@ -101,7 +111,7 @@
                         @endCan
                     </div>
                 </div>
-                <div class="col-12 col-lg-6 alert alert-danger">
+                <div class="col-12 col-lg-6 alert alert-danger" id="safety_info">
                     <h2>Emergency Contact Information</h2>
                     <div class="form-group">
                         <div class="row">
@@ -141,9 +151,17 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 col-lg-6">
+                <div class="col-12 col-lg-6" id="contact_info">
                     <h2>Contact Information</h2>
                     <div class="form-group">
+                        <div class="row">
+                            <div class="col-12">
+                                <h3>Addresses</h3>
+                            </div>
+                            <div class="col-12">
+                                @include('persons.update.addresses')
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-12">
                                 <h3>Phone Numbers</h3>
@@ -162,23 +180,16 @@
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <h3>Websites</h3>
+                                <h3>Website(s)</h3>
                             </div>
                             <div class="col-12">
                                 @include('persons.update.urls')
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <h3>Addresses</h3>
-                            </div>
-                            <div class="col-12">
-                                @include('persons.update.addresses')
-                            </div>
-                        </div>
+
                     </div>
                 </div>
-                <div class="col-12 col-lg-6">
+                <div class="col-12 col-lg-6" id="demographics">
                     <h2>Demographics</h2>
                     <div class="form-group">
                         <div class="row">
@@ -194,17 +205,17 @@
                         <div class="row">
                             <div class="col-12 col-lg-6">
                                 {!! Form::label('religion_id', 'Religion:')  !!}
-                                {!! Form::select('religion_id', $religions, $person->religion_id, ['class' => 'form-control']) !!} 
+                                {!! Form::select('religion_id', $religions, $person->religion_id, ['class' => 'form-control']) !!}
                             </div>
                             <div class="col-12 col-lg-6">
                                 {!! Form::label('occupation_id', 'Occupation:')  !!}
-                                {!! Form::select('occupation_id', $occupations, $person->occupation_id, ['class' => 'form-control']) !!} 
+                                {!! Form::select('occupation_id', $occupations, $person->occupation_id, ['class' => 'form-control']) !!}
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 col-lg-6">
                                 {!! Form::label('parish_id', 'Parish:')  !!}
-                                {!! Form::select('parish_id', $parish_list, $person->parish_id, ['class' => 'form-control']) !!} 
+                                {!! Form::select('parish_id', $parish_list, $person->parish_id, ['class' => 'form-control']) !!}
                             </div>
                             <div class="col-12 col-lg-6">
                                 {!! Form::label('ethnicity_id', 'Ethnicity:')  !!}
@@ -243,7 +254,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 col-lg-6">
+                <div class="col-12 col-lg-6" id="notes">
                     <h2>Notes</h2>
                     <div class="form-group">
                         <div class="row">
@@ -259,7 +270,7 @@
                     </div>
                 </div>
                 @can('create-attachment')
-                <div class="col-12 col-lg-6">
+                <div class="col-12 col-lg-6" id="attachments">
                     <h2>Attachments</h2>
                     <div class="form-group">
                         <div class="row">
@@ -277,8 +288,8 @@
                 @endCan
             </div>
             <div class="row">
-                <div class="col-12">
-                    <h2>Groups and Relationships</h2>
+                <div class="col-12" id="groups">
+                    <h2>Groups</h2>
                 </div>
                 <div class="col-4 col-md-2">
                     <div class="form-check">
@@ -312,13 +323,7 @@
                 </div>
                 <div class="col-4 col-md-2">
                     <div class="form-check">
-                        {!! Form::checkbox('is_hlm2017', 1, $person->is_hlm2017,['class' => 'form-check-input']) !!}
-                        {!! Form::label('is_hlm2017', 'HLM 2017', ['class' => 'form-check-label']) !!}
-                    </div>
-                </div>
-                <div class="col-4 col-md-2">
-                    <div class="form-check">
-                        {!! Form::checkbox('is_bishop', 1, $person->is_bishop,['class' => 'form-check-input']) !!}   
+                        {!! Form::checkbox('is_bishop', 1, $person->is_bishop,['class' => 'form-check-input']) !!}
                         {!! Form::label('is_bishop', 'Bishop', ['class' => 'form-check-label']) !!}
                     </div>
                 </div>
@@ -342,7 +347,7 @@
                 </div>
                 <div class="col-4 col-md-2">
                     <div class="form-check">
-                        {!! Form::checkbox('is_jesuit', 1, $person->is_jesuit,['class' => 'form-check-input']) !!}  
+                        {!! Form::checkbox('is_jesuit', 1, $person->is_jesuit,['class' => 'form-check-input']) !!}
                         {!! Form::label('is_jesuit', 'Jesuit', ['class' => 'form-check-label']) !!}
                     </div>
                 </div>
@@ -366,25 +371,19 @@
                 </div>
                 <div class="col-4 col-md-2">
                     <div class="form-check">
-                        {!! Form::checkbox('is_formerboard', 1, $person->is_former_board_member,['class' => 'form-check-input', 'disabled']) !!}
-                        {!! Form::label('is_formerboard', 'Former Board', ['class' => 'form-check-label']) !!}
-                    </div>
-                </div>
-                <div class="col-4 col-md-2">
-                    <div class="form-check">
                         {!! Form::checkbox('is_staff', 1, $person->is_staff,['class' => 'form-check-input']) !!}
                         {!! Form::label('is_staff', 'Staff', ['class' => 'form-check-label'])  !!}
                     </div>
                 </div>
                 <div class="col-4 col-md-2">
                     <div class="form-check">
-                        {!! Form::checkbox('is_director', 1, $person->is_retreat_director,['class' => 'form-check-input']) !!} 
+                        {!! Form::checkbox('is_director', 1, $person->is_retreat_director,['class' => 'form-check-input']) !!}
                         {!! Form::label('is_director', 'Retreat Director', ['class' => 'form-check-label'])  !!}
                     </div>
                 </div>
                 <div class="col-4 col-md-2">
                     <div class="form-check">
-                        {!! Form::checkbox('is_innkeeper', 1, $person->is_retreat_innkeeper,['class' => 'form-check-input']) !!} 
+                        {!! Form::checkbox('is_innkeeper', 1, $person->is_retreat_innkeeper,['class' => 'form-check-input']) !!}
                         {!! Form::label('is_innkeeper', 'Retreat Innkeeper', ['class' => 'form-check-label'])  !!}
                     </div>
                 </div>
@@ -395,7 +394,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row text-center">
+            <div class="row text-center" id="commands">
                 <div class="col-12 mt-2 mb-3">
                     {!! Form::image('/images/save.png','btnSave',['class' => 'btn btn-outline-dark']) !!}
                 </div>
