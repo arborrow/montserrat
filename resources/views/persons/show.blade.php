@@ -15,7 +15,9 @@
                 @endCan
             </div>
             <div class="col-12">
+                {!! Html::link('#contact_info','Contact',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#demographics','Demographics',array('class' => 'btn btn-outline-dark')) !!}
+                {!! Html::link('#groups','Groups',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#notes','Notes',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#relationships','Relationships',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-outline-dark')) !!}
@@ -120,31 +122,7 @@
                         </div>
                     @endIf
                 </div>
-                <p>
-                    @foreach($person->phones as $phone)
-                        @if(!empty($phone->phone))
-                            <span class="font-weight-bold">{{$phone->location->display_name}} - {{$phone->phone_type}}: </span>{{$phone->phone}}{{$phone->phone_extension}}
-                            <br>
-                        @endif
-                    @endforeach
-                </p>
-                <p>
-                    @foreach($person->emails as $email)
-                        @if(!empty($email->email))
-                            <span class="font-weight-bold">{{$email->location->display_name}} - Email: </span><a href="mailto:{{$email->email}}">{{$email->email}}</a>
-                            <br>
-                        @endif
-                    @endforeach
-                </p>
-                <p>
-                @foreach($person->websites as $website)
-                    @if(!empty($website->url))
-                        <span class="font-weight-bold">{{$website->website_type}} - URL: </span><a href="{{$website->url}}" target="_blank">{{$website->url}}</a>
-                        <br>
-                    @endif
-                @endforeach
-                </p>
-                <p>
+                <div><h3>Address(es)</h3>
                 @foreach($person->addresses as $address)
                     @if (!empty($address->street_address))
                         <span class="font-weight-bold">{{$address->location->display_name}}:</span>
@@ -157,7 +135,31 @@
                         <br>
                     @endif
                 @endforeach
-                </p>
+            </div>
+                <div><h3>Phone(s)</h3>
+                    @foreach($person->phones as $phone)
+                        @if(!empty($phone->phone))
+                            <span class="font-weight-bold">{{$phone->location->display_name}} - {{$phone->phone_type}}: </span>{{$phone->phone}}{{$phone->phone_extension}}
+                            <br>
+                        @endif
+                    @endforeach
+                </div>
+                <div><h3>Email(s)</h3>
+                    @foreach($person->emails as $email)
+                        @if(!empty($email->email))
+                            <span class="font-weight-bold">{{$email->location->display_name}} - Email: </span><a href="mailto:{{$email->email}}">{{$email->email}}</a>
+                            <br>
+                        @endif
+                    @endforeach
+                </div>
+                <div><h3>Website(s)</h3>
+                @foreach($person->websites as $website)
+                    @if(!empty($website->url))
+                        <span class="font-weight-bold">{{$website->website_type}} - URL: </span><a href="{{$website->url}}" target="_blank">{{$website->url}}</a>
+                        <br>
+                    @endif
+                @endforeach
+                </div>
             </div>
             <div class="col-12 col-lg-6" id="demographics">
                 <h2>Demographics</h2>
