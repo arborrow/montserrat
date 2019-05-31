@@ -20,6 +20,7 @@ class SearchController extends Controller
 
     public function autocomplete()
     {
+        $this->authorize('show-contact');
         $term = Input::get('term');
         $results = [];
         $queries = \App\Contact::orderBy('sort_name')->where('display_name', 'LIKE', '%'.$term.'%')->whereDeletedAt(null)->take(20)->get();
@@ -34,6 +35,7 @@ class SearchController extends Controller
 
     public function getuser()
     {
+        $this->authorize('show-contact');
         if (empty(Input::get('response'))) {
             $id = 0;
         } else {
@@ -84,9 +86,10 @@ class SearchController extends Controller
             'contact_type' => 'integer|min:0',
             'subcontact_type' => 'integer|min:0',
             'occupation_id' => 'integer|min:0',
-            
+
         ]);
 */
+        $this->authorize('show-contact');
         if (!empty($request)) {
             $persons = \App\Contact::filtered($request)->orderBy('sort_name')->with('attachments')->paginate(100);
             $persons->appends(Input::except('page'));
@@ -96,6 +99,7 @@ class SearchController extends Controller
 
     public function search()
     {
+        $this->authorize('show-contact');
         $person = new \App\Contact;
         $parishes = \App\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
         $parish_list[0]='N/A';
@@ -133,7 +137,7 @@ class SearchController extends Controller
         $suffixes->prepend('N/A', 0);
         $occupations = \App\Ppd_occupation::orderBy('name')->pluck('name', 'id');
         $occupations->prepend('N/A', 0);
-        
+
         //create defaults array for easier pre-populating of default values on edit/update blade
         // initialize defaults to avoid undefined index errors
         $defaults = [];
@@ -147,7 +151,7 @@ class SearchController extends Controller
         $defaults['Home']['Mobile']='';
         $defaults['Home']['Fax']='';
         $defaults['Home']['email']='';
-        
+
         $defaults['Work']['street_address']='';
         $defaults['Work']['supplemental_address_1']='';
         $defaults['Work']['city']='';
@@ -158,7 +162,7 @@ class SearchController extends Controller
         $defaults['Work']['Mobile']='';
         $defaults['Work']['Fax']='';
         $defaults['Work']['email']='';
-        
+
         $defaults['Other']['street_address']='';
         $defaults['Other']['supplemental_address_1']='';
         $defaults['Other']['city']='';
@@ -169,7 +173,7 @@ class SearchController extends Controller
         $defaults['Other']['Mobile']='';
         $defaults['Other']['Fax']='';
         $defaults['Other']['email']='';
-        
+
         $defaults['Main']['url']='';
         $defaults['Work']['url']='';
         $defaults['Facebook']['url']='';
@@ -177,7 +181,7 @@ class SearchController extends Controller
         $defaults['Instagram']['url']='';
         $defaults['LinkedIn']['url']='';
         $defaults['Twitter']['url']='';
-        
+
         foreach ($person->addresses as $address) {
             $defaults[$address->location->name]['street_address'] = $address->street_address;
             $defaults[$address->location->name]['supplemental_address_1'] = $address->supplemental_address_1;
@@ -186,15 +190,15 @@ class SearchController extends Controller
             $defaults[$address->location->name]['postal_code'] = $address->postal_code;
             $defaults[$address->location->name]['country_id'] = $address->country_id;
         }
-        
+
         foreach ($person->phones as $phone) {
             $defaults[$phone->location->name][$phone->phone_type] = $phone->phone;
         }
-        
+
         foreach ($person->emails as $email) {
             $defaults[$email->location->name]['email'] = $email->email;
         }
-        
+
         foreach ($person->websites as $website) {
             $defaults[$website->website_type]['url'] = $website->url;
         }
