@@ -13,7 +13,7 @@ use Gate;
 class AttachmentController extends Controller
 {
     /* used to manage file attachments for contacts, events, etc.
-     * every attachment should have a record in the files table 
+     * every attachment should have a record in the files table
      * attachments are stored in the storage/app folder according to entity/entity_id
      */
     public function __construct()
@@ -21,7 +21,7 @@ class AttachmentController extends Controller
         $this->middleware('auth');
     }
 
-    
+
     public function sanitize_filename($filename)
     {
         $sanitized = preg_replace('/[^a-zA-Z0-9\-\._]/', '', $filename);
@@ -137,8 +137,7 @@ class AttachmentController extends Controller
 
     public function update_attachment($file, $entity = 'event', $entity_id = 0, $type = null, $description = null)
     {
-        
-               
+
         $path = $entity.'/'.$entity_id.'/';
 
         switch ($type) {
@@ -229,7 +228,7 @@ class AttachmentController extends Controller
                     Storage::disk('local')->put($path.$file_name, $group_photo->stream('jpg'));
                 }
                 break;
-                
+
             default:
                 $this->authorize('create-attachment');
                 break;
@@ -245,7 +244,7 @@ class AttachmentController extends Controller
     public function delete_attachment($file_name, $entity = 'event', $entity_id = 0, $type = null)
     {
         $this->authorize('delete-attachment');
-               
+
         $path = $entity.'/'.$entity_id.'/';
         switch ($type) {
             case 'group_photo':
@@ -287,7 +286,7 @@ class AttachmentController extends Controller
             default:
                 break;
         }
-        
+
         if (!File::exists(storage_path().'/app/'.$path.$file_name)) {
             abort(404);
         }
@@ -296,7 +295,7 @@ class AttachmentController extends Controller
             $attachment->save();
             $attachment->delete();
         }
-            
+
         return Redirect::action('RetreatController@show', $entity_id);
     }
 
@@ -312,13 +311,13 @@ class AttachmentController extends Controller
         // TODO: get contact type and redirect to person, parish, organization, vendor as appropriate
         return Redirect::action('PersonController@show', $user_id);
     }
-    
+
     public function get_avatar($user_id)
     {
         $this->authorize('show-avatar');
         return $this->show_attachment('contact', $user_id, 'avatar', 'avatar.png');
     }
-    
+
     public function delete_avatar($user_id)
     {
         $this->authorize('delete-attachment');
@@ -338,13 +337,13 @@ class AttachmentController extends Controller
         return $this->show_attachment('event', $event_id, 'schedule', null);
     }
 
-    
+
     public function get_event_evaluations($event_id)
     {
         $this->authorize('show-event-evaluation');
         return $this->show_attachment('event', $event_id, 'evaluations', null);
     }
-    
+
     public function delete_event_evaluations($event_id)
     {
         $this->authorize('delete-attachment');
@@ -364,7 +363,7 @@ class AttachmentController extends Controller
         $this->delete_attachment('contract.pdf', 'event', $event_id, 'contract');
         return Redirect::action('RetreatController@show', $event_id);
     }
-    
+
     public function delete_event_group_photo($event_id)
     {
         $this->authorize('delete-attachment');

@@ -12,12 +12,9 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
-        
-
         \DB::table('permissions')->delete();
-        
         \DB::table('permissions')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'name' => 'create-retreat',
@@ -27,7 +24,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-26 15:18:58',
                 'deleted_at' => NULL,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'name' => 'create-contact',
@@ -37,7 +34,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-26 10:11:00',
                 'deleted_at' => NULL,
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'name' => 'create-permission',
@@ -47,7 +44,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-26 15:18:37',
                 'deleted_at' => NULL,
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'name' => 'create-role',
@@ -57,7 +54,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-26 15:19:13',
                 'deleted_at' => NULL,
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
                 'name' => 'create-dock',
@@ -67,7 +64,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-02-21 13:37:22',
                 'deleted_at' => '2016-02-21 13:37:22',
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 6,
                 'name' => 'delete-contact',
@@ -77,7 +74,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-25 21:21:47',
                 'deleted_at' => NULL,
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 7,
                 'name' => 'create-attachment',
@@ -87,7 +84,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-25 20:48:44',
                 'deleted_at' => NULL,
             ),
-            7 => 
+            7 =>
             array (
                 'id' => 8,
                 'name' => 'show-attachment',
@@ -97,7 +94,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-25 13:09:49',
                 'deleted_at' => NULL,
             ),
-            8 => 
+            8 =>
             array (
                 'id' => 9,
                 'name' => 'update-attachment',
@@ -107,7 +104,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-25 13:09:49',
                 'deleted_at' => NULL,
             ),
-            9 => 
+            9 =>
             array (
                 'id' => 10,
                 'name' => 'delete-attachment',
@@ -117,7 +114,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-25 13:09:49',
                 'deleted_at' => NULL,
             ),
-            10 => 
+            10 =>
             array (
                 'id' => 11,
                 'name' => 'show-avatar',
@@ -127,7 +124,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-25 17:16:06',
                 'deleted_at' => NULL,
             ),
-            11 => 
+            11 =>
             array (
                 'id' => 12,
                 'name' => 'show-admin-menu',
@@ -137,7 +134,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-25 19:31:25',
                 'deleted_at' => NULL,
             ),
-            12 => 
+            12 =>
             array (
                 'id' => 13,
                 'name' => 'show-event-attachment',
@@ -147,7 +144,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-25 19:35:18',
                 'deleted_at' => NULL,
             ),
-            13 => 
+            13 =>
             array (
                 'id' => 14,
                 'name' => 'show-event-evaluation',
@@ -157,7 +154,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-25 19:35:42',
                 'deleted_at' => NULL,
             ),
-            14 => 
+            14 =>
             array (
                 'id' => 15,
                 'name' => 'show-event-group-photo',
@@ -167,7 +164,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-25 19:36:11',
                 'deleted_at' => NULL,
             ),
-            15 => 
+            15 =>
             array (
                 'id' => 16,
                 'name' => 'create-avatar',
@@ -177,7 +174,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-25 20:49:04',
                 'deleted_at' => NULL,
             ),
-            16 => 
+            16 =>
             array (
                 'id' => 17,
                 'name' => 'create-event-contract',
@@ -187,7 +184,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-25 20:49:16',
                 'deleted_at' => NULL,
             ),
-            17 => 
+            17 =>
             array (
                 'id' => 18,
                 'name' => 'create-event-schedule',
@@ -197,7 +194,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-25 21:22:17',
                 'deleted_at' => NULL,
             ),
-            18 => 
+            18 =>
             array (
                 'id' => 19,
                 'name' => 'create-event-evaluation',
@@ -207,7 +204,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-25 20:49:50',
                 'deleted_at' => NULL,
             ),
-            19 => 
+            19 =>
             array (
                 'id' => 20,
                 'name' => 'create-event-group-photo',
@@ -217,7 +214,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-25 20:50:04',
                 'deleted_at' => NULL,
             ),
-            20 => 
+            20 =>
             array (
                 'id' => 21,
                 'name' => 'show-event-contract',
@@ -227,7 +224,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-25 21:00:11',
                 'deleted_at' => NULL,
             ),
-            21 => 
+            21 =>
             array (
                 'id' => 22,
                 'name' => 'update-retreat',
@@ -237,7 +234,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-25 21:15:04',
                 'deleted_at' => NULL,
             ),
-            22 => 
+            22 =>
             array (
                 'id' => 23,
                 'name' => 'manage-permission',
@@ -247,7 +244,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-25 22:27:44',
                 'deleted_at' => NULL,
             ),
-            23 => 
+            23 =>
             array (
                 'id' => 24,
                 'name' => 'delete-retreat',
@@ -257,7 +254,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-26 09:29:12',
                 'deleted_at' => NULL,
             ),
-            24 => 
+            24 =>
             array (
                 'id' => 25,
                 'name' => 'superuser',
@@ -267,7 +264,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-26 09:51:24',
                 'deleted_at' => NULL,
             ),
-            25 => 
+            25 =>
             array (
                 'id' => 26,
                 'name' => 'show-contact',
@@ -277,7 +274,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-26 10:11:28',
                 'deleted_at' => NULL,
             ),
-            26 => 
+            26 =>
             array (
                 'id' => 27,
                 'name' => 'update-contact',
@@ -287,7 +284,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-26 10:11:50',
                 'deleted_at' => NULL,
             ),
-            27 => 
+            27 =>
             array (
                 'id' => 28,
                 'name' => 'create-touchpoint',
@@ -297,7 +294,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-26 12:23:05',
                 'deleted_at' => NULL,
             ),
-            28 => 
+            28 =>
             array (
                 'id' => 29,
                 'name' => 'show-touchpoint',
@@ -307,7 +304,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-26 12:23:31',
                 'deleted_at' => NULL,
             ),
-            29 => 
+            29 =>
             array (
                 'id' => 30,
                 'name' => 'update-touchpoint',
@@ -317,7 +314,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-26 12:23:47',
                 'deleted_at' => NULL,
             ),
-            30 => 
+            30 =>
             array (
                 'id' => 31,
                 'name' => 'delete-touchpoint',
@@ -327,7 +324,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-26 12:24:09',
                 'deleted_at' => NULL,
             ),
-            31 => 
+            31 =>
             array (
                 'id' => 32,
                 'name' => 'create-room',
@@ -337,7 +334,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-26 12:39:13',
                 'deleted_at' => NULL,
             ),
-            32 => 
+            32 =>
             array (
                 'id' => 33,
                 'name' => 'show-room',
@@ -347,7 +344,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-26 12:39:27',
                 'deleted_at' => NULL,
             ),
-            33 => 
+            33 =>
             array (
                 'id' => 34,
                 'name' => 'update-room',
@@ -357,7 +354,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-26 12:39:41',
                 'deleted_at' => NULL,
             ),
-            34 => 
+            34 =>
             array (
                 'id' => 35,
                 'name' => 'delete-room',
@@ -367,7 +364,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-26 12:39:55',
                 'deleted_at' => NULL,
             ),
-            35 => 
+            35 =>
             array (
                 'id' => 36,
                 'name' => 'show-permission',
@@ -377,7 +374,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-26 15:13:17',
                 'deleted_at' => NULL,
             ),
-            36 => 
+            36 =>
             array (
                 'id' => 37,
                 'name' => 'update-permission',
@@ -387,7 +384,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-26 15:13:31',
                 'deleted_at' => NULL,
             ),
-            37 => 
+            37 =>
             array (
                 'id' => 38,
                 'name' => 'delete-permission',
@@ -397,7 +394,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-26 15:13:47',
                 'deleted_at' => NULL,
             ),
-            38 => 
+            38 =>
             array (
                 'id' => 39,
                 'name' => 'show-role',
@@ -407,7 +404,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-26 15:14:09',
                 'deleted_at' => NULL,
             ),
-            39 => 
+            39 =>
             array (
                 'id' => 40,
                 'name' => 'update-role',
@@ -417,7 +414,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-26 15:14:30',
                 'deleted_at' => NULL,
             ),
-            40 => 
+            40 =>
             array (
                 'id' => 41,
                 'name' => 'delete-role',
@@ -427,7 +424,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-26 15:14:49',
                 'deleted_at' => NULL,
             ),
-            41 => 
+            41 =>
             array (
                 'id' => 42,
                 'name' => 'manage-role',
@@ -437,7 +434,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-26 15:15:01',
                 'deleted_at' => NULL,
             ),
-            42 => 
+            42 =>
             array (
                 'id' => 43,
                 'name' => 'show-retreat',
@@ -447,7 +444,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-26 20:57:12',
                 'deleted_at' => NULL,
             ),
-            43 => 
+            43 =>
             array (
                 'id' => 44,
                 'name' => 'create-group',
@@ -457,7 +454,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-29 11:52:10',
                 'deleted_at' => NULL,
             ),
-            44 => 
+            44 =>
             array (
                 'id' => 45,
                 'name' => 'show-group',
@@ -467,7 +464,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-29 11:52:27',
                 'deleted_at' => NULL,
             ),
-            45 => 
+            45 =>
             array (
                 'id' => 46,
                 'name' => 'update-group',
@@ -477,7 +474,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-29 11:52:40',
                 'deleted_at' => NULL,
             ),
-            46 => 
+            46 =>
             array (
                 'id' => 47,
                 'name' => 'delete-group',
@@ -487,7 +484,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-29 11:52:52',
                 'deleted_at' => NULL,
             ),
-            47 => 
+            47 =>
             array (
                 'id' => 48,
                 'name' => 'create-relationshiptype',
@@ -497,7 +494,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-29 13:31:53',
                 'deleted_at' => NULL,
             ),
-            48 => 
+            48 =>
             array (
                 'id' => 49,
                 'name' => 'show-relationshiptype',
@@ -507,7 +504,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-29 13:32:24',
                 'deleted_at' => NULL,
             ),
-            49 => 
+            49 =>
             array (
                 'id' => 50,
                 'name' => 'update-relationshiptype',
@@ -517,7 +514,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-29 13:32:40',
                 'deleted_at' => NULL,
             ),
-            50 => 
+            50 =>
             array (
                 'id' => 51,
                 'name' => 'delete-relationshiptype',
@@ -527,7 +524,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-29 13:33:04',
                 'deleted_at' => NULL,
             ),
-            51 => 
+            51 =>
             array (
                 'id' => 52,
                 'name' => 'create-relationship',
@@ -537,7 +534,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-29 13:33:25',
                 'deleted_at' => NULL,
             ),
-            52 => 
+            52 =>
             array (
                 'id' => 53,
                 'name' => 'delete-relationship',
@@ -547,7 +544,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-29 13:33:44',
                 'deleted_at' => NULL,
             ),
-            53 => 
+            53 =>
             array (
                 'id' => 54,
                 'name' => 'show-relationship',
@@ -557,7 +554,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-29 13:34:05',
                 'deleted_at' => NULL,
             ),
-            54 => 
+            54 =>
             array (
                 'id' => 55,
                 'name' => 'update-relationship',
@@ -567,7 +564,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-29 13:34:27',
                 'deleted_at' => NULL,
             ),
-            55 => 
+            55 =>
             array (
                 'id' => 56,
                 'name' => 'create-registration',
@@ -577,7 +574,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-29 20:00:27',
                 'deleted_at' => NULL,
             ),
-            56 => 
+            56 =>
             array (
                 'id' => 57,
                 'name' => 'show-registration',
@@ -587,7 +584,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-29 20:01:07',
                 'deleted_at' => NULL,
             ),
-            57 => 
+            57 =>
             array (
                 'id' => 58,
                 'name' => 'delete-registration',
@@ -597,7 +594,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-29 20:01:22',
                 'deleted_at' => NULL,
             ),
-            58 => 
+            58 =>
             array (
                 'id' => 59,
                 'name' => 'update-registration',
@@ -607,7 +604,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2016-12-29 20:02:05',
                 'deleted_at' => NULL,
             ),
-            59 => 
+            59 =>
             array (
                 'id' => 60,
                 'name' => 'show-event-schedule',
@@ -617,7 +614,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2017-01-03 19:26:41',
                 'deleted_at' => NULL,
             ),
-            60 => 
+            60 =>
             array (
                 'id' => 61,
                 'name' => 'show-donor',
@@ -627,7 +624,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2017-04-10 13:10:11',
                 'deleted_at' => NULL,
             ),
-            61 => 
+            61 =>
             array (
                 'id' => 62,
                 'name' => 'update-donor',
@@ -637,7 +634,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2017-04-10 13:11:31',
                 'deleted_at' => NULL,
             ),
-            62 => 
+            62 =>
             array (
                 'id' => 63,
                 'name' => 'create-test',
@@ -647,7 +644,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2017-05-04 16:58:50',
                 'deleted_at' => NULL,
             ),
-            63 => 
+            63 =>
             array (
                 'id' => 64,
                 'name' => 'show-donation',
@@ -657,7 +654,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2018-04-04 15:06:21',
                 'deleted_at' => NULL,
             ),
-            64 => 
+            64 =>
             array (
                 'id' => 65,
                 'name' => 'create-donation',
@@ -667,7 +664,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2018-04-04 15:06:58',
                 'deleted_at' => NULL,
             ),
-            65 => 
+            65 =>
             array (
                 'id' => 66,
                 'name' => 'delete-donation',
@@ -677,7 +674,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2018-04-04 15:07:42',
                 'deleted_at' => NULL,
             ),
-            66 => 
+            66 =>
             array (
                 'id' => 67,
                 'name' => 'update-donation',
@@ -687,7 +684,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2018-04-04 15:07:59',
                 'deleted_at' => NULL,
             ),
-            67 => 
+            67 =>
             array (
                 'id' => 68,
                 'name' => 'create-payment',
@@ -697,7 +694,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2018-10-12 14:52:40',
                 'deleted_at' => NULL,
             ),
-            68 => 
+            68 =>
             array (
                 'id' => 69,
                 'name' => 'show-payment',
@@ -707,7 +704,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2018-10-12 14:52:52',
                 'deleted_at' => NULL,
             ),
-            69 => 
+            69 =>
             array (
                 'id' => 70,
                 'name' => 'update-payment',
@@ -717,7 +714,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2018-10-12 14:53:03',
                 'deleted_at' => NULL,
             ),
-            70 => 
+            70 =>
             array (
                 'id' => 71,
                 'name' => 'delete-payment',
@@ -727,7 +724,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2018-10-12 14:53:20',
                 'deleted_at' => NULL,
             ),
-            71 => 
+            71 =>
             array (
                 'id' => 72,
                 'name' => 'show-gate',
@@ -736,9 +733,17 @@ class PermissionsTableSeeder extends Seeder
                 'created_at' => '2018-12-06 12:53:51',
                 'updated_at' => '2018-12-06 12:55:38',
                 'deleted_at' => NULL,
+            ),
+            72 =>
+            array (
+                'id' => 73,
+                'name' => 'admin-mailgun',
+                'display_name' => 'Administer mailgun',
+                'description' => 'Administer mailgun settings',
+                'created_at' => '2018-12-06 12:53:51',
+                'updated_at' => '2018-12-06 12:55:38',
+                'deleted_at' => NULL,
             )
         ));
-        
-        
     }
 }
