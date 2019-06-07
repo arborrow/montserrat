@@ -25,6 +25,8 @@ return [
 
     'admin_name' => 'Anthony Borrow',
     'admin_email' => 'anthony.borrow@montserratretreat.org',
+    'finance_email' => 'finance@montserratretreat.org',
+    'notify_registration_event_change' => '1',
 
     'relationship_type' => [
         'child_parent' => '1',

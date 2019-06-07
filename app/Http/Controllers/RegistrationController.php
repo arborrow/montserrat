@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Redirect;
 use Input;
 use Illuminate\Mail\Mailable;
 use App\Mail\RetreatRegistration;
+use App\Mail\RegistrationEventChange;
 use App\Registration;
+
 
 class RegistrationController extends Controller
 {
@@ -393,6 +395,18 @@ class RegistrationController extends Controller
         $registration->departed_at= $request->input('departed_at');
 
         $registration->room_id= $request->input('room_id');
+        if ($registration->isDirty('event_id') && config('polanco.notify_registration_event_change')) {
+          $finance_email = config('polanco.finance_email');
+          $original_event = \App\Retreat::findOrFail($registration->getOriginal('event_id'));
+          // dd($registration,$registration->event_id,$registration->getOriginal('event_id'));
+          // return view('emails.registration-event-change', compact('registration', 'retreat', 'original_event'));
+          try {
+              \Mail::to($finance_email)->send(new RegistrationEventChange($registration,$retreat,$original_event));
+          } catch (\Exception $e) { //failed to send finance notification of event_id change on registration
+              dd($e);
+          }
+        }
+
         $registration->save();
 
         return Redirect::action('PersonController@show',$registration->contact_id);
