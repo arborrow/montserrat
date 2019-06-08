@@ -44,7 +44,7 @@
                 
 
     <div class="form-group">
-        {!! Form::image('img/save.png','btnSave',['class' => 'btn btn-primary']) !!}
+        {!! Form::image('/images/save.png','btnSave',['class' => 'btn btn-primary']) !!}
     </div>
     {!! Form::close() !!}
 </div>

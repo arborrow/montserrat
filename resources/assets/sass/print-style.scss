@@ -1,0 +1,239 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : Jan 27, 2016, 12:54:48 PM
+    Author     : anthonyb
+*/
+
+@media print {
+    @page {
+        size: 8.5in 11in;
+        margin: 1cm;
+    }
+    
+    @page rotated {
+        size: landscape
+    }
+
+    .page-break {
+        display: block;
+        page-break-before: always;
+    }
+}
+
+@font-face {
+    font-family: perpetua;
+    src: local(perpetua), url('./../fonts/perpetua.ttf') format('opentype');
+}
+
+body {
+    background: white;
+    font-family: "perpetua";
+    font-size: 13pt;
+}
+
+td {
+    width: 50%;
+    padding: 0in;
+    margin: 0in;
+}
+
+h2 {
+    margin: 0;
+    font-weight: 700;
+}
+
+td.box {
+    border: solid black;
+    height: .5in;
+    vertical-align: top;
+}
+
+#menu {
+    display: none;
+}
+
+#wrapper,
+#content {
+    width: auto;
+    border: 0;
+    margin: 0 2%;
+    padding: 0;
+    float: none !important;
+}
+
+.pagefooter {
+    font-size: 10pt;
+    bottom: 0in;
+}
+
+.logo {
+    bottom: 0in;
+    right: 0in;
+    height: 62px;
+    width: 200px;
+}
+
+.square {
+    font-size: 12pt;
+}
+
+.retreatlisting {
+    page: rotated;
+    font-size: 9pt;
+}
+
+td {
+    width: auto;
+}
+
+th {
+    text-align: left;
+    font-weight: 700;
+}
+
+h2 {
+    position: relative;
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+    white-space: normal
+}
+
+.row-name {
+    width: 15%
+}
+
+.row-address {
+    width: 20%
+}
+
+.row-city {
+    width: 18%
+}
+
+.row-phone {
+    width: 9%
+}
+
+.row-notes {
+    width: 20%
+}
+
+
+
+.retreatroster {
+    page: rotated;
+    font-size: 12pt;
+}
+
+.retreatroster row-cancel {
+    width: 15%
+}
+
+.retreatroster row-room {
+    width: 20%
+}
+
+.retreatroster .row-name {
+    width: 65%
+}
+
+.bankdeposit {
+    font-size: 10pt;
+    margin-top: 25px;
+}
+
+.bankdeposit th.row-donor {
+    width: 15%
+}
+
+.bankdeposit th.row-retreat {
+    width: 41%
+}
+
+.bankdeposit th.row-pledged_amount {
+    width: 14%
+}
+
+.bankdeposit th.row-payment_amount {
+    width: 14%
+}
+
+.bankdeposit th.row-payment_description {
+    width: 16%
+}
+
+.invoice {
+    margin-top: 25px;
+}
+
+.invoice {
+    font-size: 13pt;
+}
+
+.invoice table,
+.invoice th,
+.invoice td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 2px;
+}
+
+.invoice th {
+    text-align: center;
+}
+
+.invoice td.row-payment_amount {
+    text-align: right;
+}
+
+.invoice-totals table {
+    width: 35%;
+    margin-right: 0%;
+    margin-left: 65%;
+    padding: 5px;
+
+}
+
+.invoice-totals th td {
+    padding: 5px;
+}
+
+.pageheader table,
+.pageheader td {
+    border: 0px solid white;
+}
+
+.invoice.pageheader tr,
+.invoice.pageheader td,
+.invoice.pageheader th {
+    border: 0px solid white;
+}
+
+th.row-payment_description {
+    width: 50%;
+}
+
+th.row-payment_amount,
+td.row {
+    width: 15%;
+}
+
+th.row-payment_date {
+    width: 15%;
+}
+
+th.row-payment_method,
+td.row-payment_method {
+    width: 20%;
+}
+
+.invoice.pagefooter {
+    margin-bottom: 2px;
+}

@@ -7,7 +7,7 @@
                 <div class="panel-heading">
                     <h1>
                     <span class="grey">{{$persons->total()}} results found</span> 
-                    <span class="search"><a href={{ action('SearchController@search') }}>{!! Html::image('img/search.png', 'New search',array('title'=>"New search",'class' => 'btn btn-link')) !!}</a></span></h1>
+                    <span class="search"><a href={{ action('SearchController@search') }}>{!! Html::image('images/search.png', 'New search',array('title'=>"New search",'class' => 'btn btn-link')) !!}</a></span></h1>
                 </div>
                 @if ($persons->isEmpty())
                     <p>Oops, no known contacts with the given search criteria</p>

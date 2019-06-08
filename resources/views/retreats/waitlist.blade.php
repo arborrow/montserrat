@@ -123,12 +123,12 @@
             <div class='row'>
                 @can('update-retreat')
                     <div class='col-md-1'>
-                        <a href="{{ action('RetreatController@edit', $retreat->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                        <a href="{{ action('RetreatController@edit', $retreat->id) }}" class="btn btn-info">{!! Html::image('/images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                     </div>
                 @endCan
                 @can('delete-retreat')
                     <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['retreat.destroy', $retreat->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                        {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                        {!! Form::image('/images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
                         {!! Form::close() !!}
                     </div>
                 @endCan
@@ -139,10 +139,10 @@
             <h2>Waitlist for {!!Html::link(url('retreat/'.$retreat->id),$retreat->idnumber.' - '.$retreat->title)!!} </h2>
             
             @can('show-contact')
-                {!! Html::link($retreat->email_waitlist_retreatants,'Email retreatants on waitlist',array('class' => 'btn btn-default'))!!}
+                {!! Html::link($retreat->email_waitlist_retreatants,'Email retreatants on waitlist',array('class' => 'btn btn-outline-dark'))!!}
             @endCan
             @can('create-touchpoint')
-                {!! Html::link(action('TouchpointController@add_retreat_waitlist',$retreat->id),'Waitlist touchpoint',array('class' => 'btn btn-default'))!!}
+                {!! Html::link(action('TouchpointController@add_retreat_waitlist',$retreat->id),'Waitlist touchpoint',array('class' => 'btn btn-outline-dark'))!!}
             @endCan    
         </div>
             @if ($registrations->isEmpty())

@@ -8,7 +8,7 @@
                 <span>
                     <h2>
                         Offering Dedup Details for {{$combo}} <br />
-                         {!! Html::link(action('SystemController@offeringdedup_index'),'Offering Dedup Index',array('class' => 'btn btn-default'))!!}
+                         {!! Html::link(action('SystemController@offeringdedup_index'),'Offering Dedup Index',array('class' => 'btn btn-outline-dark'))!!}
                    
                     </h2> 
                     <br />
@@ -16,7 +16,7 @@
             </div>        
             <div class='row'>
                 <div class='col-md-6'>
-                     <table class="table table-bordered table-striped table-hover">
+                     <table class="table table-bordered table-striped table-hover table-responsive">
                             <caption><h2>{!! $donations->first()->contact->contact_link!!} attending 
                                     <a href="{{url('event/'.$donations->first()->event_id)}}">{{$donations->first()->retreat_name}}</a> 
                                     paying <u>${{number_format($donations->sum('payments_paid'),2)}}</u>  of pledged <u>${{number_format($donations->sum('donation_amount'),2)}}</u> </h2></caption>

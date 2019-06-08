@@ -28,13 +28,13 @@
             <div class='row'>
                 @can('update-touchpoint')
                     <div class='col-md-1'>
-                        <a href="{{ action('TouchpointController@edit', $touchpoint->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                        <a href="{{ action('TouchpointController@edit', $touchpoint->id) }}" class="btn btn-info">{!! Html::image('/images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                     </div>
                 @endCan
                 @can('delete-touchpoint')
                     <div class='col-md-1'>
                         {!! Form::open(['method' => 'DELETE', 'route' => ['touchpoint.destroy', $touchpoint->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                        {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                        {!! Form::image('/images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
                         {!! Form::close() !!}
                     </div>
                 @endCan

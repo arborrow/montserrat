@@ -8,6 +8,10 @@ use App\Http\Controllers\Controller;
 
 class SystemController extends Controller
 {
+  {
+    $this->middleware('auth');
+  }
+
     /**
      * Display a listing of the resource.
      *

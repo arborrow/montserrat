@@ -15,12 +15,12 @@
                         </strong></h2>
                 </span>
                 @can('create-touchpoint')
-                    <span class="btn btn-default">
+                    <span class="btn btn-outline-dark">
                         <a href={{ action('TouchpointController@add_group',$group->id) }}>Add Group Touchpoint</a>
                     </span>
                 @endCan
                 @can('create-registration')
-                    <span class="btn btn-default">
+                    <span class="btn btn-outline-dark">
                         <a href={{ action('RegistrationController@add_group',$group->id) }}>Add Group Registration</a>
                     </span>
                 @endCan
@@ -57,13 +57,13 @@
         <div class='row'>
             @can('update-group')
                 <div class='col-md-1'>
-                    <a href="{{ action('GroupController@edit', $group->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                    <a href="{{ action('GroupController@edit', $group->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                 </div>
             @endCan
             @can('delete-group')
                 <div class='col-md-1'>
                     {!! Form::open(['method' => 'DELETE', 'route' => ['group.destroy', $group->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                    {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                    {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
                     {!! Form::close() !!}
                 </div>
             @endCan

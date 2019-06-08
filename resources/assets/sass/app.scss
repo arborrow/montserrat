@@ -1,18 +1,34 @@
-
 // Fonts
-// @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+@import url('https://fonts.googleapis.com/css?family=Didact+Gothic|Roboto:300,400,500,700');
 
 // Variables
-// @import "variables";
+@import "variables";
+
+$fa-font-path: "../webfonts";
 
 // Bootstrap
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-@import "public/css/select2";
-@import "public/css/bootstrap";
-@import "public/css/style";
-@import "public/css/bootstrap-adaptive-tabs";
-@import "public/css/jquery.datetimeentry";
-@import "public/css/jquery-ui";
-@import "public/css/select2";
-@import "public/css/style";
+@import "~bootstrap/scss/bootstrap.scss";
 
+// jQuery UI
+@import "~jquery-ui-bundle/jquery-ui.css";
+
+// select2
+@import "~select2/dist/css/select2.css";
+
+// flastpickr
+@import "~flatpickr/dist/flatpickr.css";
+
+// Font Awesome
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/brands.scss";
+
+// Custom Styles
+@import "style";
+// @import "public/css/bootstrap";
+// @import "public/css/style";
+// @import "public/css/bootstrap-adaptive-tabs";
+// @import "public/css/jquery.datetimeentry";
+// @import "public/css/jquery-ui";
+// @import "public/css/select2";
+// @import "public/css/style";

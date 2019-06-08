@@ -6,14 +6,14 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                        <span class="grey">Touchpoint Index</span> 
-                        <span class="grey">({{$touchpoints->total()}} records)</span> 
+                        <span class="grey">Touchpoint Index</span>
+                        <span class="grey">({{$touchpoints->total()}} records)</span>
                         @can('update-touchpoint')
                             <span class="create">
-                                <a href={{ action('TouchpointController@create') }}>{!! Html::image('img/create.png', 'Add Touchpoint',array('title'=>"Add Touchpoint",'class' => 'btn btn-primary')) !!}</a>
+                                <a href={{ action('TouchpointController@create') }}>{!! Html::image('/images/create.png', 'Add Touchpoint',array('title'=>"Add Touchpoint",'class' => 'btn btn-primary')) !!}</a>
                             </span>
                             <span class="create">
-                                <a href={{ action('TouchpointController@add_group',0) }}>{!! Html::image('img/group_add.png', 'Add Group Touchpoint',array('title'=>"Add Group Touchpoint",'class' => 'btn btn-primary')) !!}</a>
+                                <a href={{ action('TouchpointController@add_group',0) }}>{!! Html::image('/images/group_add.png', 'Add Group Touchpoint',array('title'=>"Add Group Touchpoint",'class' => 'btn btn-primary')) !!}</a>
                             </span>
                     </h1>@endCan
                     <span>{!! $touchpoints->render() !!}</span>
@@ -37,18 +37,18 @@
                         <tr>
 
                             <td style="width:17%"><a href="touchpoint/{{ $touchpoint->id}}">{{ date('M d, Y g:i A', strtotime($touchpoint->touched_at)) }}</a></td>
-                            <td style="width:17%">{!! $touchpoint->person->contact_link_full_name or 'Unknown contact' !!} </td>
-                            <td style="width:17%">{!! $touchpoint->staff->contact_link_full_name or 'Unknown staff member' !!} </td>
+                            <td style="width:17%">{!! $touchpoint->person->contact_link_full_name ?? 'Unknown contact' !!} </td>
+                            <td style="width:17%">{!! $touchpoint->staff->contact_link_full_name ?? 'Unknown staff member' !!} </td>
                             <td style="width:5%">{{ $touchpoint->type }}</td>
                             <td style="width:44%">{{ $touchpoint->notes }}</td>
                         </tr>
                         @endforeach
-                        
+
                     </tbody>
-                    
+
                 </table>
-                {!! $touchpoints->render() !!}    
-                    
+                {!! $touchpoints->render() !!}
+
                 @endif
             </div>
         </div>

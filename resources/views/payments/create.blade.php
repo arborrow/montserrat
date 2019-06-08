@@ -1,58 +1,85 @@
 @extends('template')
 @section('content')
 
-<section class="section-padding">
-    <div class="jumbotron text-left">
-        <h2><strong>Create payment for <a href="{{url('donation/'.$donation->donation_id)}}">Donation {{$donation->donation_id}}</a></strong></h2>
-        {!! Form::open(['url' => 'payment', 'method' => 'post', 'class' => 'form-horizontal panel']) !!}
-        {!! Form::hidden('donation_id', $donation->donation_id) !!}
-            <span>
-            
-            <h2>Payment detail</h2>
-            <div class='row'>
-                {!! Form::label('payment_date', 'Payment date:', ['class' => 'col-md-3'])  !!}
-                {!! Form::date('payment_date',\Carbon\Carbon::now() , ['class' => 'col-md-3','data-provide'=>'datepicker']) !!}
-            </div>
-                           
-            <div class='row'>
-                {!! Form::label('payment_amount', 'Payment amount (paid):', ['class' => 'col-md-3'])  !!}
-                {!! Form::number('payment_amount', 0, ['class' => 'col-md-3','step'=>'0.01']) !!}
-            </div>
-            <div class='row'>
-                {!! Form::label('payment_description', 'Payment method:', ['class' => 'col-md-3'])  !!}
-                {!! Form::select('payment_description', $payment_methods, NULL, ['class' => 'col-md-3']) !!}
-            </div>
-            <div class='row'>
-                {!! Form::label('payment_idnumber', 'Check/CC Number:', ['class' => 'col-md-3'])  !!}
-                {!! Form::number('payment_idnumber', NULL, ['class' => 'col-md-3']) !!}
-            </div>
-
-            <div class='row'>
-                {!! Form::label('note', 'Note:', ['class' => 'col-md-3'])  !!}
-                {!! Form::text('note', NULL, ['class' => 'col-md-3']) !!}                   
-            </div> 
-
-            <hr />
-            
-            <h2>Donation detail</h2>
-            <br /><strong>Date: </strong>{{$donation->donation_date}}
-            <br /><strong>Description: </strong>{{$donation->donation_description}}  
-            <br /><strong>Pledged/Paid: </strong>${{number_format($donation->donation_amount,2)}} / ${{number_format($donation->payments->sum('payment_amount'),2)}}  
-            ({{number_format($donation->percent_paid,0)}}%)
-            <br /><strong>Terms: </strong>{{$donation->terms}}
-            <br /><strong>Notes: </strong>{{$donation->notes}}
-            <br /><strong>Start date: </strong>{{$donation->start_date}}
-            <br /><strong>End date: </strong>{{$donation->end_date}}
-            <br /><strong>Donation install: </strong>{{$donation->donation_install}}
-            <br /><hr />
-            <div class="col-md-1">
-                <div class="form-group">
-                    {!! Form::submit('Add payment', ['class'=>'btn btn-primary']) !!}
-                </div>
-                    {!! Form::close() !!}
-            </div>
-            <div class="clearfix"></div>
-        </span>
+<div class="row bg-cover">
+    <div class="col-12">
+        <h1>Create payment for <a href="{{url('donation/'.$donation->donation_id)}}">Donation {{$donation->donation_id}}</a></h1>
     </div>
-</section>
+    <div class="col-12">
+        {!! Form::open(['url' => 'payment', 'method' => 'post']) !!}
+        {!! Form::hidden('donation_id', $donation->donation_id) !!}
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-12">
+                        <h2>Payment Details</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        {!! Form::label('payment_date', 'Payment date')  !!}
+                        {!! Form::date('payment_date',\Carbon\Carbon::now(), ['class' => 'form-control flatpickr-date']) !!}
+                    </div>
+                    <div class="col-12 col-md-4">
+                        {!! Form::label('payment_amount', 'Payment amount (paid)')  !!}
+                        {!! Form::number('payment_amount', 0, ['class' => 'form-control','step'=>'0.01']) !!}
+                    </div>
+                    <div class="col-12 col-md-4">
+                        {!! Form::label('payment_description', 'Payment method')  !!}
+                        {!! Form::select('payment_description', $payment_methods, NULL, ['class' => 'form-control']) !!}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        {!! Form::label('payment_idnumber', 'Check/CC Number')  !!}
+                        {!! Form::number('payment_idnumber', NULL, ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="col-12 col-md-4">
+                        {!! Form::label('note', 'Note') !!}
+                        {!! Form::text('note', NULL, ['class' => 'form-control']) !!}   
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <h2>Donation Details</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    <span class="font-weight-bold">Date: </span>{{$donation->donation_date}}
+                </div>
+                <div class="col-12 col-md-4">
+                    <span class="font-weight-bold">Description: </span>{{$donation->donation_description}}  
+                </div>
+                <div class="col-12 col-md-4">
+                    <span class="font-weight-bold">Pledged/Paid: </span>${{number_format($donation->donation_amount,2)}} / ${{number_format($donation->payments->sum('payment_amount'),2)}} ({{number_format($donation->percent_paid,0)}}%)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    <span class="font-weight-bold">Terms: </span>{{$donation->terms}}
+                </div>
+                <div class="col-12 col-md-4">
+                    <span class="font-weight-bold">Notes: </span>{{$donation->notes}}
+                </div>
+                <div class="col-12 col-md-4">
+                    <span class="font-weight-bold">Start date: </span>{{$donation->start_date}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    <span class="font-weight-bold">End date: </span>{{$donation->end_date}}
+                </div>
+                <div class="col-12 col-md-4">
+                    <span class="font-weight-bold">Donation install: </span>{{$donation->donation_install}}
+                </div>
+            </div>
+            <div class="row mt-3 text-center">
+                <div class="col-12">
+                    {!! Form::submit('Add payment', ['class'=>'btn btn-outline-dark']) !!}
+                </div>
+            </div>
+        {!! Form::close() !!}
+    </div>
+</div>
 @stop

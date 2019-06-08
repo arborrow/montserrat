@@ -198,8 +198,7 @@ class PageController extends Controller
     {
         $this->authorize('show-donation');
         $donations = \App\Donation::where('donation_description','Deposit')->whereDeletedAt(NULL)->where('donation_amount','>',0)->with('contact','payments','retreat')->get();
-        $payments = \App\Payment::where('payment_amount','>',0)
-        ->whereHas('donation', function($query) {
+        $payments = \App\Payment::whereHas('donation', function($query) {
             $query->where('donation_description','=','Deposit');
         })
         ->whereHas('donation', function($query) {

@@ -226,7 +226,7 @@ class VendorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->authorize('show-contact');
+        $this->authorize('update-contact');
         $this->validate($request, [
             'organization_name' => 'required',
             'display_name' => 'required',
@@ -395,7 +395,7 @@ class VendorController extends Controller
         \App\Registration::whereContactId($id)->delete();
         // delete donations
         \App\Donation::whereContactId($id)->delete();
-       
+
         \App\Contact::destroy($id);
         return Redirect::action('VendorController@index');
     }

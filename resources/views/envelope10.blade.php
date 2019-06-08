@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Montserrat Retreat House Database</title>
-        <link rel="stylesheet" href="{{ asset('css/print-envelope10.css') }}" type="text/css" media="all" />
+        <link rel="stylesheet" href="{{ asset('dist/print-envelope10.css') }}" type="text/css" media="all" />
     </head>
     
     <body>

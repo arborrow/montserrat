@@ -9,7 +9,7 @@
                         <span class="grey">Index of Mailgun Stored Messages</span>
                         <span class="create">
                             <a href="{{ action('MailgunController@get') }}">
-                               {!! Html::image('img/create.png', 'Add Group',array('title'=>"Add Group",'class' => 'btn btn-primary')) !!}
+                               {!! Html::image('images/create.png', 'Add Group',array('title'=>"Add Group",'class' => 'btn btn-primary')) !!}
                             </a>
 
                         </span>
@@ -18,7 +18,7 @@
                 @if ($messages->isEmpty())
                     <p>It is a brand new world, there are no stored messages!</p>
                 @else
-                <table class="table table-bordered table-striped"><caption><h2>Mailgun stored messages</h2></caption>
+                <table class="table table-bordered table-striped table-responsive"><caption><h2>Mailgun stored messages</h2></caption>
                     <thead>
                         <tr>
                             <th>Timestamp</th>

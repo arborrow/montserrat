@@ -28,13 +28,15 @@ class MailgunController extends Controller
 
     public function get()
     {
+        $this->authorize('admin-mailgun');
+
         $mg = new Mailgun(env('MAILGUN_SECRET'));
         $domain = env('MAILGUN_DOMAIN');
         $queryString = ['event' => 'stored'];
         $emails= "";
         $messages = new \Illuminate\Support\Collection;
-        
-#    
+
+#
         $results = $mg->get("$domain/events", $queryString);
     //dd($results);
         if (array_key_exists("http_response_body", $results)) {
@@ -50,7 +52,7 @@ class MailgunController extends Controller
                             $email->to = self::clean_email((string) $email->message->headers->to);
                         }
                         $messages->push($email);
-                        
+
                         $email->staff = \App\Contact::whereHas('groups', function ($query) {
                                 $query->where('group_id', '=', config('polanco.group_id.staff'));
                         })
@@ -70,16 +72,16 @@ class MailgunController extends Controller
                         if (isset($email->contact['id'])) {
                             $message->to_id = $email->contact['id'];
                         }
-                        
+
                         if (isset($email->message->headers->subject)) {
                             $message->subject = substr($email->message->headers->subject, 0, 255);
                         }
-                        
+
                         $message->mailgun_timestamp = $email->timestamp;
                         if (isset($email->storage->url)) {
                             $message->storage_url = $email->storage->url;
                         }
-                        
+
                         if (isset($email->headers->subject)) {
                             $message->subject = $email->headers->subject;
                         }
@@ -93,20 +95,21 @@ class MailgunController extends Controller
         }
         return view('mailgun.index', compact('messages', 'staff', 'contact'));
     }
-    
-    
+
+
     /*
      * Clean up the email address from Mailgun by removing <name>
      * No other cleaning of the email address is performed by this function
      * For example, Anthony Borrow<anthony.borrow@montserratretreat.org>
      * becomes anthony.borrow@montserratretreat.org
      * @param string|null $full_email
-     * 
+     *
      * returns string
      */
-     
+
     public function clean_email($full_email = null)
     {
+      $this->authorize('admin-mailgun');
         if (strpos($full_email, '<') && strpos($full_email, '>')) {
             return substr($full_email, strpos($full_email, "<")+1, (strpos($full_email, ">")-strpos($full_email, "<"))-1);
         } else {
@@ -115,13 +118,14 @@ class MailgunController extends Controller
     }
     /*
      * Processes stored mailgun emails after get which saves them to messages in db
-     * 
+     *
      */
     public function process()
     {
-        
+
+        $this->authorize('admin-mailgun');
         $messages = \App\Message::whereIsProcessed(0)->get();
-        
+
         foreach ($messages as $message) {
             $ch = curl_init($message->storage_url);
             //dd($ch);
@@ -138,7 +142,7 @@ class MailgunController extends Controller
             $message->body = $json['body-plain'];
             $message->is_processed=1;
             $message->save();
-            
+
             // if we have from and to ids for contacts go ahead and create a touchpoint
             if (($message->from_id > 0) && ($message->to_id>0)) {
                 $touch = new \App\Touchpoint();
@@ -150,7 +154,7 @@ class MailgunController extends Controller
                 $touch->save();
             }
         }
-        
+
         $messages = \App\Message::whereIsProcessed(1)->get();
         //dd($messages);
         return view('mailgun.processed', compact('messages'));

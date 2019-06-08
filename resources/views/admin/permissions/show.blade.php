@@ -1,53 +1,48 @@
 @extends('template')
 @section('content')
 
-<section class="section-padding">
-    <div class="jumbotron text-left">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <span>
-                    @can('update-permission')
-                        <h2>
-                            Permission details: <strong><a href="{{url('admin/permission/'.$permission->id.'/edit')}}">{{ $permission->name }}</a></strong>
-                        </h2>
-                    @else
-                        <h2>
-                            Permission details: <strong>{{$permission->name}}</strong>
-                        </h2>
-                    @endCan
-                </span>                
-            </div>
-            
-            <div class='row'>
-                <div class='col-md-4'>
-                        <strong>Name: </strong>{{$permission->name}}
-                        <br /><strong>Display name: </strong>{{$permission->display_name}}     
-                        <br /><strong>Description: </strong>{{$permission->description}}
-                    
+<div class="row bg-cover">
+    <div class="col-12">
+        @can('update-permission')
+            <h1>
+                Permission details: <strong><a href="{{url('admin/permission/'.$permission->id.'/edit')}}">{{ $permission->name }}</a></strong>
+            </h1>
+        @else
+            <h1>
+                Permission details: <strong>{{$permission->name}}</strong>
+            </h1>
+        @endCan
+    </div>
+    <div class="col-12">
+        <h5>Name: {{$permission->name}}</h5>
+        <h5>Display name: {{$permission->display_name}}</h5>
+        <h5>Description: {{$permission->description}}</h5>
+    </div>
+    <div class="col-12">
+        @can('manage-permission')
+            {!! Form::open(['url' => 'admin/permission/update_roles', 'method' => 'POST', 'route' => ['admin.permission.update_roles']]) !!}
+                <div class="form-group">
+                    {!! Form::hidden('id', $permission->id) !!}
+                    {!! Form::label('roles', 'Assigned roles:')  !!}
+                    {!! Form::select('roles[]', $roles, $permission->roles->pluck('id')->toArray(), ['id'=>'roles','class' => 'form-control select2','multiple' => 'multiple']) !!}
+                    {!! Form::submit('Update role assignments', ['class' => 'btn btn-outline-dark mt-3']) !!}
                 </div>
+            {!! Form::close() !!}
+        @endCan
+    </div>
+    <div class="col-12">
+        <div class="row">
+            <div class="col-6 text-right">
+                <a href="{{ action('PermissionController@edit', $permission->id) }}" class="btn btn-info">
+                    {!! Html::image('/images/edit.png', 'Edit',array('title'=>"Edit")) !!}
+                </a>
             </div>
-            <div class='row'>
-                <div class='col-md-8'>
-                        
-                    @can('manage-permission')
-                        {!! Form::open(['url' => 'admin/permission/update_roles', 'method' => 'POST', 'route' => ['admin.permission.update_roles']]) !!}
-                        {!! Form::hidden('id',$permission->id) !!}
-                        {!! Form::label('roles', 'Assigned roles:', ['class' => 'col-md-2'])  !!}
-                        {!! Form::select('roles[]', $roles, $permission->roles->pluck('id')->toArray(), ['id'=>'roles','class' => 'form-control col-md-6','multiple' => 'multiple']) !!}
-                        Update role assignments {!! Form::image('img/save.png','btnSave',['class' => 'btn btn-default']) !!}
-                        {!! Form::close() !!}
-                    @endCan
-                </div>
-                
+            <div class="col-6 text-left">
+                {!! Form::open(['method' => 'DELETE', 'route' => ['permission.destroy', $permission->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                    {!! Form::image('/images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                {!! Form::close() !!}</div><div class="clearfix">
             </div>
-        </div>
-        <div class='row'>
-
-            <div class='col-md-1'><a href="{{ action('PermissionController@edit', $permission->id) }}" class="btn btn-info">{!! Html::image('img/edit.png', 'Edit',array('title'=>"Edit")) !!}</a></div>
-            <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['permission.destroy', $permission->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-            {!! Form::image('img/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
-            {!! Form::close() !!}</div><div class="clearfix"> </div>
         </div>
     </div>
-</section>
+</div>
 @stop

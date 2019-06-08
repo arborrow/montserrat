@@ -18,7 +18,7 @@
             </div>
             <div class="clearfix"> </div>
              
-            <table class="table table-striped table-bordered table-hover"><caption><h2>PPD Donor Record: {{$donor->donor_id}}</h2></caption>
+            <table class="table table-striped table-bordered table-hover table-responsive"><caption><h2>PPD Donor Record: {{$donor->donor_id}}</h2></caption>
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -41,7 +41,7 @@
                             <td><a href="../results?phone={{$donor->cell_phone}}">{{$donor->cell_phone}}</a></td>
                             <td><a href="../results?email={{$donor->EMailAddress}}">{{$donor->EMailAddress}}</a></td>
                             <td> 
-                                <span class="btn btn-default">
+                                <span class="btn btn-outline-dark">
                                     <a href="{{ url('donor/'.$donor->donor_id.'/add') }}">Add {{$donor->sort_name}} to Polanco</a>
                                 </span>
                             </td>
@@ -92,7 +92,7 @@
 
                 
             <div class="clearfix"> </div>
-                <table class="table table-striped table-bordered table-hover"><caption><h2>Matching Polanco Contact sort_name(s)</h2></caption>
+                <table class="table table-striped table-bordered table-hover table-responsive"><caption><h2>Matching Polanco Contact sort_name(s)</h2></caption>
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -130,7 +130,7 @@
                                 @endforeach
                             </td>
                             <td>
-                                <span class="btn btn-default">
+                                <span class="btn btn-outline-dark">
                                     <a href="{{ url('donor/'.$donor->donor_id.'/assign/'.$sortname->id) }}">Assign {{$sortname->id  }}</a>
                                 </span>
                                 
@@ -142,7 +142,7 @@
                     </tbody>
                 </table>
                 
-                <table class="table table-striped table-bordered table-hover"><caption><h2>Matching Polanco Contact lastname(s)</h2></caption>
+                <table class="table table-striped table-bordered table-hover table-responsive"><caption><h2>Matching Polanco Contact lastname(s)</h2></caption>
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -180,7 +180,7 @@
                                 @endforeach
                             </td>
                             <td>
-                                <span class="btn btn-default">
+                                <span class="btn btn-outline-dark">
                                     <a href="{{ url('donor/'.$donor->donor_id.'/assign/'.$lastname->id) }}">Assign {{$lastname->id  }}</a>
                                 </span>
                                 

@@ -6,25 +6,27 @@ return [
      * Restrict socialite authentication to a particular domain
      */
     'socialite_domain_restriction' => 'montserratretreat.org',
-   
+
     /**
      *  Polanco's name
      */
-    
+
     'site_name' => 'Polanco',
 
     /**
      *  Polanco's email address for sending notifications
      */
-    
+
     'site_email' => 'polanco@montserratretreat.org',
-    
+
     /*
      * Site administrator name and email for receiving notifications
      */
-    
+
     'admin_name' => 'Anthony Borrow',
     'admin_email' => 'anthony.borrow@montserratretreat.org',
+    'finance_email' => 'finance@montserratretreat.org',
+    'notify_registration_event_change' => '1',
 
     'relationship_type' => [
         'child_parent' => '1',
@@ -51,7 +53,7 @@ return [
         'community' => '27',
         'primary_contact' => '28',
     ],
-    
+
     'contact_type' => [
         'individual' => '1',
         'household' => '2',
@@ -67,7 +69,7 @@ return [
         'contract' => '12',
         'foundation' => '13'
     ],
-    
+
     'location_type' => [
         'home' => '1',
         'work' => '2',
@@ -100,7 +102,7 @@ return [
         'normal' => '2',
         'low' => '3'
     ],
-    
+
     'country_id_usa' => '1228',
     'state_province_id_tx' => '1042',
 
@@ -123,7 +125,9 @@ return [
         'other' => '9',
         'day' => '10',
         'contract' => '11',
-        'directed' => '12'
+        'directed' => '12',
+        'isi' => '13',
+        'jesuit' => '14'
     ],
 
     'file_type' => [
@@ -153,7 +157,7 @@ return [
         'volunteer' => '14',
         'hlm2017' => '17',
     ],
-    
+
     'participant_role_id' => [
         'captain' => '11',
         'retreatant' => '5',
@@ -172,7 +176,7 @@ return [
         'rejected' => '11'
     ],
 
-    
+
     'registration_source' => [
         'N/A' => 'N/A',
         'Squarespace' => 'Squarespace',
@@ -180,7 +184,7 @@ return [
         'Email' => 'Email',
         'In person' => 'In person'
     ],
-    
+
     'payment_method' => [
         'Unassigned' => 'Unassigned',
         'Cash' => 'Cash',
@@ -195,5 +199,5 @@ return [
 	'Other' => 'Other',
 	'Wire transfer' => 'Wire transfer'
     ]
-            
+
 ];

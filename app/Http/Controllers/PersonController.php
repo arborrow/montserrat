@@ -34,7 +34,7 @@ class PersonController extends Controller
 
     public function lastnames($lastname = null)
     {
-
+        $this->authorize('show-contact');
         $persons = \App\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'parish.contact_a')->where('last_name', 'LIKE', $lastname.'%')->paginate(100);
        //dd($persons);
         return view('persons.index', compact('persons'));   //
@@ -1534,6 +1534,7 @@ class PersonController extends Controller
     public function merge_destroy($id, $return_id)
     {
         // TODO: consider creating a restore/{id} or undelete/{id}
+        $this->authorize('delete-contact');
 
         //delete existing groups and relationships when deleting user
         \App\Relationship::whereContactIdA($id)->delete();
@@ -1718,6 +1719,7 @@ class PersonController extends Controller
     public function save_relationship($field, $contact_id_a, $contact_id_b, $relationship_type)
     {
         $this->authorize('update-contact');
+        $this->authorize('update-relationship');
 
         if ($request->input($field)>0) {
             $relationship = new \App\Relationship;
@@ -1741,6 +1743,11 @@ class PersonController extends Controller
     public function merge($contact_id, $merge_id = null)
     {
         $this->authorize('update-contact');
+        $this->authorize('update-relationship');
+        $this->authorize('update-attachment');
+        $this->authorize('update-touchpoint');
+        $this->authorize('update-donation');
+        $this->authorize('update-payment');
 
         $contact = \App\Contact::findOrFail($contact_id);
         $similar = \App\Contact::whereSortName($contact->sort_name)->get();
