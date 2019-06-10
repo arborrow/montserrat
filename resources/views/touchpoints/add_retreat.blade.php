@@ -8,15 +8,14 @@
         <span>
             <h3>A retreat touchpoint will add a touchpoint to each of the retreat participants.</h3>
             <div class='row'>
-
+<div class="col-12 col-md-4">
                 {!! Form::label('touched_at', 'Date of contact:', ['class' => 'col-md-3'])  !!}
-                {!! Form::text('touched_at',date('F j, Y g:i A', strtotime(\Carbon\Carbon::now())) , ['class' => 'col-md-3']) !!}
-
-            </div>
+                {!! Form::text('touched_at', now(), ['class'=>'form-control flatpickr-date-time', 'required']) !!}
+            </div></div>
             <div class='row'>
                 {!! Form::label('event_id', 'Name of Retreat:', ['class' => 'col-md-3'])  !!}
                 {!! Form::select('event_id', [$defaults['event_id']=>$defaults['event_description']],$defaults['event_id'], ['class' => 'col-md-3']) !!}
-                        
+
             </div>
             <div class='row'>
                 {!! Form::label('staff_id', 'Contacted by:', ['class' => 'col-md-3'])  !!}
@@ -24,9 +23,9 @@
                     {!! Form::select('staff_id', $staff, $defaults['user_id'], ['class' => 'col-md-3']) !!}
                 @else
                     {!! Form::select('staff_id', $staff, NULL, ['class' => 'col-md-3']) !!}
-                
+
                 @endif
-                
+
             </div>
 
             <div class='row'>
@@ -42,8 +41,8 @@
             </div>
             <div class='row'>
                 {!! Form::label('notes', 'Notes:', ['class' => 'col-md-3'])  !!}
-                {!! Form::textarea('notes', NULL, ['class' => 'col-md-3']) !!}                   
-            </div>             
+                {!! Form::textarea('notes', NULL, ['class' => 'col-md-3']) !!}
+            </div>
 
         <div class="clearfix"> </div>
      <div class="col-md-1">

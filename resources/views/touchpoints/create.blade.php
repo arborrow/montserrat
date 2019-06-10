@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="col-12 col-md-4">
                         {!! Form::label('touched_at', 'Date of contact: ')  !!}
-                        {!! Form::text('touched_at', now(), ['class'=>'form-control flatpickr-date', 'required']) !!}
+                        {!! Form::text('touched_at', now(), ['class'=>'form-control flatpickr-date-time', 'required']) !!}
                     </div>
                     <div class="col-12 col-md-4">
                         {!! Form::label('person_id', 'Name of Contact:') !!}
