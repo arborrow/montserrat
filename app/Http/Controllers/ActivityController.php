@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Redirect;
 
 class ActivityController extends Controller
 {
+  public function __construct()
+  {
+      $this->middleware('auth');
+  }
     /**
      * Display a listing of the resource.
      *
@@ -49,7 +53,7 @@ class ActivityController extends Controller
         $medium[0] = "Unspecified";
         $medium = array_map('ucfirst', $medium);
         //$medium->prepend('N/A', 0);
-        
+
         return view('activities.create', compact('staff', 'persons', 'defaults', 'status', 'activity_type', 'medium'));
     }
 
@@ -91,19 +95,19 @@ class ActivityController extends Controller
             $activity_target->contact_id = $request->input('person_id');
             $activity_target->record_type_id = config('polanco.activity_contacts_type.target');
         $activity_target->save();
-        
+
         $activity_source = new \App\ActivityContact;
             $activity_source->activity_id = $activity->id;
             $activity_source->contact_id = $request->input('staff_id');
             $activity_source->record_type_id = config('polanco.activity_contacts_type.creator');
         $activity_source->save();
-        
+
         $activity_assignee = new \App\ActivityContact;
             $activity_assignee->activity_id = $activity->id;
             $activity_assignee->contact_id = $request->input('staff_id');
             $activity_assignee->record_type_id = config('polanco.activity_contacts_type.assignee');
         $activity_assignee->save();
-        
+
         return Redirect::action('ActivityController@index');
     }
 
@@ -133,7 +137,7 @@ class ActivityController extends Controller
         $target = $activity->targets->first();
         $assignee = $activity->assignees->first();
         $creator = $activity->creators->first();
-        
+
         $staff = \App\Contact::with('groups')->whereHas('groups', function ($query) {
             $query->where('group_id', '=', config('polanco.group_id.staff'));
         })->orderBy('sort_name')->pluck('sort_name', 'id');
@@ -147,7 +151,7 @@ class ActivityController extends Controller
         $medium = array_flip(config('polanco.medium'));
         $medium[0] = "Unspecified";
         $medium = array_map('ucfirst', $medium);
-        
+
         $contact = \App\Contact::findOrFail($target->contact_id);
         if (isset($contact->subcontact_type)) {
             $persons = \App\Contact::whereSubcontactType($contact->subcontact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
@@ -180,7 +184,7 @@ class ActivityController extends Controller
         ]);
         $activity_type = \App\ActivityType::findOrFail($request->input('activity_type_id'));
         $activity = \App\Activity::findOrFail($id);
-        
+
             $activity->activity_date_time= Carbon::parse($request->input('touched_at'));
             $activity->activity_type_id = $request->input('activity_type_id');
             $activity->subject = $request->input('subject');
@@ -196,15 +200,15 @@ class ActivityController extends Controller
         $activity_target = \App\ActivityContact::whereActivityId($id)->whereRecordTypeId(config('polanco.activity_contacts_type.target'))->firstOrFail();
             $activity_target->contact_id = $request->input('target_id');
         $activity_target->save();
-        
+
         $activity_source = \App\ActivityContact::whereActivityId($id)->whereRecordTypeId(config('polanco.activity_contacts_type.creator'))->firstOrFail();
             $activity_source->contact_id = $request->input('assignee_id');
         $activity_source->save();
-        
+
         $activity_assignee = \App\ActivityContact::whereActivityId($id)->whereRecordTypeId(config('polanco.activity_contacts_type.assignee'))->firstOrFail();
             $activity_assignee->contact_id = $request->input('creator_id');
         $activity_assignee->save();
-        
+
         return Redirect::action('ActivityController@show', $id);
     }
 
@@ -217,7 +221,7 @@ class ActivityController extends Controller
     public function destroy($id)
     {
    // delete activity contacts and then the activity (could be handled in model with cascading deletes)
-        
+
         $this->authorize('delete-activity');
         \App\ActivityContact::whereActivityId($id)->delete();
         \App\Activity::destroy($id);

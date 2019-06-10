@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Redirect;
 
 class AddressController extends Controller
 {
+  public function __construct()
+  {
+      $this->middleware('auth');
+  }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +18,7 @@ class AddressController extends Controller
      */
     public function index()
     {
-        //
+        $this->authorize('show-contact');
     }
 
     /**
@@ -24,7 +28,7 @@ class AddressController extends Controller
      */
     public function create()
     {
-        //
+        $this->authorize('create-contact');
     }
 
     /**
@@ -35,7 +39,7 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('create-contact');
     }
 
     /**
@@ -46,7 +50,7 @@ class AddressController extends Controller
      */
     public function show($id)
     {
-        //
+        $this->authorize('show-contact');
     }
 
     /**
@@ -57,7 +61,7 @@ class AddressController extends Controller
      */
     public function edit($id)
     {
-        //
+        $this->authorize('update-contact');
     }
 
     /**
@@ -69,7 +73,7 @@ class AddressController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->authorize('update-contact');
     }
 
     /**

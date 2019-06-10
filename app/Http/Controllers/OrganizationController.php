@@ -74,7 +74,7 @@ class OrganizationController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('show-contact');
+        $this->authorize('create-contact');
         $this->validate($request, [
             'organization_name' => 'required',
             'subcontact_type' => 'integer|min:0',
@@ -435,7 +435,7 @@ class OrganizationController extends Controller
         \App\Registration::whereContactId($id)->delete();
         // delete donations
         \App\Donation::whereContactId($id)->delete();
-        
+
         \App\Contact::destroy($id);
         return Redirect::action('OrganizationController@index');
     }

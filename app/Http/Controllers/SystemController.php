@@ -8,6 +8,10 @@ use App\Http\Controllers\Controller;
 
 class SystemController extends Controller
 {
+  {
+    $this->middleware('auth');
+  }
+
     /**
      * Display a listing of the resource.
      *
@@ -54,7 +58,7 @@ class SystemController extends Controller
     }
     public function offeringdedup_index() {
         $this->authorize('show-offeringdedup');
-        
+
         $offeringdedup =  \App\Offeringdedup::orderBy('count', 'desc')->paginate(50);
         // dd($dioceses);
         return view('offeringdedup.index', compact('offeringdedup'));

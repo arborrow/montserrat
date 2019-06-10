@@ -520,7 +520,7 @@ class RetreatController extends Controller
         return Redirect::action('RetreatController@index');
     }
     public function calendar()
-    {
+    {   $this->authorize('show-retreat');
         $calendar_events = \Spatie\GoogleCalendar\Event::get();
         return view('calendar.index', compact('calendar_events'));
     }

@@ -33,7 +33,7 @@ class DonorController extends Controller
     public function create()
     {
 // will not be creating any PPD donor records
-
+        $this->authorize('create-donor');
         return $this->index();
     }
 
@@ -46,6 +46,8 @@ class DonorController extends Controller
     public function store(Request $request)
     {
         // will not be creating any PPD donor records
+        $this->authorize('create-donor');
+
     }
 
     /**
@@ -61,7 +63,7 @@ class DonorController extends Controller
         //dd($donor);
         $sortnames = \App\Contact::whereSortName($donor->sort_name)->get();
         $lastnames = \App\Contact::whereLastName($donor->LName)->get();
-                
+
         return view('donors.show', compact('donor', 'sortnames', 'lastnames'));//
     }
 
@@ -73,7 +75,8 @@ class DonorController extends Controller
      */
     public function edit($id)
     {
-        return $this->index();
+      $this->authorize('update-donor');
+      return $this->index();
     }
 
     /**
@@ -85,7 +88,8 @@ class DonorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $this->authorize('update-donor');
+
     }
 
     /**
@@ -96,12 +100,13 @@ class DonorController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $this->authorize('delete-donor');
     }
-    
+
     public function assign($donor_id, $contact_id)
     {
         // dd($donor_id, $contact_id);
+        $this->authorize('update-donor');
         $donor = \App\Donor::whereDonorId($donor_id)->first();
         if (empty($donor->contact_id)) {
             $donor->contact_id = $contact_id;
@@ -109,14 +114,14 @@ class DonorController extends Controller
         }
         return redirect()->action('DonorController@index');
     }
-    
+
     public function add($donor_id)
     {
         $this->authorize('create-contact');
         $person = new \App\Contact;
         $donor = \App\Donor::findOrFail($donor_id);
         //dd($donor);
-        
+
         if (isset($donor->FName)) {
             $person->first_name = $donor->FName;
         }
@@ -135,7 +140,7 @@ class DonorController extends Controller
         $person->contact_type = 1;
         $person->subcontact_type = 0;
         $person->save();
-        
+
         if (isset($donor->Address)) {
             $home_address= new \App\Address;
             $state = \App\StateProvince::whereAbbreviation($donor->State)->whereCountryId(config('polanco.country_id_usa'))->first();
@@ -151,7 +156,7 @@ class DonorController extends Controller
             $home_address->country_id=config('polanco.country_id_usa');
             $home_address->save();
         }
-        
+
         if (isset($donor->HomePhone)) {
             $phone_home_phone= new \App\Phone;
                 $phone_home_phone->contact_id=$person->id;
@@ -168,7 +173,7 @@ class DonorController extends Controller
                 $phone_home_mobile->phone_type='Mobile';
             $phone_home_mobile->save();
         }
-        
+
         if (isset($donor->WorkPhone)) {
             $phone_work_phone= new \App\Phone;
                 $phone_work_phone->contact_id=$person->id;
@@ -185,7 +190,7 @@ class DonorController extends Controller
                 $email_home->is_primary=1;
             $email_home->save();
         }
-        
+
         if (empty($donor->contact_id)) {
             $donor->contact_id = $person->id;
             $donor->save();
