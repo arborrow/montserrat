@@ -97,10 +97,28 @@
                 {!! Form::close() !!}
                 <ul>
                     @foreach($organization->a_relationships as $a_relationship)
-                        <li>{!!$organization->contact_link!!} is {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link !!}  </li>
+                      <li>
+                        @can('delete-relationship')
+                          {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $a_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                            {!!$organization->contact_link!!} is {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link !!}
+                            <button type="submit" class="btn btn-outline-dark btn-sm"><i class="fas fa-trash"></i></button>
+                          {!! Form::close() !!}
+                        @else
+                          {!!$organization->contact_link!!} is {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link !!}
+                        @endCan
+                      </li>
                     @endforeach
                     @foreach($organization->b_relationships as $b_relationship)
-                        <li>{!!$organization->contact_link!!} is {{ $b_relationship->relationship_type->label_b_a }} {!! $b_relationship->contact_a->contact_link!!}</li>
+                      <li>
+                        @can('delete-relationship')
+                          {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $b_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                            {!!$organization->contact_link!!} is {{ $b_relationship->relationship_type->label_b_a }} {!! $b_relationship->contact_a->contact_link !!}
+                            <button type="submit" class="btn btn-outline-dark btn-sm"><i class="fas fa-trash"></i></button>
+                          {!! Form::close() !!}
+                        @else
+                          {!!$organization->contact_link!!} is {{ $b_relationship->relationship_type->label_b_a }} {!! $b_relationship->contact_a->contact_link !!}
+                        @endcan
+                      </li>
                     @endforeach
                 </ul>
             </div>
