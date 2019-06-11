@@ -24,11 +24,11 @@
         <thead>
             <tr>
                 <th scope="col">Picture</th>
-                <th scope="col">Name</th> 
-                <th scope="col">Address</th> 
-                <th scope="col">Phone</th> 
-                <th scope="col">Email</th> 
-                <th scope="col">Webpage</th> 
+                <th scope="col">Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Email</th>
+                <th scope="col">Webpage</th>
            </tr>
         </thead>
         <tbody>
@@ -39,36 +39,36 @@
                 <td>
                     @foreach($vendor->addresses as $address)
                     @if ($address->is_primary)
-                        {!!$address->google_map!!} 
+                        {!!$address->google_map!!}
                     @endif
                     @endforeach
                 </td>
                 <td>
                     @foreach($vendor->phones as $phone)
-                    @if (($phone->location_type_id==3) and ($phone->phone_type=="Phone"))  
+                    @if (($phone->location_type_id==3) and ($phone->phone_type=="Phone"))
                     <a href="tel:{{ $phone->phone }}"> {{ $phone->phone }}</a>
                     @endif
                     @endforeach
                 </td>
-                <td> 
+                <td>
                     @foreach($vendor->emails as $email)
-                    @if ($email->is_primary)  
-                    <a href="mailto:{{ $email->email }}">{{ $email->email }}</a> 
+                    @if ($email->is_primary)
+                    <a href="mailto:{{ $email->email }}">{{ $email->email }}</a>
                     @endif
                     @endforeach
                 </td>
                 <td>
-                    
+
                     @foreach($vendor->websites as $website)
                      @if(!empty($website->url))
                     <a href="{{$website->url}}" target="_blank">{{$website->url}}</a><br />
                     @endif
                     @endforeach
-                    
+
                 </td>
             </tr>
             @endforeach
-          
+          {!!$vendors->render()!!}
         </tbody>
     </table>
     @endif

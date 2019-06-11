@@ -27,7 +27,7 @@ class DioceseController extends Controller
     {
         $this->authorize('show-contact');
 
-        $dioceses = \App\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'bishops.contact_b', 'parishes.contact_a')->get();
+        $dioceses = \App\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'bishops.contact_b', 'parishes.contact_a')->paginate(100);
         // dd($dioceses);
         return view('dioceses.index', compact('dioceses'));   //
     }
@@ -463,7 +463,7 @@ class DioceseController extends Controller
         \App\Registration::whereContactId($id)->delete();
         // delete donations
         \App\Donation::whereContactId($id)->delete();
-        
+
          \App\Contact::destroy($id);
         return Redirect::action('DioceseController@index');
     }

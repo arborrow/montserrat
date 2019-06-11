@@ -25,12 +25,12 @@
             <thead>
                 <tr>
                     <th scope="col">Picture</th>
-                    <th scope="col">Name</th> 
-                    <th scope="col">Bishop</th> 
-                    <th scope="col">Address</th> 
-                    <th scope="col">Phone(s)</th> 
-                    <th scope="col">Email(s)</th> 
-                    <th scope="col">Website(s)</th> 
+                    <th scope="col">Name</th>
+                    <th scope="col">Bishop</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Phone(s)</th>
+                    <th scope="col">Email(s)</th>
+                    <th scope="col">Website(s)</th>
                </tr>
             </thead>
             <tbody>
@@ -50,21 +50,21 @@
                     <td>
                         @foreach($diocese->addresses as $address)
                             @if ($address->is_primary)
-                                {!!$address->google_map!!} 
+                                {!!$address->google_map!!}
                             @endif
                         @endforeach
                     </td>
                     <td>
                         @foreach($diocese->phones as $phone)
-                            @if (($phone->location_type_id==3) and ($phone->phone_type=="Phone"))  
+                            @if (($phone->location_type_id==3) and ($phone->phone_type=="Phone"))
                                 <a href="tel:{{ $phone->phone }}"> {{ $phone->phone }}</a>
                             @endif
                         @endforeach
                     </td>
-                    <td> 
+                    <td>
                         @foreach($diocese->emails as $email)
-                            @if ($email->is_primary)  
-                                <a href="mailto:{{ $email->email }}">{{ $email->email }}</a> 
+                            @if ($email->is_primary)
+                                <a href="mailto:{{ $email->email }}">{{ $email->email }}</a>
                             @endif
                         @endforeach
                     </td>
@@ -77,6 +77,7 @@
                     </td>
                 </tr>
                 @endforeach
+                {!!$dioceses->render()!!}
             </tbody>
         </table>
         @endif

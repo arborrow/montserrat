@@ -30,7 +30,7 @@
                         selectElement.childNodes.forEach(function(child) {
                             console.log(child);
                             if (child.value == window.location)
-                                child.setAttribute('selected', ''); 
+                                child.setAttribute('selected', '');
                         });
                     </script>
                     {{-- --}}
@@ -48,12 +48,12 @@
             <thead>
                 <tr>
                     <th scope="col">Picture</th>
-                    <th scope="col">Name</th> 
+                    <th scope="col">Name</th>
                     <th scope="col">Type</th>
-                    <th scope="col">Address</th> 
-                    <th scope="col">Main phone</th> 
-                    <th scope="col">Email(s)</th> 
-                    <th scope="col">Website(s)</th> 
+                    <th scope="col">Address</th>
+                    <th scope="col">Main phone</th>
+                    <th scope="col">Email(s)</th>
+                    <th scope="col">Website(s)</th>
                </tr>
             </thead>
             <tbody>
@@ -65,31 +65,32 @@
                     <td>
                         @foreach($organization->addresses as $address)
                         @if ($address->is_primary)
-                        {!!$address->google_map!!} 
+                        {!!$address->google_map!!}
                         @endif
                         @endforeach
                     </td>
                     <td>
-                        @if (!empty($organization->phone_main_phone_number)) 
+                        @if (!empty($organization->phone_main_phone_number))
                             <a href="tel:{{ $organization->phone_main_phone_number }}"> {{ $organization->phone_main_phone_number }} </a>
                         @else
                             N/A
                         @endIf
                     </td>
-                    <td> 
-                        <a href="mailto:{{ $organization->email_primary_text }}">{{ $organization->email_primary_text }}</a> 
+                    <td>
+                        <a href="mailto:{{ $organization->email_primary_text }}">{{ $organization->email_primary_text }}</a>
                     </td>
                     <td>
-                        
+
                         @foreach($organization->websites as $website)
                          @if(!empty($website->url))
                         <a href="{{$website->url}}" target="_blank">{{$website->url}}</a><br />
                         @endif
                         @endforeach
-                        
+
                     </td>
                 </tr>
                 @endforeach
+                {!! $organizations->render() !!}
             </tbody>
         </table>
         @endif
