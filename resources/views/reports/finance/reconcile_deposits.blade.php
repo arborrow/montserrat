@@ -56,8 +56,6 @@ The following contacts appear to have a registration for an open deposit but no 
   		</div>
   	</div>
   </div>
-  "Nothing to see here"
-
 @endIf
 </div>
 @stop
