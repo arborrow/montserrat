@@ -4,6 +4,7 @@
 @can('show-donation')
         {!! Html::link(action('DonationController@index'),'Donations',array('class' => 'btn btn-outline-dark'))!!}
         {!! Html::link(action('DonationController@agc',2019),'AGC FY19',array('class' => 'btn btn-outline-dark'))!!}
+        {!! Html::link(action('PageController@finance_reconcile_deposit_show'),'Show unreconciled open deposits',array('class' => 'btn btn-outline-dark'))!!}
 @endCan
 
 <p>Finance reports</p>
@@ -13,5 +14,5 @@
         {!! Html::link(action('PageController@finance_retreatdonations','201601'),'Retreat donation report',array('class' => 'btn btn-outline-dark'))!!}
         {!! Html::link(action('PageController@finance_deposits'),'Deposits report',array('class' => 'btn btn-outline-dark'))!!}
 @endCan
-               
+
 @stop

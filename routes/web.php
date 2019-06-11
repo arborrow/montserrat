@@ -88,6 +88,7 @@ Route::get('admin/config/mailgun', ['as' => 'admin.config.mailgun','uses' => 'Pa
 Route::get('admin/config/twilio', ['as' => 'admin.config.twilio','uses' => 'PageController@config_twilio']);
 Route::get('admin/offeringdedup', ['as' => 'offeringdedup','uses' => 'SystemController@offeringdedup_index']);
 Route::get('admin/offeringdedup/show/{contact_id}/{event_id}', ['as' => 'offeringdedup.show','uses' => 'SystemController@offeringdedup_show']);
+Route::get('admin/deposit/reconcile/{event_id?}', ['as' => 'depositreconcile.show','uses' => 'PageController@finance_reconcile_deposit_show']);
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('permission', 'PermissionController');
