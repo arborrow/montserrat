@@ -235,8 +235,13 @@ class PageController extends Controller
        })->sortBy(function ($d) {
          return Carbon::parse($d[0]->donation->retreat_start_date);
        });
-       dd($grouped_payments);
-       return view('reports.finance.reconcile_deposits', compact('grouped_payments','payments'));
+       $registrations = \App\Registration::whereEventId($event_id)->whereCanceledAt(NULL)->orderBy('contact_id')->get();
+       $pg = $payments->groupBy('donation.contact_id')->sortBy('donation.contact_id');
+       $rg = $registrations->groupBy('contact_id')->sortBy('contact_id');
+       $diffpg = $pg->diffKeys($rg); //payments with no registration
+       $diffrg = $rg->diffKeys($pg); //regisrations with no payments
+       // dd($pg, $rg, $diffpg, $diffrg);
+       return view('reports.finance.reconcile_deposits', compact('diffpg','diffrg'));
    }
 
     public function retreatlistingreport($id)
