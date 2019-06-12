@@ -13,7 +13,7 @@ and open the template in the editor.
         size: 8.5in 11in;
         margin: 1cm;
     }
-    
+
     @page rotated {
         size: landscape
     }
@@ -236,4 +236,12 @@ td.row-payment_method {
 
 .invoice.pagefooter {
     margin-bottom: 2px;
+}
+
+.agcacknowledge td.board {
+    width: 20%;
+    vertical-align: top;
+}
+.agcacknowledge td.main {
+    width: 80%;
 }
