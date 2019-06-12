@@ -31,7 +31,7 @@
             <div class="col-12">
                 <span class="back">
                     <a href={{ action('ParishController@index') }}>
-                        {!! Html::image('/images/parish.png', 'Parish Index',array('title'=>"Parish Index",'class' => 'btn btn-outline-dark')) !!}
+                        {!! Html::image('images/parish.png', 'Parish Index',array('title'=>"Parish Index",'class' => 'btn btn-outline-dark')) !!}
                     </a>
                 </span>
                 @can('create-touchpoint')
@@ -123,7 +123,7 @@
                             <tr>
                                 <td><a href="../person/{{$parishioner->contact_b->id}}">
                                         @if($parishioner->contact_b->is_captain)
-                                            {!! Html::image('/images/captain.png', 'Captain',array('title'=>"Captain",'class' => 'btn btn-outline-dark')) !!}
+                                            {!! Html::image('images/captain.png', 'Captain',array('title'=>"Captain",'class' => 'btn btn-outline-dark')) !!}
                                         @endIf
                                         {!! $parishioner->contact_b->contact_link_full_name !!} ({{$parishioner->contact_b->participant_count}})
                                     </a>
@@ -337,12 +337,12 @@
         <div class="row">
             <div class="col-6 text-right">
                 <a href="{{ action('ParishController@edit', $parish->id) }}" class="btn btn-info">
-                    {!! Html::image('/images/edit.png', 'Edit',array('title'=>"Edit")) !!}
+                    {!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}
                 </a>
             </div>
             <div class="col-6 text-left">
                 {!! Form::open(['method' => 'DELETE', 'route' => ['parish.destroy', $parish->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                {!! Form::image('/images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
+                {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
                 {!! Form::close() !!}
             </div>
         </div>

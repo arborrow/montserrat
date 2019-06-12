@@ -7,7 +7,7 @@
 <table>
     <tr>
         <td>
-            <img src="/images/mrhlogoblack.png"> <br />
+            <img src="images/mrhlogoblack.png"> <br />
             600 N. Shady Shores Dr <br />
             Lake Dallas, TX 75065 <br />
             (940) 321-6020 <br />

@@ -34,12 +34,12 @@
         <div class="row">
             <div class="col-6 text-right">
                 <a href="{{ action('PermissionController@edit', $permission->id) }}" class="btn btn-info">
-                    {!! Html::image('/images/edit.png', 'Edit',array('title'=>"Edit")) !!}
+                    {!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}
                 </a>
             </div>
             <div class="col-6 text-left">
                 {!! Form::open(['method' => 'DELETE', 'route' => ['permission.destroy', $permission->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                    {!! Form::image('/images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                    {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
                 {!! Form::close() !!}</div><div class="clearfix">
             </div>
         </div>

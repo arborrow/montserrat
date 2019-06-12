@@ -23,7 +23,7 @@
         {!! Html::link('#donations','Donations',array('class' => 'btn btn-outline-dark')) !!}
     </div>
     <div class="col-12 text-center mt-3">
-        <span><a href={{ action('VendorController@index') }}>{!! Html::image('/images/vendor.png', 'Vendor Index',array('title'=>"Vendor Index",'class' => 'btn btn-outline-dark')) !!}</a></span>
+        <span><a href={{ action('VendorController@index') }}>{!! Html::image('images/vendor.png', 'Vendor Index',array('title'=>"Vendor Index",'class' => 'btn btn-outline-dark')) !!}</a></span>
         @can('create-touchpoint')
             <span><a href={{ action('TouchpointController@add',$vendor->id) }} class="btn btn-outline-dark">Add Touchpoint</a></span>
         @endCan
@@ -98,7 +98,7 @@
                         @can('delete-relationship')
                             {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $a_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
                                 {!!$vendor->contact_link!!} {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link !!}
-                                {!! Form::image('/images/delete.png','btnDelete',['title'=>'Delete Relationship '.$a_relationship->id, 'style'=>'padding-left: 50px;']) !!}
+                                {!! Form::image('images/delete.png','btnDelete',['title'=>'Delete Relationship '.$a_relationship->id, 'style'=>'padding-left: 50px;']) !!}
                             {!! Form::close() !!}
                         @else
                             {!!$vendor->contact_link!!} {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link !!}
@@ -111,7 +111,7 @@
                         @can('delete-relationship')
                             {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $b_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
                             {!!$vendor->contact_link!!} {{ $b_relationship->relationship_type->label_b_a }} {!! $b_relationship->contact_a->contact_link!!}
-                            {!! Form::image('/images/delete.png','btnDelete',['title'=>'Delete Relationship '.$b_relationship->id, 'style'=>'padding-left: 50px;']) !!}
+                            {!! Form::image('images/delete.png','btnDelete',['title'=>'Delete Relationship '.$b_relationship->id, 'style'=>'padding-left: 50px;']) !!}
                             {!! Form::close() !!}
                         @else
                             {!!$vendor->contact_link!!} {{ $b_relationship->relationship_type->label_b_a }} {!! $b_relationship->contact_a->contact_link!!}
@@ -233,13 +233,13 @@
         <div class="row">
             <div class="col-6 text-right">
                 @can('update-contact')
-                    <a href="{{ action('VendorController@edit', $vendor->id) }}" class="btn btn-info">{!! Html::image('/images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                    <a href="{{ action('VendorController@edit', $vendor->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                 @endCan
             </div>
             <div class="col-6 text-left">
                 @can('delete-contact')
                     {!! Form::open(['method' => 'DELETE', 'route' => ['vendor.destroy', $vendor->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                    {!! Form::image('/images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
+                    {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
                     {!! Form::close() !!}
                 @endCan
             </div>
