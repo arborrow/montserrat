@@ -10,7 +10,7 @@
                     <h1>
                         <span class="grey">Diocese of Dallas Parish Index</span>
                         <span class="grey">({{$parishes->count()}} records)</span> 
-                        <span class="create"><a href={{ action('ParishController@create') }}>{!! Html::image('/images/create.png', 'Create a Parish',array('title'=>"Create Parish",'class' => 'btn btn-outline-dark')) !!}</a></span>
+                        <span class="create"><a href={{ action('ParishController@create') }}>{!! Html::image('images/create.png', 'Create a Parish',array('title'=>"Create Parish",'class' => 'btn btn-outline-dark')) !!}</a></span>
                     </h1>
                 </div>
                 @if ($parishes->isEmpty())

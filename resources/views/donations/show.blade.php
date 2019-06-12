@@ -18,8 +18,8 @@
     </div>
     <div class="col-12 mt-2">
         @if ($donation->percent_paid == 100)
-            <a href="/donation/{{$donation->donation_id}}/agcacknowledge"><img src="/images/letter.png" alt="Print acknowledgement" title="Print acknowledgement"></a>
-            <a href="/person/{{$donation->contact_id}}/envelope10"><img src="/images/envelope.png" alt="Print envelope" title="Print envelope"></a>
+            <a href="/donation/{{$donation->donation_id}}/agcacknowledge"><img src="images/letter.png" alt="Print acknowledgement" title="Print acknowledgement"></a>
+            <a href="/person/{{$donation->contact_id}}/envelope10"><img src="images/envelope.png" alt="Print envelope" title="Print envelope"></a>
         @endIf
     </div>
     <div class="col-12 col-md-4">

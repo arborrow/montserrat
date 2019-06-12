@@ -4,7 +4,7 @@
 	<div class="col-12 text-center">
 		<div class="text-danger">
 			<p>Opps!</p>
-			<img src="/images/503.png" alt="503 Error">
+			<img src="images/503.png" alt="503 Error">
 		</div>
 	</div>
 </div>

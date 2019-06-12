@@ -3,7 +3,7 @@
 <meta name="format-detection" content="telephone=no">
 <div class ="agcacknowledge">
 <div class ="pageheader">
-            <img style="display: block;  margin-left: auto;  margin-right: auto;" src="https://polanco.montserratretreat.org/images/mrhlogoblack.png"> <br />
+            <img style="display: block;  margin-left: auto;  margin-right: auto;" src="https://polanco.montserratretreat.orgimages/mrhlogoblack.png"> <br />
 </table>
 </div>
 <br />

@@ -10,7 +10,7 @@
         {!! Form::hidden('id', $vendor->id) !!}
         <div class="row text-center">
             <div class="col-12">
-                {!! Form::image('/images/save.png','btnSave',['class' => 'btn btn-outline-dark']) !!}
+                {!! Form::image('images/save.png','btnSave',['class' => 'btn btn-outline-dark']) !!}
             </div>
         </div>
         <div class="row">
@@ -119,7 +119,7 @@
         </div>
         <div class="row text-center">
             <div class="col-12">
-                {!! Form::image('/images/save.png','btnSave',['class' => 'btn btn-outline-dark']) !!}
+                {!! Form::image('images/save.png','btnSave',['class' => 'btn btn-outline-dark']) !!}
             </div>
         </div>
         {!! Form::close() !!}

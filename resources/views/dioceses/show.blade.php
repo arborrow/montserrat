@@ -24,7 +24,7 @@
             </div>
             <div class="col-12 mt-3">
                 <a href={{ action('DioceseController@index') }}>
-                    {!! Html::image('/images/diocese.png', 'Diocese Index', array('title'=>"Diocese Index",'class' => 'btn btn-outline-dark')) !!}
+                    {!! Html::image('images/diocese.png', 'Diocese Index', array('title'=>"Diocese Index",'class' => 'btn btn-outline-dark')) !!}
                 </a>
                 <a href={{ action('TouchpointController@add',$diocese->id) }} class="btn btn-outline-dark">
                     Add Touchpoint
@@ -269,13 +269,13 @@
         <div class="row">
             <div class="col-6 text-right">
                 @can('update-contact')
-                    <a href="{{ action('DioceseController@edit', $diocese->id) }}" class="btn btn-info">{!! Html::image('/images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                    <a href="{{ action('DioceseController@edit', $diocese->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                 @endCan
             </div>
             <div class="col-6 text-left">
                 @can('delete-contact')
                     {!! Form::open(['method' => 'DELETE', 'route' => ['diocese.destroy', $diocese->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                    {!! Form::image('/images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
+                    {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
                     {!! Form::close() !!}
                 @endCan
             </div>
