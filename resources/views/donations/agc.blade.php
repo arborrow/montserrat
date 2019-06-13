@@ -35,12 +35,12 @@
                                     <a href='{{url("donation/".$donation->donation_id."/agcacknowledge") }}'>{{$donation['Thank You']}}</a>
                                 @else
                                     @if ($donation->percent_paid == 100)
-                                        <a href='{{ url("donation/".$donation->donation_id."/agcacknowledge") }}'><img src='{{ url("images/letter.png") }}' alt="Print acknowledgement" title="Print acknowledgement"></a>
+                                        <a href='{{ url("donation/".$donation->donation_id."/agcacknowledge") }}'><img src='{{ url("/images/letter.png") }}' alt="Print acknowledgement" title="Print acknowledgement"></a>
                                     @else
                                         Awaiting full payment
                                     @endIf
                                 @endIf
-                                <a href='{{ url("person/".$donation->contact_id."/envelope10") }}'><img src='{{ url("images/envelope.png") }}' alt="Print envelope" title="Print envelope"></a>
+                                <a href='{{ url("person/".$donation->contact_id."/envelope10") }}'><img src='{{ url("/images/envelope.png") }}' alt="Print envelope" title="Print envelope"></a>
                             </td>
                         </tr>
                     @endforeach
