@@ -20,7 +20,7 @@
 	<div class="container pt-0">
 		<nav class="navbar navbar-expand-lg navbar-light">
 			<a class="navbar-brand" href={{ ( Auth::check() ) ? route('welcome') : route('home') }}>
-				<img src="{{URL::asset('images/mrhlogoblack.png')}}" alt="Home" class="logo">
+				<img src="{{URL('/images/mrhlogoblack.png')}}" alt="Home" class="logo">
 			</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
