@@ -55,7 +55,7 @@
                 @if (empty($registration->arrived_at))
                     N/A
                 @else
-                    {{date('F d, Y', strtotime($registration->arrived_at))}}
+                    {{date('F d, Y H:i', strtotime($registration->arrived_at))}}
                 @endif
             </div>
             <div class="col-12 col-md-4">
@@ -63,7 +63,7 @@
                 @if ($registration->departed_at == NULL)
                     N/A
                 @else
-                    {{date('F d, Y', strtotime($registration->departed_at))}}
+                    {{date('F d, Y H:i', strtotime($registration->departed_at))}}
                 @endif
             </div>
             <div class="col-12 col-md-4">
@@ -106,7 +106,7 @@
             <div class="col-6 text-left">
                 @can('delete-registration')
                     {!! Form::open(['method' => 'DELETE', 'route' => ['registration.destroy', $registration->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                    {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                    {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
                     {!! Form::close() !!}
                 @endCan
             </div>
