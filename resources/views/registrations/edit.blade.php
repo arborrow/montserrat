@@ -26,11 +26,11 @@
                 </div>
                 <div class="col-12 col-md-4">
                     {!! Form::label('source', 'Registration from:') !!}
-                    {!! Form::select('source', $defaults['registration_source'], $registration->source, ['class' => 'form-control']) !!} 
+                    {!! Form::select('source', $defaults['registration_source'], $registration->source, ['class' => 'form-control']) !!}
                 </div>
                 <div class="col-12 col-md-4">
                     {!! Form::label('status_id', 'Status:') !!}
-                    {!! Form::select('status_id', $defaults['participant_status_type'], $registration->status_id, ['class' => 'form-control']) !!} 
+                    {!! Form::select('status_id', $defaults['participant_status_type'], $registration->status_id, ['class' => 'form-control']) !!}
                 </div>
             </div>
             <div class="row">
@@ -50,11 +50,11 @@
             <div class="row">
                 <div class="col-12 col-md-4">
                     {!! Form::label('arrived_at', 'Arrived at:') !!}
-                    {!! Form::text('arrived_at', $registration->arrived_at, ['class'=>'form-control flatpickr-date']) !!}
+                    {!! Form::text('arrived_at', $registration->arrived_at, ['class'=>'form-control flatpickr-date-time']) !!}
                 </div>
                 <div class="col-12 col-md-4">
                     {!! Form::label('departed_at', 'Departed at:') !!}
-                    {!! Form::text('departed_at', $registration->departed_at, ['class'=>'form-control flatpickr-date']) !!}
+                    {!! Form::text('departed_at', $registration->departed_at, ['class'=>'form-control flatpickr-date-time']) !!}
                 </div>
                 <div class="col-12 col-md-4">
                     {!! Form::label('canceled_at', 'Canceled at:') !!}
@@ -64,7 +64,7 @@
             <div class="row">
                 <div class="col-12 col-md-4">
                     {!! Form::label('room_id', 'Room:')  !!}
-                    {!! Form::select('room_id', $rooms, $registration->room_id, ['class' => 'form-control']) !!} 
+                    {!! Form::select('room_id', $rooms, $registration->room_id, ['class' => 'form-control']) !!}
                 </div>
             </div>
             <div class="row">
