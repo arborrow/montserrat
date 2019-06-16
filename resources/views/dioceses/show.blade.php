@@ -212,7 +212,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($files as $file)
+                            @@foreach($files->sortByDesc('upload_date') as $file) as $file)
                             <tr>
                                 <td><a href="{{url('contact/'.$diocese->id.'/attachment/'.$file->uri)}}">{{ $file->uri }}</a></td>
                                 <td>{{$file->description}}</td>
