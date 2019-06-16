@@ -8,7 +8,7 @@
             @can('create-contact')
                 <span class="options">
                     <a href={{ action('OrganizationController@create') }}>
-                        {!! Html::image('images/create.png', 'Create a Diocese',array('title'=>"Create Diocese",'class' => 'btn btn-light')) !!}
+                        {!! Html::image('images/create.png', 'Create Organization',array('title'=>"Create Organization",'class' => 'btn btn-light')) !!}
                     </a>
                 </span>
             @endCan

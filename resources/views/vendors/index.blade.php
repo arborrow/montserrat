@@ -4,10 +4,10 @@
     <div class="col-12">
         <h1>
             Vendors
-            @can('update-contact')
+            @can('create-contact')
                 <span class="options">
                     <a href={{ action('VendorController@create') }}>
-                        {!! Html::image('images/create.png', 'Create a Vendor',array('title'=>"Create Vendor",'class' => 'btn btn-light')) !!}
+                        {!! Html::image('images/create.png', 'Create Vendor',array('title'=>"Create Vendor",'class' => 'btn btn-light')) !!}
                     </a>
                 </span>
             @endCan

@@ -6,11 +6,11 @@
         <h1>
             Persons
             @can('create-contact')
-            <span class="options">
-                <a href={{ action('PersonController@create') }}>
-                    <img src="{{ URL::asset('images/create.png') }}" alt="Add" class="btn btn-light" title="Add">
-                </a>
-            </span>
+                <span class="options">
+                    <a href={{ action('PersonController@create') }}>
+                        {!! Html::image('images/create.png', 'Create Person',array('title'=>"Create Person",'class' => 'btn btn-light')) !!}
+                    </a>
+                </span>
             @endCan
         </h1>
         <p class="lead">{{$persons->total()}} records</p>
