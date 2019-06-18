@@ -180,7 +180,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($files->sortByDesc('upload_date') as $file) as $file)
+                            @foreach($files->sortByDesc('upload_date') as $file)
                             <tr>
                                 <td><a href="{{url('contact/'.$vendor->id.'/attachment/'.$file->uri)}}">{{ $file->uri }}</a></td>
                                 <td>{{$file->description}}</td>
