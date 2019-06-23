@@ -158,23 +158,32 @@ class PageController extends Controller
     public function finance_agcacknowledge($donation_id = NULL)
     {
         $this->authorize('show-donation');
-	$current_user = Auth::user();
+	    $current_user = Auth::user();
         $user_email = \App\Email::whereEmail($current_user->email)->first();
 
-	$donation = \App\Donation::with('payments','contact','retreat')->findOrFail($donation_id);
-	if (NULL == $donation['Thank You']) { //avoid creating another touchpoint if acknowledgement letter has already been viewed (and presumably printed and mailed)
-	    $agc_touchpoint = new \App\Touchpoint;
-	    $agc_touchpoint->person_id = $donation->contact_id;
-	    $agc_touchpoint->staff_id = $user_email->contact_id;
-	    $agc_touchpoint->touched_at = Carbon::parse(now());
-	    $agc_touchpoint->type = 'Letter';
-	    $agc_touchpoint->notes = 'AGC Acknowledgement Letter for Donation #'.$donation->donation_id;
-   	    $agc_touchpoint->save();
-	    $donation['Thank You'] = "Y";
-	    $donation->save();
-	}
-
-	return view('reports.finance.agcacknowledge', compact('donation'));   //
+    	$donation = \App\Donation::with('payments','contact','retreat')->findOrFail($donation_id);
+    	if (NULL == $donation['Thank You']) { //avoid creating another touchpoint if acknowledgement letter has already been viewed (and presumably printed and mailed)
+    	    $agc_touchpoint = new \App\Touchpoint;
+    	    $agc_touchpoint->person_id = $donation->contact_id;
+    	    $agc_touchpoint->staff_id = $user_email->contact_id;
+    	    $agc_touchpoint->touched_at = Carbon::parse(now());
+    	    $agc_touchpoint->type = 'Letter';
+    	    $agc_touchpoint->notes = 'AGC Acknowledgement Letter for Donation #'.$donation->donation_id;
+       	    $agc_touchpoint->save();
+    	    $donation['Thank You'] = "Y";
+    	    // $donation->save();
+	   }
+       //dd($donation->contact->preferred_language_value);
+       if ($donation->contact->preferred_language_value == "es") {
+           // setlocale(LC_TIME, 'Spain');
+           setlocale(LC_TIME,'es_ES');
+           $dt = Carbon::now();
+           dd($dt->format('Y-F-d'),strftime("%B", time()));
+           return view('reports.finance.agcacknowledge_es', compact('donation'));
+       } else {
+           return view('reports.finance.agcacknowledge', compact('donation'));
+       }
+	   //
     }
 
     public function finance_retreatdonations($retreat_id = NULL)

@@ -147,6 +147,14 @@ class Contact extends Model
             return null;
         }
     }
+    public function getPreferredLanguageValueAttribute() {
+
+        if (isset($this->language_pref->value)) {
+            return $this->language_pref->value;
+        } else {
+            return NULL;
+        }
+    }
     public function getOrganizationNameAndCityAttribute()
     {
         if (isset($this->address_primary->city)) {
@@ -767,6 +775,10 @@ class Contact extends Model
     public function languages()
     {
         return $this->belongsToMany(Language::class, 'contact_languages', 'contact_id', 'language_id');
+    }
+    public function language_pref()
+    {
+        return $this->hasOne(Language::class, 'name', 'preferred_language');
     }
     public function notes()
     {

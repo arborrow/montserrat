@@ -26,7 +26,7 @@ Route::get('intercept/{code}', function($code) {
 });
 
 Route::get('/agcletters', function () {
-    $touchpoints = \montserrat\Touchpoint::where('notes', 'LIKE', '%AGC thank you letter%')
+    $touchpoints = \app\Touchpoint::where('notes', 'LIKE', '%AGC thank you letter%')
     ->select('notes', 'person_id', 'created_at')
     ->with('person')
     ->orderBy('created_at', 'desc')
