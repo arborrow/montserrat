@@ -169,9 +169,9 @@ class PageController extends Controller
     	    $agc_touchpoint->touched_at = Carbon::parse(now());
     	    $agc_touchpoint->type = 'Letter';
     	    $agc_touchpoint->notes = 'AGC Acknowledgement Letter for Donation #'.$donation->donation_id;
-       	    // $agc_touchpoint->save();
+       	    $agc_touchpoint->save();
     	    $donation['Thank You'] = "Y";
-    	    // $donation->save();
+    	    $donation->save();
 	   }
        //dd($donation->contact->preferred_language_value);
        if ($donation->contact->preferred_language_value == "es") {
