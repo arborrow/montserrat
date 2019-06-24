@@ -2,21 +2,10 @@
 
 namespace App\Providers;
 
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        Paginator::useBootstrapThree();
-    }
-
     /**
      * Register any application services.
      *
@@ -24,6 +13,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // require app_path().'/constants.php';
+        //
+    }
+
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        //
     }
 }
