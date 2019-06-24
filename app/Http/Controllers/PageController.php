@@ -169,17 +169,16 @@ class PageController extends Controller
     	    $agc_touchpoint->touched_at = Carbon::parse(now());
     	    $agc_touchpoint->type = 'Letter';
     	    $agc_touchpoint->notes = 'AGC Acknowledgement Letter for Donation #'.$donation->donation_id;
-       	    $agc_touchpoint->save();
+       	    // $agc_touchpoint->save();
     	    $donation['Thank You'] = "Y";
     	    // $donation->save();
 	   }
        //dd($donation->contact->preferred_language_value);
        if ($donation->contact->preferred_language_value == "es") {
-           // setlocale(LC_TIME, 'Spain');
-           setlocale(LC_TIME,'es_ES');
            $dt = Carbon::now();
-           dd($dt->format('Y-F-d'),strftime("%B", time()));
-           return view('reports.finance.agcacknowledge_es', compact('donation'));
+            $donation['today_es']=$dt->day.' de '.$dt->locale('es')->monthName.' del '.$dt->year;
+            $donation['donation_date_es'] = $donation->donation_date->day.' de '.$donation->donation_date->locale('es')->monthName.' del '.$donation->donation_date->year;
+            return view('reports.finance.agcacknowledge_es', compact('donation'));
        } else {
            return view('reports.finance.agcacknowledge', compact('donation'));
        }
