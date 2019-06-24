@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Polanco54'),
+    'name' => env('APP_NAME', 'Polanco'),
 
     /*
     |--------------------------------------------------------------------------
@@ -124,6 +124,10 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
+
+        Collective\Html\HtmlServiceProvider::class,
+
+
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -135,9 +139,6 @@ return [
         Illuminate\Filesystem\FilesystemServiceProvider::class,
         Illuminate\Foundation\Providers\FoundationServiceProvider::class,
         Illuminate\Hashing\HashServiceProvider::class,
-        
-        Collective\Html\HtmlServiceProvider::class,
-
         Illuminate\Mail\MailServiceProvider::class,
         Illuminate\Notifications\NotificationServiceProvider::class,
         Illuminate\Pagination\PaginationServiceProvider::class,
@@ -164,14 +165,15 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         // Other service providers..
-        
+
+        Collective\Html\HtmlServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         Spatie\GoogleCalendar\GoogleCalendarServiceProvider::class,
-        Zizaco\Entrust\EntrustServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class,
         StuYam\PhoneValidator\PhoneValidatorServiceProvider::class,
+        Zizaco\Entrust\EntrustServiceProvider::class,
 
-        
+
     ],
 
     /*
@@ -188,7 +190,8 @@ return [
     'aliases' => [
 
         'App' => Illuminate\Support\Facades\App::class,
-        'Artisan' => Illuminate\Support\Facades\Artisan::class,
+	    'Arr' => Illuminate\Support\Arr::class,
+	    'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
         'Blade' => Illuminate\Support\Facades\Blade::class,
         'Broadcast' => Illuminate\Support\Facades\Broadcast::class,
@@ -217,10 +220,11 @@ return [
         'Schema' => Illuminate\Support\Facades\Schema::class,
         'Session' => Illuminate\Support\Facades\Session::class,
         'Storage' => Illuminate\Support\Facades\Storage::class,
-        'URL' => Illuminate\Support\Facades\URL::class,
+	    'Str' => Illuminate\Support\Str::class,
+	    'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        
+
         'Entrust' => \Zizaco\Entrust\EntrustFacade::class,
         'Form'      => Collective\Html\FormFacade::class,
         'GoogleCalendar' => Spatie\GoogleCalendar\GoogleCalendarFacade::class,
@@ -228,7 +232,7 @@ return [
         'Html'      => Collective\Html\HtmlFacade::class,
         'Mailgun' => Mailgun\Mailgun::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
-	'Hashids' => Vinkla\Hashids\Facades\Hashids::class
+	    'Hashids' => Vinkla\Hashids\Facades\Hashids::class
     ],
 
 ];
