@@ -477,7 +477,7 @@ class ParishController extends Controller
         \App\Registration::whereContactId($id)->delete();
         // delete donations
         \App\Donation::whereContactId($id)->delete();
-       
+
         \App\Contact::destroy($id);
         return Redirect::action('ParishController@index');
     }
