@@ -20,7 +20,7 @@
             <p>No vendors are currently in the database.</p>
         </div>
     @else
-    <table class="table table-bordered table-striped table-hover table-responsive-md">
+    <table class="table table-bordered table-striped table-hover table-responsive">
         <thead>
             <tr>
                 <th scope="col">Picture</th>
