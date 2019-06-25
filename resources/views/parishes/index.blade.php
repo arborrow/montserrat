@@ -12,7 +12,7 @@
                 </span>
                 @endCan
             </h1>
-            <p class="lead">{{$parishes->count()}} records</p>
+            <p class="lead">{{$parishes->total()}} records</p>
         </div>
         <div class="col-12">
             <span class="btn btn-outline-dark">

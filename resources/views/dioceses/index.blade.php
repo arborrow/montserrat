@@ -13,7 +13,7 @@
                 </span>
             @endCan
         </h1>
-        <p class="lead">{{$dioceses->count()}} records</p>
+        <p class="lead">{{$dioceses->total()}} records</p>
     </div>
     <div class="col-12">
         @if ($dioceses->isEmpty())
