@@ -94,8 +94,8 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-12 col-lg-4">
-                            {!! Form::label('note', 'Notes') !!}
-                            {!! Form::textarea('note', $vendor->note_vendor_text, ['class'=>'form-control', 'rows'=>'3']) !!}
+                            {!! Form::label('note_vendor', 'Notes') !!}
+                            {!! Form::textarea('note_vendor', $vendor->note_vendor_text, ['class'=>'form-control', 'rows'=>'3']) !!}
                         </div>
                     </div>
                     <div class="row mt-3">
