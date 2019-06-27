@@ -405,7 +405,7 @@ class OrganizationController extends Controller
             $url_twitter->website_type='Twitter';
         $url_twitter->save();
 
-        return Redirect::action('OrganizationController@index');
+        return Redirect::action('OrganizationController@show',$organization->id);
     }
 
     /**

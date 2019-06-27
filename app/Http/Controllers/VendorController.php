@@ -368,7 +368,7 @@ class VendorController extends Controller
             $url_twitter->website_type='Twitter';
         $url_twitter->save();
 
-        return Redirect::action('VendorController@index');
+        return Redirect::action('VendorController@show',$vendor->id);
     }
 
     /**
