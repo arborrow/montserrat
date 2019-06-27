@@ -150,7 +150,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($vendor->touchpoints as $touchpoint)
+                            @foreach($vendor->touchpoints->sortByDesc('touched_at') as $touchpoint)
                             <tr>
                                 <td><a href="../touchpoint/{{ $touchpoint->id}}">{{ $touchpoint->touched_at }}</a></td>
                                 <td><a href="../person/{{ $touchpoint->staff->id}}">{{ $touchpoint->staff->display_name }}</a></td>
