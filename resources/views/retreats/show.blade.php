@@ -5,9 +5,9 @@
     <div class="col-12">
         <h1>
             @can('update-retreat')
-                Retreat {!!Html::link(url('retreat/'.$retreat->id.'/edit'),$retreat->title.' ('.$retreat->idnumber.')')!!} 
+                Retreat {!!Html::link(url('retreat/'.$retreat->id.'/edit'),$retreat->title.' ('.$retreat->idnumber.')')!!}
             @else
-                Retreat {{$retreat->title.' ('.$retreat->idnumber.')'}} 
+                Retreat {{$retreat->title.' ('.$retreat->idnumber.')'}}
             @endCan
         </h1>
     </div>
@@ -15,7 +15,7 @@
         {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-outline-dark')) !!}
         @can('create-touchpoint')
             {!! Html::link(action('TouchpointController@add_retreat',$retreat->id),'Retreat touchpoint',array('class' => 'btn btn-outline-dark'))!!}
-        @endCan    
+        @endCan
         @can('show-contact')
             {!! Html::link(action('PageController@retreatantinforeport',$retreat->idnumber),'Retreatant information',array('class' => 'btn btn-outline-dark'))!!}
             {!! Html::link(action('PageController@retreatrosterreport',$retreat->idnumber),'Retreatant roster',array('class' => 'btn btn-outline-dark'))!!}
@@ -107,12 +107,14 @@
                     </div>
                 </div>
             </div>
-            @if (Storage::has('event/'.$retreat->id.'/group_photo.jpg'))
+            @can('show-attachment')
+              @if (Storage::has('event/'.$retreat->id.'/group_photo.jpg'))
                 <div class="col-12">
                     <h2>Group Photo</h2>
                     <img src="{{url('retreat/'.$retreat->id).'/photo'}}" class="img" style="padding:5px; width:75%">
                 </div>
-            @endif
+              @endif
+            @endCan
         </div>
     </div>
     <div class="col-12">
@@ -125,7 +127,7 @@
             <div class="col-6 text-left">
                 @can('delete-retreat')
                     {!! Form::open(['method' => 'DELETE', 'route' => ['retreat.destroy', $retreat->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                    {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                    {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
                     {!! Form::close() !!}
                 @endCan
             </div>
@@ -171,7 +173,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @can('show-registration')    
+                            @can('show-registration')
                                 @foreach($registrations->sortBy('retreatant.sort_name') as $registration)
                                     @if ($registration->status_id == config('polanco.registration_status_id.waitlist'))
                                         <tr class="warning">
