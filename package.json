@@ -17,7 +17,7 @@
     "copy-webpack-plugin": "^4.5.4",
     "cross-env": "^5.1",
     "flatpickr": "^4.5.2",
-    "imagemin-mozjpeg": "^7.0.0",
+    "imagemin-mozjpeg": "^8.0.0",
     "imagemin-webpack-plugin": "^2.3.0",
     "jquery": "~>3.4.0",
     "jquery-ui-bundle": "^1.12.1-migrate",
