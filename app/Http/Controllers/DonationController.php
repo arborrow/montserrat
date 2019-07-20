@@ -29,7 +29,7 @@ class DonationController extends Controller
     public function agc($year = null)
     {
         if (!isset($year)) {
-            $year=date("Y");
+            $year = ( date('m') > 6) ? date('Y') + 1 : date('Y');
         }
 
         // only show for FY 2008 and above because data does not exist
