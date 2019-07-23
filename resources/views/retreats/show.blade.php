@@ -136,7 +136,7 @@
     <div class="col-12 mt-3">
         <div class="row">
             <div class="col-12">
-                <h2>Retreatants Registered for {!!Html::link(url('retreat/'.$retreat->id.'/edit'),$retreat->idnumber.' - '.$retreat->title)!!} </h2>
+                <h2>{{$registrations->total()}} Registrations {{($status ? '('.ucfirst($status).')' : NULL) }} for {!!Html::link(url('retreat/'.$retreat->id.'/edit'),$retreat->idnumber.' - '.$retreat->title)!!} </h2>
                 @can('create-registration')
                     {!! Html::link(action('RegistrationController@register',$retreat->id),'Register a retreatant',array('class' => 'btn btn-outline-dark'))!!}
                 @endCan
@@ -213,7 +213,8 @@
                                             @endCan
                                         </td>
                                     </tr>
-                                @endforeach
+				    @endforeach
+				    {{ $registrations->render() }}
                             @endCan
                         </tbody>
                     </table>
