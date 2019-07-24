@@ -201,12 +201,12 @@ class RetreatController extends Controller
         return view('retreats.waitlist', compact('retreat', 'registrations'));//
     }
 
-    public function get_event_by_id_number($id_number)
+    public function get_event_by_id_number($id_number, $status=NULL)
     {
         $this->authorize('show-retreat');
         $retreat = \App\Retreat::with('retreatmasters', 'innkeeper', 'assistant', 'captains')->whereIdnumber($id_number)->firstOrFail();
-        $registrations = \App\Registration::where('event_id', '=', $retreat->id)->with('retreatant.parish')->orderBy('register_date', 'ASC')->paginate(50);
-        return view('retreats.show', compact('retreat', 'registrations'));//
+        return $this->show($retreat->id,$status);
+
     }
 
     /**
