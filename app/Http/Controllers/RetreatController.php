@@ -205,7 +205,7 @@ class RetreatController extends Controller
     {
         $this->authorize('show-retreat');
         $retreat = \App\Retreat::with('retreatmasters', 'innkeeper', 'assistant', 'captains')->whereIdnumber($id_number)->firstOrFail();
-        $registrations = \App\Registration::where('event_id', '=', $retreat->id)->with('retreatant.parish')->orderBy('register_date', 'ASC')->get();
+        $registrations = \App\Registration::where('event_id', '=', $retreat->id)->with('retreatant.parish')->orderBy('register_date', 'ASC')->paginate(50);
         return view('retreats.show', compact('retreat', 'registrations'));//
     }
 
