@@ -22,6 +22,7 @@
             </div>
         @else
             <table class="table table-bordered table-striped table-hover table-responsive-md">
+                {{ $donations->render() }}
                 <thead>
                     <tr>
                         <th>Date</th>
