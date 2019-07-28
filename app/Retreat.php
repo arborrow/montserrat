@@ -80,7 +80,7 @@ class Retreat extends Model
 
     public function retreatants()
     {
-        return $this->registrations()->whereCanceledAt(null)->whereStatusId(config('polanco.registration_status_id.registered'));
+        return $this->registrations()->whereCanceledAt(null);
     }
     public function retreatants_waitlist()
     {

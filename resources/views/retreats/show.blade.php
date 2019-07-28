@@ -174,7 +174,7 @@
                         </thead>
                         <tbody>
                             @can('show-registration')
-                                @foreach($registrations->sortBy('retreatant.sort_name') as $registration)
+                                @foreach($registrations as $registration)
                                     @if ($registration->status_id == config('polanco.registration_status_id.waitlist'))
                                         <tr class="warning">
                                     @else

@@ -171,22 +171,52 @@ class RetreatController extends Controller
 
         switch ($status) {
             case 'active':
-                $registrations = \App\Registration::where('event_id', '=', $id)->whereNull('canceled_at')->with('retreatant.parish')->orderBy('register_date', 'ASC')->paginate(50);
+                $registrations = \App\Registration::select('participant.*', 'contact.sort_name')->
+                  leftjoin('contact','participant.contact_id','=','contact.id')->
+                  orderBy('contact.sort_name')->
+                  whereEventId($id)->
+                  whereNull('canceled_at')->
+                  paginate(50);
                 break;
             case 'cancel':
-                $registrations = \App\Registration::where('event_id', '=', $id)->whereNotNull('canceled_at')->with('retreatant.parish')->orderBy('register_date', 'ASC')->paginate(50);
+                $registrations = \App\Registration::select('participant.*', 'contact.sort_name')->
+                  leftjoin('contact','participant.contact_id','=','contact.id')->
+                  orderBy('contact.sort_name')->
+                  whereEventId($id)->
+                  whereNotNull('canceled_at')->
+                  paginate(50);
                 break;
             case 'confirm':
-                $registrations = \App\Registration::where('event_id', '=', $id)->whereNotNull('registration_confirm_date')->with('retreatant.parish')->orderBy('register_date', 'ASC')->paginate(50);
+                $registrations = \App\Registration::select('participant.*', 'contact.sort_name')->
+                  leftjoin('contact','participant.contact_id','=','contact.id')->
+                  orderBy('contact.sort_name')->whereEventId($id)->
+                  whereNotNull('registration_confirm_date')->
+                  paginate(50);
                 break;
             case 'arrive':
-                $registrations = \App\Registration::where('event_id', '=', $id)->whereNotNull('arrived_at')->with('retreatant.parish')->orderBy('register_date', 'ASC')->paginate(50);
+                $registrations = \App\Registration::select('participant.*', 'contact.sort_name')->
+                  leftjoin('contact','participant.contact_id','=','contact.id')->
+                  orderBy('contact.sort_name')->
+                  whereEventId($id)->
+                  whereNotNull('arrived_at')->
+                  paginate(50);
                 break;
             case 'depart':
-                $registrations = \App\Registration::where('event_id', '=', $id)->whereNotNull('departed_at')->with('retreatant.parish')->orderBy('register_date', 'ASC')->paginate(50);
+                $registrations = \App\Registration::select('participant.*', 'contact.sort_name')->
+                  leftjoin('contact','participant.contact_id','=','contact.id')->
+                  orderBy('contact.sort_name')->
+                  whereEventId($id)->
+                  whereNotNull('departed_at')->
+                  paginate(50);
                 break;
             default:
-                $registrations = \App\Registration::where('event_id', '=', $id)->with('retreatant.parish')->orderBy('register_date', 'ASC')->paginate(50);
+//                $registrations = \App\Registration::whereEventId($id)->whereNull('canceled_at')->with('retreatant.parish')->paginate(100);
+                $registrations = \App\Registration::select('participant.*', 'contact.sort_name')->
+                  leftjoin('contact','participant.contact_id','=','contact.id')->
+                  orderBy('contact.sort_name')->
+                  whereEventId($id)->
+                  paginate(50);
+                // dd($registrations);
                 break;
         }
 
