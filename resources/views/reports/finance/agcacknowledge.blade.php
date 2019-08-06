@@ -26,8 +26,8 @@ Fr. Tim Thompson <br /><br />
 
 <div style="font-variant:small-caps"><strong>Jesuit Community</strong></div><br />
 Fr. Anthony Borrow, S.J.<br />
-Fr. Mark McKenzie, S.J.<br />
-
+Fr. Ron Gonzales, S.J.<br />
+Fr. Roy Joseph, S.J.<br />
         </td>
         <td class="main" style="padding-right: 50px; padding-left:20px; padding-top:20px;">
             <div style="position:absolute; right: 0px; padding-right:60px;">{{date('F d, Y')}}</div><br /><br />
