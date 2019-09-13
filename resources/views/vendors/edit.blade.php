@@ -47,7 +47,7 @@
                         </div>
                         <div class="col-12 col-lg-4">
                             {!! Form::label('state_province_id', 'State') !!}
-                            {!! Form::select('state_province_id', $states, $vendor->address_primary_state, ['class' => 'form-control']) !!}
+                            {!! Form::select('state_province_id', $states, $vendor->address_primary->state_province_id, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-12 col-lg-4">
                             {!! Form::label('postal_code', 'Zip') !!}
