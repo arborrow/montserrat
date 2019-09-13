@@ -131,6 +131,14 @@ class Contact extends Model
             return null;
         }
     }
+    public function getAddressPrimaryStateIdAttribute()
+    {
+        if (isset($this->address_primary->state->id)) {
+            return $this->address_primary->state->id;
+        } else {
+            return null;
+        }
+    }
     public function getAddressPrimaryPostalCodeAttribute()
     {
         if (isset($this->address_primary->postal_code)) {
