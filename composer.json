@@ -25,14 +25,15 @@
         "zizaco/entrust": "5.2.x-dev"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.2",
         "beyondcode/laravel-dump-server": "^1.0",
         "filp/whoops": "^2.0",
         "fzaninotto/faker": "^1.4",
+        "laracasts/generators": "^1.1",
+        "laravel/homestead": "^7.17",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^3.0",
         "phpunit/phpunit": "^7.5",
-        "laracasts/generators": "^1.1",
-        "laravel/homestead": "^7.17",
         "symfony/css-selector": "~3.1",
         "symfony/dom-crawler": "~3.1",
         "xethron/migrations-generator": "^2.0"

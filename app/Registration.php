@@ -11,7 +11,7 @@ class Registration extends Model
     use SoftDeletes;
     protected $table = 'participant';
     protected $dates = ['register_date', 'registration_confirm_date', 'attendance_confirm_date', 'canceled_at', 'arrived_at','departed_at','updated_at', 'deleted_at','created_at'];
-   
+
     public function setArrivedAtAttribute($date)
     {
         if (strlen($date)) {
@@ -103,8 +103,8 @@ class Registration extends Model
         } else {
             return number_format(0,2);
         }
-         
-        
+
+
     }
     public function getEventLinkAttribute()
     {
@@ -147,7 +147,7 @@ class Registration extends Model
         }
         return 'Unspecified status';
     }
-    
+
     public function getStatusNameAttribute()
     {
         if (isset($this->status_id)) {
@@ -156,7 +156,7 @@ class Registration extends Model
             return 'Unassigned status';
         }
     }
-    
+
     public function getRegistrationConfirmDateTextAttribute()
     {
         if (isset($this->registration_confirm_date)) {
@@ -212,7 +212,7 @@ class Registration extends Model
         if (($this->status_id == config('polanco.registration_status_id.waitlist')) && (!isset($this->canceled_at)) ) {
             $status .= '<span class="btn btn-warning">Waitlist: '.$this->register_date.'</span>';
         }
-        
+
         return $status;
     }
     public function getRetreatNameAttribute()
@@ -248,7 +248,7 @@ class Registration extends Model
             return null;
         }
     }
-    
+
 
     public function getRoomNameAttribute()
     {
@@ -258,7 +258,7 @@ class Registration extends Model
             return 'N/A';
         }
     }
-    
+
     public function event()
     {
         return $this->hasOne(Retreat::class, 'id', 'event_id');
@@ -283,6 +283,10 @@ class Registration extends Model
     {
         return $this->belongsTo(Contact::class, 'contact_id', 'id');
     }
+    public function retreatant_events()
+    {
+        return $this->hasOneThrough(Registration::class, Contact::class,'id','contact_id','contact_id','id');
+    }
     public function room()
     {
         return $this->hasOne(Room::class, 'id', 'room_id');
@@ -292,19 +296,19 @@ class Registration extends Model
         return $this->hasOne(Donation::class, 'donation_id', 'donation_id');
     }
     public function getDonationPledgeAttribute() {
-        
+
         if (!is_null($this->donation)) {
-            return $this->donation->donation_amount; 
-            
+            return $this->donation->donation_amount;
+
         } else {
             return 0;
         }
     }
     public function getPaymentPaidAttribute() {
-        
+
         if ((!is_null($this->donation) && (!is_null($this->donation->retreat_offering)))) {
-            return $this->donation->retreat_offering->payment_amount; 
-            
+            return $this->donation->retreat_offering->payment_amount;
+
         } else {
             return 0;
         }

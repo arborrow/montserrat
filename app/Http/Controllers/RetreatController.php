@@ -215,8 +215,9 @@ class RetreatController extends Controller
                   leftjoin('contact','participant.contact_id','=','contact.id')->
                   orderBy('contact.sort_name')->
                   whereEventId($id)->
+                  withCount('retreatant_events')->
                   paginate(50);
-                // dd($registrations);
+                 // dd($registrations);
                 break;
         }
 
