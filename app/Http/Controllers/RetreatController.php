@@ -176,6 +176,7 @@ class RetreatController extends Controller
                   orderBy('contact.sort_name')->
                   whereEventId($id)->
                   whereNull('canceled_at')->
+                  withCount('retreatant_events')->
                   paginate(50);
                 break;
             case 'cancel':
@@ -184,6 +185,7 @@ class RetreatController extends Controller
                   orderBy('contact.sort_name')->
                   whereEventId($id)->
                   whereNotNull('canceled_at')->
+                  withCount('retreatant_events')->
                   paginate(50);
                 break;
             case 'confirm':
@@ -191,6 +193,7 @@ class RetreatController extends Controller
                   leftjoin('contact','participant.contact_id','=','contact.id')->
                   orderBy('contact.sort_name')->whereEventId($id)->
                   whereNotNull('registration_confirm_date')->
+                  withCount('retreatant_events')->
                   paginate(50);
                 break;
             case 'arrive':
@@ -199,6 +202,7 @@ class RetreatController extends Controller
                   orderBy('contact.sort_name')->
                   whereEventId($id)->
                   whereNotNull('arrived_at')->
+                  withCount('retreatant_events')->
                   paginate(50);
                 break;
             case 'depart':
@@ -207,6 +211,7 @@ class RetreatController extends Controller
                   orderBy('contact.sort_name')->
                   whereEventId($id)->
                   whereNotNull('departed_at')->
+                  withCount('retreatant_events')->
                   paginate(50);
                 break;
             default:
