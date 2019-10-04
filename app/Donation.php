@@ -12,6 +12,7 @@ class Donation extends Model
     protected $fillable =  ['donation_id', 'donor_id', 'donation_description', 'donation_amount','payment_description','Notes','contact_id'];
     protected $dates = ['deleted_at','created_at','updated_at','start_date','end_date','donation_date'];
     protected $primaryKey = "donation_id";
+    protected $appends = ['payments_paid'];
 
     public function contact()
     {

@@ -31,7 +31,7 @@ class RetreatController extends Controller
         $defaults['type']='Retreat';
         $event_types = \App\EventType::whereIsActive(1)->orderBy('name')->pluck('id', 'name');
 
-        $retreats = \App\Retreat::whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc')->with('retreatmasters', 'innkeeper', 'assistant')->get();
+        $retreats = \App\Retreat::whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc')->with('retreatmasters.prefix', 'retreatmasters.suffix', 'innkeeper.prefix','innkeeper.suffix', 'assistant.prefix','assistant.suffix')->get();
         $oldretreats = \App\Retreat::whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date', 'desc')->with('retreatmasters', 'innkeeper', 'assistant')->paginate(100);
         return view('retreats.index', compact('retreats', 'oldretreats', 'defaults', 'event_types'));   //
     }

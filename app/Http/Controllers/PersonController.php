@@ -27,8 +27,8 @@ class PersonController extends Controller
     public function index()
     {
         $this->authorize('show-contact');
-        $persons = \App\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'parish.contact_a')->paginate(100);
-
+        $persons = \App\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->with('address_primary.state', 'phones', 'emails', 'websites', 'parish.contact_a.address_primary','prefix','suffix')->paginate(100);
+        // dd($persons);
         return view('persons.index', compact('persons'));   //
     }
 
@@ -695,7 +695,7 @@ class PersonController extends Controller
         $person->parish_name = '';
         if (!empty($person->parish)) {
             $person->parish_id = $person->parish->contact_id_a;
-            $person->parish_name = $person->parish->contact_a->organization_name.' ('.$person->parish->contact_a->address_primary->city.') - '.$person->parish->contact_a->diocese->contact_a->organization_name;
+            $person->parish_name = $person->parish->contact_a->organization_name.' ('.$person->parish->contact_a->address_primary_city.') - '.$person->parish->contact_a->diocese->contact_a->organization_name;
         }
 
         $preferred_language = \App\Language::whereName($person->preferred_language)->first();
@@ -1813,7 +1813,7 @@ class PersonController extends Controller
             if ((empty($contact->address_primary->supplemental_address_1)) && (!empty($merge->address_primary->supplemental_address_1))) {
                 $contact->address_primary->supplemental_address_1 = $merge->address_primary->supplemental_address_1;
             }
-            if ((empty($contact->address_primary->city)) && (!empty($merge->address_primary->city))) {
+            if ((empty($contact->address_primary_city)) && (!empty($merge->address_primary_city))) {
                 $contact->address_primary->city = $merge->address_primary->city;
             }
             if ((empty($contact->address_primary->state_province_id)) && (!empty($merge->address_primary->state_province_id))) {
