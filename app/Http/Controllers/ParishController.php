@@ -26,7 +26,7 @@ class ParishController extends Controller
     public function index()
     {
         $this->authorize('show-contact');
-        $parishes = \App\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'pastor.contact_b', 'diocese.contact_a')->get();
+        $parishes = \App\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'pastor.contact_b.prefix', 'pastor.contact_b.suffix','diocese.contact_a')->get();
         $parishes = $parishes->sortBy(function ($parish) {
             return sprintf('%-12s%s', $parish->diocese_name, $parish->organization_name);
         });
