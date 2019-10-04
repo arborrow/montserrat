@@ -642,7 +642,7 @@ class Contact extends Model
     {
         if (isset($this->parish->contact_id_a)&&($this->parish->contact_id_a>0)) {
             $path = url('parish/'.$this->parish->contact_a->id);
-            return "<a href='".$path."'>".$this->parish->contact_a->display_name.' ('.$this->parish->contact_a->address_primary->city.')'."</a>";
+            return "<a href='".$path."'>".$this->parish->contact_a->display_name.' ('.$this->parish->contact_a->address_primary_city.')'."</a>";
         } else {
             return null;
         }
