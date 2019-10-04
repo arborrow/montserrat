@@ -32,10 +32,10 @@
                     {!! Form::select('diocese_id', $dioceses, $parish->diocese_id, ['class' => 'form-control']) !!}
                 </div>
                 <div class="col-12 col-md-4">
-                    {!! Form::label('pastor_id', 'Pastor:')  !!} 
+                    {!! Form::label('pastor_id', 'Pastor:')  !!}
                     @if (empty($parish->pastor->contact_b))
                         {!! Form::select('pastor_id', $pastors, 0, ['class' => 'form-control']) !!}
-                    @else 
+                    @else
                         {!! Form::select('pastor_id', $pastors, $parish->pastor->contact_b->id, ['class' => 'form-control']) !!}
                     @endIf
                 </div>
@@ -53,7 +53,7 @@
                 </div>
                 <div class="col-12 col-md-4">
                     {!! Form::label('state_province_id', 'State:') !!}
-                    {!! Form::select('state_province_id', $states, $parish->address_primary->state_province_id, ['class' => 'form-control']) !!}
+                    {!! Form::select('state_province_id', $states, $parish->address_primary_state_id, ['class' => 'form-control']) !!}
                 </div>
                 <div class="col-12 col-md-4">
                     {!! Form::label('postal_code', 'Zip:') !!}
