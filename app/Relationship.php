@@ -63,18 +63,4 @@ class Relationship extends Model
             return null;
         }
     }
-    public function getContactAAddressAttribute() {
-      if (isset($this->contact_a->address_primary->street_address)) {
-        return $this->contact_a->address_primary->street_address;
-      } else {
-        return 'No A Address';
-      }
-    }
-    public function getContactBAddressAttribute() {
-      if (isset($this->contact_b->address_primary->street_address)) {
-        return $this->contact_b->address_primary->street_address;
-      } else {
-        return 'No B Address';
-      }
-    }
 }
