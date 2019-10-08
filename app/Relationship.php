@@ -10,22 +10,23 @@ class Relationship extends Model
     use SoftDeletes;
     protected $table = 'relationship';
     protected $fillable = ['contact_id_a','contact_id_b','relationship_type_id','is_active','description'];
-            
+    protected $appends = ['contact_a_address','contact_b_address'];
+
     public function relationship_type()
     {
         return $this->hasOne(RelationshipType::class, 'id', 'relationship_type_id');
     }
-    
+
     public function contact_a()
     {
         return $this->hasOne(Contact::class, 'id', 'contact_id_a');
     }
-    
+
     public function contact_b()
     {
         return $this->hasOne(Contact::class, 'id', 'contact_id_b');
     }
-    
+
     public function getContactADisplayNameAttribute()
     {
         if (isset($this->contact_a) && $this->contact_a > 0) {
@@ -61,5 +62,19 @@ class Relationship extends Model
         } else {
             return null;
         }
+    }
+    public function getContactAAddressAttribute() {
+      if (isset($this->contact_a->address_primary->street_address)) {
+        return $this->contact_a->address_primary->street_address;
+      } else {
+        return 'No A Address';
+      }
+    }
+    public function getContactBAddressAttribute() {
+      if (isset($this->contact_b->address_primary->street_address)) {
+        return $this->contact_b->address_primary->street_address;
+      } else {
+        return 'No B Address';
+      }
     }
 }

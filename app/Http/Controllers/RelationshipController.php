@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\Relationship;
 use Illuminate\Support\Facades\Redirect;
+use DB;
+
 
 class RelationshipController extends Controller
 {
@@ -90,5 +93,19 @@ class RelationshipController extends Controller
         $this->authorize('delete-relationship');
         \App\Relationship::destroy($id);
         return Redirect::back();
+    }
+    public function disjoined() {
+      $this->authorize('update-relationship');
+      $this->authorize('update-contact');
+      $couples = DB::table('relationship as r')
+        ->select('r.id','r.contact_id_a as husband_id','r.contact_id_b as wife_id','ha.street_address as husband_address','wa.street_address as wife_address')
+        ->leftJoin('address as ha','r.contact_id_a','=','ha.contact_id')
+        ->leftJoin('address as wa','r.contact_id_b','=','wa.contact_id')
+        ->where('r.relationship_type_id','=',2)
+        ->where('ha.is_primary','=',1)
+        ->where('wa.is_primary','=',1)
+        ->whereRaw('ha.street_address <> wa.street_address')
+        ->get();
+      return view('relationships.disjoined', compact('couples'));
     }
 }

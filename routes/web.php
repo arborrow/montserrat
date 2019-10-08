@@ -177,7 +177,9 @@ Route::get('registration/{id}/arrive', ['as' => 'registration.arrive', 'uses' =>
 Route::get('registration/{id}/cancel', ['as' => 'registration.cancel', 'uses' => 'RegistrationController@cancel']);
 Route::get('registration/{id}/depart', ['as' => 'registration.depart', 'uses' => 'RegistrationController@depart']);
 Route::resource('registration', 'RegistrationController');
+Route::get('relationship/disjoined', ['as' => 'relationship.disjoined', 'uses' => 'RelationshipController@disjoined']);
 Route::resource('relationship', 'RelationshipController');
+
 
 Route::post('relationship_type/addme', ['as' => 'relationship_type.addme', 'uses' => 'RelationshipTypeController@addme']);
 Route::get('relationship_type/{id}/add/{a?}/{b?}', ['as'=>'relationship_type.add','uses' => 'RelationshipTypeController@add']);
