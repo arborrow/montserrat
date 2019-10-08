@@ -6,7 +6,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                    <span class="grey">Disjoined Couples Index</span>
+                    <span class="grey">Disjoined Couples Index ({{ $couples->count() }})</span>
                 </div>
                 @if ($couples->isEmpty())
                     <p>Aleluya, there are no disjoined couples!</p>
