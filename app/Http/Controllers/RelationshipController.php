@@ -106,6 +106,7 @@ class RelationshipController extends Controller
         ->where('r.relationship_type_id','=',2)
         ->where('ha.is_primary','=',1)
         ->where('wa.is_primary','=',1)
+        ->whereNull('r.deleted_at')
         ->whereRaw('ha.street_address <> wa.street_address')
         ->orderBy('husband_name')
         ->get();
@@ -123,7 +124,7 @@ class RelationshipController extends Controller
           $relationship->contact_b->address_primary->postal_code = $relationship->contact_a->address_primary->postal_code;
           $relationship->contact_b->address_primary->save();
         break;
-        case $relationship->contact_id_b : 
+        case $relationship->contact_id_b :
           $relationship->contact_a->address_primary->street_address = $relationship->contact_b->address_primary->street_address;
           $relationship->contact_a->address_primary->city = $relationship->contact_b->address_primary->city;
           $relationship->contact_a->address_primary->state_province_id = $relationship->contact_b->address_primary->state_province_id;
