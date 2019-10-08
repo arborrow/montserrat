@@ -178,6 +178,7 @@ Route::get('registration/{id}/cancel', ['as' => 'registration.cancel', 'uses' =>
 Route::get('registration/{id}/depart', ['as' => 'registration.depart', 'uses' => 'RegistrationController@depart']);
 Route::resource('registration', 'RegistrationController');
 Route::get('relationship/disjoined', ['as' => 'relationship.disjoined', 'uses' => 'RelationshipController@disjoined']);
+Route::get('relationship/rejoin/{id}/{dominant}', ['as' => 'relationship.rejoin', 'uses' => 'RelationshipController@rejoin']);
 Route::resource('relationship', 'RelationshipController');
 
 
