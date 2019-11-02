@@ -89,7 +89,7 @@ class Contact extends Model
     }
     public function avatar()
     {
-        return $this->hasOne(Attachment::class, 'entity_id', 'id')->whereFileTypeId(config('polanco.file_type.contact_avatar'));
+        return $this->hasOne(Attachment::class, 'entity_id', 'id')->whereEntity('contact')->whereFileTypeId(config('polanco.file_type.contact_avatar'));
     }
     public function email_primary()
     {
