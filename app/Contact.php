@@ -778,7 +778,7 @@ class Contact extends Model
     }
     public function groups()
     {
-        return $this->hasMany(GroupContact::class, 'contact_id', 'id')->whereStaus("Added");
+        return $this->hasMany(GroupContact::class, 'contact_id', 'id')->whereStatus("Added");
     }
     public function languages()
     {
