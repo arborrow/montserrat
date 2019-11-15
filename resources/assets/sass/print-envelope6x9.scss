@@ -1,0 +1,42 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : Jan 27, 2016, 12:54:48 PM
+    Author     : anthonyb
+*/
+
+@media print {
+    @page {
+        size: 6.0in 9.0in;
+        size: landscape;
+        margin-left: 0.0in;
+        margin-top: 0.4in;
+    }
+}
+
+@font-face {
+    font-family: perpetua;
+    src: local(perpetua), url('../fonts/perpetua.ttf') format('opentype');
+}
+
+body {
+    background: white;
+    font-family: "perpetua";
+    font-size: 16pt;
+}
+
+.return-address {
+    font-size: 12pt;
+    vertical-align: top;
+}
+
+.delivery-address {
+    padding-left: 2.5in;
+    padding-top: 3.0in;
+    vertical-align: top;
+    font-size: 16pt;
+    font-weight: bold;
+}

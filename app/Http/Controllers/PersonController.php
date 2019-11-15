@@ -719,12 +719,18 @@ class PersonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function envelope10($id)
-    {
-        $this->authorize('show-contact');
-        $person = \App\Contact::findOrFail($id);
-        return view('persons.envelope10', compact('person'));//
-    }
+     public function envelope10($id)
+     {
+         $this->authorize('show-contact');
+         $person = \App\Contact::findOrFail($id);
+         return view('persons.envelope10', compact('person'));//
+     }
+     public function envelope6x9($id)
+     {
+         $this->authorize('show-contact');
+         $person = \App\Contact::findOrFail($id);
+         return view('persons.envelope6x9', compact('person'));//
+     }
 
     /**
      * Show the form for editing the specified resource.
