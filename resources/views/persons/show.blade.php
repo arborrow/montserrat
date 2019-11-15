@@ -61,6 +61,9 @@
                 <span class="btn btn-outline-dark">
                     <a href={{ action('PersonController@envelope10',$person->id) }}><img src={{URL::asset('images/envelope.png')}} title="Print envelope" alt="Print envelope"></a>
                 </span>
+                <span class="btn btn-outline-dark">
+                    <a href={{ action('PersonController@envelope9x6',$person->id) }}><img src={{URL::asset('images/envelope9x6.png')}} title="Print 9x6 envelope" alt="Print 9x6 envelope"></a>
+                </span>
             </div>
         </div>
     </div>
@@ -344,7 +347,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($files->sortByDesc('upload_date') as $file) 
+                            @foreach($files->sortByDesc('upload_date') as $file)
                             <tr>
                                 <td><a href="{{url('contact/'.$person->id.'/attachment/'.$file->uri)}}">{{ $file->uri }}</a></td>
                                 <td>{{$file->description}}</td>

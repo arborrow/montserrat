@@ -725,7 +725,7 @@ class PersonController extends Controller
          $person = \App\Contact::findOrFail($id);
          return view('persons.envelope10', compact('person'));//
      }
-     public function envelope6x9($id)
+     public function envelope9x6($id)
      {
          $this->authorize('show-contact');
          $person = \App\Contact::findOrFail($id);

@@ -145,7 +145,7 @@ Route::group(['prefix' => 'person'], function () {
     Route::get('directors', ['as' => 'directors','uses' => 'PersonController@directors']);
     Route::get('donors', ['as' => 'donors','uses' => 'PersonController@donors']);
     Route::get('{id}/envelope10', ['as' => 'envelope10','uses' => 'PersonController@envelope10']);
-    Route::get('{id}/envelope6x9', ['as' => 'envelope6x9','uses' => 'PersonController@envelope6x9']);
+    Route::get('{id}/envelope9x6', ['as' => 'envelope9x6','uses' => 'PersonController@envelope9x6']);
     Route::get('staff', ['as' => 'staff','uses' => 'PersonController@staff']);
     Route::get('formerboard', ['as' => 'formerboard','uses' => 'PersonController@formerboard']);
     Route::get('innkeepers', ['as' => 'innkeepers','uses' => 'PersonController@innkeepers']);
