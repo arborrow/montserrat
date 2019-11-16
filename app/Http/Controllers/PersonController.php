@@ -10,6 +10,8 @@ use Image;
 use Illuminate\Support\Facades\File;
 use Response;
 use App\Http\Controllers\SystemController;
+use Validator;
+use Illuminate\Validation\Rule;
 
 class PersonController extends Controller
 {
@@ -719,17 +721,36 @@ class PersonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function envelope10($id)
+     public function envelope($id, Request $request)
      {
+        //default size = 10; logo = false
+         $size=(string)"10";
+         $logo=(boolean)0;
+
          $this->authorize('show-contact');
          $person = \App\Contact::findOrFail($id);
-         return view('persons.envelope10', compact('person'));//
-     }
-     public function envelope9x6($id)
-     {
-         $this->authorize('show-contact');
-         $person = \App\Contact::findOrFail($id);
-         return view('persons.envelope6x9', compact('person'));//
+         $v = Validator::make($request->all(),[
+             'size' => Rule::in(["10","9x6"]),
+             'logo' => 'boolean'
+         ]);
+         if (empty($v->invalid())) {
+           $size = isset($request->size) ? (string)$request->size : $size;
+           $logo = isset($request->logo) ? (boolean)$request->logo : $logo;
+           $person->logo = $logo;
+         } else {
+           return Redirect::action('PersonController@show', $person->id);
+         }
+
+         switch ($size) {
+           case "10":
+               return view('persons.envelope10', compact('person'));
+               break;
+           case "9x6":
+               return view('persons.envelope6x9', compact('person'));
+               break;
+           default:
+               return Redirect::action('PersonController@show', $person->id);
+        }
      }
 
     /**
@@ -1502,7 +1523,7 @@ class PersonController extends Controller
 		}
 	}
 
-        return Redirect::action('PersonController@show', $person->id);//
+        return Redirect::action('PersonController@show', $person->id);
     }
 
     /**

@@ -144,8 +144,7 @@ Route::group(['prefix' => 'person'], function () {
     Route::get('deceased', ['as' => 'deceased','uses' => 'PersonController@deceased']);
     Route::get('directors', ['as' => 'directors','uses' => 'PersonController@directors']);
     Route::get('donors', ['as' => 'donors','uses' => 'PersonController@donors']);
-    Route::get('{id}/envelope10', ['as' => 'envelope10','uses' => 'PersonController@envelope10']);
-    Route::get('{id}/envelope9x6', ['as' => 'envelope9x6','uses' => 'PersonController@envelope9x6']);
+    Route::get('{id}/envelope', ['as' => 'envelope','uses' => 'PersonController@envelope']);
     Route::get('staff', ['as' => 'staff','uses' => 'PersonController@staff']);
     Route::get('formerboard', ['as' => 'formerboard','uses' => 'PersonController@formerboard']);
     Route::get('innkeepers', ['as' => 'innkeepers','uses' => 'PersonController@innkeepers']);

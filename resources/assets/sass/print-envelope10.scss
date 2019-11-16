@@ -12,8 +12,8 @@ and open the template in the editor.
     @page {
         size: 4.125in 9.5in;
         size: landscape;
-        margin-left: 5.5in;
-        margin-top: 2in;
+        margin-left: 0.75in;
+        margin-top: 0.75in;
     }
 }
 
@@ -26,4 +26,19 @@ body {
     background: white;
     font-family: "perpetua";
     font-size: 14pt;
+}
+
+.return-address {
+    font-size: 10pt;
+    vertical-align: top;
+    width: 25%;
+}
+
+.delivery-address {
+    padding-left: 3.5in;
+    padding-top: 2.0in;
+    vertical-align: top;
+    font-size: 12pt;
+    font-weight: bold;
+    width: 75%;
 }
