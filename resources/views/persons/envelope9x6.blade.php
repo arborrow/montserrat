@@ -1,4 +1,4 @@
-@extends('envelope6x9')
+@extends('envelope9x6')
 
 @section('content')
 
@@ -15,7 +15,7 @@
             </td>
             <td class='delivery-address' width=75%>
                 <div>
-                {{$person->agc_household_name}} <br />
+                {{$person->addressee}} <br />
                 {{$person->address_primary_street}} <br />
                 {{$person->address_primary_city}}, {{$person->address_primary_state}}  {{$person->address_primary_postal_code}}
                 </div>

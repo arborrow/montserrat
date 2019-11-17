@@ -726,17 +726,31 @@ class PersonController extends Controller
         //default size = 10; logo = false
          $size=(string)"10";
          $logo=(boolean)0;
+         $name=(string)"household";
 
          $this->authorize('show-contact');
          $person = \App\Contact::findOrFail($id);
          $v = Validator::make($request->all(),[
              'size' => Rule::in(["10","9x6"]),
-             'logo' => 'boolean'
+             'logo' => 'boolean',
+             'name' => Rule::in(["full","display","household"])
          ]);
          if (empty($v->invalid())) {
            $size = isset($request->size) ? (string)$request->size : $size;
            $logo = isset($request->logo) ? (boolean)$request->logo : $logo;
+           $name = isset($request->name) ? (string)$request->name : $name;
            $person->logo = $logo;
+           switch($name) {
+             case "full":
+                $person->addressee = $person->full_name;
+                break;
+             case "display":
+                $person->addressee = $person->display_name;
+                break;
+             default:
+                $person->addressee = $person->agc_household_name;
+                break;
+           }
          } else {
            return Redirect::action('PersonController@show', $person->id);
          }
@@ -746,7 +760,7 @@ class PersonController extends Controller
                return view('persons.envelope10', compact('person'));
                break;
            case "9x6":
-               return view('persons.envelope6x9', compact('person'));
+               return view('persons.envelope9x6', compact('person'));
                break;
            default:
                return Redirect::action('PersonController@show', $person->id);
