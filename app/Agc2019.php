@@ -7,8 +7,8 @@ use Carbon\Carbon;
 
 class Agc2019 extends Model
 {
-    protected $table = 'agc2018_clean';
+    protected $table = 'agc_household_name';
     protected $dates = ['last_event', 'last_payment'];  //
     protected $primaryKey = "contact_id";
-    public $timestamps = false;        
+    public $timestamps = false;
 }
