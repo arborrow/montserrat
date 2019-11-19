@@ -130,7 +130,7 @@
                     @if (!empty($address->street_address))
                         <span class="font-weight-bold">{{$address->location->display_name}}:</span>
                         <address class="d-inline">{!!$address->google_map!!}</address>
-                        @can('delete-contact')
+                        @can('delete-address')
                             {!! Form::open(['method' => 'DELETE', 'route' => ['address.destroy', $address->id],'onsubmit'=>'return ConfirmDelete()', 'class' => 'd-inline']) !!}
                                 <button type="submit" class="btn btn-outline-dark btn-sm"><i class="fas fa-trash"></i></button>
                             {!! Form::close() !!}
