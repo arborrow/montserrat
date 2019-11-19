@@ -59,10 +59,10 @@
                     <a href={{ action('PageController@contact_info_report',$person->id) }}>Contact Info Report</a>
                 </span>
                 <span class="btn btn-outline-dark">
-                    <a href={{ action('PersonController@envelope10',$person->id) }}><img src={{URL::asset('images/envelope.png')}} title="Print envelope" alt="Print envelope"></a>
+                    <a href={{ URL('person/'.$person->id.'/envelope?size=10&logo=0') }}><img src={{URL::asset('images/envelope.png')}} title="Print envelope" alt="Print envelope"></a>
                 </span>
                 <span class="btn btn-outline-dark">
-                    <a href={{ action('PersonController@envelope9x6',$person->id) }}><img src={{URL::asset('images/envelope9x6.png')}} title="Print 9x6 envelope" alt="Print 9x6 envelope"></a>
+                    <a href={{ URL('person/'.$person->id.'/envelope?size=9x6&logo=1') }}><img src={{URL::asset('images/envelope9x6.png')}} title="Print 9x6 envelope" alt="Print 9x6 envelope"></a>
                 </span>
             </div>
         </div>
