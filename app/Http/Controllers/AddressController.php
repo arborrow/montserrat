@@ -84,7 +84,7 @@ class AddressController extends Controller
      */
     public function destroy($id)
     {
-        $this->authorize('delete-contact');
+        $this->authorize('delete-address');
         $address = \App\Address::findOrFail($id);
         $contact_id = $address->contact_id;
         \App\Address::destroy($id);
