@@ -39,7 +39,7 @@ Fr. Roy Joseph, S.J.<br />
             Dear {{$donation->contact->agc_household_name}},<br /><br />
             Jesus promises the door will be opened to those who ask, seek, and knock.
 We knocked on your door and you generously answered. Thank you for
-your gift of ${{number_format($donation->payments_paid,2)}} for {{$donation->donation_description}} received on {{$donation->donation_date->format("F d, Y")}} supporting Montserrat
+your gift of ${{number_format($donation->payments_paid,2)}} for {{$donation->donation_description}} supporting Montserrat
 Jesuit Retreat House. We promise you that it will be put to good use.
 <br /><br />
 People need a place to rest and space to pray. At Montserrat, we never get
