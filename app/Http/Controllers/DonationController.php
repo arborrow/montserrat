@@ -21,7 +21,7 @@ class DonationController extends Controller
     public function index()
     {
         $this->authorize('show-donation');
-        $donations = \App\Donation::orderBy('donation_date', 'desc')->with('contact')->paginate(100);
+        $donations = \App\Donation::orderBy('donation_date', 'desc')->with('contact.prefix','contact.suffix')->paginate(100);
         //dd($donations);
         return view('donations.index', compact('donations'));
     }
