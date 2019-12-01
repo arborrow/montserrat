@@ -107,9 +107,6 @@ return [
     'state_province_id_tx' => '1042',
 
     'contact' => [
-        'diocese_dallas' => '3',
-        'diocese_fortworth' => '1',
-        'diocese_tyler' => '2',
         'montserrat' => '620'
     ],
 
