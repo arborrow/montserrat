@@ -26,11 +26,14 @@ class ParishController extends Controller
     public function index()
     {
         $this->authorize('show-contact');
+        $diocese = NULL;
+        $dioceses= \App\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'bishops','primary_bishop')->get();
         $parishes = \App\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'pastor.contact_b.prefix', 'pastor.contact_b.suffix','diocese.contact_a')->get();
         $parishes = $parishes->sortBy(function ($parish) {
             return sprintf('%-12s%s', $parish->diocese_name, $parish->organization_name);
         });
-        return view('parishes.index', compact('parishes'));   //
+        // dd($parishes, $dioceses, $diocese);
+        return view('parishes.index', compact('parishes','dioceses','diocese'));   //
     }
 
     /**
@@ -482,28 +485,15 @@ class ParishController extends Controller
         return Redirect::action('ParishController@index');
     }
 
-    public function fortworthdiocese()
+    public function parish_index_by_diocese($diocese_id)
     {
         $this->authorize('show-contact');
-        $parishes= \App\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'pastor.contact_b', 'diocese.contact_a')->whereHas('diocese.contact_a', function ($query) {
-            $query->where('contact_id_a', '=', config('polanco.contact.diocese_fortworth'));
+        $diocese=  \App\Contact::findOrFail($diocese_id);
+        // dd($diocese);
+        $dioceses= \App\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'bishops','primary_bishop')->get();
+        $parishes= \App\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'pastor.contact_b', 'diocese.contact_a')->whereHas('diocese.contact_a', function ($query) use ($diocese_id) {
+            $query->where('contact_id_a', '=', $diocese_id);
         })->get();
-        return view('parishes.fortworthdiocese', compact('parishes'));   //
-    }
-    public function dallasdiocese()
-    {
-        $this->authorize('show-contact');
-        $parishes= \App\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'pastor.contact_b', 'diocese.contact_a')->whereHas('diocese.contact_a', function ($query) {
-            $query->where('contact_id_a', '=', config('polanco.contact.diocese_dallas'));
-        })->get();
-        return view('parishes.dallasdiocese', compact('parishes'));   //
-    }
-    public function tylerdiocese()
-    {
-        $this->authorize('show-contact');
-        $parishes= \App\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'pastor.contact_b', 'diocese.contact_a')->whereHas('diocese.contact_a', function ($query) {
-            $query->where('contact_id_a', '=', config('polanco.contact.diocese_tyler'));
-        })->get();
-        return view('parishes.tylerdiocese', compact('parishes'));   //
+        return view('parishes.index', compact('parishes','dioceses','diocese'));
     }
 }

@@ -12,18 +12,34 @@
                 </span>
                 @endCan
             </h1>
-            <p class="lead">{{$parishes->count()}} records</p>
-        </div>
-        <div class="col-12">
-            <span class="btn btn-outline-dark">
-                <a href={{ action('ParishController@dallasdiocese') }}>Diocese of Dallas</a>
-            </span>
-            <span class="btn btn-outline-dark">
-                <a href={{ action('ParishController@fortworthdiocese') }}>Diocese of Fort Worth</a>
-            </span>
-            <span class="btn btn-outline-dark">
-                <a href={{ action('ParishController@tylerdiocese') }}>Diocese of Tyler</a>
-            </span>
+            <p class="lead">{{$parishes->count()}} parishes
+                @if($diocese !== NULL && $diocese->organization_name !== NULL)
+                    in {{ $diocese->organization_name }}
+                @endIf
+            </p>
+            @if ($dioceses->isEmpty())
+                <div class="row">
+                    <div class="col-md-4 col-12">
+                        <select class="custom-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                            <option value="">Filter by Diocese ...</option>
+                            <option value="{{url('parish')}}">All Dioceses</option>
+                        </select>
+                    </div>
+                </div>
+            @else
+                <div class="row">
+                    <div class="col-md-4 col-12">
+                        <select class="custom-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                            <option value="">Filter by Diocese ...</option>
+                            <option value="{{url('parish')}}">All Dioceses</option>
+                            @foreach($dioceses as $d)
+                                <option value="{{url('parishes/diocese/'.$d->id)}}">{{$d->sort_name}}</option>
+                            @endForeach
+                        </select>
+                    </div>
+                </div>
+            @endIf
+
         </div>
         <div class="col-12">
             @if ($parishes->isEmpty())

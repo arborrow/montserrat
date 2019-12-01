@@ -131,9 +131,8 @@ Route::resource('parish', 'ParishController');
 Route::resource('payment', 'PaymentController');
 Route::get('payment/create/{donation_id}', ['uses'=> 'PaymentController@create']);
 
-Route::get('parishes/dallas', ['as' => 'dallasparishes','uses' => 'ParishController@dallasdiocese']);
-Route::get('parishes/fortworth', ['as' => 'fortworthparishes','uses' => 'ParishController@fortworthdiocese']);
-Route::get('parishes/tyler', ['as' => 'tylerparishes','uses' => 'ParishController@tylerdiocese']);
+Route::get('parishes/diocese/{diocese_id}', ['uses' => 'ParishController@parish_index_by_diocese']);
+
 Route::group(['prefix' => 'person'], function () {
     Route::get('assistants', ['as' => 'assistants','uses' => 'PersonController@assistants']);
     Route::get('bishops', ['as' => 'bishops','uses' => 'PersonController@bishops']);
