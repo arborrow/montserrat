@@ -488,7 +488,8 @@ class ParishController extends Controller
     public function parish_index_by_diocese($diocese_id)
     {
         $this->authorize('show-contact');
-        $diocese=  \App\Contact::findOrFail($diocese_id)->with('addresses.state', 'phones', 'emails', 'websites', 'bishops','primary_bishop');
+        $diocese=  \App\Contact::findOrFail($diocese_id);
+        // dd($diocese);
         $dioceses= \App\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'bishops','primary_bishop')->get();
         $parishes= \App\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'pastor.contact_b', 'diocese.contact_a')->whereHas('diocese.contact_a', function ($query) use ($diocese_id) {
             $query->where('contact_id_a', '=', $diocese_id);
