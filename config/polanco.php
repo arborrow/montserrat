@@ -153,8 +153,9 @@ return [
         'captain' => '11',
         'board' => '12',
         'staff' => '13',
-        'steward' => '15',
         'volunteer' => '14',
+        'steward' => '15',
+        'runner' => '16',
         'hlm2017' => '17',
     ],
 
