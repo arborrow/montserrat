@@ -166,10 +166,10 @@ class PageController extends Controller
     return view('reports.finance.invoice', compact('donation'));   //
     }
 
-    public function finance_agcacknowledge($donation_id = null)
+    public function finance_agcacknowledge(Request $request, $donation_id = null)
     {
         $this->authorize('show-donation');
-        $current_user = Auth::user();
+        $current_user = $request->user();
         $user_email = \App\Email::whereEmail($current_user->email)->first();
 
         $donation = \App\Donation::with('payments', 'contact', 'retreat')->findOrFail($donation_id);

@@ -39,7 +39,7 @@ class TouchpointController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $this->authorize('create-touchpoint');
         $staff = \App\Contact::with('groups')->whereHas('groups', function ($query) {
@@ -47,7 +47,7 @@ class TouchpointController extends Controller
         })->orderBy('sort_name')->pluck('sort_name', 'id');
         // TODO: replace this with an autocomplete text box for performance rather than a dropdown box
         $persons = \App\Contact::orderBy('sort_name')->pluck('sort_name', 'id');
-        $current_user = Auth::user();
+        $current_user = $request->user();
         $user_email = \App\Email::whereEmail($current_user->email)->first();
         if (empty($user_email->contact_id)) {
             $defaults['user_id'] = 0;
@@ -58,14 +58,14 @@ class TouchpointController extends Controller
         return view('touchpoints.create', compact('staff', 'persons', 'defaults'));
     }
 
-    public function add_group($group_id = 0)
+    public function add_group(Request $request, $group_id = 0)
     {
         $this->authorize('create-touchpoint');
         $staff = \App\Contact::with('groups')->whereHas('groups', function ($query) {
             $query->where('group_id', '=', config('polanco.group_id.staff'));
         })->orderBy('sort_name')->pluck('sort_name', 'id');
         $groups = \App\Group::orderBy('title')->pluck('title', 'id');
-        $current_user = Auth::user();
+        $current_user = $request->user();
         $user_email = \App\Email::whereEmail($current_user->email)->first();
         $defaults['group_id'] = $group_id;
         if (empty($user_email->contact_id)) {
@@ -77,7 +77,7 @@ class TouchpointController extends Controller
         return view('touchpoints.add_group', compact('staff', 'groups', 'defaults'));
     }
 
-    public function add_retreat($event_id = 0)
+    public function add_retreat(Request $request, $event_id = 0)
     {
         $this->authorize('create-touchpoint');
         $staff = \App\Contact::with('groups')->whereHas('groups', function ($query) {
@@ -89,7 +89,7 @@ class TouchpointController extends Controller
         $retreat = \App\Retreat::findOrFail($event_id);
         // TODO: replace this with an autocomplete text box for performance rather than a dropdown box
         $participants = \App\Registration::whereEventId($event_id)->whereCanceledAt(null)->get();
-        $current_user = Auth::user();
+        $current_user = $request->user();
         $user_email = \App\Email::whereEmail($current_user->email)->first();
 
         $defaults['event_id'] = $event_id;
@@ -103,7 +103,7 @@ class TouchpointController extends Controller
         return view('touchpoints.add_retreat', compact('staff', 'retreat', 'retreats', 'participants', 'defaults'));
     }
 
-    public function add_retreat_waitlist($event_id = 0)
+    public function add_retreat_waitlist(Request $request, $event_id = 0)
     {
         $this->authorize('create-touchpoint');
         $staff = \App\Contact::with('groups')->whereHas('groups', function ($query) {
@@ -115,7 +115,7 @@ class TouchpointController extends Controller
         $retreat = \App\Retreat::findOrFail($event_id);
         // TODO: replace this with an autocomplete text box for performance rather than a dropdown box
         $participants = \App\Registration::whereEventId($event_id)->whereStatusId(config('polanco.registration_status_id.waitlist'))->whereCanceledAt(null)->get();
-        $current_user = Auth::user();
+        $current_user = $request->user();
         $user_email = \App\Email::whereEmail($current_user->email)->first();
 
         $defaults['event_id'] = $event_id;
@@ -129,11 +129,11 @@ class TouchpointController extends Controller
         return view('touchpoints.add_retreat_waitlist', compact('staff', 'retreat', 'retreats', 'participants', 'defaults'));
     }
 
-    public function add($id)
+    public function add(Request $request, $id)
     {
         $this->authorize('create-touchpoint');
 
-        $current_user = Auth::user();
+        $current_user = $request->user();
         $user_email = \App\Email::whereEmail($current_user->email)->first();
         $defaults['contact_id'] = $id;
         if (empty($user_email->contact_id)) {

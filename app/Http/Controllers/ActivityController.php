@@ -34,7 +34,7 @@ class ActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $this->authorize('create-activity');
         $staff = \App\Contact::with('groups')->whereHas('groups', function ($query) {
@@ -42,7 +42,7 @@ class ActivityController extends Controller
         })->orderBy('sort_name')->pluck('sort_name', 'id');
         // TODO: replace this with an autocomplete text box for performance rather than a dropdown box
         $persons = \App\Contact::orderBy('sort_name')->pluck('sort_name', 'id');
-        $current_user = Auth::user();
+        $current_user = $request->user();
         $user_email = \App\Email::whereEmail($current_user->email)->first();
         if (empty($user_email->contact_id)) {
             $defaults['user_id'] = 0;
