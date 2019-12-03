@@ -135,7 +135,7 @@ class PageController extends Controller
             // dd($report_date, $grouped_payments,$grand_total);
         return view('reports.finance.cash_deposit', compact('report_date', 'grouped_payments', 'grand_total'));   //
         } else {
-            return back(); //
+            return redirect()->back(); //
         }
     }
 
@@ -153,7 +153,7 @@ class PageController extends Controller
             //dd($report_date, $grouped_payments,$grand_total);
         return view('reports.finance.cc_deposit', compact('report_date', 'grouped_payments', 'grand_total'));   //
         } else {
-            return back(); //
+            return redirect()->back(); //
         }
     }
 
@@ -210,7 +210,7 @@ class PageController extends Controller
             //dd($retreat,$grouped_donations);
         return view('reports.finance.retreatdonations', compact('retreat', 'grouped_donations', 'donations'));   //
         } else {
-            return back(); //
+            return redirect()->back(); //
         }
     }
 

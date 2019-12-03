@@ -483,7 +483,7 @@ class RetreatController extends Controller
             $registration->save();
         }
 
-        return Redirect::back();
+        return redirect()->back();
     }
 
     public function checkin($id)
@@ -497,7 +497,7 @@ class RetreatController extends Controller
             $registration->save();
         }
 
-        return Redirect::back();
+        return redirect()->back();
     }
 
     public function room_update(RoomUpdateRetreatRequest $request)

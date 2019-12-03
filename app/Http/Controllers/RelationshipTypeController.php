@@ -287,7 +287,7 @@ class RelationshipTypeController extends Controller
         $relationship->is_active = 1;
         $relationship->save();
 
-        return redirect($contact->contact_url);
+        return redirect()->to($contact->contact_url);
     }
 
     public function get_contact_type_list($contact_type = 'Individual', $contact_subtype = null)

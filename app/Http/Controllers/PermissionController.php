@@ -87,7 +87,7 @@ class PermissionController extends Controller
         $permission->description = $request->input('description');
         $permission->save();
 
-        return Redirect::back();
+        return redirect()->back();
     }
 
     /**

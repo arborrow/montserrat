@@ -8,10 +8,10 @@ class UserRepository
     {
         if (isset($userData->user['hd'])) {
             if (! $userData->user['hd'] == 'montserratretreat.org') {
-                redirect('/restricted');
+                redirect()->to('/restricted');
             }
         } else {
-            redirect('/restricted');
+            redirect()->to('/restricted');
         }
         $user = User::where('provider_id', '=', $userData->id)->first();
         if (! $user) {

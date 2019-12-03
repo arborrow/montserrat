@@ -75,17 +75,17 @@ class LoginController extends Controller
                     return redirect()->intended('/welcome');
                 //return $this->userHasLoggedIn($currentuser);
                 } else { // the user has a domain but it does not match the socialite restrict domain so do not authenticate
-                    return redirect('restricted');
+                    return redirect()->to('restricted');
                 }
             } else { // no domain specified for the user but one is required so do not authenticate
-                return redirect('restricted');
+                return redirect()->to('restricted');
             }
         } else { // not using socialite restrict domain - all domains can authenticate
             $authuser = new \App\UserRepository;
             $currentuser = $authuser->findByUserNameOrCreate($user);
             Auth::login($currentuser, true);
 
-            return redirect('welcome');
+            return redirect()->to('welcome');
         }
     }
 
@@ -93,6 +93,6 @@ class LoginController extends Controller
     {
         Auth::logout();
 
-        return redirect('/goodbye');
+        return redirect()->to('/goodbye');
     }
 }

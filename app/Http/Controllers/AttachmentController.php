@@ -72,7 +72,7 @@ class AttachmentController extends Controller
         $file = File::get($path);
         $type = File::mimeType($path);
 
-        $response = response($file, 200);
+        $response = response($file);
         $response->header('Content-Type', $type);
 
         return $response;

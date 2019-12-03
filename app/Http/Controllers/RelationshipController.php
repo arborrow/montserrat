@@ -91,6 +91,6 @@ class RelationshipController extends Controller
         $this->authorize('delete-relationship');
         \App\Relationship::destroy($id);
 
-        return Redirect::back();
+        return redirect()->back();
     }
 }

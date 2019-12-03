@@ -250,7 +250,7 @@ class DonationController extends Controller
             $registration->save();
         }
 
-        return redirect($contact->contact_url);
+        return redirect()->to($contact->contact_url);
     }
 
     /**

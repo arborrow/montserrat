@@ -435,7 +435,7 @@ class RegistrationController extends Controller
         $registration->registration_confirm_date = \Carbon\Carbon::now();
         $registration->save();
 
-        return Redirect::back();
+        return redirect()->back();
     }
 
     public function attend($id)
@@ -445,7 +445,7 @@ class RegistrationController extends Controller
         $registration->attendance_confirm_date = \Carbon\Carbon::now();
         $registration->save();
 
-        return Redirect::back();
+        return redirect()->back();
     }
 
     public function arrive($id)
@@ -455,7 +455,7 @@ class RegistrationController extends Controller
         $registration->arrived_at = \Carbon\Carbon::now();
         $registration->save();
 
-        return Redirect::back();
+        return redirect()->back();
     }
 
     public function depart($id)
@@ -465,7 +465,7 @@ class RegistrationController extends Controller
         $registration->departed_at = \Carbon\Carbon::now();
         $registration->save();
 
-        return Redirect::back();
+        return redirect()->back();
     }
 
     public function cancel($id)
@@ -475,7 +475,7 @@ class RegistrationController extends Controller
         $registration->canceled_at = \Carbon\Carbon::now();
         $registration->save();
 
-        return Redirect::back();
+        return redirect()->back();
     }
 
     public function waitlist($id)
@@ -485,7 +485,7 @@ class RegistrationController extends Controller
         $registration->status_id = config('polanco.registration_status_id.waitlist');
         $registration->save();
 
-        return Redirect::back();
+        return redirect()->back();
     }
 
     public function offwaitlist($id)
@@ -495,7 +495,7 @@ class RegistrationController extends Controller
         $registration->status_id = config('polanco.registration_status_id.registered');
         $registration->save();
 
-        return Redirect::back();
+        return redirect()->back();
     }
 
     public function registrationEmail(Registration $participant)
