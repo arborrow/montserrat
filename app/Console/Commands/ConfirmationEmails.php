@@ -2,13 +2,13 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Support\Str;
 use App\Mail\RetreatConfirmation;
 use App\Retreat;
 use App\Touchpoint;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Mail\Mailer;
+use Illuminate\Support\Str;
 
 class ConfirmationEmails extends Command
 {

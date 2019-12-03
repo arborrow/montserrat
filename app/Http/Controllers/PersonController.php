@@ -1745,22 +1745,22 @@ class PersonController extends Controller
     /*        public function relationship_type($relationship_type_id)
         {
             $this->authorize('show-contact');
-    
+
             $persons = \App\Contact::with('relationships', 'address_primary', 'captain_events')->whereHas('relationships', function ($query) use ($relationship_type_id) {
                 $query->where('relationship_type_id', '=', $relationship_type_id)->whereIsActive(1);
             })->orderBy('sort_name')->get();
-    
+
             $relationship_type = \App\RelationshipType::findOrFail($relationship_type_id);
             $relationship['relationship_type_id'] = $relationship_type->id;
             $relationship['name']= $relationship_type->description;
             $relationship['email_link']= "";
-    
+
             $email_list = "";
             foreach ($persons as $person) {
                 if (!empty($person->email_primary_text)) {
                     $email_list .= addslashes($person->display_name). ' <'.$person->email_primary_text.'>,';
                 }
-    
+
                 if (!empty($email_list)) {
                     $relationship['email_link'] = "<a href=\"mailto:?bcc=".htmlspecialchars($email_list, ENT_QUOTES)."\">E-mail ".$group->name." Group</a>";
                 } else {
