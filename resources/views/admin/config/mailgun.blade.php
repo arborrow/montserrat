@@ -11,8 +11,8 @@
             @can('show-admin-menu') 
                 <div class='row'>
                     <div class='col-md-4'>
-                        <strong>Mailgun Domain: </strong> @if(null!==env('MAILGUN_DOMAIN')) <div class="alert alert-success" role="alert">Configured</div> @else <div class="alert alert-warning" role="alert">Not configured</div> @endIf
-                        <br /><strong>Mailgun secret: </strong>  @if(null!==env('MAILGUN_SECRET')) <div class="alert alert-success" role="alert">Configured</div> @else <div class="alert alert-warning" role="alert">Not configured</div> @endIf
+                        <strong>Mailgun Domain: </strong> @if(null!==config('settings.mailgun_domain')) <div class="alert alert-success" role="alert">Configured</div> @else <div class="alert alert-warning" role="alert">Not configured</div> @endIf
+                        <br /><strong>Mailgun secret: </strong>  @if(null!==config('settings.mailgun_secret')) <div class="alert alert-success" role="alert">Configured</div> @else <div class="alert alert-warning" role="alert">Not configured</div> @endIf
                     </div>
                 </div>
             @endCan

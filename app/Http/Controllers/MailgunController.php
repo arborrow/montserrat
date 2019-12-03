@@ -21,8 +21,8 @@ class MailgunController extends Controller
     {
         $this->authorize('admin-mailgun');
 
-        $mg = new Mailgun(env('MAILGUN_SECRET'));
-        $domain = env('MAILGUN_DOMAIN');
+        $mg = new Mailgun(config('settings.mailgun_secret'));
+        $domain = config('settings.mailgun_domain');
         $queryString = ['event' => 'stored'];
         $emails = '';
         $messages = new \Illuminate\Support\Collection;
@@ -122,7 +122,7 @@ class MailgunController extends Controller
             //dd($ch);
             curl_setopt($ch, CURLOPT_HEADER, 0);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_USERPWD, 'api:'.env('MAILGUN_SECRET'));
+            curl_setopt($ch, CURLOPT_USERPWD, 'api:'.config('settings.mailgun_secret'));
 
             //dd($ch);
             $output = curl_exec($ch);

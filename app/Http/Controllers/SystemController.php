@@ -31,7 +31,7 @@ class SystemController extends Controller
 
     public static function is_twilio_enabled()
     {
-        if (null !== env('TWILIO_SID') && null !== env('TWILIO_TOKEN')) {
+        if (null !== config('settings.twilio_sid') && null !== config('settings.twilio_token')) {
             return true;
         } else {
             return false;
@@ -40,7 +40,7 @@ class SystemController extends Controller
 
     public static function is_google_client_enabled()
     {
-        if (null !== env('GOOGLE_CLIENT_ID') && null !== env('GOOGLE_CLIENT_SECRET') && null !== env('GOOGLE_REDIRECT')) {
+        if (null !== config('settings.google_client_id') && null !== config('settings.google_client_secret') && null !== config('settings.google_redirect')) {
             return true;
         } else {
             return false;
@@ -49,7 +49,7 @@ class SystemController extends Controller
 
     public static function is_mailgun_enabled()
     {
-        if (null !== env('MAILGUN_DOMAIN') && null !== env('MAILGUN_SECRET')) {
+        if (null !== config('settings.mailgun_domain') && null !== config('settings.mailgun_secret')) {
             return true;
         } else {
             return false;
