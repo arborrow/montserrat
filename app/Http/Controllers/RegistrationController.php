@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Mail\RegistrationEventChange;
@@ -239,7 +240,7 @@ class RegistrationController extends Controller
                 $registration->confirmed_by = $request->input('confirmed_by');
                 $registration->deposit = $request->input('deposit');
                 $registration->notes = $request->input('notes');
-                $registration->remember_token = str_random(60);
+                $registration->remember_token = Str::random(60);
                 $registration->save();
                 //TODO: verify that the newly created room assignment does not conflict with an existing one
             }

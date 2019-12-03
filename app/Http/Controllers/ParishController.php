@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Arr;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -237,7 +238,7 @@ class ParishController extends Controller
         // dd($parish->pastor->contact_b->id);
         if (isset($parish->pastor->contact_b->id)) {
             $pastor_id = $parish->pastor->contact_b->id;
-            if (! array_has($pastors, $pastor_id)) {
+            if (! Arr::has($pastors, $pastor_id)) {
                 $pastors[$pastor_id] = $parish->pastor->contact_b->sort_name.' (former)';
                 asort($pastors);
                 // dd($parish->pastor->contact_b->sort_name.' is not currently listed as a pastor: '.$pastor_id, $pastors);

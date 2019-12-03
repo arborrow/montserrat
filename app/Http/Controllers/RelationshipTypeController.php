@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Arr;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -329,7 +330,7 @@ class RelationshipTypeController extends Controller
                     case 'Parish':
                         $parish_list = [];
                         $parishes = \App\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
-                        $parish_list = array_pluck($parishes->toArray(), 'full_name_with_city', 'id');
+                        $parish_list = Arr::pluck($parishes->toArray(), 'full_name_with_city', 'id');
                         /* foreach($parishes as $parish) {
                             $parish_list[$parish->id] = $parish->organization_name.' ('.$parish->address_primary_city.') - '.$parish->diocese_name;
                         } */
@@ -379,7 +380,7 @@ class RelationshipTypeController extends Controller
 
                     default:
                         $organizations = \App\Contact::whereContactType(config('polanco.contact_type.organization'))->orderBy('organization_name', 'asc')->get();
-                        $organization_list = array_pluck($organizations->toArray(), 'full_name_with_city', 'id');
+                        $organization_list = Arr::pluck($organizations->toArray(), 'full_name_with_city', 'id');
                         //dd($temp);
                         return $organization_list;
                         break;

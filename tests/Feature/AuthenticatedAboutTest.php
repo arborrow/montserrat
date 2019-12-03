@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Support\Str;
 use Tests\TestCase;
 // use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -26,7 +27,7 @@ class AuthenticatedAboutTest extends TestCase
          $abstractUser->shouldReceive('getId')
          ->andReturn(1234567890)
          ->shouldReceive('getEmail')
-         ->andReturn(str_random(10).'@montserratretreat.org')
+         ->andReturn(Str::random(10).'@montserratretreat.org')
          ->shouldReceive('getNickname')
          ->andReturn('Pseudo')
          ->shouldReceive('Domain')

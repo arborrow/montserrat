@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Illuminate\Support\Str;
 use App\Mail\RetreatConfirmation;
 use App\Retreat;
 use App\Touchpoint;
@@ -73,7 +74,7 @@ class ConfirmationEmails extends Command
 
                     // For automatic emails, remember_token must be set for all participants in retreat.
                     if (! $registration->remember_token) {
-                        $registration->remember_token = str_random(60);
+                        $registration->remember_token = Str::random(60);
                         $registration->save();
                     }
 

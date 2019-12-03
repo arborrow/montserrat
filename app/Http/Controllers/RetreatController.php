@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Arr;
 use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -301,7 +302,7 @@ class RetreatController extends Controller
          */
 
         foreach ($retreat->retreatmasters as $director) {
-            if (! array_has($d, $director->id)) {
+            if (! Arr::has($d, $director->id)) {
                 $d[$director->id] = $director->sort_name.' (former)';
                 asort($d);
                 // dd($director->sort_name.' is not currently a retreat director: '.$director->id, $d);
@@ -309,7 +310,7 @@ class RetreatController extends Controller
         }
 
         if (isset($retreat->innkeeper->id)) {
-            if (! array_has($i, $retreat->innkeeper->id)) {
+            if (! Arr::has($i, $retreat->innkeeper->id)) {
                 $i[$retreat->innkeeper->id] = $retreat->innkeeper->sort_name.' (former)';
                 asort($i);
                 // dd($retreat->innkeeper->sort_name.' is not currently an innkeeper: '.$retreat->innkeeper->id, $i);
@@ -317,7 +318,7 @@ class RetreatController extends Controller
         }
 
         if (isset($retreat->assistant->id)) {
-            if (! array_has($a, $retreat->assistant->id)) {
+            if (! Arr::has($a, $retreat->assistant->id)) {
                 $a[$retreat->assistant->id] = $retreat->assistant->sort_name.' (former)';
                 asort($a);
                 // dd($retreat->assistant->sort_name.' is not currently an assistant: '.$retreat->assistant->id, $a);
@@ -325,7 +326,7 @@ class RetreatController extends Controller
         }
 
         foreach ($retreat->captains as $captain) {
-            if (! array_has($c, $captain->id)) {
+            if (! Arr::has($c, $captain->id)) {
                 $c[$captain->id] = $captain->sort_name.' (former)';
                 asort($c);
                 // dd($captain->sort_name.' is not currently a captain: '.$captain->id, $c);

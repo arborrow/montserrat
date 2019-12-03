@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Arr;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -239,7 +240,7 @@ class DioceseController extends Controller
 
         /* ensure that a bishop  has not been removed */
         if (isset($diocese->primary_bishop->contact_id_b)) {
-            if (! array_has($bishops, $diocese->primary_bishop->contact_id_b)) {
+            if (! Arr::has($bishops, $diocese->primary_bishop->contact_id_b)) {
                 $bishops[$diocese->primary_bishop->contact_id_b] = $diocese->primary_bishop->contact_b->sort_name.' (former)';
                 $diocese->bishop_id = $diocese->primary_bishop->contact_id_b;
                 asort($bishops);
@@ -247,7 +248,7 @@ class DioceseController extends Controller
             }
         }
 
-        $bishops = array_prepend($bishops, 'N/A', 0);
+        $bishops = Arr::prepend($bishops, 'N/A', 0);
 
         // dd($bishops);
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Arr;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Auth;
@@ -281,7 +282,7 @@ class TouchpointController extends Controller
         })->orderBy('sort_name')->pluck('sort_name', 'id')->toArray();
         /* ensure that a staff member has not been removed */
         if (isset($touchpoint->staff->id)) {
-            if (! array_has($staff, $touchpoint->staff->id)) {
+            if (! Arr::has($staff, $touchpoint->staff->id)) {
                 $staff[$touchpoint->staff->id] = $touchpoint->staff->sort_name.' (former)';
                 asort($staff);
                 // dd($touchpoint->staff->sort_name.' is not currently a staff member: '.$touchpoint->staff->id, $staff);
