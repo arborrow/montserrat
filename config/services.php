@@ -30,4 +30,11 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'google' => [
+        'client_id' => getenv('GOOGLE_CLIENT_ID'),
+        'client_secret' => getenv('GOOGLE_CLIENT_SECRET'),
+        'scope' => ['userinfo_email', 'userinfo_profile'],
+        'redirect' => getenv('GOOGLE_REDIRECT'),
+    ],
+
 ];
