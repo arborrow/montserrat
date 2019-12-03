@@ -27,25 +27,21 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::registerPolicies();
-        if (null !== config('app.key')) { //prior to installing the app ignore checking for superuser or permissions
+
+        //prior to installing the app ignore checking for superuser or permissions
+        if (config('app.key')) {
             Gate::before(function ($user) {
                 $superuser = \App\Permission::whereName('superuser')->firstOrFail();
 
                 return $user->hasRole($superuser->roles);
             });
 
-            foreach ($this->getPermissions() as $permission) {
+            $permissions = Permission::with('roles')->get();
+            foreach ($permissions as $permission) {
                 Gate::define($permission->name, function ($user) use ($permission) {
                     return $user->hasRole($permission->roles);
                 });
             }
         }
-
-        //
-    }
-
-    protected function getPermissions()
-    {
-        return Permission::with('roles')->get();
     }
 }
