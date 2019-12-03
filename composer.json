@@ -73,9 +73,6 @@
         ],
         "post-install-cmd": [
             "homestead make"
-        ],
-        "pre-update-cmd": [
-            "php artisan clear-compiled"
         ]
     }
 }
