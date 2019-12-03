@@ -10,7 +10,6 @@ class Touchpoint extends Model
 {
     //
     use SoftDeletes;
-    protected $table = 'touchpoints';
     protected $dates = ['touched_at', 'created_at', 'updated_at', 'deleted_at'];
     protected $fillable = ['person_id', 'staff_id', 'notes', 'type'];
 

@@ -10,6 +10,6 @@ return [
     'open_hours_digits' => env('OPEN_HOURS_DIGITS'),
     'end_call_digits' => env('END_CALL_DIGITS'),
     'open_digits' => env('OPEN_DIGITS'),
-    'close_digits' => env('CLOSE_DIGITS')
+    'close_digits' => env('CLOSE_DIGITS'),
 
 ];

@@ -7,7 +7,6 @@ use App\Http\Requests\UpdateParishRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 
-
 class ParishController extends Controller
 {
     public function __construct()
