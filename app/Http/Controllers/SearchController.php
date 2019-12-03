@@ -27,7 +27,7 @@ class SearchController extends Controller
             $results[] = ['id' => $query->id, 'value' => $query->full_name_with_city];
         }
 
-        return Response::json($results);
+        return response()->json($results);
     }
 
     public function getuser()
