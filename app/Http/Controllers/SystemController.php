@@ -40,7 +40,7 @@ class SystemController extends Controller
 
     public static function is_google_client_enabled()
     {
-        if (null !== config('settings.google_client_id') && null !== config('settings.google_client_secret') && null !== config('settings.google_redirect')) {
+        if (null !== config('services.google.client_id') && null !== config('services.google.client_secret') && null !== config('services.google.redirect')) {
             return true;
         } else {
             return false;
@@ -49,7 +49,7 @@ class SystemController extends Controller
 
     public static function is_mailgun_enabled()
     {
-        if (null !== config('settings.mailgun_domain') && null !== config('settings.mailgun_secret')) {
+        if (null !== config('services.mailgun.domain') && null !== config('services.mailgun.secret')) {
             return true;
         } else {
             return false;
