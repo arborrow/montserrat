@@ -5,7 +5,6 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Http\Exception\HttpResponseException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

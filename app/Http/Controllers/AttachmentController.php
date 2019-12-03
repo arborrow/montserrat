@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Gate;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
-use Image;
-use Response;
+use Intervention\Image\Facades\Image;
 
 class AttachmentController extends Controller
 {
@@ -22,7 +20,7 @@ class AttachmentController extends Controller
 
     public function sanitize_filename($filename)
     {
-        $sanitized = preg_replace('/[^a-zA-Z0-9\-\._]/', '', $filename);
+        $sanitized = preg_replace('/[^a-zA-Z0-9\\-\\._]/', '', $filename);
 
         return $sanitized;
     }
@@ -72,7 +70,7 @@ class AttachmentController extends Controller
         $file = File::get($path);
         $type = File::mimeType($path);
 
-        $response = Response::make($file, 200);
+        $response = response($file);
         $response->header('Content-Type', $type);
 
         return $response;

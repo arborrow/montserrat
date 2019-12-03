@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
+use App\Http\Requests\StoreActivityRequest;
+use App\Http\Requests\UpdateActivityRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -32,7 +33,7 @@ class ActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $this->authorize('create-activity');
         $staff = \App\Contact::with('groups')->whereHas('groups', function ($query) {
@@ -40,7 +41,7 @@ class ActivityController extends Controller
         })->orderBy('sort_name')->pluck('sort_name', 'id');
         // TODO: replace this with an autocomplete text box for performance rather than a dropdown box
         $persons = \App\Contact::orderBy('sort_name')->pluck('sort_name', 'id');
-        $current_user = Auth::user();
+        $current_user = $request->user();
         $user_email = \App\Email::whereEmail($current_user->email)->first();
         if (empty($user_email->contact_id)) {
             $defaults['user_id'] = 0;
@@ -65,19 +66,9 @@ class ActivityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreActivityRequest $request)
     {
         $this->authorize('create-activity');
-        $this->validate($request, [
-            'touched_at' => 'required|date',
-            'person_id' => 'required|integer|min:0',
-            'staff_id' => 'required|integer|min:0',
-            'activity_type_id' => 'required|integer|min:1',
-            'status_id' => 'required|integer|min:0',
-            'priority_id' => 'required|integer|min:0',
-            'medium_id' => 'required|integer|min:1',
-            'duration' => 'integer|min:0',
-        ]);
         $activity_type = \App\ActivityType::findOrFail($request->input('activity_type_id'));
         $activity = new \App\Activity;
         $activity->activity_type_id = $request->input('activity_type_id');
@@ -172,20 +163,9 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateActivityRequest $request, $id)
     {
         $this->authorize('update-activity');
-        $this->validate($request, [
-            'touched_at' => 'required|date',
-            'target_id' => 'required|integer|min:0',
-            'assignee_id' => 'required|integer|min:0',
-            'creator_id' => 'required|integer|min:0',
-            'activity_type_id' => 'required|integer|min:1',
-            'status_id' => 'required|integer|min:0',
-            'priority_id' => 'required|integer|min:0',
-            'medium_id' => 'required|integer|min:1',
-            'duration' => 'integer|min:0',
-        ]);
         $activity_type = \App\ActivityType::findOrFail($request->input('activity_type_id'));
         $activity = \App\Activity::findOrFail($id);
 

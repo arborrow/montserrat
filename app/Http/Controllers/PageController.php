@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
@@ -101,7 +101,7 @@ class PageController extends Controller
         //unsorted registrations
         //$registrations = \App\Registration::where('event_id','=',$retreat->id)->with('retreat','retreatant.languages','retreatant.parish.contact_a.address_primary','retreatant.prefix','retreatant.suffix','retreatant.address_primary.state','retreatant.phones.location','retreatant.emails.location','retreatant.emergency_contact','retreatant.notes','retreatant.occupation')->get();
         //registrations sorted by contact's sort_name
-        $registrations = \App\Registration::select(\DB::raw('participant.*', 'contact.*'))
+        $registrations = \App\Registration::select(DB::raw('participant.*', 'contact.*'))
                 ->join('contact', 'participant.contact_id', '=', 'contact.id')
                 ->where('participant.event_id', '=', $retreat->id)
                 ->whereCanceledAt(null)
@@ -135,7 +135,7 @@ class PageController extends Controller
             // dd($report_date, $grouped_payments,$grand_total);
         return view('reports.finance.cash_deposit', compact('report_date', 'grouped_payments', 'grand_total'));   //
         } else {
-            return back(); //
+            return redirect()->back(); //
         }
     }
 
@@ -153,7 +153,7 @@ class PageController extends Controller
             //dd($report_date, $grouped_payments,$grand_total);
         return view('reports.finance.cc_deposit', compact('report_date', 'grouped_payments', 'grand_total'));   //
         } else {
-            return back(); //
+            return redirect()->back(); //
         }
     }
 
@@ -166,10 +166,10 @@ class PageController extends Controller
     return view('reports.finance.invoice', compact('donation'));   //
     }
 
-    public function finance_agcacknowledge($donation_id = null)
+    public function finance_agcacknowledge(Request $request, $donation_id = null)
     {
         $this->authorize('show-donation');
-        $current_user = Auth::user();
+        $current_user = $request->user();
         $user_email = \App\Email::whereEmail($current_user->email)->first();
 
         $donation = \App\Donation::with('payments', 'contact', 'retreat')->findOrFail($donation_id);
@@ -210,7 +210,7 @@ class PageController extends Controller
             //dd($retreat,$grouped_donations);
         return view('reports.finance.retreatdonations', compact('retreat', 'grouped_donations', 'donations'));   //
         } else {
-            return back(); //
+            return redirect()->back(); //
         }
     }
 
@@ -271,7 +271,7 @@ class PageController extends Controller
 
         $retreat = \App\Retreat::where('idnumber', '=', $id)->first();
         //$registrations = \App\Registration::where('event_id','=',$retreat->id)->with('retreat','retreatant')->get();
-        $registrations = \App\Registration::select(\DB::raw('participant.*', 'contact.*'))
+        $registrations = \App\Registration::select(DB::raw('participant.*', 'contact.*'))
                 ->join('contact', 'participant.contact_id', '=', 'contact.id')
                 ->where('participant.event_id', '=', $retreat->id)
                 ->whereCanceledAt(null)
@@ -289,7 +289,7 @@ class PageController extends Controller
         $retreat = \App\Retreat::where('idnumber', '=', $id)->first();
         //        $registrations = \App\Registration::where('event_id','=',$retreat->id)->with('retreat','retreatant.suffix','retreatant.address_primary','retreatant.prefix')->get();
         //dd($registrations);
-        $registrations = \App\Registration::select(\DB::raw('participant.*', 'contact.*'))
+        $registrations = \App\Registration::select(DB::raw('participant.*', 'contact.*'))
                 ->join('contact', 'participant.contact_id', '=', 'contact.id')
                 ->where('participant.event_id', '=', $retreat->id)
                 ->whereCanceledAt(null)

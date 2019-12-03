@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreDioceseRequest;
+use App\Http\Requests\UpdateDioceseRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
-use Input;
 
 class DioceseController extends Controller
 {
@@ -59,22 +59,9 @@ class DioceseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreDioceseRequest $request)
     {
         $this->authorize('create-contact');
-        $this->validate($request, [
-            'organization_name' => 'required',
-            'bishop_id' => 'integer|min:0',
-            'email_main' => 'email|nullable',
-            'url_main' => 'url|nullable',
-            'url_facebook' => 'url|regex:/facebook\.com\/.+/i|nullable',
-            'url_google' => 'url|regex:/plus\.google\.com\/.+/i|nullable',
-            'url_twitter' => 'url|regex:/twitter\.com\/.+/i|nullable',
-            'url_instagram' => 'url|regex:/instagram\.com\/.+/i|nullable',
-            'url_linkedin' => 'url|regex:/linkedin\.com\/.+/i|nullable',
-            'phone_main_phone' => 'phone|nullable',
-            'phone_main_fax' => 'phone|nullable',
-        ]);
 
         $diocese = new \App\Contact;
         $diocese->organization_name = $request->input('organization_name');
@@ -270,28 +257,9 @@ class DioceseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateDioceseRequest $request, $id)
     {
         $this->authorize('update-contact');
-        $this->validate($request, [
-            'organization_name' => 'required',
-            'display_name' => 'required',
-            'sort_name' => 'required',
-            'bishop_id' => 'integer|min:0',
-            'email_main' => 'email|nullable',
-            'url_main' => 'url|nullable',
-            'url_facebook' => 'url|regex:/facebook\.com\/.+/i|nullable',
-            'url_google' => 'url|regex:/plus\.google\.com\/.+/i|nullable',
-            'url_twitter' => 'url|regex:/twitter\.com\/.+/i|nullable',
-            'url_instagram' => 'url|regex:/instagram\.com\/.+/i|nullable',
-            'url_linkedin' => 'url|regex:/linkedin\.com\/.+/i|nullable',
-            'phone_main_phone' => 'phone|nullable',
-            'phone_main_fax' => 'phone|nullable',
-            'avatar' => 'image|max:5000|nullable',
-            'attachment' => 'file|mimes:pdf,doc,docx|max:10000|nullable',
-            'attachment_description' => 'string|max:200|nullable',
-
-        ]);
 
         $diocese = \App\Contact::with('bishops.contact_b', 'parishes.contact_b', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
         $diocese->organization_name = $request->input('organization_name');

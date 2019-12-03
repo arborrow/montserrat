@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreGroupRequest;
+use App\Http\Requests\UpdateGroupRequest;
 use Illuminate\Support\Facades\Redirect;
-use Input;
 
 class GroupController extends Controller
 {
@@ -47,16 +47,9 @@ class GroupController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreGroupRequest $request)
     {
         $this->authorize('create-group');
-        $this->validate($request, [
-            'name' => 'required|unique:group',
-            'title' => 'required',
-            'is_active' => 'integer|min:0|max:1',
-            'is_hidden' => 'integer|min:0|max:1',
-            'is_reserved' => 'integer|min:0|max:1',
-        ]);
 
         $group = new \App\Group;
         $group->name = $request->input('name');
@@ -109,16 +102,9 @@ class GroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateGroupRequest $request, $id)
     {
         $this->authorize('update-group');
-        $this->validate($request, [
-            'name' => 'required',
-            'title' => 'required',
-            'is_active' => 'integer|min:0|max:1',
-            'is_hidden' => 'integer|min:0|max:1',
-            'is_reserved' => 'integer|min:0|max:1',
-        ]);
 
         $group = \App\Group::findOrFail($request->input('id'));
         $group->name = $request->input('name');

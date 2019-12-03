@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePaymentRequest;
+use App\Http\Requests\UpdatePaymentRequest;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 class PaymentController extends Controller
@@ -49,16 +50,10 @@ class PaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePaymentRequest $request)
     {
         $this->authorize('create-payment');
         // dd($request);
-        $this->validate($request, [
-        'donation_id' => 'required|integer|min:0',
-        'payment_date' => 'required|date',
-        'payment_amount' => 'required|numeric',
-        'payment_idnumber' => 'nullable|numeric|min:0',
-        ]);
 
         $donation = \App\Donation::findOrFail($request->input('donation_id'));
         // create donation_payment
@@ -116,15 +111,9 @@ class PaymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePaymentRequest $request, $id)
     {
         $this->authorize('update-payment');
-        $this->validate($request, [
-        'donation_id' => 'required|integer|min:0',
-        'payment_date' => 'required|date',
-        'payment_amount' => 'required|numeric',
-        'payment_idnumber' => 'nullable|numeric|min:0',
-        ]);
 
         $payment = \App\Payment::findOrFail($id);
         $payment->payment_amount = $request->input('payment_amount');

@@ -9,7 +9,6 @@ class SystemController extends Controller
         $this->middleware('auth');
     }
 
-
     /**
      * Display a listing of the resource.
      *
@@ -32,7 +31,7 @@ class SystemController extends Controller
 
     public static function is_twilio_enabled()
     {
-        if (null !== env('TWILIO_SID') && null !== env('TWILIO_TOKEN')) {
+        if (null !== config('settings.twilio_sid') && null !== config('settings.twilio_token')) {
             return true;
         } else {
             return false;
@@ -41,7 +40,7 @@ class SystemController extends Controller
 
     public static function is_google_client_enabled()
     {
-        if (null !== env('GOOGLE_CLIENT_ID') && null !== env('GOOGLE_CLIENT_SECRET') && null !== env('GOOGLE_REDIRECT')) {
+        if (null !== config('services.google.client_id') && null !== config('services.google.client_secret') && null !== config('services.google.redirect')) {
             return true;
         } else {
             return false;
@@ -50,7 +49,7 @@ class SystemController extends Controller
 
     public static function is_mailgun_enabled()
     {
-        if (null !== env('MAILGUN_DOMAIN') && null !== env('MAILGUN_SECRET')) {
+        if (null !== config('services.mailgun.domain') && null !== config('services.mailgun.secret')) {
             return true;
         } else {
             return false;
@@ -70,7 +69,8 @@ class SystemController extends Controller
     {
         $this->authorize('show-offeringdedup');
         $donations = \App\Donation::whereEventId($event_id)->whereContactId($contact_id)->whereDonationDescription('Retreat Offering')->get();
-        $combo = $contact_id . '-' . $event_id;
+        $combo = $contact_id.'-'.$event_id;
+
         return view('offeringdedup.show', compact('donations', 'combo'));
     }
 }

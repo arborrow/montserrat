@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-
-use Illuminate\Http\Request;
+use App\Http\Requests\AddmeRelationshipTypeRequest;
+use App\Http\Requests\MakeRelationshipTypeRequest;
+use App\Http\Requests\StoreRelationshipTypeRequest;
+use App\Http\Requests\UpdateRelationshipTypeRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
-use Input;
+
 
 class RelationshipTypeController extends Controller
 {
@@ -48,20 +50,9 @@ class RelationshipTypeController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRelationshipTypeRequest $request)
     {
         $this->authorize('create-relationshiptype');
-        $this->validate($request, [
-            'description' => 'required',
-            'name_a_b' => 'required',
-            'label_a_b' => 'required',
-            'name_b_a' => 'required',
-            'label_b_a' => 'required',
-            'contact_type_a' => 'required',
-            'contact_type_b' => 'required',
-            'is_active' => 'integer|min:0|max:1',
-            'is_reserved' => 'integer|min:0|max:1',
-        ]);
 
         $relationship_type = new \App\RelationshipType;
         $relationship_type->description = $request->input('description');
@@ -135,18 +126,9 @@ class RelationshipTypeController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRelationshipTypeRequest $request, $id)
     {
         $this->authorize('update-relationshiptype');
-        $this->validate($request, [
-            'description' => 'required',
-            'name_a_b' => 'required',
-            'label_a_b' => 'required',
-            'name_b_a' => 'required',
-            'label_b_a' => 'required',
-            'is_active' => 'integer|min:0|max:1',
-            'is_reserved' => 'integer|min:0|max:1',
-        ]);
 
         $relationship_type = \App\RelationshipType::findOrFail($request->input('id'));
         $relationship_type->description = $request->input('description');
@@ -199,13 +181,13 @@ class RelationshipTypeController extends Controller
             $subtype_b_name = $relationship_type->name_b_a;
         }
 
-        if (!isset($a) or $a == 0) {
+        if (! isset($a) or $a == 0) {
             $contact_a_list = $this->get_contact_type_list($relationship_type->contact_type_a, $subtype_a_name);
         } else {
             $contacta = \App\Contact::findOrFail($a);
             $contact_a_list[$contacta->id] = $contacta->sort_name;
         }
-        if (!isset($b) or $b == 0) {
+        if (! isset($b) or $b == 0) {
             $contact_b_list = $this->get_contact_type_list($relationship_type->contact_type_b, $subtype_b_name);
         } else {
             $contactb = \App\Contact::findOrFail($b);
@@ -215,13 +197,9 @@ class RelationshipTypeController extends Controller
         return view('relationships.types.add', compact('relationship_type', 'contact_a_list', 'contact_b_list')); //
     }
 
-    public function addme(Request $request)
+    public function addme(AddmeRelationshipTypeRequest $request)
     {
         $this->authorize('create-relationship');
-        $this->validate($request, [
-            'contact_id' => 'integer|min:1|required',
-            'relationship_type' => 'required|in:Child,Parent,Husband,Wife,Sibling,Employee,Volunteer,Parishioner,Primary contact,Employer',
-        ]);
         $relationship_type = $request->input('relationship_type');
         $contact_id = $request->input('contact_id');
         switch ($relationship_type) {
@@ -280,13 +258,9 @@ class RelationshipTypeController extends Controller
         }
     }
 
-    public function make(Request $request)
+    public function make(MakeRelationshipTypeRequest $request)
     {   // dd($request);
         $this->authorize('create-relationship');
-        $this->validate($request, [
-            'contact_a_id' => 'integer|min:0|required',
-            'contact_b_id' => 'integer|min:0|required',
-        ]);
         // a very hacky way to get the contact_id of the user that we are creating a relationship for
         // this allows the ability to redirect back to that user
         $url_previous = URL::previous();
@@ -312,7 +286,7 @@ class RelationshipTypeController extends Controller
         $relationship->is_active = 1;
         $relationship->save();
 
-        return redirect($contact->contact_url);
+        return redirect()->to($contact->contact_url);
     }
 
     public function get_contact_type_list($contact_type = 'Individual', $contact_subtype = null)

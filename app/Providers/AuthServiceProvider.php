@@ -14,7 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
+        'App\\Model' => 'App\\Policies\\ModelPolicy',
         \App\Attachment::class => \App\Policies\AttachmentPolicy::class,
 
     ];
@@ -27,7 +27,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::registerPolicies();
-        if (null !== env('APP_KEY')) { //prior to installing the app ignore checking for superuser or permissions
+        if (null !== config('app.key')) { //prior to installing the app ignore checking for superuser or permissions
             Gate::before(function ($user) {
                 $superuser = \App\Permission::whereName('superuser')->firstOrFail();
 

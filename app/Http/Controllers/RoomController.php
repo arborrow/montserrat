@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreRoomRequest;
+use App\Http\Requests\UpdateRoomRequest;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-
-//
-//use Input;
 
 class RoomController extends Controller
 {
@@ -54,14 +52,9 @@ class RoomController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRoomRequest $request)
     {
         $this->authorize('create-room');
-        $this->validate($request, [
-            'name' => 'required',
-            'building_id' => 'integer|min:0',
-            'occupancy' => 'integer|min:0',
-        ]);
 
         $room = new \App\Room;
         $room->building_id = $request->input('building_id');
@@ -115,14 +108,9 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRoomRequest $request, $id)
     {
         $this->authorize('update-room');
-        $this->validate($request, [
-            'name' => 'required',
-            'building_id' => 'integer|min:0',
-            'occupancy' => 'integer|min:0',
-        ]);
 
         $room = \App\Room::findOrFail($request->input('id'));
         $room->building_id = $request->input('building_id');

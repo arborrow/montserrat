@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
-use DB;
 use Illuminate\Http\Request;
-use Response;
 
 class SearchController extends Controller
 {
@@ -14,10 +11,10 @@ class SearchController extends Controller
         $this->middleware('auth');
     }
 
-    public function autocomplete()
+    public function autocomplete(Request $request)
     {
         $this->authorize('show-contact');
-        $term = Request::get('term');
+        $term = $request->get('term');
         $results = [];
         $queries = \App\Contact::orderBy('sort_name')->where('display_name', 'LIKE', '%'.$term.'%')->whereDeletedAt(null)->take(20)->get();
         if (($queries->count() == 0)) {
@@ -27,16 +24,16 @@ class SearchController extends Controller
             $results[] = ['id' => $query->id, 'value' => $query->full_name_with_city];
         }
 
-        return Response::json($results);
+        return response()->json($results);
     }
 
-    public function getuser()
+    public function getuser(Request $request)
     {
         $this->authorize('show-contact');
-        if (empty(Request::get('response'))) {
+        if (empty($request->get('response'))) {
             $id = 0;
         } else {
-            $id = Request::get('response');
+            $id = $request->get('response');
         }
         // TODO: check contact_type field and redirect to appropriate parish, diocese, person, etc.
         if ($id == 0) {
@@ -49,13 +46,13 @@ class SearchController extends Controller
             switch ($contact->subcontact_type) {
                 case config('polanco.contact_type.parish'):
                     return redirect()->action('ParishController@show', $id);
-                break;
+                    break;
                 case config('polanco.contact_type.diocese'):
                     return redirect()->action('DioceseController@show', $id);
-                break;
+                    break;
                 case config('polanco.contact_type.vendor'):
                     return redirect()->action('VendorController@show', $id);
-                break;
+                    break;
                 default:
                     return redirect()->action('OrganizationController@show', $id);
             }
@@ -67,7 +64,7 @@ class SearchController extends Controller
         $this->authorize('show-contact');
         if (! empty($request)) {
             $persons = \App\Contact::filtered($request)->orderBy('sort_name')->with('attachments')->paginate(100);
-            $persons->appends(Request::except('page'));
+            $persons->appends($request->except('page'));
         }
 
         return view('search.results', compact('persons'));

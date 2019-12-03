@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreDonationRequest;
+use App\Http\Requests\UpdateDonationRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Validation\Rule;
 
 class DonationController extends Controller
 {
@@ -79,10 +81,10 @@ class DonationController extends Controller
         }
         if (isset($event_id)) {
             $retreats = \App\Retreat::findOrFail($event_id); // a lazy way to fail if unknown event_id
-            $retreats = \App\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->whereId($event_id)->pluck('description', 'id');
+            $retreats = \App\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->whereId($event_id)->pluck('description', 'id');
         } else {
             // $retreats = \App\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("is_active", "=", 1)->orderBy('start_date')->pluck('description', 'id');
-            $retreats = \App\Registration::leftjoin('event', 'participant.event_id', '=', 'event.id')->select(\DB::raw('CONCAT(event.idnumber, "-", event.title, " (",DATE_FORMAT(event.start_date,"%m-%d-%Y"),")") as description'), 'event.id')->whereContactId($id)->orderBy('event.start_date', 'desc')->pluck('event.description', 'event.id');
+            $retreats = \App\Registration::leftjoin('event', 'participant.event_id', '=', 'event.id')->select(DB::raw('CONCAT(event.idnumber, "-", event.title, " (",DATE_FORMAT(event.start_date,"%m-%d-%Y"),")") as description'), 'event.id')->whereContactId($id)->orderBy('event.start_date', 'desc')->pluck('event.description', 'event.id');
             $retreats->prepend('Unassigned', 0);
         }
 
@@ -107,22 +109,9 @@ class DonationController extends Controller
      * create and save new donation record
      * redirect to donation.index
      */
-    public function store(Request $request)
+    public function store(StoreDonationRequest $request)
     {
         $this->authorize('create-donation');
-
-        $this->validate($request, [
-        'donor_id' => 'required|integer|min:0',
-        'event_id' => 'integer|min:0',
-        'donation_date' => 'required|date',
-        'payment_date' => 'required|date',
-        'donation_amount' => 'required|numeric',
-        'payment_amount' => 'required|numeric',
-        'payment_idnumber' => 'nullable|numeric|min:0',
-        'start_date_only' => 'date|nullable|before:end_date_only',
-        'end_date_only' => 'date|nullable|after:start_date_only',
-        'donation_install' => 'numeric|min:0|nullable',
-        ]);
 
         $donation = new \App\Donation;
         $donation->contact_id = $request->input('donor_id');
@@ -184,7 +173,7 @@ class DonationController extends Controller
         $descriptions = \App\DonationType::orderby('name')->pluck('name', 'id');
 
         // $retreats = \App\Retreat::select(\DB::raw('CONCAT_WS(" ",CONCAT(idnumber," -"), title, CONCAT("(",DATE_FORMAT(start_date,"%m-%d-%Y"),")")) as description'), 'id')->where("end_date", ">", $donation->donation_date)->where("is_active", "=", 1)->orderBy('start_date')->pluck('description', 'id');
-        $retreats = \App\Registration::leftjoin('event', 'participant.event_id', '=', 'event.id')->select(\DB::raw('CONCAT(event.idnumber, "-", event.title, " (",DATE_FORMAT(event.start_date,"%m-%d-%Y"),")") as description'), 'event.id')->whereContactId($donation->contact_id)->orderBy('event.start_date', 'desc')->pluck('event.description', 'event.id');
+        $retreats = \App\Registration::leftjoin('event', 'participant.event_id', '=', 'event.id')->select(DB::raw('CONCAT(event.idnumber, "-", event.title, " (",DATE_FORMAT(event.start_date,"%m-%d-%Y"),")") as description'), 'event.id')->whereContactId($donation->contact_id)->orderBy('event.start_date', 'desc')->pluck('event.description', 'event.id');
 
         $retreats->prepend('Unassigned', 0);
         $defaults['event_id'] = $donation->event_id;
@@ -207,20 +196,10 @@ class DonationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateDonationRequest $request, $id)
     {
         $this->authorize('update-donation');
 
-        $this->validate($request, [
-        'donor_id' => 'required|integer|min:0',
-        'event_id' => 'integer|min:0',
-        'donation_date' => 'required|date',
-        'donation_amount' => 'required|numeric',
-        'start_date' => 'date|nullable|before:end_date',
-        'end_date' => 'date|nullable|after:start_date',
-        'donation_install' => 'numeric|min:0|nullable',
-        'donation_thank_you' => Rule::in(['Y', 'N']),
-        ]);
         //dd($request->input('donation_description'));
         if ($request->input('donation_description') > 0) {
             $donation_description = \App\DonationType::find($request->input('donation_description'));
@@ -270,7 +249,7 @@ class DonationController extends Controller
             $registration->save();
         }
 
-        return redirect($contact->contact_url);
+        return redirect()->to($contact->contact_url);
     }
 
     /**

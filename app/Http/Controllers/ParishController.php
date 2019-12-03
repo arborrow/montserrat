@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreParishRequest;
+use App\Http\Requests\UpdateParishRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
-use Input;
+
 
 class ParishController extends Controller
 {
@@ -61,23 +62,9 @@ class ParishController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreParishRequest $request)
     {
         $this->authorize('create-contact');
-        $this->validate($request, [
-            'organization_name' => 'required',
-            'diocese_id' => 'integer|min:0',
-            'pastor_id' => 'integer|min:0',
-            'parish_email_main' => 'email|nullable',
-            'url_main' => 'url|nullable',
-            'url_facebook' => 'url|regex:/facebook\.com\/.+/i|nullable',
-            'url_google' => 'url|regex:/plus\.google\.com\/.+/i|nullable',
-            'url_twitter' => 'url|regex:/twitter\.com\/.+/i|nullable',
-            'url_instagram' => 'url|regex:/instagram\.com\/.+/i|nullable',
-            'url_linkedin' => 'url|regex:/linkedin\.com\/.+/i|nullable',
-            'phone_main_phone' => 'phone|nullable',
-            'phone_main_fax' => 'phone|nullable',
-        ]);
         $parish = new \App\Contact;
         $parish->organization_name = $request->input('organization_name');
         $parish->display_name = $request->input('organization_name');
@@ -276,29 +263,9 @@ class ParishController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateParishRequest $request, $id)
     {
         $this->authorize('update-contact');
-        $this->validate($request, [
-            'organization_name' => 'required',
-            'display_name' => 'required',
-            'sort_name' => 'required',
-            'diocese_id' => 'integer|min:0',
-            'pastor_id' => 'integer|min:0',
-            'email_primary' => 'email|nullable',
-            'url_main' => 'url|nullable',
-            'url_facebook' => 'url|regex:/facebook\.com\/.+/i|nullable',
-            'url_google' => 'url|regex:/plus\.google\.com\/.+/i|nullable',
-            'url_twitter' => 'url|regex:/twitter\.com\/.+/i|nullable',
-            'url_instagram' => 'url|regex:/instagram\.com\/.+/i|nullable',
-            'url_linkedin' => 'url|regex:/linkedin\.com\/.+/i|nullable',
-            'avatar' => 'image|max:5000|nullable',
-            'attachment' => 'file|mimes:pdf,doc,docx|max:10000|nullable',
-            'attachment_description' => 'string|max:200|nullable',
-            'phone_main_phone' => 'phone|nullable',
-            'phone_main_fax' => 'phone|nullable',
-            'parish_email_main' => 'email|nullable',
-        ]);
 
         $parish = \App\Contact::with('pastor.contact_a', 'diocese.contact_a', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'notes')->findOrFail($request->input('id'));
         $parish->organization_name = $request->input('organization_name');
