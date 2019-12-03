@@ -9,7 +9,6 @@ class Permission extends Model
 {
     //
     use SoftDeletes;
-    protected $table = 'permissions';
 
     public function roles()
     {
