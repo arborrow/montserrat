@@ -10,7 +10,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
 
-
 class RelationshipTypeController extends Controller
 {
     public function __construct()

@@ -24,7 +24,7 @@ class UpdateRetreatRequest extends FormRequest
     public function rules()
     {
         return [
-            'idnumber' => 'required|unique:event,idnumber,' . $id,
+            'idnumber' => 'required|unique:event,idnumber,'.$id,
             'start_date' => 'required|date|before:end_date',
             'end_date' => 'required|date|after:start_date',
             'title' => 'required',
