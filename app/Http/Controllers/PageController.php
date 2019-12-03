@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
@@ -101,7 +101,7 @@ class PageController extends Controller
         //unsorted registrations
         //$registrations = \App\Registration::where('event_id','=',$retreat->id)->with('retreat','retreatant.languages','retreatant.parish.contact_a.address_primary','retreatant.prefix','retreatant.suffix','retreatant.address_primary.state','retreatant.phones.location','retreatant.emails.location','retreatant.emergency_contact','retreatant.notes','retreatant.occupation')->get();
         //registrations sorted by contact's sort_name
-        $registrations = \App\Registration::select(\DB::raw('participant.*', 'contact.*'))
+        $registrations = \App\Registration::select(DB::raw('participant.*', 'contact.*'))
                 ->join('contact', 'participant.contact_id', '=', 'contact.id')
                 ->where('participant.event_id', '=', $retreat->id)
                 ->whereCanceledAt(null)
@@ -271,7 +271,7 @@ class PageController extends Controller
 
         $retreat = \App\Retreat::where('idnumber', '=', $id)->first();
         //$registrations = \App\Registration::where('event_id','=',$retreat->id)->with('retreat','retreatant')->get();
-        $registrations = \App\Registration::select(\DB::raw('participant.*', 'contact.*'))
+        $registrations = \App\Registration::select(DB::raw('participant.*', 'contact.*'))
                 ->join('contact', 'participant.contact_id', '=', 'contact.id')
                 ->where('participant.event_id', '=', $retreat->id)
                 ->whereCanceledAt(null)
@@ -289,7 +289,7 @@ class PageController extends Controller
         $retreat = \App\Retreat::where('idnumber', '=', $id)->first();
         //        $registrations = \App\Registration::where('event_id','=',$retreat->id)->with('retreat','retreatant.suffix','retreatant.address_primary','retreatant.prefix')->get();
         //dd($registrations);
-        $registrations = \App\Registration::select(\DB::raw('participant.*', 'contact.*'))
+        $registrations = \App\Registration::select(DB::raw('participant.*', 'contact.*'))
                 ->join('contact', 'participant.contact_id', '=', 'contact.id')
                 ->where('participant.event_id', '=', $retreat->id)
                 ->whereCanceledAt(null)

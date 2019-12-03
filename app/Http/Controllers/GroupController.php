@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreGroupRequest;
 use App\Http\Requests\UpdateGroupRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use Input;
 
 class GroupController extends Controller
 {

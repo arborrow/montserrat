@@ -5,11 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RoomUpdateRetreatRequest;
 use App\Http\Requests\StoreRetreatRequest;
 use App\Http\Requests\UpdateRetreatRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Response;
-use Image;
 use Spatie\GoogleCalendar\Event;
 
 class RetreatController extends Controller

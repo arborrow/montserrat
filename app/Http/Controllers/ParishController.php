@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreParishRequest;
 use App\Http\Requests\UpdateParishRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
-use Input;
+
 
 class ParishController extends Controller
 {

@@ -39,7 +39,7 @@ class GateController extends Controller
                     'url' => 'http://demo.twilio.com/docs/voice.xml', ]
                 );
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             report($e);
         }
 
@@ -63,7 +63,7 @@ class GateController extends Controller
             'sendDigits' => config('settings.close_digits').config('settings.end_call_digits'),
             'url' => 'http://demo.twilio.com/docs/voice.xml', ]
             );
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             report($e);
         }
 

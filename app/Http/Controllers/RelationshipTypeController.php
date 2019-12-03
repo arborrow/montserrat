@@ -6,11 +6,10 @@ use App\Http\Requests\AddmeRelationshipTypeRequest;
 use App\Http\Requests\MakeRelationshipTypeRequest;
 use App\Http\Requests\StoreRelationshipTypeRequest;
 use App\Http\Requests\UpdateRelationshipTypeRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
-use Input;
+
 
 class RelationshipTypeController extends Controller
 {
