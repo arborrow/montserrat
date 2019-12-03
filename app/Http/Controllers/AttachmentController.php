@@ -22,7 +22,7 @@ class AttachmentController extends Controller
 
     public function sanitize_filename($filename)
     {
-        $sanitized = preg_replace('/[^a-zA-Z0-9\-\._]/', '', $filename);
+        $sanitized = preg_replace('/[^a-zA-Z0-9\\-\\._]/', '', $filename);
 
         return $sanitized;
     }
