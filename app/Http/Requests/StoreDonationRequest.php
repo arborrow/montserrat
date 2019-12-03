@@ -24,17 +24,17 @@ class StoreDonationRequest extends FormRequest
     public function rules()
     {
         return [
-                'donor_id'         => 'required|integer|min:0',
-                'event_id'         => 'integer|min:0',
-                'donation_date'    => 'required|date',
-                'payment_date'     => 'required|date',
-                'donation_amount'  => 'required|numeric',
-                'payment_amount'   => 'required|numeric',
-                'payment_idnumber' => 'nullable|numeric|min:0',
-                'start_date_only'  => 'date|nullable|before:end_date_only',
-                'end_date_only'    => 'date|nullable|after:start_date_only',
-                'donation_install' => 'numeric|min:0|nullable',
-               ];
+            'donor_id' => 'required|integer|min:0',
+            'event_id' => 'integer|min:0',
+            'donation_date' => 'required|date',
+            'payment_date' => 'required|date',
+            'donation_amount' => 'required|numeric',
+            'payment_amount' => 'required|numeric',
+            'payment_idnumber' => 'nullable|numeric|min:0',
+            'start_date_only' => 'date|nullable|before:end_date_only',
+            'end_date_only' => 'date|nullable|after:start_date_only',
+            'donation_install' => 'numeric|min:0|nullable',
+        ];
     }
 
     /**

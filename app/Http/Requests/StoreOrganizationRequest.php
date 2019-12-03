@@ -24,18 +24,18 @@ class StoreOrganizationRequest extends FormRequest
     public function rules()
     {
         return [
-                'organization_name' => 'required',
-                'subcontact_type'   => 'integer|min:0',
-                'email_main'        => 'email|nullable',
-                'url_main'          => 'url|nullable',
-                'url_facebook'      => 'url|regex:/facebook\\.com\\/.+/i|nullable',
-                'url_google'        => 'url|regex:/plus\\.google\\.com\\/.+/i|nullable',
-                'url_twitter'       => 'url|regex:/twitter\\.com\\/.+/i|nullable',
-                'url_instagram'     => 'url|regex:/instagram\\.com\\/.+/i|nullable',
-                'url_linkedin'      => 'url|regex:/linkedin\\.com\\/.+/i|nullable',
-                'phone_main_phone'  => 'phone|nullable',
-                'phone_main_fax'    => 'phone|nullable',
-               ];
+            'organization_name' => 'required',
+            'subcontact_type' => 'integer|min:0',
+            'email_main' => 'email|nullable',
+            'url_main' => 'url|nullable',
+            'url_facebook' => 'url|regex:/facebook\\.com\\/.+/i|nullable',
+            'url_google' => 'url|regex:/plus\\.google\\.com\\/.+/i|nullable',
+            'url_twitter' => 'url|regex:/twitter\\.com\\/.+/i|nullable',
+            'url_instagram' => 'url|regex:/instagram\\.com\\/.+/i|nullable',
+            'url_linkedin' => 'url|regex:/linkedin\\.com\\/.+/i|nullable',
+            'phone_main_phone' => 'phone|nullable',
+            'phone_main_fax' => 'phone|nullable',
+        ];
     }
 
     /**

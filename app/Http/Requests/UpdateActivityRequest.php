@@ -24,16 +24,16 @@ class UpdateActivityRequest extends FormRequest
     public function rules()
     {
         return [
-                'touched_at'       => 'required|date',
-                'target_id'        => 'required|integer|min:0',
-                'assignee_id'      => 'required|integer|min:0',
-                'creator_id'       => 'required|integer|min:0',
-                'activity_type_id' => 'required|integer|min:1',
-                'status_id'        => 'required|integer|min:0',
-                'priority_id'      => 'required|integer|min:0',
-                'medium_id'        => 'required|integer|min:1',
-                'duration'         => 'integer|min:0',
-               ];
+            'touched_at' => 'required|date',
+            'target_id' => 'required|integer|min:0',
+            'assignee_id' => 'required|integer|min:0',
+            'creator_id' => 'required|integer|min:0',
+            'activity_type_id' => 'required|integer|min:1',
+            'status_id' => 'required|integer|min:0',
+            'priority_id' => 'required|integer|min:0',
+            'medium_id' => 'required|integer|min:1',
+            'duration' => 'integer|min:0',
+        ];
     }
 
     /**

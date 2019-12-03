@@ -24,11 +24,11 @@ class StoreRetreatWaitlistTouchpointRequest extends FormRequest
     public function rules()
     {
         return [
-                'event_id'   => 'required|integer|min:0',
-                'touched_at' => 'required|date',
-                'staff_id'   => 'required|integer|min:0',
-                'type'       => 'in:Email,Call,Letter,Face,Other',
-               ];
+            'event_id' => 'required|integer|min:0',
+            'touched_at' => 'required|date',
+            'staff_id' => 'required|integer|min:0',
+            'type' => 'in:Email,Call,Letter,Face,Other',
+        ];
     }
 
     /**

@@ -24,10 +24,10 @@ class UpdateRoomRequest extends FormRequest
     public function rules()
     {
         return [
-                'name'        => 'required',
-                'building_id' => 'integer|min:0',
-                'occupancy'   => 'integer|min:0',
-               ];
+            'name' => 'required',
+            'building_id' => 'integer|min:0',
+            'occupancy' => 'integer|min:0',
+        ];
     }
 
     /**

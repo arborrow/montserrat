@@ -24,18 +24,18 @@ class StoreRegistrationRequest extends FormRequest
     public function rules()
     {
         return [
-                'register_date'             => 'required|date',
-                'attendance_confirm_date'   => 'date|nullable',
-                'registration_confirm_date' => 'date|nullable',
-                'canceled_at'               => 'date|nullable',
-                'arrived_at'                => 'date|nullable',
-                'departed_at'               => 'date|nullable',
-                'event_id'                  => 'required|integer|min:1',
-                'status_id'                 => 'required|integer|min:1',
-                'contact_id'                => 'required|integer|min:1',
-                'deposit'                   => 'required|numeric|min:0|max:10000',
-                'num_registrants'           => 'integer|min:0|max:99|nullable',
-               ];
+            'register_date' => 'required|date',
+            'attendance_confirm_date' => 'date|nullable',
+            'registration_confirm_date' => 'date|nullable',
+            'canceled_at' => 'date|nullable',
+            'arrived_at' => 'date|nullable',
+            'departed_at' => 'date|nullable',
+            'event_id' => 'required|integer|min:1',
+            'status_id' => 'required|integer|min:1',
+            'contact_id' => 'required|integer|min:1',
+            'deposit' => 'required|numeric|min:0|max:10000',
+            'num_registrants' => 'integer|min:0|max:99|nullable',
+        ];
     }
 
     /**

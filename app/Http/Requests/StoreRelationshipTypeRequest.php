@@ -24,16 +24,16 @@ class StoreRelationshipTypeRequest extends FormRequest
     public function rules()
     {
         return [
-                'description'    => 'required',
-                'name_a_b'       => 'required',
-                'label_a_b'      => 'required',
-                'name_b_a'       => 'required',
-                'label_b_a'      => 'required',
-                'contact_type_a' => 'required',
-                'contact_type_b' => 'required',
-                'is_active'      => 'integer|min:0|max:1',
-                'is_reserved'    => 'integer|min:0|max:1',
-               ];
+            'description' => 'required',
+            'name_a_b' => 'required',
+            'label_a_b' => 'required',
+            'name_b_a' => 'required',
+            'label_b_a' => 'required',
+            'contact_type_a' => 'required',
+            'contact_type_b' => 'required',
+            'is_active' => 'integer|min:0|max:1',
+            'is_reserved' => 'integer|min:0|max:1',
+        ];
     }
 
     /**

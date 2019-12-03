@@ -24,9 +24,9 @@ class MakeRelationshipTypeRequest extends FormRequest
     public function rules()
     {
         return [
-                'contact_a_id' => 'integer|min:0|required',
-                'contact_b_id' => 'integer|min:0|required',
-               ];
+            'contact_a_id' => 'integer|min:0|required',
+            'contact_b_id' => 'integer|min:0|required',
+        ];
     }
 
     /**

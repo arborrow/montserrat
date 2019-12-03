@@ -24,11 +24,11 @@ class StoreTouchpointRequest extends FormRequest
     public function rules()
     {
         return [
-                'touched_at' => 'required|date',
-                'person_id'  => 'required|integer|min:0',
-                'staff_id'   => 'required|integer|min:0',
-                'type'       => 'in:Email,Call,Letter,Face,Other',
-               ];
+            'touched_at' => 'required|date',
+            'person_id' => 'required|integer|min:0',
+            'staff_id' => 'required|integer|min:0',
+            'type' => 'in:Email,Call,Letter,Face,Other',
+        ];
     }
 
     /**

@@ -24,18 +24,18 @@ class UpdateGroupRegistrationRequest extends FormRequest
     public function rules()
     {
         return [
-                'register_date'             => 'required|date',
-                'attendance_confirm_date'   => 'date|nullable',
-                'registration_confirm_date' => 'date|nullable',
-                'canceled_at'               => 'date|nullable',
-                'arrived_at'                => 'date|nullable',
-                'departed_at'               => 'date|nullable',
-                'contact_id'                => 'required|integer|min:0',
-                'event_id'                  => 'required|integer|min:0',
-                'status_id'                 => 'required|integer|min:0',
-                'room_id'                   => 'required|integer|min:0',
-                'deposit'                   => 'required|numeric|min:0|max:10000',
-               ];
+            'register_date' => 'required|date',
+            'attendance_confirm_date' => 'date|nullable',
+            'registration_confirm_date' => 'date|nullable',
+            'canceled_at' => 'date|nullable',
+            'arrived_at' => 'date|nullable',
+            'departed_at' => 'date|nullable',
+            'contact_id' => 'required|integer|min:0',
+            'event_id' => 'required|integer|min:0',
+            'status_id' => 'required|integer|min:0',
+            'room_id' => 'required|integer|min:0',
+            'deposit' => 'required|numeric|min:0|max:10000',
+        ];
     }
 
     /**

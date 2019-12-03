@@ -24,11 +24,11 @@ class UpdatePaymentRequest extends FormRequest
     public function rules()
     {
         return [
-                'donation_id'      => 'required|integer|min:0',
-                'payment_date'     => 'required|date',
-                'payment_amount'   => 'required|numeric',
-                'payment_idnumber' => 'nullable|numeric|min:0',
-               ];
+            'donation_id' => 'required|integer|min:0',
+            'payment_date' => 'required|date',
+            'payment_amount' => 'required|numeric',
+            'payment_idnumber' => 'nullable|numeric|min:0',
+        ];
     }
 
     /**
