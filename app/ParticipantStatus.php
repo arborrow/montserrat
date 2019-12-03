@@ -9,5 +9,4 @@ class ParticipantStatus extends Model
 {
     use SoftDeletes;
     protected $table = 'participant_status_type';
-
 }

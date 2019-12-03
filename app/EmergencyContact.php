@@ -9,22 +9,23 @@ class EmergencyContact extends Model
 {
     use SoftDeletes;
     protected $table = 'emergency_contact';
-    protected $fillable = ['contact_id','name','relationship','phone','phone_alternate'];
-    
+    protected $fillable = ['contact_id', 'name', 'relationship', 'phone', 'phone_alternate'];
+
     public function contact()
     {
         return $this->belongsTo(Contact::class, 'contact_id', 'id');
     }
+
     public function setPhoneAttribute($phone)
     {
         $phone_formatted = null;
         $phone_numeric = $phone;
-        $phone_numeric = str_replace(" ", "", $phone_numeric);
-        $phone_numeric = str_replace("(", "", $phone_numeric);
-        $phone_numeric = str_replace(")", "", $phone_numeric);
-        $phone_numeric = str_replace("-", "", $phone_numeric);
+        $phone_numeric = str_replace(' ', '', $phone_numeric);
+        $phone_numeric = str_replace('(', '', $phone_numeric);
+        $phone_numeric = str_replace(')', '', $phone_numeric);
+        $phone_numeric = str_replace('-', '', $phone_numeric);
         if (strpos($phone_numeric, ',') > 0) {
-            $phone_extension = substr($phone_numeric, strpos($phone_numeric, ',')+1);
+            $phone_extension = substr($phone_numeric, strpos($phone_numeric, ',') + 1);
             $phone_numeric = substr($phone_numeric, 0, strpos($phone_numeric, ','));
         }
         if (strlen($phone_numeric) == 10) {
@@ -36,16 +37,17 @@ class EmergencyContact extends Model
             $this->attributes['phone'] = $phone_formatted.','.$phone_extension;
         }
     }
+
     public function setPhoneAlternateAttribute($phone)
     {
         $phone_formatted = null;
         $phone_numeric = $phone;
-        $phone_numeric = str_replace(" ", "", $phone_numeric);
-        $phone_numeric = str_replace("(", "", $phone_numeric);
-        $phone_numeric = str_replace(")", "", $phone_numeric);
-        $phone_numeric = str_replace("-", "", $phone_numeric);
+        $phone_numeric = str_replace(' ', '', $phone_numeric);
+        $phone_numeric = str_replace('(', '', $phone_numeric);
+        $phone_numeric = str_replace(')', '', $phone_numeric);
+        $phone_numeric = str_replace('-', '', $phone_numeric);
         if (strpos($phone_numeric, ',') > 0) {
-            $phone_extension = substr($phone_numeric, strpos($phone_numeric, ',')+1);
+            $phone_extension = substr($phone_numeric, strpos($phone_numeric, ',') + 1);
             $phone_numeric = substr($phone_numeric, 0, strpos($phone_numeric, ','));
         }
         if (strlen($phone_numeric) == 10) {

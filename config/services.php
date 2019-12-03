@@ -40,7 +40,7 @@ return [
         'scope'         => ['userinfo_email', 'userinfo_profile'],
         'redirect' => getenv('GOOGLE_REDIRECT'),
     ],
-    
+
     'stripe' => [
         'model' => App\User::class,
         'key' => env('STRIPE_KEY'),

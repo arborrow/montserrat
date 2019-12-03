@@ -14,8 +14,7 @@ class Donor extends Model
     public $timestamps = false;
 
     public function donations()
-        {
-            return $this->hasMany(Donation::class, 'donor_id', 'donor_id');
-        }
-
+    {
+        return $this->hasMany(Donation::class, 'donor_id', 'donor_id');
+    }
 }

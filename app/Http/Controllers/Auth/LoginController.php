@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\AuthenticateUser;
 use App\Http\Controllers\Controller;
+use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite;
-use App\AuthenticateUser;
-use Symfony\Component\HttpFoundation\Request;
 //use Illuminate\Support\Facades\Session;
 
-// use Redirect; 
-use Auth;
+// use Redirect;
+use Symfony\Component\HttpFoundation\Request;
 
 class LoginController extends Controller
 {
@@ -43,7 +43,7 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-    
+
     /**
      * Redirect the user to the GitHub authentication page.
      *
@@ -51,7 +51,6 @@ class LoginController extends Controller
      */
     public function redirectToProvider()
     {
-        
         return Socialite::driver('google')->redirect();
     }
 
@@ -67,10 +66,11 @@ class LoginController extends Controller
         // dd($socialite_retrict_domain,$user);
         if (isset($socialite_restrict_domain)) {
             if (isset($user->user['hd'])) {
-                if ($user->user['hd']==$socialite_restrict_domain) { // the user domain matches the social restrict domain so authenticate successfully
+                if ($user->user['hd'] == $socialite_restrict_domain) { // the user domain matches the social restrict domain so authenticate successfully
                     $authuser = new \App\UserRepository;
                     $currentuser = $authuser->findByUserNameOrCreate($user);
                     Auth::login($currentuser, true);
+
                     return redirect()->intended('/welcome');
                 //return $this->userHasLoggedIn($currentuser);
                 } else { // the user has a domain but it does not match the socialite restrict domain so do not authenticate
@@ -83,12 +83,15 @@ class LoginController extends Controller
             $authuser = new \App\UserRepository;
             $currentuser = $authuser->findByUserNameOrCreate($user);
             Auth::login($currentuser, true);
+
             return redirect('welcome');
         }
     }
+
     public function logout(AuthenticateUser $authenticateUser, Request $request, $provider = 'google')
     {
         Auth::logout();
+
         return redirect('/goodbye');
     }
 }

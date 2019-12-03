@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Mail\RetreatConfirmation;
-use Carbon\Carbon;
 use App\Retreat;
 use App\Touchpoint;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
 use Illuminate\Mail\Mailer;
 
 class ConfirmationEmails extends Command
@@ -52,18 +52,18 @@ class ConfirmationEmails extends Command
 
         if ($retreats->count() >= 1) {
             foreach ($retreats as $retreat) {
-                $automaticSuccessMessage = "Automatic confirmation email has been sent for retreat #".$retreat->idnumber.".";
-                $automaticErrorMessage = "Automatic confirmation email failed to send for retreat #".$retreat->idnumber.".";
+                $automaticSuccessMessage = 'Automatic confirmation email has been sent for retreat #'.$retreat->idnumber.'.';
+                $automaticErrorMessage = 'Automatic confirmation email failed to send for retreat #'.$retreat->idnumber.'.';
 
                 $registrations = $retreat->registrations()
                     ->where('canceled_at', null)
                     ->where('status_id', config('polanco.registration_status_id.registered'))
                     ->with('contact')
-                    ->whereHas('contact', function($query) {
+                    ->whereHas('contact', function ($query) {
                         $query->where('do_not_email', 0);
                     })
                     ->with('contact.touchpoints')
-                    ->whereDoesntHave('contact.touchpoints', function($query) use ($automaticSuccessMessage){
+                    ->whereDoesntHave('contact.touchpoints', function ($query) use ($automaticSuccessMessage) {
                         $query->where('notes', 'like', $automaticSuccessMessage);
                     })
                     ->get();
@@ -71,8 +71,8 @@ class ConfirmationEmails extends Command
                 foreach ($registrations as $registration) {
                     $primaryEmail = $registration->retreatant->email_primary_text;
 
-                    // For automatic emails, remember_token must be set for all participants in retreat. 
-                    if (!$registration->remember_token) {
+                    // For automatic emails, remember_token must be set for all participants in retreat.
+                    if (! $registration->remember_token) {
                         $registration->remember_token = str_random(60);
                         $registration->save();
                     }
@@ -89,7 +89,7 @@ class ConfirmationEmails extends Command
                         $this->mailer->to($primaryEmail)->queue(new RetreatConfirmation($registration));
                         $touchpoint->notes = $automaticSuccessMessage;
                         $touchpoint->save();
-                    } catch ( \Exception $e ) {
+                    } catch (\Exception $e) {
                         $touchpoint->notes = $automaticErrorMessage;
                         $touchpoint->save();
                     }

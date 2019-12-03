@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Input;
+use App\Http\Requests;
 use Auth;
 use DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use Response;
 
 class SearchController extends Controller
@@ -17,7 +17,6 @@ class SearchController extends Controller
         $this->middleware('auth');
     }
 
-
     public function autocomplete()
     {
         $this->authorize('show-contact');
@@ -25,11 +24,12 @@ class SearchController extends Controller
         $results = [];
         $queries = \App\Contact::orderBy('sort_name')->where('display_name', 'LIKE', '%'.$term.'%')->whereDeletedAt(null)->take(20)->get();
         if (($queries->count() == 0)) {
-            $results[0]='Add new contact (No results)';
+            $results[0] = 'Add new contact (No results)';
         }
         foreach ($queries as $query) {
-            $results[] = [ 'id' => $query->id, 'value' => $query->full_name_with_city ];
+            $results[] = ['id' => $query->id, 'value' => $query->full_name_with_city];
         }
+
         return Response::json($results);
     }
 
@@ -41,8 +41,8 @@ class SearchController extends Controller
         } else {
             $id = Input::get('response');
         }
-            // TODO: check contact_type field and redirect to appropriate parish, diocese, person, etc.
-        if ($id==0) {
+        // TODO: check contact_type field and redirect to appropriate parish, diocese, person, etc.
+        if ($id == 0) {
             return redirect()->action('PersonController@create');
         } else {
             $contact = \App\Contact::findOrFail($id);
@@ -64,13 +64,15 @@ class SearchController extends Controller
             }
         }
     }
+
     public function results(Request $request)
     {
         $this->authorize('show-contact');
-        if (!empty($request)) {
+        if (! empty($request)) {
             $persons = \App\Contact::filtered($request)->orderBy('sort_name')->with('attachments')->paginate(100);
             $persons->appends(Input::except('page'));
         }
+
         return view('search.results', compact('persons'));
     }
 
@@ -79,7 +81,7 @@ class SearchController extends Controller
         $this->authorize('show-contact');
         $person = new \App\Contact;
         $parishes = \App\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
-        $parish_list[0]='N/A';
+        $parish_list[0] = 'N/A';
         $contact_types = \App\ContactType::whereIsReserved(true)->pluck('label', 'id');
         $contact_types->prepend('N/A', 0);
         $subcontact_types = \App\ContactType::whereIsReserved(false)->whereIsActive(true)->pluck('label', 'id');
@@ -96,7 +98,7 @@ class SearchController extends Controller
         $ethnicities->prepend('N/A', 0);
 
         $genders = \App\Gender::orderBy('name')->pluck('name', 'id');
-        $genders ->prepend('N/A', 0);
+        $genders->prepend('N/A', 0);
         $groups = \App\Group::orderBy('name')->pluck('name', 'id');
         $groups->prepend('N/A', 0);
 
@@ -104,7 +106,7 @@ class SearchController extends Controller
         $languages->prepend('N/A', 0);
         $referrals = \App\Referral::orderBy('name')->whereIsActive(1)->pluck('name', 'id');
         $referrals->prepend('N/A', 0);
-        $prefixes= \App\Prefix::orderBy('name')->pluck('name', 'id');
+        $prefixes = \App\Prefix::orderBy('name')->pluck('name', 'id');
         $prefixes->prepend('N/A', 0);
         $religions = \App\Religion::orderBy('name')->whereIsActive(1)->pluck('name', 'id');
         $religions->prepend('N/A', 0);
@@ -118,46 +120,46 @@ class SearchController extends Controller
         //create defaults array for easier pre-populating of default values on edit/update blade
         // initialize defaults to avoid undefined index errors
         $defaults = [];
-        $defaults['Home']['street_address']='';
-        $defaults['Home']['supplemental_address_1']='';
-        $defaults['Home']['city']='';
-        $defaults['Home']['state_province_id']='';
-        $defaults['Home']['postal_code']='';
-        $defaults['Home']['country_id']='';
-        $defaults['Home']['Phone']='';
-        $defaults['Home']['Mobile']='';
-        $defaults['Home']['Fax']='';
-        $defaults['Home']['email']='';
+        $defaults['Home']['street_address'] = '';
+        $defaults['Home']['supplemental_address_1'] = '';
+        $defaults['Home']['city'] = '';
+        $defaults['Home']['state_province_id'] = '';
+        $defaults['Home']['postal_code'] = '';
+        $defaults['Home']['country_id'] = '';
+        $defaults['Home']['Phone'] = '';
+        $defaults['Home']['Mobile'] = '';
+        $defaults['Home']['Fax'] = '';
+        $defaults['Home']['email'] = '';
 
-        $defaults['Work']['street_address']='';
-        $defaults['Work']['supplemental_address_1']='';
-        $defaults['Work']['city']='';
-        $defaults['Work']['state_province_id']='';
-        $defaults['Work']['postal_code']='';
-        $defaults['Work']['country_id']='';
-        $defaults['Work']['Phone']='';
-        $defaults['Work']['Mobile']='';
-        $defaults['Work']['Fax']='';
-        $defaults['Work']['email']='';
+        $defaults['Work']['street_address'] = '';
+        $defaults['Work']['supplemental_address_1'] = '';
+        $defaults['Work']['city'] = '';
+        $defaults['Work']['state_province_id'] = '';
+        $defaults['Work']['postal_code'] = '';
+        $defaults['Work']['country_id'] = '';
+        $defaults['Work']['Phone'] = '';
+        $defaults['Work']['Mobile'] = '';
+        $defaults['Work']['Fax'] = '';
+        $defaults['Work']['email'] = '';
 
-        $defaults['Other']['street_address']='';
-        $defaults['Other']['supplemental_address_1']='';
-        $defaults['Other']['city']='';
-        $defaults['Other']['state_province_id']='';
-        $defaults['Other']['postal_code']='';
-        $defaults['Other']['country_id']='';
-        $defaults['Other']['Phone']='';
-        $defaults['Other']['Mobile']='';
-        $defaults['Other']['Fax']='';
-        $defaults['Other']['email']='';
+        $defaults['Other']['street_address'] = '';
+        $defaults['Other']['supplemental_address_1'] = '';
+        $defaults['Other']['city'] = '';
+        $defaults['Other']['state_province_id'] = '';
+        $defaults['Other']['postal_code'] = '';
+        $defaults['Other']['country_id'] = '';
+        $defaults['Other']['Phone'] = '';
+        $defaults['Other']['Mobile'] = '';
+        $defaults['Other']['Fax'] = '';
+        $defaults['Other']['email'] = '';
 
-        $defaults['Main']['url']='';
-        $defaults['Work']['url']='';
-        $defaults['Facebook']['url']='';
-        $defaults['Google']['url']='';
-        $defaults['Instagram']['url']='';
-        $defaults['LinkedIn']['url']='';
-        $defaults['Twitter']['url']='';
+        $defaults['Main']['url'] = '';
+        $defaults['Work']['url'] = '';
+        $defaults['Facebook']['url'] = '';
+        $defaults['Google']['url'] = '';
+        $defaults['Instagram']['url'] = '';
+        $defaults['LinkedIn']['url'] = '';
+        $defaults['Twitter']['url'] = '';
 
         foreach ($person->addresses as $address) {
             $defaults[$address->location->name]['street_address'] = $address->street_address;

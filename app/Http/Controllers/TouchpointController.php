@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
+use Auth;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Socialite;
-use Auth;
 
 class TouchpointController extends Controller
 {
@@ -26,6 +26,7 @@ class TouchpointController extends Controller
     {
         $this->authorize('show-touchpoint');
         $touchpoints = \App\Touchpoint::orderBy('touched_at', 'desc')->with('person', 'staff')->paginate(100);
+
         return view('touchpoints.index', compact('touchpoints'));
     }
 
@@ -68,6 +69,7 @@ class TouchpointController extends Controller
         } else {
             $defaults['user_id'] = $user_email->contact_id;
         }
+
         return view('touchpoints.add_group', compact('staff', 'groups', 'defaults'));
     }
 
@@ -93,6 +95,7 @@ class TouchpointController extends Controller
         } else {
             $defaults['user_id'] = $user_email->contact_id;
         }
+
         return view('touchpoints.add_retreat', compact('staff', 'retreat', 'retreats', 'participants', 'defaults'));
     }
 
@@ -118,6 +121,7 @@ class TouchpointController extends Controller
         } else {
             $defaults['user_id'] = $user_email->contact_id;
         }
+
         return view('touchpoints.add_retreat_waitlist', compact('staff', 'retreat', 'retreats', 'participants', 'defaults'));
     }
 
@@ -160,21 +164,20 @@ class TouchpointController extends Controller
         'touched_at' => 'required|date',
         'person_id' => 'required|integer|min:0',
         'staff_id' => 'required|integer|min:0',
-        'type' => 'in:Email,Call,Letter,Face,Other'
+        'type' => 'in:Email,Call,Letter,Face,Other',
         ]);
 
         $touchpoint = new \App\Touchpoint;
-        $touchpoint->person_id= $request->input('person_id');
-        $touchpoint->staff_id= $request->input('staff_id');
-        $touchpoint->touched_at= Carbon::parse($request->input('touched_at'));
+        $touchpoint->person_id = $request->input('person_id');
+        $touchpoint->staff_id = $request->input('staff_id');
+        $touchpoint->touched_at = Carbon::parse($request->input('touched_at'));
         $touchpoint->type = $request->input('type');
-        $touchpoint->notes= $request->input('notes');
+        $touchpoint->notes = $request->input('notes');
 
         $touchpoint->save();
 
         return Redirect::action('TouchpointController@index');
     }
-
 
     public function store_group(Request $request)
     {
@@ -183,19 +186,20 @@ class TouchpointController extends Controller
             'group_id' => 'required|integer|min:0',
             'touched_at' => 'required|date',
             'staff_id' => 'required|integer|min:0',
-            'type' => 'in:Email,Call,Letter,Face,Other'
+            'type' => 'in:Email,Call,Letter,Face,Other',
         ]);
         $group_id = $request->input('group_id');
         $group_members = \App\GroupContact::whereGroupId($group_id)->whereStatus('Added')->get();
         foreach ($group_members as $group_member) {
             $touchpoint = new \App\Touchpoint;
-            $touchpoint->person_id= $group_member->contact_id;
-            $touchpoint->staff_id= $request->input('staff_id');
-            $touchpoint->touched_at= Carbon::parse($request->input('touched_at'));
+            $touchpoint->person_id = $group_member->contact_id;
+            $touchpoint->staff_id = $request->input('staff_id');
+            $touchpoint->touched_at = Carbon::parse($request->input('touched_at'));
             $touchpoint->type = $request->input('type');
-            $touchpoint->notes= $request->input('notes');
+            $touchpoint->notes = $request->input('notes');
             $touchpoint->save();
         }
+
         return Redirect::action('GroupController@show', $group_id);
     }
 
@@ -206,19 +210,20 @@ class TouchpointController extends Controller
             'event_id' => 'required|integer|min:0',
             'touched_at' => 'required|date',
             'staff_id' => 'required|integer|min:0',
-            'type' => 'in:Email,Call,Letter,Face,Other'
+            'type' => 'in:Email,Call,Letter,Face,Other',
         ]);
         $event_id = $request->input('event_id');
         $participants = \App\Registration::whereStatusId(config('polanco.registration_status_id.registered'))->whereEventId($event_id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
         foreach ($participants as $participant) {
             $touchpoint = new \App\Touchpoint;
-            $touchpoint->person_id= $participant->contact_id;
-            $touchpoint->staff_id= $request->input('staff_id');
-            $touchpoint->touched_at= Carbon::parse($request->input('touched_at'));
+            $touchpoint->person_id = $participant->contact_id;
+            $touchpoint->staff_id = $request->input('staff_id');
+            $touchpoint->touched_at = Carbon::parse($request->input('touched_at'));
             $touchpoint->type = $request->input('type');
-            $touchpoint->notes= $request->input('notes');
+            $touchpoint->notes = $request->input('notes');
             $touchpoint->save();
         }
+
         return Redirect::action('RetreatController@show', $event_id);
     }
 
@@ -229,22 +234,22 @@ class TouchpointController extends Controller
             'event_id' => 'required|integer|min:0',
             'touched_at' => 'required|date',
             'staff_id' => 'required|integer|min:0',
-            'type' => 'in:Email,Call,Letter,Face,Other'
+            'type' => 'in:Email,Call,Letter,Face,Other',
         ]);
         $event_id = $request->input('event_id');
         $participants = \App\Registration::whereStatusId(config('polanco.registration_status_id.waitlist'))->whereEventId($event_id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
         foreach ($participants as $participant) {
             $touchpoint = new \App\Touchpoint;
-            $touchpoint->person_id= $participant->contact_id;
-            $touchpoint->staff_id= $request->input('staff_id');
-            $touchpoint->touched_at= Carbon::parse($request->input('touched_at'));
+            $touchpoint->person_id = $participant->contact_id;
+            $touchpoint->staff_id = $request->input('staff_id');
+            $touchpoint->touched_at = Carbon::parse($request->input('touched_at'));
             $touchpoint->type = $request->input('type');
-            $touchpoint->notes= $request->input('notes');
+            $touchpoint->notes = $request->input('notes');
             $touchpoint->save();
         }
+
         return Redirect::action('RetreatController@show', $event_id);
     }
-
 
     /**
      * Display the specified resource.
@@ -256,7 +261,8 @@ class TouchpointController extends Controller
     {
         $this->authorize('show-touchpoint');
         $touchpoint = \App\Touchpoint::with('staff', 'person')->findOrFail($id);
-        return view('touchpoints.show', compact('touchpoint'));//
+
+        return view('touchpoints.show', compact('touchpoint')); //
     }
 
     /**
@@ -275,8 +281,8 @@ class TouchpointController extends Controller
         })->orderBy('sort_name')->pluck('sort_name', 'id')->toArray();
         /* ensure that a staff member has not been removed */
         if (isset($touchpoint->staff->id)) {
-            if (!array_has($staff,$touchpoint->staff->id)) {
-                $staff[$touchpoint->staff->id] = $touchpoint->staff->sort_name. ' (former)';
+            if (! array_has($staff, $touchpoint->staff->id)) {
+                $staff[$touchpoint->staff->id] = $touchpoint->staff->sort_name.' (former)';
                 asort($staff);
                 // dd($touchpoint->staff->sort_name.' is not currently a staff member: '.$touchpoint->staff->id, $staff);
             }
@@ -291,7 +297,7 @@ class TouchpointController extends Controller
         }
         //$persons = \App\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name','id');
 // check contact type and if parish get list of parishes if individual get list of persons
-        return view('touchpoints.edit', compact('touchpoint', 'staff', 'persons'));//
+        return view('touchpoints.edit', compact('touchpoint', 'staff', 'persons')); //
     }
 
     /**
@@ -308,14 +314,14 @@ class TouchpointController extends Controller
             'touched_at' => 'required|date',
             'person_id' => 'required|integer|min:0',
             'staff_id' => 'required|integer|min:0',
-            'type' => 'in:Email,Call,Letter,Face,Other'
+            'type' => 'in:Email,Call,Letter,Face,Other',
         ]);
         $touchpoint = \App\Touchpoint::findOrFail($request->input('id'));
-        $touchpoint->person_id= $request->input('person_id');
-        $touchpoint->staff_id= $request->input('staff_id');
-        $touchpoint->touched_at= $request->input('touched_at');
+        $touchpoint->person_id = $request->input('person_id');
+        $touchpoint->staff_id = $request->input('staff_id');
+        $touchpoint->touched_at = $request->input('touched_at');
         $touchpoint->type = $request->input('type');
-        $touchpoint->notes= $request->input('notes');
+        $touchpoint->notes = $request->input('notes');
         $touchpoint->save();
 
         return Redirect::action('TouchpointController@index');
@@ -331,6 +337,7 @@ class TouchpointController extends Controller
     {
         $this->authorize('delete-touchpoint');
         \App\Touchpoint::destroy($id);
+
         return Redirect::action('TouchpointController@index');
     }
 }

@@ -3,31 +3,28 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateSalutationsTable extends Migration {
+class CreateSalutationsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('salutations', function (Blueprint $table) {
+            $table->integer('Salutation ID')->nullable();
+            $table->string('Salutation Name', 30)->nullable();
+        });
+    }
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
-		Schema::create('salutations', function(Blueprint $table)
-		{
-			$table->integer('Salutation ID')->nullable();
-			$table->string('Salutation Name', 30)->nullable();
-		});
-	}
-
-
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
-		Schema::drop('salutations');
-	}
-
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('salutations');
+    }
 }

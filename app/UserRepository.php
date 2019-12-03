@@ -9,14 +9,14 @@ class UserRepository
     public function findByUserNameOrCreate($userData)
     {
         if (isset($userData->user['hd'])) {
-            if (!$userData->user['hd']=="montserratretreat.org") {
+            if (! $userData->user['hd'] == 'montserratretreat.org') {
                 redirect('/restricted');
             }
         } else {
             redirect('/restricted');
         }
         $user = User::where('provider_id', '=', $userData->id)->first();
-        if (!$user) {
+        if (! $user) {
             $user = User::create([
                 'provider' => 'google',
                 'provider_id' => $userData->id,
@@ -29,13 +29,12 @@ class UserRepository
         }
 
         $this->checkIfUserNeedsUpdating($userData, $user);
-        
+
         return $user;
     }
 
     public function checkIfUserNeedsUpdating($userData, $user)
     {
-
         $socialData = [
             'avatar' => $userData->avatar,
             'email' => $userData->email,
@@ -49,7 +48,7 @@ class UserRepository
             'username' => $user->username,
         ];
 
-        if (!empty(array_diff($socialData, $dbData))) {
+        if (! empty(array_diff($socialData, $dbData))) {
             $user->avatar = $userData->avatar;
             $user->email = $userData->email;
             $user->name = $userData->name;

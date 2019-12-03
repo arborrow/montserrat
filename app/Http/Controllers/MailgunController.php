@@ -1,18 +1,18 @@
 <?php
+
 namespace App\Http\Controllers;
 
 //require '\vendor\autoload.php';
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use Mailgun\Mailgun;
-use Illuminate\Http\Response;
-use Carbon\Carbon;
-use App\Touchpoint;
-use App\Message;
 use App\Http\Controllers\SystemController;
+use App\Http\Requests;
+use App\Message;
+use App\Touchpoint;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
+use Mailgun\Mailgun;
 
 class MailgunController extends Controller
 {
@@ -20,11 +20,10 @@ class MailgunController extends Controller
     {
         $this->middleware('auth');
         //dd(SystemController::is_mailgun_enabled());
-        if (!SystemController::is_mailgun_enabled()) {
+        if (! SystemController::is_mailgun_enabled()) {
             Redirect('admin/config/mailgun')->send();
         }
     }
-
 
     public function get()
     {
@@ -33,13 +32,13 @@ class MailgunController extends Controller
         $mg = new Mailgun(env('MAILGUN_SECRET'));
         $domain = env('MAILGUN_DOMAIN');
         $queryString = ['event' => 'stored'];
-        $emails= "";
+        $emails = '';
         $messages = new \Illuminate\Support\Collection;
 
-#
+//
         $results = $mg->get("$domain/events", $queryString);
-    //dd($results);
-        if (array_key_exists("http_response_body", $results)) {
+        //dd($results);
+        if (array_key_exists('http_response_body', $results)) {
             //dd('found');
             foreach ($results->http_response_body as $body) {
                 //dd($body);
@@ -54,13 +53,13 @@ class MailgunController extends Controller
                         $messages->push($email);
 
                         $email->staff = \App\Contact::whereHas('groups', function ($query) {
-                                $query->where('group_id', '=', config('polanco.group_id.staff'));
+                            $query->where('group_id', '=', config('polanco.group_id.staff'));
                         })
                             ->whereHas('emails', function ($query) use ($email) {
                                 $query->whereEmail($email->from);
                             })->first();
                         $email->contact = \App\Contact::whereHas('emails', function ($query) use ($email) {
-                                $query->whereEmail($email->to);
+                            $query->whereEmail($email->to);
                         })->first();
                         //dd($email->id);
                         $message = \App\Message::firstOrCreate(['mailgun_id'=>$email->id]);
@@ -93,9 +92,9 @@ class MailgunController extends Controller
         } else {
             //dd('No items');
         }
+
         return view('mailgun.index', compact('messages', 'staff', 'contact'));
     }
-
 
     /*
      * Clean up the email address from Mailgun by removing <name>
@@ -109,20 +108,20 @@ class MailgunController extends Controller
 
     public function clean_email($full_email = null)
     {
-      $this->authorize('admin-mailgun');
+        $this->authorize('admin-mailgun');
         if (strpos($full_email, '<') && strpos($full_email, '>')) {
-            return substr($full_email, strpos($full_email, "<")+1, (strpos($full_email, ">")-strpos($full_email, "<"))-1);
+            return substr($full_email, strpos($full_email, '<') + 1, (strpos($full_email, '>') - strpos($full_email, '<')) - 1);
         } else {
             return $full_email;
         }
     }
+
     /*
      * Processes stored mailgun emails after get which saves them to messages in db
      *
      */
     public function process()
     {
-
         $this->authorize('admin-mailgun');
         $messages = \App\Message::whereIsProcessed(0)->get();
 
@@ -137,20 +136,20 @@ class MailgunController extends Controller
             $output = curl_exec($ch);
             //dd($output);
             curl_close($ch);
-            $json=json_decode($output, true);
+            $json = json_decode($output, true);
 
             $message->body = $json['body-plain'];
-            $message->is_processed=1;
+            $message->is_processed = 1;
             $message->save();
 
             // if we have from and to ids for contacts go ahead and create a touchpoint
-            if (($message->from_id > 0) && ($message->to_id>0)) {
+            if (($message->from_id > 0) && ($message->to_id > 0)) {
                 $touch = new \App\Touchpoint();
                 $touch->person_id = $message->to_id;
-                $touch->staff_id=  $message->from_id;
-                $touch->touched_at= $message->timestamp;
+                $touch->staff_id = $message->from_id;
+                $touch->touched_at = $message->timestamp;
                 $touch->type = 'Email';
-                $touch->notes= $message->subject.' - '.$message->body;
+                $touch->notes = $message->subject.' - '.$message->body;
                 $touch->save();
             }
         }

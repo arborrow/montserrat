@@ -3,9 +3,9 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class RegistrationEventChange extends Mailable
 {
@@ -33,7 +33,7 @@ class RegistrationEventChange extends Mailable
      * @return $this
      */
     public function build()
-    {   
+    {
         return $this->subject('Notification of Registration Update: Event changed')
                     ->replyTo('registration@montserratretreat.org')
                     ->view('emails.registration-event-change');

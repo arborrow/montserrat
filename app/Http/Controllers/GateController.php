@@ -1,17 +1,21 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use Twilio\Rest\Client;
- class GateController extends Controller
+
+class GateController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
     }
-     public function open($hours = NULL)
-    {   
+
+    public function open($hours = null)
+    {
         $this->authorize('show-gate'); // Check to see if the user has permissions
-        
+
         $account_sid = env('TWILIO_SID');
         $auth_token = env('TWILIO_TOKEN');
         $twilio_number = env('TWILIO_NUMBER');
@@ -19,21 +23,21 @@ use Twilio\Rest\Client;
         $client = new Client($account_sid, $auth_token);
         try {
             if ($hours) {
-                $hours = sprintf("%02d", $hours);
-                $client->calls->create(  
+                $hours = sprintf('%02d', $hours);
+                $client->calls->create(
                 $to_number,
                 $twilio_number,
-                array(
+                [
                     'sendDigits' => env('OPEN_HOURS_DIGITS').$hours.env('END_CALL_DIGITS'),
-                    'url' => "http://demo.twilio.com/docs/voice.xml")
+                    'url' => 'http://demo.twilio.com/docs/voice.xml', ]
                 );
             } else {
-                $client->calls->create(  
+                $client->calls->create(
                 $to_number,
                 $twilio_number,
-                array(
+                [
                     'sendDigits' => env('OPEN_DIGITS').env('END_CALL_DIGITS'),
-                    'url' => "http://demo.twilio.com/docs/voice.xml")
+                    'url' => 'http://demo.twilio.com/docs/voice.xml', ]
                 );
             }
         } catch (Exception $e) {
@@ -42,10 +46,11 @@ use Twilio\Rest\Client;
 
         return view('gate.open', compact('hours'));
     }
-     public function close()
+
+    public function close()
     {
         $this->authorize('show-gate'); // Check to see if the user has permissions
-        
+
         $account_sid = env('TWILIO_SID');
         $auth_token = env('TWILIO_TOKEN');
         $twilio_number = env('TWILIO_NUMBER');
@@ -55,13 +60,14 @@ use Twilio\Rest\Client;
             $client->calls->create(
             $to_number,
             $twilio_number,
-            array(
+            [
             'sendDigits' => env('CLOSE_DIGITS').env('END_CALL_DIGITS'),
-            'url' => "http://demo.twilio.com/docs/voice.xml")
+            'url' => 'http://demo.twilio.com/docs/voice.xml', ]
             );
         } catch (Exception $e) {
             report($e);
         }
+
         return view('gate.close');
-  }
+    }
 }

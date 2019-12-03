@@ -2,14 +2,14 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Carbon\Carbon;
 
 class Location extends Model
 {
     //
-     use SoftDeletes;
+    use SoftDeletes;
 
     public function rooms()
     {

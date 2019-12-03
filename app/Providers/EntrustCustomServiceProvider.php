@@ -9,11 +9,10 @@
 namespace App\Providers;
 
 /**
- * Description of EntrustCustomServiceProvider
+ * Description of EntrustCustomServiceProvider.
  *
  * @author anthonyb
  */
-
 class EntrustCustomServiceProvider extends \Zizaco\Entrust\EntrustServiceProvider
 {
     /**
@@ -40,7 +39,7 @@ class EntrustCustomServiceProvider extends \Zizaco\Entrust\EntrustServiceProvide
     }
 
     /**
-     * Register the blade directives
+     * Register the blade directives.
      *
      * @return void
      */
@@ -51,21 +50,21 @@ class EntrustCustomServiceProvider extends \Zizaco\Entrust\EntrustServiceProvide
             return "<?php if (\\Entrust::hasRole{$expression}) : ?>";
         });
         \Blade::directive('endrole', function ($expression) {
-            return "<?php endif; // Entrust::hasRole ?>";
+            return '<?php endif; // Entrust::hasRole ?>';
         });
         // Call to Entrust::can
         \Blade::directive('permission', function ($expression) {
             return "<?php if (\\Entrust::can{$expression}) : ?>";
         });
         \Blade::directive('endpermission', function ($expression) {
-            return "<?php endif; // Entrust::can ?>";
+            return '<?php endif; // Entrust::can ?>';
         });
         // Call to Entrust::ability
         \Blade::directive('ability', function ($expression) {
             return "<?php if (\\Entrust::ability{$expression}) : ?>";
         });
         \Blade::directive('endability', function ($expression) {
-            return "<?php endif; // Entrust::ability ?>";
+            return '<?php endif; // Entrust::ability ?>';
         });
     }
 }

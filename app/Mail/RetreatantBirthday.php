@@ -3,9 +3,9 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class RetreatantBirthday extends Mailable
 {
@@ -29,8 +29,9 @@ class RetreatantBirthday extends Mailable
      * @return $this
      */
     public function build()
-    {   
-        $nameToUse = $this->retreatant->nick_name != NULL ? $this->retreatant->nick_name : $this->retreatant->first_name;
+    {
+        $nameToUse = $this->retreatant->nick_name != null ? $this->retreatant->nick_name : $this->retreatant->first_name;
+
         return $this->replyTo('director@montserratretreat.org')
                     ->subject('Happy Birthday '.$nameToUse.'!')
                     ->view('emails.retreatant-birthday');

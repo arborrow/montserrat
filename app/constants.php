@@ -1,4 +1,5 @@
 <?php
+
 // define('RELATIONSHIP_TYPE_CHILD_PARENT', 1);
 // define('RELATIONSHIP_TYPE_HUSBAND_WIFE', 2);
 // define('RELATIONSHIP_TYPE_SIBLING', 4);
@@ -20,7 +21,6 @@
 // define('RELATIONSHIP_TYPE_CAPTAIN', 24);
 // define('RELATIONSHIP_TYPE_PRIEST', 25);
 // define('RELATIONSHIP_TYPE_DEACON', 26);
-
 
 // define('CONTACT_TYPE_INDIVIDUAL', 1);
 // define('CONTACT_TYPE_HOUSEHOLD', 2);
@@ -63,14 +63,12 @@
 // define('EVENT_TYPE_CONTRACT', 11);
 // define('EVENT_TYPE_DIRECTED', 12);
 
-
 // define('FILE_TYPE_CONTACT_ATTACHMENT', 1);
 // define('FILE_TYPE_EVENT_SCHEDULE', 2);
 // define('FILE_TYPE_EVENT_EVALUATION', 3);
 // define('FILE_TYPE_EVENT_CONTRACT', 4);
 // define('FILE_TYPE_EVENT_GROUP_PHOTO', 5);
 // define('FILE_TYPE_CONTACT_AVATAR', 6);
-
 
 // define('GROUP_ID_INNKEEPER', 1);
 // define('GROUP_ID_DIRECTOR', 2);
