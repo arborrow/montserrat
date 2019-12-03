@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\MakeRelationshipTypeRequest;
 use App\Http\Requests\AddmeRelationshipTypeRequest;
-use App\Http\Requests\UpdateRelationshipTypeRequest;
+use App\Http\Requests\MakeRelationshipTypeRequest;
 use App\Http\Requests\StoreRelationshipTypeRequest;
+use App\Http\Requests\UpdateRelationshipTypeRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;

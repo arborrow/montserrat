@@ -4,8 +4,8 @@ namespace App;
 
 // AuthenticateUser.php
 use Illuminate\Contracts\Auth\Guard;
-use Laravel\Socialite\Contracts\Factory as Socialite;
 use Illuminate\Support\Facades\Request;
+use Laravel\Socialite\Contracts\Factory as Socialite;
 
 class AuthenticateUser
 {

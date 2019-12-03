@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateActivityRequest;
 use App\Http\Requests\StoreActivityRequest;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\UpdateActivityRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class ActivityController extends Controller

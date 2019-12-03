@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateGroupRegistrationRequest;
-use App\Http\Requests\UpdateRegistrationRequest;
 use App\Http\Requests\StoreGroupRegistrationRequest;
 use App\Http\Requests\StoreRegistrationRequest;
+use App\Http\Requests\UpdateGroupRegistrationRequest;
+use App\Http\Requests\UpdateRegistrationRequest;
 use App\Mail\RegistrationEventChange;
 use App\Mail\RetreatRegistration;
 use App\Registration;
@@ -241,7 +241,6 @@ class RegistrationController extends Controller
     {
         $this->authorize('create-registration');
 
-
         $retreat = \App\Retreat::findOrFail($request->input('event_id'));
         $group_members = \App\GroupContact::whereGroupId($request->input('group_id'))->whereStatus('Added')->get();
         foreach ($group_members as $group_member) {
@@ -336,7 +335,6 @@ class RegistrationController extends Controller
     {
         $this->authorize('update-registration');
 
-
         $registration = \App\Registration::findOrFail($request->input('id'));
         $retreat = \App\Retreat::findOrFail($request->input('event_id'));
 
@@ -378,7 +376,6 @@ class RegistrationController extends Controller
     public function update_group(UpdateGroupRegistrationRequest $request, $id)
     {
         $this->authorize('update-registration');
-
 
         $registration = \App\Registration::findOrFail($request->input('id'));
         $retreat = \App\Retreat::findOrFail($request->input('event_id'));

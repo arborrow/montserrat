@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateDioceseRequest;
 use App\Http\Requests\StoreDioceseRequest;
+use App\Http\Requests\UpdateDioceseRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;

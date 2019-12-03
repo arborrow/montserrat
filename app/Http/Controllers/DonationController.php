@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateDonationRequest;
 use App\Http\Requests\StoreDonationRequest;
+use App\Http\Requests\UpdateDonationRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -112,7 +112,6 @@ class DonationController extends Controller
     public function store(StoreDonationRequest $request)
     {
         $this->authorize('create-donation');
-
 
         $donation = new \App\Donation;
         $donation->contact_id = $request->input('donor_id');

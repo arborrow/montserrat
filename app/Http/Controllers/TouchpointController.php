@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateTouchpointRequest;
-use App\Http\Requests\StoreRetreatWaitlistTouchpointRequest;
-use App\Http\Requests\StoreRetreatTouchpointRequest;
 use App\Http\Requests\StoreGroupTouchpointRequest;
+use App\Http\Requests\StoreRetreatTouchpointRequest;
+use App\Http\Requests\StoreRetreatWaitlistTouchpointRequest;
 use App\Http\Requests\StoreTouchpointRequest;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\UpdateTouchpointRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Socialite;
 

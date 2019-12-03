@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateVendorRequest;
 use App\Http\Requests\StoreVendorRequest;
+use App\Http\Requests\UpdateVendorRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Input;
