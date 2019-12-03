@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateOrganizationRequest;
+use App\Http\Requests\StoreOrganizationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -69,22 +71,9 @@ class OrganizationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreOrganizationRequest $request)
     {
         $this->authorize('create-contact');
-        $this->validate($request, [
-            'organization_name' => 'required',
-            'subcontact_type' => 'integer|min:0',
-            'email_main' => 'email|nullable',
-            'url_main' => 'url|nullable',
-            'url_facebook' => 'url|regex:/facebook\\.com\\/.+/i|nullable',
-            'url_google' => 'url|regex:/plus\\.google\\.com\\/.+/i|nullable',
-            'url_twitter' => 'url|regex:/twitter\\.com\\/.+/i|nullable',
-            'url_instagram' => 'url|regex:/instagram\\.com\\/.+/i|nullable',
-            'url_linkedin' => 'url|regex:/linkedin\\.com\\/.+/i|nullable',
-            'phone_main_phone' => 'phone|nullable',
-            'phone_main_fax' => 'phone|nullable',
-        ]);
 
         $organization = new \App\Contact;
         $organization->organization_name = $request->input('organization_name');
@@ -254,25 +243,9 @@ class OrganizationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateOrganizationRequest $request, $id)
     {
         $this->authorize('update-contact');
-        $this->validate($request, [
-            'organization_name' => 'required',
-            'bishop_id' => 'integer|min:0',
-            'email_main' => 'email|nullable',
-            'url_main' => 'url|nullable',
-            'url_facebook' => 'url|regex:/facebook\\.com\\/.+/i|nullable',
-            'url_google' => 'url|regex:/plus\\.google\\.com\\/.+/i|nullable',
-            'url_twitter' => 'url|regex:/twitter\\.com\\/.+/i|nullable',
-            'url_instagram' => 'url|regex:/instagram\\.com\\/.+/i|nullable',
-            'url_linkedin' => 'url|regex:/linkedin\\.com\\/.+/i|nullable',
-            'phone_main_phone' => 'phone|nullable',
-            'phone_main_fax' => 'phone|nullable',
-            'avatar' => 'image|max:5000|nullable',
-            'attachment' => 'file|mimes:pdf,doc,docx|max:10000|nullable',
-            'attachment_description' => 'string|max:200|nullable',
-        ]);
 
         $organization = \App\Contact::with('address_primary.state', 'address_primary.location', 'phone_main_phone.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'note_organization')->findOrFail($id);
         $organization->organization_name = $request->input('organization_name');

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateDonationRequest;
+use App\Http\Requests\StoreDonationRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -107,22 +109,10 @@ class DonationController extends Controller
      * create and save new donation record
      * redirect to donation.index
      */
-    public function store(Request $request)
+    public function store(StoreDonationRequest $request)
     {
         $this->authorize('create-donation');
 
-        $this->validate($request, [
-        'donor_id' => 'required|integer|min:0',
-        'event_id' => 'integer|min:0',
-        'donation_date' => 'required|date',
-        'payment_date' => 'required|date',
-        'donation_amount' => 'required|numeric',
-        'payment_amount' => 'required|numeric',
-        'payment_idnumber' => 'nullable|numeric|min:0',
-        'start_date_only' => 'date|nullable|before:end_date_only',
-        'end_date_only' => 'date|nullable|after:start_date_only',
-        'donation_install' => 'numeric|min:0|nullable',
-        ]);
 
         $donation = new \App\Donation;
         $donation->contact_id = $request->input('donor_id');
@@ -207,20 +197,10 @@ class DonationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateDonationRequest $request, $id)
     {
         $this->authorize('update-donation');
 
-        $this->validate($request, [
-        'donor_id' => 'required|integer|min:0',
-        'event_id' => 'integer|min:0',
-        'donation_date' => 'required|date',
-        'donation_amount' => 'required|numeric',
-        'start_date' => 'date|nullable|before:end_date',
-        'end_date' => 'date|nullable|after:start_date',
-        'donation_install' => 'numeric|min:0|nullable',
-        'donation_thank_you' => Rule::in(['Y', 'N']),
-        ]);
         //dd($request->input('donation_description'));
         if ($request->input('donation_description') > 0) {
             $donation_description = \App\DonationType::find($request->input('donation_description'));

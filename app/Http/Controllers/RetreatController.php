@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RoomUpdateRetreatRequest;
+use App\Http\Requests\UpdateRetreatRequest;
+use App\Http\Requests\StoreRetreatRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
@@ -91,22 +94,9 @@ class RetreatController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRetreatRequest $request)
     {
         $this->authorize('create-retreat');
-        $this->validate($request, [
-            'idnumber' => 'required|unique:event,idnumber',
-            'start_date' => 'required|date|before:end_date',
-            'end_date' => 'required|date|after:start_date',
-            'title' => 'required',
-            'innkeeper_id' => 'integer|min:0',
-            'assistant_id' => 'integer|min:0',
-            'year' => 'integer|min:1990|max:2020',
-            'amount' => 'numeric|min:0|max:100000',
-            'attending' => 'integer|min:0|max:150',
-            'silent' => 'boolean',
-            'is_active' => 'boolean',
-          ]);
 
         $retreat = new \App\Retreat;
         $calendar_event = new Event;
@@ -339,27 +329,9 @@ class RetreatController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRetreatRequest $request, $id)
     {
         $this->authorize('update-retreat');
-        $this->validate($request, [
-            'idnumber' => 'required|unique:event,idnumber,'.$id,
-            'start_date' => 'required|date|before:end_date',
-            'end_date' => 'required|date|after:start_date',
-            'title' => 'required',
-            'innkeeper_id' => 'integer|min:0',
-            'assistant_id' => 'integer|min:0',
-            'year' => 'integer|min:1990|max:2020',
-            'amount' => 'numeric|min:0|max:100000',
-            'attending' => 'integer|min:0|max:150',
-            'silent' => 'boolean',
-            'is_active' => 'boolean',
-            'contract' => 'file|mimes:pdf|max:5000|nullable',
-            'schedule' => 'file|mimes:pdf|max:5000|nullable',
-            'evaluations' => 'file|mimes:pdf|max:10000|nullable',
-            'group_photo' => 'image|max:10000|nullable',
-
-        ]);
 
         $retreat = \App\Retreat::findOrFail($request->input('id'));
         $retreat->idnumber = $request->input('idnumber');
@@ -528,13 +500,9 @@ class RetreatController extends Controller
         return Redirect::back();
     }
 
-    public function room_update(Request $request)
+    public function room_update(RoomUpdateRetreatRequest $request)
     {
         $this->authorize('update-registration');
-        $this->validate($request, [
-            'retreat_id' => 'integer|min:0',
-
-        ]);
         if (null !== $request->input('registrations')) {
             foreach ($request->input('registrations') as $key => $value) {
                 $registration = \App\Registration::findOrFail($key);

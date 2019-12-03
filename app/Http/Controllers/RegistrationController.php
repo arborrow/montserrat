@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateGroupRegistrationRequest;
+use App\Http\Requests\UpdateRegistrationRequest;
+use App\Http\Requests\StoreGroupRegistrationRequest;
+use App\Http\Requests\StoreRegistrationRequest;
 use App\Mail\RegistrationEventChange;
 use App\Mail\RetreatRegistration;
 use App\Registration;
@@ -159,22 +163,9 @@ class RegistrationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRegistrationRequest $request)
     {
         $this->authorize('create-registration');
-        $this->validate($request, [
-        'register_date' => 'required|date',
-        'attendance_confirm_date' => 'date|nullable',
-        'registration_confirm_date' => 'date|nullable',
-        'canceled_at' => 'date|nullable',
-        'arrived_at' => 'date|nullable',
-        'departed_at' => 'date|nullable',
-        'event_id' => 'required|integer|min:1',
-        'status_id' => 'required|integer|min:1',
-        'contact_id' => 'required|integer|min:1',
-        'deposit' => 'required|numeric|min:0|max:10000',
-        'num_registrants' => 'integer|min:0|max:99|nullable',
-        ]);
 
         $rooms = $request->input('rooms');
         $num_registrants = $request->input('num_registrants');
@@ -246,22 +237,10 @@ class RegistrationController extends Controller
         return Redirect::action('RegistrationController@index');
     }
 
-    public function store_group(Request $request)
+    public function store_group(StoreGroupRegistrationRequest $request)
     {
         $this->authorize('create-registration');
 
-        $this->validate($request, [
-        'register_date' => 'required|date',
-        'attendance_confirm_date' => 'date|nullable',
-        'registration_confirm_date' => 'date|nullable',
-        'status_id' => 'required|integer|min:1',
-        'canceled_at' => 'date|nullable',
-        'arrived_at' => 'date|nullable',
-        'departed_at' => 'date|nullable',
-        'event_id' => 'required|integer|min:0',
-        'group_id' => 'required|integer|min:0',
-        'deposit' => 'required|numeric|min:0|max:10000',
-        ]);
 
         $retreat = \App\Retreat::findOrFail($request->input('event_id'));
         $group_members = \App\GroupContact::whereGroupId($request->input('group_id'))->whereStatus('Added')->get();
@@ -353,22 +332,10 @@ class RegistrationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRegistrationRequest $request, $id)
     {
         $this->authorize('update-registration');
 
-        $this->validate($request, [
-            'register_date' => 'required|date',
-            'attendance_confirm_date' => 'date|nullable',
-            'registration_confirm_date' => 'date|nullable',
-            'canceled_at' => 'date|nullable',
-            'arrived_at' => 'date|nullable',
-            'departed_at' => 'date|nullable',
-            'event_id' => 'required|integer|min:0',
-            'status_id' => 'required|integer|min:1',
-            'room_id' => 'required|integer|min:0',
-            'deposit' => 'required|numeric|min:0|max:10000',
-            ]);
 
         $registration = \App\Registration::findOrFail($request->input('id'));
         $retreat = \App\Retreat::findOrFail($request->input('event_id'));
@@ -408,23 +375,10 @@ class RegistrationController extends Controller
         return Redirect::action('PersonController@show', $registration->contact_id);
     }
 
-    public function update_group(Request $request, $id)
+    public function update_group(UpdateGroupRegistrationRequest $request, $id)
     {
         $this->authorize('update-registration');
 
-        $this->validate($request, [
-            'register_date' => 'required|date',
-            'attendance_confirm_date' => 'date|nullable',
-            'registration_confirm_date' => 'date|nullable',
-            'canceled_at' => 'date|nullable',
-            'arrived_at' => 'date|nullable',
-            'departed_at' => 'date|nullable',
-            'contact_id' => 'required|integer|min:0',
-            'event_id' => 'required|integer|min:0',
-            'status_id' => 'required|integer|min:0',
-            'room_id' => 'required|integer|min:0',
-            'deposit' => 'required|numeric|min:0|max:10000',
-            ]);
 
         $registration = \App\Registration::findOrFail($request->input('id'));
         $retreat = \App\Retreat::findOrFail($request->input('event_id'));

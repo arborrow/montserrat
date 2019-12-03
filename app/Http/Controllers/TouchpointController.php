@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateTouchpointRequest;
+use App\Http\Requests\StoreRetreatWaitlistTouchpointRequest;
+use App\Http\Requests\StoreRetreatTouchpointRequest;
+use App\Http\Requests\StoreGroupTouchpointRequest;
+use App\Http\Requests\StoreTouchpointRequest;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -156,15 +161,9 @@ class TouchpointController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTouchpointRequest $request)
     {
         $this->authorize('create-touchpoint');
-        $this->validate($request, [
-        'touched_at' => 'required|date',
-        'person_id' => 'required|integer|min:0',
-        'staff_id' => 'required|integer|min:0',
-        'type' => 'in:Email,Call,Letter,Face,Other',
-        ]);
 
         $touchpoint = new \App\Touchpoint;
         $touchpoint->person_id = $request->input('person_id');
@@ -178,15 +177,9 @@ class TouchpointController extends Controller
         return Redirect::action('TouchpointController@index');
     }
 
-    public function store_group(Request $request)
+    public function store_group(StoreGroupTouchpointRequest $request)
     {
         $this->authorize('create-touchpoint');
-        $this->validate($request, [
-            'group_id' => 'required|integer|min:0',
-            'touched_at' => 'required|date',
-            'staff_id' => 'required|integer|min:0',
-            'type' => 'in:Email,Call,Letter,Face,Other',
-        ]);
         $group_id = $request->input('group_id');
         $group_members = \App\GroupContact::whereGroupId($group_id)->whereStatus('Added')->get();
         foreach ($group_members as $group_member) {
@@ -202,15 +195,9 @@ class TouchpointController extends Controller
         return Redirect::action('GroupController@show', $group_id);
     }
 
-    public function store_retreat(Request $request)
+    public function store_retreat(StoreRetreatTouchpointRequest $request)
     {
         $this->authorize('create-touchpoint');
-        $this->validate($request, [
-            'event_id' => 'required|integer|min:0',
-            'touched_at' => 'required|date',
-            'staff_id' => 'required|integer|min:0',
-            'type' => 'in:Email,Call,Letter,Face,Other',
-        ]);
         $event_id = $request->input('event_id');
         $participants = \App\Registration::whereStatusId(config('polanco.registration_status_id.registered'))->whereEventId($event_id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
         foreach ($participants as $participant) {
@@ -226,15 +213,9 @@ class TouchpointController extends Controller
         return Redirect::action('RetreatController@show', $event_id);
     }
 
-    public function store_retreat_waitlist(Request $request)
+    public function store_retreat_waitlist(StoreRetreatWaitlistTouchpointRequest $request)
     {
         $this->authorize('create-touchpoint');
-        $this->validate($request, [
-            'event_id' => 'required|integer|min:0',
-            'touched_at' => 'required|date',
-            'staff_id' => 'required|integer|min:0',
-            'type' => 'in:Email,Call,Letter,Face,Other',
-        ]);
         $event_id = $request->input('event_id');
         $participants = \App\Registration::whereStatusId(config('polanco.registration_status_id.waitlist'))->whereEventId($event_id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
         foreach ($participants as $participant) {
@@ -306,15 +287,9 @@ class TouchpointController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateTouchpointRequest $request, $id)
     {
         $this->authorize('update-touchpoint');
-        $this->validate($request, [
-            'touched_at' => 'required|date',
-            'person_id' => 'required|integer|min:0',
-            'staff_id' => 'required|integer|min:0',
-            'type' => 'in:Email,Call,Letter,Face,Other',
-        ]);
         $touchpoint = \App\Touchpoint::findOrFail($request->input('id'));
         $touchpoint->person_id = $request->input('person_id');
         $touchpoint->staff_id = $request->input('staff_id');
