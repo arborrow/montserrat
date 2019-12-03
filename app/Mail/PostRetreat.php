@@ -2,11 +2,10 @@
 
 namespace App\Mail;
 
+use App\Registration;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Registration;
 
 class PostRetreat extends Mailable
 {
@@ -31,7 +30,6 @@ class PostRetreat extends Mailable
      */
     public function build()
     {
-
         return $this->subject('Post Retreat Group Picture '.$this->participant->contact->display_name)
                     ->replyTo('registration@montserratretreat.org')
                     ->view('emails.post-retreat');

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 
 class RoleController extends Controller
@@ -18,6 +17,7 @@ class RoleController extends Controller
     {
         $this->authorize('show-role');
         $roles = \App\Role::orderBy('name')->get();
+
         return view('admin.roles.index', compact('roles'));
     }
 
@@ -29,6 +29,7 @@ class RoleController extends Controller
     public function create()
     {
         $this->authorize('create-role');
+
         return view('admin.roles.create');
     }
 
@@ -43,15 +44,14 @@ class RoleController extends Controller
         $this->authorize('create-role');
 
         $role = new \App\Role;
-        $role->name= $request->input('name');
-        $role->display_name= $request->input('display_name');
+        $role->name = $request->input('name');
+        $role->display_name = $request->input('display_name');
         $role->description = $request->input('description');
 
         $role->save();
 
         return Redirect::action('RoleController@index');
     }
-
 
     /**
      * Display the specified resource.
@@ -67,7 +67,7 @@ class RoleController extends Controller
         $permissions = \App\Permission::orderBy('name')->pluck('name', 'id');
         $users = \App\User::orderBy('name')->pluck('name', 'id');
 
-        return view('admin.roles.show', compact('role', 'permissions', 'users'));//
+        return view('admin.roles.show', compact('role', 'permissions', 'users')); //
     }
 
     /**
@@ -81,7 +81,8 @@ class RoleController extends Controller
         $this->authorize('update-role');
 
         $role = \App\Role::findOrFail($id);
-        return view('admin.roles.edit', compact('role'));//
+
+        return view('admin.roles.edit', compact('role')); //
     }
 
     /**
@@ -96,9 +97,9 @@ class RoleController extends Controller
         $this->authorize('update-role');
 
         $role = \App\Role::findOrFail($request->input('id'));
-        $role->name= $request->input('name');
-        $role->display_name= $request->input('display_name');
-        $role->description= $request->input('description');
+        $role->name = $request->input('name');
+        $role->display_name = $request->input('display_name');
+        $role->description = $request->input('description');
         $role->save();
 
         return Redirect::action('RoleController@index');
@@ -115,11 +116,13 @@ class RoleController extends Controller
         $this->authorize('delete-role');
 
         \App\Role::destroy($id);
+
         return Redirect::action('RoleController@index');
     }
 
     public function update_permissions(Request $request)
-    {   $this->authorize('update-role');
+    {
+        $this->authorize('update-role');
         $this->authorize('delete-permission');
         $role = \App\Role::findOrFail($request->input('id'));
         $role->permissions()->detach();
@@ -127,8 +130,10 @@ class RoleController extends Controller
 
         return Redirect::action('RoleController@index');
     }
+
     public function update_users(Request $request)
-    {   $this->authorize('update-role');
+    {
+        $this->authorize('update-role');
         $role = \App\Role::findOrFail($request->input('id'));
         $role->users()->detach();
         $role->users()->sync($request->input('users'));

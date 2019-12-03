@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\PostRetreat;
 use App\Retreat;
 use Carbon\Carbon;
-use App\Mail\PostRetreat;
 use Illuminate\Console\Command;
 
 class PostRetreatEmails extends Command
@@ -48,19 +48,19 @@ class PostRetreatEmails extends Command
             foreach ($retreats as $retreat) {
                 $retreatants = $retreat->registrations()
                     ->with('contact')
-                    ->whereHas('contact', function($query) {
+                    ->whereHas('contact', function ($query) {
                         $query->where('do_not_email', 0);
                     })
                     ->get();
 
                 foreach ($retreatants as $retreatant) {
-                    $primaryEmail = $retreatant->contact->primaryEmail()->first()->email;       
+                    $primaryEmail = $retreatant->contact->primaryEmail()->first()->email;
                     try {
                         \Mail::to($primaryEmail)->queue(new PostRetreat($retreatant));
-                    } catch ( \Exception $e ) {
-
+                    } catch (\Exception $e) {
                     }
                 }
+
                 return $retreatants;
             }
         }

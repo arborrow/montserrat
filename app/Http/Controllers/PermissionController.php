@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 
 class PermissionController extends Controller
@@ -14,19 +12,19 @@ class PermissionController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index(Request $request)
     {
         $this->authorize('show-permission');
-        $actions = array (
+        $actions = [
             '' => 'N/A',
             'create'=>'create',
             'delete'=>'delete',
             'manage'=>'manage',
             'show'=>'show',
-            'update'=>'update'
-        );
-        $models = array (
+            'update'=>'update',
+        ];
+        $models = [
             '' => 'N/A',
             'address'=>'address',
             'attachment'=>'attachment',
@@ -45,11 +43,9 @@ class PermissionController extends Controller
             'room'=>'room',
             'touchpoint'=>'touchpoint',
             'user'=>'user',
-            'website'=>'website'
-    
-        
-        
-        );
+            'website'=>'website',
+
+        ];
         if (empty($request->input('term'))) {
             $term = $request->input('action').'-'.$request->input('model');
         } else {
@@ -60,6 +56,7 @@ class PermissionController extends Controller
         } else {
             $permissions = \App\Permission::orderBy('name')->where('name', 'like', '%'.$term.'%')->get();
         }
+
         return view('admin.permissions.index', compact('permissions', 'actions', 'models'));
     }
 
@@ -71,9 +68,10 @@ class PermissionController extends Controller
     public function create()
     {
         $this->authorize('create-permission');
+
         return view('admin.permissions.create');
     }
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -84,13 +82,13 @@ class PermissionController extends Controller
     {
         $this->authorize('create-permission');
         $permission = new \App\Permission;
-        $permission->name= $request->input('name');
-        $permission->display_name= $request->input('display_name');
+        $permission->name = $request->input('name');
+        $permission->display_name = $request->input('display_name');
         $permission->description = $request->input('description');
         $permission->save();
+
         return Redirect::back();
     }
-    
 
     /**
      * Display the specified resource.
@@ -103,6 +101,7 @@ class PermissionController extends Controller
         $this->authorize('show-permission');
         $permission = \App\Permission::with('roles')->findOrFail($id);
         $roles = \App\Role::orderBy('name')->pluck('name', 'id');
+
         return view('admin.permissions.show', compact('permission', 'roles'));
     }
 
@@ -116,6 +115,7 @@ class PermissionController extends Controller
     {
         $this->authorize('update-permission');
         $permission = \App\Permission::findOrFail($id);
+
         return view('admin.permissions.edit', compact('permission'));
     }
 
@@ -130,11 +130,11 @@ class PermissionController extends Controller
     {
         $this->authorize('update-permission');
         $permission = \App\Permission::findOrFail($request->input('id'));
-        $permission->name= $request->input('name');
-        $permission->display_name= $request->input('display_name');
-        $permission->description= $request->input('description');
+        $permission->name = $request->input('name');
+        $permission->display_name = $request->input('display_name');
+        $permission->description = $request->input('description');
         $permission->save();
-    
+
         return Redirect::action('PermissionController@index');
     }
 
@@ -148,9 +148,10 @@ class PermissionController extends Controller
     {
         $this->authorize('delete-permission');
         \App\Permission::destroy($id);
+
         return Redirect::action('PermissionController@index');
     }
-    
+
     public function update_roles(Request $request)
     {
         $this->authorize('update-permission');
@@ -158,7 +159,7 @@ class PermissionController extends Controller
         $permission = \App\Permission::findOrFail($request->input('id'));
         $permission->roles()->detach();
         $permission->roles()->sync($request->input('roles'));
-    
+
         return Redirect::action('PermissionController@index');
     }
 }

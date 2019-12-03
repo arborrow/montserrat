@@ -7,10 +7,11 @@ use Illuminate\Support\Facades\Redirect;
 
 class AddressController extends Controller
 {
-  public function __construct()
-  {
-      $this->middleware('auth');
-  }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -88,6 +89,7 @@ class AddressController extends Controller
         $address = \App\Address::findOrFail($id);
         $contact_id = $address->contact_id;
         \App\Address::destroy($id);
-        return Redirect::action('PersonController@show',$contact_id);
+
+        return Redirect::action('PersonController@show', $contact_id);
     }
 }

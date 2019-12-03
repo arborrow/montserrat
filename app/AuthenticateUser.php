@@ -1,14 +1,14 @@
-<?php namespace App;
+<?php
 
-// AuthenticateUser.php 
+namespace App;
+
+// AuthenticateUser.php
 use Illuminate\Contracts\Auth\Guard;
 use Laravel\Socialite\Contracts\Factory as Socialite;
-use App\UserRepository;
 use Request;
 
 class AuthenticateUser
 {
-
     private $socialite;
     private $auth;
     private $users;
@@ -22,8 +22,7 @@ class AuthenticateUser
 
     public function execute($request, $listener, $provider)
     {
-       
-        if (!$request) {
+        if (! $request) {
             return $this->getAuthorizationFirst($provider);
         }
         $user = $this->users->findByUserNameOrCreate($this->getSocialUser($provider));

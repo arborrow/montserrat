@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Input;
 
@@ -14,7 +12,6 @@ class GroupController extends Controller
     {
         $this->middleware('auth');
     }
-
 
     /**
      * Display a listing of the resource.
@@ -28,6 +25,7 @@ class GroupController extends Controller
         foreach ($groups as $group) {
             $group->count = $group->members()->count();
         }
+
         return view('groups.index', compact('groups'));   //
     }
 
@@ -39,6 +37,7 @@ class GroupController extends Controller
     public function create()
     {
         $this->authorize('create-group');
+
         return view('groups.create');
     }
 
@@ -56,9 +55,9 @@ class GroupController extends Controller
             'title' => 'required',
             'is_active' => 'integer|min:0|max:1',
             'is_hidden' => 'integer|min:0|max:1',
-            'is_reserved' => 'integer|min:0|max:1'
+            'is_reserved' => 'integer|min:0|max:1',
         ]);
-        
+
         $group = new \App\Group;
         $group->name = $request->input('name');
         $group->title = $request->input('title');
@@ -66,10 +65,10 @@ class GroupController extends Controller
         $group->is_active = $request->input('is_active');
         $group->is_hidden = $request->input('is_hidden');
         $group->is_reserved = $request->input('is_reserved');
-       
+
         $group->save();
-       
-        return Redirect::action('GroupController@show', $group->id);//
+
+        return Redirect::action('GroupController@show', $group->id); //
     }
 
     /**
@@ -85,7 +84,8 @@ class GroupController extends Controller
         $members = \App\Contact::whereHas('groups', function ($query) use ($id) {
             $query->whereGroupId($id)->whereStatus('Added');
         })->orderby('sort_name')->get();
-        return view('groups.show', compact('group', 'members'));//
+
+        return view('groups.show', compact('group', 'members')); //
     }
 
     /**
@@ -98,6 +98,7 @@ class GroupController extends Controller
     {
         $this->authorize('update-group');
         $group = \App\Group::findOrFail($id);
+
         return view('groups.edit', compact('group'));
     }
 
@@ -116,9 +117,9 @@ class GroupController extends Controller
             'title' => 'required',
             'is_active' => 'integer|min:0|max:1',
             'is_hidden' => 'integer|min:0|max:1',
-            'is_reserved' => 'integer|min:0|max:1'
+            'is_reserved' => 'integer|min:0|max:1',
         ]);
-    
+
         $group = \App\Group::findOrFail($request->input('id'));
         $group->name = $request->input('name');
         $group->title = $request->input('title');
@@ -126,10 +127,11 @@ class GroupController extends Controller
         $group->is_active = $request->input('is_active');
         $group->is_hidden = $request->input('is_hidden');
         $group->is_reserved = $request->input('is_reserved');
-       
+
         $group->save();
+
         return redirect()->intended('group/'.$group->id);
-                
+
         //return Redirect::action('GroupController@index');//
     }
 
@@ -143,6 +145,7 @@ class GroupController extends Controller
     {
         $this->authorize('delete-group');
         \App\Group::destroy($id);
+
         return Redirect::action('GroupController@index');
     }
 }

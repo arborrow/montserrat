@@ -2,18 +2,18 @@
 
 return [
 
-    /**
+    /*
      * Restrict socialite authentication to a particular domain
      */
     'socialite_domain_restriction' => 'montserratretreat.org',
 
-    /**
+    /*
      *  Polanco's name
      */
 
     'site_name' => 'Polanco',
 
-    /**
+    /*
      *  Polanco's email address for sending notifications
      */
 
@@ -67,7 +67,7 @@ return [
         'religious_catholic' => '10',
         'religious_noncatholic' => '11',
         'contract' => '12',
-        'foundation' => '13'
+        'foundation' => '13',
     ],
 
     'location_type' => [
@@ -75,12 +75,12 @@ return [
         'work' => '2',
         'main' => '3',
         'other' => '4',
-        'billing' => '5'
+        'billing' => '5',
     ],
     'activity_contacts_type' => [
         'assignee' => '1',
         'creator' => '2',
-        'target' => '3'
+        'target' => '3',
     ],
     'activity_type' => [
         'meeting' => '1',
@@ -88,26 +88,26 @@ return [
         'email' => '3',
         'text' => '4',
         'letter' => '5',
-        'other' => '8'
+        'other' => '8',
     ],
     'medium' => [
         'in person' => '1',
         'phone' => '2',
         'email' => '3',
         'fax' => '4',
-        'letter' => '5'
+        'letter' => '5',
     ],
     'priority' => [
         'urgent' => '1',
         'normal' => '2',
-        'low' => '3'
+        'low' => '3',
     ],
 
     'country_id_usa' => '1228',
     'state_province_id_tx' => '1042',
 
     'contact' => [
-        'montserrat' => '620'
+        'montserrat' => '620',
     ],
 
     'event_type' => [
@@ -124,7 +124,7 @@ return [
         'contract' => '11',
         'directed' => '12',
         'isi' => '13',
-        'jesuit' => '14'
+        'jesuit' => '14',
     ],
 
     'file_type' => [
@@ -133,7 +133,7 @@ return [
         'event_evaluation' => '3',
         'event_contract' => '4',
         'event_group_photo' => '5',
-        'contact_avatar' => '6'
+        'contact_avatar' => '6',
     ],
 
     'group_id' => [
@@ -161,7 +161,7 @@ return [
         'retreatant' => '5',
         'retreat_director' => '8',
         'retreat_innkeeper' => '9',
-        'retreat_assistant' => '10'
+        'retreat_assistant' => '10',
     ],
 
     'registration_status_id' => [
@@ -171,16 +171,15 @@ return [
         'canceled' => '4',
         'pending' => '5',
         'waitlist' => '7',
-        'rejected' => '11'
+        'rejected' => '11',
     ],
-
 
     'registration_source' => [
         'N/A' => 'N/A',
         'Squarespace' => 'Squarespace',
         'Phone' => 'Phone',
         'Email' => 'Email',
-        'In person' => 'In person'
+        'In person' => 'In person',
     ],
 
     'payment_method' => [
@@ -194,8 +193,8 @@ return [
         'NSF' => 'NSF',
         'Reallocation' => 'Reallocation',
         'Refund' => 'Refund',
-	'Other' => 'Other',
-	'Wire transfer' => 'Wire transfer'
-    ]
+    'Other' => 'Other',
+    'Wire transfer' => 'Wire transfer',
+    ],
 
 ];

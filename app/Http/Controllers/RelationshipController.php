@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
-use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 
 class RelationshipController extends Controller
@@ -12,6 +12,7 @@ class RelationshipController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,6 +22,7 @@ class RelationshipController extends Controller
     {
         $this->authorize('show-relationship');
         $relationships = \App\Relationship::paginate(100);
+
         return view('relationships.index', compact('relationships'));   //
     }
 
@@ -89,6 +91,7 @@ class RelationshipController extends Controller
     {
         $this->authorize('delete-relationship');
         \App\Relationship::destroy($id);
+
         return Redirect::back();
     }
 }
