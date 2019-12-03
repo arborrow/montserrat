@@ -7,7 +7,7 @@ use App\Http\Requests;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
 use Response;
 
 class SearchController extends Controller
@@ -20,7 +20,7 @@ class SearchController extends Controller
     public function autocomplete()
     {
         $this->authorize('show-contact');
-        $term = Input::get('term');
+        $term = Request::get('term');
         $results = [];
         $queries = \App\Contact::orderBy('sort_name')->where('display_name', 'LIKE', '%'.$term.'%')->whereDeletedAt(null)->take(20)->get();
         if (($queries->count() == 0)) {
@@ -36,10 +36,10 @@ class SearchController extends Controller
     public function getuser()
     {
         $this->authorize('show-contact');
-        if (empty(Input::get('response'))) {
+        if (empty(Request::get('response'))) {
             $id = 0;
         } else {
-            $id = Input::get('response');
+            $id = Request::get('response');
         }
         // TODO: check contact_type field and redirect to appropriate parish, diocese, person, etc.
         if ($id == 0) {
@@ -70,7 +70,7 @@ class SearchController extends Controller
         $this->authorize('show-contact');
         if (! empty($request)) {
             $persons = \App\Contact::filtered($request)->orderBy('sort_name')->with('attachments')->paginate(100);
-            $persons->appends(Input::except('page'));
+            $persons->appends(Request::except('page'));
         }
 
         return view('search.results', compact('persons'));
