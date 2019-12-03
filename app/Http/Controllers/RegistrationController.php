@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests;
 use App\Mail\RegistrationEventChange;
 use App\Mail\RetreatRegistration;
 use App\Registration;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Input;

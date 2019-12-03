@@ -3,7 +3,6 @@
 namespace App;
 
 // AuthenticateUser.php
-use App\UserRepository;
 use Illuminate\Contracts\Auth\Guard;
 use Laravel\Socialite\Contracts\Factory as Socialite;
 use Request;

@@ -7,10 +7,11 @@ use App\Http\Controllers\Controller;
 use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite;
+use Symfony\Component\HttpFoundation\Request;
+
 //use Illuminate\Support\Facades\Session;
 
 // use Redirect;
-use Symfony\Component\HttpFoundation\Request;
 
 class LoginController extends Controller
 {

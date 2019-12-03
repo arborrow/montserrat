@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Zizaco\Entrust\EntrustPermission;
 

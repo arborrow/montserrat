@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\AttachmentController;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Storage;
 use Image;
 use Response;
 use Spatie\GoogleCalendar\Event;

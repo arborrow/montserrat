@@ -4,14 +4,6 @@ namespace App\Http\Controllers;
 
 //require '\vendor\autoload.php';
 
-use App\Http\Controllers\SystemController;
-use App\Http\Requests;
-use App\Message;
-use App\Touchpoint;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Redirect;
 use Mailgun\Mailgun;
 
 class MailgunController extends Controller

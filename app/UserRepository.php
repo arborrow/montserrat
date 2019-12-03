@@ -2,8 +2,6 @@
 
 namespace App;
 
-use App\User;
-
 class UserRepository
 {
     public function findByUserNameOrCreate($userData)

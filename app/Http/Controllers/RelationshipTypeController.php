@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
@@ -46,7 +45,7 @@ class RelationshipTypeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -103,7 +102,7 @@ class RelationshipTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -118,7 +117,7 @@ class RelationshipTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -132,8 +131,8 @@ class RelationshipTypeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -166,7 +165,7 @@ class RelationshipTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -200,13 +199,13 @@ class RelationshipTypeController extends Controller
             $subtype_b_name = $relationship_type->name_b_a;
         }
 
-        if (! isset($a) or $a == 0) {
+        if (!isset($a) or $a == 0) {
             $contact_a_list = $this->get_contact_type_list($relationship_type->contact_type_a, $subtype_a_name);
         } else {
             $contacta = \App\Contact::findOrFail($a);
             $contact_a_list[$contacta->id] = $contacta->sort_name;
         }
-        if (! isset($b) or $b == 0) {
+        if (!isset($b) or $b == 0) {
             $contact_b_list = $this->get_contact_type_list($relationship_type->contact_type_b, $subtype_b_name);
         } else {
             $contactb = \App\Contact::findOrFail($b);
@@ -234,7 +233,7 @@ class RelationshipTypeController extends Controller
             case 'Parent':
                 $relationship_type_id = config('polanco.relationship_type.child_parent');
 
-                return Redirect::route('relationship_type.add', ['id' => $relationship_type_id, 'a' => 0, 'b'=> $contact_id]);
+                return Redirect::route('relationship_type.add', ['id' => $relationship_type_id, 'a' => 0, 'b' => $contact_id]);
                 break;
             case 'Husband':
                 $relationship_type_id = config('polanco.relationship_type.husband_wife');
@@ -244,7 +243,7 @@ class RelationshipTypeController extends Controller
             case 'Wife':
                 $relationship_type_id = config('polanco.relationship_type.husband_wife');
 
-                return Redirect::route('relationship_type.add', ['id' => $relationship_type_id, 'a' => 0, 'b'=> $contact_id]);
+                return Redirect::route('relationship_type.add', ['id' => $relationship_type_id, 'a' => 0, 'b' => $contact_id]);
                 break;
             case 'Sibling':
                 $relationship_type_id = config('polanco.relationship_type.sibling');
@@ -259,17 +258,17 @@ class RelationshipTypeController extends Controller
             case 'Employer':
                 $relationship_type_id = config('polanco.relationship_type.staff');
 
-               return Redirect::route('relationship_type.add', ['id' => $relationship_type_id, 'a'=> 0, 'b' => $contact_id]);
+                return Redirect::route('relationship_type.add', ['id' => $relationship_type_id, 'a' => 0, 'b' => $contact_id]);
                 break;
             case 'Volunteer':
                 $relationship_type_id = config('polanco.relationship_type.volunteer');
 
-                return Redirect::route('relationship_type.add', ['id' => $relationship_type_id, 'a' => 0, 'b'=> $contact_id]);
+                return Redirect::route('relationship_type.add', ['id' => $relationship_type_id, 'a' => 0, 'b' => $contact_id]);
                 break;
             case 'Parishioner':
                 $relationship_type_id = config('polanco.relationship_type.parishioner');
 
-                return Redirect::route('relationship_type.add', ['id' => $relationship_type_id, 'a' => 0, 'b'=> $contact_id]);
+                return Redirect::route('relationship_type.add', ['id' => $relationship_type_id, 'a' => 0, 'b' => $contact_id]);
                 break;
             case 'Primary contact':
                 $relationship_type_id = config('polanco.relationship_type.primary_contact');

@@ -3,8 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Mail\RetreatConfirmation;
-use App\Retreat;
-use App\Touchpoint;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Mail\Mailer;

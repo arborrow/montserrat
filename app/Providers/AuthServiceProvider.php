@@ -3,8 +3,6 @@
 namespace App\Providers;
 
 use App\Permission;
-use App\User;
-use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -33,9 +31,7 @@ class AuthServiceProvider extends ServiceProvider
             Gate::before(function ($user) {
                 $superuser = \App\Permission::whereName('superuser')->firstOrFail();
 
-                if ($user->hasRole($superuser->roles)) {
-                    return true;
-                }
+                return $user->hasRole($superuser->roles);
             });
 
             foreach ($this->getPermissions() as $permission) {
