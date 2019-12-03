@@ -9,7 +9,6 @@ class SystemController extends Controller
         $this->middleware('auth');
     }
 
-
     /**
      * Display a listing of the resource.
      *
@@ -70,7 +69,8 @@ class SystemController extends Controller
     {
         $this->authorize('show-offeringdedup');
         $donations = \App\Donation::whereEventId($event_id)->whereContactId($contact_id)->whereDonationDescription('Retreat Offering')->get();
-        $combo = $contact_id . '-' . $event_id;
+        $combo = $contact_id.'-'.$event_id;
+
         return view('offeringdedup.show', compact('donations', 'combo'));
     }
 }

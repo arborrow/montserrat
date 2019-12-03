@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
@@ -199,13 +198,13 @@ class RelationshipTypeController extends Controller
             $subtype_b_name = $relationship_type->name_b_a;
         }
 
-        if (!isset($a) or $a == 0) {
+        if (! isset($a) or $a == 0) {
             $contact_a_list = $this->get_contact_type_list($relationship_type->contact_type_a, $subtype_a_name);
         } else {
             $contacta = \App\Contact::findOrFail($a);
             $contact_a_list[$contacta->id] = $contacta->sort_name;
         }
-        if (!isset($b) or $b == 0) {
+        if (! isset($b) or $b == 0) {
             $contact_b_list = $this->get_contact_type_list($relationship_type->contact_type_b, $subtype_b_name);
         } else {
             $contactb = \App\Contact::findOrFail($b);
