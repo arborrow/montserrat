@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Response;
 
 class SearchController extends Controller
 {
@@ -49,20 +46,20 @@ class SearchController extends Controller
             switch ($contact->subcontact_type) {
                 case config('polanco.contact_type.parish'):
                     return redirect()->action('ParishController@show', $id);
-                break;
+                    break;
                 case config('polanco.contact_type.diocese'):
                     return redirect()->action('DioceseController@show', $id);
-                break;
+                    break;
                 case config('polanco.contact_type.vendor'):
                     return redirect()->action('VendorController@show', $id);
-                break;
+                    break;
                 default:
                     return redirect()->action('OrganizationController@show', $id);
             }
         }
     }
 
-    public function results(Request $request, Request $request)
+    public function results(Request $request)
     {
         $this->authorize('show-contact');
         if (! empty($request)) {
