@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\AuthenticateUser;
 use App\Http\Controllers\Controller;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite;
 use Symfony\Component\HttpFoundation\Request;
 
 //use Illuminate\Support\Facades\Session;
 
-// use Redirect;
+// use Illuminate\Support\Facades\Redirect;
 
 class LoginController extends Controller
 {

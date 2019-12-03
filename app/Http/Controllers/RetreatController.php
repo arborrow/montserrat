@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use Image;
-use Response;
+use Illuminate\Support\Facades\Response;
 use Spatie\GoogleCalendar\Event;
 
 class RetreatController extends Controller
