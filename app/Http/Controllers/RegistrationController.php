@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 
-
 class RegistrationController extends Controller
 {
     public function __construct()

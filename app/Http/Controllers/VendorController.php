@@ -6,7 +6,6 @@ use App\Http\Requests\StoreVendorRequest;
 use App\Http\Requests\UpdateVendorRequest;
 use Illuminate\Support\Facades\Redirect;
 
-
 class VendorController extends Controller
 {
     public function __construct()
