@@ -44,7 +44,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Route::get('login/{provider?}', 'Auth\AuthController@login');
 // Route::get('auth/google/callback', 'Auth\AuthController@handleProviderCallback');
 Route::get('logout', ['uses' => 'Auth\LoginController@logout'])->name('logout');
-Route::get('login/google', [ 'uses' => 'Auth\LoginController@redirectToProvider']);
+Route::get('login/google', [ 'uses' => 'Auth\LoginController@redirectToProvider'])->name('login');
 Route::get('login/google/callback', ['uses' => 'Auth\LoginController@handleProviderCallback']);
 
 Route::get('search/autocomplete', 'SearchController@autocomplete');
