@@ -13,14 +13,14 @@
 				</tr>
 				@foreach ($touchpoints as $touchpoint)
 				<tr>
-					<td>{{ $touchpoint->person->sort_name }}</td>
-					<td>{{ $touchpoint->created_at->format('F j ,Y') }}</td>
+					<td>@if ($touchpoint->person) {{ $touchpoint->person->sort_name }} @else @endIf </td>
+					<td>{{ $touchpoint->touched_at }}</td>
 					<td>{{ $touchpoint->notes }}</td>
 				</tr>
 				@endforeach
-				
+
 			</table>
-			
+
 		</div>
 	</div>
 @stop

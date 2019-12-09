@@ -25,16 +25,20 @@ Route::get('intercept/{code}', function($code) {
     }
 });
 
+/*
 Route::get('/agcletters', function () {
-    $touchpoints = \app\Touchpoint::where('notes', 'LIKE', '%AGC thank you letter%')
-    ->select('notes', 'person_id', 'created_at')
+    $touchpoints = \App\Touchpoint::where('notes', 'LIKE', '%AGC%')
+    ->select('notes', 'person_id', 'touched_at')
     ->with('person')
-    ->orderBy('created_at', 'desc')
+    ->orderBy('touched_at', 'desc')
     ->get();
     // return $touchpoints;
 
     return view('agcletters', compact('touchpoints'));
+
 })->middleware('auth');
+*/
+
 Route::get('/', 'PageController@welcome');
 Route::get('/welcome', 'PageController@welcome')->name('welcome');
 Route::get('/goodbye', 'HomeController@goodbye');
@@ -79,7 +83,7 @@ Route::get('retreat/type/{event_type_id}', 'RetreatController@index_type');
 // General routes including groups, resources, etc.
 Route::get('about', 'PageController@about')->name('about');
 Route::resource('address', 'AddressController');
-Route::get('admin', 'PageController@admin')->name('admin');
+// Route::get('admin', 'PageController@admin')->name('admin');
 Route::post('admin/permission/update_roles', 'PermissionController@update_roles')->name('admin.permission.update_roles');
 Route::post('admin/role/update_permissions', 'RoleController@update_permissions')->name('admin.role.update_permissions');
 Route::post('admin/role/update_users', 'RoleController@update_users')->name('admin.role.update_users');
@@ -96,7 +100,9 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('phpinfo', 'SystemController@phpinfo')->name('phpinfo');
 });
 
+/* In developement - commented out for Now
 Route::resource('activity', 'ActivityController');
+ */
 
 Route::get('bookstore', 'PageController@bookstore')->name('bookstore');
 Route::resource('diocese', 'DioceseController');

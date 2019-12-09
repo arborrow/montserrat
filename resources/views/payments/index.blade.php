@@ -8,11 +8,7 @@
                     <h1>
                         <span class="grey">Payment Index</span>
                         <span class="grey">({{$payments->total()}} records)</span>
-                        @can('create-payment')
-                            <span class="create">
-                                <a href={{ action('PaymentController@create') }}>{!! Html::image('images/create.png', 'Add Donation',array('title'=>"Add Donation",'class' => 'btn btn-primary')) !!}</a>
-                            </span>
-                        @endCan
+                        <!-- payments are not created independently of donations so there should not be an option here to create a payment -->
                     </h1>
                     <span>{!! $payments->render() !!}</span>
                 </div>
