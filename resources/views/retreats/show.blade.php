@@ -107,7 +107,7 @@
                     </div>
                 </div>
             </div>
-            @can('show-attachment')
+            @can('show-event-group-photo')
               @if (Storage::has('event/'.$retreat->id.'/group_photo.jpg'))
                 <div class="col-12">
                     <h2>Group Photo</h2>
