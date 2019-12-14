@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDonationRequest;
 use App\Http\Requests\UpdateDonationRequest;
+use App\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,13 +22,28 @@ class DonationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $this->authorize('show-donation');
-        $donations = \App\Donation::orderBy('donation_date', 'desc')->with('contact.prefix', 'contact.suffix')->paginate(100);
-        //dd($donations);
-        return view('donations.index', compact('donations'));
-    }
+     public function index()
+     {
+         $this->authorize('show-donation');
+         $donations = \App\Donation::orderBy('donation_date', 'desc')->with('contact.prefix', 'contact.suffix')->paginate(100);
+         //dd($donations);
+         return view('donations.index', compact('donations'));
+     }
+
+     public function overpaid()
+     {
+         $this->authorize('show-donation');
+         $overpaid = DB::table('Donations_payment as p')
+         ->select(DB::raw('d.contact_id, c.sort_name, d.donation_id, d.donation_date, ROUND(SUM(p.payment_amount),2) as paid, ROUND(d.donation_amount,2) as pledged'))
+         ->leftjoin('Donations as d','d.donation_id', '=','p.donation_id')
+         ->leftjoin('contact as c','d.contact_id','=','c.id')
+         ->whereRaw('d.deleted_at IS NULL AND p.deleted_at IS NULL')
+         ->groupBy('p.donation_id')
+         ->havingRaw('paid>pledged')
+         ->orderBy('d.donation_date','DESC')->get();
+
+         return view('donations.overpaid', compact('overpaid'));
+     }
 
     public function agc($year = null)
     {

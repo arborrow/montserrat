@@ -13,6 +13,7 @@ class Donation extends Model
     protected $dates = ['deleted_at', 'created_at', 'updated_at', 'start_date', 'end_date', 'donation_date'];
     protected $primaryKey = 'donation_id';
     protected $appends = ['payments_paid'];
+    protected $casts = ['donation_amount'=>'decimal:2',];
 
     public function contact()
     {

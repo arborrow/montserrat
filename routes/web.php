@@ -49,7 +49,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Route::get('auth/google/callback', 'Auth\AuthController@handleProviderCallback');
 Route::get('logout', ['uses' => 'Auth\LoginController@logout'])->name('logout');
 Route::get('login/google', [ 'uses' => 'Auth\LoginController@redirectToProvider'])->name('login');
-Route::get('login/google/callback', ['uses' => 'Auth\LoginController@handleProviderCallback']);
+Route::get('login/google/callback', ['uses' => 'Auth\LoginController@handleProviderCallback'])->name('login.google_callback');
 
 Route::get('search/autocomplete', 'SearchController@autocomplete');
 Route::get('search/getuser', 'SearchController@getuser');
@@ -111,6 +111,7 @@ Route::resource('diocese', 'DioceseController');
 Route::get('donor/{donor_id?}/assign/{contact_id?}', 'DonorController@assign');
 Route::get('donor/{donor_id?}/add', 'DonorController@add');
 Route::resource('donor', 'DonorController');
+Route::get('donation/overpaid', 'DonationController@overpaid');
 Route::resource('donation', 'DonationController');
 Route::get('donation/create/{id?}/{event_id?}/{type?}', 'DonationController@create');
 Route::get('donation/{id?}/invoice', 'PageController@finance_invoice');
