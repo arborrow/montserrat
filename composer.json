@@ -33,7 +33,9 @@
         "symfony/css-selector": "~3.1",
         "symfony/dom-crawler": "~3.1",
         "facade/ignition": "^1.4",
-        "orangehill/iseed": "^2.6.2"
+        "orangehill/iseed": "^2.6.2",
+        "jasonmccreary/laravel-test-assertions": "^0.1.0",
+        "mpociot/laravel-test-factory-helper": "^1.1"
     },
     "config": {
         "optimize-autoloader": true,
