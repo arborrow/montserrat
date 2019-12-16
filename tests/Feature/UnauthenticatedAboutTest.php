@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-// use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+// use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestCase;
 
 class UnauthenticatedAboutTest extends TestCase
 {
@@ -17,7 +17,6 @@ class UnauthenticatedAboutTest extends TestCase
     protected $preserveGlobalState = false;
     protected $runTestInSeparateProcess = true;
 
-    
     public function testAbout()
     {
         // test attempt to see about page without authentication
