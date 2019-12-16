@@ -13,7 +13,7 @@ class MailgunController extends Controller
         $this->middleware('auth');
         //dd(SystemController::is_mailgun_enabled());
         if (! SystemController::is_mailgun_enabled()) {
-            Redirect('admin/config/mailgun')->send();
+//            Redirect('admin/config/mailgun')->send();
         }
     }
 
