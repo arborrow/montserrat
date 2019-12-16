@@ -29,7 +29,7 @@ class AuthServiceProvider extends ServiceProvider
         parent::registerPolicies();
 
         //prior to installing the app ignore checking for superuser or permissions to avoid artisan errors about missing permissions table
-        if (NULL !== config('app.key')) {
+        if (false) {
             Gate::before(function ($user) {
                 $superuser = \App\Permission::whereName('superuser')->firstOrFail();
                 // only return true if this user has a role with the superuser permission
