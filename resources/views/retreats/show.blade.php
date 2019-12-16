@@ -107,7 +107,7 @@
                     </div>
                 </div>
             </div>
-            @can('show-attachment')
+            @can('show-event-group-photo')
               @if (Storage::has('event/'.$retreat->id.'/group_photo.jpg'))
                 <div class="col-12">
                     <h2>Group Photo</h2>
@@ -134,7 +134,7 @@
         </div>
     </div>
     <div class="col-12 mt-3">
-        <div class="row">
+        <div class="row" id='registrations'>
             <div class="col-12">
                 <h2>{{$registrations->total()}} Registrations {{($status ? '('.ucfirst($status).')' : NULL) }} for {!!Html::link(url('retreat/'.$retreat->id.'/edit'),$retreat->idnumber.' - '.$retreat->title)!!} </h2>
                 @can('create-registration')

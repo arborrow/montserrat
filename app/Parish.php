@@ -3,13 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Parish extends Model
 {
-     use SoftDeletes;
-    protected $table = 'parishes';
+    use SoftDeletes;
 
     //
     public function diocese()
@@ -21,7 +19,7 @@ class Parish extends Model
     {
         return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.parishioner'));
     }
-    
+
     public function pastor()
     {
         return $this->hasOne(Person::class, 'id', 'pastor_id');

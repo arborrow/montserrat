@@ -3,19 +3,11 @@
 namespace App\Exceptions;
 
 use Exception;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Illuminate\Auth\AuthenticationException;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\Exception\HttpResponseException;
-use Symfony\Component\Debug\Exception\FlattenException;
-
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use function GuzzleHttp\Promise\exception_for;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -61,10 +53,10 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         $mailable = 0; //initialize to false
-        $subject =  'Error Detected on ' . config('polanco.site_name');
+        $subject = 'Error Detected on '.config('polanco.site_name');
         $fullurl = $request->fullUrl();
         (isset(Auth::User()->name) ? $username = Auth::User()->name : $username = 'Unknown user');
-        (!empty($request->ip()) ? $ip_address = $request->ip() : $ip_address = 'Unspecified IP Address');
+        (! empty($request->ip()) ? $ip_address = $request->ip() : $ip_address = 'Unspecified IP Address');
 
         //403
         if ($exception instanceof AuthorizationException) {
@@ -90,7 +82,7 @@ class Handler extends ExceptionHandler
             });
         }
 
-        if (($exception instanceof \ErrorException) && (!config('app.debug'))) { // avoid displaying error details to the user unless debugging
+        if (($exception instanceof \ErrorException) && (! config('app.debug'))) { // avoid displaying error details to the user unless debugging
             abort(500);
         }
 

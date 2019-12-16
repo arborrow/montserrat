@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\AuthenticateUser;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Socialite;
-use App\AuthenticateUser;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
 use Symfony\Component\HttpFoundation\Request;
+
 //use Illuminate\Support\Facades\Session;
 
-// use Redirect; 
-use Auth;
+// use Illuminate\Support\Facades\Redirect;
 
 class LoginController extends Controller
 {
@@ -43,7 +44,7 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-    
+
     /**
      * Redirect the user to the GitHub authentication page.
      *
@@ -51,7 +52,6 @@ class LoginController extends Controller
      */
     public function redirectToProvider()
     {
-        
         return Socialite::driver('google')->redirect();
     }
 
@@ -63,32 +63,36 @@ class LoginController extends Controller
     public function handleProviderCallback()
     {
         $user = Socialite::driver('google')->stateless()->user();
-        $socialite_restrict_domain = env('SOCIALITE_RESTRICT_DOMAIN');
+        $socialite_restrict_domain = config('settings.socialite_restrict_domain');
         // dd($socialite_retrict_domain,$user);
         if (isset($socialite_restrict_domain)) {
             if (isset($user->user['hd'])) {
-                if ($user->user['hd']==$socialite_restrict_domain) { // the user domain matches the social restrict domain so authenticate successfully
+                if ($user->user['hd'] == $socialite_restrict_domain) { // the user domain matches the social restrict domain so authenticate successfully
                     $authuser = new \App\UserRepository;
                     $currentuser = $authuser->findByUserNameOrCreate($user);
                     Auth::login($currentuser, true);
+
                     return redirect()->intended('/welcome');
                 //return $this->userHasLoggedIn($currentuser);
                 } else { // the user has a domain but it does not match the socialite restrict domain so do not authenticate
-                    return redirect('restricted');
+                    return redirect()->to('restricted');
                 }
             } else { // no domain specified for the user but one is required so do not authenticate
-                return redirect('restricted');
+                return redirect()->to('restricted');
             }
         } else { // not using socialite restrict domain - all domains can authenticate
             $authuser = new \App\UserRepository;
             $currentuser = $authuser->findByUserNameOrCreate($user);
             Auth::login($currentuser, true);
-            return redirect('welcome');
+
+            return redirect()->to('welcome');
         }
     }
+
     public function logout(AuthenticateUser $authenticateUser, Request $request, $provider = 'google')
     {
         Auth::logout();
-        return redirect('/goodbye');
+
+        return redirect()->to('/goodbye');
     }
 }

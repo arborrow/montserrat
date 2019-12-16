@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreDioceseRequest;
+use App\Http\Requests\UpdateDioceseRequest;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
-use Input;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
-use Intervention\Image\Facades\Image;
 
 class DioceseController extends Controller
 {
@@ -63,122 +59,108 @@ class DioceseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreDioceseRequest $request)
     {
         $this->authorize('create-contact');
-        $this->validate($request, [
-            'organization_name' => 'required',
-            'bishop_id' => 'integer|min:0',
-            'email_main' => 'email|nullable',
-            'url_main' => 'url|nullable',
-            'url_facebook' => 'url|regex:/facebook\.com\/.+/i|nullable',
-            'url_google' => 'url|regex:/plus\.google\.com\/.+/i|nullable',
-            'url_twitter' => 'url|regex:/twitter\.com\/.+/i|nullable',
-            'url_instagram' => 'url|regex:/instagram\.com\/.+/i|nullable',
-            'url_linkedin' => 'url|regex:/linkedin\.com\/.+/i|nullable',
-            'phone_main_phone' => 'phone|nullable',
-            'phone_main_fax' => 'phone|nullable',
-        ]);
 
         $diocese = new \App\Contact;
         $diocese->organization_name = $request->input('organization_name');
-        $diocese->display_name  = $request->input('organization_name');
-        $diocese->sort_name  = $request->input('organization_name');
+        $diocese->display_name = $request->input('organization_name');
+        $diocese->sort_name = $request->input('organization_name');
         $diocese->contact_type = config('polanco.contact_type.organization');
         $diocese->subcontact_type = config('polanco.contact_type.diocese');
         $diocese->save();
 
-        $diocese_address= new \App\Address;
-            $diocese_address->contact_id=$diocese->id;
-            $diocese_address->location_type_id=config('polanco.location_type.main');
-            $diocese_address->is_primary=1;
-            $diocese_address->street_address=$request->input('street_address');
-            $diocese_address->supplemental_address_1=$request->input('supplemental_address_1');
-            $diocese_address->city=$request->input('city');
-            $diocese_address->state_province_id=$request->input('state_province_id');
-            $diocese_address->postal_code=$request->input('postal_code');
-            $diocese_address->country_id=$request->input('country_id');
+        $diocese_address = new \App\Address;
+        $diocese_address->contact_id = $diocese->id;
+        $diocese_address->location_type_id = config('polanco.location_type.main');
+        $diocese_address->is_primary = 1;
+        $diocese_address->street_address = $request->input('street_address');
+        $diocese_address->supplemental_address_1 = $request->input('supplemental_address_1');
+        $diocese_address->city = $request->input('city');
+        $diocese_address->state_province_id = $request->input('state_province_id');
+        $diocese_address->postal_code = $request->input('postal_code');
+        $diocese_address->country_id = $request->input('country_id');
         $diocese_address->save();
 
-        $diocese_main_phone= new \App\Phone;
-            $diocese_main_phone->contact_id=$diocese->id;
-            $diocese_main_phone->location_type_id=config('polanco.location_type.main');
-            $diocese_main_phone->is_primary=1;
-            $diocese_main_phone->phone=$request->input('phone_main_phone');
-            $diocese_main_phone->phone_type='Phone';
+        $diocese_main_phone = new \App\Phone;
+        $diocese_main_phone->contact_id = $diocese->id;
+        $diocese_main_phone->location_type_id = config('polanco.location_type.main');
+        $diocese_main_phone->is_primary = 1;
+        $diocese_main_phone->phone = $request->input('phone_main_phone');
+        $diocese_main_phone->phone_type = 'Phone';
         $diocese_main_phone->save();
 
-        $diocese_fax_phone= new \App\Phone;
-            $diocese_fax_phone->contact_id=$diocese->id;
-            $diocese_fax_phone->location_type_id=config('polanco.location_type.main');
-            $diocese_fax_phone->phone=$request->input('phone_main_fax');
-            $diocese_fax_phone->phone_type='Fax';
+        $diocese_fax_phone = new \App\Phone;
+        $diocese_fax_phone->contact_id = $diocese->id;
+        $diocese_fax_phone->location_type_id = config('polanco.location_type.main');
+        $diocese_fax_phone->phone = $request->input('phone_main_fax');
+        $diocese_fax_phone->phone_type = 'Fax';
         $diocese_fax_phone->save();
 
         $diocese_email_main = new \App\Email;
-            $diocese_email_main->contact_id=$diocese->id;
-            $diocese_email_main->is_primary=1;
-            $diocese_email_main->location_type_id=config('polanco.location_type.main');
-            $diocese_email_main->email=$request->input('email_main');
+        $diocese_email_main->contact_id = $diocese->id;
+        $diocese_email_main->is_primary = 1;
+        $diocese_email_main->location_type_id = config('polanco.location_type.main');
+        $diocese_email_main->email = $request->input('email_main');
         $diocese_email_main->save();
 
         $url_main = new \App\Website;
-            $url_main->contact_id=$diocese->id;
-            $url_main->url=$request->input('url_main');
-            $url_main->website_type='Main';
+        $url_main->contact_id = $diocese->id;
+        $url_main->url = $request->input('url_main');
+        $url_main->website_type = 'Main';
         $url_main->save();
 
-        $url_work= new \App\Website;
-            $url_work->contact_id=$diocese->id;
-            $url_work->url=$request->input('url_work');
-            $url_work->website_type='Work';
+        $url_work = new \App\Website;
+        $url_work->contact_id = $diocese->id;
+        $url_work->url = $request->input('url_work');
+        $url_work->website_type = 'Work';
         $url_work->save();
 
-        $url_facebook= new \App\Website;
-            $url_facebook->contact_id=$diocese->id;
-            $url_facebook->url=$request->input('url_facebook');
-            $url_facebook->website_type='Facebook';
+        $url_facebook = new \App\Website;
+        $url_facebook->contact_id = $diocese->id;
+        $url_facebook->url = $request->input('url_facebook');
+        $url_facebook->website_type = 'Facebook';
         $url_facebook->save();
 
         $url_google = new \App\Website;
-            $url_google->contact_id=$diocese->id;
-            $url_google->url=$request->input('url_google');
-            $url_google->website_type='Google';
+        $url_google->contact_id = $diocese->id;
+        $url_google->url = $request->input('url_google');
+        $url_google->website_type = 'Google';
         $url_google->save();
 
-        $url_instagram= new \App\Website;
-            $url_instagram->contact_id=$diocese->id;
-            $url_instagram->url=$request->input('url_instagram');
-            $url_instagram->website_type='Instagram';
+        $url_instagram = new \App\Website;
+        $url_instagram->contact_id = $diocese->id;
+        $url_instagram->url = $request->input('url_instagram');
+        $url_instagram->website_type = 'Instagram';
         $url_instagram->save();
 
-        $url_linkedin= new \App\Website;
-            $url_linkedin->contact_id=$diocese->id;
-            $url_linkedin->url=$request->input('url_linkedin');
-            $url_linkedin->website_type='LinkedIn';
+        $url_linkedin = new \App\Website;
+        $url_linkedin->contact_id = $diocese->id;
+        $url_linkedin->url = $request->input('url_linkedin');
+        $url_linkedin->website_type = 'LinkedIn';
         $url_linkedin->save();
 
-        $url_twitter= new \App\Website;
-            $url_twitter->contact_id=$diocese->id;
-            $url_twitter->url=$request->input('url_twitter');
-            $url_twitter->website_type='Twitter';
+        $url_twitter = new \App\Website;
+        $url_twitter->contact_id = $diocese->id;
+        $url_twitter->url = $request->input('url_twitter');
+        $url_twitter->website_type = 'Twitter';
         $url_twitter->save();
 
-
         //TODO: add contact_id which is the id of the creator of the note
-        if (!empty($request->input('note'))) {
-            ;
-        } {
+        if (! empty($request->input('note'))) {
+        }
+        {
             $diocese_note = new \App\Note;
             $diocese_note->entity_table = 'contact';
             $diocese_note->entity_id = $diocese->id;
-            $diocese_note->note=$request->input('note');
-            $diocese_note->subject='Diocese note';
+            $diocese_note->note = $request->input('note');
+            $diocese_note->subject = 'Diocese note';
             $diocese_note->save();
         }
 
-        if ($request->input('bishop_id')>0) {
-            $relationship_bishop= new \App\Relationship;
+        if ($request->input('bishop_id') > 0) {
+            $relationship_bishop = new \App\Relationship;
             $relationship_bishop->contact_id_a = $diocese->id;
             $relationship_bishop->contact_id_b = $request->input('bishop_id');
             $relationship_bishop->relationship_type_id = config('polanco.relationship_type.bishop');
@@ -201,8 +183,9 @@ class DioceseController extends Controller
         $diocese = \App\Contact::with('bishops.contact_b', 'parishes.contact_b', 'addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations')->findOrFail($id);
         $files = \App\Attachment::whereEntity('contact')->whereEntityId($diocese->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
         $relationship_types = [];
-        $relationship_types["Primary Contact"] = "Primary Contact";
-        return view('dioceses.show', compact('diocese', 'relationship_types', 'files'));//
+        $relationship_types['Primary Contact'] = 'Primary Contact';
+
+        return view('dioceses.show', compact('diocese', 'relationship_types', 'files')); //
     }
 
     /**
@@ -219,7 +202,7 @@ class DioceseController extends Controller
         $this->authorize('update-contact');
         $diocese = \App\Contact::with('primary_bishop.contact_b', 'bishops.contact_b', 'parishes.contact_b', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
         if (empty($diocese->primary_bishop)) {
-            $diocese->bishop_id=0;
+            $diocese->bishop_id = 0;
         } else {
             $diocese->bishop_id = $diocese->primary_bishop->contact_id_b;
         }
@@ -239,27 +222,26 @@ class DioceseController extends Controller
 
         /* ensure that a bishop  has not been removed */
         if (isset($diocese->primary_bishop->contact_id_b)) {
-            if (!array_has($bishops,$diocese->primary_bishop->contact_id_b)) {
-                $bishops[$diocese->primary_bishop->contact_id_b] = $diocese->primary_bishop->contact_b->sort_name. ' (former)';
+            if (! Arr::has($bishops, $diocese->primary_bishop->contact_id_b)) {
+                $bishops[$diocese->primary_bishop->contact_id_b] = $diocese->primary_bishop->contact_b->sort_name.' (former)';
                 $diocese->bishop_id = $diocese->primary_bishop->contact_id_b;
                 asort($bishops);
                 // dd($touchpoint->staff->sort_name.' is not currently a staff member: '.$touchpoint->staff->id, $staff);
             }
         }
 
-        $bishops = array_prepend($bishops,'N/A',0);
+        $bishops = Arr::prepend($bishops, 'N/A', 0);
 
         // dd($bishops);
 
         //dd($diocese);
-        $defaults['Main']['url']='';
-        $defaults['Work']['url']='';
-        $defaults['Facebook']['url']='';
-        $defaults['Google']['url']='';
-        $defaults['Instagram']['url']='';
-        $defaults['LinkedIn']['url']='';
-        $defaults['Twitter']['url']='';
-
+        $defaults['Main']['url'] = '';
+        $defaults['Work']['url'] = '';
+        $defaults['Facebook']['url'] = '';
+        $defaults['Google']['url'] = '';
+        $defaults['Instagram']['url'] = '';
+        $defaults['LinkedIn']['url'] = '';
+        $defaults['Twitter']['url'] = '';
 
         foreach ($diocese->websites as $website) {
             $defaults[$website->website_type]['url'] = $website->url;
@@ -275,42 +257,23 @@ class DioceseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateDioceseRequest $request, $id)
     {
         $this->authorize('update-contact');
-        $this->validate($request, [
-            'organization_name' => 'required',
-            'display_name' => 'required',
-            'sort_name' => 'required',
-            'bishop_id' => 'integer|min:0',
-            'email_main' => 'email|nullable',
-            'url_main' => 'url|nullable',
-            'url_facebook' => 'url|regex:/facebook\.com\/.+/i|nullable',
-            'url_google' => 'url|regex:/plus\.google\.com\/.+/i|nullable',
-            'url_twitter' => 'url|regex:/twitter\.com\/.+/i|nullable',
-            'url_instagram' => 'url|regex:/instagram\.com\/.+/i|nullable',
-            'url_linkedin' => 'url|regex:/linkedin\.com\/.+/i|nullable',
-            'phone_main_phone' => 'phone|nullable',
-            'phone_main_fax' => 'phone|nullable',
-            'avatar' => 'image|max:5000|nullable',
-            'attachment' => 'file|mimes:pdf,doc,docx|max:10000|nullable',
-            'attachment_description' => 'string|max:200|nullable',
-
-        ]);
 
         $diocese = \App\Contact::with('bishops.contact_b', 'parishes.contact_b', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
         $diocese->organization_name = $request->input('organization_name');
-        $diocese->display_name  = $request->input('display_name');
-        $diocese->sort_name  = $request->input('sort_name');
+        $diocese->display_name = $request->input('display_name');
+        $diocese->sort_name = $request->input('sort_name');
         $diocese->contact_type = config('polanco.contact_type.organization');
         $diocese->subcontact_type = config('polanco.contact_type.diocese');
         $diocese->save();
         $bishop_id = $request->input('bishop_id');
 
         $address_primary = \App\Address::findOrNew($diocese->address_primary->id);
-        $address_primary->contact_id=$diocese->id;
-        $address_primary->location_type_id=config('polanco.location_type.main');
-        $address_primary->is_primary=1;
+        $address_primary->contact_id = $diocese->id;
+        $address_primary->location_type_id = config('polanco.location_type.main');
+        $address_primary->is_primary = 1;
 
         $address_primary->street_address = $request->input('street_address');
         $address_primary->supplemental_address_1 = $request->input('supplemental_address_1');
@@ -322,84 +285,84 @@ class DioceseController extends Controller
         $address_primary->save();
 
         $phone_primary = \App\Phone::findOrNew($diocese->phone_primary->id);
-        $phone_primary->contact_id=$diocese->id;
-        $phone_primary->location_type_id=config('polanco.location_type.main');
-        $phone_primary->is_primary=1;
-        $phone_primary->phone=$request->input('phone_main_phone');
-        $phone_primary->phone_type='Phone';
+        $phone_primary->contact_id = $diocese->id;
+        $phone_primary->location_type_id = config('polanco.location_type.main');
+        $phone_primary->is_primary = 1;
+        $phone_primary->phone = $request->input('phone_main_phone');
+        $phone_primary->phone_type = 'Phone';
         $phone_primary->save();
 
         if (empty($diocese->phone_main_fax)) {
-                $phone_main_fax = new \App\Phone;
+            $phone_main_fax = new \App\Phone;
         } else {
             $phone_main_fax = \App\Phone::findOrNew($diocese->phone_main_fax->id);
         }
-        $phone_main_fax->contact_id=$diocese->id;
-        $phone_main_fax->location_type_id=config('polanco.location_type.main');
-        $phone_main_fax->phone=$request->input('phone_main_fax');
-        $phone_main_fax->phone_type='Fax';
+        $phone_main_fax->contact_id = $diocese->id;
+        $phone_main_fax->location_type_id = config('polanco.location_type.main');
+        $phone_main_fax->phone = $request->input('phone_main_fax');
+        $phone_main_fax->phone_type = 'Fax';
         $phone_main_fax->save();
 
-        if (isset($diocese->email_primary->id) ) {
+        if (isset($diocese->email_primary->id)) {
             $email_id = $diocese->email_primary->id;
         } else {
             $email_id = 0;
         }
 
         $email_primary = \App\Email::firstOrNew(['id'=>$email_id]);
-        $email_primary->contact_id=$diocese->id;
-        $email_primary ->is_primary=1;
-        $email_primary ->location_type_id=config('polanco.location_type.main');
-        $email_primary ->email=$request->input('email_primary');
+        $email_primary->contact_id = $diocese->id;
+        $email_primary->is_primary = 1;
+        $email_primary->location_type_id = config('polanco.location_type.main');
+        $email_primary->email = $request->input('email_primary');
         $email_primary->save();
 
-        $url_main = \App\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'Main']);
-            $url_main->contact_id=$diocese->id;
-            $url_main->url=$request->input('url_main');
-            $url_main->website_type='Main';
+        $url_main = \App\Website::firstOrNew(['contact_id'=>$diocese->id, 'website_type'=>'Main']);
+        $url_main->contact_id = $diocese->id;
+        $url_main->url = $request->input('url_main');
+        $url_main->website_type = 'Main';
         $url_main->save();
 
-        $url_work= \App\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'Work']);
-            $url_work->contact_id=$diocese->id;
-            $url_work->url=$request->input('url_work');
-            $url_work->website_type='Work';
+        $url_work = \App\Website::firstOrNew(['contact_id'=>$diocese->id, 'website_type'=>'Work']);
+        $url_work->contact_id = $diocese->id;
+        $url_work->url = $request->input('url_work');
+        $url_work->website_type = 'Work';
         $url_work->save();
 
-        $url_facebook= \App\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'Facebook']);
-            $url_facebook->contact_id=$diocese->id;
-            $url_facebook->url=$request->input('url_facebook');
-            $url_facebook->website_type='Facebook';
+        $url_facebook = \App\Website::firstOrNew(['contact_id'=>$diocese->id, 'website_type'=>'Facebook']);
+        $url_facebook->contact_id = $diocese->id;
+        $url_facebook->url = $request->input('url_facebook');
+        $url_facebook->website_type = 'Facebook';
         $url_facebook->save();
 
-        $url_google = \App\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'Google']);
-            $url_google->contact_id=$diocese->id;
-            $url_google->url=$request->input('url_google');
-            $url_google->website_type='Google';
+        $url_google = \App\Website::firstOrNew(['contact_id'=>$diocese->id, 'website_type'=>'Google']);
+        $url_google->contact_id = $diocese->id;
+        $url_google->url = $request->input('url_google');
+        $url_google->website_type = 'Google';
         $url_google->save();
 
-        $url_instagram= \App\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'Instagram']);
-            $url_instagram->contact_id=$diocese->id;
-            $url_instagram->url=$request->input('url_instagram');
-            $url_instagram->website_type='Instagram';
+        $url_instagram = \App\Website::firstOrNew(['contact_id'=>$diocese->id, 'website_type'=>'Instagram']);
+        $url_instagram->contact_id = $diocese->id;
+        $url_instagram->url = $request->input('url_instagram');
+        $url_instagram->website_type = 'Instagram';
         $url_instagram->save();
 
-        $url_linkedin= \App\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'LinkedIn']);
-            $url_linkedin->contact_id=$diocese->id;
-            $url_linkedin->url=$request->input('url_linkedin');
-            $url_linkedin->website_type='LinkedIn';
+        $url_linkedin = \App\Website::firstOrNew(['contact_id'=>$diocese->id, 'website_type'=>'LinkedIn']);
+        $url_linkedin->contact_id = $diocese->id;
+        $url_linkedin->url = $request->input('url_linkedin');
+        $url_linkedin->website_type = 'LinkedIn';
         $url_linkedin->save();
 
-            $url_twitter= \App\Website::firstOrNew(['contact_id'=>$diocese->id,'website_type'=>'Twitter']);
-                $url_twitter->contact_id=$diocese->id;
-                $url_twitter->url=$request->input('url_twitter');
-                $url_twitter->website_type='Twitter';
-            $url_twitter->save();
+        $url_twitter = \App\Website::firstOrNew(['contact_id'=>$diocese->id, 'website_type'=>'Twitter']);
+        $url_twitter->contact_id = $diocese->id;
+        $url_twitter->url = $request->input('url_twitter');
+        $url_twitter->website_type = 'Twitter';
+        $url_twitter->save();
 
         /* current behavior will add a bishop to a diocese
          * to remove a bishop delete the relationship in contacts
          */
-        if ($request->input('bishop_id')>0) {
-            $relationship_bishop = \App\Relationship::firstOrNew(['contact_id_a'=>$diocese->id,'contact_id_b'=>$bishop_id,'relationship_type_id'=>config('polanco.relationship_type.bishop'),'is_active'=>1]);
+        if ($request->input('bishop_id') > 0) {
+            $relationship_bishop = \App\Relationship::firstOrNew(['contact_id_a'=>$diocese->id, 'contact_id_b'=>$bishop_id, 'relationship_type_id'=>config('polanco.relationship_type.bishop'), 'is_active'=>1]);
             $relationship_bishop->contact_id_a = $diocese->id;
             $relationship_bishop->contact_id_b = $bishop_id;
             $relationship_bishop->relationship_type_id = config('polanco.relationship_type.bishop');
@@ -413,16 +376,14 @@ class DioceseController extends Controller
          * save diocese
          */
 
-        if ($request->input('bishop_id')==0) {
-
+        if ($request->input('bishop_id') == 0) {
             $active_bishops = \App\Relationship::whereContactIdA($diocese->id)->whereRelationshipTypeId(config('polanco.relationship_type.bishop'))->whereIsActive(1)->get();
             // dd($active_bishops);
-            foreach($active_bishops as $bishop) {
+            foreach ($active_bishops as $bishop) {
                 $bishop->is_active = 0;
                 $bishop->save();
             }
         }
-
 
         if (null !== $request->file('avatar')) {
             $description = 'Avatar for '.$diocese->organization_name;
@@ -448,7 +409,7 @@ class DioceseController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-contact');
-         \App\Relationship::whereContactIdA($id)->delete();
+        \App\Relationship::whereContactIdA($id)->delete();
         \App\Relationship::whereContactIdB($id)->delete();
         \App\GroupContact::whereContactId($id)->delete();
         //delete address, email, phone, website, emergency contact, notes for deleted users
@@ -464,7 +425,8 @@ class DioceseController extends Controller
         // delete donations
         \App\Donation::whereContactId($id)->delete();
 
-         \App\Contact::destroy($id);
+        \App\Contact::destroy($id);
+
         return Redirect::action('DioceseController@index');
     }
 }

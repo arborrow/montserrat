@@ -3,32 +3,29 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreatePpdOccupationsTable extends Migration {
+class CreatePpdOccupationsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('ppd_occupations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name', 100)->nullable();
+            $table->string('occ_code', 15)->nullable()->comment('fk to occupation_list');
+        });
+    }
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
-		Schema::create('ppd_occupations', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->string('name', 100)->nullable();
-			$table->string('occ_code', 15)->nullable()->comment('fk to occupation_list');
-		});
-	}
-
-
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
-		Schema::drop('ppd_occupations');
-	}
-
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('ppd_occupations');
+    }
 }

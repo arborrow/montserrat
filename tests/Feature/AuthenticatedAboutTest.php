@@ -2,12 +2,13 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-// use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery;
+// use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
+use Mockery;
+use Tests\TestCase;
 
 class AuthenticatedAboutTest extends TestCase
 {
@@ -19,14 +20,13 @@ class AuthenticatedAboutTest extends TestCase
     protected $preserveGlobalState = false;
     protected $runTestInSeparateProcess = true;
 
-    
     public function testAbout()
     {
-         $abstractUser = Mockery::mock('Laravel\Socialite\Two\User');
-         $abstractUser->shouldReceive('getId')
+        $abstractUser = Mockery::mock('Laravel\Socialite\Two\User');
+        $abstractUser->shouldReceive('getId')
          ->andReturn(1234567890)
          ->shouldReceive('getEmail')
-         ->andReturn(str_random(10).'@montserratretreat.org')
+         ->andReturn(Str::random(10).'@montserratretreat.org')
          ->shouldReceive('getNickname')
          ->andReturn('Pseudo')
          ->shouldReceive('Domain')
@@ -36,14 +36,14 @@ class AuthenticatedAboutTest extends TestCase
          ->shouldReceive('getAvatar')
          ->andReturn('https://en.gravatar.com/arborrow');
 
-         $provider = Mockery::mock('Laravel\Socialite\Contracts\Provider');
-         $provider->shouldReceive('user')->andReturn($abstractUser);
+        $provider = Mockery::mock('Laravel\Socialite\Contracts\Provider');
+        $provider->shouldReceive('user')->andReturn($abstractUser);
 
-         Socialite::shouldReceive('driver')->with('google')->andReturn($provider);
+        Socialite::shouldReceive('driver')->with('google')->andReturn($provider);
 
-         $response = $this->get(route('login.google_callback'));
+        $response = $this->get(route('login.google_callback'));
         // test attempt to see about page without authentication
-        
-         $response->assertStatus(302);
+
+        $response->assertStatus(302);
     }
 }

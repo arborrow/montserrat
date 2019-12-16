@@ -2,69 +2,79 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use DB;
 
 class Contact extends Model
 {
     use SoftDeletes;
     protected $table = 'contact';
-    protected $dates = ['birth_date', 'deceased_date', 'created_date','modified_date', 'created_at', 'updated_at', 'deleted_at'];
+    protected $dates = ['birth_date', 'deceased_date', 'created_date', 'modified_date', 'created_at', 'updated_at', 'deleted_at'];
     protected $casts = [
         'contact_type' => 'integer',
         'subcontact_type' => 'integer',
     ];
-    protected $appends = ['full_name_with_city','agc_household_name'];
+    protected $appends = ['full_name_with_city', 'agc_household_name'];
 
     // TODO: refactor to lookup based on relationship
     //TODO: rename person_id to contact_id
-/*    public function retreatmasters() {
-        return $this->belongsToMany('\App\Retreat','retreatmasters','person_id','retreat_id');
-    }
-*/
+    /*    public function retreatmasters() {
+            return $this->belongsToMany('\App\Retreat','retreatmasters','person_id','retreat_id');
+        }
+    */
     public function a_relationships()
     {
         return $this->hasMany(Relationship::class, 'contact_id_a', 'id');
     }
+
     public function b_relationships()
     {
         return $this->hasMany(Relationship::class, 'contact_id_b', 'id');
     }
+
     public function addresses()
     {
         return $this->hasMany(Address::class, 'contact_id', 'id');
     }
+
     public function address_primary()
     {
         return $this->hasOne(Address::class, 'contact_id', 'id')->whereIsPrimary(1);
     }
+
     public function bishops()
     {
         return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.bishop'));
     }
+
     public function primary_bishop()
     {
         return $this->hasOne(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.bishop'))->whereIsActive(1);
     }
+
     public function captain_events()
     {
-         return $this->belongsToMany(Retreat::class, 'captain_retreat', 'contact_id', 'event_id');
+        return $this->belongsToMany(Retreat::class, 'captain_retreat', 'contact_id', 'event_id');
     }
+
     public function contacttype()
     {
         return $this->hasOne(ContactType::class, 'id', 'contact_type');
     }
+
     public function subcontacttype()
     {
         return $this->hasOne(ContactType::class, 'id', 'subcontact_type');
     }
+
     public function diocese()
     {
         return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.diocese'));
     }
+
     public function donations()
     {
         return $this->hasMany(Donation::class, 'contact_id', 'id');
@@ -74,35 +84,43 @@ class Contact extends Model
     {
         return $this->hasMany(Email::class, 'contact_id', 'id');
     }
+
     public function primaryEmail()
     {
         return $this->hasMany(Email::class, 'contact_id', 'id')
             ->where('is_primary', 1);
     }
+
     public function attachments()
     {
         return $this->hasMany(Attachment::class, 'entity_id', 'id')->whereEntity('contact');
     }
+
     public function agc2019()
     {
         return $this->hasOne(Agc2019::class, 'contact_id', 'id');
     }
+
     public function avatar()
     {
         return $this->hasOne(Attachment::class, 'entity_id', 'id')->whereEntity('contact')->whereFileTypeId(config('polanco.file_type.contact_avatar'));
     }
+
     public function email_primary()
     {
         return $this->hasOne(Email::class, 'contact_id', 'id')->whereIsPrimary(1)->whereNotNull('email');
     }
+
     public function emergency_contact()
     {
         return $this->hasOne(EmergencyContact::class, 'contact_id', 'id');
     }
+
     public function ethnicity()
     {
         return $this->hasOne(Ethnicity::class, 'id', 'ethnicity_id');
     }
+
     public function getAddressPrimaryStreetAttribute()
     {
         if (isset($this->address_primary->street_address)) {
@@ -112,57 +130,64 @@ class Contact extends Model
                 return $this->address_primary->street_address;
             }
         } else {
-            return null;
+            return;
         }
     }
+
     public function getAddressPrimaryCityAttribute()
     {
         if (isset($this->address_primary->city)) {
             return $this->address_primary->city;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getAddressPrimaryStateAttribute()
     {
         if (isset($this->address_primary->state->abbreviation)) {
             return $this->address_primary->state->abbreviation;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getAddressPrimaryStateIdAttribute()
     {
         if (isset($this->address_primary->state->id)) {
             return $this->address_primary->state->id;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getAddressPrimaryPostalCodeAttribute()
     {
         if (isset($this->address_primary->postal_code)) {
             return $this->address_primary->postal_code;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getAddressPrimaryGoogleMapAttribute()
     {
         if (isset($this->address_primary->google_map)) {
             return $this->address_primary->google_map;
         } else {
-            return null;
+            return;
         }
     }
-    public function getPreferredLanguageValueAttribute() {
 
+    public function getPreferredLanguageValueAttribute()
+    {
         if (isset($this->language_pref->value)) {
             return $this->language_pref->value;
         } else {
-            return NULL;
+            return;
         }
     }
+
     public function getOrganizationNameAndCityAttribute()
     {
         if (isset($this->address_primary->city)) {
@@ -174,7 +199,6 @@ class Contact extends Model
 
     public function getAvatarLargeLinkAttribute()
     {
-
         if (Storage::has('contact/'.$this->id.'/avatar.png')) {
             return "<img src='".url('avatar/'.$this->id)."' class='rounded-circle' style='height: 150px; padding:5px;'>";
         } else {
@@ -185,9 +209,9 @@ class Contact extends Model
             }
         }
     }
+
     public function getAvatarSmallLinkAttribute()
     {
-
         if (Storage::has('contact/'.$this->id.'/avatar.png')) {
             return "<img src='".url('avatar/'.$this->id)."' class='rounded-circle' style='height: 75px; padding:5px;'>";
         } else {
@@ -198,56 +222,57 @@ class Contact extends Model
             }
         }
     }
+
     public function getBirthdayAttribute()
     {
         if (isset($this->birth_date)) {
             return $this->birth_date->format('m-d-Y');
         } else {
-            return null;
+            return;
         }
     }
+
     public function getContactLinkAttribute()
     {
-
         switch ($this->subcontact_type) {
             case config('polanco.contact_type.parish'):
-                $path = url("parish/".$this->id);
+                $path = url('parish/'.$this->id);
                 break;
             case config('polanco.contact_type.diocese'):
-                $path = url("diocese/".$this->id);
+                $path = url('diocese/'.$this->id);
                 break;
             case config('polanco.contact_type.vendor'):
-                $path = url("vendor/".$this->id);
+                $path = url('vendor/'.$this->id);
                 break;
             default:
-                $path = url("organization/".$this->id);
+                $path = url('organization/'.$this->id);
         }
 
         if ($this->contact_type == config('polanco.contact_type.individual')) {
-            $path=url("person/".$this->id);
+            $path = url('person/'.$this->id);
         }
 
-        return "<a href='".$path."'>".$this->display_name."</a>";
+        return "<a href='".$path."'>".$this->display_name.'</a>';
     }
+
     public function getContactUrlAttribute()
     {
-
         switch ($this->subcontact_type) {
             case config('polanco.contact_type.parish'):
-                $path = url("parish/".$this->id);
+                $path = url('parish/'.$this->id);
                 break;
             case config('polanco.contact_type.diocese'):
-                $path = url("diocese/".$this->id);
+                $path = url('diocese/'.$this->id);
                 break;
             case config('polanco.contact_type.vendor'):
-                $path = url("vendor/".$this->id);
+                $path = url('vendor/'.$this->id);
                 break;
             default:
-                $path = url("organization/".$this->id);
+                $path = url('organization/'.$this->id);
         }
 
         if ($this->contact_type == config('polanco.contact_type.individual')) {
-            $path=url("person/".$this->id);
+            $path = url('person/'.$this->id);
         }
 
         return $path;
@@ -257,116 +282,124 @@ class Contact extends Model
     {
         switch ($this->subcontact_type) {
             case config('polanco.contact_type.parish'):
-                $path = url("parish/".$this->id);
+                $path = url('parish/'.$this->id);
                 break;
             case config('polanco.contact_type.diocese'):
-                $path = url("diocese/".$this->id);
+                $path = url('diocese/'.$this->id);
                 break;
             case config('polanco.contact_type.vendor'):
-                $path = url("vendor/".$this->id);
+                $path = url('vendor/'.$this->id);
                 break;
             default:
-                $path = url("organization/".$this->id);
+                $path = url('organization/'.$this->id);
         }
         if ($this->contact_type == config('polanco.contact_type.individual')) {
-            $path=url("person/".$this->id);
+            $path = url('person/'.$this->id);
         }
 
-        return "<a href='".$path."'>".$this->full_name."</a>";
+        return "<a href='".$path."'>".$this->full_name.'</a>';
     }
 
     public function getContactTypeLabelAttribute()
     {
-
         if (isset($this->contacttype->label)) {
             return $this->contacttype->label;
         } else {
             return 'N/A';
         }
     }
+
     public function getSubcontactTypeLabelAttribute()
     {
-
         if (isset($this->subcontacttype->label)) {
             return $this->subcontacttype->label;
         } else {
             return 'N/A';
         }
     }
+
     public function getDioceseIdAttribute()
     {
         if (isset($this->diocese->contact_id_a)) {
             return $this->diocese->contact_id_a;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getDioceseNameAttribute()
     {
         if (isset($this->diocese->contact_a->organization_name)) {
             return $this->diocese->contact_a->organization_name;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getEmailPrimaryTextAttribute()
     {
-        if (!empty($this->email_primary->email)) {
+        if (! empty($this->email_primary->email)) {
             return $this->email_primary->email;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getEmergencyContactNameAttribute()
     {
-        if (!empty($this->emergency_contact->name)) {
+        if (! empty($this->emergency_contact->name)) {
             return $this->emergency_contact->name;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getEmergencyContactRelationshipAttribute()
     {
-        if (!empty($this->emergency_contact->relationship)) {
+        if (! empty($this->emergency_contact->relationship)) {
             return $this->emergency_contact->relationship;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getEmergencyContactPhoneAttribute()
     {
-        if (!empty($this->emergency_contact->phone)) {
+        if (! empty($this->emergency_contact->phone)) {
             return $this->emergency_contact->phone;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getEmergencyContactPhoneAlternateAttribute()
     {
-        if (!empty($this->emergency_contact->phone_alternate)) {
+        if (! empty($this->emergency_contact->phone_alternate)) {
             return $this->emergency_contact->phone_alternate;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getEthnicityNameAttribute()
     {
-        if (isset($this->ethnicity_id)&&($this->ethnicity_id>0)) {
+        if (isset($this->ethnicity_id) && ($this->ethnicity_id > 0)) {
             return $this->ethnicity->ethnicity;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getFullNameAttribute()
     {
         if ($this->contact_type == config('polanco.contact_type.individual')) {
             $full_name = '';
             if (isset($this->prefix->name)) {
-                $full_name .= $this->prefix->name. ' ';
+                $full_name .= $this->prefix->name.' ';
             }
 
             if (isset($this->first_name)) {
-                $full_name .= $this->first_name. ' ';
+                $full_name .= $this->first_name.' ';
             }
             if (isset($this->nick_name)) {
                 $full_name .= '"'.$this->nick_name.'" ';
@@ -400,28 +433,31 @@ class Contact extends Model
 
     public function getGenderNameAttribute()
     {
-        if (isset($this->gender_id)&&($this->gender_id>0)) {
+        if (isset($this->gender_id) && ($this->gender_id > 0)) {
             return $this->gender->name;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getIsDonorAttribute()
     {
-        if (!empty($this->relationship_mjrh_donor->id)) {
+        if (! empty($this->relationship_mjrh_donor->id)) {
             return true;
         } else {
             return false;
         }
     }
+
     public function getIsRetreatantAttribute()
     {
-        if (!empty($this->relationship_mjrh_retreatant->id)) {
+        if (! empty($this->relationship_mjrh_retreatant->id)) {
             return true;
         } else {
             return false;
         }
     }
+
     public function getIsCaptainAttribute()
     {
         if (isset($this->group_captain->id)) {
@@ -430,6 +466,7 @@ class Contact extends Model
             return false;
         }
     }
+
     public function getIsHLM2017Attribute()
     {
         if (isset($this->group_hlm2017->id)) {
@@ -438,6 +475,7 @@ class Contact extends Model
             return false;
         }
     }
+
     public function getIsVolunteerAttribute()
     {
         if (isset($this->group_volunteer->id)) {
@@ -446,6 +484,7 @@ class Contact extends Model
             return false;
         }
     }
+
     public function getIsBishopAttribute()
     {
         if (isset($this->group_bishop->id)) {
@@ -454,6 +493,7 @@ class Contact extends Model
             return false;
         }
     }
+
     public function getIsPriestAttribute()
     {
         if (isset($this->group_priest->id)) {
@@ -462,6 +502,7 @@ class Contact extends Model
             return false;
         }
     }
+
     public function getIsDeaconAttribute()
     {
         if (isset($this->group_deacon->id)) {
@@ -470,6 +511,7 @@ class Contact extends Model
             return false;
         }
     }
+
     public function getIsPastorAttribute()
     {
         if (isset($this->group_pastor->id)) {
@@ -478,6 +520,7 @@ class Contact extends Model
             return false;
         }
     }
+
     public function getIsJesuitAttribute()
     {
         if (isset($this->group_jesuit->id)) {
@@ -486,6 +529,7 @@ class Contact extends Model
             return false;
         }
     }
+
     public function getIsProvincialAttribute()
     {
         if (isset($this->group_provincial->id)) {
@@ -494,6 +538,7 @@ class Contact extends Model
             return false;
         }
     }
+
     public function getIsSuperiorAttribute()
     {
         if (isset($this->group_superior->id)) {
@@ -502,6 +547,7 @@ class Contact extends Model
             return false;
         }
     }
+
     public function getIsBoardMemberAttribute()
     {
         if (isset($this->group_board_member->id)) {
@@ -510,6 +556,7 @@ class Contact extends Model
             return false;
         }
     }
+
     public function getIsFormerBoardMemberAttribute()
     {
         if (isset($this->relationship_mjrh_former_board_member->id)) {
@@ -518,6 +565,7 @@ class Contact extends Model
             return false;
         }
     }
+
     public function getIsStaffAttribute()
     {
         if (isset($this->group_staff->id)) {
@@ -526,6 +574,7 @@ class Contact extends Model
             return false;
         }
     }
+
     public function getIsStewardAttribute()
     {
         if (isset($this->group_steward->id)) {
@@ -534,6 +583,7 @@ class Contact extends Model
             return false;
         }
     }
+
     public function getIsRetreatDirectorAttribute()
     {
         if (isset($this->relationship_mjrh_retreat_director->id)) {
@@ -542,6 +592,7 @@ class Contact extends Model
             return false;
         }
     }
+
     public function getIsRetreatInnkeeperAttribute()
     {
         if (isset($this->relationship_mjrh_retreat_innkeeper->id)) {
@@ -550,6 +601,7 @@ class Contact extends Model
             return false;
         }
     }
+
     public function getIsRetreatAssistantAttribute()
     {
         if (isset($this->relationship_mjrh_retreat_assistant->id)) {
@@ -558,46 +610,52 @@ class Contact extends Model
             return false;
         }
     }
+
     public function getNoteDietaryTextAttribute()
     {
         if (isset($this->note_dietary->note)) {
             return $this->note_dietary->note;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getNoteHealthTextAttribute()
     {
         if (isset($this->note_health->note)) {
             return $this->note_health->note;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getNoteGeneralTextAttribute()
     {
         if (isset($this->note_general->note)) {
             return $this->note_general->note;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getNoteOrganizationTextAttribute()
     {
         if (isset($this->note_organization->note)) {
             return $this->note_organization->note;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getNoteRegistrationTextAttribute()
     {
         if (isset($this->note_registration->note)) {
             return $this->note_registration->note;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getAgcHouseholdNameAttribute()
     {
         if (isset($this->agc2019->household_name)) {
@@ -606,47 +664,54 @@ class Contact extends Model
             return $this->full_name;
         }
     }
+
     public function getNoteRoomPreferenceTextAttribute()
     {
         if (isset($this->note_room_preference->note)) {
             return $this->note_room_preference->note;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getNoteVendorTextAttribute()
     {
         if (isset($this->note_vendor->note)) {
             return $this->note_vendor->note;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getOccupationNameAttribute()
     {
-        if (isset($this->occupation_id)&&($this->occupation_id>0)) {
+        if (isset($this->occupation_id) && ($this->occupation_id > 0)) {
             return $this->occupation->name;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getParishNameAttribute()
     {
-        if (isset($this->parish->contact_id_a)&&($this->parish->contact_id_a>0)) {
+        if (isset($this->parish->contact_id_a) && ($this->parish->contact_id_a > 0)) {
             return $this->parish->contact_a->display_name.' ('.$this->parish->contact_a->address_primary->city.')';
         } else {
-            return null;
+            return;
         }
     }
+
     public function getParishLinkAttribute()
     {
-        if (isset($this->parish->contact_id_a)&&($this->parish->contact_id_a>0)) {
+        if (isset($this->parish->contact_id_a) && ($this->parish->contact_id_a > 0)) {
             $path = url('parish/'.$this->parish->contact_a->id);
-            return "<a href='".$path."'>".$this->parish->contact_a->display_name.' ('.$this->parish->contact_a->address_primary_city.')'."</a>";
+
+            return "<a href='".$path."'>".$this->parish->contact_a->display_name.' ('.$this->parish->contact_a->address_primary_city.')'.'</a>';
         } else {
-            return null;
+            return;
         }
     }
+
     public function getParticipantCountAttribute()
     {
         if (isset($this->event_registrations)) {
@@ -661,281 +726,342 @@ class Contact extends Model
         if (isset($this->phone_home_mobile->phone)) {
             return $this->phone_home_mobile->phone.$this->phone_home_mobile->phone_extension;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getPhoneHomePhoneNumberAttribute()
     {
         if (isset($this->phone_home_phone->phone)) {
             return $this->phone_home_phone->phone.$this->phone_home_phone->phone_extension;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getPhoneWorkPhoneNumberAttribute()
     {
         if (isset($this->phone_work_phone)) {
             return $this->phone_work_phone->phone.$this->phone_work_phone->phone_extension;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getPhoneMainPhoneNumberAttribute()
     {
         if (isset($this->phone_main_phone)) {
             return $this->phone_main_phone->phone.$this->phone_main_phone->phone_extension;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getPhoneMainFaxNumberAttribute()
     {
         if (isset($this->phone_main_fax)) {
             return $this->phone_main_fax->phone.$this->phone_main_fax->phone_extension;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getPrefixNameAttribute()
     {
-        if (isset($this->prefix_id)&&($this->prefix_id>0)) {
+        if (isset($this->prefix_id) && ($this->prefix_id > 0)) {
             return $this->prefix->name;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getReligionNameAttribute()
     {
-        if (isset($this->religion_id)&&($this->religion_id>0)) {
+        if (isset($this->religion_id) && ($this->religion_id > 0)) {
             return $this->religion->label;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getSuffixNameAttribute()
     {
-        if (isset($this->suffix_id)&&($this->suffix_id>0)) {
+        if (isset($this->suffix_id) && ($this->suffix_id > 0)) {
             return $this->suffix->name;
         } else {
-            return null;
+            return;
         }
     }
+
     public function gender()
     {
         return $this->hasOne(Gender::class, 'id', 'gender_id');
     }
+
     public function group_captain()
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.captain'));
     }
+
     public function group_hlm2017()
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.hlm2017'));
     }
+
     public function group_volunteer()
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.volunteer'));
     }
+
     public function group_bishop()
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.bishop'));
     }
+
     public function group_priest()
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.priest'));
     }
+
     public function group_deacon()
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.deacon'));
     }
+
     public function group_pastor()
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.pastor'));
     }
+
     public function group_jesuit()
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.jesuit'));
     }
+
     public function group_provincial()
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.provincial'));
     }
+
     public function group_superior()
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.superior'));
     }
+
     public function group_board_member()
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.board'))->whereStatus('Added');
     }
+
     public function group_staff()
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.staff'));
     }
+
     public function group_steward()
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.steward'));
     }
+
     public function groups()
     {
-        return $this->hasMany(GroupContact::class, 'contact_id', 'id')->whereStatus("Added");
+        return $this->hasMany(GroupContact::class, 'contact_id', 'id')->whereStatus('Added');
     }
+
     public function languages()
     {
         return $this->belongsToMany(Language::class, 'contact_languages', 'contact_id', 'language_id');
     }
+
     public function language_pref()
     {
         return $this->hasOne(Language::class, 'name', 'preferred_language');
     }
+
     public function notes()
     {
         return $this->hasMany(Note::class, 'entity_id', 'id')->whereEntityTable('contact');
     }
+
     public function note_dietary()
     {
         return $this->hasOne(Note::class, 'entity_id', 'id')->whereEntityTable('contact')->whereSubject('Dietary Note');
     }
+
     public function note_health()
     {
         return $this->hasOne(Note::class, 'entity_id', 'id')->whereEntityTable('contact')->whereSubject('Health Note');
     }
+
     public function note_room_preference()
     {
         return $this->hasOne(Note::class, 'entity_id', 'id')->whereEntityTable('contact')->whereSubject('Room Preference');
     }
+
     public function note_vendor()
     {
         return $this->hasOne(Note::class, 'entity_id', 'id')->whereEntityTable('contact')->whereSubject('Vendor note');
     }
+
     public function note_general()
     {
         return $this->hasOne(Note::class, 'entity_id', 'id')->whereEntityTable('contact')->whereSubject('Contact Note');
     }
+
     public function note_organization()
     {
         return $this->hasOne(Note::class, 'entity_id', 'id')->whereEntityTable('contact')->whereSubject('Organization Note');
     }
+
     public function note_registration()
     {
         return $this->hasOne(Note::class, 'entity_id', 'id')->whereEntityTable('contact')->whereSubject('Registration Note');
     }
+
     public function occupation()
     {
         return $this->hasOne(Ppd_occupation::class, 'id', 'occupation_id');
     }
+
     public function parish()
     {
         return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.parishioner'));
     }
+
     public function parishes()
     {
         return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.diocese'));
     }
+
     public function parishioners()
     {
         return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.parishioner'));
     }
+
     public function pastor()
     {
         return $this->hasOne(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.pastor'));
     }
+
     public function phones()
     {
         return $this->hasMany(Phone::class, 'contact_id', 'id');
     }
+
     public function phone_primary()
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->whereIsPrimary(1);
     }
+
     public function phone_main_phone()
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Phone')->whereLocationTypeId(config('polanco.location_type.main'));
     }
+
     public function phone_main_mobile()
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Mobile')->whereLocationTypeId(config('polanco.location_type.main'));
     }
+
     public function phone_main_fax()
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Fax')->whereLocationTypeId(config('polanco.location_type.main'));
     }
+
     public function phone_home_phone()
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Phone')->whereLocationTypeId(config('polanco.location_type.home'));
     }
+
     public function phone_home_mobile()
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Mobile')->whereLocationTypeId(config('polanco.location_type.home'));
     }
+
     public function phone_home_fax()
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Fax')->whereLocationTypeId(config('polanco.location_type.home'));
     }
+
     public function phone_work_phone()
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Phone')->whereLocationTypeId(config('polanco.location_type.work'));
     }
+
     public function phone_work_mobile()
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Mobile')->whereLocationTypeId(config('polanco.location_type.work'));
     }
+
     public function phone_work_fax()
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Fax')->whereLocationTypeId(config('polanco.location_type.work'));
     }
+
     public function phone_other_phone()
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Phone')->whereLocationTypeId(config('polanco.location_type.other'));
     }
+
     public function phone_other_mobile()
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Mobile')->whereLocationTypeId(config('polanco.location_type.other'));
     }
+
     public function phone_other_fax()
     {
         return $this->hasOne(Phone::class, 'contact_id', 'id')->wherePhoneType('Fax')->whereLocationTypeId(config('polanco.location_type.other'));
     }
+
     public function prefix()
     {
         return $this->hasOne(Prefix::class, 'id', 'prefix_id');
     }
+
     public function referrals()
     {
         return $this->belongsToMany(Referral::class, 'contact_referral', 'contact_id', 'referral_id');
     }
+
     public function retreat_assistants()
     {
         return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.retreat_assistant'))->whereIsActive(1);
     }
+
     public function retreat_directors()
     {
         return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.retreat_director'));
     }
+
     public function retreat_innkeepers()
     {
         return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.retreat_innkeeper'));
     }
+
     public function retreat_captains()
     {
         // TODO: handle with participants of role Retreat Director or Master - be careful with difference between (registration table) retreat_id and (participant table) event_id
         return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.captain'));
     }
+
     public function event_registrations()
     {
         // the events (retreats) for which this contact has participated
         return $this->hasMany(Registration::class, 'contact_id', 'id');
     }
+
     public function event_captains()
     {
         // the events (retreats) for which this contact has been a retreatant
         return $this->hasMany(Registration::class, 'contact_id', 'id')->whereRoleId(config('polanco.participant_role_id.captain'));
     }
+
     public function event_retreatants()
     {
         // the events (retreats) for which this contact has been a retreatant
         return $this->hasMany(Registration::class, 'contact_id', 'id')->whereRoleId(config('polanco.participant_role_id.retreatant'));
     }
+
     public function relationship_mjrh_former_board_member()
     {
         return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.board_member'))->whereNotNull('end_date');
@@ -945,26 +1071,32 @@ class Contact extends Model
     {
         return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.donor'));
     }
+
     public function relationship_mjrh_retreatant()
     {
         return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.retreatant'))->whereIsActive(1)->whereContactIdA(config('polanco.contact.montserrat'));
     }
+
     public function relationship_mjrh_retreat_assistant()
     {
         return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.retreat_assistant'))->whereContactIdA(config('polanco.contact.montserrat'))->whereIsActive(1);
     }
+
     public function relationship_mjrh_retreat_director()
     {
         return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.retreat_director'))->whereContactIdA(config('polanco.contact.montserrat'))->whereIsActive(1);
     }
+
     public function relationship_mjrh_retreat_innkeeper()
     {
         return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.retreat_innkeeper'))->whereContactIdA(config('polanco.contact.montserrat'))->whereIsActive(1);
     }
+
     public function religion()
     {
         return $this->hasOne(Religion::class, 'id', 'religion_id');
     }
+
     public function setBirthDateAttribute($date)
     {
         if (strlen($date)) {
@@ -987,150 +1119,157 @@ class Contact extends Model
     {
         $this->attributes['nick_name'] = trim($nick_name) !== '' ? $nick_name : null;
     }
+
     public function setMiddleNameAttribute($middle_name)
     {
         $this->attributes['middle_name'] = trim($middle_name) !== '' ? $middle_name : null;
     }
+
     public function suffix()
     {
         return $this->hasOne(Suffix::class, 'id', 'suffix_id');
     }
+
     public function touchpoints()
     {
         return $this->hasMany(Touchpoint::class, 'person_id', 'id');
     }
+
     public function websites()
     {
         return $this->hasMany(Website::class, 'contact_id', 'id');
     }
+
     public function website_main()
     {
         return $this->hasOne(Website::class, 'contact_id', 'id')->whereWebsiteType('Main');
     }
+
     public function scopeOrganizations_Generic($query)
     {
         return $query->where([
-            ['contact_type','>=',config('polanco.contact_type.organization')],
-            ['subcontact_type','>=',config('polanco.contact_type.province')],
+            ['contact_type', '>=', config('polanco.contact_type.organization')],
+            ['subcontact_type', '>=', config('polanco.contact_type.province')],
             ]);
     }
+
     public function scopeFiltered($query, $filters)
     {
         //dd($filters->request);
         foreach ($filters->request as $filter => $value) {
-            if ($filter=='prefix_id' && $value>0) {
+            if ($filter == 'prefix_id' && $value > 0) {
                 $query->where($filter, $value);
             }
-            if ($filter=='first_name' && !empty($value)) {
+            if ($filter == 'first_name' && ! empty($value)) {
                 $query->where($filter, 'like', '%'.$value.'%');
             }
-            if ($filter=='middle_name'&& !empty($value)) {
+            if ($filter == 'middle_name' && ! empty($value)) {
                 $query->where($filter, 'like', '%'.$value.'%');
             }
-            if ($filter=='last_name'&& !empty($value)) {
+            if ($filter == 'last_name' && ! empty($value)) {
                 $query->where($filter, 'like', '%'.$value.'%');
             }
-            if ($filter=='suffix_id' && $value>0) {
+            if ($filter == 'suffix_id' && $value > 0) {
                 $query->where($filter, $value);
             }
-            if ($filter=='nick_name' && !empty($value)) {
+            if ($filter == 'nick_name' && ! empty($value)) {
                 $query->where($filter, 'like', '%'.$value.'%');
             }
-            if ($filter=='display_name'&& !empty($value)) {
+            if ($filter == 'display_name' && ! empty($value)) {
                 $query->where($filter, 'like', '%'.$value.'%');
             }
-            if ($filter=='sort_name'&& !empty($value)) {
+            if ($filter == 'sort_name' && ! empty($value)) {
                 $query->where($filter, 'like', '%'.$value.'%');
             }
 
-            if ($filter=='contact_type' && $value>0) {
+            if ($filter == 'contact_type' && $value > 0) {
                 $query->where($filter, $value);
             }
-            if ($filter=='subcontact_type' && $value>0) {
+            if ($filter == 'subcontact_type' && $value > 0) {
                 $query->where($filter, $value);
             }
-            if ($filter=='gender_id' && $value>0) {
+            if ($filter == 'gender_id' && $value > 0) {
                 $query->where($filter, $value);
             }
 
-            if ($filter=='religion_id' && $value>0) {
+            if ($filter == 'religion_id' && $value > 0) {
                 $query->where($filter, $value);
             }
-            if ($filter=='preferred_language_id' && $value>0) {
-                    $lang = \App\Language::findOrFail($value);
-                    $query->wherePreferredLanguage($lang->name);
+            if ($filter == 'preferred_language_id' && $value > 0) {
+                $lang = \App\Language::findOrFail($value);
+                $query->wherePreferredLanguage($lang->name);
             }
-            if ($filter=='occupation_id' && $value>0) {
+            if ($filter == 'occupation_id' && $value > 0) {
                 $query->where($filter, $value);
             }
-            if ($filter=='ethnicity_id' && $value>0) {
+            if ($filter == 'ethnicity_id' && $value > 0) {
                 $query->where($filter, $value);
             }
-            if ($filter=='is_deceased' && $value>0) {
+            if ($filter == 'is_deceased' && $value > 0) {
                 $query->where($filter, $value);
             }
             // ignore year but get everyone born on that month/day
-            if ($filter=='birth_date' && !empty($value)) {
-                    $dob = Carbon::parse($value);
-                    $query->whereMonth('birth_date', '=', $dob->month);
-                    $query->whereDay('birth_date', '=', $dob->day);
+            if ($filter == 'birth_date' && ! empty($value)) {
+                $dob = Carbon::parse($value);
+                $query->whereMonth('birth_date', '=', $dob->month);
+                $query->whereDay('birth_date', '=', $dob->day);
             }
-            if ($filter=='deceased_date' && !empty($value)) {
-                    $dod = Carbon::parse($value);
-                    $query->whereMonth('deceased_date', '=', $dod->month);
-                    $query->whereDay('deceased_date', '=', $dod->day);
+            if ($filter == 'deceased_date' && ! empty($value)) {
+                $dod = Carbon::parse($value);
+                $query->whereMonth('deceased_date', '=', $dod->month);
+                $query->whereDay('deceased_date', '=', $dod->day);
             }
-            if ($filter=='phone' && !empty($value)) {
-                $value= str_replace(" ", "", $value);
-                $value= str_replace("(", "", $value);
-                $value= str_replace(")", "", $value);
-                $value= str_replace("-", "", $value);
+            if ($filter == 'phone' && ! empty($value)) {
+                $value = str_replace(' ', '', $value);
+                $value = str_replace('(', '', $value);
+                $value = str_replace(')', '', $value);
+                $value = str_replace('-', '', $value);
 
                 $query->whereHas('phones', function ($q) use ($value) {
                     $q->where('phone_numeric', 'like', '%'.$value.'%');
                 });
             }
-            if ($filter=='do_not_phone' && $value>0) {
+            if ($filter == 'do_not_phone' && $value > 0) {
                 $query->where($filter, $value);
             }
-            if ($filter=='do_not_sms' && $value>0) {
+            if ($filter == 'do_not_sms' && $value > 0) {
                 $query->where($filter, $value);
             }
 
-            if ($filter=='email'  && !empty($value)) {
+            if ($filter == 'email' && ! empty($value)) {
                 $query->whereHas('emails', function ($q) use ($value) {
                     $q->where('email', 'like', '%'.$value.'%');
                 });
             }
-            if ($filter=='do_not_email' && $value>0) {
+            if ($filter == 'do_not_email' && $value > 0) {
                 $query->where($filter, $value);
             }
 
-            if ($filter=='street_address'  && !empty($value)) {
+            if ($filter == 'street_address' && ! empty($value)) {
                 $query->whereHas('addresses', function ($q) use ($value) {
                     $q->where('street_address', 'like', '%'.$value.'%');
                 });
             }
-            if ($filter=='city' && !empty($value)) {
+            if ($filter == 'city' && ! empty($value)) {
                 $query->whereHas('addresses', function ($q) use ($value) {
                     $q->where('city', 'like', '%'.$value.'%');
                 });
             }
-            if ($filter=='state_province_id' && !empty($value)) {
+            if ($filter == 'state_province_id' && ! empty($value)) {
                 $query->whereHas('addresses', function ($q) use ($value) {
                     $q->where('state_province_id', '=', $value);
                 });
             }
-            if ($filter=='postal_code' && !empty($value)) {
+            if ($filter == 'postal_code' && ! empty($value)) {
                 $query->whereHas('addresses', function ($q) use ($value) {
                     $q->where('postal_code', 'like', '%'.$value.'%');
                 });
             }
-            if ($filter=='do_not_mail' && $value>0) {
+            if ($filter == 'do_not_mail' && $value > 0) {
                 $query->where($filter, $value);
             }
 
-            if ($filter=='languages' && !empty($value)) {
+            if ($filter == 'languages' && ! empty($value)) {
                 foreach ($value as $language) {
                     if ($language > 0) {
                         $query->whereHas('languages', function ($q) use ($language) {
@@ -1139,16 +1278,16 @@ class Contact extends Model
                     }
                 }
             }
-            if ($filter=='referrals' && !empty($value)) {
+            if ($filter == 'referrals' && ! empty($value)) {
                 foreach ($value as $referral) {
-                    if ($referral> 0) {
+                    if ($referral > 0) {
                         $query->whereHas('referrals', function ($q) use ($referral) {
                             $q->whereReferralId($referral);
                         });
                     }
                 }
             }
-            if ($filter=='groups' && !empty($value)) {
+            if ($filter == 'groups' && ! empty($value)) {
                 foreach ($value as $group) {
                     if ($group > 0) {
                         $query->whereHas('groups', function ($q) use ($group) {
@@ -1157,60 +1296,60 @@ class Contact extends Model
                     }
                 }
             }
-            if ($filter=='parish_id' && !empty($value)) {
+            if ($filter == 'parish_id' && ! empty($value)) {
                 $query->whereHas('parish', function ($q) use ($value) {
                     $q->where('contact_id_a', '=', $value);
                 });
             }
-            if ($filter=='has_attachment' && !empty($value)) {
+            if ($filter == 'has_attachment' && ! empty($value)) {
                 $query->whereHas('attachments', function ($q) use ($value) {
                     $q->where('uri', '!=', 'avatar.png');
                 });
             }
-            if ($filter=='attachment_description' && !empty($value)) {
+            if ($filter == 'attachment_description' && ! empty($value)) {
                 $query->whereHas('attachments', function ($q) use ($value) {
                     $q->where('description', 'LIKE', '%'.$value.'%');
                 });
             }
-            if ($filter=='has_avatar' && !empty($value)) {
+            if ($filter == 'has_avatar' && ! empty($value)) {
                 $query->has('avatar');
             }
-            if ($filter=='note_health' && !empty($value)) {
+            if ($filter == 'note_health' && ! empty($value)) {
                 $query->whereHas('note_health', function ($q) use ($value) {
                     $q->where('note', 'LIKE', '%'.$value.'%');
                 });
             }
-            if ($filter=='note_dietary' && !empty($value)) {
+            if ($filter == 'note_dietary' && ! empty($value)) {
                 $query->whereHas('note_dietary', function ($q) use ($value) {
                     $q->where('note', 'LIKE', '%'.$value.'%');
                 });
             }
-            if ($filter=='note_general' && !empty($value)) {
+            if ($filter == 'note_general' && ! empty($value)) {
                 $query->whereHas('note_general', function ($q) use ($value) {
                     $q->where('note', 'LIKE', '%'.$value.'%');
                 });
             }
-            if ($filter=='note_room_preference' && !empty($value)) {
+            if ($filter == 'note_room_preference' && ! empty($value)) {
                 $query->whereHas('note_room_preference', function ($q) use ($value) {
                     $q->where('note', 'LIKE', '%'.$value.'%');
                 });
             }
-            if ($filter=='emergency_contact_name' && !empty($value)) {
+            if ($filter == 'emergency_contact_name' && ! empty($value)) {
                 $query->whereHas('emergency_contact', function ($q) use ($value) {
                     $q->where('name', 'LIKE', '%'.$value.'%');
                 });
             }
-            if ($filter=='emergency_contact_relationship' && !empty($value)) {
+            if ($filter == 'emergency_contact_relationship' && ! empty($value)) {
                 $query->whereHas('emergency_contact', function ($q) use ($value) {
                     $q->where('relationship', 'LIKE', '%'.$value.'%');
                 });
             }
-            if ($filter=='emergency_contact_phone' && !empty($value)) {
+            if ($filter == 'emergency_contact_phone' && ! empty($value)) {
                 $query->whereHas('emergency_contact', function ($q) use ($value) {
                     $q->where('phone', 'LIKE', '%'.$value.'%')->orWhere('phone_alternate', 'LIKE', '%'.$value.'%');
                 });
             }
-            if ($filter=='url' && !empty($value)) {
+            if ($filter == 'url' && ! empty($value)) {
                 $query->whereHas('websites', function ($q) use ($value) {
                     $q->where('url', 'like', '%'.$value.'%');
                 });
@@ -1219,6 +1358,7 @@ class Contact extends Model
 
         return $query;
     }
+
     public function birthdayEmailReceivers()
     {
         $sql = "SELECT

@@ -108,7 +108,7 @@
 				<a href="{{action('SearchController@search')}}">{!! Html::image('images/search.png', 'Advanced search',array('title'=>"Advanced search",'class' => 'btn btn-link')) !!}</a>
 				{{ Form::close() }}
 				@endcan
-				@if (Auth::check())
+				@auth
 				<div class="dropdown">
 					<div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<img src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->name }}" title="{{ Auth::user()->name }}" class="rounded-circle avatar">
@@ -123,7 +123,7 @@
 				<a href={{ route('login') }}>
 					Login
 				</a>
-				@endif
+				@endauth
 			</div>
 		</nav>
 	</div>

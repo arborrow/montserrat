@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-//use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Redirect;
-//use Input;
+use App\Http\Requests\StoreRoomRequest;
+use App\Http\Requests\UpdateRoomRequest;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Redirect;
 
 class RoomController extends Controller
 {
@@ -31,6 +29,7 @@ class RoomController extends Controller
         $roomsort = $rooms->sortBy(function ($building) {
             return sprintf('%-12s%s', $building->building, $building->name);
         });
+
         return view('rooms.index', compact('roomsort'));   //
     }
 
@@ -43,6 +42,7 @@ class RoomController extends Controller
     {
         $this->authorize('create-room');
         $locations = \App\Location::orderby('name')->pluck('name', 'id');
+
         return view('rooms.create', compact('locations'));
     }
 
@@ -52,15 +52,10 @@ class RoomController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRoomRequest $request)
     {
         $this->authorize('create-room');
-        $this->validate($request, [
-            'name' => 'required',
-            'building_id' => 'integer|min:0',
-            'occupancy' => 'integer|min:0'
-        ]);
-        
+
         $room = new \App\Room;
         $room->building_id = $request->input('building_id');
         $room->name = $request->input('name');
@@ -69,9 +64,9 @@ class RoomController extends Controller
         $room->access = $request->input('access');
         $room->type = $request->input('type');
         $room->occupancy = $request->input('occupancy');
-        $room->status= $request->input('status');
+        $room->status = $request->input('status');
         $room->save();
-        
+
         return Redirect::action('RoomController@index');
     }
 
@@ -85,9 +80,10 @@ class RoomController extends Controller
     {
         $this->authorize('show-room');
         $room = \App\Room::findOrFail($id);
-        $building =  \App\Room::findOrFail($id)->location;
+        $building = \App\Room::findOrFail($id)->location;
         $room->building = $building->name;
-        return view('rooms.show', compact('room'));//
+
+        return view('rooms.show', compact('room')); //
     }
 
     /**
@@ -100,7 +96,8 @@ class RoomController extends Controller
     {
         $this->authorize('update-room');
         $locations = \App\Location::orderby('name')->pluck('name', 'id');
-        $room= \App\Room::findOrFail($id);
+        $room = \App\Room::findOrFail($id);
+
         return view('rooms.edit', compact('room', 'locations'));
     }
 
@@ -111,15 +108,10 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRoomRequest $request, $id)
     {
         $this->authorize('update-room');
-        $this->validate($request, [
-            'name' => 'required',
-            'building_id' => 'integer|min:0',
-            'occupancy' => 'integer|min:0'
-        ]);
-           
+
         $room = \App\Room::findOrFail($request->input('id'));
         $room->building_id = $request->input('building_id');
         $room->name = $request->input('name');
@@ -144,9 +136,10 @@ class RoomController extends Controller
     {
         $this->authorize('delete-room');
         \App\Room::destroy($id);
+
         return Redirect::action('RoomController@index');
     }
-    
+
     /**
      * Display the room schedules for a particular month/year - default this month.
      *
@@ -156,39 +149,39 @@ class RoomController extends Controller
     public function schedule($ym = null, $building = null)
     {
         $this->authorize('show-room');
-        if ((!isset($ym)) or ($ym==0)) {
+        if ((! isset($ym)) or ($ym == 0)) {
             $dt = Carbon::now();
-            //dd($dt);
+        //dd($dt);
         } else {
-            if (!$dt = Carbon::parse($ym)) {
-                    return view('404');
+            if (! $dt = Carbon::parse($ym)) {
+                return view('404');
             }
         }
         $upcoming = clone $dt;
         $previous_dt = clone $dt;
-        $prev_path=url('rooms/'.$previous_dt->subDays(31)->format('Ymd'));
+        $prev_path = url('rooms/'.$previous_dt->subDays(31)->format('Ymd'));
         $previous_link = '<a href="'.$prev_path.'">&#171;</a>';
         $dts[0] = $dt;
         //dd($dts);
-        for ($i=1; $i<=31; $i++) {
+        for ($i = 1; $i <= 31; $i++) {
             $dts[$i] = Carbon::parse($upcoming->addDays((1)));
         }
-        
-        $next_path=url('rooms/'.$upcoming->format('Ymd'));
+
+        $next_path = url('rooms/'.$upcoming->format('Ymd'));
         $next_link = '<a href="'.$next_path.'">&#187;</a>';
-        
+
         $rooms = \App\Room::with('location')->get();
         $roomsort = $rooms->sortBy(function ($room) {
             return sprintf('%-12s%s', $room->building_id, $room->name);
         });
-        
+
         $registrations_start = \App\Registration::with('room', 'room.location', 'retreatant', 'retreat')->whereNull('canceled_at')->where('room_id', '>', 0)->whereHas('retreat', function ($query) use ($dts) {
             $query->where('start_date', '>=', $dts[0])->where('start_date', '<=', $dts[30]);
         })->get();
         $registrations_end = \App\Registration::with('room', 'room.location', 'retreatant', 'retreat')->whereNull('canceled_at')->where('room_id', '>', 0)->whereHas('retreat', function ($query) use ($dts) {
             $query->where('end_date', '>=', $dts[0])->where('start_date', '<=', $dts[0]);
         })->get();
-        
+
         // create matrix of rooms and dates
         foreach ($rooms as $room) {
             foreach ($dts as $dt) {
@@ -197,64 +190,65 @@ class RoomController extends Controller
                 $m[$room->id][$dt->toDateString()]['registration_id'] = null;
                 $m[$room->id][$dt->toDateString()]['retreatant_id'] = null;
                 $m[$room->id][$dt->toDateString()]['retreatant_name'] = null;
-                
+
                 $m[$room->id]['room'] = $room->name;
                 $m[$room->id]['building'] = $room->location->name;
                 $m[$room->id]['occupancy'] = $room->occupancy;
             }
         }
-        
+
         /*
-         * for each registration, get the number of days 
+         * for each registration, get the number of days
          * for each day, check if the status is set (in other words it is in the room schedule matrix)
          * if it is in the matrix update the status to reserved
          */
-        
+
         foreach ($registrations_start as $registration) {
             $numdays = ($registration->retreat->end_date->diffInDays($registration->retreat->start_date));
-            for ($i=0; $i<=$numdays; $i++) {
+            for ($i = 0; $i <= $numdays; $i++) {
                 $matrixdate = $registration->retreat->start_date->copy()->addDays($i);
                 if (array_key_exists($matrixdate->toDateString(), $m[$registration->room_id])) {
-                        $m[$registration->room_id][$matrixdate->toDateString()]['status']='R';
-                    if (!empty($registration->arrived_at) && empty($registration->departed_at)) {
-                        $m[$registration->room_id][$matrixdate->toDateString()]['status']='O';
+                    $m[$registration->room_id][$matrixdate->toDateString()]['status'] = 'R';
+                    if (! empty($registration->arrived_at) && empty($registration->departed_at)) {
+                        $m[$registration->room_id][$matrixdate->toDateString()]['status'] = 'O';
                     }
-                        $m[$registration->room_id][$matrixdate->toDateString()]['registration_id']=$registration->id;
-                        $m[$registration->room_id][$matrixdate->toDateString()]['retreatant_id']=$registration->contact_id;
-                        $m[$registration->room_id][$matrixdate->toDateString()]['retreatant_name']= $registration->retreatant->display_name;
-                        $m[$registration->room_id][$matrixdate->toDateString()]['retreat_name']= $registration->retreat_name;
+                    $m[$registration->room_id][$matrixdate->toDateString()]['registration_id'] = $registration->id;
+                    $m[$registration->room_id][$matrixdate->toDateString()]['retreatant_id'] = $registration->contact_id;
+                    $m[$registration->room_id][$matrixdate->toDateString()]['retreatant_name'] = $registration->retreatant->display_name;
+                    $m[$registration->room_id][$matrixdate->toDateString()]['retreat_name'] = $registration->retreat_name;
 
-                        /* For now just handle marking the room as reserved with a URL to the registration and name in the title when hovering over it
-                         * I am thinking about using diffInDays to see if the retreatant arrived on the day that we are looking at or sooner
-                         * If they have not yet arrived then the first day should be reserved but not occupied. 
-                         * Occupied will be the same link to the registration. 
-                         */
+                    /* For now just handle marking the room as reserved with a URL to the registration and name in the title when hovering over it
+                     * I am thinking about using diffInDays to see if the retreatant arrived on the day that we are looking at or sooner
+                     * If they have not yet arrived then the first day should be reserved but not occupied.
+                     * Occupied will be the same link to the registration.
+                     */
                 }
             }
         }
         foreach ($registrations_end as $registration) {
             $numdays = ($registration->retreat->end_date->diffInDays($registration->retreat->start_date));
-            
-            for ($i=0; $i<=$numdays; $i++) {
+
+            for ($i = 0; $i <= $numdays; $i++) {
                 $matrixdate = $registration->retreat->start_date->copy()->addDays($i);
                 if (array_key_exists($matrixdate->toDateString(), $m[$registration->room_id])) {
-                        $m[$registration->room_id][$matrixdate->toDateString()]['status']='R';
-                    if (!empty($registration->arrived_at) && empty($registration->departed_at)) {
-                        $m[$registration->room_id][$matrixdate->toDateString()]['status']='O';
+                    $m[$registration->room_id][$matrixdate->toDateString()]['status'] = 'R';
+                    if (! empty($registration->arrived_at) && empty($registration->departed_at)) {
+                        $m[$registration->room_id][$matrixdate->toDateString()]['status'] = 'O';
                     }
-                        $m[$registration->room_id][$matrixdate->toDateString()]['registration_id']=$registration->id;
-                        $m[$registration->room_id][$matrixdate->toDateString()]['retreatant_id']=$registration->contact_id;
-                        $m[$registration->room_id][$matrixdate->toDateString()]['retreatant_name']= $registration->retreatant->display_name;
-                        $m[$registration->room_id][$matrixdate->toDateString()]['retreat_name']= $registration->retreat_name;
-                        
-                        /* For now just handle marking the room as reserved with a URL to the registration and name in the title when hovering over it
-                         * I am thinking about using diffInDays to see if the retreatant arrived on the day that we are looking at or sooner
-                         * If they have not yet arrived then the first day should be reserved but not occupied. 
-                         * Occupied will be the same link to the registration. 
-                         */
+                    $m[$registration->room_id][$matrixdate->toDateString()]['registration_id'] = $registration->id;
+                    $m[$registration->room_id][$matrixdate->toDateString()]['retreatant_id'] = $registration->contact_id;
+                    $m[$registration->room_id][$matrixdate->toDateString()]['retreatant_name'] = $registration->retreatant->display_name;
+                    $m[$registration->room_id][$matrixdate->toDateString()]['retreat_name'] = $registration->retreat_name;
+
+                    /* For now just handle marking the room as reserved with a URL to the registration and name in the title when hovering over it
+                     * I am thinking about using diffInDays to see if the retreatant arrived on the day that we are looking at or sooner
+                     * If they have not yet arrived then the first day should be reserved but not occupied.
+                     * Occupied will be the same link to the registration.
+                     */
                 }
             }
         }
+
         return view('rooms.sched2', compact('dts', 'roomsort', 'm', 'previous_link', 'next_link'));
     }
 }

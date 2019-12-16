@@ -9,10 +9,11 @@ class Donation extends Model
 {
     use SoftDeletes;
     protected $table = 'Donations';
-    protected $fillable =  ['donation_id', 'donor_id', 'donation_description', 'donation_amount','payment_description','Notes','contact_id'];
-    protected $dates = ['deleted_at','created_at','updated_at','start_date','end_date','donation_date'];
-    protected $primaryKey = "donation_id";
+    protected $fillable = ['donation_id', 'donor_id', 'donation_description', 'donation_amount', 'payment_description', 'Notes', 'contact_id'];
+    protected $dates = ['deleted_at', 'created_at', 'updated_at', 'start_date', 'end_date', 'donation_date'];
+    protected $primaryKey = 'donation_id';
     protected $appends = ['payments_paid'];
+    protected $casts = ['donation_amount'=>'decimal:2',];
 
     public function contact()
     {
@@ -23,99 +24,123 @@ class Donation extends Model
     {
         return $this->hasMany(Payment::class, 'donation_id', 'donation_id');
     }
+
     public function retreat()
     {
         return $this->hasOne(Retreat::class, 'id', 'event_id');
     }
-    public function getDonationStartDate() {
+
+    public function getDonationStartDate()
+    {
         if (isset($this->start_date)) {
             return $this->start_date->format('m/d/Y');
         } else {
-            return NULL;
+            return;
         }
     }
-    public function getDonationEndDate() {
+
+    public function getDonationEndDate()
+    {
         if (isset($this->end_date)) {
             return $this->end_date->format('m/d/Y');
         } else {
-            return NULL;
+            return;
         }
     }
+
     public function getRetreatOfferingAttribute()
     {
         return $this->payments()->first();
     }
-    public function getPercentPaidAttribute() {
+
+    public function getPercentPaidAttribute()
+    {
         if ($this->donation_amount > 0) {
-            return number_format(($this->payments->sum('payment_amount')/$this->donation_amount),2)*100;
+            return number_format(($this->payments->sum('payment_amount') / $this->donation_amount), 2) * 100;
         } else {
             return 0;
         }
     }
-    public function getPaymentsPaidAttribute() {
+
+    public function getPaymentsPaidAttribute()
+    {
         if (isset($this->payments)) {
-            return ($this->payments->sum('payment_amount'));
+            return $this->payments->sum('payment_amount');
         } else {
             return 0;
         }
     }
-    public function getRetreatNameAttribute() {
+
+    public function getRetreatNameAttribute()
+    {
         if (isset($this->retreat->title)) {
             return $this->retreat->title;
         } else {
-            return NULL;
+            return;
         }
     }
-    public function getDonorFullnameAttribute() {
+
+    public function getDonorFullnameAttribute()
+    {
         if (isset($this->contact->full_name)) {
             return $this->contact->full_name;
         } else {
             dd($this->contact_id);
         }
     }
-    public function getRetreatIdnumberAttribute() {
+
+    public function getRetreatIdnumberAttribute()
+    {
         if (isset($this->retreat->idnumber)) {
             return $this->retreat->idnumber;
         } else {
-            return NULL;
+            return;
         }
     }
-    public function getRetreatStartDateAttribute() {
+
+    public function getRetreatStartDateAttribute()
+    {
         if (isset($this->retreat->start_date)) {
             return $this->retreat->start_date->format('m/d/Y');
         } else {
-            return NULL;
+            return;
         }
     }
-    public function getRetreatLinkAttribute() {
+
+    public function getRetreatLinkAttribute()
+    {
         if (isset($this->retreat->title)) {
             $path = url('retreat/'.$this->retreat->id);
-            return "<a href='".$path."'>".'#'.$this->retreat_idnumber.' - '.$this->retreat_name."</a>";
+
+            return "<a href='".$path."'>".'#'.$this->retreat_idnumber.' - '.$this->retreat_name.'</a>';
         }
     }
-    public function getDonationDateFormattedAttribute() {
+
+    public function getDonationDateFormattedAttribute()
+    {
         if (isset($this->donation_date)) {
             return $this->donation_date->format('m/d/Y');
         } else {
-            return NULL;
+            return;
         }
     }
-    public function getDonationThankYouSentAttribute() {
+
+    public function getDonationThankYouSentAttribute()
+    {
         if (isset($this['Thank You'])) {
             return $this['Thank You'];
         } else {
             return 'N';
         }
     }
+
     public static function boot()
     {
         parent::boot();
 
         // cause a delete of a donation to cascade to children so payments are also deleted
-        static::deleted(function($donation)
-        {
+        static::deleted(function ($donation) {
             $donation->payments()->delete();
         });
     }
-
 }

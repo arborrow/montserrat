@@ -9,34 +9,38 @@ class Activity extends Model
 {
     use SoftDeletes;
     protected $table = 'activity';
-    
+
     public function contacts()
     {
         return $this->hasMany(ActivityContact::class, 'activity_id', 'id');
     }
-    
+
     public function targets()
     {
         return $this->hasMany(ActivityContact::class, 'activity_id', 'id')->whereRecordTypeId(config('polanco.activity_contacts_type.target'));
     }
+
     public function creators()
     {
         return $this->hasMany(ActivityContact::class, 'activity_id', 'id')->whereRecordTypeId(config('polanco.activity_contacts_type.creator'));
     }
+
     public function assignees()
     {
         return $this->hasMany(ActivityContact::class, 'activity_id', 'id')->whereRecordTypeId(config('polanco.activity_contacts_type.assignee'));
     }
+
     public function activity_type()
     {
         return $this->hasOne(ActivityType::class, 'id', 'activity_type_id');
     }
-    
+
     public function getActivityTypeLabelAttribute()
     {
         //dd($this->activity_type);
         return $this->activity_type->label;
     }
+
     public function getTargetsFullNameLinkAttribute()
     {
         $target_list = '';
@@ -44,13 +48,15 @@ class Activity extends Model
         foreach ($targets as $target) {
             if ($targets->last() === $target) {
                 $target_list .= $target->contact->contact_link_full_name;
-                //$target_list .= $target->contact_id;
+            //$target_list .= $target->contact_id;
             } else {
                 $target_list .= $target->contact->contact_link_full_name.', ';
             }
         }
+
         return $target_list;
     }
+
     public function getAssigneesFullNameLinkAttribute()
     {
         $assignee_list = '';
@@ -62,8 +68,10 @@ class Activity extends Model
                 $assignee_list .= $assignee->contact->contact_link_full_name.', ';
             }
         }
+
         return $assignee_list;
     }
+
     public function getSourcesFullNameLinkAttribute()
     {
         $source_list = '';
@@ -75,8 +83,10 @@ class Activity extends Model
                 $source_list .= $source->contact->contact_link_full_name.', ';
             }
         }
+
         return $source_list;
     }
+
     // alias for previous touchpoint field
     public function getTouchedAtAttribute()
     {
@@ -86,9 +96,10 @@ class Activity extends Model
     public function getStatusLabelAttribute()
     {
         $status = \App\ActivityStatus::findOrFail($this->status_id);
+
         return $status->label;
     }
-    
+
     public function getPriorityLabelAttribute()
     {
         $priority = config('polanco.priority');
@@ -98,7 +109,7 @@ class Activity extends Model
             return 'Unspecified';
         }
     }
-    
+
     public function getMediumLabelAttribute()
     {
         $medium = config('polanco.medium');

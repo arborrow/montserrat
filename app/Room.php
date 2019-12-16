@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Carbon\Carbon;
 
 class Room extends Model
 {
@@ -18,7 +17,7 @@ class Room extends Model
     {
         return $this->belongsTo(Location::class, 'building_id', 'id');
     }
-    
+
     public function roomstates()
     {
         return $this->hasMany(Roomstate::class, 'room_id', 'id');

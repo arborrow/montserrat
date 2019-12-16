@@ -3,8 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Contact;
-use Illuminate\Console\Command;
 use App\Mail\RetreatantBirthday;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
 
 class SendBirthdays extends Command
 {
@@ -40,11 +41,11 @@ class SendBirthdays extends Command
     public function handle()
     {
         $receivers = new Contact;
-	    $receivers = $receivers->birthdayEmailReceivers();
-	    // dd($receivers);
+        $receivers = $receivers->birthdayEmailReceivers();
+        // dd($receivers);
         foreach ($receivers as $key => $receiver) {
             try {
-                \Mail::to($receiver->email)->queue(new RetreatantBirthday($receiver));
+                Mail::to($receiver->email)->queue(new RetreatantBirthday($receiver));
             } catch (\Exception $e) {
                 // don't do anything
             }

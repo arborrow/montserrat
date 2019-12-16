@@ -2,11 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Permission;
-use Illuminate\Contracts\Auth\Access\Gate as GateContract;
-use App\User;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -16,7 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
+        'App\\Model' => 'App\\Policies\\ModelPolicy',
         \App\Attachment::class => \App\Policies\AttachmentPolicy::class,
 
     ];
@@ -29,26 +27,24 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::registerPolicies();
-	if (NULL !== env('APP_KEY')) { //prior to installing the app ignore checking for superuser or permissions        
+
+        //prior to installing the app ignore checking for superuser or permissions to avoid artisan errors about missing permissions table
+        if (NULL !== config('app.key')) {
             Gate::before(function ($user) {
                 $superuser = \App\Permission::whereName('superuser')->firstOrFail();
-
+                // only return true if this user has a role with the superuser permission
+                // otherwise
                 if ($user->hasRole($superuser->roles)) {
                     return true;
                 }
             });
 
-            foreach ($this->getPermissions() as $permission) {
+            $permissions = Permission::with('roles')->get();
+            foreach ($permissions as $permission) {
                 Gate::define($permission->name, function ($user) use ($permission) {
                     return $user->hasRole($permission->roles);
                 });
-	    }
-	}
-        
-        //
-    }
-    protected function getPermissions()
-    {
-        return Permission::with('roles')->get();
+            }
+        }
     }
 }

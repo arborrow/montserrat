@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
+use App\Attachment;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use App\Attachment;
 
 class AttachmentPolicy
 {
@@ -19,12 +19,14 @@ class AttachmentPolicy
     {
         //
     }
+
     public function show_attachment(User $user, Attachment $attachment)
     {
-         return false;
+        return false;
     }
+
     public function show_avatar(User $user)
     {
-         return true;
+        return true;
     }
 }
