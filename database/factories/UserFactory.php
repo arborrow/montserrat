@@ -12,7 +12,7 @@ $factory->define(App\User::class, function (Faker $faker) {
         // 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         'avatar' => $faker->md5,
         'provider' => $faker->word,
-        'provider_id' => $faker->word,
+        'provider_id' => $faker->md5,
         'remember_token' => Str::random(10),
     ];
 });
