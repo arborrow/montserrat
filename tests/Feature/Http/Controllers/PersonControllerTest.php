@@ -290,9 +290,10 @@ class PersonControllerTest extends TestCase
      */
     public function index_displays_paginated_contacts_contacts()
     {
-        $persons = [];
-//        $user = factory(\App\User::class)->create();
-//        $user->assignRole('admin');
+        $contact = factory(\App\Contact::class)->create([
+            'contact_type' => config('polanco.contact_type.individual')
+        ]);
+
         $user = $this->createUserWithPermission('show-contact');
 
         $response = $this->actingAs($user)->get(route('person.index'));
@@ -300,6 +301,10 @@ class PersonControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('persons.index');
         $response->assertViewHas('persons');
+
+        $persons = $response->viewData('persons');
+        $this->assertCount(1, $persons);
+        $this->assertEquals($contact->id, $persons->first()->id);
     }
 
     /**

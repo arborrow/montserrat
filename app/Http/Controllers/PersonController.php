@@ -25,8 +25,9 @@ class PersonController extends Controller
     public function index()
     {
         $this->authorize('show-contact');
+
         $persons = \App\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->with('address_primary.state', 'phones', 'emails', 'websites', 'parish.contact_a.address_primary', 'prefix', 'suffix')->paginate(100);
-        // dd($persons);
+
         return view('persons.index', compact('persons'));   //
     }
 
@@ -34,7 +35,7 @@ class PersonController extends Controller
     {
         $this->authorize('show-contact');
         $persons = \App\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'parish.contact_a')->where('last_name', 'LIKE', $lastname.'%')->paginate(100);
-        //dd($persons);
+
         return view('persons.index', compact('persons'));   //
     }
 
