@@ -1097,24 +1097,6 @@ class Contact extends Model
         return $this->hasOne(Religion::class, 'id', 'religion_id');
     }
 
-    public function setBirthDateAttribute($date)
-    {
-        if (strlen($date)) {
-            $this->attributes['birth_date'] = Carbon::parse($date);
-        } else {
-            $this->attributes['birth_date'] = null;
-        }
-    }
-
-    public function setDeceasedDateAttribute($date)
-    {
-        if (strlen($date)) {
-            $this->attributes['deceased_date'] = Carbon::parse($date);
-        } else {
-            $this->attributes['deceased_date'] = null;
-        }
-    }
-
     public function setNickNameAttribute($nick_name)
     {
         $this->attributes['nick_name'] = trim($nick_name) !== '' ? $nick_name : null;

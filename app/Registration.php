@@ -2,97 +2,22 @@
 
 namespace App;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Registration extends Model
 {
     use SoftDeletes;
+
     protected $table = 'participant';
-    protected $dates = ['register_date', 'registration_confirm_date', 'attendance_confirm_date', 'canceled_at', 'arrived_at', 'departed_at', 'updated_at', 'deleted_at', 'created_at'];
-
-    public function setArrivedAtAttribute($date)
-    {
-        if (strlen($date)) {
-            $this->attributes['arrived_at'] = Carbon::parse($date);
-        } else {
-            $this->attributes['arrived_at'] = null;
-        }
-    }
-
-    public function setAttendanceConfirmDateAttribute($date)
-    {
-        if (strlen($date)) {
-            $this->attributes['attendance_confirm_date'] = Carbon::parse($date);
-        } else {
-            $this->attributes['attendance_confirm_date'] = null;
-            //dd($this->attributes['confirmattend']);
-        }
-    }
-
-    public function setCanceledAtAttribute($date)
-    {
-        if (strlen($date)) {
-            $this->attributes['canceled_at'] = Carbon::parse($date);
-        } else {
-            $this->attributes['canceled_at'] = null;
-        }
-    }
-
-    public function setCreatedAtAttribute($date)
-    {
-        if (strlen($date)) {
-            $this->attributes['created_at'] = Carbon::parse($date);
-        } else {
-            $this->attributes['created_at'] = null;
-        }
-    }
-
-    public function setDeletedAtAttribute($date)
-    {
-        if (strlen($date)) {
-            $this->attributes['deleted_at'] = Carbon::parse($date);
-        } else {
-            $this->attributes['deleted_at'] = null;
-        }
-    }
-
-    public function setDepartedAtAttribute($date)
-    {
-        if (strlen($date)) {
-            $this->attributes['departed_at'] = Carbon::parse($date);
-        } else {
-            $this->attributes['departed_at'] = null;
-        }
-    }
-
-    public function setRegisterDateAttribute($date)
-    {
-        if (strlen($date)) {
-            $this->attributes['register_date'] = Carbon::parse($date);
-        } else {
-            $this->attributes['register_date'] = null;
-        }
-    }
-
-    public function setRegistrationConfirmDateAttribute($date)
-    {
-        if (strlen($date)) {
-            $this->attributes['registration_confirm_date'] = Carbon::parse($date);
-        } else {
-            $this->attributes['registration_confirm_date'] = null;
-        }
-    }
-
-    public function setUpdatedAtAttribute($date)
-    {
-        if (strlen($date)) {
-            $this->attributes['updated_at'] = Carbon::parse($date);
-        } else {
-            $this->attributes['updated_at'] = null;
-        }
-    }
+    protected $dates = [
+        'register_date',
+        'registration_confirm_date',
+        'attendance_confirm_date',
+        'canceled_at',
+        'arrived_at',
+        'departed_at'
+    ];
 
     public function getAttendanceConfirmDateTextAttribute()
     {
