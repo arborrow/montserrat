@@ -22,6 +22,6 @@ class Role extends Model
 
     public function givePermissionTo(Permission $permission)
     {
-        return $this->permissions->save();
+        return $this->permissions()->attach($permission->id);
     }
 }
