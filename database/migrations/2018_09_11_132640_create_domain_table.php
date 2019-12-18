@@ -14,7 +14,7 @@ class CreateDomainTable extends Migration
     {
         Schema::create('domain', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 64)->nullable()->index('UI_name');
+            $table->string('name', 64)->nullable()->index();
             $table->string('description')->nullable();
             $table->text('config_backend', 65535)->nullable();
             $table->string('version', 32)->nullable();

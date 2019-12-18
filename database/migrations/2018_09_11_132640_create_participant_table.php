@@ -43,7 +43,7 @@ class CreateParticipantTable extends Migration
             $table->dateTime('arrived_at')->nullable();
             $table->dateTime('departed_at')->nullable();
             $table->integer('room_id')->unsigned()->nullable();
-            $table->integer('donation_id')->nullable()->unique('idx_donation_id');
+            $table->integer('donation_id')->nullable()->unique();
             $table->string('ppd_source')->nullable();
         });
     }

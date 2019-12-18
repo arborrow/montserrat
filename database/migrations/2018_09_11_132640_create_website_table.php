@@ -14,7 +14,7 @@ class CreateWebsiteTable extends Migration
     {
         Schema::create('website', function (Blueprint $table) {
             $table->bigInteger('id', true)->unsigned();
-            $table->integer('contact_id')->nullable()->index('idx_contact_id');
+            $table->integer('contact_id')->nullable()->index();
             $table->string('url')->nullable()->index('idx_url');
             $table->integer('website_type_id')->nullable();
             $table->softDeletes();

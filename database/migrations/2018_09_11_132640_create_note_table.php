@@ -24,7 +24,7 @@ class CreateNoteTable extends Migration
             $table->softDeletes();
             $table->string('remember_token', 100)->nullable();
             $table->timestamps();
-            $table->index(['entity_table', 'entity_id'], 'idx_entity_id');
+            $table->index(['entity_table', 'entity_id'], );
         });
     }
 

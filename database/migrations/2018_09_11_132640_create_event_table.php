@@ -84,7 +84,7 @@ class CreateEventTable extends Migration
             $table->softDeletes();
             $table->string('remember_token', 100)->nullable();
             $table->timestamps();
-            $table->integer('ppd_id')->nullable()->unique('idx_ppd_id');
+            $table->integer('ppd_id')->nullable()->unique();
             $table->string('calendar_id')->nullable();
         });
     }

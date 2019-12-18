@@ -14,7 +14,7 @@ class CreateDonationsPaymentTable extends Migration
     {
         Schema::create('Donations_payment', function (Blueprint $table) {
             $table->integer('payment_id', true);
-            $table->integer('donation_id')->nullable()->index('idx_donation_id');
+            $table->integer('donation_id')->nullable()->index();
             $table->decimal('payment_amount', 9)->nullable();
             $table->dateTime('payment_date')->nullable()->index('payment_date');
             $table->string('payment_description', 23)->nullable();

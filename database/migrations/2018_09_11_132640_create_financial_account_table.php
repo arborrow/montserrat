@@ -14,7 +14,7 @@ class CreateFinancialAccountTable extends Migration
     {
         Schema::create('financial_account', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->index('UI_name');
+            $table->string('name')->index();
             $table->integer('contact_id')->unsigned()->nullable()->index('financial_account_contact_id_foreign');
             $table->integer('financial_account_type_id')->unsigned()->default(3);
             $table->string('accounting_code')->nullable();
