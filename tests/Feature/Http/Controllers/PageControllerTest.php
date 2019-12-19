@@ -242,7 +242,7 @@ class PageControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-donation');
         $donation = factory(\App\Donation::class)->create();
 
-        $response = $this->actingAs($user)->get('donation/' . $donation->id . '/invoice');
+        $response = $this->actingAs($user)->get('donation/' . $donation->donation_id . '/invoice');
 
         $response->assertOk();
         $response->assertViewIs('reports.finance_invoice');
