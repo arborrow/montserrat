@@ -11,7 +11,7 @@ use Tests\TestCase;
  */
 class OrganizationControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    // use RefreshDatabase;
 
     /**
      * @test

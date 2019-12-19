@@ -11,7 +11,7 @@ use Tests\TestCase;
  */
 class DonationControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    // use RefreshDatabase;
 
     /**
      * @test

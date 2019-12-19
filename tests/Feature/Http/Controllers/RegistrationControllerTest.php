@@ -11,7 +11,7 @@ use Tests\TestCase;
  */
 class RegistrationControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    // use RefreshDatabase;
 
     /**
      * @test

@@ -25,7 +25,7 @@ class CreateFileTable extends Migration
             $table->timestamps();
             $table->string('entity')->nullable();
             $table->integer('entity_id');
-            $table->index(['entity', 'entity_id'], );
+            $table->index(['entity', 'entity_id']);
         });
     }
 

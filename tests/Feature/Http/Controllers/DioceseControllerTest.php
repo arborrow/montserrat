@@ -11,7 +11,7 @@ use Tests\TestCase;
  */
 class DioceseControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    // use RefreshDatabase;
 
     /**
      * @test
