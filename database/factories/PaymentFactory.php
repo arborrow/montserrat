@@ -5,13 +5,14 @@
 use Faker\Generator as Faker;
 
 $factory->define(App\Payment::class, function (Faker $faker) {
+    $payment_methods = config('polanco.payment_method');
     return [
         'donation_id' => function () {
             return factory(App\Donation::class)->create()->donation_id;
         },
         'payment_amount' => $faker->randomFloat(),
         'payment_date' => $faker->dateTime(),
-        'payment_description' => $faker->word,
+        'payment_description' => $faker->randomElement($payment_methods),
         'cknumber' => $faker->word,
         'ccnumber' => $faker->word,
         'expire_date' => $faker->dateTime(),
