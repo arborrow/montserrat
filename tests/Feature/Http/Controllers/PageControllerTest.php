@@ -62,7 +62,6 @@ class PageControllerTest extends TestCase
         $user = factory(\App\User::class)->create();
 
         $response = $this->actingAs($user)->get(route('admin.config.google_client'));
-
         $response->assertForbidden();
     }
 
@@ -401,18 +400,18 @@ class PageControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-registration');
         $retreat = factory(Retreat::class)->create();
         $registrants = factory(Registration::class, 2)->create([
-            'event_id' => $retreat->id
+            'event_id' => $retreat->id,
+            'canceled_at' => NULL
         ]);
 
-        $response = $this->actingAs($user)->get('report/retreatantinfo/{retreat_id}');
+        $response = $this->actingAs($user)->get('report/retreatantinfo/'.$retreat->idnumber);
 
         $response->assertOk();
         $response->assertViewIs('reports.retreatantinfo2');
         $response->assertViewHas('registrations');
-
         $registrations = $response->viewData('registrations');
         $this->assertCount(2, $registrations);
-        $this->assertEquals($registrants->pluck('id'), $registrations->pluck('id'));
+        $this->assertEquals($registrants->sortBy('id')->pluck('id'), $registrations->sortBy('id')->pluck('id'));
     }
 
     /**
