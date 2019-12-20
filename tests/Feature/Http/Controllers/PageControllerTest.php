@@ -245,8 +245,10 @@ class PageControllerTest extends TestCase
         $response = $this->actingAs($user)->get('donation/' . $donation->donation_id . '/invoice');
 
         $response->assertOk();
-        $response->assertViewIs('reports.finance_invoice');
-        $response->assertViewHas('person', $donation);
+        $response->assertViewIs('reports.finance.invoice');
+        $response->assertViewHas('donation');
+        $response->assertSee('Invoice #'.$donation->donation_id);
+
     }
 
     /**
