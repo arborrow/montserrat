@@ -91,10 +91,11 @@ class PageController extends Controller
     public function retreatantinforeport($id)
     {
         $this->authorize('show-registration');
+        $retreat = \App\Retreat::where('idnumber', '=', $id)->first();
 
         $registrations = \App\Registration::select(DB::raw('participant.*', 'contact.*'))
             ->join('contact', 'participant.contact_id', '=', 'contact.id')
-            ->where('participant.event_id', $id)
+            ->where('participant.event_id','=',$retreat->id)
             ->whereCanceledAt(null)
             ->with('retreat', 'retreatant.languages', 'retreatant.parish.contact_a.address_primary', 'retreatant.prefix', 'retreatant.suffix', 'retreatant.address_primary.state', 'retreatant.phones.location', 'retreatant.emails.location', 'retreatant.emergency_contact', 'retreatant.notes', 'retreatant.occupation')
             ->orderBy('contact.sort_name')

@@ -391,9 +391,8 @@ class Contact extends Model
     }
 
     public function getFullNameAttribute()
-    {
+    {   $full_name = '';
         if ($this->contact_type == config('polanco.contact_type.individual')) {
-            $full_name = '';
             if (isset($this->prefix->name)) {
                 $full_name .= $this->prefix->name.' ';
             }
