@@ -411,7 +411,7 @@ class PageControllerTest extends TestCase
         $response->assertViewHas('registrations');
         $registrations = $response->viewData('registrations');
         $this->assertCount(2, $registrations);
-        $this->assertEquals($registrants->pluck('id'), $registrations->pluck('id'));
+        $this->assertEquals($registrants->sortBy('id')->pluck('id'), $registrations->sortBy('id')->pluck('id'));
     }
 
     /**
