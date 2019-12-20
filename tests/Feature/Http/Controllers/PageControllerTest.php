@@ -410,7 +410,6 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('reports.retreatantinfo2');
         $response->assertViewHas('registrations');
         $registrations = $response->viewData('registrations');
-        // dd($registrants, $registrations);
         $this->assertCount(2, $registrations);
         $this->assertEquals($registrants->pluck('id'), $registrations->pluck('id'));
     }
