@@ -302,9 +302,14 @@ class PersonControllerTest extends TestCase
         $response->assertViewIs('persons.index');
         $response->assertViewHas('persons');
 
+        // verify that at least one contact is on the list
+        // verify contact created with this test is returned as part of the persons.index results
+        // n.b. - this could fail if there are more than the paginated number of contacts with the created contact on another page
         $persons = $response->viewData('persons');
-        $this->assertCount(1, $persons);
-        $this->assertEquals($contact->id, $persons->first()->id);
+        $person = $persons->find($contact->id);
+        $count_persons = $persons->count();
+        $this->assertGreaterThanOrEqual('1',$count_persons);
+        $this->assertEquals($contact->id, $person->id);
     }
 
     /**
