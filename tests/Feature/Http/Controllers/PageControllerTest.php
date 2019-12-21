@@ -2,8 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Registration;
-use App\Retreat;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -406,8 +404,8 @@ class PageControllerTest extends TestCase
     public function retreatantinforeport_displays_view()
     {
         $user = $this->createUserWithPermission('show-registration');
-        $retreat = factory(Retreat::class)->create();
-        $registrants = factory(Registration::class, 2)->create([
+        $retreat = factory(\App\Retreat::class)->create();
+        $registrants = factory(\App\Registration::class, 2)->create([
             'event_id' => $retreat->id,
             'canceled_at' => NULL
         ]);
@@ -427,7 +425,7 @@ class PageControllerTest extends TestCase
     public function retreatlistingreport_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-contact');
-        $retreat = factory(Retreat::class)->create();
+        $retreat = factory(\App\Retreat::class)->create();
 
         $response = $this->actingAs($user)->get('report/retreatlisting/'.$retreat->idnumber);
 
@@ -444,7 +442,7 @@ class PageControllerTest extends TestCase
     public function retreatrosterreport_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-contact');
-        $retreat = factory(Retreat::class)->create();
+        $retreat = factory(\App\Retreat::class)->create();
 
         $response = $this->actingAs($user)->get('report/retreatroster/'.$retreat->idnumber);
 

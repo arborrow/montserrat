@@ -124,11 +124,15 @@ class Contact extends Model
     public function getAddressPrimaryStreetAttribute()
     {
         if (isset($this->address_primary->street_address)) {
-            if (isset($this->address_primary->supplemental_address_1)) {
-                return $this->address_primary->street_address.' '.$this->address_primary->supplemental_address_1;
-            } else {
-                return $this->address_primary->street_address;
-            }
+            return $this->address_primary->street_address;
+        } else {
+            return;
+        }
+    }
+    public function getAddressPrimarySupplementalAddress()
+    {
+        if (isset($this->address_primary->supplemental_address_1)) {
+                return $this->address_primary->supplemental_address_1;
         } else {
             return;
         }
