@@ -738,6 +738,16 @@ class PermissionsTableSeeder extends Seeder
             72 =>
             array (
                 'id' => 73,
+                'name' => 'delete-address',
+                'display_name' => 'delete-address',
+                'description' => 'Delete address',
+                'created_at' => '2018-12-06 12:53:51',
+                'updated_at' => '2018-12-06 12:55:38',
+                'deleted_at' => NULL,
+            ),
+            73 =>
+            array (
+                'id' => 74,
                 'name' => 'admin-mailgun',
                 'display_name' => 'Administer mailgun',
                 'description' => 'Administer mailgun settings',
