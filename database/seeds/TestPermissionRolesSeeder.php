@@ -21,5 +21,16 @@ class TestPermissionRolesSeeder extends Seeder
             ]);
             $role->givePermissionTo($permission);
         }
+        // manually create some roles where more than one permission is required
+
+        $role = \App\Role::create([
+          'name' => 'test-role:' . 'finance_reconcile_deposit_show',
+          'display_name' => 'test-role:' .'finance_reconcile_deposit_show',
+          'description' => 'Test role with permissions: ' .'finance_reconcile_deposit_show',
+        ]);
+        $permission = \App\Permission::whereName('show-donation')->first();
+        $role->givePermissionTo($permission);
+        $permission = \App\Permission::whereName('show-registration')->first();
+        $role->givePermissionTo($permission);
     }
 }
