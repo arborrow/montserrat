@@ -466,6 +466,7 @@ class PageControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertViewIs('pages.support');
+        $response->assertSee('Support Page');
     }
 
     /**
