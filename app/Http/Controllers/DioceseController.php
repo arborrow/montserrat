@@ -66,7 +66,7 @@ class DioceseController extends Controller
         $diocese = new \App\Contact;
         $diocese->organization_name = $request->input('organization_name');
         $diocese->display_name = $request->input('organization_name');
-        $diocese->sort_name = $request->input('organization_name');
+        $diocese->sort_name = $request->input('sort_name');
         $diocese->contact_type = config('polanco.contact_type.organization');
         $diocese->subcontact_type = config('polanco.contact_type.diocese');
         $diocese->save();
