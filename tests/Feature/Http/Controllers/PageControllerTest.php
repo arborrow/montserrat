@@ -403,7 +403,8 @@ class PageControllerTest extends TestCase
      */
     public function retreatantinforeport_displays_view()
     {
-        $user = $this->createUserWithPermission('show-registration');
+        $user = factory(\App\User::class)->create();
+        $user->assignRole('test-role:retreatantinforeport');
         $retreat = factory(\App\Retreat::class)->create();
         $registrants = factory(\App\Registration::class, 2)->create([
             'event_id' => $retreat->id,
@@ -426,13 +427,17 @@ class PageControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-contact');
         $retreat = factory(\App\Retreat::class)->create();
+        $registrants = factory(\App\Registration::class, 2)->create([
+            'event_id' => $retreat->id,
+            'canceled_at' => NULL
+        ]);
 
         $response = $this->actingAs($user)->get('report/retreatlisting/'.$retreat->idnumber);
 
         $response->assertOk();
         $response->assertViewIs('reports.retreatlisting');
         $response->assertViewHas('registrations');
-
+        $response->assertSee('Retreat Listing');
         // TODO: perform additional assertions
     }
 

@@ -88,10 +88,11 @@ class PageController extends Controller
         return view('welcome', compact('quote'));   //
     }
 
-    public function retreatantinforeport($id)
+    public function retreatantinforeport($idnumber)
     {
+        $this->authorize('show-contact');
         $this->authorize('show-registration');
-        $retreat = \App\Retreat::where('idnumber', '=', $id)->first();
+        $retreat = \App\Retreat::whereIdnumber($idnumber)->firstOrFail();
 
         $registrations = \App\Registration::select(DB::raw('participant.*', 'contact.*'))
             ->join('contact', 'participant.contact_id', '=', 'contact.id')
@@ -196,14 +197,14 @@ class PageController extends Controller
         //
     }
 
-    public function finance_retreatdonations($retreat_id = null)
+    public function finance_retreatdonations($idnumber = null)
     {
         $this->authorize('show-donation');
 
-        if (is_null($retreat_id)) {
-            $retreat_id = null;
+        if (is_null($idnumber)) {
+            $idnumber = null;
         }
-        $retreat = \App\Retreat::whereIdnumber($retreat_id)->firstOrFail();
+        $retreat = \App\Retreat::whereIdnumber($idnumber)->firstOrFail();
         if (isset($retreat)) {
             $donations = \App\Donation::whereEventId($retreat->id)->with('contact', 'payments')->get();
             $grouped_donations = $donations->sortBy('donation_description')->groupBy('donation_description');
@@ -239,7 +240,7 @@ class PageController extends Controller
         $this->authorize('show-registration');
 
         if (!isset($event_id)) {
-            $event_id = 1422; //open deposit retreat id - currently hardcoded
+            $event_id = config('polanco.event.open_deposit');
         }
 
         $payments = \App\Payment::where('payment_amount', '>', 0)
@@ -266,11 +267,11 @@ class PageController extends Controller
         return view('reports.finance.reconcile_deposits', compact('diffpg', 'diffrg'));
     }
 
-    public function retreatlistingreport($id)
+    public function retreatlistingreport($idnumber)
     {
         $this->authorize('show-contact');
 
-        $retreat = \App\Retreat::where('idnumber', '=', $id)->first();
+        $retreat = \App\Retreat::whereIdnumber($idnumber)->firstOrFail();
         $registrations = \App\Registration::select(DB::raw('participant.*', 'contact.*'))
             ->join('contact', 'participant.contact_id', '=', 'contact.id')
             ->where('participant.event_id', '=', $retreat->id)
@@ -283,11 +284,11 @@ class PageController extends Controller
         return view('reports.retreatlisting', compact('registrations'));   //
     }
 
-    public function retreatrosterreport($id)
+    public function retreatrosterreport($idnumber)
     {
         $this->authorize('show-contact');
 
-        $retreat = \App\Retreat::where('idnumber', '=', $id)->first();
+        $retreat = \App\Retreat::whereIdnumber($idnumber)->firstOrFail();
         $registrations = \App\Registration::select(DB::raw('participant.*', 'contact.*'))
             ->join('contact', 'participant.contact_id', '=', 'contact.id')
             ->where('participant.event_id', '=', $retreat->id)

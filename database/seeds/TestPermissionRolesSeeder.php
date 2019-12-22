@@ -32,5 +32,19 @@ class TestPermissionRolesSeeder extends Seeder
         $role->givePermissionTo($permission);
         $permission = \App\Permission::whereName('show-registration')->first();
         $role->givePermissionTo($permission);
+
+        /**
+         * PageController retreatantinforeport
+         * Permissions: show-contact, show-registration
+         */
+        $role = \App\Role::create([
+          'name' => 'test-role:' . 'retreatantinforeport',
+          'display_name' => 'test-role:' .'retreatantinforeport',
+          'description' => 'Test role with permissions: ' .'retreatantinforeport',
+        ]);
+        $permission = \App\Permission::whereName('show-contact')->first();
+        $role->givePermissionTo($permission);
+        $permission = \App\Permission::whereName('show-registration')->first();
+        $role->givePermissionTo($permission);
     }
 }
