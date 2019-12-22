@@ -10,7 +10,7 @@ class Donor extends Model
 {
     //use SoftDeletes;
     protected $table = 'Donors';
-    protected $primaryKey = 'donor_id';
+    // protected $primaryKey = 'donor_id';
     public $timestamps = false;
 
     public function donations()

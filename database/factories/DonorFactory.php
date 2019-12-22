@@ -6,6 +6,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Donor::class, function (Faker $faker) {
     return [
+        'donor_id' => $faker->randomNumber(5),
         'FName' => $faker->word,
         'MInitial' => $faker->word,
         'LName' => $faker->word,
@@ -72,6 +73,6 @@ $factory->define(App\Donor::class, function (Faker $faker) {
         'St Rita Spiritual Exercises' => $faker->word,
         'contact_id' => $faker->randomNumber(),
         'sort_name' => $faker->word,
-        'sort_name_count' => $faker->randomNumber(),
+        'sort_name_count' => $faker->randomNumber(2),
     ];
 });
