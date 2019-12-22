@@ -135,7 +135,7 @@ class DioceseControllerTest extends TestCase
           'sort_name' => $city_name,
           'display_name' => $org_name,
         ]);
-        // TODO: perform additional assertions
+        // TODO: add testing for storing address, email, phone, website data and then perform additional assertions
     }
 
     /**
