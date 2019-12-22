@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -54,7 +53,7 @@ class Registration extends Model
 
     public function getEventNameAttribute()
     {
-        if (! empty($this->event)) {
+        if (!empty($this->event)) {
             return $this->event->title;
         } else {
             return 'N/A';
@@ -75,7 +74,7 @@ class Registration extends Model
         if (!is_null($this->canceled_at)) {
             return 'Canceled: ' . $this->canceled_at;
         }
-        if (! is_null($this->arrived_at)) {
+        if (!is_null($this->arrived_at)) {
             return 'Attended';
         }
         if (!is_null($this->registration_confirm_date)) {
@@ -161,7 +160,7 @@ class Registration extends Model
 
     public function getRetreatNameAttribute()
     {
-        if (! empty($this->retreat)) {
+        if (!empty($this->retreat)) {
             return $this->retreat->title;
         } else {
             return 'N/A';
@@ -170,7 +169,7 @@ class Registration extends Model
 
     public function getRetreatEndDateAttribute()
     {
-        if (! empty($this->retreat->end_date)) {
+        if (!empty($this->retreat->end_date)) {
             return $this->retreat->end_date;
         } else {
             return;
@@ -179,7 +178,7 @@ class Registration extends Model
 
     public function getRetreatStartDateAttribute()
     {
-        if (! empty($this->retreat->start_date)) {
+        if (!empty($this->retreat->start_date)) {
             return $this->retreat->start_date;
         } else {
             return;
