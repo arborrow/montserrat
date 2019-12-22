@@ -1,4 +1,5 @@
 <?php
+// TODO: Remove Donor Controller, Tests, Migrations, Seeds, etc. as all legace PPD Donors are imported
 
 namespace App\Http\Controllers;
 
@@ -60,10 +61,9 @@ class DonorController extends Controller
     {
         $this->authorize('show-donor');
         $donor = \App\Donor::whereDonorId($id)->first();
-        //dd($donor);
+        // dd($donor,$id);
         $sortnames = \App\Contact::whereSortName($donor->sort_name)->get();
         $lastnames = \App\Contact::whereLastName($donor->LName)->get();
-
         return view('donors.show', compact('donor', 'sortnames', 'lastnames')); //
     }
 

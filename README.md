@@ -39,11 +39,14 @@ vagrant ssh
 ```
 
 ### Step 4: Setup the Database
+
+If not creating inside of vagrant, you may need to create your .env file by copying .env.example to .env and providing
+the database configuration settings (host, name, username and password).
+
 Following commands must be executed **inside** your vagrant box.
 * `cd code`
-* `php artisan migrate`
-* `php artisan db:seed` 
-
+* `php artisan migrate:fresh --seed`
+*
 ### Step 5: Generate and Set Application Key
 #### Generating Key
 Run the following command to generate an application key
@@ -87,3 +90,9 @@ The command above will assign the very first user as the superuser. The command 
 
 ### Step 8: Follow Good Coding Practices!! 🤗
 You're all set!
+
+### Step 9: Testing
+Prior to committing code changes, it is suggested to run the phpunit tests. Test development remains a work in progress. The test environment requires extensive setup and makes use of a fresh MySQL database. The initial database migration and seeding helps to ensure that things are setup to run well. It is recommended that you copy the .env.example file and set it up to use a testing database. Then migrate and seed the database. 
+
+* php artisan --env=testing migrate:fresh --seed
+* php artisan --env=testing db:seed --class=TestPermissionRolesSeeder

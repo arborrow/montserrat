@@ -25,17 +25,17 @@
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
+        "facade/ignition": "^1.4",
         "fzaninotto/faker": "^1.4",
+        "jasonmccreary/laravel-test-assertions": "^0.1.0",
         "laravel/homestead": "^7.17",
         "mockery/mockery": "^1.0",
+        "mpociot/laravel-test-factory-helper": "^1.2",
         "nunomaduro/collision": "^3.0",
+        "orangehill/iseed": "^2.6.2",
         "phpunit/phpunit": "^8.0",
         "symfony/css-selector": "~3.1",
-        "symfony/dom-crawler": "~3.1",
-        "facade/ignition": "^1.4",
-        "orangehill/iseed": "^2.6.2",
-        "jasonmccreary/laravel-test-assertions": "^0.1.0",
-        "mpociot/laravel-test-factory-helper": "^1.1"
+        "symfony/dom-crawler": "~3.1"
     },
     "config": {
         "optimize-autoloader": true,

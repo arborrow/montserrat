@@ -14,7 +14,7 @@ class CreatePaymentProcessorTypeTable extends Migration
     {
         Schema::create('payment_processor_type', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 64)->nullable()->index('UI_name');
+            $table->string('name', 64)->nullable()->index();
             $table->string('title', 127)->nullable();
             $table->string('description')->nullable();
             $table->boolean('is_active')->nullable();

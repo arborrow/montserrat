@@ -109,6 +109,10 @@ return [
     'contact' => [
         'montserrat' => '620',
     ],
+    // when creating database with the seeder, the first event created is the open deposit event
+    'event' => [
+        'open_deposit' => '1'
+    ],
 
     'event_type' => [
         'conference' => '1',
@@ -125,6 +129,7 @@ return [
         'directed' => '12',
         'isi' => '13',
         'jesuit' => '14',
+        'saturday' => '15'
     ],
 
     'file_type' => [
@@ -195,6 +200,13 @@ return [
         'Refund' => 'Refund',
     'Other' => 'Other',
     'Wire transfer' => 'Wire transfer',
+    ],
+
+    // when using the database seeder the first contact created is the self organization
+    // name is used by database seeder to create self contact record 
+    'self' => [
+        'id' => '1',
+        'name' => 'Montserrat Jesuit Retreat House'
     ],
 
 ];

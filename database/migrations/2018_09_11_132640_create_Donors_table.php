@@ -78,7 +78,7 @@ class CreateDonorsTable extends Migration
             $table->string('Emergency Name', 100)->nullable();
             $table->string('Emergency Contact Num2', 100)->nullable();
             $table->char('St Rita Spiritual Exercises', 1)->nullable();
-            $table->integer('contact_id')->nullable()->index('idx_contact_id');
+            $table->integer('contact_id')->nullable()->index();
             $table->string('sort_name')->nullable()->index('idx_sort_name');
             $table->integer('sort_name_count')->unsigned()->nullable();
         });

@@ -14,7 +14,7 @@ class CreateEmergencyContactTable extends Migration
     {
         Schema::create('emergency_contact', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('contact_id')->unique('idx_contact_id');
+            $table->integer('contact_id')->unique();
             $table->string('name')->nullable()->index('idx_name');
             $table->string('relationship')->nullable()->index('idx_relationship');
             $table->string('phone')->nullable()->index('idx_phone');

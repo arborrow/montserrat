@@ -47,7 +47,9 @@ class DonationController extends Controller
 
     public function agc($year = null)
     {
-        if (! isset($year)) {
+      $this->authorize('show-donation');
+
+      if (! isset($year)) {
             $year = (date('m') > 6) ? date('Y') + 1 : date('Y');
         }
 
@@ -59,7 +61,6 @@ class DonationController extends Controller
         }
         $prev_year = $year - 1;
 
-        $this->authorize('show-donation');
         $all_donations = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', ['Annual Giving', 'Endowment', 'Scholarship', 'Buildings & Maintenance'])->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->get();
         $donations = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', ['Annual Giving', 'Endowment', 'Scholarship', 'Buildings & Maintenance'])->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->paginate(100);
         $total['pledged'] = $all_donations->sum('donation_amount');

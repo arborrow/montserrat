@@ -66,7 +66,7 @@ class DioceseController extends Controller
         $diocese = new \App\Contact;
         $diocese->organization_name = $request->input('organization_name');
         $diocese->display_name = $request->input('organization_name');
-        $diocese->sort_name = $request->input('organization_name');
+        $diocese->sort_name = $request->input('sort_name');
         $diocese->contact_type = config('polanco.contact_type.organization');
         $diocese->subcontact_type = config('polanco.contact_type.diocese');
         $diocese->save();
@@ -270,7 +270,8 @@ class DioceseController extends Controller
         $diocese->save();
         $bishop_id = $request->input('bishop_id');
 
-        $address_primary = \App\Address::findOrNew($diocese->address_primary->id);
+        $address_id = isset($diocese->address_primary->id) ? $diocese->address_primary->id : 0;
+        $address_primary = \App\Address::findOrNew($address_id);
         $address_primary->contact_id = $diocese->id;
         $address_primary->location_type_id = config('polanco.location_type.main');
         $address_primary->is_primary = 1;
@@ -284,7 +285,8 @@ class DioceseController extends Controller
         $address_primary->is_primary = 1;
         $address_primary->save();
 
-        $phone_primary = \App\Phone::findOrNew($diocese->phone_primary->id);
+        $phone_id = isset($diocese->phone_primary->id) ? $diocese->phone_primary->id : 0;
+        $phone_primary = \App\Phone::findOrNew($phone_id);
         $phone_primary->contact_id = $diocese->id;
         $phone_primary->location_type_id = config('polanco.location_type.main');
         $phone_primary->is_primary = 1;
@@ -292,24 +294,16 @@ class DioceseController extends Controller
         $phone_primary->phone_type = 'Phone';
         $phone_primary->save();
 
-        if (empty($diocese->phone_main_fax)) {
-            $phone_main_fax = new \App\Phone;
-        } else {
-            $phone_main_fax = \App\Phone::findOrNew($diocese->phone_main_fax->id);
-        }
+        $fax_id = isset($diocese->phone_main_fax->id) ? $diocese->phone_main_fax->id : 0;
+        $phone_main_fax = \App\Phone::findOrNew($fax_id);
         $phone_main_fax->contact_id = $diocese->id;
         $phone_main_fax->location_type_id = config('polanco.location_type.main');
         $phone_main_fax->phone = $request->input('phone_main_fax');
         $phone_main_fax->phone_type = 'Fax';
         $phone_main_fax->save();
 
-        if (isset($diocese->email_primary->id)) {
-            $email_id = $diocese->email_primary->id;
-        } else {
-            $email_id = 0;
-        }
-
-        $email_primary = \App\Email::firstOrNew(['id'=>$email_id]);
+        $email_id = isset($diocese->email_primary->id) ? $diocese->email_primary->id : 0;
+        $email_primary = \App\Email::firstOrNew(['id' => $email_id]);
         $email_primary->contact_id = $diocese->id;
         $email_primary->is_primary = 1;
         $email_primary->location_type_id = config('polanco.location_type.main');

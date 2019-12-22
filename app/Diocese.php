@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Diocese extends Model
 {
-    use SoftDeletes;
+  use SoftDeletes;
+  protected $table = 'contact';
+
     //
 }

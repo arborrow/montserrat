@@ -14,7 +14,6 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\\Model' => 'App\\Policies\\ModelPolicy',
         \App\Attachment::class => \App\Policies\AttachmentPolicy::class,
 
     ];
@@ -31,13 +30,14 @@ class AuthServiceProvider extends ServiceProvider
         //prior to installing the app ignore checking for superuser or permissions to avoid artisan errors about missing permissions table
         if (NULL !== config('app.key')) {
             Gate::before(function ($user) {
-                $superuser = \App\Permission::whereName('superuser')->firstOrFail();
-                // only return true if this user has a role with the superuser permission
-                // otherwise
-                if ($user->hasRole($superuser->roles)) {
+                $superuser = \App\Permission::where('name', 'superuser')->firstOrFail();
+
+                  // only return true if this user has a role with the superuser permission
+                  // otherwise
+                  if ($user->hasRole($superuser->roles)) {
                     return true;
-                }
-            });
+                  }
+                });
 
             $permissions = Permission::with('roles')->get();
             foreach ($permissions as $permission) {

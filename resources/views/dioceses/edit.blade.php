@@ -50,23 +50,23 @@
                         <div class="row">
                             <div class="col-12 col-md-6">
                                 {!! Form::label('street_address', 'Address Line 1') !!}
-                                {!! Form::text('street_address', $diocese->address_primary->street_address, ['class' => 'form-control']) !!}
+                                {!! Form::text('street_address', $diocese->address_primary_street_address, ['class' => 'form-control']) !!}
                             </div>
                             <div class="col-12 col-md-6">
                                 {!! Form::label('supplemental_address_1', 'Address Line 2') !!}
-                                {!! Form::text('supplemental_address_1', $diocese->address_primary->supplemental_address_1, ['class' => 'form-control']) !!}
+                                {!! Form::text('supplemental_address_1', $diocese->address_primary_supplemental_address_1, ['class' => 'form-control']) !!}
                             </div>
                             <div class="col-12 col-md-3">
                                 {!! Form::label('city', 'City') !!}
-                                {!! Form::text('city', $diocese->address_primary->city, ['class' => 'form-control']) !!}
+                                {!! Form::text('city', $diocese->address_primary_city, ['class' => 'form-control']) !!}
                             </div>
                             <div class="col-12 col-md-3">
                                 {!! Form::label('state_province_id', 'State') !!}
-                                {!! Form::select('state_province_id', $states, $diocese->address_primary->state_province_id, ['class' => 'form-control']) !!}
+                                {!! Form::select('state_province_id', $states, $diocese->address_primary_state_id, ['class' => 'form-control']) !!}
                             </div>
                             <div class="col-12 col-md-3">
                                 {!! Form::label('postal_code', 'Zip') !!}
-                                {!! Form::text('postal_code', $diocese->address_primary->postal_code, ['class' => 'form-control']) !!}
+                                {!! Form::text('postal_code', $diocese->address_primary_postal_code, ['class' => 'form-control']) !!}
                             </div>
                         </div>
                     </div>
@@ -81,11 +81,11 @@
                         <div class="row">
                             <div class="col-12 col-md-4">
                                 {!! Form::label('phone_main_phone', 'Phone') !!}
-                                {!! Form::text('phone_main_phone', $diocese->phone_primary->phone, ['class' => 'form-control']) !!}
+                                {!! Form::text('phone_main_phone', $diocese->phone_main_phone_number, ['class' => 'form-control']) !!}
                             </div>
                             <div class="col-12 col-md-4">
                                 {!! Form::label('phone_main_fax', 'Fax') !!}
-                                {!! Form::text('phone_main_fax', $diocese->phone_main_fax->phone, ['class' => 'form-control']) !!}
+                                {!! Form::text('phone_main_fax', $diocese->phone_main_fax_number, ['class' => 'form-control']) !!}
                             </div>
                             <div class="col-12 col-md-4">
                                 {!! Form::label('email_primary', 'Email') !!}

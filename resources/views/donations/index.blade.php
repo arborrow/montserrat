@@ -36,7 +36,7 @@
                 <tbody>
                     @foreach($donations as $donation)
                     <tr>
-                        <td><a href="donation/{{ $donation->donation_id}}">{{ date('M d, Y g:i A', strtotime($donation->donation_date)) }}</a></td>
+                        <td><a href="{{ URL('donation/'. $donation->donation_id) }}">{{ date('M d, Y g:i A', strtotime($donation->donation_date)) }}</a></td>
                         <td>{!! $donation->contact->contact_link_full_name ?? 'Unknown contact' !!} </td>
                         <td>{{ $donation->donation_description }} </td>
                         <td>{{ $donation->donation_amount }}</td>

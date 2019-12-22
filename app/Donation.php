@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Donation extends Model
 {
     use SoftDeletes;
+
     protected $table = 'Donations';
     protected $fillable = ['donation_id', 'donor_id', 'donation_description', 'donation_amount', 'payment_description', 'Notes', 'contact_id'];
-    protected $dates = ['deleted_at', 'created_at', 'updated_at', 'start_date', 'end_date', 'donation_date'];
+    protected $dates = ['start_date', 'end_date', 'donation_date'];
     protected $primaryKey = 'donation_id';
     protected $appends = ['payments_paid'];
-    protected $casts = ['donation_amount'=>'decimal:2',];
+    protected $casts = ['donation_amount' => 'decimal:2',];
 
     public function contact()
     {
@@ -110,9 +111,9 @@ class Donation extends Model
     public function getRetreatLinkAttribute()
     {
         if (isset($this->retreat->title)) {
-            $path = url('retreat/'.$this->retreat->id);
+            $path = url('retreat/' . $this->retreat->id);
 
-            return "<a href='".$path."'>".'#'.$this->retreat_idnumber.' - '.$this->retreat_name.'</a>';
+            return "<a href='" . $path . "'>" . '#' . $this->retreat_idnumber . ' - ' . $this->retreat_name . '</a>';
         }
     }
 

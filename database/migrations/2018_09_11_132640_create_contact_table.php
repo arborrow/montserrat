@@ -70,7 +70,7 @@ class CreateContactTable extends Migration
             $table->integer('religion_id')->unsigned()->nullable();
             $table->integer('occupation_id')->unsigned()->nullable();
             $table->integer('sort_name_count')->unsigned()->nullable();
-            $table->integer('ppd_id')->unsigned()->nullable()->index('idx_ppd_id');
+            $table->integer('ppd_id')->unsigned()->nullable()->index();
         });
     }
 
