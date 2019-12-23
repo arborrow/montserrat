@@ -106,7 +106,7 @@ class GroupController extends Controller
     {
         $this->authorize('update-group');
 
-        $group = \App\Group::findOrFail($request->input('id'));
+        $group = \App\Group::findOrFail($id);
         $group->name = $request->input('name');
         $group->title = $request->input('title');
         $group->description = $request->input('description');
@@ -116,7 +116,7 @@ class GroupController extends Controller
 
         $group->save();
 
-        return redirect()->intended('group/'.$group->id);
+        return Redirect::action('GroupController@show', $id);
 
         //return Redirect::action('GroupController@index');//
     }
