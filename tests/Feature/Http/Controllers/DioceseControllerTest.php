@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Diocese;
 
 /**
  * @see \App\Http\Controllers\DioceseController
@@ -155,8 +156,8 @@ class DioceseControllerTest extends TestCase
      */
     public function update_returns_an_ok_response()
     {
-        $diocese = factory(\App\Diocese::class)->create();
         $user = $this->createUserWithPermission('update-contact');
+        $diocese = factory(\App\Diocese::class)->create();
         $sort_name = $diocese->sort_name;
         $city_name = $this->faker->city;
         $org_name = 'Renewed Diocese of ' . $city_name;

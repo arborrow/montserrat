@@ -20,14 +20,13 @@ class MailgunController extends Controller
     public function get()
     {
         $this->authorize('admin-mailgun');
+        $messages = new \Illuminate\Support\Collection;
 
         $mg = new Mailgun(config('services.mailgun.secret'));
         $domain = config('services.mailgun.domain');
         $queryString = ['event' => 'stored'];
         $emails = '';
         $messages = new \Illuminate\Support\Collection;
-
-//
         $results = $mg->get("$domain/events", $queryString);
         //dd($results);
         if (array_key_exists('http_response_body', $results)) {
@@ -81,12 +80,10 @@ class MailgunController extends Controller
                     }
                 }
             }
-        } else {
-            //dd('No items');
         }
-
-        return view('mailgun.index', compact('messages', 'staff', 'contact'));
+        return view('mailgun.index', compact('messages'));
     }
+
 
     /*
      * Clean up the email address from Mailgun by removing <name>

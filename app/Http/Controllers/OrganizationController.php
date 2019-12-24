@@ -38,7 +38,7 @@ class OrganizationController extends Controller
         $defaults['type'] = $subcontact_type->label;
         $organizations = \App\Contact::organizations_generic()->whereSubcontactType($subcontact_type_id)->orderBy('organization_name', 'asc')->paginate(100);
 
-        return view('organizations.index', compact('organizations', 'subcontact_types', 'subcontact_types', 'defaults'));
+        return view('organizations.index', compact('organizations', 'subcontact_types', 'defaults'));
     }
 
     /**

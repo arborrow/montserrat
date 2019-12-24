@@ -44,25 +44,25 @@
                     <div class="row">
                         <div class="col-12 col-lg-6">
                             {!! Form::label('street_address', 'Address Line 1') !!}
-                            {!! Form::text('street_address', $organization->address_primary->street_address, ['class' => 'form-control']) !!}
+                            {!! Form::text('street_address', $organization->address_primary_street_address, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-12 col-lg-6">
                             {!! Form::label('supplemental_address_1', 'Address Line 2') !!}
-                            {!! Form::text('supplemental_address_1', $organization->address_primary->supplemental_address_1, ['class' => 'form-control']) !!}
+                            {!! Form::text('supplemental_address_1', $organization->address_primary_supplemental_address_1, ['class' => 'form-control']) !!}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12 col-lg-4">
                             {!! Form::label('city', 'City') !!}
-                            {!! Form::text('city', $organization->address_primary->city, ['class' => 'form-control']) !!}
+                            {!! Form::text('city', $organization->address_primary_city, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-12 col-lg-4">
                             {!! Form::label('state_province_id', 'State') !!}
-                            {!! Form::select('state_province_id', $states, $organization->address_primary->state_province_id, ['class' => 'form-control']) !!}
+                            {!! Form::select('state_province_id', $states, $organization->address_primary_state_province_id, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-12 col-lg-4">
                             {!! Form::label('postal_code', 'Zip') !!}
-                            {!! Form::text('postal_code', $organization->address_primary->postal_code, ['class' => 'form-control']) !!}
+                            {!! Form::text('postal_code', $organization->address_primary_postal_code, ['class' => 'form-control']) !!}
                         </div>
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                         <div class="col-12 col-lg-4">
                             {!! Form::label('email_primary', 'Email:', ['class' => 'col-md-2']) !!}
                             @if (isset($organization->email_primary))
-                                {!! Form::text('email_primary', $organization->email_primary->email, ['class' => 'form-control']) !!}
+                                {!! Form::text('email_primary', $organization->email_primary_text, ['class' => 'form-control']) !!}
                             @else
                                 {!! Form::text('email_primary', NULL, ['class' => 'form-control']) !!}
                             @endIf
