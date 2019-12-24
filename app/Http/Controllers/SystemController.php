@@ -26,6 +26,7 @@ class SystemController extends Controller
      */
     public function phpinfo()
     {
+        $this->authorize('show-admin-menu');
         phpinfo();
     }
 
@@ -60,7 +61,7 @@ class SystemController extends Controller
     {
         $this->authorize('show-offeringdedup');
 
-        $offeringdedup = \App\Offeringdedup::orderBy('count', 'desc')->paginate(50);
+        $offeringdedup = \App\TmpOfferingDedup::orderBy('count', 'desc')->paginate(50);
         // dd($dioceses);
         return view('offeringdedup.index', compact('offeringdedup'));
     }

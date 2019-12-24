@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 //use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Offeringdedup extends Model
+class TmpOfferingDedup extends Model
 {
     //use SoftDeletes;
     protected $table = 'tmp_offering_dedup';

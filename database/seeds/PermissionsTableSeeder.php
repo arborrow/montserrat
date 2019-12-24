@@ -754,6 +754,16 @@ class PermissionsTableSeeder extends Seeder
                 'created_at' => '2018-12-06 12:53:51',
                 'updated_at' => '2018-12-06 12:55:38',
                 'deleted_at' => NULL,
+            ),
+            74 =>
+            array (
+                'id' => 75,
+                'name' => 'show-offeringdedup',
+                'display_name' => 'show-offeringdedup',
+                'description' => 'Show Offering Dedup',
+                'created_at' => '2018-12-06 12:53:51',
+                'updated_at' => '2018-12-06 12:55:38',
+                'deleted_at' => NULL,
             )
         ));
     }
