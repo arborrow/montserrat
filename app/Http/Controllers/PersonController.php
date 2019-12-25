@@ -684,7 +684,7 @@ class PersonController extends Controller
     {
         $this->authorize('show-contact');
 
-        pu//default size = 10; logo = false
+        //default size = 10; logo = false
         $size = (string) '10';
         $logo = (bool) 0;
         $name = (string) 'household';
