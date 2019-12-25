@@ -5,7 +5,6 @@ namespace Tests\Feature\Http\Controllers;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\Diocese;
 
 /**
  * @see \App\Http\Controllers\DioceseController
@@ -19,7 +18,6 @@ class DioceseControllerTest extends TestCase
      */
     public function create_returns_an_ok_response()
     {
-
         $user = $this->createUserWithPermission('create-contact');
 
         $response = $this->actingAs($user)->get(route('diocese.create'));
@@ -30,8 +28,8 @@ class DioceseControllerTest extends TestCase
         $response->assertViewHas('states');
         $response->assertViewHas('countries');
         $response->assertViewHas('defaults');
+        $response->assertSee('Add a Diocese');
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -46,8 +44,6 @@ class DioceseControllerTest extends TestCase
 
         $response->assertRedirect(action('DioceseController@index'));
         $this->assertSoftDeleted($diocese);
-
-        // TODO: perform additional assertions such as ensuring all touchpoints, addresses, etc. are also soft deleted
     }
 
     /**
@@ -55,8 +51,8 @@ class DioceseControllerTest extends TestCase
      */
     public function edit_returns_an_ok_response()
     {
-        $diocese = factory(\App\Diocese::class)->create();
         $user = $this->createUserWithPermission('update-contact');
+        $diocese = factory(\App\Diocese::class)->create();
 
         $response = $this->actingAs($user)->get(route('diocese.edit', [$diocese]));
 
@@ -67,8 +63,9 @@ class DioceseControllerTest extends TestCase
         $response->assertViewHas('states');
         $response->assertViewHas('countries');
         $response->assertViewHas('defaults');
+        $response->assertSeeText('Edit');
+        $response->assertSeeText($diocese->display_name);
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -81,17 +78,13 @@ class DioceseControllerTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('diocese.index'));
 
+        $dioceses = $response->viewData('dioceses');
+
         $response->assertOk();
         $response->assertViewIs('dioceses.index');
         $response->assertViewHas('dioceses');
+        $this->assertGreaterThanOrEqual('1',$dioceses->count());
 
-        $dioceses = $response->viewData('dioceses');
-        $diocese_view = $dioceses->find($diocese->id);
-        $count_dioceses = $dioceses->count();
-        $this->assertGreaterThanOrEqual('1',$count_dioceses);
-        $this->assertEquals($diocese->id, $diocese_view->id);
-
-        // TODO: perform additional assertions
     }
 
     /**
@@ -109,8 +102,7 @@ class DioceseControllerTest extends TestCase
         $response->assertViewHas('diocese');
         $response->assertViewHas('relationship_types');
         $response->assertViewHas('files');
-
-        // TODO: perform additional assertions
+        $response->assertSeeText(e($diocese->display_name));
     }
 
     /**

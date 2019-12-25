@@ -233,7 +233,6 @@ class PageControllerTest extends TestCase
         $response->assertViewHas('grouped_payments');
         $response->assertViewHas('payments');
 
-        // TODO: perform additional assertions
     }
 
     /**

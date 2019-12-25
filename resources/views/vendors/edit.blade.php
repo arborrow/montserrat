@@ -47,7 +47,7 @@
                         </div>
                         <div class="col-12 col-lg-4">
                             {!! Form::label('state_province_id', 'State') !!}
-                            {!! Form::select('state_province_id', $states, $vendor->address_primary->state_province_id, ['class' => 'form-control']) !!}
+                            {!! Form::select('state_province_id', $states, $vendor->address_primary_state_province_id, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-12 col-lg-4">
                             {!! Form::label('postal_code', 'Zip') !!}
@@ -65,7 +65,7 @@
                             @if (empty($vendor->phone_primary))
                                 {!! Form::text('phone_main_phone', NULL, ['class' => 'form-control']) !!}
                             @else
-                                {!! Form::text('phone_main_phone', $vendor->phone_primary->phone, ['class' => 'form-control']) !!}
+                                {!! Form::text('phone_main_phone', $vendor->phone_primary_phone, ['class' => 'form-control']) !!}
                             @endif
                         </div>
                         <div class="col-12 col-lg-4">
@@ -73,7 +73,7 @@
                             @if (empty($vendor->phone_main_fax))
                                 {!! Form::text('phone_main_fax', NULL, ['class' => 'form-control']) !!}
                             @else
-                                {!! Form::text('phone_main_fax', $vendor->phone_main_fax->phone, ['class' => 'form-control']) !!}
+                                {!! Form::text('phone_main_fax', $vendor->phone_main_fax_phone, ['class' => 'form-control']) !!}
                             @endif
                         </div>
                         <div class="col-12 col-lg-4">

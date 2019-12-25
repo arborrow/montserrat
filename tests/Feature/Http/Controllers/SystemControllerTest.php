@@ -69,6 +69,9 @@ class SystemControllerTest extends TestCase
         $response = $this->actingAs($user)->get(route('phpinfo'));
 
         $response->assertOk();
+        $response->assertViewIs('admin.config.phpinfo');
+        $response->assertSee('PHP Version');
+
     }
 
 }

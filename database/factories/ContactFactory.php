@@ -9,6 +9,10 @@ $factory->define(App\Contact::class, function (Faker $faker) {
   $last_name = $faker->lastName;
   $sort_name = $last_name . ', '. $first_name;
   $display_name = $first_name . ' ' . $last_name;
+  $ethnicity = \App\Ethnicity::get()->random();
+  $religion = \App\Religion::whereIsActive(1)->get()->random();
+  $occupation = \App\Ppd_occupation::get()->random();
+
     return [
         'contact_type' => $faker->numberBetween(1,3),
         'subcontact_type' => $faker->numberBetween(4,8),
@@ -51,5 +55,8 @@ $factory->define(App\Contact::class, function (Faker $faker) {
         'modified_date' => $faker->dateTime(),
         'remember_token' => Str::random(10),
         'sort_name_count' => $faker->randomNumber(),
+        'ethnicity_id' => $ethnicity->id,
+        'religion_id' => $religion->id,
+        'occupation_id' => $occupation->id,
     ];
 });

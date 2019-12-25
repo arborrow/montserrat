@@ -27,7 +27,7 @@ class SystemController extends Controller
     public function phpinfo()
     {
         $this->authorize('show-admin-menu');
-        phpinfo();
+        return view('admin.config.phpinfo');
     }
 
     public static function is_twilio_enabled()

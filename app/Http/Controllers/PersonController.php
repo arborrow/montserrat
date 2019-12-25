@@ -682,12 +682,13 @@ class PersonController extends Controller
      */
     public function envelope($id, Request $request)
     {
-        //default size = 10; logo = false
+        $this->authorize('show-contact');
+
+        pu//default size = 10; logo = false
         $size = (string) '10';
         $logo = (bool) 0;
         $name = (string) 'household';
 
-        $this->authorize('show-contact');
         $person = \App\Contact::findOrFail($id);
         $v = Validator::make($request->all(), [
              'size' => Rule::in(['10', '9x6']),
@@ -1537,26 +1538,9 @@ class PersonController extends Controller
         return $this->role(config('polanco.group_id.captain'));
     }
 
-    public function catholics()
-    {
-        $role['name'] = 'Catholics';
-        $role['field'] = 'is_catholic';
-
-        return $this->role($role);
-    }
-
-    public function deacons()
+        public function deacons()
     {
         return $this->role(config('polanco.group_id.deacon'));
-    }
-
-    public function deceased()
-    {
-        //
-        $role['name'] = 'Deceased';
-        $role['field'] = 'is_deceased';
-
-        return $this->role($role);
     }
 
     public function directors()
@@ -1564,27 +1548,9 @@ class PersonController extends Controller
         return $this->role(config('polanco.group_id.director'));
     }
 
-    public function donors()
-    {
-        //
-        $role['name'] = 'Donors';
-        $role['field'] = 'is_donor';
-
-        return $this->role($role);
-    }
-
     public function staff()
     {
         return $this->role(config('polanco.group_id.staff'));
-    }
-
-    public function formerboard()
-    {
-        //
-        $role['name'] = 'Former Board Members';
-        $role['field'] = 'is_formerboard';
-
-        return $this->role($role);
     }
 
     public function innkeepers()
@@ -1610,12 +1576,6 @@ class PersonController extends Controller
     public function provincials()
     {
         return $this->role(config('polanco.group_id.provincial'));
-    }
-
-    public function retreatants()
-    {
-        //relationship (not a group)
-        return $this->role($role);
     }
 
     public function superiors()

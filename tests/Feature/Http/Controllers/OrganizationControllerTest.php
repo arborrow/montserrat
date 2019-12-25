@@ -29,7 +29,7 @@ class OrganizationControllerTest extends TestCase
         $response->assertViewHas('states');
         $response->assertViewHas('countries');
         $response->assertViewHas('defaults');
-        $response->assertSee('Add an Organization');
+        $response->assertSeeText('Add an Organization');
         // TODO: perform additional assertions
     }
 
@@ -82,7 +82,7 @@ class OrganizationControllerTest extends TestCase
         $response->assertViewIs('organizations.index');
         $response->assertViewHas('organizations');
         $response->assertViewHas('subcontact_types');
-        $response->assertSee('Organizations');
+        $response->assertSeeText('Organizations');
 
     }
 
@@ -100,7 +100,7 @@ class OrganizationControllerTest extends TestCase
         $response->assertViewHas('organizations');
         $response->assertViewHas('subcontact_types');
         $response->assertViewHas('defaults');
-        $response->assertSee('Organizations');
+        $response->assertSeeText('Organizations');
 
     }
 
@@ -118,7 +118,7 @@ class OrganizationControllerTest extends TestCase
         $response->assertViewHas('organization');
         $response->assertViewHas('files');
         $response->assertViewHas('relationship_types');
-        $response->assertSee(htmlentities($organization->organization_name));
+        $response->assertSeeText(e($organization->organization_name));
 
         // TODO: perform additional assertions
     }
