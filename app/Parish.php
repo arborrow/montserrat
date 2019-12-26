@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Parish extends Model
 {
     use SoftDeletes;
+    protected $table = 'contact';
 
     //
     public function diocese()

@@ -2,7 +2,7 @@
 @section('content')
 <div class="row bg-cover">
     <div class="col-12">
-        <h2>Add A Parish</h2>
+        <h2>Add a Parish</h2>
     </div>
     <div class="col-12">
         {!! Form::open(['url' => 'parish', 'method' => 'post']) !!}

@@ -280,8 +280,10 @@ class ParishController extends Controller
         $diocese->contact_id_b = $parish->id;
         $diocese->relationship_type_id = config('polanco.relationship_type.diocese');
         $diocese->is_active = 1;
-        $diocese->contact_id_a = $request->input('diocese_id');
-        $diocese->save();
+        if (null !== $request->input('diocese_id')) {
+            $diocese->contact_id_a = $request->input('diocese_id');
+            $diocese->save();
+          };
 
         /*
          * if there is not currently a pastor, create a new relationship
