@@ -46,5 +46,27 @@ class TestPermissionRolesSeeder extends Seeder
         $role->givePermissionTo($permission);
         $permission = \App\Permission::whereName('show-registration')->first();
         $role->givePermissionTo($permission);
+
+        /**
+         * PersonController merge
+         * Permissions: update-contact, update-relationship, update-attachment, update-touchpoint, update-donation, update-payment
+         */
+        $role = \App\Role::create([
+          'name' => 'test-role:' . 'merge',
+          'display_name' => 'test-role:' .'merge',
+          'description' => 'Test role with permissions: ' . 'merge',
+        ]);
+        $permission = \App\Permission::whereName('update-contact')->first();
+        $role->givePermissionTo($permission);
+        $permission = \App\Permission::whereName('update-relationship')->first();
+        $role->givePermissionTo($permission);
+        $permission = \App\Permission::whereName('update-attachment')->first();
+        $role->givePermissionTo($permission);
+        $permission = \App\Permission::whereName('update-touchpoint')->first();
+        $role->givePermissionTo($permission);
+        $permission = \App\Permission::whereName('update-donation')->first();
+        $role->givePermissionTo($permission);
+        $permission = \App\Permission::whereName('update-payment')->first();
+        $role->givePermissionTo($permission);
     }
 }

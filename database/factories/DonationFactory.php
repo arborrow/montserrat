@@ -3,7 +3,7 @@
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
 use Faker\Generator as Faker;
-
+// TODO: to avoid confusion with agc letters in Spanish I'm limiting testing for now to $current_user
 $factory->define(App\Donation::class, function (Faker $faker) {
     $description = \App\DonationType::get()->random();
     return [
@@ -25,7 +25,9 @@ $factory->define(App\Donation::class, function (Faker $faker) {
         'AGC Donation Description' => $faker->word,
         'Pledge' => $faker->word,
         'contact_id' => function () {
-            return factory(App\Contact::class)->create()->id;
+            return factory(App\Contact::class)->create([
+              'preferred_language' => 'en_US',
+              ])->id;
         },
         'event_id' => function() {
           return factory(App\Retreat::class)->create()->id;
