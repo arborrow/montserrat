@@ -9,8 +9,8 @@ $factory->define(App\Donation::class, function (Faker $faker) {
     return [
         'donation_description' => $description->name,
         'donation_date' => $faker->dateTime(),
-        'donation_amount' => $faker->randomFloat(),
-        'donation_install' => $faker->randomFloat(),
+        'donation_amount' => $faker->randomFloat(2,0,100000),
+        'donation_install' => $faker->randomFloat(2,0,5000),
         'terms' => $faker->text,
         'start_date' => $faker->dateTime(),
         'end_date' => $faker->dateTime(),

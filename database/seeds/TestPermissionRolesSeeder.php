@@ -68,5 +68,21 @@ class TestPermissionRolesSeeder extends Seeder
         $role->givePermissionTo($permission);
         $permission = \App\Permission::whereName('update-payment')->first();
         $role->givePermissionTo($permission);
+
+        /**
+         * PermissionController update_roles
+         * Permissions: update-permission, update-role
+         */
+        $role = \App\Role::create([
+          'name' => 'test-role:' . 'update_roles',
+          'display_name' => 'test-role:' .'update_roles',
+          'description' => 'Test role with permissions: ' .'update_roles',
+        ]);
+        $permission = \App\Permission::whereName('update-permission')->first();
+        $role->givePermissionTo($permission);
+        $permission = \App\Permission::whereName('update-role')->first();
+        $role->givePermissionTo($permission);
+
     }
+
 }
