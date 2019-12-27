@@ -374,7 +374,7 @@ class RegistrationController extends Controller
     }
 
     public function update_group(UpdateGroupRegistrationRequest $request, $id)
-    {
+    {   //TODO: this does not appear different from an individual update and does not appear to be used elsewhere, either make it do something special or remove it
         $this->authorize('update-registration');
 
         $registration = \App\Registration::findOrFail($request->input('id'));

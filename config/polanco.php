@@ -198,12 +198,12 @@ return [
         'NSF' => 'NSF',
         'Reallocation' => 'Reallocation',
         'Refund' => 'Refund',
-    'Other' => 'Other',
-    'Wire transfer' => 'Wire transfer',
+        'Other' => 'Other',
+        'Wire transfer' => 'Wire transfer',
     ],
 
     // when using the database seeder the first contact created is the self organization
-    // name is used by database seeder to create self contact record 
+    // name is used by database seeder to create self contact record
     'self' => [
         'id' => '1',
         'name' => 'Montserrat Jesuit Retreat House'
