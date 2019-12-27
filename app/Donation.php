@@ -86,7 +86,7 @@ class Donation extends Model
         if (isset($this->contact->full_name)) {
             return $this->contact->full_name;
         } else {
-            dd($this->contact_id);
+            return;
         }
     }
 
