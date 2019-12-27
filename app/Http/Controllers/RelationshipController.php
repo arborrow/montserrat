@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Relationship;
+use Illuminate\Support\Facades\Redirect;
 
 class RelationshipController extends Controller
 {
@@ -30,8 +32,9 @@ class RelationshipController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {   // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
         $this->authorize('create-relationship');
+        return Redirect::action('RelationshipController@index');
     }
 
     /**
@@ -41,8 +44,10 @@ class RelationshipController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   // relationships are not created directly here; they are created through the person controller
+        // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
         $this->authorize('create-relationship');
+        return Redirect::action('RelationshipController@index');
     }
 
     /**
@@ -54,6 +59,8 @@ class RelationshipController extends Controller
     public function show($id)
     {
         $this->authorize('show-relationship');
+        $relationship = \App\Relationship::findOrFail($id);
+        return view('relationships.show',compact('relationship'));
     }
 
     /**
@@ -63,8 +70,9 @@ class RelationshipController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
+    {   // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
         $this->authorize('update-relationship');
+        return Redirect::action('RelationshipController@show',$id);
     }
 
     /**
@@ -75,8 +83,9 @@ class RelationshipController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
+    {   // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
         $this->authorize('update-relationship');
+        return Redirect::action('RelationshipController@show',$id);      
     }
 
     /**
