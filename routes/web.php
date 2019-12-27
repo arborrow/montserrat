@@ -172,7 +172,7 @@ Route::post('relationship/add', 'RelationshipTypeController@make');
 Route::post('registration/{id}/update_group', 'RegistrationController@update_group')->name('registration.update_group');
 Route::get('registration/{id}/confirm', 'RegistrationController@confirm')->name('registration.confirm');
 Route::get('registration/{id}/waitlist', 'RegistrationController@waitlist')->name('registration.waitlist');
-Route::get('registration/{id}/offwaitlist', 'RegistrationController@offwaitlist')->name('registration.register');
+Route::get('registration/{id}/offwaitlist', 'RegistrationController@offwaitlist')->name('registration.offwaitlist');
 Route::get('registration/{id}/attend', 'RegistrationController@attend')->name('registration.attend');
 Route::get('registration/{id}/arrive', 'RegistrationController@arrive')->name('registration.arrive');
 Route::get('registration/{id}/cancel', 'RegistrationController@cancel')->name('registration.cancel');

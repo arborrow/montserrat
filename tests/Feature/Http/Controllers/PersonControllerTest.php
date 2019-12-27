@@ -225,8 +225,7 @@ class PersonControllerTest extends TestCase
         $response->assertViewIs('persons.envelope10');
         $response->assertSee(e($person->agc_household_name));
 
-        // TODO: perform additional assertions
-    }
+      }
 
     /**
      * @test
@@ -246,12 +245,13 @@ class PersonControllerTest extends TestCase
         $response->assertViewIs('persons.index');
         $response->assertViewHas('persons');
 
-        // verify that at least one contact is on the list
-        // verify contact created with this test is returned as part of the persons.index results
+        // TODO: verify that at least one contact is on the list
+        // TODO: verify contact created with this test is returned as part of the persons.index results
         // n.b. - this could fail if there are more than the paginated number of contacts with the created contact on another page
         $persons = $response->viewData('persons');
         $count_persons = $persons->count();
         $this->assertGreaterThanOrEqual('1',$count_persons);
+
       }
 
     /**

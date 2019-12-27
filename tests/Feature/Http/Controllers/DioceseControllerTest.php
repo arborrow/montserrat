@@ -64,7 +64,7 @@ class DioceseControllerTest extends TestCase
         $response->assertViewHas('countries');
         $response->assertViewHas('defaults');
         $response->assertSeeText('Edit');
-        $response->assertSeeText($diocese->display_name);
+        $response->assertSeeText(e($diocese->display_name));
 
     }
 
