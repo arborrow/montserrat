@@ -69,13 +69,15 @@ class PaymentControllerTest extends TestCase
     public function index_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-payment');
-
+        $payment = factory(\App\Payment::class)->create();
         $response = $this->actingAs($user)->get(route('payment.index'));
 
         $response->assertOk();
         $response->assertViewIs('payments.index');
         $response->assertViewHas('payments');
         $response->assertSeeText('Payment Index');
+        $payments = $response->viewData('payments');
+        $this->assertGreaterThanOrEqual('1',$payments->count());
 
     }
 
