@@ -183,10 +183,10 @@ class DonationControllerTest extends TestCase
             'event_id' => $event->id,
             'donation_date' => $this->faker->dateTime(),
             'payment_date' => $this->faker->dateTime(),
-            'donation_amount' => $this->faker->randomFloat(),
-            'payment_amount' => $this->faker->randomFloat(),
+            'donation_amount' => $this->faker->randomFloat(2,0,100000),
+            'payment_amount' => $this->faker->randomFloat(2,0,100000),
             'payment_idnumber' => $this->faker->randomNumber(4),
-            'donation_install' => $this->faker->randomFloat(),
+            'donation_install' => $this->faker->randomFloat(2,0,100000),
             // TODO: figure out and clean up start and end dates - commenting out for now
             // 'start_date_only' => $start_date_only,
             // 'end_date_only' => $this->faker->dateTimeBetween($start_date_only, strtotime('+7 days')),
@@ -236,11 +236,11 @@ class DonationControllerTest extends TestCase
             'donation_date' => $this->faker->dateTime,
             'start_date' => $start_date,
             'end_date' => $end_date,
-            'donation_amount' => $this->faker->randomFloat(),
+            'donation_amount' => $this->faker->randomFloat(2,0,100000),
             'notes1' => $this->faker->text,
             'notes' => $this->faker->text,
             'terms' => $this->faker->text,
-            'donation_install' => $this->faker->randomFloat(),
+            'donation_install' => $this->faker->randomFloat(2,0,100000),
         ]);
 
         // TODO: removed space on Thank You field in Donation table then add to unit test

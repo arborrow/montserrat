@@ -40,4 +40,13 @@ class Payment extends Model
             return;
         }
     }
+
+    public function getDonationAmountAttribute()
+    {
+      if (isset($this->donation->donation_amount)) {
+        return number_format($this->donation->donation_amount,2);
+      } else {
+        return 0;
+      }
+    }
 }
