@@ -437,7 +437,7 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('reports.retreatlisting');
         $response->assertViewHas('registrations');
         $response->assertSee('Retreat Listing');
-        // TODO: perform additional assertions
+        $response->assertSee('Registered Retreatant');
     }
 
     /**

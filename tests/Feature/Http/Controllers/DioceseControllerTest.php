@@ -161,11 +161,10 @@ class DioceseControllerTest extends TestCase
         ]);
         // TODO: test for updating of other fields on the diocese.edit blade like email, phone, address, etc.
 
-        $updated = \App\Contact::find($diocese->id);
-
+        $diocese->refresh();
         $response->assertRedirect(action('DioceseController@show', $diocese->id));
-        $this->assertEquals($updated->sort_name, $city_name);
-        $this->assertNotEquals($updated->sort_name, $sort_name);
+        $this->assertEquals($diocese->sort_name, $city_name);
+        $this->assertNotEquals($diocese->sort_name, $sort_name);
 
     }
 

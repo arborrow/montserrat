@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-12 col-md-4">
                         {!! Form::label('payment_date', 'Payment date')  !!}
-                        {!! Form::date('payment_date', $payment->payment_date, ['class' => 'form-control flatpickr-date']) !!}    
+                        {!! Form::date('payment_date', $payment->payment_date, ['class' => 'form-control flatpickr-date']) !!}
                     </div>
                     <div class="col-12 col-md-4">
                         {!! Form::label('payment_amount', 'Payment amount (paid)')  !!}
@@ -45,10 +45,10 @@
                             <span class="font-weight-bold">Date: </span>{{$payment->donation->donation_date->format('m/d/Y')}}
                         </div>
                         <div class="col-12 col-md-4">
-                            <span class="font-weight-bold">Description: </span>{{$payment->donation->donation_description}}  
+                            <span class="font-weight-bold">Description: </span>{{$payment->donation->donation_description}}
                         </div>
                         <div class="col-12 col-md-4">
-                            <span class="font-weight-bold">Pledged/Paid: </span>${{number_format($payment->donation->donation_amount,2)}} / ${{number_format($payment->donation->payments->sum('payment_amount'),2)}} ({{number_format($payment->donation->percent_paid,0)}}%)
+                            <span class="font-weight-bold">Pledged/Paid: </span>${{number_format($payment->donation->donation_amount,2)}} / ${{number_format($payment->donation->payments->sum('payment_amount'),2)}} ({{$payment->donation->percent_paid}}%)
                         </div>
                     </div>
                     <div class="row">

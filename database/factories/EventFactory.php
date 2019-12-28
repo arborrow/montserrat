@@ -15,7 +15,7 @@ $factory->define(App\Retreat::class, function (Faker $faker) {
     $start_date = Carbon::createFromTimestamp($faker->dateTimeBetween($startDate = '-60 days', $endDate = '+60 days')->getTimeStamp());
     $end_date = Carbon::createFromFormat('Y-m-d H:i:s', $start_date)->addDays($faker->numberBetween(1, 5));
     $title = ucwords(implode(' ', $faker->words(2))).' Retreat';
-    $idnumber = (int) '2018'.$faker->unique()->randomNumber(4);
+    $idnumber = (int) '2018'.$faker->unique()->randomNumber(4).'-'.$faker->unique()->lastName;
     // dd($start_date,$end_date);
     // dd($title, $start_date, $end_date, $idnumber);
 

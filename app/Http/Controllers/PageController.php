@@ -272,6 +272,7 @@ class PageController extends Controller
         $this->authorize('show-contact');
 
         $retreat = \App\Retreat::whereIdnumber($idnumber)->firstOrFail();
+
         $registrations = \App\Registration::select(DB::raw('participant.*', 'contact.*'))
             ->join('contact', 'participant.contact_id', '=', 'contact.id')
             ->where('participant.event_id', '=', $retreat->id)

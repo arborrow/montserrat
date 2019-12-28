@@ -19,7 +19,7 @@ $factory->define(App\Retreat::class, function (Faker $faker) {
         'max_participants' => $faker->randomNumber(),
         'event_full_text' => $faker->text,
         'has_waitlist' => $faker->boolean,
-        'idnumber' => $faker->unique()->randomNumber(),
+        'idnumber' => $faker->unique()->randomNumber(8).$faker->unique()->lastName,
         'innkeeper_id' => function () {
             return factory(App\Contact::class)->create()->id;
         },
