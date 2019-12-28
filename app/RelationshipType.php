@@ -3,10 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class RelationshipType extends Model
 {
-    //
+    use SoftDeletes;
     protected $table = 'relationship_type';
 
     public function getContactTypeAIdAttribute()

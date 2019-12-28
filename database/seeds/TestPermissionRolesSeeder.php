@@ -83,6 +83,20 @@ class TestPermissionRolesSeeder extends Seeder
         $permission = \App\Permission::whereName('update-role')->first();
         $role->givePermissionTo($permission);
 
+        /**
+         * RelationshipTypeController add
+         * Permissions: create-relationship, show-contact
+         */
+        $role = \App\Role::create([
+          'name' => 'test-role:' . 'relationship_type_add',
+          'display_name' => 'test-role:' .'relationship_type_add',
+          'description' => 'Test role with permissions: ' .'relationship_type_add',
+        ]);
+        $permission = \App\Permission::whereName('create-relationship')->first();
+        $role->givePermissionTo($permission);
+        $permission = \App\Permission::whereName('show-contact')->first();
+        $role->givePermissionTo($permission);
+
     }
 
 }

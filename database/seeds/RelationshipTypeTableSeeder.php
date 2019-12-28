@@ -12,12 +12,12 @@ class RelationshipTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('relationship_type')->delete();
-        
+
         \DB::table('relationship_type')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'name_a_b' => 'Child',
@@ -38,7 +38,7 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'name_a_b' => 'Husband',
@@ -59,14 +59,14 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => '2016-04-29 23:29:01',
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'name_a_b' => 'Partner of',
                 'name_b_a' => 'Partner of',
                 'label_a_b' => 'Partner of',
                 'label_b_a' => 'Partner of',
-                'description' => 'Partner relationship.',
+                'description' => 'Partner',
                 'contact_type_a' => 'Individual',
                 'contact_type_b' => 'Individual',
                 'contact_sub_type_a' => NULL,
@@ -80,7 +80,7 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'name_a_b' => 'Sibling',
@@ -101,14 +101,14 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
                 'name_a_b' => 'Employee',
                 'name_b_a' => 'Employer',
                 'label_a_b' => 'Employee of',
                 'label_b_a' => 'Employer of',
-                'description' => 'Employment relationship.',
+                'description' => 'Employment',
                 'contact_type_a' => 'Individual',
                 'contact_type_b' => 'Organization',
                 'contact_sub_type_a' => NULL,
@@ -122,14 +122,14 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 6,
                 'name_a_b' => 'Retreat House',
                 'name_b_a' => 'Volunteer',
                 'label_a_b' => 'Volunteer is',
                 'label_b_a' => 'Volunteer for',
-                'description' => 'Volunteer relationship.',
+                'description' => 'Volunteer',
                 'contact_type_a' => 'Organization',
                 'contact_type_b' => 'Individual',
                 'contact_sub_type_a' => NULL,
@@ -143,14 +143,14 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 7,
                 'name_a_b' => 'Head of Household for',
                 'name_b_a' => 'Head of Household is',
                 'label_a_b' => 'Head of Household for',
                 'label_b_a' => 'Head of Household is',
-                'description' => 'Head of household.',
+                'description' => 'Head of household',
                 'contact_type_a' => 'Individual',
                 'contact_type_b' => 'Household',
                 'contact_sub_type_a' => NULL,
@@ -164,14 +164,14 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            7 => 
+            7 =>
             array (
                 'id' => 8,
                 'name_a_b' => 'Household Member of',
                 'name_b_a' => 'Household Member is',
                 'label_a_b' => 'Household Member of',
                 'label_b_a' => 'Household Member is',
-                'description' => 'Household membership.',
+                'description' => 'Household membership',
                 'contact_type_a' => 'Individual',
                 'contact_type_b' => 'Household',
                 'contact_sub_type_a' => NULL,
@@ -185,7 +185,7 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            8 => 
+            8 =>
             array (
                 'id' => 9,
                 'name_a_b' => 'Case Coordinator is',
@@ -206,7 +206,7 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            9 => 
+            9 =>
             array (
                 'id' => 10,
                 'name_a_b' => 'Supervised by',
@@ -227,7 +227,7 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            10 => 
+            10 =>
             array (
                 'id' => 11,
                 'name_a_b' => 'Parish',
@@ -248,7 +248,7 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => '2016-04-29 23:31:04',
             ),
-            11 => 
+            11 =>
             array (
                 'id' => 12,
                 'name_a_b' => 'Diocese',
@@ -269,7 +269,7 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => '2016-04-30 07:44:23',
             ),
-            12 => 
+            12 =>
             array (
                 'id' => 13,
                 'name_a_b' => 'Diocese',
@@ -290,7 +290,7 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => '2016-04-30 07:45:57',
             ),
-            13 => 
+            13 =>
             array (
                 'id' => 14,
                 'name_a_b' => 'Parish',
@@ -311,7 +311,7 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            14 => 
+            14 =>
             array (
                 'id' => 15,
                 'name_a_b' => 'Community',
@@ -332,7 +332,7 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => '2016-04-30 07:42:05',
             ),
-            15 => 
+            15 =>
             array (
                 'id' => 16,
                 'name_a_b' => 'Province',
@@ -353,7 +353,7 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            16 => 
+            16 =>
             array (
                 'id' => 17,
                 'name_a_b' => 'Community',
@@ -374,7 +374,7 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => '2016-04-30 07:43:43',
             ),
-            17 => 
+            17 =>
             array (
                 'id' => 18,
                 'name_a_b' => 'Retreat House',
@@ -395,7 +395,7 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            18 => 
+            18 =>
             array (
                 'id' => 19,
                 'name_a_b' => 'Retreat House',
@@ -416,7 +416,7 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => '2016-04-29 23:18:14',
             ),
-            19 => 
+            19 =>
             array (
                 'id' => 20,
                 'name_a_b' => 'Retreat House',
@@ -437,7 +437,7 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => '2016-04-29 23:18:02',
             ),
-            20 => 
+            20 =>
             array (
                 'id' => 21,
                 'name_a_b' => 'Retreat House',
@@ -458,14 +458,14 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => '2016-04-29 23:18:25',
             ),
-            21 => 
+            21 =>
             array (
                 'id' => 22,
                 'name_a_b' => 'Retreat House',
                 'name_b_a' => 'Retreatant',
                 'label_a_b' => 'Retreat House for',
                 'label_b_a' => 'Retreatant of',
-                'description' => 'A retreatant of a particular retreat house',
+                'description' => 'A retreatant of retreat house',
                 'contact_type_a' => 'Organization',
                 'contact_type_b' => 'Individual',
                 'contact_sub_type_a' => 'Retreat House',
@@ -479,14 +479,14 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => '2016-04-30 07:37:31',
             ),
-            22 => 
+            22 =>
             array (
                 'id' => 23,
                 'name_a_b' => 'Retreat House',
                 'name_b_a' => 'Donor',
                 'label_a_b' => 'has Donor ',
                 'label_b_a' => 'Donor to',
-                'description' => 'Donor of Retreat House',
+                'description' => 'Donor of retreat house',
                 'contact_type_a' => 'Organization',
                 'contact_type_b' => 'Individual',
                 'contact_sub_type_a' => 'Retreat House',
@@ -500,14 +500,14 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            23 => 
+            23 =>
             array (
                 'id' => 24,
                 'name_a_b' => 'Retreat House',
                 'name_b_a' => 'Captain',
                 'label_a_b' => 'Captain',
                 'label_b_a' => 'Captain',
-                'description' => 'Retreat House/Captain',
+                'description' => 'Retreat house/Captain',
                 'contact_type_a' => 'Organization',
                 'contact_type_b' => 'Individual',
                 'contact_sub_type_a' => 'Retreat House',
@@ -521,7 +521,7 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            24 => 
+            24 =>
             array (
                 'id' => 25,
                 'name_a_b' => 'Diocese',
@@ -542,7 +542,7 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => '2016-04-30 07:47:37',
             ),
-            25 => 
+            25 =>
             array (
                 'id' => 26,
                 'name_a_b' => 'Deacon of',
@@ -563,7 +563,7 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => '2016-04-30 07:45:02',
             ),
-            26 => 
+            26 =>
             array (
                 'id' => 27,
                 'name_a_b' => 'Religious Community',
@@ -584,7 +584,7 @@ class RelationshipTypeTableSeeder extends Seeder
                 'created_at' => '2016-04-30 09:25:25',
                 'updated_at' => '2016-04-30 09:25:25',
             ),
-            27 => 
+            27 =>
             array (
                 'id' => 28,
                 'name_a_b' => 'Primary contact',
@@ -606,7 +606,7 @@ class RelationshipTypeTableSeeder extends Seeder
                 'updated_at' => '2018-05-07 07:39:06',
             ),
         ));
-        
-        
+
+
     }
 }
