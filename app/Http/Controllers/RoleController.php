@@ -123,7 +123,6 @@ class RoleController extends Controller
     public function update_permissions(Request $request)
     {
         $this->authorize('update-role');
-        $this->authorize('delete-permission');
         $role = \App\Role::findOrFail($request->input('id'));
         $role->permissions()->detach();
         $role->permissions()->sync($request->input('permissions'));
