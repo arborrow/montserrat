@@ -46,7 +46,7 @@
                 <span class="font-weight-bold">Description: </span>{{$payment->donation->donation_description}}
             </div>
             <div class="col-12 col-md-4">
-                <span class="font-weight-bold">Amount pledged (% paid): </span>${{number_format($payment->donation->donation_amount,2)}} ({{number_format($payment->donation->percent_paid,0)}}%)
+                <span class="font-weight-bold">Amount pledged (% paid): </span>${{number_format($payment->donation->donation_amount,2)}} ({{$payment->donation->percent_paid}}%)
             </div>
         </div>
         <div class="row">
