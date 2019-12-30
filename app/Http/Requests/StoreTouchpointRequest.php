@@ -28,6 +28,7 @@ class StoreTouchpointRequest extends FormRequest
             'person_id' => 'required|integer|min:0',
             'staff_id' => 'required|integer|min:0',
             'type' => 'in:Email,Call,Letter,Face,Other',
+            'notes' => 'required',
         ];
     }
 

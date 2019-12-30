@@ -45,6 +45,7 @@ class StoreTouchpointRequestTest extends TestCase
           'person_id' => 'required|integer|min:0',
           'staff_id' => 'required|integer|min:0',
           'type' => 'in:Email,Call,Letter,Face,Other',
+          'notes' => 'required',
         ], $actual);
     }
 
