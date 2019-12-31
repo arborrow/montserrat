@@ -66,14 +66,14 @@
                     @endif
                 </td>
                 <td>
-                    @if ($retreat->innkeeper_id > 0)
+                    @if ($retreat->innkeeper_id > 0 && !empty($retreat->innkeeper))
                         {!!$retreat->innkeeper->contact_link_full_name!!}
                     @else
                         N/A
                     @endIf
                 </td>
                 <td>
-                    @if ($retreat->assistant_id > 0)
+                    @if ($retreat->assistant_id > 0 && !empty($retreat->assistant))
                         {!!$retreat->assistant->contact_link_full_name!!}
                     @else
                         N/A

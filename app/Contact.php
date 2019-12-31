@@ -132,7 +132,7 @@ class Contact extends Model
     public function getAddressPrimarySupplementalAddress()
     {
         if (isset($this->address_primary->supplemental_address_1)) {
-                return $this->address_primary->supplemental_address_1;
+            return $this->address_primary->supplemental_address_1;
         } else {
             return;
         }
@@ -300,6 +300,9 @@ class Contact extends Model
         if ($this->contact_type == config('polanco.contact_type.individual')) {
             $path = url('person/'.$this->id);
         }
+        if ($this->contact_type == config('polanco.contact_type.household')) {
+            $path = url('person/'.$this->id);
+        }
 
         return "<a href='".$path."'>".$this->full_name.'</a>';
     }
@@ -395,7 +398,8 @@ class Contact extends Model
     }
 
     public function getFullNameAttribute()
-    {   $full_name = '';
+    {
+        $full_name = '';
         if ($this->contact_type == config('polanco.contact_type.individual')) {
             if (isset($this->prefix->name)) {
                 $full_name .= $this->prefix->name.' ';
@@ -418,6 +422,9 @@ class Contact extends Model
             }
         }
         if ($this->contact_type == config('polanco.contact_type.organization')) {
+            $full_name = $this->display_name;
+        }
+        if ($this->contact_type == config('polanco.contact_type.household')) {
             $full_name = $this->display_name;
         }
 
