@@ -1,8 +1,8 @@
 @extends('template')
 @section('content')
 @if(!$hours)
-<h1>The gate is now open.</h1>
+<h1>{{$message}}</h1>
 @else
-<h1>The gate will remain open for {{ $hours }} hours.</h1>
+<h1>You have requested to open the gate for {{ $hours }} hours. {{$message}}</h1>
 @endif
 @stop
