@@ -3,7 +3,7 @@
 
 <div class="row bg-cover">
     <div class="col-12">
-        <h1>Edit: Event (#{!! $retreat->idnumber !!})</h1>
+        <h1>Edit: Event (#{{ $retreat->idnumber }})</h1>
     </div>
     <div class="col-12">
         {!! Form::open(['method' => 'PUT', 'files'=>'true','route' => ['retreat.update', $retreat->id]]) !!}
@@ -29,7 +29,7 @@
                             {!! Form::label('end_date', 'Ends:') !!}
                             {!! Form::text('end_date', date('F j, Y g:i A', strtotime($retreat->end_date)), ['id' => 'end_date', 'class' => 'form-control form-control flatpickr-datetime']) !!}
                         </div>
-                        
+
                     </div>
                     <div class="row">
                         <div class="col-12 col-lg-4">
@@ -101,56 +101,56 @@
 
 <div class="jumbotron text-left">
     <h1></h1>
-    
+
     <div class="form-group">
-        
+
     </div>
     <div class="clearfix"> </div>
 
     <div class="form-group">
         <span>
-        
+
         </span>
     </div>
     <div class="form-group">
         <span>
-        
+
         </span>
     </div>
     <div class="clearfix"> </div>
 
     <div class="form-group">
-        
+
 <!--        {!! Form::label('attending', 'Attending:') !!}
         {!! Form::text('attending', $retreat->attending) !!} -->
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
-        
+
     </div>
     <div class="clearfix"> </div>
-    <div class="form-group">    
-        
-    </div><div class="clearfix"> </div>
-    
     <div class="form-group">
-        
+
     </div><div class="clearfix"> </div>
 
     <div class="form-group">
-        
+
     </div><div class="clearfix"> </div>
-    
-    <div class="form-group"> 
-        
-    </div><div class="clearfix"> </div>
-            
+
     <div class="form-group">
-        
+
+    </div><div class="clearfix"> </div>
+
+    <div class="form-group">
+
+    </div><div class="clearfix"> </div>
+
+    <div class="form-group">
+
     </div><div class="clearfix"> </div>
     <div class="form-group">
-        
+
     </div><div class="clearfix"> </div>
     <div class="form-group">
-       
+
 @stop

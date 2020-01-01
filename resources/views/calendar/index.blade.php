@@ -7,12 +7,6 @@
                 <div class="panel-heading">
                     <h1>
                         <span class="grey">Index of Google Master Calendar Events</span>
-                        <span class="create">
-                            <a href="{{ action('RetreatController@calendar') }}">
-                               {!! Html::image('images/create.png', 'Add Group',array('title'=>"Add Group",'class' => 'btn btn-primary')) !!}
-                            </a>
-
-                        </span>
                     </h1>
                 </div>
                 @if ($calendar_events->isEmpty())
@@ -29,7 +23,7 @@
                             <th>Kind</th>
                             <th>Created</th>
                             <th>LastUpdated</th>
-                            
+
                         </tr>
                     </thead>
                     <tbody>
@@ -43,10 +37,10 @@
                             <td>{{ $event->kind }}</td>
                             <td>{{ $event->created }}</td>
                             <td>{{ $event->updated }}</td>
-                            
+
                         </tr>
                         @endforeach
-                        
+
                     </tbody>
                 </table>
                 @endif

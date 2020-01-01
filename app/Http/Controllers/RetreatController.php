@@ -56,31 +56,46 @@ class RetreatController extends Controller
     {
         $this->authorize('create-retreat');
 
-        $retreat_house = \App\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b', 'retreat_captains.contact_b')->findOrFail(config('polanco.contact.montserrat'));
+        $retreat_house = \App\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b', 'retreat_captains.contact_b')->findOrFail(config('polanco.self.id'));
         $event_types = \App\EventType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
+
+        // initialize null arrays for innkeeper, assistant, director and captain dropdowns
+        $i = [];
+        $a = [];
+        $d = [];
+        $c = [];
+
         foreach ($retreat_house->retreat_innkeepers as $innkeeper) {
             $i[$innkeeper->contact_id_b] = $innkeeper->contact_b->sort_name;
         }
-        asort($i);
-        $i = [0=>'N/A'] + $i;
+        if (!null == $i) {
+            asort($i);
+            $i = [0=>'N/A'] + $i;
+        }
 
         foreach ($retreat_house->retreat_directors as $director) {
             $d[$director->contact_id_b] = $director->contact_b->sort_name;
         }
-        asort($d);
-        $d = [0=>'N/A'] + $d;
+        if (!null == $d) {
+            asort($d);
+            $d = [0=>'N/A'] + $d;
+        }
 
         foreach ($retreat_house->retreat_assistants as $assistant) {
             $a[$assistant->contact_id_b] = $assistant->contact_b->sort_name;
         }
-        asort($a);
-        $a = [0=>'N/A'] + $a;
+        if (!null == $a) {
+            asort($a);
+            $a = [0=>'N/A'] + $a;
+        }
 
         foreach ($retreat_house->retreat_captains as $captain) {
             $c[$captain->contact_id_b] = $captain->contact_b->sort_name;
         }
-        asort($c);
-        $c = [0=>'N/A'] + $c;
+        if (!null == $c) {
+            asort($c);
+            $c = [0=>'N/A'] + $c;
+        }
         //dd($retreat_house);
         return view('retreats.create', compact('d', 'i', 'a', 'c', 'event_types'));
     }
@@ -96,7 +111,6 @@ class RetreatController extends Controller
         $this->authorize('create-retreat');
 
         $retreat = new \App\Retreat;
-        $calendar_event = new Event;
 
         $retreat->idnumber = $request->input('idnumber');
         $retreat->start_date = $request->input('start_date');
@@ -115,8 +129,13 @@ class RetreatController extends Controller
         //$retreat->year = $request->input('year');
         $retreat->innkeeper_id = $request->input('innkeeper_id');
         $retreat->assistant_id = $request->input('assistant_id');
-        $calendar_event->id = uniqid();
-        $retreat->calendar_id = $calendar_event->id;
+
+        if (null !==(env('GOOGLE_CALENDAR_ID'))) {
+            $calendar_event = new Event;
+            $calendar_event->id = uniqid();
+            $retreat->calendar_id = $calendar_event->id;
+        }
+
         $retreat->save();
 
         if (empty($request->input('directors')) or in_array(0, $request->input('directors'))) {
@@ -131,13 +150,15 @@ class RetreatController extends Controller
             $retreat->captains()->sync($request->input('captains'));
         }
 
-        $calendar_event->name = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
-        $calendar_event->summary = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
-        $calendar_event->startDateTime = $retreat->start_date;
-        $calendar_event->endDateTime = $retreat->end_date;
-        $retreat_url = url('retreat/'.$retreat->id);
-        $calendar_event->description = "<a href='".$retreat_url."'>".$retreat->idnumber.' - '.$retreat->title.'</a> : '.$retreat->description;
-        $calendar_event->save('insertEvent');
+        if (null !==(env('GOOGLE_CALENDAR_ID'))) {
+            $calendar_event->name = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
+            $calendar_event->summary = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
+            $calendar_event->startDateTime = $retreat->start_date;
+            $calendar_event->endDateTime = $retreat->end_date;
+            $retreat_url = url('retreat/'.$retreat->id);
+            $calendar_event->description = "<a href='".$retreat_url."'>".$retreat->idnumber.' - '.$retreat->title.'</a> : '.$retreat->description;
+            $calendar_event->save('insertEvent');
+        }
 
         return Redirect::action('RetreatController@index'); //
     }
@@ -253,29 +274,43 @@ class RetreatController extends Controller
         //create lists of retreat directors, innkeepers, and assistants from relationship to retreat house
         $retreat_house = \App\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b')->findOrFail(config('polanco.contact.montserrat'));
 
+        // initialize null arrays for innkeeper, assistant, director and captain dropdowns
+        $i = [];
+        $a = [];
+        $d = [];
+        $c = [];
+
         foreach ($retreat_house->retreat_innkeepers as $innkeeper) {
             $i[$innkeeper->contact_id_b] = $innkeeper->contact_b->sort_name;
         }
-        asort($i);
-        $i = [0=>'N/A'] + $i;
+        if (!null == $i) {
+            asort($i);
+            $i = [0=>'N/A'] + $i;
+        }
 
         foreach ($retreat_house->retreat_directors as $director) {
             $d[$director->contact_id_b] = $director->contact_b->sort_name;
         }
-        asort($d);
-        $d = [0=>'N/A'] + $d;
+        if (!null == $d) {
+            asort($d);
+            $d = [0=>'N/A'] + $d;
+        }
 
         foreach ($retreat_house->retreat_assistants as $assistant) {
             $a[$assistant->contact_id_b] = $assistant->contact_b->sort_name;
         }
-        asort($a);
-        $a = [0=>'N/A'] + $a;
+        if (!null == $a) {
+            asort($a);
+            $a = [0=>'N/A'] + $a;
+        }
 
         foreach ($retreat_house->retreat_captains as $captain) {
             $c[$captain->contact_id_b] = $captain->contact_b->sort_name;
         }
-        asort($c);
-        $c = [0=>'N/A'] + $c;
+        if (!null == $c) {
+            asort($c);
+            $c = [0=>'N/A'] + $c;
+        }
 
         /* prevent losing former retreatmasters, innkeeper, assistant, or captain when editing retreat
          * loop through currently assigned retreatmasters, innkeeper, assistant, and captain assignments
@@ -385,7 +420,7 @@ class RetreatController extends Controller
         } else {
             $retreat->captains()->sync($request->input('captains'));
         }
-        if (! empty($retreat->calendar_id)) {
+        if (!empty($retreat->calendar_id)) {
             //dd($retreat->calendar_id);
             $calendar_event = Event::find($retreat->calendar_id);
             /*
@@ -395,7 +430,7 @@ class RetreatController extends Controller
              * What about guest directors?
              */
             //$calendar_event->attendees = $retreat->retreat_attendees;
-            if (! empty($calendar_event)) {
+            if (!empty($calendar_event)) {
                 $calendar_event->name = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
                 $calendar_event->summary = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
                 $calendar_event->startDateTime = $retreat->start_date;
@@ -420,16 +455,16 @@ class RetreatController extends Controller
     {
         $this->authorize('delete-retreat');
         $retreat = \App\Retreat::findOrFail($id);
-
-        if (! empty($retreat->calendar_id)) {
-            $calendar_event = Event::find($retreat->calendar_id);
-            if (! empty($calendar_event)) {
-                $calendar_event->name = '[CANCELLED] '.$retreat->title.' ('.$retreat->idnumber.')';
+        // if there is a calendar id for the event then find the Google Calendar event, mark it as canceled and then remove it from the calendar (soft delete)
+        if (!empty($retreat->calendar_id)) {
+            $calendar_event = Event::findOrFail($retreat->calendar_id);
+            if (!empty($calendar_event)) {
+                $calendar_event->name = '[CANCELED] '.$retreat->title.' ('.$retreat->idnumber.')';
                 $calendar_event->save();
+                $calendar_event->delete();
             }
         }
-        $calendar_event = Event::find($retreat->calendar_id);
-        $calendar_event->delete();
+
         \App\Retreat::destroy($id);
 
         return Redirect::action('RetreatController@index');
@@ -472,6 +507,7 @@ class RetreatController extends Controller
     public function checkout($id)
     {
         /* checkout all registrations for a retreat where the arrived_at is not NULL and the departed is NULL for a particular event */
+        // TODO: consider also checking to see if the arrived_at time is empty and if it is put in the retreat start time
         $this->authorize('update-registration');
         $retreat = \App\Retreat::findOrFail($id); //verifies that it is a valid retreat id
         $registrations = \App\Registration::whereEventId($id)->whereCanceledAt(null)->whereDepartedAt(null)->whereNotNull('arrived_at')->get();
@@ -480,7 +516,7 @@ class RetreatController extends Controller
             $registration->save();
         }
 
-        return redirect()->back();
+        return Redirect::action('RetreatController@show',$retreat->id);
     }
 
     public function checkin($id)
@@ -494,18 +530,19 @@ class RetreatController extends Controller
             $registration->save();
         }
 
-        return redirect()->back();
+        return Redirect::action('RetreatController@show',$retreat->id);
     }
 
     public function room_update(RoomUpdateRetreatRequest $request)
     {
         $this->authorize('update-registration');
+
         if (null !== $request->input('registrations')) {
             foreach ($request->input('registrations') as $key => $value) {
                 $registration = \App\Registration::findOrFail($key);
                 $registration->room_id = $value;
                 $registration->save();
-                //dd($registration,$value);
+                //dd($registration,$value,$key);
             }
         }
         if (null !== $request->input('notes')) {
@@ -523,7 +560,12 @@ class RetreatController extends Controller
     public function calendar()
     {
         $this->authorize('show-retreat');
-        $calendar_events = \Spatie\GoogleCalendar\Event::get();
+        if (null !== env('GOOGLE_CALENDAR_ID')) {
+            $calendar_events = \Spatie\GoogleCalendar\Event::get();
+        } else {
+            $calendar_events = collect([]);
+        }
+
 
         return view('calendar.index', compact('calendar_events'));
     }
