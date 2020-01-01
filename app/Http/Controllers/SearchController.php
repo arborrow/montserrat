@@ -28,41 +28,28 @@ class SearchController extends Controller
     }
 
     public function getuser(Request $request)
-    {
+    {   //dd($request);
         $this->authorize('show-contact');
         if (empty($request->get('response'))) {
             $id = 0;
         } else {
             $id = $request->get('response');
         }
-        // TODO: check contact_type field and redirect to appropriate parish, diocese, person, etc.
+
         if ($id == 0) {
             return redirect()->action('PersonController@create');
         } else {
             $contact = \App\Contact::findOrFail($id);
-            if ($contact->contact_type == config('polanco.contact_type.individual')) {
-                return redirect()->action('PersonController@show', $id);
-            }
-            switch ($contact->subcontact_type) {
-                case config('polanco.contact_type.parish'):
-                    return redirect()->action('ParishController@show', $id);
-                    break;
-                case config('polanco.contact_type.diocese'):
-                    return redirect()->action('DioceseController@show', $id);
-                    break;
-                case config('polanco.contact_type.vendor'):
-                    return redirect()->action('VendorController@show', $id);
-                    break;
-                default:
-                    return redirect()->action('OrganizationController@show', $id);
-            }
+            return redirect($contact->contact_url);
+            $user = $this->createUserWithPermission('show-contact');
         }
     }
 
     public function results(Request $request)
     {
         $this->authorize('show-contact');
-        if (! empty($request)) {
+        // dd($request);
+        if (!empty($request)) {
             $persons = \App\Contact::filtered($request)->orderBy('sort_name')->with('attachments')->paginate(100);
             $persons->appends($request->except('page'));
         }
