@@ -247,6 +247,7 @@ class RelationshipTypeController extends Controller
 
                 return Redirect::route('relationship_type.add', ['id' => $relationship_type_id, 'a' => 0, 'b' => $contact_id]);
                 break;
+            // TODO: Primary contact logic may be backwards contact_id may be a - does not seem to be functioning in vendor (possilbly elsewhere if at all)
             case 'Primary contact':
                 $relationship_type_id = config('polanco.relationship_type.primary_contact');
 
