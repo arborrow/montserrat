@@ -38,11 +38,11 @@ class RelationshipTypeConrollerTest extends TestCase
      * @test
      */
     public function addme_returns_an_ok_response()
-    {   /* TODO: evaluate relationships and use of this function throughout Polanco, we may be able to remove it
-        // technically this is adding a relationship (not a relationship_type)
-        // relationship_types are manually defined in each contoller for persons and $organizations
-        // for now, for the the sake of simplicity, we will only one random relationship_type for basic functionality
-        // namely, we will create a user and show the addme form
+    {   /* TODO: evaluate relationships and use of this function throughout Polanco, we may be able to remove addme from controller altogether
+        // technically this is adding a relationship (not a relationship_type) so a bit of mismatch
+        // relationship_types are manually defined in each contoller for persons and $organizations resulting in far more logic than normal in a test
+        // for now, for the the sake of simplicity, we will only test for one random relationship_type for basic functionality
+        // namely, we will create a user and show the addme form for a random relationship_type
         */
 
         $user = $this->createUserWithPermission('create-relationship');
@@ -57,27 +57,25 @@ class RelationshipTypeConrollerTest extends TestCase
             'contact_id' => $contact->id,
           ]);
 
-
-
         switch ($relationship_type) {
-            case 'Child';
-            case 'Husband';
-            case 'Sibling';
-            case 'Employee';
+            case 'Child':
+            case 'Husband':
+            case 'Sibling':
+            case 'Employee':
                 $relationship_type_id = \App\RelationshipType::whereNameAB($relationship_type)->first();
                 $response->assertRedirect(route('relationship_type.add', ['id' => $relationship_type_id->id, 'a' => $contact->id]));
                 break;
-            case 'Parent';
-            case 'Wife';
-            case 'Employer';
-            case 'Volunteer';
-            case 'Parishioner';
-            case 'Primary contact';
+            case 'Parent':
+            case 'Wife':
+            case 'Employer':
+            case 'Volunteer':
+            case 'Parishioner':
+            case 'Primary contact':
                 $relationship_type_id = \App\RelationshipType::whereNameBA($relationship_type)->first();
                 $response->assertRedirect(route('relationship_type.add', ['id' => $relationship_type_id->id, 'a' => 0, 'b' => $contact->id]));
                 break;
             }
-        }
+    }
 
     /**
      * @test
@@ -104,7 +102,6 @@ class RelationshipTypeConrollerTest extends TestCase
         $response->assertViewIs('relationships.types.create');
         $response->assertViewHas('contact_types');
         $response->assertSeeText('Create Relationship Type');
-
     }
 
     /**
@@ -120,7 +117,6 @@ class RelationshipTypeConrollerTest extends TestCase
 
         $response->assertRedirect(action('RelationshipTypeController@index'));
         $this->assertSoftDeleted($relationship_type);
-
     }
 
     /**
@@ -154,8 +150,7 @@ class RelationshipTypeConrollerTest extends TestCase
         $response->assertViewIs('relationships.types.index');
         $response->assertViewHas('relationship_types');
         $relationship_types = $response->viewData('relationship_types');
-        $this->assertGreaterThanOrEqual('1',$relationship_types->count());
-
+        $this->assertGreaterThanOrEqual('1', $relationship_types->count());
     }
 
     /**
