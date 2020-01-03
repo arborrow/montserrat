@@ -30,6 +30,7 @@ $factory->define(App\Retreat::class, function (Faker $faker) {
          'contact_id_b' => $assistant->id,
          'relationship_type_id' => config('polanco.relationship_type.retreat_innkeeper'),
       ]);
+  // innkeeper and assistant methods in retreat model assume individual contact type and so we force it here in the factory as well
 */
     return [
         'title' => $faker->word,
@@ -52,7 +53,7 @@ $factory->define(App\Retreat::class, function (Faker $faker) {
         'assistant_id' => function () {
             return factory(App\Contact::class)->create([
                 'contact_type' => config('polanco.contact_type.individual'),
-                'subcontact_type' => null,    
+                'subcontact_type' => null,
             ])->id;
         },
         'remember_token' => Str::random(10),

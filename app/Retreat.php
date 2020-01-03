@@ -50,7 +50,7 @@ class Retreat extends Model
     }
 
     public function assistant()
-    {
+    {   // TODO: evaluate whether the assumption that this is an individual makes a difference, currently retreat factory will force individual to avoid undefined variable on retreat.show
         return $this->belongsTo(Contact::class, 'assistant_id', 'id')->whereContactType(config('polanco.contact_type.individual'));
     }
 
@@ -61,7 +61,8 @@ class Retreat extends Model
     }
 
     public function innkeeper()
-    {
+    {   // TODO: evaluate whether the assumption that this is an individual makes a difference, currently retreat factory will force individual to avoid undefined variable on retreat.show
+
         return $this->belongsTo(Contact::class, 'innkeeper_id', 'id')->whereContactType(config('polanco.contact_type.individual'));
     }
 
