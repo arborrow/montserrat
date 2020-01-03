@@ -272,7 +272,7 @@ class RetreatController extends Controller
         $is_active[1] = 'Active';
 
         //create lists of retreat directors, innkeepers, and assistants from relationship to retreat house
-        $retreat_house = \App\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b')->findOrFail(config('polanco.contact.montserrat'));
+        $retreat_house = \App\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b')->findOrFail(config('polanco.self.id'));
 
         // initialize null arrays for innkeeper, assistant, director and captain dropdowns
         $i = [];
