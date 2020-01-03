@@ -57,7 +57,7 @@ class Donation extends Model
     public function getPercentPaidAttribute()
     {
         if ($this->donation_amount > 0) {
-            return number_format((($this->payments_paid / $this->donation_amount) * 100),2);
+            return number_format((($this->payments_paid / $this->donation_amount) * 100),0);
         } else {
             return 0;
         }

@@ -156,9 +156,10 @@ class DonationControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-donation');
-        $donation = factory(\App\Donation::class)->create();
+        // create a payment rather than just a donation so that things like percent_paid 
+        $payment = factory(\App\Payment::class)->create();
 
-        $response = $this->actingAs($user)->get(route('donation.show', [$donation]));
+        $response = $this->actingAs($user)->get(route('donation.show', [$payment->donation_id]));
 
         $response->assertOk();
         $response->assertViewIs('donations.show');
