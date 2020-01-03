@@ -44,10 +44,16 @@ $factory->define(App\Retreat::class, function (Faker $faker) {
         'has_waitlist' => $faker->boolean,
         'idnumber' => $faker->unique()->randomNumber(8).$faker->unique()->lastName,
         'innkeeper_id' => function () {
-            return factory(App\Contact::class)->create()->id;
+            return factory(App\Contact::class)->create([
+                'contact_type' => config('polanco.contact_type.individual'),
+                'subcontact_type' => null,
+                ])->id;
         },
         'assistant_id' => function () {
-            return factory(App\Contact::class)->create()->id;
+            return factory(App\Contact::class)->create([
+                'contact_type' => config('polanco.contact_type.individual'),
+                'subcontact_type' => null,    
+            ])->id;
         },
         'remember_token' => Str::random(10),
     ];
