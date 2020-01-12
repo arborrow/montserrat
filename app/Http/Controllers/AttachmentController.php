@@ -43,17 +43,17 @@ class AttachmentController extends Controller
                 $path = storage_path().'/app/'.$entity.'/'.$entity_id.'/'.$file_name;
                 break;
             case 'contract':
-                $this->authorize('show-attachment');
+                $this->authorize('show-event-attachment');
                 $file_name = 'contract.pdf';
                 $path = storage_path().'/app/'.$entity.'/'.$entity_id.'/'.$file_name;
                 break;
             case 'evaluations':
-                $this->authorize('show-attachment');
+                $this->authorize('show-event-evaluation');
                 $file_name = 'evaluations.pdf';
                 $path = storage_path().'/app/'.$entity.'/'.$entity_id.'/'.$file_name;
                 break;
             case 'group_photo':
-                $this->authorize('show-attachment');
+                $this->authorize('show-event-group-photo');
                 $file_name = 'group_photo.jpg';
                 $path = storage_path().'/app/'.$entity.'/'.$entity_id.'/'.$file_name;
                 break;
@@ -77,7 +77,7 @@ class AttachmentController extends Controller
     }
 
     public function store_attachment($file, $entity = 'event', $entity_id = 0, $type = null, $description = null)
-    {
+    {   // TODO: Not sure if this is being called from anywhere but contact attachments seems to be missing the attachments folder in the path (see update_attachment method)
         $this->authorize('create-attachment');
         $file_name = $this->sanitize_filename($file->getClientOriginalName());
         $attachment = new \App\Attachment;
@@ -105,7 +105,7 @@ class AttachmentController extends Controller
             case 'group_photo':
                 $this->authorize('create-event-group-photo');
                 $attachment->file_type_id = config('polanco.file_type.event_group_photo');
-                $attachment->uri = 'group_photo.png';
+                $attachment->uri = 'group_photo.jpg';
                 break;
             case 'attachment':
                 $this->authorize('create-attachment');
@@ -125,7 +125,7 @@ class AttachmentController extends Controller
                 break;
         }
         $attachment->save();
-        //write file to filesystem
+        //write file to filesystem (attachments seems to be missing attachments path - evaluate when implementing generic event attachments)
         if ($type == 'avatar') {
             Storage::disk('local')->put($entity.'/'.$entity_id.'/'.'avatar.png', $avatar->stream('png'));
         } else {
