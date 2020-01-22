@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use App\Address;
 
 class AddressController extends Controller
 {
@@ -20,6 +21,8 @@ class AddressController extends Controller
     public function index()
     {
         $this->authorize('show-contact');
+        $addresses = \App\Address::orderBy('postal_code','asc')->with('addressee')->paginate(100);
+        return view('addresses.index',compact('addresses'));
     }
 
     /**
@@ -51,7 +54,11 @@ class AddressController extends Controller
      */
     public function show($id)
     {
-        $this->authorize('show-contact');
+        $this->authorize('show-address');
+        $address = \App\Address::with('addressee')->findOrFail($id);
+
+        return view('addresses.show', compact('address'));
+
     }
 
     /**
