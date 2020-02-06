@@ -205,8 +205,8 @@ return [
     // when using the database seeder the first contact created is the self organization
     // name is used by database seeder to create self contact record
     'self' => [
-        'id' => '1',
-        'name' => 'Montserrat Jesuit Retreat House'
+        'id' => env('SELF_CONTACT_ID',1),
+        'name' => env('SELF_NAME','Montserrat Jesuit Retreat House')
     ],
 
 ];
