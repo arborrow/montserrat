@@ -27,7 +27,13 @@
         @can('create-touchpoint')
             <span><a href={{ action('TouchpointController@add',$vendor->id) }} class="btn btn-outline-dark">Add Touchpoint</a></span>
         @endCan
-    </div>
+        <span class="btn btn-outline-dark">
+            <a href={{ URL('person/'.$vendor->id.'/envelope?size=10&logo=0') }}><img src={{URL::asset('images/envelope.png')}} title="Print envelope" alt="Print envelope"></a>
+        </span>
+        <span class="btn btn-outline-dark">
+            <a href={{ URL('person/'.$vendor->id.'/envelope?size=9x6&logo=1') }}><img src={{URL::asset('images/envelope9x6.png')}} title="Print 9x6 envelope" alt="Print 9x6 envelope"></a>
+        </span>
+        </div>
     <div class="col-12 mt-3">
         <div class="row">
             <div class="col-12 col-lg-6">
