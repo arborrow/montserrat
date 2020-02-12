@@ -38,7 +38,7 @@
                         <address>
                             {!!$address->google_map!!}
                             <br>
-                            @if ($address->country_id=1228)
+                            @if ($address->country_id == config('polanco.country_id_usa'))
                             @else {{$address->country_id}}
                             @endif
                         </address>

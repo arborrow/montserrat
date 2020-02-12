@@ -17,6 +17,9 @@
                 <div>
                 {{$person->addressee}} <br />
                 {{$person->address_primary_street}} <br />
+                @if (!is_null($person->address_primary_supplemental_address))
+                    {{ $person->address_primary_supplemental_address  }} <br />
+                @endIf
                 {{$person->address_primary_city}}, {{$person->address_primary_state}}  {{$person->address_primary_postal_code}}
                 </div>
             </td>

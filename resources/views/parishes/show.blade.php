@@ -54,7 +54,7 @@
                         <span class="font-weight-bold">{{$address->location->display_name}}:</span>
                         <address>
                             {!!$address->google_map!!}<br>
-                            @if ($address->country_id=1228) @else {{$address->country_id}} @endif
+                            @if ($address->country_id == config('polanco.country_id_usa')) @else {{$address->country_id}} @endif
                         </address>
                     @endif
                 @endforeach
@@ -132,7 +132,7 @@
                                     <td>
                                         {!!$parishioner->contact_b->address_primary->google_map!!}
                                         <br />
-                                        @if ($parishioner->contact_b->address_primary->country_id=1228) @else {{$parishioner->contact_b->address_primary->country_id}} @endif
+                                        @if ($parishioner->contact_b->address_primary->country_id == config('polanco.country_id_usa')) @else {{$parishioner->contact_b->address_primary->country_id}} @endif
                                     </td>
                                 @else <td> </td>
                                 @endif

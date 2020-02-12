@@ -800,7 +800,7 @@ class PersonController extends Controller
         $prefixes->prepend('N/A', 0);
         $religions = \App\Religion::orderBy('name')->whereIsActive(1)->pluck('name', 'id');
         $religions->prepend('N/A', 0);
-        $states = \App\StateProvince::orderBy('name')->whereCountryId(1228)->pluck('name', 'id');
+        $states = \App\StateProvince::orderBy('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
         $suffixes = \App\Suffix::orderBy('name')->pluck('name', 'id');
         $suffixes->prepend('N/A', 0);

@@ -56,7 +56,7 @@
             <div class="row">
                 <div class="col-12 col-md-4">
                     {!! Form::label("address_home_country", "Country:") !!}
-                    {!! Form::select("address_home_country", $countries, "1228", ["class" => "form-control"]) !!}
+                    {!! Form::select("address_home_country", $countries, config('polanco.country_id_usa'), ["class" => "form-control"]) !!}
                 </div>
             </div>
         </div>
@@ -92,7 +92,7 @@
             <div class="row">
                 <div class="col-12 col-md-4">
                     {!! Form::label("address_work_country", "Country:") !!}
-                    {!! Form::select("address_work_country", $countries, "1228", ["class" => "form-control"]) !!}
+                    {!! Form::select("address_work_country", $countries, config('polanco.country_id_usa'), ["class" => "form-control"]) !!}
                 </div>
             </div>
         </div>
@@ -118,7 +118,7 @@
                 </div>
                 <div class="col-12 col-md-4">
                     {!! Form::label("address_other_state", "State:") !!}
-                    {!! Form::select("address_other_state", $states, "1042", ["class" => "form-control"]) !!}
+                    {!! Form::select("address_other_state", $states, config('polanco.state_province_id_tx'), ["class" => "form-control"]) !!}
                 </div>
                 <div class="col-12 col-md-4">
                     {!! Form::label("address_other_zip", "Zip:") !!}
@@ -128,7 +128,7 @@
             <div class="row">
                 <div class="col-12 col-md-4">
                     {!! Form::label("address_other_country", "Country:") !!}
-                    {!! Form::select("address_other_country", $countries, "1228", ["class" => "form-control"]) !!}
+                    {!! Form::select("address_other_country", $countries, config('polanco.country_id_usa'), ["class" => "form-control"]) !!}
                 </div>
             </div>
         </div>

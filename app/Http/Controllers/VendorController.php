@@ -182,6 +182,7 @@ class VendorController extends Controller
         $states = \App\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
         $countries = \App\Country::orderby('iso_code')->pluck('iso_code', 'id');
+        $countries->prepend('N/A', 0);
         $defaults['state_province_id'] = config('polanco.state_province_id_tx');
         $defaults['country_id'] = config('polanco.country_id_usa');
         $countries->prepend('N/A', 0);
@@ -195,7 +196,6 @@ class VendorController extends Controller
         $defaults['Twitter']['url'] = '';
 
         $vendor = \App\Contact::with('address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
-
         foreach ($vendor->websites as $website) {
             $defaults[$website->website_type]['url'] = $website->url;
         }

@@ -42,17 +42,26 @@
                             {!! Form::text('street_address', $vendor->address_primary_street, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-12 col-lg-4">
+                            {!! Form::label('supplemental_address_1', 'Address Line 2') !!}
+                            {!! Form::text('supplemental_address_1', $vendor->address_primary_supplemental_address, ['class' => 'form-control']) !!}
+                        </div>
+                        <div class="col-12 col-lg-4">
                             {!! Form::label('city', 'City') !!}
                             {!! Form::text('city', $vendor->address_primary_city, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-12 col-lg-4">
                             {!! Form::label('state_province_id', 'State') !!}
-                            {!! Form::select('state_province_id', $states, $vendor->address_primary_state_province_id, ['class' => 'form-control']) !!}
+                            {!! Form::select('state_province_id', $states, $vendor->address_primary_state_id, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-12 col-lg-4">
                             {!! Form::label('postal_code', 'Zip') !!}
                             {!! Form::text('postal_code', $vendor->address_primary_postal_code, ['class' => 'form-control']) !!}
                         </div>
+                        <div class="col-12 col-lg-4">
+                            {!! Form::label('country_id', 'Country') !!}
+                            {!! Form::select('country_id', $countries, $vendor->address_primary_country_id, ['class' => 'form-control']) !!}
+                        </div>
+
                     </div>
                 </div>
             </div>

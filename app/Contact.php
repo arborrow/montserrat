@@ -129,7 +129,7 @@ class Contact extends Model
             return;
         }
     }
-    public function getAddressPrimarySupplementalAddress()
+    public function getAddressPrimarySupplementalAddressAttribute()
     {
         if (isset($this->address_primary->supplemental_address_1)) {
             return $this->address_primary->supplemental_address_1;
@@ -158,10 +158,18 @@ class Contact extends Model
 
     public function getAddressPrimaryStateIdAttribute()
     {
-        if (isset($this->address_primary->state->id)) {
-            return $this->address_primary->state->id;
+        if (isset($this->address_primary->state_province_id)) {
+            return $this->address_primary->state_province_id;
         } else {
             return;
+        }
+    }
+    public function getAddressPrimaryCountryIdAttribute()
+    {
+        if (isset($this->address_primary->country_id)) {
+            return $this->address_primary->country_id;
+        } else {
+            return 0;
         }
     }
 
