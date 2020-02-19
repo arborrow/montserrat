@@ -29,6 +29,10 @@
 @endIf
 
 {{$donation->contact->address_primary_street}} <br />
+@if (!is_null($donation->contact->address_primary_supplemental_address))
+    {{ $donation->contact->address_primary_supplemental_address  }} <br />
+@endIf
+
 {{$donation->contact->address_primary_city}}, {{$donation->contact->address_primary_state}}  {{$donation->contact->address_primary_postal_code}}
 <br /><br />
 
