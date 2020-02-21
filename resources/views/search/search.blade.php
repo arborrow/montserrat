@@ -108,13 +108,13 @@
                 <div class="form-group">
                     {!! Form::label('do_not_phone', 'Do not phone:', ['class' => 'control-label col-sm-3'])  !!}
                     <div class="col-sm-8">
-                    {!! Form::checkbox('do_not_phone', 1, 0,['class' => '']) !!}
+                    {{!! Form::select('do_not_phone', array('Ignore' => 'Ignore', 'Yes' => 'Yes', 'No' => 'No')) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('do_not_sms', 'Do not SMS:', ['class' => 'control-label col-sm-3'])  !!}
                     <div class="col-sm-8">
-                    {!! Form::checkbox('do_not_sms', 1, 0,['class' => '']) !!}
+                    {!! Form::select('do_not_sms', array('Ignore' => 'Ignore', 'Yes' => 'Yes', 'No' => 'No')) !!}
                     </div>
                 </div>
 
@@ -127,7 +127,7 @@
                 <div class="form-group">
                     {!! Form::label('do_not_email', 'Do not email:', ['class' => 'control-label col-sm-3'])  !!}
                     <div class="col-sm-8">
-                    {!! Form::checkbox('do_not_email', 1, 0,['class' => '']) !!}
+                    {!! Form::select('do_not_email', array('Ignore' => 'Ignore', 'Yes' => 'Yes', 'No' => 'No')) !!}
                     </div>
                 </div>
                 <div class="form-group">
@@ -157,7 +157,7 @@
                 <div class="form-group">
                     {!! Form::label('do_not_mail', 'Do not mail:', ['class' => 'control-label col-sm-3'])  !!}
                     <div class="col-sm-8">
-                    {!! Form::checkbox('do_not_mail', 1, 0,['class' => '']) !!}
+                    {!! Form::select('do_not_mail', array('Ignore' => 'Ignore', 'Yes' => 'Yes', 'No' => 'No')) !!}
                     </div>
                 </div>
 
