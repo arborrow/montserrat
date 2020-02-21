@@ -1229,10 +1229,10 @@ class Contact extends Model
                     $q->where('phone_numeric', 'like', '%'.$value.'%');
                 });
             }
-            if ($filter == 'do_not_phone' && $value > 0) {
+            if ($filter == 'do_not_phone' && ! empty($value)) {
                 $query->where($filter, $value);
             }
-            if ($filter == 'do_not_sms' && $value > 0) {
+            if ($filter == 'do_not_sms' && ! empty($value)) {
                 $query->where($filter, $value);
             }
 
@@ -1241,7 +1241,7 @@ class Contact extends Model
                     $q->where('email', 'like', '%'.$value.'%');
                 });
             }
-            if ($filter == 'do_not_email' && $value > 0) {
+            if ($filter == 'do_not_email' && ! empty($value)) {
                 $query->where($filter, $value);
             }
 
@@ -1265,7 +1265,7 @@ class Contact extends Model
                     $q->where('postal_code', 'like', '%'.$value.'%');
                 });
             }
-            if ($filter == 'do_not_mail' && $value > 0) {
+            if ($filter == 'do_not_mail' && ! empty($value)) {
                 $query->where($filter, $value);
             }
 
