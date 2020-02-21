@@ -1,21 +1,21 @@
 @extends('template')
 @section('content')
-    
+
 <div>
 <div class="jumbotron text-left">
     <div class="panel panel-default">
-        
+
         <div class='panel-heading'>
             <h1><strong>Search Contacts</strong></h1>
         </div>
-       
+
         {!! Form::open(['method' => 'GET', 'class' => 'form-horizontal', 'route' => ['results']]) !!}
 
         <div class="panel-body">
             <div class='panel-heading'>
                 <h2>
                     <span>Name</span>
-                    <span>{!! Form::image('images/submit.png','btnSave',['class' => 'btn btn-outline-dark pull-right']) !!}</span>                    
+                    <span>{!! Form::image('images/submit.png','btnSave',['class' => 'btn btn-outline-dark pull-right']) !!}</span>
                 </h2>
             </div>
             <div class="panel-body">
@@ -24,7 +24,7 @@
                     <div class="col-sm-8">
                         {!! Form::select('prefix_id', $prefixes, NULL, ['class' => 'form-control']) !!}
                     </div>
-                    
+
                 </div>
                 <div class="form-group">
                     {!! Form::label('first_name', 'First:', ['class' => 'control-label col-sm-3'])  !!}
@@ -108,13 +108,13 @@
                 <div class="form-group">
                     {!! Form::label('do_not_phone', 'Do not phone:', ['class' => 'control-label col-sm-3'])  !!}
                     <div class="col-sm-8">
-                    {!! Form::checkbox('do_not_phone', 1, 0,['class' => '']) !!}
+                        {!! Form::select('do_not_phone', array(null => 'N/A', '1' => 'Yes', '0' => 'No')) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('do_not_sms', 'Do not SMS:', ['class' => 'control-label col-sm-3'])  !!}
                     <div class="col-sm-8">
-                    {!! Form::checkbox('do_not_sms', 1, 0,['class' => '']) !!}
+                        {!! Form::select('do_not_sms', array(null => 'N/A', '1' => 'Yes', '0' => 'No')) !!}
                     </div>
                 </div>
 
@@ -127,7 +127,7 @@
                 <div class="form-group">
                     {!! Form::label('do_not_email', 'Do not email:', ['class' => 'control-label col-sm-3'])  !!}
                     <div class="col-sm-8">
-                    {!! Form::checkbox('do_not_email', 1, 0,['class' => '']) !!}
+                        {!! Form::select('do_not_email', array(null => 'N/A', '1' => 'Yes', '0' => 'No')) !!}
                     </div>
                 </div>
                 <div class="form-group">
@@ -157,7 +157,7 @@
                 <div class="form-group">
                     {!! Form::label('do_not_mail', 'Do not mail:', ['class' => 'control-label col-sm-3'])  !!}
                     <div class="col-sm-8">
-                    {!! Form::checkbox('do_not_mail', 1, 0,['class' => '']) !!}
+                        {!! Form::select('do_not_mail', array(null => 'N/A', '1' => 'Yes', '0' => 'No')) !!}
                     </div>
                 </div>
 
@@ -166,7 +166,7 @@
                     <div class="col-sm-8">
                         {!! Form::text('url', NULL, ['class' => 'form-control']) !!}
                     </div>
-                </div> 
+                </div>
             </div>
             <div class='panel-heading' style="background-color: lightcoral;"><h2>Emergency Contact Information</h2></div>
             <div class="panel-body" style="background-color: lightcoral;">
@@ -196,7 +196,7 @@
                     <div class="col-sm-8">
                         {!! Form::select('gender_id', $genders, 0, ['class' => 'form-control']) !!}
                     </div>
-                </div> 
+                </div>
                 <div class="form-group">
                     {!! Form::label('birth_date', 'Birth Date:', ['class' => 'control-label col-sm-3']) !!}
                     <div class="col-sm-8">
@@ -206,19 +206,19 @@
                 <div class="form-group">
                     {!! Form::label('religion_id', 'Religion:', ['class' => 'control-label col-sm-3'])  !!}
                     <div class="col-sm-8">
-                        {!! Form::select('religion_id', $religions, 0, ['class' => 'form-control']) !!} 
+                        {!! Form::select('religion_id', $religions, 0, ['class' => 'form-control']) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('occupation_id', 'Occupation:', ['class' => 'control-label col-sm-3'])  !!}
                     <div class="col-sm-8">
-                        {!! Form::select('occupation_id', $occupations, 0, ['class' => 'form-control']) !!} 
+                        {!! Form::select('occupation_id', $occupations, 0, ['class' => 'form-control']) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('parish_id', 'Parish:', ['class' => 'control-label col-sm-3'])  !!}
                     <div class="col-sm-8">
-                        {!! Form::select('parish_id', $parish_list, 0, ['class' => 'form-control']) !!} 
+                        {!! Form::select('parish_id', $parish_list, 0, ['class' => 'form-control']) !!}
                     </div>
                 </div>
                 <div class="form-group">
@@ -229,31 +229,31 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label('languages', 'Languages:', ['class' => 'control-label col-sm-3'])  !!}
-                    <div class="col-sm-8">  
+                    <div class="col-sm-8">
                         {!! Form::select('languages[]', $languages, NULL, ['id'=>'languages','class' => 'form-control','multiple' => 'multiple','style'=>'width: auto; font-size: inherit;']) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('preferred_language_id', 'Preferred Language:', ['class' => 'control-label col-sm-3'])  !!}
-                    <div class="col-sm-8">  
+                    <div class="col-sm-8">
                         {!! Form::select('preferred_language_id', $languages, 0, ['class' => 'form-control']) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('referrals', 'Referral source(s):', ['class' => 'control-label col-sm-3'])  !!}
-                    <div class="col-sm-8">  
+                    <div class="col-sm-8">
                         {!! Form::select('referrals[]', $referrals, NULL, ['id'=>'referrals','class' => 'form-control','multiple' => 'multiple','style'=>'width: auto; font-size: inherit;']) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('deceased_date', 'Deceased Date:', ['class' => 'control-label col-sm-3'])  !!}
-                    <div class="col-sm-8">  
+                    <div class="col-sm-8">
                         {!! Form::text('deceased_date', NULL, ['class'=>'form-control flatpickr-date']) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('is_deceased', 'Is Deceased:', ['class' => 'control-label col-sm-3'])  !!}
-                    <div class="col-sm-8">  
+                    <div class="col-sm-8">
                         {!! Form::checkbox('is_deceased', 1, NULL, ['class' => '']) !!}
                     </div>
                 </div>
@@ -300,7 +300,7 @@
         </div>
 
 
-        
+
 {{--
         <div class='row'>
                 <div class='col-md-8'>
@@ -361,7 +361,7 @@
                 </div>
         </div>
         <div class="clearfix"> </div>
- 
+
 --}}
    </div>
     {{-- <div class="form-group">
