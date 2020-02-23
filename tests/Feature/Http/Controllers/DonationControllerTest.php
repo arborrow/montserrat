@@ -156,7 +156,7 @@ class DonationControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-donation');
-        // create a payment rather than just a donation so that things like percent_paid 
+        // create a payment rather than just a donation so that things like percent_paid
         $payment = factory(\App\Payment::class)->create();
 
         $response = $this->actingAs($user)->get(route('donation.show', [$payment->donation_id]));
@@ -251,9 +251,6 @@ class DonationControllerTest extends TestCase
         $updated_donation = \App\Donation::find($donation->donation_id);
         $this->assertEquals($updated_donation->event_id,$event->id);
         $this->assertNotEquals($updated_donation->donation_amount, $original_amount);
-
-
-        // TODO: perform additional assertions
     }
 
     /**

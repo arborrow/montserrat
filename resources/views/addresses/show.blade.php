@@ -14,13 +14,15 @@
         @endCan
     </div>
     <div class="col-12">
-        <h5>Address 1: {{$address->street_address}}</h5>
-        <h5>Address 2: {{$address->supplemental_address_1}}</h5>
-        <h5>City: {{$address->city}}</h5>
-        <h5>State: {{$address->state_province_id}}</h5>
-        <h5>Country: {{$address->country_id}}</h5>
-        <h5>Zip: {{$address->postal_code}}</h5>
-        <h5>Is primary: {{$address->is_primary}}</h5>
+        <h5>Contact: {!! $address->addressee->contact_link_full_name !!} </h5>
+        <h5>Location type: {{ $address->location_type_name }} </h5>
+        <h5>Address 1: {{$address->street_address}} </h5>
+        <h5>Address 2: {{$address->supplemental_address_1}} </h5>
+        <h5>City: {{$address->city}} </h5>
+        <h5>State: {{$address->state_name}} </h5>
+        <h5>Country: {{$address->country_name}} </h5>
+        <h5>Zip: {{$address->postal_code}} </h5>
+        <h5>Is primary: {{ $address->is_primary ? 'Yes':'No'}} </h5>
     </div>
     <div class="col-12 mb-4">
         @can('update-address')

@@ -764,7 +764,38 @@ class PermissionsTableSeeder extends Seeder
                 'created_at' => '2018-12-06 12:53:51',
                 'updated_at' => '2018-12-06 12:55:38',
                 'deleted_at' => NULL,
-            )
+            ),
+            75 =>
+            array (
+                'id' => 76,
+                'name' => 'show-address',
+                'display_name' => 'show-address',
+                'description' => 'Show address',
+                'created_at' => '2018-12-06 12:53:51',
+                'updated_at' => '2018-12-06 12:55:38',
+                'deleted_at' => NULL,
+            ),
+            76 =>
+            array (
+                'id' => 77,
+                'name' => 'create-address',
+                'display_name' => 'create-address',
+                'description' => 'Create address',
+                'created_at' => '2018-12-06 12:53:51',
+                'updated_at' => '2018-12-06 12:55:38',
+                'deleted_at' => NULL,
+            ),
+            77 =>
+            array (
+                'id' => 78,
+                'name' => 'update-address',
+                'display_name' => 'update-address',
+                'description' => 'Update address',
+                'created_at' => '2018-12-06 12:53:51',
+                'updated_at' => '2018-12-06 12:55:38',
+                'deleted_at' => NULL,
+            ),
+
         ));
     }
 }
