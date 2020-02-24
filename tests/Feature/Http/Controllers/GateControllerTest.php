@@ -13,6 +13,23 @@ class GateControllerTest extends TestCase
 {   // TODO: develop funcitonal tests
     // for now, I am not actually going to test the functionality but just ensure the controller methods function
 
+
+    /**
+     * @test
+     */
+    public function index_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-gate');
+
+        $response = $this->actingAs($user)->get(route('gate.index'));
+
+        $response->assertOk();
+        $response->assertViewIs('gate.index');
+        $response->assertViewHas('touchpoints');
+        $response->assertSeeText('Gate activity');
+    }
+
+
     /**
      * @test
      */

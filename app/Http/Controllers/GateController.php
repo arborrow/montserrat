@@ -12,6 +12,13 @@ class GateController extends Controller
     {
         $this->middleware('auth');
     }
+    public function index()
+    {
+        $this->authorize('show-gate');
+        $touchpoints = \App\Touchpoint::whereType('Gate activity')->orderBy('touched_at', 'desc')->with('person', 'staff')->paginate(100);
+
+        return view('gate.index', compact('touchpoints'));
+    }
 
     public function open($hours = null)
     {
