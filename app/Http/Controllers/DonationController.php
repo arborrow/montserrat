@@ -279,9 +279,8 @@ class DonationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function retreat_payments_update(Request $request)
-    {
+    {   // I removed the permission check for update-payment as it seemed redundant to update-donation and it makes testing a little easier
         $this->authorize('update-donation');
-        $this->authorize('update-payment');
         $event_id = $request->input('event_id');
         if (! is_null($request->input('donations'))) {
             foreach ($request->input('donations') as $key => $value) {

@@ -27,7 +27,7 @@ $factory->define(App\Registration::class, function (Faker $faker) {
         'confirmed_by' => $faker->word,
         'notes' => $faker->text,
         'deposit' => $faker->randomFloat(),
-        'canceled_at' => $faker->dateTime(),
+        'canceled_at' => null,
         'arrived_at' => $faker->dateTime(),
         'departed_at' => $faker->dateTime(),
         'ppd_source' => $faker->word,
