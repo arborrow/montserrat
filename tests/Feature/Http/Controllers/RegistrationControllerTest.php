@@ -55,7 +55,7 @@ class RegistrationControllerTest extends TestCase
         $response->assertViewHas('groups');
         $response->assertViewHas('rooms');
         $response->assertViewHas('defaults');
-        $response->assertSeeText(e($group->name));
+        $response->assertSeeText(e($group->title));
 
     }
 
