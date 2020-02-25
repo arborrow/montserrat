@@ -19,11 +19,11 @@
                 {!! Html::link('#demographics','Demographics',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#groups','Groups',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#notes','Notes',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#relationships','Relationships',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#touchpoints','Touchpoints',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#attachments','Attachments',array('class' => 'btn btn-outline-dark')) !!}
-                {!! Html::link('#donations','Donations',array('class' => 'btn btn-outline-dark')) !!}
+                @can('show-relationship'){!! Html::link('#relationships','Relationships',array('class' => 'btn btn-outline-dark')) !!} @endCan
+                @can('show-registration'){!! Html::link('#registrations','Registrations',array('class' => 'btn btn-outline-dark')) !!} @endCan
+                @can('show-touchpoint'){!! Html::link('#touchpoints','Touchpoints',array('class' => 'btn btn-outline-dark')) !!} @endCan
+                @can('show-attachment'){!! Html::link('#attachments','Attachments',array('class' => 'btn btn-outline-dark')) !!} @endCan
+                @can('show-donation') {!! Html::link('#donations','Donations',array('class' => 'btn btn-outline-dark')) !!} @endCan
             </div>
             <div class="col-12 mt-2">
                 @can('show-group')
