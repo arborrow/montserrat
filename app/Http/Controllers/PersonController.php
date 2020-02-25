@@ -93,6 +93,9 @@ class PersonController extends Controller
         $this->authorize('create-contact');
         $person = new \App\Contact;
 
+        $person->contact_type = $request->input('contact_type');
+        $person->subcontact_type = $request->input('subcontact_type');
+
         // name info
         $person->prefix_id = $request->input('prefix_id');
         $person->first_name = $request->input('first_name');
@@ -100,8 +103,7 @@ class PersonController extends Controller
         $person->last_name = $request->input('last_name');
         $person->suffix_id = $request->input('suffix_id');
         $person->nick_name = $request->input('nick_name');
-        $person->contact_type = $request->input('contact_type');
-        $person->subcontact_type = $request->input('subcontact_type');
+
         // the sort and display names are not available on creation so that we create a default and then it can be customized or tweaked individually
         if (empty($request->input('display_name'))) {
             $person->display_name = $person->first_name.' '.$person->last_name;
@@ -887,17 +889,17 @@ class PersonController extends Controller
     {
         $this->authorize('update-contact');
 
-        //dd($request);
-        //name
         $person = \App\Contact::with('addresses.location', 'emails.location', 'phones.location', 'websites', 'emergency_contact', 'parish')->findOrFail($id);
+
+        $person->contact_type = $request->input('contact_type');
+        $person->subcontact_type = $request->input('subcontact_type');
+
         $person->prefix_id = $request->input('prefix_id');
         $person->first_name = $request->input('first_name');
         $person->middle_name = $request->input('middle_name');
         $person->last_name = $request->input('last_name');
         $person->suffix_id = $request->input('suffix_id');
         $person->nick_name = $request->input('nick_name');
-        $person->contact_type = $request->input('contact_type');
-        $person->subcontact_type = $request->input('subcontact_type');
 
         if (empty($request->input('display_name'))) {
             $person->display_name = $person->first_name.' '.$person->last_name;
