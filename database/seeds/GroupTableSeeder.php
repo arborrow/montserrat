@@ -12,12 +12,12 @@ class GroupTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('group')->delete();
-        
+
         \DB::table('group')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'name' => 'Innkeeper',
@@ -43,7 +43,7 @@ class GroupTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'name' => 'Director',
@@ -69,7 +69,7 @@ class GroupTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'name' => 'Assistant',
@@ -95,7 +95,7 @@ class GroupTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'name' => 'Bishop',
@@ -121,7 +121,7 @@ class GroupTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
                 'name' => 'Priest',
@@ -147,7 +147,7 @@ class GroupTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 6,
                 'name' => 'Deacon',
@@ -173,7 +173,7 @@ class GroupTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 7,
                 'name' => 'Jesuit',
@@ -199,7 +199,7 @@ class GroupTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            7 => 
+            7 =>
             array (
                 'id' => 8,
                 'name' => 'Provincial',
@@ -225,7 +225,7 @@ class GroupTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            8 => 
+            8 =>
             array (
                 'id' => 9,
                 'name' => 'Superior',
@@ -251,7 +251,7 @@ class GroupTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            9 => 
+            9 =>
             array (
                 'id' => 10,
                 'name' => 'Pastor',
@@ -277,12 +277,12 @@ class GroupTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            10 => 
+            10 =>
             array (
                 'id' => 11,
-                'name' => 'Captain',
-                'title' => 'Captains',
-                'description' => 'Captains',
+                'name' => 'Ambassador',
+                'title' => 'Ambassador',
+                'description' => 'Ambassadors',
                 'source' => NULL,
                 'saved_search_id' => NULL,
                 'is_active' => 1,
@@ -303,7 +303,7 @@ class GroupTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            11 => 
+            11 =>
             array (
                 'id' => 12,
                 'name' => 'Board member',
@@ -329,7 +329,7 @@ class GroupTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            12 => 
+            12 =>
             array (
                 'id' => 13,
                 'name' => 'Staff',
@@ -355,7 +355,7 @@ class GroupTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            13 => 
+            13 =>
             array (
                 'id' => 14,
                 'name' => 'Volunteer',
@@ -381,7 +381,7 @@ class GroupTableSeeder extends Seeder
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
-            14 => 
+            14 =>
             array (
                 'id' => 15,
                 'name' => 'Stewards',
@@ -407,7 +407,7 @@ class GroupTableSeeder extends Seeder
                 'created_at' => '2016-09-29 17:40:53',
                 'updated_at' => '2016-09-29 17:40:53',
             ),
-            15 => 
+            15 =>
             array (
                 'id' => 16,
                 'name' => 'Runner',
@@ -433,7 +433,7 @@ class GroupTableSeeder extends Seeder
                 'created_at' => '2017-05-04 13:27:33',
                 'updated_at' => '2017-05-04 13:31:09',
             ),
-            16 => 
+            16 =>
             array (
                 'id' => 17,
                 'name' => 'HLM2017',
@@ -460,7 +460,7 @@ class GroupTableSeeder extends Seeder
                 'updated_at' => '2017-10-10 11:58:55',
             ),
         ));
-        
-        
+
+
     }
 }
