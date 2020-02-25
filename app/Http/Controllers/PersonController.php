@@ -194,7 +194,7 @@ class PersonController extends Controller
         // save donor relationship
         if ($request->input('is_donor') > 0) {
             $relationship_donor = new \App\Relationship;
-            $relationship_donor->contact_id_a = config('polanco.contact.montserrat');
+            $relationship_donor->contact_id_a = config('polanco.self.id');
             $relationship_donor->contact_id_b = $person->id;
             $relationship_donor->relationship_type_id = config('polanco.relationship_type.donor');
             $relationship_donor->is_active = 1;
@@ -204,7 +204,7 @@ class PersonController extends Controller
         // save retreatant relationship
         if ($request->input('is_retreatant') > 0) {
             $relationship_retreatant = new \App\Relationship;
-            $relationship_retreatant->contact_id_a = config('polanco.contact.montserrat');
+            $relationship_retreatant->contact_id_a = config('polanco.self.id');
             $relationship_retreatant->contact_id_b = $person->id;
             $relationship_retreatant->relationship_type_id = config('polanco.relationship_type.retreatant');
             $relationship_retreatant->is_active = 1;
@@ -214,7 +214,7 @@ class PersonController extends Controller
         // save volunteer relationship
         if ($request->input('is_volunteer') > 0) {
             $relationship_volunteer = new \App\Relationship;
-            $relationship_volunteer->contact_id_a = config('polanco.contact.montserrat');
+            $relationship_volunteer->contact_id_a = config('polanco.self.id');
             $relationship_volunteer->contact_id_b = $person->id;
             $relationship_volunteer->relationship_type_id = config('polanco.relationship_type.volunteer');
             $relationship_volunteer->is_active = 1;
@@ -229,7 +229,7 @@ class PersonController extends Controller
         // save captain relationship
         if ($request->input('is_captain') > 0) {
             $relationship_captain = new \App\Relationship;
-            $relationship_captain->contact_id_a = config('polanco.contact.montserrat');
+            $relationship_captain->contact_id_a = config('polanco.self.id');
             $relationship_captain->contact_id_b = $person->id;
             $relationship_captain->relationship_type_id = config('polanco.relationship_type.captain');
             $relationship_captain->is_active = 1;
@@ -243,7 +243,7 @@ class PersonController extends Controller
         // save retreat director relationship
         if ($request->input('is_director') > 0) {
             $relationship_director = new \App\Relationship;
-            $relationship_director->contact_id_a = config('polanco.contact.montserrat');
+            $relationship_director->contact_id_a = config('polanco.self.id');
             $relationship_director->contact_id_b = $person->id;
             $relationship_director->relationship_type_id = config('polanco.relationship_type.retreat_director');
             $relationship_director->is_active = 1;
@@ -257,7 +257,7 @@ class PersonController extends Controller
         // save retreat innkeeper relationship
         if ($request->input('is_innkeeper') > 0) {
             $relationship_innkeeper = new \App\Relationship;
-            $relationship_innkeeper->contact_id_a = config('polanco.contact.montserrat');
+            $relationship_innkeeper->contact_id_a = config('polanco.self.id');
             $relationship_innkeeper->contact_id_b = $person->id;
             $relationship_innkeeper->relationship_type_id = config('polanco.relationship_type.retreat_innkeeper');
             $relationship_innkeeper->is_active = 1;
@@ -271,7 +271,7 @@ class PersonController extends Controller
         // save retreat assistant relationship
         if ($request->input('is_assistant') > 0) {
             $relationship_assistant = new \App\Relationship;
-            $relationship_assistant->contact_id_a = config('polanco.contact.montserrat');
+            $relationship_assistant->contact_id_a = config('polanco.self.id');
             $relationship_assistant->contact_id_b = $person->id;
             $relationship_assistant->relationship_type_id = config('polanco.relationship_type.retreat_assistant');
             $relationship_assistant->is_active = 1;
@@ -286,7 +286,7 @@ class PersonController extends Controller
         if ($request->input('is_staff') > 0) {
             $relationship_staff = new \App\Relationship;
             $relationship_staff->contact_id_a = $person->id;
-            $relationship_staff->contact_id_b = config('polanco.contact.montserrat');
+            $relationship_staff->contact_id_b = config('polanco.self.id');
             $relationship_staff->relationship_type_id = config('polanco.relationship_type.staff');
             $relationship_staff->is_active = 1;
             $relationship_staff->save();
@@ -307,7 +307,7 @@ class PersonController extends Controller
         // save board member relationship
         if ($request->input('is_board') > 0) {
             $relationship_board = new \App\Relationship;
-            $relationship_board->contact_id_a = config('polanco.contact.montserrat');
+            $relationship_board->contact_id_a = config('polanco.self.id');
             $relationship_board->contact_id_b = $person->id;
             $relationship_board->relationship_type_id = config('polanco.relationship_type.board_member');
             $relationship_board->start_date = \Carbon\Carbon::now();
@@ -381,15 +381,15 @@ class PersonController extends Controller
 
         /*
         $this->save_relationship('parish_id',$parish_id,$person->id,config('polanco.relationship_type.parishioner'));
-        $this->save_relationship('is_donor',config('polanco.contact.montserrat'),$person->id,config('polanco.relationship_type.donor'));
-        $this->save_relationship('is_retreatant',config('polanco.contact.montserrat'),$person->id,config('polanco.relationship_type.retreatant'));
-        $this->save_relationship('is_volunteer',config('polanco.contact.montserrat'),$person->id,config('polanco.relationship_type.volunteer'));
-        $this->save_relationship('is_captain',config('polanco.contact.montserrat'),$person->id,config('polanco.relationship_type.captain'));
-        $this->save_relationship('is_director',config('polanco.contact.montserrat'),$person->id,config('polanco.relationship_type.retreat_director'));
-        $this->save_relationship('is_innkeeper',config('polanco.contact.montserrat'),$person->id,config('polanco.relationship_type.retreat_innkeeper'));
-        $this->save_relationship('is_assistant',config('polanco.contact.montserrat'),$person->id,config('polanco.relationship_type.retreat_assistant'));
-        $this->save_relationship('is_staff',config('polanco.contact.montserrat'),$person->id,config('polanco.relationship_type.staff'));
-        $this->save_relationship('is_board',config('polanco.contact.montserrat'),$person->id,config('polanco.relationship_type.board_member'));
+        $this->save_relationship('is_donor',config('polanco.self.id'),$person->id,config('polanco.relationship_type.donor'));
+        $this->save_relationship('is_retreatant',config('polanco.self.id'),$person->id,config('polanco.relationship_type.retreatant'));
+        $this->save_relationship('is_volunteer',config('polanco.self.id'),$person->id,config('polanco.relationship_type.volunteer'));
+        $this->save_relationship('is_captain',config('polanco.self.id'),$person->id,config('polanco.relationship_type.captain'));
+        $this->save_relationship('is_director',config('polanco.self.id'),$person->id,config('polanco.relationship_type.retreat_director'));
+        $this->save_relationship('is_innkeeper',config('polanco.self.id'),$person->id,config('polanco.relationship_type.retreat_innkeeper'));
+        $this->save_relationship('is_assistant',config('polanco.self.id'),$person->id,config('polanco.relationship_type.retreat_assistant'));
+        $this->save_relationship('is_staff',config('polanco.self.id'),$person->id,config('polanco.relationship_type.staff'));
+        $this->save_relationship('is_board',config('polanco.self.id'),$person->id,config('polanco.relationship_type.board_member'));
         */
 
         // save health, dietary, general and room preference notes
@@ -1211,7 +1211,7 @@ class PersonController extends Controller
         if ($request->input('is_donor') == 0) {
             $relationship_donor->delete();
         } else {
-            $relationship_donor->contact_id_a = config('polanco.contact.montserrat');
+            $relationship_donor->contact_id_a = config('polanco.self.id');
             $relationship_donor->contact_id_b = $person->id;
             $relationship_donor->relationship_type_id = config('polanco.relationship_type.donor');
             $relationship_donor->is_active = 1;
@@ -1222,7 +1222,7 @@ class PersonController extends Controller
         if ($request->input('is_retreatant') == 0) {
             $relationship_retreatant->delete();
         } else {
-            $relationship_retreatant->contact_id_a = config('polanco.contact.montserrat');
+            $relationship_retreatant->contact_id_a = config('polanco.self.id');
             $relationship_retreatant->contact_id_b = $person->id;
             $relationship_retreatant->relationship_type_id = config('polanco.relationship_type.retreatant');
             $relationship_retreatant->is_active = 1;
@@ -1233,7 +1233,7 @@ class PersonController extends Controller
         if ($request->input('is_volunteer') == 0) {
             $relationship_volunteer->delete();
         } else {
-            $relationship_volunteer->contact_id_a = config('polanco.contact.montserrat');
+            $relationship_volunteer->contact_id_a = config('polanco.self.id');
             $relationship_volunteer->contact_id_b = $person->id;
             $relationship_volunteer->relationship_type_id = config('polanco.relationship_type.volunteer');
             $relationship_volunteer->is_active = 1;
@@ -1244,7 +1244,7 @@ class PersonController extends Controller
         if ($request->input('is_captain') == 0) {
             $relationship_captain->delete();
         } else {
-            $relationship_captain->contact_id_a = config('polanco.contact.montserrat');
+            $relationship_captain->contact_id_a = config('polanco.self.id');
             $relationship_captain->contact_id_b = $person->id;
             $relationship_captain->relationship_type_id = config('polanco.relationship_type.captain');
             $relationship_captain->is_active = 1;
@@ -1255,7 +1255,7 @@ class PersonController extends Controller
         if ($request->input('is_director') == 0) {
             $relationship_director->delete();
         } else {
-            $relationship_director->contact_id_a = config('polanco.contact.montserrat');
+            $relationship_director->contact_id_a = config('polanco.self.id');
             $relationship_director->contact_id_b = $person->id;
             $relationship_director->relationship_type_id = config('polanco.relationship_type.retreat_director');
             $relationship_director->is_active = 1;
@@ -1266,7 +1266,7 @@ class PersonController extends Controller
         if ($request->input('is_innkeeper') == 0) {
             $relationship_innkeeper->delete();
         } else {
-            $relationship_innkeeper->contact_id_a = config('polanco.contact.montserrat');
+            $relationship_innkeeper->contact_id_a = config('polanco.self.id');
             $relationship_innkeeper->contact_id_b = $person->id;
             $relationship_innkeeper->relationship_type_id = config('polanco.relationship_type.retreat_innkeeper');
             $relationship_innkeeper->is_active = 1;
@@ -1277,7 +1277,7 @@ class PersonController extends Controller
         if ($request->input('is_assistant') == 0) {
             $relationship_assistant->delete();
         } else {
-            $relationship_assistant->contact_id_a = config('polanco.contact.montserrat');
+            $relationship_assistant->contact_id_a = config('polanco.self.id');
             $relationship_assistant->contact_id_b = $person->id;
             $relationship_assistant->relationship_type_id = config('polanco.relationship_type.retreat_assistant');
             $relationship_assistant->is_active = 1;
@@ -1289,7 +1289,7 @@ class PersonController extends Controller
             $relationship_staff->delete();
         } else {
             $relationship_staff->contact_id_a = $person->id;
-            $relationship_staff->contact_id_b = config('polanco.contact.montserrat');
+            $relationship_staff->contact_id_b = config('polanco.self.id');
             $relationship_staff->relationship_type_id = config('polanco.relationship_type.staff');
             $relationship_staff->is_active = 1;
             $relationship_staff->save();
@@ -1304,7 +1304,7 @@ class PersonController extends Controller
                 $relationship_board->save();
             }
         } else {
-            $relationship_board->contact_id_a = config('polanco.contact.montserrat');
+            $relationship_board->contact_id_a = config('polanco.self.id');
             $relationship_board->contact_id_b = $person->id;
             $relationship_board->relationship_type_id = config('polanco.relationship_type.board_member');
             $relationship_board->start_date = \Carbon\Carbon::now();

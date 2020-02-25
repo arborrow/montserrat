@@ -78,7 +78,7 @@ class PersonControllerTest extends TestCase
       $response->assertViewIs('persons.role');
       $response->assertViewHas('persons');
       $response->assertViewHas('role');
-      $response->assertSeeText('Captain');
+      $response->assertSeeText('Ambassador');
 
     }
 

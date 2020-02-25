@@ -36,9 +36,11 @@ class GateControllerTest extends TestCase
     public function close_returns_an_ok_response()
     {
 	    $user = $this->createUserWithPermission('show-gate');
+        $email = factory(\App\Email::class)->create([
+            'email' => $user->email,
+        ]);
 
         $response = $this->actingAs($user)->get(route('gate.close'));
-
         $response->assertOk();
         $response->assertViewIs('gate.close');
         $response->assertViewHas('message');
@@ -51,9 +53,11 @@ class GateControllerTest extends TestCase
     public function open_returns_an_ok_response()
     {
 	    $user = $this->createUserWithPermission('show-gate');
+        $email = factory(\App\Email::class)->create([
+            'email' => $user->email,
+        ]);
 
         $response = $this->actingAs($user)->get(route('gate.open'));
-
         $response->assertOk();
         $response->assertViewIs('gate.open');
         $response->assertViewHas('hours');

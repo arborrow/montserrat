@@ -107,13 +107,13 @@ class GateController extends Controller
             // create touchpoint to log open and closing of gate
             $text =  !isset($hours) ? null : ' for '. $hours. ' hours';
             $current_user = Auth::user();
+
             $user_email = \App\Email::whereEmail($current_user->email)->first();
             if (empty($user_email->contact_id)) {
                 $defaults['user_id'] = config('polanco.self.id');
             } else {
                 $defaults['user_id'] = $user_email->contact_id;
             }
-
             $touchpoint = new \App\Touchpoint;
             $touchpoint->person_id = config('polanco.self.id');
             $touchpoint->staff_id = $user_email->contact_id;
