@@ -901,16 +901,12 @@ class PersonController extends Controller
         $person->suffix_id = $request->input('suffix_id');
         $person->nick_name = $request->input('nick_name');
 
-        if (empty($request->input('display_name'))) {
-            $person->display_name = $person->first_name.' '.$person->last_name;
-        } else {
+        if (!empty($request->input('display_name'))) {
             $person->display_name = $request->input('display_name');
-        }
-        if (empty($request->input('sort_name'))) {
-            $person->sort_name = $person->last_name.', '.$person->first_name;
-        } else {
+        } // if no display_name is sent in the request, leave the existing data
+        if (!empty($request->input('sort_name'))) {
             $person->sort_name = $request->input('sort_name');
-        }
+        } // if no sort_name is sent in the request, leave the existing data
 
         //demographic info
         $person->gender_id = $request->input('gender_id');
@@ -1222,6 +1218,7 @@ class PersonController extends Controller
             $relationship_donor->save();
         }
         $relationship_retreatant = \App\Relationship::firstOrNew(['contact_id_b'=>$person->id, 'relationship_type_id'=>config('polanco.relationship_type.retreatant'), 'is_active'=>1]);
+
         if ($request->input('is_retreatant') == 0) {
             $relationship_retreatant->delete();
         } else {
@@ -1231,6 +1228,7 @@ class PersonController extends Controller
             $relationship_retreatant->is_active = 1;
             $relationship_retreatant->save();
         }
+
         $relationship_volunteer = \App\Relationship::firstOrNew(['contact_id_b'=>$person->id, 'relationship_type_id'=>config('polanco.relationship_type.volunteer'), 'is_active'=>1]);
         if ($request->input('is_volunteer') == 0) {
             $relationship_volunteer->delete();
@@ -1241,6 +1239,7 @@ class PersonController extends Controller
             $relationship_volunteer->is_active = 1;
             $relationship_volunteer->save();
         }
+
         $relationship_captain = \App\Relationship::firstOrNew(['contact_id_b'=>$person->id, 'relationship_type_id'=>config('polanco.relationship_type.captain'), 'is_active'=>1]);
         if ($request->input('is_captain') == 0) {
             $relationship_captain->delete();
@@ -1251,6 +1250,7 @@ class PersonController extends Controller
             $relationship_captain->is_active = 1;
             $relationship_captain->save();
         }
+
         $relationship_director = \App\Relationship::firstOrNew(['contact_id_b'=>$person->id, 'relationship_type_id'=>config('polanco.relationship_type.retreat_director'), 'is_active'=>1]);
         if ($request->input('is_director') == 0) {
             $relationship_director->delete();
@@ -1261,6 +1261,7 @@ class PersonController extends Controller
             $relationship_director->is_active = 1;
             $relationship_director->save();
         }
+
         $relationship_innkeeper = \App\Relationship::firstOrNew(['contact_id_b'=>$person->id, 'relationship_type_id'=>config('polanco.relationship_type.retreat_innkeeper'), 'is_active'=>1]);
         if ($request->input('is_innkeeper') == 0) {
             $relationship_innkeeper->delete();
@@ -1271,6 +1272,7 @@ class PersonController extends Controller
             $relationship_innkeeper->is_active = 1;
             $relationship_innkeeper->save();
         }
+
         $relationship_assistant = \App\Relationship::firstOrNew(['contact_id_b'=>$person->id, 'relationship_type_id'=>config('polanco.relationship_type.retreat_assistant'), 'is_active'=>1]);
         if ($request->input('is_assistant') == 0) {
             $relationship_assistant->delete();
@@ -1281,6 +1283,7 @@ class PersonController extends Controller
             $relationship_assistant->is_active = 1;
             $relationship_assistant->save();
         }
+
         $relationship_staff = \App\Relationship::firstOrNew(['contact_id_a'=>$person->id, 'relationship_type_id'=>config('polanco.relationship_type.staff'), 'is_active'=>1]);
         if ($request->input('is_staff') == 0) {
             $relationship_staff->delete();
@@ -1291,6 +1294,7 @@ class PersonController extends Controller
             $relationship_staff->is_active = 1;
             $relationship_staff->save();
         }
+
         // for Board Members we are not deleting the relationship but ending it and making it inactive
         $relationship_board = \App\Relationship::firstOrNew(['contact_id_b'=>$person->id, 'relationship_type_id'=>config('polanco.relationship_type.board_member')]);
         if ($request->input('is_board') == 0) {
@@ -1319,6 +1323,7 @@ class PersonController extends Controller
             $group_captain->deleted_at = null;
             $group_captain->save();
         }
+
         $group_hlm2017 = \App\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.hlm2017'), 'status'=>'Added']);
         if ($request->input('is_hlm2017') == 0) {
             $group_hlm2017->delete();
@@ -1329,6 +1334,7 @@ class PersonController extends Controller
             $group_hlm2017->deleted_at = null;
             $group_hlm2017->save();
         }
+
         $group_volunteer = \App\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.volunteer'), 'status'=>'Added']);
         if ($request->input('is_volunteer') == 0) {
             $group_volunteer->delete();
@@ -1339,6 +1345,7 @@ class PersonController extends Controller
             $group_volunteer->deleted_at = null;
             $group_volunteer->save();
         }
+
         $group_bishop = \App\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.bishop'), 'status'=>'Added']);
         if ($request->input('is_bishop') == 0) {
             $group_bishop->delete();
@@ -1349,6 +1356,7 @@ class PersonController extends Controller
             $group_bishop->deleted_at = null;
             $group_bishop->save();
         }
+
         $group_priest = \App\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.priest'), 'status'=>'Added']);
         if ($request->input('is_priest') == 0) {
             $group_priest->delete();
@@ -1359,6 +1367,7 @@ class PersonController extends Controller
             $group_priest->deleted_at = null;
             $group_priest->save();
         }
+
         $group_deacon = \App\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.deacon'), 'status'=>'Added']);
         if ($request->input('is_deacon') == 0) {
             $group_deacon->delete();
@@ -1369,6 +1378,7 @@ class PersonController extends Controller
             $group_deacon->deleted_at = null;
             $group_deacon->save();
         }
+
         $group_pastor = \App\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.pastor'), 'status'=>'Added']);
         if ($request->input('is_pastor') == 0) {
             $group_pastor->delete();
@@ -1379,6 +1389,7 @@ class PersonController extends Controller
             $group_pastor->deleted_at = null;
             $group_pastor->save();
         }
+
         $group_jesuit = \App\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.jesuit'), 'status'=>'Added']);
         if ($request->input('is_jesuit') == 0) {
             $group_jesuit->delete();
@@ -1389,6 +1400,7 @@ class PersonController extends Controller
             $group_jesuit->deleted_at = null;
             $group_jesuit->save();
         }
+
         $group_provincial = \App\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.provincial'), 'status'=>'Added']);
         if ($request->input('is_provincial') == 0) {
             $group_provincial->delete();
@@ -1399,6 +1411,7 @@ class PersonController extends Controller
             $group_provincial->deleted_at = null;
             $group_provincial->save();
         }
+
         $group_superior = \App\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.superior'), 'status'=>'Added']);
         if ($request->input('is_superior') == 0) {
             $group_superior->delete();
@@ -1409,6 +1422,7 @@ class PersonController extends Controller
             $group_superior->deleted_at = null;
             $group_superior->save();
         }
+
         $group_board = \App\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.board')]);
         if ($request->input('is_board') == 0) {
             if (isset($group_board->id)) {
@@ -1422,6 +1436,7 @@ class PersonController extends Controller
             $group_board->deleted_at = null;
             $group_board->save();
         }
+
         $group_staff = \App\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.staff'), 'status'=>'Added']);
         if ($request->input('is_staff') == 0) {
             $group_staff->delete();
@@ -1432,6 +1447,7 @@ class PersonController extends Controller
             $group_staff->deleted_at = null;
             $group_staff->save();
         }
+
         $group_steward = \App\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.steward'), 'status'=>'Added']);
         if ($request->input('is_steward') == 0) {
             $group_steward->delete();
@@ -1442,6 +1458,7 @@ class PersonController extends Controller
             $group_steward->deleted_at = null;
             $group_steward->save();
         }
+
         $group_director = \App\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.director'), 'status'=>'Added']);
         if ($request->input('is_director') == 0) {
             $group_director->delete();
@@ -1452,6 +1469,7 @@ class PersonController extends Controller
             $group_director->deleted_at = null;
             $group_director->save();
         }
+
         $group_innkeeper = \App\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.innkeeper'), 'status'=>'Added']);
         if ($request->input('is_innkeeper') == 0) {
             $group_innkeeper->delete();
@@ -1462,6 +1480,7 @@ class PersonController extends Controller
             $group_innkeeper->deleted_at = null;
             $group_innkeeper->save();
         }
+
         $group_assistant = \App\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.assistant'), 'status'=>'Added']);
         if ($request->input('is_assistant') == 0) {
             $group_assistant->delete();
@@ -1472,6 +1491,7 @@ class PersonController extends Controller
             $group_assistant->deleted_at = null;
             $group_assistant->save();
         }
+
         if (null !== $request->input('agc_household_name')) {
             $agc2019 = \App\Agc2019::find($person->id);
             if (isset($agc2019->contact_id)) {

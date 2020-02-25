@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreAddressRequest;
+use App\Http\Requests\UpdateAddressRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Address;
@@ -57,7 +59,7 @@ class AddressController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAddressRequest $request)
     {
         $this->authorize('create-address');
         $address = new \App\Address;
@@ -118,7 +120,7 @@ class AddressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateAddressRequest $request, $id)
     {
         $this->authorize('update-address');
         $address = \App\Address::findOrFail($id);

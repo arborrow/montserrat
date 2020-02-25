@@ -105,29 +105,42 @@ class AddressControllerTest extends TestCase
      * @test
      */
     public function store_returns_an_ok_response()
-    {
+    {   $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-address');
         $contact = factory(\App\Contact::class)->create();
-        $random_location_type_id = \App\LocationType::get()->random()->pluck('id');
-        $random_state_id = \App\StateProvince::whereCountryId(config('polanco.country_id_usa'))->get()->random()->pluck('id');
+        $random_location_type = \App\LocationType::get()->random();
+        $random_state = \App\StateProvince::whereCountryId(config('polanco.country_id_usa'))->get()->random();
         $random_street_address = $this->faker->streetAddress;
-
+        
         $response = $this->actingAs($user)->post(route('address.store'), [
             'contact_id' => $contact->id,
-            'location_type' => $random_location_type_id,
+            'location_type_id' => $random_location_type->id,
             'is_primary' => $this->faker->boolean,
             'street_address' => $random_street_address,
             'supplemental_address_1' => $this->faker->streetAddress,
             'city' => $this->faker->city,
-            'state_province_id' => $random_state_id,
+            'state_province_id' => $random_state->id,
             'postal_code' => $this->faker->postcode,
             'country_id' => config('polanco.country_id_usa'),
         ]);
+
         $response->assertRedirect(action('AddressController@index'));
         $this->assertDatabaseHas('address', [
           'contact_id' => $contact->id,
           'street_address' => $random_street_address,
         ]);
+    }
+
+    /**
+     * @test
+     */
+    public function store_validates_with_a_form_request()
+    {
+        $this->assertActionUsesFormRequest(
+            \App\Http\Controllers\AddressController::class,
+            'store',
+            \App\Http\Requests\StoreAddressRequest::class
+        );
     }
 
     /**
@@ -142,6 +155,7 @@ class AddressControllerTest extends TestCase
 
         $response = $this->actingAs($user)->put(route('address.update', [$address]), [
             'contact_id' => $address->contact_id,
+            'location_type_id' => $address->location_type_id,
             'street_address' => $this->faker->streetAddress,
         ]);
 
@@ -151,4 +165,17 @@ class AddressControllerTest extends TestCase
         $this->assertEquals($updated_address->contact_id,$contact_id);
         $this->assertNotEquals($updated_address->street_address, $original_street_address);
     }
+
+
+        /**
+         * @test
+         */
+        public function update_validates_with_a_form_request()
+        {
+            $this->assertActionUsesFormRequest(
+                \App\Http\Controllers\AddressController::class,
+                'update',
+                \App\Http\Requests\UpdateAddressRequest::class
+            );
+        }
 }
