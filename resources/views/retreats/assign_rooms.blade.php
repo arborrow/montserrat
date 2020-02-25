@@ -4,7 +4,7 @@
 <section class="section-padding">
     <div class="jumbotron text-left">
         {!! Form::open(['url' => 'retreat/room_update', 'method' => 'POST', 'route' => ['retreat.room_update', $retreat->id]]) !!}
-        
+
         <div class="panel panel-default">
             <div class="panel-heading">
                 <span><h2>Retreat #<a href="{{url('retreat/'.$retreat->id)}}">{{ $retreat->idnumber }} - {{ $retreat->title }}</a></span>
@@ -24,11 +24,11 @@
                     @else
                     <div class='col-md-2'>
                         @foreach($retreat->retreatmasters as $rm)
-                            <a href="{{url('person/'.$rm->id)}}">{{ $rm->display_name }}</a><br /> 
+                            <a href="{{url('person/'.$rm->id)}}">{{ $rm->display_name }}</a><br />
                         @endforeach
                         </div>
                     @endif
-    
+
                 <div class='col-md-3'><strong>Innkeeper: </strong>
                     @if ($retreat->innkeeper_id > 0)
                         <a href="{{url('person/'.$retreat->innkeeper_id)}}">{{ $retreat->innkeeper->display_name }}</a>
@@ -46,13 +46,13 @@
 
             </div><div class="clearfix"> </div>
             <div class='row'>
-                <div class='col-md-1'><strong>Captain(s): </strong></div>
+                <div class='col-md-1'><strong>Ambassador(s): </strong></div>
                     @if ($retreat->captains->isEmpty())
                         N/A
                     @else
                     <div class='col-md-2'>
                         @foreach($retreat->captains as $captain)
-                            <a href="/person/{{ $captain->id }}">{{ $captain->display_name }}</a><br /> 
+                            <a href="/person/{{ $captain->id }}">{{ $captain->display_name }}</a><br />
                         @endforeach
                     </div>
                     @endif
@@ -60,15 +60,15 @@
             <div class='row'>
                 <div class='col-md-3'><strong>Type: </strong>{{ $retreat->retreat_type}}</div>
             </div><div class="clearfix"> </div>
-                
+
         </div>
             <hr>
-        <div class="panel panel-default">  
+        <div class="panel panel-default">
         <div class="panel-heading">
             <h2>Registered Retreatants</h2>
             Save Room Assignments {!! Form::image('images/save.png','btnSave',['class' => 'btn btn-outline-dark']) !!}
 
-            
+
         </div>
             @if ($registrations->isEmpty())
                 <p> Currently, there are no registrations for this retreats</p>
@@ -96,7 +96,7 @@
                             Canceled
                             @endIf
                         </td>
-                        <td class='col-md-3'>    
+                        <td class='col-md-3'>
                             {!! Form::text('notes['.$registration->id.']', $registration->notes) !!}
                         </td>
                     </tr>

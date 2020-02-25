@@ -123,7 +123,7 @@
                             <tr>
                                 <td><a href="../person/{{$parishioner->contact_b->id}}">
                                         @if($parishioner->contact_b->is_captain)
-                                            {!! Html::image('images/captain.png', 'Captain',array('title'=>"Captain",'class' => 'btn btn-outline-dark')) !!}
+                                            {!! Html::image('images/captain.png', 'Ambassador',array('title'=>"Ambassador",'class' => 'btn btn-outline-dark')) !!}
                                         @endIf
                                         {!! $parishioner->contact_b->contact_link_full_name !!} ({{$parishioner->contact_b->participant_count}})
                                     </a>

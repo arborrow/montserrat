@@ -68,7 +68,7 @@
                 @else
                     N/A <br>
                 @endIf
-                <span class="font-weight-bold">Captain(s): </span>
+                <span class="font-weight-bold">Ambassador(s): </span>
                 @if ($retreat->captains->isEmpty())
                     N/A <br>
                 @else
@@ -143,7 +143,7 @@
                         {!!Html::link(url('retreat/'.$retreat->id.'/edit'),$retreat->title.' ('.$retreat->idnumber.')')!!}
                     @else
                         {{$retreat->title.' ('.$retreat->idnumber.')'}}
-                    @endCan 
+                    @endCan
                 </h2>
                 @can('create-registration')
                     {!! Html::link(action('RegistrationController@register',$retreat->id),'Register a retreatant',array('class' => 'btn btn-outline-dark'))!!}

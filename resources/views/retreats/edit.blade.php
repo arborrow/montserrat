@@ -41,7 +41,7 @@
                             {!! Form::select('directors[]', $d, $retreat->retreatmasters->pluck('id')->toArray(), ['id'=>'directors','class' => 'form-control select2','multiple' => 'multiple']) !!}
                         </div>
                         <div class="col-12 col-lg-4">
-                            {!! Form::label('captains', 'Captain(s):') !!}
+                            {!! Form::label('captains', 'Ambassador(s):') !!}
                             {!! Form::select('captains[]', $c, $retreat->captains->pluck('id')->toArray(), ['id'=>'captains','class' => 'form-control select2','multiple' => 'multiple']) !!}
                         </div>
                     </div>

@@ -8,7 +8,7 @@
     </div>
     <div class="col-12 text-center">
         @if ($person->is_board_member) <span><a href={{ action('PersonController@boardmembers') }}>{!! Html::image('images/board.png', 'Board Members Group',array('title'=>"Board Members Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
-        @if ($person->is_captain) <span><a href={{ action('PersonController@captains') }}>{!! Html::image('images/captain.png', 'Captains Group',array('title'=>"Captains Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
+        @if ($person->is_captain) <span><a href={{ action('PersonController@captains') }}>{!! Html::image('images/captain.png', 'Ambassador Group',array('title'=>"Captains Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
         @if ($person->is_staff) <span><a href={{ action('PersonController@staff') }}>{!! Html::image('images/employee.png', 'Staff Group',array('title'=>"Employees Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
         @if ($person->is_steward) <span><a href={{ action('PersonController@stewards') }}>{!! Html::image('images/steward.png', 'Steward Group',array('title'=>"Stewards Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
         @if ($person->is_volunteer) <span><a href={{ action('PersonController@volunteers') }}>{!! Html::image('images/volunteer.png', 'Volunteers Group',array('title'=>"Volunteers Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
@@ -318,7 +318,7 @@
                 <div class="col-4 col-md-2">
                     <div class="form-check">
                         {!! Form::checkbox('is_captain', 1, $person->is_captain,['class' => 'form-check-input']) !!}
-                        {!! Form::label('is_captain', 'Captain', ['class' => 'form-check-label']) !!}
+                        {!! Form::label('is_captain', 'Ambassador', ['class' => 'form-check-label']) !!}
                     </div>
                 </div>
                 <div class="col-4 col-md-2">

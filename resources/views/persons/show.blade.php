@@ -28,7 +28,7 @@
             <div class="col-12 mt-2">
                 @can('show-group')
                 @if ($person->is_board_member) <span><a href={{ action('PersonController@boardmembers') }}>{!! Html::image('images/board.png', 'Board Members Group',array('title'=>"Board Members Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
-                @if ($person->is_captain) <span><a href={{ action('PersonController@captains') }}>{!! Html::image('images/captain.png', 'Captains Group',array('title'=>"Captains Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
+                @if ($person->is_captain) <span><a href={{ action('PersonController@captains') }}>{!! Html::image('images/captain.png', 'Ambassador Group',array('title'=>"Captains Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
                 @if ($person->is_staff) <span><a href={{ action('PersonController@staff') }}>{!! Html::image('images/employee.png', 'Staff Group',array('title'=>"Employees Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
                 @if ($person->is_steward) <span><a href={{ action('PersonController@stewards') }}>{!! Html::image('images/steward.png', 'Steward Group',array('title'=>"Stewards Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
                 @if ($person->is_volunteer) <span><a href={{ action('PersonController@volunteers') }}>{!! Html::image('images/volunteer.png', 'Volunteers Group',array('title'=>"Volunteers Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf

@@ -7,14 +7,14 @@
             <div class="panel-heading">
                 <h2>
                     @can('update-retreat')
-                        Retreat {!!Html::link(url('retreat/'.$retreat->id.'/edit'),$retreat->idnumber.' - '.$retreat->title.' Waitlist')!!} 
+                        Retreat {!!Html::link(url('retreat/'.$retreat->id.'/edit'),$retreat->idnumber.' - '.$retreat->title.' Waitlist')!!}
                     @else
                         Retreat {{$retreat->idnumber.' - '.$retreat->title}} Waitlist
                     @endCan
                 </h2>
                 {!! Html::link('#registrations','Waitlist Registrations',array('class' => 'btn btn-primary')) !!}
                 {!! Html::link(url('retreat'),'Retreat index',array('class' => 'btn btn-primary')) !!}
-            
+
             </div>
             <div class='row'>
                 <div class='col-md-2'><strong>ID#: </strong>{{ $retreat->idnumber}}</div>
@@ -44,7 +44,7 @@
                         @endforeach
                     @endif
                 </div>
-    
+
                 <div class='col-md-3'><strong>Innkeeper: </strong>
                     @if ($retreat->innkeeper_id > 0)
                         {!!$retreat->innkeeper->contact_link_full_name!!}
@@ -62,7 +62,7 @@
 
             </div><div class="clearfix"> </div>
             <div class='row'>
-                <div class='col-md-6'><strong>Captain(s): </strong>
+                <div class='col-md-6'><strong>Ambassador(s): </strong>
                     @if ($retreat->captains->isEmpty())
                         N/A
                     @else
@@ -100,7 +100,7 @@
                         {!!$retreat->retreat_evaluations_link!!}
                     @endCan
                 </div>
-                    
+
             </div>
             <div class="clearfix"> </div>
             @can('show-event-group-photo')
@@ -108,7 +108,7 @@
 
                     @if (Storage::has('event/'.$retreat->id.'/group_photo.jpg'))
                         <div class='col-md-1'>
-                            <strong>Group photo:</strong> 
+                            <strong>Group photo:</strong>
                         </div>
                         <div class='col-md-8'>
                             <img src="{{url('retreat/'.$retreat->id).'/photo'}}" class="img" style="padding:5px; width:75%">
@@ -118,7 +118,7 @@
                 </div>
             @endCan
             <div class="clearfix"> </div>
-                
+
         </div>
             <div class='row'>
                 @can('update-retreat')
@@ -128,22 +128,22 @@
                 @endCan
                 @can('delete-retreat')
                     <div class='col-md-1'>{!! Form::open(['method' => 'DELETE', 'route' => ['retreat.destroy', $retreat->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                        {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                        {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
                         {!! Form::close() !!}
                     </div>
                 @endCan
                 <div class="clearfix"> </div>
             </div><br />
-        <div class="panel panel-default">  
+        <div class="panel panel-default">
         <div class="panel-heading" id='registrations'>
             <h2>Waitlist for {!!Html::link(url('retreat/'.$retreat->id),$retreat->idnumber.' - '.$retreat->title)!!} </h2>
-            
+
             @can('show-contact')
                 {!! Html::link($retreat->email_waitlist_retreatants,'Email retreatants on waitlist',array('class' => 'btn btn-outline-dark'))!!}
             @endCan
             @can('create-touchpoint')
                 {!! Html::link(action('TouchpointController@add_retreat_waitlist',$retreat->id),'Waitlist touchpoint',array('class' => 'btn btn-outline-dark'))!!}
-            @endCan    
+            @endCan
         </div>
             @if ($registrations->isEmpty())
                 <p> Currently, there is no waitlist for this retreat.</p>
@@ -163,7 +163,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                @can('show-registration')    
+                @can('show-registration')
                     @foreach($registrations->sortBy('register_date') as $registration)
                         <tr>
                             <td id='registration-{{$registration->id}}'><a href="{{action('RegistrationController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }}</a></td>

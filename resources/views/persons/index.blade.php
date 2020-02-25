@@ -24,7 +24,7 @@
             </span>
             <span>
                 <a href={{ action('PersonController@captains') }}>
-                    <img src="{{ URL::asset('images/captain.png') }}" alt="Captains" class="btn btn-info" title="Captains">
+                    <img src="{{ URL::asset('images/captain.png') }}" alt="Ambassadors" class="btn btn-info" title="Ambassadors">
                 </a>
             </span>
             <span>
