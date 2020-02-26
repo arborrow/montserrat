@@ -258,6 +258,37 @@ class RelationshipTypeController extends Controller
         }
     }
 
+    public function make(MakeRelationshipTypeRequest $request)
+    {   // dd($request);
+        $this->authorize('create-relationship');
+        // a very hacky way to get the contact_id of the user that we are creating a relationship for
+        // this allows the ability to redirect back to that user
+        $url_previous = URL::previous();
+        $url_param = strpos($url_previous, 'add') + 4;
+        $url_right = substr($url_previous, $url_param);
+
+        if (strpos($url_right, '/') > 0) {
+            $url_a_param = substr($url_right, 0, strpos($url_right, '/'));
+            $url_b_param = substr($url_right, strpos($url_right, '/') + 1);
+            $contact_id = $url_b_param;
+        } else {
+            $url_a_param = $url_right;
+            $url_b_param = 0;
+            $contact_id = $url_a_param;
+        }
+        //dd($url_right,$url_a_param, $url_b_param);
+        $contact = \App\Contact::findOrFail($contact_id);
+        //dd(url($contact->ContactLink));
+        $relationship = new \App\Relationship;
+        $relationship->contact_id_a = $request->input('contact_a_id');
+        $relationship->contact_id_b = $request->input('contact_b_id');
+        $relationship->relationship_type_id = $request->input('relationship_type_id');
+        $relationship->is_active = 1;
+        $relationship->save();
+
+        return redirect()->to($contact->contact_url);
+    }
+
     public function get_contact_type_list($contact_type = 'Individual', $contact_subtype = null)
     {
         $this->authorize('show-contact');
