@@ -20,7 +20,7 @@ class UpdatePersonRequest extends FormRequest
      * Get the validation rules that apply to the request.
      *
      * TODO: languages and referrals
-     * 
+     *
      * @return array
      */
     public function rules()
@@ -28,19 +28,19 @@ class UpdatePersonRequest extends FormRequest
         return [
             'address_home_address1' => 'string|max:125|nullable',
             'address_home_address2' => 'string|max:125|nullable',
-            'address_home_city' => 'alpha|max:125|nullable',
+            'address_home_city' => 'string|max:125|nullable',
             'address_home_state' => 'integer|min:0|nullable',
             'address_home_zip' => 'alpha_dash|max:12|nullable',
             'address_home_country' => 'integer|min:0|nullable',
             'address_other_address1' => 'string|max:125|nullable',
             'address_other_address2' => 'string|max:125|nullable',
-            'address_other_city' => 'alpha|max:125|nullable',
+            'address_other_city' => 'string|max:125|nullable',
             'address_other_state' => 'integer|min:0|nullable',
             'address_other_zip' => 'alpha_dash|max:12|nullable',
             'address_other_country' => 'integer|min:0|nullable',
             'address_work_address1' => 'string|max:125|nullable',
             'address_work_address2' => 'string|max:125|nullable',
-            'address_work_city' => 'alpha|max:125|nullable',
+            'address_work_city' => 'string|max:125|nullable',
             'address_work_state' => 'integer|min:0|nullable',
             'address_work_zip' => 'alpha_dash|max:12|nullable',
             'address_work_country' => 'integer|min:0|nullable',
