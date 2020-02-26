@@ -373,36 +373,6 @@ class RegistrationController extends Controller
         return Redirect::action('PersonController@show', $registration->contact_id);
     }
 
-    public function update_group(UpdateGroupRegistrationRequest $request, $id)
-    {   //TODO: this does not appear different from an individual update and does not appear to be used elsewhere, either make it do something special or remove it
-        $this->authorize('update-registration');
-
-        $registration = \App\Registration::findOrFail($request->input('id'));
-        $retreat = \App\Retreat::findOrFail($request->input('event_id'));
-
-        $registration->event_id = $request->input('event_id');
-        // TODO: pull this from the retreat's start_date and end_date
-        //$registration->start = $retreat->start;
-        //$registration->end = $retreat->end;
-        $registration->contact_id = $request->input('contact_id');
-        $registration->source = $request->input('source');
-        $registration->status_id = $request->input('status_id');
-        $registration->register_date = $request->input('register_date');
-        $registration->attendance_confirm_date = $request->input('attendance_confirm_date');
-        $registration->registration_confirm_date = $request->input('registration_confirm_date');
-        $registration->confirmed_by = $request->input('confirmed_by');
-        $registration->deposit = $request->input('deposit');
-        $registration->notes = $request->input('notes');
-        $registration->canceled_at = $request->input('canceled_at');
-        $registration->arrived_at = $request->input('arrived_at');
-        $registration->departed_at = $request->input('departed_at');
-
-        $registration->room_id = $request->input('room_id');
-        $registration->save();
-
-        return Redirect::action('RegistrationController@index');
-    }
-
     /**
      * Remove the specified resource from storage.
      *

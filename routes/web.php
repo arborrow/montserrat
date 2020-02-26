@@ -168,7 +168,6 @@ Route::resource('person', 'PersonController');
 Route::get('registration/confirm/{token}', 'RegistrationController@confirmAttendance');
 Route::get('registration/{participant}/email', 'RegistrationController@registrationEmail');
 Route::get('registration/add/{id?}', 'RegistrationController@add');
-Route::post('registration/{id}/update_group', 'RegistrationController@update_group')->name('registration.update_group');
 Route::get('registration/{id}/confirm', 'RegistrationController@confirm')->name('registration.confirm');
 Route::get('registration/{id}/waitlist', 'RegistrationController@waitlist')->name('registration.waitlist');
 Route::get('registration/{id}/offwaitlist', 'RegistrationController@offwaitlist')->name('registration.offwaitlist');
