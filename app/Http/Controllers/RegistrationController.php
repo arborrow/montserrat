@@ -467,11 +467,14 @@ class RegistrationController extends Controller
 
     public function registrationEmail(Registration $participant)
     {
+        $this->authorize('show-registration');
+
         // 1. Get a primary email address for participant.
         $primaryEmail = $participant->contact->primaryEmail()->first();
 
         if ($primaryEmail) {
             // 2. Find Polanco contact for use with touchpoint.
+            // TODO: create Polanco user during initial seeding, allow this to be customized in .env to avoid hardcoded string
             $alfonso = \App\Contact::where('display_name', 'Juan Alfonso de Polanco')->first();
 
             // 3. Setup infomration to be used with touchpoint for sending out registration email.
