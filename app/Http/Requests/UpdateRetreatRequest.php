@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
 
 class UpdateRetreatRequest extends FormRequest
 {
@@ -22,9 +24,9 @@ class UpdateRetreatRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
+    {   // dd($this);
         return [
-            'idnumber' => 'required|unique:event,idnumber,'.$this->id,
+            'idnumber' => ['required', Rule::unique('event')->ignore($this->id)->whereNull('deleted_at'),],
             'start_date' => 'required|date|before:end_date',
             'end_date' => 'required|date|after:start_date',
             'title' => 'required',
