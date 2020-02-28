@@ -78,8 +78,8 @@ class SearchControllerTest extends TestCase
         $response->assertViewIs('search.results');
         $response->assertViewHas('persons');
         $response->assertSeeText('results found');
-        $response->assertSeeText(e($contact->last_name));
-
+        $response->assertSeeText($contact->last_name);
+        
     }
 
     /**
