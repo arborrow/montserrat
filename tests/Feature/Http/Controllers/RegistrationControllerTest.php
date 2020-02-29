@@ -337,6 +337,7 @@ class RegistrationControllerTest extends TestCase
         $response->assertRedirect('person/'.$registration->contact_id);
         $this->assertDatabaseHas('touchpoints', [
           'person_id' => $registration->contact_id,
+          'staff_id' => config('polanco.self.id'),
           'type' => 'Email',
           'notes' => $event->idnumber . ' registration email sent.',
         ]);

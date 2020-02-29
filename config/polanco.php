@@ -9,6 +9,7 @@ return [
 
     /*
      *  Polanco's name
+     *  TODO: rename self.name and self.id to site.id and use site.variable consistently throughout Polanco
      */
 
     'site_name' => 'Polanco',

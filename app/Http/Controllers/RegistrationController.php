@@ -473,14 +473,11 @@ class RegistrationController extends Controller
         $primaryEmail = $participant->contact->primaryEmail()->first();
 
         if ($primaryEmail) {
-            // 2. Find Polanco contact for use with touchpoint.
-            // TODO: create Polanco user during initial seeding, allow this to be customized in .env to avoid hardcoded string
-            $alfonso = \App\Contact::where('display_name', 'Juan Alfonso de Polanco')->first();
 
-            // 3. Setup infomration to be used with touchpoint for sending out registration email.
+            // 2. Setup infomration to be used with touchpoint for sending out registration email.
             $touchpoint = new \App\Touchpoint;
             $touchpoint->person_id = $participant->contact->id;
-            $touchpoint->staff_id = $alfonso->id;
+            $touchpoint->staff_id = config('polanco.self.id');
             $touchpoint->touched_at = Carbon::now();
             $touchpoint->type = 'Email';
 
