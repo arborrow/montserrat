@@ -10,12 +10,16 @@
                     </h1>
                 </div>
                 <div> {!! $chart->container() !!} </div>
+                <hr />
                 <div> {!! $agc_donor_chart->container() !!} </div>
+                <hr />
+                <div> {!! $agc_amount->container() !!} </div>
             </div>
         </div>
     </section>
     {!! $chart->script() !!}
     {!! $agc_donor_chart->script() !!}
+    {!! $agc_amount->script() !!}
 
 
 @stop
