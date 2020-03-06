@@ -9,10 +9,13 @@
                         <span class="grey">Dashboard</span>
                     </h1>
                 </div>
-                {!! $chart->container() !!}
+                <div> {!! $chart->container() !!} </div>
+                <div> {!! $agc_donor_chart->container() !!} </div>
             </div>
         </div>
     </section>
     {!! $chart->script() !!}
+    {!! $agc_donor_chart->script() !!}
+
 
 @stop
