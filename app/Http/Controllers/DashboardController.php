@@ -38,8 +38,11 @@ class DashboardController extends Controller
         $chart->dataset('Ignatian Retreats per Month', 'bar', array_values($participants));
 
         $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
+        $number_of_years = 5;
+        $average_donor_count = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', ['Annual Giving', 'Endowment', 'Scholarship', 'Buildings & Maintenance'])->where('donation_date', '>=', ($current_year-($number_of_years+1)).'-07-01')->where('donation_date', '<', $current_year.'-07-01')->groupBy('contact_id')->get();
+        // dd($average_donor_count);
         $years = array();
-        for ($x = -6; $x <= 0; $x++) {
+        for ($x = -$number_of_years; $x <= 0; $x++) {
             $today = \Carbon\Carbon::now();
             $today->day = 1;
             $today->month = 1;
@@ -55,9 +58,14 @@ class DashboardController extends Controller
             $agc_donors = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', ['Annual Giving', 'Endowment', 'Scholarship', 'Buildings & Maintenance'])->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
 
             $donors[$label]['count'] = $agc_donors->count();
-            $donors[$label]['average'] = 240.9;
 
+        }
 
+        $average_donor_count = array_sum(array_column($donors,'count'))/count(array_column($donors,'count'));
+        foreach ($years as $year) {
+            $label = $year->year;
+            $prev_year = $year->copy()->subYear();
+            $donors[$label]['average'] = $average_donor_count;
         }
 
         $agc_donor_chart = new RetreatOfferingChart;
