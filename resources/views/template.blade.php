@@ -15,6 +15,7 @@
 
 	<link rel="stylesheet" type="text/css" href="{{ url(mix('dist/bundle.css')) }}">
 	<script src="{{ url(mix('dist/bundle.js')) }}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
 	<script>
 		function ConfirmDelete() {
 			var x = confirm("Are you sure you want to delete?");
