@@ -1270,7 +1270,7 @@ class Contact extends Model
                 $q->where('notes', 'like', '%'.$value.'%');
             });
             }
-            if ($filter == 'date' && ! empty($value)) {
+            if ($filter == 'touched_at' && ! empty($value)) {
                 $query->whereHas('touchpoints', function ($q) use ($value) {
                 $q->whereDate('touched_at', $value);
             });
