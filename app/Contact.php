@@ -1272,7 +1272,7 @@ class Contact extends Model
             }
             if ($filter == 'date' && ! empty($value)) {
                 $query->whereHas('touchpoints', function ($q) use ($value) {
-                $q->whereDate('touched_at', '=', '%'.$value.'%');
+                $q->whereDate('touched_at', $value);
             });
             }
             if ($filter == 'do_not_mail' && ! empty($value)) {
