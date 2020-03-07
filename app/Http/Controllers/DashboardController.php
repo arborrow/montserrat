@@ -194,7 +194,13 @@ class DashboardController extends Controller
             ->color($borderColors)
             ->backgroundcolor($fillColors);
 
-        return view('dashboard.board', compact('board_summary_revenue_chart','board_summary_participant_chart'));
+        $board_summary_peoplenight_chart = new RetreatOfferingChart;
+        $board_summary_peoplenight_chart->labels(array_column($board_summary,'type'));
+        $board_summary_peoplenight_chart->dataset('FY20 People Nights by Event Type', 'doughnut', array_column($board_summary, 'total_pn'))
+            ->color($borderColors)
+            ->backgroundcolor($fillColors);
+
+        return view('dashboard.board', compact('board_summary_revenue_chart','board_summary_participant_chart','board_summary_peoplenight_chart'));
 
     }
 
