@@ -45,6 +45,7 @@ Route::get('/goodbye', 'HomeController@goodbye');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 Route::get('/dashboard/description/{category?}', 'DashboardController@donation_description_chart')->name('dashboard.description');
+Route::get('/dashboard/board', 'DashboardController@board')->name('dashboard.board');
 
 // Authentication routes...
 // Route::get('login/{provider?}', 'Auth\AuthController@login');

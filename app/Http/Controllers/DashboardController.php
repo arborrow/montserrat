@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Charts\RetreatOfferingChart;
 use Carbon\Carbon;
+use DB;
 
 class DashboardController extends Controller
 {
@@ -88,6 +89,8 @@ class DashboardController extends Controller
     }
 
     public function donation_description_chart($category = null) {
+        $this->authorize('show-dashboard');
+
         switch ($category) {
             case 'book' : $donation_description = 'Books'; break;
             case 'deposit' : $donation_description = 'Deposit'; break;
@@ -135,5 +138,66 @@ class DashboardController extends Controller
         $descriptions = array(['book','deposit','diocese','donation','flower','gift','offering','tip']);
         return view('dashboard.description', compact('donation_description_chart','descriptions'));
     }
+
+    public function board() {
+        $this->authorize('show-dashboard');
+
+        $borderColors = [
+           "rgba(255, 99, 132, 1.0)",
+           "rgba(22,160,133, 1.0)",
+           "rgba(255, 205, 86, 1.0)",
+           "rgba(51,105,232, 1.0)",
+           "rgba(244,67,54, 1.0)",
+           "rgba(34,198,246, 1.0)",
+           "rgba(153, 102, 255, 1.0)",
+           "rgba(255, 159, 64, 1.0)",
+           "rgba(233,30,99, 1.0)",
+           "rgba(205,220,57, 1.0)"
+       ];
+       $fillColors = [
+           "rgba(255, 99, 132, 0.5)",
+           "rgba(22,160,133, 0.5)",
+           "rgba(255, 205, 86, 0.5)",
+           "rgba(51,105,232, 0.5)",
+           "rgba(244,67,54, 0.5)",
+           "rgba(34,198,246, 0.5)",
+           "rgba(153, 102, 255, 0.5)",
+           "rgba(255, 159, 64, 0.5)",
+           "rgba(233,30,99, 0.5)",
+           "rgba(205,220,57, 0.5)"
+
+       ];
+        $board_summary = DB::select("SELECT tmp.type, SUM(tmp.pledged) as total_pledged, SUM(tmp.paid) as total_paid, SUM(tmp.participants) as total_participants, SUM(tmp.peoplenights) as total_pn, SUM(tmp.nights) as total_nights
+            FROM
+            (SELECT e.id as event_id, e.title as event, et.name as type, e.idnumber, e.start_date, e.end_date, DATEDIFF(e.end_date,e.start_date) as nights,
+            	(SELECT SUM(d.donation_amount) FROM Donations as d WHERE d.event_id=e.id) as pledged,
+            	(SELECT SUM(p.payment_amount) FROM Donations as d LEFT JOIN Donations_payment as p ON (p.donation_id = d.donation_id) WHERE d.event_id=e.id AND d.deleted_at IS NULL AND p.deleted_at IS NULL) as paid,
+            	(SELECT COUNT(*) FROM participant as reg WHERE reg.event_id = e.id AND reg.deleted_at IS NULL AND reg.canceled_at IS NULL) as participants,
+            	(SELECT(participants*nights)) as peoplenights
+            FROM event as e LEFT JOIN event_type as et ON (et.id = e.event_type_id)
+            WHERE e.start_date > '2019-07-01' AND e.start_date < NOW() AND e.is_active=1 AND e.deleted_at IS NULL AND e.title NOT LIKE '%Deposit%'
+            GROUP BY e.id) as tmp
+            GROUP BY tmp.type
+            ORDER BY `tmp`.`type` ASC");
+            //dd(array_column($board_summary, 'total_paid'));
+
+        $board_summary_revenue_chart = new RetreatOfferingChart;
+        $board_summary_revenue_chart->labels(array_column($board_summary,'type'));
+        $board_summary_revenue_chart->dataset('FY20 Revenue by Event Type', 'doughnut', array_column($board_summary, 'total_paid'))
+            ->color($borderColors)
+            ->backgroundcolor($fillColors);
+
+
+        $board_summary_participant_chart = new RetreatOfferingChart;
+        $board_summary_participant_chart->labels(array_column($board_summary,'type'));
+        $board_summary_participant_chart->dataset('FY20 Participants by Event Type', 'doughnut', array_column($board_summary, 'total_participants'))
+            ->color($borderColors)
+            ->backgroundcolor($fillColors);
+
+        return view('dashboard.board', compact('board_summary_revenue_chart','board_summary_participant_chart'));
+
+    }
+
+
 
 }
