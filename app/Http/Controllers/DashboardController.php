@@ -121,7 +121,7 @@ class DashboardController extends Controller
 
         }
 
-        $average_amount = (array_sum(array_column($donors,'sum'))/$number_of_years+1);
+        $average_amount = (array_sum(array_column($donors,'sum'))/($number_of_years+1));
         foreach ($years as $year) {
             $label = $year->year;
             $prev_year = $year->copy()->subYear();
