@@ -288,6 +288,21 @@
                     </div>
                 </div>
             </div>
+            <div class='panel-heading'><h2>Touchpoints</h2></div>
+            <div class="form-group">
+                    <div class="clearfix"> </div>
+                        {!! Form::label('touchpoint_notes', 'Note: ', ['class' => 'control-label col-sm-3'])  !!}
+                    <div class="col-sm-8">
+                        {!! Form::text('touchpoint_notes', NULL, ['class' => 'form-control']) !!}
+                    </div>
+                </div>
+            <div class="form-group">
+                    <div class="clearfix"> </div>
+                        {!! Form::label('touched_at', 'Touched at: ', ['class' => 'control-label col-sm-3'])  !!}
+                    <div class="col-sm-8">
+                        {!! Form::text('touched_at', NULL, ['class' => 'form-control flatpickr-date bg-white']) !!}
+                    </div>
+                </div>
             <div class='panel-heading'><h2>Groups and Relationships</h2></div>
             <div class="panel-body">
                 <div class="form-group">

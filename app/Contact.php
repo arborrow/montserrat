@@ -1265,6 +1265,16 @@ class Contact extends Model
                     $q->where('postal_code', 'like', '%'.$value.'%');
                 });
             }
+            if ($filter == 'touchpoint_notes' && ! empty($value)) {
+                $query->whereHas('touchpoints', function ($q) use ($value) {
+                $q->where('notes', 'like', '%'.$value.'%');
+            });
+            }
+            if ($filter == 'touched_at' && ! empty($value)) {
+                $query->whereHas('touchpoints', function ($q) use ($value) {
+                $q->whereDate('touched_at', $value);
+            });
+            }
             if ($filter == 'do_not_mail' && ! empty($value)) {
                 $query->where($filter, $value);
             }
