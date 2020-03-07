@@ -14,11 +14,11 @@ class CreateTouchpointsTable extends Migration
     {
         Schema::create('touchpoints', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('person_id');
-            $table->integer('staff_id');
+            $table->integer('person_id')->index('idx_person_id');
+            $table->integer('staff_id')->index('idx_staff_id');
             $table->string('type');
             $table->text('notes', 16777215);
-            $table->dateTime('touched_at')->default('0000-00-00 00:00:00');
+            $table->dateTime('touched_at')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'))->index('idx_touched_at');
             $table->softDeletes();
             $table->timestamps();
             $table->integer('touchcategory_id')->unsigned()->nullable();
