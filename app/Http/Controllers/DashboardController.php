@@ -181,6 +181,10 @@ class DashboardController extends Controller
             ORDER BY `tmp`.`type` ASC");
             //dd(array_column($board_summary, 'total_paid'));
 
+        $total_revenue = array_sum(array_column($board_summary, 'total_paid'));
+        $total_participants = array_sum(array_column($board_summary, 'total_participants'));
+        $total_peoplenights = array_sum(array_column($board_summary, 'total_pn'));
+
         $board_summary_revenue_chart = new RetreatOfferingChart;
         $board_summary_revenue_chart->labels(array_column($board_summary,'type'));
         $board_summary_revenue_chart->dataset('FY20 Revenue by Event Type', 'doughnut', array_column($board_summary, 'total_paid'))
@@ -199,8 +203,8 @@ class DashboardController extends Controller
         $board_summary_peoplenight_chart->dataset('FY20 People Nights by Event Type', 'doughnut', array_column($board_summary, 'total_pn'))
             ->color($borderColors)
             ->backgroundcolor($fillColors);
-
-        return view('dashboard.board', compact('board_summary_revenue_chart','board_summary_participant_chart','board_summary_peoplenight_chart'));
+        $summary = array_values($board_summary);
+        return view('dashboard.board', compact('summary','board_summary','board_summary_revenue_chart','board_summary_participant_chart','board_summary_peoplenight_chart','total_revenue','total_participants','total_peoplenights'));
 
     }
 
