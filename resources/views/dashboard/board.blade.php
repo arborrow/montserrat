@@ -13,13 +13,9 @@
                 <div class="col-md-4 col-12">
                     <select class="custom-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                         <option value="">Select fiscal year ...</option>
-                            <option value="{{url('dashboard/board/2020')}}">FY20</option>
-                            <option value="{{url('dashboard/board/2019')}}">FY19</option>
-                            <option value="{{url('dashboard/board/2018')}}">FY18</option>
-                            <option value="{{url('dashboard/board/2017')}}">FY17</option>
-                            <option value="{{url('dashboard/board/2016')}}">FY16</option>
-                            <option value="{{url('dashboard/board/2015')}}">FY15</option>
-
+                        @foreach($years as $y)
+                            <option value="{{url('dashboard/board/'.$y->year)}}">FY{{$y->year}}</option>
+                        @endForeach
                     </select>
                 </div>
 

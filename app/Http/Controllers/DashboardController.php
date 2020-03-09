@@ -36,7 +36,10 @@ class DashboardController extends Controller
 
         $chart = new RetreatOfferingChart;
         $chart->labels(array_keys($participants));
-        $chart->dataset('Ignatian Retreats per Month', 'bar', array_values($participants));
+        $chart->dataset('Ignatian Retreats per Month', 'bar', array_values($participants))
+            ->color("rgba(255, 205, 86, 1.0)")
+            ->backgroundcolor("rgba(255, 205, 86, 0.5)");
+
 
         // AGC Number of Donors per FY
         $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
@@ -76,13 +79,17 @@ class DashboardController extends Controller
 
         $agc_donor_chart = new RetreatOfferingChart;
         $agc_donor_chart->labels(array_keys($donors));
-        $agc_donor_chart->dataset('AGC Donors per Year', 'line', array_column($donors,'count'));
         $agc_donor_chart->dataset('Average', 'line', array_column($donors,'average_count'));
+        $agc_donor_chart->dataset('AGC Donors per Year', 'line', array_column($donors,'count'))
+            ->color('blue')
+            ->backgroundcolor('lightblue',0.5);
 
         $agc_amount = new RetreatOfferingChart;
         $agc_amount->labels(array_keys($donors));
-        $agc_amount->dataset('AGC Amount per Fiscal Year', 'line', array_column($donors,'sum'));
         $agc_amount->dataset('Average', 'line', array_column($donors,'average_amount'));
+        $agc_amount->dataset('AGC Amount per Fiscal Year', 'line', array_column($donors,'sum'))
+            ->color('green')
+            ->backgroundcolor('lightgreen',0.5);
 
 
         return view('dashboard.index', compact('chart','agc_donor_chart','agc_amount'));
@@ -132,10 +139,13 @@ class DashboardController extends Controller
         }
         $donation_description_chart = new RetreatOfferingChart;
         $donation_description_chart->labels(array_keys($donors));
-        $donation_description_chart->dataset('Donations for '.$donation_description, 'line', array_column($donors,'sum'));
         $donation_description_chart->dataset('Average', 'line', array_column($donors,'average_amount'));
+        $donation_description_chart->dataset('Donations for '.$donation_description, 'line', array_column($donors,'sum'))
+            ->color("rgba(22,160,133, 1.0)")
+            ->backgroundcolor("rgba(22,160,133, 0.5)");
 
         $descriptions = array(['book','deposit','diocese','donation','flower','gift','offering','tip']);
+
         return view('dashboard.description', compact('donation_description_chart','descriptions'));
     }
 
@@ -146,9 +156,21 @@ class DashboardController extends Controller
         if (! isset($year)) {
             $year = (date('m') > 6) ? date('Y') + 1 : date('Y');
         }
+
+        $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
         $prev_year = $year - 1;
         $begin_date = $prev_year . '-07-01';
         $end_date = $year . '-07-01';
+
+        $number_of_years = 5;
+        $years = array();
+        for ($x = 0; $x <= $number_of_years; $x++) {
+            $today = \Carbon\Carbon::now();
+            $today->day = 1;
+            $today->month = 1;
+            $today->year = $current_year;
+            $years[$x] = $today->subYear($x);
+        }
 
         $borderColors = [
            "rgba(255, 99, 132, 1.0)",
@@ -221,10 +243,7 @@ class DashboardController extends Controller
             ->color($borderColors)
             ->backgroundcolor($fillColors);
         $summary = array_values($board_summary);
-        return view('dashboard.board', compact('year','summary','board_summary','board_summary_revenue_chart','board_summary_participant_chart','board_summary_peoplenight_chart','total_revenue','total_participants','total_peoplenights'));
+        return view('dashboard.board', compact('years','year','summary','board_summary','board_summary_revenue_chart','board_summary_participant_chart','board_summary_peoplenight_chart','total_revenue','total_participants','total_peoplenights'));
 
     }
-
-
-
 }
