@@ -49,6 +49,10 @@
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href={{ route('organization.index') }}>Organizations</a>
 							<a class="dropdown-item" href={{ route('vendor.index') }}>Vendors</a>
+							@can('show-touchpoint')
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item"  href={{ route('touchpoint.index') }}>Touchpoints</a>
+							@endcan
 						</div>
 					</li>
 					@endCan
@@ -92,7 +96,7 @@
                     @endcan
 					@can('show-dashboard')
 						<li class="nav-item">
-							<a class="nav-link" href={{ route('dashboard') }}>Dashboards</a>
+							<a class="nav-link" href={{ route('dashboard.index') }}>Dashboards</a>
 						</li>
 
 					@endcan

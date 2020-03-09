@@ -43,7 +43,7 @@ Route::get('/', 'PageController@welcome');
 Route::get('/welcome', 'PageController@welcome')->name('welcome');
 Route::get('/goodbye', 'HomeController@goodbye');
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
 Route::get('/dashboard/agc', 'DashboardController@agc')->name('dashboard.agc');
 Route::get('/dashboard/board/{year?}', 'DashboardController@board')->name('dashboard.board')->where('year', '^\d{4}$');
 Route::get('/dashboard/description/{category?}', 'DashboardController@donation_description_chart')->name('dashboard.description');
