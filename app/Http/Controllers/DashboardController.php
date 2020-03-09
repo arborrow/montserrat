@@ -139,8 +139,16 @@ class DashboardController extends Controller
         return view('dashboard.description', compact('donation_description_chart','descriptions'));
     }
 
-    public function board() {
+    public function board($year = null) {
         $this->authorize('show-dashboard');
+
+        // default to current fiscal year
+        if (! isset($year)) {
+            $year = (date('m') > 6) ? date('Y') + 1 : date('Y');
+        }
+        $prev_year = $year - 1;
+        $begin_date = $prev_year . '-07-01';
+        $end_date = $year . '-07-01';
 
         $borderColors = [
            "rgba(255, 99, 132, 1.0)",
@@ -167,6 +175,7 @@ class DashboardController extends Controller
            "rgba(205,220,57, 0.5)"
 
        ];
+
         $board_summary = DB::select("SELECT tmp.type, SUM(tmp.pledged) as total_pledged, SUM(tmp.paid) as total_paid, SUM(tmp.participants) as total_participants, SUM(tmp.peoplenights) as total_pn, SUM(tmp.nights) as total_nights
             FROM
             (SELECT e.id as event_id, e.title as event, et.name as type, e.idnumber, e.start_date, e.end_date, DATEDIFF(e.end_date,e.start_date) as nights,
@@ -175,10 +184,13 @@ class DashboardController extends Controller
             	(SELECT COUNT(*) FROM participant as reg WHERE reg.event_id = e.id AND reg.deleted_at IS NULL AND reg.canceled_at IS NULL) as participants,
             	(SELECT(participants*nights)) as peoplenights
             FROM event as e LEFT JOIN event_type as et ON (et.id = e.event_type_id)
-            WHERE e.start_date > '2019-07-01' AND e.start_date < NOW() AND e.is_active=1 AND e.deleted_at IS NULL AND e.title NOT LIKE '%Deposit%'
+            WHERE e.start_date > :begin_date AND e.start_date < :end_date AND e.is_active=1 AND e.deleted_at IS NULL AND e.title NOT LIKE '%Deposit%'
             GROUP BY e.id) as tmp
             GROUP BY tmp.type
-            ORDER BY `tmp`.`type` ASC");
+            ORDER BY `tmp`.`type` ASC", array(
+                'begin_date' => $begin_date,
+                'end_date' => $end_date,
+            ));
             //dd(array_column($board_summary, 'total_paid'));
 
         $total_revenue = array_sum(array_column($board_summary, 'total_paid'));
@@ -190,6 +202,11 @@ class DashboardController extends Controller
         $board_summary_revenue_chart->dataset('FY20 Revenue by Event Type', 'doughnut', array_column($board_summary, 'total_paid'))
             ->color($borderColors)
             ->backgroundcolor($fillColors);
+        // $board_summary_revenue_chart->displayLegend(true);
+        //$board_summary_revenue_chart->minimalist(false);
+        $board_summary_revenue_chart->options([
+                'plugins' => '{datalabels: {color: \'red\'}}',
+        ]);
 
 
         $board_summary_participant_chart = new RetreatOfferingChart;
@@ -204,7 +221,7 @@ class DashboardController extends Controller
             ->color($borderColors)
             ->backgroundcolor($fillColors);
         $summary = array_values($board_summary);
-        return view('dashboard.board', compact('summary','board_summary','board_summary_revenue_chart','board_summary_participant_chart','board_summary_peoplenight_chart','total_revenue','total_participants','total_peoplenights'));
+        return view('dashboard.board', compact('year','summary','board_summary','board_summary_revenue_chart','board_summary_participant_chart','board_summary_peoplenight_chart','total_revenue','total_participants','total_peoplenights'));
 
     }
 
