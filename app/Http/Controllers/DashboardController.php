@@ -11,6 +11,10 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        return view('dashboard.index');
+    }
+    public function agc()
+    {
         $this->authorize('show-dashboard');
 
         // number of Ignatian Retreats per Month
@@ -92,7 +96,7 @@ class DashboardController extends Controller
             ->backgroundcolor('lightgreen',0.5);
 
 
-        return view('dashboard.index', compact('chart','agc_donor_chart','agc_amount'));
+        return view('dashboard.agc', compact('chart','agc_donor_chart','agc_amount'));
     }
 
     public function donation_description_chart($category = null) {

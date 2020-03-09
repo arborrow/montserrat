@@ -6,21 +6,17 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                        <span class="grey">Dashboard</span>
-                    </h1>
+                        <span class="grey">Dashboards</span>
+                    </h1>                    <div class="col-md-4 col-12">
+                        <select class="custom-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                            <option value="">Display dashboard for ...</option>
+                                <option value="{{url('dashboard/agc')}}">AGC</option>
+                                <option value="{{url('dashboard/board')}}">Events</option>
+                                <option value="{{url('dashboard/description/offering')}}">Donation Descriptions</option>
+                        </select>
+                    </div>
                 </div>
-                <div> {!! $agc_donor_chart->container() !!} </div>
-                <hr />
-                <div> {!! $agc_amount->container() !!} </div>
-                <hr />
-                <div> {!! $chart->container() !!} </div>
-
             </div>
         </div>
     </section>
-    {!! $agc_donor_chart->script() !!}
-    {!! $agc_amount->script() !!}
-    {!! $chart->script() !!}
-
-
 @stop
