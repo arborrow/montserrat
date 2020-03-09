@@ -49,6 +49,10 @@ class DashboardController extends Controller
         $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
         $number_of_years = 5;
         $average_donor_count = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', ['Annual Giving', 'Endowment', 'Scholarship', 'Buildings & Maintenance'])->where('donation_date', '>=', ($current_year-($number_of_years+1)).'-07-01')->where('donation_date', '<', $current_year.'-07-01')->groupBy('contact_id')->get();
+        $average_donor_giving = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('Annual Giving')->where('donation_date', '>=', ($current_year-($number_of_years+1)).'-07-01')->where('donation_date', '<', $current_year.'-07-01')->groupBy('contact_id')->get();
+        $average_donor_endowment = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('Endowment')->where('donation_date', '>=', ($current_year-($number_of_years+1)).'-07-01')->where('donation_date', '<', $current_year.'-07-01')->groupBy('contact_id')->get();
+        $average_donor_scholarship = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('Scholarship')->where('donation_date', '>=', ($current_year-($number_of_years+1)).'-07-01')->where('donation_date', '<', $current_year.'-07-01')->groupBy('contact_id')->get();
+        $average_donor_building = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('Buildings & Maintenance')->where('donation_date', '>=', ($current_year-($number_of_years+1)).'-07-01')->where('donation_date', '<', $current_year.'-07-01')->groupBy('contact_id')->get();
         // dd($average_donor_count);
         $years = array();
         for ($x = -$number_of_years; $x <= 0; $x++) {
@@ -65,10 +69,29 @@ class DashboardController extends Controller
             $prev_year = $year->copy()->subYear();
 
             $agc_donors = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', ['Annual Giving', 'Endowment', 'Scholarship', 'Buildings & Maintenance'])->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
-            $agc_donations = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', ['Annual Giving', 'Endowment', 'Scholarship', 'Buildings & Maintenance'])->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
+            $agc_donors_giving = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('Annual Giving')->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
+            $agc_donors_endowment = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('Endowment')->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
+            $agc_donors_scholarship = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('Scholarship')->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
+            $agc_donors_building = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('Buildings & Maintenance')->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
 
-            $donors[$label]['count'] = $agc_donors->count(); //unique donors
+            $agc_donations = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', ['Annual Giving', 'Endowment', 'Scholarship', 'Buildings & Maintenance'])->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
+            $agc_donations_giving = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('Annual Giving')->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
+            $agc_donations_endowment = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('Endowment')->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
+            $agc_donations_scholarship = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('Scholarship')->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
+            $agc_donations_building = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('Buildings & Maintenance')->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
+
+            //unique donors
+            $donors[$label]['count'] = $agc_donors->count();
+            $donors[$label]['count_giving'] = $agc_donors_giving->count();
+            $donors[$label]['count_endowment'] = $agc_donors_endowment->count();
+            $donors[$label]['count_scholarship'] = $agc_donors_scholarship->count();
+            $donors[$label]['count_building'] = $agc_donors_building->count();
+
             $donors[$label]['sum'] = $agc_donations->sum('donation_amount');
+            $donors[$label]['sum_giving'] = $agc_donations_giving->sum('donation_amount');
+            $donors[$label]['sum_endowment'] = $agc_donations_endowment->sum('donation_amount');
+            $donors[$label]['sum_scholarship'] = $agc_donations_scholarship->sum('donation_amount');
+            $donors[$label]['sum_building'] = $agc_donations_building->sum('donation_amount');
 
         }
 
@@ -83,18 +106,52 @@ class DashboardController extends Controller
 
         $agc_donor_chart = new RetreatOfferingChart;
         $agc_donor_chart->labels(array_keys($donors));
-        $agc_donor_chart->dataset('Average', 'line', array_column($donors,'average_count'));
-        $agc_donor_chart->dataset('AGC Donors per Year', 'line', array_column($donors,'count'))
-            ->color('blue')
-            ->backgroundcolor('lightblue',0.5);
+        $agc_donor_chart->options([
+            'legend' => [
+                'position' => 'bottom' // or false, depending on what you want.
+            ]
+        ]);
+
+        $agc_donor_chart->dataset('Total Average', 'line', array_column($donors,'average_count'));
+        $agc_donor_chart->dataset('Total Donors per Year', 'line', array_column($donors,'count'))
+            ->color("rgba(22,160,133, 1.0)")
+            ->backgroundcolor("rgba(22,160,133, 0.2");
+        $agc_donor_chart->dataset('Annual Giving Donors', 'line', array_column($donors,'count_giving'))
+            ->color("rgba(51,105,232, 1.0)")
+            ->backgroundcolor("rgba(51,105,232, 0.2");
+        $agc_donor_chart->dataset('Endowment Donors', 'line', array_column($donors,'count_endowment'))
+            ->color("rgba(255, 205, 86, 1.0)")
+            ->backgroundcolor("rgba(255, 205, 86, 132, 0.4");
+        $agc_donor_chart->dataset('Scholarship Donors', 'line', array_column($donors,'count_scholarship'))
+            ->color("rgba(255, 99, 132, 1.0)")
+            ->backgroundcolor("rgba(255, 99, 132, 0.2");
+        $agc_donor_chart->dataset('Building & Maintenance Donors', 'line', array_column($donors,'count_building'))
+            ->color("rgba(244,67,54, 1.0)")
+            ->backgroundcolor("rgba(244,67,54, 0.2");
 
         $agc_amount = new RetreatOfferingChart;
+        $agc_amount->options([
+            'legend' => [
+                'position' => 'bottom' // or false, depending on what you want.
+            ]
+        ]);
         $agc_amount->labels(array_keys($donors));
-        $agc_amount->dataset('Average', 'line', array_column($donors,'average_amount'));
-        $agc_amount->dataset('AGC Amount per Fiscal Year', 'line', array_column($donors,'sum'))
-            ->color('green')
-            ->backgroundcolor('lightgreen',0.5);
-
+        $agc_amount->dataset('Total Average', 'line', array_column($donors,'average_amount'));
+        $agc_amount->dataset('Total Donations per Year', 'line', array_column($donors,'sum'))
+            ->color("rgba(22,160,133, 1.0)")
+            ->backgroundcolor("rgba(22,160,133, 0.2");
+        $agc_amount->dataset('Annual Giving', 'line', array_column($donors,'sum_giving'))
+            ->color("rgba(51,105,232, 1.0)")
+            ->backgroundcolor("rgba(51,105,232, 0.2");
+        $agc_amount->dataset('Endowment', 'line', array_column($donors,'sum_endowment'))
+            ->color("rgba(255, 205, 86, 1.0)")
+            ->backgroundcolor("rgba(255, 205, 86, 132, 0.4");
+        $agc_amount->dataset('Scholarship', 'line', array_column($donors,'sum_scholarship'))
+            ->color("rgba(255, 99, 132, 1.0)")
+            ->backgroundcolor("rgba(255, 99, 132, 0.2");
+        $agc_amount->dataset('Building & Maintenance', 'line', array_column($donors,'sum_building'))
+            ->color("rgba(244,67,54, 1.0)")
+            ->backgroundcolor("rgba(244,67,54, 0.2");
 
         return view('dashboard.agc', compact('chart','agc_donor_chart','agc_amount'));
     }
