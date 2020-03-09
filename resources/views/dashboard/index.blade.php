@@ -6,7 +6,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                        <span class="grey">Dashboards</span>
+                        <span class="grey">Dashboard Index</span>
                     </h1>                    <div class="col-md-4 col-12">
                         <select class="custom-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                             <option value="">Display dashboard for ...</option>

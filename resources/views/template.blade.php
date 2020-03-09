@@ -90,6 +90,12 @@
 						</div>
 					</li>
                     @endcan
+					@can('show-dashboard')
+						<li class="nav-item">
+							<a class="nav-link" href={{ route('dashboard') }}>Dashboards</a>
+						</li>
+
+					@endcan
 					@can('show-admin-menu')
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

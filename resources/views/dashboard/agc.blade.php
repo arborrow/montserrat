@@ -6,7 +6,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                        <span class="grey">Dashboard</span>
+                        <span class="grey">AGC Dashboard</span>
                     </h1>
                 </div>
                 <div> {!! $agc_donor_chart->container() !!} </div>
