@@ -200,6 +200,11 @@ class DashboardController extends Controller
         }
         $donation_description_chart = new RetreatOfferingChart;
         $donation_description_chart->labels(array_keys($donors));
+        $donation_description_chart->options([
+            'legend' => [
+                'position' => 'bottom' // or false, depending on what you want.
+            ]
+        ]);
         $donation_description_chart->dataset('Average', 'line', array_column($donors,'average_amount'));
         $donation_description_chart->dataset('Donations for '.$donation_description, 'line', array_column($donors,'sum'))
             ->color("rgba(22,160,133, 1.0)")
@@ -282,24 +287,40 @@ class DashboardController extends Controller
 
         $board_summary_revenue_chart = new RetreatOfferingChart;
         $board_summary_revenue_chart->labels(array_column($board_summary,'type'));
+        $board_summary_revenue_chart->options([
+            'legend' => [
+                'position' => 'bottom'
+            ]
+        ]);
+
         $board_summary_revenue_chart->dataset('FY20 Revenue by Event Type', 'doughnut', array_column($board_summary, 'total_paid'))
             ->color($borderColors)
             ->backgroundcolor($fillColors);
         // $board_summary_revenue_chart->displayLegend(true);
         //$board_summary_revenue_chart->minimalist(false);
-        $board_summary_revenue_chart->options([
-                'plugins' => '{datalabels: {color: \'red\'}}',
-        ]);
+        // $board_summary_revenue_chart->plugins([
+            //    'plugins' => '{datalabels: {color: \'red\'}}',
+        // ]);
 
 
         $board_summary_participant_chart = new RetreatOfferingChart;
         $board_summary_participant_chart->labels(array_column($board_summary,'type'));
+        $board_summary_participant_chart->options([
+            'legend' => [
+                'position' => 'bottom' // or false, depending on what you want.
+            ]
+        ]);
         $board_summary_participant_chart->dataset('FY20 Participants by Event Type', 'doughnut', array_column($board_summary, 'total_participants'))
             ->color($borderColors)
             ->backgroundcolor($fillColors);
 
         $board_summary_peoplenight_chart = new RetreatOfferingChart;
         $board_summary_peoplenight_chart->labels(array_column($board_summary,'type'));
+        $board_summary_peoplenight_chart->options([
+            'legend' => [
+                'position' => 'bottom' // or false, depending on what you want.
+            ]
+        ]);
         $board_summary_peoplenight_chart->dataset('FY20 People Nights by Event Type', 'doughnut', array_column($board_summary, 'total_pn'))
             ->color($borderColors)
             ->backgroundcolor($fillColors);
