@@ -74,7 +74,7 @@
                             @if (empty($vendor->phone_primary))
                                 {!! Form::text('phone_main_phone', NULL, ['class' => 'form-control']) !!}
                             @else
-                                {!! Form::text('phone_main_phone', $vendor->phone_primary_phone, ['class' => 'form-control']) !!}
+                                {!! Form::text('phone_main_phone', $vendor->phone_main_phone_number, ['class' => 'form-control']) !!}
                             @endif
                         </div>
                         <div class="col-12 col-lg-4">
