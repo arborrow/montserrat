@@ -42,7 +42,7 @@ class UpdateRoomRequestTest extends TestCase
 
         $this->assertEquals([
           'name' => 'required',
-          'building_id' => 'integer|min:0',
+          'location_id' => 'integer|min:0',
           'occupancy' => 'integer|min:0',
         ], $actual);
     }

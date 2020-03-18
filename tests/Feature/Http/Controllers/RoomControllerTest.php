@@ -126,7 +126,7 @@ class RoomControllerTest extends TestCase
         $description = $this->faker->catchPhrase;
 
         $response = $this->actingAs($user)->post(route('room.store'), [
-          'building_id' => $location->id,
+          'location_id' => $location->id,
           'name' => $name,
           'description' => $description,
           'notes' => $this->faker->sentence,
@@ -140,7 +140,7 @@ class RoomControllerTest extends TestCase
         $this->assertDatabaseHas('rooms', [
           'name' => $name,
           'description' => $description,
-          'building_id' => $location->id,
+          'location_id' => $location->id,
         ]);
 
 
@@ -173,7 +173,7 @@ class RoomControllerTest extends TestCase
 
         $response = $this->actingAs($user)->put(route('room.update', [$room]), [
           'id' => $room->id,
-          'building_id' => $new_location->id,
+          'location_id' => $new_location->id,
           'name' => $new_name,
           'description' => $new_description,
         ]);

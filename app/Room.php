@@ -15,7 +15,7 @@ class Room extends Model
 
     public function location()
     {
-        return $this->belongsTo(Location::class, 'building_id', 'id');
+        return $this->belongsTo(Location::class, 'location_id', 'id');
     }
 
     public function roomstates()

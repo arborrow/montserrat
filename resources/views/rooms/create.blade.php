@@ -7,9 +7,9 @@
             {!! Form::open(['url' => 'room', 'method' => 'post', 'class' => 'form-horizontal panel']) !!}
            <div class="form-group">
 
-                {!! Form::label('building_id', 'Location:', ['class' => 'col-md-1']) !!}
-                {!! Form::select('building_id', $locations, 0, ['class' => 'col-md-2']) !!}
-                
+                {!! Form::label('location_id', 'Location:', ['class' => 'col-md-1']) !!}
+                {!! Form::select('location_id', $locations, 0, ['class' => 'col-md-2']) !!}
+
             </div><div class="clearfix"> </div>
             <div class="form-group">
                 {!! Form::label('name', 'Name:', ['class' => 'col-md-1']) !!}
@@ -32,8 +32,8 @@
                 {!! Form::text('occupancy', 1, ['class' => 'col-md-1']) !!}
                 {!! Form::label('status', 'Status:', ['class' => 'col-md-1']) !!}
                 {!! Form::text('status', null, ['class'=>'col-md-1']) !!}
-            </div><div class="clearfix"> </div> 
-            
+            </div><div class="clearfix"> </div>
+
             <div class="col-md-1"><div class="form-group">
                 {!! Form::submit('Add Room', ['class'=>'btn btn-primary']) !!}
             </div></div><div class="clearfix"> </div>

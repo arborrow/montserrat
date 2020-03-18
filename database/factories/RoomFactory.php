@@ -6,7 +6,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Room::class, function (Faker $faker) {
     return [
-        'building_id' => function () {
+        'location_id' => function () {
             return factory(App\Location::class)->create()->id;
         },
         'name' => $faker->lastName. ' Suite',
