@@ -456,11 +456,13 @@ class RetreatControllerTest extends TestCase
     /**
      * @test
      */
-    public function roomlist_returns_an_ok_response()
+    public function event_room_list_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-registration');
         $retreat = factory(\App\Retreat::class)->create();
-        $retreatant = factory(\App\Contact::class)->create();
+        $retreatant = factory(\App\Contact::class)->create([
+            'contact_type' => config('polanco.contact_type.individual'),
+        ]);
         $room = factory(\App\Room::class)->create();
         $registration = factory(\App\Registration::class)->create([
             'event_id' => $retreat->id,
