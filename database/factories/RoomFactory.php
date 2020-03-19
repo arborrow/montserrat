@@ -9,6 +9,7 @@ $factory->define(App\Room::class, function (Faker $faker) {
         'location_id' => function () {
             return factory(App\Location::class)->create()->id;
         },
+        'floor' =>  $faker->numberBetween($min = 1, $max = 9),
         'name' => $faker->lastName. ' Suite',
         'description' => $faker->catchPhrase,
         'notes' => $faker->sentence,

@@ -592,9 +592,19 @@ class RetreatController extends Controller
 
         foreach ($registrations as $registration) {
             if ($registration->room_id >0) {
-                $results[$registration->room->location->name][$registration->room->floor][$registration->room->name] = $registration->retreatant->sort_name;
-            }
+                // if the registered retreatant is not an individual person - for example a contract group organization then use the registration note for the name of the retreatant
+                if ($registration->retreatant->contact_type == config('polanco.contact_type.individual')) {
+                        $results[$registration->room->location->name][$registration->room->floor][$registration->room->name] = $registration->retreatant->sort_name;
+                } else {
+                    // if there is no note; default back to the sort_name of the contact
+                    if (isset($registration->notes)) {
+                        $results[$registration->room->location->name][$registration->room->floor][$registration->room->name] = $registration->notes;
 
+                    } else {
+                        $results[$registration->room->location->name][$registration->room->floor][$registration->room->name] = $registration->retreatant->sort_name;
+                    }
+                }
+            }
         }
         return view('retreats.roomlist', compact('results','event'));
 

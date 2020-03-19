@@ -245,3 +245,44 @@ td.row-payment_method {
 .agcacknowledge td.main {
     width: 80%;
 }
+
+
+.roomlist header {
+    text-align: center;
+}
+.roomlist footer {
+  page-break-after: always;
+}
+
+.roomlist caption {
+  text-align: center;
+}
+
+.roomlist th, tr {
+  border: 1px solid black;
+  border-collapse: collapse;
+  margin-left: 5px;
+  padding: 5px;
+  vertical-align: top;
+}
+
+.roomlist td.room, th.room {
+  width: 25%;
+}
+.roomlist td.retreatant, th.retreatant {
+  width: 50%;
+}
+
+.roomlist td.room, td.retreatant {
+    border-left: 1px solid black;
+    margin-left: 5px;
+    padding: 5px;
+}
+
+.roomlist table.buildings {
+  border-collapse: collapse;
+}
+
+.roomlist table.rooms {
+  border-collapse: collapse;
+}

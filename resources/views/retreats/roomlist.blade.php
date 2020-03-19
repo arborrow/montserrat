@@ -1,46 +1,54 @@
-@extends('template')
+@extends('report')
 @section('content')
 
-<div class="row bg-cover" id="upcoming">
-    <div class="col-12">
-        <div class="row"><h1>Room List for {{ $event->title }}</h1>
-        </div>
-    </div>
-    <div class="col-12">
-        @if (!isset($results))
-            <p> Currently, there are no room assignments.</p>
-        @else
+<div class="roomlist" id="roomlist">
+    @if (!isset($results))
+        <p> Currently, there are no room assignments.</p>
+    @else
 
-            @foreach ($results as $building => $floors)
+        @foreach ($results as $building => $floors)
+            <header>
+                <h2>
+                    {{ $event->title }} Room List
+                </h2>
+                <h3>
+                    {{ $event->start_date->format('F d, Y h:i A') }} - {{ $event->end_date->format('F d, Y h:i A') }}
+                </h3>
+            </header>
+            <table class="table table-bordered table-striped table-hover" id='buildings'>
+                <caption>
+                    <h1>{{ $building }}</h1>
+                </caption>
+                <tr>
+                    @foreach ($floors as $floor => $rooms)
+                        <td class='rooms'>
+                            <table class='rooms'>
+                                <thead>
+                                    <tr>
+                                        <th class='room'>Room #</td>
+                                        <th class='retreatant'>Retreatant</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($rooms as $room => $retreatant)
+                                    <tr class='room'>
+                                        <td class='room'> {{ $room }} </td>
+                                        <td class='retreatant'> {{ $retreatant }} </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </td>
+                    @endforeach
+                </tr>
+            </table>
+            <hr />
+            <footer>
+                Printed on {{date('l, F j, Y H:i')}}
+                <img src="{{URL('/images/mrhlogoblack.png')}}" align="right" width="200px" height="64px">
+            </footer>
+        @endforeach
 
-                <table class="table table-bordered table-striped table-hover">
-                    <caption><h3>{{ $building }}</h3></caption>
-                    <tr>
-                        @foreach ($floors as $floor => $rooms)
-                            <td>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <td>Room #</td>
-                                            <td>Retreatant</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($rooms as $room => $retreatant)
-                                        <tr>
-                                            <td>{{ $room }}</td>
-                                            <td>{{ $retreatant }}</td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </td>
-                        @endforeach
-                    </tr>
-                </table>
-            @endforeach
-
-        @endif
-    </div>
+    @endif
 </div>
 @stop
