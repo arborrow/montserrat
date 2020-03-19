@@ -2228,7 +2228,7 @@ CREATE TABLE `role_user` (
 
 CREATE TABLE `rooms` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `building_id` int(11) NOT NULL,
+  `location_id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `description` text COLLATE utf8_unicode_ci NOT NULL,
   `notes` mediumtext COLLATE utf8_unicode_ci NOT NULL,

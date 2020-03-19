@@ -79,6 +79,7 @@ Route::get('retreat/{event_id}/evaluations', 'AttachmentController@get_event_eva
 Route::get('retreat/{event_id}/evaluations/delete', 'AttachmentController@delete_event_evaluations')->name('delete_event_evaluations');
 Route::get('retreat/{event_id}/photo', 'AttachmentController@get_event_group_photo')->name('get_event_group_photo');
 Route::get('retreat/{event_id}/photo/delete', 'AttachmentController@delete_event_group_photo')->name('delete_event_group_photo');
+Route::get('retreat/{event_id}/roomlist', 'RetreatController@event_room_list')->name('event_room_list');
 Route::get('retreat/{event_id}/touchpoint', 'TouchpointController@add_retreat');
 Route::get('retreat/{event_id}/waitlist_touchpoint', 'TouchpointController@add_retreat_waitlist');
 Route::get('retreat/{event_id}/waitlist', 'RetreatController@show_waitlist');

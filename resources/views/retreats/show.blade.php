@@ -154,6 +154,9 @@
                 @can('update-registration')
                     {!! Html::link(action('RetreatController@assign_rooms',$retreat->id),'Assign rooms',array('class' => 'btn btn-outline-dark'))!!}
                 @endCan
+                @can('show-registration')
+                    {!! Html::link(action('RetreatController@event_room_list',$retreat->id),'Room list',array('class' => 'btn btn-outline-dark'))!!}
+                @endCan
                 @can('update-registration')
                     @if ($retreat->end_date < now())
                         {!! Html::link(action('RetreatController@checkout',$retreat->id),'Checkout',array('class' => 'btn btn-outline-dark'))!!}

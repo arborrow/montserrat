@@ -22,12 +22,10 @@ class RoomController extends Controller
     public function index()
     {
         $this->authorize('show-room');
-        $rooms = \App\Room::orderBy('building_id', 'asc', 'name', 'asc')->get();
-        foreach ($rooms as $room) {
-            $room->building = \App\Location::findOrFail($room->building_id)->name;
-        }
+        // TODO: consider eager loading building name and sorting on room.location.name
+        $rooms = \App\Room::with('location')->get();
         $roomsort = $rooms->sortBy(function ($building) {
-            return sprintf('%-12s%s', $building->building, $building->name);
+            return sprintf('%-12s%s', $building->location->name, $building->name);
         });
 
         return view('rooms.index', compact('roomsort'));   //
@@ -57,7 +55,7 @@ class RoomController extends Controller
         $this->authorize('create-room');
 
         $room = new \App\Room;
-        $room->building_id = $request->input('building_id');
+        $room->location_id = $request->input('location_id');
         $room->name = $request->input('name');
         $room->description = $request->input('description');
         $room->notes = $request->input('notes');
@@ -113,7 +111,7 @@ class RoomController extends Controller
         $this->authorize('update-room');
 
         $room = \App\Room::findOrFail($request->input('id'));
-        $room->building_id = $request->input('building_id');
+        $room->location_id = $request->input('location_id');
         $room->name = $request->input('name');
         $room->description = $request->input('description');
         $room->notes = $request->input('notes');
@@ -172,7 +170,7 @@ class RoomController extends Controller
 
         $rooms = \App\Room::with('location')->get();
         $roomsort = $rooms->sortBy(function ($room) {
-            return sprintf('%-12s%s', $room->building_id, $room->name);
+            return sprintf('%-12s%s', $room->location_id, $room->name);
         });
 
         $registrations_start = \App\Registration::with('room', 'room.location', 'retreatant', 'retreat')->whereNull('canceled_at')->where('room_id', '>', 0)->whereHas('retreat', function ($query) use ($dts) {

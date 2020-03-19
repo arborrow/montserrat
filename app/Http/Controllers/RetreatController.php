@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RoomUpdateRetreatRequest;
 use App\Http\Requests\StoreRetreatRequest;
 use App\Http\Requests\UpdateRetreatRequest;
+use App\Registration;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use Spatie\GoogleCalendar\Event;
@@ -568,5 +569,44 @@ class RetreatController extends Controller
 
 
         return view('calendar.index', compact('calendar_events'));
+    }
+    public function event_room_list($event_id) {
+        // get buildings for which there are assigned rooms
+        // for each building initialize array of all rooms in that building
+        // for each registration add contact sort_name to room
+        // view room_lists
+        // TODO: write unit tests for this method
+        $this->authorize('show-registration');
+        $event = \App\Retreat::findOrFail($event_id);
+        $registrations = \App\Registration::whereEventId($event_id)->whereNull('canceled_at')->with('room')->get();
+        $room_ids = \App\Registration::whereEventId($event_id)->whereNull('canceled_at')->pluck('room_id');
+        $location_ids = \App\Room::whereIn('id',$room_ids)->pluck('location_id')->unique();
+        $building_ids = \App\Location::whereIn('id',$location_ids)->pluck('id');
+        $results = array();
+        foreach ($building_ids as $building) {
+            $building_rooms = \App\Room::whereLocationId($building)->with('location')->orderBy('name')->get();
+            foreach ($building_rooms as $room) {
+                    $results[$room->location->name][$room->floor][$room->name] = '';
+            }
+        }
+
+        foreach ($registrations as $registration) {
+            if ($registration->room_id >0) {
+                // if the registered retreatant is not an individual person - for example a contract group organization then use the registration note for the name of the retreatant
+                if ($registration->retreatant->contact_type == config('polanco.contact_type.individual')) {
+                        $results[$registration->room->location->name][$registration->room->floor][$registration->room->name] = $registration->retreatant->sort_name;
+                } else {
+                    // if there is no note; default back to the sort_name of the contact
+                    if (isset($registration->notes)) {
+                        $results[$registration->room->location->name][$registration->room->floor][$registration->room->name] = $registration->notes;
+
+                    } else {
+                        $results[$registration->room->location->name][$registration->room->floor][$registration->room->name] = $registration->retreatant->sort_name;
+                    }
+                }
+            }
+        }
+        return view('retreats.roomlist', compact('results','event'));
+
     }
 }

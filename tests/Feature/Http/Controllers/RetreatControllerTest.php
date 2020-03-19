@@ -453,5 +453,32 @@ class RetreatControllerTest extends TestCase
         );
     }
 
+    /**
+     * @test
+     */
+    public function event_room_list_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-registration');
+        $retreat = factory(\App\Retreat::class)->create();
+        $retreatant = factory(\App\Contact::class)->create([
+            'contact_type' => config('polanco.contact_type.individual'),
+        ]);
+        $room = factory(\App\Room::class)->create();
+        $registration = factory(\App\Registration::class)->create([
+            'event_id' => $retreat->id,
+            'contact_id' => $retreatant->id,
+            'room_id' => $room->id,
+            'canceled_at' => null,
+        ]);
+        $response = $this->actingAs($user)->get('retreat/' . $registration->event_id .'/roomlist');
+        $response->assertOk();
+        $response->assertViewIs('retreats.roomlist');
+        $response->assertViewHas('event');
+        $response->assertViewHas('results');
+        $response->assertSeeText($room->name);
+        $response->assertSeeText($retreatant->sort_name);
+        $response->assertSeeText($retreat->title);
+    }
+
     // test cases...
 }
