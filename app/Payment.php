@@ -12,7 +12,7 @@ class Payment extends Model
     protected $fillable = ['donation_id', 'payment_id', 'payment_amount', 'payment_description', 'cknumber', 'ccnumber', 'authorization_number', 'note', 'ty_letter_sent'];
     protected $dates = ['deleted_at', 'created_at', 'updated_at', 'payment_date', 'expire_date'];
     protected $primaryKey = 'payment_id';
-    protected $casts = ['payment_amount'=>'decimal:2',];
+    protected $casts = ['payment_amount'=>'decimal:2'];
 
     public function donation()
     {
@@ -43,10 +43,10 @@ class Payment extends Model
 
     public function getDonationAmountAttribute()
     {
-      if (isset($this->donation->donation_amount)) {
-        return number_format($this->donation->donation_amount,2);
-      } else {
-        return 0;
-      }
+        if (isset($this->donation->donation_amount)) {
+            return number_format($this->donation->donation_amount, 2);
+        } else {
+            return 0;
+        }
     }
 }

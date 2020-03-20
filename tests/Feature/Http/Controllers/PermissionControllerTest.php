@@ -12,6 +12,7 @@ use Tests\TestCase;
 class PermissionControllerTest extends TestCase
 {
     use withFaker;
+
     /**
      * @test
      */
@@ -38,7 +39,6 @@ class PermissionControllerTest extends TestCase
 
         $response->assertRedirect(action('PermissionController@index'));
         $this->assertSoftDeleted($permission);
-
     }
 
     /**
@@ -72,7 +72,6 @@ class PermissionControllerTest extends TestCase
         $response->assertViewHas('actions');
         $response->assertViewHas('models');
         $response->assertSeeText('Permissions');
-
     }
 
     /**
@@ -98,9 +97,9 @@ class PermissionControllerTest extends TestCase
     public function store_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('create-permission');
-        $permission_name = 'New ' . $this->faker->words(3,true);
-        $permission_display_name = $this->faker->words(4,true);
-        $permission_description = $this->faker->sentence(7,true);
+        $permission_name = 'New '.$this->faker->words(3, true);
+        $permission_display_name = $this->faker->words(4, true);
+        $permission_description = $this->faker->sentence(7, true);
 
         $response = $this->actingAs($user)->post(route('permission.store'), [
             'name' => $permission_name,
@@ -114,7 +113,6 @@ class PermissionControllerTest extends TestCase
           'display_name' => $permission_display_name,
           'description' => $permission_description,
         ]);
-
     }
 
     /**
@@ -125,13 +123,13 @@ class PermissionControllerTest extends TestCase
         $user = $this->createUserWithPermission('update-permission');
         $permission = factory(\App\Permission::class)->create();
         $original_permission_name = $permission->name;
-        $new_permission_name = 'New ' . $this->faker->words(3,true);
+        $new_permission_name = 'New '.$this->faker->words(3, true);
 
         $response = $this->actingAs($user)->put(route('permission.update', [$permission]), [
           'id' => $permission->id,
           'name' => $new_permission_name,
-          'display_name' => $this->faker->words(4,true),
-          'description' => $this->faker->sentence(7,true),
+          'display_name' => $this->faker->words(4, true),
+          'description' => $this->faker->sentence(7, true),
         ]);
 
         $response->assertRedirect(action('PermissionController@index'));
@@ -158,7 +156,7 @@ class PermissionControllerTest extends TestCase
         ]);
 
         $response->assertRedirect(action('PermissionController@index'));
-        
+
         // TODO: perform additional assertions
     }
 

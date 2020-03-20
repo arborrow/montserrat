@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Organization;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\Organization;
 
 /**
  * @see \App\Http\Controllers\OrganizationController
@@ -83,7 +83,6 @@ class OrganizationControllerTest extends TestCase
         $response->assertViewHas('organizations');
         $response->assertViewHas('subcontact_types');
         $response->assertSeeText('Organizations');
-
     }
 
     /**
@@ -92,8 +91,8 @@ class OrganizationControllerTest extends TestCase
     public function index_type_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-contact');
-        $subcontact_type_id = rand(7,13);
-        $response = $this->actingAs($user)->get('organization/type/' . $subcontact_type_id);
+        $subcontact_type_id = rand(7, 13);
+        $response = $this->actingAs($user)->get('organization/type/'.$subcontact_type_id);
 
         $response->assertOk();
         $response->assertViewIs('organizations.index');
@@ -101,7 +100,6 @@ class OrganizationControllerTest extends TestCase
         $response->assertViewHas('subcontact_types');
         $response->assertViewHas('defaults');
         $response->assertSeeText('Organizations');
-
     }
 
     /**
@@ -136,7 +134,7 @@ class OrganizationControllerTest extends TestCase
           'display_name' => $organization_name,
           'sort_name' => $organization_name,
           'contact_type' => config('polanco.contact_type.organization'),
-          'subcontact_type' => $this->faker->numberBetween(9,11),
+          'subcontact_type' => $this->faker->numberBetween(9, 11),
 
         ]);
         $response->assertRedirect(action('OrganizationController@index'));
@@ -145,7 +143,6 @@ class OrganizationControllerTest extends TestCase
           'sort_name' => $organization_name,
           'display_name' => $organization_name,
         ]);
-
     }
 
     /**

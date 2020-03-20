@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Registration;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\Registration;
 
 /**
  * @see \App\Http\Controllers\DonationController
@@ -20,7 +20,7 @@ class DonationControllerTest extends TestCase
     public function agc_returns_an_ok_response()
     {   // agc reports available from 2007 to 2020
         $user = $this->createUserWithPermission('show-donation');
-        $year = $this->faker->numberBetween(2007,2020);
+        $year = $this->faker->numberBetween(2007, 2020);
         $response = $this->actingAs($user)->get('agc/'.$year);
 
         $response->assertOk();
@@ -34,10 +34,10 @@ class DonationControllerTest extends TestCase
     /**
      * @test
      */
-     public function agc_returns_404()
+    public function agc_returns_404()
     {
         $user = $this->createUserWithPermission('show-donation');
-        $year = $this->faker->numberBetween(2000,2005);
+        $year = $this->faker->numberBetween(2000, 2005);
         $response = $this->actingAs($user)->get('agc/'.$year);
 
         $response->assertNotFound();
@@ -144,17 +144,17 @@ class DonationControllerTest extends TestCase
         $retreat = factory(\App\Retreat::class)->create([
             'description' => 'Retreat Payments Update Test',
         ]);
-        $participants = factory(\App\Registration::class,$this->faker->numberBetween(5,10))->create([
+        $participants = factory(\App\Registration::class, $this->faker->numberBetween(5, 10))->create([
             'event_id' => $retreat->id,
             'canceled_at' => null,
         ]);
-        $donations = array();
+        $donations = [];
 
         $participants = \App\Registration::whereEventId($retreat->id)->get();
         foreach ($participants as $participant) {
             $donations[$participant->id]['id'] = $participant->id;
-            $donations[$participant->id]['pledge'] = $this->faker->numberBetween(100,200);
-            $donations[$participant->id]['paid'] = $this->faker->numberBetween(100,200);
+            $donations[$participant->id]['pledge'] = $this->faker->numberBetween(100, 200);
+            $donations[$participant->id]['paid'] = $this->faker->numberBetween(100, 200);
             $donations[$participant->id]['method'] = 'Credit Card';
             $donations[$participant->id]['idnumber'] = $this->faker->randomNumber(6);
             $donations[$participant->id]['terms'] = $this->faker->sentence;
@@ -170,7 +170,6 @@ class DonationControllerTest extends TestCase
           'event_id' => $retreat->id,
           'contact_id' => $random_participant->contact_id,
         ]);
-
     }
 
     /**
@@ -199,7 +198,7 @@ class DonationControllerTest extends TestCase
         $user = $this->createUserWithPermission('create-donation');
         $donor = factory(\App\Contact::class)->create();
         $event = factory(\App\Retreat::class)->create();
-        $start_date_only = $this->faker->dateTimeBetween('this week','+7 days');
+        $start_date_only = $this->faker->dateTimeBetween('this week', '+7 days');
 
         $response = $this->actingAs($user)->post(route('donation.store'), [
             // TODO: send request data
@@ -207,10 +206,10 @@ class DonationControllerTest extends TestCase
             'event_id' => $event->id,
             'donation_date' => $this->faker->dateTime(),
             'payment_date' => $this->faker->dateTime(),
-            'donation_amount' => $this->faker->randomFloat(2,0,100000),
-            'payment_amount' => $this->faker->randomFloat(2,0,100000),
+            'donation_amount' => $this->faker->randomFloat(2, 0, 100000),
+            'payment_amount' => $this->faker->randomFloat(2, 0, 100000),
             'payment_idnumber' => $this->faker->randomNumber(4),
-            'donation_install' => $this->faker->randomFloat(2,0,100000),
+            'donation_install' => $this->faker->randomFloat(2, 0, 100000),
             // TODO: figure out and clean up start and end dates - commenting out for now
             // 'start_date_only' => $start_date_only,
             // 'end_date_only' => $this->faker->dateTimeBetween($start_date_only, strtotime('+7 days')),
@@ -222,7 +221,6 @@ class DonationControllerTest extends TestCase
           'contact_id' => $donor->id,
           'event_id' => $event->id,
         ]);
-
 
         // TODO: perform additional assertions
     }
@@ -249,7 +247,7 @@ class DonationControllerTest extends TestCase
         $donation = factory(\App\Donation::class)->create();
         $new_contact = factory(\App\Contact::class)->create();
         $description = \App\DonationType::get()->random();
-        $start_date = $this->faker->dateTimeBetween('this week','+7 days');
+        $start_date = $this->faker->dateTimeBetween('this week', '+7 days');
         $end_date = $this->faker->dateTimeBetween($start_date, strtotime('+7 days'));
 
         $original_amount = $donation->donation_amount;
@@ -260,11 +258,11 @@ class DonationControllerTest extends TestCase
             'donation_date' => $this->faker->dateTime,
             'start_date' => $start_date,
             'end_date' => $end_date,
-            'donation_amount' => $this->faker->randomFloat(2,0,100000),
+            'donation_amount' => $this->faker->randomFloat(2, 0, 100000),
             'notes1' => $this->faker->text,
             'notes' => $this->faker->text,
             'terms' => $this->faker->text,
-            'donation_install' => $this->faker->randomFloat(2,0,100000),
+            'donation_install' => $this->faker->randomFloat(2, 0, 100000),
         ]);
 
         // TODO: removed space on Thank You field in Donation table then add to unit test
@@ -272,7 +270,7 @@ class DonationControllerTest extends TestCase
         $response->assertRedirect(action('DonationController@show', $donation->donation_id));
 
         $updated_donation = \App\Donation::find($donation->donation_id);
-        $this->assertEquals($updated_donation->event_id,$event->id);
+        $this->assertEquals($updated_donation->event_id, $event->id);
         $this->assertNotEquals($updated_donation->donation_amount, $original_amount);
     }
 

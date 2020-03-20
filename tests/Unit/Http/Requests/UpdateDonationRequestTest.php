@@ -4,9 +4,8 @@ namespace Tests\Unit\Http\Requests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use Illuminate\Validation\Rule;
-
+use Tests\TestCase;
 
 /**
  * @see \App\Http\Requests\UpdateDonationRequest
@@ -28,7 +27,6 @@ class UpdateDonationRequestTest extends TestCase
      */
     public function authorize()
     {
-
         $actual = $this->subject->authorize();
 
         $this->assertTrue($actual);
@@ -39,7 +37,6 @@ class UpdateDonationRequestTest extends TestCase
      */
     public function rules()
     {
-
         $actual = $this->subject->rules();
 
         $this->assertEquals([
@@ -59,7 +56,6 @@ class UpdateDonationRequestTest extends TestCase
      */
     public function messages()
     {
-
         $actual = $this->subject->messages();
 
         $this->assertEquals([], $actual);

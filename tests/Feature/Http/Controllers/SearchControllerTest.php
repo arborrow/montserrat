@@ -10,7 +10,9 @@ use Tests\TestCase;
  * @see \App\Http\Controllers\SearchController
  */
 class SearchControllerTest extends TestCase
-{   use WithFaker;
+{
+    use WithFaker;
+
     /**
      * @test
      */
@@ -18,7 +20,7 @@ class SearchControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-contact');
         $lastname = $this->faker->lastName;
-        $display_name = $this->faker->firstName . ' ' . $lastname;
+        $display_name = $this->faker->firstName.' '.$lastname;
 
         $person = factory(\App\Contact::class)->create([
             'display_name' => $display_name,
@@ -33,11 +35,10 @@ class SearchControllerTest extends TestCase
         $response->assertJsonStructure([
             [
                 'id',
-                'value'
-            ]
+                'value',
+            ],
         ]);
         $response->assertSeeText($lastname);
-
     }
 
     /**
@@ -79,7 +80,6 @@ class SearchControllerTest extends TestCase
         $response->assertViewHas('persons');
         $response->assertSeeText('results found');
         $response->assertSeeText($contact->last_name);
-        
     }
 
     /**

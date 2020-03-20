@@ -2,10 +2,10 @@
 
 namespace Tests\Unit\Console\Commands;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Mail;
+use Tests\TestCase;
 
 /**
  * @see \App\Console\Commands\SendBirthdays
@@ -23,7 +23,7 @@ class SendBirthdaysTest extends TestCase
 
         $person = factory(\App\Contact::class)->create([
           'contact_type' => '1',
-          'subcontact_type' => NULL,
+          'subcontact_type' => null,
           'birth_date' => now(),
         ]);
         $email = factory(\App\Email::class)->create([
@@ -36,7 +36,7 @@ class SendBirthdaysTest extends TestCase
             ->assertExitCode(0)
             ->run();
 
-        /** TODO: test that the mail is sent
+        /* TODO: test that the mail is sent
         *    return $mail->hasTo($email->email);
         * });
         */

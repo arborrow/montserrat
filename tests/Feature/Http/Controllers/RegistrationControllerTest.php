@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\GroupContact;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\GroupContact;
 
 /**
  * @see \App\Http\Controllers\RegistrationController
@@ -25,7 +25,7 @@ class RegistrationControllerTest extends TestCase
             'subcontact_type' => null,
         ]);
 
-        $response = $this->actingAs($user)->get('registration/add/' . $contact->id);
+        $response = $this->actingAs($user)->get('registration/add/'.$contact->id);
 
         $response->assertOk();
         $response->assertViewIs('registrations.create');
@@ -47,7 +47,7 @@ class RegistrationControllerTest extends TestCase
 
         $group = factory(\App\Group::class)->create();
 
-        $response = $this->actingAs($user)->get('group/' . $group->id . '/registration');
+        $response = $this->actingAs($user)->get('group/'.$group->id.'/registration');
 
         $response->assertOk();
         $response->assertViewIs('registrations.add_group');
@@ -56,7 +56,6 @@ class RegistrationControllerTest extends TestCase
         $response->assertViewHas('rooms');
         $response->assertViewHas('defaults');
         $response->assertSeeText(e($group->title));
-
     }
 
     /**
@@ -80,7 +79,6 @@ class RegistrationControllerTest extends TestCase
         $this->assertNotEquals($registration->arrived_at, $updated->arrived_at);
         // test that we are being redirected back to the retreat show blade
         $response->assertRedirect(URL('retreat/'.$registration->event_id));
-
     }
 
     /**
@@ -102,7 +100,6 @@ class RegistrationControllerTest extends TestCase
         $this->assertNotEquals($registration->attendance_confirm_date, $updated->attendance_confirm_date);
         // test that we are being redirected back to the retreat show blade
         $response->assertRedirect(URL('retreat/'.$registration->event_id));
-
     }
 
     /**
@@ -125,7 +122,6 @@ class RegistrationControllerTest extends TestCase
         $this->assertNotEquals($registration->canceled_at, $updated->canceled_at);
         // test that we are being redirected back to the retreat show blade
         $response->assertRedirect(URL('retreat/'.$registration->event_id));
-
     }
 
     /**
@@ -147,7 +143,6 @@ class RegistrationControllerTest extends TestCase
         $this->assertNotEquals($registration->registration_confirm_date, $updated->registration_confirm_date);
         // test that we are being redirected back to the retreat show blade
         $response->assertRedirect(URL('retreat/'.$registration->event_id));
-
     }
 
     /**
@@ -155,7 +150,7 @@ class RegistrationControllerTest extends TestCase
      */
     public function confirm_attendance_returns_an_ok_response()
     {
-          $registration = factory(\App\Registration::class)->create([
+        $registration = factory(\App\Registration::class)->create([
               'departed_at' => null,
               'registration_confirm_date' => null,
               'arrived_at' => null,
@@ -163,16 +158,14 @@ class RegistrationControllerTest extends TestCase
               'attendance_confirm_date' => null,
           ]);
 
-          $path = 'registration/confirm/'.$registration->remember_token;
-          $response = $this->get($path);
-          $registration->refresh();
+        $path = 'registration/confirm/'.$registration->remember_token;
+        $response = $this->get($path);
+        $registration->refresh();
 
-          $response->assertRedirect('https://montserratretreat.org/retreat-attendance');
-          $this->assertEquals($registration->remember_token,null);
-          $this->assertNotEquals($registration->registration_confirm_date,null);
-      }
-
-
+        $response->assertRedirect('https://montserratretreat.org/retreat-attendance');
+        $this->assertEquals($registration->remember_token, null);
+        $this->assertNotEquals($registration->registration_confirm_date, null);
+    }
 
     /**
      * @test
@@ -190,7 +183,6 @@ class RegistrationControllerTest extends TestCase
         $response->assertViewHas('rooms');
         $response->assertViewHas('defaults');
         $response->assertSeeText('Add A Registration');
-
     }
 
     /**
@@ -210,8 +202,6 @@ class RegistrationControllerTest extends TestCase
         $this->assertNotEquals($registration->departed_at, $updated->departed_at);
         // test that we are being redirected back to the retreat show blade
         $response->assertRedirect(URL('retreat/'.$registration->event_id));
-
-
     }
 
     /**
@@ -226,7 +216,6 @@ class RegistrationControllerTest extends TestCase
 
         $response->assertRedirect(action('RegistrationController@index'));
         $this->assertSoftDeleted($registration);
-
     }
 
     /**
@@ -263,8 +252,7 @@ class RegistrationControllerTest extends TestCase
         $response->assertViewIs('registrations.index');
         $response->assertViewHas('registrations');
         $registrations = $response->viewData('registrations');
-        $this->assertGreaterThanOrEqual('1',$registrations->count());
-
+        $this->assertGreaterThanOrEqual('1', $registrations->count());
     }
 
     /**
@@ -281,8 +269,7 @@ class RegistrationControllerTest extends TestCase
             get(route('registration.offwaitlist', ['id' => $registration->id]));
         $updated = \App\Registration::findOrFail($registration->id);
         $response->assertRedirect(URL('retreat/'.$registration->event_id));
-        $this->assertEquals(config('polanco.registration_status_id.registered'),$updated->status_id);
-
+        $this->assertEquals(config('polanco.registration_status_id.registered'), $updated->status_id);
     }
 
     /**
@@ -339,7 +326,7 @@ class RegistrationControllerTest extends TestCase
           'person_id' => $registration->contact_id,
           'staff_id' => config('polanco.self.id'),
           'type' => 'Email',
-          'notes' => $event->idnumber . ' registration email sent.',
+          'notes' => $event->idnumber.' registration email sent.',
         ]);
 
         // TODO: perform additional assertions
@@ -377,7 +364,7 @@ class RegistrationControllerTest extends TestCase
             'event_id' => $retreat->id,
             'status_id' => config('polanco.registration_status_id.registered'),
             'contact_id' => $contact->id,
-            'deposit' => $this->faker->randomFloat(2,0,1000),
+            'deposit' => $this->faker->randomFloat(2, 0, 1000),
             'attendance_confirm_date' => null,
             'registration_confirm_date' => null,
             'canceled_at' => null,
@@ -391,7 +378,6 @@ class RegistrationControllerTest extends TestCase
           'contact_id' => $contact->id,
           'status_id' => config('polanco.registration_status_id.registered'),
         ]);
-
     }
 
     /**
@@ -414,7 +400,7 @@ class RegistrationControllerTest extends TestCase
         $user = $this->createUserWithPermission('create-registration');
         $retreat = factory(\App\Retreat::class)->create();
         $group = factory(\App\Group::class)->create();
-        $group_contacts = factory(\App\GroupContact::class, $this->faker->numberBetween(2,10))->create([
+        $group_contacts = factory(\App\GroupContact::class, $this->faker->numberBetween(2, 10))->create([
             'group_id' => $group->id,
         ]);
         $response = $this->actingAs($user)->post('registration/add_group', [
@@ -422,14 +408,14 @@ class RegistrationControllerTest extends TestCase
             'group_id' => $group->id,
             'status_id' => config('polanco.registration_status_id.registered'),
             'register_date' => $this->faker->dateTime('now'),
-            'deposit' => $this->faker->randomFloat(2,0,100),
+            'deposit' => $this->faker->randomFloat(2, 0, 100),
         ]);
 
         $response->assertRedirect(action('RetreatController@show', $retreat->id));
         $registrations = \App\Registration::whereEventId($retreat->id)->get();
         $group_contacts = \App\GroupContact::whereGroupId($group->id)->get();
         // assert that every group contact now has a registration for the event
-        $this->assertEquals($registrations->count(),$group_contacts->count());
+        $this->assertEquals($registrations->count(), $group_contacts->count());
     }
 
     /**
@@ -451,7 +437,7 @@ class RegistrationControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-registration');
         $registration = factory(\App\Registration::class)->create();
-        $new_deposit = $this->faker->numberBetween(0,1000);
+        $new_deposit = $this->faker->numberBetween(0, 1000);
         $original_deposit = $registration->deposit;
         $response = $this->actingAs($user)->put(route('registration.update', [$registration]), [
             'id' => $registration->id,
@@ -502,8 +488,7 @@ class RegistrationControllerTest extends TestCase
         $updated = \App\Registration::findOrFail($registration->id);
 
         $response->assertRedirect(URL('retreat/'.$registration->event_id));
-        $this->assertEquals(config('polanco.registration_status_id.waitlist'),$updated->status_id);
-
+        $this->assertEquals(config('polanco.registration_status_id.waitlist'), $updated->status_id);
     }
 
     // test cases...

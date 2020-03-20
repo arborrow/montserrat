@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Vendor extends Model
 {
-  use SoftDeletes;
-  protected $table = 'contact';
+    use SoftDeletes;
+    protected $table = 'contact';
 
     //
 }

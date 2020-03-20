@@ -26,7 +26,6 @@ class UpdatePersonRequestTest extends TestCase
      */
     public function authorize()
     {
-
         $actual = $this->subject->authorize();
 
         $this->assertTrue($actual);
@@ -139,7 +138,6 @@ class UpdatePersonRequestTest extends TestCase
      */
     public function messages()
     {
-
         $actual = $this->subject->messages();
 
         $this->assertEquals([], $actual);

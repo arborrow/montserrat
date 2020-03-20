@@ -2,12 +2,14 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Faker\Generator as Faker;
 use App\ContactType;
+use Faker\Generator as Faker;
+
 $factory->define(App\Organization::class, function (Faker $faker) {
-  // organization subcontact types are in the range of
-  $subcontact_type = $faker->numberBetween(9,11);
-  $organizaton_name = $faker->company;
+    // organization subcontact types are in the range of
+    $subcontact_type = $faker->numberBetween(9, 11);
+    $organizaton_name = $faker->company;
+
     return [
         'contact_type' => config('polanco.contact_type.organization'),
         'subcontact_type' => $subcontact_type,

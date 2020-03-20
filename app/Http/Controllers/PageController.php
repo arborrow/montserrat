@@ -96,7 +96,7 @@ class PageController extends Controller
 
         $registrations = \App\Registration::select(DB::raw('participant.*', 'contact.*'))
             ->join('contact', 'participant.contact_id', '=', 'contact.id')
-            ->where('participant.event_id','=',$retreat->id)
+            ->where('participant.event_id', '=', $retreat->id)
             ->whereCanceledAt(null)
             ->with('retreat', 'retreatant.languages', 'retreatant.parish.contact_a.address_primary', 'retreatant.prefix', 'retreatant.suffix', 'retreatant.address_primary.state', 'retreatant.phones.location', 'retreatant.emails.location', 'retreatant.emergency_contact', 'retreatant.notes', 'retreatant.occupation')
             ->orderBy('contact.sort_name')
@@ -179,7 +179,7 @@ class PageController extends Controller
             $agc_touchpoint->staff_id = $user_email->contact_id;
             $agc_touchpoint->touched_at = Carbon::parse(now());
             $agc_touchpoint->type = 'Letter';
-            $agc_touchpoint->notes = 'AGC Acknowledgement Letter for Donation #' . $donation->donation_id;
+            $agc_touchpoint->notes = 'AGC Acknowledgement Letter for Donation #'.$donation->donation_id;
             $agc_touchpoint->save();
             $donation['Thank You'] = 'Y';
             $donation->save();
@@ -187,8 +187,8 @@ class PageController extends Controller
         //dd($donation->contact->preferred_language_value);
         if ($donation->contact->preferred_language_value == 'es') {
             $dt = Carbon::now();
-            $donation['today_es'] = $dt->day . ' de ' . $dt->locale('es')->monthName . ' del ' . $dt->year;
-            $donation['donation_date_es'] = $donation->donation_date->day . ' de ' . $donation->donation_date->locale('es')->monthName . ' del ' . $donation->donation_date->year;
+            $donation['today_es'] = $dt->day.' de '.$dt->locale('es')->monthName.' del '.$dt->year;
+            $donation['donation_date_es'] = $donation->donation_date->day.' de '.$donation->donation_date->locale('es')->monthName.' del '.$donation->donation_date->year;
 
             return view('reports.finance.agcacknowledge_es', compact('donation'));
         } else {
@@ -226,7 +226,7 @@ class PageController extends Controller
                 $query->where('donation_amount', '>', 0);
             })->with('donation.retreat', 'donation.contact')->get();
         $grouped_payments = $payments->groupBy(function ($c) {
-            return '#' . $c->donation->retreat_idnumber . '-' . $c->donation->retreat_name . ' (' . $c->donation->retreat_start_date . ')';
+            return '#'.$c->donation->retreat_idnumber.'-'.$c->donation->retreat_name.' ('.$c->donation->retreat_start_date.')';
         })->sortBy(function ($d) {
             return Carbon::parse($d[0]->donation->retreat_start_date);
         });
@@ -239,7 +239,7 @@ class PageController extends Controller
         $this->authorize('show-donation');
         $this->authorize('show-registration');
 
-        if (!isset($event_id)) {
+        if (! isset($event_id)) {
             $event_id = config('polanco.event.open_deposit');
         }
 
@@ -254,7 +254,7 @@ class PageController extends Controller
                 $query->where('donation_amount', '>', 0);
             })->with('donation.retreat', 'donation.contact')->get();
         $grouped_payments = $payments->groupBy(function ($c) {
-            return '#' . $c->donation->retreat_idnumber . '-' . $c->donation->retreat_name . ' (' . $c->donation->retreat_start_date . ')';
+            return '#'.$c->donation->retreat_idnumber.'-'.$c->donation->retreat_name.' ('.$c->donation->retreat_start_date.')';
         })->sortBy(function ($d) {
             return Carbon::parse($d[0]->donation->retreat_start_date);
         });

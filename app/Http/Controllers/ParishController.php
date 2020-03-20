@@ -283,7 +283,7 @@ class ParishController extends Controller
         if (null !== $request->input('diocese_id')) {
             $diocese->contact_id_a = $request->input('diocese_id');
             $diocese->save();
-          };
+        }
 
         /*
          * if there is not currently a pastor, create a new relationship

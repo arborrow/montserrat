@@ -14,13 +14,13 @@ class CreateTmpOfferingDedup extends Migration
     public function up()
     {
         Schema::create('tmp_offering_dedup', function (Blueprint $table) {
-          $table->string('combo')->nullable()->default(NULL);
-          $table->integer('contact_id')->nullable()->default(NULL);
-          $table->integer('event_id')->nullable()->default(NULL);
-          $table->integer('count')->default(0);
-          $table->boolean('merged')->default(0);
-          $table->softDeletes();
-          $table->timestamps();
+            $table->string('combo')->nullable()->default(null);
+            $table->integer('contact_id')->nullable()->default(null);
+            $table->integer('event_id')->nullable()->default(null);
+            $table->integer('count')->default(0);
+            $table->boolean('merged')->default(0);
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 

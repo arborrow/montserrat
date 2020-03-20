@@ -121,7 +121,7 @@ class PageControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-contact');
         $contact = factory(\App\Contact::class)->create();
 
-        $response = $this->actingAs($user)->get('report/contact_info_report/' . $contact->id);
+        $response = $this->actingAs($user)->get('report/contact_info_report/'.$contact->id);
 
         $response->assertOk();
         $response->assertViewIs('reports.contact_info');
@@ -161,7 +161,7 @@ class PageControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-donation');
         $payment = factory(\App\Payment::class)->create();
 
-        $response = $this->actingAs($user)->get('donation/' . $payment->donation_id . '/agcacknowledge');
+        $response = $this->actingAs($user)->get('donation/'.$payment->donation_id.'/agcacknowledge');
 
         $response->assertOk();
         $response->assertViewIs('reports.finance.agcacknowledge');
@@ -178,7 +178,7 @@ class PageControllerTest extends TestCase
         $user = factory(\App\User::class)->create();
         $payment = factory(\App\Payment::class)->create();
 
-        $response = $this->actingAs($user)->get('donation/' . $payment->donation_id . '/agcacknowledge');
+        $response = $this->actingAs($user)->get('donation/'.$payment->donation_id.'/agcacknowledge');
 
         $response->assertForbidden();
     }
@@ -232,7 +232,6 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('reports.finance.deposits');
         $response->assertViewHas('grouped_payments');
         $response->assertViewHas('payments');
-
     }
 
     /**
@@ -244,13 +243,12 @@ class PageControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-donation');
         $donation = factory(\App\Donation::class)->create();
 
-        $response = $this->actingAs($user)->get('donation/' . $donation->donation_id . '/invoice');
+        $response = $this->actingAs($user)->get('donation/'.$donation->donation_id.'/invoice');
 
         $response->assertOk();
         $response->assertViewIs('reports.finance.invoice');
         $response->assertViewHas('donation');
         $response->assertSee('Invoice #'.$donation->donation_id);
-
     }
 
     /**
@@ -291,9 +289,8 @@ class PageControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-donation');
         $retreat = factory(\App\Retreat::class)->create();
         $donation = factory(\App\Donation::class)->create([
-          'event_id' => $retreat->id
+          'event_id' => $retreat->id,
         ]);
-
 
         $response = $this->actingAs($user)->get('report/finance/retreatdonations/'.$retreat->idnumber);
 
@@ -407,7 +404,7 @@ class PageControllerTest extends TestCase
         $retreat = factory(\App\Retreat::class)->create();
         $registrants = factory(\App\Registration::class, 2)->create([
             'event_id' => $retreat->id,
-            'canceled_at' => NULL
+            'canceled_at' => null,
         ]);
 
         $response = $this->actingAs($user)->get('report/retreatantinfo/'.$retreat->idnumber);
@@ -428,7 +425,7 @@ class PageControllerTest extends TestCase
         $retreat = factory(\App\Retreat::class)->create();
         $registrants = factory(\App\Registration::class, 2)->create([
             'event_id' => $retreat->id,
-            'canceled_at' => NULL
+            'canceled_at' => null,
         ]);
 
         $response = $this->actingAs($user)->get('report/retreatlisting/'.$retreat->idnumber);

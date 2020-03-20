@@ -4,21 +4,17 @@ use Illuminate\Database\Seeder;
 
 class EventTypeTableSeeder extends Seeder
 {
-
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
     public function run()
     {
-        
-
         \DB::table('event_type')->delete();
-        
-        \DB::table('event_type')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('event_type')->insert([
+            0 => [
                 'id' => 1,
                 'label' => 'Conference',
                 'value' => 'Conference',
@@ -27,13 +23,12 @@ class EventTypeTableSeeder extends Seeder
                 'is_default' => 0,
                 'is_reserved' => 0,
                 'is_active' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            1 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            1 => [
                 'id' => 2,
                 'label' => 'Exhibition',
                 'value' => 'Exhibition',
@@ -42,13 +37,12 @@ class EventTypeTableSeeder extends Seeder
                 'is_default' => 0,
                 'is_reserved' => 0,
                 'is_active' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            2 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            2 => [
                 'id' => 3,
                 'label' => 'Fundraiser',
                 'value' => 'Fundraiser',
@@ -57,13 +51,12 @@ class EventTypeTableSeeder extends Seeder
                 'is_default' => 0,
                 'is_reserved' => 0,
                 'is_active' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            3 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            3 => [
                 'id' => 4,
                 'label' => 'Meeting',
                 'value' => 'Meeting',
@@ -72,13 +65,12 @@ class EventTypeTableSeeder extends Seeder
                 'is_default' => 0,
                 'is_reserved' => 0,
                 'is_active' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            4 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            4 => [
                 'id' => 5,
                 'label' => 'Performance',
                 'value' => 'Performance',
@@ -87,13 +79,12 @@ class EventTypeTableSeeder extends Seeder
                 'is_default' => 0,
                 'is_reserved' => 0,
                 'is_active' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            5 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            5 => [
                 'id' => 6,
                 'label' => 'Workshop',
                 'value' => 'Workshop',
@@ -102,13 +93,12 @@ class EventTypeTableSeeder extends Seeder
                 'is_default' => 0,
                 'is_reserved' => 0,
                 'is_active' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            6 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            6 => [
                 'id' => 7,
                 'label' => 'Ignatian',
                 'value' => 'Ignatian',
@@ -117,13 +107,12 @@ class EventTypeTableSeeder extends Seeder
                 'is_default' => 1,
                 'is_reserved' => 0,
                 'is_active' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            7 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            7 => [
                 'id' => 8,
                 'label' => 'Diocesan',
                 'value' => 'Diocesan',
@@ -132,13 +121,12 @@ class EventTypeTableSeeder extends Seeder
                 'is_default' => 0,
                 'is_reserved' => 0,
                 'is_active' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            8 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            8 => [
                 'id' => 9,
                 'label' => 'Other',
                 'value' => 'Other',
@@ -147,13 +135,12 @@ class EventTypeTableSeeder extends Seeder
                 'is_default' => 0,
                 'is_reserved' => 0,
                 'is_active' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            9 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            9 => [
                 'id' => 10,
                 'label' => 'Day',
                 'value' => 'Day',
@@ -162,13 +149,12 @@ class EventTypeTableSeeder extends Seeder
                 'is_default' => 0,
                 'is_reserved' => 0,
                 'is_active' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            10 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            10 => [
                 'id' => 11,
                 'label' => 'Contract',
                 'value' => 'Contract',
@@ -177,13 +163,12 @@ class EventTypeTableSeeder extends Seeder
                 'is_default' => 0,
                 'is_reserved' => 0,
                 'is_active' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            11 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            11 => [
                 'id' => 12,
                 'label' => 'Directed',
                 'value' => 'Directed',
@@ -192,13 +177,12 @@ class EventTypeTableSeeder extends Seeder
                 'is_default' => 0,
                 'is_reserved' => 0,
                 'is_active' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            12 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            12 => [
                 'id' => 13,
                 'label' => 'ISI',
                 'value' => 'ISI',
@@ -207,13 +191,12 @@ class EventTypeTableSeeder extends Seeder
                 'is_default' => 0,
                 'is_reserved' => 0,
                 'is_active' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            13 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            13 => [
                 'id' => 14,
                 'label' => 'Jesuit',
                 'value' => 'Jesuit',
@@ -222,13 +205,11 @@ class EventTypeTableSeeder extends Seeder
                 'is_default' => 0,
                 'is_reserved' => 0,
                 'is_active' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-        ));
-        
-        
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+        ]);
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Twilio\Rest\Client;
 use Auth;
 use Carbon\Carbon;
+use Twilio\Rest\Client;
 
 class GateController extends Controller
 {
@@ -12,6 +12,7 @@ class GateController extends Controller
     {
         $this->middleware('auth');
     }
+
     public function index()
     {
         $this->authorize('show-gate');
@@ -56,7 +57,7 @@ class GateController extends Controller
             }
 
             // create touchpoint to log open and closing of gate
-            $text =  !isset($hours) ? null : ' for '. $hours. ' hours';
+            $text = ! isset($hours) ? null : ' for '.$hours.' hours';
             $current_user = Auth::user();
             $user_email = \App\Email::whereEmail($current_user->email)->first();
             if (empty($user_email->contact_id)) {
@@ -70,14 +71,13 @@ class GateController extends Controller
             $touchpoint->staff_id = $user_email->contact_id;
             $touchpoint->touched_at = Carbon::now();
             $touchpoint->type = 'Gate activity';
-            $touchpoint->notes = 'Request to open gate' . $text;
+            $touchpoint->notes = 'Request to open gate'.$text;
             $touchpoint->save();
-
         } else {
             $message = 'Gate settings are NOT sufficiently configured to OPEN the gate.';
         }
 
-        return view('gate.open', compact('hours','message'));
+        return view('gate.open', compact('hours', 'message'));
     }
 
     public function close()
@@ -105,7 +105,7 @@ class GateController extends Controller
             }
 
             // create touchpoint to log open and closing of gate
-            $text =  !isset($hours) ? null : ' for '. $hours. ' hours';
+            $text = ! isset($hours) ? null : ' for '.$hours.' hours';
             $current_user = Auth::user();
 
             $user_email = \App\Email::whereEmail($current_user->email)->first();
@@ -119,9 +119,8 @@ class GateController extends Controller
             $touchpoint->staff_id = $user_email->contact_id;
             $touchpoint->touched_at = Carbon::now();
             $touchpoint->type = 'Gate activity';
-            $touchpoint->notes = 'Request to close gate' . $text;
+            $touchpoint->notes = 'Request to close gate'.$text;
             $touchpoint->save();
-
         } else {
             $message = 'Gate settings are not sufficiently configured to CLOSE the gate.';
         }

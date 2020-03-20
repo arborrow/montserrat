@@ -12,10 +12,10 @@
 
         <?= Form::open() ?>
         <?= Form::label('auto', 'Find a retreatant: ') ?>
-        <?= Form::text('auto', '', array('id' => 'auto'))?>
+        <?= Form::text('auto', '', ['id' => 'auto'])?>
         <br>
         <?= Form::label('response', 'Retreatant id: ') ?>
-        <?= Form::text('response', '', array('id' =>'response', 'disabled' => 'disabled')) ?>
+        <?= Form::text('response', '', ['id' =>'response', 'disabled' => 'disabled']) ?>
         <?= Form::close() ?>
 
         <script type="text/javascript">

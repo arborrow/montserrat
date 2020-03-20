@@ -81,9 +81,9 @@ class MailgunController extends Controller
                 }
             }
         }
+
         return view('mailgun.index', compact('messages'));
     }
-
 
     /*
      * Clean up the email address from Mailgun by removing <name>

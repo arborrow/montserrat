@@ -69,7 +69,7 @@ class RetreatController extends Controller
         foreach ($retreat_house->retreat_innkeepers as $innkeeper) {
             $i[$innkeeper->contact_id_b] = $innkeeper->contact_b->sort_name;
         }
-        if (!null == $i) {
+        if (! null == $i) {
             asort($i);
             $i = [0=>'N/A'] + $i;
         }
@@ -77,7 +77,7 @@ class RetreatController extends Controller
         foreach ($retreat_house->retreat_directors as $director) {
             $d[$director->contact_id_b] = $director->contact_b->sort_name;
         }
-        if (!null == $d) {
+        if (! null == $d) {
             asort($d);
             $d = [0=>'N/A'] + $d;
         }
@@ -85,7 +85,7 @@ class RetreatController extends Controller
         foreach ($retreat_house->retreat_assistants as $assistant) {
             $a[$assistant->contact_id_b] = $assistant->contact_b->sort_name;
         }
-        if (!null == $a) {
+        if (! null == $a) {
             asort($a);
             $a = [0=>'N/A'] + $a;
         }
@@ -93,7 +93,7 @@ class RetreatController extends Controller
         foreach ($retreat_house->retreat_captains as $captain) {
             $c[$captain->contact_id_b] = $captain->contact_b->sort_name;
         }
-        if (!null == $c) {
+        if (! null == $c) {
             asort($c);
             $c = [0=>'N/A'] + $c;
         }
@@ -131,7 +131,7 @@ class RetreatController extends Controller
         $retreat->innkeeper_id = $request->input('innkeeper_id');
         $retreat->assistant_id = $request->input('assistant_id');
 
-        if (null !==(env('GOOGLE_CALENDAR_ID'))) {
+        if (null !== (env('GOOGLE_CALENDAR_ID'))) {
             $calendar_event = new Event;
             $calendar_event->id = uniqid();
             $retreat->calendar_id = $calendar_event->id;
@@ -151,7 +151,7 @@ class RetreatController extends Controller
             $retreat->captains()->sync($request->input('captains'));
         }
 
-        if (null !==(env('GOOGLE_CALENDAR_ID'))) {
+        if (null !== (env('GOOGLE_CALENDAR_ID'))) {
             $calendar_event->name = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
             $calendar_event->summary = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
             $calendar_event->startDateTime = $retreat->start_date;
@@ -284,7 +284,7 @@ class RetreatController extends Controller
         foreach ($retreat_house->retreat_innkeepers as $innkeeper) {
             $i[$innkeeper->contact_id_b] = $innkeeper->contact_b->sort_name;
         }
-        if (!null == $i) {
+        if (! null == $i) {
             asort($i);
             $i = [0=>'N/A'] + $i;
         }
@@ -292,7 +292,7 @@ class RetreatController extends Controller
         foreach ($retreat_house->retreat_directors as $director) {
             $d[$director->contact_id_b] = $director->contact_b->sort_name;
         }
-        if (!null == $d) {
+        if (! null == $d) {
             asort($d);
             $d = [0=>'N/A'] + $d;
         }
@@ -300,7 +300,7 @@ class RetreatController extends Controller
         foreach ($retreat_house->retreat_assistants as $assistant) {
             $a[$assistant->contact_id_b] = $assistant->contact_b->sort_name;
         }
-        if (!null == $a) {
+        if (! null == $a) {
             asort($a);
             $a = [0=>'N/A'] + $a;
         }
@@ -308,7 +308,7 @@ class RetreatController extends Controller
         foreach ($retreat_house->retreat_captains as $captain) {
             $c[$captain->contact_id_b] = $captain->contact_b->sort_name;
         }
-        if (!null == $c) {
+        if (! null == $c) {
             asort($c);
             $c = [0=>'N/A'] + $c;
         }
@@ -421,7 +421,7 @@ class RetreatController extends Controller
         } else {
             $retreat->captains()->sync($request->input('captains'));
         }
-        if (!empty($retreat->calendar_id)) {
+        if (! empty($retreat->calendar_id)) {
             //dd($retreat->calendar_id);
             $calendar_event = Event::find($retreat->calendar_id);
             /*
@@ -431,7 +431,7 @@ class RetreatController extends Controller
              * What about guest directors?
              */
             //$calendar_event->attendees = $retreat->retreat_attendees;
-            if (!empty($calendar_event)) {
+            if (! empty($calendar_event)) {
                 $calendar_event->name = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
                 $calendar_event->summary = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
                 $calendar_event->startDateTime = $retreat->start_date;
@@ -457,9 +457,9 @@ class RetreatController extends Controller
         $this->authorize('delete-retreat');
         $retreat = \App\Retreat::findOrFail($id);
         // if there is a calendar id for the event then find the Google Calendar event, mark it as canceled and then remove it from the calendar (soft delete)
-        if (!empty($retreat->calendar_id)) {
+        if (! empty($retreat->calendar_id)) {
             $calendar_event = Event::findOrFail($retreat->calendar_id);
-            if (!empty($calendar_event)) {
+            if (! empty($calendar_event)) {
                 $calendar_event->name = '[CANCELED] '.$retreat->title.' ('.$retreat->idnumber.')';
                 $calendar_event->save();
                 $calendar_event->delete();
@@ -517,7 +517,7 @@ class RetreatController extends Controller
             $registration->save();
         }
 
-        return Redirect::action('RetreatController@show',$retreat->id);
+        return Redirect::action('RetreatController@show', $retreat->id);
     }
 
     public function checkin($id)
@@ -531,7 +531,7 @@ class RetreatController extends Controller
             $registration->save();
         }
 
-        return Redirect::action('RetreatController@show',$retreat->id);
+        return Redirect::action('RetreatController@show', $retreat->id);
     }
 
     public function room_update(RoomUpdateRetreatRequest $request)
@@ -567,10 +567,11 @@ class RetreatController extends Controller
             $calendar_events = collect([]);
         }
 
-
         return view('calendar.index', compact('calendar_events'));
     }
-    public function event_room_list($event_id) {
+
+    public function event_room_list($event_id)
+    {
         // get buildings for which there are assigned rooms
         // for each building initialize array of all rooms in that building
         // for each registration add contact sort_name to room
@@ -580,33 +581,32 @@ class RetreatController extends Controller
         $event = \App\Retreat::findOrFail($event_id);
         $registrations = \App\Registration::whereEventId($event_id)->whereNull('canceled_at')->with('room')->get();
         $room_ids = \App\Registration::whereEventId($event_id)->whereNull('canceled_at')->pluck('room_id');
-        $location_ids = \App\Room::whereIn('id',$room_ids)->pluck('location_id')->unique();
-        $building_ids = \App\Location::whereIn('id',$location_ids)->pluck('id');
-        $results = array();
+        $location_ids = \App\Room::whereIn('id', $room_ids)->pluck('location_id')->unique();
+        $building_ids = \App\Location::whereIn('id', $location_ids)->pluck('id');
+        $results = [];
         foreach ($building_ids as $building) {
             $building_rooms = \App\Room::whereLocationId($building)->with('location')->orderBy('name')->get();
             foreach ($building_rooms as $room) {
-                    $results[$room->location->name][$room->floor][$room->name] = '';
+                $results[$room->location->name][$room->floor][$room->name] = '';
             }
         }
 
         foreach ($registrations as $registration) {
-            if ($registration->room_id >0) {
+            if ($registration->room_id > 0) {
                 // if the registered retreatant is not an individual person - for example a contract group organization then use the registration note for the name of the retreatant
                 if ($registration->retreatant->contact_type == config('polanco.contact_type.individual')) {
-                        $results[$registration->room->location->name][$registration->room->floor][$registration->room->name] = $registration->retreatant->sort_name;
+                    $results[$registration->room->location->name][$registration->room->floor][$registration->room->name] = $registration->retreatant->sort_name;
                 } else {
                     // if there is no note; default back to the sort_name of the contact
                     if (isset($registration->notes)) {
                         $results[$registration->room->location->name][$registration->room->floor][$registration->room->name] = $registration->notes;
-
                     } else {
                         $results[$registration->room->location->name][$registration->room->floor][$registration->room->name] = $registration->retreatant->sort_name;
                     }
                 }
             }
         }
-        return view('retreats.roomlist', compact('results','event'));
 
+        return view('retreats.roomlist', compact('results', 'event'));
     }
 }

@@ -18,7 +18,7 @@ class StorePersonRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     * TODO: languages and referrals
+     * TODO: languages and referrals.
      *
      * @return array
      */

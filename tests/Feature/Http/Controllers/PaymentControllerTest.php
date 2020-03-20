@@ -21,7 +21,7 @@ class PaymentControllerTest extends TestCase
         $user = $this->createUserWithPermission('create-payment');
         $donation = factory(\App\Donation::class)->create();
 
-        $response = $this->actingAs($user)->get('payment/create/' . $donation->donation_id);
+        $response = $this->actingAs($user)->get('payment/create/'.$donation->donation_id);
 
         $response->assertOk();
         $response->assertViewIs('payments.create');
@@ -42,7 +42,6 @@ class PaymentControllerTest extends TestCase
 
         $response->assertRedirect(action('DonationController@show', $payment->donation_id));
         $this->assertSoftDeleted($payment);
-
     }
 
     /**
@@ -60,7 +59,6 @@ class PaymentControllerTest extends TestCase
         $response->assertViewHas('payment');
         $response->assertViewHas('payment_methods');
         $response->assertSeeText('Edit payment');
-
     }
 
     /**
@@ -77,8 +75,7 @@ class PaymentControllerTest extends TestCase
         $response->assertViewHas('payments');
         $response->assertSeeText('Payment Index');
         $payments = $response->viewData('payments');
-        $this->assertGreaterThanOrEqual('1',$payments->count());
-
+        $this->assertGreaterThanOrEqual('1', $payments->count());
     }
 
     /**
@@ -105,7 +102,7 @@ class PaymentControllerTest extends TestCase
         $user = $this->createUserWithPermission('create-payment');
         $donation = factory(\App\Donation::class)->create();
         $payment_date = $this->faker->dateTime();
-        $payment_amount = $this->faker->randomFloat(2,0,100000);
+        $payment_amount = $this->faker->randomFloat(2, 0, 100000);
         $response = $this->actingAs($user)->post(route('payment.store'), [
             'donation_id' => $donation->donation_id,
             'payment_date' => $payment_date,
@@ -118,7 +115,6 @@ class PaymentControllerTest extends TestCase
           'payment_date' => $payment_date,
           'payment_amount' => $payment_amount,
         ]);
-
     }
 
     /**
@@ -141,7 +137,7 @@ class PaymentControllerTest extends TestCase
         $user = $this->createUserWithPermission('update-payment');
         $payment = factory(\App\Payment::class)->create();
         $original_payment_amount = $payment->payment_amount;
-        $new_payment_amount = $this->faker->randomFloat(2,0,100000);
+        $new_payment_amount = $this->faker->randomFloat(2, 0, 100000);
 
         $response = $this->actingAs($user)->put(route('payment.update', [$payment]), [
             'payment_amount' => $new_payment_amount,
@@ -153,7 +149,6 @@ class PaymentControllerTest extends TestCase
         $response->assertRedirect(action('DonationController@show', $payment->donation_id));
         $this->assertEquals($updated->payment_amount, $new_payment_amount);
         $this->assertNotEquals($updated->payment_amount, $original_payment_amount);
-
     }
 
     /**
@@ -164,7 +159,7 @@ class PaymentControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-payment');
         $payment = factory(\App\Payment::class)->create();
         $original_payment_amount = $payment->payment_amount;
-        $new_payment_amount = $this->faker->randomFloat(2,0,100000);
+        $new_payment_amount = $this->faker->randomFloat(2, 0, 100000);
 
         $response = $this->actingAs($user)->put(route('payment.update', [$payment]), [
             'payment_amount' => $new_payment_amount,
@@ -173,7 +168,6 @@ class PaymentControllerTest extends TestCase
         ]);
 
         $response->assertForbidden();
-
     }
 
     /**

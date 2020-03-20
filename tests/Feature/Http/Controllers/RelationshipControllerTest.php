@@ -23,7 +23,6 @@ class RelationshipControllerTest extends TestCase
         $response = $this->actingAs($user)->get(route('relationship.create'));
 
         $response->assertRedirect(action('RelationshipController@index'));
-
     }
 
     /**
@@ -38,7 +37,6 @@ class RelationshipControllerTest extends TestCase
 
         $response->assertRedirect('relationship.index');
         $this->assertSoftDeleted($relationship);
-
     }
 
     /**
@@ -53,7 +51,6 @@ class RelationshipControllerTest extends TestCase
         $response = $this->actingAs($user)->get(route('relationship.edit', [$relationship]));
 
         $response->assertRedirect(action('RelationshipController@show', $relationship->id));
-
     }
 
     /**
@@ -69,7 +66,6 @@ class RelationshipControllerTest extends TestCase
         $response->assertViewIs('relationships.index');
         $response->assertViewHas('relationships');
         $response->assertSeeText('Relationship Index');
-
     }
 
     /**
@@ -86,7 +82,6 @@ class RelationshipControllerTest extends TestCase
         $response->assertViewIs('relationships.show');
         $response->assertViewHas('relationship');
         $response->assertSeeText(e($relationship->description));
-
 
         // TODO: perform additional assertions
     }
@@ -105,7 +100,6 @@ class RelationshipControllerTest extends TestCase
         ]);
 
         $response->assertRedirect(action('RelationshipController@index'));
-
     }
 
     /**
@@ -122,7 +116,6 @@ class RelationshipControllerTest extends TestCase
         ]);
 
         $response->assertRedirect(action('RelationshipController@show', $relationship->id));
-
     }
 
     // test cases...

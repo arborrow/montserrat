@@ -31,31 +31,33 @@ class Address extends Model
     {
         return $this->hasOne(Country::class, 'id', 'country_id');
     }
+
     public function getLocationTypeNameAttribute()
     {
         if (isset($this->location_type_id)) {
             return $this->location->name;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getStateNameAttribute()
     {
         if (isset($this->state_province_id)) {
             return $this->state->name;
         } else {
-            return null;
+            return;
         }
     }
+
     public function getCountryNameAttribute()
     {
         if (isset($this->country_id)) {
             return $this->country->name;
         } else {
-            return null;
+            return;
         }
     }
-
 
     public function getGoogleMapAttribute()
     {

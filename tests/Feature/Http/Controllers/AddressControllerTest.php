@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\StateProvince;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\StateProvince;
 
 /**
  * @see \App\Http\Controllers\AddressController
@@ -87,7 +87,6 @@ class AddressControllerTest extends TestCase
      */
     public function show_returns_an_ok_response()
     {
-
         $address = factory(\App\Address::class)->create();
         $user = $this->createUserWithPermission('show-address');
 
@@ -98,20 +97,20 @@ class AddressControllerTest extends TestCase
 
         $response->assertSeeText('Address details');
         $response->assertSeeText($address->street_address);
-
     }
 
     /**
      * @test
      */
     public function store_returns_an_ok_response()
-    {   $this->withoutExceptionHandling();
+    {
+        $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-address');
         $contact = factory(\App\Contact::class)->create();
         $random_location_type = \App\LocationType::get()->random();
         $random_state = \App\StateProvince::whereCountryId(config('polanco.country_id_usa'))->get()->random();
         $random_street_address = $this->faker->streetAddress;
-        
+
         $response = $this->actingAs($user)->post(route('address.store'), [
             'contact_id' => $contact->id,
             'location_type_id' => $random_location_type->id,
@@ -162,20 +161,19 @@ class AddressControllerTest extends TestCase
         // $response->assertRedirect(action('AddressController@show', $address->id));
 
         $updated_address = \App\Address::find($address->id);
-        $this->assertEquals($updated_address->contact_id,$contact_id);
+        $this->assertEquals($updated_address->contact_id, $contact_id);
         $this->assertNotEquals($updated_address->street_address, $original_street_address);
     }
 
-
-        /**
-         * @test
-         */
-        public function update_validates_with_a_form_request()
-        {
-            $this->assertActionUsesFormRequest(
+    /**
+     * @test
+     */
+    public function update_validates_with_a_form_request()
+    {
+        $this->assertActionUsesFormRequest(
                 \App\Http\Controllers\AddressController::class,
                 'update',
                 \App\Http\Requests\UpdateAddressRequest::class
             );
-        }
+    }
 }

@@ -26,7 +26,6 @@ class UpdateRelationshipTypeRequestTest extends TestCase
      */
     public function authorize()
     {
-
         $actual = $this->subject->authorize();
 
         $this->assertTrue($actual);
@@ -37,7 +36,6 @@ class UpdateRelationshipTypeRequestTest extends TestCase
      */
     public function rules()
     {
-
         $actual = $this->subject->rules();
 
         $this->assertEquals([
@@ -56,7 +54,6 @@ class UpdateRelationshipTypeRequestTest extends TestCase
      */
     public function messages()
     {
-
         $actual = $this->subject->messages();
 
         $this->assertEquals([], $actual);
