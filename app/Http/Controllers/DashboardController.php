@@ -15,6 +15,7 @@ class DashboardController extends Controller
     }
     public function agc()
     {
+        // TODO: get % of returning or % of last year but unfortunately not this year  between agc years
         $this->authorize('show-dashboard');
 
         // number of Ignatian Retreats per Month
@@ -216,6 +217,7 @@ class DashboardController extends Controller
     }
 
     public function board($year = null) {
+        // TODO: Create donut chart for average number of retreatants per event (get count of event_type_id) partipants/count(event_type_id) //useful for Ambassador goal of 40 (draw goal line)
         $this->authorize('show-dashboard');
 
         // default to current fiscal year
