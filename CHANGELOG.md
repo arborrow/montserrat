@@ -195,7 +195,7 @@
 - Added `stderr` example to `config/logging.php` ([66f5757](https://github.com/laravel/laravel/commit/66f5757d58cb3f6d1152ec2d5f12e247eb2242e2))
 
 ### Changed
-- Set `MAIL_DRIVER` in `phpunit.xml` ([#4607](https://github.com/laravel/laravel/pull/4607))
+- Set `MAIL_MAILER` in `phpunit.xml` ([#4607](https://github.com/laravel/laravel/pull/4607))
 
 ### Removed
 - Removed "thanks" package ([#4593](https://github.com/laravel/laravel/pull/4593))
