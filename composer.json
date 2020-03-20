@@ -22,7 +22,8 @@
         "php-http/curl-client": "^1.7",
         "spatie/laravel-google-calendar": "^2.3",
         "stuyam/laravel-phone-validator": "^1.0",
-        "vinkla/hashids": "^7.0"
+        "vinkla/hashids": "^7.0",
+        "laravel/ui": "^2.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
