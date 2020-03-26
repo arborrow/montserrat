@@ -47,6 +47,7 @@ class ConfirmationEmails extends Command
         $startDate = Carbon::today()->addDays(7);
         $retreats = \App\Retreat::whereDate('start_date', $startDate)
             ->where('event_type_id', config('polanco.event_type.ignatian'))
+            ->whereIsActive(1)
             ->get();
 
         if ($retreats->count() >= 1) {
