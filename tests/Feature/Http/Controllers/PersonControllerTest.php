@@ -220,7 +220,7 @@ class PersonControllerTest extends TestCase
         $response = $this->actingAs($user)->get(route('envelope', ['id' => $person->id]));
 
         $response->assertViewIs('persons.envelope10');
-        $response->assertSee(e($person->agc_household_name));
+        $response->assertSee($person->agc_household_name);
     }
 
     /**
