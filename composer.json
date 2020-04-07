@@ -17,7 +17,7 @@
         "laravel/helpers": "^1.1",
         "laravel/socialite": "^4.2",
         "laravel/tinker": "^2.0",
-        "laravelcollective/html": "6.0.*",
+        "laravelcollective/html": "^6.1",
         "mailgun/mailgun-php": "^2.1",
         "php-http/curl-client": "^1.7",
         "spatie/laravel-google-calendar": "^2.3",
