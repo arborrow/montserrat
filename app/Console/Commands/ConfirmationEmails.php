@@ -75,9 +75,11 @@ class ConfirmationEmails extends Command
                         $registration->remember_token = Str::random(60);
                         $registration->save();
                     }
-
+                    // TODO: create Juan Alfonso de Polanco contact in seeder
                     $alfonso = \App\Contact::where('display_name', 'Juan Alfonso de Polanco')->first();
-
+                    if (!isset($alfonso->id)) {
+                        $alfonso = \App\Contact::findOrFail(config('polanco.self.id'));
+                    }
                     $touchpoint = new \App\Touchpoint();
                     $touchpoint->person_id = $registration->contact->id;
                     $touchpoint->staff_id = $alfonso->id;
