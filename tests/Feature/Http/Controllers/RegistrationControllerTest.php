@@ -55,7 +55,7 @@ class RegistrationControllerTest extends TestCase
         $response->assertViewHas('groups');
         $response->assertViewHas('rooms');
         $response->assertViewHas('defaults');
-        $response->assertSeeText(e($group->title));
+        $response->assertSeeText($group->title);
     }
 
     /**
@@ -235,7 +235,7 @@ class RegistrationControllerTest extends TestCase
         $response->assertViewHas('rooms');
         $response->assertViewHas('defaults');
         $response->assertSeeText('Edit Registration');
-        $response->assertSeeText(e($registration->notes));
+        $response->assertSeeText($registration->notes);
     }
 
     /**
@@ -295,8 +295,8 @@ class RegistrationControllerTest extends TestCase
         $response->assertViewHas('retreatants');
         $response->assertViewHas('rooms');
         $response->assertViewHas('defaults');
-        $response->assertSeeText(e($retreat->title));
-        $response->assertSeeText(e($contact->sort_name));
+        $response->assertSeeText($retreat->title);
+        $response->assertSeeText($contact->sort_name);
     }
 
     /**
@@ -345,7 +345,7 @@ class RegistrationControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('registrations.show');
         $response->assertViewHas('registration');
-        $response->assertSeeText(e($registration->contact->full_name));
+        $response->assertSeeText($registration->contact->full_name);
     }
 
     /**

@@ -81,7 +81,7 @@ class RelationshipControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('relationships.show');
         $response->assertViewHas('relationship');
-        $response->assertSeeText(e($relationship->description));
+        $response->assertSeeText($relationship->description);
 
         // TODO: perform additional assertions
     }

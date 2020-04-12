@@ -167,7 +167,7 @@ class RetreatControllerTest extends TestCase
         $response->assertViewHas('event_types');
         $response->assertViewHas('is_active');
         $response->assertSeeText('Edit');
-        $response->assertSeeText(e($retreat->idnumber));
+        $response->assertSeeText($retreat->idnumber);
     }
 
     /**
@@ -208,7 +208,7 @@ class RetreatControllerTest extends TestCase
         $response->assertViewHas('retreat');
         $response->assertViewHas('registrations');
         $response->assertViewHas('status');
-        $response->assertSeeText(e($retreat->title));
+        $response->assertSeeText($retreat->title);
     }
 
     /**
@@ -321,7 +321,7 @@ class RetreatControllerTest extends TestCase
         $response->assertViewHas('retreat');
         $response->assertViewHas('registrations');
         $response->assertViewHas('status');
-        $response->assertSeeText(e($retreat->title));
+        $response->assertSeeText($retreat->title);
     }
 
     /**
@@ -340,7 +340,7 @@ class RetreatControllerTest extends TestCase
         $response->assertViewIs('retreats.payments.show');
         $response->assertViewHas('retreat');
         $response->assertViewHas('registrations');
-        $response->assertSeeText(e($retreat->idnumber));
+        $response->assertSeeText($retreat->idnumber);
     }
 
     /**
@@ -360,7 +360,7 @@ class RetreatControllerTest extends TestCase
         $response->assertViewHas('retreat');
         $response->assertViewHas('registrations');
         $response->assertSeeText('Waitlist for');
-        $response->assertSeeText(e($retreat->idnumber));
+        $response->assertSeeText($retreat->idnumber);
     }
 
     /**

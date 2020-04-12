@@ -250,7 +250,7 @@ class TouchpointControllerTest extends TestCase
         $response->assertViewIs('touchpoints.show');
         $response->assertViewHas('touchpoint');
         $response->assertSeeText('Touchpoint details');
-        $response->assertSeeText(e($touchpoint->description));
+        $response->assertSeeText($touchpoint->description);
     }
 
     /**

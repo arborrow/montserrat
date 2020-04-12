@@ -88,7 +88,7 @@ class RoleControllerTest extends TestCase
         $response->assertViewHas('permissions');
         $response->assertViewHas('users');
         $response->assertSeeText('Role details');
-        $response->assertSeeText(e($role->description));
+        $response->assertSeeText($role->description);
     }
 
     /**

@@ -108,7 +108,7 @@ class RoomControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('rooms.show');
         $response->assertViewHas('room');
-        $response->assertSeeText(e($room->description));
+        $response->assertSeeText($room->description);
     }
 
     /**

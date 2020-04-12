@@ -443,7 +443,7 @@ class PersonControllerTest extends TestCase
         $response->assertViewHas('relationship_types');
         $response->assertViewHas('touchpoints');
         $response->assertViewHas('registrations');
-        $response->assertSeeText(e($person->display_name));
+        $response->assertSeeText($person->display_name);
     }
 
     /**

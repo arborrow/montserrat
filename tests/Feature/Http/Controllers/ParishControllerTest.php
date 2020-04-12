@@ -128,7 +128,7 @@ class ParishControllerTest extends TestCase
         $response->assertViewHas('parish');
         $response->assertViewHas('files');
         $response->assertViewHas('relationship_types');
-        $response->assertSeeText(e($parish->display_name));
+        $response->assertSeeText($parish->display_name);
     }
 
     /**

@@ -31,7 +31,7 @@ class RelationshipTypeControllerTest extends TestCase
         $response->assertViewHas('contact_a_list');
         $response->assertViewHas('contact_b_list');
 
-        $response->assertSeeText(e($relationship_type->description));
+        $response->assertSeeText($relationship_type->description);
     }
 
     /**
@@ -133,7 +133,7 @@ class RelationshipTypeControllerTest extends TestCase
         $response->assertViewIs('relationships.types.edit');
         $response->assertViewHas('relationship_type');
         $response->assertSeeText('Edit Relationship Type');
-        $response->assertSeeText(e($relationship_type->description));
+        $response->assertSeeText($relationship_type->description);
     }
 
     /**
@@ -212,7 +212,7 @@ class RelationshipTypeControllerTest extends TestCase
         $response->assertViewIs('relationships.types.show');
         $response->assertViewHas('relationship_type');
         $response->assertViewHas('relationships');
-        $response->assertSeeText(e($relationship_type->description));
+        $response->assertSeeText($relationship_type->description);
     }
 
     /**

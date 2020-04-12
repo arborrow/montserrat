@@ -63,7 +63,7 @@ class DioceseControllerTest extends TestCase
         $response->assertViewHas('countries');
         $response->assertViewHas('defaults');
         $response->assertSeeText('Edit');
-        $response->assertSeeText(e($diocese->display_name));
+        $response->assertSeeText($diocese->display_name);
     }
 
     /**
@@ -99,7 +99,7 @@ class DioceseControllerTest extends TestCase
         $response->assertViewHas('diocese');
         $response->assertViewHas('relationship_types');
         $response->assertViewHas('files');
-        $response->assertSeeText(e($diocese->display_name));
+        $response->assertSeeText($diocese->display_name);
     }
 
     /**
