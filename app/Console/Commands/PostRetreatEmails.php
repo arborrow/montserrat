@@ -45,6 +45,7 @@ class PostRetreatEmails extends Command
         $retreats = Retreat::where('event_type_id', 7)
             ->whereDate('end_date', $endDate)
             ->get();
+
         if ($retreats->count() >= 1) {
             foreach ($retreats as $retreat) {
                 $retreatants = $retreat->registrations()
@@ -54,15 +55,17 @@ class PostRetreatEmails extends Command
                     })
                     ->get();
 
-                foreach ($retreatants as $retreatant) {
-                    $primaryEmail = $retreatant->contact->primaryEmail()->first()->email;
-                    try {
-                        Mail::to($primaryEmail)->queue(new PostRetreat($retreatant));
-                    } catch (\Exception $e) {
+                if ($retreatants->count() >= 1) {
+                    foreach ($retreatants as $retreatant) {
+                        $primaryEmail = $retreatant->contact->primaryEmail()->first()->email;
+                            try {
+                                Mail::to($primaryEmail)->queue(new PostRetreat($retreatant));
+                            } catch (\Exception $e) {
+                        }
                     }
                 }
-
-                return $retreatants;
+                // TODO: explore why behavior in test changed during upgrade to Laravel 7
+                return 0;
             }
         }
     }
