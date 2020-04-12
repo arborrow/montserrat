@@ -11,7 +11,7 @@ use Tests\TestCase;
  */
 class GroupControllerTest extends TestCase
 {
-  use WithFaker;
+    use WithFaker;
 
     /**
      * @test
@@ -41,7 +41,6 @@ class GroupControllerTest extends TestCase
 
         $response->assertRedirect(action('GroupController@index'));
         $this->assertSoftDeleted($group);
-
     }
 
     /**
@@ -104,7 +103,7 @@ class GroupControllerTest extends TestCase
     public function store_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('create-group');
-        $group_name = ucfirst(implode(' ',$this->faker->words));
+        $group_name = ucfirst(implode(' ', $this->faker->words));
         $response = $this->actingAs($user)->post(route('group.store'), [
             'name' => $group_name,
             'title' => str_plural($group_name),
@@ -121,7 +120,6 @@ class GroupControllerTest extends TestCase
           'title' => str_plural($group_name),
           'description' => 'New Group of '.str_plural($group_name),
         ]);
-
 
         // TODO: perform additional assertions
     }
@@ -143,7 +141,6 @@ class GroupControllerTest extends TestCase
      */
     public function update_returns_an_ok_response()
     {
-
         $user = $this->createUserWithPermission('update-group');
         $group = factory(\App\Group::class)->create();
         $new_group_name = ucfirst($this->faker->unique()->word);
@@ -157,7 +154,7 @@ class GroupControllerTest extends TestCase
 
         $response->assertRedirect(action('GroupController@show', $group->id));
         $this->assertEquals($updated->name, $new_group_name);
-        $this->assertNotEquals($updated->name,$group->name);
+        $this->assertNotEquals($updated->name, $group->name);
 
         // TODO: perform additional assertions
     }

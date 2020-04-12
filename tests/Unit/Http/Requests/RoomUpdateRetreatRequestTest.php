@@ -39,7 +39,7 @@ class RoomUpdateRetreatRequestTest extends TestCase
         $actual = $this->subject->rules();
 
         $this->assertEquals([
-          'retreat_id' => 'integer|min:0'
+          'retreat_id' => 'integer|min:0',
         ], $actual);
     }
 

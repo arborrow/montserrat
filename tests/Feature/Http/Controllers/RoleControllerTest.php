@@ -11,7 +11,6 @@ use Tests\TestCase;
  */
 class RoleControllerTest extends TestCase
 {
-
     use WithFaker;
 
     /**
@@ -71,7 +70,7 @@ class RoleControllerTest extends TestCase
         $response->assertViewIs('admin.roles.index');
         $response->assertViewHas('roles');
         $response->assertSeeText('Roles');
-}
+    }
 
     /**
      * @test
@@ -90,7 +89,6 @@ class RoleControllerTest extends TestCase
         $response->assertViewHas('users');
         $response->assertSeeText('Role details');
         $response->assertSeeText(e($role->description));
-
     }
 
     /**
@@ -115,7 +113,6 @@ class RoleControllerTest extends TestCase
           'display_name' => $new_name,
           'description' => $new_description,
         ]);
-
     }
 
     /**
@@ -155,7 +152,7 @@ class RoleControllerTest extends TestCase
 
         $response = $this->actingAs($user)->post(route('admin.role.update_permissions'), [
             'id' => $role->id,
-            'permissions' => array($permission->id),
+            'permissions' => [$permission->id],
         ]);
 
         $response->assertRedirect(action('RoleController@index'));
@@ -164,8 +161,6 @@ class RoleControllerTest extends TestCase
           'permission_id' => $permission->id,
           'deleted_at' => null,
         ]);
-
-
     }
 
     /**
@@ -178,7 +173,7 @@ class RoleControllerTest extends TestCase
 
         $response = $this->actingAs($user)->post(route('admin.role.update_users'), [
             'id' => $role->id,
-            'users' => array($user->id),
+            'users' => [$user->id],
         ]);
 
         $response->assertRedirect(action('RoleController@index'));

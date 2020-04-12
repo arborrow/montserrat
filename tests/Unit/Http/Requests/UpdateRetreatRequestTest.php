@@ -4,9 +4,8 @@ namespace Tests\Unit\Http\Requests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use Illuminate\Validation\Rule;
-
+use Tests\TestCase;
 
 /**
  * @see \App\Http\Requests\UpdateRetreatRequest
@@ -29,7 +28,6 @@ class UpdateRetreatRequestTest extends TestCase
      */
     public function authorize()
     {
-
         $actual = $this->subject->authorize();
 
         $this->assertTrue($actual);
@@ -43,9 +41,9 @@ class UpdateRetreatRequestTest extends TestCase
         // TODO: not sure how best to handle the $this-id in the idnumber - should probably explore using something else, for now mark is incomplete and skip the test
 
         $actual = $this->subject->rules();
-// dd($this->id);
+        // dd($this->id);
         $this->assertEquals([
-          'idnumber' => ['required', Rule::unique('event')->ignore($this->id)->whereNull('deleted_at'),],
+          'idnumber' => ['required', Rule::unique('event')->ignore($this->id)->whereNull('deleted_at')],
           'start_date' => 'required|date|before:end_date',
           'end_date' => 'required|date|after:start_date',
           'title' => 'required',
@@ -68,7 +66,6 @@ class UpdateRetreatRequestTest extends TestCase
      */
     public function messages()
     {
-
         $actual = $this->subject->messages();
 
         $this->assertEquals([], $actual);

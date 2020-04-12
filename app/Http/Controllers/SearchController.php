@@ -40,6 +40,7 @@ class SearchController extends Controller
             return redirect()->action('PersonController@create');
         } else {
             $contact = \App\Contact::findOrFail($id);
+
             return redirect($contact->contact_url);
             $user = $this->createUserWithPermission('show-contact');
         }
@@ -49,7 +50,7 @@ class SearchController extends Controller
     {
         $this->authorize('show-contact');
         // dd($request);
-        if (!empty($request)) {
+        if (! empty($request)) {
             $persons = \App\Contact::filtered($request)->orderBy('sort_name')->with('attachments')->paginate(100);
             $persons->appends($request->except('page'));
         }

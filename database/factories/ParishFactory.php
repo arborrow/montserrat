@@ -5,8 +5,8 @@
 use Faker\Generator as Faker;
 
 $factory->define(App\Parish::class, function (Faker $faker) {
-  $name = $faker->firstName;
-  $parish_name = 'St. ' . $name . ' of ' . $this->faker->city . ' Parish';
+    $name = $faker->firstName;
+    $parish_name = 'St. '.$name.' of '.$this->faker->city.' Parish';
 
     return [
       'contact_type' => config('polanco.contact_type.organization'),

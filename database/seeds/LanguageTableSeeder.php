@@ -4,21 +4,17 @@ use Illuminate\Database\Seeder;
 
 class LanguageTableSeeder extends Seeder
 {
-
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
     public function run()
     {
-        
-
         \DB::table('language')->delete();
-        
-        \DB::table('language')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('language')->insert([
+            0 => [
                 'id' => 1,
                 'label' => 'Abkhaz',
                 'value' => 'ab',
@@ -26,13 +22,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            1 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            1 => [
                 'id' => 2,
                 'label' => 'Afar',
                 'value' => 'aa',
@@ -40,13 +35,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 2,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            2 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            2 => [
                 'id' => 3,
                 'label' => 'Afrikaans',
                 'value' => 'af',
@@ -54,13 +48,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 3,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            3 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            3 => [
                 'id' => 4,
                 'label' => 'Akan',
                 'value' => 'ak',
@@ -68,13 +61,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 4,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            4 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            4 => [
                 'id' => 5,
                 'label' => 'Albanian',
                 'value' => 'sq',
@@ -82,13 +74,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 5,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            5 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            5 => [
                 'id' => 6,
                 'label' => 'Amharic',
                 'value' => 'am',
@@ -96,13 +87,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 6,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            6 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            6 => [
                 'id' => 7,
                 'label' => 'Arabic',
                 'value' => 'ar',
@@ -110,13 +100,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 7,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            7 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            7 => [
                 'id' => 8,
                 'label' => 'Aragonese',
                 'value' => 'an',
@@ -124,13 +113,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 8,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            8 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            8 => [
                 'id' => 9,
                 'label' => 'Armenian',
                 'value' => 'hy',
@@ -138,13 +126,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 9,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            9 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            9 => [
                 'id' => 10,
                 'label' => 'Assamese',
                 'value' => 'as',
@@ -152,13 +139,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 10,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            10 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            10 => [
                 'id' => 11,
                 'label' => 'Avaric',
                 'value' => 'av',
@@ -166,13 +152,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 11,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            11 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            11 => [
                 'id' => 12,
                 'label' => 'Avestan',
                 'value' => 'ae',
@@ -180,13 +165,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 12,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            12 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            12 => [
                 'id' => 13,
                 'label' => 'Aymara',
                 'value' => 'ay',
@@ -194,13 +178,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 13,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            13 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            13 => [
                 'id' => 14,
                 'label' => 'Azerbaijani',
                 'value' => 'az',
@@ -208,13 +191,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 14,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            14 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            14 => [
                 'id' => 15,
                 'label' => 'Bambara',
                 'value' => 'bm',
@@ -222,13 +204,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 15,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            15 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            15 => [
                 'id' => 16,
                 'label' => 'Bashkir',
                 'value' => 'ba',
@@ -236,13 +217,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 16,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            16 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            16 => [
                 'id' => 17,
                 'label' => 'Basque',
                 'value' => 'eu',
@@ -250,13 +230,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 17,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            17 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            17 => [
                 'id' => 18,
                 'label' => 'Belarusian',
                 'value' => 'be',
@@ -264,13 +243,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 18,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            18 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            18 => [
                 'id' => 19,
                 'label' => 'Bengali',
                 'value' => 'bn',
@@ -278,13 +256,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 19,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            19 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            19 => [
                 'id' => 20,
                 'label' => 'Bihari',
                 'value' => 'bh',
@@ -292,13 +269,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 20,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            20 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            20 => [
                 'id' => 21,
                 'label' => 'Bislama',
                 'value' => 'bi',
@@ -306,13 +282,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 21,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            21 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            21 => [
                 'id' => 22,
                 'label' => 'Bosnian',
                 'value' => 'bs',
@@ -320,13 +295,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 22,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            22 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            22 => [
                 'id' => 23,
                 'label' => 'Breton',
                 'value' => 'br',
@@ -334,13 +308,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 23,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            23 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            23 => [
                 'id' => 24,
                 'label' => 'Bulgarian',
                 'value' => 'bg',
@@ -348,13 +321,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 24,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            24 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            24 => [
                 'id' => 25,
                 'label' => 'Burmese',
                 'value' => 'my',
@@ -362,13 +334,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 25,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            25 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            25 => [
                 'id' => 26,
                 'label' => 'Catalan; Valencian',
                 'value' => 'ca',
@@ -376,13 +347,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 26,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            26 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            26 => [
                 'id' => 27,
                 'label' => 'Chamorro',
                 'value' => 'ch',
@@ -390,13 +360,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 27,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            27 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            27 => [
                 'id' => 28,
                 'label' => 'Chechen',
                 'value' => 'ce',
@@ -404,13 +373,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 28,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            28 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            28 => [
                 'id' => 29,
                 'label' => 'Chichewa; Chewa; Nyanja',
                 'value' => 'ny',
@@ -418,13 +386,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 29,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            29 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            29 => [
                 'id' => 30,
             'label' => 'Chinese (China)',
                 'value' => 'zh',
@@ -432,13 +399,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 1,
                 'is_default' => 0,
                 'weight' => 30,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            30 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            30 => [
                 'id' => 31,
             'label' => 'Chinese (Taiwan)',
                 'value' => 'zh',
@@ -446,13 +412,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 31,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            31 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            31 => [
                 'id' => 32,
                 'label' => 'Chuvash',
                 'value' => 'cv',
@@ -460,13 +425,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 32,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            32 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            32 => [
                 'id' => 33,
                 'label' => 'Cornish',
                 'value' => 'kw',
@@ -474,13 +438,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 33,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            33 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            33 => [
                 'id' => 34,
                 'label' => 'Corsican',
                 'value' => 'co',
@@ -488,13 +451,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 34,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            34 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            34 => [
                 'id' => 35,
                 'label' => 'Cree',
                 'value' => 'cr',
@@ -502,13 +464,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 35,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            35 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            35 => [
                 'id' => 36,
                 'label' => 'Croatian',
                 'value' => 'hr',
@@ -516,13 +477,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 36,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            36 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            36 => [
                 'id' => 37,
                 'label' => 'Czech',
                 'value' => 'cs',
@@ -530,13 +490,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 37,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            37 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            37 => [
                 'id' => 38,
                 'label' => 'Danish',
                 'value' => 'da',
@@ -544,13 +503,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 38,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            38 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            38 => [
                 'id' => 39,
                 'label' => 'Divehi; Dhivehi; Maldivian;',
                 'value' => 'dv',
@@ -558,13 +516,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 39,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            39 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            39 => [
                 'id' => 40,
                 'label' => 'Dutch',
                 'value' => 'nl',
@@ -572,13 +529,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 40,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            40 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            40 => [
                 'id' => 41,
                 'label' => 'Dzongkha',
                 'value' => 'dz',
@@ -586,13 +542,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 41,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            41 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            41 => [
                 'id' => 42,
             'label' => 'English (Australia)',
                 'value' => 'en',
@@ -600,13 +555,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 42,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            42 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            42 => [
                 'id' => 43,
             'label' => 'English (Canada)',
                 'value' => 'en',
@@ -614,13 +568,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 43,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            43 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            43 => [
                 'id' => 44,
             'label' => 'English (United Kingdom)',
                 'value' => 'en',
@@ -628,13 +581,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 44,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            44 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            44 => [
                 'id' => 45,
             'label' => 'English (United States)',
                 'value' => 'en',
@@ -642,13 +594,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 1,
                 'is_default' => 1,
                 'weight' => 45,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            45 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            45 => [
                 'id' => 46,
                 'label' => 'Esperanto',
                 'value' => 'eo',
@@ -656,13 +607,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 46,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            46 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            46 => [
                 'id' => 47,
                 'label' => 'Estonian',
                 'value' => 'et',
@@ -670,13 +620,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 47,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            47 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            47 => [
                 'id' => 48,
                 'label' => 'Ewe',
                 'value' => 'ee',
@@ -684,13 +633,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 48,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            48 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            48 => [
                 'id' => 49,
                 'label' => 'Faroese',
                 'value' => 'fo',
@@ -698,13 +646,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 49,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            49 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            49 => [
                 'id' => 50,
                 'label' => 'Fijian',
                 'value' => 'fj',
@@ -712,13 +659,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 50,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            50 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            50 => [
                 'id' => 51,
                 'label' => 'Finnish',
                 'value' => 'fi',
@@ -726,13 +672,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 51,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            51 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            51 => [
                 'id' => 52,
             'label' => 'French (Canada)',
                 'value' => 'fr',
@@ -740,13 +685,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 52,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            52 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            52 => [
                 'id' => 53,
             'label' => 'French (France)',
                 'value' => 'fr',
@@ -754,13 +698,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 1,
                 'is_default' => 0,
                 'weight' => 53,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            53 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            53 => [
                 'id' => 54,
                 'label' => 'Fula; Fulah; Pulaar; Pular',
                 'value' => 'ff',
@@ -768,13 +711,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 54,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            54 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            54 => [
                 'id' => 55,
                 'label' => 'Galician',
                 'value' => 'gl',
@@ -782,13 +724,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 55,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            55 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            55 => [
                 'id' => 56,
                 'label' => 'Georgian',
                 'value' => 'ka',
@@ -796,13 +737,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 56,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            56 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            56 => [
                 'id' => 57,
                 'label' => 'German',
                 'value' => 'de',
@@ -810,13 +750,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 1,
                 'is_default' => 0,
                 'weight' => 57,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            57 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            57 => [
                 'id' => 58,
             'label' => 'German (Swiss)',
                 'value' => 'de',
@@ -824,13 +763,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 58,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            58 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            58 => [
                 'id' => 59,
                 'label' => 'Greek, Modern',
                 'value' => 'el',
@@ -838,13 +776,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 59,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            59 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            59 => [
                 'id' => 60,
                 'label' => 'Guaraní',
                 'value' => 'gn',
@@ -852,13 +789,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 60,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            60 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            60 => [
                 'id' => 61,
                 'label' => 'Gujarati',
                 'value' => 'gu',
@@ -866,13 +802,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 61,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            61 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            61 => [
                 'id' => 62,
                 'label' => 'Haitian; Haitian Creole',
                 'value' => 'ht',
@@ -880,13 +815,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 62,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            62 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            62 => [
                 'id' => 63,
                 'label' => 'Hausa',
                 'value' => 'ha',
@@ -894,13 +828,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 63,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            63 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            63 => [
                 'id' => 64,
             'label' => 'Hebrew (modern)',
                 'value' => 'he',
@@ -908,13 +841,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 64,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            64 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            64 => [
                 'id' => 65,
                 'label' => 'Herero',
                 'value' => 'hz',
@@ -922,13 +854,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 65,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            65 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            65 => [
                 'id' => 66,
                 'label' => 'Hindi',
                 'value' => 'hi',
@@ -936,13 +867,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 66,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            66 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            66 => [
                 'id' => 67,
                 'label' => 'Hiri Motu',
                 'value' => 'ho',
@@ -950,13 +880,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 67,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            67 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            67 => [
                 'id' => 68,
                 'label' => 'Hungarian',
                 'value' => 'hu',
@@ -964,13 +893,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 68,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            68 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            68 => [
                 'id' => 69,
                 'label' => 'Interlingua',
                 'value' => 'ia',
@@ -978,13 +906,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 69,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            69 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            69 => [
                 'id' => 70,
                 'label' => 'Indonesian',
                 'value' => 'id',
@@ -992,13 +919,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 70,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            70 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            70 => [
                 'id' => 71,
                 'label' => 'Interlingue',
                 'value' => 'ie',
@@ -1006,13 +932,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 71,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            71 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            71 => [
                 'id' => 72,
                 'label' => 'Irish',
                 'value' => 'ga',
@@ -1020,13 +945,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 72,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            72 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            72 => [
                 'id' => 73,
                 'label' => 'Igbo',
                 'value' => 'ig',
@@ -1034,13 +958,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 73,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            73 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            73 => [
                 'id' => 74,
                 'label' => 'Inupiaq',
                 'value' => 'ik',
@@ -1048,13 +971,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 74,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            74 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            74 => [
                 'id' => 75,
                 'label' => 'Ido',
                 'value' => 'io',
@@ -1062,13 +984,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 75,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            75 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            75 => [
                 'id' => 76,
                 'label' => 'Icelandic',
                 'value' => 'is',
@@ -1076,13 +997,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 76,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            76 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            76 => [
                 'id' => 77,
                 'label' => 'Italian',
                 'value' => 'it',
@@ -1090,13 +1010,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 1,
                 'is_default' => 0,
                 'weight' => 77,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            77 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            77 => [
                 'id' => 78,
                 'label' => 'Inuktitut',
                 'value' => 'iu',
@@ -1104,13 +1023,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 78,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            78 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            78 => [
                 'id' => 79,
                 'label' => 'Japanese',
                 'value' => 'ja',
@@ -1118,13 +1036,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 1,
                 'is_default' => 0,
                 'weight' => 79,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            79 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            79 => [
                 'id' => 80,
                 'label' => 'Javanese',
                 'value' => 'jv',
@@ -1132,13 +1049,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 80,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            80 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            80 => [
                 'id' => 81,
                 'label' => 'Kalaallisut, Greenlandic',
                 'value' => 'kl',
@@ -1146,13 +1062,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 81,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            81 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            81 => [
                 'id' => 82,
                 'label' => 'Kannada',
                 'value' => 'kn',
@@ -1160,13 +1075,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 82,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            82 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            82 => [
                 'id' => 83,
                 'label' => 'Kanuri',
                 'value' => 'kr',
@@ -1174,13 +1088,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 83,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            83 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            83 => [
                 'id' => 84,
                 'label' => 'Kashmiri',
                 'value' => 'ks',
@@ -1188,13 +1101,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 84,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            84 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            84 => [
                 'id' => 85,
                 'label' => 'Kazakh',
                 'value' => 'kk',
@@ -1202,13 +1114,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 85,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            85 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            85 => [
                 'id' => 86,
                 'label' => 'Khmer',
                 'value' => 'km',
@@ -1216,13 +1127,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 86,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            86 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            86 => [
                 'id' => 87,
                 'label' => 'Kikuyu, Gikuyu',
                 'value' => 'ki',
@@ -1230,13 +1140,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 87,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            87 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            87 => [
                 'id' => 88,
                 'label' => 'Kinyarwanda',
                 'value' => 'rw',
@@ -1244,13 +1153,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 88,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            88 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            88 => [
                 'id' => 89,
                 'label' => 'Kirghiz, Kyrgyz',
                 'value' => 'ky',
@@ -1258,13 +1166,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 89,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            89 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            89 => [
                 'id' => 90,
                 'label' => 'Komi',
                 'value' => 'kv',
@@ -1272,13 +1179,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 90,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            90 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            90 => [
                 'id' => 91,
                 'label' => 'Kongo',
                 'value' => 'kg',
@@ -1286,13 +1192,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 91,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            91 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            91 => [
                 'id' => 92,
                 'label' => 'Korean',
                 'value' => 'ko',
@@ -1300,13 +1205,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 1,
                 'is_default' => 0,
                 'weight' => 92,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            92 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            92 => [
                 'id' => 93,
                 'label' => 'Kurdish',
                 'value' => 'ku',
@@ -1314,13 +1218,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 93,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            93 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            93 => [
                 'id' => 94,
                 'label' => 'Kwanyama, Kuanyama',
                 'value' => 'kj',
@@ -1328,13 +1231,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 94,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            94 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            94 => [
                 'id' => 95,
                 'label' => 'Latin',
                 'value' => 'la',
@@ -1342,13 +1244,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 95,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            95 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            95 => [
                 'id' => 96,
                 'label' => 'Luxembourgish, Letzeburgesch',
                 'value' => 'lb',
@@ -1356,13 +1257,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 96,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            96 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            96 => [
                 'id' => 97,
                 'label' => 'Luganda',
                 'value' => 'lg',
@@ -1370,13 +1270,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 97,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            97 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            97 => [
                 'id' => 98,
                 'label' => 'Limburgish, Limburgan, Limburger',
                 'value' => 'li',
@@ -1384,13 +1283,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 98,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            98 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            98 => [
                 'id' => 99,
                 'label' => 'Lingala',
                 'value' => 'ln',
@@ -1398,13 +1296,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 99,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            99 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            99 => [
                 'id' => 100,
                 'label' => 'Lao',
                 'value' => 'lo',
@@ -1412,13 +1309,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 100,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            100 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            100 => [
                 'id' => 101,
                 'label' => 'Lithuanian',
                 'value' => 'lt',
@@ -1426,13 +1322,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 101,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            101 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            101 => [
                 'id' => 102,
                 'label' => 'Luba-Katanga',
                 'value' => 'lu',
@@ -1440,13 +1335,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 102,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            102 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            102 => [
                 'id' => 103,
                 'label' => 'Latvian',
                 'value' => 'lv',
@@ -1454,13 +1348,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 103,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            103 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            103 => [
                 'id' => 104,
                 'label' => 'Manx',
                 'value' => 'gv',
@@ -1468,13 +1361,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 104,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            104 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            104 => [
                 'id' => 105,
                 'label' => 'Macedonian',
                 'value' => 'mk',
@@ -1482,13 +1374,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 105,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            105 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            105 => [
                 'id' => 106,
                 'label' => 'Malagasy',
                 'value' => 'mg',
@@ -1496,13 +1387,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 106,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            106 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            106 => [
                 'id' => 107,
                 'label' => 'Malay',
                 'value' => 'ms',
@@ -1510,13 +1400,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 107,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            107 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            107 => [
                 'id' => 108,
                 'label' => 'Malayalam',
                 'value' => 'ml',
@@ -1524,13 +1413,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 108,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            108 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            108 => [
                 'id' => 109,
                 'label' => 'Maltese',
                 'value' => 'mt',
@@ -1538,13 +1426,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 109,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            109 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            109 => [
                 'id' => 110,
                 'label' => 'Māori',
                 'value' => 'mi',
@@ -1552,13 +1439,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 110,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            110 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            110 => [
                 'id' => 111,
                 'label' => 'Marathi',
                 'value' => 'mr',
@@ -1566,13 +1452,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 111,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            111 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            111 => [
                 'id' => 112,
                 'label' => 'Marshallese',
                 'value' => 'mh',
@@ -1580,13 +1465,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 112,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            112 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            112 => [
                 'id' => 113,
                 'label' => 'Mongolian',
                 'value' => 'mn',
@@ -1594,13 +1478,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 113,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            113 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            113 => [
                 'id' => 114,
                 'label' => 'Nauru',
                 'value' => 'na',
@@ -1608,13 +1491,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 114,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            114 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            114 => [
                 'id' => 115,
                 'label' => 'Navajo, Navaho',
                 'value' => 'nv',
@@ -1622,13 +1504,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 115,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            115 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            115 => [
                 'id' => 116,
                 'label' => 'Norwegian Bokmål',
                 'value' => 'nb',
@@ -1636,13 +1517,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 116,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            116 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            116 => [
                 'id' => 117,
                 'label' => 'North Ndebele',
                 'value' => 'nd',
@@ -1650,13 +1530,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 117,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            117 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            117 => [
                 'id' => 118,
                 'label' => 'Nepali',
                 'value' => 'ne',
@@ -1664,13 +1543,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 118,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            118 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            118 => [
                 'id' => 119,
                 'label' => 'Ndonga',
                 'value' => 'ng',
@@ -1678,13 +1556,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 119,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            119 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            119 => [
                 'id' => 120,
                 'label' => 'Norwegian Nynorsk',
                 'value' => 'nn',
@@ -1692,13 +1569,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 120,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            120 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            120 => [
                 'id' => 121,
                 'label' => 'Norwegian',
                 'value' => 'no',
@@ -1706,13 +1582,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 121,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            121 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            121 => [
                 'id' => 122,
                 'label' => 'Nuosu',
                 'value' => 'ii',
@@ -1720,13 +1595,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 122,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            122 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            122 => [
                 'id' => 123,
                 'label' => 'South Ndebele',
                 'value' => 'nr',
@@ -1734,13 +1608,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 123,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            123 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            123 => [
                 'id' => 124,
             'label' => 'Occitan (after 1500)',
                 'value' => 'oc',
@@ -1748,13 +1621,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 124,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            124 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            124 => [
                 'id' => 125,
                 'label' => 'Ojibwa',
                 'value' => 'oj',
@@ -1762,13 +1634,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 125,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            125 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            125 => [
                 'id' => 126,
                 'label' => 'Old Church Slavonic, Church Slavic, Church Slavonic, Old Bulgarian, Old Slavonic',
                 'value' => 'cu',
@@ -1776,13 +1647,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 126,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            126 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            126 => [
                 'id' => 127,
                 'label' => 'Oromo',
                 'value' => 'om',
@@ -1790,13 +1660,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 127,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            127 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            127 => [
                 'id' => 128,
                 'label' => 'Oriya',
                 'value' => 'or',
@@ -1804,13 +1673,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 128,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            128 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            128 => [
                 'id' => 129,
                 'label' => 'Ossetian, Ossetic',
                 'value' => 'os',
@@ -1818,13 +1686,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 129,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            129 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            129 => [
                 'id' => 130,
                 'label' => 'Panjabi, Punjabi',
                 'value' => 'pa',
@@ -1832,13 +1699,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 130,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            130 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            130 => [
                 'id' => 131,
                 'label' => 'Pāli',
                 'value' => 'pi',
@@ -1846,13 +1712,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 131,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            131 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            131 => [
                 'id' => 132,
             'label' => 'Persian (Iran)',
                 'value' => 'fa',
@@ -1860,13 +1725,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 132,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            132 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            132 => [
                 'id' => 133,
                 'label' => 'Polish',
                 'value' => 'pl',
@@ -1874,13 +1738,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 1,
                 'is_default' => 0,
                 'weight' => 133,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            133 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            133 => [
                 'id' => 134,
                 'label' => 'Pashto, Pushto',
                 'value' => 'ps',
@@ -1888,13 +1751,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 134,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            134 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            134 => [
                 'id' => 135,
             'label' => 'Portuguese (Brazil)',
                 'value' => 'pt',
@@ -1902,13 +1764,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 135,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            135 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            135 => [
                 'id' => 136,
             'label' => 'Portuguese (Portugal)',
                 'value' => 'pt',
@@ -1916,13 +1777,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 1,
                 'is_default' => 0,
                 'weight' => 136,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            136 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            136 => [
                 'id' => 137,
                 'label' => 'Quechua',
                 'value' => 'qu',
@@ -1930,13 +1790,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 137,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            137 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            137 => [
                 'id' => 138,
                 'label' => 'Romansh',
                 'value' => 'rm',
@@ -1944,13 +1803,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 138,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            138 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            138 => [
                 'id' => 139,
                 'label' => 'Kirundi',
                 'value' => 'rn',
@@ -1958,13 +1816,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 139,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            139 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            139 => [
                 'id' => 140,
                 'label' => 'Romanian, Moldavian, Moldovan',
                 'value' => 'ro',
@@ -1972,13 +1829,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 140,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            140 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            140 => [
                 'id' => 141,
                 'label' => 'Russian',
                 'value' => 'ru',
@@ -1986,13 +1842,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 1,
                 'is_default' => 0,
                 'weight' => 141,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            141 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            141 => [
                 'id' => 142,
                 'label' => 'Sanskrit',
                 'value' => 'sa',
@@ -2000,13 +1855,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 142,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            142 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            142 => [
                 'id' => 143,
                 'label' => 'Sardinian',
                 'value' => 'sc',
@@ -2014,13 +1868,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 143,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            143 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            143 => [
                 'id' => 144,
                 'label' => 'Sindhi',
                 'value' => 'sd',
@@ -2028,13 +1881,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 144,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            144 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            144 => [
                 'id' => 145,
                 'label' => 'Northern Sami',
                 'value' => 'se',
@@ -2042,13 +1894,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 145,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            145 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            145 => [
                 'id' => 146,
                 'label' => 'Samoan',
                 'value' => 'sm',
@@ -2056,13 +1907,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 146,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            146 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            146 => [
                 'id' => 147,
                 'label' => 'Sango',
                 'value' => 'sg',
@@ -2070,13 +1920,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 147,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            147 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            147 => [
                 'id' => 148,
                 'label' => 'Serbian',
                 'value' => 'sr',
@@ -2084,13 +1933,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 148,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            148 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            148 => [
                 'id' => 149,
                 'label' => 'Scottish Gaelic; Gaelic',
                 'value' => 'gd',
@@ -2098,13 +1946,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 149,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            149 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            149 => [
                 'id' => 150,
                 'label' => 'Shona',
                 'value' => 'sn',
@@ -2112,13 +1959,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 150,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            150 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            150 => [
                 'id' => 151,
                 'label' => 'Sinhala, Sinhalese',
                 'value' => 'si',
@@ -2126,13 +1972,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 151,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            151 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            151 => [
                 'id' => 152,
                 'label' => 'Slovak',
                 'value' => 'sk',
@@ -2140,13 +1985,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 152,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            152 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            152 => [
                 'id' => 153,
                 'label' => 'Slovene',
                 'value' => 'sl',
@@ -2154,13 +1998,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 153,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            153 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            153 => [
                 'id' => 154,
                 'label' => 'Somali',
                 'value' => 'so',
@@ -2168,13 +2011,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 154,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            154 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            154 => [
                 'id' => 155,
                 'label' => 'Southern Sotho',
                 'value' => 'st',
@@ -2182,13 +2024,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 155,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            155 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            155 => [
                 'id' => 156,
             'label' => 'Spanish; Castilian (Spain)',
                 'value' => 'es',
@@ -2196,13 +2037,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 1,
                 'is_default' => 0,
                 'weight' => 156,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            156 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            156 => [
                 'id' => 157,
             'label' => 'Spanish; Castilian (Mexico)',
                 'value' => 'es',
@@ -2210,13 +2050,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 157,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            157 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            157 => [
                 'id' => 158,
             'label' => 'Spanish; Castilian (Puerto Rico)',
                 'value' => 'es',
@@ -2224,13 +2063,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 158,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            158 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            158 => [
                 'id' => 159,
                 'label' => 'Sundanese',
                 'value' => 'su',
@@ -2238,13 +2076,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 159,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            159 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            159 => [
                 'id' => 160,
                 'label' => 'Swahili',
                 'value' => 'sw',
@@ -2252,13 +2089,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 160,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            160 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            160 => [
                 'id' => 161,
                 'label' => 'Swati',
                 'value' => 'ss',
@@ -2266,13 +2102,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 161,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            161 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            161 => [
                 'id' => 162,
                 'label' => 'Swedish',
                 'value' => 'sv',
@@ -2280,13 +2115,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 162,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            162 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            162 => [
                 'id' => 163,
                 'label' => 'Tamil',
                 'value' => 'ta',
@@ -2294,13 +2128,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 163,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            163 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            163 => [
                 'id' => 164,
                 'label' => 'Telugu',
                 'value' => 'te',
@@ -2308,13 +2141,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 164,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            164 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            164 => [
                 'id' => 165,
                 'label' => 'Tajik',
                 'value' => 'tg',
@@ -2322,13 +2154,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 165,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            165 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            165 => [
                 'id' => 166,
                 'label' => 'Thai',
                 'value' => 'th',
@@ -2336,13 +2167,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 166,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            166 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            166 => [
                 'id' => 167,
                 'label' => 'Tigrinya',
                 'value' => 'ti',
@@ -2350,13 +2180,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 167,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            167 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            167 => [
                 'id' => 168,
                 'label' => 'Tibetan Standard, Tibetan, Central',
                 'value' => 'bo',
@@ -2364,13 +2193,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 168,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            168 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            168 => [
                 'id' => 169,
                 'label' => 'Turkmen',
                 'value' => 'tk',
@@ -2378,13 +2206,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 169,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            169 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            169 => [
                 'id' => 170,
                 'label' => 'Tagalog',
                 'value' => 'tl',
@@ -2392,13 +2219,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 170,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            170 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            170 => [
                 'id' => 171,
                 'label' => 'Tswana',
                 'value' => 'tn',
@@ -2406,13 +2232,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 171,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            171 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            171 => [
                 'id' => 172,
             'label' => 'Tonga (Tonga Islands)',
                 'value' => 'to',
@@ -2420,13 +2245,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 172,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            172 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            172 => [
                 'id' => 173,
                 'label' => 'Turkish',
                 'value' => 'tr',
@@ -2434,13 +2258,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 173,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            173 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            173 => [
                 'id' => 174,
                 'label' => 'Tsonga',
                 'value' => 'ts',
@@ -2448,13 +2271,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 174,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            174 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            174 => [
                 'id' => 175,
                 'label' => 'Tatar',
                 'value' => 'tt',
@@ -2462,13 +2284,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 175,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            175 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            175 => [
                 'id' => 176,
                 'label' => 'Twi',
                 'value' => 'tw',
@@ -2476,13 +2297,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 176,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            176 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            176 => [
                 'id' => 177,
                 'label' => 'Tahitian',
                 'value' => 'ty',
@@ -2490,13 +2310,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 177,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            177 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            177 => [
                 'id' => 178,
                 'label' => 'Uighur, Uyghur',
                 'value' => 'ug',
@@ -2504,13 +2323,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 178,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            178 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            178 => [
                 'id' => 179,
                 'label' => 'Ukrainian',
                 'value' => 'uk',
@@ -2518,13 +2336,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 179,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            179 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            179 => [
                 'id' => 180,
                 'label' => 'Urdu',
                 'value' => 'ur',
@@ -2532,13 +2349,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 180,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            180 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            180 => [
                 'id' => 181,
                 'label' => 'Uzbek',
                 'value' => 'uz',
@@ -2546,13 +2362,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 181,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            181 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            181 => [
                 'id' => 182,
                 'label' => 'Venda',
                 'value' => 've',
@@ -2560,13 +2375,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 182,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            182 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            182 => [
                 'id' => 183,
                 'label' => 'Vietnamese',
                 'value' => 'vi',
@@ -2574,13 +2388,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 1,
                 'is_default' => 0,
                 'weight' => 183,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            183 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            183 => [
                 'id' => 184,
                 'label' => 'Volapük',
                 'value' => 'vo',
@@ -2588,13 +2401,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 184,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            184 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            184 => [
                 'id' => 185,
                 'label' => 'Walloon',
                 'value' => 'wa',
@@ -2602,13 +2414,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 185,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            185 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            185 => [
                 'id' => 186,
                 'label' => 'Welsh',
                 'value' => 'cy',
@@ -2616,13 +2427,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 186,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            186 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            186 => [
                 'id' => 187,
                 'label' => 'Wolof',
                 'value' => 'wo',
@@ -2630,13 +2440,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 187,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            187 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            187 => [
                 'id' => 188,
                 'label' => 'Western Frisian',
                 'value' => 'fy',
@@ -2644,13 +2453,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 188,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            188 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            188 => [
                 'id' => 189,
                 'label' => 'Xhosa',
                 'value' => 'xh',
@@ -2658,13 +2466,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 189,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            189 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            189 => [
                 'id' => 190,
                 'label' => 'Yiddish',
                 'value' => 'yi',
@@ -2672,13 +2479,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 190,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            190 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            190 => [
                 'id' => 191,
                 'label' => 'Yoruba',
                 'value' => 'yo',
@@ -2686,13 +2492,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 191,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            191 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            191 => [
                 'id' => 192,
                 'label' => 'Zhuang, Chuang',
                 'value' => 'za',
@@ -2700,13 +2505,12 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 192,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            192 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            192 => [
                 'id' => 193,
                 'label' => 'Zulu',
                 'value' => 'zu',
@@ -2714,13 +2518,11 @@ class LanguageTableSeeder extends Seeder
                 'is_active' => 0,
                 'is_default' => 0,
                 'weight' => 193,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-        ));
-        
-        
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+        ]);
     }
 }

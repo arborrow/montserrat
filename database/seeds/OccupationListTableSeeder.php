@@ -4,21 +4,17 @@ use Illuminate\Database\Seeder;
 
 class OccupationListTableSeeder extends Seeder
 {
-
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
     public function run()
     {
-        
-
         \DB::table('occupation_list')->delete();
-        
-        \DB::table('occupation_list')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('occupation_list')->insert([
+            0 => [
                 'OCC_CODE' => '00-0000',
                 'OCC_TITLE' => 'All Occupations',
                 'OCC_GROUP' => 'total',
@@ -31,10 +27,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,200',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            1 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            1 => [
                 'OCC_CODE' => '11-0000',
                 'OCC_TITLE' => 'Management Occupations',
                 'OCC_GROUP' => 'major',
@@ -47,10 +42,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '98,560',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            2 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            2 => [
                 'OCC_CODE' => '11-1000',
                 'OCC_TITLE' => 'Top Executives',
                 'OCC_GROUP' => 'minor',
@@ -63,10 +57,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '100,940',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            3 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            3 => [
                 'OCC_CODE' => '11-1010',
                 'OCC_TITLE' => 'Chief Executives',
                 'OCC_GROUP' => 'broad',
@@ -79,10 +72,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '175,110',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            4 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            4 => [
                 'OCC_CODE' => '11-1011',
                 'OCC_TITLE' => 'Chief Executives',
                 'OCC_GROUP' => 'detailed',
@@ -95,10 +87,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '175,110',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            5 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            5 => [
                 'OCC_CODE' => '11-1020',
                 'OCC_TITLE' => 'General and Operations Managers',
                 'OCC_GROUP' => 'broad',
@@ -111,10 +102,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '97,730',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            6 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            6 => [
                 'OCC_CODE' => '11-1021',
                 'OCC_TITLE' => 'General and Operations Managers',
                 'OCC_GROUP' => 'detailed',
@@ -127,10 +117,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '97,730',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            7 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            7 => [
                 'OCC_CODE' => '11-1030',
                 'OCC_TITLE' => 'Legislators',
                 'OCC_GROUP' => 'broad',
@@ -143,10 +132,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '20,500',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            8 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            8 => [
                 'OCC_CODE' => '11-1031',
                 'OCC_TITLE' => 'Legislators',
                 'OCC_GROUP' => 'detailed',
@@ -159,10 +147,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '20,500',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            9 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            9 => [
                 'OCC_CODE' => '11-2000',
                 'OCC_TITLE' => 'Advertising, Marketing, Promotions, Public Relations, and Sales Managers',
                 'OCC_GROUP' => 'minor',
@@ -175,10 +162,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '116,810',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            10 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            10 => [
                 'OCC_CODE' => '11-2010',
                 'OCC_TITLE' => 'Advertising and Promotions Managers',
                 'OCC_GROUP' => 'broad',
@@ -191,10 +177,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '95,890',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            11 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            11 => [
                 'OCC_CODE' => '11-2011',
                 'OCC_TITLE' => 'Advertising and Promotions Managers',
                 'OCC_GROUP' => 'detailed',
@@ -207,10 +192,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '95,890',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            12 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            12 => [
                 'OCC_CODE' => '11-2020',
                 'OCC_TITLE' => 'Marketing and Sales Managers',
                 'OCC_GROUP' => 'broad',
@@ -223,10 +207,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '119,280',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            13 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            13 => [
                 'OCC_CODE' => '11-2021',
                 'OCC_TITLE' => 'Marketing Managers',
                 'OCC_GROUP' => 'detailed',
@@ -239,10 +222,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '128,750',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            14 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            14 => [
                 'OCC_CODE' => '11-2022',
                 'OCC_TITLE' => 'Sales Managers',
                 'OCC_GROUP' => 'detailed',
@@ -255,10 +237,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '113,860',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            15 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            15 => [
                 'OCC_CODE' => '11-2030',
                 'OCC_TITLE' => 'Public Relations and Fundraising Managers',
                 'OCC_GROUP' => 'broad',
@@ -271,10 +252,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '104,140',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            16 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            16 => [
                 'OCC_CODE' => '11-2031',
                 'OCC_TITLE' => 'Public Relations and Fundraising Managers',
                 'OCC_GROUP' => 'detailed',
@@ -287,10 +267,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '104,140',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            17 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            17 => [
                 'OCC_CODE' => '11-3000',
                 'OCC_TITLE' => 'Operations Specialties Managers',
                 'OCC_GROUP' => 'minor',
@@ -303,10 +282,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '108,260',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            18 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            18 => [
                 'OCC_CODE' => '11-3010',
                 'OCC_TITLE' => 'Administrative Services Managers',
                 'OCC_GROUP' => 'broad',
@@ -319,10 +297,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '86,110',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            19 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            19 => [
                 'OCC_CODE' => '11-3011',
                 'OCC_TITLE' => 'Administrative Services Managers',
                 'OCC_GROUP' => 'detailed',
@@ -335,10 +312,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '86,110',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            20 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            20 => [
                 'OCC_CODE' => '11-3020',
                 'OCC_TITLE' => 'Computer and Information Systems Managers',
                 'OCC_GROUP' => 'broad',
@@ -351,10 +327,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '131,600',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            21 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            21 => [
                 'OCC_CODE' => '11-3021',
                 'OCC_TITLE' => 'Computer and Information Systems Managers',
                 'OCC_GROUP' => 'detailed',
@@ -367,10 +342,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '131,600',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            22 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            22 => [
                 'OCC_CODE' => '11-3030',
                 'OCC_TITLE' => 'Financial Managers',
                 'OCC_GROUP' => 'broad',
@@ -383,10 +357,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '117,990',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            23 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            23 => [
                 'OCC_CODE' => '11-3031',
                 'OCC_TITLE' => 'Financial Managers',
                 'OCC_GROUP' => 'detailed',
@@ -399,10 +372,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '117,990',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            24 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            24 => [
                 'OCC_CODE' => '11-3050',
                 'OCC_TITLE' => 'Industrial Production Managers',
                 'OCC_GROUP' => 'broad',
@@ -415,10 +387,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '93,940',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            25 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            25 => [
                 'OCC_CODE' => '11-3051',
                 'OCC_TITLE' => 'Industrial Production Managers',
                 'OCC_GROUP' => 'detailed',
@@ -431,10 +402,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '93,940',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            26 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            26 => [
                 'OCC_CODE' => '11-3060',
                 'OCC_TITLE' => 'Purchasing Managers',
                 'OCC_GROUP' => 'broad',
@@ -447,10 +417,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '108,120',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            27 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            27 => [
                 'OCC_CODE' => '11-3061',
                 'OCC_TITLE' => 'Purchasing Managers',
                 'OCC_GROUP' => 'detailed',
@@ -463,10 +432,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '108,120',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            28 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            28 => [
                 'OCC_CODE' => '11-3070',
                 'OCC_TITLE' => 'Transportation, Storage, and Distribution Managers',
                 'OCC_GROUP' => 'broad',
@@ -479,10 +447,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '86,630',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            29 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            29 => [
                 'OCC_CODE' => '11-3071',
                 'OCC_TITLE' => 'Transportation, Storage, and Distribution Managers',
                 'OCC_GROUP' => 'detailed',
@@ -495,10 +462,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '86,630',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            30 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            30 => [
                 'OCC_CODE' => '11-3110',
                 'OCC_TITLE' => 'Compensation and Benefits Managers',
                 'OCC_GROUP' => 'broad',
@@ -511,10 +477,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '111,430',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            31 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            31 => [
                 'OCC_CODE' => '11-3111',
                 'OCC_TITLE' => 'Compensation and Benefits Managers',
                 'OCC_GROUP' => 'detailed',
@@ -527,10 +492,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '111,430',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            32 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            32 => [
                 'OCC_CODE' => '11-3120',
                 'OCC_TITLE' => 'Human Resources Managers',
                 'OCC_GROUP' => 'broad',
@@ -543,10 +507,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '104,440',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            33 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            33 => [
                 'OCC_CODE' => '11-3121',
                 'OCC_TITLE' => 'Human Resources Managers',
                 'OCC_GROUP' => 'detailed',
@@ -559,10 +522,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '104,440',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            34 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            34 => [
                 'OCC_CODE' => '11-3130',
                 'OCC_TITLE' => 'Training and Development Managers',
                 'OCC_GROUP' => 'broad',
@@ -575,10 +537,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '102,640',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            35 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            35 => [
                 'OCC_CODE' => '11-3131',
                 'OCC_TITLE' => 'Training and Development Managers',
                 'OCC_GROUP' => 'detailed',
@@ -591,10 +552,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '102,640',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            36 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            36 => [
                 'OCC_CODE' => '11-9000',
                 'OCC_TITLE' => 'Other Management Occupations',
                 'OCC_GROUP' => 'minor',
@@ -607,10 +567,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '85,880',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            37 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            37 => [
                 'OCC_CODE' => '11-9010',
                 'OCC_TITLE' => 'Farmers, Ranchers, and Other Agricultural Managers',
                 'OCC_GROUP' => 'broad',
@@ -623,10 +582,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '64,170',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            38 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            38 => [
                 'OCC_CODE' => '11-9013',
                 'OCC_TITLE' => 'Farmers, Ranchers, and Other Agricultural Managers',
                 'OCC_GROUP' => 'detailed',
@@ -639,10 +597,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '64,170',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            39 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            39 => [
                 'OCC_CODE' => '11-9020',
                 'OCC_TITLE' => 'Construction Managers',
                 'OCC_GROUP' => 'broad',
@@ -655,10 +612,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '87,400',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            40 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            40 => [
                 'OCC_CODE' => '11-9021',
                 'OCC_TITLE' => 'Construction Managers',
                 'OCC_GROUP' => 'detailed',
@@ -671,10 +627,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '87,400',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            41 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            41 => [
                 'OCC_CODE' => '11-9030',
                 'OCC_TITLE' => 'Education Administrators',
                 'OCC_GROUP' => 'broad',
@@ -687,10 +642,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '85,290',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            42 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            42 => [
                 'OCC_CODE' => '11-9031',
                 'OCC_TITLE' => 'Education Administrators, Preschool and Childcare Center/Program',
                 'OCC_GROUP' => 'detailed',
@@ -703,10 +657,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,670',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            43 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            43 => [
                 'OCC_CODE' => '11-9032',
                 'OCC_TITLE' => 'Education Administrators, Elementary and Secondary School',
                 'OCC_GROUP' => 'detailed',
@@ -719,10 +672,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '90,410',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            44 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            44 => [
                 'OCC_CODE' => '11-9033',
                 'OCC_TITLE' => 'Education Administrators, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -735,10 +687,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '88,580',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            45 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            45 => [
                 'OCC_CODE' => '11-9039',
                 'OCC_TITLE' => 'Education Administrators, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -751,10 +702,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '76,930',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            46 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            46 => [
                 'OCC_CODE' => '11-9040',
                 'OCC_TITLE' => 'Architectural and Engineering Managers',
                 'OCC_GROUP' => 'broad',
@@ -767,10 +717,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '132,800',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            47 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            47 => [
                 'OCC_CODE' => '11-9041',
                 'OCC_TITLE' => 'Architectural and Engineering Managers',
                 'OCC_GROUP' => 'detailed',
@@ -783,10 +732,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '132,800',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            48 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            48 => [
                 'OCC_CODE' => '11-9050',
                 'OCC_TITLE' => 'Food Service Managers',
                 'OCC_GROUP' => 'broad',
@@ -799,10 +747,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,690',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            49 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            49 => [
                 'OCC_CODE' => '11-9051',
                 'OCC_TITLE' => 'Food Service Managers',
                 'OCC_GROUP' => 'detailed',
@@ -815,10 +762,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,690',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            50 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            50 => [
                 'OCC_CODE' => '11-9060',
                 'OCC_TITLE' => 'Funeral Service Managers',
                 'OCC_GROUP' => 'broad',
@@ -831,10 +777,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '70,890',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            51 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            51 => [
                 'OCC_CODE' => '11-9061',
                 'OCC_TITLE' => 'Funeral Service Managers',
                 'OCC_GROUP' => 'detailed',
@@ -847,10 +792,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '70,890',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            52 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            52 => [
                 'OCC_CODE' => '11-9070',
                 'OCC_TITLE' => 'Gaming Managers',
                 'OCC_GROUP' => 'broad',
@@ -863,10 +807,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '68,380',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            53 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            53 => [
                 'OCC_CODE' => '11-9071',
                 'OCC_TITLE' => 'Gaming Managers',
                 'OCC_GROUP' => 'detailed',
@@ -879,10 +822,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '68,380',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            54 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            54 => [
                 'OCC_CODE' => '11-9080',
                 'OCC_TITLE' => 'Lodging Managers',
                 'OCC_GROUP' => 'broad',
@@ -895,10 +837,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '49,720',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            55 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            55 => [
                 'OCC_CODE' => '11-9081',
                 'OCC_TITLE' => 'Lodging Managers',
                 'OCC_GROUP' => 'detailed',
@@ -911,10 +852,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '49,720',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            56 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            56 => [
                 'OCC_CODE' => '11-9110',
                 'OCC_TITLE' => 'Medical and Health Services Managers',
                 'OCC_GROUP' => 'broad',
@@ -927,10 +867,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '94,500',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            57 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            57 => [
                 'OCC_CODE' => '11-9111',
                 'OCC_TITLE' => 'Medical and Health Services Managers',
                 'OCC_GROUP' => 'detailed',
@@ -943,10 +882,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '94,500',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            58 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            58 => [
                 'OCC_CODE' => '11-9120',
                 'OCC_TITLE' => 'Natural Sciences Managers',
                 'OCC_GROUP' => 'broad',
@@ -959,10 +897,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '120,160',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            59 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            59 => [
                 'OCC_CODE' => '11-9121',
                 'OCC_TITLE' => 'Natural Sciences Managers',
                 'OCC_GROUP' => 'detailed',
@@ -975,10 +912,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '120,160',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            60 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            60 => [
                 'OCC_CODE' => '11-9130',
                 'OCC_TITLE' => 'Postmasters and Mail Superintendents',
                 'OCC_GROUP' => 'broad',
@@ -991,10 +927,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '70,640',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            61 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            61 => [
                 'OCC_CODE' => '11-9131',
                 'OCC_TITLE' => 'Postmasters and Mail Superintendents',
                 'OCC_GROUP' => 'detailed',
@@ -1007,10 +942,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '70,640',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            62 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            62 => [
                 'OCC_CODE' => '11-9140',
                 'OCC_TITLE' => 'Property, Real Estate, and Community Association Managers',
                 'OCC_GROUP' => 'broad',
@@ -1023,10 +957,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '55,380',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            63 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            63 => [
                 'OCC_CODE' => '11-9141',
                 'OCC_TITLE' => 'Property, Real Estate, and Community Association Managers',
                 'OCC_GROUP' => 'detailed',
@@ -1039,10 +972,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '55,380',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            64 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            64 => [
                 'OCC_CODE' => '11-9150',
                 'OCC_TITLE' => 'Social and Community Service Managers',
                 'OCC_GROUP' => 'broad',
@@ -1055,10 +987,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '63,530',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            65 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            65 => [
                 'OCC_CODE' => '11-9151',
                 'OCC_TITLE' => 'Social and Community Service Managers',
                 'OCC_GROUP' => 'detailed',
@@ -1071,10 +1002,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '63,530',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            66 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            66 => [
                 'OCC_CODE' => '11-9160',
                 'OCC_TITLE' => 'Emergency Management Directors',
                 'OCC_GROUP' => 'broad',
@@ -1087,10 +1017,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '67,330',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            67 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            67 => [
                 'OCC_CODE' => '11-9161',
                 'OCC_TITLE' => 'Emergency Management Directors',
                 'OCC_GROUP' => 'detailed',
@@ -1103,10 +1032,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '67,330',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            68 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            68 => [
                 'OCC_CODE' => '11-9190',
                 'OCC_TITLE' => 'Miscellaneous Managers',
                 'OCC_GROUP' => 'broad',
@@ -1119,10 +1047,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '104,850',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            69 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            69 => [
                 'OCC_CODE' => '11-9199',
                 'OCC_TITLE' => 'Managers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -1135,10 +1062,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '104,850',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            70 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            70 => [
                 'OCC_CODE' => '13-0000',
                 'OCC_TITLE' => 'Business and Financial Operations Occupations',
                 'OCC_GROUP' => 'major',
@@ -1151,10 +1077,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '65,710',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            71 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            71 => [
                 'OCC_CODE' => '13-1000',
                 'OCC_TITLE' => 'Business Operations Specialists',
                 'OCC_GROUP' => 'minor',
@@ -1167,10 +1092,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '64,510',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            72 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            72 => [
                 'OCC_CODE' => '13-1010',
                 'OCC_TITLE' => 'Agents and Business Managers of Artists, Performers, and Athletes',
                 'OCC_GROUP' => 'broad',
@@ -1183,10 +1107,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '62,940',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            73 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            73 => [
                 'OCC_CODE' => '13-1011',
                 'OCC_TITLE' => 'Agents and Business Managers of Artists, Performers, and Athletes',
                 'OCC_GROUP' => 'detailed',
@@ -1199,10 +1122,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '62,940',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            74 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            74 => [
                 'OCC_CODE' => '13-1020',
                 'OCC_TITLE' => 'Buyers and Purchasing Agents',
                 'OCC_GROUP' => 'broad',
@@ -1215,10 +1137,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '59,620',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            75 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            75 => [
                 'OCC_CODE' => '13-1021',
                 'OCC_TITLE' => 'Buyers and Purchasing Agents, Farm Products',
                 'OCC_GROUP' => 'detailed',
@@ -1231,10 +1152,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '56,270',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            76 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            76 => [
                 'OCC_CODE' => '13-1022',
                 'OCC_TITLE' => 'Wholesale and Retail Buyers, Except Farm Products',
                 'OCC_GROUP' => 'detailed',
@@ -1247,10 +1167,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '52,940',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            77 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            77 => [
                 'OCC_CODE' => '13-1023',
                 'OCC_TITLE' => 'Purchasing Agents, Except Wholesale, Retail, and Farm Products',
                 'OCC_GROUP' => 'detailed',
@@ -1263,10 +1182,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '62,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            78 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            78 => [
                 'OCC_CODE' => '13-1030',
                 'OCC_TITLE' => 'Claims Adjusters, Appraisers, Examiners, and Investigators',
                 'OCC_GROUP' => 'broad',
@@ -1279,10 +1197,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '63,060',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            79 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            79 => [
                 'OCC_CODE' => '13-1031',
                 'OCC_TITLE' => 'Claims Adjusters, Examiners, and Investigators',
                 'OCC_GROUP' => 'detailed',
@@ -1295,10 +1212,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '62,980',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            80 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            80 => [
                 'OCC_CODE' => '13-1032',
                 'OCC_TITLE' => 'Insurance Appraisers, Auto Damage',
                 'OCC_GROUP' => 'detailed',
@@ -1311,10 +1227,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '64,020',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            81 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            81 => [
                 'OCC_CODE' => '13-1040',
                 'OCC_TITLE' => 'Compliance Officers',
                 'OCC_GROUP' => 'broad',
@@ -1327,10 +1242,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '65,640',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            82 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            82 => [
                 'OCC_CODE' => '13-1041',
                 'OCC_TITLE' => 'Compliance Officers',
                 'OCC_GROUP' => 'detailed',
@@ -1343,10 +1257,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '65,640',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            83 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            83 => [
                 'OCC_CODE' => '13-1050',
                 'OCC_TITLE' => 'Cost Estimators',
                 'OCC_GROUP' => 'broad',
@@ -1359,10 +1272,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '60,390',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            84 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            84 => [
                 'OCC_CODE' => '13-1051',
                 'OCC_TITLE' => 'Cost Estimators',
                 'OCC_GROUP' => 'detailed',
@@ -1375,10 +1287,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '60,390',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            85 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            85 => [
                 'OCC_CODE' => '13-1070',
                 'OCC_TITLE' => 'Human Resources Workers',
                 'OCC_GROUP' => 'broad',
@@ -1391,10 +1302,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '58,370',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            86 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            86 => [
                 'OCC_CODE' => '13-1071',
                 'OCC_TITLE' => 'Human Resources Specialists',
                 'OCC_GROUP' => 'detailed',
@@ -1407,10 +1317,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '58,350',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            87 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            87 => [
                 'OCC_CODE' => '13-1074',
                 'OCC_TITLE' => 'Farm Labor Contractors',
                 'OCC_GROUP' => 'detailed',
@@ -1423,10 +1332,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,910',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            88 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            88 => [
                 'OCC_CODE' => '13-1075',
                 'OCC_TITLE' => 'Labor Relations Specialists',
                 'OCC_GROUP' => 'detailed',
@@ -1439,10 +1347,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '58,820',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            89 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            89 => [
                 'OCC_CODE' => '13-1080',
                 'OCC_TITLE' => 'Logisticians',
                 'OCC_GROUP' => 'broad',
@@ -1455,10 +1362,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '74,260',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            90 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            90 => [
                 'OCC_CODE' => '13-1081',
                 'OCC_TITLE' => 'Logisticians',
                 'OCC_GROUP' => 'detailed',
@@ -1471,10 +1377,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '74,260',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            91 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            91 => [
                 'OCC_CODE' => '13-1110',
                 'OCC_TITLE' => 'Management Analysts',
                 'OCC_GROUP' => 'broad',
@@ -1487,10 +1392,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '81,320',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            92 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            92 => [
                 'OCC_CODE' => '13-1111',
                 'OCC_TITLE' => 'Management Analysts',
                 'OCC_GROUP' => 'detailed',
@@ -1503,10 +1407,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '81,320',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            93 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            93 => [
                 'OCC_CODE' => '13-1120',
                 'OCC_TITLE' => 'Meeting, Convention, and Event Planners',
                 'OCC_GROUP' => 'broad',
@@ -1519,10 +1422,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '46,840',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            94 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            94 => [
                 'OCC_CODE' => '13-1121',
                 'OCC_TITLE' => 'Meeting, Convention, and Event Planners',
                 'OCC_GROUP' => 'detailed',
@@ -1535,10 +1437,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '46,840',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            95 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            95 => [
                 'OCC_CODE' => '13-1130',
                 'OCC_TITLE' => 'Fundraisers',
                 'OCC_GROUP' => 'broad',
@@ -1551,10 +1452,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '52,970',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            96 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            96 => [
                 'OCC_CODE' => '13-1131',
                 'OCC_TITLE' => 'Fundraisers',
                 'OCC_GROUP' => 'detailed',
@@ -1567,10 +1467,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '52,970',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            97 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            97 => [
                 'OCC_CODE' => '13-1140',
                 'OCC_TITLE' => 'Compensation, Benefits, and Job Analysis Specialists',
                 'OCC_GROUP' => 'broad',
@@ -1583,10 +1482,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '60,850',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            98 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            98 => [
                 'OCC_CODE' => '13-1141',
                 'OCC_TITLE' => 'Compensation, Benefits, and Job Analysis Specialists',
                 'OCC_GROUP' => 'detailed',
@@ -1599,10 +1497,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '60,850',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            99 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            99 => [
                 'OCC_CODE' => '13-1150',
                 'OCC_TITLE' => 'Training and Development Specialists',
                 'OCC_GROUP' => 'broad',
@@ -1615,10 +1512,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '58,210',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            100 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            100 => [
                 'OCC_CODE' => '13-1151',
                 'OCC_TITLE' => 'Training and Development Specialists',
                 'OCC_GROUP' => 'detailed',
@@ -1631,10 +1527,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '58,210',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            101 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            101 => [
                 'OCC_CODE' => '13-1160',
                 'OCC_TITLE' => 'Market Research Analysts and Marketing Specialists',
                 'OCC_GROUP' => 'broad',
@@ -1647,10 +1542,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '62,150',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            102 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            102 => [
                 'OCC_CODE' => '13-1161',
                 'OCC_TITLE' => 'Market Research Analysts and Marketing Specialists',
                 'OCC_GROUP' => 'detailed',
@@ -1663,10 +1557,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '62,150',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            103 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            103 => [
                 'OCC_CODE' => '13-1190',
                 'OCC_TITLE' => 'Miscellaneous Business Operations Specialists',
                 'OCC_GROUP' => 'broad',
@@ -1679,10 +1572,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '68,170',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            104 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            104 => [
                 'OCC_CODE' => '13-1199',
                 'OCC_TITLE' => 'Business Operations Specialists, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -1695,10 +1587,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '68,170',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            105 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            105 => [
                 'OCC_CODE' => '13-2000',
                 'OCC_TITLE' => 'Financial Specialists',
                 'OCC_GROUP' => 'minor',
@@ -1711,10 +1602,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '67,740',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            106 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            106 => [
                 'OCC_CODE' => '13-2010',
                 'OCC_TITLE' => 'Accountants and Auditors',
                 'OCC_GROUP' => 'broad',
@@ -1727,10 +1617,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '67,190',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            107 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            107 => [
                 'OCC_CODE' => '13-2011',
                 'OCC_TITLE' => 'Accountants and Auditors',
                 'OCC_GROUP' => 'detailed',
@@ -1743,10 +1632,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '67,190',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            108 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            108 => [
                 'OCC_CODE' => '13-2020',
                 'OCC_TITLE' => 'Appraisers and Assessors of Real Estate',
                 'OCC_GROUP' => 'broad',
@@ -1759,10 +1647,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '51,860',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            109 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            109 => [
                 'OCC_CODE' => '13-2021',
                 'OCC_TITLE' => 'Appraisers and Assessors of Real Estate',
                 'OCC_GROUP' => 'detailed',
@@ -1775,10 +1662,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '51,860',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            110 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            110 => [
                 'OCC_CODE' => '13-2030',
                 'OCC_TITLE' => 'Budget Analysts',
                 'OCC_GROUP' => 'broad',
@@ -1791,10 +1677,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '71,590',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            111 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            111 => [
                 'OCC_CODE' => '13-2031',
                 'OCC_TITLE' => 'Budget Analysts',
                 'OCC_GROUP' => 'detailed',
@@ -1807,10 +1692,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '71,590',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            112 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            112 => [
                 'OCC_CODE' => '13-2040',
                 'OCC_TITLE' => 'Credit Analysts',
                 'OCC_GROUP' => 'broad',
@@ -1823,10 +1707,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '69,680',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            113 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            113 => [
                 'OCC_CODE' => '13-2041',
                 'OCC_TITLE' => 'Credit Analysts',
                 'OCC_GROUP' => 'detailed',
@@ -1839,10 +1722,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '69,680',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            114 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            114 => [
                 'OCC_CODE' => '13-2050',
                 'OCC_TITLE' => 'Financial Analysts and Advisors',
                 'OCC_GROUP' => 'broad',
@@ -1855,10 +1737,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '79,350',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            115 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            115 => [
                 'OCC_CODE' => '13-2051',
                 'OCC_TITLE' => 'Financial Analysts',
                 'OCC_GROUP' => 'detailed',
@@ -1871,10 +1752,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '80,310',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            116 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            116 => [
                 'OCC_CODE' => '13-2052',
                 'OCC_TITLE' => 'Personal Financial Advisors',
                 'OCC_GROUP' => 'detailed',
@@ -1887,10 +1767,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '89,160',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            117 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            117 => [
                 'OCC_CODE' => '13-2053',
                 'OCC_TITLE' => 'Insurance Underwriters',
                 'OCC_GROUP' => 'detailed',
@@ -1903,10 +1782,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '65,040',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            118 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            118 => [
                 'OCC_CODE' => '13-2060',
                 'OCC_TITLE' => 'Financial Examiners',
                 'OCC_GROUP' => 'broad',
@@ -1919,10 +1797,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '78,010',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            119 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            119 => [
                 'OCC_CODE' => '13-2061',
                 'OCC_TITLE' => 'Financial Examiners',
                 'OCC_GROUP' => 'detailed',
@@ -1935,10 +1812,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '78,010',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            120 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            120 => [
                 'OCC_CODE' => '13-2070',
                 'OCC_TITLE' => 'Credit Counselors and Loan Officers',
                 'OCC_GROUP' => 'broad',
@@ -1951,10 +1827,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '60,910',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            121 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            121 => [
                 'OCC_CODE' => '13-2071',
                 'OCC_TITLE' => 'Credit Counselors',
                 'OCC_GROUP' => 'detailed',
@@ -1967,10 +1842,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '43,840',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            122 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            122 => [
                 'OCC_CODE' => '13-2072',
                 'OCC_TITLE' => 'Loan Officers',
                 'OCC_GROUP' => 'detailed',
@@ -1983,10 +1857,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '63,430',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            123 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            123 => [
                 'OCC_CODE' => '13-2080',
                 'OCC_TITLE' => 'Tax Examiners, Collectors and Preparers, and Revenue Agents',
                 'OCC_GROUP' => 'broad',
@@ -1999,10 +1872,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '44,840',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            124 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            124 => [
                 'OCC_CODE' => '13-2081',
                 'OCC_TITLE' => 'Tax Examiners and Collectors, and Revenue Agents',
                 'OCC_GROUP' => 'detailed',
@@ -2015,10 +1887,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '51,430',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            125 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            125 => [
                 'OCC_CODE' => '13-2082',
                 'OCC_TITLE' => 'Tax Preparers',
                 'OCC_GROUP' => 'detailed',
@@ -2031,10 +1902,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,450',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            126 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            126 => [
                 'OCC_CODE' => '13-2090',
                 'OCC_TITLE' => 'Miscellaneous Financial Specialists',
                 'OCC_GROUP' => 'broad',
@@ -2047,10 +1917,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '66,670',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            127 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            127 => [
                 'OCC_CODE' => '13-2099',
                 'OCC_TITLE' => 'Financial Specialists, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -2063,10 +1932,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '66,670',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            128 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            128 => [
                 'OCC_CODE' => '15-0000',
                 'OCC_TITLE' => 'Computer and Mathematical Occupations',
                 'OCC_GROUP' => 'major',
@@ -2079,10 +1947,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '81,430',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            129 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            129 => [
                 'OCC_CODE' => '15-1100',
                 'OCC_TITLE' => 'Computer Occupations',
                 'OCC_GROUP' => 'minor',
@@ -2095,10 +1962,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '81,430',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            130 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            130 => [
                 'OCC_CODE' => '15-1110',
                 'OCC_TITLE' => 'Computer and Information Research Scientists',
                 'OCC_GROUP' => 'broad',
@@ -2111,10 +1977,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '110,620',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            131 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            131 => [
                 'OCC_CODE' => '15-1111',
                 'OCC_TITLE' => 'Computer and Information Research Scientists',
                 'OCC_GROUP' => 'detailed',
@@ -2127,10 +1992,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '110,620',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            132 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            132 => [
                 'OCC_CODE' => '15-1120',
                 'OCC_TITLE' => 'Computer and Information Analysts',
                 'OCC_GROUP' => 'broad',
@@ -2143,10 +2007,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '86,370',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            133 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            133 => [
                 'OCC_CODE' => '15-1121',
                 'OCC_TITLE' => 'Computer Systems Analysts',
                 'OCC_GROUP' => 'detailed',
@@ -2159,10 +2022,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '85,800',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            134 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            134 => [
                 'OCC_CODE' => '15-1122',
                 'OCC_TITLE' => 'Information Security Analysts',
                 'OCC_GROUP' => 'detailed',
@@ -2175,10 +2037,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '90,120',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            135 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            135 => [
                 'OCC_CODE' => '15-1130',
                 'OCC_TITLE' => 'Software Developers and Programmers',
                 'OCC_GROUP' => 'broad',
@@ -2191,10 +2052,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '94,080',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            136 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            136 => [
                 'OCC_CODE' => '15-1131',
                 'OCC_TITLE' => 'Computer Programmers',
                 'OCC_GROUP' => 'detailed',
@@ -2207,10 +2067,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '79,530',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            137 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            137 => [
                 'OCC_CODE' => '15-1132',
                 'OCC_TITLE' => 'Software Developers, Applications',
                 'OCC_GROUP' => 'detailed',
@@ -2223,10 +2082,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '98,260',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            138 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            138 => [
                 'OCC_CODE' => '15-1133',
                 'OCC_TITLE' => 'Software Developers, Systems Software',
                 'OCC_GROUP' => 'detailed',
@@ -2239,10 +2097,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '105,570',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            139 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            139 => [
                 'OCC_CODE' => '15-1134',
                 'OCC_TITLE' => 'Web Developers',
                 'OCC_GROUP' => 'detailed',
@@ -2255,10 +2112,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '64,970',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            140 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            140 => [
                 'OCC_CODE' => '15-1140',
                 'OCC_TITLE' => 'Database and Systems Administrators and Network Architects',
                 'OCC_GROUP' => 'broad',
@@ -2271,10 +2127,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '82,780',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            141 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            141 => [
                 'OCC_CODE' => '15-1141',
                 'OCC_TITLE' => 'Database Administrators',
                 'OCC_GROUP' => 'detailed',
@@ -2287,10 +2142,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '81,710',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            142 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            142 => [
                 'OCC_CODE' => '15-1142',
                 'OCC_TITLE' => 'Network and Computer Systems Administrators',
                 'OCC_GROUP' => 'detailed',
@@ -2303,10 +2157,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '77,810',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            143 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            143 => [
                 'OCC_CODE' => '15-1143',
                 'OCC_TITLE' => 'Computer Network Architects',
                 'OCC_GROUP' => 'detailed',
@@ -2319,10 +2172,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '100,240',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            144 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            144 => [
                 'OCC_CODE' => '15-1150',
                 'OCC_TITLE' => 'Computer Support Specialists',
                 'OCC_GROUP' => 'broad',
@@ -2335,10 +2187,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '51,470',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            145 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            145 => [
                 'OCC_CODE' => '15-1151',
                 'OCC_TITLE' => 'Computer User Support Specialists',
                 'OCC_GROUP' => 'detailed',
@@ -2351,10 +2202,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,620',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            146 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            146 => [
                 'OCC_CODE' => '15-1152',
                 'OCC_TITLE' => 'Computer Network Support Specialists',
                 'OCC_GROUP' => 'detailed',
@@ -2367,10 +2217,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '62,250',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            147 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            147 => [
                 'OCC_CODE' => '15-1190',
                 'OCC_TITLE' => 'Miscellaneous Computer Occupations',
                 'OCC_GROUP' => 'broad',
@@ -2383,10 +2232,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '85,240',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            148 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            148 => [
                 'OCC_CODE' => '15-1199',
                 'OCC_TITLE' => 'Computer Occupations, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -2399,10 +2247,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '85,240',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            149 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            149 => [
                 'OCC_CODE' => '15-2000',
                 'OCC_TITLE' => 'Mathematical Science Occupations',
                 'OCC_GROUP' => 'minor',
@@ -2415,10 +2262,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '81,360',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            150 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            150 => [
                 'OCC_CODE' => '15-2010',
                 'OCC_TITLE' => 'Actuaries',
                 'OCC_GROUP' => 'broad',
@@ -2431,10 +2277,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '97,070',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            151 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            151 => [
                 'OCC_CODE' => '15-2011',
                 'OCC_TITLE' => 'Actuaries',
                 'OCC_GROUP' => 'detailed',
@@ -2447,10 +2292,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '97,070',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            152 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            152 => [
                 'OCC_CODE' => '15-2020',
                 'OCC_TITLE' => 'Mathematicians',
                 'OCC_GROUP' => 'broad',
@@ -2463,10 +2307,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '111,110',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            153 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            153 => [
                 'OCC_CODE' => '15-2021',
                 'OCC_TITLE' => 'Mathematicians',
                 'OCC_GROUP' => 'detailed',
@@ -2479,10 +2322,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '111,110',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            154 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            154 => [
                 'OCC_CODE' => '15-2030',
                 'OCC_TITLE' => 'Operations Research Analysts',
                 'OCC_GROUP' => 'broad',
@@ -2495,10 +2337,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '78,630',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            155 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            155 => [
                 'OCC_CODE' => '15-2031',
                 'OCC_TITLE' => 'Operations Research Analysts',
                 'OCC_GROUP' => 'detailed',
@@ -2511,10 +2352,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '78,630',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            156 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            156 => [
                 'OCC_CODE' => '15-2040',
                 'OCC_TITLE' => 'Statisticians',
                 'OCC_GROUP' => 'broad',
@@ -2527,10 +2367,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '80,110',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            157 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            157 => [
                 'OCC_CODE' => '15-2041',
                 'OCC_TITLE' => 'Statisticians',
                 'OCC_GROUP' => 'detailed',
@@ -2543,10 +2382,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '80,110',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            158 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            158 => [
                 'OCC_CODE' => '15-2090',
                 'OCC_TITLE' => 'Miscellaneous Mathematical Science Occupations',
                 'OCC_GROUP' => 'broad',
@@ -2559,10 +2397,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '58,580',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            159 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            159 => [
                 'OCC_CODE' => '15-2091',
                 'OCC_TITLE' => 'Mathematical Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -2575,10 +2412,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '46,600',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            160 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            160 => [
                 'OCC_CODE' => '15-2099',
                 'OCC_TITLE' => 'Mathematical Science Occupations, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -2591,10 +2427,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '66,210',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            161 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            161 => [
                 'OCC_CODE' => '17-0000',
                 'OCC_TITLE' => 'Architecture and Engineering Occupations',
                 'OCC_GROUP' => 'major',
@@ -2607,10 +2442,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '76,870',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            162 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            162 => [
                 'OCC_CODE' => '17-1000',
                 'OCC_TITLE' => 'Architects, Surveyors, and Cartographers',
                 'OCC_GROUP' => 'minor',
@@ -2623,10 +2457,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '69,130',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            163 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            163 => [
                 'OCC_CODE' => '17-1010',
                 'OCC_TITLE' => 'Architects, Except Naval',
                 'OCC_GROUP' => 'broad',
@@ -2639,10 +2472,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '74,040',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            164 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            164 => [
                 'OCC_CODE' => '17-1011',
                 'OCC_TITLE' => 'Architects, Except Landscape and Naval',
                 'OCC_GROUP' => 'detailed',
@@ -2655,10 +2487,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '76,100',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            165 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            165 => [
                 'OCC_CODE' => '17-1012',
                 'OCC_TITLE' => 'Landscape Architects',
                 'OCC_GROUP' => 'detailed',
@@ -2671,10 +2502,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '63,810',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            166 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            166 => [
                 'OCC_CODE' => '17-1020',
                 'OCC_TITLE' => 'Surveyors, Cartographers, and Photogrammetrists',
                 'OCC_GROUP' => 'broad',
@@ -2687,10 +2517,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '58,920',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            167 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            167 => [
                 'OCC_CODE' => '17-1021',
                 'OCC_TITLE' => 'Cartographers and Photogrammetrists',
                 'OCC_GROUP' => 'detailed',
@@ -2703,10 +2532,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '61,880',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            168 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            168 => [
                 'OCC_CODE' => '17-1022',
                 'OCC_TITLE' => 'Surveyors',
                 'OCC_GROUP' => 'detailed',
@@ -2719,10 +2547,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '58,020',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            169 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            169 => [
                 'OCC_CODE' => '17-2000',
                 'OCC_TITLE' => 'Engineers',
                 'OCC_GROUP' => 'minor',
@@ -2735,10 +2562,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '90,060',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            170 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            170 => [
                 'OCC_CODE' => '17-2010',
                 'OCC_TITLE' => 'Aerospace Engineers',
                 'OCC_GROUP' => 'broad',
@@ -2751,10 +2577,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '107,830',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            171 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            171 => [
                 'OCC_CODE' => '17-2011',
                 'OCC_TITLE' => 'Aerospace Engineers',
                 'OCC_GROUP' => 'detailed',
@@ -2767,10 +2592,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '107,830',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            172 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            172 => [
                 'OCC_CODE' => '17-2020',
                 'OCC_TITLE' => 'Agricultural Engineers',
                 'OCC_GROUP' => 'broad',
@@ -2783,10 +2607,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '75,090',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            173 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            173 => [
                 'OCC_CODE' => '17-2021',
                 'OCC_TITLE' => 'Agricultural Engineers',
                 'OCC_GROUP' => 'detailed',
@@ -2799,10 +2622,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '75,090',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            174 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            174 => [
                 'OCC_CODE' => '17-2030',
                 'OCC_TITLE' => 'Biomedical Engineers',
                 'OCC_GROUP' => 'broad',
@@ -2815,10 +2637,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '86,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            175 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            175 => [
                 'OCC_CODE' => '17-2031',
                 'OCC_TITLE' => 'Biomedical Engineers',
                 'OCC_GROUP' => 'detailed',
@@ -2831,10 +2652,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '86,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            176 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            176 => [
                 'OCC_CODE' => '17-2040',
                 'OCC_TITLE' => 'Chemical Engineers',
                 'OCC_GROUP' => 'broad',
@@ -2847,10 +2667,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '97,360',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            177 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            177 => [
                 'OCC_CODE' => '17-2041',
                 'OCC_TITLE' => 'Chemical Engineers',
                 'OCC_GROUP' => 'detailed',
@@ -2863,10 +2682,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '97,360',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            178 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            178 => [
                 'OCC_CODE' => '17-2050',
                 'OCC_TITLE' => 'Civil Engineers',
                 'OCC_GROUP' => 'broad',
@@ -2879,10 +2697,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '82,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            179 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            179 => [
                 'OCC_CODE' => '17-2051',
                 'OCC_TITLE' => 'Civil Engineers',
                 'OCC_GROUP' => 'detailed',
@@ -2895,10 +2712,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '82,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            180 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            180 => [
                 'OCC_CODE' => '17-2060',
                 'OCC_TITLE' => 'Computer Hardware Engineers',
                 'OCC_GROUP' => 'broad',
@@ -2911,10 +2727,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '111,730',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            181 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            181 => [
                 'OCC_CODE' => '17-2061',
                 'OCC_TITLE' => 'Computer Hardware Engineers',
                 'OCC_GROUP' => 'detailed',
@@ -2927,10 +2742,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '111,730',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            182 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            182 => [
                 'OCC_CODE' => '17-2070',
                 'OCC_TITLE' => 'Electrical and Electronics Engineers',
                 'OCC_GROUP' => 'broad',
@@ -2943,10 +2757,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '95,230',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            183 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            183 => [
                 'OCC_CODE' => '17-2071',
                 'OCC_TITLE' => 'Electrical Engineers',
                 'OCC_GROUP' => 'detailed',
@@ -2959,10 +2772,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '93,010',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            184 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            184 => [
                 'OCC_CODE' => '17-2072',
                 'OCC_TITLE' => 'Electronics Engineers, Except Computer',
                 'OCC_GROUP' => 'detailed',
@@ -2975,10 +2787,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '98,270',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            185 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            185 => [
                 'OCC_CODE' => '17-2080',
                 'OCC_TITLE' => 'Environmental Engineers',
                 'OCC_GROUP' => 'broad',
@@ -2991,10 +2802,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '84,560',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            186 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            186 => [
                 'OCC_CODE' => '17-2081',
                 'OCC_TITLE' => 'Environmental Engineers',
                 'OCC_GROUP' => 'detailed',
@@ -3007,10 +2817,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '84,560',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            187 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            187 => [
                 'OCC_CODE' => '17-2110',
                 'OCC_TITLE' => 'Industrial Engineers, Including Health and Safety',
                 'OCC_GROUP' => 'broad',
@@ -3023,10 +2832,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '83,570',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            188 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            188 => [
                 'OCC_CODE' => '17-2111',
                 'OCC_TITLE' => 'Health and Safety Engineers, Except Mining Safety Engineers and Inspectors',
                 'OCC_GROUP' => 'detailed',
@@ -3039,10 +2847,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '84,600',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            189 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            189 => [
                 'OCC_CODE' => '17-2112',
                 'OCC_TITLE' => 'Industrial Engineers',
                 'OCC_GROUP' => 'detailed',
@@ -3055,10 +2862,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '83,470',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            190 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            190 => [
                 'OCC_CODE' => '17-2120',
                 'OCC_TITLE' => 'Marine Engineers and Naval Architects',
                 'OCC_GROUP' => 'broad',
@@ -3071,10 +2877,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '93,110',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            191 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            191 => [
                 'OCC_CODE' => '17-2121',
                 'OCC_TITLE' => 'Marine Engineers and Naval Architects',
                 'OCC_GROUP' => 'detailed',
@@ -3087,10 +2892,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '93,110',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            192 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            192 => [
                 'OCC_CODE' => '17-2130',
                 'OCC_TITLE' => 'Materials Engineers',
                 'OCC_GROUP' => 'broad',
@@ -3103,10 +2907,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '91,310',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            193 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            193 => [
                 'OCC_CODE' => '17-2131',
                 'OCC_TITLE' => 'Materials Engineers',
                 'OCC_GROUP' => 'detailed',
@@ -3119,10 +2922,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '91,310',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            194 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            194 => [
                 'OCC_CODE' => '17-2140',
                 'OCC_TITLE' => 'Mechanical Engineers',
                 'OCC_GROUP' => 'broad',
@@ -3135,10 +2937,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '83,590',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            195 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            195 => [
                 'OCC_CODE' => '17-2141',
                 'OCC_TITLE' => 'Mechanical Engineers',
                 'OCC_GROUP' => 'detailed',
@@ -3151,10 +2952,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '83,590',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            196 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            196 => [
                 'OCC_CODE' => '17-2150',
                 'OCC_TITLE' => 'Mining and Geological Engineers, Including Mining Safety Engineers',
                 'OCC_GROUP' => 'broad',
@@ -3167,10 +2967,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '94,040',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            197 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            197 => [
                 'OCC_CODE' => '17-2151',
                 'OCC_TITLE' => 'Mining and Geological Engineers, Including Mining Safety Engineers',
                 'OCC_GROUP' => 'detailed',
@@ -3183,10 +2982,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '94,040',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            198 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            198 => [
                 'OCC_CODE' => '17-2160',
                 'OCC_TITLE' => 'Nuclear Engineers',
                 'OCC_GROUP' => 'broad',
@@ -3199,10 +2997,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '102,950',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            199 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            199 => [
                 'OCC_CODE' => '17-2161',
                 'OCC_TITLE' => 'Nuclear Engineers',
                 'OCC_GROUP' => 'detailed',
@@ -3215,10 +3012,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '102,950',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            200 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            200 => [
                 'OCC_CODE' => '17-2170',
                 'OCC_TITLE' => 'Petroleum Engineers',
                 'OCC_GROUP' => 'broad',
@@ -3231,10 +3027,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '129,990',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            201 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            201 => [
                 'OCC_CODE' => '17-2171',
                 'OCC_TITLE' => 'Petroleum Engineers',
                 'OCC_GROUP' => 'detailed',
@@ -3247,10 +3042,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '129,990',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            202 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            202 => [
                 'OCC_CODE' => '17-2190',
                 'OCC_TITLE' => 'Miscellaneous Engineers',
                 'OCC_GROUP' => 'broad',
@@ -3263,10 +3057,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '95,900',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            203 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            203 => [
                 'OCC_CODE' => '17-2199',
                 'OCC_TITLE' => 'Engineers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -3279,10 +3072,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '95,900',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            204 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            204 => [
                 'OCC_CODE' => '17-3000',
                 'OCC_TITLE' => 'Drafters, Engineering Technicians, and Mapping Technicians',
                 'OCC_GROUP' => 'minor',
@@ -3295,10 +3087,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '54,140',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            205 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            205 => [
                 'OCC_CODE' => '17-3010',
                 'OCC_TITLE' => 'Drafters',
                 'OCC_GROUP' => 'broad',
@@ -3311,10 +3102,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '52,720',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            206 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            206 => [
                 'OCC_CODE' => '17-3011',
                 'OCC_TITLE' => 'Architectural and Civil Drafters',
                 'OCC_GROUP' => 'detailed',
@@ -3327,10 +3117,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '50,710',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            207 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            207 => [
                 'OCC_CODE' => '17-3012',
                 'OCC_TITLE' => 'Electrical and Electronics Drafters',
                 'OCC_GROUP' => 'detailed',
@@ -3343,10 +3132,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '59,520',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            208 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            208 => [
                 'OCC_CODE' => '17-3013',
                 'OCC_TITLE' => 'Mechanical Drafters',
                 'OCC_GROUP' => 'detailed',
@@ -3359,10 +3147,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '53,520',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            209 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            209 => [
                 'OCC_CODE' => '17-3019',
                 'OCC_TITLE' => 'Drafters, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -3375,10 +3162,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '49,650',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            210 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            210 => [
                 'OCC_CODE' => '17-3020',
                 'OCC_TITLE' => 'Engineering Technicians, Except Drafters',
                 'OCC_GROUP' => 'broad',
@@ -3391,10 +3177,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '56,450',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            211 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            211 => [
                 'OCC_CODE' => '17-3021',
                 'OCC_TITLE' => 'Aerospace Engineering and Operations Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -3407,10 +3192,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '66,180',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            212 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            212 => [
                 'OCC_CODE' => '17-3022',
                 'OCC_TITLE' => 'Civil Engineering Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -3423,10 +3207,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '49,260',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            213 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            213 => [
                 'OCC_CODE' => '17-3023',
                 'OCC_TITLE' => 'Electrical and Electronics Engineering Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -3439,10 +3222,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '61,130',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            214 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            214 => [
                 'OCC_CODE' => '17-3024',
                 'OCC_TITLE' => 'Electro-Mechanical Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -3455,10 +3237,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '53,340',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            215 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            215 => [
                 'OCC_CODE' => '17-3025',
                 'OCC_TITLE' => 'Environmental Engineering Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -3471,10 +3252,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,650',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            216 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            216 => [
                 'OCC_CODE' => '17-3026',
                 'OCC_TITLE' => 'Industrial Engineering Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -3487,10 +3267,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '53,780',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            217 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            217 => [
                 'OCC_CODE' => '17-3027',
                 'OCC_TITLE' => 'Mechanical Engineering Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -3503,10 +3282,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '53,910',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            218 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            218 => [
                 'OCC_CODE' => '17-3029',
                 'OCC_TITLE' => 'Engineering Technicians, Except Drafters, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -3519,10 +3297,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '61,260',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            219 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            219 => [
                 'OCC_CODE' => '17-3030',
                 'OCC_TITLE' => 'Surveying and Mapping Technicians',
                 'OCC_GROUP' => 'broad',
@@ -3535,10 +3312,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '42,010',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            220 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            220 => [
                 'OCC_CODE' => '17-3031',
                 'OCC_TITLE' => 'Surveying and Mapping Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -3551,10 +3327,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '42,010',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            221 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            221 => [
                 'OCC_CODE' => '19-0000',
                 'OCC_TITLE' => 'Life, Physical, and Social Science Occupations',
                 'OCC_GROUP' => 'major',
@@ -3567,10 +3342,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '62,160',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            222 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            222 => [
                 'OCC_CODE' => '19-1000',
                 'OCC_TITLE' => 'Life Scientists',
                 'OCC_GROUP' => 'minor',
@@ -3583,10 +3357,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '72,090',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            223 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            223 => [
                 'OCC_CODE' => '19-1010',
                 'OCC_TITLE' => 'Agricultural and Food Scientists',
                 'OCC_GROUP' => 'broad',
@@ -3599,10 +3372,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '62,470',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            224 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            224 => [
                 'OCC_CODE' => '19-1011',
                 'OCC_TITLE' => 'Animal Scientists',
                 'OCC_GROUP' => 'detailed',
@@ -3615,10 +3387,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '60,390',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            225 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            225 => [
                 'OCC_CODE' => '19-1012',
                 'OCC_TITLE' => 'Food Scientists and Technologists',
                 'OCC_GROUP' => 'detailed',
@@ -3631,10 +3402,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '65,840',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            226 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            226 => [
                 'OCC_CODE' => '19-1013',
                 'OCC_TITLE' => 'Soil and Plant Scientists',
                 'OCC_GROUP' => 'detailed',
@@ -3647,10 +3417,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '60,050',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            227 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            227 => [
                 'OCC_CODE' => '19-1020',
                 'OCC_TITLE' => 'Biological Scientists',
                 'OCC_GROUP' => 'broad',
@@ -3663,10 +3432,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '72,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            228 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            228 => [
                 'OCC_CODE' => '19-1021',
                 'OCC_TITLE' => 'Biochemists and Biophysicists',
                 'OCC_GROUP' => 'detailed',
@@ -3679,10 +3447,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '82,150',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            229 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            229 => [
                 'OCC_CODE' => '19-1022',
                 'OCC_TITLE' => 'Microbiologists',
                 'OCC_GROUP' => 'detailed',
@@ -3695,10 +3462,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '67,550',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            230 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            230 => [
                 'OCC_CODE' => '19-1023',
                 'OCC_TITLE' => 'Zoologists and Wildlife Biologists',
                 'OCC_GROUP' => 'detailed',
@@ -3711,10 +3477,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '59,680',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            231 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            231 => [
                 'OCC_CODE' => '19-1029',
                 'OCC_TITLE' => 'Biological Scientists, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -3727,10 +3492,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '75,150',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            232 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            232 => [
                 'OCC_CODE' => '19-1030',
                 'OCC_TITLE' => 'Conservation Scientists and Foresters',
                 'OCC_GROUP' => 'broad',
@@ -3743,10 +3507,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '60,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            233 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            233 => [
                 'OCC_CODE' => '19-1031',
                 'OCC_TITLE' => 'Conservation Scientists',
                 'OCC_GROUP' => 'detailed',
@@ -3759,10 +3522,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '61,110',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            234 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            234 => [
                 'OCC_CODE' => '19-1032',
                 'OCC_TITLE' => 'Foresters',
                 'OCC_GROUP' => 'detailed',
@@ -3775,10 +3537,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '58,230',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            235 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            235 => [
                 'OCC_CODE' => '19-1040',
                 'OCC_TITLE' => 'Medical Scientists',
                 'OCC_GROUP' => 'broad',
@@ -3791,10 +3552,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '81,060',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            236 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            236 => [
                 'OCC_CODE' => '19-1041',
                 'OCC_TITLE' => 'Epidemiologists',
                 'OCC_GROUP' => 'detailed',
@@ -3807,10 +3567,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '69,450',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            237 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            237 => [
                 'OCC_CODE' => '19-1042',
                 'OCC_TITLE' => 'Medical Scientists, Except Epidemiologists',
                 'OCC_GROUP' => 'detailed',
@@ -3823,10 +3582,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '82,240',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            238 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            238 => [
                 'OCC_CODE' => '19-1090',
                 'OCC_TITLE' => 'Miscellaneous Life Scientists',
                 'OCC_GROUP' => 'broad',
@@ -3839,10 +3597,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '70,550',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            239 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            239 => [
                 'OCC_CODE' => '19-1099',
                 'OCC_TITLE' => 'Life Scientists, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -3855,10 +3612,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '70,550',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            240 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            240 => [
                 'OCC_CODE' => '19-2000',
                 'OCC_TITLE' => 'Physical Scientists',
                 'OCC_GROUP' => 'minor',
@@ -3871,10 +3627,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '76,140',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            241 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            241 => [
                 'OCC_CODE' => '19-2010',
                 'OCC_TITLE' => 'Astronomers and Physicists',
                 'OCC_GROUP' => 'broad',
@@ -3887,10 +3642,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '110,980',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            242 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            242 => [
                 'OCC_CODE' => '19-2011',
                 'OCC_TITLE' => 'Astronomers',
                 'OCC_GROUP' => 'detailed',
@@ -3903,10 +3657,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '104,100',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            243 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            243 => [
                 'OCC_CODE' => '19-2012',
                 'OCC_TITLE' => 'Physicists',
                 'OCC_GROUP' => 'detailed',
@@ -3919,10 +3672,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '111,580',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            244 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            244 => [
                 'OCC_CODE' => '19-2020',
                 'OCC_TITLE' => 'Atmospheric and Space Scientists',
                 'OCC_GROUP' => 'broad',
@@ -3935,10 +3687,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '89,820',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            245 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            245 => [
                 'OCC_CODE' => '19-2021',
                 'OCC_TITLE' => 'Atmospheric and Space Scientists',
                 'OCC_GROUP' => 'detailed',
@@ -3951,10 +3702,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '89,820',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            246 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            246 => [
                 'OCC_CODE' => '19-2030',
                 'OCC_TITLE' => 'Chemists and Materials Scientists',
                 'OCC_GROUP' => 'broad',
@@ -3967,10 +3717,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '72,610',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            247 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            247 => [
                 'OCC_CODE' => '19-2031',
                 'OCC_TITLE' => 'Chemists',
                 'OCC_GROUP' => 'detailed',
@@ -3983,10 +3732,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '71,260',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            248 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            248 => [
                 'OCC_CODE' => '19-2032',
                 'OCC_TITLE' => 'Materials Scientists',
                 'OCC_GROUP' => 'detailed',
@@ -3999,10 +3747,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '91,000',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            249 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            249 => [
                 'OCC_CODE' => '19-2040',
                 'OCC_TITLE' => 'Environmental Scientists and Geoscientists',
                 'OCC_GROUP' => 'broad',
@@ -4015,10 +3762,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '71,740',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            250 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            250 => [
                 'OCC_CODE' => '19-2041',
                 'OCC_TITLE' => 'Environmental Scientists and Specialists, Including Health',
                 'OCC_GROUP' => 'detailed',
@@ -4031,10 +3777,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '67,460',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            251 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            251 => [
                 'OCC_CODE' => '19-2042',
                 'OCC_TITLE' => 'Geoscientists, Except Hydrologists and Geographers',
                 'OCC_GROUP' => 'detailed',
@@ -4047,10 +3792,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '89,700',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            252 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            252 => [
                 'OCC_CODE' => '19-2043',
                 'OCC_TITLE' => 'Hydrologists',
                 'OCC_GROUP' => 'detailed',
@@ -4063,10 +3807,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '79,550',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            253 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            253 => [
                 'OCC_CODE' => '19-2090',
                 'OCC_TITLE' => 'Miscellaneous Physical Scientists',
                 'OCC_GROUP' => 'broad',
@@ -4079,10 +3822,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '97,130',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            254 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            254 => [
                 'OCC_CODE' => '19-2099',
                 'OCC_TITLE' => 'Physical Scientists, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -4095,10 +3837,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '97,130',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            255 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            255 => [
                 'OCC_CODE' => '19-3000',
                 'OCC_TITLE' => 'Social Scientists and Related Workers',
                 'OCC_GROUP' => 'minor',
@@ -4111,10 +3852,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '72,570',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            256 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            256 => [
                 'OCC_CODE' => '19-3010',
                 'OCC_TITLE' => 'Economists',
                 'OCC_GROUP' => 'broad',
@@ -4127,10 +3867,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '99,180',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            257 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            257 => [
                 'OCC_CODE' => '19-3011',
                 'OCC_TITLE' => 'Economists',
                 'OCC_GROUP' => 'detailed',
@@ -4143,10 +3882,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '99,180',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            258 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            258 => [
                 'OCC_CODE' => '19-3020',
                 'OCC_TITLE' => 'Survey Researchers',
                 'OCC_GROUP' => 'broad',
@@ -4159,10 +3897,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '53,920',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            259 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            259 => [
                 'OCC_CODE' => '19-3022',
                 'OCC_TITLE' => 'Survey Researchers',
                 'OCC_GROUP' => 'detailed',
@@ -4175,10 +3912,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '53,920',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            260 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            260 => [
                 'OCC_CODE' => '19-3030',
                 'OCC_TITLE' => 'Psychologists',
                 'OCC_GROUP' => 'broad',
@@ -4191,10 +3927,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '72,580',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            261 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            261 => [
                 'OCC_CODE' => '19-3031',
                 'OCC_TITLE' => 'Clinical, Counseling, and School Psychologists',
                 'OCC_GROUP' => 'detailed',
@@ -4207,10 +3942,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '70,580',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            262 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            262 => [
                 'OCC_CODE' => '19-3032',
                 'OCC_TITLE' => 'Industrial-Organizational Psychologists',
                 'OCC_GROUP' => 'detailed',
@@ -4223,10 +3957,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '77,350',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            263 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            263 => [
                 'OCC_CODE' => '19-3039',
                 'OCC_TITLE' => 'Psychologists, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -4239,10 +3972,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '94,590',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            264 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            264 => [
                 'OCC_CODE' => '19-3040',
                 'OCC_TITLE' => 'Sociologists',
                 'OCC_GROUP' => 'broad',
@@ -4255,10 +3987,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '73,760',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            265 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            265 => [
                 'OCC_CODE' => '19-3041',
                 'OCC_TITLE' => 'Sociologists',
                 'OCC_GROUP' => 'detailed',
@@ -4271,10 +4002,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '73,760',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            266 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            266 => [
                 'OCC_CODE' => '19-3050',
                 'OCC_TITLE' => 'Urban and Regional Planners',
                 'OCC_GROUP' => 'broad',
@@ -4287,10 +4017,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '68,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            267 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            267 => [
                 'OCC_CODE' => '19-3051',
                 'OCC_TITLE' => 'Urban and Regional Planners',
                 'OCC_GROUP' => 'detailed',
@@ -4303,10 +4032,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '68,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            268 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            268 => [
                 'OCC_CODE' => '19-3090',
                 'OCC_TITLE' => 'Miscellaneous Social Scientists and Related Workers',
                 'OCC_GROUP' => 'broad',
@@ -4319,10 +4047,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '74,640',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            269 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            269 => [
                 'OCC_CODE' => '19-3091',
                 'OCC_TITLE' => 'Anthropologists and Archeologists',
                 'OCC_GROUP' => 'detailed',
@@ -4335,10 +4062,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '61,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            270 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            270 => [
                 'OCC_CODE' => '19-3092',
                 'OCC_TITLE' => 'Geographers',
                 'OCC_GROUP' => 'detailed',
@@ -4351,10 +4077,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '74,260',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            271 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            271 => [
                 'OCC_CODE' => '19-3093',
                 'OCC_TITLE' => 'Historians',
                 'OCC_GROUP' => 'detailed',
@@ -4367,10 +4092,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '55,800',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            272 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            272 => [
                 'OCC_CODE' => '19-3094',
                 'OCC_TITLE' => 'Political Scientists',
                 'OCC_GROUP' => 'detailed',
@@ -4383,10 +4107,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '99,730',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            273 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            273 => [
                 'OCC_CODE' => '19-3099',
                 'OCC_TITLE' => 'Social Scientists and Related Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -4399,10 +4122,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '76,380',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            274 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            274 => [
                 'OCC_CODE' => '19-4000',
                 'OCC_TITLE' => 'Life, Physical, and Social Science Technicians',
                 'OCC_GROUP' => 'minor',
@@ -4415,10 +4137,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '43,490',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            275 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            275 => [
                 'OCC_CODE' => '19-4010',
                 'OCC_TITLE' => 'Agricultural and Food Science Technicians',
                 'OCC_GROUP' => 'broad',
@@ -4431,10 +4152,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,480',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            276 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            276 => [
                 'OCC_CODE' => '19-4011',
                 'OCC_TITLE' => 'Agricultural and Food Science Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -4447,10 +4167,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,480',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            277 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            277 => [
                 'OCC_CODE' => '19-4020',
                 'OCC_TITLE' => 'Biological Technicians',
                 'OCC_GROUP' => 'broad',
@@ -4463,10 +4182,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '41,650',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            278 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            278 => [
                 'OCC_CODE' => '19-4021',
                 'OCC_TITLE' => 'Biological Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -4479,10 +4197,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '41,650',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            279 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            279 => [
                 'OCC_CODE' => '19-4030',
                 'OCC_TITLE' => 'Chemical Technicians',
                 'OCC_GROUP' => 'broad',
@@ -4495,10 +4212,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '44,660',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            280 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            280 => [
                 'OCC_CODE' => '19-4031',
                 'OCC_TITLE' => 'Chemical Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -4511,10 +4227,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '44,660',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            281 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            281 => [
                 'OCC_CODE' => '19-4040',
                 'OCC_TITLE' => 'Geological and Petroleum Technicians',
                 'OCC_GROUP' => 'broad',
@@ -4527,10 +4242,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '55,610',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            282 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            282 => [
                 'OCC_CODE' => '19-4041',
                 'OCC_TITLE' => 'Geological and Petroleum Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -4543,10 +4257,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '55,610',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            283 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            283 => [
                 'OCC_CODE' => '19-4050',
                 'OCC_TITLE' => 'Nuclear Technicians',
                 'OCC_GROUP' => 'broad',
@@ -4559,10 +4272,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '80,260',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            284 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            284 => [
                 'OCC_CODE' => '19-4051',
                 'OCC_TITLE' => 'Nuclear Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -4575,10 +4287,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '80,260',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            285 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            285 => [
                 'OCC_CODE' => '19-4060',
                 'OCC_TITLE' => 'Social Science Research Assistants',
                 'OCC_GROUP' => 'broad',
@@ -4591,10 +4302,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '42,480',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            286 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            286 => [
                 'OCC_CODE' => '19-4061',
                 'OCC_TITLE' => 'Social Science Research Assistants',
                 'OCC_GROUP' => 'detailed',
@@ -4607,10 +4317,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '42,480',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            287 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            287 => [
                 'OCC_CODE' => '19-4090',
                 'OCC_TITLE' => 'Miscellaneous Life, Physical, and Social Science Technicians',
                 'OCC_GROUP' => 'broad',
@@ -4623,10 +4332,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '43,520',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            288 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            288 => [
                 'OCC_CODE' => '19-4091',
                 'OCC_TITLE' => 'Environmental Science and Protection Technicians, Including Health',
                 'OCC_GROUP' => 'detailed',
@@ -4639,10 +4347,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '43,030',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            289 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            289 => [
                 'OCC_CODE' => '19-4092',
                 'OCC_TITLE' => 'Forensic Science Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -4655,10 +4362,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '56,320',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            290 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            290 => [
                 'OCC_CODE' => '19-4093',
                 'OCC_TITLE' => 'Forest and Conservation Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -4671,10 +4377,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,430',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            291 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            291 => [
                 'OCC_CODE' => '19-4099',
                 'OCC_TITLE' => 'Life, Physical, and Social Science Technicians, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -4687,10 +4392,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,300',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            292 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            292 => [
                 'OCC_CODE' => '21-0000',
                 'OCC_TITLE' => 'Community and Social Service Occupations',
                 'OCC_GROUP' => 'major',
@@ -4703,10 +4407,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '42,010',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            293 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            293 => [
                 'OCC_CODE' => '21-1000',
                 'OCC_TITLE' => 'Counselors, Social Workers, and Other Community and Social Service Specialists',
                 'OCC_GROUP' => 'minor',
@@ -4719,10 +4422,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '42,030',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            294 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            294 => [
                 'OCC_CODE' => '21-1010',
                 'OCC_TITLE' => 'Counselors',
                 'OCC_GROUP' => 'broad',
@@ -4735,10 +4437,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,160',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            295 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            295 => [
                 'OCC_CODE' => '21-1011',
                 'OCC_TITLE' => 'Substance Abuse and Behavioral Disorder Counselors',
                 'OCC_GROUP' => 'detailed',
@@ -4751,10 +4452,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '39,980',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            296 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            296 => [
                 'OCC_CODE' => '21-1012',
                 'OCC_TITLE' => 'Educational, Guidance, School, and Vocational Counselors',
                 'OCC_GROUP' => 'detailed',
@@ -4767,10 +4467,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '53,660',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            297 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            297 => [
                 'OCC_CODE' => '21-1013',
                 'OCC_TITLE' => 'Marriage and Family Therapists',
                 'OCC_GROUP' => 'detailed',
@@ -4783,10 +4482,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,600',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            298 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            298 => [
                 'OCC_CODE' => '21-1014',
                 'OCC_TITLE' => 'Mental Health Counselors',
                 'OCC_GROUP' => 'detailed',
@@ -4799,10 +4497,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '41,880',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            299 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            299 => [
                 'OCC_CODE' => '21-1015',
                 'OCC_TITLE' => 'Rehabilitation Counselors',
                 'OCC_GROUP' => 'detailed',
@@ -4815,10 +4512,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '34,390',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            300 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            300 => [
                 'OCC_CODE' => '21-1019',
                 'OCC_TITLE' => 'Counselors, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -4831,10 +4527,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,530',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            301 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            301 => [
                 'OCC_CODE' => '21-1020',
                 'OCC_TITLE' => 'Social Workers',
                 'OCC_GROUP' => 'broad',
@@ -4847,10 +4542,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,900',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            302 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            302 => [
                 'OCC_CODE' => '21-1021',
                 'OCC_TITLE' => 'Child, Family, and School Social Workers',
                 'OCC_GROUP' => 'detailed',
@@ -4863,10 +4557,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '42,350',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            303 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            303 => [
                 'OCC_CODE' => '21-1022',
                 'OCC_TITLE' => 'Healthcare Social Workers',
                 'OCC_GROUP' => 'detailed',
@@ -4879,10 +4572,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '52,380',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            304 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            304 => [
                 'OCC_CODE' => '21-1023',
                 'OCC_TITLE' => 'Mental Health and Substance Abuse Social Workers',
                 'OCC_GROUP' => 'detailed',
@@ -4895,10 +4587,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '42,170',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            305 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            305 => [
                 'OCC_CODE' => '21-1029',
                 'OCC_TITLE' => 'Social Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -4911,10 +4602,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '58,560',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            306 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            306 => [
                 'OCC_CODE' => '21-1090',
                 'OCC_TITLE' => 'Miscellaneous Community and Social Service Specialists',
                 'OCC_GROUP' => 'broad',
@@ -4927,10 +4617,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,110',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            307 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            307 => [
                 'OCC_CODE' => '21-1091',
                 'OCC_TITLE' => 'Health Educators',
                 'OCC_GROUP' => 'detailed',
@@ -4943,10 +4632,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '51,960',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            308 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            308 => [
                 'OCC_CODE' => '21-1092',
                 'OCC_TITLE' => 'Probation Officers and Correctional Treatment Specialists',
                 'OCC_GROUP' => 'detailed',
@@ -4959,10 +4647,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '49,360',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            309 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            309 => [
                 'OCC_CODE' => '21-1093',
                 'OCC_TITLE' => 'Social and Human Service Assistants',
                 'OCC_GROUP' => 'detailed',
@@ -4975,10 +4662,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,830',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            310 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            310 => [
                 'OCC_CODE' => '21-1094',
                 'OCC_TITLE' => 'Community Health Workers',
                 'OCC_GROUP' => 'detailed',
@@ -4991,10 +4677,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,300',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            311 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            311 => [
                 'OCC_CODE' => '21-1099',
                 'OCC_TITLE' => 'Community and Social Service Specialists, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -5007,10 +4692,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '41,890',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            312 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            312 => [
                 'OCC_CODE' => '21-2000',
                 'OCC_TITLE' => 'Religious Workers',
                 'OCC_GROUP' => 'minor',
@@ -5023,10 +4707,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '41,550',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            313 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            313 => [
                 'OCC_CODE' => '21-2010',
                 'OCC_TITLE' => 'Clergy',
                 'OCC_GROUP' => 'broad',
@@ -5039,10 +4722,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '44,250',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            314 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            314 => [
                 'OCC_CODE' => '21-2011',
                 'OCC_TITLE' => 'Clergy',
                 'OCC_GROUP' => 'detailed',
@@ -5055,10 +4737,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '44,250',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            315 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            315 => [
                 'OCC_CODE' => '21-2020',
                 'OCC_TITLE' => 'Directors, Religious Activities and Education',
                 'OCC_GROUP' => 'broad',
@@ -5071,10 +4752,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '38,780',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            316 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            316 => [
                 'OCC_CODE' => '21-2021',
                 'OCC_TITLE' => 'Directors, Religious Activities and Education',
                 'OCC_GROUP' => 'detailed',
@@ -5087,10 +4767,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '38,780',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            317 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            317 => [
                 'OCC_CODE' => '21-2090',
                 'OCC_TITLE' => 'Miscellaneous Religious Workers',
                 'OCC_GROUP' => 'broad',
@@ -5103,10 +4782,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '28,750',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            318 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            318 => [
                 'OCC_CODE' => '21-2099',
                 'OCC_TITLE' => 'Religious Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -5119,10 +4797,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '28,750',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            319 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            319 => [
                 'OCC_CODE' => '23-0000',
                 'OCC_TITLE' => 'Legal Occupations',
                 'OCC_GROUP' => 'major',
@@ -5135,10 +4812,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '78,170',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            320 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            320 => [
                 'OCC_CODE' => '23-1000',
                 'OCC_TITLE' => 'Lawyers, Judges, and Related Workers',
                 'OCC_GROUP' => 'minor',
@@ -5151,10 +4827,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '113,120',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            321 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            321 => [
                 'OCC_CODE' => '23-1010',
                 'OCC_TITLE' => 'Lawyers and Judicial Law Clerks',
                 'OCC_GROUP' => 'broad',
@@ -5167,10 +4842,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '114,280',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            322 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            322 => [
                 'OCC_CODE' => '23-1011',
                 'OCC_TITLE' => 'Lawyers',
                 'OCC_GROUP' => 'detailed',
@@ -5183,10 +4857,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '115,820',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            323 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            323 => [
                 'OCC_CODE' => '23-1012',
                 'OCC_TITLE' => 'Judicial Law Clerks',
                 'OCC_GROUP' => 'detailed',
@@ -5199,10 +4872,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '50,740',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            324 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            324 => [
                 'OCC_CODE' => '23-1020',
                 'OCC_TITLE' => 'Judges, Magistrates, and Other Judicial Workers',
                 'OCC_GROUP' => 'broad',
@@ -5215,10 +4887,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '99,870',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            325 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            325 => [
                 'OCC_CODE' => '23-1021',
                 'OCC_TITLE' => 'Administrative Law Judges, Adjudicators, and Hearing Officers',
                 'OCC_GROUP' => 'detailed',
@@ -5231,10 +4902,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '90,600',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            326 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            326 => [
                 'OCC_CODE' => '23-1022',
                 'OCC_TITLE' => 'Arbitrators, Mediators, and Conciliators',
                 'OCC_GROUP' => 'detailed',
@@ -5247,10 +4917,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '58,020',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            327 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            327 => [
                 'OCC_CODE' => '23-1023',
                 'OCC_TITLE' => 'Judges, Magistrate Judges, and Magistrates',
                 'OCC_GROUP' => 'detailed',
@@ -5263,10 +4932,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '126,930',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            328 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            328 => [
                 'OCC_CODE' => '23-2000',
                 'OCC_TITLE' => 'Legal Support Workers',
                 'OCC_GROUP' => 'minor',
@@ -5279,10 +4947,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,680',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            329 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            329 => [
                 'OCC_CODE' => '23-2010',
                 'OCC_TITLE' => 'Paralegals and Legal Assistants',
                 'OCC_GROUP' => 'broad',
@@ -5295,10 +4962,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,810',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            330 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            330 => [
                 'OCC_CODE' => '23-2011',
                 'OCC_TITLE' => 'Paralegals and Legal Assistants',
                 'OCC_GROUP' => 'detailed',
@@ -5311,10 +4977,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,810',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            331 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            331 => [
                 'OCC_CODE' => '23-2090',
                 'OCC_TITLE' => 'Miscellaneous Legal Support Workers',
                 'OCC_GROUP' => 'broad',
@@ -5327,10 +4992,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,310',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            332 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            332 => [
                 'OCC_CODE' => '23-2091',
                 'OCC_TITLE' => 'Court Reporters',
                 'OCC_GROUP' => 'detailed',
@@ -5343,10 +5007,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '49,500',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            333 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            333 => [
                 'OCC_CODE' => '23-2093',
                 'OCC_TITLE' => 'Title Examiners, Abstractors, and Searchers',
                 'OCC_GROUP' => 'detailed',
@@ -5359,10 +5022,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '44,370',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            334 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            334 => [
                 'OCC_CODE' => '23-2099',
                 'OCC_TITLE' => 'Legal Support Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -5375,10 +5037,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '53,920',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            335 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            335 => [
                 'OCC_CODE' => '25-0000',
                 'OCC_TITLE' => 'Education, Training, and Library Occupations',
                 'OCC_GROUP' => 'major',
@@ -5391,10 +5052,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '47,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            336 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            336 => [
                 'OCC_CODE' => '25-1000',
                 'OCC_TITLE' => 'Postsecondary Teachers',
                 'OCC_GROUP' => 'minor',
@@ -5407,10 +5067,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '64,450',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            337 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            337 => [
                 'OCC_CODE' => '25-1010',
                 'OCC_TITLE' => 'Business Teachers, Postsecondary',
                 'OCC_GROUP' => 'broad',
@@ -5423,10 +5082,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '75,370',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            338 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            338 => [
                 'OCC_CODE' => '25-1011',
                 'OCC_TITLE' => 'Business Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5439,10 +5097,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '75,370',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            339 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            339 => [
                 'OCC_CODE' => '25-1020',
                 'OCC_TITLE' => 'Math and Computer Teachers, Postsecondary',
                 'OCC_GROUP' => 'broad',
@@ -5455,10 +5112,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '69,990',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            340 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            340 => [
                 'OCC_CODE' => '25-1021',
                 'OCC_TITLE' => 'Computer Science Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5471,10 +5127,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '74,840',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            341 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            341 => [
                 'OCC_CODE' => '25-1022',
                 'OCC_TITLE' => 'Mathematical Science Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5487,10 +5142,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '67,170',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            342 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            342 => [
                 'OCC_CODE' => '25-1030',
                 'OCC_TITLE' => 'Engineering and Architecture Teachers, Postsecondary',
                 'OCC_GROUP' => 'broad',
@@ -5503,10 +5157,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '91,610',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            343 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            343 => [
                 'OCC_CODE' => '25-1031',
                 'OCC_TITLE' => 'Architecture Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5519,10 +5172,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '73,920',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            344 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            344 => [
                 'OCC_CODE' => '25-1032',
                 'OCC_TITLE' => 'Engineering Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5535,10 +5187,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '95,060',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            345 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            345 => [
                 'OCC_CODE' => '25-1040',
                 'OCC_TITLE' => 'Life Sciences Teachers, Postsecondary',
                 'OCC_GROUP' => 'broad',
@@ -5551,10 +5202,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '77,960',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            346 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            346 => [
                 'OCC_CODE' => '25-1041',
                 'OCC_TITLE' => 'Agricultural Sciences Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5567,10 +5217,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '90,780',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            347 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            347 => [
                 'OCC_CODE' => '25-1042',
                 'OCC_TITLE' => 'Biological Science Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5583,10 +5232,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '75,320',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            348 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            348 => [
                 'OCC_CODE' => '25-1043',
                 'OCC_TITLE' => 'Forestry and Conservation Science Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5599,10 +5247,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '88,270',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            349 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            349 => [
                 'OCC_CODE' => '25-1050',
                 'OCC_TITLE' => 'Physical Sciences Teachers, Postsecondary',
                 'OCC_GROUP' => 'broad',
@@ -5615,10 +5262,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '79,020',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            350 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            350 => [
                 'OCC_CODE' => '25-1051',
                 'OCC_TITLE' => 'Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5631,10 +5277,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '83,150',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            351 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            351 => [
                 'OCC_CODE' => '25-1052',
                 'OCC_TITLE' => 'Chemistry Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5647,10 +5292,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '75,060',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            352 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            352 => [
                 'OCC_CODE' => '25-1053',
                 'OCC_TITLE' => 'Environmental Science Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5663,10 +5307,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '78,770',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            353 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            353 => [
                 'OCC_CODE' => '25-1054',
                 'OCC_TITLE' => 'Physics Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5679,10 +5322,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '82,840',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            354 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            354 => [
                 'OCC_CODE' => '25-1060',
                 'OCC_TITLE' => 'Social Sciences Teachers, Postsecondary',
                 'OCC_GROUP' => 'broad',
@@ -5695,10 +5337,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '73,490',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            355 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            355 => [
                 'OCC_CODE' => '25-1061',
                 'OCC_TITLE' => 'Anthropology and Archeology Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5711,10 +5352,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '77,650',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            356 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            356 => [
                 'OCC_CODE' => '25-1062',
                 'OCC_TITLE' => 'Area, Ethnic, and Cultural Studies Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5727,10 +5367,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '72,300',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            357 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            357 => [
                 'OCC_CODE' => '25-1063',
                 'OCC_TITLE' => 'Economics Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5743,10 +5382,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '94,000',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            358 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            358 => [
                 'OCC_CODE' => '25-1064',
                 'OCC_TITLE' => 'Geography Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5759,10 +5397,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '75,400',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            359 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            359 => [
                 'OCC_CODE' => '25-1065',
                 'OCC_TITLE' => 'Political Science Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5775,10 +5412,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '76,370',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            360 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            360 => [
                 'OCC_CODE' => '25-1066',
                 'OCC_TITLE' => 'Psychology Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5791,10 +5427,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '70,260',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            361 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            361 => [
                 'OCC_CODE' => '25-1067',
                 'OCC_TITLE' => 'Sociology Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5807,10 +5442,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '69,230',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            362 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            362 => [
                 'OCC_CODE' => '25-1069',
                 'OCC_TITLE' => 'Social Sciences Teachers, Postsecondary, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -5823,10 +5457,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '67,490',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            363 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            363 => [
                 'OCC_CODE' => '25-1070',
                 'OCC_TITLE' => 'Health Teachers, Postsecondary',
                 'OCC_GROUP' => 'broad',
@@ -5839,10 +5472,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '81,470',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            364 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            364 => [
                 'OCC_CODE' => '25-1071',
                 'OCC_TITLE' => 'Health Specialties Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5855,10 +5487,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '90,840',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            365 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            365 => [
                 'OCC_CODE' => '25-1072',
                 'OCC_TITLE' => 'Nursing Instructors and Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5871,10 +5502,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '67,480',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            366 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            366 => [
                 'OCC_CODE' => '25-1080',
                 'OCC_TITLE' => 'Education and Library Science Teachers, Postsecondary',
                 'OCC_GROUP' => 'broad',
@@ -5887,10 +5517,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '62,040',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            367 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            367 => [
                 'OCC_CODE' => '25-1081',
                 'OCC_TITLE' => 'Education Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5903,10 +5532,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '61,560',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            368 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            368 => [
                 'OCC_CODE' => '25-1082',
                 'OCC_TITLE' => 'Library Science Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5919,10 +5547,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '67,660',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            369 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            369 => [
                 'OCC_CODE' => '25-1110',
                 'OCC_TITLE' => 'Law, Criminal Justice, and Social Work Teachers, Postsecondary',
                 'OCC_GROUP' => 'broad',
@@ -5935,10 +5562,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '69,240',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            370 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            370 => [
                 'OCC_CODE' => '25-1111',
                 'OCC_TITLE' => 'Criminal Justice and Law Enforcement Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5951,10 +5577,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '58,770',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            371 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            371 => [
                 'OCC_CODE' => '25-1112',
                 'OCC_TITLE' => 'Law Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5967,10 +5592,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '105,250',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            372 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            372 => [
                 'OCC_CODE' => '25-1113',
                 'OCC_TITLE' => 'Social Work Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -5983,10 +5607,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '63,390',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            373 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            373 => [
                 'OCC_CODE' => '25-1120',
                 'OCC_TITLE' => 'Arts, Communications, and Humanities Teachers, Postsecondary',
                 'OCC_GROUP' => 'broad',
@@ -5999,10 +5622,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '64,120',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            374 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            374 => [
                 'OCC_CODE' => '25-1121',
                 'OCC_TITLE' => 'Art, Drama, and Music Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -6015,10 +5637,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '65,340',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            375 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            375 => [
                 'OCC_CODE' => '25-1122',
                 'OCC_TITLE' => 'Communications Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -6031,10 +5652,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '63,410',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            376 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            376 => [
                 'OCC_CODE' => '25-1123',
                 'OCC_TITLE' => 'English Language and Literature Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -6047,10 +5667,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '61,990',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            377 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            377 => [
                 'OCC_CODE' => '25-1124',
                 'OCC_TITLE' => 'Foreign Language and Literature Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -6063,10 +5682,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '61,380',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            378 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            378 => [
                 'OCC_CODE' => '25-1125',
                 'OCC_TITLE' => 'History Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -6079,10 +5697,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '69,400',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            379 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            379 => [
                 'OCC_CODE' => '25-1126',
                 'OCC_TITLE' => 'Philosophy and Religion Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -6095,10 +5712,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '66,380',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            380 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            380 => [
                 'OCC_CODE' => '25-1190',
                 'OCC_TITLE' => 'Miscellaneous Postsecondary Teachers',
                 'OCC_GROUP' => 'broad',
@@ -6111,10 +5727,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '47,780',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            381 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            381 => [
                 'OCC_CODE' => '25-1191',
                 'OCC_TITLE' => 'Graduate Teaching Assistants',
                 'OCC_GROUP' => 'detailed',
@@ -6127,10 +5742,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,810',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            382 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            382 => [
                 'OCC_CODE' => '25-1192',
                 'OCC_TITLE' => 'Home Economics Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -6143,10 +5757,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '64,950',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            383 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            383 => [
                 'OCC_CODE' => '25-1193',
                 'OCC_TITLE' => 'Recreation and Fitness Studies Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -6159,10 +5772,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '59,280',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            384 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            384 => [
                 'OCC_CODE' => '25-1194',
                 'OCC_TITLE' => 'Vocational Education Teachers, Postsecondary',
                 'OCC_GROUP' => 'detailed',
@@ -6175,10 +5787,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '49,470',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            385 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            385 => [
                 'OCC_CODE' => '25-1199',
                 'OCC_TITLE' => 'Postsecondary Teachers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -6191,10 +5802,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '63,000',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            386 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            386 => [
                 'OCC_CODE' => '25-2000',
                 'OCC_TITLE' => 'Preschool, Primary, Secondary, and Special Education School Teachers',
                 'OCC_GROUP' => 'minor',
@@ -6207,10 +5817,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '53,860',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            387 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            387 => [
                 'OCC_CODE' => '25-2010',
                 'OCC_TITLE' => 'Preschool and Kindergarten Teachers',
                 'OCC_GROUP' => 'broad',
@@ -6223,10 +5832,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '34,330',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            388 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            388 => [
                 'OCC_CODE' => '25-2011',
                 'OCC_TITLE' => 'Preschool Teachers, Except Special Education',
                 'OCC_GROUP' => 'detailed',
@@ -6239,10 +5847,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '28,570',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            389 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            389 => [
                 'OCC_CODE' => '25-2012',
                 'OCC_TITLE' => 'Kindergarten Teachers, Except Special Education',
                 'OCC_GROUP' => 'detailed',
@@ -6255,10 +5862,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '51,640',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            390 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            390 => [
                 'OCC_CODE' => '25-2020',
                 'OCC_TITLE' => 'Elementary and Middle School Teachers',
                 'OCC_GROUP' => 'broad',
@@ -6271,10 +5877,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '55,200',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            391 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            391 => [
                 'OCC_CODE' => '25-2021',
                 'OCC_TITLE' => 'Elementary School Teachers, Except Special Education',
                 'OCC_GROUP' => 'detailed',
@@ -6287,10 +5892,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '54,890',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            392 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            392 => [
                 'OCC_CODE' => '25-2022',
                 'OCC_TITLE' => 'Middle School Teachers, Except Special and Career/Technical Education',
                 'OCC_GROUP' => 'detailed',
@@ -6303,10 +5907,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '55,860',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            393 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            393 => [
                 'OCC_CODE' => '25-2023',
                 'OCC_TITLE' => 'Career/Technical Education Teachers, Middle School',
                 'OCC_GROUP' => 'detailed',
@@ -6319,10 +5922,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '55,190',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            394 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            394 => [
                 'OCC_CODE' => '25-2030',
                 'OCC_TITLE' => 'Secondary School Teachers',
                 'OCC_GROUP' => 'broad',
@@ -6335,10 +5937,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '57,110',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            395 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            395 => [
                 'OCC_CODE' => '25-2031',
                 'OCC_TITLE' => 'Secondary School Teachers, Except Special and Career/Technical Education',
                 'OCC_GROUP' => 'detailed',
@@ -6351,10 +5952,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '57,200',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            396 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            396 => [
                 'OCC_CODE' => '25-2032',
                 'OCC_TITLE' => 'Career/Technical Education Teachers, Secondary School',
                 'OCC_GROUP' => 'detailed',
@@ -6367,10 +5967,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '56,130',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            397 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            397 => [
                 'OCC_CODE' => '25-2050',
                 'OCC_TITLE' => 'Special Education Teachers',
                 'OCC_GROUP' => 'broad',
@@ -6383,10 +5982,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '56,610',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            398 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            398 => [
                 'OCC_CODE' => '25-2051',
                 'OCC_TITLE' => 'Special Education Teachers, Preschool',
                 'OCC_GROUP' => 'detailed',
@@ -6399,10 +5997,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '53,990',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            399 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            399 => [
                 'OCC_CODE' => '25-2052',
                 'OCC_TITLE' => 'Special Education Teachers, Kindergarten and Elementary School',
                 'OCC_GROUP' => 'detailed',
@@ -6415,10 +6012,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '55,810',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            400 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            400 => [
                 'OCC_CODE' => '25-2053',
                 'OCC_TITLE' => 'Special Education Teachers, Middle School',
                 'OCC_GROUP' => 'detailed',
@@ -6431,10 +6027,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '57,280',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            401 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            401 => [
                 'OCC_CODE' => '25-2054',
                 'OCC_TITLE' => 'Special Education Teachers, Secondary School',
                 'OCC_GROUP' => 'detailed',
@@ -6447,10 +6042,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '58,500',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            402 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            402 => [
                 'OCC_CODE' => '25-2059',
                 'OCC_TITLE' => 'Special Education Teachers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -6463,10 +6057,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '53,920',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            403 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            403 => [
                 'OCC_CODE' => '25-3000',
                 'OCC_TITLE' => 'Other Teachers and Instructors',
                 'OCC_GROUP' => 'minor',
@@ -6479,10 +6072,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,760',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            404 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            404 => [
                 'OCC_CODE' => '25-3010',
                 'OCC_TITLE' => 'Adult Basic and Secondary Education and Literacy Teachers and Instructors',
                 'OCC_GROUP' => 'broad',
@@ -6495,10 +6087,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '50,280',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            405 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            405 => [
                 'OCC_CODE' => '25-3011',
                 'OCC_TITLE' => 'Adult Basic and Secondary Education and Literacy Teachers and Instructors',
                 'OCC_GROUP' => 'detailed',
@@ -6511,10 +6102,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '50,280',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            406 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            406 => [
                 'OCC_CODE' => '25-3020',
                 'OCC_TITLE' => 'Self-Enrichment Education Teachers',
                 'OCC_GROUP' => 'broad',
@@ -6527,10 +6117,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,680',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            407 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            407 => [
                 'OCC_CODE' => '25-3021',
                 'OCC_TITLE' => 'Self-Enrichment Education Teachers',
                 'OCC_GROUP' => 'detailed',
@@ -6543,10 +6132,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,680',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            408 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            408 => [
                 'OCC_CODE' => '25-3090',
                 'OCC_TITLE' => 'Miscellaneous Teachers and Instructors',
                 'OCC_GROUP' => 'broad',
@@ -6559,10 +6147,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '28,960',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            409 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            409 => [
                 'OCC_CODE' => '25-3097',
                 'OCC_TITLE' => 'Teachers and Instructors, All Other, Except Substitute Teachers',
                 'OCC_GROUP' => 'detailed',
@@ -6575,10 +6162,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,140',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            410 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            410 => [
                 'OCC_CODE' => '25-3098',
                 'OCC_TITLE' => 'Substitute Teachers',
                 'OCC_GROUP' => 'detailed',
@@ -6591,10 +6177,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,830',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            411 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            411 => [
                 'OCC_CODE' => '25-4000',
                 'OCC_TITLE' => 'Librarians, Curators, and Archivists',
                 'OCC_GROUP' => 'minor',
@@ -6607,10 +6192,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,960',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            412 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            412 => [
                 'OCC_CODE' => '25-4010',
                 'OCC_TITLE' => 'Archivists, Curators, and Museum Technicians',
                 'OCC_GROUP' => 'broad',
@@ -6623,10 +6207,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '46,710',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            413 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            413 => [
                 'OCC_CODE' => '25-4011',
                 'OCC_TITLE' => 'Archivists',
                 'OCC_GROUP' => 'detailed',
@@ -6639,10 +6222,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '50,250',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            414 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            414 => [
                 'OCC_CODE' => '25-4012',
                 'OCC_TITLE' => 'Curators',
                 'OCC_GROUP' => 'detailed',
@@ -6655,10 +6237,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '51,520',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            415 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            415 => [
                 'OCC_CODE' => '25-4013',
                 'OCC_TITLE' => 'Museum Technicians and Conservators',
                 'OCC_GROUP' => 'detailed',
@@ -6671,10 +6252,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,340',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            416 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            416 => [
                 'OCC_CODE' => '25-4020',
                 'OCC_TITLE' => 'Librarians',
                 'OCC_GROUP' => 'broad',
@@ -6687,10 +6267,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '56,880',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            417 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            417 => [
                 'OCC_CODE' => '25-4021',
                 'OCC_TITLE' => 'Librarians',
                 'OCC_GROUP' => 'detailed',
@@ -6703,10 +6282,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '56,880',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            418 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            418 => [
                 'OCC_CODE' => '25-4030',
                 'OCC_TITLE' => 'Library Technicians',
                 'OCC_GROUP' => 'broad',
@@ -6719,10 +6297,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,310',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            419 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            419 => [
                 'OCC_CODE' => '25-4031',
                 'OCC_TITLE' => 'Library Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -6735,10 +6312,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,310',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            420 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            420 => [
                 'OCC_CODE' => '25-9000',
                 'OCC_TITLE' => 'Other Education, Training, and Library Occupations',
                 'OCC_GROUP' => 'minor',
@@ -6751,10 +6327,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,970',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            421 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            421 => [
                 'OCC_CODE' => '25-9010',
                 'OCC_TITLE' => 'Audio-Visual and Multimedia Collections Specialists',
                 'OCC_GROUP' => 'broad',
@@ -6767,10 +6342,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,890',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            422 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            422 => [
                 'OCC_CODE' => '25-9011',
                 'OCC_TITLE' => 'Audio-Visual and Multimedia Collections Specialists',
                 'OCC_GROUP' => 'detailed',
@@ -6783,10 +6357,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,890',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            423 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            423 => [
                 'OCC_CODE' => '25-9020',
                 'OCC_TITLE' => 'Farm and Home Management Advisors',
                 'OCC_GROUP' => 'broad',
@@ -6799,10 +6372,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '49,190',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            424 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            424 => [
                 'OCC_CODE' => '25-9021',
                 'OCC_TITLE' => 'Farm and Home Management Advisors',
                 'OCC_GROUP' => 'detailed',
@@ -6815,10 +6387,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '49,190',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            425 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            425 => [
                 'OCC_CODE' => '25-9030',
                 'OCC_TITLE' => 'Instructional Coordinators',
                 'OCC_GROUP' => 'broad',
@@ -6831,10 +6402,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '62,270',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            426 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            426 => [
                 'OCC_CODE' => '25-9031',
                 'OCC_TITLE' => 'Instructional Coordinators',
                 'OCC_GROUP' => 'detailed',
@@ -6847,10 +6417,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '62,270',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            427 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            427 => [
                 'OCC_CODE' => '25-9040',
                 'OCC_TITLE' => 'Teacher Assistants',
                 'OCC_GROUP' => 'broad',
@@ -6863,10 +6432,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,900',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            428 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            428 => [
                 'OCC_CODE' => '25-9041',
                 'OCC_TITLE' => 'Teacher Assistants',
                 'OCC_GROUP' => 'detailed',
@@ -6879,10 +6447,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,900',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            429 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            429 => [
                 'OCC_CODE' => '25-9090',
                 'OCC_TITLE' => 'Miscellaneous Education, Training, and Library Workers',
                 'OCC_GROUP' => 'broad',
@@ -6895,10 +6462,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,380',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            430 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            430 => [
                 'OCC_CODE' => '25-9099',
                 'OCC_TITLE' => 'Education, Training, and Library Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -6911,10 +6477,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,380',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            431 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            431 => [
                 'OCC_CODE' => '27-0000',
                 'OCC_TITLE' => 'Arts, Design, Entertainment, Sports, and Media Occupations',
                 'OCC_GROUP' => 'major',
@@ -6927,10 +6492,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '46,160',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            432 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            432 => [
                 'OCC_CODE' => '27-1000',
                 'OCC_TITLE' => 'Art and Design Workers',
                 'OCC_GROUP' => 'minor',
@@ -6943,10 +6507,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '43,950',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            433 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            433 => [
                 'OCC_CODE' => '27-1010',
                 'OCC_TITLE' => 'Artists and Related Workers',
                 'OCC_GROUP' => 'broad',
@@ -6959,10 +6522,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '67,620',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            434 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            434 => [
                 'OCC_CODE' => '27-1011',
                 'OCC_TITLE' => 'Art Directors',
                 'OCC_GROUP' => 'detailed',
@@ -6975,10 +6537,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '89,760',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            435 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            435 => [
                 'OCC_CODE' => '27-1012',
                 'OCC_TITLE' => 'Craft Artists',
                 'OCC_GROUP' => 'detailed',
@@ -6991,10 +6552,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,720',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            436 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            436 => [
                 'OCC_CODE' => '27-1013',
                 'OCC_TITLE' => 'Fine Artists, Including Painters, Sculptors, and Illustrators',
                 'OCC_GROUP' => 'detailed',
@@ -7007,10 +6567,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '46,460',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            437 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            437 => [
                 'OCC_CODE' => '27-1014',
                 'OCC_TITLE' => 'Multimedia Artists and Animators',
                 'OCC_GROUP' => 'detailed',
@@ -7023,10 +6582,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '63,970',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            438 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            438 => [
                 'OCC_CODE' => '27-1019',
                 'OCC_TITLE' => 'Artists and Related Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -7039,10 +6597,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '58,450',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            439 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            439 => [
                 'OCC_CODE' => '27-1020',
                 'OCC_TITLE' => 'Designers',
                 'OCC_GROUP' => 'broad',
@@ -7055,10 +6612,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,530',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            440 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            440 => [
                 'OCC_CODE' => '27-1021',
                 'OCC_TITLE' => 'Commercial and Industrial Designers',
                 'OCC_GROUP' => 'detailed',
@@ -7071,10 +6627,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '67,130',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            441 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            441 => [
                 'OCC_CODE' => '27-1022',
                 'OCC_TITLE' => 'Fashion Designers',
                 'OCC_GROUP' => 'detailed',
@@ -7087,10 +6642,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '63,670',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            442 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            442 => [
                 'OCC_CODE' => '27-1023',
                 'OCC_TITLE' => 'Floral Designers',
                 'OCC_GROUP' => 'detailed',
@@ -7103,10 +6657,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '25,010',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            443 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            443 => [
                 'OCC_CODE' => '27-1024',
                 'OCC_TITLE' => 'Graphic Designers',
                 'OCC_GROUP' => 'detailed',
@@ -7119,10 +6672,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '46,900',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            444 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            444 => [
                 'OCC_CODE' => '27-1025',
                 'OCC_TITLE' => 'Interior Designers',
                 'OCC_GROUP' => 'detailed',
@@ -7135,10 +6687,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,840',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            445 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            445 => [
                 'OCC_CODE' => '27-1026',
                 'OCC_TITLE' => 'Merchandise Displayers and Window Trimmers',
                 'OCC_GROUP' => 'detailed',
@@ -7151,10 +6702,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,870',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            446 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            446 => [
                 'OCC_CODE' => '27-1027',
                 'OCC_TITLE' => 'Set and Exhibit Designers',
                 'OCC_GROUP' => 'detailed',
@@ -7167,10 +6717,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '49,530',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            447 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            447 => [
                 'OCC_CODE' => '27-1029',
                 'OCC_TITLE' => 'Designers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -7183,10 +6732,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '53,280',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            448 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            448 => [
                 'OCC_CODE' => '27-2000',
                 'OCC_TITLE' => 'Entertainers and Performers, Sports and Related Workers',
                 'OCC_GROUP' => 'minor',
@@ -7199,10 +6747,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,030',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            449 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            449 => [
                 'OCC_CODE' => '27-2010',
                 'OCC_TITLE' => 'Actors, Producers, and Directors',
                 'OCC_GROUP' => 'broad',
@@ -7215,10 +6762,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '60,480',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            450 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            450 => [
                 'OCC_CODE' => '27-2011',
                 'OCC_TITLE' => 'Actors',
                 'OCC_GROUP' => 'detailed',
@@ -7231,10 +6777,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '*',
                 'ANNUAL' => '',
                 'HOURLY' => 'TRUE',
-                'ocuupation_id' => NULL,
-            ),
-            451 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            451 => [
                 'OCC_CODE' => '27-2012',
                 'OCC_TITLE' => 'Producers and Directors',
                 'OCC_GROUP' => 'detailed',
@@ -7247,10 +6792,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '68,440',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            452 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            452 => [
                 'OCC_CODE' => '27-2020',
                 'OCC_TITLE' => 'Athletes, Coaches, Umpires, and Related Workers',
                 'OCC_GROUP' => 'broad',
@@ -7263,10 +6807,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,010',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            453 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            453 => [
                 'OCC_CODE' => '27-2021',
                 'OCC_TITLE' => 'Athletes and Sports Competitors',
                 'OCC_GROUP' => 'detailed',
@@ -7279,10 +6822,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '44,680',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            454 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            454 => [
                 'OCC_CODE' => '27-2022',
                 'OCC_TITLE' => 'Coaches and Scouts',
                 'OCC_GROUP' => 'detailed',
@@ -7295,10 +6837,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,000',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            455 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            455 => [
                 'OCC_CODE' => '27-2023',
                 'OCC_TITLE' => 'Umpires, Referees, and Other Sports Officials',
                 'OCC_GROUP' => 'detailed',
@@ -7311,10 +6852,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,870',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            456 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            456 => [
                 'OCC_CODE' => '27-2030',
                 'OCC_TITLE' => 'Dancers and Choreographers',
                 'OCC_GROUP' => 'broad',
@@ -7327,10 +6867,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,050',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            457 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            457 => [
                 'OCC_CODE' => '27-2031',
                 'OCC_TITLE' => 'Dancers',
                 'OCC_GROUP' => 'detailed',
@@ -7343,10 +6882,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '*',
                 'ANNUAL' => '',
                 'HOURLY' => 'TRUE',
-                'ocuupation_id' => NULL,
-            ),
-            458 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            458 => [
                 'OCC_CODE' => '27-2032',
                 'OCC_TITLE' => 'Choreographers',
                 'OCC_GROUP' => 'detailed',
@@ -7359,10 +6897,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,940',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            459 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            459 => [
                 'OCC_CODE' => '27-2040',
                 'OCC_TITLE' => 'Musicians, Singers, and Related Workers',
                 'OCC_GROUP' => 'broad',
@@ -7375,10 +6912,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '*',
                 'ANNUAL' => '',
                 'HOURLY' => 'TRUE',
-                'ocuupation_id' => NULL,
-            ),
-            460 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            460 => [
                 'OCC_CODE' => '27-2041',
                 'OCC_TITLE' => 'Music Directors and Composers',
                 'OCC_GROUP' => 'detailed',
@@ -7391,10 +6927,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '49,820',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            461 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            461 => [
                 'OCC_CODE' => '27-2042',
                 'OCC_TITLE' => 'Musicians and Singers',
                 'OCC_GROUP' => 'detailed',
@@ -7407,10 +6942,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '*',
                 'ANNUAL' => '',
                 'HOURLY' => 'TRUE',
-                'ocuupation_id' => NULL,
-            ),
-            462 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            462 => [
                 'OCC_CODE' => '27-2090',
                 'OCC_TITLE' => 'Miscellaneous Entertainers and Performers, Sports and Related Workers',
                 'OCC_GROUP' => 'broad',
@@ -7423,10 +6957,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '*',
                 'ANNUAL' => '',
                 'HOURLY' => 'TRUE',
-                'ocuupation_id' => NULL,
-            ),
-            463 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            463 => [
                 'OCC_CODE' => '27-2099',
                 'OCC_TITLE' => 'Entertainers and Performers, Sports and Related Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -7439,10 +6972,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '*',
                 'ANNUAL' => '',
                 'HOURLY' => 'TRUE',
-                'ocuupation_id' => NULL,
-            ),
-            464 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            464 => [
                 'OCC_CODE' => '27-3000',
                 'OCC_TITLE' => 'Media and Communication Workers',
                 'OCC_GROUP' => 'minor',
@@ -7455,10 +6987,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '53,530',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            465 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            465 => [
                 'OCC_CODE' => '27-3010',
                 'OCC_TITLE' => 'Announcers',
                 'OCC_GROUP' => 'broad',
@@ -7471,10 +7002,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,080',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            466 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            466 => [
                 'OCC_CODE' => '27-3011',
                 'OCC_TITLE' => 'Radio and Television Announcers',
                 'OCC_GROUP' => 'detailed',
@@ -7487,10 +7017,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,960',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            467 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            467 => [
                 'OCC_CODE' => '27-3012',
                 'OCC_TITLE' => 'Public Address System and Other Announcers',
                 'OCC_GROUP' => 'detailed',
@@ -7503,10 +7032,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,930',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            468 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            468 => [
                 'OCC_CODE' => '27-3020',
                 'OCC_TITLE' => 'News Analysts, Reporters and Correspondents',
                 'OCC_GROUP' => 'broad',
@@ -7519,10 +7047,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,720',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            469 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            469 => [
                 'OCC_CODE' => '27-3021',
                 'OCC_TITLE' => 'Broadcast News Analysts',
                 'OCC_GROUP' => 'detailed',
@@ -7535,10 +7062,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '65,530',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            470 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            470 => [
                 'OCC_CODE' => '27-3022',
                 'OCC_TITLE' => 'Reporters and Correspondents',
                 'OCC_GROUP' => 'detailed',
@@ -7551,10 +7077,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,360',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            471 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            471 => [
                 'OCC_CODE' => '27-3030',
                 'OCC_TITLE' => 'Public Relations Specialists',
                 'OCC_GROUP' => 'broad',
@@ -7567,10 +7092,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '56,770',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            472 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            472 => [
                 'OCC_CODE' => '27-3031',
                 'OCC_TITLE' => 'Public Relations Specialists',
                 'OCC_GROUP' => 'detailed',
@@ -7583,10 +7107,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '56,770',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            473 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            473 => [
                 'OCC_CODE' => '27-3040',
                 'OCC_TITLE' => 'Writers and Editors',
                 'OCC_GROUP' => 'broad',
@@ -7599,10 +7122,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '60,820',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            474 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            474 => [
                 'OCC_CODE' => '27-3041',
                 'OCC_TITLE' => 'Editors',
                 'OCC_GROUP' => 'detailed',
@@ -7615,10 +7137,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '56,010',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            475 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            475 => [
                 'OCC_CODE' => '27-3042',
                 'OCC_TITLE' => 'Technical Writers',
                 'OCC_GROUP' => 'detailed',
@@ -7631,10 +7152,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '70,240',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            476 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            476 => [
                 'OCC_CODE' => '27-3043',
                 'OCC_TITLE' => 'Writers and Authors',
                 'OCC_GROUP' => 'detailed',
@@ -7647,10 +7167,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '60,250',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            477 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            477 => [
                 'OCC_CODE' => '27-3090',
                 'OCC_TITLE' => 'Miscellaneous Media and Communication Workers',
                 'OCC_GROUP' => 'broad',
@@ -7663,10 +7182,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '44,480',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            478 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            478 => [
                 'OCC_CODE' => '27-3091',
                 'OCC_TITLE' => 'Interpreters and Translators',
                 'OCC_GROUP' => 'detailed',
@@ -7679,10 +7197,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '44,190',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            479 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            479 => [
                 'OCC_CODE' => '27-3099',
                 'OCC_TITLE' => 'Media and Communication Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -7695,10 +7212,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            480 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            480 => [
                 'OCC_CODE' => '27-4000',
                 'OCC_TITLE' => 'Media and Communication Equipment Workers',
                 'OCC_GROUP' => 'minor',
@@ -7711,10 +7227,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '43,480',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            481 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            481 => [
                 'OCC_CODE' => '27-4010',
                 'OCC_TITLE' => 'Broadcast and Sound Engineering Technicians and Radio Operators',
                 'OCC_GROUP' => 'broad',
@@ -7727,10 +7242,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '41,860',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            482 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            482 => [
                 'OCC_CODE' => '27-4011',
                 'OCC_TITLE' => 'Audio and Video Equipment Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -7743,10 +7257,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '41,440',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            483 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            483 => [
                 'OCC_CODE' => '27-4012',
                 'OCC_TITLE' => 'Broadcast Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -7759,10 +7272,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,490',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            484 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            484 => [
                 'OCC_CODE' => '27-4013',
                 'OCC_TITLE' => 'Radio Operators',
                 'OCC_GROUP' => 'detailed',
@@ -7775,10 +7287,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '50,040',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            485 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            485 => [
                 'OCC_CODE' => '27-4014',
                 'OCC_TITLE' => 'Sound Engineering Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -7791,10 +7302,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '53,330',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            486 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            486 => [
                 'OCC_CODE' => '27-4020',
                 'OCC_TITLE' => 'Photographers',
                 'OCC_GROUP' => 'broad',
@@ -7807,10 +7317,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,710',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            487 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            487 => [
                 'OCC_CODE' => '27-4021',
                 'OCC_TITLE' => 'Photographers',
                 'OCC_GROUP' => 'detailed',
@@ -7823,10 +7332,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,710',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            488 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            488 => [
                 'OCC_CODE' => '27-4030',
                 'OCC_TITLE' => 'Television, Video, and Motion Picture Camera Operators and Editors',
                 'OCC_GROUP' => 'broad',
@@ -7839,10 +7347,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '55,740',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            489 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            489 => [
                 'OCC_CODE' => '27-4031',
                 'OCC_TITLE' => 'Camera Operators, Television, Video, and Motion Picture',
                 'OCC_GROUP' => 'detailed',
@@ -7855,10 +7362,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '49,080',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            490 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            490 => [
                 'OCC_CODE' => '27-4032',
                 'OCC_TITLE' => 'Film and Video Editors',
                 'OCC_GROUP' => 'detailed',
@@ -7871,10 +7377,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '61,750',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            491 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            491 => [
                 'OCC_CODE' => '27-4090',
                 'OCC_TITLE' => 'Miscellaneous Media and Communication Equipment Workers',
                 'OCC_GROUP' => 'broad',
@@ -7887,10 +7392,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '70,590',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            492 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            492 => [
                 'OCC_CODE' => '27-4099',
                 'OCC_TITLE' => 'Media and Communication Equipment Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -7903,10 +7407,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '70,590',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            493 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            493 => [
                 'OCC_CODE' => '29-0000',
                 'OCC_TITLE' => 'Healthcare Practitioners and Technical Occupations',
                 'OCC_GROUP' => 'major',
@@ -7919,10 +7422,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '62,610',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            494 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            494 => [
                 'OCC_CODE' => '29-1000',
                 'OCC_TITLE' => 'Health Diagnosing and Treating Practitioners',
                 'OCC_GROUP' => 'minor',
@@ -7935,10 +7437,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '76,760',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            495 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            495 => [
                 'OCC_CODE' => '29-1010',
                 'OCC_TITLE' => 'Chiropractors',
                 'OCC_GROUP' => 'broad',
@@ -7951,10 +7452,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '64,440',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            496 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            496 => [
                 'OCC_CODE' => '29-1011',
                 'OCC_TITLE' => 'Chiropractors',
                 'OCC_GROUP' => 'detailed',
@@ -7967,10 +7467,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '64,440',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            497 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            497 => [
                 'OCC_CODE' => '29-1020',
                 'OCC_TITLE' => 'Dentists',
                 'OCC_GROUP' => 'broad',
@@ -7983,10 +7482,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '158,310',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            498 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            498 => [
                 'OCC_CODE' => '29-1021',
                 'OCC_TITLE' => 'Dentists, General',
                 'OCC_GROUP' => 'detailed',
@@ -7999,10 +7497,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '152,700',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            499 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            499 => [
                 'OCC_CODE' => '29-1022',
                 'OCC_TITLE' => 'Oral and Maxillofacial Surgeons',
                 'OCC_GROUP' => 'detailed',
@@ -8015,12 +7512,11 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '#',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-        ));
-        \DB::table('occupation_list')->insert(array (
-            0 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+        ]);
+        \DB::table('occupation_list')->insert([
+            0 => [
                 'OCC_CODE' => '29-1023',
                 'OCC_TITLE' => 'Orthodontists',
                 'OCC_GROUP' => 'detailed',
@@ -8033,10 +7529,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '#',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            1 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            1 => [
                 'OCC_CODE' => '29-1024',
                 'OCC_TITLE' => 'Prosthodontists',
                 'OCC_GROUP' => 'detailed',
@@ -8049,10 +7544,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '119,740',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            2 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            2 => [
                 'OCC_CODE' => '29-1029',
                 'OCC_TITLE' => 'Dentists, All Other Specialists',
                 'OCC_GROUP' => 'detailed',
@@ -8065,10 +7559,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '171,000',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            3 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            3 => [
                 'OCC_CODE' => '29-1030',
                 'OCC_TITLE' => 'Dietitians and Nutritionists',
                 'OCC_GROUP' => 'broad',
@@ -8081,10 +7574,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '57,910',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            4 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            4 => [
                 'OCC_CODE' => '29-1031',
                 'OCC_TITLE' => 'Dietitians and Nutritionists',
                 'OCC_GROUP' => 'detailed',
@@ -8097,10 +7589,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '57,910',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            5 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            5 => [
                 'OCC_CODE' => '29-1040',
                 'OCC_TITLE' => 'Optometrists',
                 'OCC_GROUP' => 'broad',
@@ -8113,10 +7604,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '103,900',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            6 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            6 => [
                 'OCC_CODE' => '29-1041',
                 'OCC_TITLE' => 'Optometrists',
                 'OCC_GROUP' => 'detailed',
@@ -8129,10 +7619,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '103,900',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            7 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            7 => [
                 'OCC_CODE' => '29-1050',
                 'OCC_TITLE' => 'Pharmacists',
                 'OCC_GROUP' => 'broad',
@@ -8145,10 +7634,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '121,500',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            8 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            8 => [
                 'OCC_CODE' => '29-1051',
                 'OCC_TITLE' => 'Pharmacists',
                 'OCC_GROUP' => 'detailed',
@@ -8161,10 +7649,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '121,500',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            9 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            9 => [
                 'OCC_CODE' => '29-1060',
                 'OCC_TITLE' => 'Physicians and Surgeons',
                 'OCC_GROUP' => 'broad',
@@ -8177,10 +7664,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '#',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            10 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            10 => [
                 'OCC_CODE' => '29-1061',
                 'OCC_TITLE' => 'Anesthesiologists',
                 'OCC_GROUP' => 'detailed',
@@ -8193,10 +7679,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '#',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            11 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            11 => [
                 'OCC_CODE' => '29-1062',
                 'OCC_TITLE' => 'Family and General Practitioners',
                 'OCC_GROUP' => 'detailed',
@@ -8209,10 +7694,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '184,390',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            12 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            12 => [
                 'OCC_CODE' => '29-1063',
                 'OCC_TITLE' => 'Internists, General',
                 'OCC_GROUP' => 'detailed',
@@ -8225,10 +7709,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '#',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            13 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            13 => [
                 'OCC_CODE' => '29-1064',
                 'OCC_TITLE' => 'Obstetricians and Gynecologists',
                 'OCC_GROUP' => 'detailed',
@@ -8241,10 +7724,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '#',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            14 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            14 => [
                 'OCC_CODE' => '29-1065',
                 'OCC_TITLE' => 'Pediatricians, General',
                 'OCC_GROUP' => 'detailed',
@@ -8257,10 +7739,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '170,300',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            15 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            15 => [
                 'OCC_CODE' => '29-1066',
                 'OCC_TITLE' => 'Psychiatrists',
                 'OCC_GROUP' => 'detailed',
@@ -8273,10 +7754,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '#',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            16 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            16 => [
                 'OCC_CODE' => '29-1067',
                 'OCC_TITLE' => 'Surgeons',
                 'OCC_GROUP' => 'detailed',
@@ -8289,10 +7769,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '#',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            17 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            17 => [
                 'OCC_CODE' => '29-1069',
                 'OCC_TITLE' => 'Physicians and Surgeons, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -8305,10 +7784,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '#',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            18 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            18 => [
                 'OCC_CODE' => '29-1070',
                 'OCC_TITLE' => 'Physician Assistants',
                 'OCC_GROUP' => 'broad',
@@ -8321,10 +7799,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '98,180',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            19 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            19 => [
                 'OCC_CODE' => '29-1071',
                 'OCC_TITLE' => 'Physician Assistants',
                 'OCC_GROUP' => 'detailed',
@@ -8337,10 +7814,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '98,180',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            20 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            20 => [
                 'OCC_CODE' => '29-1080',
                 'OCC_TITLE' => 'Podiatrists',
                 'OCC_GROUP' => 'broad',
@@ -8353,10 +7829,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '119,340',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            21 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            21 => [
                 'OCC_CODE' => '29-1081',
                 'OCC_TITLE' => 'Podiatrists',
                 'OCC_GROUP' => 'detailed',
@@ -8369,10 +7844,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '119,340',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            22 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            22 => [
                 'OCC_CODE' => '29-1120',
                 'OCC_TITLE' => 'Therapists',
                 'OCC_GROUP' => 'broad',
@@ -8385,10 +7859,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '73,900',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            23 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            23 => [
                 'OCC_CODE' => '29-1122',
                 'OCC_TITLE' => 'Occupational Therapists',
                 'OCC_GROUP' => 'detailed',
@@ -8401,10 +7874,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '80,150',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            24 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            24 => [
                 'OCC_CODE' => '29-1123',
                 'OCC_TITLE' => 'Physical Therapists',
                 'OCC_GROUP' => 'detailed',
@@ -8417,10 +7889,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '84,020',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            25 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            25 => [
                 'OCC_CODE' => '29-1124',
                 'OCC_TITLE' => 'Radiation Therapists',
                 'OCC_GROUP' => 'detailed',
@@ -8433,10 +7904,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '80,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            26 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            26 => [
                 'OCC_CODE' => '29-1125',
                 'OCC_TITLE' => 'Recreational Therapists',
                 'OCC_GROUP' => 'detailed',
@@ -8449,10 +7919,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,890',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            27 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            27 => [
                 'OCC_CODE' => '29-1126',
                 'OCC_TITLE' => 'Respiratory Therapists',
                 'OCC_GROUP' => 'detailed',
@@ -8465,10 +7934,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '57,790',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            28 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            28 => [
                 'OCC_CODE' => '29-1127',
                 'OCC_TITLE' => 'Speech-Language Pathologists',
                 'OCC_GROUP' => 'detailed',
@@ -8481,10 +7949,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '73,410',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            29 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            29 => [
                 'OCC_CODE' => '29-1128',
                 'OCC_TITLE' => 'Exercise Physiologists',
                 'OCC_GROUP' => 'detailed',
@@ -8497,10 +7964,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '47,010',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            30 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            30 => [
                 'OCC_CODE' => '29-1129',
                 'OCC_TITLE' => 'Therapists, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -8513,10 +7979,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '56,010',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            31 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            31 => [
                 'OCC_CODE' => '29-1130',
                 'OCC_TITLE' => 'Veterinarians',
                 'OCC_GROUP' => 'broad',
@@ -8529,10 +7994,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '88,490',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            32 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            32 => [
                 'OCC_CODE' => '29-1131',
                 'OCC_TITLE' => 'Veterinarians',
                 'OCC_GROUP' => 'detailed',
@@ -8545,10 +8009,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '88,490',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            33 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            33 => [
                 'OCC_CODE' => '29-1140',
                 'OCC_TITLE' => 'Registered Nurses',
                 'OCC_GROUP' => 'broad',
@@ -8561,10 +8024,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '67,490',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            34 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            34 => [
                 'OCC_CODE' => '29-1141',
                 'OCC_TITLE' => 'Registered Nurses',
                 'OCC_GROUP' => 'detailed',
@@ -8577,10 +8039,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '67,490',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            35 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            35 => [
                 'OCC_CODE' => '29-1150',
                 'OCC_TITLE' => 'Nurse Anesthetists',
                 'OCC_GROUP' => 'broad',
@@ -8593,10 +8054,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '157,140',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            36 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            36 => [
                 'OCC_CODE' => '29-1151',
                 'OCC_TITLE' => 'Nurse Anesthetists',
                 'OCC_GROUP' => 'detailed',
@@ -8609,10 +8069,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '157,140',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            37 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            37 => [
                 'OCC_CODE' => '29-1160',
                 'OCC_TITLE' => 'Nurse Midwives',
                 'OCC_GROUP' => 'broad',
@@ -8625,10 +8084,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '92,510',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            38 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            38 => [
                 'OCC_CODE' => '29-1161',
                 'OCC_TITLE' => 'Nurse Midwives',
                 'OCC_GROUP' => 'detailed',
@@ -8641,10 +8099,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '92,510',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            39 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            39 => [
                 'OCC_CODE' => '29-1170',
                 'OCC_TITLE' => 'Nurse Practitioners',
                 'OCC_GROUP' => 'broad',
@@ -8657,10 +8114,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '98,190',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            40 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            40 => [
                 'OCC_CODE' => '29-1171',
                 'OCC_TITLE' => 'Nurse Practitioners',
                 'OCC_GROUP' => 'detailed',
@@ -8673,10 +8129,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '98,190',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            41 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            41 => [
                 'OCC_CODE' => '29-1180',
                 'OCC_TITLE' => 'Audiologists',
                 'OCC_GROUP' => 'broad',
@@ -8689,10 +8144,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '74,890',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            42 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            42 => [
                 'OCC_CODE' => '29-1181',
                 'OCC_TITLE' => 'Audiologists',
                 'OCC_GROUP' => 'detailed',
@@ -8705,10 +8159,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '74,890',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            43 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            43 => [
                 'OCC_CODE' => '29-1190',
                 'OCC_TITLE' => 'Miscellaneous Health Diagnosing and Treating Practitioners',
                 'OCC_GROUP' => 'broad',
@@ -8721,10 +8174,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '74,710',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            44 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            44 => [
                 'OCC_CODE' => '29-1199',
                 'OCC_TITLE' => 'Health Diagnosing and Treating Practitioners, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -8737,10 +8189,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '74,710',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            45 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            45 => [
                 'OCC_CODE' => '29-2000',
                 'OCC_TITLE' => 'Health Technologists and Technicians',
                 'OCC_GROUP' => 'minor',
@@ -8753,10 +8204,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '42,190',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            46 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            46 => [
                 'OCC_CODE' => '29-2010',
                 'OCC_TITLE' => 'Clinical Laboratory Technologists and Technicians',
                 'OCC_GROUP' => 'broad',
@@ -8769,10 +8219,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '50,550',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            47 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            47 => [
                 'OCC_CODE' => '29-2011',
                 'OCC_TITLE' => 'Medical and Clinical Laboratory Technologists',
                 'OCC_GROUP' => 'detailed',
@@ -8785,10 +8234,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '60,520',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            48 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            48 => [
                 'OCC_CODE' => '29-2012',
                 'OCC_TITLE' => 'Medical and Clinical Laboratory Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -8801,10 +8249,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '38,970',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            49 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            49 => [
                 'OCC_CODE' => '29-2020',
                 'OCC_TITLE' => 'Dental Hygienists',
                 'OCC_GROUP' => 'broad',
@@ -8817,10 +8264,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '72,330',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            50 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            50 => [
                 'OCC_CODE' => '29-2021',
                 'OCC_TITLE' => 'Dental Hygienists',
                 'OCC_GROUP' => 'detailed',
@@ -8833,10 +8279,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '72,330',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            51 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            51 => [
                 'OCC_CODE' => '29-2030',
                 'OCC_TITLE' => 'Diagnostic Related Technologists and Technicians',
                 'OCC_GROUP' => 'broad',
@@ -8849,10 +8294,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '60,400',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            52 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            52 => [
                 'OCC_CODE' => '29-2031',
                 'OCC_TITLE' => 'Cardiovascular Technologists and Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -8865,10 +8309,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '54,880',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            53 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            53 => [
                 'OCC_CODE' => '29-2032',
                 'OCC_TITLE' => 'Diagnostic Medical Sonographers',
                 'OCC_GROUP' => 'detailed',
@@ -8881,10 +8324,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '68,970',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            54 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            54 => [
                 'OCC_CODE' => '29-2033',
                 'OCC_TITLE' => 'Nuclear Medicine Technologists',
                 'OCC_GROUP' => 'detailed',
@@ -8897,10 +8339,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '73,360',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            55 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            55 => [
                 'OCC_CODE' => '29-2034',
                 'OCC_TITLE' => 'Radiologic Technologists',
                 'OCC_GROUP' => 'detailed',
@@ -8913,10 +8354,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '56,670',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            56 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            56 => [
                 'OCC_CODE' => '29-2035',
                 'OCC_TITLE' => 'Magnetic Resonance Imaging Technologists',
                 'OCC_GROUP' => 'detailed',
@@ -8929,10 +8369,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '67,720',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            57 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            57 => [
                 'OCC_CODE' => '29-2040',
                 'OCC_TITLE' => 'Emergency Medical Technicians and Paramedics',
                 'OCC_GROUP' => 'broad',
@@ -8945,10 +8384,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,980',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            58 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            58 => [
                 'OCC_CODE' => '29-2041',
                 'OCC_TITLE' => 'Emergency Medical Technicians and Paramedics',
                 'OCC_GROUP' => 'detailed',
@@ -8961,10 +8399,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,980',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            59 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            59 => [
                 'OCC_CODE' => '29-2050',
                 'OCC_TITLE' => 'Health Practitioner Support Technologists and Technicians',
                 'OCC_GROUP' => 'broad',
@@ -8977,10 +8414,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,680',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            60 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            60 => [
                 'OCC_CODE' => '29-2051',
                 'OCC_TITLE' => 'Dietetic Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -8993,10 +8429,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,040',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            61 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            61 => [
                 'OCC_CODE' => '29-2052',
                 'OCC_TITLE' => 'Pharmacy Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -9009,10 +8444,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,410',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            62 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            62 => [
                 'OCC_CODE' => '29-2053',
                 'OCC_TITLE' => 'Psychiatric Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -9025,10 +8459,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,140',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            63 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            63 => [
                 'OCC_CODE' => '29-2054',
                 'OCC_TITLE' => 'Respiratory Therapy Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -9041,10 +8474,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,490',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            64 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            64 => [
                 'OCC_CODE' => '29-2055',
                 'OCC_TITLE' => 'Surgical Technologists',
                 'OCC_GROUP' => 'detailed',
@@ -9057,10 +8489,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '44,330',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            65 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            65 => [
                 'OCC_CODE' => '29-2056',
                 'OCC_TITLE' => 'Veterinary Technologists and Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -9073,10 +8504,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,800',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            66 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            66 => [
                 'OCC_CODE' => '29-2057',
                 'OCC_TITLE' => 'Ophthalmic Medical Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -9089,10 +8519,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,350',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            67 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            67 => [
                 'OCC_CODE' => '29-2060',
                 'OCC_TITLE' => 'Licensed Practical and Licensed Vocational Nurses',
                 'OCC_GROUP' => 'broad',
@@ -9105,10 +8534,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '43,170',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            68 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            68 => [
                 'OCC_CODE' => '29-2061',
                 'OCC_TITLE' => 'Licensed Practical and Licensed Vocational Nurses',
                 'OCC_GROUP' => 'detailed',
@@ -9121,10 +8549,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '43,170',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            69 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            69 => [
                 'OCC_CODE' => '29-2070',
                 'OCC_TITLE' => 'Medical Records and Health Information Technicians',
                 'OCC_GROUP' => 'broad',
@@ -9137,10 +8564,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,110',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            70 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            70 => [
                 'OCC_CODE' => '29-2071',
                 'OCC_TITLE' => 'Medical Records and Health Information Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -9153,10 +8579,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,110',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            71 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            71 => [
                 'OCC_CODE' => '29-2080',
                 'OCC_TITLE' => 'Opticians, Dispensing',
                 'OCC_GROUP' => 'broad',
@@ -9169,10 +8594,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '34,840',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            72 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            72 => [
                 'OCC_CODE' => '29-2081',
                 'OCC_TITLE' => 'Opticians, Dispensing',
                 'OCC_GROUP' => 'detailed',
@@ -9185,10 +8609,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '34,840',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            73 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            73 => [
                 'OCC_CODE' => '29-2090',
                 'OCC_TITLE' => 'Miscellaneous Health Technologists and Technicians',
                 'OCC_GROUP' => 'broad',
@@ -9201,10 +8624,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '42,730',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            74 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            74 => [
                 'OCC_CODE' => '29-2091',
                 'OCC_TITLE' => 'Orthotists and Prosthetists',
                 'OCC_GROUP' => 'detailed',
@@ -9217,10 +8639,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '64,430',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            75 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            75 => [
                 'OCC_CODE' => '29-2092',
                 'OCC_TITLE' => 'Hearing Aid Specialists',
                 'OCC_GROUP' => 'detailed',
@@ -9233,10 +8654,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '49,600',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            76 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            76 => [
                 'OCC_CODE' => '29-2099',
                 'OCC_TITLE' => 'Health Technologists and Technicians, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -9249,10 +8669,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '41,260',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            77 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            77 => [
                 'OCC_CODE' => '29-9000',
                 'OCC_TITLE' => 'Other Healthcare Practitioners and Technical Occupations',
                 'OCC_GROUP' => 'minor',
@@ -9265,10 +8684,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '57,990',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            78 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            78 => [
                 'OCC_CODE' => '29-9010',
                 'OCC_TITLE' => 'Occupational Health and Safety Specialists and Technicians',
                 'OCC_GROUP' => 'broad',
@@ -9281,10 +8699,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '65,920',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            79 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            79 => [
                 'OCC_CODE' => '29-9011',
                 'OCC_TITLE' => 'Occupational Health and Safety Specialists',
                 'OCC_GROUP' => 'detailed',
@@ -9297,10 +8714,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '70,210',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            80 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            80 => [
                 'OCC_CODE' => '29-9012',
                 'OCC_TITLE' => 'Occupational Health and Safety Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -9313,10 +8729,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,070',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            81 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            81 => [
                 'OCC_CODE' => '29-9090',
                 'OCC_TITLE' => 'Miscellaneous Health Practitioners and Technical Workers',
                 'OCC_GROUP' => 'broad',
@@ -9329,10 +8744,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '47,090',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            82 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            82 => [
                 'OCC_CODE' => '29-9091',
                 'OCC_TITLE' => 'Athletic Trainers',
                 'OCC_GROUP' => 'detailed',
@@ -9345,10 +8759,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '44,670',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            83 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            83 => [
                 'OCC_CODE' => '29-9092',
                 'OCC_TITLE' => 'Genetic Counselors',
                 'OCC_GROUP' => 'detailed',
@@ -9361,10 +8774,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '72,090',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            84 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            84 => [
                 'OCC_CODE' => '29-9099',
                 'OCC_TITLE' => 'Healthcare Practitioners and Technical Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -9377,10 +8789,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,270',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            85 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            85 => [
                 'OCC_CODE' => '31-0000',
                 'OCC_TITLE' => 'Healthcare Support Occupations',
                 'OCC_GROUP' => 'major',
@@ -9393,10 +8804,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,040',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            86 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            86 => [
                 'OCC_CODE' => '31-1000',
                 'OCC_TITLE' => 'Nursing, Psychiatric, and Home Health Aides',
                 'OCC_GROUP' => 'minor',
@@ -9409,10 +8819,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,040',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            87 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            87 => [
                 'OCC_CODE' => '31-1010',
                 'OCC_TITLE' => 'Nursing, Psychiatric, and Home Health Aides',
                 'OCC_GROUP' => 'broad',
@@ -9425,10 +8834,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,040',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            88 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            88 => [
                 'OCC_CODE' => '31-1011',
                 'OCC_TITLE' => 'Home Health Aides',
                 'OCC_GROUP' => 'detailed',
@@ -9441,10 +8849,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '21,920',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            89 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            89 => [
                 'OCC_CODE' => '31-1013',
                 'OCC_TITLE' => 'Psychiatric Aides',
                 'OCC_GROUP' => 'detailed',
@@ -9457,10 +8864,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,190',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            90 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            90 => [
                 'OCC_CODE' => '31-1014',
                 'OCC_TITLE' => 'Nursing Assistants',
                 'OCC_GROUP' => 'detailed',
@@ -9473,10 +8879,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '25,710',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            91 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            91 => [
                 'OCC_CODE' => '31-1015',
                 'OCC_TITLE' => 'Orderlies',
                 'OCC_GROUP' => 'detailed',
@@ -9489,10 +8894,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '25,580',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            92 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            92 => [
                 'OCC_CODE' => '31-2000',
                 'OCC_TITLE' => 'Occupational Therapy and Physical Therapist Assistants and Aides',
                 'OCC_GROUP' => 'minor',
@@ -9505,10 +8909,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '46,720',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            93 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            93 => [
                 'OCC_CODE' => '31-2010',
                 'OCC_TITLE' => 'Occupational Therapy Assistants and Aides',
                 'OCC_GROUP' => 'broad',
@@ -9521,10 +8924,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '54,520',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            94 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            94 => [
                 'OCC_CODE' => '31-2011',
                 'OCC_TITLE' => 'Occupational Therapy Assistants',
                 'OCC_GROUP' => 'detailed',
@@ -9537,10 +8939,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '57,870',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            95 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            95 => [
                 'OCC_CODE' => '31-2012',
                 'OCC_TITLE' => 'Occupational Therapy Aides',
                 'OCC_GROUP' => 'detailed',
@@ -9553,10 +8954,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,800',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            96 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            96 => [
                 'OCC_CODE' => '31-2020',
                 'OCC_TITLE' => 'Physical Therapist Assistants and Aides',
                 'OCC_GROUP' => 'broad',
@@ -9569,10 +8969,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '42,980',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            97 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            97 => [
                 'OCC_CODE' => '31-2021',
                 'OCC_TITLE' => 'Physical Therapist Assistants',
                 'OCC_GROUP' => 'detailed',
@@ -9585,10 +8984,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '55,170',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            98 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            98 => [
                 'OCC_CODE' => '31-2022',
                 'OCC_TITLE' => 'Physical Therapist Aides',
                 'OCC_GROUP' => 'detailed',
@@ -9601,10 +8999,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '25,120',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            99 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            99 => [
                 'OCC_CODE' => '31-9000',
                 'OCC_TITLE' => 'Other Healthcare Support Occupations',
                 'OCC_GROUP' => 'minor',
@@ -9617,10 +9014,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,210',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            100 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            100 => [
                 'OCC_CODE' => '31-9010',
                 'OCC_TITLE' => 'Massage Therapists',
                 'OCC_GROUP' => 'broad',
@@ -9633,10 +9029,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '38,040',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            101 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            101 => [
                 'OCC_CODE' => '31-9011',
                 'OCC_TITLE' => 'Massage Therapists',
                 'OCC_GROUP' => 'detailed',
@@ -9649,10 +9044,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '38,040',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            102 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            102 => [
                 'OCC_CODE' => '31-9090',
                 'OCC_TITLE' => 'Miscellaneous Healthcare Support Occupations',
                 'OCC_GROUP' => 'broad',
@@ -9665,10 +9059,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,950',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            103 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            103 => [
                 'OCC_CODE' => '31-9091',
                 'OCC_TITLE' => 'Dental Assistants',
                 'OCC_GROUP' => 'detailed',
@@ -9681,10 +9074,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,980',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            104 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            104 => [
                 'OCC_CODE' => '31-9092',
                 'OCC_TITLE' => 'Medical Assistants',
                 'OCC_GROUP' => 'detailed',
@@ -9697,10 +9089,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,590',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            105 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            105 => [
                 'OCC_CODE' => '31-9093',
                 'OCC_TITLE' => 'Medical Equipment Preparers',
                 'OCC_GROUP' => 'detailed',
@@ -9713,10 +9104,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '33,330',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            106 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            106 => [
                 'OCC_CODE' => '31-9094',
                 'OCC_TITLE' => 'Medical Transcriptionists',
                 'OCC_GROUP' => 'detailed',
@@ -9729,10 +9119,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '34,890',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            107 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            107 => [
                 'OCC_CODE' => '31-9095',
                 'OCC_TITLE' => 'Pharmacy Aides',
                 'OCC_GROUP' => 'detailed',
@@ -9745,10 +9134,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,450',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            108 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            108 => [
                 'OCC_CODE' => '31-9096',
                 'OCC_TITLE' => 'Veterinary Assistants and Laboratory Animal Caretakers',
                 'OCC_GROUP' => 'detailed',
@@ -9761,10 +9149,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,360',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            109 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            109 => [
                 'OCC_CODE' => '31-9097',
                 'OCC_TITLE' => 'Phlebotomists',
                 'OCC_GROUP' => 'detailed',
@@ -9777,10 +9164,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,630',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            110 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            110 => [
                 'OCC_CODE' => '31-9099',
                 'OCC_TITLE' => 'Healthcare Support Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -9793,10 +9179,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,780',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            111 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            111 => [
                 'OCC_CODE' => '33-0000',
                 'OCC_TITLE' => 'Protective Service Occupations',
                 'OCC_GROUP' => 'major',
@@ -9809,10 +9194,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,730',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            112 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            112 => [
                 'OCC_CODE' => '33-1000',
                 'OCC_TITLE' => 'Supervisors of Protective Service Workers',
                 'OCC_GROUP' => 'minor',
@@ -9825,10 +9209,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '66,060',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            113 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            113 => [
                 'OCC_CODE' => '33-1010',
                 'OCC_TITLE' => 'First-Line Supervisors of Law Enforcement Workers',
                 'OCC_GROUP' => 'broad',
@@ -9841,10 +9224,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '75,250',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            114 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            114 => [
                 'OCC_CODE' => '33-1011',
                 'OCC_TITLE' => 'First-Line Supervisors of Correctional Officers',
                 'OCC_GROUP' => 'detailed',
@@ -9857,10 +9239,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '59,720',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            115 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            115 => [
                 'OCC_CODE' => '33-1012',
                 'OCC_TITLE' => 'First-Line Supervisors of Police and Detectives',
                 'OCC_GROUP' => 'detailed',
@@ -9873,10 +9254,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '82,090',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            116 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            116 => [
                 'OCC_CODE' => '33-1020',
                 'OCC_TITLE' => 'First-Line Supervisors of Fire Fighting and Prevention Workers',
                 'OCC_GROUP' => 'broad',
@@ -9889,10 +9269,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '72,230',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            117 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            117 => [
                 'OCC_CODE' => '33-1021',
                 'OCC_TITLE' => 'First-Line Supervisors of Fire Fighting and Prevention Workers',
                 'OCC_GROUP' => 'detailed',
@@ -9905,10 +9284,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '72,230',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            118 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            118 => [
                 'OCC_CODE' => '33-1090',
                 'OCC_TITLE' => 'Miscellaneous First-Line Supervisors, Protective Service Workers',
                 'OCC_GROUP' => 'broad',
@@ -9921,10 +9299,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '46,900',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            119 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            119 => [
                 'OCC_CODE' => '33-1099',
                 'OCC_TITLE' => 'First-Line Supervisors of Protective Service Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -9937,10 +9314,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '46,900',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            120 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            120 => [
                 'OCC_CODE' => '33-2000',
                 'OCC_TITLE' => 'Fire Fighting and Prevention Workers',
                 'OCC_GROUP' => 'minor',
@@ -9953,10 +9329,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '47,250',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            121 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            121 => [
                 'OCC_CODE' => '33-2010',
                 'OCC_TITLE' => 'Firefighters',
                 'OCC_GROUP' => 'broad',
@@ -9969,10 +9344,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '46,870',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            122 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            122 => [
                 'OCC_CODE' => '33-2011',
                 'OCC_TITLE' => 'Firefighters',
                 'OCC_GROUP' => 'detailed',
@@ -9985,10 +9359,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '46,870',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            123 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            123 => [
                 'OCC_CODE' => '33-2020',
                 'OCC_TITLE' => 'Fire Inspectors',
                 'OCC_GROUP' => 'broad',
@@ -10001,10 +9374,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '54,790',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            124 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            124 => [
                 'OCC_CODE' => '33-2021',
                 'OCC_TITLE' => 'Fire Inspectors and Investigators',
                 'OCC_GROUP' => 'detailed',
@@ -10017,10 +9389,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '56,730',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            125 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            125 => [
                 'OCC_CODE' => '33-2022',
                 'OCC_TITLE' => 'Forest Fire Inspectors and Prevention Specialists',
                 'OCC_GROUP' => 'detailed',
@@ -10033,10 +9404,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,650',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            126 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            126 => [
                 'OCC_CODE' => '33-3000',
                 'OCC_TITLE' => 'Law Enforcement Workers',
                 'OCC_GROUP' => 'minor',
@@ -10049,10 +9419,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '52,070',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            127 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            127 => [
                 'OCC_CODE' => '33-3010',
                 'OCC_TITLE' => 'Bailiffs, Correctional Officers, and Jailers',
                 'OCC_GROUP' => 'broad',
@@ -10065,10 +9434,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,580',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            128 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            128 => [
                 'OCC_CODE' => '33-3011',
                 'OCC_TITLE' => 'Bailiffs',
                 'OCC_GROUP' => 'detailed',
@@ -10081,10 +9449,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '41,670',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            129 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            129 => [
                 'OCC_CODE' => '33-3012',
                 'OCC_TITLE' => 'Correctional Officers and Jailers',
                 'OCC_GROUP' => 'detailed',
@@ -10097,10 +9464,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,530',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            130 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            130 => [
                 'OCC_CODE' => '33-3020',
                 'OCC_TITLE' => 'Detectives and Criminal Investigators',
                 'OCC_GROUP' => 'broad',
@@ -10113,10 +9479,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '77,210',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            131 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            131 => [
                 'OCC_CODE' => '33-3021',
                 'OCC_TITLE' => 'Detectives and Criminal Investigators',
                 'OCC_GROUP' => 'detailed',
@@ -10129,10 +9494,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '77,210',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            132 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            132 => [
                 'OCC_CODE' => '33-3030',
                 'OCC_TITLE' => 'Fish and Game Wardens',
                 'OCC_GROUP' => 'broad',
@@ -10145,10 +9509,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '52,780',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            133 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            133 => [
                 'OCC_CODE' => '33-3031',
                 'OCC_TITLE' => 'Fish and Game Wardens',
                 'OCC_GROUP' => 'detailed',
@@ -10161,10 +9524,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '52,780',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            134 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            134 => [
                 'OCC_CODE' => '33-3040',
                 'OCC_TITLE' => 'Parking Enforcement Workers',
                 'OCC_GROUP' => 'broad',
@@ -10177,10 +9539,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,530',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            135 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            135 => [
                 'OCC_CODE' => '33-3041',
                 'OCC_TITLE' => 'Parking Enforcement Workers',
                 'OCC_GROUP' => 'detailed',
@@ -10193,10 +9554,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,530',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            136 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            136 => [
                 'OCC_CODE' => '33-3050',
                 'OCC_TITLE' => 'Police Officers',
                 'OCC_GROUP' => 'broad',
@@ -10209,10 +9569,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '58,330',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            137 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            137 => [
                 'OCC_CODE' => '33-3051',
                 'OCC_TITLE' => 'Police and Sheriff\'s Patrol Officers',
                 'OCC_GROUP' => 'detailed',
@@ -10225,10 +9584,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '58,320',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            138 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            138 => [
                 'OCC_CODE' => '33-3052',
                 'OCC_TITLE' => 'Transit and Railroad Police',
                 'OCC_GROUP' => 'detailed',
@@ -10241,10 +9599,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '59,670',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            139 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            139 => [
                 'OCC_CODE' => '33-9000',
                 'OCC_TITLE' => 'Other Protective Service Workers',
                 'OCC_GROUP' => 'minor',
@@ -10257,10 +9614,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,870',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            140 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            140 => [
                 'OCC_CODE' => '33-9010',
                 'OCC_TITLE' => 'Animal Control Workers',
                 'OCC_GROUP' => 'broad',
@@ -10273,10 +9629,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '33,450',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            141 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            141 => [
                 'OCC_CODE' => '33-9011',
                 'OCC_TITLE' => 'Animal Control Workers',
                 'OCC_GROUP' => 'detailed',
@@ -10289,10 +9644,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '33,450',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            142 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            142 => [
                 'OCC_CODE' => '33-9020',
                 'OCC_TITLE' => 'Private Detectives and Investigators',
                 'OCC_GROUP' => 'broad',
@@ -10305,10 +9659,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,610',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            143 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            143 => [
                 'OCC_CODE' => '33-9021',
                 'OCC_TITLE' => 'Private Detectives and Investigators',
                 'OCC_GROUP' => 'detailed',
@@ -10321,10 +9674,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,610',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            144 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            144 => [
                 'OCC_CODE' => '33-9030',
                 'OCC_TITLE' => 'Security Guards and Gaming Surveillance Officers',
                 'OCC_GROUP' => 'broad',
@@ -10337,10 +9689,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,680',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            145 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            145 => [
                 'OCC_CODE' => '33-9031',
                 'OCC_TITLE' => 'Gaming Surveillance Officers and Gaming Investigators',
                 'OCC_GROUP' => 'detailed',
@@ -10353,10 +9704,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,170',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            146 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            146 => [
                 'OCC_CODE' => '33-9032',
                 'OCC_TITLE' => 'Security Guards',
                 'OCC_GROUP' => 'detailed',
@@ -10369,10 +9719,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,630',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            147 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            147 => [
                 'OCC_CODE' => '33-9090',
                 'OCC_TITLE' => 'Miscellaneous Protective Service Workers',
                 'OCC_GROUP' => 'broad',
@@ -10385,10 +9734,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,280',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            148 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            148 => [
                 'OCC_CODE' => '33-9091',
                 'OCC_TITLE' => 'Crossing Guards',
                 'OCC_GROUP' => 'detailed',
@@ -10401,10 +9749,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '25,100',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            149 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            149 => [
                 'OCC_CODE' => '33-9092',
                 'OCC_TITLE' => 'Lifeguards, Ski Patrol, and Other Recreational Protective Service Workers',
                 'OCC_GROUP' => 'detailed',
@@ -10417,10 +9764,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,500',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            150 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            150 => [
                 'OCC_CODE' => '33-9093',
                 'OCC_TITLE' => 'Transportation Security Screeners',
                 'OCC_GROUP' => 'detailed',
@@ -10433,10 +9779,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '39,310',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            151 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            151 => [
                 'OCC_CODE' => '33-9099',
                 'OCC_TITLE' => 'Protective Service Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -10449,10 +9794,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '28,650',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            152 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            152 => [
                 'OCC_CODE' => '35-0000',
                 'OCC_TITLE' => 'Food Preparation and Serving Related Occupations',
                 'OCC_GROUP' => 'major',
@@ -10465,10 +9809,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,580',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            153 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            153 => [
                 'OCC_CODE' => '35-1000',
                 'OCC_TITLE' => 'Supervisors of Food Preparation and Serving Workers',
                 'OCC_GROUP' => 'minor',
@@ -10481,10 +9824,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,420',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            154 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            154 => [
                 'OCC_CODE' => '35-1010',
                 'OCC_TITLE' => 'Supervisors of Food Preparation and Serving Workers',
                 'OCC_GROUP' => 'broad',
@@ -10497,10 +9839,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,420',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            155 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            155 => [
                 'OCC_CODE' => '35-1011',
                 'OCC_TITLE' => 'Chefs and Head Cooks',
                 'OCC_GROUP' => 'detailed',
@@ -10513,10 +9854,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '41,500',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            156 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            156 => [
                 'OCC_CODE' => '35-1012',
                 'OCC_TITLE' => 'First-Line Supervisors of Food Preparation and Serving Workers',
                 'OCC_GROUP' => 'detailed',
@@ -10529,10 +9869,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,340',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            157 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            157 => [
                 'OCC_CODE' => '35-2000',
                 'OCC_TITLE' => 'Cooks and Food Preparation Workers',
                 'OCC_GROUP' => 'minor',
@@ -10545,10 +9884,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '21,310',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            158 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            158 => [
                 'OCC_CODE' => '35-2010',
                 'OCC_TITLE' => 'Cooks',
                 'OCC_GROUP' => 'broad',
@@ -10561,10 +9899,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '21,720',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            159 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            159 => [
                 'OCC_CODE' => '35-2011',
                 'OCC_TITLE' => 'Cooks, Fast Food',
                 'OCC_GROUP' => 'detailed',
@@ -10577,10 +9914,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,080',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            160 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            160 => [
                 'OCC_CODE' => '35-2012',
                 'OCC_TITLE' => 'Cooks, Institution and Cafeteria',
                 'OCC_GROUP' => 'detailed',
@@ -10593,10 +9929,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '23,960',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            161 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            161 => [
                 'OCC_CODE' => '35-2013',
                 'OCC_TITLE' => 'Cooks, Private Household',
                 'OCC_GROUP' => 'detailed',
@@ -10609,10 +9944,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,300',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            162 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            162 => [
                 'OCC_CODE' => '35-2014',
                 'OCC_TITLE' => 'Cooks, Restaurant',
                 'OCC_GROUP' => 'detailed',
@@ -10625,10 +9959,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '23,100',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            163 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            163 => [
                 'OCC_CODE' => '35-2015',
                 'OCC_TITLE' => 'Cooks, Short Order',
                 'OCC_GROUP' => 'detailed',
@@ -10641,10 +9974,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '20,780',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            164 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            164 => [
                 'OCC_CODE' => '35-2019',
                 'OCC_TITLE' => 'Cooks, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -10657,10 +9989,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,350',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            165 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            165 => [
                 'OCC_CODE' => '35-2020',
                 'OCC_TITLE' => 'Food Preparation Workers',
                 'OCC_GROUP' => 'broad',
@@ -10673,10 +10004,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '20,180',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            166 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            166 => [
                 'OCC_CODE' => '35-2021',
                 'OCC_TITLE' => 'Food Preparation Workers',
                 'OCC_GROUP' => 'detailed',
@@ -10689,10 +10019,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '20,180',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            167 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            167 => [
                 'OCC_CODE' => '35-3000',
                 'OCC_TITLE' => 'Food and Beverage Serving Workers',
                 'OCC_GROUP' => 'minor',
@@ -10705,10 +10034,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,110',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            168 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            168 => [
                 'OCC_CODE' => '35-3010',
                 'OCC_TITLE' => 'Bartenders',
                 'OCC_GROUP' => 'broad',
@@ -10721,10 +10049,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,530',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            169 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            169 => [
                 'OCC_CODE' => '35-3011',
                 'OCC_TITLE' => 'Bartenders',
                 'OCC_GROUP' => 'detailed',
@@ -10737,10 +10064,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,530',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            170 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            170 => [
                 'OCC_CODE' => '35-3020',
                 'OCC_TITLE' => 'Fast Food and Counter Workers',
                 'OCC_GROUP' => 'broad',
@@ -10753,10 +10079,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '18,960',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            171 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            171 => [
                 'OCC_CODE' => '35-3021',
                 'OCC_TITLE' => 'Combined Food Preparation and Serving Workers, Including Fast Food',
                 'OCC_GROUP' => 'detailed',
@@ -10769,10 +10094,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '18,910',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            172 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            172 => [
                 'OCC_CODE' => '35-3022',
                 'OCC_TITLE' => 'Counter Attendants, Cafeteria, Food Concession, and Coffee Shop',
                 'OCC_GROUP' => 'detailed',
@@ -10785,10 +10109,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,230',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            173 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            173 => [
                 'OCC_CODE' => '35-3030',
                 'OCC_TITLE' => 'Waiters and Waitresses',
                 'OCC_GROUP' => 'broad',
@@ -10801,10 +10124,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,250',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            174 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            174 => [
                 'OCC_CODE' => '35-3031',
                 'OCC_TITLE' => 'Waiters and Waitresses',
                 'OCC_GROUP' => 'detailed',
@@ -10817,10 +10139,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,250',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            175 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            175 => [
                 'OCC_CODE' => '35-3040',
                 'OCC_TITLE' => 'Food Servers, Nonrestaurant',
                 'OCC_GROUP' => 'broad',
@@ -10833,10 +10154,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '20,420',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            176 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            176 => [
                 'OCC_CODE' => '35-3041',
                 'OCC_TITLE' => 'Food Servers, Nonrestaurant',
                 'OCC_GROUP' => 'detailed',
@@ -10849,10 +10169,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '20,420',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            177 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            177 => [
                 'OCC_CODE' => '35-9000',
                 'OCC_TITLE' => 'Other Food Preparation and Serving Related Workers',
                 'OCC_GROUP' => 'minor',
@@ -10865,10 +10184,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,290',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            178 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            178 => [
                 'OCC_CODE' => '35-9010',
                 'OCC_TITLE' => 'Dining Room and Cafeteria Attendants and Bartender Helpers',
                 'OCC_GROUP' => 'broad',
@@ -10881,10 +10199,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,280',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            179 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            179 => [
                 'OCC_CODE' => '35-9011',
                 'OCC_TITLE' => 'Dining Room and Cafeteria Attendants and Bartender Helpers',
                 'OCC_GROUP' => 'detailed',
@@ -10897,10 +10214,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,280',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            180 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            180 => [
                 'OCC_CODE' => '35-9020',
                 'OCC_TITLE' => 'Dishwashers',
                 'OCC_GROUP' => 'broad',
@@ -10913,10 +10229,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,340',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            181 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            181 => [
                 'OCC_CODE' => '35-9021',
                 'OCC_TITLE' => 'Dishwashers',
                 'OCC_GROUP' => 'detailed',
@@ -10929,10 +10244,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,340',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            182 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            182 => [
                 'OCC_CODE' => '35-9030',
                 'OCC_TITLE' => 'Hosts and Hostesses, Restaurant, Lounge, and Coffee Shop',
                 'OCC_GROUP' => 'broad',
@@ -10945,10 +10259,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,180',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            183 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            183 => [
                 'OCC_CODE' => '35-9031',
                 'OCC_TITLE' => 'Hosts and Hostesses, Restaurant, Lounge, and Coffee Shop',
                 'OCC_GROUP' => 'detailed',
@@ -10961,10 +10274,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,180',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            184 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            184 => [
                 'OCC_CODE' => '35-9090',
                 'OCC_TITLE' => 'Miscellaneous Food Preparation and Serving Related Workers',
                 'OCC_GROUP' => 'broad',
@@ -10977,10 +10289,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '20,380',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            185 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            185 => [
                 'OCC_CODE' => '35-9099',
                 'OCC_TITLE' => 'Food Preparation and Serving Related Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -10993,10 +10304,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '20,380',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            186 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            186 => [
                 'OCC_CODE' => '37-0000',
                 'OCC_TITLE' => 'Building and Grounds Cleaning and Maintenance Occupations',
                 'OCC_GROUP' => 'major',
@@ -11009,10 +10319,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '23,860',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            187 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            187 => [
                 'OCC_CODE' => '37-1000',
                 'OCC_TITLE' => 'Supervisors of Building and Grounds Cleaning and Maintenance Workers',
                 'OCC_GROUP' => 'minor',
@@ -11025,10 +10334,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '39,440',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            188 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            188 => [
                 'OCC_CODE' => '37-1010',
                 'OCC_TITLE' => 'First-Line Supervisors of Building and Grounds Cleaning and Maintenance Workers',
                 'OCC_GROUP' => 'broad',
@@ -11041,10 +10349,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '39,440',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            189 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            189 => [
                 'OCC_CODE' => '37-1011',
                 'OCC_TITLE' => 'First-Line Supervisors of Housekeeping and Janitorial Workers',
                 'OCC_GROUP' => 'detailed',
@@ -11057,10 +10364,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,050',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            190 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            190 => [
                 'OCC_CODE' => '37-1012',
                 'OCC_TITLE' => 'First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers',
                 'OCC_GROUP' => 'detailed',
@@ -11073,10 +10379,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '43,980',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            191 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            191 => [
                 'OCC_CODE' => '37-2000',
                 'OCC_TITLE' => 'Building Cleaning and Pest Control Workers',
                 'OCC_GROUP' => 'minor',
@@ -11089,10 +10394,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '22,740',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            192 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            192 => [
                 'OCC_CODE' => '37-2010',
                 'OCC_TITLE' => 'Building Cleaning Workers',
                 'OCC_GROUP' => 'broad',
@@ -11105,10 +10409,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '22,590',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            193 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            193 => [
                 'OCC_CODE' => '37-2011',
                 'OCC_TITLE' => 'Janitors and Cleaners, Except Maids and Housekeeping Cleaners',
                 'OCC_GROUP' => 'detailed',
@@ -11121,10 +10424,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '23,440',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            194 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            194 => [
                 'OCC_CODE' => '37-2012',
                 'OCC_TITLE' => 'Maids and Housekeeping Cleaners',
                 'OCC_GROUP' => 'detailed',
@@ -11137,10 +10439,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '20,740',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            195 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            195 => [
                 'OCC_CODE' => '37-2019',
                 'OCC_TITLE' => 'Building Cleaning Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -11153,10 +10454,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,250',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            196 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            196 => [
                 'OCC_CODE' => '37-2020',
                 'OCC_TITLE' => 'Pest Control Workers',
                 'OCC_GROUP' => 'broad',
@@ -11169,10 +10469,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,160',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            197 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            197 => [
                 'OCC_CODE' => '37-2021',
                 'OCC_TITLE' => 'Pest Control Workers',
                 'OCC_GROUP' => 'detailed',
@@ -11185,10 +10484,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,160',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            198 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            198 => [
                 'OCC_CODE' => '37-3000',
                 'OCC_TITLE' => 'Grounds Maintenance Workers',
                 'OCC_GROUP' => 'minor',
@@ -11201,10 +10499,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '25,610',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            199 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            199 => [
                 'OCC_CODE' => '37-3010',
                 'OCC_TITLE' => 'Grounds Maintenance Workers',
                 'OCC_GROUP' => 'broad',
@@ -11217,10 +10514,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '25,610',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            200 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            200 => [
                 'OCC_CODE' => '37-3011',
                 'OCC_TITLE' => 'Landscaping and Groundskeeping Workers',
                 'OCC_GROUP' => 'detailed',
@@ -11233,10 +10529,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '25,030',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            201 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            201 => [
                 'OCC_CODE' => '37-3012',
                 'OCC_TITLE' => 'Pesticide Handlers, Sprayers, and Applicators, Vegetation',
                 'OCC_GROUP' => 'detailed',
@@ -11249,10 +10544,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,540',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            202 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            202 => [
                 'OCC_CODE' => '37-3013',
                 'OCC_TITLE' => 'Tree Trimmers and Pruners',
                 'OCC_GROUP' => 'detailed',
@@ -11265,10 +10559,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '33,500',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            203 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            203 => [
                 'OCC_CODE' => '37-3019',
                 'OCC_TITLE' => 'Grounds Maintenance Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -11281,10 +10574,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            204 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            204 => [
                 'OCC_CODE' => '39-0000',
                 'OCC_TITLE' => 'Personal Care and Service Occupations',
                 'OCC_GROUP' => 'major',
@@ -11297,10 +10589,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '21,850',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            205 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            205 => [
                 'OCC_CODE' => '39-1000',
                 'OCC_TITLE' => 'Supervisors of Personal Care and Service Workers',
                 'OCC_GROUP' => 'minor',
@@ -11313,10 +10604,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,840',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            206 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            206 => [
                 'OCC_CODE' => '39-1010',
                 'OCC_TITLE' => 'First-Line Supervisors of Gaming Workers',
                 'OCC_GROUP' => 'broad',
@@ -11329,10 +10619,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '46,160',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            207 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            207 => [
                 'OCC_CODE' => '39-1011',
                 'OCC_TITLE' => 'Gaming Supervisors',
                 'OCC_GROUP' => 'detailed',
@@ -11345,10 +10634,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '49,730',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            208 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            208 => [
                 'OCC_CODE' => '39-1012',
                 'OCC_TITLE' => 'Slot Supervisors',
                 'OCC_GROUP' => 'detailed',
@@ -11361,10 +10649,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,680',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            209 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            209 => [
                 'OCC_CODE' => '39-1020',
                 'OCC_TITLE' => 'First-Line Supervisors of Personal Service Workers',
                 'OCC_GROUP' => 'broad',
@@ -11377,10 +10664,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,710',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            210 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            210 => [
                 'OCC_CODE' => '39-1021',
                 'OCC_TITLE' => 'First-Line Supervisors of Personal Service Workers',
                 'OCC_GROUP' => 'detailed',
@@ -11393,10 +10679,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,710',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            211 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            211 => [
                 'OCC_CODE' => '39-2000',
                 'OCC_TITLE' => 'Animal Care and Service Workers',
                 'OCC_GROUP' => 'minor',
@@ -11409,10 +10694,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '21,260',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            212 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            212 => [
                 'OCC_CODE' => '39-2010',
                 'OCC_TITLE' => 'Animal Trainers',
                 'OCC_GROUP' => 'broad',
@@ -11425,10 +10709,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,610',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            213 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            213 => [
                 'OCC_CODE' => '39-2011',
                 'OCC_TITLE' => 'Animal Trainers',
                 'OCC_GROUP' => 'detailed',
@@ -11441,10 +10724,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,610',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            214 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            214 => [
                 'OCC_CODE' => '39-2020',
                 'OCC_TITLE' => 'Nonfarm Animal Caretakers',
                 'OCC_GROUP' => 'broad',
@@ -11457,10 +10739,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '21,010',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            215 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            215 => [
                 'OCC_CODE' => '39-2021',
                 'OCC_TITLE' => 'Nonfarm Animal Caretakers',
                 'OCC_GROUP' => 'detailed',
@@ -11473,10 +10754,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '21,010',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            216 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            216 => [
                 'OCC_CODE' => '39-3000',
                 'OCC_TITLE' => 'Entertainment Attendants and Related Workers',
                 'OCC_GROUP' => 'minor',
@@ -11489,10 +10769,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,320',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            217 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            217 => [
                 'OCC_CODE' => '39-3010',
                 'OCC_TITLE' => 'Gaming Services Workers',
                 'OCC_GROUP' => 'broad',
@@ -11505,10 +10784,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            218 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            218 => [
                 'OCC_CODE' => '39-3011',
                 'OCC_TITLE' => 'Gaming Dealers',
                 'OCC_GROUP' => 'detailed',
@@ -11521,10 +10799,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,000',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            219 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            219 => [
                 'OCC_CODE' => '39-3012',
                 'OCC_TITLE' => 'Gaming and Sports Book Writers and Runners',
                 'OCC_GROUP' => 'detailed',
@@ -11537,10 +10814,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '22,700',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            220 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            220 => [
                 'OCC_CODE' => '39-3019',
                 'OCC_TITLE' => 'Gaming Service Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -11553,10 +10829,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,040',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            221 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            221 => [
                 'OCC_CODE' => '39-3020',
                 'OCC_TITLE' => 'Motion Picture Projectionists',
                 'OCC_GROUP' => 'broad',
@@ -11569,10 +10844,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '21,490',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            222 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            222 => [
                 'OCC_CODE' => '39-3021',
                 'OCC_TITLE' => 'Motion Picture Projectionists',
                 'OCC_GROUP' => 'detailed',
@@ -11585,10 +10859,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '21,490',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            223 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            223 => [
                 'OCC_CODE' => '39-3030',
                 'OCC_TITLE' => 'Ushers, Lobby Attendants, and Ticket Takers',
                 'OCC_GROUP' => 'broad',
@@ -11601,10 +10874,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,180',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            224 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            224 => [
                 'OCC_CODE' => '39-3031',
                 'OCC_TITLE' => 'Ushers, Lobby Attendants, and Ticket Takers',
                 'OCC_GROUP' => 'detailed',
@@ -11617,10 +10889,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,180',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            225 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            225 => [
                 'OCC_CODE' => '39-3090',
                 'OCC_TITLE' => 'Miscellaneous Entertainment Attendants and Related Workers',
                 'OCC_GROUP' => 'broad',
@@ -11633,10 +10904,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,410',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            226 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            226 => [
                 'OCC_CODE' => '39-3091',
                 'OCC_TITLE' => 'Amusement and Recreation Attendants',
                 'OCC_GROUP' => 'detailed',
@@ -11649,10 +10919,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,280',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            227 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            227 => [
                 'OCC_CODE' => '39-3092',
                 'OCC_TITLE' => 'Costume Attendants',
                 'OCC_GROUP' => 'detailed',
@@ -11665,10 +10934,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '44,500',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            228 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            228 => [
                 'OCC_CODE' => '39-3093',
                 'OCC_TITLE' => 'Locker Room, Coatroom, and Dressing Room Attendants',
                 'OCC_GROUP' => 'detailed',
@@ -11681,10 +10949,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '21,020',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            229 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            229 => [
                 'OCC_CODE' => '39-3099',
                 'OCC_TITLE' => 'Entertainment Attendants and Related Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -11697,10 +10964,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '22,720',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            230 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            230 => [
                 'OCC_CODE' => '39-4000',
                 'OCC_TITLE' => 'Funeral Service Workers',
                 'OCC_GROUP' => 'minor',
@@ -11713,10 +10979,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,770',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            231 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            231 => [
                 'OCC_CODE' => '39-4010',
                 'OCC_TITLE' => 'Embalmers',
                 'OCC_GROUP' => 'broad',
@@ -11729,10 +10994,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,410',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            232 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            232 => [
                 'OCC_CODE' => '39-4011',
                 'OCC_TITLE' => 'Embalmers',
                 'OCC_GROUP' => 'detailed',
@@ -11745,10 +11009,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,410',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            233 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            233 => [
                 'OCC_CODE' => '39-4020',
                 'OCC_TITLE' => 'Funeral Attendants',
                 'OCC_GROUP' => 'broad',
@@ -11761,10 +11024,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '23,770',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            234 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            234 => [
                 'OCC_CODE' => '39-4021',
                 'OCC_TITLE' => 'Funeral Attendants',
                 'OCC_GROUP' => 'detailed',
@@ -11777,10 +11039,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '23,770',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            235 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            235 => [
                 'OCC_CODE' => '39-4030',
                 'OCC_TITLE' => 'Morticians, Undertakers, and Funeral Directors',
                 'OCC_GROUP' => 'broad',
@@ -11793,10 +11054,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,490',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            236 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            236 => [
                 'OCC_CODE' => '39-4031',
                 'OCC_TITLE' => 'Morticians, Undertakers, and Funeral Directors',
                 'OCC_GROUP' => 'detailed',
@@ -11809,10 +11069,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,490',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            237 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            237 => [
                 'OCC_CODE' => '39-5000',
                 'OCC_TITLE' => 'Personal Appearance Workers',
                 'OCC_GROUP' => 'minor',
@@ -11825,10 +11084,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '23,240',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            238 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            238 => [
                 'OCC_CODE' => '39-5010',
                 'OCC_TITLE' => 'Barbers, Hairdressers, Hairstylists and Cosmetologists',
                 'OCC_GROUP' => 'broad',
@@ -11841,10 +11099,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '23,710',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            239 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            239 => [
                 'OCC_CODE' => '39-5011',
                 'OCC_TITLE' => 'Barbers',
                 'OCC_GROUP' => 'detailed',
@@ -11857,10 +11114,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,850',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            240 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            240 => [
                 'OCC_CODE' => '39-5012',
                 'OCC_TITLE' => 'Hairdressers, Hairstylists, and Cosmetologists',
                 'OCC_GROUP' => 'detailed',
@@ -11873,10 +11129,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '23,660',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            241 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            241 => [
                 'OCC_CODE' => '39-5090',
                 'OCC_TITLE' => 'Miscellaneous Personal Appearance Workers',
                 'OCC_GROUP' => 'broad',
@@ -11889,10 +11144,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '22,150',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            242 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            242 => [
                 'OCC_CODE' => '39-5091',
                 'OCC_TITLE' => 'Makeup Artists, Theatrical and Performance',
                 'OCC_GROUP' => 'detailed',
@@ -11905,10 +11159,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '53,230',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            243 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            243 => [
                 'OCC_CODE' => '39-5092',
                 'OCC_TITLE' => 'Manicurists and Pedicurists',
                 'OCC_GROUP' => 'detailed',
@@ -11921,10 +11174,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '20,820',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            244 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            244 => [
                 'OCC_CODE' => '39-5093',
                 'OCC_TITLE' => 'Shampooers',
                 'OCC_GROUP' => 'detailed',
@@ -11937,10 +11189,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,290',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            245 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            245 => [
                 'OCC_CODE' => '39-5094',
                 'OCC_TITLE' => 'Skincare Specialists',
                 'OCC_GROUP' => 'detailed',
@@ -11953,10 +11204,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,090',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            246 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            246 => [
                 'OCC_CODE' => '39-6000',
                 'OCC_TITLE' => 'Baggage Porters, Bellhops, and Concierges',
                 'OCC_GROUP' => 'minor',
@@ -11969,10 +11219,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,130',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            247 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            247 => [
                 'OCC_CODE' => '39-6010',
                 'OCC_TITLE' => 'Baggage Porters, Bellhops, and Concierges',
                 'OCC_GROUP' => 'broad',
@@ -11985,10 +11234,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,130',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            248 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            248 => [
                 'OCC_CODE' => '39-6011',
                 'OCC_TITLE' => 'Baggage Porters and Bellhops',
                 'OCC_GROUP' => 'detailed',
@@ -12001,10 +11249,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '21,160',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            249 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            249 => [
                 'OCC_CODE' => '39-6012',
                 'OCC_TITLE' => 'Concierges',
                 'OCC_GROUP' => 'detailed',
@@ -12017,10 +11264,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,030',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            250 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            250 => [
                 'OCC_CODE' => '39-7000',
                 'OCC_TITLE' => 'Tour and Travel Guides',
                 'OCC_GROUP' => 'minor',
@@ -12033,10 +11279,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,650',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            251 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            251 => [
                 'OCC_CODE' => '39-7010',
                 'OCC_TITLE' => 'Tour and Travel Guides',
                 'OCC_GROUP' => 'broad',
@@ -12049,10 +11294,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,650',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            252 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            252 => [
                 'OCC_CODE' => '39-7011',
                 'OCC_TITLE' => 'Tour Guides and Escorts',
                 'OCC_GROUP' => 'detailed',
@@ -12065,10 +11309,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,100',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            253 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            253 => [
                 'OCC_CODE' => '39-7012',
                 'OCC_TITLE' => 'Travel Guides',
                 'OCC_GROUP' => 'detailed',
@@ -12081,10 +11324,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '34,180',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            254 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            254 => [
                 'OCC_CODE' => '39-9000',
                 'OCC_TITLE' => 'Other Personal Care and Service Workers',
                 'OCC_GROUP' => 'minor',
@@ -12097,10 +11339,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '21,640',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            255 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            255 => [
                 'OCC_CODE' => '39-9010',
                 'OCC_TITLE' => 'Childcare Workers',
                 'OCC_GROUP' => 'broad',
@@ -12113,10 +11354,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '20,320',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            256 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            256 => [
                 'OCC_CODE' => '39-9011',
                 'OCC_TITLE' => 'Childcare Workers',
                 'OCC_GROUP' => 'detailed',
@@ -12129,10 +11369,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '20,320',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            257 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            257 => [
                 'OCC_CODE' => '39-9020',
                 'OCC_TITLE' => 'Personal Care Aides',
                 'OCC_GROUP' => 'broad',
@@ -12145,10 +11384,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '20,980',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            258 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            258 => [
                 'OCC_CODE' => '39-9021',
                 'OCC_TITLE' => 'Personal Care Aides',
                 'OCC_GROUP' => 'detailed',
@@ -12161,10 +11399,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '20,980',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            259 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            259 => [
                 'OCC_CODE' => '39-9030',
                 'OCC_TITLE' => 'Recreation and Fitness Workers',
                 'OCC_GROUP' => 'broad',
@@ -12177,10 +11414,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,550',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            260 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            260 => [
                 'OCC_CODE' => '39-9031',
                 'OCC_TITLE' => 'Fitness Trainers and Aerobics Instructors',
                 'OCC_GROUP' => 'detailed',
@@ -12193,10 +11429,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,160',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            261 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            261 => [
                 'OCC_CODE' => '39-9032',
                 'OCC_TITLE' => 'Recreation Workers',
                 'OCC_GROUP' => 'detailed',
@@ -12209,10 +11444,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '23,320',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            262 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            262 => [
                 'OCC_CODE' => '39-9040',
                 'OCC_TITLE' => 'Residential Advisors',
                 'OCC_GROUP' => 'broad',
@@ -12225,10 +11459,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,990',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            263 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            263 => [
                 'OCC_CODE' => '39-9041',
                 'OCC_TITLE' => 'Residential Advisors',
                 'OCC_GROUP' => 'detailed',
@@ -12241,10 +11474,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,990',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            264 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            264 => [
                 'OCC_CODE' => '39-9090',
                 'OCC_TITLE' => 'Miscellaneous Personal Care and Service Workers',
                 'OCC_GROUP' => 'broad',
@@ -12257,10 +11489,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '22,310',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            265 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            265 => [
                 'OCC_CODE' => '39-9099',
                 'OCC_TITLE' => 'Personal Care and Service Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -12273,10 +11504,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '22,310',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            266 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            266 => [
                 'OCC_CODE' => '41-0000',
                 'OCC_TITLE' => 'Sales and Related Occupations',
                 'OCC_GROUP' => 'major',
@@ -12289,10 +11519,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '25,660',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            267 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            267 => [
                 'OCC_CODE' => '41-1000',
                 'OCC_TITLE' => 'Supervisors of Sales Workers',
                 'OCC_GROUP' => 'minor',
@@ -12305,10 +11534,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '41,330',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            268 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            268 => [
                 'OCC_CODE' => '41-1010',
                 'OCC_TITLE' => 'First-Line Supervisors of Sales Workers',
                 'OCC_GROUP' => 'broad',
@@ -12321,10 +11549,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '41,330',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            269 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            269 => [
                 'OCC_CODE' => '41-1011',
                 'OCC_TITLE' => 'First-Line Supervisors of Retail Sales Workers',
                 'OCC_GROUP' => 'detailed',
@@ -12337,10 +11564,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '38,310',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            270 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            270 => [
                 'OCC_CODE' => '41-1012',
                 'OCC_TITLE' => 'First-Line Supervisors of Non-Retail Sales Workers',
                 'OCC_GROUP' => 'detailed',
@@ -12353,10 +11579,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '72,300',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            271 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            271 => [
                 'OCC_CODE' => '41-2000',
                 'OCC_TITLE' => 'Retail Sales Workers',
                 'OCC_GROUP' => 'minor',
@@ -12369,10 +11594,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '20,470',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            272 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            272 => [
                 'OCC_CODE' => '41-2010',
                 'OCC_TITLE' => 'Cashiers',
                 'OCC_GROUP' => 'broad',
@@ -12385,10 +11609,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,320',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            273 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            273 => [
                 'OCC_CODE' => '41-2011',
                 'OCC_TITLE' => 'Cashiers',
                 'OCC_GROUP' => 'detailed',
@@ -12401,10 +11624,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,310',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            274 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            274 => [
                 'OCC_CODE' => '41-2012',
                 'OCC_TITLE' => 'Gaming Change Persons and Booth Cashiers',
                 'OCC_GROUP' => 'detailed',
@@ -12417,10 +11639,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '22,930',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            275 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            275 => [
                 'OCC_CODE' => '41-2020',
                 'OCC_TITLE' => 'Counter and Rental Clerks and Parts Salespersons',
                 'OCC_GROUP' => 'broad',
@@ -12433,10 +11654,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,160',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            276 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            276 => [
                 'OCC_CODE' => '41-2021',
                 'OCC_TITLE' => 'Counter and Rental Clerks',
                 'OCC_GROUP' => 'detailed',
@@ -12449,10 +11669,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,440',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            277 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            277 => [
                 'OCC_CODE' => '41-2022',
                 'OCC_TITLE' => 'Parts Salespersons',
                 'OCC_GROUP' => 'detailed',
@@ -12465,10 +11684,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,650',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            278 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            278 => [
                 'OCC_CODE' => '41-2030',
                 'OCC_TITLE' => 'Retail Salespersons',
                 'OCC_GROUP' => 'broad',
@@ -12481,10 +11699,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '21,780',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            279 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            279 => [
                 'OCC_CODE' => '41-2031',
                 'OCC_TITLE' => 'Retail Salespersons',
                 'OCC_GROUP' => 'detailed',
@@ -12497,10 +11714,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '21,780',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            280 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            280 => [
                 'OCC_CODE' => '41-3000',
                 'OCC_TITLE' => 'Sales Representatives, Services',
                 'OCC_GROUP' => 'minor',
@@ -12513,10 +11729,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '51,540',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            281 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            281 => [
                 'OCC_CODE' => '41-3010',
                 'OCC_TITLE' => 'Advertising Sales Agents',
                 'OCC_GROUP' => 'broad',
@@ -12529,10 +11744,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,490',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            282 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            282 => [
                 'OCC_CODE' => '41-3011',
                 'OCC_TITLE' => 'Advertising Sales Agents',
                 'OCC_GROUP' => 'detailed',
@@ -12545,10 +11759,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,490',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            283 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            283 => [
                 'OCC_CODE' => '41-3020',
                 'OCC_TITLE' => 'Insurance Sales Agents',
                 'OCC_GROUP' => 'broad',
@@ -12561,10 +11774,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,200',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            284 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            284 => [
                 'OCC_CODE' => '41-3021',
                 'OCC_TITLE' => 'Insurance Sales Agents',
                 'OCC_GROUP' => 'detailed',
@@ -12577,10 +11789,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,200',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            285 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            285 => [
                 'OCC_CODE' => '41-3030',
                 'OCC_TITLE' => 'Securities, Commodities, and Financial Services Sales Agents',
                 'OCC_GROUP' => 'broad',
@@ -12593,10 +11804,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '71,550',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            286 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            286 => [
                 'OCC_CODE' => '41-3031',
                 'OCC_TITLE' => 'Securities, Commodities, and Financial Services Sales Agents',
                 'OCC_GROUP' => 'detailed',
@@ -12609,10 +11819,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '71,550',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            287 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            287 => [
                 'OCC_CODE' => '41-3040',
                 'OCC_TITLE' => 'Travel Agents',
                 'OCC_GROUP' => 'broad',
@@ -12625,10 +11834,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,660',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            288 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            288 => [
                 'OCC_CODE' => '41-3041',
                 'OCC_TITLE' => 'Travel Agents',
                 'OCC_GROUP' => 'detailed',
@@ -12641,10 +11849,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,660',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            289 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            289 => [
                 'OCC_CODE' => '41-3090',
                 'OCC_TITLE' => 'Miscellaneous Sales Representatives, Services',
                 'OCC_GROUP' => 'broad',
@@ -12657,10 +11864,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '51,700',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            290 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            290 => [
                 'OCC_CODE' => '41-3099',
                 'OCC_TITLE' => 'Sales Representatives, Services, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -12673,10 +11879,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '51,700',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            291 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            291 => [
                 'OCC_CODE' => '41-4000',
                 'OCC_TITLE' => 'Sales Representatives, Wholesale and Manufacturing',
                 'OCC_GROUP' => 'minor',
@@ -12689,10 +11894,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '59,080',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            292 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            292 => [
                 'OCC_CODE' => '41-4010',
                 'OCC_TITLE' => 'Sales Representatives, Wholesale and Manufacturing',
                 'OCC_GROUP' => 'broad',
@@ -12705,10 +11909,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '59,080',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            293 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            293 => [
                 'OCC_CODE' => '41-4011',
                 'OCC_TITLE' => 'Sales Representatives, Wholesale and Manufacturing, Technical and Scientific Products',
                 'OCC_GROUP' => 'detailed',
@@ -12721,10 +11924,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '76,190',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            294 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            294 => [
                 'OCC_CODE' => '41-4012',
                 'OCC_TITLE' => 'Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products',
                 'OCC_GROUP' => 'detailed',
@@ -12737,10 +11939,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '55,730',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            295 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            295 => [
                 'OCC_CODE' => '41-9000',
                 'OCC_TITLE' => 'Other Sales and Related Workers',
                 'OCC_GROUP' => 'minor',
@@ -12753,10 +11954,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,870',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            296 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            296 => [
                 'OCC_CODE' => '41-9010',
                 'OCC_TITLE' => 'Models, Demonstrators, and Product Promoters',
                 'OCC_GROUP' => 'broad',
@@ -12769,10 +11969,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,970',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            297 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            297 => [
                 'OCC_CODE' => '41-9011',
                 'OCC_TITLE' => 'Demonstrators and Product Promoters',
                 'OCC_GROUP' => 'detailed',
@@ -12785,10 +11984,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,940',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            298 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            298 => [
                 'OCC_CODE' => '41-9012',
                 'OCC_TITLE' => 'Models',
                 'OCC_GROUP' => 'detailed',
@@ -12801,10 +11999,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,530',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            299 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            299 => [
                 'OCC_CODE' => '41-9020',
                 'OCC_TITLE' => 'Real Estate Brokers and Sales Agents',
                 'OCC_GROUP' => 'broad',
@@ -12817,10 +12014,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,610',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            300 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            300 => [
                 'OCC_CODE' => '41-9021',
                 'OCC_TITLE' => 'Real Estate Brokers',
                 'OCC_GROUP' => 'detailed',
@@ -12833,10 +12029,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '56,860',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            301 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            301 => [
                 'OCC_CODE' => '41-9022',
                 'OCC_TITLE' => 'Real Estate Sales Agents',
                 'OCC_GROUP' => 'detailed',
@@ -12849,10 +12044,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '43,370',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            302 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            302 => [
                 'OCC_CODE' => '41-9030',
                 'OCC_TITLE' => 'Sales Engineers',
                 'OCC_GROUP' => 'broad',
@@ -12865,10 +12059,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '97,650',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            303 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            303 => [
                 'OCC_CODE' => '41-9031',
                 'OCC_TITLE' => 'Sales Engineers',
                 'OCC_GROUP' => 'detailed',
@@ -12881,10 +12074,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '97,650',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            304 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            304 => [
                 'OCC_CODE' => '41-9040',
                 'OCC_TITLE' => 'Telemarketers',
                 'OCC_GROUP' => 'broad',
@@ -12897,10 +12089,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '23,530',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            305 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            305 => [
                 'OCC_CODE' => '41-9041',
                 'OCC_TITLE' => 'Telemarketers',
                 'OCC_GROUP' => 'detailed',
@@ -12913,10 +12104,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '23,530',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            306 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            306 => [
                 'OCC_CODE' => '41-9090',
                 'OCC_TITLE' => 'Miscellaneous Sales and Related Workers',
                 'OCC_GROUP' => 'broad',
@@ -12929,10 +12119,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,940',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            307 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            307 => [
                 'OCC_CODE' => '41-9091',
                 'OCC_TITLE' => 'Door-to-Door Sales Workers, News and Street Vendors, and Related Workers',
                 'OCC_GROUP' => 'detailed',
@@ -12945,10 +12134,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '22,210',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            308 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            308 => [
                 'OCC_CODE' => '41-9099',
                 'OCC_TITLE' => 'Sales and Related Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -12961,10 +12149,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '33,240',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            309 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            309 => [
                 'OCC_CODE' => '43-0000',
                 'OCC_TITLE' => 'Office and Administrative Support Occupations',
                 'OCC_GROUP' => 'major',
@@ -12977,10 +12164,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '33,200',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            310 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            310 => [
                 'OCC_CODE' => '43-1000',
                 'OCC_TITLE' => 'Supervisors of Office and Administrative Support Workers',
                 'OCC_GROUP' => 'minor',
@@ -12993,10 +12179,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '52,630',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            311 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            311 => [
                 'OCC_CODE' => '43-1010',
                 'OCC_TITLE' => 'First-Line Supervisors of Office and Administrative Support Workers',
                 'OCC_GROUP' => 'broad',
@@ -13009,10 +12194,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '52,630',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            312 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            312 => [
                 'OCC_CODE' => '43-1011',
                 'OCC_TITLE' => 'First-Line Supervisors of Office and Administrative Support Workers',
                 'OCC_GROUP' => 'detailed',
@@ -13025,10 +12209,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '52,630',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            313 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            313 => [
                 'OCC_CODE' => '43-2000',
                 'OCC_TITLE' => 'Communications Equipment Operators',
                 'OCC_GROUP' => 'minor',
@@ -13041,10 +12224,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '28,010',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            314 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            314 => [
                 'OCC_CODE' => '43-2010',
                 'OCC_TITLE' => 'Switchboard Operators, Including Answering Service',
                 'OCC_GROUP' => 'broad',
@@ -13057,10 +12239,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,440',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            315 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            315 => [
                 'OCC_CODE' => '43-2011',
                 'OCC_TITLE' => 'Switchboard Operators, Including Answering Service',
                 'OCC_GROUP' => 'detailed',
@@ -13073,10 +12254,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,440',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            316 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            316 => [
                 'OCC_CODE' => '43-2020',
                 'OCC_TITLE' => 'Telephone Operators',
                 'OCC_GROUP' => 'broad',
@@ -13089,10 +12269,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,880',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            317 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            317 => [
                 'OCC_CODE' => '43-2021',
                 'OCC_TITLE' => 'Telephone Operators',
                 'OCC_GROUP' => 'detailed',
@@ -13105,10 +12284,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,880',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            318 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            318 => [
                 'OCC_CODE' => '43-2090',
                 'OCC_TITLE' => 'Miscellaneous Communications Equipment Operators',
                 'OCC_GROUP' => 'broad',
@@ -13121,10 +12299,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,330',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            319 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            319 => [
                 'OCC_CODE' => '43-2099',
                 'OCC_TITLE' => 'Communications Equipment Operators, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -13137,10 +12314,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,330',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            320 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            320 => [
                 'OCC_CODE' => '43-3000',
                 'OCC_TITLE' => 'Financial Clerks',
                 'OCC_GROUP' => 'minor',
@@ -13153,10 +12329,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '34,830',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            321 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            321 => [
                 'OCC_CODE' => '43-3010',
                 'OCC_TITLE' => 'Bill and Account Collectors',
                 'OCC_GROUP' => 'broad',
@@ -13169,10 +12344,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '34,440',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            322 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            322 => [
                 'OCC_CODE' => '43-3011',
                 'OCC_TITLE' => 'Bill and Account Collectors',
                 'OCC_GROUP' => 'detailed',
@@ -13185,10 +12359,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '34,440',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            323 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            323 => [
                 'OCC_CODE' => '43-3020',
                 'OCC_TITLE' => 'Billing and Posting Clerks',
                 'OCC_GROUP' => 'broad',
@@ -13201,10 +12374,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,050',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            324 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            324 => [
                 'OCC_CODE' => '43-3021',
                 'OCC_TITLE' => 'Billing and Posting Clerks',
                 'OCC_GROUP' => 'detailed',
@@ -13217,10 +12389,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,050',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            325 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            325 => [
                 'OCC_CODE' => '43-3030',
                 'OCC_TITLE' => 'Bookkeeping, Accounting, and Auditing Clerks',
                 'OCC_GROUP' => 'broad',
@@ -13233,10 +12404,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,250',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            326 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            326 => [
                 'OCC_CODE' => '43-3031',
                 'OCC_TITLE' => 'Bookkeeping, Accounting, and Auditing Clerks',
                 'OCC_GROUP' => 'detailed',
@@ -13249,10 +12419,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,250',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            327 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            327 => [
                 'OCC_CODE' => '43-3040',
                 'OCC_TITLE' => 'Gaming Cage Workers',
                 'OCC_GROUP' => 'broad',
@@ -13265,10 +12434,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '25,860',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            328 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            328 => [
                 'OCC_CODE' => '43-3041',
                 'OCC_TITLE' => 'Gaming Cage Workers',
                 'OCC_GROUP' => 'detailed',
@@ -13281,10 +12449,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '25,860',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            329 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            329 => [
                 'OCC_CODE' => '43-3050',
                 'OCC_TITLE' => 'Payroll and Timekeeping Clerks',
                 'OCC_GROUP' => 'broad',
@@ -13297,10 +12464,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '41,000',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            330 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            330 => [
                 'OCC_CODE' => '43-3051',
                 'OCC_TITLE' => 'Payroll and Timekeeping Clerks',
                 'OCC_GROUP' => 'detailed',
@@ -13313,10 +12479,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '41,000',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            331 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            331 => [
                 'OCC_CODE' => '43-3060',
                 'OCC_TITLE' => 'Procurement Clerks',
                 'OCC_GROUP' => 'broad',
@@ -13329,10 +12494,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,600',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            332 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            332 => [
                 'OCC_CODE' => '43-3061',
                 'OCC_TITLE' => 'Procurement Clerks',
                 'OCC_GROUP' => 'detailed',
@@ -13345,10 +12509,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,600',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            333 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            333 => [
                 'OCC_CODE' => '43-3070',
                 'OCC_TITLE' => 'Tellers',
                 'OCC_GROUP' => 'broad',
@@ -13361,10 +12524,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,410',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            334 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            334 => [
                 'OCC_CODE' => '43-3071',
                 'OCC_TITLE' => 'Tellers',
                 'OCC_GROUP' => 'detailed',
@@ -13377,10 +12539,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,410',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            335 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            335 => [
                 'OCC_CODE' => '43-3090',
                 'OCC_TITLE' => 'Miscellaneous Financial Clerks',
                 'OCC_GROUP' => 'broad',
@@ -13393,10 +12554,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,080',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            336 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            336 => [
                 'OCC_CODE' => '43-3099',
                 'OCC_TITLE' => 'Financial Clerks, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -13409,10 +12569,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,080',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            337 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            337 => [
                 'OCC_CODE' => '43-4000',
                 'OCC_TITLE' => 'Information and Record Clerks',
                 'OCC_GROUP' => 'minor',
@@ -13425,10 +12584,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,010',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            338 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            338 => [
                 'OCC_CODE' => '43-4010',
                 'OCC_TITLE' => 'Brokerage Clerks',
                 'OCC_GROUP' => 'broad',
@@ -13441,10 +12599,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,180',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            339 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            339 => [
                 'OCC_CODE' => '43-4011',
                 'OCC_TITLE' => 'Brokerage Clerks',
                 'OCC_GROUP' => 'detailed',
@@ -13457,10 +12614,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,180',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            340 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            340 => [
                 'OCC_CODE' => '43-4020',
                 'OCC_TITLE' => 'Correspondence Clerks',
                 'OCC_GROUP' => 'broad',
@@ -13473,10 +12629,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,320',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            341 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            341 => [
                 'OCC_CODE' => '43-4021',
                 'OCC_TITLE' => 'Correspondence Clerks',
                 'OCC_GROUP' => 'detailed',
@@ -13489,10 +12644,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,320',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            342 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            342 => [
                 'OCC_CODE' => '43-4030',
                 'OCC_TITLE' => 'Court, Municipal, and License Clerks',
                 'OCC_GROUP' => 'broad',
@@ -13505,10 +12659,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,850',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            343 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            343 => [
                 'OCC_CODE' => '43-4031',
                 'OCC_TITLE' => 'Court, Municipal, and License Clerks',
                 'OCC_GROUP' => 'detailed',
@@ -13521,10 +12674,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,850',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            344 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            344 => [
                 'OCC_CODE' => '43-4040',
                 'OCC_TITLE' => 'Credit Authorizers, Checkers, and Clerks',
                 'OCC_GROUP' => 'broad',
@@ -13537,10 +12689,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,280',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            345 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            345 => [
                 'OCC_CODE' => '43-4041',
                 'OCC_TITLE' => 'Credit Authorizers, Checkers, and Clerks',
                 'OCC_GROUP' => 'detailed',
@@ -13553,10 +12704,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,280',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            346 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            346 => [
                 'OCC_CODE' => '43-4050',
                 'OCC_TITLE' => 'Customer Service Representatives',
                 'OCC_GROUP' => 'broad',
@@ -13569,10 +12719,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,720',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            347 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            347 => [
                 'OCC_CODE' => '43-4051',
                 'OCC_TITLE' => 'Customer Service Representatives',
                 'OCC_GROUP' => 'detailed',
@@ -13585,10 +12734,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,720',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            348 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            348 => [
                 'OCC_CODE' => '43-4060',
                 'OCC_TITLE' => 'Eligibility Interviewers, Government Programs',
                 'OCC_GROUP' => 'broad',
@@ -13601,10 +12749,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '43,170',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            349 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            349 => [
                 'OCC_CODE' => '43-4061',
                 'OCC_TITLE' => 'Eligibility Interviewers, Government Programs',
                 'OCC_GROUP' => 'detailed',
@@ -13617,10 +12764,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '43,170',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            350 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            350 => [
                 'OCC_CODE' => '43-4070',
                 'OCC_TITLE' => 'File Clerks',
                 'OCC_GROUP' => 'broad',
@@ -13633,10 +12779,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,850',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            351 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            351 => [
                 'OCC_CODE' => '43-4071',
                 'OCC_TITLE' => 'File Clerks',
                 'OCC_GROUP' => 'detailed',
@@ -13649,10 +12794,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,850',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            352 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            352 => [
                 'OCC_CODE' => '43-4080',
                 'OCC_TITLE' => 'Hotel, Motel, and Resort Desk Clerks',
                 'OCC_GROUP' => 'broad',
@@ -13665,10 +12809,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '21,040',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            353 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            353 => [
                 'OCC_CODE' => '43-4081',
                 'OCC_TITLE' => 'Hotel, Motel, and Resort Desk Clerks',
                 'OCC_GROUP' => 'detailed',
@@ -13681,10 +12824,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '21,040',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            354 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            354 => [
                 'OCC_CODE' => '43-4110',
                 'OCC_TITLE' => 'Interviewers, Except Eligibility and Loan',
                 'OCC_GROUP' => 'broad',
@@ -13697,10 +12839,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,410',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            355 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            355 => [
                 'OCC_CODE' => '43-4111',
                 'OCC_TITLE' => 'Interviewers, Except Eligibility and Loan',
                 'OCC_GROUP' => 'detailed',
@@ -13713,10 +12854,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,410',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            356 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            356 => [
                 'OCC_CODE' => '43-4120',
                 'OCC_TITLE' => 'Library Assistants, Clerical',
                 'OCC_GROUP' => 'broad',
@@ -13729,10 +12869,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,480',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            357 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            357 => [
                 'OCC_CODE' => '43-4121',
                 'OCC_TITLE' => 'Library Assistants, Clerical',
                 'OCC_GROUP' => 'detailed',
@@ -13745,10 +12884,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,480',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            358 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            358 => [
                 'OCC_CODE' => '43-4130',
                 'OCC_TITLE' => 'Loan Interviewers and Clerks',
                 'OCC_GROUP' => 'broad',
@@ -13761,10 +12899,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,710',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            359 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            359 => [
                 'OCC_CODE' => '43-4131',
                 'OCC_TITLE' => 'Loan Interviewers and Clerks',
                 'OCC_GROUP' => 'detailed',
@@ -13777,10 +12914,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,710',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            360 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            360 => [
                 'OCC_CODE' => '43-4140',
                 'OCC_TITLE' => 'New Accounts Clerks',
                 'OCC_GROUP' => 'broad',
@@ -13793,10 +12929,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '34,880',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            361 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            361 => [
                 'OCC_CODE' => '43-4141',
                 'OCC_TITLE' => 'New Accounts Clerks',
                 'OCC_GROUP' => 'detailed',
@@ -13809,10 +12944,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '34,880',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            362 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            362 => [
                 'OCC_CODE' => '43-4150',
                 'OCC_TITLE' => 'Order Clerks',
                 'OCC_GROUP' => 'broad',
@@ -13825,10 +12959,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,330',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            363 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            363 => [
                 'OCC_CODE' => '43-4151',
                 'OCC_TITLE' => 'Order Clerks',
                 'OCC_GROUP' => 'detailed',
@@ -13841,10 +12974,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,330',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            364 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            364 => [
                 'OCC_CODE' => '43-4160',
                 'OCC_TITLE' => 'Human Resources Assistants, Except Payroll and Timekeeping',
                 'OCC_GROUP' => 'broad',
@@ -13857,10 +12989,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '38,100',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            365 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            365 => [
                 'OCC_CODE' => '43-4161',
                 'OCC_TITLE' => 'Human Resources Assistants, Except Payroll and Timekeeping',
                 'OCC_GROUP' => 'detailed',
@@ -13873,10 +13004,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '38,100',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            366 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            366 => [
                 'OCC_CODE' => '43-4170',
                 'OCC_TITLE' => 'Receptionists and Information Clerks',
                 'OCC_GROUP' => 'broad',
@@ -13889,10 +13019,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,300',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            367 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            367 => [
                 'OCC_CODE' => '43-4171',
                 'OCC_TITLE' => 'Receptionists and Information Clerks',
                 'OCC_GROUP' => 'detailed',
@@ -13905,10 +13034,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,300',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            368 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            368 => [
                 'OCC_CODE' => '43-4180',
                 'OCC_TITLE' => 'Reservation and Transportation Ticket Agents and Travel Clerks',
                 'OCC_GROUP' => 'broad',
@@ -13921,10 +13049,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,170',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            369 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            369 => [
                 'OCC_CODE' => '43-4181',
                 'OCC_TITLE' => 'Reservation and Transportation Ticket Agents and Travel Clerks',
                 'OCC_GROUP' => 'detailed',
@@ -13937,10 +13064,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,170',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            370 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            370 => [
                 'OCC_CODE' => '43-4190',
                 'OCC_TITLE' => 'Miscellaneous Information and Record Clerks',
                 'OCC_GROUP' => 'broad',
@@ -13953,10 +13079,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,990',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            371 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            371 => [
                 'OCC_CODE' => '43-4199',
                 'OCC_TITLE' => 'Information and Record Clerks, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -13969,10 +13094,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,990',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            372 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            372 => [
                 'OCC_CODE' => '43-5000',
                 'OCC_TITLE' => 'Material Recording, Scheduling, Dispatching, and Distributing Workers',
                 'OCC_GROUP' => 'minor',
@@ -13985,10 +13109,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,780',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            373 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            373 => [
                 'OCC_CODE' => '43-5010',
                 'OCC_TITLE' => 'Cargo and Freight Agents',
                 'OCC_GROUP' => 'broad',
@@ -14001,10 +13124,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '41,870',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            374 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            374 => [
                 'OCC_CODE' => '43-5011',
                 'OCC_TITLE' => 'Cargo and Freight Agents',
                 'OCC_GROUP' => 'detailed',
@@ -14017,10 +13139,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '41,870',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            375 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            375 => [
                 'OCC_CODE' => '43-5020',
                 'OCC_TITLE' => 'Couriers and Messengers',
                 'OCC_GROUP' => 'broad',
@@ -14033,10 +13154,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,280',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            376 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            376 => [
                 'OCC_CODE' => '43-5021',
                 'OCC_TITLE' => 'Couriers and Messengers',
                 'OCC_GROUP' => 'detailed',
@@ -14049,10 +13169,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,280',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            377 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            377 => [
                 'OCC_CODE' => '43-5030',
                 'OCC_TITLE' => 'Dispatchers',
                 'OCC_GROUP' => 'broad',
@@ -14065,10 +13184,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,440',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            378 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            378 => [
                 'OCC_CODE' => '43-5031',
                 'OCC_TITLE' => 'Police, Fire, and Ambulance Dispatchers',
                 'OCC_GROUP' => 'detailed',
@@ -14081,10 +13199,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '38,010',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            379 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            379 => [
                 'OCC_CODE' => '43-5032',
                 'OCC_TITLE' => 'Dispatchers, Except Police, Fire, and Ambulance',
                 'OCC_GROUP' => 'detailed',
@@ -14097,10 +13214,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,150',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            380 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            380 => [
                 'OCC_CODE' => '43-5040',
                 'OCC_TITLE' => 'Meter Readers, Utilities',
                 'OCC_GROUP' => 'broad',
@@ -14113,10 +13229,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '38,510',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            381 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            381 => [
                 'OCC_CODE' => '43-5041',
                 'OCC_TITLE' => 'Meter Readers, Utilities',
                 'OCC_GROUP' => 'detailed',
@@ -14129,10 +13244,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '38,510',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            382 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            382 => [
                 'OCC_CODE' => '43-5050',
                 'OCC_TITLE' => 'Postal Service Workers',
                 'OCC_GROUP' => 'broad',
@@ -14145,10 +13259,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '56,790',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            383 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            383 => [
                 'OCC_CODE' => '43-5051',
                 'OCC_TITLE' => 'Postal Service Clerks',
                 'OCC_GROUP' => 'detailed',
@@ -14161,10 +13274,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '56,790',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            384 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            384 => [
                 'OCC_CODE' => '43-5052',
                 'OCC_TITLE' => 'Postal Service Mail Carriers',
                 'OCC_GROUP' => 'detailed',
@@ -14177,10 +13289,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '58,280',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            385 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            385 => [
                 'OCC_CODE' => '43-5053',
                 'OCC_TITLE' => 'Postal Service Mail Sorters, Processors, and Processing Machine Operators',
                 'OCC_GROUP' => 'detailed',
@@ -14193,10 +13304,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '56,740',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            386 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            386 => [
                 'OCC_CODE' => '43-5060',
                 'OCC_TITLE' => 'Production, Planning, and Expediting Clerks',
                 'OCC_GROUP' => 'broad',
@@ -14209,10 +13319,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '46,150',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            387 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            387 => [
                 'OCC_CODE' => '43-5061',
                 'OCC_TITLE' => 'Production, Planning, and Expediting Clerks',
                 'OCC_GROUP' => 'detailed',
@@ -14225,10 +13334,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '46,150',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            388 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            388 => [
                 'OCC_CODE' => '43-5070',
                 'OCC_TITLE' => 'Shipping, Receiving, and Traffic Clerks',
                 'OCC_GROUP' => 'broad',
@@ -14241,10 +13349,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,450',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            389 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            389 => [
                 'OCC_CODE' => '43-5071',
                 'OCC_TITLE' => 'Shipping, Receiving, and Traffic Clerks',
                 'OCC_GROUP' => 'detailed',
@@ -14257,10 +13364,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,450',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            390 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            390 => [
                 'OCC_CODE' => '43-5080',
                 'OCC_TITLE' => 'Stock Clerks and Order Fillers',
                 'OCC_GROUP' => 'broad',
@@ -14273,10 +13379,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '23,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            391 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            391 => [
                 'OCC_CODE' => '43-5081',
                 'OCC_TITLE' => 'Stock Clerks and Order Fillers',
                 'OCC_GROUP' => 'detailed',
@@ -14289,10 +13394,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '23,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            392 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            392 => [
                 'OCC_CODE' => '43-5110',
                 'OCC_TITLE' => 'Weighers, Measurers, Checkers, and Samplers, Recordkeeping',
                 'OCC_GROUP' => 'broad',
@@ -14305,10 +13409,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '28,690',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            393 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            393 => [
                 'OCC_CODE' => '43-5111',
                 'OCC_TITLE' => 'Weighers, Measurers, Checkers, and Samplers, Recordkeeping',
                 'OCC_GROUP' => 'detailed',
@@ -14321,10 +13424,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '28,690',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            394 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            394 => [
                 'OCC_CODE' => '43-6000',
                 'OCC_TITLE' => 'Secretaries and Administrative Assistants',
                 'OCC_GROUP' => 'minor',
@@ -14337,10 +13439,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,500',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            395 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            395 => [
                 'OCC_CODE' => '43-6010',
                 'OCC_TITLE' => 'Secretaries and Administrative Assistants',
                 'OCC_GROUP' => 'broad',
@@ -14353,10 +13454,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,500',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            396 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            396 => [
                 'OCC_CODE' => '43-6011',
                 'OCC_TITLE' => 'Executive Secretaries and Executive Administrative Assistants',
                 'OCC_GROUP' => 'detailed',
@@ -14369,10 +13469,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '53,370',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            397 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            397 => [
                 'OCC_CODE' => '43-6012',
                 'OCC_TITLE' => 'Legal Secretaries',
                 'OCC_GROUP' => 'detailed',
@@ -14385,10 +13484,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '43,200',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            398 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            398 => [
                 'OCC_CODE' => '43-6013',
                 'OCC_TITLE' => 'Medical Secretaries',
                 'OCC_GROUP' => 'detailed',
@@ -14401,10 +13499,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '33,040',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            399 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            399 => [
                 'OCC_CODE' => '43-6014',
                 'OCC_TITLE' => 'Secretaries and Administrative Assistants, Except Legal, Medical, and Executive',
                 'OCC_GROUP' => 'detailed',
@@ -14417,10 +13514,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '33,910',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            400 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            400 => [
                 'OCC_CODE' => '43-9000',
                 'OCC_TITLE' => 'Other Office and Administrative Support Workers',
                 'OCC_GROUP' => 'minor',
@@ -14433,10 +13529,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,520',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            401 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            401 => [
                 'OCC_CODE' => '43-9010',
                 'OCC_TITLE' => 'Computer Operators',
                 'OCC_GROUP' => 'broad',
@@ -14449,10 +13544,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,420',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            402 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            402 => [
                 'OCC_CODE' => '43-9011',
                 'OCC_TITLE' => 'Computer Operators',
                 'OCC_GROUP' => 'detailed',
@@ -14465,10 +13559,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,420',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            403 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            403 => [
                 'OCC_CODE' => '43-9020',
                 'OCC_TITLE' => 'Data Entry and Information Processing Workers',
                 'OCC_GROUP' => 'broad',
@@ -14481,10 +13574,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,180',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            404 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            404 => [
                 'OCC_CODE' => '43-9021',
                 'OCC_TITLE' => 'Data Entry Keyers',
                 'OCC_GROUP' => 'detailed',
@@ -14497,10 +13589,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,460',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            405 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            405 => [
                 'OCC_CODE' => '43-9022',
                 'OCC_TITLE' => 'Word Processors and Typists',
                 'OCC_GROUP' => 'detailed',
@@ -14513,10 +13604,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,610',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            406 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            406 => [
                 'OCC_CODE' => '43-9030',
                 'OCC_TITLE' => 'Desktop Publishers',
                 'OCC_GROUP' => 'broad',
@@ -14529,10 +13619,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '39,840',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            407 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            407 => [
                 'OCC_CODE' => '43-9031',
                 'OCC_TITLE' => 'Desktop Publishers',
                 'OCC_GROUP' => 'detailed',
@@ -14545,10 +13634,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '39,840',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            408 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            408 => [
                 'OCC_CODE' => '43-9040',
                 'OCC_TITLE' => 'Insurance Claims and Policy Processing Clerks',
                 'OCC_GROUP' => 'broad',
@@ -14561,10 +13649,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,530',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            409 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            409 => [
                 'OCC_CODE' => '43-9041',
                 'OCC_TITLE' => 'Insurance Claims and Policy Processing Clerks',
                 'OCC_GROUP' => 'detailed',
@@ -14577,10 +13664,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,530',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            410 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            410 => [
                 'OCC_CODE' => '43-9050',
                 'OCC_TITLE' => 'Mail Clerks and Mail Machine Operators, Except Postal Service',
                 'OCC_GROUP' => 'broad',
@@ -14593,10 +13679,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '28,570',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            411 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            411 => [
                 'OCC_CODE' => '43-9051',
                 'OCC_TITLE' => 'Mail Clerks and Mail Machine Operators, Except Postal Service',
                 'OCC_GROUP' => 'detailed',
@@ -14609,10 +13694,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '28,570',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            412 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            412 => [
                 'OCC_CODE' => '43-9060',
                 'OCC_TITLE' => 'Office Clerks, General',
                 'OCC_GROUP' => 'broad',
@@ -14625,10 +13709,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,580',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            413 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            413 => [
                 'OCC_CODE' => '43-9061',
                 'OCC_TITLE' => 'Office Clerks, General',
                 'OCC_GROUP' => 'detailed',
@@ -14641,10 +13724,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,580',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            414 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            414 => [
                 'OCC_CODE' => '43-9070',
                 'OCC_TITLE' => 'Office Machine Operators, Except Computer',
                 'OCC_GROUP' => 'broad',
@@ -14657,10 +13739,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,010',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            415 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            415 => [
                 'OCC_CODE' => '43-9071',
                 'OCC_TITLE' => 'Office Machine Operators, Except Computer',
                 'OCC_GROUP' => 'detailed',
@@ -14673,10 +13754,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,010',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            416 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            416 => [
                 'OCC_CODE' => '43-9080',
                 'OCC_TITLE' => 'Proofreaders and Copy Markers',
                 'OCC_GROUP' => 'broad',
@@ -14689,10 +13769,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,630',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            417 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            417 => [
                 'OCC_CODE' => '43-9081',
                 'OCC_TITLE' => 'Proofreaders and Copy Markers',
                 'OCC_GROUP' => 'detailed',
@@ -14705,10 +13784,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,630',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            418 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            418 => [
                 'OCC_CODE' => '43-9110',
                 'OCC_TITLE' => 'Statistical Assistants',
                 'OCC_GROUP' => 'broad',
@@ -14721,10 +13799,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '42,700',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            419 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            419 => [
                 'OCC_CODE' => '43-9111',
                 'OCC_TITLE' => 'Statistical Assistants',
                 'OCC_GROUP' => 'detailed',
@@ -14737,10 +13814,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '42,700',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            420 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            420 => [
                 'OCC_CODE' => '43-9190',
                 'OCC_TITLE' => 'Miscellaneous Office and Administrative Support Workers',
                 'OCC_GROUP' => 'broad',
@@ -14753,10 +13829,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,590',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            421 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            421 => [
                 'OCC_CODE' => '43-9199',
                 'OCC_TITLE' => 'Office and Administrative Support Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -14769,10 +13844,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,590',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            422 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            422 => [
                 'OCC_CODE' => '45-0000',
                 'OCC_TITLE' => 'Farming, Fishing, and Forestry Occupations',
                 'OCC_GROUP' => 'major',
@@ -14785,10 +13859,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '21,760',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            423 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            423 => [
                 'OCC_CODE' => '45-1000',
                 'OCC_TITLE' => 'Supervisors of Farming, Fishing, and Forestry Workers',
                 'OCC_GROUP' => 'minor',
@@ -14801,10 +13874,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,340',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            424 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            424 => [
                 'OCC_CODE' => '45-1010',
                 'OCC_TITLE' => 'First-Line Supervisors of Farming, Fishing, and Forestry Workers',
                 'OCC_GROUP' => 'broad',
@@ -14817,10 +13889,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,340',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            425 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            425 => [
                 'OCC_CODE' => '45-1011',
                 'OCC_TITLE' => 'First-Line Supervisors of Farming, Fishing, and Forestry Workers',
                 'OCC_GROUP' => 'detailed',
@@ -14833,10 +13904,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,340',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            426 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            426 => [
                 'OCC_CODE' => '45-2000',
                 'OCC_TITLE' => 'Agricultural Workers',
                 'OCC_GROUP' => 'minor',
@@ -14849,10 +13919,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '20,500',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            427 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            427 => [
                 'OCC_CODE' => '45-2010',
                 'OCC_TITLE' => 'Agricultural Inspectors',
                 'OCC_GROUP' => 'broad',
@@ -14865,10 +13934,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '43,380',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            428 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            428 => [
                 'OCC_CODE' => '45-2011',
                 'OCC_TITLE' => 'Agricultural Inspectors',
                 'OCC_GROUP' => 'detailed',
@@ -14881,10 +13949,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '43,380',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            429 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            429 => [
                 'OCC_CODE' => '45-2020',
                 'OCC_TITLE' => 'Animal Breeders',
                 'OCC_GROUP' => 'broad',
@@ -14897,10 +13964,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '39,380',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            430 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            430 => [
                 'OCC_CODE' => '45-2021',
                 'OCC_TITLE' => 'Animal Breeders',
                 'OCC_GROUP' => 'detailed',
@@ -14913,10 +13979,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '39,380',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            431 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            431 => [
                 'OCC_CODE' => '45-2040',
                 'OCC_TITLE' => 'Graders and Sorters, Agricultural Products',
                 'OCC_GROUP' => 'broad',
@@ -14929,10 +13994,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '21,100',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            432 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            432 => [
                 'OCC_CODE' => '45-2041',
                 'OCC_TITLE' => 'Graders and Sorters, Agricultural Products',
                 'OCC_GROUP' => 'detailed',
@@ -14945,10 +14009,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '21,100',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            433 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            433 => [
                 'OCC_CODE' => '45-2090',
                 'OCC_TITLE' => 'Miscellaneous Agricultural Workers',
                 'OCC_GROUP' => 'broad',
@@ -14961,10 +14024,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '20,080',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            434 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            434 => [
                 'OCC_CODE' => '45-2091',
                 'OCC_TITLE' => 'Agricultural Equipment Operators',
                 'OCC_GROUP' => 'detailed',
@@ -14977,10 +14039,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,840',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            435 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            435 => [
                 'OCC_CODE' => '45-2092',
                 'OCC_TITLE' => 'Farmworkers and Laborers, Crop, Nursery, and Greenhouse',
                 'OCC_GROUP' => 'detailed',
@@ -14993,10 +14054,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '19,770',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            436 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            436 => [
                 'OCC_CODE' => '45-2093',
                 'OCC_TITLE' => 'Farmworkers, Farm, Ranch, and Aquacultural Animals',
                 'OCC_GROUP' => 'detailed',
@@ -15009,10 +14069,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '23,750',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            437 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            437 => [
                 'OCC_CODE' => '45-2099',
                 'OCC_TITLE' => 'Agricultural Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -15025,10 +14084,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,830',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            438 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            438 => [
                 'OCC_CODE' => '45-3000',
                 'OCC_TITLE' => 'Fishing and Hunting Workers',
                 'OCC_GROUP' => 'minor',
@@ -15041,10 +14099,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '28,100',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            439 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            439 => [
                 'OCC_CODE' => '45-3010',
                 'OCC_TITLE' => 'Fishers and Related Fishing Workers',
                 'OCC_GROUP' => 'broad',
@@ -15057,10 +14114,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,340',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            440 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            440 => [
                 'OCC_CODE' => '45-3011',
                 'OCC_TITLE' => 'Fishers and Related Fishing Workers',
                 'OCC_GROUP' => 'detailed',
@@ -15073,10 +14129,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,340',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            441 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            441 => [
                 'OCC_CODE' => '45-4000',
                 'OCC_TITLE' => 'Forest, Conservation, and Logging Workers',
                 'OCC_GROUP' => 'minor',
@@ -15089,10 +14144,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,150',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            442 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            442 => [
                 'OCC_CODE' => '45-4010',
                 'OCC_TITLE' => 'Forest and Conservation Workers',
                 'OCC_GROUP' => 'broad',
@@ -15105,10 +14159,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,190',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            443 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            443 => [
                 'OCC_CODE' => '45-4011',
                 'OCC_TITLE' => 'Forest and Conservation Workers',
                 'OCC_GROUP' => 'detailed',
@@ -15121,10 +14174,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,190',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            444 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            444 => [
                 'OCC_CODE' => '45-4020',
                 'OCC_TITLE' => 'Logging Workers',
                 'OCC_GROUP' => 'broad',
@@ -15137,10 +14189,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,210',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            445 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            445 => [
                 'OCC_CODE' => '45-4021',
                 'OCC_TITLE' => 'Fallers',
                 'OCC_GROUP' => 'detailed',
@@ -15153,10 +14204,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,400',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            446 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            446 => [
                 'OCC_CODE' => '45-4022',
                 'OCC_TITLE' => 'Logging Equipment Operators',
                 'OCC_GROUP' => 'detailed',
@@ -15169,10 +14219,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,290',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            447 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            447 => [
                 'OCC_CODE' => '45-4023',
                 'OCC_TITLE' => 'Log Graders and Scalers',
                 'OCC_GROUP' => 'detailed',
@@ -15185,10 +14234,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,110',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            448 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            448 => [
                 'OCC_CODE' => '45-4029',
                 'OCC_TITLE' => 'Logging Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -15201,10 +14249,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,620',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            449 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            449 => [
                 'OCC_CODE' => '47-0000',
                 'OCC_TITLE' => 'Construction and Extraction Occupations',
                 'OCC_GROUP' => 'major',
@@ -15217,10 +14264,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '42,280',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            450 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            450 => [
                 'OCC_CODE' => '47-1000',
                 'OCC_TITLE' => 'Supervisors of Construction and Extraction Workers',
                 'OCC_GROUP' => 'minor',
@@ -15233,10 +14279,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '62,070',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            451 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            451 => [
                 'OCC_CODE' => '47-1010',
                 'OCC_TITLE' => 'First-Line Supervisors of Construction Trades and Extraction Workers',
                 'OCC_GROUP' => 'broad',
@@ -15249,10 +14294,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '62,070',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            452 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            452 => [
                 'OCC_CODE' => '47-1011',
                 'OCC_TITLE' => 'First-Line Supervisors of Construction Trades and Extraction Workers',
                 'OCC_GROUP' => 'detailed',
@@ -15265,10 +14309,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '62,070',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            453 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            453 => [
                 'OCC_CODE' => '47-2000',
                 'OCC_TITLE' => 'Construction Trades Workers',
                 'OCC_GROUP' => 'minor',
@@ -15281,10 +14324,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '41,020',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            454 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            454 => [
                 'OCC_CODE' => '47-2010',
                 'OCC_TITLE' => 'Boilermakers',
                 'OCC_GROUP' => 'broad',
@@ -15297,10 +14339,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '60,120',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            455 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            455 => [
                 'OCC_CODE' => '47-2011',
                 'OCC_TITLE' => 'Boilermakers',
                 'OCC_GROUP' => 'detailed',
@@ -15313,10 +14354,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '60,120',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            456 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            456 => [
                 'OCC_CODE' => '47-2020',
                 'OCC_TITLE' => 'Brickmasons, Blockmasons, and Stonemasons',
                 'OCC_GROUP' => 'broad',
@@ -15329,10 +14369,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '46,420',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            457 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            457 => [
                 'OCC_CODE' => '47-2021',
                 'OCC_TITLE' => 'Brickmasons and Blockmasons',
                 'OCC_GROUP' => 'detailed',
@@ -15345,10 +14384,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '47,950',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            458 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            458 => [
                 'OCC_CODE' => '47-2022',
                 'OCC_TITLE' => 'Stonemasons',
                 'OCC_GROUP' => 'detailed',
@@ -15361,10 +14399,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '38,630',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            459 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            459 => [
                 'OCC_CODE' => '47-2030',
                 'OCC_TITLE' => 'Carpenters',
                 'OCC_GROUP' => 'broad',
@@ -15377,10 +14414,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '42,090',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            460 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            460 => [
                 'OCC_CODE' => '47-2031',
                 'OCC_TITLE' => 'Carpenters',
                 'OCC_GROUP' => 'detailed',
@@ -15393,10 +14429,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '42,090',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            461 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            461 => [
                 'OCC_CODE' => '47-2040',
                 'OCC_TITLE' => 'Carpet, Floor, and Tile Installers and Finishers',
                 'OCC_GROUP' => 'broad',
@@ -15409,10 +14444,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '38,230',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            462 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            462 => [
                 'OCC_CODE' => '47-2041',
                 'OCC_TITLE' => 'Carpet Installers',
                 'OCC_GROUP' => 'detailed',
@@ -15425,10 +14459,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            463 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            463 => [
                 'OCC_CODE' => '47-2042',
                 'OCC_TITLE' => 'Floor Layers, Except Carpet, Wood, and Hard Tiles',
                 'OCC_GROUP' => 'detailed',
@@ -15441,10 +14474,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,030',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            464 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            464 => [
                 'OCC_CODE' => '47-2043',
                 'OCC_TITLE' => 'Floor Sanders and Finishers',
                 'OCC_GROUP' => 'detailed',
@@ -15457,10 +14489,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,930',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            465 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            465 => [
                 'OCC_CODE' => '47-2044',
                 'OCC_TITLE' => 'Tile and Marble Setters',
                 'OCC_GROUP' => 'detailed',
@@ -15473,10 +14504,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '39,400',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            466 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            466 => [
                 'OCC_CODE' => '47-2050',
                 'OCC_TITLE' => 'Cement Masons, Concrete Finishers, and Terrazzo Workers',
                 'OCC_GROUP' => 'broad',
@@ -15489,10 +14519,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,780',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            467 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            467 => [
                 'OCC_CODE' => '47-2051',
                 'OCC_TITLE' => 'Cement Masons and Concrete Finishers',
                 'OCC_GROUP' => 'detailed',
@@ -15505,10 +14534,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,740',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            468 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            468 => [
                 'OCC_CODE' => '47-2053',
                 'OCC_TITLE' => 'Terrazzo Workers and Finishers',
                 'OCC_GROUP' => 'detailed',
@@ -15521,10 +14549,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,710',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            469 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            469 => [
                 'OCC_CODE' => '47-2060',
                 'OCC_TITLE' => 'Construction Laborers',
                 'OCC_GROUP' => 'broad',
@@ -15537,10 +14564,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,910',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            470 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            470 => [
                 'OCC_CODE' => '47-2061',
                 'OCC_TITLE' => 'Construction Laborers',
                 'OCC_GROUP' => 'detailed',
@@ -15553,10 +14579,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,910',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            471 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            471 => [
                 'OCC_CODE' => '47-2070',
                 'OCC_TITLE' => 'Construction Equipment Operators',
                 'OCC_GROUP' => 'broad',
@@ -15569,10 +14594,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '43,810',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            472 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            472 => [
                 'OCC_CODE' => '47-2071',
                 'OCC_TITLE' => 'Paving, Surfacing, and Tamping Equipment Operators',
                 'OCC_GROUP' => 'detailed',
@@ -15585,10 +14609,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '38,270',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            473 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            473 => [
                 'OCC_CODE' => '47-2072',
                 'OCC_TITLE' => 'Pile-Driver Operators',
                 'OCC_GROUP' => 'detailed',
@@ -15601,10 +14624,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '49,430',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            474 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            474 => [
                 'OCC_CODE' => '47-2073',
                 'OCC_TITLE' => 'Operating Engineers and Other Construction Equipment Operators',
                 'OCC_GROUP' => 'detailed',
@@ -15617,10 +14639,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '44,600',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            475 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            475 => [
                 'OCC_CODE' => '47-2080',
                 'OCC_TITLE' => 'Drywall Installers, Ceiling Tile Installers, and Tapers',
                 'OCC_GROUP' => 'broad',
@@ -15633,10 +14654,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,470',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            476 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            476 => [
                 'OCC_CODE' => '47-2081',
                 'OCC_TITLE' => 'Drywall and Ceiling Tile Installers',
                 'OCC_GROUP' => 'detailed',
@@ -15649,10 +14669,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '39,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            477 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            477 => [
                 'OCC_CODE' => '47-2082',
                 'OCC_TITLE' => 'Tapers',
                 'OCC_GROUP' => 'detailed',
@@ -15665,10 +14684,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '47,970',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            478 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            478 => [
                 'OCC_CODE' => '47-2110',
                 'OCC_TITLE' => 'Electricians',
                 'OCC_GROUP' => 'broad',
@@ -15681,10 +14699,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '51,880',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            479 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            479 => [
                 'OCC_CODE' => '47-2111',
                 'OCC_TITLE' => 'Electricians',
                 'OCC_GROUP' => 'detailed',
@@ -15697,10 +14714,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '51,880',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            480 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            480 => [
                 'OCC_CODE' => '47-2120',
                 'OCC_TITLE' => 'Glaziers',
                 'OCC_GROUP' => 'broad',
@@ -15713,10 +14729,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '39,440',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            481 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            481 => [
                 'OCC_CODE' => '47-2121',
                 'OCC_TITLE' => 'Glaziers',
                 'OCC_GROUP' => 'detailed',
@@ -15729,10 +14744,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '39,440',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            482 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            482 => [
                 'OCC_CODE' => '47-2130',
                 'OCC_TITLE' => 'Insulation Workers',
                 'OCC_GROUP' => 'broad',
@@ -15745,10 +14759,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '38,630',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            483 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            483 => [
                 'OCC_CODE' => '47-2131',
                 'OCC_TITLE' => 'Insulation Workers, Floor, Ceiling, and Wall',
                 'OCC_GROUP' => 'detailed',
@@ -15761,10 +14774,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,040',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            484 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            484 => [
                 'OCC_CODE' => '47-2132',
                 'OCC_TITLE' => 'Insulation Workers, Mechanical',
                 'OCC_GROUP' => 'detailed',
@@ -15777,10 +14789,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '43,610',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            485 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            485 => [
                 'OCC_CODE' => '47-2140',
                 'OCC_TITLE' => 'Painters and Paperhangers',
                 'OCC_GROUP' => 'broad',
@@ -15793,10 +14804,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,550',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            486 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            486 => [
                 'OCC_CODE' => '47-2141',
                 'OCC_TITLE' => 'Painters, Construction and Maintenance',
                 'OCC_GROUP' => 'detailed',
@@ -15809,10 +14819,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,580',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            487 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            487 => [
                 'OCC_CODE' => '47-2142',
                 'OCC_TITLE' => 'Paperhangers',
                 'OCC_GROUP' => 'detailed',
@@ -15825,10 +14834,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '33,590',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            488 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            488 => [
                 'OCC_CODE' => '47-2150',
                 'OCC_TITLE' => 'Pipelayers, Plumbers, Pipefitters, and Steamfitters',
                 'OCC_GROUP' => 'broad',
@@ -15841,10 +14849,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '49,340',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            489 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            489 => [
                 'OCC_CODE' => '47-2151',
                 'OCC_TITLE' => 'Pipelayers',
                 'OCC_GROUP' => 'detailed',
@@ -15857,10 +14864,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,780',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            490 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            490 => [
                 'OCC_CODE' => '47-2152',
                 'OCC_TITLE' => 'Plumbers, Pipefitters, and Steamfitters',
                 'OCC_GROUP' => 'detailed',
@@ -15873,10 +14879,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '50,620',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            491 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            491 => [
                 'OCC_CODE' => '47-2160',
                 'OCC_TITLE' => 'Plasterers and Stucco Masons',
                 'OCC_GROUP' => 'broad',
@@ -15889,10 +14894,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,320',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            492 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            492 => [
                 'OCC_CODE' => '47-2161',
                 'OCC_TITLE' => 'Plasterers and Stucco Masons',
                 'OCC_GROUP' => 'detailed',
@@ -15905,10 +14909,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,320',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            493 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            493 => [
                 'OCC_CODE' => '47-2170',
                 'OCC_TITLE' => 'Reinforcing Iron and Rebar Workers',
                 'OCC_GROUP' => 'broad',
@@ -15921,10 +14924,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,010',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            494 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            494 => [
                 'OCC_CODE' => '47-2171',
                 'OCC_TITLE' => 'Reinforcing Iron and Rebar Workers',
                 'OCC_GROUP' => 'detailed',
@@ -15937,10 +14939,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,010',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            495 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            495 => [
                 'OCC_CODE' => '47-2180',
                 'OCC_TITLE' => 'Roofers',
                 'OCC_GROUP' => 'broad',
@@ -15953,10 +14954,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,720',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            496 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            496 => [
                 'OCC_CODE' => '47-2181',
                 'OCC_TITLE' => 'Roofers',
                 'OCC_GROUP' => 'detailed',
@@ -15969,10 +14969,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,720',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            497 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            497 => [
                 'OCC_CODE' => '47-2210',
                 'OCC_TITLE' => 'Sheet Metal Workers',
                 'OCC_GROUP' => 'broad',
@@ -15985,10 +14984,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,750',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            498 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            498 => [
                 'OCC_CODE' => '47-2211',
                 'OCC_TITLE' => 'Sheet Metal Workers',
                 'OCC_GROUP' => 'detailed',
@@ -16001,10 +14999,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,750',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            499 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            499 => [
                 'OCC_CODE' => '47-2220',
                 'OCC_TITLE' => 'Structural Iron and Steel Workers',
                 'OCC_GROUP' => 'broad',
@@ -16017,12 +15014,11 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '50,490',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-        ));
-        \DB::table('occupation_list')->insert(array (
-            0 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+        ]);
+        \DB::table('occupation_list')->insert([
+            0 => [
                 'OCC_CODE' => '47-2221',
                 'OCC_TITLE' => 'Structural Iron and Steel Workers',
                 'OCC_GROUP' => 'detailed',
@@ -16035,10 +15031,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '50,490',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            1 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            1 => [
                 'OCC_CODE' => '47-2230',
                 'OCC_TITLE' => 'Solar Photovoltaic Installers',
                 'OCC_GROUP' => 'broad',
@@ -16051,10 +15046,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,830',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            2 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            2 => [
                 'OCC_CODE' => '47-2231',
                 'OCC_TITLE' => 'Solar Photovoltaic Installers',
                 'OCC_GROUP' => 'detailed',
@@ -16067,10 +15061,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,830',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            3 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            3 => [
                 'OCC_CODE' => '47-3000',
                 'OCC_TITLE' => 'Helpers, Construction Trades',
                 'OCC_GROUP' => 'minor',
@@ -16083,10 +15076,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '28,380',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            4 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            4 => [
                 'OCC_CODE' => '47-3010',
                 'OCC_TITLE' => 'Helpers, Construction Trades',
                 'OCC_GROUP' => 'broad',
@@ -16099,10 +15091,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '28,380',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            5 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            5 => [
                 'OCC_CODE' => '47-3011',
                 'OCC_TITLE' => 'Helpers--Brickmasons, Blockmasons, Stonemasons, and Tile and Marble Setters',
                 'OCC_GROUP' => 'detailed',
@@ -16115,10 +15106,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,320',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            6 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            6 => [
                 'OCC_CODE' => '47-3012',
                 'OCC_TITLE' => 'Helpers--Carpenters',
                 'OCC_GROUP' => 'detailed',
@@ -16131,10 +15121,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,890',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            7 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            7 => [
                 'OCC_CODE' => '47-3013',
                 'OCC_TITLE' => 'Helpers--Electricians',
                 'OCC_GROUP' => 'detailed',
@@ -16147,10 +15136,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '28,730',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            8 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            8 => [
                 'OCC_CODE' => '47-3014',
                 'OCC_TITLE' => 'Helpers--Painters, Paperhangers, Plasterers, and Stucco Masons',
                 'OCC_GROUP' => 'detailed',
@@ -16163,10 +15151,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,480',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            9 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            9 => [
                 'OCC_CODE' => '47-3015',
                 'OCC_TITLE' => 'Helpers--Pipelayers, Plumbers, Pipefitters, and Steamfitters',
                 'OCC_GROUP' => 'detailed',
@@ -16179,10 +15166,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '28,500',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            10 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            10 => [
                 'OCC_CODE' => '47-3016',
                 'OCC_TITLE' => 'Helpers--Roofers',
                 'OCC_GROUP' => 'detailed',
@@ -16195,10 +15181,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,110',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            11 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            11 => [
                 'OCC_CODE' => '47-3019',
                 'OCC_TITLE' => 'Helpers, Construction Trades, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -16211,10 +15196,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '28,510',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            12 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            12 => [
                 'OCC_CODE' => '47-4000',
                 'OCC_TITLE' => 'Other Construction and Related Workers',
                 'OCC_GROUP' => 'minor',
@@ -16227,10 +15211,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '41,930',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            13 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            13 => [
                 'OCC_CODE' => '47-4010',
                 'OCC_TITLE' => 'Construction and Building Inspectors',
                 'OCC_GROUP' => 'broad',
@@ -16243,10 +15226,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '57,340',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            14 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            14 => [
                 'OCC_CODE' => '47-4011',
                 'OCC_TITLE' => 'Construction and Building Inspectors',
                 'OCC_GROUP' => 'detailed',
@@ -16259,10 +15241,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '57,340',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            15 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            15 => [
                 'OCC_CODE' => '47-4020',
                 'OCC_TITLE' => 'Elevator Installers and Repairers',
                 'OCC_GROUP' => 'broad',
@@ -16275,10 +15256,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '80,870',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            16 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            16 => [
                 'OCC_CODE' => '47-4021',
                 'OCC_TITLE' => 'Elevator Installers and Repairers',
                 'OCC_GROUP' => 'detailed',
@@ -16291,10 +15271,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '80,870',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            17 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            17 => [
                 'OCC_CODE' => '47-4030',
                 'OCC_TITLE' => 'Fence Erectors',
                 'OCC_GROUP' => 'broad',
@@ -16307,10 +15286,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,450',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            18 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            18 => [
                 'OCC_CODE' => '47-4031',
                 'OCC_TITLE' => 'Fence Erectors',
                 'OCC_GROUP' => 'detailed',
@@ -16323,10 +15301,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,450',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            19 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            19 => [
                 'OCC_CODE' => '47-4040',
                 'OCC_TITLE' => 'Hazardous Materials Removal Workers',
                 'OCC_GROUP' => 'broad',
@@ -16339,10 +15316,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '39,690',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            20 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            20 => [
                 'OCC_CODE' => '47-4041',
                 'OCC_TITLE' => 'Hazardous Materials Removal Workers',
                 'OCC_GROUP' => 'detailed',
@@ -16355,10 +15331,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '39,690',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            21 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            21 => [
                 'OCC_CODE' => '47-4050',
                 'OCC_TITLE' => 'Highway Maintenance Workers',
                 'OCC_GROUP' => 'broad',
@@ -16371,10 +15346,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,930',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            22 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            22 => [
                 'OCC_CODE' => '47-4051',
                 'OCC_TITLE' => 'Highway Maintenance Workers',
                 'OCC_GROUP' => 'detailed',
@@ -16387,10 +15361,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,930',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            23 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            23 => [
                 'OCC_CODE' => '47-4060',
                 'OCC_TITLE' => 'Rail-Track Laying and Maintenance Equipment Operators',
                 'OCC_GROUP' => 'broad',
@@ -16403,10 +15376,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '52,830',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            24 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            24 => [
                 'OCC_CODE' => '47-4061',
                 'OCC_TITLE' => 'Rail-Track Laying and Maintenance Equipment Operators',
                 'OCC_GROUP' => 'detailed',
@@ -16419,10 +15391,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '52,830',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            25 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            25 => [
                 'OCC_CODE' => '47-4070',
                 'OCC_TITLE' => 'Septic Tank Servicers and Sewer Pipe Cleaners',
                 'OCC_GROUP' => 'broad',
@@ -16435,10 +15406,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,370',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            26 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            26 => [
                 'OCC_CODE' => '47-4071',
                 'OCC_TITLE' => 'Septic Tank Servicers and Sewer Pipe Cleaners',
                 'OCC_GROUP' => 'detailed',
@@ -16451,10 +15421,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,370',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            27 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            27 => [
                 'OCC_CODE' => '47-4090',
                 'OCC_TITLE' => 'Miscellaneous Construction and Related Workers',
                 'OCC_GROUP' => 'broad',
@@ -16467,10 +15436,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,000',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            28 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            28 => [
                 'OCC_CODE' => '47-4091',
                 'OCC_TITLE' => 'Segmental Pavers',
                 'OCC_GROUP' => 'detailed',
@@ -16483,10 +15451,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,730',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            29 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            29 => [
                 'OCC_CODE' => '47-4099',
                 'OCC_TITLE' => 'Construction and Related Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -16499,10 +15466,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,300',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            30 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            30 => [
                 'OCC_CODE' => '47-5000',
                 'OCC_TITLE' => 'Extraction Workers',
                 'OCC_GROUP' => 'minor',
@@ -16515,10 +15481,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '42,680',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            31 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            31 => [
                 'OCC_CODE' => '47-5010',
                 'OCC_TITLE' => 'Derrick, Rotary Drill, and Service Unit Operators, Oil, Gas, and Mining',
                 'OCC_GROUP' => 'broad',
@@ -16531,10 +15496,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '47,240',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            32 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            32 => [
                 'OCC_CODE' => '47-5011',
                 'OCC_TITLE' => 'Derrick Operators, Oil and Gas',
                 'OCC_GROUP' => 'detailed',
@@ -16547,10 +15511,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '47,910',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            33 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            33 => [
                 'OCC_CODE' => '47-5012',
                 'OCC_TITLE' => 'Rotary Drill Operators, Oil and Gas',
                 'OCC_GROUP' => 'detailed',
@@ -16563,10 +15526,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '54,310',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            34 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            34 => [
                 'OCC_CODE' => '47-5013',
                 'OCC_TITLE' => 'Service Unit Operators, Oil, Gas, and Mining',
                 'OCC_GROUP' => 'detailed',
@@ -16579,10 +15541,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,000',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            35 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            35 => [
                 'OCC_CODE' => '47-5020',
                 'OCC_TITLE' => 'Earth Drillers, Except Oil and Gas',
                 'OCC_GROUP' => 'broad',
@@ -16595,10 +15556,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '44,240',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            36 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            36 => [
                 'OCC_CODE' => '47-5021',
                 'OCC_TITLE' => 'Earth Drillers, Except Oil and Gas',
                 'OCC_GROUP' => 'detailed',
@@ -16611,10 +15571,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '44,240',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            37 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            37 => [
                 'OCC_CODE' => '47-5030',
                 'OCC_TITLE' => 'Explosives Workers, Ordnance Handling Experts, and Blasters',
                 'OCC_GROUP' => 'broad',
@@ -16627,10 +15586,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '50,210',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            38 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            38 => [
                 'OCC_CODE' => '47-5031',
                 'OCC_TITLE' => 'Explosives Workers, Ordnance Handling Experts, and Blasters',
                 'OCC_GROUP' => 'detailed',
@@ -16643,10 +15601,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '50,210',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            39 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            39 => [
                 'OCC_CODE' => '47-5040',
                 'OCC_TITLE' => 'Mining Machine Operators',
                 'OCC_GROUP' => 'broad',
@@ -16659,10 +15616,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '49,560',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            40 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            40 => [
                 'OCC_CODE' => '47-5041',
                 'OCC_TITLE' => 'Continuous Mining Machine Operators',
                 'OCC_GROUP' => 'detailed',
@@ -16675,10 +15631,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,620',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            41 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            41 => [
                 'OCC_CODE' => '47-5042',
                 'OCC_TITLE' => 'Mine Cutting and Channeling Machine Operators',
                 'OCC_GROUP' => 'detailed',
@@ -16691,10 +15646,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '51,810',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            42 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            42 => [
                 'OCC_CODE' => '47-5049',
                 'OCC_TITLE' => 'Mining Machine Operators, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -16707,10 +15661,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,550',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            43 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            43 => [
                 'OCC_CODE' => '47-5050',
                 'OCC_TITLE' => 'Rock Splitters, Quarry',
                 'OCC_GROUP' => 'broad',
@@ -16723,10 +15676,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '33,820',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            44 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            44 => [
                 'OCC_CODE' => '47-5051',
                 'OCC_TITLE' => 'Rock Splitters, Quarry',
                 'OCC_GROUP' => 'detailed',
@@ -16739,10 +15691,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '33,820',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            45 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            45 => [
                 'OCC_CODE' => '47-5060',
                 'OCC_TITLE' => 'Roof Bolters, Mining',
                 'OCC_GROUP' => 'broad',
@@ -16755,10 +15706,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '54,950',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            46 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            46 => [
                 'OCC_CODE' => '47-5061',
                 'OCC_TITLE' => 'Roof Bolters, Mining',
                 'OCC_GROUP' => 'detailed',
@@ -16771,10 +15721,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '54,950',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            47 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            47 => [
                 'OCC_CODE' => '47-5070',
                 'OCC_TITLE' => 'Roustabouts, Oil and Gas',
                 'OCC_GROUP' => 'broad',
@@ -16787,10 +15736,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,510',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            48 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            48 => [
                 'OCC_CODE' => '47-5071',
                 'OCC_TITLE' => 'Roustabouts, Oil and Gas',
                 'OCC_GROUP' => 'detailed',
@@ -16803,10 +15751,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,510',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            49 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            49 => [
                 'OCC_CODE' => '47-5080',
                 'OCC_TITLE' => 'Helpers--Extraction Workers',
                 'OCC_GROUP' => 'broad',
@@ -16819,10 +15766,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,760',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            50 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            50 => [
                 'OCC_CODE' => '47-5081',
                 'OCC_TITLE' => 'Helpers--Extraction Workers',
                 'OCC_GROUP' => 'detailed',
@@ -16835,10 +15781,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,760',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            51 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            51 => [
                 'OCC_CODE' => '47-5090',
                 'OCC_TITLE' => 'Miscellaneous Extraction Workers',
                 'OCC_GROUP' => 'broad',
@@ -16851,10 +15796,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '44,370',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            52 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            52 => [
                 'OCC_CODE' => '47-5099',
                 'OCC_TITLE' => 'Extraction Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -16867,10 +15811,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '44,370',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            53 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            53 => [
                 'OCC_CODE' => '49-0000',
                 'OCC_TITLE' => 'Installation, Maintenance, and Repair Occupations',
                 'OCC_GROUP' => 'major',
@@ -16883,10 +15826,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '42,790',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            54 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            54 => [
                 'OCC_CODE' => '49-1000',
                 'OCC_TITLE' => 'Supervisors of Installation, Maintenance, and Repair Workers',
                 'OCC_GROUP' => 'minor',
@@ -16899,10 +15841,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '63,010',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            55 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            55 => [
                 'OCC_CODE' => '49-1010',
                 'OCC_TITLE' => 'First-Line Supervisors of Mechanics, Installers, and Repairers',
                 'OCC_GROUP' => 'broad',
@@ -16915,10 +15856,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '63,010',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            56 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            56 => [
                 'OCC_CODE' => '49-1011',
                 'OCC_TITLE' => 'First-Line Supervisors of Mechanics, Installers, and Repairers',
                 'OCC_GROUP' => 'detailed',
@@ -16931,10 +15871,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '63,010',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            57 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            57 => [
                 'OCC_CODE' => '49-2000',
                 'OCC_TITLE' => 'Electrical and Electronic Equipment Mechanics, Installers, and Repairers',
                 'OCC_GROUP' => 'minor',
@@ -16947,10 +15886,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,470',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            58 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            58 => [
                 'OCC_CODE' => '49-2010',
                 'OCC_TITLE' => 'Computer, Automated Teller, and Office Machine Repairers',
                 'OCC_GROUP' => 'broad',
@@ -16963,10 +15901,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,840',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            59 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            59 => [
                 'OCC_CODE' => '49-2011',
                 'OCC_TITLE' => 'Computer, Automated Teller, and Office Machine Repairers',
                 'OCC_GROUP' => 'detailed',
@@ -16979,10 +15916,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,840',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            60 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            60 => [
                 'OCC_CODE' => '49-2020',
                 'OCC_TITLE' => 'Radio and Telecommunications Equipment Installers and Repairers',
                 'OCC_GROUP' => 'broad',
@@ -16995,10 +15931,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '54,390',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            61 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            61 => [
                 'OCC_CODE' => '49-2021',
                 'OCC_TITLE' => 'Radio, Cellular, and Tower Equipment Installers and Repairers',
                 'OCC_GROUP' => 'detailed',
@@ -17011,10 +15946,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '51,660',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            62 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            62 => [
                 'OCC_CODE' => '49-2022',
                 'OCC_TITLE' => 'Telecommunications Equipment Installers and Repairers, Except Line Installers',
                 'OCC_GROUP' => 'detailed',
@@ -17027,10 +15961,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '54,570',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            63 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            63 => [
                 'OCC_CODE' => '49-2090',
                 'OCC_TITLE' => 'Miscellaneous Electrical and Electronic Equipment Mechanics, Installers, and Repairers',
                 'OCC_GROUP' => 'broad',
@@ -17043,10 +15976,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '49,750',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            64 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            64 => [
                 'OCC_CODE' => '49-2091',
                 'OCC_TITLE' => 'Avionics Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -17059,10 +15991,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '58,540',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            65 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            65 => [
                 'OCC_CODE' => '49-2092',
                 'OCC_TITLE' => 'Electric Motor, Power Tool, and Related Repairers',
                 'OCC_GROUP' => 'detailed',
@@ -17075,10 +16006,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,520',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            66 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            66 => [
                 'OCC_CODE' => '49-2093',
                 'OCC_TITLE' => 'Electrical and Electronics Installers and Repairers, Transportation Equipment',
                 'OCC_GROUP' => 'detailed',
@@ -17091,10 +16021,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '58,990',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            67 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            67 => [
                 'OCC_CODE' => '49-2094',
                 'OCC_TITLE' => 'Electrical and Electronics Repairers, Commercial and Industrial Equipment',
                 'OCC_GROUP' => 'detailed',
@@ -17107,10 +16036,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '55,690',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            68 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            68 => [
                 'OCC_CODE' => '49-2095',
                 'OCC_TITLE' => 'Electrical and Electronics Repairers, Powerhouse, Substation, and Relay',
                 'OCC_GROUP' => 'detailed',
@@ -17123,10 +16051,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '73,810',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            69 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            69 => [
                 'OCC_CODE' => '49-2096',
                 'OCC_TITLE' => 'Electronic Equipment Installers and Repairers, Motor Vehicles',
                 'OCC_GROUP' => 'detailed',
@@ -17139,10 +16066,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,360',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            70 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            70 => [
                 'OCC_CODE' => '49-2097',
                 'OCC_TITLE' => 'Electronic Home Entertainment Equipment Installers and Repairers',
                 'OCC_GROUP' => 'detailed',
@@ -17155,10 +16081,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,790',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            71 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            71 => [
                 'OCC_CODE' => '49-2098',
                 'OCC_TITLE' => 'Security and Fire Alarm Systems Installers',
                 'OCC_GROUP' => 'detailed',
@@ -17171,10 +16096,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '43,420',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            72 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            72 => [
                 'OCC_CODE' => '49-3000',
                 'OCC_TITLE' => 'Vehicle and Mobile Equipment Mechanics, Installers, and Repairers',
                 'OCC_GROUP' => 'minor',
@@ -17187,10 +16111,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,160',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            73 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            73 => [
                 'OCC_CODE' => '49-3010',
                 'OCC_TITLE' => 'Aircraft Mechanics and Service Technicians',
                 'OCC_GROUP' => 'broad',
@@ -17203,10 +16126,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '58,370',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            74 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            74 => [
                 'OCC_CODE' => '49-3011',
                 'OCC_TITLE' => 'Aircraft Mechanics and Service Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -17219,10 +16141,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '58,370',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            75 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            75 => [
                 'OCC_CODE' => '49-3020',
                 'OCC_TITLE' => 'Automotive Technicians and Repairers',
                 'OCC_GROUP' => 'broad',
@@ -17235,10 +16156,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '38,290',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            76 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            76 => [
                 'OCC_CODE' => '49-3021',
                 'OCC_TITLE' => 'Automotive Body and Related Repairers',
                 'OCC_GROUP' => 'detailed',
@@ -17251,10 +16171,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,970',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            77 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            77 => [
                 'OCC_CODE' => '49-3022',
                 'OCC_TITLE' => 'Automotive Glass Installers and Repairers',
                 'OCC_GROUP' => 'detailed',
@@ -17267,10 +16186,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '33,830',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            78 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            78 => [
                 'OCC_CODE' => '49-3023',
                 'OCC_TITLE' => 'Automotive Service Technicians and Mechanics',
                 'OCC_GROUP' => 'detailed',
@@ -17283,10 +16201,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,850',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            79 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            79 => [
                 'OCC_CODE' => '49-3030',
                 'OCC_TITLE' => 'Bus and Truck Mechanics and Diesel Engine Specialists',
                 'OCC_GROUP' => 'broad',
@@ -17299,10 +16216,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '44,520',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            80 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            80 => [
                 'OCC_CODE' => '49-3031',
                 'OCC_TITLE' => 'Bus and Truck Mechanics and Diesel Engine Specialists',
                 'OCC_GROUP' => 'detailed',
@@ -17315,10 +16231,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '44,520',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            81 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            81 => [
                 'OCC_CODE' => '49-3040',
                 'OCC_TITLE' => 'Heavy Vehicle and Mobile Equipment Service Technicians and Mechanics',
                 'OCC_GROUP' => 'broad',
@@ -17331,10 +16246,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '47,120',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            82 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            82 => [
                 'OCC_CODE' => '49-3041',
                 'OCC_TITLE' => 'Farm Equipment Mechanics and Service Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -17347,10 +16261,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,050',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            83 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            83 => [
                 'OCC_CODE' => '49-3042',
                 'OCC_TITLE' => 'Mobile Heavy Equipment Mechanics, Except Engines',
                 'OCC_GROUP' => 'detailed',
@@ -17363,10 +16276,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,770',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            84 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            84 => [
                 'OCC_CODE' => '49-3043',
                 'OCC_TITLE' => 'Rail Car Repairers',
                 'OCC_GROUP' => 'detailed',
@@ -17379,10 +16291,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '55,570',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            85 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            85 => [
                 'OCC_CODE' => '49-3050',
                 'OCC_TITLE' => 'Small Engine Mechanics',
                 'OCC_GROUP' => 'broad',
@@ -17395,10 +16306,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '34,650',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            86 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            86 => [
                 'OCC_CODE' => '49-3051',
                 'OCC_TITLE' => 'Motorboat Mechanics and Service Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -17411,10 +16321,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '38,280',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            87 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            87 => [
                 'OCC_CODE' => '49-3052',
                 'OCC_TITLE' => 'Motorcycle Mechanics',
                 'OCC_GROUP' => 'detailed',
@@ -17427,10 +16336,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '34,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            88 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            88 => [
                 'OCC_CODE' => '49-3053',
                 'OCC_TITLE' => 'Outdoor Power Equipment and Other Small Engine Mechanics',
                 'OCC_GROUP' => 'detailed',
@@ -17443,10 +16351,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,710',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            89 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            89 => [
                 'OCC_CODE' => '49-3090',
                 'OCC_TITLE' => 'Miscellaneous Vehicle and Mobile Equipment Mechanics, Installers, and Repairers',
                 'OCC_GROUP' => 'broad',
@@ -17459,10 +16366,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '25,140',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            90 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            90 => [
                 'OCC_CODE' => '49-3091',
                 'OCC_TITLE' => 'Bicycle Repairers',
                 'OCC_GROUP' => 'detailed',
@@ -17475,10 +16381,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,470',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            91 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            91 => [
                 'OCC_CODE' => '49-3092',
                 'OCC_TITLE' => 'Recreational Vehicle Service Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -17491,10 +16396,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,670',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            92 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            92 => [
                 'OCC_CODE' => '49-3093',
                 'OCC_TITLE' => 'Tire Repairers and Changers',
                 'OCC_GROUP' => 'detailed',
@@ -17507,10 +16411,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            93 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            93 => [
                 'OCC_CODE' => '49-9000',
                 'OCC_TITLE' => 'Other Installation, Maintenance, and Repair Occupations',
                 'OCC_GROUP' => 'minor',
@@ -17523,10 +16426,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,330',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            94 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            94 => [
                 'OCC_CODE' => '49-9010',
                 'OCC_TITLE' => 'Control and Valve Installers and Repairers',
                 'OCC_GROUP' => 'broad',
@@ -17539,10 +16441,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '47,400',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            95 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            95 => [
                 'OCC_CODE' => '49-9011',
                 'OCC_TITLE' => 'Mechanical Door Repairers',
                 'OCC_GROUP' => 'detailed',
@@ -17555,10 +16456,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '38,160',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            96 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            96 => [
                 'OCC_CODE' => '49-9012',
                 'OCC_TITLE' => 'Control and Valve Installers and Repairers, Except Mechanical Door',
                 'OCC_GROUP' => 'detailed',
@@ -17571,10 +16471,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '54,100',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            97 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            97 => [
                 'OCC_CODE' => '49-9020',
                 'OCC_TITLE' => 'Heating, Air Conditioning, and Refrigeration Mechanics and Installers',
                 'OCC_GROUP' => 'broad',
@@ -17587,10 +16486,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,110',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            98 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            98 => [
                 'OCC_CODE' => '49-9021',
                 'OCC_TITLE' => 'Heating, Air Conditioning, and Refrigeration Mechanics and Installers',
                 'OCC_GROUP' => 'detailed',
@@ -17603,10 +16501,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,110',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            99 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            99 => [
                 'OCC_CODE' => '49-9030',
                 'OCC_TITLE' => 'Home Appliance Repairers',
                 'OCC_GROUP' => 'broad',
@@ -17619,10 +16516,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,200',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            100 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            100 => [
                 'OCC_CODE' => '49-9031',
                 'OCC_TITLE' => 'Home Appliance Repairers',
                 'OCC_GROUP' => 'detailed',
@@ -17635,10 +16531,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,200',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            101 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            101 => [
                 'OCC_CODE' => '49-9040',
                 'OCC_TITLE' => 'Industrial Machinery Installation, Repair, and Maintenance Workers',
                 'OCC_GROUP' => 'broad',
@@ -17651,10 +16546,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,410',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            102 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            102 => [
                 'OCC_CODE' => '49-9041',
                 'OCC_TITLE' => 'Industrial Machinery Mechanics',
                 'OCC_GROUP' => 'detailed',
@@ -17667,10 +16561,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '49,690',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            103 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            103 => [
                 'OCC_CODE' => '49-9043',
                 'OCC_TITLE' => 'Maintenance Workers, Machinery',
                 'OCC_GROUP' => 'detailed',
@@ -17683,10 +16576,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '43,260',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            104 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            104 => [
                 'OCC_CODE' => '49-9044',
                 'OCC_TITLE' => 'Millwrights',
                 'OCC_GROUP' => 'detailed',
@@ -17699,10 +16591,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '51,390',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            105 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            105 => [
                 'OCC_CODE' => '49-9045',
                 'OCC_TITLE' => 'Refractory Materials Repairers, Except Brickmasons',
                 'OCC_GROUP' => 'detailed',
@@ -17715,10 +16606,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '47,060',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            106 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            106 => [
                 'OCC_CODE' => '49-9050',
                 'OCC_TITLE' => 'Line Installers and Repairers',
                 'OCC_GROUP' => 'broad',
@@ -17731,10 +16621,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '61,430',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            107 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            107 => [
                 'OCC_CODE' => '49-9051',
                 'OCC_TITLE' => 'Electrical Power-Line Installers and Repairers',
                 'OCC_GROUP' => 'detailed',
@@ -17747,10 +16636,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '66,450',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            108 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            108 => [
                 'OCC_CODE' => '49-9052',
                 'OCC_TITLE' => 'Telecommunications Line Installers and Repairers',
                 'OCC_GROUP' => 'detailed',
@@ -17763,10 +16651,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '52,920',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            109 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            109 => [
                 'OCC_CODE' => '49-9060',
                 'OCC_TITLE' => 'Precision Instrument and Equipment Repairers',
                 'OCC_GROUP' => 'broad',
@@ -17779,10 +16666,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,640',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            110 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            110 => [
                 'OCC_CODE' => '49-9061',
                 'OCC_TITLE' => 'Camera and Photographic Equipment Repairers',
                 'OCC_GROUP' => 'detailed',
@@ -17795,10 +16681,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,620',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            111 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            111 => [
                 'OCC_CODE' => '49-9062',
                 'OCC_TITLE' => 'Medical Equipment Repairers',
                 'OCC_GROUP' => 'detailed',
@@ -17811,10 +16696,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '46,340',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            112 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            112 => [
                 'OCC_CODE' => '49-9063',
                 'OCC_TITLE' => 'Musical Instrument Repairers and Tuners',
                 'OCC_GROUP' => 'detailed',
@@ -17827,10 +16711,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,660',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            113 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            113 => [
                 'OCC_CODE' => '49-9064',
                 'OCC_TITLE' => 'Watch Repairers',
                 'OCC_GROUP' => 'detailed',
@@ -17843,10 +16726,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '34,750',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            114 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            114 => [
                 'OCC_CODE' => '49-9069',
                 'OCC_TITLE' => 'Precision Instrument and Equipment Repairers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -17859,10 +16741,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '54,350',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            115 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            115 => [
                 'OCC_CODE' => '49-9070',
                 'OCC_TITLE' => 'Maintenance and Repair Workers, General',
                 'OCC_GROUP' => 'broad',
@@ -17875,10 +16756,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,630',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            116 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            116 => [
                 'OCC_CODE' => '49-9071',
                 'OCC_TITLE' => 'Maintenance and Repair Workers, General',
                 'OCC_GROUP' => 'detailed',
@@ -17891,10 +16771,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,630',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            117 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            117 => [
                 'OCC_CODE' => '49-9080',
                 'OCC_TITLE' => 'Wind Turbine Service Technicians',
                 'OCC_GROUP' => 'broad',
@@ -17907,10 +16786,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '51,050',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            118 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            118 => [
                 'OCC_CODE' => '49-9081',
                 'OCC_TITLE' => 'Wind Turbine Service Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -17923,10 +16801,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '51,050',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            119 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            119 => [
                 'OCC_CODE' => '49-9090',
                 'OCC_TITLE' => 'Miscellaneous Installation, Maintenance, and Repair Workers',
                 'OCC_GROUP' => 'broad',
@@ -17939,10 +16816,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '33,240',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            120 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            120 => [
                 'OCC_CODE' => '49-9091',
                 'OCC_TITLE' => 'Coin, Vending, and Amusement Machine Servicers and Repairers',
                 'OCC_GROUP' => 'detailed',
@@ -17955,10 +16831,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,700',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            121 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            121 => [
                 'OCC_CODE' => '49-9092',
                 'OCC_TITLE' => 'Commercial Divers',
                 'OCC_GROUP' => 'detailed',
@@ -17971,10 +16846,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '50,470',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            122 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            122 => [
                 'OCC_CODE' => '49-9093',
                 'OCC_TITLE' => 'Fabric Menders, Except Garment',
                 'OCC_GROUP' => 'detailed',
@@ -17987,10 +16861,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,490',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            123 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            123 => [
                 'OCC_CODE' => '49-9094',
                 'OCC_TITLE' => 'Locksmiths and Safe Repairers',
                 'OCC_GROUP' => 'detailed',
@@ -18003,10 +16876,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '39,160',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            124 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            124 => [
                 'OCC_CODE' => '49-9095',
                 'OCC_TITLE' => 'Manufactured Building and Mobile Home Installers',
                 'OCC_GROUP' => 'detailed',
@@ -18019,10 +16891,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,050',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            125 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            125 => [
                 'OCC_CODE' => '49-9096',
                 'OCC_TITLE' => 'Riggers',
                 'OCC_GROUP' => 'detailed',
@@ -18035,10 +16906,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '43,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            126 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            126 => [
                 'OCC_CODE' => '49-9097',
                 'OCC_TITLE' => 'Signal and Track Switch Repairers',
                 'OCC_GROUP' => 'detailed',
@@ -18051,10 +16921,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '63,840',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            127 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            127 => [
                 'OCC_CODE' => '49-9098',
                 'OCC_TITLE' => 'Helpers--Installation, Maintenance, and Repair Workers',
                 'OCC_GROUP' => 'detailed',
@@ -18067,10 +16936,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,400',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            128 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            128 => [
                 'OCC_CODE' => '49-9099',
                 'OCC_TITLE' => 'Installation, Maintenance, and Repair Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -18083,10 +16951,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,730',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            129 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            129 => [
                 'OCC_CODE' => '51-0000',
                 'OCC_TITLE' => 'Production Occupations',
                 'OCC_GROUP' => 'major',
@@ -18099,10 +16966,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,250',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            130 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            130 => [
                 'OCC_CODE' => '51-1000',
                 'OCC_TITLE' => 'Supervisors of Production Workers',
                 'OCC_GROUP' => 'minor',
@@ -18115,10 +16981,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '56,340',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            131 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            131 => [
                 'OCC_CODE' => '51-1010',
                 'OCC_TITLE' => 'First-Line Supervisors of Production and Operating Workers',
                 'OCC_GROUP' => 'broad',
@@ -18131,10 +16996,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '56,340',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            132 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            132 => [
                 'OCC_CODE' => '51-1011',
                 'OCC_TITLE' => 'First-Line Supervisors of Production and Operating Workers',
                 'OCC_GROUP' => 'detailed',
@@ -18147,10 +17011,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '56,340',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            133 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            133 => [
                 'OCC_CODE' => '51-2000',
                 'OCC_TITLE' => 'Assemblers and Fabricators',
                 'OCC_GROUP' => 'minor',
@@ -18163,10 +17026,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,080',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            134 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            134 => [
                 'OCC_CODE' => '51-2010',
                 'OCC_TITLE' => 'Aircraft Structure, Surfaces, Rigging, and Systems Assemblers',
                 'OCC_GROUP' => 'broad',
@@ -18179,10 +17041,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,970',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            135 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            135 => [
                 'OCC_CODE' => '51-2011',
                 'OCC_TITLE' => 'Aircraft Structure, Surfaces, Rigging, and Systems Assemblers',
                 'OCC_GROUP' => 'detailed',
@@ -18195,10 +17056,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,970',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            136 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            136 => [
                 'OCC_CODE' => '51-2020',
                 'OCC_TITLE' => 'Electrical, Electronics, and Electromechanical Assemblers',
                 'OCC_GROUP' => 'broad',
@@ -18211,10 +17071,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,350',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            137 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            137 => [
                 'OCC_CODE' => '51-2021',
                 'OCC_TITLE' => 'Coil Winders, Tapers, and Finishers',
                 'OCC_GROUP' => 'detailed',
@@ -18227,10 +17086,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,730',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            138 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            138 => [
                 'OCC_CODE' => '51-2022',
                 'OCC_TITLE' => 'Electrical and Electronic Equipment Assemblers',
                 'OCC_GROUP' => 'detailed',
@@ -18243,10 +17101,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,860',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            139 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            139 => [
                 'OCC_CODE' => '51-2023',
                 'OCC_TITLE' => 'Electromechanical Equipment Assemblers',
                 'OCC_GROUP' => 'detailed',
@@ -18259,10 +17116,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '33,580',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            140 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            140 => [
                 'OCC_CODE' => '51-2030',
                 'OCC_TITLE' => 'Engine and Other Machine Assemblers',
                 'OCC_GROUP' => 'broad',
@@ -18275,10 +17131,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '39,600',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            141 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            141 => [
                 'OCC_CODE' => '51-2031',
                 'OCC_TITLE' => 'Engine and Other Machine Assemblers',
                 'OCC_GROUP' => 'detailed',
@@ -18291,10 +17146,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '39,600',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            142 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            142 => [
                 'OCC_CODE' => '51-2040',
                 'OCC_TITLE' => 'Structural Metal Fabricators and Fitters',
                 'OCC_GROUP' => 'broad',
@@ -18307,10 +17161,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,050',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            143 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            143 => [
                 'OCC_CODE' => '51-2041',
                 'OCC_TITLE' => 'Structural Metal Fabricators and Fitters',
                 'OCC_GROUP' => 'detailed',
@@ -18323,10 +17176,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,050',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            144 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            144 => [
                 'OCC_CODE' => '51-2090',
                 'OCC_TITLE' => 'Miscellaneous Assemblers and Fabricators',
                 'OCC_GROUP' => 'broad',
@@ -18339,10 +17191,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '28,850',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            145 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            145 => [
                 'OCC_CODE' => '51-2091',
                 'OCC_TITLE' => 'Fiberglass Laminators and Fabricators',
                 'OCC_GROUP' => 'detailed',
@@ -18355,10 +17206,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,160',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            146 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            146 => [
                 'OCC_CODE' => '51-2092',
                 'OCC_TITLE' => 'Team Assemblers',
                 'OCC_GROUP' => 'detailed',
@@ -18371,10 +17221,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,080',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            147 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            147 => [
                 'OCC_CODE' => '51-2093',
                 'OCC_TITLE' => 'Timing Device Assemblers and Adjusters',
                 'OCC_GROUP' => 'detailed',
@@ -18387,10 +17236,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,940',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            148 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            148 => [
                 'OCC_CODE' => '51-2099',
                 'OCC_TITLE' => 'Assemblers and Fabricators, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -18403,10 +17251,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,620',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            149 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            149 => [
                 'OCC_CODE' => '51-3000',
                 'OCC_TITLE' => 'Food Processing Workers',
                 'OCC_GROUP' => 'minor',
@@ -18419,10 +17266,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '25,470',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            150 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            150 => [
                 'OCC_CODE' => '51-3010',
                 'OCC_TITLE' => 'Bakers',
                 'OCC_GROUP' => 'broad',
@@ -18435,10 +17281,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,170',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            151 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            151 => [
                 'OCC_CODE' => '51-3011',
                 'OCC_TITLE' => 'Bakers',
                 'OCC_GROUP' => 'detailed',
@@ -18451,10 +17296,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,170',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            152 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            152 => [
                 'OCC_CODE' => '51-3020',
                 'OCC_TITLE' => 'Butchers and Other Meat, Poultry, and Fish Processing Workers',
                 'OCC_GROUP' => 'broad',
@@ -18467,10 +17311,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '25,660',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            153 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            153 => [
                 'OCC_CODE' => '51-3021',
                 'OCC_TITLE' => 'Butchers and Meat Cutters',
                 'OCC_GROUP' => 'detailed',
@@ -18483,10 +17326,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,130',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            154 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            154 => [
                 'OCC_CODE' => '51-3022',
                 'OCC_TITLE' => 'Meat, Poultry, and Fish Cutters and Trimmers',
                 'OCC_GROUP' => 'detailed',
@@ -18499,10 +17341,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '23,870',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            155 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            155 => [
                 'OCC_CODE' => '51-3023',
                 'OCC_TITLE' => 'Slaughterers and Meat Packers',
                 'OCC_GROUP' => 'detailed',
@@ -18515,10 +17356,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '25,650',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            156 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            156 => [
                 'OCC_CODE' => '51-3090',
                 'OCC_TITLE' => 'Miscellaneous Food Processing Workers',
                 'OCC_GROUP' => 'broad',
@@ -18531,10 +17371,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,350',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            157 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            157 => [
                 'OCC_CODE' => '51-3091',
                 'OCC_TITLE' => 'Food and Tobacco Roasting, Baking, and Drying Machine Operators and Tenders',
                 'OCC_GROUP' => 'detailed',
@@ -18547,10 +17386,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '28,060',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            158 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            158 => [
                 'OCC_CODE' => '51-3092',
                 'OCC_TITLE' => 'Food Batchmakers',
                 'OCC_GROUP' => 'detailed',
@@ -18563,10 +17401,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,950',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            159 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            159 => [
                 'OCC_CODE' => '51-3093',
                 'OCC_TITLE' => 'Food Cooking Machine Operators and Tenders',
                 'OCC_GROUP' => 'detailed',
@@ -18579,10 +17416,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,760',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            160 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            160 => [
                 'OCC_CODE' => '51-3099',
                 'OCC_TITLE' => 'Food Processing Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -18595,10 +17431,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '23,720',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            161 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            161 => [
                 'OCC_CODE' => '51-4000',
                 'OCC_TITLE' => 'Metal Workers and Plastic Workers',
                 'OCC_GROUP' => 'minor',
@@ -18611,10 +17446,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,730',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            162 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            162 => [
                 'OCC_CODE' => '51-4010',
                 'OCC_TITLE' => 'Computer Control Programmers and Operators',
                 'OCC_GROUP' => 'broad',
@@ -18627,10 +17461,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '38,430',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            163 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            163 => [
                 'OCC_CODE' => '51-4011',
                 'OCC_TITLE' => 'Computer-Controlled Machine Tool Operators, Metal and Plastic',
                 'OCC_GROUP' => 'detailed',
@@ -18643,10 +17476,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,030',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            164 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            164 => [
                 'OCC_CODE' => '51-4012',
                 'OCC_TITLE' => 'Computer Numerically Controlled Machine Tool Programmers, Metal and Plastic',
                 'OCC_GROUP' => 'detailed',
@@ -18659,10 +17491,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,990',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            165 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            165 => [
                 'OCC_CODE' => '51-4020',
                 'OCC_TITLE' => 'Forming Machine Setters, Operators, and Tenders, Metal and Plastic',
                 'OCC_GROUP' => 'broad',
@@ -18675,10 +17506,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '34,990',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            166 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            166 => [
                 'OCC_CODE' => '51-4021',
                 'OCC_TITLE' => 'Extruding and Drawing Machine Setters, Operators, and Tenders, Metal and Plastic',
                 'OCC_GROUP' => 'detailed',
@@ -18691,10 +17521,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '33,120',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            167 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            167 => [
                 'OCC_CODE' => '51-4022',
                 'OCC_TITLE' => 'Forging Machine Setters, Operators, and Tenders, Metal and Plastic',
                 'OCC_GROUP' => 'detailed',
@@ -18707,10 +17536,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,070',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            168 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            168 => [
                 'OCC_CODE' => '51-4023',
                 'OCC_TITLE' => 'Rolling Machine Setters, Operators, and Tenders, Metal and Plastic',
                 'OCC_GROUP' => 'detailed',
@@ -18723,10 +17551,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,590',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            169 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            169 => [
                 'OCC_CODE' => '51-4030',
                 'OCC_TITLE' => 'Machine Tool Cutting Setters, Operators, and Tenders, Metal and Plastic',
                 'OCC_GROUP' => 'broad',
@@ -18739,10 +17566,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,830',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            170 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            170 => [
                 'OCC_CODE' => '51-4031',
                 'OCC_TITLE' => 'Cutting, Punching, and Press Machine Setters, Operators, and Tenders, Metal and Plastic',
                 'OCC_GROUP' => 'detailed',
@@ -18755,10 +17581,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,280',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            171 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            171 => [
                 'OCC_CODE' => '51-4032',
                 'OCC_TITLE' => 'Drilling and Boring Machine Tool Setters, Operators, and Tenders, Metal and Plastic',
                 'OCC_GROUP' => 'detailed',
@@ -18771,10 +17596,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,480',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            172 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            172 => [
                 'OCC_CODE' => '51-4033',
                 'OCC_TITLE' => 'Grinding, Lapping, Polishing, and Buffing Machine Tool Setters, Operators, and Tenders, Metal and Plastic',
                 'OCC_GROUP' => 'detailed',
@@ -18787,10 +17611,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,840',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            173 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            173 => [
                 'OCC_CODE' => '51-4034',
                 'OCC_TITLE' => 'Lathe and Turning Machine Tool Setters, Operators, and Tenders, Metal and Plastic',
                 'OCC_GROUP' => 'detailed',
@@ -18803,10 +17626,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,810',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            174 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            174 => [
                 'OCC_CODE' => '51-4035',
                 'OCC_TITLE' => 'Milling and Planing Machine Setters, Operators, and Tenders, Metal and Plastic',
                 'OCC_GROUP' => 'detailed',
@@ -18819,10 +17641,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '38,250',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            175 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            175 => [
                 'OCC_CODE' => '51-4040',
                 'OCC_TITLE' => 'Machinists',
                 'OCC_GROUP' => 'broad',
@@ -18835,10 +17656,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,550',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            176 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            176 => [
                 'OCC_CODE' => '51-4041',
                 'OCC_TITLE' => 'Machinists',
                 'OCC_GROUP' => 'detailed',
@@ -18851,10 +17671,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,550',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            177 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            177 => [
                 'OCC_CODE' => '51-4050',
                 'OCC_TITLE' => 'Metal Furnace Operators, Tenders, Pourers, and Casters',
                 'OCC_GROUP' => 'broad',
@@ -18867,10 +17686,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '39,490',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            178 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            178 => [
                 'OCC_CODE' => '51-4051',
                 'OCC_TITLE' => 'Metal-Refining Furnace Operators and Tenders',
                 'OCC_GROUP' => 'detailed',
@@ -18883,10 +17701,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '42,240',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            179 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            179 => [
                 'OCC_CODE' => '51-4052',
                 'OCC_TITLE' => 'Pourers and Casters, Metal',
                 'OCC_GROUP' => 'detailed',
@@ -18899,10 +17716,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '33,850',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            180 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            180 => [
                 'OCC_CODE' => '51-4060',
                 'OCC_TITLE' => 'Model Makers and Patternmakers, Metal and Plastic',
                 'OCC_GROUP' => 'broad',
@@ -18915,10 +17731,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '43,950',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            181 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            181 => [
                 'OCC_CODE' => '51-4061',
                 'OCC_TITLE' => 'Model Makers, Metal and Plastic',
                 'OCC_GROUP' => 'detailed',
@@ -18931,10 +17746,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,980',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            182 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            182 => [
                 'OCC_CODE' => '51-4062',
                 'OCC_TITLE' => 'Patternmakers, Metal and Plastic',
                 'OCC_GROUP' => 'detailed',
@@ -18947,10 +17761,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,960',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            183 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            183 => [
                 'OCC_CODE' => '51-4070',
                 'OCC_TITLE' => 'Molders and Molding Machine Setters, Operators, and Tenders, Metal and Plastic',
                 'OCC_GROUP' => 'broad',
@@ -18963,10 +17776,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,630',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            184 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            184 => [
                 'OCC_CODE' => '51-4071',
                 'OCC_TITLE' => 'Foundry Mold and Coremakers',
                 'OCC_GROUP' => 'detailed',
@@ -18979,10 +17791,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,680',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            185 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            185 => [
                 'OCC_CODE' => '51-4072',
                 'OCC_TITLE' => 'Molding, Coremaking, and Casting Machine Setters, Operators, and Tenders, Metal and Plastic',
                 'OCC_GROUP' => 'detailed',
@@ -18995,10 +17806,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,340',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            186 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            186 => [
                 'OCC_CODE' => '51-4080',
                 'OCC_TITLE' => 'Multiple Machine Tool Setters, Operators, and Tenders, Metal and Plastic',
                 'OCC_GROUP' => 'broad',
@@ -19011,10 +17821,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '33,950',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            187 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            187 => [
                 'OCC_CODE' => '51-4081',
                 'OCC_TITLE' => 'Multiple Machine Tool Setters, Operators, and Tenders, Metal and Plastic',
                 'OCC_GROUP' => 'detailed',
@@ -19027,10 +17836,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '33,950',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            188 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            188 => [
                 'OCC_CODE' => '51-4110',
                 'OCC_TITLE' => 'Tool and Die Makers',
                 'OCC_GROUP' => 'broad',
@@ -19043,10 +17851,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '50,290',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            189 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            189 => [
                 'OCC_CODE' => '51-4111',
                 'OCC_TITLE' => 'Tool and Die Makers',
                 'OCC_GROUP' => 'detailed',
@@ -19059,10 +17866,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '50,290',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            190 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            190 => [
                 'OCC_CODE' => '51-4120',
                 'OCC_TITLE' => 'Welding, Soldering, and Brazing Workers',
                 'OCC_GROUP' => 'broad',
@@ -19075,10 +17881,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,910',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            191 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            191 => [
                 'OCC_CODE' => '51-4121',
                 'OCC_TITLE' => 'Welders, Cutters, Solderers, and Brazers',
                 'OCC_GROUP' => 'detailed',
@@ -19091,10 +17896,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '38,150',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            192 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            192 => [
                 'OCC_CODE' => '51-4122',
                 'OCC_TITLE' => 'Welding, Soldering, and Brazing Machine Setters, Operators, and Tenders',
                 'OCC_GROUP' => 'detailed',
@@ -19107,10 +17911,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,150',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            193 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            193 => [
                 'OCC_CODE' => '51-4190',
                 'OCC_TITLE' => 'Miscellaneous Metal Workers and Plastic Workers',
                 'OCC_GROUP' => 'broad',
@@ -19123,10 +17926,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '34,270',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            194 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            194 => [
                 'OCC_CODE' => '51-4191',
                 'OCC_TITLE' => 'Heat Treating Equipment Setters, Operators, and Tenders, Metal and Plastic',
                 'OCC_GROUP' => 'detailed',
@@ -19139,10 +17941,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,600',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            195 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            195 => [
                 'OCC_CODE' => '51-4192',
                 'OCC_TITLE' => 'Layout Workers, Metal and Plastic',
                 'OCC_GROUP' => 'detailed',
@@ -19155,10 +17956,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '44,530',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            196 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            196 => [
                 'OCC_CODE' => '51-4193',
                 'OCC_TITLE' => 'Plating and Coating Machine Setters, Operators, and Tenders, Metal and Plastic',
                 'OCC_GROUP' => 'detailed',
@@ -19171,10 +17971,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,550',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            197 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            197 => [
                 'OCC_CODE' => '51-4194',
                 'OCC_TITLE' => 'Tool Grinders, Filers, and Sharpeners',
                 'OCC_GROUP' => 'detailed',
@@ -19187,10 +17986,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,550',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            198 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            198 => [
                 'OCC_CODE' => '51-4199',
                 'OCC_TITLE' => 'Metal Workers and Plastic Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -19203,10 +18001,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,990',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            199 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            199 => [
                 'OCC_CODE' => '51-5100',
                 'OCC_TITLE' => 'Printing Workers',
                 'OCC_GROUP' => 'minor',
@@ -19219,10 +18016,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '34,620',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            200 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            200 => [
                 'OCC_CODE' => '51-5110',
                 'OCC_TITLE' => 'Printing Workers',
                 'OCC_GROUP' => 'broad',
@@ -19235,10 +18031,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '34,620',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            201 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            201 => [
                 'OCC_CODE' => '51-5111',
                 'OCC_TITLE' => 'Prepress Technicians and Workers',
                 'OCC_GROUP' => 'detailed',
@@ -19251,10 +18046,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '38,270',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            202 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            202 => [
                 'OCC_CODE' => '51-5112',
                 'OCC_TITLE' => 'Printing Press Operators',
                 'OCC_GROUP' => 'detailed',
@@ -19267,10 +18061,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,240',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            203 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            203 => [
                 'OCC_CODE' => '51-5113',
                 'OCC_TITLE' => 'Print Binding and Finishing Workers',
                 'OCC_GROUP' => 'detailed',
@@ -19283,10 +18076,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,260',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            204 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            204 => [
                 'OCC_CODE' => '51-6000',
                 'OCC_TITLE' => 'Textile, Apparel, and Furnishings Workers',
                 'OCC_GROUP' => 'minor',
@@ -19299,10 +18091,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '22,990',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            205 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            205 => [
                 'OCC_CODE' => '51-6010',
                 'OCC_TITLE' => 'Laundry and Dry-Cleaning Workers',
                 'OCC_GROUP' => 'broad',
@@ -19315,10 +18106,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '20,820',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            206 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            206 => [
                 'OCC_CODE' => '51-6011',
                 'OCC_TITLE' => 'Laundry and Dry-Cleaning Workers',
                 'OCC_GROUP' => 'detailed',
@@ -19331,10 +18121,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '20,820',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            207 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            207 => [
                 'OCC_CODE' => '51-6020',
                 'OCC_TITLE' => 'Pressers, Textile, Garment, and Related Materials',
                 'OCC_GROUP' => 'broad',
@@ -19347,10 +18136,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '20,470',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            208 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            208 => [
                 'OCC_CODE' => '51-6021',
                 'OCC_TITLE' => 'Pressers, Textile, Garment, and Related Materials',
                 'OCC_GROUP' => 'detailed',
@@ -19363,10 +18151,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '20,470',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            209 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            209 => [
                 'OCC_CODE' => '51-6030',
                 'OCC_TITLE' => 'Sewing Machine Operators',
                 'OCC_GROUP' => 'broad',
@@ -19379,10 +18166,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '22,550',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            210 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            210 => [
                 'OCC_CODE' => '51-6031',
                 'OCC_TITLE' => 'Sewing Machine Operators',
                 'OCC_GROUP' => 'detailed',
@@ -19395,10 +18181,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '22,550',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            211 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            211 => [
                 'OCC_CODE' => '51-6040',
                 'OCC_TITLE' => 'Shoe and Leather Workers',
                 'OCC_GROUP' => 'broad',
@@ -19411,10 +18196,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '24,090',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            212 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            212 => [
                 'OCC_CODE' => '51-6041',
                 'OCC_TITLE' => 'Shoe and Leather Workers and Repairers',
                 'OCC_GROUP' => 'detailed',
@@ -19427,10 +18211,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '23,630',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            213 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            213 => [
                 'OCC_CODE' => '51-6042',
                 'OCC_TITLE' => 'Shoe Machine Operators and Tenders',
                 'OCC_GROUP' => 'detailed',
@@ -19443,10 +18226,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '25,190',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            214 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            214 => [
                 'OCC_CODE' => '51-6050',
                 'OCC_TITLE' => 'Tailors, Dressmakers, and Sewers',
                 'OCC_GROUP' => 'broad',
@@ -19459,10 +18241,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '25,120',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            215 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            215 => [
                 'OCC_CODE' => '51-6051',
                 'OCC_TITLE' => 'Sewers, Hand',
                 'OCC_GROUP' => 'detailed',
@@ -19475,10 +18256,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '23,640',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            216 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            216 => [
                 'OCC_CODE' => '51-6052',
                 'OCC_TITLE' => 'Tailors, Dressmakers, and Custom Sewers',
                 'OCC_GROUP' => 'detailed',
@@ -19491,10 +18271,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '25,830',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            217 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            217 => [
                 'OCC_CODE' => '51-6060',
                 'OCC_TITLE' => 'Textile Machine Setters, Operators, and Tenders',
                 'OCC_GROUP' => 'broad',
@@ -19507,10 +18286,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,690',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            218 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            218 => [
                 'OCC_CODE' => '51-6061',
                 'OCC_TITLE' => 'Textile Bleaching and Dyeing Machine Operators and Tenders',
                 'OCC_GROUP' => 'detailed',
@@ -19523,10 +18301,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,340',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            219 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            219 => [
                 'OCC_CODE' => '51-6062',
                 'OCC_TITLE' => 'Textile Cutting Machine Setters, Operators, and Tenders',
                 'OCC_GROUP' => 'detailed',
@@ -19539,10 +18316,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '25,490',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            220 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            220 => [
                 'OCC_CODE' => '51-6063',
                 'OCC_TITLE' => 'Textile Knitting and Weaving Machine Setters, Operators, and Tenders',
                 'OCC_GROUP' => 'detailed',
@@ -19555,10 +18331,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            221 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            221 => [
                 'OCC_CODE' => '51-6064',
                 'OCC_TITLE' => 'Textile Winding, Twisting, and Drawing Out Machine Setters, Operators, and Tenders',
                 'OCC_GROUP' => 'detailed',
@@ -19571,10 +18346,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,870',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            222 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            222 => [
                 'OCC_CODE' => '51-6090',
                 'OCC_TITLE' => 'Miscellaneous Textile, Apparel, and Furnishings Workers',
                 'OCC_GROUP' => 'broad',
@@ -19587,10 +18361,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,120',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            223 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            223 => [
                 'OCC_CODE' => '51-6091',
                 'OCC_TITLE' => 'Extruding and Forming Machine Setters, Operators, and Tenders, Synthetic and Glass Fibers',
                 'OCC_GROUP' => 'detailed',
@@ -19603,10 +18376,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,980',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            224 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            224 => [
                 'OCC_CODE' => '51-6092',
                 'OCC_TITLE' => 'Fabric and Apparel Patternmakers',
                 'OCC_GROUP' => 'detailed',
@@ -19619,10 +18391,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '43,900',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            225 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            225 => [
                 'OCC_CODE' => '51-6093',
                 'OCC_TITLE' => 'Upholsterers',
                 'OCC_GROUP' => 'detailed',
@@ -19635,10 +18406,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,020',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            226 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            226 => [
                 'OCC_CODE' => '51-6099',
                 'OCC_TITLE' => 'Textile, Apparel, and Furnishings Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -19651,10 +18421,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,310',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            227 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            227 => [
                 'OCC_CODE' => '51-7000',
                 'OCC_TITLE' => 'Woodworkers',
                 'OCC_GROUP' => 'minor',
@@ -19667,10 +18436,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,500',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            228 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            228 => [
                 'OCC_CODE' => '51-7010',
                 'OCC_TITLE' => 'Cabinetmakers and Bench Carpenters',
                 'OCC_GROUP' => 'broad',
@@ -19683,10 +18451,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,270',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            229 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            229 => [
                 'OCC_CODE' => '51-7011',
                 'OCC_TITLE' => 'Cabinetmakers and Bench Carpenters',
                 'OCC_GROUP' => 'detailed',
@@ -19699,10 +18466,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,270',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            230 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            230 => [
                 'OCC_CODE' => '51-7020',
                 'OCC_TITLE' => 'Furniture Finishers',
                 'OCC_GROUP' => 'broad',
@@ -19715,10 +18481,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,200',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            231 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            231 => [
                 'OCC_CODE' => '51-7021',
                 'OCC_TITLE' => 'Furniture Finishers',
                 'OCC_GROUP' => 'detailed',
@@ -19731,10 +18496,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,200',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            232 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            232 => [
                 'OCC_CODE' => '51-7030',
                 'OCC_TITLE' => 'Model Makers and Patternmakers, Wood',
                 'OCC_GROUP' => 'broad',
@@ -19747,10 +18511,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,720',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            233 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            233 => [
                 'OCC_CODE' => '51-7031',
                 'OCC_TITLE' => 'Model Makers, Wood',
                 'OCC_GROUP' => 'detailed',
@@ -19763,10 +18526,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '33,590',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            234 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            234 => [
                 'OCC_CODE' => '51-7032',
                 'OCC_TITLE' => 'Patternmakers, Wood',
                 'OCC_GROUP' => 'detailed',
@@ -19779,10 +18541,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '38,410',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            235 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            235 => [
                 'OCC_CODE' => '51-7040',
                 'OCC_TITLE' => 'Woodworking Machine Setters, Operators, and Tenders',
                 'OCC_GROUP' => 'broad',
@@ -19795,10 +18556,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,810',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            236 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            236 => [
                 'OCC_CODE' => '51-7041',
                 'OCC_TITLE' => 'Sawing Machine Setters, Operators, and Tenders, Wood',
                 'OCC_GROUP' => 'detailed',
@@ -19811,10 +18571,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,800',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            237 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            237 => [
                 'OCC_CODE' => '51-7042',
                 'OCC_TITLE' => 'Woodworking Machine Setters, Operators, and Tenders, Except Sawing',
                 'OCC_GROUP' => 'detailed',
@@ -19827,10 +18586,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,820',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            238 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            238 => [
                 'OCC_CODE' => '51-7090',
                 'OCC_TITLE' => 'Miscellaneous Woodworkers',
                 'OCC_GROUP' => 'broad',
@@ -19843,10 +18601,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '28,990',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            239 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            239 => [
                 'OCC_CODE' => '51-7099',
                 'OCC_TITLE' => 'Woodworkers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -19859,10 +18616,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '28,990',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            240 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            240 => [
                 'OCC_CODE' => '51-8000',
                 'OCC_TITLE' => 'Plant and System Operators',
                 'OCC_GROUP' => 'minor',
@@ -19875,10 +18631,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '57,160',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            241 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            241 => [
                 'OCC_CODE' => '51-8010',
                 'OCC_TITLE' => 'Power Plant Operators, Distributors, and Dispatchers',
                 'OCC_GROUP' => 'broad',
@@ -19891,10 +18646,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '75,660',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            242 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            242 => [
                 'OCC_CODE' => '51-8011',
                 'OCC_TITLE' => 'Nuclear Power Reactor Operators',
                 'OCC_GROUP' => 'detailed',
@@ -19907,10 +18661,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '88,560',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            243 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            243 => [
                 'OCC_CODE' => '51-8012',
                 'OCC_TITLE' => 'Power Distributors and Dispatchers',
                 'OCC_GROUP' => 'detailed',
@@ -19923,10 +18676,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '80,840',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            244 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            244 => [
                 'OCC_CODE' => '51-8013',
                 'OCC_TITLE' => 'Power Plant Operators',
                 'OCC_GROUP' => 'detailed',
@@ -19939,10 +18691,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '71,940',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            245 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            245 => [
                 'OCC_CODE' => '51-8020',
                 'OCC_TITLE' => 'Stationary Engineers and Boiler Operators',
                 'OCC_GROUP' => 'broad',
@@ -19955,10 +18706,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '58,530',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            246 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            246 => [
                 'OCC_CODE' => '51-8021',
                 'OCC_TITLE' => 'Stationary Engineers and Boiler Operators',
                 'OCC_GROUP' => 'detailed',
@@ -19971,10 +18721,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '58,530',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            247 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            247 => [
                 'OCC_CODE' => '51-8030',
                 'OCC_TITLE' => 'Water and Wastewater Treatment Plant and System Operators',
                 'OCC_GROUP' => 'broad',
@@ -19987,10 +18736,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '44,790',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            248 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            248 => [
                 'OCC_CODE' => '51-8031',
                 'OCC_TITLE' => 'Water and Wastewater Treatment Plant and System Operators',
                 'OCC_GROUP' => 'detailed',
@@ -20003,10 +18751,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '44,790',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            249 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            249 => [
                 'OCC_CODE' => '51-8090',
                 'OCC_TITLE' => 'Miscellaneous Plant and System Operators',
                 'OCC_GROUP' => 'broad',
@@ -20019,10 +18766,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '62,100',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            250 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            250 => [
                 'OCC_CODE' => '51-8091',
                 'OCC_TITLE' => 'Chemical Plant and System Operators',
                 'OCC_GROUP' => 'detailed',
@@ -20035,10 +18781,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '59,320',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            251 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            251 => [
                 'OCC_CODE' => '51-8092',
                 'OCC_TITLE' => 'Gas Plant Operators',
                 'OCC_GROUP' => 'detailed',
@@ -20051,10 +18796,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '66,010',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            252 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            252 => [
                 'OCC_CODE' => '51-8093',
                 'OCC_TITLE' => 'Petroleum Pump System Operators, Refinery Operators, and Gaugers',
                 'OCC_GROUP' => 'detailed',
@@ -20067,10 +18811,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '65,190',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            253 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            253 => [
                 'OCC_CODE' => '51-8099',
                 'OCC_TITLE' => 'Plant and System Operators, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -20083,10 +18826,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '55,540',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            254 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            254 => [
                 'OCC_CODE' => '51-9000',
                 'OCC_TITLE' => 'Other Production Occupations',
                 'OCC_GROUP' => 'minor',
@@ -20099,10 +18841,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,590',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            255 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            255 => [
                 'OCC_CODE' => '51-9010',
                 'OCC_TITLE' => 'Chemical Processing Machine Setters, Operators, and Tenders',
                 'OCC_GROUP' => 'broad',
@@ -20115,10 +18856,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '43,340',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            256 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            256 => [
                 'OCC_CODE' => '51-9011',
                 'OCC_TITLE' => 'Chemical Equipment Operators and Tenders',
                 'OCC_GROUP' => 'detailed',
@@ -20131,10 +18871,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '47,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            257 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            257 => [
                 'OCC_CODE' => '51-9012',
                 'OCC_TITLE' => 'Separating, Filtering, Clarifying, Precipitating, and Still Machine Setters, Operators, and Tenders',
                 'OCC_GROUP' => 'detailed',
@@ -20147,10 +18886,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '38,420',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            258 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            258 => [
                 'OCC_CODE' => '51-9020',
                 'OCC_TITLE' => 'Crushing, Grinding, Polishing, Mixing, and Blending Workers',
                 'OCC_GROUP' => 'broad',
@@ -20163,10 +18901,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '33,460',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            259 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            259 => [
                 'OCC_CODE' => '51-9021',
                 'OCC_TITLE' => 'Crushing, Grinding, and Polishing Machine Setters, Operators, and Tenders',
                 'OCC_GROUP' => 'detailed',
@@ -20179,10 +18916,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '33,810',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            260 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            260 => [
                 'OCC_CODE' => '51-9022',
                 'OCC_TITLE' => 'Grinding and Polishing Workers, Hand',
                 'OCC_GROUP' => 'detailed',
@@ -20195,10 +18931,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '28,610',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            261 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            261 => [
                 'OCC_CODE' => '51-9023',
                 'OCC_TITLE' => 'Mixing and Blending Machine Setters, Operators, and Tenders',
                 'OCC_GROUP' => 'detailed',
@@ -20211,10 +18946,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '34,600',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            262 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            262 => [
                 'OCC_CODE' => '51-9030',
                 'OCC_TITLE' => 'Cutting Workers',
                 'OCC_GROUP' => 'broad',
@@ -20227,10 +18961,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,970',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            263 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            263 => [
                 'OCC_CODE' => '51-9031',
                 'OCC_TITLE' => 'Cutters and Trimmers, Hand',
                 'OCC_GROUP' => 'detailed',
@@ -20243,10 +18976,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,820',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            264 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            264 => [
                 'OCC_CODE' => '51-9032',
                 'OCC_TITLE' => 'Cutting and Slicing Machine Setters, Operators, and Tenders',
                 'OCC_GROUP' => 'detailed',
@@ -20259,10 +18991,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,190',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            265 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            265 => [
                 'OCC_CODE' => '51-9040',
                 'OCC_TITLE' => 'Extruding, Forming, Pressing, and Compacting Machine Setters, Operators, and Tenders',
                 'OCC_GROUP' => 'broad',
@@ -20275,10 +19006,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,160',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            266 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            266 => [
                 'OCC_CODE' => '51-9041',
                 'OCC_TITLE' => 'Extruding, Forming, Pressing, and Compacting Machine Setters, Operators, and Tenders',
                 'OCC_GROUP' => 'detailed',
@@ -20291,10 +19021,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,160',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            267 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            267 => [
                 'OCC_CODE' => '51-9050',
                 'OCC_TITLE' => 'Furnace, Kiln, Oven, Drier, and Kettle Operators and Tenders',
                 'OCC_GROUP' => 'broad',
@@ -20307,10 +19036,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,360',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            268 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            268 => [
                 'OCC_CODE' => '51-9051',
                 'OCC_TITLE' => 'Furnace, Kiln, Oven, Drier, and Kettle Operators and Tenders',
                 'OCC_GROUP' => 'detailed',
@@ -20323,10 +19051,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,360',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            269 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            269 => [
                 'OCC_CODE' => '51-9060',
                 'OCC_TITLE' => 'Inspectors, Testers, Sorters, Samplers, and Weighers',
                 'OCC_GROUP' => 'broad',
@@ -20339,10 +19066,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,000',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            270 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            270 => [
                 'OCC_CODE' => '51-9061',
                 'OCC_TITLE' => 'Inspectors, Testers, Sorters, Samplers, and Weighers',
                 'OCC_GROUP' => 'detailed',
@@ -20355,10 +19081,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,000',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            271 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            271 => [
                 'OCC_CODE' => '51-9070',
                 'OCC_TITLE' => 'Jewelers and Precious Stone and Metal Workers',
                 'OCC_GROUP' => 'broad',
@@ -20371,10 +19096,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,060',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            272 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            272 => [
                 'OCC_CODE' => '51-9071',
                 'OCC_TITLE' => 'Jewelers and Precious Stone and Metal Workers',
                 'OCC_GROUP' => 'detailed',
@@ -20387,10 +19111,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,060',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            273 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            273 => [
                 'OCC_CODE' => '51-9080',
                 'OCC_TITLE' => 'Medical, Dental, and Ophthalmic Laboratory Technicians',
                 'OCC_GROUP' => 'broad',
@@ -20403,10 +19126,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '33,950',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            274 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            274 => [
                 'OCC_CODE' => '51-9081',
                 'OCC_TITLE' => 'Dental Laboratory Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -20419,10 +19141,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '37,190',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            275 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            275 => [
                 'OCC_CODE' => '51-9082',
                 'OCC_TITLE' => 'Medical Appliance Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -20435,10 +19156,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '34,890',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            276 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            276 => [
                 'OCC_CODE' => '51-9083',
                 'OCC_TITLE' => 'Ophthalmic Laboratory Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -20451,10 +19171,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,860',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            277 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            277 => [
                 'OCC_CODE' => '51-9110',
                 'OCC_TITLE' => 'Packaging and Filling Machine Operators and Tenders',
                 'OCC_GROUP' => 'broad',
@@ -20467,10 +19186,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,080',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            278 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            278 => [
                 'OCC_CODE' => '51-9111',
                 'OCC_TITLE' => 'Packaging and Filling Machine Operators and Tenders',
                 'OCC_GROUP' => 'detailed',
@@ -20483,10 +19201,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,080',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            279 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            279 => [
                 'OCC_CODE' => '51-9120',
                 'OCC_TITLE' => 'Painting Workers',
                 'OCC_GROUP' => 'broad',
@@ -20499,10 +19216,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '34,340',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            280 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            280 => [
                 'OCC_CODE' => '51-9121',
                 'OCC_TITLE' => 'Coating, Painting, and Spraying Machine Setters, Operators, and Tenders',
                 'OCC_GROUP' => 'detailed',
@@ -20515,10 +19231,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,940',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            281 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            281 => [
                 'OCC_CODE' => '51-9122',
                 'OCC_TITLE' => 'Painters, Transportation Equipment',
                 'OCC_GROUP' => 'detailed',
@@ -20531,10 +19246,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '41,150',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            282 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            282 => [
                 'OCC_CODE' => '51-9123',
                 'OCC_TITLE' => 'Painting, Coating, and Decorating Workers',
                 'OCC_GROUP' => 'detailed',
@@ -20547,10 +19261,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,270',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            283 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            283 => [
                 'OCC_CODE' => '51-9140',
                 'OCC_TITLE' => 'Semiconductor Processors',
                 'OCC_GROUP' => 'broad',
@@ -20563,10 +19276,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,390',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            284 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            284 => [
                 'OCC_CODE' => '51-9141',
                 'OCC_TITLE' => 'Semiconductor Processors',
                 'OCC_GROUP' => 'detailed',
@@ -20579,10 +19291,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,390',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            285 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            285 => [
                 'OCC_CODE' => '51-9150',
                 'OCC_TITLE' => 'Photographic Process Workers and Processing Machine Operators',
                 'OCC_GROUP' => 'broad',
@@ -20595,10 +19306,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,590',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            286 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            286 => [
                 'OCC_CODE' => '51-9151',
                 'OCC_TITLE' => 'Photographic Process Workers and Processing Machine Operators',
                 'OCC_GROUP' => 'detailed',
@@ -20611,10 +19321,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,590',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            287 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            287 => [
                 'OCC_CODE' => '51-9190',
                 'OCC_TITLE' => 'Miscellaneous Production Workers',
                 'OCC_GROUP' => 'broad',
@@ -20627,10 +19336,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '26,590',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            288 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            288 => [
                 'OCC_CODE' => '51-9191',
                 'OCC_TITLE' => 'Adhesive Bonding Machine Operators and Tenders',
                 'OCC_GROUP' => 'detailed',
@@ -20643,10 +19351,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '31,710',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            289 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            289 => [
                 'OCC_CODE' => '51-9192',
                 'OCC_TITLE' => 'Cleaning, Washing, and Metal Pickling Equipment Operators and Tenders',
                 'OCC_GROUP' => 'detailed',
@@ -20659,10 +19366,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,880',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            290 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            290 => [
                 'OCC_CODE' => '51-9193',
                 'OCC_TITLE' => 'Cooling and Freezing Equipment Operators and Tenders',
                 'OCC_GROUP' => 'detailed',
@@ -20675,10 +19381,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '28,630',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            291 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            291 => [
                 'OCC_CODE' => '51-9194',
                 'OCC_TITLE' => 'Etchers and Engravers',
                 'OCC_GROUP' => 'detailed',
@@ -20691,10 +19396,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,810',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            292 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            292 => [
                 'OCC_CODE' => '51-9195',
                 'OCC_TITLE' => 'Molders, Shapers, and Casters, Except Metal and Plastic',
                 'OCC_GROUP' => 'detailed',
@@ -20707,10 +19411,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,630',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            293 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            293 => [
                 'OCC_CODE' => '51-9196',
                 'OCC_TITLE' => 'Paper Goods Machine Setters, Operators, and Tenders',
                 'OCC_GROUP' => 'detailed',
@@ -20723,10 +19426,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,710',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            294 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            294 => [
                 'OCC_CODE' => '51-9197',
                 'OCC_TITLE' => 'Tire Builders',
                 'OCC_GROUP' => 'detailed',
@@ -20739,10 +19441,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '39,120',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            295 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            295 => [
                 'OCC_CODE' => '51-9198',
                 'OCC_TITLE' => 'Helpers--Production Workers',
                 'OCC_GROUP' => 'detailed',
@@ -20755,10 +19456,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '23,960',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            296 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            296 => [
                 'OCC_CODE' => '51-9199',
                 'OCC_TITLE' => 'Production Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -20771,10 +19471,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '27,950',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            297 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            297 => [
                 'OCC_CODE' => '53-0000',
                 'OCC_TITLE' => 'Transportation and Material Moving Occupations',
                 'OCC_GROUP' => 'major',
@@ -20787,10 +19486,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,090',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            298 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            298 => [
                 'OCC_CODE' => '53-1000',
                 'OCC_TITLE' => 'Supervisors of Transportation and Material Moving Workers',
                 'OCC_GROUP' => 'minor',
@@ -20803,10 +19501,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '51,280',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            299 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            299 => [
                 'OCC_CODE' => '53-1010',
                 'OCC_TITLE' => 'Aircraft Cargo Handling Supervisors',
                 'OCC_GROUP' => 'broad',
@@ -20819,10 +19516,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,470',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            300 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            300 => [
                 'OCC_CODE' => '53-1011',
                 'OCC_TITLE' => 'Aircraft Cargo Handling Supervisors',
                 'OCC_GROUP' => 'detailed',
@@ -20835,10 +19531,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,470',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            301 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            301 => [
                 'OCC_CODE' => '53-1020',
                 'OCC_TITLE' => 'First-Line Supervisors of Helpers, Laborers, and Material Movers, Hand',
                 'OCC_GROUP' => 'broad',
@@ -20851,10 +19546,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '46,960',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            302 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            302 => [
                 'OCC_CODE' => '53-1021',
                 'OCC_TITLE' => 'First-Line Supervisors of Helpers, Laborers, and Material Movers, Hand',
                 'OCC_GROUP' => 'detailed',
@@ -20867,10 +19561,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '46,960',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            303 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            303 => [
                 'OCC_CODE' => '53-1030',
                 'OCC_TITLE' => 'First-Line Supervisors of Transportation and Material-Moving Machine and Vehicle Operators',
                 'OCC_GROUP' => 'broad',
@@ -20883,10 +19576,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '55,860',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            304 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            304 => [
                 'OCC_CODE' => '53-1031',
                 'OCC_TITLE' => 'First-Line Supervisors of Transportation and Material-Moving Machine and Vehicle Operators',
                 'OCC_GROUP' => 'detailed',
@@ -20899,10 +19591,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '55,860',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            305 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            305 => [
                 'OCC_CODE' => '53-2000',
                 'OCC_TITLE' => 'Air Transportation Workers',
                 'OCC_GROUP' => 'minor',
@@ -20915,10 +19606,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '68,510',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            306 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            306 => [
                 'OCC_CODE' => '53-2010',
                 'OCC_TITLE' => 'Aircraft Pilots and Flight Engineers',
                 'OCC_GROUP' => 'broad',
@@ -20931,10 +19621,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '102,520',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            307 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            307 => [
                 'OCC_CODE' => '53-2011',
                 'OCC_TITLE' => 'Airline Pilots, Copilots, and Flight Engineers',
                 'OCC_GROUP' => 'detailed',
@@ -20947,10 +19636,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '117,290',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            308 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            308 => [
                 'OCC_CODE' => '53-2012',
                 'OCC_TITLE' => 'Commercial Pilots',
                 'OCC_GROUP' => 'detailed',
@@ -20963,10 +19651,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '76,150',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            309 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            309 => [
                 'OCC_CODE' => '53-2020',
                 'OCC_TITLE' => 'Air Traffic Controllers and Airfield Operations Specialists',
                 'OCC_GROUP' => 'broad',
@@ -20979,10 +19666,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '99,940',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            310 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            310 => [
                 'OCC_CODE' => '53-2021',
                 'OCC_TITLE' => 'Air Traffic Controllers',
                 'OCC_GROUP' => 'detailed',
@@ -20995,10 +19681,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '122,950',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            311 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            311 => [
                 'OCC_CODE' => '53-2022',
                 'OCC_TITLE' => 'Airfield Operations Specialists',
                 'OCC_GROUP' => 'detailed',
@@ -21011,10 +19696,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '51,880',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            312 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            312 => [
                 'OCC_CODE' => '53-2030',
                 'OCC_TITLE' => 'Flight Attendants',
                 'OCC_GROUP' => 'broad',
@@ -21027,10 +19711,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '44,860',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            313 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            313 => [
                 'OCC_CODE' => '53-2031',
                 'OCC_TITLE' => 'Flight Attendants',
                 'OCC_GROUP' => 'detailed',
@@ -21043,10 +19726,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '44,860',
                 'ANNUAL' => 'TRUE',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            314 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            314 => [
                 'OCC_CODE' => '53-3000',
                 'OCC_TITLE' => 'Motor Vehicle Operators',
                 'OCC_GROUP' => 'minor',
@@ -21059,10 +19741,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '34,170',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            315 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            315 => [
                 'OCC_CODE' => '53-3010',
                 'OCC_TITLE' => 'Ambulance Drivers and Attendants, Except Emergency Medical Technicians',
                 'OCC_GROUP' => 'broad',
@@ -21075,10 +19756,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '23,740',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            316 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            316 => [
                 'OCC_CODE' => '53-3011',
                 'OCC_TITLE' => 'Ambulance Drivers and Attendants, Except Emergency Medical Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -21091,10 +19771,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '23,740',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            317 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            317 => [
                 'OCC_CODE' => '53-3020',
                 'OCC_TITLE' => 'Bus Drivers',
                 'OCC_GROUP' => 'broad',
@@ -21107,10 +19786,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,950',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            318 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            318 => [
                 'OCC_CODE' => '53-3021',
                 'OCC_TITLE' => 'Bus Drivers, Transit and Intercity',
                 'OCC_GROUP' => 'detailed',
@@ -21123,10 +19801,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '38,290',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            319 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            319 => [
                 'OCC_CODE' => '53-3022',
                 'OCC_TITLE' => 'Bus Drivers, School or Special Client',
                 'OCC_GROUP' => 'detailed',
@@ -21139,10 +19816,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,490',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            320 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            320 => [
                 'OCC_CODE' => '53-3030',
                 'OCC_TITLE' => 'Driver/Sales Workers and Truck Drivers',
                 'OCC_GROUP' => 'broad',
@@ -21155,10 +19831,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '35,850',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            321 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            321 => [
                 'OCC_CODE' => '53-3031',
                 'OCC_TITLE' => 'Driver/Sales Workers',
                 'OCC_GROUP' => 'detailed',
@@ -21171,10 +19846,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '22,450',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            322 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            322 => [
                 'OCC_CODE' => '53-3032',
                 'OCC_TITLE' => 'Heavy and Tractor-Trailer Truck Drivers',
                 'OCC_GROUP' => 'detailed',
@@ -21187,10 +19861,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,260',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            323 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            323 => [
                 'OCC_CODE' => '53-3033',
                 'OCC_TITLE' => 'Light Truck or Delivery Services Drivers',
                 'OCC_GROUP' => 'detailed',
@@ -21203,10 +19876,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,850',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            324 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            324 => [
                 'OCC_CODE' => '53-3040',
                 'OCC_TITLE' => 'Taxi Drivers and Chauffeurs',
                 'OCC_GROUP' => 'broad',
@@ -21219,10 +19891,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '23,510',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            325 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            325 => [
                 'OCC_CODE' => '53-3041',
                 'OCC_TITLE' => 'Taxi Drivers and Chauffeurs',
                 'OCC_GROUP' => 'detailed',
@@ -21235,10 +19906,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '23,510',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            326 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            326 => [
                 'OCC_CODE' => '53-3090',
                 'OCC_TITLE' => 'Miscellaneous Motor Vehicle Operators',
                 'OCC_GROUP' => 'broad',
@@ -21251,10 +19921,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,230',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            327 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            327 => [
                 'OCC_CODE' => '53-3099',
                 'OCC_TITLE' => 'Motor Vehicle Operators, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -21267,10 +19936,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,230',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            328 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            328 => [
                 'OCC_CODE' => '53-4000',
                 'OCC_TITLE' => 'Rail Transportation Workers',
                 'OCC_GROUP' => 'minor',
@@ -21283,10 +19951,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '55,900',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            329 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            329 => [
                 'OCC_CODE' => '53-4010',
                 'OCC_TITLE' => 'Locomotive Engineers and Operators',
                 'OCC_GROUP' => 'broad',
@@ -21299,10 +19966,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '55,030',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            330 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            330 => [
                 'OCC_CODE' => '53-4011',
                 'OCC_TITLE' => 'Locomotive Engineers',
                 'OCC_GROUP' => 'detailed',
@@ -21315,10 +19981,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '56,240',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            331 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            331 => [
                 'OCC_CODE' => '53-4012',
                 'OCC_TITLE' => 'Locomotive Firers',
                 'OCC_GROUP' => 'detailed',
@@ -21331,10 +19996,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,470',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            332 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            332 => [
                 'OCC_CODE' => '53-4013',
                 'OCC_TITLE' => 'Rail Yard Engineers, Dinkey Operators, and Hostlers',
                 'OCC_GROUP' => 'detailed',
@@ -21347,10 +20011,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '45,780',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            333 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            333 => [
                 'OCC_CODE' => '53-4020',
                 'OCC_TITLE' => 'Railroad Brake, Signal, and Switch Operators',
                 'OCC_GROUP' => 'broad',
@@ -21363,10 +20026,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '54,020',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            334 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            334 => [
                 'OCC_CODE' => '53-4021',
                 'OCC_TITLE' => 'Railroad Brake, Signal, and Switch Operators',
                 'OCC_GROUP' => 'detailed',
@@ -21379,10 +20041,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '54,020',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            335 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            335 => [
                 'OCC_CODE' => '53-4030',
                 'OCC_TITLE' => 'Railroad Conductors and Yardmasters',
                 'OCC_GROUP' => 'broad',
@@ -21395,10 +20056,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '55,930',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            336 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            336 => [
                 'OCC_CODE' => '53-4031',
                 'OCC_TITLE' => 'Railroad Conductors and Yardmasters',
                 'OCC_GROUP' => 'detailed',
@@ -21411,10 +20071,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '55,930',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            337 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            337 => [
                 'OCC_CODE' => '53-4040',
                 'OCC_TITLE' => 'Subway and Streetcar Operators',
                 'OCC_GROUP' => 'broad',
@@ -21427,10 +20086,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '62,360',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            338 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            338 => [
                 'OCC_CODE' => '53-4041',
                 'OCC_TITLE' => 'Subway and Streetcar Operators',
                 'OCC_GROUP' => 'detailed',
@@ -21443,10 +20101,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '62,360',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            339 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            339 => [
                 'OCC_CODE' => '53-4090',
                 'OCC_TITLE' => 'Miscellaneous Rail Transportation Workers',
                 'OCC_GROUP' => 'broad',
@@ -21459,10 +20116,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '59,840',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            340 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            340 => [
                 'OCC_CODE' => '53-4099',
                 'OCC_TITLE' => 'Rail Transportation Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -21475,10 +20131,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '59,840',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            341 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            341 => [
                 'OCC_CODE' => '53-5000',
                 'OCC_TITLE' => 'Water Transportation Workers',
                 'OCC_GROUP' => 'minor',
@@ -21491,10 +20146,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '55,000',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            342 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            342 => [
                 'OCC_CODE' => '53-5010',
                 'OCC_TITLE' => 'Sailors and Marine Oilers',
                 'OCC_GROUP' => 'broad',
@@ -21507,10 +20161,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '41,260',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            343 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            343 => [
                 'OCC_CODE' => '53-5011',
                 'OCC_TITLE' => 'Sailors and Marine Oilers',
                 'OCC_GROUP' => 'detailed',
@@ -21523,10 +20176,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '41,260',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            344 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            344 => [
                 'OCC_CODE' => '53-5020',
                 'OCC_TITLE' => 'Ship and Boat Captains and Operators',
                 'OCC_GROUP' => 'broad',
@@ -21539,10 +20191,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '72,420',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            345 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            345 => [
                 'OCC_CODE' => '53-5021',
                 'OCC_TITLE' => 'Captains, Mates, and Pilots of Water Vessels',
                 'OCC_GROUP' => 'detailed',
@@ -21555,10 +20206,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '76,780',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            346 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            346 => [
                 'OCC_CODE' => '53-5022',
                 'OCC_TITLE' => 'Motorboat Operators',
                 'OCC_GROUP' => 'detailed',
@@ -21571,10 +20221,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,800',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            347 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            347 => [
                 'OCC_CODE' => '53-5030',
                 'OCC_TITLE' => 'Ship Engineers',
                 'OCC_GROUP' => 'broad',
@@ -21587,10 +20236,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '72,870',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            348 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            348 => [
                 'OCC_CODE' => '53-5031',
                 'OCC_TITLE' => 'Ship Engineers',
                 'OCC_GROUP' => 'detailed',
@@ -21603,10 +20251,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '72,870',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            349 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            349 => [
                 'OCC_CODE' => '53-6000',
                 'OCC_TITLE' => 'Other Transportation Workers',
                 'OCC_GROUP' => 'minor',
@@ -21619,10 +20266,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '22,880',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            350 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            350 => [
                 'OCC_CODE' => '53-6010',
                 'OCC_TITLE' => 'Bridge and Lock Tenders',
                 'OCC_GROUP' => 'broad',
@@ -21635,10 +20281,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,520',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            351 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            351 => [
                 'OCC_CODE' => '53-6011',
                 'OCC_TITLE' => 'Bridge and Lock Tenders',
                 'OCC_GROUP' => 'detailed',
@@ -21651,10 +20296,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '48,520',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            352 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            352 => [
                 'OCC_CODE' => '53-6020',
                 'OCC_TITLE' => 'Parking Lot Attendants',
                 'OCC_GROUP' => 'broad',
@@ -21667,10 +20311,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '20,630',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            353 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            353 => [
                 'OCC_CODE' => '53-6021',
                 'OCC_TITLE' => 'Parking Lot Attendants',
                 'OCC_GROUP' => 'detailed',
@@ -21683,10 +20326,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '20,630',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            354 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            354 => [
                 'OCC_CODE' => '53-6030',
                 'OCC_TITLE' => 'Automotive and Watercraft Service Attendants',
                 'OCC_GROUP' => 'broad',
@@ -21699,10 +20341,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '21,560',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            355 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            355 => [
                 'OCC_CODE' => '53-6031',
                 'OCC_TITLE' => 'Automotive and Watercraft Service Attendants',
                 'OCC_GROUP' => 'detailed',
@@ -21715,10 +20356,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '21,560',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            356 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            356 => [
                 'OCC_CODE' => '53-6040',
                 'OCC_TITLE' => 'Traffic Technicians',
                 'OCC_GROUP' => 'broad',
@@ -21731,10 +20371,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '43,930',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            357 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            357 => [
                 'OCC_CODE' => '53-6041',
                 'OCC_TITLE' => 'Traffic Technicians',
                 'OCC_GROUP' => 'detailed',
@@ -21747,10 +20386,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '43,930',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            358 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            358 => [
                 'OCC_CODE' => '53-6050',
                 'OCC_TITLE' => 'Transportation Inspectors',
                 'OCC_GROUP' => 'broad',
@@ -21763,10 +20401,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '70,820',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            359 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            359 => [
                 'OCC_CODE' => '53-6051',
                 'OCC_TITLE' => 'Transportation Inspectors',
                 'OCC_GROUP' => 'detailed',
@@ -21779,10 +20416,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '70,820',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            360 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            360 => [
                 'OCC_CODE' => '53-6060',
                 'OCC_TITLE' => 'Transportation Attendants, Except Flight Attendants',
                 'OCC_GROUP' => 'broad',
@@ -21795,10 +20431,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '25,930',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            361 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            361 => [
                 'OCC_CODE' => '53-6061',
                 'OCC_TITLE' => 'Transportation Attendants, Except Flight Attendants',
                 'OCC_GROUP' => 'detailed',
@@ -21811,10 +20446,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '25,930',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            362 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            362 => [
                 'OCC_CODE' => '53-6090',
                 'OCC_TITLE' => 'Miscellaneous Transportation Workers',
                 'OCC_GROUP' => 'broad',
@@ -21827,10 +20461,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,890',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            363 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            363 => [
                 'OCC_CODE' => '53-6099',
                 'OCC_TITLE' => 'Transportation Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -21843,10 +20476,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,890',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            364 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            364 => [
                 'OCC_CODE' => '53-7000',
                 'OCC_TITLE' => 'Material Moving Workers',
                 'OCC_GROUP' => 'minor',
@@ -21859,10 +20491,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '25,420',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            365 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            365 => [
                 'OCC_CODE' => '53-7010',
                 'OCC_TITLE' => 'Conveyor Operators and Tenders',
                 'OCC_GROUP' => 'broad',
@@ -21875,10 +20506,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,050',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            366 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            366 => [
                 'OCC_CODE' => '53-7011',
                 'OCC_TITLE' => 'Conveyor Operators and Tenders',
                 'OCC_GROUP' => 'detailed',
@@ -21891,10 +20521,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,050',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            367 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            367 => [
                 'OCC_CODE' => '53-7020',
                 'OCC_TITLE' => 'Crane and Tower Operators',
                 'OCC_GROUP' => 'broad',
@@ -21907,10 +20536,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '51,650',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            368 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            368 => [
                 'OCC_CODE' => '53-7021',
                 'OCC_TITLE' => 'Crane and Tower Operators',
                 'OCC_GROUP' => 'detailed',
@@ -21923,10 +20551,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '51,650',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            369 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            369 => [
                 'OCC_CODE' => '53-7030',
                 'OCC_TITLE' => 'Dredge, Excavating, and Loading Machine Operators',
                 'OCC_GROUP' => 'broad',
@@ -21939,10 +20566,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,650',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            370 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            370 => [
                 'OCC_CODE' => '53-7031',
                 'OCC_TITLE' => 'Dredge Operators',
                 'OCC_GROUP' => 'detailed',
@@ -21955,10 +20581,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,060',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            371 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            371 => [
                 'OCC_CODE' => '53-7032',
                 'OCC_TITLE' => 'Excavating and Loading Machine and Dragline Operators',
                 'OCC_GROUP' => 'detailed',
@@ -21971,10 +20596,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '40,050',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            372 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            372 => [
                 'OCC_CODE' => '53-7033',
                 'OCC_TITLE' => 'Loading Machine Operators, Underground Mining',
                 'OCC_GROUP' => 'detailed',
@@ -21987,10 +20611,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '52,320',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            373 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            373 => [
                 'OCC_CODE' => '53-7040',
                 'OCC_TITLE' => 'Hoist and Winch Operators',
                 'OCC_GROUP' => 'broad',
@@ -22003,10 +20626,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '42,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            374 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            374 => [
                 'OCC_CODE' => '53-7041',
                 'OCC_TITLE' => 'Hoist and Winch Operators',
                 'OCC_GROUP' => 'detailed',
@@ -22019,10 +20641,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '42,220',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            375 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            375 => [
                 'OCC_CODE' => '53-7050',
                 'OCC_TITLE' => 'Industrial Truck and Tractor Operators',
                 'OCC_GROUP' => 'broad',
@@ -22035,10 +20656,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,090',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            376 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            376 => [
                 'OCC_CODE' => '53-7051',
                 'OCC_TITLE' => 'Industrial Truck and Tractor Operators',
                 'OCC_GROUP' => 'detailed',
@@ -22051,10 +20671,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '32,090',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            377 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            377 => [
                 'OCC_CODE' => '53-7060',
                 'OCC_TITLE' => 'Laborers and Material Movers, Hand',
                 'OCC_GROUP' => 'broad',
@@ -22067,10 +20686,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '23,930',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            378 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            378 => [
                 'OCC_CODE' => '53-7061',
                 'OCC_TITLE' => 'Cleaners of Vehicles and Equipment',
                 'OCC_GROUP' => 'detailed',
@@ -22083,10 +20701,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '21,310',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            379 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            379 => [
                 'OCC_CODE' => '53-7062',
                 'OCC_TITLE' => 'Laborers and Freight, Stock, and Material Movers, Hand',
                 'OCC_GROUP' => 'detailed',
@@ -22099,10 +20716,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '25,010',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            380 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            380 => [
                 'OCC_CODE' => '53-7063',
                 'OCC_TITLE' => 'Machine Feeders and Offbearers',
                 'OCC_GROUP' => 'detailed',
@@ -22115,10 +20731,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '29,440',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            381 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            381 => [
                 'OCC_CODE' => '53-7064',
                 'OCC_TITLE' => 'Packers and Packagers, Hand',
                 'OCC_GROUP' => 'detailed',
@@ -22131,10 +20746,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '21,010',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            382 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            382 => [
                 'OCC_CODE' => '53-7070',
                 'OCC_TITLE' => 'Pumping Station Operators',
                 'OCC_GROUP' => 'broad',
@@ -22147,10 +20761,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '47,200',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            383 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            383 => [
                 'OCC_CODE' => '53-7071',
                 'OCC_TITLE' => 'Gas Compressor and Gas Pumping Station Operators',
                 'OCC_GROUP' => 'detailed',
@@ -22163,10 +20776,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '58,350',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            384 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            384 => [
                 'OCC_CODE' => '53-7072',
                 'OCC_TITLE' => 'Pump Operators, Except Wellhead Pumpers',
                 'OCC_GROUP' => 'detailed',
@@ -22179,10 +20791,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '42,420',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            385 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            385 => [
                 'OCC_CODE' => '53-7073',
                 'OCC_TITLE' => 'Wellhead Pumpers',
                 'OCC_GROUP' => 'detailed',
@@ -22195,10 +20806,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '46,990',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            386 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            386 => [
                 'OCC_CODE' => '53-7080',
                 'OCC_TITLE' => 'Refuse and Recyclable Material Collectors',
                 'OCC_GROUP' => 'broad',
@@ -22211,10 +20821,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '33,800',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            387 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            387 => [
                 'OCC_CODE' => '53-7081',
                 'OCC_TITLE' => 'Refuse and Recyclable Material Collectors',
                 'OCC_GROUP' => 'detailed',
@@ -22227,10 +20836,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '33,800',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            388 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            388 => [
                 'OCC_CODE' => '53-7110',
                 'OCC_TITLE' => 'Mine Shuttle Car Operators',
                 'OCC_GROUP' => 'broad',
@@ -22243,10 +20851,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '55,320',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            389 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            389 => [
                 'OCC_CODE' => '53-7111',
                 'OCC_TITLE' => 'Mine Shuttle Car Operators',
                 'OCC_GROUP' => 'detailed',
@@ -22259,10 +20866,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '55,320',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            390 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            390 => [
                 'OCC_CODE' => '53-7120',
                 'OCC_TITLE' => 'Tank Car, Truck, and Ship Loaders',
                 'OCC_GROUP' => 'broad',
@@ -22275,10 +20881,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,660',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            391 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            391 => [
                 'OCC_CODE' => '53-7121',
                 'OCC_TITLE' => 'Tank Car, Truck, and Ship Loaders',
                 'OCC_GROUP' => 'detailed',
@@ -22291,10 +20896,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '36,660',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            392 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            392 => [
                 'OCC_CODE' => '53-7190',
                 'OCC_TITLE' => 'Miscellaneous Material Moving Workers',
                 'OCC_GROUP' => 'broad',
@@ -22307,10 +20911,9 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,360',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-            393 => 
-            array (
+                'ocuupation_id' => null,
+            ],
+            393 => [
                 'OCC_CODE' => '53-7199',
                 'OCC_TITLE' => 'Material Moving Workers, All Other',
                 'OCC_GROUP' => 'detailed',
@@ -22323,10 +20926,8 @@ class OccupationListTableSeeder extends Seeder
                 'A_MEDIAN' => '30,360',
                 'ANNUAL' => '',
                 'HOURLY' => '',
-                'ocuupation_id' => NULL,
-            ),
-        ));
-        
-        
+                'ocuupation_id' => null,
+            ],
+        ]);
     }
 }

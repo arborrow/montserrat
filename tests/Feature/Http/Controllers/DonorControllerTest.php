@@ -1,5 +1,7 @@
 <?php
+
 // TODO: Remove Donor tests as Donors are no longer used
+
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -12,7 +14,6 @@ use Tests\TestCase;
 class DonorControllerTest extends TestCase
 {
     // use RefreshDatabase;
-
 
     /**
      * @test
@@ -38,7 +39,7 @@ class DonorControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-donor');
         $contact = factory(\App\Contact::class)->create([
           'contact_type' => config('polanco.contact_type.individual'),
-          'subcontact_type' => NULL,
+          'subcontact_type' => null,
         ]);
         $donor = factory(\App\Donor::class)->create([
           'contact_id' => $contact->id,

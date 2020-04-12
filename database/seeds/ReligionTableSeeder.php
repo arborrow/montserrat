@@ -4,21 +4,17 @@ use Illuminate\Database\Seeder;
 
 class ReligionTableSeeder extends Seeder
 {
-
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
     public function run()
     {
-        
-
         \DB::table('religion')->delete();
-        
-        \DB::table('religion')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('religion')->insert([
+            0 => [
                 'id' => 1,
                 'label' => 'Catholic',
                 'value' => 'Roman Catholic',
@@ -26,13 +22,12 @@ class ReligionTableSeeder extends Seeder
                 'is_active' => 1,
                 'is_default' => 1,
                 'weight' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            1 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            1 => [
                 'id' => 2,
                 'label' => 'Protestant',
                 'value' => 'Protestant',
@@ -40,13 +35,12 @@ class ReligionTableSeeder extends Seeder
                 'is_active' => 1,
                 'is_default' => 0,
                 'weight' => 2,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            2 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            2 => [
                 'id' => 3,
                 'label' => 'Mormon',
                 'value' => 'Morman',
@@ -54,13 +48,12 @@ class ReligionTableSeeder extends Seeder
                 'is_active' => 1,
                 'is_default' => 0,
                 'weight' => 3,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            3 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            3 => [
                 'id' => 4,
                 'label' => 'Jehovah\'s Witness',
                 'value' => 'Jehovah\'s Witness',
@@ -68,27 +61,25 @@ class ReligionTableSeeder extends Seeder
                 'is_active' => 1,
                 'is_default' => 0,
                 'weight' => 4,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            4 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            4 => [
                 'id' => 5,
                 'label' => 'Jewish',
                 'value' => 'Jewish',
                 'name' => 'Jewish',
                 'is_active' => 1,
                 'is_default' => 0,
-                'weight' => NULL,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            5 => 
-            array (
+                'weight' => null,
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            5 => [
                 'id' => 7,
                 'label' => 'Muslim',
                 'value' => 'Muslim',
@@ -96,13 +87,12 @@ class ReligionTableSeeder extends Seeder
                 'is_active' => 1,
                 'is_default' => 0,
                 'weight' => 6,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            6 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            6 => [
                 'id' => 8,
                 'label' => 'Buddhist',
                 'value' => 'Buddhist',
@@ -110,13 +100,12 @@ class ReligionTableSeeder extends Seeder
                 'is_active' => 1,
                 'is_default' => 0,
                 'weight' => 7,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            7 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            7 => [
                 'id' => 9,
                 'label' => 'Hindu',
                 'value' => 'Hindu',
@@ -124,13 +113,12 @@ class ReligionTableSeeder extends Seeder
                 'is_active' => 1,
                 'is_default' => 0,
                 'weight' => 8,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            8 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            8 => [
                 'id' => 10,
                 'label' => 'Agnostic',
                 'value' => 'Agnostic',
@@ -138,13 +126,11 @@ class ReligionTableSeeder extends Seeder
                 'is_active' => 1,
                 'is_default' => 0,
                 'weight' => 9,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-        ));
-        
-        
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+        ]);
     }
 }

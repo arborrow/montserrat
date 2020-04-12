@@ -3,8 +3,10 @@
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
 use Faker\Generator as Faker;
+
 $factory->define(App\Group::class, function (Faker $faker) {
-    $group_name = ucfirst(implode(' ',$faker->words));
+    $group_name = ucfirst(implode(' ', $faker->words));
+
     return [
       'name' => $group_name,
       'title' => str_plural($group_name),
@@ -13,8 +15,8 @@ $factory->define(App\Group::class, function (Faker $faker) {
       'visibility' => 'User and User Admin Only',
       'is_hidden' => 0,
       'is_reserved' => 0,
-      'created_id' => NULL,
-      'deleted_at' => NULL,
+      'created_id' => null,
+      'deleted_at' => null,
       'remember_token' => Str::random(10),
       'created_at' => $faker->dateTimeBetween($startDate = '-12 days', $endDate = '-6 days'),
       'updated_at' => $faker->dateTimeBetween($startDate = '-5 days', $endDate = '-1 days'),

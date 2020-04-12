@@ -4,25 +4,21 @@ use Illuminate\Database\Seeder;
 
 class RoleUserTableSeeder extends Seeder
 {
-
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
     public function run()
     {
-        
-
         \DB::table('role_user')->delete();
-        
-        \DB::table('role_user')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('role_user')->insert([
+            0 => [
                 'user_id' => 1,
                 'role_id' => 1,
-                'deleted_at' => NULL,
-            ),
-        ));
+                'deleted_at' => null,
+            ],
+        ]);
     }
 }

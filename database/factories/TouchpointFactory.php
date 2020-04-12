@@ -6,7 +6,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Touchpoint::class, function (Faker $faker) {
     return [
-        'type' => array_rand(array_flip(array('Email','Call','Letter','Face','Other'))),
+        'type' => array_rand(array_flip(['Email', 'Call', 'Letter', 'Face', 'Other'])),
         'notes' => $faker->paragraph,
         'touched_at' => $faker->dateTime('now'),
         'created_at' => $faker->dateTime('now'),

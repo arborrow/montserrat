@@ -13,7 +13,6 @@ class GateControllerTest extends TestCase
 {   // TODO: develop funcitonal tests
     // for now, I am not actually going to test the functionality but just ensure the controller methods function
 
-
     /**
      * @test
      */
@@ -29,13 +28,12 @@ class GateControllerTest extends TestCase
         $response->assertSeeText('Gate activity');
     }
 
-
     /**
      * @test
      */
     public function close_returns_an_ok_response()
     {
-	    $user = $this->createUserWithPermission('show-gate');
+        $user = $this->createUserWithPermission('show-gate');
         $email = factory(\App\Email::class)->create([
             'email' => $user->email,
         ]);
@@ -52,7 +50,7 @@ class GateControllerTest extends TestCase
      */
     public function open_returns_an_ok_response()
     {
-	    $user = $this->createUserWithPermission('show-gate');
+        $user = $this->createUserWithPermission('show-gate');
         $email = factory(\App\Email::class)->create([
             'email' => $user->email,
         ]);
@@ -63,8 +61,6 @@ class GateControllerTest extends TestCase
         $response->assertViewHas('hours');
         $response->assertViewHas('message');
         $response->assertSeeText('OPEN');
-
-
     }
 
     // test cases...

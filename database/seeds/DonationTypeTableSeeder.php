@@ -4,21 +4,17 @@ use Illuminate\Database\Seeder;
 
 class DonationTypeTableSeeder extends Seeder
 {
-
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
     public function run()
     {
-        
-
         \DB::table('donation_type')->delete();
-        
-        \DB::table('donation_type')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('donation_type')->insert([
+            0 => [
                 'id' => 1,
                 'label' => 'Retreat Offering',
                 'value' => '1',
@@ -27,13 +23,12 @@ class DonationTypeTableSeeder extends Seeder
                 'is_default' => 0,
                 'is_reserved' => 0,
                 'is_active' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            1 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            1 => [
                 'id' => 11,
                 'label' => 'Books',
                 'value' => '11',
@@ -42,13 +37,12 @@ class DonationTypeTableSeeder extends Seeder
                 'is_default' => 0,
                 'is_reserved' => 0,
                 'is_active' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            2 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            2 => [
                 'id' => 24,
                 'label' => 'Miscellaneous',
                 'value' => '25',
@@ -57,13 +51,12 @@ class DonationTypeTableSeeder extends Seeder
                 'is_default' => 0,
                 'is_reserved' => 0,
                 'is_active' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            3 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            3 => [
                 'id' => 107,
                 'label' => 'Day Only Events',
                 'value' => '111',
@@ -72,13 +65,12 @@ class DonationTypeTableSeeder extends Seeder
                 'is_default' => 0,
                 'is_reserved' => 0,
                 'is_active' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            4 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            4 => [
                 'id' => 115,
                 'label' => 'Deposit',
                 'value' => '119',
@@ -87,13 +79,11 @@ class DonationTypeTableSeeder extends Seeder
                 'is_default' => 0,
                 'is_reserved' => 0,
                 'is_active' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-        ));
-        
-        
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+        ]);
     }
 }

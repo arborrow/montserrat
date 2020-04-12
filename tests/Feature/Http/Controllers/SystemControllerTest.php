@@ -2,17 +2,18 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\TmpOfferingDedup;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\TmpOfferingDedup;
 
 /**
  * @see \App\Http\Controllers\SystemController
  */
 class SystemControllerTest extends TestCase
 {
-  use WithFaker;
+    use WithFaker;
+
     /**
      * @test
      */
@@ -71,7 +72,5 @@ class SystemControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('admin.config.phpinfo');
         $response->assertSee('PHP Version');
-
     }
-
 }

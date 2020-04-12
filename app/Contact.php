@@ -129,6 +129,7 @@ class Contact extends Model
             return;
         }
     }
+
     public function getAddressPrimarySupplementalAddressAttribute()
     {
         if (isset($this->address_primary->supplemental_address_1)) {
@@ -164,6 +165,7 @@ class Contact extends Model
             return;
         }
     }
+
     public function getAddressPrimaryCountryIdAttribute()
     {
         if (isset($this->address_primary->country_id)) {
@@ -1267,13 +1269,13 @@ class Contact extends Model
             }
             if ($filter == 'touchpoint_notes' && ! empty($value)) {
                 $query->whereHas('touchpoints', function ($q) use ($value) {
-                $q->where('notes', 'like', '%'.$value.'%');
-            });
+                    $q->where('notes', 'like', '%'.$value.'%');
+                });
             }
             if ($filter == 'touched_at' && ! empty($value)) {
                 $query->whereHas('touchpoints', function ($q) use ($value) {
-                $q->whereDate('touched_at', $value);
-            });
+                    $q->whereDate('touched_at', $value);
+                });
             }
             if ($filter == 'do_not_mail' && ! empty($value)) {
                 $query->where($filter, $value);

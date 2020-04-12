@@ -42,7 +42,6 @@ class VendorControllerTest extends TestCase
 
         $response->assertRedirect(action('VendorController@index'));
         $this->assertSoftDeleted($vendor);
-
     }
 
     /**
@@ -60,7 +59,7 @@ class VendorControllerTest extends TestCase
         $response->assertViewHas('states');
         $response->assertViewHas('countries');
         $response->assertViewHas('defaults');
-        $response->assertSeeText(e($vendor->display_name));
+        $response->assertSeeText($vendor->display_name);
 
         // TODO: perform additional assertions
     }
@@ -81,7 +80,7 @@ class VendorControllerTest extends TestCase
         $response->assertViewIs('vendors.index');
         $response->assertViewHas('vendors');
         $response->assertSeeText('Vendors');
-        $this->assertGreaterThanOrEqual('1',$vendors->count());
+        $this->assertGreaterThanOrEqual('1', $vendors->count());
 
         // TODO: perform additional assertions
     }
@@ -101,8 +100,7 @@ class VendorControllerTest extends TestCase
         $response->assertViewHas('vendor');
         $response->assertViewHas('relationship_types');
         $response->assertViewHas('files');
-        $response->assertSeeText(e($vendor->display_name));
-
+        $response->assertSeeText($vendor->display_name);
     }
 
     /**
@@ -130,7 +128,6 @@ class VendorControllerTest extends TestCase
           'display_name' => $vendor_name,
           'organization_name' => $vendor_name,
         ]);
-
     }
 
     /**
@@ -169,7 +166,6 @@ class VendorControllerTest extends TestCase
         $response->assertRedirect(action('VendorController@show', $vendor->id));
         $this->assertEquals($updated->sort_name, $vendor_name);
         $this->assertNotEquals($updated->sort_name, $original_sort_name);
-
     }
 
     /**

@@ -4,441 +4,352 @@ use Illuminate\Database\Seeder;
 
 class SalutationsTableSeeder extends Seeder
 {
-
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
     public function run()
     {
-        
-
         \DB::table('salutations')->delete();
-        
-        \DB::table('salutations')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('salutations')->insert([
+            0 => [
                 'Salutation ID' => 1,
                 'Salutation Name' => 'Mr.',
-            ),
-            1 => 
-            array (
+            ],
+            1 => [
                 'Salutation ID' => 2,
                 'Salutation Name' => 'Mrs.',
-            ),
-            2 => 
-            array (
+            ],
+            2 => [
                 'Salutation ID' => 3,
                 'Salutation Name' => 'Ms.',
-            ),
-            3 => 
-            array (
+            ],
+            3 => [
                 'Salutation ID' => 4,
                 'Salutation Name' => 'Miss',
-            ),
-            4 => 
-            array (
+            ],
+            4 => [
                 'Salutation ID' => 5,
                 'Salutation Name' => 'Sr.',
-            ),
-            5 => 
-            array (
+            ],
+            5 => [
                 'Salutation ID' => 6,
                 'Salutation Name' => 'Bishop',
-            ),
-            6 => 
-            array (
+            ],
+            6 => [
                 'Salutation ID' => 7,
                 'Salutation Name' => 'Fr.',
-            ),
-            7 => 
-            array (
+            ],
+            7 => [
                 'Salutation ID' => 8,
                 'Salutation Name' => 'Bro.',
-            ),
-            8 => 
-            array (
+            ],
+            8 => [
                 'Salutation ID' => 9,
                 'Salutation Name' => 'Pastor',
-            ),
-            9 => 
-            array (
+            ],
+            9 => [
                 'Salutation ID' => 10,
                 'Salutation Name' => 'Rev.',
-            ),
-            10 => 
-            array (
+            ],
+            10 => [
                 'Salutation ID' => 11,
                 'Salutation Name' => 'Dr.',
-            ),
-            11 => 
-            array (
+            ],
+            11 => [
                 'Salutation ID' => 12,
                 'Salutation Name' => 'Mr. & Mrs.',
-            ),
-            12 => 
-            array (
+            ],
+            12 => [
                 'Salutation ID' => 13,
                 'Salutation Name' => 'Deacon',
-            ),
-            13 => 
-            array (
+            ],
+            13 => [
                 'Salutation ID' => 14,
                 'Salutation Name' => 'Rev. Msgr.',
-            ),
-            14 => 
-            array (
+            ],
+            14 => [
                 'Salutation ID' => 15,
                 'Salutation Name' => 'Dr1.',
-            ),
-            15 => 
-            array (
+            ],
+            15 => [
                 'Salutation ID' => 16,
                 'Salutation Name' => 'The Rev.',
-            ),
-            16 => 
-            array (
+            ],
+            16 => [
                 'Salutation ID' => 17,
                 'Salutation Name' => 'Most Rev.',
-            ),
-            17 => 
-            array (
+            ],
+            17 => [
                 'Salutation ID' => 18,
                 'Salutation Name' => 'Padre',
-            ),
-            18 => 
-            array (
+            ],
+            18 => [
                 'Salutation ID' => 19,
                 'Salutation Name' => 'Father',
-            ),
-            19 => 
-            array (
+            ],
+            19 => [
                 'Salutation ID' => 20,
                 'Salutation Name' => 'Ma.',
-            ),
-            20 => 
-            array (
+            ],
+            20 => [
                 'Salutation ID' => 21,
                 'Salutation Name' => 'Deacon & Mrs.',
-            ),
-            21 => 
-            array (
+            ],
+            21 => [
                 'Salutation ID' => 1,
                 'Salutation Name' => 'Mr.',
-            ),
-            22 => 
-            array (
+            ],
+            22 => [
                 'Salutation ID' => 2,
                 'Salutation Name' => 'Mrs.',
-            ),
-            23 => 
-            array (
+            ],
+            23 => [
                 'Salutation ID' => 3,
                 'Salutation Name' => 'Ms.',
-            ),
-            24 => 
-            array (
+            ],
+            24 => [
                 'Salutation ID' => 4,
                 'Salutation Name' => 'Miss',
-            ),
-            25 => 
-            array (
+            ],
+            25 => [
                 'Salutation ID' => 5,
                 'Salutation Name' => 'Sr.',
-            ),
-            26 => 
-            array (
+            ],
+            26 => [
                 'Salutation ID' => 6,
                 'Salutation Name' => 'Bishop',
-            ),
-            27 => 
-            array (
+            ],
+            27 => [
                 'Salutation ID' => 7,
                 'Salutation Name' => 'Fr.',
-            ),
-            28 => 
-            array (
+            ],
+            28 => [
                 'Salutation ID' => 8,
                 'Salutation Name' => 'Bro.',
-            ),
-            29 => 
-            array (
+            ],
+            29 => [
                 'Salutation ID' => 9,
                 'Salutation Name' => 'Pastor',
-            ),
-            30 => 
-            array (
+            ],
+            30 => [
                 'Salutation ID' => 10,
                 'Salutation Name' => 'Rev.',
-            ),
-            31 => 
-            array (
+            ],
+            31 => [
                 'Salutation ID' => 11,
                 'Salutation Name' => 'Dr.',
-            ),
-            32 => 
-            array (
+            ],
+            32 => [
                 'Salutation ID' => 12,
                 'Salutation Name' => 'Mr. & Mrs.',
-            ),
-            33 => 
-            array (
+            ],
+            33 => [
                 'Salutation ID' => 13,
                 'Salutation Name' => 'Deacon',
-            ),
-            34 => 
-            array (
+            ],
+            34 => [
                 'Salutation ID' => 14,
                 'Salutation Name' => 'Rev. Msgr.',
-            ),
-            35 => 
-            array (
+            ],
+            35 => [
                 'Salutation ID' => 15,
                 'Salutation Name' => 'Dr1.',
-            ),
-            36 => 
-            array (
+            ],
+            36 => [
                 'Salutation ID' => 16,
                 'Salutation Name' => 'The Rev.',
-            ),
-            37 => 
-            array (
+            ],
+            37 => [
                 'Salutation ID' => 17,
                 'Salutation Name' => 'Most Rev.',
-            ),
-            38 => 
-            array (
+            ],
+            38 => [
                 'Salutation ID' => 18,
                 'Salutation Name' => 'Padre',
-            ),
-            39 => 
-            array (
+            ],
+            39 => [
                 'Salutation ID' => 19,
                 'Salutation Name' => 'Father',
-            ),
-            40 => 
-            array (
+            ],
+            40 => [
                 'Salutation ID' => 20,
                 'Salutation Name' => 'Ma.',
-            ),
-            41 => 
-            array (
+            ],
+            41 => [
                 'Salutation ID' => 21,
                 'Salutation Name' => 'Deacon & Mrs.',
-            ),
-            42 => 
-            array (
+            ],
+            42 => [
                 'Salutation ID' => 1,
                 'Salutation Name' => 'Mr.',
-            ),
-            43 => 
-            array (
+            ],
+            43 => [
                 'Salutation ID' => 2,
                 'Salutation Name' => 'Mrs.',
-            ),
-            44 => 
-            array (
+            ],
+            44 => [
                 'Salutation ID' => 3,
                 'Salutation Name' => 'Ms.',
-            ),
-            45 => 
-            array (
+            ],
+            45 => [
                 'Salutation ID' => 4,
                 'Salutation Name' => 'Miss',
-            ),
-            46 => 
-            array (
+            ],
+            46 => [
                 'Salutation ID' => 5,
                 'Salutation Name' => 'Sr.',
-            ),
-            47 => 
-            array (
+            ],
+            47 => [
                 'Salutation ID' => 6,
                 'Salutation Name' => 'Bishop',
-            ),
-            48 => 
-            array (
+            ],
+            48 => [
                 'Salutation ID' => 7,
                 'Salutation Name' => 'Fr.',
-            ),
-            49 => 
-            array (
+            ],
+            49 => [
                 'Salutation ID' => 8,
                 'Salutation Name' => 'Bro.',
-            ),
-            50 => 
-            array (
+            ],
+            50 => [
                 'Salutation ID' => 9,
                 'Salutation Name' => 'Pastor',
-            ),
-            51 => 
-            array (
+            ],
+            51 => [
                 'Salutation ID' => 10,
                 'Salutation Name' => 'Rev.',
-            ),
-            52 => 
-            array (
+            ],
+            52 => [
                 'Salutation ID' => 11,
                 'Salutation Name' => 'Dr.',
-            ),
-            53 => 
-            array (
+            ],
+            53 => [
                 'Salutation ID' => 12,
                 'Salutation Name' => 'Mr. & Mrs.',
-            ),
-            54 => 
-            array (
+            ],
+            54 => [
                 'Salutation ID' => 13,
                 'Salutation Name' => 'Deacon',
-            ),
-            55 => 
-            array (
+            ],
+            55 => [
                 'Salutation ID' => 14,
                 'Salutation Name' => 'Rev. Msgr.',
-            ),
-            56 => 
-            array (
+            ],
+            56 => [
                 'Salutation ID' => 15,
                 'Salutation Name' => 'Dr1.',
-            ),
-            57 => 
-            array (
+            ],
+            57 => [
                 'Salutation ID' => 16,
                 'Salutation Name' => 'The Rev.',
-            ),
-            58 => 
-            array (
+            ],
+            58 => [
                 'Salutation ID' => 17,
                 'Salutation Name' => 'Most Rev.',
-            ),
-            59 => 
-            array (
+            ],
+            59 => [
                 'Salutation ID' => 18,
                 'Salutation Name' => 'Padre',
-            ),
-            60 => 
-            array (
+            ],
+            60 => [
                 'Salutation ID' => 19,
                 'Salutation Name' => 'Father',
-            ),
-            61 => 
-            array (
+            ],
+            61 => [
                 'Salutation ID' => 20,
                 'Salutation Name' => 'Ma.',
-            ),
-            62 => 
-            array (
+            ],
+            62 => [
                 'Salutation ID' => 21,
                 'Salutation Name' => 'Deacon & Mrs.',
-            ),
-            63 => 
-            array (
+            ],
+            63 => [
                 'Salutation ID' => 1,
                 'Salutation Name' => 'Mr.',
-            ),
-            64 => 
-            array (
+            ],
+            64 => [
                 'Salutation ID' => 2,
                 'Salutation Name' => 'Mrs.',
-            ),
-            65 => 
-            array (
+            ],
+            65 => [
                 'Salutation ID' => 3,
                 'Salutation Name' => 'Ms.',
-            ),
-            66 => 
-            array (
+            ],
+            66 => [
                 'Salutation ID' => 4,
                 'Salutation Name' => 'Miss',
-            ),
-            67 => 
-            array (
+            ],
+            67 => [
                 'Salutation ID' => 5,
                 'Salutation Name' => 'Sr.',
-            ),
-            68 => 
-            array (
+            ],
+            68 => [
                 'Salutation ID' => 6,
                 'Salutation Name' => 'Bishop',
-            ),
-            69 => 
-            array (
+            ],
+            69 => [
                 'Salutation ID' => 7,
                 'Salutation Name' => 'Fr.',
-            ),
-            70 => 
-            array (
+            ],
+            70 => [
                 'Salutation ID' => 8,
                 'Salutation Name' => 'Bro.',
-            ),
-            71 => 
-            array (
+            ],
+            71 => [
                 'Salutation ID' => 9,
                 'Salutation Name' => 'Pastor',
-            ),
-            72 => 
-            array (
+            ],
+            72 => [
                 'Salutation ID' => 10,
                 'Salutation Name' => 'Rev.',
-            ),
-            73 => 
-            array (
+            ],
+            73 => [
                 'Salutation ID' => 11,
                 'Salutation Name' => 'Dr.',
-            ),
-            74 => 
-            array (
+            ],
+            74 => [
                 'Salutation ID' => 12,
                 'Salutation Name' => 'Mr. & Mrs.',
-            ),
-            75 => 
-            array (
+            ],
+            75 => [
                 'Salutation ID' => 13,
                 'Salutation Name' => 'Deacon',
-            ),
-            76 => 
-            array (
+            ],
+            76 => [
                 'Salutation ID' => 14,
                 'Salutation Name' => 'Rev. Msgr.',
-            ),
-            77 => 
-            array (
+            ],
+            77 => [
                 'Salutation ID' => 15,
                 'Salutation Name' => 'Dr1.',
-            ),
-            78 => 
-            array (
+            ],
+            78 => [
                 'Salutation ID' => 16,
                 'Salutation Name' => 'The Rev.',
-            ),
-            79 => 
-            array (
+            ],
+            79 => [
                 'Salutation ID' => 17,
                 'Salutation Name' => 'Most Rev.',
-            ),
-            80 => 
-            array (
+            ],
+            80 => [
                 'Salutation ID' => 18,
                 'Salutation Name' => 'Padre',
-            ),
-            81 => 
-            array (
+            ],
+            81 => [
                 'Salutation ID' => 19,
                 'Salutation Name' => 'Father',
-            ),
-            82 => 
-            array (
+            ],
+            82 => [
                 'Salutation ID' => 20,
                 'Salutation Name' => 'Ma.',
-            ),
-            83 => 
-            array (
+            ],
+            83 => [
                 'Salutation ID' => 21,
                 'Salutation Name' => 'Deacon & Mrs.',
-            ),
-        ));
-        
-        
+            ],
+        ]);
     }
 }

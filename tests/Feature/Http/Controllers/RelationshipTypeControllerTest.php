@@ -2,15 +2,15 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\RelationshipType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\RelationshipType;
 
 /**
  * @see \App\Http\Controllers\RelationshipTypeController
  */
-class RelationshipTypeConrollerTest extends TestCase
+class RelationshipTypeControllerTest extends TestCase
 {
     use withFaker;
 
@@ -51,7 +51,7 @@ class RelationshipTypeConrollerTest extends TestCase
           'contact_type' => config('polanco.contact_type.individual'),
           'subcontact_type' => null,
         ]);
-        $relationship_type = array_rand(array_flip(array('Child','Employee','Husband','Parent','Parishioner','Sibling','Wife')));
+        $relationship_type = array_rand(array_flip(['Child', 'Employee', 'Husband', 'Parent', 'Parishioner', 'Sibling', 'Wife']));
         $response = $this->actingAs($user)->post(route('relationship_type.addme'), [
             'relationship_type' => $relationship_type,
             'contact_id' => $contact->id,
@@ -172,7 +172,7 @@ class RelationshipTypeConrollerTest extends TestCase
         // generically testing for ability to create sibling relationship to avoid complexity of contact types and subtypes
         $relationship_type_id = config('polanco.relationship_type.sibling');
 
-        $response = $this->actingAs($user)->from('relationship_type/' . config('polanco.relationship_type.sibling') .'/add/'.$contact_a->id . '/' . $contact_b->id)->post('relationship/add', [
+        $response = $this->actingAs($user)->from('relationship_type/'.config('polanco.relationship_type.sibling').'/add/'.$contact_a->id.'/'.$contact_b->id)->post('relationship/add', [
             'contact_a_id' => $contact_a->id,
             'contact_b_id' => $contact_b->id,
             'relationship_type_id' => $relationship_type_id,
@@ -184,7 +184,6 @@ class RelationshipTypeConrollerTest extends TestCase
           'contact_id_b' => $contact_b->id,
           'relationship_type_id' => $relationship_type_id,
         ]);
-
     }
 
     /**
@@ -230,17 +229,17 @@ class RelationshipTypeConrollerTest extends TestCase
         $response = $this->actingAs($user)->post(route('relationship_type.store'), [
           'name_a_b' => $name_a_b,
           'name_b_a' => $name_b_a,
-          'label_a_b' => 'has a ' . $this->faker->word .' of ',
-          'label_b_a' => $this->faker->word . ' for ',
+          'label_a_b' => 'has a '.$this->faker->word.' of ',
+          'label_b_a' => $this->faker->word.' for ',
           'description' => $description,
-          'contact_type_a' => array_rand(array_flip(['Individual','Organization','Household'])),
-          'contact_type_b' => array_rand(array_flip(['Individual','Organization','Household'])),
+          'contact_type_a' => array_rand(array_flip(['Individual', 'Organization', 'Household'])),
+          'contact_type_b' => array_rand(array_flip(['Individual', 'Organization', 'Household'])),
           'contact_sub_type_a' => null,
           'contact_sub_type_b' => null,
           'is_reserved' => 0,
           'is_active' => 1,
           'created_at' => $this->faker->dateTime('now'),
-          'updated_at' => $this->faker->dateTime('now')
+          'updated_at' => $this->faker->dateTime('now'),
         ]);
         $response->assertRedirect(action('RelationshipTypeController@index'));
         $this->assertDatabaseHas('relationship_type', [
@@ -281,8 +280,8 @@ class RelationshipTypeConrollerTest extends TestCase
           'id' => $relationship_type->id,
           'name_a_b' => $new_name_a_b,
           'name_b_a' => $new_name_b_a,
-          'label_a_b' => 'has a ' . $this->faker->word .' of ',
-          'label_b_a' => $this->faker->word . ' for ',
+          'label_a_b' => 'has a '.$this->faker->word.' of ',
+          'label_b_a' => $this->faker->word.' for ',
           'description' => $new_description,
 
         ]);

@@ -26,7 +26,6 @@ class RoomControllerTest extends TestCase
         $response->assertViewIs('rooms.create');
         $response->assertViewHas('locations');
         $response->assertSeeText('Add A Room');
-
     }
 
     /**
@@ -41,7 +40,6 @@ class RoomControllerTest extends TestCase
 
         $response->assertRedirect(action('RoomController@index'));
         $this->assertSoftDeleted($room);
-
     }
 
     /**
@@ -61,7 +59,6 @@ class RoomControllerTest extends TestCase
         $room_data = $response->viewData('room');
         $this->assertEquals($room_data->description, $room->description);
         $response->assertSeeText('Edit Room');
-
     }
 
     /**
@@ -122,7 +119,7 @@ class RoomControllerTest extends TestCase
         $user = $this->createUserWithPermission('create-room');
 
         $location = factory(\App\Location::class)->create();
-        $name = 'New ' . $this->faker->lastName . ' Suite';
+        $name = 'New '.$this->faker->lastName.' Suite';
         $description = $this->faker->catchPhrase;
 
         $response = $this->actingAs($user)->post(route('room.store'), [
@@ -142,8 +139,6 @@ class RoomControllerTest extends TestCase
           'description' => $description,
           'location_id' => $location->id,
         ]);
-
-
     }
 
     /**
@@ -168,7 +163,7 @@ class RoomControllerTest extends TestCase
 
         $original_description = $room->description;
         $new_location = factory(\App\Location::class)->create();
-        $new_name = 'Renovated ' . $this->faker->lastName . ' Suite';
+        $new_name = 'Renovated '.$this->faker->lastName.' Suite';
         $new_description = $this->faker->catchPhrase;
 
         $response = $this->actingAs($user)->put(route('room.update', [$room]), [
@@ -180,8 +175,8 @@ class RoomControllerTest extends TestCase
 
         $room->refresh();
         $response->assertRedirect(action('RoomController@index'));
-        $this->assertEquals($new_description,$room->description);
-        $this->assertNotEquals($original_description,$room->description);
+        $this->assertEquals($new_description, $room->description);
+        $this->assertNotEquals($original_description, $room->description);
     }
 
     /**

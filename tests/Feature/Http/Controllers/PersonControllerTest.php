@@ -11,7 +11,8 @@ use Tests\TestCase;
  */
 class PersonControllerTest extends TestCase
 {
-  use withFaker;
+    use withFaker;
+
     /**
      * @test
      */
@@ -37,15 +38,15 @@ class PersonControllerTest extends TestCase
      */
     public function bishops_returns_an_ok_response()
     {
-      $user = $this->createUserWithPermission('show-contact');
+        $user = $this->createUserWithPermission('show-contact');
 
-      $response = $this->actingAs($user)->get(route('bishops'));
+        $response = $this->actingAs($user)->get(route('bishops'));
 
-      $response->assertOk();
-      $response->assertViewIs('persons.role');
-      $response->assertViewHas('persons');
-      $response->assertViewHas('role');
-      $response->assertSeeText('Bishop');
+        $response->assertOk();
+        $response->assertViewIs('persons.role');
+        $response->assertViewHas('persons');
+        $response->assertViewHas('role');
+        $response->assertSeeText('Bishop');
     }
 
     /**
@@ -53,16 +54,15 @@ class PersonControllerTest extends TestCase
      */
     public function boardmembers_returns_an_ok_response()
     {
-      $user = $this->createUserWithPermission('show-contact');
+        $user = $this->createUserWithPermission('show-contact');
 
-      $response = $this->actingAs($user)->get(route('boardmembers'));
+        $response = $this->actingAs($user)->get(route('boardmembers'));
 
-      $response->assertOk();
-      $response->assertViewIs('persons.role');
-      $response->assertViewHas('persons');
-      $response->assertViewHas('role');
-      $response->assertSeeText('Board member');
-
+        $response->assertOk();
+        $response->assertViewIs('persons.role');
+        $response->assertViewHas('persons');
+        $response->assertViewHas('role');
+        $response->assertSeeText('Board member');
     }
 
     /**
@@ -70,16 +70,15 @@ class PersonControllerTest extends TestCase
      */
     public function captains_returns_an_ok_response()
     {
-      $user = $this->createUserWithPermission('show-contact');
+        $user = $this->createUserWithPermission('show-contact');
 
-      $response = $this->actingAs($user)->get(route('captains'));
+        $response = $this->actingAs($user)->get(route('captains'));
 
-      $response->assertOk();
-      $response->assertViewIs('persons.role');
-      $response->assertViewHas('persons');
-      $response->assertViewHas('role');
-      $response->assertSeeText('Ambassador');
-
+        $response->assertOk();
+        $response->assertViewIs('persons.role');
+        $response->assertViewHas('persons');
+        $response->assertViewHas('role');
+        $response->assertSeeText('Ambassador');
     }
 
     /**
@@ -114,16 +113,15 @@ class PersonControllerTest extends TestCase
      */
     public function deacons_returns_an_ok_response()
     {
-      $user = $this->createUserWithPermission('show-contact');
+        $user = $this->createUserWithPermission('show-contact');
 
-      $response = $this->actingAs($user)->get(route('deacons'));
+        $response = $this->actingAs($user)->get(route('deacons'));
 
-      $response->assertOk();
-      $response->assertViewIs('persons.role');
-      $response->assertViewHas('persons');
-      $response->assertViewHas('role');
-      $response->assertSeeText('Deacon');
-
+        $response->assertOk();
+        $response->assertViewIs('persons.role');
+        $response->assertViewHas('persons');
+        $response->assertViewHas('role');
+        $response->assertSeeText('Deacon');
     }
 
     /**
@@ -134,7 +132,7 @@ class PersonControllerTest extends TestCase
         $user = $this->createUserWithPermission('delete-contact');
         $person = factory(\App\Contact::class)->create([
           'contact_type' => '1',
-          'subcontact_type' => NULL,
+          'subcontact_type' => null,
         ]);
 
         $response = $this->actingAs($user)->delete(route('person.destroy', ['person' => $person]));
@@ -157,7 +155,6 @@ class PersonControllerTest extends TestCase
         $response->assertViewHas('persons');
         $response->assertViewHas('role');
         $response->assertSeeText('Director');
-
     }
 
     /**
@@ -183,7 +180,7 @@ class PersonControllerTest extends TestCase
         $user = $this->createUserWithPermission('update-contact');
         $person = factory(\App\Contact::class)->create([
           'contact_type' => '1',
-          'subcontact_type' => NULL,
+          'subcontact_type' => null,
         ]);
 
         $response = $this->actingAs($user)->get(route('person.edit', ['person' => $person]));
@@ -206,7 +203,7 @@ class PersonControllerTest extends TestCase
         $response->assertViewHas('subcontact_types');
         $response->assertViewHas('referrals');
         $response->assertSeeText('Edit');
-        $response->assertSee(e($person->display_name));
+        $response->assertSee($person->display_name);
     }
 
     /**
@@ -217,15 +214,14 @@ class PersonControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-contact');
         $person = factory(\App\Contact::class)->create([
           'contact_type' => '1',
-          'subcontact_type' => NULL,
+          'subcontact_type' => null,
         ]);
 
         $response = $this->actingAs($user)->get(route('envelope', ['id' => $person->id]));
 
         $response->assertViewIs('persons.envelope10');
-        $response->assertSee(e($person->agc_household_name));
-
-      }
+        $response->assertSee($person->agc_household_name);
+    }
 
     /**
      * @test
@@ -234,7 +230,7 @@ class PersonControllerTest extends TestCase
     {
         $person = factory(\App\Contact::class)->create([
             'contact_type' => config('polanco.contact_type.individual'),
-            'subcontact_type' => NULL,
+            'subcontact_type' => null,
         ]);
 
         $user = $this->createUserWithPermission('show-contact');
@@ -250,9 +246,8 @@ class PersonControllerTest extends TestCase
         // n.b. - this could fail if there are more than the paginated number of contacts with the created contact on another page
         $persons = $response->viewData('persons');
         $count_persons = $persons->count();
-        $this->assertGreaterThanOrEqual('1',$count_persons);
-
-      }
+        $this->assertGreaterThanOrEqual('1', $count_persons);
+    }
 
     /**
      * @test
@@ -271,15 +266,15 @@ class PersonControllerTest extends TestCase
      */
     public function innkeepers_returns_an_ok_response()
     {
-      $user = $this->createUserWithPermission('show-contact');
+        $user = $this->createUserWithPermission('show-contact');
 
-      $response = $this->actingAs($user)->get(route('innkeepers'));
+        $response = $this->actingAs($user)->get(route('innkeepers'));
 
-      $response->assertOk();
-      $response->assertViewIs('persons.role');
-      $response->assertViewHas('persons');
-      $response->assertViewHas('role');
-      $response->assertSeeText('Innkeeper');
+        $response->assertOk();
+        $response->assertViewIs('persons.role');
+        $response->assertViewHas('persons');
+        $response->assertViewHas('role');
+        $response->assertSeeText('Innkeeper');
     }
 
     /**
@@ -287,15 +282,15 @@ class PersonControllerTest extends TestCase
      */
     public function jesuits_returns_an_ok_response()
     {
-      $user = $this->createUserWithPermission('show-contact');
+        $user = $this->createUserWithPermission('show-contact');
 
-      $response = $this->actingAs($user)->get(route('jesuits'));
+        $response = $this->actingAs($user)->get(route('jesuits'));
 
-      $response->assertOk();
-      $response->assertViewIs('persons.role');
-      $response->assertViewHas('persons');
-      $response->assertViewHas('role');
-      $response->assertSeeText('Jesuit');
+        $response->assertOk();
+        $response->assertViewIs('persons.role');
+        $response->assertViewHas('persons');
+        $response->assertViewHas('role');
+        $response->assertSeeText('Jesuit');
     }
 
     /**
@@ -306,19 +301,18 @@ class PersonControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-contact');
         $person = factory(\App\Contact::class)->create([
           'contact_type' => config('polanco.contact_type.individual'),
-          'subcontact_type' => NULL,
+          'subcontact_type' => null,
         ]);
 
-        $response = $this->actingAs($user)->get(route('lastnames'),[
-            'lastname' => substr($person->last_name,0,1),
+        $response = $this->actingAs($user)->get(route('lastnames'), [
+            'lastname' => substr($person->last_name, 0, 1),
           ]);
         $persons = $response->viewData('persons');
 
         $response->assertOk();
         $response->assertViewIs('persons.index');
         $response->assertViewHas('persons');
-        $this->assertGreaterThanOrEqual('1',$persons->count());
-
+        $this->assertGreaterThanOrEqual('1', $persons->count());
     }
 
     /**
@@ -331,12 +325,12 @@ class PersonControllerTest extends TestCase
 
         $person = factory(\App\Contact::class)->create([
             'contact_type' => config('polanco.contact_type.individual'),
-            'subcontact_type' => NULL,
+            'subcontact_type' => null,
         ]);
 
         $duplicate_person = factory(\App\Contact::class)->create([
           'contact_type' => config('polanco.contact_type.individual'),
-          'subcontact_type' => NULL,
+          'subcontact_type' => null,
           'sort_name' => $person->sort_name,
         ]);
 
@@ -353,7 +347,6 @@ class PersonControllerTest extends TestCase
         $response->assertViewHas('contact');
         $response->assertViewHas('duplicates');
 
-
         // TODO: perform additional assertions and create additional tests to ensure that the merging functionality actually works
     }
 
@@ -365,12 +358,12 @@ class PersonControllerTest extends TestCase
         $user = $this->createUserWithPermission('delete-contact');
         $person = factory(\App\Contact::class)->create([
             'contact_type' => config('polanco.contact_type.individual'),
-            'subcontact_type' => NULL,
+            'subcontact_type' => null,
         ]);
 
         $duplicate_person = factory(\App\Contact::class)->create([
           'contact_type' => config('polanco.contact_type.individual'),
-          'subcontact_type' => NULL,
+          'subcontact_type' => null,
           'sort_name' => $person->sort_name,
         ]);
 
@@ -387,15 +380,15 @@ class PersonControllerTest extends TestCase
      */
     public function pastors_returns_an_ok_response()
     {
-      $user = $this->createUserWithPermission('show-contact');
+        $user = $this->createUserWithPermission('show-contact');
 
-      $response = $this->actingAs($user)->get(route('pastors'));
+        $response = $this->actingAs($user)->get(route('pastors'));
 
-      $response->assertOk();
-      $response->assertViewIs('persons.role');
-      $response->assertViewHas('persons');
-      $response->assertViewHas('role');
-      $response->assertSeeText('Pastor');
+        $response->assertOk();
+        $response->assertViewIs('persons.role');
+        $response->assertViewHas('persons');
+        $response->assertViewHas('role');
+        $response->assertSeeText('Pastor');
     }
 
     /**
@@ -403,15 +396,15 @@ class PersonControllerTest extends TestCase
      */
     public function priests_returns_an_ok_response()
     {
-      $user = $this->createUserWithPermission('show-contact');
+        $user = $this->createUserWithPermission('show-contact');
 
-      $response = $this->actingAs($user)->get(route('priests'));
+        $response = $this->actingAs($user)->get(route('priests'));
 
-      $response->assertOk();
-      $response->assertViewIs('persons.role');
-      $response->assertViewHas('persons');
-      $response->assertViewHas('role');
-      $response->assertSeeText('Priest');
+        $response->assertOk();
+        $response->assertViewIs('persons.role');
+        $response->assertViewHas('persons');
+        $response->assertViewHas('role');
+        $response->assertSeeText('Priest');
     }
 
     /**
@@ -419,15 +412,15 @@ class PersonControllerTest extends TestCase
      */
     public function provincials_returns_an_ok_response()
     {
-      $user = $this->createUserWithPermission('show-contact');
+        $user = $this->createUserWithPermission('show-contact');
 
-      $response = $this->actingAs($user)->get(route('provincials'));
+        $response = $this->actingAs($user)->get(route('provincials'));
 
-      $response->assertOk();
-      $response->assertViewIs('persons.role');
-      $response->assertViewHas('persons');
-      $response->assertViewHas('role');
-      $response->assertSeeText('Provincial');
+        $response->assertOk();
+        $response->assertViewIs('persons.role');
+        $response->assertViewHas('persons');
+        $response->assertViewHas('role');
+        $response->assertSeeText('Provincial');
     }
 
     /**
@@ -438,7 +431,7 @@ class PersonControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-contact');
         $person = factory(\App\Contact::class)->create([
           'contact_type' => config('polanco.contact_type.individual'),
-          'subcontact_type' => NULL,
+          'subcontact_type' => null,
         ]);
 
         $response = $this->actingAs($user)->get(route('person.show', ['person' => $person]));
@@ -458,15 +451,15 @@ class PersonControllerTest extends TestCase
      */
     public function staff_returns_an_ok_response()
     {
-      $user = $this->createUserWithPermission('show-contact');
+        $user = $this->createUserWithPermission('show-contact');
 
-      $response = $this->actingAs($user)->get(route('staff'));
+        $response = $this->actingAs($user)->get(route('staff'));
 
-      $response->assertOk();
-      $response->assertViewIs('persons.role');
-      $response->assertViewHas('persons');
-      $response->assertViewHas('role');
-      $response->assertSeeText('Staff');
+        $response->assertOk();
+        $response->assertViewIs('persons.role');
+        $response->assertViewHas('persons');
+        $response->assertViewHas('role');
+        $response->assertSeeText('Staff');
     }
 
     /**
@@ -474,15 +467,15 @@ class PersonControllerTest extends TestCase
      */
     public function stewards_returns_an_ok_response()
     {
-      $user = $this->createUserWithPermission('show-contact');
+        $user = $this->createUserWithPermission('show-contact');
 
-      $response = $this->actingAs($user)->get(route('stewards'));
+        $response = $this->actingAs($user)->get(route('stewards'));
 
-      $response->assertOk();
-      $response->assertViewIs('persons.role');
-      $response->assertViewHas('persons');
-      $response->assertViewHas('role');
-      $response->assertSeeText('Steward');
+        $response->assertOk();
+        $response->assertViewIs('persons.role');
+        $response->assertViewHas('persons');
+        $response->assertViewHas('role');
+        $response->assertSeeText('Steward');
     }
 
     /**
@@ -501,8 +494,8 @@ class PersonControllerTest extends TestCase
         $occupation = \App\Ppd_occupation::get()->random();
 
         $response = $this->actingAs($user)->post(route('person.store'), [
-                'sort_name' => $last_name . ', ' . $first_name,
-                '$display_name' => $first_name . ' ' . $last_name,
+                'sort_name' => $last_name.', '.$first_name,
+                '$display_name' => $first_name.' '.$last_name,
                 'prefix_id' => $prefix->id,
                 'first_name' => $first_name,
                 'middle_name' => $this->faker->firstName,
@@ -510,8 +503,8 @@ class PersonControllerTest extends TestCase
                 'suffix_id' => $suffix->id,
                 'nick_name' => $this->faker->name,
                 'contact_type' => config('polanco.contact_type.individual'),
-                'subcontact_type' => NULL,
-                'gender_id' => $this->faker->numberBetween(1,2),
+                'subcontact_type' => null,
+                'gender_id' => $this->faker->numberBetween(1, 2),
                 'birth_date' => $this->faker->dateTime,
                 '$ethnicity_id' => $ethnicity->id,
                 'religion_id' => $religion->id,
@@ -523,7 +516,7 @@ class PersonControllerTest extends TestCase
                 'do_not_sms' => $this->faker->boolean,
                 'do_not_trade' => $this->faker->boolean,
         ]);
-        $person = \App\Contact::whereSortName($last_name . ', ' . $first_name)->first();
+        $person = \App\Contact::whereSortName($last_name.', '.$first_name)->first();
         $response->assertRedirect(action('PersonController@show', $person->id));
     }
 
@@ -544,15 +537,15 @@ class PersonControllerTest extends TestCase
      */
     public function superiors_returns_an_ok_response()
     {
-      $user = $this->createUserWithPermission('show-contact');
+        $user = $this->createUserWithPermission('show-contact');
 
-      $response = $this->actingAs($user)->get(route('superiors'));
+        $response = $this->actingAs($user)->get(route('superiors'));
 
-      $response->assertOk();
-      $response->assertViewIs('persons.role');
-      $response->assertViewHas('persons');
-      $response->assertViewHas('role');
-      $response->assertSeeText('Superior');
+        $response->assertOk();
+        $response->assertViewIs('persons.role');
+        $response->assertViewHas('persons');
+        $response->assertViewHas('role');
+        $response->assertSeeText('Superior');
     }
 
     /**
@@ -563,10 +556,10 @@ class PersonControllerTest extends TestCase
         $user = $this->createUserWithPermission('update-contact');
         $person = factory(\App\Contact::class)->create([
           'contact_type' => config('polanco.contact_type.individual'),
-          'subcontact_type' => NULL,
+          'subcontact_type' => null,
         ]);
         $original_sort_name = $person->sort_name;
-        $new_sort_name = $this->faker->lastName . ', ' . $this->faker->firstName;
+        $new_sort_name = $this->faker->lastName.', '.$this->faker->firstName;
 
         $response = $this->actingAs($user)->put(route('person.update', [$person]), [
             'first_name' => $person->first_name,
@@ -579,7 +572,6 @@ class PersonControllerTest extends TestCase
         $response->assertRedirect(action('PersonController@show', $person->id));
         $this->assertEquals($updated->sort_name, $new_sort_name);
         $this->assertNotEquals($updated->sort_name, $original_sort_name);
-
     }
 
     /**
@@ -599,15 +591,14 @@ class PersonControllerTest extends TestCase
      */
     public function volunteers_returns_an_ok_response()
     {
-      $user = $this->createUserWithPermission('show-contact');
+        $user = $this->createUserWithPermission('show-contact');
 
-      $response = $this->actingAs($user)->get(route('volunteers'));
+        $response = $this->actingAs($user)->get(route('volunteers'));
 
-      $response->assertOk();
-      $response->assertViewIs('persons.role');
-      $response->assertViewHas('persons');
-      $response->assertViewHas('role');
-      $response->assertSeeText('Volunteer');
-
+        $response->assertOk();
+        $response->assertViewIs('persons.role');
+        $response->assertViewHas('persons');
+        $response->assertViewHas('role');
+        $response->assertSeeText('Volunteer');
     }
 }

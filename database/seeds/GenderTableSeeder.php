@@ -4,21 +4,17 @@ use Illuminate\Database\Seeder;
 
 class GenderTableSeeder extends Seeder
 {
-
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
     public function run()
     {
-        
-
         \DB::table('gender')->delete();
-        
-        \DB::table('gender')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('gender')->insert([
+            0 => [
                 'id' => 1,
                 'label' => 'Male',
                 'value' => 'Male',
@@ -26,13 +22,12 @@ class GenderTableSeeder extends Seeder
                 'is_active' => 1,
                 'is_default' => 0,
                 'weight' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            1 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            1 => [
                 'id' => 2,
                 'label' => 'Female',
                 'value' => 'Female',
@@ -40,27 +35,24 @@ class GenderTableSeeder extends Seeder
                 'is_active' => 1,
                 'is_default' => 0,
                 'weight' => 2,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            2 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            2 => [
                 'id' => 3,
                 'label' => 'Other',
                 'value' => 'Other',
                 'name' => 'Other',
                 'is_active' => 1,
                 'is_default' => 0,
-                'weight' => NULL,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-        ));
-        
-        
+                'weight' => null,
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+        ]);
     }
 }

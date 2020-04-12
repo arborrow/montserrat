@@ -5,7 +5,8 @@
 use Faker\Generator as Faker;
 
 $factory->define(App\Vendor::class, function (Faker $faker) {
-  $vendor_name = $faker->company;
+    $vendor_name = $faker->company;
+
     return [
         'contact_type' => config('polanco.contact_type.organization'),
         'subcontact_type' => config('polanco.contact_type.vendor'),

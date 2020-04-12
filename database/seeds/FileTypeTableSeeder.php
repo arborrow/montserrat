@@ -4,21 +4,17 @@ use Illuminate\Database\Seeder;
 
 class FileTypeTableSeeder extends Seeder
 {
-
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
     public function run()
     {
-        
-
         \DB::table('file_type')->delete();
-        
-        \DB::table('file_type')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('file_type')->insert([
+            0 => [
                 'id' => 1,
                 'label' => 'Attachment',
                 'value' => 'Attachment',
@@ -27,13 +23,12 @@ class FileTypeTableSeeder extends Seeder
                 'is_default' => 1,
                 'is_reserved' => 0,
                 'is_active' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            1 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            1 => [
                 'id' => 2,
                 'label' => 'Schedule',
                 'value' => 'Schedule',
@@ -42,13 +37,12 @@ class FileTypeTableSeeder extends Seeder
                 'is_default' => 0,
                 'is_reserved' => 0,
                 'is_active' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            2 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            2 => [
                 'id' => 3,
                 'label' => 'Evaluation',
                 'value' => 'Evaluation',
@@ -57,13 +51,12 @@ class FileTypeTableSeeder extends Seeder
                 'is_default' => 0,
                 'is_reserved' => 0,
                 'is_active' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            3 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            3 => [
                 'id' => 4,
                 'label' => 'Contract',
                 'value' => 'Contract',
@@ -72,13 +65,12 @@ class FileTypeTableSeeder extends Seeder
                 'is_default' => 0,
                 'is_reserved' => 0,
                 'is_active' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            4 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            4 => [
                 'id' => 5,
                 'label' => 'Photo',
                 'value' => 'Photo',
@@ -87,13 +79,12 @@ class FileTypeTableSeeder extends Seeder
                 'is_default' => 0,
                 'is_reserved' => 0,
                 'is_active' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            5 => 
-            array (
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            5 => [
                 'id' => 6,
                 'label' => 'Avatar',
                 'value' => 'Avatar',
@@ -102,13 +93,11 @@ class FileTypeTableSeeder extends Seeder
                 'is_default' => 0,
                 'is_reserved' => 0,
                 'is_active' => 1,
-                'deleted_at' => NULL,
-                'remember_token' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-        ));
-        
-        
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+        ]);
     }
 }

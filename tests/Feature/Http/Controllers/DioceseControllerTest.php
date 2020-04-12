@@ -29,7 +29,6 @@ class DioceseControllerTest extends TestCase
         $response->assertViewHas('countries');
         $response->assertViewHas('defaults');
         $response->assertSee('Add a Diocese');
-
     }
 
     /**
@@ -65,7 +64,6 @@ class DioceseControllerTest extends TestCase
         $response->assertViewHas('defaults');
         $response->assertSeeText('Edit');
         $response->assertSeeText(e($diocese->display_name));
-
     }
 
     /**
@@ -83,8 +81,7 @@ class DioceseControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('dioceses.index');
         $response->assertViewHas('dioceses');
-        $this->assertGreaterThanOrEqual('1',$dioceses->count());
-
+        $this->assertGreaterThanOrEqual('1', $dioceses->count());
     }
 
     /**
@@ -113,7 +110,7 @@ class DioceseControllerTest extends TestCase
         $user = $this->createUserWithPermission('create-contact');
 
         $city_name = $this->faker->city;
-        $org_name = 'New Diocese of ' . $city_name;
+        $org_name = 'New Diocese of '.$city_name;
 
         $response = $this->actingAs($user)->post(route('diocese.store'), [
             'organization_name' => $org_name,
@@ -151,7 +148,7 @@ class DioceseControllerTest extends TestCase
         $diocese = factory(\App\Diocese::class)->create();
         $sort_name = $diocese->sort_name;
         $city_name = $this->faker->city;
-        $org_name = 'Renewed Diocese of ' . $city_name;
+        $org_name = 'Renewed Diocese of '.$city_name;
 
         $response = $this->actingAs($user)->put(route('diocese.update', [$diocese]), [
           'sort_name' => $city_name,
@@ -165,7 +162,6 @@ class DioceseControllerTest extends TestCase
         $response->assertRedirect(action('DioceseController@show', $diocese->id));
         $this->assertEquals($diocese->sort_name, $city_name);
         $this->assertNotEquals($diocese->sort_name, $sort_name);
-
     }
 
     /**

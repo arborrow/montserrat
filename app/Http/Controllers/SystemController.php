@@ -27,6 +27,7 @@ class SystemController extends Controller
     public function phpinfo()
     {
         $this->authorize('show-admin-menu');
+
         return view('admin.config.phpinfo');
     }
 

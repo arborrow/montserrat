@@ -11,16 +11,14 @@
 |
 */
 
-
 // Auth::routes();
 
-
-Route::get('intercept/{code}', function($code) {
+Route::get('intercept/{code}', function ($code) {
     $url = base64_decode($code);
     // dd($url);
     try {
         return redirect($url);
-    } catch ( \Exception $e ) {
+    } catch (\Exception $e) {
         abort(404);
     }
 });
@@ -52,7 +50,7 @@ Route::get('/dashboard/description/{category?}', 'DashboardController@donation_d
 // Route::get('login/{provider?}', 'Auth\AuthController@login');
 // Route::get('auth/google/callback', 'Auth\AuthController@handleProviderCallback');
 Route::get('logout', ['uses' => 'Auth\LoginController@logout'])->name('logout');
-Route::get('login/google', [ 'uses' => 'Auth\LoginController@redirectToProvider'])->name('login');
+Route::get('login/google', ['uses' => 'Auth\LoginController@redirectToProvider'])->name('login');
 Route::get('login/google/callback', ['uses' => 'Auth\LoginController@handleProviderCallback'])->name('login.google_callback');
 
 Route::get('search/autocomplete', 'SearchController@autocomplete');
@@ -128,7 +126,6 @@ Route::post('touchpoint/add_group', 'TouchpointController@store_group');
 Route::post('touchpoint/add_retreat', 'TouchpointController@store_retreat');
 Route::post('touchpoint/add_retreat_waitlist', 'TouchpointController@store_retreat_waitlist');
 Route::post('registration/add_group', 'RegistrationController@store_group');
-
 
 Route::resource('group', 'GroupController');
 Route::get('grounds', 'PageController@grounds')->name('grounds');

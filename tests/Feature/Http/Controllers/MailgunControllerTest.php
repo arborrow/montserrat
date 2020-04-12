@@ -11,7 +11,6 @@ use Tests\TestCase;
  */
 class MailgunControllerTest extends TestCase
 {
-
     /**
      * @test
      */
@@ -19,18 +18,17 @@ class MailgunControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('admin-mailgun');
         if (null !== config('services.mailgun.domain') && null !== config('services.mailgun.secret')) {
-
             $response = $this->actingAs($user)->get(route('mailgun.get'));
             $response->assertOk();
             $response->assertViewIs('mailgun.index');
             $response->assertViewHas('messages');
             $response->assertSee('Mailgun Stored Messages');
         } else {
-          $user = $this->createUserWithPermission('show-admin-menu');
-          $response = $this->actingAs($user)->get(route('admin.config.mailgun'));
-          $response->assertOk();
-          $response->assertViewIs('admin.config.mailgun');
-          $response->assertSee('Mailgun configuration');
+            $user = $this->createUserWithPermission('show-admin-menu');
+            $response = $this->actingAs($user)->get(route('admin.config.mailgun'));
+            $response->assertOk();
+            $response->assertViewIs('admin.config.mailgun');
+            $response->assertSee('Mailgun configuration');
         }
 
         // TODO: perform additional assertions
@@ -49,13 +47,12 @@ class MailgunControllerTest extends TestCase
             $response->assertViewHas('messages');
             $respnose->assertSee('Index of Mailgun Processed Messages');
         } else {
-          $user = $this->createUserWithPermission('show-admin-menu');
-          $response = $this->actingAs($user)->get(route('admin.config.mailgun'));
-          $response->assertOk();
-          $response->assertViewIs('admin.config.mailgun');
-          $response->assertSee('Mailgun configuration');
+            $user = $this->createUserWithPermission('show-admin-menu');
+            $response = $this->actingAs($user)->get(route('admin.config.mailgun'));
+            $response->assertOk();
+            $response->assertViewIs('admin.config.mailgun');
+            $response->assertSee('Mailgun configuration');
         }
-
 
         // TODO: perform additional assertions
     }

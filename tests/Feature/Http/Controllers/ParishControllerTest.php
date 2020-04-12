@@ -30,7 +30,6 @@ class ParishControllerTest extends TestCase
         $response->assertViewHas('countries');
         $response->assertViewHas('defaults');
         $response->assertSeeText('Add a Parish');
-
     }
 
     /**
@@ -42,10 +41,9 @@ class ParishControllerTest extends TestCase
         $parish = factory(\App\Parish::class)->create();
 
         $response = $this->actingAs($user)->delete(route('parish.destroy', [$parish->id]));
-        ;
+
         $response->assertRedirect(action('ParishController@index'));
         $this->assertSoftDeleted($parish);
-
     }
 
     /**
@@ -67,7 +65,6 @@ class ParishControllerTest extends TestCase
         $response->assertViewHas('countries');
         $response->assertViewHas('defaults');
         $response->assertSeeText($parish->display_name);
-
     }
 
     /**
@@ -88,7 +85,6 @@ class ParishControllerTest extends TestCase
         $response->assertViewHas('dioceses');
         $response->assertViewHas('diocese');
         $this->assertGreaterThanOrEqual('1', $parishes->count());
-
     }
 
     /**
@@ -106,7 +102,7 @@ class ParishControllerTest extends TestCase
             'relationship_type_id' => config('polanco.relationship_type.diocese'),
         ]);
 
-        $response = $this->actingAs($user)->get('parishes/diocese/' . $diocese->id);
+        $response = $this->actingAs($user)->get('parishes/diocese/'.$diocese->id);
         $parishes = $response->viewData('parishes');
 
         $response->assertOk();
@@ -115,7 +111,6 @@ class ParishControllerTest extends TestCase
         $response->assertViewHas('dioceses');
         $response->assertViewHas('diocese');
         $this->assertGreaterThanOrEqual('1', $parishes->count());
-
     }
 
     /**
@@ -134,7 +129,6 @@ class ParishControllerTest extends TestCase
         $response->assertViewHas('files');
         $response->assertViewHas('relationship_types');
         $response->assertSeeText(e($parish->display_name));
-
     }
 
     /**
@@ -143,7 +137,7 @@ class ParishControllerTest extends TestCase
     public function store_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('create-contact');
-        $parish_name = 'St. ' . $this->faker->firstName . ' Parish';
+        $parish_name = 'St. '.$this->faker->firstName.' Parish';
 
         $response = $this->actingAs($user)->post(route('parish.store'), [
           'organization_name' => $parish_name,
@@ -160,7 +154,6 @@ class ParishControllerTest extends TestCase
           'display_name' => $parish_name,
           'organization_name' => $parish_name,
         ]);
-
     }
 
     /**
@@ -183,7 +176,7 @@ class ParishControllerTest extends TestCase
         $user = $this->createUserWithPermission('update-contact');
         $parish = factory(\App\Parish::class)->create();
         $original_sort_name = $parish->sort_name;
-        $new_parish_name = 'St. ' . $this->faker->firstName . ' Parish of the Renewal';
+        $new_parish_name = 'St. '.$this->faker->firstName.' Parish of the Renewal';
 
         $response = $this->actingAs($user)->put(route('parish.update', [$parish]), [
           'sort_name' => $new_parish_name,
@@ -197,7 +190,6 @@ class ParishControllerTest extends TestCase
         $response->assertRedirect(action('ParishController@show', $parish->id));
         $this->assertEquals($updated->sort_name, $new_parish_name);
         $this->assertNotEquals($updated->sort_name, $original_sort_name);
-
     }
 
     /**

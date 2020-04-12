@@ -15,18 +15,18 @@ class TestPermissionRolesSeeder extends Seeder
 
         foreach ($permissions as $permission) {
             $role = \App\Role::create([
-                'name' => 'test-role:' . $permission->name,
-                'display_name' => 'test-role:' . $permission->name,
-                'description' => 'Test role with permission: ' . $permission->name
+                'name' => 'test-role:'.$permission->name,
+                'display_name' => 'test-role:'.$permission->name,
+                'description' => 'Test role with permission: '.$permission->name,
             ]);
             $role->givePermissionTo($permission);
         }
         // manually create some roles where more than one permission is required
 
         $role = \App\Role::create([
-          'name' => 'test-role:' . 'finance_reconcile_deposit_show',
-          'display_name' => 'test-role:' .'finance_reconcile_deposit_show',
-          'description' => 'Test role with permissions: ' .'finance_reconcile_deposit_show',
+          'name' => 'test-role:'.'finance_reconcile_deposit_show',
+          'display_name' => 'test-role:'.'finance_reconcile_deposit_show',
+          'description' => 'Test role with permissions: '.'finance_reconcile_deposit_show',
         ]);
         $permission = \App\Permission::whereName('show-donation')->first();
         $role->givePermissionTo($permission);
@@ -35,12 +35,12 @@ class TestPermissionRolesSeeder extends Seeder
 
         /**
          * PageController retreatantinforeport
-         * Permissions: show-contact, show-registration
+         * Permissions: show-contact, show-registration.
          */
         $role = \App\Role::create([
-          'name' => 'test-role:' . 'retreatantinforeport',
-          'display_name' => 'test-role:' .'retreatantinforeport',
-          'description' => 'Test role with permissions: ' .'retreatantinforeport',
+          'name' => 'test-role:'.'retreatantinforeport',
+          'display_name' => 'test-role:'.'retreatantinforeport',
+          'description' => 'Test role with permissions: '.'retreatantinforeport',
         ]);
         $permission = \App\Permission::whereName('show-contact')->first();
         $role->givePermissionTo($permission);
@@ -49,12 +49,12 @@ class TestPermissionRolesSeeder extends Seeder
 
         /**
          * PersonController merge
-         * Permissions: update-contact, update-relationship, update-attachment, update-touchpoint, update-donation, update-payment
+         * Permissions: update-contact, update-relationship, update-attachment, update-touchpoint, update-donation, update-payment.
          */
         $role = \App\Role::create([
-          'name' => 'test-role:' . 'merge',
-          'display_name' => 'test-role:' .'merge',
-          'description' => 'Test role with permissions: ' . 'merge',
+          'name' => 'test-role:'.'merge',
+          'display_name' => 'test-role:'.'merge',
+          'description' => 'Test role with permissions: '.'merge',
         ]);
         $permission = \App\Permission::whereName('update-contact')->first();
         $role->givePermissionTo($permission);
@@ -71,12 +71,12 @@ class TestPermissionRolesSeeder extends Seeder
 
         /**
          * PermissionController update_roles
-         * Permissions: update-permission, update-role
+         * Permissions: update-permission, update-role.
          */
         $role = \App\Role::create([
-          'name' => 'test-role:' . 'update_roles',
-          'display_name' => 'test-role:' .'update_roles',
-          'description' => 'Test role with permissions: ' .'update_roles',
+          'name' => 'test-role:'.'update_roles',
+          'display_name' => 'test-role:'.'update_roles',
+          'description' => 'Test role with permissions: '.'update_roles',
         ]);
         $permission = \App\Permission::whereName('update-permission')->first();
         $role->givePermissionTo($permission);
@@ -85,18 +85,16 @@ class TestPermissionRolesSeeder extends Seeder
 
         /**
          * RelationshipTypeController add
-         * Permissions: create-relationship, show-contact
+         * Permissions: create-relationship, show-contact.
          */
         $role = \App\Role::create([
-          'name' => 'test-role:' . 'relationship_type_add',
-          'display_name' => 'test-role:' .'relationship_type_add',
-          'description' => 'Test role with permissions: ' .'relationship_type_add',
+          'name' => 'test-role:'.'relationship_type_add',
+          'display_name' => 'test-role:'.'relationship_type_add',
+          'description' => 'Test role with permissions: '.'relationship_type_add',
         ]);
         $permission = \App\Permission::whereName('create-relationship')->first();
         $role->givePermissionTo($permission);
         $permission = \App\Permission::whereName('show-contact')->first();
         $role->givePermissionTo($permission);
-
     }
-
 }

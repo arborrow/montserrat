@@ -901,10 +901,10 @@ class PersonController extends Controller
         $person->suffix_id = $request->input('suffix_id');
         $person->nick_name = $request->input('nick_name');
 
-        if (!empty($request->input('display_name'))) {
+        if (! empty($request->input('display_name'))) {
             $person->display_name = $request->input('display_name');
         } // if no display_name is sent in the request, leave the existing data
-        if (!empty($request->input('sort_name'))) {
+        if (! empty($request->input('sort_name'))) {
             $person->sort_name = $request->input('sort_name');
         } // if no sort_name is sent in the request, leave the existing data
 
@@ -1580,7 +1580,7 @@ class PersonController extends Controller
         return $this->role(config('polanco.group_id.captain'));
     }
 
-        public function deacons()
+    public function deacons()
     {
         return $this->role(config('polanco.group_id.deacon'));
     }

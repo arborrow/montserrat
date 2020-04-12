@@ -14,7 +14,7 @@ class Donation extends Model
     protected $dates = ['start_date', 'end_date', 'donation_date'];
     protected $primaryKey = 'donation_id';
     protected $appends = ['payments_paid'];
-    protected $casts = ['donation_amount' => 'decimal:2',];
+    protected $casts = ['donation_amount' => 'decimal:2'];
 
     public function contact()
     {
@@ -57,7 +57,7 @@ class Donation extends Model
     public function getPercentPaidAttribute()
     {
         if ($this->donation_amount > 0) {
-            return number_format((($this->payments_paid / $this->donation_amount) * 100),0);
+            return number_format((($this->payments_paid / $this->donation_amount) * 100), 0);
         } else {
             return 0;
         }
@@ -111,9 +111,9 @@ class Donation extends Model
     public function getRetreatLinkAttribute()
     {
         if (isset($this->retreat->title)) {
-            $path = url('retreat/' . $this->retreat->id);
+            $path = url('retreat/'.$this->retreat->id);
 
-            return "<a href='" . $path . "'>" . '#' . $this->retreat_idnumber . ' - ' . $this->retreat_name . '</a>';
+            return "<a href='".$path."'>".'#'.$this->retreat_idnumber.' - '.$this->retreat_name.'</a>';
         }
     }
 

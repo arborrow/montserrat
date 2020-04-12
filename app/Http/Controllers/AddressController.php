@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Address;
 use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use App\Address;
 
 /**
  * In production, addresses are primarily managed by the person or contact controller.
  * In testing, the address controller uses CRUD-style permissions which are theoretical rather than the contact CRUD permissions used in production
- * In other words, in production, the create-contact permission is used rather than create-address
+ * In other words, in production, the create-contact permission is used rather than create-address.
  */
-
-
 class AddressController extends Controller
 {
     public function __construct()
@@ -30,8 +28,9 @@ class AddressController extends Controller
     public function index()
     {
         $this->authorize('show-address');
-        $addresses = \App\Address::orderBy('postal_code','asc')->with('addressee')->paginate(100);
-        return view('addresses.index',compact('addresses'));
+        $addresses = \App\Address::orderBy('postal_code', 'asc')->with('addressee')->paginate(100);
+
+        return view('addresses.index', compact('addresses'));
     }
 
     /**
@@ -49,8 +48,7 @@ class AddressController extends Controller
         $contacts = \App\Contact::orderBy('sort_name')->pluck('sort_name', 'id');
         $location_types = \App\LocationType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
 
-        return view('addresses.create',compact('countries','states','contacts','location_types'));
-
+        return view('addresses.create', compact('countries', 'states', 'contacts', 'location_types'));
     }
 
     /**
@@ -89,7 +87,6 @@ class AddressController extends Controller
         $address = \App\Address::with('addressee')->findOrFail($id);
 
         return view('addresses.show', compact('address'));
-
     }
 
     /**
@@ -110,7 +107,7 @@ class AddressController extends Controller
         $location_types = \App\LocationType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
         $address = \App\Address::findOrFail($id);
 
-        return view('addresses.edit',compact('address','countries','states','contacts','location_types'));
+        return view('addresses.edit', compact('address', 'countries', 'states', 'contacts', 'location_types'));
     }
 
     /**

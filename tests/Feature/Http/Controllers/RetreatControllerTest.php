@@ -21,7 +21,7 @@ class RetreatControllerTest extends TestCase
         $user = $this->createUserWithPermission('update-registration');
         // create a retreat, then create a number of registrations for the retreat
         $retreat = factory(\App\Retreat::class)->create();
-        $number_registrations = $this->faker->numberBetween(2,10);
+        $number_registrations = $this->faker->numberBetween(2, 10);
         $registration = factory(\App\Registration::class, $number_registrations)->create([
           'event_id' => $retreat->id,
           'canceled_at' => null,
@@ -41,8 +41,6 @@ class RetreatControllerTest extends TestCase
         $response->assertViewHas('registrations');
         $response->assertViewHas('rooms');
         $response->assertSeeText('Save Room Assignments');
-
-
     }
 
     /**
@@ -69,7 +67,7 @@ class RetreatControllerTest extends TestCase
 
         // create a retreat, then create a number of registrations for the retreat
         $retreat = factory(\App\Retreat::class)->create();
-        $number_registrations = $this->faker->numberBetween(2,10);
+        $number_registrations = $this->faker->numberBetween(2, 10);
         $registrations = factory(\App\Registration::class, $number_registrations)->create([
           'event_id' => $retreat->id,
           'canceled_at' => null,
@@ -78,12 +76,11 @@ class RetreatControllerTest extends TestCase
           'room_id' => null,
         ]);
 
-        $response = $this->from('retreat.show',$retreat->id)->actingAs($user)->get(route('retreat.checkin', ['id' => $retreat->id]));
+        $response = $this->from('retreat.show', $retreat->id)->actingAs($user)->get(route('retreat.checkin', ['id' => $retreat->id]));
         $registration = $registrations->random();
         $registration->refresh();
-        $response->assertRedirect(action('RetreatController@show',$retreat->id));
-        $this->assertNotEquals(null,$registration->arrived_at);
-
+        $response->assertRedirect(action('RetreatController@show', $retreat->id));
+        $this->assertNotEquals(null, $registration->arrived_at);
     }
 
     /**
@@ -96,11 +93,11 @@ class RetreatControllerTest extends TestCase
         // create a retreat, then create a number of registrations for the retreat
         $retreat = factory(\App\Retreat::class)->create(
           [
-            'start_date' => $this->faker->dateTimeBetween('-5 days','-2 days'),
-            'end_date' => $this->faker->dateTimeBetween('-1 day','1 day'),
+            'start_date' => $this->faker->dateTimeBetween('-5 days', '-2 days'),
+            'end_date' => $this->faker->dateTimeBetween('-1 day', '1 day'),
           ]
         );
-        $number_registrations = $this->faker->numberBetween(2,10);
+        $number_registrations = $this->faker->numberBetween(2, 10);
         $registrations = factory(\App\Registration::class, $number_registrations)->create([
           'event_id' => $retreat->id,
           'canceled_at' => null,
@@ -114,9 +111,8 @@ class RetreatControllerTest extends TestCase
         $registration = $registrations->random();
         $registration->refresh();
 
-        $response->assertRedirect(action('RetreatController@show',$retreat->id));
-        $this->assertNotEquals(null,$registration->departed_at);
-
+        $response->assertRedirect(action('RetreatController@show', $retreat->id));
+        $this->assertNotEquals(null, $registration->departed_at);
     }
 
     /**
@@ -194,7 +190,7 @@ class RetreatControllerTest extends TestCase
         $response->assertViewHas('registrations');
         $response->assertViewHas('donation_description');
         $response->assertViewHas('payment_description');
-        $response->assertSeeText('Retreat Offerings for ' . e($retreat->title));
+        $response->assertSeeText('Retreat Offerings for '.e($retreat->title));
     }
 
     /**
@@ -205,7 +201,7 @@ class RetreatControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-retreat');
         $retreat = factory(\App\Retreat::class)->create();
 
-        $response = $this->actingAs($user)->get('retreat/id/' . $retreat->idnumber);
+        $response = $this->actingAs($user)->get('retreat/id/'.$retreat->idnumber);
 
         $response->assertOk();
         $response->assertViewIs('retreats.show');
@@ -213,7 +209,6 @@ class RetreatControllerTest extends TestCase
         $response->assertViewHas('registrations');
         $response->assertViewHas('status');
         $response->assertSeeText(e($retreat->title));
-
     }
 
     /**
@@ -246,7 +241,7 @@ class RetreatControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-retreat');
         // create a new event type, add a random number of retreats (2-10) to that event type ensuring they are all future events
         $event_type = factory(\App\EventType::class)->create();
-        $number_retreats = $this->faker->numberBetween(2,10);
+        $number_retreats = $this->faker->numberBetween(2, 10);
         $retreat = factory(\App\Retreat::class, $number_retreats)->create([
             'event_type_id' => $event_type->id,
             'start_date' => $this->faker->dateTimeBetween('+6 days', '+10 days'),
@@ -254,7 +249,7 @@ class RetreatControllerTest extends TestCase
 
         ]);
 
-        $response = $this->actingAs($user)->get('retreat/type/' . $event_type->id);
+        $response = $this->actingAs($user)->get('retreat/type/'.$event_type->id);
         $upcoming = $response->viewData('retreats');
         $response->assertOk();
         $response->assertViewIs('retreats.index');
@@ -262,10 +257,10 @@ class RetreatControllerTest extends TestCase
         $response->assertViewHas('oldretreats');
         $response->assertViewHas('defaults');
         $response->assertViewHas('event_types');
-        $response->assertSeeText('Upcoming ' . e($event_type->type));
-        $response->assertSeeText('Previous ' . e($event_type->type));
+        $response->assertSeeText('Upcoming '.e($event_type->type));
+        $response->assertSeeText('Previous '.e($event_type->type));
         $this->assertEquals($number_retreats, $upcoming->count());
-        }
+    }
 
     /**
      * @test
@@ -282,8 +277,8 @@ class RetreatControllerTest extends TestCase
           'canceled_at' => null,
         ]);
         $room = factory(\App\Room::class)->create();
-        $registrations = array();
-        $notes = array();
+        $registrations = [];
+        $notes = [];
         $registrations[$registration->id] = $room->id;
         $notes[$registration->id] = $this->faker->sentence;
 
@@ -294,10 +289,10 @@ class RetreatControllerTest extends TestCase
 
         $updated_registration = \App\Registration::findOrFail($registration->id);
         $response->assertRedirect(action('RetreatController@index'));
-        $this->assertNotEquals(null,$updated_registration->room_id);
+        $this->assertNotEquals(null, $updated_registration->room_id);
         $this->assertEquals($room->id, $updated_registration->room_id);
-        $this->assertNotEquals(null,$updated_registration->notes);
-      }
+        $this->assertNotEquals(null, $updated_registration->notes);
+    }
 
     /**
      * @test
@@ -327,7 +322,6 @@ class RetreatControllerTest extends TestCase
         $response->assertViewHas('registrations');
         $response->assertViewHas('status');
         $response->assertSeeText(e($retreat->title));
-
     }
 
     /**
@@ -359,7 +353,7 @@ class RetreatControllerTest extends TestCase
             'status_id' => config('polanco.registration_status_id.waitlist'),
         ]);
         $retreat = \App\Retreat::findOrFail($registration->event_id);
-        $response = $this->actingAs($user)->get('retreat/' . $registration->event_id .'/waitlist');
+        $response = $this->actingAs($user)->get('retreat/'.$registration->event_id.'/waitlist');
 
         $response->assertOk();
         $response->assertViewIs('retreats.waitlist');
@@ -367,7 +361,6 @@ class RetreatControllerTest extends TestCase
         $response->assertViewHas('registrations');
         $response->assertSeeText('Waitlist for');
         $response->assertSeeText(e($retreat->idnumber));
-
     }
 
     /**
@@ -376,7 +369,7 @@ class RetreatControllerTest extends TestCase
     public function store_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('create-retreat');
-        $idnumber = $this->faker->numberBetween(11111111,99999999) . $this->faker->lastName;
+        $idnumber = $this->faker->numberBetween(11111111, 99999999).$this->faker->lastName;
         $response = $this->actingAs($user)->post(route('retreat.store'), [
             'idnumber' => $idnumber,
             'start_date' => $this->faker->dateTimeBetween('+6 days', '+10 days'),
@@ -385,7 +378,7 @@ class RetreatControllerTest extends TestCase
             'silent' => $this->faker->boolean(90),
             'is_active' => '1',
             'description' => $this->faker->paragraph,
-            'event_type_id' => $this->faker->numberBetween(1,14),
+            'event_type_id' => $this->faker->numberBetween(1, 14),
             'innkeeper_id' => 0,
             'assistant_id' => 0,
         ]);
@@ -416,7 +409,7 @@ class RetreatControllerTest extends TestCase
         $retreat = factory(\App\Retreat::class)->create();
         $original_idnumber = $retreat->idnumber;
         $original_title = $retreat->title;
-        $new_idnumber = $this->faker->numberBetween(11111111,99999999) . $this->faker->lastName;
+        $new_idnumber = $this->faker->numberBetween(11111111, 99999999).$this->faker->lastName;
         $new_title = $this->faker->catchPhrase;
         $response = $this->actingAs($user)->put(route('retreat.update', [$retreat]), [
             'id' => $retreat->id,
@@ -429,7 +422,7 @@ class RetreatControllerTest extends TestCase
             'silent' => $this->faker->boolean(90),
             'is_active' => '1',
             'description' => $this->faker->paragraph,
-            'event_type_id' => $this->faker->numberBetween(1,14),
+            'event_type_id' => $this->faker->numberBetween(1, 14),
         ]);
         $retreat->refresh();
         $response->assertRedirect(action('RetreatController@index'));
@@ -438,7 +431,7 @@ class RetreatControllerTest extends TestCase
         $this->assertNotEquals($retreat->title, $original_title);
         $this->assertNotEquals($retreat->idnumber, $original_idnumber);
 
-// TODO: write tests for uploading of files (schedule, evaluations, contracts, group pictures, etc.)
+        // TODO: write tests for uploading of files (schedule, evaluations, contracts, group pictures, etc.)
     }
 
     /**
@@ -470,7 +463,7 @@ class RetreatControllerTest extends TestCase
             'room_id' => $room->id,
             'canceled_at' => null,
         ]);
-        $response = $this->actingAs($user)->get('retreat/' . $registration->event_id .'/roomlist');
+        $response = $this->actingAs($user)->get('retreat/'.$registration->event_id.'/roomlist');
         $response->assertOk();
         $response->assertViewIs('retreats.roomlist');
         $response->assertViewHas('event');

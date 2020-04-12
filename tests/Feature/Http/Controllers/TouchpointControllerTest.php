@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\GroupContact;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\GroupContact;
 
 /**
  * @see \App\Http\Controllers\TouchpointController
@@ -82,7 +82,7 @@ class TouchpointControllerTest extends TestCase
 
         */
 
-        $response = $this->actingAs($user)->get('group/' . $group->id . '/touchpoint');
+        $response = $this->actingAs($user)->get('group/'.$group->id.'/touchpoint');
 
         $response->assertOk();
         $response->assertViewIs('touchpoints.add_group');
@@ -90,7 +90,6 @@ class TouchpointControllerTest extends TestCase
         $response->assertViewHas('groups');
         $response->assertViewHas('defaults');
         $response->assertSeeText('Create Group Touchpoint');
-
     }
 
     /**
@@ -123,7 +122,7 @@ class TouchpointControllerTest extends TestCase
         ]);
         */
 
-        $response = $this->actingAs($user)->get('retreat/' . $retreat->id . '/touchpoint');
+        $response = $this->actingAs($user)->get('retreat/'.$retreat->id.'/touchpoint');
 
         $response->assertOk();
         $response->assertViewIs('touchpoints.add_retreat');
@@ -160,7 +159,7 @@ class TouchpointControllerTest extends TestCase
 
         $retreat = factory(\App\Retreat::class)->create();
 
-        $response = $this->actingAs($user)->get('retreat/' . $retreat->id . '/waitlist_touchpoint');
+        $response = $this->actingAs($user)->get('retreat/'.$retreat->id.'/waitlist_touchpoint');
 
         $response->assertOk();
         $response->assertViewIs('touchpoints.add_retreat_waitlist');
@@ -277,7 +276,7 @@ class TouchpointControllerTest extends TestCase
           'touched_at' => $touched_at,
           'person_id' => $person->id,
           'staff_id' => $staff->id,
-          'type' => array_rand(array_flip(array('Email','Call','Letter','Face','Other'))),
+          'type' => array_rand(array_flip(['Email', 'Call', 'Letter', 'Face', 'Other'])),
           'notes' => $this->faker->paragraph,
         ]);
         $response->assertRedirect(action('TouchpointController@index'));
@@ -286,7 +285,6 @@ class TouchpointControllerTest extends TestCase
           'person_id' => $person->id,
           'staff_id' => $staff->id,
         ]);
-
     }
 
     /**
@@ -339,7 +337,7 @@ class TouchpointControllerTest extends TestCase
             'group_id' => $group->id,
             'touched_at' => $touched_at,
             'staff_id' => $staff->id,
-            'type' => array_rand(array_flip(array('Email','Call','Letter','Face','Other'))),
+            'type' => array_rand(array_flip(['Email', 'Call', 'Letter', 'Face', 'Other'])),
             'notes' => $notes,
         ]);
 
@@ -387,7 +385,7 @@ class TouchpointControllerTest extends TestCase
         // Create touchpoint for the retreatants registered on that retreat
 
         $retreat = factory(\App\Retreat::class)->create();
-        $number_participants = $this->faker->numberBetween(3,15);
+        $number_participants = $this->faker->numberBetween(3, 15);
 
         // criteria set from search criteria in touchpoint controller's store_retreat method
         $participants = factory(\App\Registration::class, $number_participants)->create([
@@ -408,7 +406,7 @@ class TouchpointControllerTest extends TestCase
             'event_id' => $retreat->id,
             'touched_at' => $touched_at,
             'staff_id' => $staff->id,
-            'type' => array_rand(array_flip(array('Email','Call','Letter','Face','Other'))),
+            'type' => array_rand(array_flip(['Email', 'Call', 'Letter', 'Face', 'Other'])),
             'notes' => $notes,
         ]);
 
@@ -420,7 +418,6 @@ class TouchpointControllerTest extends TestCase
           'staff_id' => $staff->id,
           'notes' => $notes,
         ]);
-
     }
 
     /**
@@ -458,7 +455,7 @@ class TouchpointControllerTest extends TestCase
         // Create touchpoint for the retreatants registered on that retreat
 
         $retreat = factory(\App\Retreat::class)->create();
-        $number_participants = $this->faker->numberBetween(3,15);
+        $number_participants = $this->faker->numberBetween(3, 15);
 
         // criteria set from search criteria in touchpoint controller's store_retreat method
         $participants = factory(\App\Registration::class, $number_participants)->create([
@@ -479,7 +476,7 @@ class TouchpointControllerTest extends TestCase
             'event_id' => $retreat->id,
             'touched_at' => $touched_at,
             'staff_id' => $staff->id,
-            'type' => array_rand(array_flip(array('Email','Call','Letter','Face','Other'))),
+            'type' => array_rand(array_flip(['Email', 'Call', 'Letter', 'Face', 'Other'])),
             'notes' => $notes,
         ]);
 
@@ -541,7 +538,6 @@ class TouchpointControllerTest extends TestCase
         $this->AssertEquals($person->id, $touchpoint->person_id);
         $this->AssertEquals($staff->id, $touchpoint->staff_id);
         $this->AssertNotEquals($original_staff_id, $touchpoint->staff_id);
-
     }
 
     /**
