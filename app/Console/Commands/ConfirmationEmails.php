@@ -78,7 +78,7 @@ class ConfirmationEmails extends Command
                     }
                     // TODO: create Juan Alfonso de Polanco contact in seeder; however, if it does not exist use self id from polanco config
                     $alfonso = \App\Contact::where('display_name', 'Juan Alfonso de Polanco')->first();
-                    if (!isset($alfonso->id)) {
+                    if (! isset($alfonso->id)) {
                         $alfonso = \App\Contact::findOrFail(config('polanco.self.id'));
                     }
                     $touchpoint = new \App\Touchpoint();
