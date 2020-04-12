@@ -41,7 +41,7 @@ class SearchController extends Controller
         } else {
             $contact = \App\Contact::findOrFail($id);
 
-            return redirect($contact->contact_url);
+            return redirect()->to($contact->contact_url);
             $user = $this->createUserWithPermission('show-contact');
         }
     }
