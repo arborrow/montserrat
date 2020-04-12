@@ -131,7 +131,7 @@ class RetreatController extends Controller
         $retreat->innkeeper_id = $request->input('innkeeper_id');
         $retreat->assistant_id = $request->input('assistant_id');
 
-        if (null !== (env('GOOGLE_CALENDAR_ID'))) {
+        if (null !== (config('settings.google_calendar_id'))) {
             $calendar_event = new Event;
             $calendar_event->id = uniqid();
             $retreat->calendar_id = $calendar_event->id;
@@ -151,7 +151,7 @@ class RetreatController extends Controller
             $retreat->captains()->sync($request->input('captains'));
         }
 
-        if (null !== (env('GOOGLE_CALENDAR_ID'))) {
+        if (null !== (config('settings.google_calendar_id'))) {
             $calendar_event->name = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
             $calendar_event->summary = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
             $calendar_event->startDateTime = $retreat->start_date;
@@ -561,7 +561,7 @@ class RetreatController extends Controller
     public function calendar()
     {
         $this->authorize('show-retreat');
-        if (null !== env('GOOGLE_CALENDAR_ID')) {
+        if (null !== config('settings.google_calendar_id')) {
             $calendar_events = \Spatie\GoogleCalendar\Event::get();
         } else {
             $calendar_events = collect([]);
