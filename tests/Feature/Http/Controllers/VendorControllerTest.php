@@ -59,7 +59,7 @@ class VendorControllerTest extends TestCase
         $response->assertViewHas('states');
         $response->assertViewHas('countries');
         $response->assertViewHas('defaults');
-        $response->assertSeeText(e($vendor->display_name));
+        $response->assertSeeText($vendor->display_name);
 
         // TODO: perform additional assertions
     }
@@ -100,7 +100,7 @@ class VendorControllerTest extends TestCase
         $response->assertViewHas('vendor');
         $response->assertViewHas('relationship_types');
         $response->assertViewHas('files');
-        $response->assertSeeText(e($vendor->display_name));
+        $response->assertSeeText($vendor->display_name);
     }
 
     /**
