@@ -19,7 +19,9 @@ class Retreat extends Model
 
     protected $table = 'event';
 
-    protected $dates = ['start_date', 'end_date', 'created_at', 'updated_at', 'disabled_at', 'deleted_at'];  //
+    protected $dates = [
+        'start_date', 'end_date', 'disabled_at',
+    ];  //
 
     public function setStartDateAttribute($date)
     {

@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Ethnicity extends Model
 {
     use SoftDeletes;
-    protected $dates = ['created_at', 'updated_at', 'disabled_at'];  //
+    protected $dates = [
+        'disabled_at',
+    ];  //
 
     //
 }

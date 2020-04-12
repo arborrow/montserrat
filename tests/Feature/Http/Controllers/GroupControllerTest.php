@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 /**
@@ -106,8 +107,8 @@ class GroupControllerTest extends TestCase
         $group_name = ucfirst(implode(' ', $this->faker->words));
         $response = $this->actingAs($user)->post(route('group.store'), [
             'name' => $group_name,
-            'title' => str_plural($group_name),
-            'description' => 'New Group of '.str_plural($group_name),
+            'title' => Str::plural($group_name),
+            'description' => 'New Group of '.Str::plural($group_name),
             'is_active' => '1',
             'is_hidden' => '0',
             'is_reserved' => '0',
@@ -117,8 +118,8 @@ class GroupControllerTest extends TestCase
         $response->assertRedirect(action('GroupController@show', $new_group->id));
         $this->assertDatabaseHas('group', [
           'name' => $group_name,
-          'title' => str_plural($group_name),
-          'description' => 'New Group of '.str_plural($group_name),
+          'title' => Str::plural($group_name),
+          'description' => 'New Group of '.Str::plural($group_name),
         ]);
 
         // TODO: perform additional assertions
@@ -147,8 +148,8 @@ class GroupControllerTest extends TestCase
 
         $response = $this->actingAs($user)->put(route('group.update', [$group]), [
             'name' => $new_group_name,
-            'title' => str_plural($new_group_name),
-            'description' => 'Renewed Group of '.str_plural($new_group_name),
+            'title' => Str::plural($new_group_name),
+            'description' => 'Renewed Group of '.Str::plural($new_group_name),
         ]);
         $updated = \App\Group::findOrFail($group->id);
 

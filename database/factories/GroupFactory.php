@@ -3,14 +3,15 @@
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
 use Faker\Generator as Faker;
+use Illuminate\Support\Str;
 
 $factory->define(App\Group::class, function (Faker $faker) {
     $group_name = ucfirst(implode(' ', $faker->words));
 
     return [
       'name' => $group_name,
-      'title' => str_plural($group_name),
-      'description' => 'Group of '.str_plural($group_name),
+      'title' => Str::plural($group_name),
+      'description' => 'Group of '.Str::plural($group_name),
       'is_active' => 1,
       'visibility' => 'User and User Admin Only',
       'is_hidden' => 0,

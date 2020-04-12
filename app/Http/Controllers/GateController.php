@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Twilio\Rest\Client;
 
 class GateController extends Controller
@@ -21,7 +22,7 @@ class GateController extends Controller
         return view('gate.index', compact('touchpoints'));
     }
 
-    public function open($hours = null)
+    public function open(Request $request, $hours = null)
     {
         $this->authorize('show-gate'); // Check to see if the user has permissions
 
@@ -58,7 +59,7 @@ class GateController extends Controller
 
             // create touchpoint to log open and closing of gate
             $text = ! isset($hours) ? null : ' for '.$hours.' hours';
-            $current_user = Auth::user();
+            $current_user = $request->user();
             $user_email = \App\Email::whereEmail($current_user->email)->first();
             if (empty($user_email->contact_id)) {
                 $defaults['user_id'] = config('polanco.self.id');
@@ -80,7 +81,7 @@ class GateController extends Controller
         return view('gate.open', compact('hours', 'message'));
     }
 
-    public function close()
+    public function close(Request $request)
     {
         $this->authorize('show-gate'); // Check to see if the user has permissions
 
@@ -106,7 +107,7 @@ class GateController extends Controller
 
             // create touchpoint to log open and closing of gate
             $text = ! isset($hours) ? null : ' for '.$hours.' hours';
-            $current_user = Auth::user();
+            $current_user = $request->user();
 
             $user_email = \App\Email::whereEmail($current_user->email)->first();
             if (empty($user_email->contact_id)) {

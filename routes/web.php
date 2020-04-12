@@ -43,15 +43,15 @@ Route::get('/goodbye', 'HomeController@goodbye');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
 Route::get('/dashboard/agc', 'DashboardController@agc')->name('dashboard.agc');
-Route::get('/dashboard/board/{year?}', 'DashboardController@board')->name('dashboard.board')->where('year', '^\d{4}$');
+Route::get('/dashboard/board/{year?}', 'DashboardController@board')->name('dashboard.board')->where('year', '^\\d{4}$');
 Route::get('/dashboard/description/{category?}', 'DashboardController@donation_description_chart')->name('dashboard.description');
 
 // Authentication routes...
 // Route::get('login/{provider?}', 'Auth\AuthController@login');
 // Route::get('auth/google/callback', 'Auth\AuthController@handleProviderCallback');
-Route::get('logout', ['uses' => 'Auth\LoginController@logout'])->name('logout');
-Route::get('login/google', ['uses' => 'Auth\LoginController@redirectToProvider'])->name('login');
-Route::get('login/google/callback', ['uses' => 'Auth\LoginController@handleProviderCallback'])->name('login.google_callback');
+Route::get('logout', 'Auth\\LoginController@logout')->name('logout');
+Route::get('login/google', 'Auth\\LoginController@redirectToProvider')->name('login');
+Route::get('login/google/callback', 'Auth\\LoginController@handleProviderCallback')->name('login.google_callback');
 
 Route::get('search/autocomplete', 'SearchController@autocomplete');
 Route::get('search/getuser', 'SearchController@getuser');

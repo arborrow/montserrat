@@ -58,9 +58,9 @@ class PostRetreatEmails extends Command
                 if ($retreatants->count() >= 1) {
                     foreach ($retreatants as $retreatant) {
                         $primaryEmail = $retreatant->contact->primaryEmail()->first()->email;
-                            try {
-                                Mail::to($primaryEmail)->queue(new PostRetreat($retreatant));
-                            } catch (\Exception $e) {
+                        try {
+                            Mail::to($primaryEmail)->queue(new PostRetreat($retreatant));
+                        } catch (\Exception $e) {
                         }
                     }
                 }

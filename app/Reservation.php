@@ -9,7 +9,9 @@ class Reservation extends Model
 {
     //
     use SoftDeletes;
-    protected $dates = ['start', 'end', 'register', 'confirmregister', 'confirmattend', 'created_at', 'updated_at', 'disabled_at'];  //
+    protected $dates = [
+        'start', 'end', 'register', 'confirmregister', 'confirmattend', 'disabled_at',
+    ];  //
 
     public function registration()
     {

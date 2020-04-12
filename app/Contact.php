@@ -12,7 +12,9 @@ class Contact extends Model
 {
     use SoftDeletes;
     protected $table = 'contact';
-    protected $dates = ['birth_date', 'deceased_date', 'created_date', 'modified_date', 'created_at', 'updated_at', 'deleted_at'];
+    protected $dates = [
+        'birth_date', 'deceased_date', 'created_date', 'modified_date',
+    ];
     protected $casts = [
         'contact_type' => 'integer',
         'subcontact_type' => 'integer',

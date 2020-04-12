@@ -681,6 +681,7 @@ class PersonController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     * TODO: Shift suggestion - review these instances for dynamic validation rules - handle in a custom request like EnvelopeRequest
      */
     public function envelope($id, Request $request)
     {
