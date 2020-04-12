@@ -50,6 +50,7 @@ class Handler extends ExceptionHandler
      * @param  \Illuminate\Http\Request  $request
      * @param  \Throwable  $exception
      * @return \Illuminate\Http\Response
+     * TODO: Shift detected direct Mail::send() calls. Laravel 5.4 introduced Mailables which better encapsulate the code for sending emails.
      */
     public function render($request, Throwable $exception)
     {
