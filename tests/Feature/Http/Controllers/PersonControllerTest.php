@@ -203,7 +203,7 @@ class PersonControllerTest extends TestCase
         $response->assertViewHas('subcontact_types');
         $response->assertViewHas('referrals');
         $response->assertSeeText('Edit');
-        $response->assertSee(e($person->display_name));
+        $response->assertSee($person->display_name);
     }
 
     /**
