@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Charts\RetreatOfferingChart;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {

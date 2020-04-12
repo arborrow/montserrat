@@ -2,8 +2,8 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Illuminate\Support\Str;
 use Faker\Generator as Faker;
+use Illuminate\Support\Str;
 
 $factory->define(App\Group::class, function (Faker $faker) {
     $group_name = ucfirst(implode(' ', $faker->words));

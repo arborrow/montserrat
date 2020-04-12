@@ -9,7 +9,7 @@ class Ethnicity extends Model
 {
     use SoftDeletes;
     protected $dates = [
-        'disabled_at'
+        'disabled_at',
     ];  //
 
     //

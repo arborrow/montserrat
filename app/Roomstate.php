@@ -10,7 +10,7 @@ class Roomstate extends Model
     use SoftDeletes;
 
     protected $dates = [
-        'statechange_at'
+        'statechange_at',
     ];  //
 
     //

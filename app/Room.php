@@ -11,7 +11,7 @@ class Room extends Model
 
     use SoftDeletes;
 
-      //
+    //
 
     public function location()
     {

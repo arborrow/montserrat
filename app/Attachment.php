@@ -10,7 +10,7 @@ class Attachment extends Model
     use SoftDeletes;
     protected $table = 'file';
     protected $dates = [
-        'upload_date'
+        'upload_date',
     ];  //
     protected $fillable = ['entity', 'entity_id', 'file_type_id'];
 

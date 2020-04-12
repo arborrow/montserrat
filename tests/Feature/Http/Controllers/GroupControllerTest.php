@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 /**
