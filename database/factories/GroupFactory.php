@@ -2,6 +2,7 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
+use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
 $factory->define(App\Group::class, function (Faker $faker) {
@@ -9,8 +10,8 @@ $factory->define(App\Group::class, function (Faker $faker) {
 
     return [
       'name' => $group_name,
-      'title' => str_plural($group_name),
-      'description' => 'Group of '.str_plural($group_name),
+      'title' => Str::plural($group_name),
+      'description' => 'Group of '.Str::plural($group_name),
       'is_active' => 1,
       'visibility' => 'User and User Admin Only',
       'is_hidden' => 0,
