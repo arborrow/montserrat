@@ -22,12 +22,14 @@ class MailgunController extends Controller
         $this->authorize('admin-mailgun');
         $messages = new \Illuminate\Support\Collection;
 
-        $mg = new Mailgun(config('services.mailgun.secret'));
+        // $mg = new Mailgun(config('services.mailgun.secret'));
+        $mg = Mailgun::create(config('services.mailgun.secret'));
         $domain = config('services.mailgun.domain');
         $queryString = ['event' => 'stored'];
         $emails = '';
         $messages = new \Illuminate\Support\Collection;
-        $results = $mg->get("$domain/events", $queryString);
+
+        $results = $mg->events()->get("$domain", $queryString);
         //dd($results);
         if (array_key_exists('http_response_body', $results)) {
             //dd('found');
