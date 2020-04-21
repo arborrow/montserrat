@@ -1,5 +1,5 @@
 <div class="form-group form-check">
-    {!! Form::checkbox('do_not_email', 1, 0,['class' => 'form-check-input', 'id' => 'do_not_email']) !!}
+    {!! Form::checkbox('do_not_email', 1, $person->do_not_email,['class' => 'form-check-input', 'id' => 'do_not_email']) !!}
     {!! Form::label('do_not_email', 'Do not email', ['class' => 'form-check-label', 'id' => 'do_not_email']) !!}
 </div>
 <div class="form-group">
@@ -31,7 +31,7 @@
                     {!! Form::label('email_home', 'Email:') !!}
                     {!! Form::text('email_home', $defaults['Home']['email'], ['class' => 'form-control']) !!}
                 </div>
-            </div>          
+            </div>
         </div>
         <div aria-labelledby="tab2-tab" id="email_work" class="tab-pane fade" role="tabpanel">
             <h4>Work email</h4>
