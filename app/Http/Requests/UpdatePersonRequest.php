@@ -45,7 +45,7 @@ class UpdatePersonRequest extends FormRequest
             'address_work_zip' => 'alpha_dash|max:12|nullable',
             'address_work_country' => 'integer|min:0|nullable',
             'agc_household_name' => 'string|max:200|nullable',
-            'attachment' => 'file|mimes:pdf,doc,docx|max:10000|nullable',
+            'attachment' => 'file|mimes:pdf,doc,docx,zip|max:10000|nullable',
             'attachment_description' => 'string|max:200|nullable',
             'avatar' => 'image|max:5000|nullable',
             'birth_date' => 'date|nullable',
