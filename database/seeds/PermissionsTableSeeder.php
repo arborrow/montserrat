@@ -716,6 +716,15 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2018-12-06 12:55:38',
                 'deleted_at' => null,
             ],
+            78 => [
+                'id' => 79,
+                'name' => 'show-dashboard',
+                'display_name' => 'show-dashboard',
+                'description' => 'Show dashboard',
+                'created_at' => '2018-12-06 12:53:51',
+                'updated_at' => '2018-12-06 12:55:38',
+                'deleted_at' => null,
+            ],
 
         ]);
     }

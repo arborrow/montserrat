@@ -11,6 +11,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $this->authorize('show-dashboard');
         return view('dashboard.index');
     }
 
