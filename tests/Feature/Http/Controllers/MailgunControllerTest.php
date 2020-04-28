@@ -45,7 +45,7 @@ class MailgunControllerTest extends TestCase
             $response->assertOk();
             $response->assertViewIs('mailgun.processed');
             $response->assertViewHas('messages');
-            $respnose->assertSee('Index of Mailgun Processed Messages');
+            $response->assertSee('Index of Mailgun Processed Messages');
         } else {
             $user = $this->createUserWithPermission('show-admin-menu');
             $response = $this->actingAs($user)->get(route('admin.config.mailgun'));
