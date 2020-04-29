@@ -16,12 +16,6 @@
             {!! Html::link(action('PaymentController@create',$donation->donation_id),'Add payment',array('class' => 'btn btn-outline-dark'))!!}
         @endCan
     </div>
-    <div class="col-12 mt-2">
-        @if ($donation->percent_paid == 100)
-            <a href="/donation/{{$donation->donation_id}}/agcacknowledge"><img src="{{URL('/images/letter.png')}}" alt="Print acknowledgement" title="Print acknowledgement"></a>
-            <a href="/person/{{$donation->contact_id}}/envelope10"><img src="{{URL('/images/envelope.png')}}" alt="Print envelope" title="Print envelope"></a>
-        @endIf
-    </div>
     <div class="col-12 col-md-4">
         <span class="font-weight-bold">Date: </span>{{$donation->donation_date->format('m/d/Y')}}
         <br><span class="font-weight-bold">Description: </span>{{$donation->donation_description}}

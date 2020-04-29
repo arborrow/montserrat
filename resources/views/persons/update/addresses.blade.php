@@ -1,5 +1,5 @@
 <div class="form-group form-check">
-    {!! Form::checkbox("do_not_mail", 1, 0,["class" => "form-check-input", "id" => "do_not_mail"]) !!}
+    {!! Form::checkbox("do_not_mail", 1, $person->do_not_mail,["class" => "form-check-input", "id" => "do_not_mail"]) !!}
     {!! Form::label("do_not_mail", "Do not mail", ["class" => "form-check-label", "id" => "do_not_mail"]) !!}
 </div>
 <div class="form-group">

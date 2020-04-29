@@ -1,9 +1,9 @@
 <div class="form-group form-check">
-    {!! Form::checkbox('do_not_phone', 1, 0,['class' => 'form-check-input', 'id' => 'do_not_phone']) !!}
+    {!! Form::checkbox('do_not_phone', 1, $person->do_not_phone,['class' => 'form-check-input', 'id' => 'do_not_phone']) !!}
     {!! Form::label('do_not_phone', 'Do not call', ['class' => 'form-check-label', 'id' => 'do_not_phone']) !!}
 </div>
 <div class="form-group form-check">
-    {!! Form::checkbox('do_not_sms', 1, 0,['class' => 'form-check-input', 'id' => 'do_not_sms']) !!}
+    {!! Form::checkbox('do_not_sms', 1, $person->do_not_sms,['class' => 'form-check-input', 'id' => 'do_not_sms']) !!}
     {!! Form::label('do_not_sms', 'Do not text', ['class' => 'form-check-label', 'id' => 'do_not_sms']) !!}
 </div>
 <div class="form-group">
@@ -48,7 +48,7 @@
         </div>
         <div id="phone_work" class="tab-pane fade" role="tabpanel">
             <h4>Work phone numbers</h4>
-            
+
             <div class="row">
                 <div class="col-12 col-md-4">
                     {!! Form::label('phone_work_phone', 'Home:') !!}
@@ -66,7 +66,7 @@
         </div>
         <div id="phone_other" class="tab-pane fade" role="tabpanel">
             <h4>Other phone numbers</h4>
-            
+
             <div class="row">
                 <div class="col-12 col-md-4">
                     {!! Form::label('phone_other_phone', 'Main:') !!}

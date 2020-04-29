@@ -52,7 +52,7 @@ class UpdateVendorRequestTest extends TestCase
           'phone_main_phone' => 'phone|nullable',
           'phone_main_fax' => 'phone|nullable',
           'avatar' => 'image|max:5000|nullable',
-          'attachment' => 'file|mimes:pdf,doc,docx|max:10000|nullable',
+          'attachment' => 'file|mimes:pdf,doc,docx,zip|max:10000|nullable',
           'attachment_description' => 'string|max:200|nullable',
         ], $actual);
     }
