@@ -13,18 +13,28 @@
 
 		We look forward to welcoming and accompanying you during the retreat.<br><br>
 
+		Special COVID-19 Considerations:<br>
+		• First and foremost, <strong><u>stay home if you are sick</u></strong>, especially if you have a fever, cough or other COVID-19 related symptoms.<br>
+		• For those 65 and older or have any health issues that might put one <u>at a higher risk</u> from COVID-19, consider staying home. <br>
+		• While here at Montserrat, you are expected to <u>practice social distancing</u> by maintaining appropriated distance between yourself and others. <br>
+		• Practice <u>good hygiene</u> including: frequent hand washing and using hand sanitizer when entering common spaces. <br>
+		• Be vigilant to <u>cover all coughs and sneezes</u> with elbow and be mindful to not touch your face. <br>
+		• After entering the <u>chapel</u> (or other common spaces), sanitize your hands and <u>wear a face mask</u> during talks and Mass. <br>
+		• After entering the Simons Common Dining Hall, sanitize hands and keep appropriate distance (no more than one person per table unless they are of the same household). <br>
+
 		In the Lord,<br><br>
 		Fr. Anthony Borrow, S.J.<br>
 		Director<br><br>
 
 		P.S. If you have a moment, kindly <a href="{{ url('intercept/'.$encodedUrl ) }}">click here to confirm your attendance</a>. If your plans have changed kindly let us know by calling us at 940-321-6020 or emailing us at registration@montserratretreat.org. We would be happy to help you reschedule your retreat.<br><br>
 
-		What is provided:<br> 
+		What is provided:<br>
 		• All meals, snacks and beverages<br>
 		• Bed linens, pillows, towels, and washcloths<br>
 		• Each room has a private bath and individually controlled cooling/heating units<br><br>
 
 		What to bring:<br>
+		• <strong>In light of COVID-19, you are expected to bring a <u>face mask</u></strong><br>
 		• Personal medicines, toiletries and hairdryer<br>
 		• Comfortable, casual clothes and walking shoes<br>
 		• A pen, journal or notebook<br>

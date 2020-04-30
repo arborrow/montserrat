@@ -208,6 +208,7 @@ table {
 .pageheader table,
 .pageheader td {
     border: 0px solid white;
+    border-collapse: unset;
 }
 
 .invoice.pageheader tr,
