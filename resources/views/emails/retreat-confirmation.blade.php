@@ -13,7 +13,7 @@
 
 		We look forward to welcoming and accompanying you during the retreat.<br><br>
 
-		Special COVID-19 Considerations:<br>
+		<strong><u>Special COVID-19 Considerations:</u></strong><br>
 		• First and foremost, <strong><u>stay home if you are sick</u></strong>, especially if you have a fever, cough or other COVID-19 related symptoms.<br>
 		• For those 65 and older or have any health issues that might put one <u>at a higher risk</u> from COVID-19, consider staying home. <br>
 		• While here at Montserrat, you are expected to <u>practice social distancing</u> by maintaining appropriated distance between yourself and others. <br>
