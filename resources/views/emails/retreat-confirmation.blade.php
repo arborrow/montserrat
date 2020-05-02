@@ -17,7 +17,7 @@
 		• First and foremost, <strong><u>stay home if you are sick</u></strong>, especially if you have a fever, cough or other COVID-19 related symptoms.<br>
 		• For those 65 and older or have any health issues that might put one <u>at a higher risk</u> from COVID-19, consider staying home. <br>
 		• While here at Montserrat, you are expected to <u>practice social distancing</u> by maintaining appropriated distance between yourself and others. <br>
-		• Practice <u>good hygiene</u> including: frequent hand washing and using hand sanitizer when entering common spaces. <br>
+		• Practice <u>good hygiene</u> including: frequent hand washing with soap and using hand sanitizer when entering common spaces. <br>
 		• Be vigilant to <u>cover all coughs and sneezes</u> with elbow and be mindful to not touch your face. <br>
 		• After entering the <u>chapel</u> (or other common spaces), sanitize your hands and <u>wear a face mask</u> during talks and Mass. <br>
 		• After entering the Simons Common Dining Hall, sanitize hands and keep appropriate distance (no more than one person per table unless they are of the same household). <br>
