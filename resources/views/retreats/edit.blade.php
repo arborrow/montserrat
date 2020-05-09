@@ -86,6 +86,16 @@
                             {!! Form::label('group_photo', 'Group photo (max 10M):')  !!}
                             {!! Form::file('group_photo'); !!}
                         </div>
+                        @can('create-event-attachment')
+                          <div class="col-6 mt-2">
+                              {!! Form::label('event_attachment', 'Attachment (max 10M): ')  !!}
+                              {!! Form::file('event_attachment',['class' => 'form-control']); !!}
+                          </div>
+                          <div class="col-6 mt-2">
+                              {!! Form::label('event_attachment_description', 'Description: (max 200)')  !!}
+                              {!! Form::text('event_attachment_description', NULL, ['class' => 'form-control']) !!}
+                          </div>
+                        @endCan
                     </div>
                 </div>
             </div>

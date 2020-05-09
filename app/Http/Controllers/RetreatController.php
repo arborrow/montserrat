@@ -411,6 +411,12 @@ class RetreatController extends Controller
             $attachment->update_attachment($request->file('group_photo'), 'event', $retreat->id, 'group_photo', $description);
         }
 
+        if (null !== $request->file('event_attachment')) {
+            $description = 'Attachment for '.$retreat->idnumber.'-'.$retreat->title;
+            $attachment = new AttachmentController;
+            $attachment->update_attachment($request->file('event_attachment'), 'event', $retreat->id, 'attachment', $description);
+        }
+
         if (empty($request->input('directors')) or in_array(0, $request->input('directors'))) {
             $retreat->retreatmasters()->detach();
         } else {

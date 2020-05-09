@@ -40,6 +40,7 @@ class UpdateRetreatRequest extends FormRequest
             'schedule' => 'file|mimes:pdf|max:5000|nullable',
             'evaluations' => 'file|mimes:pdf|max:10000|nullable',
             'group_photo' => 'image|max:10000|nullable',
+            'event_attchment' => 'file|mimes:pdf|max:10000|nullable',
         ];
     }
 
