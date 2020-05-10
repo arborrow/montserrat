@@ -747,7 +747,7 @@ class PermissionsTableSeeder extends Seeder
                 'id' => 82,
                 'name' => 'delete-event-attachment',
                 'display_name' => 'delete-event-attachment',
-                'description' => 'Delete an event attachment',
+                'description' => 'Delete an event attachment (unused, using generic delete-attachment to simplify testing for now)',
                 'created_at' => '2018-12-06 12:53:51',
                 'updated_at' => '2018-12-06 12:55:38',
                 'deleted_at' => null,
