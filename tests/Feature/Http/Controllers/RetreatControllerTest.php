@@ -425,7 +425,7 @@ class RetreatControllerTest extends TestCase
             'event_type_id' => $this->faker->numberBetween(1, 14),
         ]);
         $retreat->refresh();
-        $response->assertRedirect(action('RetreatController@index'));
+        $response->assertRedirect(action('RetreatController@show', $retreat->id));
         $this->assertEquals($retreat->title, $new_title);
         $this->assertEquals($retreat->idnumber, $new_idnumber);
         $this->assertNotEquals($retreat->title, $original_title);
