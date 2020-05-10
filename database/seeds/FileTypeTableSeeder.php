@@ -98,6 +98,21 @@ class FileTypeTableSeeder extends Seeder
                 'created_at' => null,
                 'updated_at' => null,
             ],
+            6 => [
+                'id' => 7,
+                'label' => 'Event attachment',
+                'value' => 'Event attachment',
+                'name' => 'Event attachment',
+                'description' => 'Event attachment',
+                'is_default' => 0,
+                'is_reserved' => 0,
+                'is_active' => 1,
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+
         ]);
     }
 }

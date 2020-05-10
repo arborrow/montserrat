@@ -347,7 +347,7 @@ class AttachmentController extends Controller
 
     public function delete_event_attachment($event_id, $attachment)
         {
-            $this->authorize('delete-event-attachment');
+            $this->authorize('delete-attachment'); // TODO: for testing simplicity I am not implementing the use of delete-event-attachment 
             $this->delete_attachment($attachment, 'event', $event_id, 'event-attachment');
             // TODO: get contact type and redirect to person, parish, organization, vendor as appropriate
             return Redirect::action('RetreatController@show', $event_id);
