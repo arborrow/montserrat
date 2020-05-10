@@ -105,6 +105,33 @@
                             {!!$retreat->retreat_evaluations_link!!}
                         @endCan
                     </div>
+
+                    @can('show-event-attachment')
+                        @if ($attachments->isEmpty())
+                            <p>There are no additional attachments for this retreat.</p>
+                        @else
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Uploaded date</th>
+                                        <th>MIME type</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($attachments->sortByDesc('upload_date') as $file)
+                                    <tr>
+                                        <td><a href="{{url('retreat/'.$retreat->id.'/attachment/'.$file->uri)}}">{{ $file->uri }}</a></td>
+                                        <td>{{$file->description}}</td>
+                                        <td>{{ $file->upload_date}}</td>
+                                        <td>{{ $file->mime_type }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endif
+                    @endCan
                 </div>
             </div>
             @can('show-event-group-photo')

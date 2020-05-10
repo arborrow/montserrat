@@ -140,6 +140,7 @@ return [
         'event_contract' => '4',
         'event_group_photo' => '5',
         'contact_avatar' => '6',
+        'event_attachment' => '7',
     ],
 
     'group_id' => [
