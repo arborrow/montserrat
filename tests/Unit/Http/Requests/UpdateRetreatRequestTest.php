@@ -58,6 +58,8 @@ class UpdateRetreatRequestTest extends TestCase
           'schedule' => 'file|mimes:pdf|max:5000|nullable',
           'evaluations' => 'file|mimes:pdf|max:10000|nullable',
           'group_photo' => 'image|max:10000|nullable',
+          'event_attachment' => 'file|mimes:pdf,doc,docx,zip|max:10000|nullable',
+          'event_attachment_description' => 'string|max:200|nullable',
         ], $actual);
     }
 

@@ -725,7 +725,33 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2018-12-06 12:55:38',
                 'deleted_at' => null,
             ],
-
+            79 => [
+                'id' => 80,
+                'name' => 'create-event-attachment',
+                'display_name' => 'create-event-attachment',
+                'description' => 'Create an event attachment',
+                'created_at' => '2018-12-06 12:53:51',
+                'updated_at' => '2018-12-06 12:55:38',
+                'deleted_at' => null,
+            ],
+            80 => [
+                'id' => 81,
+                'name' => 'update-event-attachment',
+                'display_name' => 'update-event-attachment',
+                'description' => 'Update an event attachment (unused as create will overwrite if file name is the same)',
+                'created_at' => '2018-12-06 12:53:51',
+                'updated_at' => '2018-12-06 12:55:38',
+                'deleted_at' => null,
+            ],
+            81 => [
+                'id' => 82,
+                'name' => 'delete-event-attachment',
+                'display_name' => 'delete-event-attachment',
+                'description' => 'Delete an event attachment (unused, using generic delete-attachment to simplify testing for now)',
+                'created_at' => '2018-12-06 12:53:51',
+                'updated_at' => '2018-12-06 12:55:38',
+                'deleted_at' => null,
+            ],
         ]);
     }
 }

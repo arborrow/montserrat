@@ -69,6 +69,9 @@ Route::get('avatar/{user_id}/delete', 'AttachmentController@delete_avatar')->nam
 Route::get('contact/{user_id}/attachment/{file_name}', 'AttachmentController@show_contact_attachment')->name('show_contact_attachment');
 Route::get('contact/{user_id}/attachment/{file_name}/delete', 'AttachmentController@delete_contact_attachment')->name('delete_contact_attachment');
 
+Route::get('retreat/{event_id}/attachment/{file_name}', 'AttachmentController@show_event_attachment')->name('show_event_attachment');
+Route::get('retreat/{event_id}/attachment/{file_name}/delete', 'AttachmentController@delete_event_attachment')->name('delete_event_attachment');
+
 Route::get('retreat/{event_id}/contract', 'AttachmentController@get_event_contract')->name('get_event_contract');
 Route::get('retreat/{event_id}/contract/delete', 'AttachmentController@delete_event_contract')->name('delete_event_contract');
 Route::get('retreat/{event_id}/schedule', 'AttachmentController@get_event_schedule')->name('get_event_schedule');

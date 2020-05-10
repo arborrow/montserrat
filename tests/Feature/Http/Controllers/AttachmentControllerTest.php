@@ -77,6 +77,34 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
+    public function delete_event_attachment_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('delete-attachment');
+
+        //create a person, create a fake attachment for that person, see if you can display the attachment
+        $event = factory(\App\Retreat::class)->create();
+        $file_name = $this->faker->isbn10.'.pdf';
+        $file = UploadedFile::fake()->create($file_name)->storeAs('event/'.$event->id.'/attachments', $file_name);
+        $description = 'Random Attachment for '.$event->idnumber;
+
+        $attachment = factory(\App\Attachment::class)->create([
+            'mime_type' => 'application/pdf',
+            'description' => $description,
+            'upload_date' => $this->faker->dateTime('now'),
+            'entity' => 'event',
+            'entity_id' => $event->id,
+            'file_type_id' => config('polanco.file_type.event_attachment'),
+            'uri' => $file_name,
+        ]);
+
+        $response = $this->actingAs($user)->get(route('delete_event_attachment', ['event_id' => $attachment->entity_id, 'file_name' => $attachment->uri]));
+        $response->assertRedirect(action('RetreatController@show', $event->id));
+        // TODO: perform additional assertions such as verify that the deleted file has been renamed to name-deleted-time.extension
+    }
+
+    /**
+     * @test
+     */
     public function delete_event_contract_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-attachment');
@@ -357,5 +385,36 @@ class AttachmentControllerTest extends TestCase
         // TODO: perform additional assertions
     }
 
-    // test cases...
+
+    /**
+     * @test
+     */
+    public function show_event_attachment_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-event-attachment');
+
+        //create a person, create a fake attachment for that person, see if you can display the attachment
+        $event = factory(\App\Retreat::class)->create();
+        $file_name = $this->faker->isbn10.'.pdf';
+        $file = UploadedFile::fake()->create($file_name)->storeAs('event/'.$event->id.'/attachments', $file_name);
+        $description = 'Random Attachment for '.$event->idnumber;
+
+        $attachment = factory(\App\Attachment::class)->create([
+            'mime_type' => 'application/pdf',
+            'description' => $description,
+            'upload_date' => $this->faker->dateTime('now'),
+            'entity' => 'event',
+            'entity_id' => $event->id,
+            'file_type_id' => config('polanco.file_type.event_attachment'),
+            'uri' => $file_name,
+        ]);
+
+        $response = $this->actingAs($user)->get(route('show_event_attachment', ['event_id' => $event->id, 'file_name' => $file_name]));
+
+        $response->assertOk();
+        // dd($response);
+        // TODO: perform additional assertions
+    }
+
+// test cases...
 }

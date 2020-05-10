@@ -56,6 +56,11 @@ class Retreat extends Model
         return $this->belongsTo(Contact::class, 'assistant_id', 'id')->whereContactType(config('polanco.contact_type.individual'));
     }
 
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class, 'entity_id', 'id')->whereEntity('event');
+    }
+
     public function captains()
     {
         // TODO: handle with participants of role Retreat Director or Master - be careful with difference between (registration table) retreat_id and (participant table) event_id

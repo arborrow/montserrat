@@ -174,6 +174,7 @@ class RetreatController extends Controller
     {
         $this->authorize('show-retreat');
         $retreat = \App\Retreat::with('retreatmasters', 'innkeeper', 'assistant', 'captains')->findOrFail($id);
+        $attachments = \App\Attachment::whereEntity('event')->whereEntityId($id)->whereFileTypeId(config('polanco.file_type.event_attachment'))->get();
 
         switch ($status) {
             case 'active':
@@ -232,7 +233,7 @@ class RetreatController extends Controller
                 break;
         }
 
-        return view('retreats.show', compact('retreat', 'registrations', 'status')); //
+        return view('retreats.show', compact('retreat', 'registrations', 'status', 'attachments')); //
     }
 
     public function show_waitlist($id)
@@ -411,6 +412,12 @@ class RetreatController extends Controller
             $attachment->update_attachment($request->file('group_photo'), 'event', $retreat->id, 'group_photo', $description);
         }
 
+        if (null !== $request->file('event_attachment')) {
+            $description = $request->input('event_attachment_description');
+            $attachment = new AttachmentController;
+            $attachment->update_attachment($request->file('event_attachment'), 'event', $retreat->id, 'event_attachment', $description);
+        }
+
         if (empty($request->input('directors')) or in_array(0, $request->input('directors'))) {
             $retreat->retreatmasters()->detach();
         } else {
@@ -443,7 +450,7 @@ class RetreatController extends Controller
             }
         }
 
-        return Redirect::action('RetreatController@index');
+        return Redirect::action('RetreatController@show',$id);
     }
 
     /**
