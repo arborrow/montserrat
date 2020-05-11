@@ -624,21 +624,29 @@ class RetreatController extends Controller
         $this->authorize('show-registration');
         $event = \App\Retreat::findOrFail($event_id);
         $registrations = \App\Registration::whereEventId($event_id)->whereNull('canceled_at')->get();
+
         $results = [];
         foreach ($registrations as $registration) {
             // if the registered retreatant is not an individual person - for example a contract group organization then use the registration note for the name of the retreatant
             if ($registration->retreatant->contact_type == config('polanco.contact_type.individual')) {
                 $results[$registration->id] = $registration->retreatant->sort_name;
+                $registration->badgename = $registration->retreatant->sort_name;
+
             } else {
                 // if there is no note; default back to the sort_name of the contact
                 if (isset($registration->notes)) {
                     $results[$registration->id] = $registration->notes;
+                    $registration->badgename = $registration->notes;
                 } else {
                     $results[$registration->id] = $registration->retreatant->sort_name;
+                    $registration->badgename = $registration->retreatant->sort_name;
                 }
             }
         }
+        asort($results);
+        $cresults = collect($results);
+        $registrations->sortBy('badgename')->all();
 
-        return view('retreats.namebadges', compact('results', 'event','registrations'));
+        return view('retreats.namebadges', compact('cresults', 'event'));
     }
 }
