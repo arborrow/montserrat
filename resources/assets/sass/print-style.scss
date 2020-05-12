@@ -287,3 +287,22 @@ td.row-payment_method {
 .roomlist table.rooms {
   border-collapse: collapse;
 }
+
+.namebadges footer {
+  page-break-after: always;
+}
+.namebadges td {
+  height: 2.2in;
+  width: 3.4in;
+  padding-left: 0.25in;
+  padding-right: 0.25in;
+  padding-top: 0.125in;
+  padding-bottom: 0.125in;
+}
+
+.namebadges table {
+  margin-left: 0.5in;
+  margin-right: 0.5in;
+  margin-top: 0.75in;
+  margin-bottom: 0.75in;
+}
