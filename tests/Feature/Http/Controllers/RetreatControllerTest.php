@@ -473,5 +473,32 @@ class RetreatControllerTest extends TestCase
         $response->assertSeeText($retreat->title);
     }
 
+
+        /**
+         * @test
+         */
+        public function event_namebadges_returns_an_ok_response()
+        {   
+            $user = $this->createUserWithPermission('show-registration');
+            $retreat = factory(\App\Retreat::class)->create();
+            $retreatant = factory(\App\Contact::class)->create([
+                'contact_type' => config('polanco.contact_type.individual'),
+            ]);
+            $room = factory(\App\Room::class)->create();
+            $registration = factory(\App\Registration::class)->create([
+                'event_id' => $retreat->id,
+                'contact_id' => $retreatant->id,
+                'room_id' => $room->id,
+                'canceled_at' => null,
+            ]);
+            $response = $this->actingAs($user)->get('retreat/'.$registration->event_id.'/namebadges');
+            $response->assertOk();
+            $response->assertViewIs('retreats.namebadges');
+            $response->assertViewHas('event');
+            $response->assertViewHas('cresults');
+            $response->assertSeeText($retreatant->sort_name);
+
+        }
+
     // test cases...
 }
