@@ -51,23 +51,27 @@
                 @if ($retreat->retreatmasters->isEmpty())
                     N/A <br>
                 @else
-                    @foreach($retreat->retreatmasters as $rm)
-                        {!!$rm->contact_link_full_name!!}
+                    @foreach($retreat->retreatmasters as $retreatmaster)
+                        {!!$retreatmaster->contact->contact_link_full_name!!}
                     @endforeach
                 @endif
                 <span class="font-weight-bold">Innkeeper: </span>
-                @if ($retreat->innkeeper_id > 0)
-                    {!!$retreat->innkeeper->contact_link_full_name!!}
+                @if ($retreat->innkeepers->isEmpty())
+                    N/A <br>
                 @else
-                    N/A
-                @endIf
+                    @foreach($retreat->innkeepers as $innkeeper)
+                        {!!$innkeeper->contact->contact_link_full_name!!}
+                    @endforeach
+                @endif
                 <br>
                 <span class="font-weight-bold">Assistant: </span>
-                @if ($retreat->assistant_id > 0)
-                    {!!$retreat->assistant->contact_link_full_name!!}
-                @else
+                @if ($retreat->assistants->isEmpty())
                     N/A <br>
-                @endIf
+                @else
+                    @foreach($retreat->assistants as $assistant)
+                        {!!$assistant->contact->contact_link_full_name!!}
+                    @endforeach
+                @endif
                 <span class="font-weight-bold">Ambassador(s): </span>
                 @if ($retreat->captains->isEmpty())
                     N/A <br>

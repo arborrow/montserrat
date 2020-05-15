@@ -173,7 +173,7 @@ class RetreatController extends Controller
     public function show($id, $status = null)
     {
         $this->authorize('show-retreat');
-        $retreat = \App\Retreat::with('retreatmasters', 'innkeeper', 'assistant', 'captains')->findOrFail($id);
+        $retreat = \App\Retreat::with('retreatmasters', 'innkeepers', 'assistants', 'captains')->findOrFail($id);
         $attachments = \App\Attachment::whereEntity('event')->whereEntityId($id)->whereFileTypeId(config('polanco.file_type.event_attachment'))->get();
 
         switch ($status) {
@@ -232,7 +232,7 @@ class RetreatController extends Controller
                  // dd($registrations);
                 break;
         }
-
+        //dd($retreat);
         return view('retreats.show', compact('retreat', 'registrations', 'status', 'attachments')); //
     }
 
