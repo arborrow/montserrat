@@ -9,6 +9,7 @@ use App\Registration;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use Spatie\GoogleCalendar\Event;
+use Auth;
 
 class RetreatController extends Controller
 {
@@ -25,14 +26,21 @@ class RetreatController extends Controller
     public function index()
     {
         $this->authorize('show-retreat');
+        // do once in controller to reduce excessive number of checks on blade
+        $permission_checks = ['show-retreat','show-event-contract','show-event-schedule','show-event-evaluation'];
+        foreach ($permission_checks as $permission_check => $permission) {
+          $results[$permission] = Auth::user()->can($permission);
+        }
+        //dd($permission_checks, $results);
+
         $defaults = [];
         $defaults['type'] = 'Retreat';
         $event_types = \App\EventType::whereIsActive(1)->orderBy('name')->pluck('id', 'name');
 
-        $retreats = \App\Retreat::whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc')->with('retreatmasters.prefix', 'retreatmasters.suffix', 'innkeeper.prefix', 'innkeeper.suffix', 'assistant.prefix', 'assistant.suffix')->get();
-        $oldretreats = \App\Retreat::whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date', 'desc')->with('retreatmasters', 'innkeeper', 'assistant')->paginate(100);
+        $retreats = \App\Retreat::whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->get();
+        $oldretreats = \App\Retreat::whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date', 'desc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->paginate(100);
 
-        return view('retreats.index', compact('retreats', 'oldretreats', 'defaults', 'event_types'));   //
+        return view('retreats.index', compact('retreats', 'oldretreats', 'defaults', 'event_types','results'));   //
     }
 
     public function index_type($event_type_id)
@@ -239,7 +247,7 @@ class RetreatController extends Controller
     public function show_waitlist($id)
     {
         $this->authorize('show-retreat');
-        $retreat = \App\Retreat::with('retreatmasters', 'innkeeper', 'assistant', 'captains')->findOrFail($id);
+        $retreat = \App\Retreat::with('retreatmasters', 'innkeepers', 'assistants', 'captains')->findOrFail($id);
         $registrations = \App\Registration::where('event_id', '=', $id)->whereStatusId(config('polanco.registration_status_id.waitlist'))->with('retreatant.parish')->orderBy('register_date', 'ASC')->get();
 
         return view('retreats.waitlist', compact('retreat', 'registrations')); //
@@ -248,7 +256,7 @@ class RetreatController extends Controller
     public function get_event_by_id_number($id_number, $status = null)
     {
         $this->authorize('show-retreat');
-        $retreat = \App\Retreat::with('retreatmasters', 'innkeeper', 'assistant', 'captains')->whereIdnumber($id_number)->firstOrFail();
+        $retreat = \App\Retreat::with('retreatmasters', 'innkeepers', 'assistants', 'captains')->whereIdnumber($id_number)->firstOrFail();
 
         return $this->show($retreat->id, $status);
     }
@@ -268,7 +276,7 @@ class RetreatController extends Controller
     {
         $this->authorize('update-retreat');
         //get this retreat's information
-        $retreat = \App\Retreat::with('retreatmasters', 'assistant', 'innkeeper', 'captains')->findOrFail($id);
+        $retreat = \App\Retreat::with('retreatmasters', 'assistants', 'innkeepers', 'captains')->findOrFail($id);
         $event_types = \App\EventType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
         $is_active[0] = 'Cancelled';
         $is_active[1] = 'Active';
@@ -381,8 +389,8 @@ class RetreatController extends Controller
         // attending field not needed - will calculate with count on registrations
         //$retreat->attending = $request->input('attending');
         //$retreat->year = $request->input('year');
-        $retreat->innkeeper_id = $request->input('innkeeper_id');
-        $retreat->assistant_id = $request->input('assistant_id');
+        // $retreat->innkeeper_id = $request->input('innkeeper_id');
+        // $retreat->assistant_id = $request->input('assistant_id');
         if (null !== $request->input('calendar_id')) {
             $retreat->calendar_id = $request->input('calendar_id');
         }
@@ -417,12 +425,13 @@ class RetreatController extends Controller
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('event_attachment'), 'event', $retreat->id, 'event_attachment', $description);
         }
-
+/*
         if (empty($request->input('directors')) or in_array(0, $request->input('directors'))) {
             $retreat->retreatmasters()->detach();
         } else {
             $retreat->retreatmasters()->sync($request->input('directors'));
         }
+*/
         if (empty($request->input('captains')) or in_array(0, $request->input('captains'))) {
             $retreat->captains()->detach();
         } else {
@@ -482,7 +491,7 @@ class RetreatController extends Controller
     {
         $this->authorize('update-registration');
         //get this retreat's information
-        $retreat = \App\Retreat::with('retreatmasters', 'assistant', 'innkeeper', 'captains')->findOrFail($id);
+        $retreat = \App\Retreat::with('retreatmasters', 'assistants', 'innkeepers', 'captains')->findOrFail($id);
         $registrations = \App\Registration::where('event_id', '=', $id)->with('retreatant.parish')->orderBy('register_date', 'DESC')->get();
         $rooms = \App\Room::orderby('name')->pluck('name', 'id');
         $rooms->prepend('Unassigned', 0);
