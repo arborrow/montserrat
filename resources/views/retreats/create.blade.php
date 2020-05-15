@@ -46,12 +46,12 @@
                 </div>
                 <div class="row">
                     <div class="col-3">
-                        {!! Form::label('innkeeper_id', 'Innkeeper:') !!}
-                        {!! Form::select('innkeeper_id', $i, 0, ['class' => 'form-control']) !!}
+                        {!! Form::label('innkeeper_ids', 'Innkeeper(s):') !!}
+                        {!! Form::select('innkeepers[]', $i, 0, ['id'=>'innkeepers','class' => 'form-control select2','multiple' => 'multiple']) !!}
                     </div>
                     <div class="col-3">
-                        {!! Form::label('assistant_id', 'Assistant:') !!}
-                        {!! Form::select('assistant_id', $a, 0, ['class' => 'form-control']) !!}
+                        {!! Form::label('assistant_ids', 'Assistant(s):') !!}
+                        {!! Form::select('assistants[]', $a, 0, ['id'=>'assistants','class' => 'form-control select2','multiple' => 'multiple']) !!}
                     </div>
                     <div class="col-3">
                         {!! Form::label('event_type', 'Type:') !!}
