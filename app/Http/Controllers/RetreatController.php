@@ -384,14 +384,14 @@ class RetreatController extends Controller
 
         foreach ($retreat->innkeepers as $innkeeper) {
             if (! Arr::has($options['innkeepers'], $innkeeper->contact->id)) {
-                $options['innkeepers'][$retreat->innkeeper->contact->id] = $retreat->innkeeper->contact->sort_name.' (former)';
+                $options['innkeepers'][$innkeeper->contact->id] = $innkeeper->contact->sort_name.' (former)';
                 asort($options['innkeepers']);
             }
         }
 
         foreach ($retreat->assistants as $assistant) {
             if (! Arr::has($options['assistants'], $assistant->contact->id)) {
-                $options['assistants'][$retreat->assistant->contact->id] = $retreat->assistant->contact->sort_name.' (former)';
+                $options['assistants'][$assistant->contact->id] = $assistant->contact->sort_name.' (former)';
                 asort($options['assistants']);
             }
         }
