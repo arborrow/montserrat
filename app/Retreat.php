@@ -61,10 +61,10 @@ class Retreat extends Model
         return $this->hasMany(Attachment::class, 'entity_id', 'id')->whereEntity('event');
     }
 
-    public function captains()
+    public function ambassadors()
     {
         // TODO: handle with participants of role Retreat Director or Master - be careful with difference between (registration table) retreat_id and (participant table) event_id
-        return $this->belongsToMany(Contact::class, 'captain_retreat', 'event_id', 'contact_id')->whereContactType(config('polanco.contact_type.individual'));
+        return $this->hasMany(Registration::class, 'event_id', 'id')->whereRoleId(config('polanco.participant_role_id.ambassador'));
     }
 
     public function innkeepers()

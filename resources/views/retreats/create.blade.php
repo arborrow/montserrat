@@ -40,8 +40,8 @@
                         {!! Form::select('directors[]', $d, 0, ['id'=>'directors','class' => 'form-control select2','multiple' => 'multiple']) !!}
                     </div>
                     <div class="col-4">
-                        {!! Form::label('captains', 'Ambassador(s):') !!}
-                        {!! Form::select('captains[]', $c, 0, ['id'=>'captains','class' => 'form-control select2','multiple' => 'multiple']) !!}
+                        {!! Form::label('ambassadors', 'Ambassador(s):') !!}
+                        {!! Form::select('ambassadors[]', $c, 0, ['id'=>'ambassadors','class' => 'form-control select2','multiple' => 'multiple']) !!}
                     </div>
                 </div>
                 <div class="row">

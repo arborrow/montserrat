@@ -39,36 +39,40 @@
                     @if ($retreat->retreatmasters->isEmpty())
                         N/A
                     @else
-                        @foreach($retreat->retreatmasters as $rm)
-                            {!!$rm->contact_link_full_name!!}
+                        @foreach($retreat->retreatmasters as $retreatmaster)
+                            {!!$retreatmaster->contact_link_full_name!!}
                         @endforeach
                     @endif
                 </div>
 
                 <div class='col-md-3'><strong>Innkeeper: </strong>
-                    @if ($retreat->innkeeper_id > 0)
-                        {!!$retreat->innkeeper->contact_link_full_name!!}
-                    @else
+                    @if ($retreat->innkeepers->isEmpty())
                         N/A
-                    @endIf
+                    @else
+                        @foreach($retreat->innkeepers as $innkeeper)
+                            {!!$innkeeper->contact_link_full_name!!}
+                        @endforeach
+                    @endif
                 </div>
                 <div class='col-md-3'><strong>Assistant: </strong>
-                    @if ($retreat->assistant_id > 0)
-                        {!!$retreat->assistant->contact_link_full_name!!}
-                    @else
+                    @if ($retreat->assistants->isEmpty())
                         N/A
-                    @endIf
+                    @else
+                        @foreach($retreat->assistants as $assistant)
+                            {!!$assistant->contact_link_full_name!!}
+                        @endforeach
+                    @endif
                 </div>
 
             </div><div class="clearfix"> </div>
             <div class='row'>
                 <div class='col-md-6'><strong>Ambassador(s): </strong>
-                    @if ($retreat->captains->isEmpty())
+                    @if ($retreat->ambassadors->isEmpty())
                         N/A
                     @else
                     <ul>
-                        @foreach($retreat->captains as $captain)
-                        <li>    {!!$captain->contact_link_full_name!!} </li>
+                        @foreach($retreat->ambassadors as $ambassador)
+                        <li>    {!!$ambassador->contact_link_full_name!!} </li>
                         @endforeach
                     </ul>
                     @endif

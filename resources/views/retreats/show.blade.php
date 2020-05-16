@@ -52,7 +52,7 @@
                     N/A <br>
                 @else
                     @foreach($retreat->retreatmasters as $retreatmaster)
-                        {!!$retreatmaster->contact->contact_link_full_name!!}
+                        {!!$retreatmaster->contact_link_full_name!!}
                     @endforeach
                 @endif
                 <span class="font-weight-bold">Innkeeper: </span>
@@ -60,7 +60,7 @@
                     N/A <br>
                 @else
                     @foreach($retreat->innkeepers as $innkeeper)
-                        {!!$innkeeper->contact->contact_link_full_name!!}
+                        {!!$innkeeper->contact_link_full_name!!}
                     @endforeach
                 @endif
                 <br>
@@ -69,17 +69,17 @@
                     N/A <br>
                 @else
                     @foreach($retreat->assistants as $assistant)
-                        {!!$assistant->contact->contact_link_full_name!!}
+                        {!!$assistant->contact_link_full_name!!}
                     @endforeach
                 @endif
                 <span class="font-weight-bold">Ambassador(s): </span>
-                @if ($retreat->captains->isEmpty())
+                @if ($retreat->ambassadors->isEmpty())
                     N/A <br>
                 @else
                     <ul>
-                        @foreach($retreat->captains as $captain)
+                        @foreach($retreat->ambassadors as $ambassador)
                             <li>
-                                {!!$captain->contact_link_full_name!!}
+                                {!!$ambassador->contact_link_full_name!!}
                             </li>
                         @endforeach
                     </ul>

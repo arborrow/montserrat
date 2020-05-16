@@ -95,6 +95,13 @@ class Registration extends Model
             return 'Unassigned status';
         }
     }
+    public function getContactLinkFullNameAttribute() {
+        if (! empty($this->contact)) {
+            return $this->contact->contact_link_full_name;
+        } else {
+            return 'Unknown contact';
+        }
+    }
 
     public function getRegistrationConfirmDateTextAttribute()
     {

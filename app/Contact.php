@@ -1060,7 +1060,7 @@ class Contact extends Model
         return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.retreat_innkeeper'));
     }
 
-    public function retreat_captains()
+    public function retreat_ambassadors()
     {
         // TODO: handle with participants of role Retreat Director or Master - be careful with difference between (registration table) retreat_id and (participant table) event_id
         return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.captain'));
@@ -1075,7 +1075,7 @@ class Contact extends Model
     public function event_captains()
     {
         // the events (retreats) for which this contact has been a retreatant
-        return $this->hasMany(Registration::class, 'contact_id', 'id')->whereRoleId(config('polanco.participant_role_id.captain'));
+        return $this->hasMany(Registration::class, 'contact_id', 'id')->whereRoleId(config('polanco.participant_role_id.ambassador'));
     }
 
     public function event_retreatants()

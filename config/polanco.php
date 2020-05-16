@@ -164,7 +164,7 @@ return [
     ],
 
     'participant_role_id' => [
-        'captain' => '11',
+        'ambassador' => '11',
         'retreatant' => '5',
         'retreat_director' => '8',
         'retreat_innkeeper' => '9',
