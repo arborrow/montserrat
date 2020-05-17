@@ -68,11 +68,11 @@ class PersonControllerTest extends TestCase
     /**
      * @test
      */
-    public function captains_returns_an_ok_response()
+    public function ambassadors_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-contact');
 
-        $response = $this->actingAs($user)->get(route('captains'));
+        $response = $this->actingAs($user)->get(route('ambassadors'));
 
         $response->assertOk();
         $response->assertViewIs('persons.role');

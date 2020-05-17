@@ -57,9 +57,9 @@ class Contact extends Model
         return $this->hasOne(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.bishop'))->whereIsActive(1);
     }
 
-    public function captain_events()
+    public function ambassador_events()
     {
-        return $this->belongsToMany(Retreat::class, 'captain_retreat', 'contact_id', 'event_id');
+        return $this->hasMany(Registration::class, 'contact_id', 'id');
     }
 
     public function contacttype()
@@ -822,7 +822,7 @@ class Contact extends Model
 
     public function group_captain()
     {
-        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.captain'));
+        return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.ambassador'));
     }
 
     public function group_hlm2017()
@@ -1063,7 +1063,7 @@ class Contact extends Model
     public function retreat_ambassadors()
     {
         // TODO: handle with participants of role Retreat Director or Master - be careful with difference between (registration table) retreat_id and (participant table) event_id
-        return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.captain'));
+        return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.ambassador'));
     }
 
     public function event_registrations()

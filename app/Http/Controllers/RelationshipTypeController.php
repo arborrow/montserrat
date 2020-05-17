@@ -413,7 +413,7 @@ class RelationshipTypeController extends Controller
                         break;
                     case 'Captain':
                         $captains = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
-                            $query->where('group_id', '=', config('polanco.group_id.captain'));
+                            $query->where('group_id', '=', config('polanco.group_id.ambassador'));
                         })->pluck('sort_name', 'id');
 
                         return $captains;

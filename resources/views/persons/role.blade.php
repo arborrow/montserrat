@@ -50,7 +50,7 @@
                         <th scope="col">Cell phone</th>
                         <th scope="col">Email</th>
                         <th scope="col">Parish (City)</th>
-                        @if ($role['group_id'] == config('polanco.group_id.captain'))
+                        @if ($role['group_id'] == config('polanco.group_id.ambassador'))
                             <th scope="col">Captain for</th>
                         @endIf
                     </tr>
@@ -63,18 +63,18 @@
                             {!!$person->contact_link_full_name!!}
                         </td>
                         <td>
-                            {!!$person->address_primary_google_map!!} 
+                            {!!$person->address_primary_google_map!!}
                         </td>
                         <td>{{ $person->phone_home_phone_number }}</td>
                         <td>{{ $person->phone_home_mobile_number }}</td>
                         <td><a href="mailto:{{$person->email_primary_text}}">{{ $person->email_primary_text }}</a></td>
                         <td>{!! $person->parish_link !!}</td>
-                        @if ($role['group_id'] == config('polanco.group_id.captain'))
+                        @if ($role['group_id'] == config('polanco.group_id.ambassador'))
                         <td>
                             <ul>
-                                @foreach ($person->captain_events as $event)
-                                    <li>  
-                                        <a href="{{url('retreat/'.$event->id)}}" title="{{$event->idnumber}}">{{$event->title}}</a>
+                                @foreach ($person->ambassador_events as $event)
+                                    <li>
+                                      {!! $ambassador->event_link !!}
                                     </li>
                                 @endforeach
                             </ul></td>
