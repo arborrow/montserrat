@@ -947,6 +947,13 @@ class PersonController extends Controller
             $person->deceased_date = null;
         } else {
             $person->deceased_date = $request->input('deceased_date');
+            $person->is_deceased = 1;
+        }
+        if ($person->is_deceased == true) { // we only want to communicate with the dead through prayer
+            $person->do_not_mail = true;
+            $person->do_not_email = true;
+            $person->do_not_phone = true;
+            $person->do_not_sms = true;
         }
 
         $person->save();
