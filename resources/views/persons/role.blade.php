@@ -72,9 +72,9 @@
                         @if ($role['group_id'] == config('polanco.group_id.ambassador'))
                         <td>
                             <ul>
-                                @foreach ($person->ambassador_events as $event)
+                                @foreach ($person->ambassador_events as $participant)
                                     <li>
-                                      {!! $ambassador->event_link !!}
+                                      {!! $participant->event_link !!}
                                     </li>
                                 @endforeach
                             </ul></td>
