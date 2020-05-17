@@ -61,9 +61,9 @@ class CreateDonorsTable extends Migration
             $table->text('Note2', 65535)->nullable();
             $table->char('BoardMember', 1)->nullable();
             $table->char('NoticeSend', 1)->nullable();
-            $table->char('Captain', 1)->nullable();
+            $table->char('Ambassador', 1)->nullable();
             $table->char('Knights', 1)->nullable();
-            $table->string('CaptainSince', 40)->nullable();
+            $table->string('AmbassadorSince', 40)->nullable();
             $table->char('ParkCityClub', 1)->nullable();
             $table->char('SpeedwayClub', 1)->nullable();
             $table->char('DonatedWillNotAttend', 1)->nullable();

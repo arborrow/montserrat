@@ -51,7 +51,7 @@
                         <th scope="col">Email</th>
                         <th scope="col">Parish (City)</th>
                         @if ($role['group_id'] == config('polanco.group_id.ambassador'))
-                            <th scope="col">Captain for</th>
+                            <th scope="col">Ambassador for</th>
                         @endIf
                     </tr>
                 </thead>

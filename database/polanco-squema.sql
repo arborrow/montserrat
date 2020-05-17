@@ -321,9 +321,9 @@ CREATE TABLE `bu20180328Donors` (
   `Note2` text CHARACTER SET utf8,
   `BoardMember` char(1) CHARACTER SET utf8 DEFAULT NULL,
   `NoticeSend` char(1) CHARACTER SET utf8 DEFAULT NULL,
-  `Captain` char(1) CHARACTER SET utf8 DEFAULT NULL,
+  `Ambassador` char(1) CHARACTER SET utf8 DEFAULT NULL,
   `Knights` char(1) CHARACTER SET utf8 DEFAULT NULL,
-  `CaptainSince` varchar(40) CHARACTER SET utf8 DEFAULT NULL,
+  `AmbassadorSince` varchar(40) CHARACTER SET utf8 DEFAULT NULL,
   `ParkCityClub` char(1) CHARACTER SET utf8 DEFAULT NULL,
   `SpeedwayClub` char(1) CHARACTER SET utf8 DEFAULT NULL,
   `DonatedWillNotAttend` char(1) CHARACTER SET utf8 DEFAULT NULL,
@@ -382,17 +382,6 @@ CREATE TABLE `capabilities` (
   `remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `captain_retreat`
---
-
-CREATE TABLE `captain_retreat` (
-  `contact_id` int(10) UNSIGNED NOT NULL,
-  `event_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -795,9 +784,9 @@ CREATE TABLE `Donors` (
   `Note2` text CHARACTER SET utf8,
   `BoardMember` char(1) CHARACTER SET utf8 DEFAULT NULL,
   `NoticeSend` char(1) CHARACTER SET utf8 DEFAULT NULL,
-  `Captain` char(1) CHARACTER SET utf8 DEFAULT NULL,
+  `Ambassador` char(1) CHARACTER SET utf8 DEFAULT NULL,
   `Knights` char(1) CHARACTER SET utf8 DEFAULT NULL,
-  `CaptainSince` varchar(40) CHARACTER SET utf8 DEFAULT NULL,
+  `AmbassadorSince` varchar(40) CHARACTER SET utf8 DEFAULT NULL,
   `ParkCityClub` char(1) CHARACTER SET utf8 DEFAULT NULL,
   `SpeedwayClub` char(1) CHARACTER SET utf8 DEFAULT NULL,
   `DonatedWillNotAttend` char(1) CHARACTER SET utf8 DEFAULT NULL,
@@ -1634,7 +1623,7 @@ CREATE TABLE `persons` (
   `is_director` tinyint(1) DEFAULT '0',
   `is_innkeeper` tinyint(1) DEFAULT '0',
   `is_assistant` tinyint(1) DEFAULT '0',
-  `is_captain` tinyint(1) DEFAULT '0',
+  `is_ambassador` tinyint(1) DEFAULT '0',
   `is_staff` tinyint(1) DEFAULT '0',
   `is_volunteer` tinyint(1) DEFAULT '0',
   `is_board` tinyint(1) DEFAULT '0',
@@ -2412,9 +2401,9 @@ CREATE TABLE `tmp_DonorPhoneFix` (
   `Note2` text CHARACTER SET utf8,
   `BoardMember` char(1) CHARACTER SET utf8 DEFAULT NULL,
   `NoticeSend` char(1) CHARACTER SET utf8 DEFAULT NULL,
-  `Captain` char(1) CHARACTER SET utf8 DEFAULT NULL,
+  `Ambassador` char(1) CHARACTER SET utf8 DEFAULT NULL,
   `Knights` char(1) CHARACTER SET utf8 DEFAULT NULL,
-  `CaptainSince` varchar(40) CHARACTER SET utf8 DEFAULT NULL,
+  `AmbassadorSince` varchar(40) CHARACTER SET utf8 DEFAULT NULL,
   `ParkCityClub` char(1) CHARACTER SET utf8 DEFAULT NULL,
   `SpeedwayClub` char(1) CHARACTER SET utf8 DEFAULT NULL,
   `DonatedWillNotAttend` char(1) CHARACTER SET utf8 DEFAULT NULL,
@@ -2723,14 +2712,6 @@ ALTER TABLE `bu20180402_donations_payment`
 --
 ALTER TABLE `capabilities`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `captain_retreat`
---
-ALTER TABLE `captain_retreat`
-  ADD PRIMARY KEY (`contact_id`,`event_id`),
-  ADD KEY `captain_retreat_contact_id_index` (`contact_id`),
-  ADD KEY `captain_retreat_event_id_index` (`event_id`);
 
 --
 -- Indexes for table `civicrm_participant_status_type`
@@ -3772,13 +3753,6 @@ ALTER TABLE `website`
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `captain_retreat`
---
-ALTER TABLE `captain_retreat`
-  ADD CONSTRAINT `captain_retreat_contact_id_foreign` FOREIGN KEY (`contact_id`) REFERENCES `contact` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `captain_retreat_event_id_foreign` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `contribution`

@@ -227,7 +227,7 @@ class PersonController extends Controller
         }
 
         // save ambassador relationship
-        if ($request->input('is_captain') > 0) {
+        if ($request->input('is_ambassador') > 0) {
             $relationship_ambassador = new \App\Relationship;
             $relationship_ambassador->contact_id_a = config('polanco.self.id');
             $relationship_ambassador->contact_id_b = $person->id;
@@ -384,7 +384,7 @@ class PersonController extends Controller
         $this->save_relationship('is_donor',config('polanco.self.id'),$person->id,config('polanco.relationship_type.donor'));
         $this->save_relationship('is_retreatant',config('polanco.self.id'),$person->id,config('polanco.relationship_type.retreatant'));
         $this->save_relationship('is_volunteer',config('polanco.self.id'),$person->id,config('polanco.relationship_type.volunteer'));
-        $this->save_relationship('is_captain',config('polanco.self.id'),$person->id,config('polanco.relationship_type.ambassador'));
+        $this->save_relationship('is_ambassador',config('polanco.self.id'),$person->id,config('polanco.relationship_type.ambassador'));
         $this->save_relationship('is_director',config('polanco.self.id'),$person->id,config('polanco.relationship_type.retreat_director'));
         $this->save_relationship('is_innkeeper',config('polanco.self.id'),$person->id,config('polanco.relationship_type.retreat_innkeeper'));
         $this->save_relationship('is_assistant',config('polanco.self.id'),$person->id,config('polanco.relationship_type.retreat_assistant'));
@@ -1242,7 +1242,7 @@ class PersonController extends Controller
         }
 
         $relationship_ambassador = \App\Relationship::firstOrNew(['contact_id_b'=>$person->id, 'relationship_type_id'=>config('polanco.relationship_type.ambassador'), 'is_active'=>1]);
-        if ($request->input('is_captain') == 0) {
+        if ($request->input('is_ambassador') == 0) {
             $relationship_ambassador->delete();
         } else {
             $relationship_ambassador->contact_id_a = config('polanco.self.id');
@@ -1315,7 +1315,7 @@ class PersonController extends Controller
 
         //groups:
         $group_ambassador = \App\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.ambassador'), 'status'=>'Added']);
-        if ($request->input('is_captain') == 0) {
+        if ($request->input('is_ambassador') == 0) {
             $group_ambassador->delete();
         } else {
             $group_ambassador->contact_id = $person->id;

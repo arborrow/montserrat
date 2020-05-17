@@ -274,8 +274,8 @@
             </div>
             <div class="col-4 col-md-2">
                 <div class="form-check">
-                    {!! Form::checkbox('is_captain', 1, false,['class' => 'form-check-input']) !!}
-                    {!! Form::label('is_captain', 'Ambassador', ['class' => 'form-check-label']) !!}
+                    {!! Form::checkbox('is_ambassador', 1, false,['class' => 'form-check-input']) !!}
+                    {!! Form::label('is_ambassador', 'Ambassador', ['class' => 'form-check-label']) !!}
                 </div>
             </div>
             <div class="col-4 col-md-2">

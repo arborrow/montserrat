@@ -73,7 +73,7 @@ class RetreatController extends Controller
         $retreat_house = \App\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b', 'retreat_ambassadors.contact_b')->findOrFail(config('polanco.self.id'));
         $event_types = \App\EventType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
 
-        // initialize null arrays for innkeeper, assistant, director and captain dropdowns
+        // initialize null arrays for innkeeper, assistant, director and ambassador dropdowns
         $i = [];
         $a = [];
         $d = [];
@@ -332,7 +332,7 @@ class RetreatController extends Controller
         //create lists of retreat directors, innkeepers, and assistants from relationship to retreat house
         $retreat_house = \App\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b','retreat_ambassadors.contact_b')->findOrFail(config('polanco.self.id'));
 
-        // initialize null arrays for innkeeper, assistant, director and captain dropdowns
+        // initialize null arrays for innkeeper, assistant, director and ambassador dropdowns
 
         $options = ['innkeepers'=>[],'directors'=>[],'assistants'=>[],'ambassadors'=>[]];
 
@@ -368,8 +368,8 @@ class RetreatController extends Controller
             $options['ambassadors'] = [0=>'N/A'] + $options['ambassadors'];
         }
 
-        /* prevent losing former retreatmasters, innkeeper, assistant, or captain when editing retreat
-         * loop through currently assigned retreatmasters, innkeeper, assistant, and captain assignments
+        /* prevent losing former retreatmasters, innkeeper, assistant, or ambassador when editing retreat
+         * loop through currently assigned retreatmasters, innkeeper, assistant, and ambassador assignments
          * verify that they are currently in appropriate array as defined above (d, i, a or c)
          * if not found in the array then add them and resort the array adding 'former' to the end of their name
          * so that they visually standout on the dropdown list as being a former member of that group

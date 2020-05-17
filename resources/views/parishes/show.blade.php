@@ -122,8 +122,8 @@
                             @foreach($parish->parishioners as $parishioner)
                             <tr>
                                 <td><a href="../person/{{$parishioner->contact_b->id}}">
-                                        @if($parishioner->contact_b->is_captain)
-                                            {!! Html::image('images/captain.png', 'Ambassador',array('title'=>"Ambassador",'class' => 'btn btn-outline-dark')) !!}
+                                        @if($parishioner->contact_b->is_ambassador)
+                                            {!! Html::image('images/ambassador.png', 'Ambassador',array('title'=>"Ambassador",'class' => 'btn btn-outline-dark')) !!}
                                         @endIf
                                         {!! $parishioner->contact_b->contact_link_full_name !!} ({{$parishioner->contact_b->participant_count}})
                                     </a>

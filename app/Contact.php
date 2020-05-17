@@ -480,9 +480,9 @@ class Contact extends Model
         }
     }
 
-    public function getIsCaptainAttribute()
+    public function getIsAmbassadorAttribute()
     {
-        if (isset($this->group_captain->id)) {
+        if (isset($this->group_ambassador->id)) {
             return true;
         } else {
             return false;
@@ -820,7 +820,7 @@ class Contact extends Model
         return $this->hasOne(Gender::class, 'id', 'gender_id');
     }
 
-    public function group_captain()
+    public function group_ambassador()
     {
         return $this->hasOne(GroupContact::class, 'contact_id', 'id')->whereGroupId(config('polanco.group_id.ambassador'));
     }
@@ -1072,7 +1072,7 @@ class Contact extends Model
         return $this->hasMany(Registration::class, 'contact_id', 'id');
     }
 
-    public function event_captains()
+    public function event_ambassadors()
     {
         // the events (retreats) for which this contact has been a retreatant
         return $this->hasMany(Registration::class, 'contact_id', 'id')->whereRoleId(config('polanco.participant_role_id.ambassador'));
