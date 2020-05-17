@@ -63,11 +63,18 @@
                             </td>
                             <td>
                                 {{ $category->total_pn }}
-                                ( {{ number_format(((($category->total_pn)/(array_sum(array_column($board_summary,'total_pn'))))*100),0) }}%)
-
+                                @if (array_sum(array_column($board_summary,'total_pn'))>0)
+                                    ( {{ number_format(((($category->total_pn)/(array_sum(array_column($board_summary,'total_pn'))))*100),0) }}%)
+                                @else
+                                   n/a
+                                @endIf
                             </td>
                             <td>
-                                ${{ ($category->total_pn>0) ? (number_format(($category->total_paid/$category->total_pn),2)) : '0.00' }}
+                              @if ($category->total_pn > 0)
+                                  ${{ ($category->total_pn>0) ? (number_format(($category->total_paid/$category->total_pn),2)) : '0.00' }}
+                              @else
+                                  n/a
+                              @endIf
                             </td>
                         </tr>
                         @endforeach
@@ -78,7 +85,14 @@
                             <td>{{ number_format(array_sum(array_column($board_summary,'total_participants')),0) }}</td>
                             <td>{{ number_format(array_sum(array_column($board_summary,'total_nights')),0) }}</td>
                             <td>{{ number_format(array_sum(array_column($board_summary,'total_pn')),0) }}</td>
-                            <td>${{ number_format((array_sum(array_column($board_summary,'total_paid')))/(array_sum(array_column($board_summary,'total_pn'))),2) }}</td>
+                            <td>
+                                @if (array_sum(array_column($board_summary,'total_pn')) > 0)
+                                    ${{ number_format((array_sum(array_column($board_summary,'total_paid')))/(array_sum(array_column($board_summary,'total_pn'))),2) }}
+                                @else
+                                    n/a
+                                @endIf
+                            </td>
+
                         </tr>
                     </table>
                 </div>
