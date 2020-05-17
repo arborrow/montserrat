@@ -78,9 +78,6 @@ class CreateEventTable extends Migration
             $table->integer('slot_label_id')->unsigned()->nullable();
             $table->integer('retreat_id')->unsigned()->nullable();
             $table->string('idnumber')->nullable()->comment('idnumber');
-            $table->integer('director_id')->unsigned()->nullable();
-            $table->integer('innkeeper_id')->unsigned()->nullable();
-            $table->integer('assistant_id')->unsigned()->nullable();
             $table->softDeletes();
             $table->string('remember_token', 100)->nullable();
             $table->timestamps();
