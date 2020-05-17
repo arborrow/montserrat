@@ -69,7 +69,7 @@ class RetreatController extends Controller
     {
         $this->authorize('create-retreat');
 
-        $retreat_house = \App\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b', 'retreat_captains.contact_b')->findOrFail(config('polanco.self.id'));
+        $retreat_house = \App\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b', 'retreat_ambassadors.contact_b')->findOrFail(config('polanco.self.id'));
         $event_types = \App\EventType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
 
         // initialize null arrays for innkeeper, assistant, director and captain dropdowns
@@ -102,8 +102,8 @@ class RetreatController extends Controller
             $a = [0=>'N/A'] + $a;
         }
 
-        foreach ($retreat_house->retreat_captains as $captain) {
-            $c[$captain->contact_id_b] = $captain->contact_b->sort_name;
+        foreach ($retreat_house->retreat_ambassadors as $ambassador) {
+            $c[$ambassador->contact_id_b] = $ambassador->contact_b->sort_name;
         }
         if (! null == $c) {
             asort($c);
@@ -154,14 +154,13 @@ class RetreatController extends Controller
 
         if (empty($directors) or (in_array(0, $directors) && sizeof($directors)==1)) {
             // nothing to store
-            dd($directors);
         } else {
             foreach ($directors as $director) {
                 $this->add_participant($director, $retreat->id, config('polanco.participant_role_id.retreat_director'));            }
         }
 
         if (empty($innkeepers) or (in_array(0, $innkeepers) && sizeof($innkeepers)==1)) {
-            dd($innkeepers);
+          // nothing to store
         } else {
             foreach ($innkeepers as $innkeeper) {
                 $this->add_participant($innkeeper, $retreat->id, config('polanco.participant_role_id.retreat_innkeeper'));
@@ -169,7 +168,7 @@ class RetreatController extends Controller
         }
 
         if (empty($assistants) or (in_array(0, $assistants) && sizeof($assistants)==1)) {
-            dd($assistants);
+          // nothing to store
         } else {
             foreach ($assistants as $assistant) {
                 $this->add_participant($assistant, $retreat->id, config('polanco.participant_role_id.retreat_assistant'));
@@ -177,7 +176,7 @@ class RetreatController extends Controller
         }
 
         if (empty($ambassadors) or (in_array(0, $ambassadors) && sizeof($ambassadors)==1)) {
-            dd($ambassadors);
+          // nothing to store
         } else {
             foreach ($ambassadors as $ambassador) {
                 $this->add_participant($ambassador, $retreat->id, config('polanco.participant_role_id.ambassador'));
@@ -206,15 +205,15 @@ class RetreatController extends Controller
     */
     public function add_participant ($contact_id, $event_id, $participant_role_id) {
         if ($contact_id > 0 && $event_id > 0) { //avoid inserting bad data
-            $new_director = new Registration;
-            $new_director->contact_id = $contact_id;
-            $new_director->event_id = $event_id;
-            $new_director->status_id = config('polanco.registration_status_id.registered');
-            $new_director->role_id = $participant_role_id;
-            $new_director->register_date = now();
-            return $new_director->save();
-        } else {
+            $new_director = \App\Registration::updateOrCreate([
+              'contact_id' => $contact_id,
+              'event_id' => $event_id,
+              'status_id' => config('polanco.registration_status_id.registered'),
+              'role_id' => $participant_role_id,
+            ]);
             return true;
+        } else {
+            return false;
         }
     }
 
@@ -425,14 +424,7 @@ class RetreatController extends Controller
         $retreat->description = $request->input('description');
         $retreat->event_type_id = $request->input('event_type');
         $retreat->is_active = $request->input('is_active');
-        //TODO: Figure out how to use event type or some other way of tracking the silent retreats, possibly silent boolean field in event table
-        //$retreat->silent = $request->input('silent');
-        //$retreat->amount = $request->input('amount');
-        // attending field not needed - will calculate with count on registrations
-        //$retreat->attending = $request->input('attending');
-        //$retreat->year = $request->input('year');
-        // $retreat->innkeeper_id = $request->input('innkeeper_id');
-        // $retreat->assistant_id = $request->input('assistant_id');
+
         if (null !== $request->input('calendar_id')) {
             $retreat->calendar_id = $request->input('calendar_id');
         }
@@ -467,18 +459,44 @@ class RetreatController extends Controller
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('event_attachment'), 'event', $retreat->id, 'event_attachment', $description);
         }
-/*
-        if (empty($request->input('directors')) or in_array(0, $request->input('directors'))) {
-            $retreat->retreatmasters()->detach();
+
+        $directors = $request->input('directors');
+        if (empty($directors) or (in_array(0, $directors) && sizeof($directors)==1)) {
+            $retreat->retreatmasters()->delete();
         } else {
-            $retreat->retreatmasters()->sync($request->input('directors'));
+            foreach ($directors as $director) {
+              // dd($director,$retreat->id,config('polanco.participant_role_id.retreat_director'));
+               $this->add_participant($director, $retreat->id, config('polanco.participant_role_id.retreat_director'));
+             }
         }
-*/
-        if (empty($request->input('captains')) or in_array(0, $request->input('captains'))) {
-            $retreat->captains()->detach();
+
+        $innkeepers = $request->input('innkeepers');
+        if (empty($innkeepers) or (in_array(0, $innkeepers) && sizeof($innkeepers)==1)) {
+            $retreat->innkeepers()->delete();
         } else {
-            $retreat->captains()->sync($request->input('captains'));
+            foreach ($innkeepers as $innkeeper) {
+               $this->add_participant($innkeeper, $retreat->id, config('polanco.participant_role_id.retreat_innkeeper'));
+             }
         }
+
+        $assistants = $request->input('assistants');
+        if (empty($assistants) or (in_array(0, $assistants) && sizeof($assistants)==1)) {
+            $retreat->assistants()->delete();
+        } else {
+            foreach ($assistants as $assistant) {
+               $this->add_participant($assistant, $retreat->id, config('polanco.participant_role_id.retreat_assistant'));
+             }
+        }
+
+        $ambassadors = $request->input('ambassadors');
+        if (empty($ambassadors) or (in_array(0, $ambassadors) && sizeof($ambassadors)==1)) {
+            $retreat->ambassadors()->delete();
+        } else {
+            foreach ($ambassadors as $ambassador) {
+               $this->add_participant($ambassador, $retreat->id, config('polanco.participant_role_id.ambassador'));
+             }
+        }
+
         if (! empty($retreat->calendar_id)) {
             //dd($retreat->calendar_id);
             $calendar_event = Event::find($retreat->calendar_id);
@@ -533,7 +551,7 @@ class RetreatController extends Controller
     {
         $this->authorize('update-registration');
         //get this retreat's information
-        $retreat = \App\Retreat::with('retreatmasters', 'assistants', 'innkeepers', 'captains')->findOrFail($id);
+        $retreat = \App\Retreat::with('retreatmasters.contact', 'assistants.contact', 'innkeepers.contact', 'ambassadors.contact')->findOrFail($id);
         $registrations = \App\Registration::where('event_id', '=', $id)->with('retreatant.parish')->orderBy('register_date', 'DESC')->get();
         $rooms = \App\Room::orderby('name')->pluck('name', 'id');
         $rooms->prepend('Unassigned', 0);
