@@ -109,7 +109,7 @@ class RetreatController extends Controller
             asort($c);
             $c = [0=>'N/A'] + $c;
         }
-        //dd($retreat_house);
+        // dd($d,$i,$a,$c);
         return view('retreats.create', compact('d', 'i', 'a', 'c', 'event_types'));
     }
 
@@ -333,7 +333,7 @@ class RetreatController extends Controller
 
         // initialize null arrays for innkeeper, assistant, director and captain dropdowns
 
-        $options = [];
+        $options = ['innkeepers'=>[],'directors'=>[],'assistants'=>[],'ambassadors'=>[]];
 
         foreach ($retreat_house->retreat_innkeepers as $innkeeper) {
             $options['innkeepers'][$innkeeper->contact_id_b] = $innkeeper->contact_b->sort_name;

@@ -160,10 +160,7 @@ class RetreatControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('retreats.edit');
         $response->assertViewHas('retreat');
-        $response->assertViewHas('d');
-        $response->assertViewHas('i');
-        $response->assertViewHas('a');
-        $response->assertViewHas('c');
+        $response->assertViewHas('options');
         $response->assertViewHas('event_types');
         $response->assertViewHas('is_active');
         $response->assertSeeText('Edit');
@@ -478,7 +475,7 @@ class RetreatControllerTest extends TestCase
          * @test
          */
         public function event_namebadges_returns_an_ok_response()
-        {   
+        {
             $user = $this->createUserWithPermission('show-registration');
             $retreat = factory(\App\Retreat::class)->create();
             $retreatant = factory(\App\Contact::class)->create([

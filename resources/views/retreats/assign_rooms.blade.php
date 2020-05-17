@@ -18,41 +18,49 @@
                 <div class='col-md-6'><strong>Description: </strong>{{ $retreat->description}}</div>
             </div><div class="clearfix"> </div>
             <div class='row'>
-                <div class='col-md-1'><strong>Director(s): </strong></div>
+                <div class='col-md-3'><strong>Director(s): </strong></div>
                     @if ($retreat->retreatmasters->isEmpty())
                         N/A
                     @else
-                    <div class='col-md-2'>
-                        @foreach($retreat->retreatmasters as $rm)
-                            <a href="{{url('person/'.$rm->id)}}">{{ $rm->display_name }}</a><br />
+                    <div class='col-md-3'>
+                        @foreach($retreat->retreatmasters as $retreatmaster)
+                            {!! $retreatmaster->contact_link_full_name !!}<br />
                         @endforeach
                         </div>
                     @endif
 
                 <div class='col-md-3'><strong>Innkeeper: </strong>
-                    @if ($retreat->innkeeper_id > 0)
-                        <a href="{{url('person/'.$retreat->innkeeper_id)}}">{{ $retreat->innkeeper->display_name }}</a>
-                    @else
+                    @if ($retreat->innkeepers->isEmpty())
                         N/A
-                    @endIf
+                    @else
+                    <div class='col-md-3'>
+                        @foreach($retreat->innkeepers as $innkeeper)
+                            {!! $innkeeper->contact_link_full_name !!}<br />
+                        @endforeach
+                        </div>
+                    @endif
                 </div>
                 <div class='col-md-3'><strong>Assistant: </strong>
-                    @if ($retreat->assistant_id > 0)
-                        <a href="{{url('person/'.$retreat->assistant_id) }}">{{ $retreat->assistant->display_name }}</a>
-                    @else
+                    @if ($retreat->assistants->isEmpty())
                         N/A
-                    @endIf
+                    @else
+                    <div class='col-md-3'>
+                        @foreach($retreat->assistants as $assistant)
+                            {!! $assistant->contact_link_full_name !!}<br />
+                        @endforeach
+                        </div>
+                    @endif
                 </div>
 
             </div><div class="clearfix"> </div>
             <div class='row'>
-                <div class='col-md-1'><strong>Ambassador(s): </strong></div>
-                    @if ($retreat->captains->isEmpty())
+                <div class='col-md-3'><strong>Ambassador(s): </strong></div>
+                    @if ($retreat->ambassadors->isEmpty())
                         N/A
                     @else
-                    <div class='col-md-2'>
-                        @foreach($retreat->captains as $captain)
-                            <a href="/person/{{ $captain->id }}">{{ $captain->display_name }}</a><br />
+                    <div class='col-md-3'>
+                        @foreach($retreat->ambassadors as $ambassador)
+                            {!! $ambassador->contact_link_full_name !!} <br />
                         @endforeach
                     </div>
                     @endif
