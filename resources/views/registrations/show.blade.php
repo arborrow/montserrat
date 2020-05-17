@@ -27,7 +27,7 @@
         </div>
         <div class="row">
             <div class="col-12 col-md-4">
-                <strong>Registered: </strong>{{ date('F d, Y h:i A', strtotime($registration->register_date))}}
+                <strong>Registered: </strong>{{ isset($registration->register_date) ? date('F d, Y h:i A', strtotime($registration->register_date)) : null }}
             </div>
             <div class="col-12 col-md-4">
                 <strong>Status: </strong>{{ $registration->status_name }}

@@ -85,7 +85,7 @@ class Registration extends Model
             return 'Registered:'.$this->register_date;
         }
 
-        return 'Unspecified status';
+        return $this->status_name;
     }
 
     public function getStatusNameAttribute()
