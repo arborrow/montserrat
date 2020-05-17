@@ -42,7 +42,7 @@
                         </div>
                         <div class="col-12 col-lg-4">
                             {!! Form::label('ambassadors', 'Ambassador(s):') !!}
-                            {!! Form::select('captains[]', $options['ambassadors'], $retreat->ambassadors->pluck('contact.id'), ['id'=>'ambassadors','class' => 'form-control select2','multiple' => 'multiple']) !!}
+                            {!! Form::select('ambassadors[]', $options['ambassadors'], $retreat->ambassadors->pluck('contact.id'), ['id'=>'ambassadors','class' => 'form-control select2','multiple' => 'multiple']) !!}
                         </div>
                     </div>
                     <div class="row">

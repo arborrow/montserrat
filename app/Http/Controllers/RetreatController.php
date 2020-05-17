@@ -461,40 +461,52 @@ class RetreatController extends Controller
         }
 
         $directors = $request->input('directors');
-        if (empty($directors) or (in_array(0, $directors) && sizeof($directors)==1)) {
-            $retreat->retreatmasters()->delete();
-        } else {
+        $existing_directors = $retreat->retreatmasters()->pluck('contact_id');
+        $removed_directors = $existing_directors->diff($directors);
+
+        if (!empty($directors)) {
             foreach ($directors as $director) {
-              // dd($director,$retreat->id,config('polanco.participant_role_id.retreat_director'));
-               $this->add_participant($director, $retreat->id, config('polanco.participant_role_id.retreat_director'));
-             }
+                $this->add_participant($director, $retreat->id, config('polanco.participant_role_id.retreat_director'));
+            }
+        }
+        if (!$removed_directors->isEmpty()) {
+            $retreat->retreatmasters()->whereIn('contact_id',$removed_directors)->delete();
         }
 
         $innkeepers = $request->input('innkeepers');
-        if (empty($innkeepers) or (in_array(0, $innkeepers) && sizeof($innkeepers)==1)) {
-            $retreat->innkeepers()->delete();
-        } else {
+        $existing_innkeepers = $retreat->innkeepers()->pluck('contact_id');
+        $removed_innkeepers = $existing_innkeepers->diff($innkeepers);
+        if (!empty($innkeepers)) {
             foreach ($innkeepers as $innkeeper) {
                $this->add_participant($innkeeper, $retreat->id, config('polanco.participant_role_id.retreat_innkeeper'));
              }
+         }
+        if (!$removed_innkeepers->isEmpty()) {
+            $retreat->innkeepers()->whereIn('contact_id',$removed_innkeepers)->delete();
         }
 
         $assistants = $request->input('assistants');
-        if (empty($assistants) or (in_array(0, $assistants) && sizeof($assistants)==1)) {
-            $retreat->assistants()->delete();
-        } else {
+        $existing_assistants = $retreat->assistants()->pluck('contact_id');
+        $removed_assistants = $existing_assistants->diff($assistants);
+        if (!empty($assistants)) {
             foreach ($assistants as $assistant) {
                $this->add_participant($assistant, $retreat->id, config('polanco.participant_role_id.retreat_assistant'));
              }
+         }
+        if (!$removed_assistants->isEmpty()) {
+            $retreat->assistants()->whereIn('contact_id',$removed_assistants)->delete();
         }
 
         $ambassadors = $request->input('ambassadors');
-        if (empty($ambassadors) or (in_array(0, $ambassadors) && sizeof($ambassadors)==1)) {
-            $retreat->ambassadors()->delete();
-        } else {
+        $existing_ambassadors = $retreat->ambassadors()->pluck('contact_id');
+        $removed_ambassadors = $existing_ambassadors->diff($ambassadors);
+        if (!empty($ambassadors)) {
             foreach ($ambassadors as $ambassador) {
                $this->add_participant($ambassador, $retreat->id, config('polanco.participant_role_id.ambassador'));
              }
+         }
+        if (!$removed_ambassadors->isEmpty()) {
+            $retreat->ambassadors()->whereIn('contact_id',$removed_ambassadors)->delete();
         }
 
         if (! empty($retreat->calendar_id)) {
