@@ -83,7 +83,7 @@
                       @endforeach
                   @endif
                 </td>
-                <td><a href="{{url('retreat/'.$retreat->id.'#registrations')}}">{{ $retreat->retreatant_count}}</a></td>
+                <td><a href="{{url('retreat/'.$retreat->id.'#registrations')}}"> {{ $retreat->retreatants_count }}</a></td>
                 <td>
                     @if ($results['show-event-contract'])
                         {!!$retreat->retreat_contract_link!!}
@@ -171,7 +171,7 @@
                           @endforeach
                       @endif
                     </td>
-                    <td><a href="{{url('retreat/'.$oldretreat->id.'#registrations')}}">{{ $oldretreat->retreatant_count}}</a></td>
+                    <td><a href="{{url('retreat/'.$oldretreat->id.'#registrations')}}">{{ $oldretreat->retreatants_count}}</a></td>
                     <td>
                         @if($results['show-event-contract'])
                             {!!$oldretreat->retreat_contract_link!!}
