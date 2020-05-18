@@ -9,6 +9,7 @@ use App\Registration;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use Spatie\GoogleCalendar\Event;
+use Illuminate\Http\Request;
 
 class RetreatController extends Controller
 {
@@ -655,10 +656,20 @@ class RetreatController extends Controller
         $this->authorize('show-retreat');
         $event_types = \App\EventType::whereIsActive(true)->pluck('label', 'id');
         $event_types->prepend('N/A', 0);
-        $directors = [];
-        // $directors->prepend('N/A', 0);
 
-        return view('retreats.search', compact('event_types', 'directors'));
+        return view('retreats.search', compact('event_types'));
+    }
+
+    public function results(Request $request)
+    {
+        $this->authorize('show-contact');
+        // dd($request);
+        if (! empty($request)) {
+            $events = \App\Retreat::filtered($request)->orderBy('idnumber')->paginate(100);
+            $events->appends($request->except('page'));
+        }
+        // dd($events);
+        return view('retreats.results', compact('events'));
     }
 
 

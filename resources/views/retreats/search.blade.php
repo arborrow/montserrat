@@ -43,19 +43,11 @@
                     </div>
 
                     <div class="form-group">
-                        {!! Form::label('event_type', 'Event type:', ['class' => 'control-label col-sm-3'])  !!}
+                        {!! Form::label('event_type_id', 'Event type:', ['class' => 'control-label col-sm-3'])  !!}
                         <div class="col-sm-8">
-                        {!! Form::select('event_type', $event_types, NULL, ['class' => 'form-control']) !!}
+                        {!! Form::select('event_type_id', $event_types, NULL, ['class' => 'form-control']) !!}
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        {!! Form::label('director', 'Director:', ['class' => 'control-label col-sm-3'])  !!}
-                        <div class="col-sm-8">
-                        {!! Form::select('director', $directors, NULL, ['class' => 'form-control']) !!}
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
