@@ -87,6 +87,9 @@ Route::get('retreat/{event_id}/waitlist_touchpoint', 'TouchpointController@add_r
 Route::get('retreat/{event_id}/waitlist', 'RetreatController@show_waitlist');
 Route::get('retreat/type/{event_type_id}', 'RetreatController@index_type');
 
+Route::get('retreat/search', 'RetreatController@search')->name('retreats.search');
+Route::get('retreat/results', 'RetreatController@results')->name('retreats.results');
+
 // General routes including groups, resources, etc.
 Route::get('about', 'PageController@about')->name('about');
 Route::resource('address', 'AddressController');

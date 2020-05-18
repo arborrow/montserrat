@@ -240,4 +240,31 @@ class Retreat extends Model
     {
         return $query->where('event_type_id', $event_type_id);
     }
+    public function scopeFiltered($query, $filters)
+    {
+        //dd($filters->request);
+        foreach ($filters->request as $filter => $value) {
+            if ($filter == 'begin_date' && ! empty($value)) {
+                $begin_date = Carbon::parse($value);
+                $query->where('start_date', '>=', $begin_date);
+            }
+            if ($filter == 'end_date' && ! empty($value)) {
+                $end_date = Carbon::parse($value);
+                $query->where('start_date', '<=', $end_date);
+            }
+
+            if ($filter == 'title' && ! empty($value)) {
+                $query->where($filter, 'like', '%'.$value.'%');
+            }
+            if ($filter == 'idnumber' && ! empty($value)) {
+                $query->where($filter, 'like', '%'.$value.'%');
+            }
+            if ($filter == 'event_type_id' && ! empty($value)) {
+                $query->where($filter, '=', $value);
+            }
+        }
+
+        return $query;
+    }
+
 }

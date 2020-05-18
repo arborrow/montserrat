@@ -478,7 +478,7 @@ class RetreatControllerTest extends TestCase
          * @test
          */
         public function event_namebadges_returns_an_ok_response()
-        {   
+        {
             $user = $this->createUserWithPermission('show-registration');
             $retreat = factory(\App\Retreat::class)->create();
             $retreatant = factory(\App\Contact::class)->create([
@@ -499,6 +499,41 @@ class RetreatControllerTest extends TestCase
             $response->assertSeeText($retreatant->sort_name);
 
         }
+
+
+            /**
+             * @test
+             */
+            public function results_returns_an_ok_response()
+            {   // create a new user and then search for that user's last name and ensure that a result appears
+                $user = $this->createUserWithPermission('show-retreat');
+
+                $retreat = factory(\App\Retreat::class)->create();
+
+                $response = $this->actingAs($user)->get('retreat/results?idnumber='.$retreat->idnumber);
+
+                $response->assertOk();
+                $response->assertViewIs('retreats.results');
+                $response->assertViewHas('events');
+                $response->assertSeeText('results found');
+                $response->assertSeeText($retreat->idnumber);
+            }
+
+            /**
+             * @test
+             */
+            public function search_returns_an_ok_response()
+            {
+                $user = $this->createUserWithPermission('show-retreat');
+
+                $response = $this->actingAs($user)->get('retreat/search');
+
+                $response->assertOk();
+                $response->assertViewIs('retreats.search');
+                $response->assertViewHas('event_types');
+                $response->assertSeeText('Search Events');
+            }
+
 
     // test cases...
 }
