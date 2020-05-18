@@ -12,7 +12,7 @@
                 @if ($events->isEmpty())
                     <p>Oops, no known events with the given search criteria</p>
                 @else
-                <table class="table table-striped table-bordered table-hover"><caption><h2>Contacts</h2></caption>
+                <table class="table table-striped table-bordered table-hover"><caption><h2>Events</h2></caption>
                     <thead>
                         <tr>
                             <th>ID#</th>

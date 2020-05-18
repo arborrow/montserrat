@@ -662,7 +662,7 @@ class RetreatController extends Controller
 
     public function results(Request $request)
     {
-        $this->authorize('show-contact');
+        $this->authorize('show-retreat');
         // dd($request);
         if (! empty($request)) {
             $events = \App\Retreat::filtered($request)->orderBy('idnumber')->paginate(100);
