@@ -649,4 +649,17 @@ class RetreatController extends Controller
 
         return view('retreats.namebadges', compact('cresults', 'event'));
     }
+
+    public function search()
+    {
+        $this->authorize('show-retreat');
+        $event_types = \App\EventType::whereIsActive(true)->pluck('label', 'id');
+        $event_types->prepend('N/A', 0);
+        $directors = [];
+        // $directors->prepend('N/A', 0);
+
+        return view('retreats.search', compact('event_types', 'directors'));
+    }
+
+
 }
