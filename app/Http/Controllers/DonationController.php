@@ -25,9 +25,26 @@ class DonationController extends Controller
     public function index()
     {
         $this->authorize('show-donation');
+        $donation_descriptions = DB::table('Donations')->selectRaw('MIN(donation_id) as donation_id, donation_description, count(*) as count')->groupBy('donation_description')->orderBy('donation_description')->whereNull('deleted_at')->get();
+        // dd($donation_descriptions);
         $donations = \App\Donation::orderBy('donation_date', 'desc')->with('contact.prefix', 'contact.suffix')->paginate(100);
         //dd($donations);
-        return view('donations.index', compact('donations'));
+        return view('donations.index', compact('donations','donation_descriptions'));
+    }
+
+    public function index_type($donation_id = null)
+    {
+        $this->authorize('show-donation');
+        $donation_descriptions = DB::table('Donations')->selectRaw('MIN(donation_id) as donation_id, donation_description, count(*) as count')->groupBy('donation_description')->orderBy('donation_description')->whereNull('deleted_at')->get();
+        $donation = \App\Donation::findOrFail($donation_id);
+        $donation_description = $donation->donation_description;
+
+        $defaults = [];
+        $defaults['type'] = $donation_description;
+
+        $donations = \App\Donation::whereDonationDescription($donation_description)->orderBy('donation_date', 'desc')->with('contact.prefix','contact.suffix')->paginate(100);
+
+        return view('donations.index', compact('donations', 'donation_descriptions', 'defaults'));   //
     }
 
     public function overpaid()

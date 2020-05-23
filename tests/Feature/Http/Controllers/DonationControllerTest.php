@@ -121,6 +121,30 @@ class DonationControllerTest extends TestCase
     /**
      * @test
      */
+    public function index_type_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-donation');
+        // create a new event type, add a random number of retreats (2-10) to that event type ensuring they are all future events
+        $donation = factory(\App\Donation::class)->create();
+        $donation_id = $donation->donation_id;
+        $number_donations = $this->faker->numberBetween(2, 10);
+        $donations = factory(\App\Donation::class, $number_donations)->create([
+            'donation_description' => $donation->donation_description,
+            'deleted_at' => null,
+        ]);
+
+        $response = $this->actingAs($user)->get('donation/type/'.$donation_id);
+        $results = $response->viewData('donations');
+        $response->assertOk();
+        $response->assertViewIs('donations.index');
+        $response->assertViewHas('donations');
+        $response->assertViewHas('donation_descriptions');
+        $this->assertGreaterThan($number_donations,$results->count());
+    }
+
+    /**
+     * @test
+     */
     public function overpaid_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-donation');

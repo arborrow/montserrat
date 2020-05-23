@@ -14,6 +14,18 @@
             @endCan
             <p class="lead">{{$donations->total()}} records</p>
         </h1>
+        <div class="row">
+            <div class="col-md-4 col-12">
+                <select class="custom-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                    <option value="">Filter by donation description ...</option>
+                    <option value="{{url('donation')}}">All donations</option>
+                    @foreach($donation_descriptions as $donation_description)
+                        <option value="{{url('donation/type/'.$donation_description->donation_id)}}">{{$donation_description->donation_description .'('.$donation_description->count.')'}}</option>
+                    @endForeach
+                </select>
+            </div>
+        </div>
+
     </div>
     <div class="col-12 mt-2">
         @if ($donations->isEmpty())
