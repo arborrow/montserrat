@@ -63,17 +63,17 @@
                             {!!$person->contact_link_full_name!!}
                         </td>
                         <td>
-                            {!!$person->address_primary_google_map!!} 
+                            {!!$person->address_primary_google_map!!}
                         </td>
-                        <td>{{ $person->phone_home_phone_number }}</td>
-                        <td>{{ $person->phone_home_mobile_number }}</td>
+                        <td><a href="tel:{{ $person->phone_home_phone_number }}">{{ $person->phone_home_phone_number }}</a></td>
+                        <td><a href="tel:{{ $person->phone_home_mobile_number }}">{{ $person->phone_home_mobile_number }}</a></td>
                         <td><a href="mailto:{{$person->email_primary_text}}">{{ $person->email_primary_text }}</a></td>
                         <td>{!! $person->parish_link !!}</td>
                         @if ($role['group_id'] == config('polanco.group_id.captain'))
                         <td>
                             <ul>
                                 @foreach ($person->captain_events as $event)
-                                    <li>  
+                                    <li>
                                         <a href="{{url('retreat/'.$event->id)}}" title="{{$event->idnumber}}">{{$event->title}}</a>
                                     </li>
                                 @endforeach
