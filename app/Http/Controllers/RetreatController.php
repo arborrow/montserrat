@@ -10,6 +10,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use Spatie\GoogleCalendar\Event;
 use Auth;
+use Illuminate\Http\Request;
 
 class RetreatController extends Controller
 {
