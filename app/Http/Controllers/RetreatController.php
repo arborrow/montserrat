@@ -549,6 +549,9 @@ class RetreatController extends Controller
         if (null !== $request->input('registrations')) {
             foreach ($request->input('registrations') as $key => $value) {
                 $registration = \App\Registration::findOrFail($key);
+                if (!isset($event_id)) {
+                    $event_id = $registration->event_id;
+                }
                 $registration->room_id = $value;
                 $registration->save();
                 //dd($registration,$value,$key);
@@ -557,13 +560,19 @@ class RetreatController extends Controller
         if (null !== $request->input('notes')) {
             foreach ($request->input('notes') as $key => $value) {
                 $registration = \App\Registration::findOrFail($key);
+                if (!isset($event_id)) {
+                    $event_id = $registration->event_id;
+                }
                 $registration->notes = $value;
                 $registration->save();
                 //dd($registration,$value);
             }
         }
-
-        return Redirect::action('RetreatController@index');
+        if (isset($event_id)) {
+            return Redirect::action('RetreatController@show',$event_id);
+        } else { // this should never really happen as it means an event registration did not have an event_id; unit test will assume returning to retreat.show blade
+            return Redirect::action('RetreatController@index');
+        }
     }
 
     public function calendar()

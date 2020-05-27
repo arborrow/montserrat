@@ -288,7 +288,7 @@ class RetreatControllerTest extends TestCase
         ]);
 
         $updated_registration = \App\Registration::findOrFail($registration->id);
-        $response->assertRedirect(action('RetreatController@index'));
+        $response->assertRedirect(action('RetreatController@show',$retreat->id));
         $this->assertNotEquals(null, $updated_registration->room_id);
         $this->assertEquals($room->id, $updated_registration->room_id);
         $this->assertNotEquals(null, $updated_registration->notes);
