@@ -631,6 +631,9 @@ class RetreatController extends Controller
         if (null !== $request->input('registrations')) {
             foreach ($request->input('registrations') as $key => $value) {
                 $registration = \App\Registration::findOrFail($key);
+                if (!isset($event_id)) {
+                    $event_id = $registration->event_id;
+                }
                 $registration->room_id = $value;
                 $registration->save();
                 //dd($registration,$value,$key);
@@ -639,13 +642,19 @@ class RetreatController extends Controller
         if (null !== $request->input('notes')) {
             foreach ($request->input('notes') as $key => $value) {
                 $registration = \App\Registration::findOrFail($key);
+                if (!isset($event_id)) {
+                    $event_id = $registration->event_id;
+                }
                 $registration->notes = $value;
                 $registration->save();
                 //dd($registration,$value);
             }
         }
-
-        return Redirect::action('RetreatController@index');
+        if (isset($event_id)) {
+            return Redirect::action('RetreatController@show',$event_id);
+        } else { // this should never really happen as it means an event registration did not have an event_id; unit test will assume returning to retreat.show blade
+            return Redirect::action('RetreatController@index');
+        }
     }
 
     public function calendar()
@@ -732,4 +741,27 @@ class RetreatController extends Controller
 
         return view('retreats.namebadges', compact('cresults', 'event'));
     }
+
+    public function search()
+    {
+        $this->authorize('show-retreat');
+        $event_types = \App\EventType::whereIsActive(true)->pluck('label', 'id');
+        $event_types->prepend('N/A', 0);
+
+        return view('retreats.search', compact('event_types'));
+    }
+
+    public function results(Request $request)
+    {
+        $this->authorize('show-retreat');
+        // dd($request);
+        if (! empty($request)) {
+            $events = \App\Retreat::filtered($request)->orderBy('idnumber')->paginate(100);
+            $events->appends($request->except('page'));
+        }
+        // dd($events);
+        return view('retreats.results', compact('events'));
+    }
+
+
 }

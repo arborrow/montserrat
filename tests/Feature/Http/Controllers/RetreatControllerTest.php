@@ -285,7 +285,7 @@ class RetreatControllerTest extends TestCase
         ]);
 
         $updated_registration = \App\Registration::findOrFail($registration->id);
-        $response->assertRedirect(action('RetreatController@index'));
+        $response->assertRedirect(action('RetreatController@show',$retreat->id));
         $this->assertNotEquals(null, $updated_registration->room_id);
         $this->assertEquals($room->id, $updated_registration->room_id);
         $this->assertNotEquals(null, $updated_registration->notes);
@@ -496,6 +496,41 @@ class RetreatControllerTest extends TestCase
             $response->assertSeeText($retreatant->sort_name);
 
         }
+
+
+            /**
+             * @test
+             */
+            public function results_returns_an_ok_response()
+            {   // create a new user and then search for that user's last name and ensure that a result appears
+                $user = $this->createUserWithPermission('show-retreat');
+
+                $retreat = factory(\App\Retreat::class)->create();
+
+                $response = $this->actingAs($user)->get('retreat/results?idnumber='.$retreat->idnumber);
+
+                $response->assertOk();
+                $response->assertViewIs('retreats.results');
+                $response->assertViewHas('events');
+                $response->assertSeeText('results found');
+                $response->assertSeeText($retreat->idnumber);
+            }
+
+            /**
+             * @test
+             */
+            public function search_returns_an_ok_response()
+            {
+                $user = $this->createUserWithPermission('show-retreat');
+
+                $response = $this->actingAs($user)->get('retreat/search');
+
+                $response->assertOk();
+                $response->assertViewIs('retreats.search');
+                $response->assertViewHas('event_types');
+                $response->assertSeeText('Search Events');
+            }
+
 
     // test cases...
 }

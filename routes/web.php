@@ -87,6 +87,9 @@ Route::get('retreat/{event_id}/waitlist_touchpoint', 'TouchpointController@add_r
 Route::get('retreat/{event_id}/waitlist', 'RetreatController@show_waitlist');
 Route::get('retreat/type/{event_type_id}', 'RetreatController@index_type');
 
+Route::get('retreat/search', 'RetreatController@search')->name('retreats.search');
+Route::get('retreat/results', 'RetreatController@results')->name('retreats.results');
+
 // General routes including groups, resources, etc.
 Route::get('about', 'PageController@about')->name('about');
 Route::resource('address', 'AddressController');
@@ -123,6 +126,8 @@ Route::resource('donation', 'DonationController');
 Route::get('donation/create/{id?}/{event_id?}/{type?}', 'DonationController@create');
 Route::get('donation/{id?}/invoice', 'PageController@finance_invoice');
 Route::get('donation/{id?}/agcacknowledge', 'PageController@finance_agcacknowledge');
+Route::get('donation/type/{donation_id?}', 'DonationController@index_type');
+
 Route::get('agc/{year?}', 'DonationController@agc');
 Route::get('group/{group_id?}/touchpoint', 'TouchpointController@add_group');
 Route::get('group/{group_id?}/registration', 'RegistrationController@add_group');

@@ -5,17 +5,21 @@
     <div class="col-12">
         <h2>
             Upcoming {{ $defaults['type'] }}
-            @can('create-retreat')
-                <span class="options">
+            <span class="options">
+                @can('create-retreat')
                     <a href={{ action('RetreatController@create') }}>
                         {!! Html::image('images/create.png', 'Create a Retreat',array('title'=>"Create Retreat",'class' => 'btn btn-light')) !!}
                     </a>
-                    <a href="#previous">
-                        <i class="fas fa-history" title="Previous Retreats"></i>
-                    </a>
-                </span>
-            @endCan
+                @endCan
+                <a href="#previous">
+                    <i class="fas fa-history" title="Previous Retreats"></i>
+                </a>
+                <a href={{ action('RetreatController@search') }}>
+                    {!! Html::image('images/search.png', 'Search retreats',array('title'=>"Search retreats",'class' => 'btn btn-link')) !!}
+                </a>
+            </span>
         </h2>
+
         <p class="lead">{{$retreats->count()}} records</p>
         <div class="row">
             <div class="col-md-4 col-12">
