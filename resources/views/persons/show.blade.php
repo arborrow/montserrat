@@ -257,7 +257,7 @@
                 {!! Form::close() !!}
                 @endCan
                 <ul>
-                    @foreach($person->a_relationships() as $a_relationship)
+                    @foreach($person->a_relationships as $a_relationship)
                     <li>
                         @can('delete-relationship')
                             {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $a_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
@@ -270,7 +270,7 @@
                     </li>
                     @endforeach
 
-                    @foreach($person->b_relationships() as $b_relationship)
+                    @foreach($person->b_relationships as $b_relationship)
                     <li>
                         @can('delete-relationship')
                             {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $b_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
