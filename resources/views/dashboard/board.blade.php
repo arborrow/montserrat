@@ -51,12 +51,20 @@
                             <td>${{ number_format($category->total_pledged,2) }}</td>
                             <td>
                                 ${{ number_format($category->total_paid,2) }}
-                                ( {{ number_format(((($category->total_paid)/(array_sum(array_column($board_summary,'total_paid'))))*100),0) }}%)
+                                (
+                                @if (array_sum(array_column($board_summary,'total_paid')) > 0)
+                                    {{ number_format(((($category->total_paid)/(array_sum(array_column($board_summary,'total_paid'))))*100),0) }}%)
+                                @else
+                                    N/A
+                                @endIf
                             </td>
                             <td>
                                 {{ $category->total_participants }}
-                                ( {{ number_format(((($category->total_participants)/(array_sum(array_column($board_summary,'total_participants'))))*100),0) }}%)
-
+                                @if (array_sum(array_column($board_summary,'total_participants')) > 0)
+                                    ( {{ number_format(((($category->total_participants)/(array_sum(array_column($board_summary,'total_participants'))))*100),0) }}%)
+                                @else
+                                    N/A
+                                @endIf
                             </td>
                             <td>
                                 {{ $category->total_nights }}
