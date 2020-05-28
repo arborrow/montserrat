@@ -48,19 +48,22 @@ class PostRetreatEmails extends Command
 
         if ($retreats->count() >= 1) {
             foreach ($retreats as $retreat) {
-                $retreatants = $retreat->registrations()
+                $registrations = $retreat->registrations()
                     ->with('contact')
                     ->whereHas('contact', function ($query) {
                         $query->where('do_not_email', 0);
                     })
                     ->get();
 
-                if ($retreatants->count() >= 1) {
-                    foreach ($retreatants as $retreatant) {
-                        $primaryEmail = $retreatant->contact->primaryEmail()->first()->email;
-                        try {
-                            Mail::to($primaryEmail)->queue(new PostRetreat($retreatant));
-                        } catch (\Exception $e) {
+                if ($registrations->count() >= 1) {
+                    foreach ($registrations as $registration) {
+                        if (null !==  $registration->retreatant->primaryEmail()->first()) {
+                            $primaryEmail = $registration->retreatant->primaryEmail()->first()->email;
+                            try {
+                                Mail::to($primaryEmail)->queue(new PostRetreat($retreatant));
+                            }
+                            catch (\Exception $e) {
+                            }
                         }
                     }
                 }
