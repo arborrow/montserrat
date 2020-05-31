@@ -65,8 +65,8 @@
                         <td>
                             {!!$person->address_primary_google_map!!}
                         </td>
-                        <td>{{ $person->phone_home_phone_number }}</td>
-                        <td>{{ $person->phone_home_mobile_number }}</td>
+                        <td><a href="tel:{{ $person->phone_home_phone_number }}">{{ $person->phone_home_phone_number }}</a></td>
+                        <td><a href="tel:{{ $person->phone_home_mobile_number }}">{{ $person->phone_home_mobile_number }}</a></td>
                         <td><a href="mailto:{{$person->email_primary_text}}">{{ $person->email_primary_text }}</a></td>
                         <td>{!! $person->parish_link !!}</td>
                         @if ($role['group_id'] == config('polanco.group_id.ambassador'))
