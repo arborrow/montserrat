@@ -142,7 +142,8 @@
                 <div><h3>Phone(s)</h3>
                     @foreach($person->phones as $phone)
                         @if(!empty($phone->phone))
-                            <span class="font-weight-bold">{{$phone->location->display_name}} - {{$phone->phone_type}}: </span>{{$phone->phone}}{{$phone->phone_extension}}
+                            <span class="font-weight-bold">{{$phone->location->display_name}} - {{$phone->phone_type}}: </span>
+                            <a href="tel:{{$phone->phone}}{{$phone->phone_extension}}">{{$phone->phone}}{{$phone->phone_extension}}</a>
                             <br>
                         @endif
                     @endforeach
