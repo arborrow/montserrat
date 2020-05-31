@@ -52,7 +52,7 @@ class TouchcategoriesTableSeeder extends Seeder
             ],
             4 => [
                 'id' => 5,
-                'name' => 'Captain',
+                'name' => 'Ambassador',
                 'description' => '',
                 'deleted_at' => null,
                 'remember_token' => null,

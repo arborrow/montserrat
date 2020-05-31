@@ -40,18 +40,18 @@
                         {!! Form::select('directors[]', $d, 0, ['id'=>'directors','class' => 'form-control select2','multiple' => 'multiple']) !!}
                     </div>
                     <div class="col-4">
-                        {!! Form::label('captains', 'Ambassador(s):') !!}
-                        {!! Form::select('captains[]', $c, 0, ['id'=>'captains','class' => 'form-control select2','multiple' => 'multiple']) !!}
+                        {!! Form::label('ambassadors', 'Ambassador(s):') !!}
+                        {!! Form::select('ambassadors[]', $c, 0, ['id'=>'ambassadors','class' => 'form-control select2','multiple' => 'multiple']) !!}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-3">
-                        {!! Form::label('innkeeper_id', 'Innkeeper:') !!}
-                        {!! Form::select('innkeeper_id', $i, 0, ['class' => 'form-control']) !!}
+                        {!! Form::label('innkeeper_ids', 'Innkeeper(s):') !!}
+                        {!! Form::select('innkeepers[]', $i, 0, ['id'=>'innkeepers','class' => 'form-control select2','multiple' => 'multiple']) !!}
                     </div>
                     <div class="col-3">
-                        {!! Form::label('assistant_id', 'Assistant:') !!}
-                        {!! Form::select('assistant_id', $a, 0, ['class' => 'form-control']) !!}
+                        {!! Form::label('assistant_ids', 'Assistant(s):') !!}
+                        {!! Form::select('assistants[]', $a, 0, ['id'=>'assistants','class' => 'form-control select2','multiple' => 'multiple']) !!}
                     </div>
                     <div class="col-3">
                         {!! Form::label('event_type', 'Type:') !!}

@@ -411,12 +411,12 @@ class RelationshipTypeController extends Controller
 
                         return $directors;
                         break;
-                    case 'Captain':
-                        $captains = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
-                            $query->where('group_id', '=', config('polanco.group_id.captain'));
+                    case 'Ambassador':
+                        $ambassadors = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                            $query->where('group_id', '=', config('polanco.group_id.ambassador'));
                         })->pluck('sort_name', 'id');
 
-                        return $captains;
+                        return $ambassadors;
                         break;
                     case 'Jesuit':
                         $jesuits = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {

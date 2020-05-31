@@ -179,7 +179,7 @@ class PersonController extends Controller
         $emergency_contact->phone_alternate = $request->input('emergency_contact_phone_alternate');
         $emergency_contact->save();
 
-        // relationships: parishioner, donor, retreatant, volunteer, captain, director, innkeeper, assistant, staff, board
+        // relationships: parishioner, donor, retreatant, volunteer, ambassador, director, innkeeper, assistant, staff, board
 
         // save parishioner relationship
         if ($request->input('parish_id') > 0) {
@@ -226,19 +226,19 @@ class PersonController extends Controller
             $group_volunteer->save();
         }
 
-        // save captain relationship
-        if ($request->input('is_captain') > 0) {
-            $relationship_captain = new \App\Relationship;
-            $relationship_captain->contact_id_a = config('polanco.self.id');
-            $relationship_captain->contact_id_b = $person->id;
-            $relationship_captain->relationship_type_id = config('polanco.relationship_type.captain');
-            $relationship_captain->is_active = 1;
-            $relationship_captain->save();
-            $group_captain = new \App\GroupContact;
-            $group_captain->group_id = config('polanco.group_id.captain');
-            $group_captain->contact_id = $person->id;
-            $group_captain->status = 'Added';
-            $group_captain->save();
+        // save ambassador relationship
+        if ($request->input('is_ambassador') > 0) {
+            $relationship_ambassador = new \App\Relationship;
+            $relationship_ambassador->contact_id_a = config('polanco.self.id');
+            $relationship_ambassador->contact_id_b = $person->id;
+            $relationship_ambassador->relationship_type_id = config('polanco.relationship_type.ambassador');
+            $relationship_ambassador->is_active = 1;
+            $relationship_ambassador->save();
+            $group_ambassador = new \App\GroupContact;
+            $group_ambassador->group_id = config('polanco.group_id.ambassador');
+            $group_ambassador->contact_id = $person->id;
+            $group_ambassador->status = 'Added';
+            $group_ambassador->save();
         }
         // save retreat director relationship
         if ($request->input('is_director') > 0) {
@@ -320,7 +320,7 @@ class PersonController extends Controller
             $group_board->save();
         }
 
-        //groups: deacon, priest, bishop, pastor, jesuit, provincial, superior, captain, board, innkeeper, director, assistant, staff
+        //groups: deacon, priest, bishop, pastor, jesuit, provincial, superior, ambassador, board, innkeeper, director, assistant, staff
 
         if ($request->input('is_bishop') > 0) {
             $group_bishop = new \App\GroupContact;
@@ -384,7 +384,7 @@ class PersonController extends Controller
         $this->save_relationship('is_donor',config('polanco.self.id'),$person->id,config('polanco.relationship_type.donor'));
         $this->save_relationship('is_retreatant',config('polanco.self.id'),$person->id,config('polanco.relationship_type.retreatant'));
         $this->save_relationship('is_volunteer',config('polanco.self.id'),$person->id,config('polanco.relationship_type.volunteer'));
-        $this->save_relationship('is_captain',config('polanco.self.id'),$person->id,config('polanco.relationship_type.captain'));
+        $this->save_relationship('is_ambassador',config('polanco.self.id'),$person->id,config('polanco.relationship_type.ambassador'));
         $this->save_relationship('is_director',config('polanco.self.id'),$person->id,config('polanco.relationship_type.retreat_director'));
         $this->save_relationship('is_innkeeper',config('polanco.self.id'),$person->id,config('polanco.relationship_type.retreat_innkeeper'));
         $this->save_relationship('is_assistant',config('polanco.self.id'),$person->id,config('polanco.relationship_type.retreat_assistant'));
@@ -1214,7 +1214,7 @@ class PersonController extends Controller
         $url_twitter->website_type = 'Twitter';
         $url_twitter->save();
 
-        // relationships: donor, retreatant, volunteer, captain, director, innkeeper, assistant, staff, board
+        // relationships: donor, retreatant, volunteer, ambassador, director, innkeeper, assistant, staff, board
         $relationship_donor = \App\Relationship::firstOrNew(['contact_id_b'=>$person->id, 'relationship_type_id'=>config('polanco.relationship_type.donor'), 'is_active'=>1]);
         if ($request->input('is_donor') == 0) {
             $relationship_donor->delete();
@@ -1248,15 +1248,15 @@ class PersonController extends Controller
             $relationship_volunteer->save();
         }
 
-        $relationship_captain = \App\Relationship::firstOrNew(['contact_id_b'=>$person->id, 'relationship_type_id'=>config('polanco.relationship_type.captain'), 'is_active'=>1]);
-        if ($request->input('is_captain') == 0) {
-            $relationship_captain->delete();
+        $relationship_ambassador = \App\Relationship::firstOrNew(['contact_id_b'=>$person->id, 'relationship_type_id'=>config('polanco.relationship_type.ambassador'), 'is_active'=>1]);
+        if ($request->input('is_ambassador') == 0) {
+            $relationship_ambassador->delete();
         } else {
-            $relationship_captain->contact_id_a = config('polanco.self.id');
-            $relationship_captain->contact_id_b = $person->id;
-            $relationship_captain->relationship_type_id = config('polanco.relationship_type.captain');
-            $relationship_captain->is_active = 1;
-            $relationship_captain->save();
+            $relationship_ambassador->contact_id_a = config('polanco.self.id');
+            $relationship_ambassador->contact_id_b = $person->id;
+            $relationship_ambassador->relationship_type_id = config('polanco.relationship_type.ambassador');
+            $relationship_ambassador->is_active = 1;
+            $relationship_ambassador->save();
         }
 
         $relationship_director = \App\Relationship::firstOrNew(['contact_id_b'=>$person->id, 'relationship_type_id'=>config('polanco.relationship_type.retreat_director'), 'is_active'=>1]);
@@ -1321,15 +1321,15 @@ class PersonController extends Controller
         }
 
         //groups:
-        $group_captain = \App\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.captain'), 'status'=>'Added']);
-        if ($request->input('is_captain') == 0) {
-            $group_captain->delete();
+        $group_ambassador = \App\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.ambassador'), 'status'=>'Added']);
+        if ($request->input('is_ambassador') == 0) {
+            $group_ambassador->delete();
         } else {
-            $group_captain->contact_id = $person->id;
-            $group_captain->group_id = config('polanco.group_id.captain');
-            $group_captain->status = 'Added';
-            $group_captain->deleted_at = null;
-            $group_captain->save();
+            $group_ambassador->contact_id = $person->id;
+            $group_ambassador->group_id = config('polanco.group_id.ambassador');
+            $group_ambassador->status = 'Added';
+            $group_ambassador->deleted_at = null;
+            $group_ambassador->save();
         }
 
         $group_hlm2017 = \App\GroupContact::withTrashed()->firstOrNew(['contact_id'=>$person->id, 'group_id'=>config('polanco.group_id.hlm2017'), 'status'=>'Added']);
@@ -1583,9 +1583,9 @@ class PersonController extends Controller
         return $this->role(config('polanco.group_id.board'));
     }
 
-    public function captains()
-    {
-        return $this->role(config('polanco.group_id.captain'));
+    public function ambassadors()
+    {   
+        return $this->role(config('polanco.group_id.ambassador'));
     }
 
     public function deacons()
@@ -1647,7 +1647,7 @@ class PersonController extends Controller
     {
         $this->authorize('show-contact');
 
-        $persons = \App\Contact::with('groups', 'address_primary', 'captain_events')->whereHas('groups', function ($query) use ($group_id) {
+        $persons = \App\Contact::with('groups', 'address_primary', 'ambassador_events')->whereHas('groups', function ($query) use ($group_id) {
             $query->where('group_id', '=', $group_id)->whereStatus('Added');
         })->orderBy('sort_name')->get();
 
@@ -1682,7 +1682,7 @@ class PersonController extends Controller
         {
             $this->authorize('show-contact');
 
-            $persons = \App\Contact::with('relationships', 'address_primary', 'captain_events')->whereHas('relationships', function ($query) use ($relationship_type_id) {
+            $persons = \App\Contact::with('relationships', 'address_primary', 'ambassador_events')->whereHas('relationships', function ($query) use ($relationship_type_id) {
                 $query->where('relationship_type_id', '=', $relationship_type_id)->whereIsActive(1);
             })->orderBy('sort_name')->get();
 

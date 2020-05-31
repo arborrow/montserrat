@@ -43,9 +43,9 @@ class RolesTableSeeder extends Seeder
             ],
             3 => [
                 'id' => 4,
-                'name' => 'captain',
+                'name' => 'ambassador',
                 'display_name' => 'Captian',
-                'description' => 'Can perform captain related duties',
+                'description' => 'Can perform ambassador related duties',
                 'created_at' => '2016-02-11 21:00:00',
                 'updated_at' => '2016-02-11 21:00:00',
                 'deleted_at' => null,

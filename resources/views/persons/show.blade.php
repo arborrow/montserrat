@@ -28,7 +28,7 @@
             <div class="col-12 mt-2">
                 @can('show-group')
                 @if ($person->is_board_member) <span><a href={{ action('PersonController@boardmembers') }}>{!! Html::image('images/board.png', 'Board Members Group',array('title'=>"Board Members Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
-                @if ($person->is_captain) <span><a href={{ action('PersonController@captains') }}>{!! Html::image('images/captain.png', 'Ambassador Group',array('title'=>"Captains Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
+                @if ($person->is_ambassador) <span><a href={{ action('PersonController@ambassadors') }}>{!! Html::image('images/ambassador.png', 'Ambassador Group',array('title'=>"Ambassadors Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
                 @if ($person->is_staff) <span><a href={{ action('PersonController@staff') }}>{!! Html::image('images/employee.png', 'Staff Group',array('title'=>"Employees Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
                 @if ($person->is_steward) <span><a href={{ action('PersonController@stewards') }}>{!! Html::image('images/steward.png', 'Steward Group',array('title'=>"Stewards Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
                 @if ($person->is_volunteer) <span><a href={{ action('PersonController@volunteers') }}>{!! Html::image('images/volunteer.png', 'Volunteers Group',array('title'=>"Volunteers Group",'class' => 'btn btn-outline-dark')) !!}</a></span> @endIf
@@ -142,7 +142,8 @@
                 <div><h3>Phone(s)</h3>
                     @foreach($person->phones as $phone)
                         @if(!empty($phone->phone))
-                            <span class="font-weight-bold">{{$phone->location->display_name}} - {{$phone->phone_type}}: </span>{{$phone->phone}}{{$phone->phone_extension}}
+                            <span class="font-weight-bold">{{$phone->location->display_name}} - {{$phone->phone_type}}: </span>
+                            <a href="tel:{{$phone->phone}}{{$phone->phone_extension}}">{{$phone->phone}}{{$phone->phone_extension}}</a>
                             <br>
                         @endif
                     @endforeach
@@ -290,7 +291,7 @@
                 <h2>Retreat Participation ({{$registrations->count()}})</h2>
                 @foreach($registrations as $registration)
                     <div class="p-3 mb-2 alert rounded {{ $registration->canceled_at ? 'alert-warning' : 'alert-success'}}">
-                        {!!$registration->event_link!!} ({{date('F j, Y', strtotime($registration->retreat_start_date))}} - {{date('F j, Y', strtotime($registration->retreat_end_date))}}) - {{$registration->participant_role_name}} ({{$registration->participant_status}})
+                        {!!$registration->event_link!!} ({{date('F j, Y', strtotime($registration->retreat_start_date))}} - {{date('F j, Y', strtotime($registration->retreat_end_date))}}) - <u>{{$registration->participant_role_name}}</u> ({{$registration->participant_status}})
                         <a href="{{ url('registration/'.$registration->id) }}">
                             View Registration
                         </a>

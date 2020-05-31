@@ -155,7 +155,7 @@ Route::prefix('person')->group(function () {
     Route::get('assistants', 'PersonController@assistants')->name('assistants');
     Route::get('bishops', 'PersonController@bishops')->name('bishops');
     Route::get('boardmembers', 'PersonController@boardmembers')->name('boardmembers');
-    Route::get('captains', 'PersonController@captains')->name('captains');
+    Route::get('ambassadors', 'PersonController@ambassadors')->name('ambassadors');
     Route::get('deacons', 'PersonController@deacons')->name('deacons');
     Route::get('directors', 'PersonController@directors')->name('directors');
     Route::get('{id}/envelope', 'PersonController@envelope')->name('envelope');

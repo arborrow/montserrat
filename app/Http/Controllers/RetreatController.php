@@ -9,6 +9,7 @@ use App\Registration;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use Spatie\GoogleCalendar\Event;
+use Auth;
 use Illuminate\Http\Request;
 
 class RetreatController extends Controller
@@ -26,27 +27,39 @@ class RetreatController extends Controller
     public function index()
     {
         $this->authorize('show-retreat');
+        // do once in controller to reduce excessive number of checks on blade
+        $permission_checks = ['show-retreat','show-event-contract','show-event-schedule','show-event-evaluation'];
+        foreach ($permission_checks as $permission_check => $permission) {
+          $results[$permission] = Auth::user()->can($permission);
+        }
+        //dd($permission_checks, $results);
+
         $defaults = [];
         $defaults['type'] = 'Retreat';
         $event_types = \App\EventType::whereIsActive(1)->orderBy('name')->pluck('id', 'name');
 
-        $retreats = \App\Retreat::whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc')->with('retreatmasters.prefix', 'retreatmasters.suffix', 'innkeeper.prefix', 'innkeeper.suffix', 'assistant.prefix', 'assistant.suffix')->get();
-        $oldretreats = \App\Retreat::whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date', 'desc')->with('retreatmasters', 'innkeeper', 'assistant')->paginate(100);
+        $retreats = \App\Retreat::whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->withCount('retreatants')->get();
+  //      dd($retreats);
+        $oldretreats = \App\Retreat::whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date', 'desc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->withCount('retreatants')->paginate(100);
 
-        return view('retreats.index', compact('retreats', 'oldretreats', 'defaults', 'event_types'));   //
+        return view('retreats.index', compact('retreats', 'oldretreats', 'defaults', 'event_types','results'));   //
     }
 
     public function index_type($event_type_id)
     {
         $this->authorize('show-retreat');
+        $permission_checks = ['show-retreat','show-event-contract','show-event-schedule','show-event-evaluation'];
+        foreach ($permission_checks as $permission_check => $permission) {
+          $results[$permission] = Auth::user()->can($permission);
+        }
         $event_types = \App\EventType::whereIsActive(1)->orderBy('name')->pluck('id', 'name');
         $event_type = \App\EventType::findOrFail($event_type_id);
         $defaults = [];
         $defaults['type'] = $event_type->label;
-        $retreats = \App\Retreat::type($event_type_id)->whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc')->with('retreatmasters', 'innkeeper', 'assistant')->get();
-        $oldretreats = \App\Retreat::type($event_type_id)->whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date', 'desc')->with('retreatmasters', 'innkeeper', 'assistant')->paginate(100);
+        $retreats = \App\Retreat::type($event_type_id)->whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->get();
+        $oldretreats = \App\Retreat::type($event_type_id)->whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date', 'desc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->paginate(100);
 
-        return view('retreats.index', compact('retreats', 'oldretreats', 'defaults', 'event_types'));   //
+        return view('retreats.index', compact('retreats', 'oldretreats', 'defaults', 'event_types','results'));   //
     }
 
     /**
@@ -58,10 +71,10 @@ class RetreatController extends Controller
     {
         $this->authorize('create-retreat');
 
-        $retreat_house = \App\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b', 'retreat_captains.contact_b')->findOrFail(config('polanco.self.id'));
+        $retreat_house = \App\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b', 'retreat_ambassadors.contact_b')->findOrFail(config('polanco.self.id'));
         $event_types = \App\EventType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
 
-        // initialize null arrays for innkeeper, assistant, director and captain dropdowns
+        // initialize null arrays for innkeeper, assistant, director and ambassador dropdowns
         $i = [];
         $a = [];
         $d = [];
@@ -91,14 +104,14 @@ class RetreatController extends Controller
             $a = [0=>'N/A'] + $a;
         }
 
-        foreach ($retreat_house->retreat_captains as $captain) {
-            $c[$captain->contact_id_b] = $captain->contact_b->sort_name;
+        foreach ($retreat_house->retreat_ambassadors as $ambassador) {
+            $c[$ambassador->contact_id_b] = $ambassador->contact_b->sort_name;
         }
         if (! null == $c) {
             asort($c);
             $c = [0=>'N/A'] + $c;
         }
-        //dd($retreat_house);
+        // dd($d,$i,$a,$c);
         return view('retreats.create', compact('d', 'i', 'a', 'c', 'event_types'));
     }
 
@@ -126,30 +139,50 @@ class RetreatController extends Controller
         // amount will be related to default_fee_id?
         //$retreat->amount = $request->input('amount');
         // attending should be calculated based on retreat participants
-        // TODO: consider making Directors, Innkeepers, and Assistants participant roles and adding them by default to retreats
         //$retreat->attending = $request->input('attending');
         //$retreat->year = $request->input('year');
-        $retreat->innkeeper_id = $request->input('innkeeper_id');
-        $retreat->assistant_id = $request->input('assistant_id');
 
         if (null !== (config('settings.google_calendar_id'))) {
             $calendar_event = new Event;
             $calendar_event->id = uniqid();
             $retreat->calendar_id = $calendar_event->id;
         }
-
+        $directors = $request->input('directors');
+        $innkeepers = $request->input('innkeepers');
+        $assistants = $request->input('assistants');
+        $ambassadors = $request->input('ambassadors');
+        // dd($directors, $innkeepers, $assistants);
         $retreat->save();
 
-        if (empty($request->input('directors')) or in_array(0, $request->input('directors'))) {
-            $retreat->retreatmasters()->detach();
+        if (empty($directors) or (in_array(0, $directors) && sizeof($directors)==1)) {
+            // nothing to store
         } else {
-            $retreat->retreatmasters()->sync($request->input('directors'));
+            foreach ($directors as $director) {
+                $this->add_participant($director, $retreat->id, config('polanco.participant_role_id.retreat_director'));            }
         }
 
-        if (empty($request->input('captains')) or in_array(0, $request->input('captains'))) {
-            $retreat->captains()->detach();
+        if (empty($innkeepers) or (in_array(0, $innkeepers) && sizeof($innkeepers)==1)) {
+          // nothing to store
         } else {
-            $retreat->captains()->sync($request->input('captains'));
+            foreach ($innkeepers as $innkeeper) {
+                $this->add_participant($innkeeper, $retreat->id, config('polanco.participant_role_id.retreat_innkeeper'));
+            }
+        }
+
+        if (empty($assistants) or (in_array(0, $assistants) && sizeof($assistants)==1)) {
+          // nothing to store
+        } else {
+            foreach ($assistants as $assistant) {
+                $this->add_participant($assistant, $retreat->id, config('polanco.participant_role_id.retreat_assistant'));
+            }
+        }
+
+        if (empty($ambassadors) or (in_array(0, $ambassadors) && sizeof($ambassadors)==1)) {
+          // nothing to store
+        } else {
+            foreach ($ambassadors as $ambassador) {
+                $this->add_participant($ambassador, $retreat->id, config('polanco.participant_role_id.ambassador'));
+            }
         }
 
         if (null !== (config('settings.google_calendar_id'))) {
@@ -166,6 +199,28 @@ class RetreatController extends Controller
     }
 
     /**
+    * Add a participant to an event with a given participant role
+    * @param int $contact_id
+    * @param int $event_id
+    * @param int $participant_role_id
+    * @return boolean
+    */
+    public function add_participant ($contact_id, $event_id, $participant_role_id) {
+        if ($contact_id > 0 && $event_id > 0) { //avoid inserting bad data
+            $new_director = \App\Registration::updateOrCreate([
+              'contact_id' => $contact_id,
+              'event_id' => $event_id,
+              'status_id' => config('polanco.registration_status_id.registered'),
+              'role_id' => $participant_role_id,
+            ]);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -174,7 +229,7 @@ class RetreatController extends Controller
     public function show($id, $status = null)
     {
         $this->authorize('show-retreat');
-        $retreat = \App\Retreat::with('retreatmasters', 'innkeeper', 'assistant', 'captains')->findOrFail($id);
+        $retreat = \App\Retreat::with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact', 'ambassadors.contact')->findOrFail($id);
         $attachments = \App\Attachment::whereEntity('event')->whereEntityId($id)->whereFileTypeId(config('polanco.file_type.event_attachment'))->get();
 
         switch ($status) {
@@ -233,14 +288,14 @@ class RetreatController extends Controller
                  // dd($registrations);
                 break;
         }
-
+        //dd($retreat);
         return view('retreats.show', compact('retreat', 'registrations', 'status', 'attachments')); //
     }
 
     public function show_waitlist($id)
     {
         $this->authorize('show-retreat');
-        $retreat = \App\Retreat::with('retreatmasters', 'innkeeper', 'assistant', 'captains')->findOrFail($id);
+        $retreat = \App\Retreat::with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact', 'ambassadors.contact')->findOrFail($id);
         $registrations = \App\Registration::where('event_id', '=', $id)->whereStatusId(config('polanco.registration_status_id.waitlist'))->with('retreatant.parish')->orderBy('register_date', 'ASC')->get();
 
         return view('retreats.waitlist', compact('retreat', 'registrations')); //
@@ -249,7 +304,7 @@ class RetreatController extends Controller
     public function get_event_by_id_number($id_number, $status = null)
     {
         $this->authorize('show-retreat');
-        $retreat = \App\Retreat::with('retreatmasters', 'innkeeper', 'assistant', 'captains')->whereIdnumber($id_number)->firstOrFail();
+        $retreat = \App\Retreat::with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact', 'ambassadors.contact')->whereIdnumber($id_number)->firstOrFail();
 
         return $this->show($retreat->id, $status);
     }
@@ -269,92 +324,87 @@ class RetreatController extends Controller
     {
         $this->authorize('update-retreat');
         //get this retreat's information
-        $retreat = \App\Retreat::with('retreatmasters', 'assistant', 'innkeeper', 'captains')->findOrFail($id);
+        $retreat = \App\Retreat::with('retreatmasters.contact', 'assistants.contact', 'innkeepers.contact', 'ambassadors.contact')->findOrFail($id);
         $event_types = \App\EventType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
+        // dd($retreat);
         $is_active[0] = 'Cancelled';
         $is_active[1] = 'Active';
 
         //create lists of retreat directors, innkeepers, and assistants from relationship to retreat house
-        $retreat_house = \App\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b')->findOrFail(config('polanco.self.id'));
+        $retreat_house = \App\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b','retreat_ambassadors.contact_b')->findOrFail(config('polanco.self.id'));
 
-        // initialize null arrays for innkeeper, assistant, director and captain dropdowns
-        $i = [];
-        $a = [];
-        $d = [];
-        $c = [];
+        // initialize null arrays for innkeeper, assistant, director and ambassador dropdowns
+
+        $options = ['innkeepers'=>[],'directors'=>[],'assistants'=>[],'ambassadors'=>[]];
 
         foreach ($retreat_house->retreat_innkeepers as $innkeeper) {
-            $i[$innkeeper->contact_id_b] = $innkeeper->contact_b->sort_name;
+            $options['innkeepers'][$innkeeper->contact_id_b] = $innkeeper->contact_b->sort_name;
         }
-        if (! null == $i) {
-            asort($i);
-            $i = [0=>'N/A'] + $i;
+        if (! null == $options['innkeepers']) {
+            asort($options['innkeepers']);
+            $options['innkeepers'] = [0=>'N/A'] + $options['innkeepers'];
         }
 
         foreach ($retreat_house->retreat_directors as $director) {
-            $d[$director->contact_id_b] = $director->contact_b->sort_name;
+            $options['directors'][$director->contact_id_b] = $director->contact_b->sort_name;
         }
-        if (! null == $d) {
-            asort($d);
-            $d = [0=>'N/A'] + $d;
+        if (! null == $options['directors']) {
+            asort($options['directors']);
+            $options['directors'] = [0=>'N/A'] + $options['directors'];
         }
 
         foreach ($retreat_house->retreat_assistants as $assistant) {
-            $a[$assistant->contact_id_b] = $assistant->contact_b->sort_name;
+            $options['assistants'][$assistant->contact_id_b] = $assistant->contact_b->sort_name;
         }
-        if (! null == $a) {
-            asort($a);
-            $a = [0=>'N/A'] + $a;
-        }
-
-        foreach ($retreat_house->retreat_captains as $captain) {
-            $c[$captain->contact_id_b] = $captain->contact_b->sort_name;
-        }
-        if (! null == $c) {
-            asort($c);
-            $c = [0=>'N/A'] + $c;
+        if (! null == $options['assistants']) {
+            asort($options['assistants']);
+            $options['assistants'] = [0=>'N/A'] + $options['assistants'];
         }
 
-        /* prevent losing former retreatmasters, innkeeper, assistant, or captain when editing retreat
-         * loop through currently assigned retreatmasters, innkeeper, assistant, and captain assignments
+        foreach ($retreat_house->retreat_ambassadors as $ambassador) {
+            $options['ambassadors'][$ambassador->contact_id_b] = $ambassador->contact_b->sort_name;
+        }
+        if (! null == $options['ambassadors']) {
+            asort($options['ambassadors']);
+            $options['ambassadors'] = [0=>'N/A'] + $options['ambassadors'];
+        }
+
+        /* prevent losing former retreatmasters, innkeeper, assistant, or ambassador when editing retreat
+         * loop through currently assigned retreatmasters, innkeeper, assistant, and ambassador assignments
          * verify that they are currently in appropriate array as defined above (d, i, a or c)
          * if not found in the array then add them and resort the array adding 'former' to the end of their name
          * so that they visually standout on the dropdown list as being a former member of that group
          */
 
         foreach ($retreat->retreatmasters as $director) {
-            if (! Arr::has($d, $director->id)) {
-                $d[$director->id] = $director->sort_name.' (former)';
-                asort($d);
-                // dd($director->sort_name.' is not currently a retreat director: '.$director->id, $d);
+            if (! Arr::has($options['directors'], $director->contact->id)) {
+                $options['directors'][$director->contact->id] = $director->contact->sort_name.' (former)';
+                asort($options['directors']);
             }
         }
 
-        if (isset($retreat->innkeeper->id)) {
-            if (! Arr::has($i, $retreat->innkeeper->id)) {
-                $i[$retreat->innkeeper->id] = $retreat->innkeeper->sort_name.' (former)';
-                asort($i);
-                // dd($retreat->innkeeper->sort_name.' is not currently an innkeeper: '.$retreat->innkeeper->id, $i);
+        foreach ($retreat->innkeepers as $innkeeper) {
+            if (! Arr::has($options['innkeepers'], $innkeeper->contact->id)) {
+                $options['innkeepers'][$innkeeper->contact->id] = $innkeeper->contact->sort_name.' (former)';
+                asort($options['innkeepers']);
             }
         }
 
-        if (isset($retreat->assistant->id)) {
-            if (! Arr::has($a, $retreat->assistant->id)) {
-                $a[$retreat->assistant->id] = $retreat->assistant->sort_name.' (former)';
-                asort($a);
-                // dd($retreat->assistant->sort_name.' is not currently an assistant: '.$retreat->assistant->id, $a);
+        foreach ($retreat->assistants as $assistant) {
+            if (! Arr::has($options['assistants'], $assistant->contact->id)) {
+                $options['assistants'][$assistant->contact->id] = $assistant->contact->sort_name.' (former)';
+                asort($options['assistants']);
             }
         }
 
-        foreach ($retreat->captains as $captain) {
-            if (! Arr::has($c, $captain->id)) {
-                $c[$captain->id] = $captain->sort_name.' (former)';
-                asort($c);
-                // dd($captain->sort_name.' is not currently a captain: '.$captain->id, $c);
+        foreach ($retreat->ambassadors as $ambassador) {
+            if (! Arr::has($options['ambassadors'], $ambassador->contact->id)) {
+                $options['ambassadors'][$ambassador->contact->id] = $ambassador->contact->sort_name.' (former)';
+                asort($options['ambassadors']);
             }
         }
 
-        return view('retreats.edit', compact('retreat', 'd', 'i', 'a', 'c', 'event_types', 'is_active'));
+        return view('retreats.edit', compact('retreat', 'options', 'event_types', 'is_active'));
     }
 
     /**
@@ -376,14 +426,7 @@ class RetreatController extends Controller
         $retreat->description = $request->input('description');
         $retreat->event_type_id = $request->input('event_type');
         $retreat->is_active = $request->input('is_active');
-        //TODO: Figure out how to use event type or some other way of tracking the silent retreats, possibly silent boolean field in event table
-        //$retreat->silent = $request->input('silent');
-        //$retreat->amount = $request->input('amount');
-        // attending field not needed - will calculate with count on registrations
-        //$retreat->attending = $request->input('attending');
-        //$retreat->year = $request->input('year');
-        $retreat->innkeeper_id = $request->input('innkeeper_id');
-        $retreat->assistant_id = $request->input('assistant_id');
+
         if (null !== $request->input('calendar_id')) {
             $retreat->calendar_id = $request->input('calendar_id');
         }
@@ -419,16 +462,55 @@ class RetreatController extends Controller
             $attachment->update_attachment($request->file('event_attachment'), 'event', $retreat->id, 'event_attachment', $description);
         }
 
-        if (empty($request->input('directors')) or in_array(0, $request->input('directors'))) {
-            $retreat->retreatmasters()->detach();
-        } else {
-            $retreat->retreatmasters()->sync($request->input('directors'));
+        $directors = $request->input('directors');
+        $existing_directors = $retreat->retreatmasters()->pluck('contact_id');
+        $removed_directors = $existing_directors->diff($directors);
+
+        if (!empty($directors)) {
+            foreach ($directors as $director) {
+                $this->add_participant($director, $retreat->id, config('polanco.participant_role_id.retreat_director'));
+            }
         }
-        if (empty($request->input('captains')) or in_array(0, $request->input('captains'))) {
-            $retreat->captains()->detach();
-        } else {
-            $retreat->captains()->sync($request->input('captains'));
+        if (!$removed_directors->isEmpty()) {
+            $retreat->retreatmasters()->whereIn('contact_id',$removed_directors)->delete();
         }
+
+        $innkeepers = $request->input('innkeepers');
+        $existing_innkeepers = $retreat->innkeepers()->pluck('contact_id');
+        $removed_innkeepers = $existing_innkeepers->diff($innkeepers);
+        if (!empty($innkeepers)) {
+            foreach ($innkeepers as $innkeeper) {
+               $this->add_participant($innkeeper, $retreat->id, config('polanco.participant_role_id.retreat_innkeeper'));
+             }
+         }
+        if (!$removed_innkeepers->isEmpty()) {
+            $retreat->innkeepers()->whereIn('contact_id',$removed_innkeepers)->delete();
+        }
+
+        $assistants = $request->input('assistants');
+        $existing_assistants = $retreat->assistants()->pluck('contact_id');
+        $removed_assistants = $existing_assistants->diff($assistants);
+        if (!empty($assistants)) {
+            foreach ($assistants as $assistant) {
+               $this->add_participant($assistant, $retreat->id, config('polanco.participant_role_id.retreat_assistant'));
+             }
+         }
+        if (!$removed_assistants->isEmpty()) {
+            $retreat->assistants()->whereIn('contact_id',$removed_assistants)->delete();
+        }
+
+        $ambassadors = $request->input('ambassadors');
+        $existing_ambassadors = $retreat->ambassadors()->pluck('contact_id');
+        $removed_ambassadors = $existing_ambassadors->diff($ambassadors);
+        if (!empty($ambassadors)) {
+            foreach ($ambassadors as $ambassador) {
+               $this->add_participant($ambassador, $retreat->id, config('polanco.participant_role_id.ambassador'));
+             }
+         }
+        if (!$removed_ambassadors->isEmpty()) {
+            $retreat->ambassadors()->whereIn('contact_id',$removed_ambassadors)->delete();
+        }
+
         if (! empty($retreat->calendar_id)) {
             //dd($retreat->calendar_id);
             $calendar_event = Event::find($retreat->calendar_id);
@@ -483,7 +565,7 @@ class RetreatController extends Controller
     {
         $this->authorize('update-registration');
         //get this retreat's information
-        $retreat = \App\Retreat::with('retreatmasters', 'assistant', 'innkeeper', 'captains')->findOrFail($id);
+        $retreat = \App\Retreat::with('retreatmasters.contact', 'assistants.contact', 'innkeepers.contact', 'ambassadors.contact')->findOrFail($id);
         $registrations = \App\Registration::where('event_id', '=', $id)->with('retreatant.parish')->orderBy('register_date', 'DESC')->get();
         $rooms = \App\Room::orderby('name')->pluck('name', 'id');
         $rooms->prepend('Unassigned', 0);

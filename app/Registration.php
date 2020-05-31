@@ -18,6 +18,7 @@ class Registration extends Model
         'arrived_at',
         'departed_at',
     ];
+    protected $fillable = ['contact_id', 'event_id', 'status_id', 'role_id'];
 
     public function getAttendanceConfirmDateTextAttribute()
     {
@@ -84,7 +85,7 @@ class Registration extends Model
             return 'Registered:'.$this->register_date;
         }
 
-        return 'Unspecified status';
+        return $this->status_name;
     }
 
     public function getStatusNameAttribute()
@@ -93,6 +94,13 @@ class Registration extends Model
             return $this->participant_status_type->name;
         } else {
             return 'Unassigned status';
+        }
+    }
+    public function getContactLinkFullNameAttribute() {
+        if (! empty($this->contact)) {
+            return $this->contact->contact_link_full_name;
+        } else {
+            return 'Unknown contact';
         }
     }
 

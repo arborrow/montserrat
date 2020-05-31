@@ -48,7 +48,7 @@ return [
         'retreat_innkeeper' => '21',
         'retreatant' => '22',
         'donor' => '23',
-        'captain' => '24',
+        'ambassador' => '24',
         'priest' => '25',
         'deacon' => '26',
         'community' => '27',
@@ -154,7 +154,7 @@ return [
         'provincial' => '8',
         'superior' => '9',
         'pastor' => '10',
-        'captain' => '11',
+        'ambassador' => '11',
         'board' => '12',
         'staff' => '13',
         'volunteer' => '14',
@@ -164,7 +164,7 @@ return [
     ],
 
     'participant_role_id' => [
-        'captain' => '11',
+        'ambassador' => '11',
         'retreatant' => '5',
         'retreat_director' => '8',
         'retreat_innkeeper' => '9',
@@ -207,7 +207,7 @@ return [
     // when using the database seeder the first contact created is the self organization
     // name is used by database seeder to create self contact record
     'self' => [
-        'id' => env('SELF_CONTACT_ID', 1),
+        'id' => env('SELF_CONTACT_ID', 620),
         'name' => env('SELF_NAME', 'Montserrat Jesuit Retreat House'),
     ],
 

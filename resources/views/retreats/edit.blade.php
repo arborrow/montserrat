@@ -38,21 +38,21 @@
                         </div>
                         <div class="col-12 col-lg-4">
                             {!! Form::label('directors','Director(s):')  !!}
-                            {!! Form::select('directors[]', $d, $retreat->retreatmasters->pluck('id')->toArray(), ['id'=>'directors','class' => 'form-control select2','multiple' => 'multiple']) !!}
+                            {!! Form::select('directors[]', $options['directors'], $retreat->retreatmasters->pluck('contact.id'), ['id'=>'directors','class' => 'form-control select2','multiple' => 'multiple']) !!}
                         </div>
                         <div class="col-12 col-lg-4">
-                            {!! Form::label('captains', 'Ambassador(s):') !!}
-                            {!! Form::select('captains[]', $c, $retreat->captains->pluck('id')->toArray(), ['id'=>'captains','class' => 'form-control select2','multiple' => 'multiple']) !!}
+                            {!! Form::label('ambassadors', 'Ambassador(s):') !!}
+                            {!! Form::select('ambassadors[]', $options['ambassadors'], $retreat->ambassadors->pluck('contact.id'), ['id'=>'ambassadors','class' => 'form-control select2','multiple' => 'multiple']) !!}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12 col-lg-4">
-                            {!! Form::label('innkeeper_id', 'Innkeeper:') !!}
-                            {!! Form::select('innkeeper_id', $i, $retreat->innkeeper_id, ['class' => 'form-control']) !!}
+                            {!! Form::label('innkeepers', 'Innkeeper:') !!}
+                            {!! Form::select('innkeepers[]', $options['innkeepers'], $retreat->innkeepers->pluck('contact.id'), ['id'=>'innkeepers','class' => 'form-control select2','multiple' => 'multiple']) !!}
                         </div>
                         <div class="col-12 col-lg-4">
-                            {!! Form::label('assistant_id', 'Assistant:') !!}
-                            {!! Form::select('assistant_id', $a, $retreat->assistant_id, ['class' => 'form-control']) !!}
+                            {!! Form::label('assistants', 'Assistant:') !!}
+                            {!! Form::select('assistants[]', $options['assistants'], $retreat->assistants->pluck('contact.id'), ['id'=>'assistants','class' => 'form-control select2','multiple' => 'multiple']) !!}
                         </div>
                         <div class="col-12 col-lg-4">
                                 {!! Form::label('event_type', 'Type: ') !!}

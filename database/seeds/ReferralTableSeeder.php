@@ -82,7 +82,7 @@ class ReferralTableSeeder extends Seeder
             ],
             6 => [
                 'id' => 7,
-                'name' => 'Captain',
+                'name' => 'Ambassador',
                 'is_active' => 1,
                 'is_default' => 0,
                 'weight' => 7,

@@ -44,8 +44,8 @@
                 <th>Title</th>
                 <th>Starts - Ends</th>
                 <th>Director(s)</th>
-                <th>Innkeeper</th>
-                <th>Assistant</th>
+                <th>Innkeeper(s)</th>
+                <th>Assistant(s)</th>
                 <th># Attending</th>
                 <th>Attachments</th>
             </tr>
@@ -64,36 +64,40 @@
                     @if ($retreat->retreatmasters->isEmpty())
                     N/A
                     @else
-                        @foreach($retreat->retreatmasters as $rm)
-                            {!!$rm->contact_link_full_name!!}<br />
+                        @foreach($retreat->retreatmasters as $retreatmaster)
+                            {!!$retreatmaster->contact_link_full_name!!}<br />
                         @endforeach
                     @endif
                 </td>
                 <td>
-                    @if ($retreat->innkeeper_id > 0 && !empty($retreat->innkeeper))
-                        {!!$retreat->innkeeper->contact_link_full_name!!}
-                    @else
-                        N/A
-                    @endIf
+                  @if ($retreat->innkeepers->isEmpty())
+                  N/A
+                  @else
+                      @foreach($retreat->innkeepers as $innkeeper)
+                          {!!$innkeeper->contact_link_full_name!!}<br />
+                      @endforeach
+                  @endif
                 </td>
                 <td>
-                    @if ($retreat->assistant_id > 0 && !empty($retreat->assistant))
-                        {!!$retreat->assistant->contact_link_full_name!!}
-                    @else
-                        N/A
-                    @endIf
+                  @if ($retreat->assistants->isEmpty())
+                  N/A
+                  @else
+                      @foreach($retreat->assistants as $assistant)
+                          {!!$assistant->contact_link_full_name!!}<br />
+                      @endforeach
+                  @endif
                 </td>
-                <td><a href="{{url('retreat/'.$retreat->id.'#registrations')}}">{{ $retreat->retreatant_count}}</a></td>
+                <td><a href="{{url('retreat/'.$retreat->id.'#registrations')}}"> {{ $retreat->retreatants_count }}</a></td>
                 <td>
-                    @can('show-event-contract')
+                    @if ($results['show-event-contract'])
                         {!!$retreat->retreat_contract_link!!}
-                    @endCan
-                    @can('show-event-schedule')
+                    @endIf
+                    @if ($results['show-event-schedule'])
                         {!!$retreat->retreat_schedule_link!!}
-                    @endCan
-                    @can('show-event-evaluation')
+                    @endIf
+                    @if($results['show-event-evaluation'])
                         {!!$retreat->retreat_evaluations_link!!}
-                    @endCan
+                    @endIf
                 </td>
             </tr>
             @endforeach
@@ -145,44 +149,43 @@
                     <td>{{ $oldretreat->title }}</td>
                     <td>{{ date('M j, Y', strtotime($oldretreat->start_date)) }} - {{ date('M j, Y', strtotime($oldretreat->end_date)) }}</td>
                     <td>
-                    @if ($oldretreat->retreatmasters->isEmpty())
+                        @if ($oldretreat->retreatmasters->isEmpty())
                         N/A
-                    @else
-                        @foreach($oldretreat->retreatmasters as $rm)
-                            @if (!empty($rm->display_name))
-                                {!!$rm->contact_link_full_name!!}
-                            @else
-                                N/A
-                            @endIf
-                        @endforeach
-                    @endif
-                    </td>
-
-                    <td>
-                        @if (!empty($oldretreat->innkeeper->display_name))
-                            {!!$oldretreat->innkeeper->contact_link_full_name!!}
                         @else
-                            N/A
-                        @endIf
+                            @foreach($oldretreat->retreatmasters as $retreatmaster)
+                                {!!$retreatmaster->contact->contact_link_full_name!!}<br />
+                            @endforeach
+                        @endif
                     </td>
                     <td>
-                        @if (!empty($oldretreat->assistant->display_name))
-                            {!!$oldretreat->assistant->contact_link_full_name!!}
-                        @else
-                            N/A
-                        @endIf
+                      @if ($oldretreat->innkeepers->isEmpty())
+                      N/A
+                      @else
+                          @foreach($oldretreat->innkeepers as $innkeeper)
+                              {!!$innkeeper->contact->contact_link_full_name!!}<br />
+                          @endforeach
+                      @endif
                     </td>
-                    <td><a href="{{url('retreat/'.$oldretreat->id.'#registrations')}}">{{ $oldretreat->retreatant_count}}</a></td>
                     <td>
-                        @can('show-event-contract')
+                      @if ($oldretreat->assistants->isEmpty())
+                      N/A
+                      @else
+                          @foreach($oldretreat->assistants as $assistant)
+                              {!!$assistant->contact->contact_link_full_name!!}<br />
+                          @endforeach
+                      @endif
+                    </td>
+                    <td><a href="{{url('retreat/'.$oldretreat->id.'#registrations')}}">{{ $oldretreat->retreatants_count}}</a></td>
+                    <td>
+                        @if($results['show-event-contract'])
                             {!!$oldretreat->retreat_contract_link!!}
-                        @endCan
-                        @can('show-event-schedule')
+                        @endIf
+                        @if($results['show-event-schedule'])
                             {!!$oldretreat->retreat_schedule_link!!}
-                        @endCan
-                        @can('show-event-evaluation')
+                        @endIf
+                        @if($results['show-event-evaluation'])
                             {!!$oldretreat->retreat_evaluations_link!!}
-                        @endCan
+                        @endIf
                     </td>
                     </tr>
                 @endforeach

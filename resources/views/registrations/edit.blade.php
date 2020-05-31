@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="col-12 col-md-4">
                     {!! Form::label('register_date', 'Registered') !!}
-                    {!! Form::text('register_date', $registration->register_date, ['class'=>'form-control flatpickr-date']) !!}
+                    {!! Form::text('register_date', isset($registration->register_date) ? $registration->register_date : now() , ['class'=>'form-control flatpickr-date']) !!}
                 </div>
                 <div class="col-12 col-md-4">
                     {!! Form::label('source', 'Registration from:') !!}

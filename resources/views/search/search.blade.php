@@ -331,8 +331,8 @@
                         <div class="form-group">
                             {!! Form::label('is_retreatant', 'Retreatant:', ['class' => ''])  !!}
                             {!! Form::checkbox('is_retreatant', 1, 0,['class' => 'col-md-1']) !!}
-                            {!! Form::label('is_captain', 'Captain:', ['class' => ''])  !!}
-                            {!! Form::checkbox('is_captain', 1, 0,['class' => 'col-md-1']) !!}
+                            {!! Form::label('is_ambassador', 'Ambassador:', ['class' => ''])  !!}
+                            {!! Form::checkbox('is_ambassador', 1, 0,['class' => 'col-md-1']) !!}
                         </div><div class="clearfix"> </div>
 
                         <div class="form-group">

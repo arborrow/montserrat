@@ -83,7 +83,7 @@ class UpdatePersonRequestTest extends TestCase
             'is_assistant' => 'boolean|nullable',
             'is_bishop' => 'boolean|nullable',
             'is_board' => 'boolean|nullable',
-            'is_captain' => 'boolean|nullable',
+            'is_ambassador' => 'boolean|nullable',
             'is_deacon' => 'boolean|nullable',
             'is_deceased' => 'boolean|nullable',
             'is_donor' => 'boolean|nullable',

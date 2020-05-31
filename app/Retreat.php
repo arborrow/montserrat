@@ -51,9 +51,9 @@ class Retreat extends Model
         return $this->retreatants_waitlist->count();
     }
 
-    public function assistant()
+    public function assistants()
     {   // TODO: evaluate whether the assumption that this is an individual makes a difference, currently retreat factory will force individual to avoid undefined variable on retreat.show
-        return $this->belongsTo(Contact::class, 'assistant_id', 'id')->whereContactType(config('polanco.contact_type.individual'));
+        return $this->hasMany(Registration::class, 'event_id', 'id')->whereRoleId(config('polanco.participant_role_id.retreat_assistant'));
     }
 
     public function attachments()
@@ -61,16 +61,15 @@ class Retreat extends Model
         return $this->hasMany(Attachment::class, 'entity_id', 'id')->whereEntity('event');
     }
 
-    public function captains()
+    public function ambassadors()
     {
         // TODO: handle with participants of role Retreat Director or Master - be careful with difference between (registration table) retreat_id and (participant table) event_id
-        return $this->belongsToMany(Contact::class, 'captain_retreat', 'event_id', 'contact_id')->whereContactType(config('polanco.contact_type.individual'));
+        return $this->hasMany(Registration::class, 'event_id', 'id')->whereRoleId(config('polanco.participant_role_id.ambassador'));
     }
 
-    public function innkeeper()
+    public function innkeepers()
     {   // TODO: evaluate whether the assumption that this is an individual makes a difference, currently retreat factory will force individual to avoid undefined variable on retreat.show
-
-        return $this->belongsTo(Contact::class, 'innkeeper_id', 'id')->whereContactType(config('polanco.contact_type.individual'));
+        return $this->hasMany(Registration::class, 'event_id', 'id')->whereRoleId(config('polanco.participant_role_id.retreat_innkeeper'));
     }
 
     public function event_type()
@@ -81,7 +80,8 @@ class Retreat extends Model
     public function retreatmasters()
     {
         // TODO: handle with participants of role Retreat Director or Master - be careful with difference between (registration table) retreat_id and (participant table) event_id
-        return $this->belongsToMany(Contact::class, 'retreatmasters', 'retreat_id', 'person_id')->whereContactType(config('polanco.contact_type.individual'));
+        return $this->hasMany(Registration::class, 'event_id', 'id')->whereRoleId(config('polanco.participant_role_id.retreat_director'));
+
     }
 
     public function registrations()
@@ -91,7 +91,7 @@ class Retreat extends Model
 
     public function retreatants()
     {
-        return $this->registrations()->whereCanceledAt(null);
+        return $this->registrations()->whereCanceledAt(null)->whereRoleId(config('polanco.participant_role_id.retreatant'));
     }
 
     public function retreatants_waitlist()
