@@ -187,20 +187,27 @@ class Retreat extends Model
     {
         $team = '';
         $directors = $this->retreatmasters()->get();
-        //dd($directors);
-        foreach ($directors as $director) {
-            // dd($director);
-            $team .= $director->last_name.'(D) ';
-        }
-        $innkeeper = $this->innkeeper()->first();
-        //dd($innkeeper->last_name);
-        if (isset($innkeeper->last_name)) {
-            $team .= $innkeeper->last_name.'(I) ';
-        }
-        $assistant = $this->assistant()->first();
-        if (isset($assistant->last_name)) {
-            $team .= $assistant->last_name.'(A) ';
-        }
+        $innkeepers = $this->innkeepers()->get();
+        $assistants = $this->assistants()->get();
+	
+	foreach ($directors as $director) {
+	    if (!empty($director->contact->last_name)) {
+	        $team .= $director->contact->last_name.'(D) ';
+	    }
+	}
+
+	foreach ($innkeepers as $innkeeper) {
+	    if (!empty($innkeeper->contact->last_name)) {
+	        $team .= $innkeeper->contact->last_name.'(I) ';
+	    }
+	}
+
+	foreach ($assistants as $assistant) {
+	    if (!empty($assistant->contact->last_name)) {    
+	        $team .= $assistant->contact->last_name.'(A) ';
+	    }
+	}
+
 
         return $team;
     }
