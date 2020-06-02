@@ -17,17 +17,18 @@ Mark Vehslage <br />
 <i>Secretary Treasurer</i> <br /><br />
 
 Mary Del Olmo <br />
-Fr. Manuel Holguin <br />
+Fr. Holguin <br />
 John Luna <br />
 Paul Pederson <br />
 Richard Rolland <br />
 Jeannette Santos <br />
-Fr. Tim Thompson <br /><br />
+Fr. Thompson <br /><br />
 
 <div style="font-variant:small-caps"><strong>Jesuit Community</strong></div><br />
-Fr. Anthony Borrow, S.J.<br />
-Fr. Ron Gonzales, S.J.<br />
-Fr. Roy Joseph, S.J.<br />
+Fr. Rauschuber, S.J.<br />
+Fr. Gonzales, S.J.<br />
+Fr. Joseph, S.J.<br />
+Fr. Vo, S.J.<br />
         </td>
         <td class="main" style="padding-right: 50px; padding-left:20px; padding-top:20px;">
             <div style="position:absolute; right: 0px; padding-right:60px;">{{date('F d, Y')}}</div><br /><br />
@@ -53,7 +54,7 @@ we now offer it to you: “May it ever please the Lord to recompense and
 repay you with his most holy consolations and spiritual blessings and eternal
 peace.”<br /><br />
 Peace,<br /><br /><br /><br />
-Fr. Anthony Borrow, S.J.<br />
+Fr. Anthony Rauschuber, S.J.<br />
 Director <br />
         </td>
     </tr>

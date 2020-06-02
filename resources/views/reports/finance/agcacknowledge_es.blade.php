@@ -18,16 +18,18 @@ Mark Vehslage <br />
 <i>Secretario/Tesoro</i> <br /><br />
 
 Mary Del Olmo <br />
-P. Manuel Holguin <br />
+P. Holguin <br />
 John Luna <br />
 Paul Pederson <br />
 Richard Rolland <br />
 Jeannette Santos <br />
-P. Tim Thompson <br /><br />
+P. Thompson <br /><br />
 
 <div style="font-variant:small-caps"><strong>La Comunidad Jesuita</strong></div><br />
-P. Antonio Borrow, S.J.<br />
-P. Mark McKenzie, S.J.<br />
+P. Raushchuber, S.J.<br />
+P. Gonzales, S.J.<br />
+P. Joseph, S.J.<br />
+P. Vo, S.J.<br />
 
         </td>
         <td class="main" style="padding-right: 50px; padding-left:20px; padding-top:20px;">
@@ -39,13 +41,13 @@ P. Mark McKenzie, S.J.<br />
             <br />
             Querida familia {{$donation->contact->last_name}},<br /><br />
             Jesús nos promete que la puerta estará abierta para aquellos que piden, buscan y llaman. Nosotros tocamos sobre su puerta y usted respondió generosamente. Agradecemos su donación de
-            ${{number_format($donation->payments_paid,2)}} para "{{$donation->donation_description}}" recibida en {{$donation->donation_date_es}} para apoyar la casa de retiros de Montserrat. Tengan por seguro que se le dará un buen uso.
+            ${{number_format($donation->payments_paid,2)}} para "{{$donation->donation_description}}" recibida en {{$donation->donation_date_es}} para apoyar Montserrat. Tengan por seguro que se le dará un buen uso.
 <br /><br />
-La gente necesita un lugar para descansar y espacio para orar. Montserrat existe para ayudarlos reconocer la gracia de todas las bendiciones que solo vienen de Dios. Por este motivo, no descansamos hasta que la casa esté llena. Su donación a la Campaña Anual de Donaciones nos ayuda seguir creciendo y poder seguir ofreciendo un espacio de oración y consejo para todos los que estén necesitados y que desean profundizar su relación con Dios. Gracias a usted, podemos seguir apoyando al pueblo de Dios.
+La gente necesita un lugar para descansar y espacio para orar. Montserrat existe para ayudarlos reconocer la gracia de todas las bendiciones que solo vienen de Dios. Por este motivo, no descansamos hasta que la casa esté llena. Su donación a la Campaña Anual de Donaciones nos ayuda seguir creciendo y poder seguir ofreciendo un espacio de oración para todos los que estén necesitados y que desean profundizar su relación con Dios. Gracias a usted, podemos seguir apoyando al pueblo de Dios.
 <br /><br />Usted y su familia serán recordados diariamente en nuestras oraciones y misas en Montserrat. San Ignacio de Loyola ofreció esta bendición a sus amigos, por lo que ahora se la ofrecemos a ustedes: “Que siempre le complazca al Señor recompensarlo con sus consuelos sagrados, sus bendiciones espirituales y su paz eterna."
 <br /><br />
-Paz,<br /><br /><br /><br />
-P. Antonio Borrow, S.J.<br />
+Paz,<br /><br /><br />
+P. Anthony Rauschuber, S.J.<br />
 Director <br />
         </td>
     </tr>
