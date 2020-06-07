@@ -78,9 +78,8 @@ class DioceseControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('phone_main_fax', $diocese->phone_main_fax_number, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('email_primary', $diocese->email_primary_text, 'text', $response->getContent()));
 
-/*
-@include('dioceses.update.urls')
-*/
+        // TODO: default value checks for diocese.edit @include('dioceses.update.urls')
+
     }
 
     /**

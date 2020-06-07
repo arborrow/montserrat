@@ -99,7 +99,33 @@ class DonationControllerTest extends TestCase
         $response->assertViewHas('defaults');
         $response->assertViewHas('retreats');
 
-        // TODO: perform additional assertions
+        $this->assertTrue($this->findFieldValueInResponseContent('donation_description', $donation->description->id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('event_id', $donation->event_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('donation_date', $donation->donation_date, 'date', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('donation_amount', $donation->donation_amount, 'number', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('notes1', $donation->Notes1, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('notes', $donation->Notes, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('terms', $donation->terms, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('start_date_only', $donation->start_date, 'date', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('end_date_only', $donation->end_date, 'date', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('donation_install', $donation->donation_install, 'number', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('donation_thank_you', $donation->donation_thank_you_sent, 'select', $response->getContent()));
+        // TODO: clean up Donation.thank_you field so that it only contains Y or N and consider switching to boolean field
+
+/*
+        {!! Form::select('donation_description', $descriptions, $defaults['description_key'], ['class' => 'form-control']) !!}
+        {!! Form::select('event_id', $retreats, $donation->event_id, ['class' => 'form-control']) !!}
+        {!! Form::date('donation_date', $donation->donation_date, ['class'=>'form-control flatpickr-date']) !!}
+        {!! Form::number('donation_amount', $donation->donation_amount, ['class' => 'form-control','step'=>'0.01']) !!}
+        {!! Form::text('notes1', $donation->Notes1, ['class' => 'form-control']) !!}
+        {!! Form::text('notes', $donation->Notes, ['class' => 'form-control']) !!}
+        {!! Form::text('terms', $donation->terms, ['class' => 'form-control']) !!}
+        {!! Form::text('start_date_only', $donation->start_date, ['class' => 'form-control flatpickr-date']) !!}
+        {!! Form::text('end_date_only', $donation->end_date, ['class' => 'form-control flatpickr-date']) !!}
+        {!! Form::number('donation_install', $donation->donation_install, ['class' => 'form-control','step'=>'0.01']) !!}
+        {!! Form::select('donation_thank_you', ['Y' => 'Yes','N' => 'No'], $donation->donation_thank_you_sent, ['class' => 'form-control']) !!}
+*/
+
     }
 
     /**

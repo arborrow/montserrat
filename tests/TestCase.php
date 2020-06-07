@@ -51,6 +51,8 @@ abstract class TestCase extends BaseTestCase
             case 'number':
                 break;
             case 'date':
+                // dd($field_value, gettype($field_value), $field_value->format('Y-m-d'));
+                $field_value_string = "value=\"".$field_value->format('Y-m-d')."\"";
                 break;
             case 'text':
                 break;
