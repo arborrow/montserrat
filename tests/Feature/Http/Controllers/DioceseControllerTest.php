@@ -64,6 +64,23 @@ class DioceseControllerTest extends TestCase
         $response->assertViewHas('defaults');
         $response->assertSeeText('Edit');
         $response->assertSeeText($diocese->display_name);
+
+        $this->assertTrue($this->findFieldValueInResponseContent('bishop_id', $diocese->bishop_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('organization_name', $diocese->organization_name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('display_name', $diocese->display_name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('sort_name', $diocese->sort_name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('street_address', $diocese->address_primary_street_address, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('supplemental_address_1', $diocese->address_primary_supplemental_address_1, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('city', $diocese->address_primary_city, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('state_province_id', $diocese->address_primary_state_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('postal_code', $diocese->address_primary_postal_code, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('phone_main_phone', $diocese->phone_main_phone_number, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('phone_main_fax', $diocese->phone_main_fax_number, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('email_primary', $diocese->email_primary_text, 'text', $response->getContent()));
+
+/*
+@include('dioceses.update.urls')
+*/
     }
 
     /**

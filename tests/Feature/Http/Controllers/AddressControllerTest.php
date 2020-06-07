@@ -51,11 +51,13 @@ class AddressControllerTest extends TestCase
      */
     public function edit_returns_an_ok_response()
     {
-        $address = factory(\App\Address::class)->create();
+        $address = factory(\App\Address::class)->create([
+            'is_primary' => false,
+        ]);
         $user = $this->createUserWithPermission('update-address');
 
         $response = $this->actingAs($user)->get(route('address.edit', [$address]));
-
+        // dd($response);
         $response->assertOk();
         $response->assertViewIs('addresses.edit');
         $response->assertViewHas('address');
@@ -74,7 +76,6 @@ class AddressControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('postal_code', $address->postal_code, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('country_id', $address->country_id, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('is_primary', $address->is_primary, 'checkbox', $response->getContent()));
-
     }
 
     /**
