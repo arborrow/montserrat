@@ -965,6 +965,14 @@ class Contact extends Model
         return $this->hasOne(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.pastor'));
     }
 
+    public function getPastorIdAttribute() {
+        if (isset($this->pastor->contact_id_b)) {
+            return $this->pastor->contact_id_b;
+        } else {
+            return 0;
+        }
+    }
+
     public function phones()
     {
         return $this->hasMany(Phone::class, 'contact_id', 'id');
