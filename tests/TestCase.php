@@ -65,6 +65,9 @@ abstract class TestCase extends BaseTestCase
             case 'checkbox':
                 $field_value_string = "checked=\"checked\"";
                 break;
+            case 'textarea': // textarea should be value and then the end of the textarea tag
+                $field_value_string = $field_value."</textarea>";
+                break;
             default:
                 break;
         }
