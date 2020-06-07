@@ -66,7 +66,38 @@ class OrganizationControllerTest extends TestCase
         $response->assertViewHas('defaults');
         $response->assertViewHas('subcontact_types');
 
-        // TODO: perform additional assertions
+        $this->assertTrue($this->findFieldValueInResponseContent('organization_name', $organization->organization_name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('subcontact_type', $organization->subcontact_type, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('display_name', $organization->display_name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('sort_name', $organization->sort_name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('street_address', $organization->address_primary_street_address, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('supplemental_address_1', $organization->address_primary_supplemental_address_1, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('city', $organization->address_primary_city, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('state_province_id', $organization->address_primary_state_province_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('postal_code', $organization->address_primary_postal_code, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('phone_main_phone', $organization->phone_main_phone_number, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('phone_main_fax', $organization->phone_main_fax_number, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('email_primary', $organization->email_primary_text, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('note', $organization->note_organization_text, 'textarea', $response->getContent()));
+
+
+        /*
+        {!! Form::text('organization_name', $organization->organization_name, ['class' => 'form-control']) !!}
+{!! Form::select('subcontact_type', $subcontact_types, $organization->subcontact_type, ['class' => 'form-control']) !!}
+{!! Form::text('display_name', $organization->display_name, ['class' => 'form-control']) !!}
+{!! Form::text('sort_name', $organization->sort_name, ['class' => 'form-control']) !!}
+{!! Form::text('street_address', $organization->address_primary_street_address, ['class' => 'form-control']) !!}
+{!! Form::text('supplemental_address_1', $organization->address_primary_supplemental_address_1, ['class' => 'form-control']) !!}
+{!! Form::text('city', $organization->address_primary_city, ['class' => 'form-control']) !!}
+{!! Form::select('state_province_id', $states, $organization->address_primary_state_province_id, ['class' => 'form-control']) !!}
+{!! Form::text('postal_code', $organization->address_primary_postal_code, ['class' => 'form-control']) !!}
+{!! Form::text('phone_main_phone', $organization->phone_main_phone_number, ['class' => 'form-control']) !!}
+{!! Form::text('phone_main_fax', $organization->phone_main_fax_number, ['class' => 'form-control']) !!}
+    {!! Form::text('email_primary', $organization->email_primary_text, ['class' => 'form-control']) !!}
+// TODO: @include('organizations.update.urls')
+{!! Form::textarea('note', $organization->note_organization_text, ['class'=>'form-control', 'rows'=>'3']) !!}
+
+         */
     }
 
     /**
