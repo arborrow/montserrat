@@ -73,7 +73,7 @@ class AddressControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('state_province_id', $address->state_province_id, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('postal_code', $address->postal_code, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('country_id', $address->country_id, 'select', $response->getContent()));
-        // $this->assertTrue($this->findFieldValueInResponseContent('is_primary', $address->is_primary, 'checkbox', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('is_primary', $address->is_primary, 'checkbox', $response->getContent()));
 
     }
 

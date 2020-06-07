@@ -39,36 +39,29 @@ abstract class TestCase extends BaseTestCase
 
     protected function findFieldValueInResponseContent(string $field_name, string $field_value, string $form_type = 'number', $contents)
     {   // form_type can be number (default), text, select, date
-        // initialize variables
+        // initialize default variables
         $line_number = 0;
         $value_found = 0;
+        $field_name_string = "name=\"".$field_name."\"";
+        $field_value_string = "value=\"".e($field_value)."\"";
+        $contents_array = explode("\n", $contents);
 
         switch ($form_type) {
             case 'number':
-                $field_name_string = "name=\"".$field_name."\"";
-                $field_value_string = "value=\"".$field_value."\"";
                 break;
             case 'date':
-                $field_name_string = "name=\"".$field_name."\"";
-                $field_value_string = "value=\"".$field_value."\"";
                 break;
             case 'text':
-                $field_name_string = "name=\"".$field_name."\"";
-                $field_value_string = "value=\"".$field_value."\"";
                 break;
             case 'select':
-                $field_name_string = "name=\"".$field_name."\"";
-                $field_value_string = "<option value=\"".$field_value."\" selected=\"selected\">".$field_value."</option>";
+                $field_value_string = "<option value=\"".$field_value."\" selected=\"selected\">";
+                break;
+            case 'checkbox':
+                $field_value_string = "checked=\"checked\"";
                 break;
             default:
-                $field_name_string = "name=\"".$field_name."\"";
-                $field_value_string = "value=\"".$field_value."\"";
                 break;
         }
-
-        $field_name_string = "name=\"".$field_name."\"";
-        $field_value_string = "value=\"".$field_value."\"";
-        $contents_array = explode("\n", $contents);
 
         foreach ($contents_array as $content_key=>$content_value) {
             if (strpos($content_value, $field_name_string) !== false) {
@@ -77,10 +70,22 @@ abstract class TestCase extends BaseTestCase
         }
         if ($line_number) {
             $value_found = strpos($contents_array[$line_number], $field_value_string);
+            if ($form_type == 'checkbox' && ($field_value==true)) {
+                $value_found = (strpos($contents_array[$line_number], "checked=\"checked\""));
+            }
+            if ($form_type == 'checkbox' && ($field_value==false)) {
+                // if the checkbox is not checked then the value in the database was 0 so this is a success
+                $value_not_found = (strpos($contents_array[$line_number], "checked=\"checked\""));
+                if ($value_not_found == 0) {
+                    $value_found = 1;
+                }
+            }
+
         }
         if ($value_found > 0) {
             return true;
         } else {
+            // dd($value_found, $field_name_string,$field_value_string,$contents_array);
             return false;
         }
     }
