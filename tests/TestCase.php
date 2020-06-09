@@ -52,7 +52,18 @@ abstract class TestCase extends BaseTestCase
                 break;
             case 'date':
                 // dd($field_value, gettype($field_value), $field_value->format('Y-m-d'));
-                $field_value_string = "value=\"".$field_value->format('Y-m-d')."\"";
+                if (!is_null($field_value)) {
+                    $field_value_string = "value=\"".$field_value->format('Y-m-d')."\"";
+                } else {
+                    return true;
+                }
+                break;
+            case 'datetime':
+                if (!is_null($field_value)) {
+                    $field_value_string = "value=\"".$field_value->format('Y-m-d\TH:i:sP')."\"";
+                } else {
+                    return true;
+                }
                 break;
             case 'text':
                 break;
@@ -111,7 +122,7 @@ abstract class TestCase extends BaseTestCase
         if ($value_found > 0) {
             return true;
         } else {
-            dd($value_found, $line_number, $field_value, $field_name_string,$field_value_string,gettype($field_value_string),$contents_array);
+            dd($value_found, $line_number, $field_value, $field_name_string,$field_value_string,gettype($field_value_string),$contents_array[$line_number]);
             return false;
         }
     }

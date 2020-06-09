@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 
 class RegistrationController extends Controller
 {
@@ -319,6 +320,14 @@ class RegistrationController extends Controller
         }
 
         $defaults['registration_source'] = config('polanco.registration_source');
+
+        // prevent dataloss of existing sources; shouldn't really be necessary with use of polanco.registration_source but just in case this will help prevent unintended data loss
+        foreach ($defaults['registration_source'] as $source) {
+            if (! Arr::has($defaults['registration_source'], $registration->source)) {
+                $defaults['registration_source'][$registration->source] = $registration->source;
+            }
+        }
+
         $defaults['participant_status_type'] = \App\ParticipantStatus::whereIsActive(1)->pluck('name', 'id');
 
         return view('registrations.edit', compact('registration', 'retreats', 'rooms', 'defaults'));
