@@ -199,7 +199,7 @@
                             </div>
                             <div class="col-12 col-lg-6">
                                 {!! Form::label('birth_date', 'Birth Date:') !!}
-                                {!! Form::text('birth_date', $person->birth_date, ['class'=>'form-control bg-white flatpickr-date']) !!}
+                                {!! Form::date('birth_date', $person->birth_date, ['class'=>'form-control bg-white flatpickr-date']) !!}
                             </div>
                         </div>
                         <div class="row">
@@ -247,7 +247,7 @@
                             </div>
                             <div class="col-12 col-lg-6">
                                 {!! Form::label('deceased_date', 'Deceased Date:')  !!}
-                                {!! Form::text('deceased_date', $person->deceased_date, ['class'=>'form-control bg-white flatpickr-date']) !!}
+                                {!! Form::date('deceased_date', $person->deceased_date, ['class'=>'form-control bg-white flatpickr-date']) !!}
                             </div>
                         </div>
                     </div>

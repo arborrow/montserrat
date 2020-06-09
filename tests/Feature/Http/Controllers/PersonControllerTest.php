@@ -204,6 +204,68 @@ class PersonControllerTest extends TestCase
         $response->assertViewHas('referrals');
         $response->assertSeeText('Edit');
         $response->assertSee($person->display_name);
+
+        $this->assertTrue($this->findFieldValueInResponseContent('prefix_id', $person->prefix_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('first_name', $person->first_name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('middle_name', $person->middle_name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('last_name', $person->last_name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('suffix_id', $person->suffix_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('nick_name', $person->nick_name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('display_name', $person->display_name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('sort_name', $person->sort_name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('agc_household_name', $person->agc_household_name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('contact_type', $person->contact_type, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('subcontact_type', $person->subcontact_type, 'select', $response->getContent()));
+
+        $this->assertTrue($this->findFieldValueInResponseContent('emergency_contact_name', $person->emergency_contact_name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('emergency_contact_relationship', $person->emergency_contact_relationship, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('emergency_contact_phone', $person->emergency_contact_phone, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('emergency_contact_phone_alternate', $person->emergency_contact_phone_alternate, 'text', $response->getContent()));
+
+        $this->assertTrue($this->findFieldValueInResponseContent('note_health', $person->note_health, 'textarea', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('note_dietary', $person->note_dietary, 'textarea', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('note_contact', $person->note_contact, 'textarea', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('note_room_preference', $person->note_room_preference, 'textarea', $response->getContent()));
+
+        $this->assertTrue($this->findFieldValueInResponseContent('gender_id', $person->gender_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('birth_date', $person->birth_date, 'date', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('religion_id', $person->religion_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('occupation_id', $person->occupation_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('parish_id', $person->parish_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('ethnicity_id', $person->ethnicity_id, 'select', $response->getContent()));
+        // TODO: $this->assertTrue($this->findFieldValueInResponseContent('languages', $person->languages->pluck('id'), 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('preferred_language_id', $person->preferred_language_id, 'select', $response->getContent()));
+        // TODO: $this->assertTrue($this->findFieldValueInResponseContent('referrals', $person->referrals->pluck('id')->toArray(), 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('is_deceased', $person->is_deceased, 'checkbox', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('deceased_date', $person->deceased_date, 'date', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('gender_id', $person->gender_id, 'select', $response->getContent()));
+
+        $this->assertTrue($this->findFieldValueInResponseContent('is_donor', $person->is_donor, 'checkbox', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('is_steward', $person->is_steward, 'checkbox', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('is_volunteer', $person->is_volunteer, 'checkbox', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('is_retreatant', $person->is_retreatant, 'checkbox', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('is_ambassador', $person->is_ambassador, 'checkbox', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('is_bishop', $person->is_bishop, 'checkbox', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('is_priest', $person->is_priest, 'checkbox', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('is_deacon', $person->is_deacon, 'checkbox', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('is_pastor', $person->is_pastor, 'checkbox', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('is_jesuit', $person->is_jesuit, 'checkbox', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('is_provincial', $person->is_provincial, 'checkbox', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('is_superior', $person->is_superior, 'checkbox', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('is_board', $person->is_board, 'checkbox', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('is_staff', $person->is_staff, 'checkbox', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('is_director', $person->is_director, 'checkbox', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('is_innkeeper', $person->is_innkeeper, 'checkbox', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('is_assistant', $person->is_assistant, 'checkbox', $response->getContent()));
+
+        /*
+        // TODO: @include('persons.update.addresses')
+        // TODO: @include('persons.update.phones')
+        // TODO: @include('persons.update.emails')
+        // TODO: @include('persons.update.urls')
+
+         */
+
     }
 
     /**
