@@ -189,6 +189,15 @@ return [
         'In person' => 'In person',
     ],
 
+    'touchpoint_source' => [
+        'Call' => 'Call',
+        'Email' => 'Email',
+        'Face' => 'Face to Face',
+        'Letter' => 'Letter',
+        'Other' => 'Other',
+    ],
+
+
     'payment_method' => [
         'Unassigned' => 'Unassigned',
         'Cash' => 'Cash',
