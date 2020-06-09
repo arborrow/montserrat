@@ -61,7 +61,39 @@ class VendorControllerTest extends TestCase
         $response->assertViewHas('defaults');
         $response->assertSeeText($vendor->display_name);
 
-        // TODO: perform additional assertions
+        $this->assertTrue($this->findFieldValueInResponseContent('organization_name', $vendor->organization_name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('display_name', $vendor->display_name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('sort_name', $vendor->sort_name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('street_address', $vendor->address_primary_street, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('supplemental_address_1', $vendor->address_primary_supplemental_address, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('city', $vendor->address_primary_city, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('state_province_id', $vendor->address_primary_state_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('postal_code', $vendor->address_primary_postal_code, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('country_id', $vendor->address_primary_country_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('phone_main_phone', $vendor->phone_main_phone_number, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('phone_main_fax', $vendor->phone_main_fax_phone, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('email_primary', $vendor->email_primary_text, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('note_vendor', $vendor->note_vendor_text, 'text', $response->getContent()));
+
+/*
+{!! Form::text('organization_name', $vendor->organization_name, ['class' => 'form-control']) !!}
+{!! Form::text('display_name', $vendor->display_name, ['class' => 'form-control']) !!}
+{!! Form::text('sort_name', $vendor->sort_name, ['class' => 'form-control']) !!}
+{!! Form::text('street_address', $vendor->address_primary_street, ['class' => 'form-control']) !!}
+{!! Form::text('supplemental_address_1', $vendor->address_primary_supplemental_address, ['class' => 'form-control']) !!}
+{!! Form::text('city', $vendor->address_primary_city, ['class' => 'form-control']) !!}
+{!! Form::select('state_province_id', $states, $vendor->address_primary_state_id, ['class' => 'form-control']) !!}
+{!! Form::text('postal_code', $vendor->address_primary_postal_code, ['class' => 'form-control']) !!}
+{!! Form::select('country_id', $countries, $vendor->address_primary_country_id, ['class' => 'form-control']) !!}
+{!! Form::text('phone_main_phone', $vendor->phone_main_phone_number, ['class' => 'form-control']) !!}
+{!! Form::text('phone_main_fax', $vendor->phone_main_fax_phone, ['class' => 'form-control']) !!}
+{!! Form::text('email_primary', $vendor->email_primary_text, ['class' => 'form-control']) !!}
+{!! Form::textarea('note_vendor', $vendor->note_vendor_text, ['class'=>'form-control', 'rows'=>'3']) !!}
+
+// TODO: @include('vendors.update.urls')
+
+ */
+
     }
 
     /**
