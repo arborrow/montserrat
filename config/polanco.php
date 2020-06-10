@@ -112,7 +112,7 @@ return [
     ],
     // when creating database with the seeder, the first event created is the open deposit event
     'event' => [
-        'open_deposit' => '1',
+        'open_deposit' => env('OPEN_DEPOSIT_EVENT_ID', 1),
     ],
 
     'event_type' => [
