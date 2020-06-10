@@ -28,7 +28,6 @@ class DonorControllerTest extends TestCase
         $response->assertViewIs('donors.index');
         $response->assertViewHas('donors');
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -54,7 +53,6 @@ class DonorControllerTest extends TestCase
         $response->assertViewHas('sortnames');
         $response->assertViewHas('lastnames');
 
-        // TODO: perform additional assertions
     }
 
     // test cases...

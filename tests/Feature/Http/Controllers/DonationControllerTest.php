@@ -28,7 +28,6 @@ class DonationControllerTest extends TestCase
         $response->assertViewHas('donations');
         $response->assertViewHas('total');
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -42,7 +41,6 @@ class DonationControllerTest extends TestCase
 
         $response->assertNotFound();
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -61,7 +59,6 @@ class DonationControllerTest extends TestCase
         $response->assertViewHas('payment_methods');
         $response->assertViewHas('defaults');
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -79,7 +76,6 @@ class DonationControllerTest extends TestCase
 
         $this->assertSoftDeleted($donation);
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -141,7 +137,6 @@ class DonationControllerTest extends TestCase
         $response->assertViewIs('donations.index');
         $response->assertViewHas('donations');
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -180,7 +175,6 @@ class DonationControllerTest extends TestCase
         $response->assertViewIs('donations.overpaid');
         $response->assertViewHas('overpaid');
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -237,7 +231,6 @@ class DonationControllerTest extends TestCase
         $response->assertViewIs('donations.show');
         $response->assertViewHas('donation');
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -251,7 +244,6 @@ class DonationControllerTest extends TestCase
         $start_date_only = $this->faker->dateTimeBetween('this week', '+7 days');
 
         $response = $this->actingAs($user)->post(route('donation.store'), [
-            // TODO: send request data
             'donor_id' => $donor->id,
             'event_id' => $event->id,
             'donation_date' => $this->faker->dateTime(),
@@ -265,14 +257,12 @@ class DonationControllerTest extends TestCase
             // 'end_date_only' => $this->faker->dateTimeBetween($start_date_only, strtotime('+7 days')),
 
         ]);
-        // dd($response);
         $response->assertRedirect($donor->contact_url.'#donations');
         $this->assertDatabaseHas('Donations', [
           'contact_id' => $donor->id,
           'event_id' => $event->id,
         ]);
 
-        // TODO: perform additional assertions
     }
 
     /**

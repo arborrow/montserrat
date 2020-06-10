@@ -194,7 +194,6 @@ class RoleControllerTest extends TestCase
           'deleted_at' => null,
         ]);
 
-        // TODO: perform additional assertions
     }
 
     // test cases...

@@ -266,7 +266,6 @@ class RelationshipTypeControllerTest extends TestCase
           'description' => $description,
         ]);
 
-        // TODO: perform additional assertions
     }
 
     /**

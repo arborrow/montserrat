@@ -82,15 +82,7 @@ class ParishControllerTest extends TestCase
 
 
         /*
-        {!! Form::text('organization_name', $parish->organization_name, ['class' => 'form-control']) !!}
-{!! Form::text('display_name', $parish->display_name, ['class' => 'form-control']) !!}
-{!! Form::text('sort_name', $parish->sort_name, ['class' => 'form-control']) !!}
-{!! Form::select('diocese_id', $dioceses, $parish->diocese_id, ['class' => 'form-control']) !!}
 {!! Form::select('pastor_id', $pastors, $parish->pastor->contact_b->id, ['class' => 'form-control']) !!}
-{!! Form::text('street_address', $parish->address_primary_street, ['class' => 'form-control']) !!}
-{!! Form::text('city', $parish->address_primary_city, ['class' => 'form-control']) !!}
-{!! Form::select('state_province_id', $states, $parish->address_primary_state_id, ['class' => 'form-control']) !!}
-{!! Form::text('postal_code', $parish->address_primary_postal_code, ['class' => 'form-control']) !!}
 {!! Form::text('phone_main_phone', $parish->phone_primary->phone, ['class' => 'form-control']) !!}
 {!! Form::text('phone_main_fax', $parish->phone_main_fax->phone, ['class' => 'form-control']) !!}
 {!! Form::text('email_primary', $defaults['email_primary'], ['class' => 'form-control']) !!}

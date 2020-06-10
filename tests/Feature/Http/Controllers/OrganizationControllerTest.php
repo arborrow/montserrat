@@ -30,7 +30,6 @@ class OrganizationControllerTest extends TestCase
         $response->assertViewHas('countries');
         $response->assertViewHas('defaults');
         $response->assertSeeText('Add an Organization');
-        // TODO: perform additional assertions
     }
 
     /**
@@ -46,7 +45,6 @@ class OrganizationControllerTest extends TestCase
         $response->assertRedirect(action('OrganizationController@index'));
         $this->assertSoftDeleted($organization);
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -80,24 +78,9 @@ class OrganizationControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('email_primary', $organization->email_primary_text, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('note', $organization->note_organization_text, 'textarea', $response->getContent()));
 
-
-        /*
-        {!! Form::text('organization_name', $organization->organization_name, ['class' => 'form-control']) !!}
-{!! Form::select('subcontact_type', $subcontact_types, $organization->subcontact_type, ['class' => 'form-control']) !!}
-{!! Form::text('display_name', $organization->display_name, ['class' => 'form-control']) !!}
-{!! Form::text('sort_name', $organization->sort_name, ['class' => 'form-control']) !!}
-{!! Form::text('street_address', $organization->address_primary_street_address, ['class' => 'form-control']) !!}
-{!! Form::text('supplemental_address_1', $organization->address_primary_supplemental_address_1, ['class' => 'form-control']) !!}
-{!! Form::text('city', $organization->address_primary_city, ['class' => 'form-control']) !!}
-{!! Form::select('state_province_id', $states, $organization->address_primary_state_province_id, ['class' => 'form-control']) !!}
-{!! Form::text('postal_code', $organization->address_primary_postal_code, ['class' => 'form-control']) !!}
-{!! Form::text('phone_main_phone', $organization->phone_main_phone_number, ['class' => 'form-control']) !!}
-{!! Form::text('phone_main_fax', $organization->phone_main_fax_number, ['class' => 'form-control']) !!}
-    {!! Form::text('email_primary', $organization->email_primary_text, ['class' => 'form-control']) !!}
 // TODO: @include('organizations.update.urls')
-{!! Form::textarea('note', $organization->note_organization_text, ['class'=>'form-control', 'rows'=>'3']) !!}
+// TODO: create phones, email, and address to properly test defaults
 
-         */
     }
 
     /**
@@ -149,7 +132,6 @@ class OrganizationControllerTest extends TestCase
         $response->assertViewHas('relationship_types');
         $response->assertSeeText($organization->organization_name);
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -211,7 +193,6 @@ class OrganizationControllerTest extends TestCase
         $this->assertEquals($updated->sort_name, $organization_name);
         $this->assertNotEquals($updated->organization_name, $original_name);
 
-        // TODO: perform additional assertions
     }
 
     /**

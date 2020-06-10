@@ -27,7 +27,6 @@ class GroupControllerTest extends TestCase
         $response->assertViewIs('groups.create');
         $response->assertSee('Create Group');
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -90,7 +89,6 @@ class GroupControllerTest extends TestCase
         $response->assertViewHas('groups');
         $response->assertSee('Group Index');
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -109,7 +107,6 @@ class GroupControllerTest extends TestCase
         $response->assertViewHas('members');
         $response->assertSee($group->description);
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -136,7 +133,6 @@ class GroupControllerTest extends TestCase
           'description' => 'New Group of '.Str::plural($group_name),
         ]);
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -171,7 +167,6 @@ class GroupControllerTest extends TestCase
         $this->assertEquals($updated->name, $new_group_name);
         $this->assertNotEquals($updated->name, $group->name);
 
-        // TODO: perform additional assertions
     }
 
     /**

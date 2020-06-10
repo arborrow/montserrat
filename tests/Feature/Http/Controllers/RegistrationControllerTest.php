@@ -35,7 +35,6 @@ class RegistrationControllerTest extends TestCase
         $response->assertViewHas('defaults');
         $response->assertSeeText('Add A Registration');
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -359,7 +358,6 @@ class RegistrationControllerTest extends TestCase
           'notes' => $event->idnumber.' registration email sent.',
         ]);
 
-        // TODO: perform additional assertions
     }
 
     /**

@@ -46,7 +46,6 @@ class TouchpointControllerTest extends TestCase
         $response->assertViewHas('defaults');
         $response->assertSeeText('Create Touchpoint');
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -169,7 +168,6 @@ class TouchpointControllerTest extends TestCase
         $response->assertViewHas('participants');
         $response->assertViewHas('defaults');
 
-        // TODO: perform additional assertions
     }
 
     /**

@@ -114,7 +114,6 @@ class VendorControllerTest extends TestCase
         $response->assertSeeText('Vendors');
         $this->assertGreaterThanOrEqual('1', $vendors->count());
 
-        // TODO: perform additional assertions
     }
 
     /**

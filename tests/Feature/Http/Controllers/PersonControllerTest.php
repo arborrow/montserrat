@@ -28,9 +28,6 @@ class PersonControllerTest extends TestCase
         $response->assertViewHas('role');
         $response->assertSeeText('Assistant');
 
-        // dd($response);
-
-        // TODO: perform additional assertions
     }
 
     /**
@@ -575,7 +572,6 @@ class PersonControllerTest extends TestCase
         $response->assertRedirect(action('PersonController@merge', $person->id));
         $this->assertSoftDeleted($duplicate_person);
 
-        // TODO: perform additional assertions
     }
 
     /**

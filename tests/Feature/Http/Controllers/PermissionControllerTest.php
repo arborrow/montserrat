@@ -142,7 +142,6 @@ class PermissionControllerTest extends TestCase
         $this->assertEquals($updated->name, $new_permission_name);
         $this->assertNotEquals($updated->name, $original_permission_name);
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -162,7 +161,6 @@ class PermissionControllerTest extends TestCase
 
         $response->assertRedirect(action('PermissionController@index'));
 
-        // TODO: perform additional assertions
     }
 
     // test cases...
