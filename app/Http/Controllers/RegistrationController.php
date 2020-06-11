@@ -367,6 +367,9 @@ class RegistrationController extends Controller
                 dd($e);
             }
         }
+        if ($registration->event_id == config('polanco.event.open_deposit')) {
+            $registration->room_id = 0; 
+        }
 
         $registration->save();
 
