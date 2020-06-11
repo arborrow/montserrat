@@ -466,7 +466,7 @@ class RetreatController extends Controller
         if (!$removed_directors->isEmpty()) {
             $retreat->retreatmasters()->whereIn('contact_id',$removed_directors)->delete();
         }
-	
+
 	$innkeepers = $request->input('innkeepers');
         $existing_innkeepers = $retreat->innkeepers()->pluck('contact_id');
         $removed_innkeepers = $existing_innkeepers->diff($innkeepers);
@@ -504,7 +504,7 @@ class RetreatController extends Controller
         }
         if (! empty($retreat->calendar_id)) {
             $calendar_event = Event::find($retreat->calendar_id);
-	    
+
 	    /*
              * Initial work to manage attendees from Polanco
              * Need to clean up management of primary emails
@@ -512,7 +512,7 @@ class RetreatController extends Controller
              * What about guest directors?
              */
             //$calendar_event->attendees = $retreat->retreat_attendees;
-	    
+
 	    if (! empty($calendar_event)) {
                 $calendar_event->name = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
                 $calendar_event->summary = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
@@ -683,13 +683,21 @@ class RetreatController extends Controller
             if ($registration->room_id > 0) {
                 // if the registered retreatant is not an individual person - for example a contract group organization then use the registration note for the name of the retreatant
                 if ($registration->retreatant->contact_type == config('polanco.contact_type.individual')) {
-                    $results[$registration->room->location->name][$registration->room->floor][$registration->room->name] = $registration->retreatant->sort_name;
+                    if ($results[$registration->room->location->name][$registration->room->floor][$registration->room->name] == "") {
+                        $results[$registration->room->location->name][$registration->room->floor][$registration->room->name] = $registration->retreatant->sort_name;
+                    } else {
+                        $results[$registration->room->location->name][$registration->room->floor][$registration->room->name] .= ' & ' . $registration->retreatant->sort_name;
+                    }
                 } else {
                     // if there is no note; default back to the sort_name of the contact
                     if (isset($registration->notes)) {
-                        $results[$registration->room->location->name][$registration->room->floor][$registration->room->name] = $registration->notes;
+                            if ($results[$registration->room->location->name][$registration->room->floor][$registration->room->name] == "") {
+                                 $results[$registration->room->location->name][$registration->room->floor][$registration->room->name] = $registration->notes;
+                             } else {
+                                 $results[$registration->room->location->name][$registration->room->floor][$registration->room->name] .= ' & ' . $registration->notes;
+                             }
                     } else {
-                        $results[$registration->room->location->name][$registration->room->floor][$registration->room->name] = $registration->retreatant->sort_name;
+                        $results[$registration->room->location->name][$registration->room->floor][$registration->room->name] .= $registration->retreatant->sort_name;
                     }
                 }
             }
