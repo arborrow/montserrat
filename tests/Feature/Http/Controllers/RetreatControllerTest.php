@@ -493,7 +493,7 @@ class RetreatControllerTest extends TestCase
             $response->assertViewIs('retreats.namebadges');
             $response->assertViewHas('event');
             $response->assertViewHas('cresults');
-            $response->assertSeeText($retreatant->sort_name);
+            $response->assertSeeText($retreatant->first_name.' '.$retreatant->last_name);
 
         }
 
