@@ -75,7 +75,7 @@ class DioceseControllerTest extends TestCase
         ]);
 
         $main_email = factory(\App\Email::class)->create([
-            'contact_id' => $diocese-id,
+            'contact_id' => $diocese->id,
             'is_primary' => 1,
             'location_type_id' => config('polanco.location_type.main'),
         ]);

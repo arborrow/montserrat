@@ -82,7 +82,7 @@
                             @if (empty($vendor->phone_main_fax))
                                 {!! Form::text('phone_main_fax', NULL, ['class' => 'form-control']) !!}
                             @else
-                                {!! Form::text('phone_main_fax', $vendor->phone_main_fax_phone, ['class' => 'form-control']) !!}
+                                {!! Form::text('phone_main_fax', $vendor->phone_main_fax_number, ['class' => 'form-control']) !!}
                             @endif
                         </div>
                         <div class="col-12 col-lg-4">
