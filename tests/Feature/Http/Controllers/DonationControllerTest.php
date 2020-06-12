@@ -305,8 +305,8 @@ class DonationControllerTest extends TestCase
             'donation_install' => $this->faker->randomFloat(2, 0, 100000),
         ]);
 
-        // TODO: removed space on Thank You field in Donation table then add to unit test
-        // dd($response);
+        // TODO: remove space on Thank You field in Donation table then add to unit test
+
         $response->assertRedirect(action('DonationController@show', $donation->donation_id));
 
         $updated_donation = \App\Donation::find($donation->donation_id);
