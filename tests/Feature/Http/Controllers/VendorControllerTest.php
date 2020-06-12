@@ -54,6 +54,12 @@ class VendorControllerTest extends TestCase
             'contact_type' => config('polanco.contact_type.organization'),
             'subcontact_type' => config('polanco.contact_type.vendor'),
         ]);
+        $vendor_note = factory(\App\Note::class)->create([
+            'entity_table' => 'contact',
+            'entity_id' => $vendor->id,
+            'subject' => 'Vendor note',
+        ]);
+
         $main_address = factory(\App\Address::class)->create([
             'contact_id' => $vendor->id,
             'location_type_id' => config('polanco.location_type.main'),
@@ -133,7 +139,7 @@ class VendorControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('phone_main_phone', $vendor->phone_main_phone_number, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('phone_main_fax', $vendor->phone_main_fax_number, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('email_primary', $vendor->email_primary_text, 'text', $response->getContent()));
-        $this->assertTrue($this->findFieldValueInResponseContent('note_vendor', $vendor->note_vendor_text, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('note_vendor', $vendor->note_vendor_text, 'textarea', $response->getContent()));
         // urls
         $this->assertTrue($this->findFieldValueInResponseContent('url_main', $url_main->url, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('url_work', $url_work->url, 'text', $response->getContent()));
