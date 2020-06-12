@@ -161,7 +161,7 @@ class DashboardController extends Controller
         $this->authorize('show-dashboard');
 
         switch ($category) {
-            case 'book': $donation_description = 'Books'; break;
+            case 'bookstore': $donation_description = 'Bookstore'; break;
             case 'deposit': $donation_description = 'Deposit'; break;
             case 'diocese': $donation_description = 'Diocesan/Provincial/Parish Retreats'; break;
             case 'donation': $donation_description = 'Donation'; break;
@@ -210,7 +210,7 @@ class DashboardController extends Controller
             ->color('rgba(22,160,133, 1.0)')
             ->backgroundcolor('rgba(22,160,133, 0.5)');
 
-        $descriptions = [['book', 'deposit', 'diocese', 'donation', 'flower', 'gift', 'offering', 'tip']];
+        $descriptions = [['bookstore', 'deposit', 'diocese', 'donation', 'flower', 'gift', 'offering', 'tip']];
 
         return view('dashboard.description', compact('donation_description_chart', 'descriptions'));
     }
