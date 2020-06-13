@@ -652,7 +652,7 @@ class PersonController extends Controller
                 }
             }
         }
-
+        /*
         //not pretty but moves some of the processing to the controller rather than the blade
         $person->parish_id = '';
         $person->parish_name = '';
@@ -660,7 +660,7 @@ class PersonController extends Controller
             $person->parish_id = $person->parish->contact_id_a;
             $person->parish_name = $person->parish->contact_a->organization_name.' ('.$person->parish->contact_a->address_primary_city.') - '.$person->parish->contact_a->diocese->contact_a->organization_name;
         }
-
+        */
         $touchpoints = \App\Touchpoint::wherePersonId($person->id)->orderBy('touched_at', 'desc')->with('staff')->get();
         $registrations = \App\Registration::whereContactId($person->id)->get();
         $registrations = $registrations->sortByDesc(function ($registration) {

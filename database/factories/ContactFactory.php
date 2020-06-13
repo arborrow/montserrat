@@ -14,6 +14,8 @@ $factory->define(App\Contact::class, function (Faker $faker) {
     $religion = \App\Religion::whereIsActive(1)->get()->random();
     $occupation = \App\Ppd_occupation::get()->random();
     $preferred_language = \App\Language::whereIsActive(1)->get()->random();
+    $suffix = \App\Suffix::get()->random();
+    $prefix = \App\Prefix::get()->random();
 
     return [
         'contact_type' => $faker->numberBetween(1, 3),
@@ -38,8 +40,8 @@ $factory->define(App\Contact::class, function (Faker $faker) {
         'first_name' => $first_name,
         'middle_name' => $faker->firstName,
         'last_name' => $last_name,
-        'prefix_id' => $faker->numberBetween(1,10),
-        'suffix_id' => $faker->numberBetween(1,10),
+        'prefix_id' => $prefix->id,
+        'suffix_id' => $suffix->id,
         'email_greeting_custom' => $faker->word,
         'email_greeting_display' => $faker->word,
         'postal_greeting_custom' => $faker->word,

@@ -176,10 +176,20 @@ class PersonControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-contact');
+
+
         $person = factory(\App\Contact::class)->create([
           'contact_type' => config('polanco.contact_type.individual'),
           'subcontact_type' => null,
         ]);
+        $parish = factory(\App\Parish::class)->create();
+        $parishioner = factory(\App\Relationship::class)->create([
+            'contact_id_a' => $parish->id,
+            'contact_id_b' => $person->id,
+            'relationship_type_id' => config('polanco.relationship_type.parishioner'),
+            'is_active' => 1,
+        ]);
+
         $emergency_contact = factory(\App\EmergencyContact::class)->create([
             'contact_id' => $person->id,
         ]);
@@ -428,9 +438,9 @@ class PersonControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('url_instagram', $url_instagram->url, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('url_linkedin', $url_linkedin->url, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('url_twitter', $url_twitter->url, 'text', $response->getContent()));
-        // TODO: add parish, languages, preferred language
+        // TODO: add languages
         // TODO: add some groups and relationships
-
+        
     }
 
     /**
@@ -659,7 +669,7 @@ class PersonControllerTest extends TestCase
           'contact_type' => config('polanco.contact_type.individual'),
           'subcontact_type' => null,
         ]);
-
+        // var_dump($person->id);
         $response = $this->actingAs($user)->get(route('person.show', ['person' => $person]));
 
         $response->assertOk();
