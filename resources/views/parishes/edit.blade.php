@@ -63,25 +63,25 @@
             <div class="row">
                 <div class="col-12 col-md-4">
                     {!! Form::label('phone_main_phone', 'Phone:') !!}
-                    @if (empty($parish->phone_primary))
+                    @if (empty($parish->phone_main_phone_number))
                     {!! Form::text('phone_main_phone', NULL, ['class' => 'form-control']) !!}
                     @else
-                    {!! Form::text('phone_main_phone', $parish->phone_primary->phone, ['class' => 'form-control']) !!}
+                    {!! Form::text('phone_main_phone', $parish->phone_main_phone_number, ['class' => 'form-control']) !!}
                     @endif
                 </div>
                 <div class="col-12 col-md-4">
                     {!! Form::label('phone_main_fax', 'Fax:') !!}
-                    @if (empty($parish->phone_main_fax))
+                    @if (empty($parish->phone_main_fax_number))
                     {!! Form::text('phone_main_fax', NULL, ['class' => 'form-control']) !!}
                     @else
-                    {!! Form::text('phone_main_fax', $parish->phone_main_fax->phone, ['class' => 'form-control']) !!}
+                    {!! Form::text('phone_main_fax', $parish->phone_main_fax_number, ['class' => 'form-control']) !!}
                     @endif
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 col-md-4">
                     {!! Form::label('email_primary', 'Email:') !!}
-                    {!! Form::text('email_primary', $defaults['email_primary'], ['class' => 'form-control']) !!}
+                    {!! Form::text('email_primary', $parish->email_primary_text, ['class' => 'form-control']) !!}
                 </div>
             </div>
             <div class="row">
