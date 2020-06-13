@@ -231,7 +231,11 @@
                         <div class="row">
                             <div class="col-12">
                                 {!! Form::label('preferred_language_id', 'Preferred Language:')  !!}
-                                {!! Form::select('preferred_language_id', $languages, $person->preferred_language_id, ['class' => 'form-control']) !!}
+                                @if (empty($person->preferred_language_id))
+                                    {!! Form::select('preferred_language_id', $languages, 0, ['class' => 'form-control']) !!}
+                                @else
+                                    {!! Form::select('preferred_language_id', $languages, $person->preferred_language_id, ['class' => 'form-control']) !!}
+                                @endif
                             </div>
                         </div>
                         <div class="row">

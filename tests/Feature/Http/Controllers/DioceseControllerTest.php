@@ -132,8 +132,8 @@ class DioceseControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('organization_name', $diocese->organization_name, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('display_name', $diocese->display_name, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('sort_name', $diocese->sort_name, 'text', $response->getContent()));
-        $this->assertTrue($this->findFieldValueInResponseContent('street_address', $diocese->address_primary_street_address, 'text', $response->getContent()));
-        $this->assertTrue($this->findFieldValueInResponseContent('supplemental_address_1', $diocese->address_primary_supplemental_address_1, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('street_address', $diocese->address_primary_street, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('supplemental_address_1', $diocese->address_primary_supplemental_address, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('city', $diocese->address_primary_city, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('state_province_id', $diocese->address_primary_state_id, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('postal_code', $diocese->address_primary_postal_code, 'text', $response->getContent()));
@@ -148,7 +148,6 @@ class DioceseControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('url_instagram', $url_instagram->url, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('url_linkedin', $url_linkedin->url, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('url_twitter', $url_twitter->url, 'text', $response->getContent()));
-
     }
 
     /**

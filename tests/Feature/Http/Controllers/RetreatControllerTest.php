@@ -171,7 +171,7 @@ class RetreatControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('end_date', $retreat->end_date, 'datetime', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('title', $retreat->title, 'text', $response->getContent()));
 
-        // TODO: come back and figure out how to deal with null lists
+        // TODO: come back and figure out how to deal with null lists; add some directors, assistants, innkeepers, and ambassadors
         // $this->assertTrue($this->findFieldValueInResponseContent('directors[]', $retreat->retreatmasters->pluck('contact.id'), 'select', $response->getContent()));
         // $this->assertTrue($this->findFieldValueInResponseContent('innkeepers[]', $retreat->innkeepers->pluck('contact.id'), 'select', $response->getContent()));
         // $this->assertTrue($this->findFieldValueInResponseContent('assistants[]', $retreat->assistants->pluck('contact.id'), 'select', $response->getContent()));

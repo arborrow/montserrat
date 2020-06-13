@@ -11,8 +11,8 @@ $factory->define(App\EmergencyContact::class, function (Faker $faker) {
         },
         'name' => $faker->name,
         'relationship' => $faker->word,
-        'phone' => $faker->phoneNumber,
-        'phone_alternate' => $faker->word,
+        'phone' => '9403216010,'.$faker->numberBetween(111,999),
+        'phone_alternate' => '9403216030,'.$faker->numberBetween(111,999),
         'remember_token' => Str::random(10),
     ];
 });

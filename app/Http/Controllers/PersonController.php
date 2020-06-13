@@ -661,12 +661,6 @@ class PersonController extends Controller
             $person->parish_name = $person->parish->contact_a->organization_name.' ('.$person->parish->contact_a->address_primary_city.') - '.$person->parish->contact_a->diocese->contact_a->organization_name;
         }
 
-        $preferred_language = \App\Language::whereName($person->preferred_language)->first();
-        if (! empty($preferred_language)) {
-            $person->preferred_language_label = $preferred_language->label;
-        } else {
-            $person->preferred_language_label = 'N/A';
-        }
         $touchpoints = \App\Touchpoint::wherePersonId($person->id)->orderBy('touched_at', 'desc')->with('staff')->get();
         $registrations = \App\Registration::whereContactId($person->id)->get();
         $registrations = $registrations->sortByDesc(function ($registration) {
@@ -755,12 +749,6 @@ class PersonController extends Controller
             $person->parish_id = $person->parish->contact_id_a;
         } else {
             $person->parish_id = 0;
-        }
-        $preferred_language = \App\Language::whereName($person->preferred_language)->first();
-        if (! empty($preferred_language)) {
-            $person->preferred_language_id = $preferred_language->id;
-        } else {
-            $person->preferred_language_id = 0;
         }
 
         //again not at all elegant but this parses out the notes for easy display and use in the edit blade

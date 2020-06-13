@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\EmergencyContact;
 
 /**
  * @see \App\Http\Controllers\PersonController
@@ -128,7 +129,7 @@ class PersonControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('delete-contact');
         $person = factory(\App\Contact::class)->create([
-          'contact_type' => '1',
+          'contact_type' => config('polanco.contact_type.individual'),
           'subcontact_type' => null,
         ]);
 
@@ -176,9 +177,13 @@ class PersonControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-contact');
         $person = factory(\App\Contact::class)->create([
-          'contact_type' => '1',
+          'contact_type' => config('polanco.contact_type.individual'),
           'subcontact_type' => null,
         ]);
+        $emergency_contact = factory(\App\EmergencyContact::class)->create([
+            'contact_id' => $person->id,
+        ]);
+
         // create addresses
         $home_address = factory(\App\Address::class)->create([
             'contact_id' => $person->id,
@@ -282,6 +287,26 @@ class PersonControllerTest extends TestCase
             'website_type' => 'Twitter',
             'url' => 'https://twitter.com/'.$this->faker->slug,
         ]);
+        $note_health = factory(\App\Note::class)->create([
+            'entity_table' => 'contact',
+            'entity_id' => $person->id,
+            'subject' => 'Health Note',
+        ]);
+        $note_dietary = factory(\App\Note::class)->create([
+            'entity_table' => 'contact',
+            'entity_id' => $person->id,
+            'subject' => 'Dietary Note',
+       ]);
+        $note_contact = factory(\App\Note::class)->create([
+            'entity_table' => 'contact',
+            'entity_id' => $person->id,
+            'subject' => 'Contact Note',
+        ]);
+        $note_room_preference = factory(\App\Note::class)->create([
+            'entity_table' => 'contact',
+            'entity_id' => $person->id,
+            'subject' => 'Room Preference',
+        ]);
 
         $response = $this->actingAs($user)->get(route('person.edit', ['person' => $person]));
 
@@ -322,10 +347,10 @@ class PersonControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('emergency_contact_phone', $person->emergency_contact_phone, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('emergency_contact_phone_alternate', $person->emergency_contact_phone_alternate, 'text', $response->getContent()));
         // notes
-        $this->assertTrue($this->findFieldValueInResponseContent('note_health', $person->note_health, 'textarea', $response->getContent()));
-        $this->assertTrue($this->findFieldValueInResponseContent('note_dietary', $person->note_dietary, 'textarea', $response->getContent()));
-        $this->assertTrue($this->findFieldValueInResponseContent('note_contact', $person->note_contact, 'textarea', $response->getContent()));
-        $this->assertTrue($this->findFieldValueInResponseContent('note_room_preference', $person->note_room_preference, 'textarea', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('note_health', $person->note_health_text, 'textarea', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('note_dietary', $person->note_dietary_text, 'textarea', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('note_contact', $person->note_contact_text, 'textarea', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('note_room_preference', $person->note_room_preference_text, 'textarea', $response->getContent()));
         // demographics
         $this->assertTrue($this->findFieldValueInResponseContent('gender_id', $person->gender_id, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('birth_date', $person->birth_date, 'date', $response->getContent()));
@@ -403,6 +428,8 @@ class PersonControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('url_instagram', $url_instagram->url, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('url_linkedin', $url_linkedin->url, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('url_twitter', $url_twitter->url, 'text', $response->getContent()));
+        // TODO: add parish, languages, preferred language
+        // TODO: add some groups and relationships
 
     }
 
@@ -413,7 +440,7 @@ class PersonControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-contact');
         $person = factory(\App\Contact::class)->create([
-          'contact_type' => '1',
+          'contact_type' => config('polanco.contact_type.individual'),
           'subcontact_type' => null,
         ]);
 
@@ -691,6 +718,7 @@ class PersonControllerTest extends TestCase
         $ethnicity = \App\Ethnicity::get()->random();
         $religion = \App\Religion::whereIsActive(1)->get()->random();
         $occupation = \App\Ppd_occupation::get()->random();
+        $preferred_language = \App\Language::whereIsActive(1)->get()->random();
 
         $response = $this->actingAs($user)->post(route('person.store'), [
                 'sort_name' => $last_name.', '.$first_name,
@@ -708,7 +736,7 @@ class PersonControllerTest extends TestCase
                 '$ethnicity_id' => $ethnicity->id,
                 'religion_id' => $religion->id,
                 'occupation_id' => $occupation->id,
-                'preferred_language' => $this->faker->locale,
+                'preferred_language' => $preferred_language->name,
                 'do_not_email' => $this->faker->boolean,
                 'do_not_phone' => $this->faker->boolean,
                 'do_not_mail' => $this->faker->boolean,
@@ -761,6 +789,7 @@ class PersonControllerTest extends TestCase
         $new_sort_name = $this->faker->lastName.', '.$this->faker->firstName;
 
         $response = $this->actingAs($user)->put(route('person.update', [$person]), [
+            'contact_type' => config('polanco.contact_type.individual'),
             'first_name' => $person->first_name,
             'last_name' => $person->last_name,
             'sort_name' => $new_sort_name,

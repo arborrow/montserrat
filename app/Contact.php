@@ -204,6 +204,24 @@ class Contact extends Model
         }
     }
 
+    public function getPreferredLanguageIdAttribute()
+    {
+        if (!empty($this->language_pref)) {
+            return $this->language_pref->id;
+        } else {
+            return;
+        }
+    }
+
+    public function getPreferredLanguageLabelAttribute()
+    {
+        if (!empty($this->language_pref)) {
+            return $this->language_pref->label;
+        } else {
+            return;
+        }
+    }
+
     public function getOrganizationNameAndCityAttribute()
     {
         if (isset($this->address_primary->city)) {

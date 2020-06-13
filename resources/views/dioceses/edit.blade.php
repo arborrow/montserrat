@@ -50,11 +50,11 @@
                         <div class="row">
                             <div class="col-12 col-md-6">
                                 {!! Form::label('street_address', 'Address Line 1') !!}
-                                {!! Form::text('street_address', $diocese->address_primary_street_address, ['class' => 'form-control']) !!}
+                                {!! Form::text('street_address', $diocese->address_primary_street, ['class' => 'form-control']) !!}
                             </div>
                             <div class="col-12 col-md-6">
                                 {!! Form::label('supplemental_address_1', 'Address Line 2') !!}
-                                {!! Form::text('supplemental_address_1', $diocese->address_primary_supplemental_address_1, ['class' => 'form-control']) !!}
+                                {!! Form::text('supplemental_address_1', $diocese->address_primary_supplemental_address, ['class' => 'form-control']) !!}
                             </div>
                             <div class="col-12 col-md-3">
                                 {!! Form::label('city', 'City') !!}
