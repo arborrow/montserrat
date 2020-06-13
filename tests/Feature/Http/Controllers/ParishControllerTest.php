@@ -118,9 +118,6 @@ class ParishControllerTest extends TestCase
             'url' => 'https://twitter.com/'.$this->faker->slug,
         ]);
 
-
-        //TODO: consider adding phone and fax numbers and verifying default values
-
         $response = $this->actingAs($user)->get(route('parish.edit', [$parish]));
 
         $response->assertOk();
