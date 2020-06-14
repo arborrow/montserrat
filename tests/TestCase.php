@@ -9,6 +9,20 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication, HttpTestAssertions;
 
+    protected function stristrarray($array, $str){
+    //This array will hold the indexes of every
+    //element that contains our substring.
+    $indexes = array();
+    foreach($array as $k => $v){
+        //If stristr, add the index to our
+        //$indexes array.
+        if(stristr($v, $str)){
+            $indexes[] = $k;
+        }
+    }
+    return $indexes;
+}
+
     protected function createUserWithPermission(string $permission, array $data = [])
     {
         $reference = \App\Permission::where('name', $permission)->first();
@@ -79,6 +93,8 @@ abstract class TestCase extends BaseTestCase
             case 'textarea': // textarea should be value and then the end of the textarea tag
                 $field_value_string = $field_value."</textarea>";
                 break;
+            case 'multiselect':
+                break;
             default:
                 break;
         }
@@ -106,6 +122,28 @@ abstract class TestCase extends BaseTestCase
                         $value_found = (strpos($contents_array[$line_number], $field_value_string) || strpos($contents_array[$line_number], $field_zero_value_string)) ;
                     }
                     // dd($value_found, strpos($contents_array[$line_number], $field_value_string),  )
+                    break;
+                case 'multiselect' : //count the number of selected options on the line & count the number of selected default field values - then compare that they are the same
+                    $results = [];
+                    if (is_null($field_value)) {
+                        $value_found = (!(strpos($contents_array[$line_number], "selected=\"selected\"")) || strpos($contents_array[$line_number], $field_zero_value_string));
+                    } else { // build array $results of selected values
+                        foreach ($field_value as $key => $value) {
+                            $field_value_string = "<option value=\"".$value."\" selected=\"selected\">";
+                            $field_no_value_string = "<option value=\"\" selected=\"selected\">";
+                            $field_zero_value_string = "<option value=\"0\" selected=\"selected\">";
+
+                            $value_found = boolval(strpos($contents_array[$line_number], $field_value_string) || strpos($contents_array[$line_number], $field_zero_value_string)) ;
+                            $results[$key] = $value_found;
+                        }
+                        $options = explode("<option ",$contents_array[$line_number]);
+                        $options_count = count($this->stristrarray($options, "selected=\"selected\">"));
+                        $results_count = count($this->stristrarray($results,'1'));
+
+//                        dd(count($selected_options), count($field_value), $value_found, $field_name, $field_value,$line_number,$contents_array[$line_number],$results, $options);
+                    }
+                    // dd(count($field_value), $field_value, $options_count, $options, $results_count, $results);
+                    return ($options_count == $results_count) && (count($field_value) == $results_count);
                     break;
                 case 'text' :
                     if (is_null($field_value)) { //if there is no value there shouldn't be a default value

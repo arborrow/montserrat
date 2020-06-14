@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\ContactLanguage;
 use App\EmergencyContact;
 
 /**
@@ -190,6 +191,21 @@ class PersonControllerTest extends TestCase
             'is_active' => 1,
         ]);
 
+        $languages = \App\Language::whereIsActive(1)->get()->random(2);
+        foreach ($languages as $language) {
+                $contact_language = new \App\ContactLanguage ;
+                $contact_language->contact_id = $person->id;
+                $contact_language->language_id = $language->id;
+                $contact_language->save();
+        };
+        $referrals = \App\Referral::whereIsActive(1)->get()->random(2);
+        foreach ($referrals as $referral) {
+                $contact_referral = new \App\ContactReferral ;
+                $contact_referral->contact_id = $person->id;
+                $contact_referral->referral_id = $referral->id;
+                $contact_referral->save();
+        };
+
         $emergency_contact = factory(\App\EmergencyContact::class)->create([
             'contact_id' => $person->id,
         ]);
@@ -368,12 +384,15 @@ class PersonControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('occupation_id', $person->occupation_id, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('parish_id', $person->parish_id, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('ethnicity_id', $person->ethnicity_id, 'select', $response->getContent()));
-        // TODO: $this->assertTrue($this->findFieldValueInResponseContent('languages', $person->languages->pluck('id'), 'select', $response->getContent()));
+
+        $this->assertTrue($this->findFieldValueInResponseContent('languages[]', $person->languages->pluck('id'), 'multiselect', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('referrals[]', $person->referrals->pluck('id'), 'multiselect', $response->getContent()));
+
         $this->assertTrue($this->findFieldValueInResponseContent('preferred_language_id', $person->preferred_language_id, 'select', $response->getContent()));
-        // TODO: $this->assertTrue($this->findFieldValueInResponseContent('referrals', $person->referrals->pluck('id')->toArray(), 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('is_deceased', $person->is_deceased, 'checkbox', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('deceased_date', $person->deceased_date, 'date', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('gender_id', $person->gender_id, 'select', $response->getContent()));
+
         // groups and relationships
         $this->assertTrue($this->findFieldValueInResponseContent('is_donor', $person->is_donor, 'checkbox', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('is_steward', $person->is_steward, 'checkbox', $response->getContent()));
@@ -438,9 +457,8 @@ class PersonControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('url_instagram', $url_instagram->url, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('url_linkedin', $url_linkedin->url, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('url_twitter', $url_twitter->url, 'text', $response->getContent()));
-        // TODO: add languages
         // TODO: add some groups and relationships
-        
+
     }
 
     /**
