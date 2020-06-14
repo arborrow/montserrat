@@ -18,7 +18,7 @@ class Registration extends Model
         'arrived_at',
         'departed_at',
     ];
-    protected $fillable = ['contact_id', 'event_id', 'status_id', 'role_id'];
+    protected $fillable = ['contact_id', 'event_id', 'status_id', 'role_id','notes','register_date'];
 
     public function getAttendanceConfirmDateTextAttribute()
     {

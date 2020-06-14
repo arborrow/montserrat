@@ -208,7 +208,10 @@ class RetreatController extends Controller
               'event_id' => $event_id,
               'status_id' => config('polanco.registration_status_id.registered'),
               'role_id' => $participant_role_id,
+              'register_date' => now(),
             ]);
+            $new_director->notes = 'Automatically registered by Polanco as '.$new_director->participant_role_name;
+            $new_director->save();
             return true;
         } else {
             return false;
