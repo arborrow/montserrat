@@ -51,7 +51,70 @@ class DioceseControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-contact');
-        $diocese = factory(\App\Diocese::class)->create();
+        $diocese = factory(\App\Contact::class)->create([
+            'contact_type' => config('polanco.contact_type.organization'),
+            'subcontact_type' => config('polanco.contact_type.diocese'),
+        ]);
+        $main_address = factory(\App\Address::class)->create([
+            'contact_id' => $diocese->id,
+            'location_type_id' => config('polanco.location_type.main'),
+            'is_primary' => 1,
+        ]);
+
+        $main_phone = factory(\App\Phone::class)->create([
+            'contact_id' => $diocese->id,
+            'location_type_id' =>  config('polanco.location_type.main'),
+            'is_primary' => 1,
+            'phone_type' => 'Phone',
+        ]);
+
+        $main_fax = factory(\App\Phone::class)->create([
+            'contact_id' => $diocese->id,
+            'location_type_id' =>  config('polanco.location_type.main'),
+            'phone_type' => 'Fax',
+        ]);
+
+        $main_email = factory(\App\Email::class)->create([
+            'contact_id' => $diocese->id,
+            'is_primary' => 1,
+            'location_type_id' => config('polanco.location_type.main'),
+        ]);
+
+        $url_main = factory(\App\Website::class)->create([
+            'contact_id' => $diocese->id,
+            'website_type' => 'Main',
+            'url' => $this->faker->url,
+        ]);
+        $url_work = factory(\App\Website::class)->create([
+            'contact_id' => $diocese->id,
+            'website_type' => 'Work',
+            'url' => $this->faker->url,
+        ]);
+        $url_facebook = factory(\App\Website::class)->create([
+            'contact_id' => $diocese->id,
+            'website_type' => 'Facebook',
+            'url' => 'https://facebook.com/'.$this->faker->slug,
+        ]);
+        $url_google = factory(\App\Website::class)->create([
+            'contact_id' => $diocese->id,
+            'website_type' => 'Google',
+            'url' => 'https://google.com/'.$this->faker->slug,
+        ]);
+        $url_instagram = factory(\App\Website::class)->create([
+            'contact_id' => $diocese->id,
+            'website_type' => 'Instagram',
+            'url' => 'https://instagram.com/'.$this->faker->slug,
+        ]);
+        $url_linkedin = factory(\App\Website::class)->create([
+            'contact_id' => $diocese->id,
+            'website_type' => 'LinkedIn',
+            'url' => 'https://linkedin.com/'.$this->faker->slug,
+        ]);
+        $url_twitter = factory(\App\Website::class)->create([
+            'contact_id' => $diocese->id,
+            'website_type' => 'Twitter',
+            'url' => 'https://twitter.com/'.$this->faker->slug,
+        ]);
 
         $response = $this->actingAs($user)->get(route('diocese.edit', [$diocese]));
 
@@ -64,6 +127,27 @@ class DioceseControllerTest extends TestCase
         $response->assertViewHas('defaults');
         $response->assertSeeText('Edit');
         $response->assertSeeText($diocese->display_name);
+
+        $this->assertTrue($this->findFieldValueInResponseContent('bishop_id', $diocese->bishop_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('organization_name', $diocese->organization_name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('display_name', $diocese->display_name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('sort_name', $diocese->sort_name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('street_address', $diocese->address_primary_street, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('supplemental_address_1', $diocese->address_primary_supplemental_address, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('city', $diocese->address_primary_city, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('state_province_id', $diocese->address_primary_state_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('postal_code', $diocese->address_primary_postal_code, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('phone_main_phone', $diocese->phone_main_phone_number, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('phone_main_fax', $diocese->phone_main_fax_number, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('email_primary', $diocese->email_primary_text, 'text', $response->getContent()));
+
+        // urls
+        $this->assertTrue($this->findFieldValueInResponseContent('url_main', $url_main->url, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('url_work', $url_work->url, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('url_facebook', $url_facebook->url, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('url_instagram', $url_instagram->url, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('url_linkedin', $url_linkedin->url, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('url_twitter', $url_twitter->url, 'text', $response->getContent()));
     }
 
     /**

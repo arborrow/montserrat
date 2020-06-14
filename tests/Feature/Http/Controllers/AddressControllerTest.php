@@ -51,11 +51,13 @@ class AddressControllerTest extends TestCase
      */
     public function edit_returns_an_ok_response()
     {
-        $address = factory(\App\Address::class)->create();
+        $address = factory(\App\Address::class)->create([
+            'is_primary' => false,
+        ]);
         $user = $this->createUserWithPermission('update-address');
 
         $response = $this->actingAs($user)->get(route('address.edit', [$address]));
-
+        // dd($response);
         $response->assertOk();
         $response->assertViewIs('addresses.edit');
         $response->assertViewHas('address');
@@ -64,7 +66,16 @@ class AddressControllerTest extends TestCase
         $response->assertViewHas('contacts');
         $response->assertViewHas('location_types');
         $response->assertSeeText('Edit address');
-        // TODO: would be nice to assertSeeText($address->street_address) is the default/populated value of the field but I couldn't figure out why this text is not in the response
+
+        $this->assertTrue($this->findFieldValueInResponseContent('contact_id', $address->contact_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('location_type_id', $address->location_type_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('street_address', $address->street_address, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('supplemental_address_1', $address->supplemental_address_1, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('city', $address->city, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('state_province_id', $address->state_province_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('postal_code', $address->postal_code, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('country_id', $address->country_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('is_primary', $address->is_primary, 'checkbox', $response->getContent()));
     }
 
     /**

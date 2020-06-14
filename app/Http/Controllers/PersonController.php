@@ -652,7 +652,7 @@ class PersonController extends Controller
                 }
             }
         }
-
+        /*
         //not pretty but moves some of the processing to the controller rather than the blade
         $person->parish_id = '';
         $person->parish_name = '';
@@ -660,13 +660,7 @@ class PersonController extends Controller
             $person->parish_id = $person->parish->contact_id_a;
             $person->parish_name = $person->parish->contact_a->organization_name.' ('.$person->parish->contact_a->address_primary_city.') - '.$person->parish->contact_a->diocese->contact_a->organization_name;
         }
-
-        $preferred_language = \App\Language::whereName($person->preferred_language)->first();
-        if (! empty($preferred_language)) {
-            $person->preferred_language_label = $preferred_language->label;
-        } else {
-            $person->preferred_language_label = 'N/A';
-        }
+        */
         $touchpoints = \App\Touchpoint::wherePersonId($person->id)->orderBy('touched_at', 'desc')->with('staff')->get();
         $registrations = \App\Registration::whereContactId($person->id)->get();
         $registrations = $registrations->sortByDesc(function ($registration) {
@@ -755,12 +749,6 @@ class PersonController extends Controller
             $person->parish_id = $person->parish->contact_id_a;
         } else {
             $person->parish_id = 0;
-        }
-        $preferred_language = \App\Language::whereName($person->preferred_language)->first();
-        if (! empty($preferred_language)) {
-            $person->preferred_language_id = $preferred_language->id;
-        } else {
-            $person->preferred_language_id = 0;
         }
 
         //again not at all elegant but this parses out the notes for easy display and use in the edit blade
@@ -864,7 +852,7 @@ class PersonController extends Controller
         }
 
         foreach ($person->phones as $phone) {
-            $defaults[$phone->location->name][$phone->phone_type] = $phone->phone;
+            $defaults[$phone->location->name][$phone->phone_type] = $phone->phone.$phone->phone_extension;
         }
 
         foreach ($person->emails as $email) {
@@ -1090,8 +1078,9 @@ class PersonController extends Controller
         $other_address->postal_code = $request->input('address_other_zip');
         $other_address->country_id = $request->input('address_other_country');
         $other_address->save();
-
+        // because of how the phone_ext field is handled by the model, reset to null on every update to ensure it gets removed and then re-added during the update
         $phone_home_phone = \App\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.home'), 'phone_type'=>'Phone']);
+        $phone_home_phone->phone_ext = null;
         $phone_home_phone->contact_id = $person->id;
         $phone_home_phone->location_type_id = config('polanco.location_type.home');
         $phone_home_phone->phone = $request->input('phone_home_phone');
@@ -1099,6 +1088,7 @@ class PersonController extends Controller
         $phone_home_phone->save();
 
         $phone_home_mobile = \App\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.home'), 'phone_type'=>'Mobile']);
+        $phone_home_mobile->phone_ext = null;
         $phone_home_mobile->contact_id = $person->id;
         $phone_home_mobile->location_type_id = config('polanco.location_type.home');
         $phone_home_mobile->phone = $request->input('phone_home_mobile');
@@ -1106,6 +1096,7 @@ class PersonController extends Controller
         $phone_home_mobile->save();
 
         $phone_home_fax = \App\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.home'), 'phone_type'=>'Fax']);
+        $phone_home_fax->phone_ext = null;
         $phone_home_fax->contact_id = $person->id;
         $phone_home_fax->location_type_id = config('polanco.location_type.home');
         $phone_home_fax->phone = $request->input('phone_home_fax');
@@ -1113,6 +1104,7 @@ class PersonController extends Controller
         $phone_home_fax->save();
 
         $phone_work_phone = \App\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.work'), 'phone_type'=>'Phone']);
+        $phone_work_phone->phone_ext = null;
         $phone_work_phone->contact_id = $person->id;
         $phone_work_phone->location_type_id = config('polanco.location_type.work');
         $phone_work_phone->phone = $request->input('phone_work_phone');
@@ -1120,6 +1112,7 @@ class PersonController extends Controller
         $phone_work_phone->save();
 
         $phone_work_mobile = \App\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.work'), 'phone_type'=>'Mobile']);
+        $phone_work_mobile->phone_ext = null;
         $phone_work_mobile->contact_id = $person->id;
         $phone_work_mobile->location_type_id = config('polanco.location_type.work');
         $phone_work_mobile->phone = $request->input('phone_work_mobile');
@@ -1127,6 +1120,7 @@ class PersonController extends Controller
         $phone_work_mobile->save();
 
         $phone_work_fax = \App\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.work'), 'phone_type'=>'Fax']);
+        $phone_work_fax->phone_ext = null;
         $phone_work_fax->contact_id = $person->id;
         $phone_work_fax->location_type_id = config('polanco.location_type.work');
         $phone_work_fax->phone = $request->input('phone_work_fax');
@@ -1134,6 +1128,7 @@ class PersonController extends Controller
         $phone_work_fax->save();
 
         $phone_other_phone = \App\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.other'), 'phone_type'=>'Phone']);
+        $phone_other_phone->phone_ext = null;
         $phone_other_phone->contact_id = $person->id;
         $phone_other_phone->location_type_id = config('polanco.location_type.other');
         $phone_other_phone->phone = $request->input('phone_other_phone');
@@ -1141,6 +1136,7 @@ class PersonController extends Controller
         $phone_other_phone->save();
 
         $phone_other_mobile = \App\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.other'), 'phone_type'=>'Mobile']);
+        $phone_other_mobile->phone_ext = null;
         $phone_other_mobile->contact_id = $person->id;
         $phone_other_mobile->location_type_id = config('polanco.location_type.other');
         $phone_other_mobile->phone = $request->input('phone_other_mobile');
@@ -1148,6 +1144,7 @@ class PersonController extends Controller
         $phone_other_mobile->save();
 
         $phone_other_fax = \App\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.other'), 'phone_type'=>'Fax']);
+        $phone_other_fax->phone_ext = null;
         $phone_other_fax->contact_id = $person->id;
         $phone_other_fax->location_type_id = config('polanco.location_type.other');
         $phone_other_fax->phone = $request->input('phone_other_fax');
@@ -1584,7 +1581,7 @@ class PersonController extends Controller
     }
 
     public function ambassadors()
-    {   
+    {
         return $this->role(config('polanco.group_id.ambassador'));
     }
 

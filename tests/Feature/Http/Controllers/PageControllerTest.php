@@ -167,7 +167,6 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('reports.finance.agcacknowledge');
         $response->assertViewHas('donation');
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -198,7 +197,6 @@ class PageControllerTest extends TestCase
         $response->assertViewHas('grouped_payments');
         $response->assertViewHas('grand_total');
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -216,7 +214,6 @@ class PageControllerTest extends TestCase
         $response->assertViewHas('grouped_payments');
         $response->assertViewHas('grand_total');
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -278,7 +275,6 @@ class PageControllerTest extends TestCase
         $response->assertViewHas('diffpg');
         $response->assertViewHas('diffrg');
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -300,7 +296,6 @@ class PageControllerTest extends TestCase
         $response->assertViewHas('grouped_donations');
         $response->assertViewHas('donations');
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -451,7 +446,6 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('reports.retreatroster');
         $response->assertViewHas('registrations');
 
-        // TODO: perform additional assertions
     }
 
     /**

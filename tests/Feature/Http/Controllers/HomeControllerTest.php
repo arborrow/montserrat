@@ -21,7 +21,6 @@ class HomeControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('pages.goodbye');
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -36,7 +35,6 @@ class HomeControllerTest extends TestCase
         $response->assertSee('Welcome to Polanco');
         $response->assertViewHas('quote');
 
-        // TODO: perform additional assertions
     }
 
     // test cases...

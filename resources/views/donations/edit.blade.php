@@ -50,11 +50,11 @@
                     </div>
                     <div class="col-12 col-md-4">
                         {!! Form::label('start_date_only', 'Start date')  !!}
-                        {!! Form::text('start_date_only', $donation->start_date, ['class' => 'form-control flatpickr-date']) !!}
+                        {!! Form::date('start_date_only', $donation->start_date, ['class' => 'form-control flatpickr-date']) !!}
                     </div>
                     <div class="col-12 col-md-4">
                         {!! Form::label('end_date_only', 'End date')  !!}
-                        {!! Form::text('end_date_only', $donation->end_date, ['class' => 'form-control flatpickr-date']) !!}
+                        {!! Form::date('end_date_only', $donation->end_date, ['class' => 'form-control flatpickr-date']) !!}
                     </div>
                 </div>
                 <div class="row">

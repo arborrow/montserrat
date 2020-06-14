@@ -23,7 +23,7 @@ $factory->define(App\Donation::class, function (Faker $faker) {
         'Arrupe Donation Description' => $faker->word,
         'Target Amount' => $faker->randomNumber(),
         'Donation Type ID' => $faker->randomNumber(),
-        'Thank You' => $faker->word,
+        'Thank You' => $faker->randomElement($array = array ('Y','N')),
         'AGC Donation Description' => $faker->word,
         'Pledge' => $faker->word,
         'contact_id' => function () {

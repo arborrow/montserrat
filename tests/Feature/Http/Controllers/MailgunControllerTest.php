@@ -31,7 +31,6 @@ class MailgunControllerTest extends TestCase
             $response->assertSee('Mailgun configuration');
         }
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -54,7 +53,6 @@ class MailgunControllerTest extends TestCase
             $response->assertSee('Mailgun configuration');
         }
 
-        // TODO: perform additional assertions
     }
 
     // test cases...

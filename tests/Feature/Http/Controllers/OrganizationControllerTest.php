@@ -30,7 +30,6 @@ class OrganizationControllerTest extends TestCase
         $response->assertViewHas('countries');
         $response->assertViewHas('defaults');
         $response->assertSeeText('Add an Organization');
-        // TODO: perform additional assertions
     }
 
     /**
@@ -46,7 +45,6 @@ class OrganizationControllerTest extends TestCase
         $response->assertRedirect(action('OrganizationController@index'));
         $this->assertSoftDeleted($organization);
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -55,7 +53,73 @@ class OrganizationControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-contact');
-        $organization = factory(\App\Organization::class)->create();
+        $organization = factory(\App\Contact::class)->create([
+            'contact_type' => config('polanco.contact_type.organization'),
+        ]);
+
+        $organization_note = factory(\App\Note::class)->create([
+            'entity_table' => 'contact',
+            'entity_id' => $organization->id,
+            'subject' => 'Organization Note',
+        ]);
+
+        $main_address = factory(\App\Address::class)->create([
+            'contact_id' => $organization->id,
+            'location_type_id' => config('polanco.location_type.main'),
+            'is_primary' => 1,
+        ]);
+
+        $main_phone = factory(\App\Phone::class)->create([
+            'contact_id' => $organization->id,
+            'location_type_id' =>  config('polanco.location_type.main'),
+            'is_primary' => 1,
+            'phone_type' => 'Phone',
+        ]);
+
+        $main_fax = factory(\App\Phone::class)->create([
+            'contact_id' => $organization->id,
+            'location_type_id' =>  config('polanco.location_type.main'),
+            'phone_type' => 'Fax',
+        ]);
+
+        $main_email = factory(\App\Email::class)->create([
+            'contact_id' => $organization->id,
+            'is_primary' => 1,
+            'location_type_id' => config('polanco.location_type.main'),
+        ]);
+
+
+        $url_main = factory(\App\Website::class)->create([
+            'contact_id' => $organization->id,
+            'website_type' => 'Main',
+            'url' => $this->faker->url,
+        ]);
+        $url_work = factory(\App\Website::class)->create([
+            'contact_id' => $organization->id,
+            'website_type' => 'Work',
+            'url' => $this->faker->url,
+        ]);
+        $url_facebook = factory(\App\Website::class)->create([
+            'contact_id' => $organization->id,
+            'website_type' => 'Facebook',
+            'url' => 'https://facebook.com/'.$this->faker->slug,
+        ]);
+        $url_instagram = factory(\App\Website::class)->create([
+            'contact_id' => $organization->id,
+            'website_type' => 'Instagram',
+            'url' => 'https://instagram.com/'.$this->faker->slug,
+        ]);
+        $url_linkedin = factory(\App\Website::class)->create([
+            'contact_id' => $organization->id,
+            'website_type' => 'LinkedIn',
+            'url' => 'https://linkedin.com/'.$this->faker->slug,
+        ]);
+        $url_twitter = factory(\App\Website::class)->create([
+            'contact_id' => $organization->id,
+            'website_type' => 'Twitter',
+            'url' => 'https://twitter.com/'.$this->faker->slug,
+        ]);
+
         $response = $this->actingAs($user)->get(route('organization.edit', ['organization' => $organization]));
 
         $response->assertOk();
@@ -66,7 +130,28 @@ class OrganizationControllerTest extends TestCase
         $response->assertViewHas('defaults');
         $response->assertViewHas('subcontact_types');
 
-        // TODO: perform additional assertions
+        $this->assertTrue($this->findFieldValueInResponseContent('organization_name', $organization->organization_name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('subcontact_type', $organization->subcontact_type, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('display_name', $organization->display_name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('sort_name', $organization->sort_name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('street_address', $organization->address_primary_street, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('supplemental_address_1', $organization->address_primary_supplemental_address, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('city', $organization->address_primary_city, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('state_province_id', $organization->address_primary_state_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('postal_code', $organization->address_primary_postal_code, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('phone_main_phone', $organization->phone_main_phone_number, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('phone_main_fax', $organization->phone_main_fax_number, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('email_primary', $organization->email_primary_text, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('note', $organization->note_organization_text, 'textarea', $response->getContent()));
+
+        // urls
+        $this->assertTrue($this->findFieldValueInResponseContent('url_main', $url_main->url, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('url_work', $url_work->url, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('url_facebook', $url_facebook->url, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('url_instagram', $url_instagram->url, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('url_linkedin', $url_linkedin->url, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('url_twitter', $url_twitter->url, 'text', $response->getContent()));
+        
     }
 
     /**
@@ -118,7 +203,6 @@ class OrganizationControllerTest extends TestCase
         $response->assertViewHas('relationship_types');
         $response->assertSeeText($organization->organization_name);
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -180,7 +264,6 @@ class OrganizationControllerTest extends TestCase
         $this->assertEquals($updated->sort_name, $organization_name);
         $this->assertNotEquals($updated->organization_name, $original_name);
 
-        // TODO: perform additional assertions
     }
 
     /**

@@ -9,5 +9,7 @@ $factory->define(App\Website::class, function (Faker $faker) {
         'contact_id' => function () {
             return factory(App\Contact::class)->create()->id;
         },
+        'url' => $faker->url,
+        'website_type' => $faker->randomElement(['Personal','Work','Main','Facebook','Google','Other','Instagram','LinkedIn','MySpace','Pinterest','SnapChat','Tumblr','Twitter','Vine']),
     ];
 });

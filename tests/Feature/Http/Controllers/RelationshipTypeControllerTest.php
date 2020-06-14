@@ -134,6 +134,24 @@ class RelationshipTypeControllerTest extends TestCase
         $response->assertViewHas('relationship_type');
         $response->assertSeeText('Edit Relationship Type');
         $response->assertSeeText($relationship_type->description);
+
+        $this->assertTrue($this->findFieldValueInResponseContent('name_a_b', $relationship_type->name_a_b, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('label_a_b', $relationship_type->label_a_b, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('name_b_a', $relationship_type->name_b_a, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('label_b_a', $relationship_type->label_b_a, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('description', $relationship_type->description, 'textarea', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('is_active', $relationship_type->is_active, 'checkbox', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('is_reserved', $relationship_type->is_reserved, 'checkbox', $response->getContent()));
+
+/*
+{!! Form::text('name_a_b', $relationship_type->name_a_b, ['class' => 'col-md-3']) !!}
+{!! Form::text('label_a_b', $relationship_type->label_a_b, ['class' => 'col-md-3']) !!}
+{!! Form::text('name_b_a', $relationship_type->name_b_a, ['class' => 'col-md-3']) !!}
+{!! Form::text('label_b_a', $relationship_type->label_b_a, ['class' => 'col-md-3']) !!}
+{!! Form::textarea('description', $relationship_type->description, ['class' => 'col-md-3']) !!}
+{!! Form::checkbox('is_active', true, $relationship_type->is_active,['class' => 'col-md-1']) !!}
+{!! Form::checkbox('is_reserved', false, $relationship_type->is_reserved, ['class' => 'col-md-1']) !!}
+ */
     }
 
     /**
@@ -248,7 +266,6 @@ class RelationshipTypeControllerTest extends TestCase
           'description' => $description,
         ]);
 
-        // TODO: perform additional assertions
     }
 
     /**

@@ -35,7 +35,6 @@ class RegistrationControllerTest extends TestCase
         $response->assertViewHas('defaults');
         $response->assertSeeText('Add A Registration');
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -236,7 +235,37 @@ class RegistrationControllerTest extends TestCase
         $response->assertViewHas('defaults');
         $response->assertSeeText('Edit Registration');
         $response->assertSeeText($registration->notes);
+
+        $this->assertTrue($this->findFieldValueInResponseContent('event_id', $registration->event_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('register_date', $registration->register_date, 'date', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('source', $registration->source, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('status_id', $registration->status_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('registration_confirm_date', $registration->registration_confirm_date, 'date', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('confirmed_by', $registration->confirmed_by, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('arrived_at', $registration->arrived_at, 'datetime', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('departed_at', $registration->departed_at, 'datetime', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('canceled_at', $registration->canceled_at, 'date', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('room_id', $registration->room_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('deposit', number_format($registration->deposit,2,".",""), 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('notes', $registration->notes, 'textarea', $response->getContent()));
+
     }
+
+    /*
+    {!! Form::select('event_id', $retreats, $registration->event_id, ['class' => 'form-control']) !!}
+{!! Form::date('register_date', isset($registration->register_date) ? $registration->register_date : now() , ['class'=>'form-control flatpickr-date']) !!}
+{!! Form::select('source', $defaults['registration_source'], $registration->source, ['class' => 'form-control']) !!}
+{!! Form::select('status_id', $defaults['participant_status_type'], $registration->status_id, ['class' => 'form-control']) !!}
+    {!! Form::date('registration_confirm_date', $registration->registration_confirm_date, ['class'=>'form-control flatpickr-date']) !!}
+{!! Form::text('confirmed_by', $registration->confirmed_by, ['class'=>'form-control']) !!}
+{!! Form::date('arrived_at', $registration->arrived_at, ['class'=>'form-control flatpickr-date-time']) !!}
+{!! Form::date('departed_at', $registration->departed_at, ['class'=>'form-control flatpickr-date-time']) !!}
+{!! Form::date('canceled_at', $registration->canceled_at, ['class'=>'form-control flatpickr-date']) !!}
+{!! Form::select('room_id', $rooms, $registration->room_id, ['class' => 'form-control']) !!}
+{!! Form::text('deposit', $registration->deposit, ['class'=>'form-control']) !!}
+{!! Form::textarea('notes', $registration->notes, ['class'=>'form-control', 'rows'=>'3']) !!}
+
+     */
 
     /**
      * @test
@@ -329,7 +358,6 @@ class RegistrationControllerTest extends TestCase
           'notes' => $event->idnumber.' registration email sent.',
         ]);
 
-        // TODO: perform additional assertions
     }
 
     /**

@@ -59,6 +59,28 @@ class RoomControllerTest extends TestCase
         $room_data = $response->viewData('room');
         $this->assertEquals($room_data->description, $room->description);
         $response->assertSeeText('Edit Room');
+
+        $this->assertTrue($this->findFieldValueInResponseContent('location_id', $room->location_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('name', $room->name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('description', $room->description, 'textarea', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('notes', $room->notes, 'textarea', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('access', $room->access, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('type', $room->type, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('occupancy', $room->occupancy, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('status', $room->status, 'text', $response->getContent()));
+
+
+        /*
+        {!! Form::select('location_id', $locations, $room->location_id, ['class' => 'col-md-2']) !!}
+{!! Form::text('name', $room->name, ['class' => 'col-md-2']) !!}
+{!! Form::textarea('description', $room->description, ['class' => 'col-md-5', 'rows'=>'3']) !!}
+{!! Form::textarea('notes', $room->notes, ['class' => 'col-md-5', 'rows'=>'3']) !!}
+{!! Form::text('access', $room->access, ['class' => 'col-md-1']) !!}
+{!! Form::text('type', $room->type, ['class' => 'col-md-1']) !!}
+{!! Form::text('occupancy', $room->occupancy, ['class' => 'col-md-1']) !!}
+{!! Form::text('status', $room->status, ['class' => 'col-md-1']) !!}
+
+         */
     }
 
     /**

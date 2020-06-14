@@ -204,6 +204,24 @@ class Contact extends Model
         }
     }
 
+    public function getPreferredLanguageIdAttribute()
+    {
+        if (!empty($this->language_pref)) {
+            return $this->language_pref->id;
+        } else {
+            return;
+        }
+    }
+
+    public function getPreferredLanguageLabelAttribute()
+    {
+        if (!empty($this->language_pref)) {
+            return $this->language_pref->label;
+        } else {
+            return;
+        }
+    }
+
     public function getOrganizationNameAndCityAttribute()
     {
         if (isset($this->address_primary->city)) {
@@ -714,6 +732,15 @@ class Contact extends Model
         }
     }
 
+    public function getParishIdAttribute()
+    {
+        if (isset($this->parish->contact_id_a) && ($this->parish->contact_id_a > 0)) {
+            return $this->parish->contact_id_a;
+        } else {
+            return;
+        }
+    }
+
     public function getParishNameAttribute()
     {
         if (isset($this->parish->contact_id_a) && ($this->parish->contact_id_a > 0)) {
@@ -963,6 +990,14 @@ class Contact extends Model
     public function pastor()
     {
         return $this->hasOne(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.pastor'));
+    }
+
+    public function getPastorIdAttribute() {
+        if (isset($this->pastor->contact_id_b)) {
+            return $this->pastor->contact_id_b;
+        } else {
+            return 0;
+        }
     }
 
     public function phones()

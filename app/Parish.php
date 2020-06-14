@@ -23,6 +23,15 @@ class Parish extends Model
 
     public function pastor()
     {
-        return $this->hasOne(Person::class, 'id', 'pastor_id');
+        return $this->hasOne(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.pastor'));
     }
+
+    public function getPastorIdAttribute() {
+        if (isset($this->pastor)) {
+            return $this->pastor->contact_id_b;
+        } else {
+            return 0;
+        }
+    }
+
 }

@@ -3,6 +3,7 @@
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
 use Faker\Generator as Faker;
+use App\Language;
 
 $factory->define(App\Contact::class, function (Faker $faker) {
     $first_name = $faker->firstName;
@@ -12,6 +13,9 @@ $factory->define(App\Contact::class, function (Faker $faker) {
     $ethnicity = \App\Ethnicity::get()->random();
     $religion = \App\Religion::whereIsActive(1)->get()->random();
     $occupation = \App\Ppd_occupation::get()->random();
+    $preferred_language = \App\Language::whereIsActive(1)->get()->random();
+    $suffix = \App\Suffix::get()->random();
+    $prefix = \App\Prefix::get()->random();
 
     return [
         'contact_type' => $faker->numberBetween(1, 3),
@@ -28,7 +32,7 @@ $factory->define(App\Contact::class, function (Faker $faker) {
         'legal_name' => $display_name,
         'image_URL' => $faker->word,
         'preferred_communication_method' => $faker->word,
-        'preferred_language' => $faker->locale,
+        'preferred_language' => $preferred_language->name,
         'preferred_mail_format' => $faker->word,
         'hash' => $faker->word,
         'api_key' => $faker->word,
@@ -36,6 +40,8 @@ $factory->define(App\Contact::class, function (Faker $faker) {
         'first_name' => $first_name,
         'middle_name' => $faker->firstName,
         'last_name' => $last_name,
+        'prefix_id' => $prefix->id,
+        'suffix_id' => $suffix->id,
         'email_greeting_custom' => $faker->word,
         'email_greeting_display' => $faker->word,
         'postal_greeting_custom' => $faker->word,

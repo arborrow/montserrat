@@ -28,7 +28,6 @@ class DonationControllerTest extends TestCase
         $response->assertViewHas('donations');
         $response->assertViewHas('total');
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -42,7 +41,6 @@ class DonationControllerTest extends TestCase
 
         $response->assertNotFound();
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -61,7 +59,6 @@ class DonationControllerTest extends TestCase
         $response->assertViewHas('payment_methods');
         $response->assertViewHas('defaults');
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -79,7 +76,6 @@ class DonationControllerTest extends TestCase
 
         $this->assertSoftDeleted($donation);
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -99,7 +95,33 @@ class DonationControllerTest extends TestCase
         $response->assertViewHas('defaults');
         $response->assertViewHas('retreats');
 
-        // TODO: perform additional assertions
+        $this->assertTrue($this->findFieldValueInResponseContent('donation_description', $donation->description->id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('event_id', $donation->event_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('donation_date', $donation->donation_date, 'date', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('donation_amount', $donation->donation_amount, 'number', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('notes1', $donation->Notes1, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('notes', $donation->Notes, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('terms', $donation->terms, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('start_date_only', $donation->start_date, 'date', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('end_date_only', $donation->end_date, 'date', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('donation_install', $donation->donation_install, 'number', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('donation_thank_you', $donation->donation_thank_you_sent, 'select', $response->getContent()));
+        // TODO: clean up Donation.thank_you field so that it only contains Y or N and consider switching to boolean field
+
+/*
+        {!! Form::select('donation_description', $descriptions, $defaults['description_key'], ['class' => 'form-control']) !!}
+        {!! Form::select('event_id', $retreats, $donation->event_id, ['class' => 'form-control']) !!}
+        {!! Form::date('donation_date', $donation->donation_date, ['class'=>'form-control flatpickr-date']) !!}
+        {!! Form::number('donation_amount', $donation->donation_amount, ['class' => 'form-control','step'=>'0.01']) !!}
+        {!! Form::text('notes1', $donation->Notes1, ['class' => 'form-control']) !!}
+        {!! Form::text('notes', $donation->Notes, ['class' => 'form-control']) !!}
+        {!! Form::text('terms', $donation->terms, ['class' => 'form-control']) !!}
+        {!! Form::text('start_date_only', $donation->start_date, ['class' => 'form-control flatpickr-date']) !!}
+        {!! Form::text('end_date_only', $donation->end_date, ['class' => 'form-control flatpickr-date']) !!}
+        {!! Form::number('donation_install', $donation->donation_install, ['class' => 'form-control','step'=>'0.01']) !!}
+        {!! Form::select('donation_thank_you', ['Y' => 'Yes','N' => 'No'], $donation->donation_thank_you_sent, ['class' => 'form-control']) !!}
+*/
+
     }
 
     /**
@@ -115,7 +137,6 @@ class DonationControllerTest extends TestCase
         $response->assertViewIs('donations.index');
         $response->assertViewHas('donations');
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -154,7 +175,6 @@ class DonationControllerTest extends TestCase
         $response->assertViewIs('donations.overpaid');
         $response->assertViewHas('overpaid');
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -211,7 +231,6 @@ class DonationControllerTest extends TestCase
         $response->assertViewIs('donations.show');
         $response->assertViewHas('donation');
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -225,7 +244,6 @@ class DonationControllerTest extends TestCase
         $start_date_only = $this->faker->dateTimeBetween('this week', '+7 days');
 
         $response = $this->actingAs($user)->post(route('donation.store'), [
-            // TODO: send request data
             'donor_id' => $donor->id,
             'event_id' => $event->id,
             'donation_date' => $this->faker->dateTime(),
@@ -239,14 +257,12 @@ class DonationControllerTest extends TestCase
             // 'end_date_only' => $this->faker->dateTimeBetween($start_date_only, strtotime('+7 days')),
 
         ]);
-        // dd($response);
         $response->assertRedirect($donor->contact_url.'#donations');
         $this->assertDatabaseHas('Donations', [
           'contact_id' => $donor->id,
           'event_id' => $event->id,
         ]);
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -289,8 +305,8 @@ class DonationControllerTest extends TestCase
             'donation_install' => $this->faker->randomFloat(2, 0, 100000),
         ]);
 
-        // TODO: removed space on Thank You field in Donation table then add to unit test
-        // dd($response);
+        // TODO: remove space on Thank You field in Donation table then add to unit test
+
         $response->assertRedirect(action('DonationController@show', $donation->donation_id));
 
         $updated_donation = \App\Donation::find($donation->donation_id);

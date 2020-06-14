@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="col-12 col-md-4">
                     {!! Form::label('register_date', 'Registered') !!}
-                    {!! Form::text('register_date', isset($registration->register_date) ? $registration->register_date : now() , ['class'=>'form-control flatpickr-date']) !!}
+                    {!! Form::date('register_date', isset($registration->register_date) ? $registration->register_date : now() , ['class'=>'form-control flatpickr-date']) !!}
                 </div>
                 <div class="col-12 col-md-4">
                     {!! Form::label('source', 'Registration from:') !!}
@@ -37,9 +37,9 @@
                 <div class="col-12 col-md-4">
                     {!! Form::label('registration_confirm_date', 'Registration Confirmed:') !!}
                     @if ($registration->registration_confirm_date == NULL)
-                        {!! Form::text('registration_confirm_date', NULL, ['class'=>'form-control flatpickr-date']) !!}
+                        {!! Form::date('registration_confirm_date', NULL, ['class'=>'form-control flatpickr-date']) !!}
                     @else
-                        {!! Form::text('registration_confirm_date', $registration->registration_confirm_date, ['class'=>'form-control flatpickr-date']) !!}
+                        {!! Form::date('registration_confirm_date', $registration->registration_confirm_date, ['class'=>'form-control flatpickr-date']) !!}
                     @endif
                 </div>
                 <div class="col-12 col-md-4">
@@ -50,15 +50,15 @@
             <div class="row">
                 <div class="col-12 col-md-4">
                     {!! Form::label('arrived_at', 'Arrived at:') !!}
-                    {!! Form::text('arrived_at', $registration->arrived_at, ['class'=>'form-control flatpickr-date-time']) !!}
+                    {!! Form::datetime('arrived_at', $registration->arrived_at, ['class'=>'form-control flatpickr-date-time']) !!}
                 </div>
                 <div class="col-12 col-md-4">
                     {!! Form::label('departed_at', 'Departed at:') !!}
-                    {!! Form::text('departed_at', $registration->departed_at, ['class'=>'form-control flatpickr-date-time']) !!}
+                    {!! Form::datetime('departed_at', $registration->departed_at, ['class'=>'form-control flatpickr-date-time']) !!}
                 </div>
                 <div class="col-12 col-md-4">
                     {!! Form::label('canceled_at', 'Canceled at:') !!}
-                    {!! Form::text('canceled_at', $registration->canceled_at, ['class'=>'form-control flatpickr-date']) !!}
+                    {!! Form::date('canceled_at', $registration->canceled_at, ['class'=>'form-control flatpickr-date']) !!}
                 </div>
             </div>
             <div class="row">

@@ -59,7 +59,7 @@ class PaymentControllerTest extends TestCase
         $response->assertViewHas('payment_methods');
         $response->assertSeeText('Edit payment');
         // verify default values on the edit blade are correctly set based on data from the database to prevent data loss
-        $this->assertTrue($this->findFieldValueInResponseContent('payment_date', $payment->payment_date->format('Y-m-d'), 'date', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('payment_date', $payment->payment_date, 'date', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('payment_amount', $payment->payment_amount, 'number', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('payment_description', $payment->payment_description, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('payment_idnumber', $payment->payment_number, 'number', $response->getContent()));

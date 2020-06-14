@@ -165,7 +165,36 @@ class RetreatControllerTest extends TestCase
         $response->assertViewHas('is_active');
         $response->assertSeeText('Edit');
         $response->assertSeeText($retreat->idnumber);
+
+        $this->assertTrue($this->findFieldValueInResponseContent('idnumber', $retreat->idnumber, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('start_date', $retreat->start_date, 'datetime', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('end_date', $retreat->end_date, 'datetime', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('title', $retreat->title, 'text', $response->getContent()));
+
+        // TODO: come back and figure out how to deal with null lists; add some directors, assistants, innkeepers, and ambassadors
+        // $this->assertTrue($this->findFieldValueInResponseContent('directors[]', $retreat->retreatmasters->pluck('contact.id'), 'select', $response->getContent()));
+        // $this->assertTrue($this->findFieldValueInResponseContent('innkeepers[]', $retreat->innkeepers->pluck('contact.id'), 'select', $response->getContent()));
+        // $this->assertTrue($this->findFieldValueInResponseContent('assistants[]', $retreat->assistants->pluck('contact.id'), 'select', $response->getContent()));
+        // $this->assertTrue($this->findFieldValueInResponseContent('ambassadors[]', $retreat->ambassadors->pluck('contact.id'), 'select', $response->getContent()));
+
+        $this->assertTrue($this->findFieldValueInResponseContent('description', $retreat->description, 'textarea', $response->getContent()));
+
     }
+
+    /*
+    {!! Form::text('idnumber', $retreat->idnumber, ['class' => 'form-control']) !!}
+{!! Form::text('start_date', date('F j, Y g:i A', strtotime($retreat->start_date)), ['id' => 'start_date', 'class' => 'form-control form-control flatpickr-datetime']) !!}
+{!! Form::text('end_date', date('F j, Y g:i A', strtotime($retreat->end_date)), ['id' => 'end_date', 'class' => 'form-control form-control flatpickr-datetime']) !!}
+{!! Form::text('title', $retreat->title, ['class' => 'form-control']) !!}
+{!! Form::select('directors[]', $options['directors'], $retreat->retreatmasters->pluck('contact.id'), ['id'=>'directors','class' => 'form-control select2','multiple' => 'multiple']) !!}
+{!! Form::select('ambassadors[]', $options['ambassadors'], $retreat->ambassadors->pluck('contact.id'), ['id'=>'ambassadors','class' => 'form-control select2','multiple' => 'multiple']) !!}
+{!! Form::select('innkeepers[]', $options['innkeepers'], $retreat->innkeepers->pluck('contact.id'), ['id'=>'innkeepers','class' => 'form-control select2','multiple' => 'multiple']) !!}
+{!! Form::select('assistants[]', $options['assistants'], $retreat->assistants->pluck('contact.id'), ['id'=>'assistants','class' => 'form-control select2','multiple' => 'multiple']) !!}
+    {!! Form::select('event_type', $event_types, $retreat->event_type_id, ['class' => 'form-control']) !!}
+{!! Form::select('is_active', $is_active, $retreat->is_active, ['class' => 'form-control']) !!}
+{!! Form::textarea('description', $retreat->description, ['class' => 'form-control', 'rows'=>'3']) !!}
+
+     */
 
     /**
      * @test

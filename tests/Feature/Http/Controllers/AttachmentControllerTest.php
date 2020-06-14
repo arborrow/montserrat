@@ -41,7 +41,6 @@ class AttachmentControllerTest extends TestCase
 
         $response->assertRedirect(action('PersonController@show', $person->id));
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -71,7 +70,6 @@ class AttachmentControllerTest extends TestCase
 
         $response->assertRedirect(action('PersonController@show', $person->id));
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -127,7 +125,6 @@ class AttachmentControllerTest extends TestCase
 
         $response->assertRedirect(action('RetreatController@show', $retreat->id));
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -155,7 +152,6 @@ class AttachmentControllerTest extends TestCase
 
         $response->assertRedirect(action('RetreatController@show', $retreat->id));
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -183,7 +179,6 @@ class AttachmentControllerTest extends TestCase
 
         $response->assertRedirect(action('RetreatController@show', $retreat->id));
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -211,7 +206,6 @@ class AttachmentControllerTest extends TestCase
 
         $response->assertRedirect(action('RetreatController@show', $retreat->id));
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -240,7 +234,6 @@ class AttachmentControllerTest extends TestCase
 
         $response->assertOk();
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -268,7 +261,6 @@ class AttachmentControllerTest extends TestCase
 
         $response->assertOk();
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -296,7 +288,6 @@ class AttachmentControllerTest extends TestCase
 
         $response->assertOk();
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -324,7 +315,6 @@ class AttachmentControllerTest extends TestCase
 
         $response->assertOk();
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -352,7 +342,6 @@ class AttachmentControllerTest extends TestCase
 
         $response->assertOk();
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -382,7 +371,6 @@ class AttachmentControllerTest extends TestCase
 
         $response->assertOk();
 
-        // TODO: perform additional assertions
     }
 
 
@@ -412,8 +400,6 @@ class AttachmentControllerTest extends TestCase
         $response = $this->actingAs($user)->get(route('show_event_attachment', ['event_id' => $event->id, 'file_name' => $file_name]));
 
         $response->assertOk();
-        // dd($response);
-        // TODO: perform additional assertions
     }
 
 // test cases...

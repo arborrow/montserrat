@@ -55,6 +55,17 @@ class RoleControllerTest extends TestCase
         $response->assertViewIs('admin.roles.edit');
         $response->assertViewHas('role');
         $response->assertSeeText('Edit');
+
+        $this->assertTrue($this->findFieldValueInResponseContent('name', $role->name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('display_name', $role->display_name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('description', $role->description, 'text', $response->getContent()));
+
+/*
+{!! Form::text('name', $role->name, ['class' => 'form-control']) !!}
+{!! Form::text('display_name', $role->display_name, ['class' => 'form-control']) !!}
+{!! Form::text('description', $role->description, ['class' => 'form-control']) !!}
+
+ */
     }
 
     /**
@@ -183,7 +194,6 @@ class RoleControllerTest extends TestCase
           'deleted_at' => null,
         ]);
 
-        // TODO: perform additional assertions
     }
 
     // test cases...

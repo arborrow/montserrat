@@ -44,11 +44,11 @@
                     <div class="row">
                         <div class="col-12 col-lg-6">
                             {!! Form::label('street_address', 'Address Line 1') !!}
-                            {!! Form::text('street_address', $organization->address_primary_street_address, ['class' => 'form-control']) !!}
+                            {!! Form::text('street_address', $organization->address_primary_street, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-12 col-lg-6">
                             {!! Form::label('supplemental_address_1', 'Address Line 2') !!}
-                            {!! Form::text('supplemental_address_1', $organization->address_primary_supplemental_address_1, ['class' => 'form-control']) !!}
+                            {!! Form::text('supplemental_address_1', $organization->address_primary_supplemental_address, ['class' => 'form-control']) !!}
                         </div>
                     </div>
                     <div class="row">
@@ -58,7 +58,7 @@
                         </div>
                         <div class="col-12 col-lg-4">
                             {!! Form::label('state_province_id', 'State') !!}
-                            {!! Form::select('state_province_id', $states, $organization->address_primary_state_province_id, ['class' => 'form-control']) !!}
+                            {!! Form::select('state_province_id', $states, $organization->address_primary_state_id, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-12 col-lg-4">
                             {!! Form::label('postal_code', 'Zip') !!}

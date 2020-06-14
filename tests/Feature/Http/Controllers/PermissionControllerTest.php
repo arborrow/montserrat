@@ -55,6 +55,11 @@ class PermissionControllerTest extends TestCase
         $response->assertViewIs('admin.permissions.edit');
         $response->assertViewHas('permission');
         $response->assertSeeText('Edit');
+
+        $this->assertTrue($this->findFieldValueInResponseContent('name', $permission->name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('display_name', $permission->display_name, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('description', $permission->description, 'text', $response->getContent()));
+
     }
 
     /**
@@ -137,7 +142,6 @@ class PermissionControllerTest extends TestCase
         $this->assertEquals($updated->name, $new_permission_name);
         $this->assertNotEquals($updated->name, $original_permission_name);
 
-        // TODO: perform additional assertions
     }
 
     /**
@@ -157,7 +161,6 @@ class PermissionControllerTest extends TestCase
 
         $response->assertRedirect(action('PermissionController@index'));
 
-        // TODO: perform additional assertions
     }
 
     // test cases...

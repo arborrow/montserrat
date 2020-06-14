@@ -31,6 +31,10 @@ class Donation extends Model
         return $this->hasOne(Retreat::class, 'id', 'event_id');
     }
 
+    public function description() {
+        return $this->hasOne(DonationType::class, 'name', 'donation_description');
+    }
+
     public function getDonationStartDate()
     {
         if (isset($this->start_date)) {
