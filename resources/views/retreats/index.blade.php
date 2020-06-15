@@ -153,7 +153,7 @@
                         N/A
                         @else
                             @foreach($oldretreat->retreatmasters as $retreatmaster)
-                                {!!$retreatmaster->contact->contact_link_full_name!!}<br />
+                                {!!$retreatmaster->contact_link_full_name!!}<br />
                             @endforeach
                         @endif
                     </td>
@@ -162,7 +162,7 @@
                       N/A
                       @else
                           @foreach($oldretreat->innkeepers as $innkeeper)
-                              {!!$innkeeper->contact->contact_link_full_name!!}<br />
+                              {!!$innkeeper->contact_link_full_name!!}<br />
                           @endforeach
                       @endif
                     </td>
@@ -171,7 +171,7 @@
                       N/A
                       @else
                           @foreach($oldretreat->assistants as $assistant)
-                              {!!$assistant->contact->contact_link_full_name!!}<br />
+                              {!!$assistant->contact_link_full_name!!}<br />
                           @endforeach
                       @endif
                     </td>
