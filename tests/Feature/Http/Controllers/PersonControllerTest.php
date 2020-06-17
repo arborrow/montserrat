@@ -388,6 +388,7 @@ class PersonControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('languages[]', $person->languages->pluck('id'), 'multiselect', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('referrals[]', $person->referrals->pluck('id'), 'multiselect', $response->getContent()));
 
+        $this->assertTrue($this->findFieldValueInResponseContent('preferred_communication_method_id', $person->preferred_communication_method, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('preferred_language_id', $person->preferred_language_id, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('is_deceased', $person->is_deceased, 'checkbox', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('deceased_date', $person->deceased_date, 'date', $response->getContent()));
