@@ -103,7 +103,13 @@ return [
         'normal' => '2',
         'low' => '3',
     ],
-
+    'preferred_communication_method' => [
+        '0' => 'N/A',
+        '1' => 'Phone',
+        '2' => 'Email',
+        '3' => 'Postal Mail',
+        '4' => 'SMS',
+    ],
     'country_id_usa' => '1228',
     'state_province_id_tx' => '1042',
 

@@ -153,6 +153,13 @@
             <div class="row">
                 <div class="col-12 col-lg-6" id="contact_info">
                     <h2>Contact Information</h2>
+                    <div class="row">
+                        <div class="col-12">
+                            {!! Form::label('preferred_communication_method_id', 'Preferred communication method:') !!}
+                            {!! Form::select('preferred_communication_method_id', $preferred_communication_methods, $person->preferred_communication_method, ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <div class="row">
                             <div class="col-12">

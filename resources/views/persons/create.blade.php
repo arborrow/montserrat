@@ -111,7 +111,12 @@
                 </div>
             </div>
         </div>
-
+        <div class="row">
+            <div class="col-12 col-md-4">
+                {!! Form::label('preferred_communication_method_id', 'Preferred communication method:') !!}
+                {!! Form::select('preferred_communication_method_id', $preferred_communication_methods, 0, ['class' => 'form-control']) !!}
+            </div>
+        </div>
         <div class="row">
             <div class="col-12">
                 <h3>Addresses</h3>
@@ -138,6 +143,8 @@
                 @include('persons.create.emails')
             </div>
         </div>
+
+
 
         <div class="row">
             <div class="col-12">

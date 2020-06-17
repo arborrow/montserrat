@@ -59,26 +59,10 @@
     @endif
     @endforeach
     <tr>
-        <td><strong>Preferred contact method (Email, Cell, Home, Work, Mail, etc.): </strong> {{$registration->retreatant->preferred_communication_method}}</td>
-        <td><hr/></td>
-    </tr>
-    <tr><td> </td></tr>
-    <tr><td><h2>Emergency Contact Information</h2></td></tr>
-
-    <tr>
-        <td><strong>Name (Relationship): </strong>{{$registration->retreatant->emergency_contact_name}}
-                @if (!empty($registration->retreatant->emergency_contact_relationship))
-                    ({{$registration->retreatant->emergency_contact_relationship}})
-                @endIf
-        </td>
-        <td><hr/></td>
+        <td><h2>Preferred contact method</h2>
     </tr>
     <tr>
-        <td><strong>Phone #: </strong>{{$registration->retreatant->emergency_contact_phone}}</td>
-        <td><hr/></td>
-    </tr>
-    <tr>
-        <td><strong>Alternate Phone #: </strong>{{$registration->retreatant->emergency_contact_phone_alternate}}</td>
+        <td>(Email, Cell, Home, Work, Mail, etc.): {{$registration->retreatant->preferred_communication_method}}</td>
         <td><hr/></td>
     </tr>
     <tr>
@@ -127,6 +111,26 @@
         <td><hr/></td>
 
     </tr>
+
+    <tr><td><h2>Emergency Contact Information</h2></td></tr>
+
+    <tr>
+        <td><strong>Name (Relationship): </strong>{{$registration->retreatant->emergency_contact_name}}
+                @if (!empty($registration->retreatant->emergency_contact_relationship))
+                    ({{$registration->retreatant->emergency_contact_relationship}})
+                @endIf
+        </td>
+        <td><hr/></td>
+    </tr>
+    <tr>
+        <td><strong>Phone #: </strong>{{$registration->retreatant->emergency_contact_phone}}</td>
+        <td><hr/></td>
+    </tr>
+    <tr>
+        <td><strong>Alternate Phone #: </strong>{{$registration->retreatant->emergency_contact_phone_alternate}}</td>
+        <td><hr/></td>
+    </tr>
+
     <tr>
         <td>
             <h2>Notes</h2>

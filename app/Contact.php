@@ -744,7 +744,7 @@ class Contact extends Model
     public function getParishNameAttribute()
     {
         if (isset($this->parish->contact_id_a) && ($this->parish->contact_id_a > 0)) {
-            return $this->parish->contact_a->display_name.' ('.$this->parish->contact_a->address_primary->city.')';
+            return $this->parish->contact_a->display_name.' ('.$this->parish->contact_a->address_primary_city.')';
         } else {
             return;
         }

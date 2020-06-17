@@ -16,6 +16,7 @@ $factory->define(App\Contact::class, function (Faker $faker) {
     $preferred_language = \App\Language::whereIsActive(1)->get()->random();
     $suffix = \App\Suffix::get()->random();
     $prefix = \App\Prefix::get()->random();
+    $preferred_communication_method = $faker->numberBetween(0,4);
 
     return [
         'contact_type' => $faker->numberBetween(1, 3),
@@ -31,7 +32,7 @@ $factory->define(App\Contact::class, function (Faker $faker) {
         'nick_name' => $faker->firstName,
         'legal_name' => $display_name,
         'image_URL' => $faker->word,
-        'preferred_communication_method' => $faker->word,
+        'preferred_communication_method' => $preferred_communication_method,
         'preferred_language' => $preferred_language->name,
         'preferred_mail_format' => $faker->word,
         'hash' => $faker->word,
