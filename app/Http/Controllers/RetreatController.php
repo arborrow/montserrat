@@ -203,15 +203,19 @@ class RetreatController extends Controller
     */
     public function add_participant ($contact_id, $event_id, $participant_role_id) {
         if ($contact_id > 0 && $event_id > 0) { //avoid inserting bad data
-            $new_director = \App\Registration::updateOrCreate([
+            $participant = \App\Registration::updateOrCreate([
               'contact_id' => $contact_id,
               'event_id' => $event_id,
               'status_id' => config('polanco.registration_status_id.registered'),
               'role_id' => $participant_role_id,
-              'register_date' => now(),
             ]);
-            $new_director->notes = 'Automatically registered by Polanco as '.$new_director->participant_role_name;
-            $new_director->save();
+            if (!isset($participant->register_date)) {
+                $participant->register_date=now();
+            }
+            if (!isset($participant->notes)) {
+                $participant->notes = 'Automatically registered by Polanco as '.$participant->participant_role_name;
+            }
+            $participant->save();
             return true;
         } else {
             return false;
