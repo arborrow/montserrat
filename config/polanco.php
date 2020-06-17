@@ -193,6 +193,7 @@ return [
         'Phone' => 'Phone',
         'Email' => 'Email',
         'In person' => 'In person',
+        'Postal Mail' => 'Postal Mail',
     ],
 
     'touchpoint_source' => [
