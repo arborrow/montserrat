@@ -77,9 +77,10 @@ class PersonController extends Controller
         $contact_types = \App\ContactType::whereIsReserved(true)->orderBy('label')->pluck('label', 'id');
         $subcontact_types = \App\ContactType::whereIsReserved(false)->whereIsActive(true)->orderBy('label')->pluck('label', 'id');
         $subcontact_types->prepend('N/A', 0);
+        $preferred_communication_methods = config('polanco.preferred_communication_method');
 
         //dd($subcontact_types);
-        return view('persons.create', compact('parish_list', 'ethnicities', 'states', 'countries', 'suffixes', 'prefixes', 'languages', 'genders', 'religions', 'occupations', 'contact_types', 'subcontact_types', 'referrals'));
+        return view('persons.create', compact('parish_list', 'ethnicities', 'states', 'countries', 'suffixes', 'prefixes', 'languages', 'genders', 'religions', 'occupations', 'contact_types', 'subcontact_types', 'referrals','preferred_communication_methods'));
     }
 
     /**
@@ -103,6 +104,7 @@ class PersonController extends Controller
         $person->last_name = $request->input('last_name');
         $person->suffix_id = $request->input('suffix_id');
         $person->nick_name = $request->input('nick_name');
+        $person->preferred_communication_method = $request->input('preferred_communication_method_id');
 
         // the sort and display names are not available on creation so that we create a default and then it can be customized or tweaked individually
         if (empty($request->input('display_name'))) {
@@ -797,6 +799,7 @@ class PersonController extends Controller
         $suffixes->prepend('N/A', 0);
         $occupations = \App\Ppd_occupation::orderBy('name')->pluck('name', 'id');
         $occupations->prepend('N/A', 0);
+        $preferred_communication_methods = config('polanco.preferred_communication_method');
 
         //create defaults array for easier pre-populating of default values on edit/update blade
         // initialize defaults to avoid undefined index errors
@@ -864,7 +867,7 @@ class PersonController extends Controller
         }
         //dd($person);
 
-        return view('persons.edit', compact('prefixes', 'suffixes', 'person', 'parish_list', 'ethnicities', 'states', 'countries', 'genders', 'languages', 'defaults', 'religions', 'occupations', 'contact_types', 'subcontact_types', 'referrals'));
+        return view('persons.edit', compact('prefixes', 'suffixes', 'person', 'parish_list', 'ethnicities', 'states', 'countries', 'genders', 'languages', 'defaults', 'religions', 'occupations', 'contact_types', 'subcontact_types', 'referrals','preferred_communication_methods'));
     }
 
     /**
@@ -905,6 +908,7 @@ class PersonController extends Controller
         $person->occupation_id = $request->input('occupation_id');
 
         // communication preferences
+        $person->preferred_communication_method = $request->input('preferred_communication_method_id') ?: 0;
         $person->do_not_mail = $request->input('do_not_mail') ?: 0;
         $person->do_not_email = $request->input('do_not_email') ?: 0;
         $person->do_not_phone = $request->input('do_not_phone') ?: 0;

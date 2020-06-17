@@ -104,6 +104,9 @@
             <div class="col-12 col-lg-6" id="contact_info">
                 <h2>Contact Information</h2>
                 <div class="row">
+                    <strong>Preferred communication method: </strong> {{ config('polanco.preferred_communication_method.'.$person->preferred_communication_method) }}
+                </div>
+                <div class="row">
                     @if($person->do_not_phone)
                         <div class="alert alert-warning col-12 col-lg-3 m-2" role="alert">
                             <span class="font-weight-bold">Do Not Call</span>

@@ -240,7 +240,7 @@
                                             @if (empty($registration->retreatant->parish_name))
                                                 N/A
                                             @else
-                                            {!! $registration->retreatant->parish_link!!}
+                                                {!! $registration->retreatant->parish_link!!}
                                             @endif
                                         </td>
                                         <td> {{ $registration->notes }} <br />
