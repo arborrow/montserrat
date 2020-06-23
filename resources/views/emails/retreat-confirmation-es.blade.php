@@ -23,7 +23,7 @@
 		• Las personas deben permanecer separadas por lo menos de seis pies, tanto en lugares interiores como en los exteriores. <br>
 		• Lávese las manos con frecuencia. <br>
 		• Use desinfectante de manos con frecuencia. Los dispensadores de desinfectante para las manos están ubicados cerca de la entrada de cada edificio. <br>
-
+<br>
 Paz - Padre Tony Raushchuber, S.J., Director<br>
 director@montserratretreat.org <br>
 940-321-6020<br><br>
