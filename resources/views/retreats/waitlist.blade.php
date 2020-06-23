@@ -184,7 +184,7 @@
                                 <a href="mailto:{{ $registration->retreatant->email_primary_text }}?subject={{ rawurlencode($retreat->title . " Waitlist: ") }}">{{ $registration->retreatant->email_primary_text }}</a>
                             </td>
                             <td>
-                                <a href="mailto:{{$registration->retreatant->phone_home_mobile_number}}">{{ $registration->retreatant->phone_home_mobile_number }}</a>
+                                <a href="tel:{{$registration->retreatant->phone_home_mobile_number}}">{{ $registration->retreatant->phone_home_mobile_number }}</a>
                             </td>
                             <td>
                                 @if (empty($registration->retreatant->parish_name))
