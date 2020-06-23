@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="col-12 col-md-4">
                     {!! Form::label('register_date', 'Registered:') !!}
-                    {!! Form::text('register_date', $defaults['today'], ['class'=>'form-control flatpickr-date']) !!}
+                    {!! Form::text('register_date', $defaults['today'], ['class'=>'form-control flatpickr-date-time']) !!}
                 </div>
                 <div class="col-12 col-md-4">
                     {!! Form::label('source', 'Registration from:') !!}
@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-12 col-md-4">
                     {!! Form::label('status_id', 'Status:') !!}
-                    {!! Form::select('status_id', $defaults['participant_status_type'], NULL, ['class' => 'form-control']) !!} 
+                    {!! Form::select('status_id', $defaults['participant_status_type'], NULL, ['class' => 'form-control']) !!}
                 </div>
             </div>
             <div class="row">
