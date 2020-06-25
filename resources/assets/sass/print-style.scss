@@ -288,7 +288,7 @@ td.row-payment_method {
   border-collapse: collapse;
 }
 
-.namebadges footer {
+.namebadges footer, .tableplacards footer {
   page-break-after: always;
 }
 .namebadges td {
@@ -299,10 +299,35 @@ td.row-payment_method {
   padding-top: 0.125in;
   padding-bottom: 0.125in;
 }
-
+.tableplacards td {
+  height: 0.5in;
+  width: 7.0in;
+  padding-left: 0.125in;
+  padding-right: 0.125in;
+  padding-top: 0.125in;
+  padding-bottom: 0.125in;
+}
+.tableplacards hr {
+     border-top: 1px dashed;
+}
 .namebadges table {
   margin-left: 0.5in;
   margin-right: 0.5in;
   margin-top: 0.75in;
   margin-bottom: 0.75in;
+}
+.tableplacards table {
+    margin-left: 0.5in;
+    margin-right: 0.5in;
+    margin-top: 0.25in;
+    margin-bottom: 0.25in;
+}
+
+.flipped {
+  transform: scale(-1, -1);
+  -moz-transform: scale(-1, -1);
+  -webkit-transform: scale(-1, -1);
+  -o-transform: scale(-1, -1);
+  -ms-transform: scale(-1, -1);
+  transform: scale(-1, -1);
 }

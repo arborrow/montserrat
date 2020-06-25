@@ -16,15 +16,24 @@
         @can('create-touchpoint')
             {!! Html::link(action('TouchpointController@add_retreat',$retreat->id),'Retreat touchpoint',array('class' => 'btn btn-outline-dark'))!!}
         @endCan
-        @can('show-contact')
-            {!! Html::link(action('PageController@retreatantinforeport',$retreat->idnumber),'Retreatant information',array('class' => 'btn btn-outline-dark'))!!}
-            {!! Html::link(action('PageController@retreatrosterreport',$retreat->idnumber),'Retreatant roster',array('class' => 'btn btn-outline-dark'))!!}
-            {!! Html::link(action('PageController@retreatlistingreport',$retreat->idnumber),'Retreatant listing',array('class' => 'btn btn-outline-dark'))!!}
-        @endCan
         @can('show-donation')
             {!! Html::link('retreat/'.$retreat->id.'/payments','Retreat donations',array('class' => 'btn btn-outline-dark')) !!}
             {!! Html::link('report/finance/retreatdonations/'.$retreat->idnumber,'Donations report',array('class' => 'btn btn-outline-dark')) !!}
         @endCan
+        @can('show-registration')
+            <select class="custom-select col-3" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                <option value="">Print ...</option>
+                <option value="{{url('retreat/'.$retreat->id.'/namebadges')}}">Namebadges</option>
+                <option value="{{url('report/retreatroster/'.$retreat->idnumber)}}">Retreat roster</option>
+                <option value="{{url('report/retreatlisting/'.$retreat->idnumber)}}">Retreat listing</option>
+                <option value="{{url('report/retreatantinfo/'.$retreat->idnumber)}}">Retreatant info sheets</option>
+                <option value="{{url('retreat/'.$retreat->id.'/roomlist')}}">Room list</option>
+                <option value="{{url('retreat/'.$retreat->id.'/tableplacards')}}">Table placards</option>
+            </select>
+        @endCan
+
+        </select>
+
     </div>
     <div class="col-12 mt-3">
         <h2>Details</h2>
@@ -184,9 +193,6 @@
                 @endCan
                 @can('update-registration')
                     {!! Html::link(action('RetreatController@assign_rooms',$retreat->id),'Assign rooms',array('class' => 'btn btn-outline-dark'))!!}
-                @endCan
-                @can('show-registration')
-                    {!! Html::link(action('RetreatController@event_room_list',$retreat->id),'Room list',array('class' => 'btn btn-outline-dark'))!!}
                 @endCan
                 @can('update-registration')
                     @if ($retreat->end_date < now())

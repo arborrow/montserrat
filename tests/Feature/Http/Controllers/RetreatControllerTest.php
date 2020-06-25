@@ -526,6 +526,30 @@ class RetreatControllerTest extends TestCase
 
         }
 
+        /**
+         * @test
+         */
+        public function event_tableplacards_returns_an_ok_response()
+        {
+            $user = $this->createUserWithPermission('show-registration');
+            $retreat = factory(\App\Retreat::class)->create();
+            $retreatant = factory(\App\Contact::class)->create([
+                'contact_type' => config('polanco.contact_type.individual'),
+            ]);
+            $registration = factory(\App\Registration::class)->create([
+                'event_id' => $retreat->id,
+                'contact_id' => $retreatant->id,
+                'canceled_at' => null,
+                'role_id' => config('polanco.participant_role_id.retreatant'),
+            ]);
+            $response = $this->actingAs($user)->get('retreat/'.$registration->event_id.'/tableplacards');
+            $response->assertOk();
+            $response->assertViewIs('retreats.tableplacards');
+            $response->assertViewHas('event');
+            $response->assertViewHas('cresults');
+            $response->assertSeeText($retreatant->first_name.' '.$retreatant->last_name);
+
+        }
 
             /**
              * @test
