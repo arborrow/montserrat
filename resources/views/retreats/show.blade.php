@@ -23,7 +23,7 @@
         @can('show-registration')
             <select class="custom-select col-3" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                 <option value="">Print ...</option>
-                <option value="{{url('retreat/'.$retreat->id.'/namebadges')}}">Namebadges</option>
+                <option value="{{url('retreat/'.$retreat->id.'/namebadges/all')}}">Namebadges</option>
                 <option value="{{url('report/retreatroster/'.$retreat->idnumber)}}">Retreat roster</option>
                 <option value="{{url('report/retreatlisting/'.$retreat->idnumber)}}">Retreat listing</option>
                 <option value="{{url('report/retreatantinfo/'.$retreat->idnumber)}}">Retreatant info sheets</option>

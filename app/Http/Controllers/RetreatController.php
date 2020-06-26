@@ -713,13 +713,33 @@ class RetreatController extends Controller
         return view('retreats.roomlist', compact('results', 'event'));
     }
 
-    public function event_namebadges($event_id)
+    public function event_namebadges($event_id, $role=null)
     {
         // for each registration add contact sort_name to namebadge
         // TODO: write unit tests for this method
         $this->authorize('show-registration');
         $event = \App\Retreat::findOrFail($event_id);
-        $registrations = \App\Registration::whereEventId($event_id)->whereNull('canceled_at')->get();
+        switch ($role) {
+            case  'retreatant' : $role = config('polanco.participant_role_id.retreatant');
+                break;
+            case  'director' : $role = config('polanco.participant_role_id.retreat_director');
+                    break;
+            case  'innkeeper' : $role = config('polanco.participant_role_id.retreat_innkeeper');
+                    break;
+            case  'assistant' : $role = config('polanco.participant_role_id.retreat_assistant');
+                    break;
+            case 'ambassador':
+                $role = config('polanco.participant_role_id.ambassador');
+                break;
+            case  'all' : $role = null;
+                    break;
+            default : $role = config('polanco.participant_role_id.retreatant');
+        };
+        if(is_null($role)) {
+            $registrations = \App\Registration::whereEventId($event_id)->whereNull('canceled_at')->get();
+        } else {
+            $registrations = \App\Registration::whereEventId($event_id)->whereNull('canceled_at')->whereRoleId($role)->get();
+        }
 
         $results = [];
         foreach ($registrations as $registration) {

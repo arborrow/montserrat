@@ -81,7 +81,7 @@ Route::get('retreat/{event_id}/evaluations/delete', 'AttachmentController@delete
 Route::get('retreat/{event_id}/photo', 'AttachmentController@get_event_group_photo')->name('get_event_group_photo');
 Route::get('retreat/{event_id}/photo/delete', 'AttachmentController@delete_event_group_photo')->name('delete_event_group_photo');
 Route::get('retreat/{event_id}/roomlist', 'RetreatController@event_room_list')->name('event_room_list');
-Route::get('retreat/{event_id}/namebadges', 'RetreatController@event_namebadges')->name('event_namebadges');
+Route::get('retreat/{event_id}/namebadges/{role?}', 'RetreatController@event_namebadges')->name('event_namebadges');
 Route::get('retreat/{event_id}/tableplacards', 'RetreatController@event_tableplacards')->name('event_tableplacards');
 Route::get('retreat/{event_id}/touchpoint', 'TouchpointController@add_retreat');
 Route::get('retreat/{event_id}/waitlist_touchpoint', 'TouchpointController@add_retreat_waitlist');
