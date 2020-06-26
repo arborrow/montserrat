@@ -397,7 +397,7 @@ class PageControllerTest extends TestCase
         $user = factory(\App\User::class)->create();
         $user->assignRole('test-role:retreatantinforeport');
         $retreat = factory(\App\Retreat::class)->create();
-        $registrants = factory(\App\Registration::class, 2)->create([
+        $registrants = factory(\App\Registration::class, 3)->create([
             'event_id' => $retreat->id,
             'canceled_at' => null,
         ]);
@@ -407,7 +407,7 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('reports.retreatantinfo2');
         $response->assertViewHas('registrations');
         $registrations = $response->viewData('registrations');
-        $this->assertCount(2, $registrations);
+        $this->assertCount(3, $registrations);
         $this->assertEquals($registrants->sortBy('id')->pluck('id'), $registrations->sortBy('id')->pluck('id'));
     }
 

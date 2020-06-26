@@ -97,6 +97,7 @@ class PageController extends Controller
         $registrations = \App\Registration::select(DB::raw('participant.*', 'contact.*'))
             ->join('contact', 'participant.contact_id', '=', 'contact.id')
             ->where('participant.event_id', '=', $retreat->id)
+            ->where('participant.role_id', '=', config('polanco.participant_role_id.retreatant'))
             ->whereCanceledAt(null)
             ->with('retreat', 'retreatant.languages', 'retreatant.parish.contact_a.address_primary', 'retreatant.prefix', 'retreatant.suffix', 'retreatant.address_primary.state', 'retreatant.phones.location', 'retreatant.emails.location', 'retreatant.emergency_contact', 'retreatant.notes', 'retreatant.occupation')
             ->orderBy('contact.sort_name')
