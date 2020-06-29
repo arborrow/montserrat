@@ -9,9 +9,11 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Controllers\RelationshipController
  */
+
 class RelationshipControllerTest extends TestCase
 {
     // use RefreshDatabase;
+    use WithFaker;
 
     /**
      * @test
@@ -43,14 +45,24 @@ class RelationshipControllerTest extends TestCase
      * @test
      */
     public function edit_returns_an_ok_response()
-    {   //TODO: relationship editing currently handled by person controller; this is more of a stub
-
+    {
         $user = $this->createUserWithPermission('update-relationship');
         $relationship = factory(\App\Relationship::class)->create();
 
         $response = $this->actingAs($user)->get(route('relationship.edit', [$relationship]));
+        $response->assertOk();
+        $response->assertViewIs('relationships.edit');
+        $response->assertViewHas('relationship_types');
+        $response->assertViewHas('relationship');
+        $response->assertSeeText('Edit Relationship');
+        $response->assertSeeText($relationship->id);
 
-        $response->assertRedirect(action('RelationshipController@show', $relationship->id));
+        $this->assertTrue($this->findFieldValueInResponseContent('relationship_type_id', $relationship->relationship_type_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('start_date', $relationship->start_date, 'date', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('end_date', $relationship->end_date, 'date', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('description', $relationship->description, 'textarea', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('is_active', $relationship->is_active, 'checkbox', $response->getContent()));
+
     }
 
     /**
@@ -105,16 +117,22 @@ class RelationshipControllerTest extends TestCase
      * @test
      */
     public function update_returns_an_ok_response()
-    {   //TODO: relationship creation currently handled by person controller; this is more of a stub
-        $user = $this->createUserWithPermission('update-relationship');
+    {   $user = $this->createUserWithPermission('update-relationship');
         $relationship = factory(\App\Relationship::class)->create();
+        $original_description = $relationship->description;
+        $new_description = $this->faker->sentence();
 
         $response = $this->actingAs($user)->put(route('relationship.update', [$relationship]), [
-          'contact_id_a' => $relationship->contact_id_a,
-          'contact_id_b' => $relationship->contact_id_b,
+          'id' => $relationship->id,
+          'description' => $new_description,
+          'relationship_type_id' => $relationship->relationship_type_id,
+          'is_active' => $relationship->is_active,
         ]);
+        $relationship->refresh();
+        $response->assertRedirect(action('RelationshipController@show', $relationship));
+        $this->assertEquals($new_description, $relationship->description);
+        $this->assertNotEquals($original_description, $relationship->description);
 
-        $response->assertRedirect(action('RelationshipController@show', $relationship->id));
     }
 
     // test cases...
