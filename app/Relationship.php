@@ -30,18 +30,7 @@ class Relationship extends Model
     {
         if (isset($this->contact_a)) {
             if ($this->contact_a->id > 0) {
-                //default is individual person
-                $display_name = '<a href="'.$this->contact_a->id.'">'.$this->contact_a->display_name.'</a>';
-                //diocese
-                if ($this->contact_a->contact_type == config('polanco.contact_type.organization') && $this->contact_a->subcontact_type == config('polanco.contact_type.diocese')) {
-                    $display_name = '<a href="../diocese/'.$this->contact_a->id.'">'.$this->contact_a->display_name.'</a>';
-                }
-                //parish
-                if ($this->contact_a->contact_type == config('polanco.contact_type.organization') && $this->contact_a->subcontact_type == config('polanco.contact_type.parish')) {
-                    $display_name = '<a href="../parish/'.$this->contact_a->id.'">'.$this->contact_a->display_name.'</a>';
-                }
-
-                return $display_name;
+                return $this->contact_a->contact_link;
             } else {
                 return;
             }
@@ -52,18 +41,7 @@ class Relationship extends Model
     {
         if (isset($this->contact_b)) {
             if ($this->contact_b->id > 0) {
-                //default is individual person
-                $display_name = '<a href="'.$this->contact_b->id.'">'.$this->contact_b->display_name.'</a>';
-                //diocese
-                if ($this->contact_b->contact_type == config('polanco.contact_type.organization') && $this->contact_b->subcontact_type == config('polanco.contact_type.diocese')) {
-                    $display_name = '<a href="../diocese'.$this->contact_b->id.'">'.$this->contact_b->display_name.'</a>';
-                }
-                //parish
-                if ($this->contact_b->contact_type == config('polanco.contact_type.organization') && $this->contact_b->subcontact_type == config('polanco.contact_type.parish')) {
-                    $display_name = '<a href="../parish/'.$this->contact_b->id.'">'.$this->contact_b->display_name.'</a>';
-                }
-
-                return $display_name;
+                return $this->contact_b->contact_link;
             } else {
                 return;
             }

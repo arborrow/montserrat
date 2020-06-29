@@ -59,10 +59,10 @@
                     <a href={{ action('PageController@contact_info_report',$person->id) }}>Contact Info Report</a>
                 </span>
                 <span class="btn btn-outline-dark">
-                    <a href={{ URL('person/'.$person->id.'/envelope?size=10&logo=0') }}><img src={{URL::asset('images/envelope.png')}} title="Print envelope" alt="Print envelope"></a>
+                    <a href={{ url('person/'.$person->id.'/envelope?size=10&logo=0') }}><img src={{URL::asset('images/envelope.png')}} title="Print envelope" alt="Print envelope"></a>
                 </span>
                 <span class="btn btn-outline-dark">
-                    <a href={{ URL('person/'.$person->id.'/envelope?size=9x6&logo=1') }}><img src={{URL::asset('images/envelope9x6.png')}} title="Print 9x6 envelope" alt="Print 9x6 envelope"></a>
+                    <a href={{ url('person/'.$person->id.'/envelope?size=9x6&logo=1') }}><img src={{URL::asset('images/envelope9x6.png')}} title="Print 9x6 envelope" alt="Print 9x6 envelope"></a>
                 </span>
             </div>
         </div>
@@ -265,11 +265,11 @@
                     <li>
                         @can('delete-relationship')
                             {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $a_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                                {!!$person->contact_link_full_name!!} is {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link_full_name !!}
+                                {!!$person->contact_link_full_name!!} is <a href="{{ url('relationship/'.$a_relationship->id) }}">{{ $a_relationship->relationship_type->label_a_b }}</a> {!! $a_relationship->contact_b->contact_link_full_name !!}
                                 <button type="submit" class="btn btn-outline-dark btn-sm"><i class="fas fa-trash"></i></button>
                             {!! Form::close() !!}
                         @else
-                            {!!$person->contact_link_full_name!!} is {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link_full_name !!}
+                            {!!$person->contact_link_full_name!!} is <a href="{{ url('relationship/'.$a_relationship->id) }}">{{ $a_relationship->relationship_type->label_a_b }}</a> {!! $a_relationship->contact_b->contact_link_full_name !!}
                         @endCan
                     </li>
                     @endforeach
@@ -278,11 +278,11 @@
                     <li>
                         @can('delete-relationship')
                             {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $b_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                                {!!$person->contact_link_full_name!!} is {{ $b_relationship->relationship_type->label_b_a }} {!! $b_relationship->contact_a->contact_link_full_name!!}
+                                {!!$person->contact_link_full_name!!} is <a href="{{ url('relationship/'.$b_relationship->id) }}">{{ $b_relationship->relationship_type->label_b_a }}</a> {!! $b_relationship->contact_a->contact_link_full_name!!}
                                 <button type="submit" class="btn btn-outline-dark btn-sm"><i class="fas fa-trash"></i></button>
                             {!! Form::close() !!}
                         @else
-                            {!!$person->contact_link_full_name!!} is {{ $b_relationship->relationship_type->label_b_a }} {!! $b_relationship->contact_a->contact_link_full_name!!}
+                            {!!$person->contact_link_full_name!!} is <a href="{{ url('relationship/'.$b_relationship->id) }}">{{ $b_relationship->relationship_type->label_b_a }}</a> {!! $b_relationship->contact_a->contact_link_full_name!!}
                         @endCan
                     </li>
                     @endforeach
