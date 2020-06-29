@@ -546,7 +546,7 @@ class RetreatController extends Controller
         $retreat = \App\Retreat::findOrFail($id);
         // if there is a calendar id for the event then find the Google Calendar event, mark it as canceled and then remove it from the calendar (soft delete)
         if (! empty($retreat->calendar_id)) {
-            $calendar_event = Event::findOrFail($retreat->calendar_id);
+            $calendar_event = Event::find($retreat->calendar_id);
             if (! empty($calendar_event)) {
                 $calendar_event->name = '[CANCELED] '.$retreat->title.' ('.$retreat->idnumber.')';
                 $calendar_event->save();
