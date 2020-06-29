@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePersonRequest;
 use App\Http\Requests\UpdatePersonRequest;
+use App\RelationshipType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
@@ -191,6 +192,7 @@ class PersonController extends Controller
             $relationship_parishioner->relationship_type_id = config('polanco.relationship_type.parishioner');
             $relationship_parishioner->is_active = 1;
             $relationship_parishioner->save();
+            $this->update_relationship_description($relationship_parishioner->id);
         }
 
         // save donor relationship
@@ -201,6 +203,7 @@ class PersonController extends Controller
             $relationship_donor->relationship_type_id = config('polanco.relationship_type.donor');
             $relationship_donor->is_active = 1;
             $relationship_donor->save();
+            $this->update_relationship_description($relationship_donor->id);
         }
 
         // save retreatant relationship
@@ -211,6 +214,7 @@ class PersonController extends Controller
             $relationship_retreatant->relationship_type_id = config('polanco.relationship_type.retreatant');
             $relationship_retreatant->is_active = 1;
             $relationship_retreatant->save();
+            $this->update_relationship_description($relationship_retreatant->id);
         }
 
         // save volunteer relationship
@@ -221,6 +225,8 @@ class PersonController extends Controller
             $relationship_volunteer->relationship_type_id = config('polanco.relationship_type.volunteer');
             $relationship_volunteer->is_active = 1;
             $relationship_volunteer->save();
+            $this->update_relationship_description($relationship_volunteer->id);
+
             $group_volunteer = new \App\GroupContact;
             $group_volunteer->group_id = config('polanco.group_id.volunteer');
             $group_volunteer->contact_id = $person->id;
@@ -236,6 +242,8 @@ class PersonController extends Controller
             $relationship_ambassador->relationship_type_id = config('polanco.relationship_type.ambassador');
             $relationship_ambassador->is_active = 1;
             $relationship_ambassador->save();
+            $this->update_relationship_description($relationship_ambassador->id);
+
             $group_ambassador = new \App\GroupContact;
             $group_ambassador->group_id = config('polanco.group_id.ambassador');
             $group_ambassador->contact_id = $person->id;
@@ -250,6 +258,8 @@ class PersonController extends Controller
             $relationship_director->relationship_type_id = config('polanco.relationship_type.retreat_director');
             $relationship_director->is_active = 1;
             $relationship_director->save();
+            $this->update_relationship_description($relationship_director->id);
+
             $group_director = new \App\GroupContact;
             $group_director->group_id = config('polanco.group_id.director');
             $group_director->contact_id = $person->id;
@@ -264,6 +274,8 @@ class PersonController extends Controller
             $relationship_innkeeper->relationship_type_id = config('polanco.relationship_type.retreat_innkeeper');
             $relationship_innkeeper->is_active = 1;
             $relationship_innkeeper->save();
+            $this->update_relationship_description($relationship_innkeeper->id);
+
             $group_innkeeper = new \App\GroupContact;
             $group_innkeeper->group_id = config('polanco.group_id.innkeeper');
             $group_innkeeper->contact_id = $person->id;
@@ -278,6 +290,8 @@ class PersonController extends Controller
             $relationship_assistant->relationship_type_id = config('polanco.relationship_type.retreat_assistant');
             $relationship_assistant->is_active = 1;
             $relationship_assistant->save();
+            $this->update_relationship_description($relationship_assistant->id);
+
             $group_assistant = new \App\GroupContact;
             $group_assistant->group_id = config('polanco.group_id.assistant');
             $group_assistant->contact_id = $person->id;
@@ -292,6 +306,8 @@ class PersonController extends Controller
             $relationship_staff->relationship_type_id = config('polanco.relationship_type.staff');
             $relationship_staff->is_active = 1;
             $relationship_staff->save();
+            $this->update_relationship_description($relationship_staff->id);
+
             $group_staff = new \App\GroupContact;
             $group_staff->group_id = config('polanco.group_id.staff');
             $group_staff->contact_id = $person->id;
@@ -315,6 +331,8 @@ class PersonController extends Controller
             $relationship_board->start_date = \Carbon\Carbon::now();
             $relationship_board->is_active = 1;
             $relationship_board->save();
+            $this->update_relationship_description($relationship_board->id);
+
             $group_board = new \App\GroupContact;
             $group_board->group_id = config('polanco.group_id.board');
             $group_board->contact_id = $person->id;
@@ -380,19 +398,6 @@ class PersonController extends Controller
             $group_hlm2017->status = 'Added';
             $group_hlm2017->save();
         }
-
-        /*
-        $this->save_relationship('parish_id',$parish_id,$person->id,config('polanco.relationship_type.parishioner'));
-        $this->save_relationship('is_donor',config('polanco.self.id'),$person->id,config('polanco.relationship_type.donor'));
-        $this->save_relationship('is_retreatant',config('polanco.self.id'),$person->id,config('polanco.relationship_type.retreatant'));
-        $this->save_relationship('is_volunteer',config('polanco.self.id'),$person->id,config('polanco.relationship_type.volunteer'));
-        $this->save_relationship('is_ambassador',config('polanco.self.id'),$person->id,config('polanco.relationship_type.ambassador'));
-        $this->save_relationship('is_director',config('polanco.self.id'),$person->id,config('polanco.relationship_type.retreat_director'));
-        $this->save_relationship('is_innkeeper',config('polanco.self.id'),$person->id,config('polanco.relationship_type.retreat_innkeeper'));
-        $this->save_relationship('is_assistant',config('polanco.self.id'),$person->id,config('polanco.relationship_type.retreat_assistant'));
-        $this->save_relationship('is_staff',config('polanco.self.id'),$person->id,config('polanco.relationship_type.staff'));
-        $this->save_relationship('is_board',config('polanco.self.id'),$person->id,config('polanco.relationship_type.board_member'));
-        */
 
         // save health, dietary, general and room preference notes
 
@@ -1927,5 +1932,14 @@ class PersonController extends Controller
         }
 
         return view('persons.merge', compact('contact', 'duplicates'));
+    }
+
+    public function update_relationship_description($id) {
+        $relationship = \App\Relationship::findOrFail($id);
+        $contact_a = \App\Contact::findOrFail($relationship->contact_id_a);
+        $contact_b = \App\Contact::findOrFail($relationship->contact_id_b);
+        $relationship_type = \App\RelationshipType::findOrFail($relationship->relationship_type_id);
+        $relationship->description = $contact_a->display_name." ".$relationship_type->label_a_b. " ".$contact_b->display_name;
+        $relationship->save();
     }
 }

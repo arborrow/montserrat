@@ -6,9 +6,9 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                    <span class="grey">Relationship Index</span> 
+                    <span class="grey">Relationship Index</span>
                     <span class="create"><a href={{ action('RelationshipController@create') }}>{!! Html::image('images/create.png', 'Add Relationship',array('title'=>"Add Relationship",'class' => 'btn btn-primary')) !!}</a></span></h1>
-                
+
                 </div>
                 @if ($relationships->isEmpty())
                     <p>It is a brand new world, there are no relationships!</p>
@@ -29,18 +29,15 @@
                         @foreach($relationships as $relationship)
                         <tr>
                             <td><a href="relationship/{{ $relationship->id }}">{{ $relationship->description }}</a></td>
-                            <td>{{ $relationship->relationship_type_id }}</td>
-                            <td>{{ $relationship->contact_id_a }}</td>
-                            <td>{{ $relationship->contact_id_b }}</td>
+                            <td>{{ $relationship->relationship_type_description }}</td>
+                            <td>{!! $relationship->contact_a_display_name !!}</td>
+                            <td>{!! $relationship->contact_b_display_name !!}</td>
                             <td>{{ $relationship->start_date }}</td>
                             <td>{{ $relationship->end_date }}</td>
-                            <td>{{ $relationship->is_active }}</td>
-                            <td>{{ $relationship->label_b_a }}</td>
-                            <td>N/A</td>
-                            
+                            <td>{{ $relationship->is_active ? "Y":"N"}}</td>
                         </tr>
                         @endforeach
-                        
+
                     </tbody>
                 </table>
                 @endif
