@@ -128,7 +128,7 @@ class ParishControllerTest extends TestCase
         $response->assertViewHas('states');
         $response->assertViewHas('countries');
         $response->assertViewHas('defaults');
-        $response->assertSeeText($parish->organization_name);
+        $response->assertSeeText(e($parish->organization_name));
 
         $this->assertTrue($this->findFieldValueInResponseContent('organization_name', $parish->organization_name, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('display_name', $parish->display_name, 'text', $response->getContent()));

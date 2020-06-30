@@ -168,11 +168,14 @@ class PersonController extends Controller
         }
 
         $person->save();
+
+        // avatar
         if (null !== $request->file('avatar')) {
             $description = 'Avatar for '.$person->full_name;
             $attachment = new AttachmentController;
             $attachment->store_attachment($request->file('avatar'), 'contact', $person->id, 'avatar', $description);
         }
+
         // emergency contact information - not part of CiviCRM squema
         $emergency_contact = new \App\EmergencyContact;
         $emergency_contact->contact_id = $person->id;
@@ -184,219 +187,93 @@ class PersonController extends Controller
 
         // relationships: parishioner, donor, retreatant, volunteer, ambassador, director, innkeeper, assistant, staff, board
 
-        // save parishioner relationship
+        // save parishioner b-relationship
         if ($request->input('parish_id') > 0) {
-            $relationship_parishioner = new \App\Relationship;
-            $relationship_parishioner->contact_id_a = $request->input('parish_id');
-            $relationship_parishioner->contact_id_b = $person->id;
-            $relationship_parishioner->relationship_type_id = config('polanco.relationship_type.parishioner');
-            $relationship_parishioner->is_active = 1;
-            $relationship_parishioner->save();
-            $this->update_relationship_description($relationship_parishioner->id);
+            $this->create_relationship($request->input('parish_id'), config('polanco.relationship_type.parishioner'), $person->id);
         }
 
-        // save donor relationship
+        // save donor b-relationship
         if ($request->input('is_donor') > 0) {
-            $relationship_donor = new \App\Relationship;
-            $relationship_donor->contact_id_a = config('polanco.self.id');
-            $relationship_donor->contact_id_b = $person->id;
-            $relationship_donor->relationship_type_id = config('polanco.relationship_type.donor');
-            $relationship_donor->is_active = 1;
-            $relationship_donor->save();
-            $this->update_relationship_description($relationship_donor->id);
+            $this->create_relationship(config('polanco.self.id'), config('polanco.relationship_type.donor'), $person->id);
         }
 
-        // save retreatant relationship
+        // save retreatant b-relationship
         if ($request->input('is_retreatant') > 0) {
-            $relationship_retreatant = new \App\Relationship;
-            $relationship_retreatant->contact_id_a = config('polanco.self.id');
-            $relationship_retreatant->contact_id_b = $person->id;
-            $relationship_retreatant->relationship_type_id = config('polanco.relationship_type.retreatant');
-            $relationship_retreatant->is_active = 1;
-            $relationship_retreatant->save();
-            $this->update_relationship_description($relationship_retreatant->id);
+            $this->create_relationship(config('polanco.self.id'), config('polanco.relationship_type.retreatant'), $person->id);
         }
 
-        // save volunteer relationship
+        // save volunteer b-relationship & group member
         if ($request->input('is_volunteer') > 0) {
-            $relationship_volunteer = new \App\Relationship;
-            $relationship_volunteer->contact_id_a = config('polanco.self.id');
-            $relationship_volunteer->contact_id_b = $person->id;
-            $relationship_volunteer->relationship_type_id = config('polanco.relationship_type.volunteer');
-            $relationship_volunteer->is_active = 1;
-            $relationship_volunteer->save();
-            $this->update_relationship_description($relationship_volunteer->id);
-
-            $group_volunteer = new \App\GroupContact;
-            $group_volunteer->group_id = config('polanco.group_id.volunteer');
-            $group_volunteer->contact_id = $person->id;
-            $group_volunteer->status = 'Added';
-            $group_volunteer->save();
+            $this->create_relationship(config('polanco.self.id'), config('polanco.relationship_type.volunteer'), $person->id);
+            $this->create_group_member($person->id, config('polanco.group_id.volunteer'));
         }
 
-        // save ambassador relationship
+        // save ambassador b-relationship
         if ($request->input('is_ambassador') > 0) {
-            $relationship_ambassador = new \App\Relationship;
-            $relationship_ambassador->contact_id_a = config('polanco.self.id');
-            $relationship_ambassador->contact_id_b = $person->id;
-            $relationship_ambassador->relationship_type_id = config('polanco.relationship_type.ambassador');
-            $relationship_ambassador->is_active = 1;
-            $relationship_ambassador->save();
-            $this->update_relationship_description($relationship_ambassador->id);
-
-            $group_ambassador = new \App\GroupContact;
-            $group_ambassador->group_id = config('polanco.group_id.ambassador');
-            $group_ambassador->contact_id = $person->id;
-            $group_ambassador->status = 'Added';
-            $group_ambassador->save();
+            $this->create_relationship(config('polanco.self.id'), config('polanco.relationship_type.ambassador'), $person->id);
+            $this->create_group_member($person->id, config('polanco.group_id.ambassador'));
         }
-        // save retreat director relationship
+
+        // save retreat director b-relationship
         if ($request->input('is_director') > 0) {
-            $relationship_director = new \App\Relationship;
-            $relationship_director->contact_id_a = config('polanco.self.id');
-            $relationship_director->contact_id_b = $person->id;
-            $relationship_director->relationship_type_id = config('polanco.relationship_type.retreat_director');
-            $relationship_director->is_active = 1;
-            $relationship_director->save();
-            $this->update_relationship_description($relationship_director->id);
-
-            $group_director = new \App\GroupContact;
-            $group_director->group_id = config('polanco.group_id.director');
-            $group_director->contact_id = $person->id;
-            $group_director->status = 'Added';
-            $group_director->save();
+            $this->create_relationship(config('polanco.self.id'), config('polanco.relationship_type.retreat_director'), $person->id);
+            $this->create_group_member($person->id, config('polanco.group_id.director'));
         }
-        // save retreat innkeeper relationship
+
+        // save retreat innkeeper b-relationship
         if ($request->input('is_innkeeper') > 0) {
-            $relationship_innkeeper = new \App\Relationship;
-            $relationship_innkeeper->contact_id_a = config('polanco.self.id');
-            $relationship_innkeeper->contact_id_b = $person->id;
-            $relationship_innkeeper->relationship_type_id = config('polanco.relationship_type.retreat_innkeeper');
-            $relationship_innkeeper->is_active = 1;
-            $relationship_innkeeper->save();
-            $this->update_relationship_description($relationship_innkeeper->id);
-
-            $group_innkeeper = new \App\GroupContact;
-            $group_innkeeper->group_id = config('polanco.group_id.innkeeper');
-            $group_innkeeper->contact_id = $person->id;
-            $group_innkeeper->status = 'Added';
-            $group_innkeeper->save();
+            $this->create_relationship(config('polanco.self.id'), config('polanco.relationship_type.retreat_innkeeper'), $person->id);
+            $this->create_group_member($person->id, config('polanco.group_id.innkeeper'));
         }
-        // save retreat assistant relationship
+
+        // save retreat assistant b-relationship
         if ($request->input('is_assistant') > 0) {
-            $relationship_assistant = new \App\Relationship;
-            $relationship_assistant->contact_id_a = config('polanco.self.id');
-            $relationship_assistant->contact_id_b = $person->id;
-            $relationship_assistant->relationship_type_id = config('polanco.relationship_type.retreat_assistant');
-            $relationship_assistant->is_active = 1;
-            $relationship_assistant->save();
-            $this->update_relationship_description($relationship_assistant->id);
-
-            $group_assistant = new \App\GroupContact;
-            $group_assistant->group_id = config('polanco.group_id.assistant');
-            $group_assistant->contact_id = $person->id;
-            $group_assistant->status = 'Added';
-            $group_assistant->save();
+            $this->create_relationship(config('polanco.self.id'), config('polanco.relationship_type.retreat_assistant'), $person->id);
+            $this->create_group_member($person->id, config('polanco.group_id.assistant'));
         }
-        // save staff relationship - nb that the individual is contact_a and organization is contact_b
+
+        // save staff relationship a-relationship
         if ($request->input('is_staff') > 0) {
-            $relationship_staff = new \App\Relationship;
-            $relationship_staff->contact_id_a = $person->id;
-            $relationship_staff->contact_id_b = config('polanco.self.id');
-            $relationship_staff->relationship_type_id = config('polanco.relationship_type.staff');
-            $relationship_staff->is_active = 1;
-            $relationship_staff->save();
-            $this->update_relationship_description($relationship_staff->id);
-
-            $group_staff = new \App\GroupContact;
-            $group_staff->group_id = config('polanco.group_id.staff');
-            $group_staff->contact_id = $person->id;
-            $group_staff->status = 'Added';
-            $group_staff->save();
+            $this->create_relationship($person->id, config('polanco.relationship_type.staff'), config('polanco.self.id'));
+            $this->create_group_member($person->id, config('polanco.group_id.staff'));
         }
-        // save steward group
+        // save steward group member
         if ($request->input('is_steward') > 0) {
-            $group_steward = new \App\GroupContact;
-            $group_steward->group_id = config('polanco.group_id.steward');
-            $group_steward->contact_id = $person->id;
-            $group_steward->status = 'Added';
-            $group_steward->save();
+            $this->create_group_member($person->id, config('polanco.group_id.steward'));
         }
-        // save board member relationship
-        if ($request->input('is_board') > 0) {
-            $relationship_board = new \App\Relationship;
-            $relationship_board->contact_id_a = config('polanco.self.id');
-            $relationship_board->contact_id_b = $person->id;
-            $relationship_board->relationship_type_id = config('polanco.relationship_type.board_member');
-            $relationship_board->start_date = \Carbon\Carbon::now();
-            $relationship_board->is_active = 1;
-            $relationship_board->save();
-            $this->update_relationship_description($relationship_board->id);
 
-            $group_board = new \App\GroupContact;
-            $group_board->group_id = config('polanco.group_id.board');
-            $group_board->contact_id = $person->id;
-            $group_board->status = 'Added';
-            $group_board->save();
+        // save board member b-relationship
+        // TODO: evaluate whether to set relationship start_date upon creation, removing for now
+        if ($request->input('is_board') > 0) {
+            $this->create_relationship(config('polanco.self.id'), config('polanco.relationship_type.board_member'), $person->id);
+            $this->create_group_member($person->id, config('polanco.group_id.board'));
         }
 
         //groups: deacon, priest, bishop, pastor, jesuit, provincial, superior, ambassador, board, innkeeper, director, assistant, staff
 
         if ($request->input('is_bishop') > 0) {
-            $group_bishop = new \App\GroupContact;
-            $group_bishop->group_id = config('polanco.group_id.bishop');
-            $group_bishop->contact_id = $person->id;
-            $group_bishop->status = 'Added';
-            $group_bishop->save();
+            $this->create_group_member($person->id, config('polanco.group_id.bishop'));
         }
         if ($request->input('is_priest') > 0) {
-            $group_priest = new \App\GroupContact;
-            $group_priest->group_id = config('polanco.group_id.priest');
-            $group_priest->contact_id = $person->id;
-            $group_priest->status = 'Added';
-            $group_priest->save();
+            $this->create_group_member($person->id, config('polanco.group_id.priest'));
         }
         if ($request->input('is_deacon') > 0) {
-            $group_deacon = new \App\GroupContact;
-            $group_deacon->group_id = config('polanco.group_id.deacon');
-            $group_deacon->contact_id = $person->id;
-            $group_deacon->status = 'Added';
-            $group_deacon->save();
+            $this->create_group_member($person->id, config('polanco.group_id.deacon'));
         }
         if ($request->input('is_pastor') > 0) {
-            $group_pastor = new \App\GroupContact;
-            $group_pastor->group_id = config('polanco.group_id.pastor');
-            $group_pastor->contact_id = $person->id;
-            $group_pastor->status = 'Added';
-            $group_pastor->save();
+            $this->create_group_member($person->id, config('polanco.group_id.pastor'));
         }
         if ($request->input('is_jesuit') > 0) {
-            $group_jesuit = new \App\GroupContact;
-            $group_jesuit->group_id = config('polanco.group_id.jesuit');
-            $group_jesuit->contact_id = $person->id;
-            $group_jesuit->status = 'Added';
-            $group_jesuit->save();
+            $this->create_group_member($person->id, config('polanco.group_id.jesuit'));
         }
         if ($request->input('is_superior') > 0) {
-            $group_superior = new \App\GroupContact;
-            $group_superior->group_id = config('polanco.group_id.superior');
-            $group_superior->contact_id = $person->id;
-            $group_superior->status = 'Added';
-            $group_superior->save();
+            $this->create_group_member($person->id, config('polanco.group_id.superior'));
         }
         if ($request->input('is_provincial') > 0) {
-            $group_provincial = new \App\GroupContact;
-            $group_provincial->group_id = config('polanco.group_id.provincial');
-            $group_provincial->contact_id = $person->id;
-            $group_provincial->status = 'Added';
-            $group_provincial->save();
+            $this->create_group_member($person->id, config('polanco.group_id.provincial'));
         }
         if ($request->input('is_hlm2017') > 0) {
-            $group_hlm2017 = new \App\GroupContact;
-            $group_hlm2017->group_id = config('polanco.group_id.hlm2017');
-            $group_hlm2017->contact_id = $person->id;
-            $group_hlm2017->status = 'Added';
-            $group_hlm2017->save();
+            $this->create_group_member($person->id, config('polanco.group_id.hlm2017'));
         }
 
         // save health, dietary, general and room preference notes
@@ -1941,5 +1818,27 @@ class PersonController extends Controller
         $relationship_type = \App\RelationshipType::findOrFail($relationship->relationship_type_id);
         $relationship->description = $contact_a->display_name." ".$relationship_type->label_a_b. " ".$contact_b->display_name;
         $relationship->save();
+    }
+
+    /*
+    Create a new relationship
+     */
+    public function create_relationship($contact_id_a, $relationship_type_id, $contact_id_b) {
+
+        $relationship_new = new \App\Relationship;
+        $relationship_new->contact_id_a = $contact_id_a;
+        $relationship_new->contact_id_b = $contact_id_b;
+        $relationship_new->relationship_type_id = $relationship_type_id;
+        $relationship_new->is_active = 1;
+        $relationship_new->save();
+        $this->update_relationship_description($relationship_new->id);
+    }
+
+    public function create_group_member($contact_id, $group_id) {
+        $group_new = new \App\GroupContact;
+        $group_new->group_id = $group_id;
+        $group_new->contact_id = $contact_id;
+        $group_new->status = 'Added';
+        $group_new->save();
     }
 }

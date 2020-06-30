@@ -45,8 +45,7 @@ class RelationshipControllerTest extends TestCase
      * @test
      */
     public function edit_returns_an_ok_response()
-    {
-        $user = $this->createUserWithPermission('update-relationship');
+    {   $user = $this->createUserWithPermission('update-relationship');
         $relationship = factory(\App\Relationship::class)->create();
 
         $response = $this->actingAs($user)->get(route('relationship.edit', [$relationship]));
