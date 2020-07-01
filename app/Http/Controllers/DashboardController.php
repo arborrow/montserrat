@@ -215,20 +215,45 @@ class DashboardController extends Controller
         return view('dashboard.description', compact('donation_description_chart', 'descriptions'));
     }
 
-    public function board($year = null)
+    public function board($start = null, $end=null)
     {
         // TODO: Create donut chart for average number of retreatants per event (get count of event_type_id) partipants/count(event_type_id) //useful for Ambassador goal of 40 (draw goal line)
         $this->authorize('show-dashboard');
-
-        // default to current fiscal year
-        if (! isset($year)) {
-            $year = (date('m') > 6) ? date('Y') + 1 : date('Y');
+        if (! is_null($start)) {
+            try {
+                $start_date = Carbon::createFromFormat('Ymd', $start);
+            } catch (\Exception $e) {
+                echo 'Start date not formatted as yyyymmdd';
+                return redirect(url('dashboard'));
+            }
+        }
+        if (! is_null($end)) {
+            try {
+                $end_date = Carbon::createFromFormat('Ymd', $end);
+            } catch (\Exception $e) {
+                echo 'End date not formatted as yyyymmdd';
+                return redirect()->back();
+            }
         }
 
-        $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
-        $prev_year = $year - 1;
-        $begin_date = $prev_year.'-07-01';
-        $end_date = $year.'-07-01';
+        // default to current fiscal year
+        // if just a start date is given assume fiscal year for start date
+
+        $start_date = is_null($start) ?  Carbon::now() : Carbon::createFromFormat('Ymd', $start);
+        $end_date = is_null($end) ?  null : Carbon::createFromFormat('Ymd', $end);
+
+        //calculate the fiscal year of the start date
+        $fiscal_year = ($start_date->month > 6) ? $start_date->year + 1 : $start_date->year;
+        $end_year = $fiscal_year - 1;
+
+        // if there is no specific end date then assume fiscal year
+        if (is_null($end_date)) {
+            $start_date = $fiscal_year.'-07-01';
+            $end_date = $end_year.'-07-01';
+        } else {
+            $start_date = $start_date->format("Y-m-d");
+            $end_date = $end_date->format("Y-m-d");
+        }
 
         $number_of_years = 5;
         $years = [];
@@ -236,7 +261,7 @@ class DashboardController extends Controller
             $today = \Carbon\Carbon::now();
             $today->day = 1;
             $today->month = 1;
-            $today->year = $current_year;
+            $today->year = $fiscal_year;
             $years[$x] = $today->subYear($x);
         }
 
@@ -278,7 +303,7 @@ class DashboardController extends Controller
             GROUP BY e.id) as tmp
             GROUP BY tmp.type
             ORDER BY `tmp`.`type` ASC", [
-                'begin_date' => $begin_date,
+                'begin_date' => $start_date,
                 'end_date' => $end_date,
             ]);
         //dd(array_column($board_summary, 'total_paid'));
@@ -327,6 +352,6 @@ class DashboardController extends Controller
             ->backgroundcolor($fillColors);
         $summary = array_values($board_summary);
 
-        return view('dashboard.board', compact('years', 'year', 'summary', 'board_summary', 'board_summary_revenue_chart', 'board_summary_participant_chart', 'board_summary_peoplenight_chart', 'total_revenue', 'total_participants', 'total_peoplenights'));
+        return view('dashboard.board', compact('years', 'fiscal_year', 'summary', 'board_summary', 'board_summary_revenue_chart', 'board_summary_participant_chart', 'board_summary_peoplenight_chart', 'total_revenue', 'total_participants', 'total_peoplenights'));
     }
 }

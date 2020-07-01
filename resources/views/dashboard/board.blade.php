@@ -20,20 +20,20 @@
                 </div>
 
 
-                <div>FY{{ $year }} Revenue by Event Type</div>
+                <div>FY{{ $fiscal_year }} Revenue by Event Type</div>
                 <div> {!! $board_summary_revenue_chart->container() !!} </div>
 
                 <div>Total Revenue: ${{ number_format($total_revenue,2) }} </div>
                 <hr />
-                <div>FY{{ $year }} Participants by Event Type</div>
+                <div>FY{{ $fiscal_year }} Participants by Event Type</div>
                 <div> {!! $board_summary_participant_chart->container() !!} </div>
                 <div>Total Participants: {{ number_format($total_participants,0) }} </div>
                 <hr />
-                <div>FY{{ $year }} People Nights by Event Type</div>
+                <div>FY{{ $fiscal_year }} People Nights by Event Type</div>
                 <div> {!! $board_summary_peoplenight_chart->container() !!} </div>
                 <div>Total People Nights: {{ number_format($total_peoplenights,0) }} </div>
                 <hr />
-                <div>FY{{ $year }} Summary</div>
+                <div>FY{{ $fiscal_year }} Summary</div>
                 <div>
                     <table class="table table-bordered table-striped table-hover table-responsive-md">
                         <thead style='text-align:center'>
