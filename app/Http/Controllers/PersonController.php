@@ -277,7 +277,6 @@ class PersonController extends Controller
         }
 
         // save health, dietary, general and room preference notes
-        create_note($person_id, $note_subject, $note_text)
         if (! empty($request->input('note_health'))) {
             create_note($person->id, 'Health Note', $request->input('note_health'));
         }
