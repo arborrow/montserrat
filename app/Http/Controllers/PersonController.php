@@ -277,43 +277,24 @@ class PersonController extends Controller
         }
 
         // save health, dietary, general and room preference notes
-
+        create_note($person_id, $note_subject, $note_text)
         if (! empty($request->input('note_health'))) {
-            $person_note_health = new \App\Note;
-            $person_note_health->entity_table = 'contact';
-            $person_note_health->entity_id = $person->id;
-            $person_note_health->note = $request->input('note_health');
-            $person_note_health->subject = 'Health Note';
-            $person_note_health->save();
+            create_note($person->id, 'Health Note', $request->input('note_health'));
         }
 
         if (! empty($request->input('note_dietary'))) {
-            $person_note_dietary = new \App\Note;
-            $person_note_dietary->entity_table = 'contact';
-            $person_note_dietary->entity_id = $person->id;
-            $person_note_dietary->note = $request->input('note_dietary');
-            $person_note_dietary->subject = 'Dietary Note';
-            $person_note_dietary->save();
+            create_note($person->id, 'Dietary Note', $request->input('note_dietary'));
         }
 
         if (! empty($request->input('note_contact'))) {
-            $person_note_contact = new \App\Note;
-            $person_note_contact->entity_table = 'contact';
-            $person_note_contact->entity_id = $person->id;
-            $person_note_contact->note = $request->input('note_contact');
-            $person_note_contact->subject = 'Contact Note';
-            $person_note_contact->save();
+            create_note($person->id, 'Contact Note', $request->input('note_contact'));
         }
 
         if (! empty($request->input('note_room_preference'))) {
-            $person_note_room_preference = new \App\Note;
-            $person_note_room_preference->entity_table = 'contact';
-            $person_note_room_preference->entity_id = $person->id;
-            $person_note_room_preference->note = $request->input('note_room_preference');
-            $person_note_room_preference->subject = 'Room Preference';
-            $person_note_room_preference->save();
+            create_note($person->id, 'Room Preference', $request->input('note_room_preference'));
         }
 
+        //languages
         if (empty($request->input('languages')) or in_array(0, $request->input('languages'))) {
             $person->languages()->detach();
         } else {
@@ -361,129 +342,69 @@ class PersonController extends Controller
         $other_address->country_id = $request->input('address_other_country');
         $other_address->save();
 
-        $phone_home_phone = new \App\Phone;
-        $phone_home_phone->contact_id = $person->id;
-        $phone_home_phone->location_type_id = config('polanco.location_type.home');
-        $phone_home_phone->phone = $request->input('phone_home_phone');
-        $phone_home_phone->phone_type = 'Phone';
-        $phone_home_phone->save();
+        // home phone numbers
+        if (! empty($request->input('phone_home_phone'))) {
+            create_phone($person->id, config('polano.location_type.home'), 'Phone', $request->input('phone_home_phone'));
+        }
+        if (! empty($request->input('phone_home_mobile'))) {
+            create_phone($person->id, config('polano.location_type.home'), 'Mobile', $request->input('phone_home_mobile'));
+        }
+        if (! empty($request->input('phone_home_fax'))) {
+            create_phone($person->id, config('polano.location_type.home'), 'Fax', $request->input('phone_home_fax'));
+        }
+        // work phone numbers
+        if (! empty($request->input('phone_work_phone'))) {
+            create_phone($person->id, config('polano.location_type.work'), 'Phone', $request->input('phone_work_phone'));
+        }
+        if (! empty($request->input('phone_work_mobile'))) {
+            create_phone($person->id, config('polano.location_type.work'), 'Mobile', $request->input('phone_work_mobile'));
+        }
+        if (! empty($request->input('phone_work_fax'))) {
+            create_phone($person->id, config('polano.location_type.work'), 'Fax', $request->input('phone_work_fax'));
+        }
+        // work phone numbers
+        if (! empty($request->input('phone_other_phone'))) {
+            create_phone($person->id, config('polano.location_type.other'), 'Phone', $request->input('phone_other_phone'));
+        }
+        if (! empty($request->input('phone_other_mobile'))) {
+            create_phone($person->id, config('polano.location_type.other'), 'Mobile', $request->input('phone_other_mobile'));
+        }
+        if (! empty($request->input('phone_other_fax'))) {
+            create_phone($person->id, config('polano.location_type.other'), 'Fax', $request->input('phone_other_fax'));
+        }
+        // emails
+        if (! empty($request->input('email_home'))) {
+            create_email($person->id, config('polanco.location_type.home'), $request->input('email_home'), 1);
+        }
+        if (! empty($request->input('email_work'))) {
+            create_email($person->id, config('polanco.location_type.work'), $request->input('email_work'), 0);
+        }
+        if (! empty($request->input('email_other'))) {
+            create_email($person->id, config('polanco.location_type.other'), $request->input('email_other'), 0);
+        }
+        // urls
+        if (! empty($request->input('url_main'))) {
+            create_website($person->id, 'Main', $request->input('url_main'));
+        }
+        if (! empty($request->input('url_work'))) {
+            create_website($person->id, 'Work', $request->input('url_work'));
+        }
+        if (! empty($request->input('url_facebook'))) {
+            create_website($person->id, 'Facebook', $request->input('url_facebook'));
+        }
+        if (! empty($request->input('url_google'))) {
+            create_website($person->id, 'Google', $request->input('url_google'));
+        }
 
-        $phone_home_mobile = new \App\Phone;
-        $phone_home_mobile->contact_id = $person->id;
-        $phone_home_mobile->location_type_id = config('polanco.location_type.home');
-        $phone_home_mobile->phone = $request->input('phone_home_mobile');
-        $phone_home_mobile->phone_type = 'Mobile';
-        $phone_home_mobile->save();
-
-        $phone_home_fax = new \App\Phone;
-        $phone_home_fax->contact_id = $person->id;
-        $phone_home_fax->location_type_id = config('polanco.location_type.home');
-        $phone_home_fax->phone = $request->input('phone_home_fax');
-        $phone_home_fax->phone_type = 'Fax';
-        $phone_home_fax->save();
-
-        $phone_work_phone = new \App\Phone;
-        $phone_work_phone->contact_id = $person->id;
-        $phone_work_phone->location_type_id = config('polanco.location_type.work');
-        $phone_work_phone->phone = $request->input('phone_work_phone');
-        $phone_work_phone->phone_type = 'Phone';
-        $phone_work_phone->save();
-
-        $phone_work_mobile = new \App\Phone;
-        $phone_work_mobile->contact_id = $person->id;
-        $phone_work_mobile->location_type_id = config('polanco.location_type.work');
-        $phone_work_mobile->phone = $request->input('phone_work_mobile');
-        $phone_work_mobile->phone_type = 'Mobile';
-        $phone_work_mobile->save();
-
-        $phone_work_fax = new \App\Phone;
-        $phone_work_fax->contact_id = $person->id;
-        $phone_work_fax->location_type_id = config('polanco.location_type.work');
-        $phone_work_fax->phone = $request->input('phone_work_fax');
-        $phone_work_fax->phone_type = 'Fax';
-        $phone_work_fax->save();
-
-        $phone_other_phone = new \App\Phone;
-        $phone_other_phone->contact_id = $person->id;
-        $phone_other_phone->location_type_id = config('polanco.location_type.other');
-        $phone_other_phone->phone = $request->input('phone_other_phone');
-        $phone_other_phone->phone_type = 'Phone';
-        $phone_other_phone->save();
-
-        $phone_other_mobile = new \App\Phone;
-        $phone_other_mobile->contact_id = $person->id;
-        $phone_other_mobile->location_type_id = config('polanco.location_type.other');
-        $phone_other_mobile->phone = $request->input('phone_other_mobile');
-        $phone_other_mobile->phone_type = 'Mobile';
-        $phone_other_mobile->save();
-
-        $phone_other_fax = new \App\Phone;
-        $phone_other_fax->contact_id = $person->id;
-        $phone_other_fax->location_type_id = config('polanco.location_type.other');
-        $phone_other_fax->phone = $request->input('phone_other_fax');
-        $phone_other_fax->phone_type = 'Fax';
-        $phone_other_fax->save();
-
-        $email_home = new \App\Email;
-        $email_home->contact_id = $person->id;
-        $email_home->location_type_id = config('polanco.location_type.home');
-        $email_home->email = $request->input('email_home');
-        $email_home->is_primary = 1;
-        $email_home->save();
-
-        $email_work = new \App\Email;
-        $email_work->contact_id = $person->id;
-        $email_work->location_type_id = config('polanco.location_type.work');
-        $email_work->email = $request->input('email_work');
-        $email_work->save();
-
-        $email_other = new \App\Email;
-        $email_other->contact_id = $person->id;
-        $email_other->location_type_id = config('polanco.location_type.other');
-        $email_other->email = $request->input('email_other');
-        $email_other->save();
-
-        $url_main = new \App\Website;
-        $url_main->contact_id = $person->id;
-        $url_main->url = $request->input('url_main');
-        $url_main->website_type = 'Main';
-        $url_main->save();
-
-        $url_work = new \App\Website;
-        $url_work->contact_id = $person->id;
-        $url_work->url = $request->input('url_work');
-        $url_work->website_type = 'Work';
-        $url_work->save();
-
-        $url_facebook = new \App\Website;
-        $url_facebook->contact_id = $person->id;
-        $url_facebook->url = $request->input('url_facebook');
-        $url_facebook->website_type = 'Facebook';
-        $url_facebook->save();
-
-        $url_google = new \App\Website;
-        $url_google->contact_id = $person->id;
-        $url_google->url = $request->input('url_google');
-        $url_google->website_type = 'Google';
-        $url_google->save();
-
-        $url_instagram = new \App\Website;
-        $url_instagram->contact_id = $person->id;
-        $url_instagram->url = $request->input('url_instagram');
-        $url_instagram->website_type = 'Instagram';
-        $url_instagram->save();
-
-        $url_linkedin = new \App\Website;
-        $url_linkedin->contact_id = $person->id;
-        $url_linkedin->url = $request->input('url_linkedin');
-        $url_linkedin->website_type = 'LinkedIn';
-        $url_linkedin->save();
-
-        $url_twitter = new \App\Website;
-        $url_twitter->contact_id = $person->id;
-        $url_twitter->url = $request->input('url_twitter');
-        $url_twitter->website_type = 'Twitter';
-        $url_twitter->save();
+        if (! empty($request->input('url_instagram'))) {
+            create_website($person->id, 'Instagram', $request->input('url_instagram'));
+        }
+        if (! empty($request->input('url_linkedin'))) {
+            create_website($person->id, 'LinkedIn', $request->input('url_linkedin'));
+        }
+        if (! empty($request->input('url_twitter'))) {
+            create_website($person->id, 'Twitter', $request->input('url_twitter'));
+        }
 
         return Redirect::action('PersonController@show', $person->id); //
 
@@ -1841,4 +1762,39 @@ class PersonController extends Controller
         $group_new->status = 'Added';
         $group_new->save();
     }
+
+    public function create_note($contact_id, $note_subject, $note_text) {
+        $note_new = new \App\Note;
+        $note_new->entity_table = 'contact';
+        $note_new->entity_id = $contact_id;
+        $note_new->note = $note_text;
+        $note_new->subject = $note_subject;
+        $note_new->save();
+    }
+    public function create_phone($contact_id, $location, $type, $phone_number) {
+        $phone_new = new \App\Phone;
+        $phone_new->contact_id = $contact_id;
+        $phone_new->location_type_id = $location;
+        $phone_new->phone_type = $type;
+        $phone_new->phone = $phone_number;
+        $phone_new->save();
+    }
+
+    public function create_email($contact_id, $location, $email, $is_primary) {
+        $email_new = new \App\Email;
+        $email_new->contact_id = $contact_id;
+        $email_new->location_type_id = $location;
+        $email_new->email = $email;
+        $email_new->is_primary = $is_primary;
+        $email_new->save();
+    }
+
+    public function create_website($contact_id, $type, $url) {
+        $url_new = new \App\Website;
+        $url_new->contact_id = $contact_id;
+        $url_new->url = $url;
+        $url_new->website_type = $type;
+        $url_new->save();
+    }
+
 }
