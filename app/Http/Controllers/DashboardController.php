@@ -241,7 +241,8 @@ class DashboardController extends Controller
 
         $start_date = is_null($start) ?  Carbon::today() : Carbon::createFromFormat('Ymd', $start);
         $end_date = is_null($end) ?  null : Carbon::createFromFormat('Ymd', $end);
-
+        $today = \Carbon\Carbon::today();
+        $current_fiscal_year = ($today->month > 6) ? $today->year + 1 : $today->year;
 
         //calculate the fiscal year of the start date
         $fiscal_year = ($start_date->month > 6) ? $start_date->year + 1 : $start_date->year;
@@ -266,13 +267,9 @@ class DashboardController extends Controller
         $number_of_years = 5;
         $years = [];
         for ($x = 0; $x <= $number_of_years; $x++) {
-            $today = \Carbon\Carbon::now();
-            $today->day = 1;
-            $today->month = 1;
-            $today->year = $fiscal_year;
-            $years[$x] = $today->subYear($x);
+            $years[$x] = $current_fiscal_year - $x;
         }
-
+        
         $borderColors = [
            'rgba(255, 99, 132, 1.0)',
            'rgba(22,160,133, 1.0)',

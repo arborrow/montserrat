@@ -14,7 +14,7 @@
                     <select class="custom-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                         <option value="">Select fiscal year ...</option>
                         @foreach($years as $y)
-                            <option value="{{url('dashboard/board/'.$y->year)}}">FY{{$y->year}}</option>
+                            <option value="{{url('dashboard/board/'.$y.'0101')}}">FY{{$y}}</option>
                         @endForeach
                     </select>
                 </div>
