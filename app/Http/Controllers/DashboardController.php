@@ -299,13 +299,14 @@ class DashboardController extends Controller
             	(SELECT COUNT(*) FROM participant as reg WHERE reg.event_id = e.id AND reg.deleted_at IS NULL AND reg.canceled_at IS NULL) as participants,
             	(SELECT(participants*nights)) as peoplenights
             FROM event as e LEFT JOIN event_type as et ON (et.id = e.event_type_id)
-            WHERE e.start_date > :begin_date AND e.start_date < :end_date AND e.is_active=1 AND e.deleted_at IS NULL AND e.title NOT LIKE '%Deposit%'
+            WHERE e.start_date > :begin AND e.start_date < :end AND e.is_active=1 AND e.deleted_at IS NULL AND e.title NOT LIKE '%Deposit%'
             GROUP BY e.id) as tmp
             GROUP BY tmp.type
             ORDER BY `tmp`.`type` ASC", [
-                'begin_date' => $start_date,
-                'end_date' => $end_date,
+                'begin' => $start_date,
+                'end' => $end_date,
             ]);
+        dd($start_date, $end_date, $board_summary);
         //dd(array_column($board_summary, 'total_paid'));
 
         $total_revenue = array_sum(array_column($board_summary, 'total_paid'));
