@@ -20,7 +20,7 @@
                 </div>
 
 
-                <div>FY{{ $fiscal_year }} Revenue by Event Type</div>
+                <div>FY{{ $fiscal_year }} Revenue by Event Type ({{ $begin_date }} - {{ $end_date }})</div>
                 <div> {!! $board_summary_revenue_chart->container() !!} </div>
 
                 <div>Total Revenue: ${{ number_format($total_revenue,2) }} </div>
@@ -33,7 +33,7 @@
                 <div> {!! $board_summary_peoplenight_chart->container() !!} </div>
                 <div>Total People Nights: {{ number_format($total_peoplenights,0) }} </div>
                 <hr />
-                <div>FY{{ $fiscal_year }} Summary</div>
+                <div>FY{{ $fiscal_year }} Summary ({{ $begin_date }} - {{ $end_date }})</div>
                 <div>
                     <table class="table table-bordered table-striped table-hover table-responsive-md">
                         <thead style='text-align:center'>

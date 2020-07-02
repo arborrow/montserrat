@@ -239,19 +239,27 @@ class DashboardController extends Controller
         // default to current fiscal year
         // if just a start date is given assume fiscal year for start date
 
-        $start_date = is_null($start) ?  Carbon::now() : Carbon::createFromFormat('Ymd', $start);
+        $start_date = is_null($start) ?  Carbon::today() : Carbon::createFromFormat('Ymd', $start);
         $end_date = is_null($end) ?  null : Carbon::createFromFormat('Ymd', $end);
+
 
         //calculate the fiscal year of the start date
         $fiscal_year = ($start_date->month > 6) ? $start_date->year + 1 : $start_date->year;
-        $end_year = $fiscal_year - 1;
+        $start_year = $fiscal_year - 1;
 
         // if there is no specific end date then assume fiscal year
         if (is_null($end_date)) {
-            $start_date = $fiscal_year.'-07-01';
-            $end_date = $end_year.'-07-01';
+            $start_date->month = 7;
+            $start_date->day = 1;
+            $start_date->year = $start_year;
+            $end_date = new \Carbon\Carbon();
+            $end_date->month = 7;
+            $end_date->day = 1;
+            $end_date->year = $fiscal_year;
+            $begin_date = $start_date->format("Y-m-d");
+            $end_date = $end_date->format("Y-m-d");
         } else {
-            $start_date = $start_date->format("Y-m-d");
+            $begin_date = $start_date->format("Y-m-d");
             $end_date = $end_date->format("Y-m-d");
         }
 
@@ -291,23 +299,21 @@ class DashboardController extends Controller
 
        ];
 
-        $board_summary = DB::select("SELECT tmp.type, SUM(tmp.pledged) as total_pledged, SUM(tmp.paid) as total_paid, SUM(tmp.participants) as total_participants, SUM(tmp.peoplenights) as total_pn, SUM(tmp.nights) as total_nights
-            FROM
-            (SELECT e.id as event_id, e.title as event, et.name as type, e.idnumber, e.start_date, e.end_date, DATEDIFF(e.end_date,e.start_date) as nights,
-            	(SELECT SUM(d.donation_amount) FROM Donations as d WHERE d.event_id=e.id) as pledged,
-            	(SELECT SUM(p.payment_amount) FROM Donations as d LEFT JOIN Donations_payment as p ON (p.donation_id = d.donation_id) WHERE d.event_id=e.id AND d.deleted_at IS NULL AND p.deleted_at IS NULL) as paid,
-            	(SELECT COUNT(*) FROM participant as reg WHERE reg.event_id = e.id AND reg.deleted_at IS NULL AND reg.canceled_at IS NULL) as participants,
-            	(SELECT(participants*nights)) as peoplenights
-            FROM event as e LEFT JOIN event_type as et ON (et.id = e.event_type_id)
-            WHERE e.start_date > :begin AND e.start_date < :end AND e.is_active=1 AND e.deleted_at IS NULL AND e.title NOT LIKE '%Deposit%'
-            GROUP BY e.id) as tmp
-            GROUP BY tmp.type
-            ORDER BY `tmp`.`type` ASC", [
-                'begin' => $start_date,
-                'end' => $end_date,
-            ]);
-        dd($start_date, $end_date, $board_summary);
-        //dd(array_column($board_summary, 'total_paid'));
+       $board_summary = DB::select("SELECT tmp.type, SUM(tmp.pledged) as total_pledged, SUM(tmp.paid) as total_paid, SUM(tmp.participants) as total_participants, SUM(tmp.peoplenights) as total_pn, SUM(tmp.nights) as total_nights
+           FROM
+           (SELECT e.id as event_id, e.title as event, et.name as type, e.idnumber, e.start_date, e.end_date, DATEDIFF(e.end_date,e.start_date) as nights,
+               (SELECT SUM(d.donation_amount) FROM Donations as d WHERE d.event_id=e.id) as pledged,
+               (SELECT SUM(p.payment_amount) FROM Donations as d LEFT JOIN Donations_payment as p ON (p.donation_id = d.donation_id) WHERE d.event_id=e.id AND d.deleted_at IS NULL AND p.deleted_at IS NULL) as paid,
+               (SELECT COUNT(*) FROM participant as reg WHERE reg.event_id = e.id AND reg.deleted_at IS NULL AND reg.canceled_at IS NULL) as participants,
+               (SELECT(participants*nights)) as peoplenights
+           FROM event as e LEFT JOIN event_type as et ON (et.id = e.event_type_id)
+           WHERE e.start_date > :begin_date AND e.start_date < :end_date AND e.is_active=1 AND e.deleted_at IS NULL AND e.title NOT LIKE '%Deposit%'
+           GROUP BY e.id) as tmp
+           GROUP BY tmp.type
+           ORDER BY `tmp`.`type` ASC", [
+               'begin_date' => $begin_date,
+               'end_date' => $end_date,
+           ]);
 
         $total_revenue = array_sum(array_column($board_summary, 'total_paid'));
         $total_participants = array_sum(array_column($board_summary, 'total_participants'));
@@ -353,6 +359,6 @@ class DashboardController extends Controller
             ->backgroundcolor($fillColors);
         $summary = array_values($board_summary);
 
-        return view('dashboard.board', compact('years', 'fiscal_year', 'summary', 'board_summary', 'board_summary_revenue_chart', 'board_summary_participant_chart', 'board_summary_peoplenight_chart', 'total_revenue', 'total_participants', 'total_peoplenights'));
+        return view('dashboard.board', compact('years', 'fiscal_year', 'summary', 'board_summary', 'board_summary_revenue_chart', 'board_summary_participant_chart', 'board_summary_peoplenight_chart', 'total_revenue', 'total_participants', 'total_peoplenights', 'begin_date', 'end_date'));
     }
 }
