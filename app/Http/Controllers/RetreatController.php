@@ -803,7 +803,7 @@ class RetreatController extends Controller
     public function search()
     {
         $this->authorize('show-retreat');
-        $event_types = \App\EventType::whereIsActive(true)->pluck('label', 'id');
+        $event_types = \App\EventType::whereIsActive(true)->orderBy('label')->pluck('label', 'id');
         $event_types->prepend('N/A', 0);
 
         return view('retreats.search', compact('event_types'));
