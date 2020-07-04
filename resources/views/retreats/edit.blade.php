@@ -24,7 +24,6 @@
                         <div class="col-12 col-lg-4">
                             {!! Form::label('start_date', 'Starts:') !!}
                             {!! Form::datetime('start_date', $retreat->start_date, ['class'=>'form-control flatpickr-date-time','id' => 'start_date']) !!}
-
                         </div>
                         <div class="col-12 col-lg-4">
                             {!! Form::label('end_date', 'Ends:') !!}

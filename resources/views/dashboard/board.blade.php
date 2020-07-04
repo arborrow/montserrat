@@ -9,14 +9,23 @@
                         <span class="grey">Board Dashboard</span>
                     </h1>
                 </div>
-
-                <div class="col-md-4 col-12">
-                    <select class="custom-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-                        <option value="">Select fiscal year ...</option>
-                        @foreach($years as $y)
-                            <option value="{{url('dashboard/board/'.$y.'0101')}}">FY{{$y}}</option>
-                        @endForeach
-                    </select>
+                <div class="row">
+                    <div class="col-4"  style="align-self: end;">
+                        <select class="custom-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                            <option value="">Select fiscal year ...</option>
+                            @foreach($years as $y)
+                                <option value="{{url('dashboard/board/'.$y.'0101')}}">FY{{$y}}</option>
+                            @endForeach
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        {!! Form::label('start_date', 'Starts:') !!}
+                        {!! Form::date('start_date', $begin_date, ['class'=>'form-control flatpickr-date','id' => 'start_date']) !!}
+                    </div>
+                    <div class="col-4">
+                        {!! Form::label('end_date', 'Ends:') !!}
+                        {!! Form::date('end_date', $end_date, ['class' => 'form-control flatpickr-date','id' => 'end_date']) !!}
+                    </div>
                 </div>
 
 
