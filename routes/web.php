@@ -205,6 +205,8 @@ Route::prefix('report')->group(function () {
     Route::get('finance/retreatdonations/{retreat_id?}', 'PageController@finance_retreatdonations');
     Route::get('finance/deposits', 'PageController@finance_deposits');
 });
+Route::get('/transactions', 'TransactionController@index')->name('transactions.index');
+Route::get('/transactions/all', 'TransactionController@all')->name('transactions.all');
 
 Route::get('reservation', 'PageController@reservation')->name('reservation');
 Route::get('restricted', 'PageController@restricted')->name('restricted');

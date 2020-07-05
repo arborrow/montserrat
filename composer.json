@@ -25,6 +25,7 @@
         "nyholm/psr7": "^1.2",
         "php-http/curl-client": "^2.0",
         "spatie/laravel-google-calendar": "^2.5",
+        "stripe/stripe-php": "^7.39",
         "stuyam/laravel-phone-validator": "^1.0",
         "vinkla/hashids": "^8.0"
     },
