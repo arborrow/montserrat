@@ -24,17 +24,17 @@
                     </div>
                 </div>
 
-                <table 
+                <table
                     id="table"
                     data-toolbar="#toolbar"
-                    data-data-field="data" 
-                    data-toggle="table" 
-                    data-thead-classes="thead-dark" 
-                    data-query-params="queryParams" 
+                    data-data-field="data"
+                    data-toggle="table"
+                    data-thead-classes="thead-dark"
+                    data-query-params="queryParams"
                     data-detail-view="true"
                     data-detail-formatter="detailFormatter"
-                    data-response-handler="responseHandler" 
-                    data-url="/transactions/all">
+                    data-response-handler="responseHandler"
+                    data-url="transactions/all">
                     <thead>
                         <tr>
                             <th data-field="id">ID</th>
@@ -80,7 +80,7 @@
                 objectId.value = data[0].id;
                 paginationDirection.value = 'previous';
             }
-            
+
             $table.bootstrapTable('refresh');
         });
     });
