@@ -193,8 +193,10 @@
                 @endCan
                 @can('update-registration')
                     {!! Html::link(action('RetreatController@assign_rooms',$retreat->id),'Assign rooms',array('class' => 'btn btn-outline-dark'))!!}
-                @endCan
-                @can('update-registration')
+                    @if (($retreat->start_date <= now()) && ($retreat->end_date >= now()))
+                        {!! Html::link(action('RetreatController@checkin',$retreat->id),'Checkin',array('class' => 'btn btn-outline-dark'))!!}
+                    @endIf
+
                     @if ($retreat->end_date < now())
                         {!! Html::link(action('RetreatController@checkout',$retreat->id),'Checkout',array('class' => 'btn btn-outline-dark'))!!}
                     @endIf
@@ -228,7 +230,7 @@
                                     @else
                                         <tr>
                                     @endif
-                                        <td id='registration-{{$registration->id}}'><a href="{{action('RegistrationController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }} </a></td>
+                                        <td id='registration-{{$registration->id}}'><a href="{{action('RegistrationController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }} </a> {{$registration->participant_role_name}}</td>
                                         <td> {!!$registration->retreatant->avatar_small_link!!} </td>
                                         <td>{!!$registration->retreatant->contact_link_full_name!!} ({{$registration->retreatant_events_count}})</td>
                                         <td>
