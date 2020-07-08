@@ -95,8 +95,8 @@ class DashboardController extends Controller
             $donors[$label]['sum_building'] = $agc_donations_building->sum('donation_amount');
         }
 
-        $average_donor_count = array_sum(array_column($donors, 'count')) / count(array_column($donors, 'count'));
-        $average_agc_amount = array_sum(array_column($donors, 'sum')) / count(array_column($donors, 'sum'));
+        $average_donor_count = ((array_sum(array_column($donors, 'count'))) / (count(array_column($donors, 'count'))-1));
+        $average_agc_amount = ((array_sum(array_column($donors, 'sum'))) / (count(array_column($donors, 'sum'))-1));
         foreach ($years as $year) {
             $label = $year->year;
             $prev_year = $year->copy()->subYear();
