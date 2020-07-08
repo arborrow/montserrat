@@ -50,11 +50,12 @@ class DashboardController extends Controller
         $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
         $number_of_years = 5;
         // note: to get the running year average for the past, full 5 years, exclude current year as it is partial/incomplete
-        $average_donor_count = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', ['Annual Giving', 'Endowment', 'Scholarship', 'Buildings & Maintenance'])->where('donation_date', '>=', ($current_year - ($number_of_years + 1)).'-07-01')->where('donation_date', '<', ($current_year - 1).'-07-01')->groupBy('contact_id')->get();
-        $average_donor_giving = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('Annual Giving')->where('donation_date', '>=', ($current_year - ($number_of_years + 1)).'-07-01')->where('donation_date', '<', ($current_year - 1).'-07-01')->groupBy('contact_id')->get();
-        $average_donor_endowment = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('Endowment')->where('donation_date', '>=', ($current_year - ($number_of_years + 1)).'-07-01')->where('donation_date', '<', ($current_year - 1).'-07-01')->groupBy('contact_id')->get();
-        $average_donor_scholarship = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('Scholarship')->where('donation_date', '>=', ($current_year - ($number_of_years + 1)).'-07-01')->where('donation_date', '<', ($current_year - 1).'-07-01')->groupBy('contact_id')->get();
-        $average_donor_building = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('Buildings & Maintenance')->where('donation_date', '>=', ($current_year - ($number_of_years + 1)).'-07-01')->where('donation_date', '<', ($current_year - 1).'-07-01')->groupBy('contact_id')->get();
+        // upon closer inspection, the group by here will conflate a donor across the fiscal years and results in the total number of donors over the whole time period which is not what we are looking for here
+        // $average_donor_count = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', ['Annual Giving', 'Endowment', 'Scholarship', 'Buildings & Maintenance'])->where('donation_date', '>=', ($current_year - ($number_of_years + 1)).'-07-01')->where('donation_date', '<', ($current_year - 1).'-07-01')->groupBy('contact_id')->get();
+        // $average_donor_giving = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('Annual Giving')->where('donation_date', '>=', ($current_year - ($number_of_years + 1)).'-07-01')->where('donation_date', '<', ($current_year - 1).'-07-01')->groupBy('contact_id')->get();
+        // $average_donor_endowment = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('Endowment')->where('donation_date', '>=', ($current_year - ($number_of_years + 1)).'-07-01')->where('donation_date', '<', ($current_year - 1).'-07-01')->groupBy('contact_id')->get();
+        // $average_donor_scholarship = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('Scholarship')->where('donation_date', '>=', ($current_year - ($number_of_years + 1)).'-07-01')->where('donation_date', '<', ($current_year - 1).'-07-01')->groupBy('contact_id')->get();
+        // $average_donor_building = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('Buildings & Maintenance')->where('donation_date', '>=', ($current_year - ($number_of_years + 1)).'-07-01')->where('donation_date', '<', ($current_year - 1).'-07-01')->groupBy('contact_id')->get();
         // dd($average_donor_count);
         $years = [];
         for ($x = -$number_of_years; $x <= 0; $x++) {
@@ -96,8 +97,9 @@ class DashboardController extends Controller
             $donors[$label]['sum_building'] = $agc_donations_building->sum('donation_amount');
         }
 
-        $average_donor_count = ((array_sum(array_column($donors, 'count'))) / (count(array_column($donors, 'count'))-1));
-        $average_agc_amount = ((array_sum(array_column($donors, 'sum'))) / (count(array_column($donors, 'sum'))-1));
+        $average_donor_count = (((array_sum(array_column($donors, 'count')))-($donors[$current_year]['count'])) / (count(array_column($donors, 'count'))-1));
+        $average_agc_amount = (((array_sum(array_column($donors, 'sum'))) - ($donors[$current_year]['sum'])) / (count(array_column($donors, 'sum'))-1));
+
         foreach ($years as $year) {
             $label = $year->year;
             $prev_year = $year->copy()->subYear();
