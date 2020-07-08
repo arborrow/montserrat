@@ -57,6 +57,8 @@ class PageController extends Controller
 
     public function finance()
     {
+        $this->authorize('show-donation');
+
         return view('pages.finance');
     }
 

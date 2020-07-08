@@ -145,7 +145,7 @@ class PageControllerTest extends TestCase
      */
     public function finance_displays_view()
     {
-        $user = factory(\App\User::class)->create();
+        $user = $this->createUserWithPermission('show-donation');
 
         $response = $this->actingAs($user)->get(route('finance'));
 
