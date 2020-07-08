@@ -156,6 +156,18 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
+    public function finance_returns_403()
+    {
+        $user = factory(\App\User::class)->create();
+
+        $response = $this->actingAs($user)->get(route('finance'));
+
+        $response->assertStatus(403);
+    }
+
+    /**
+     * @test
+     */
     public function finance_agcacknowledge_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-donation');
