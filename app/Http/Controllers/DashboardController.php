@@ -159,8 +159,9 @@ class DashboardController extends Controller
             $donors[$label]['count'] = $donations->count();
             $donors[$label]['sum'] = $donations->sum('donation_amount');
         }
+        $average_amount = ((((array_sum(array_column($donors, 'sum'))) - ($donors[$current_year]['sum'])) / ($number_of_years)));
+        // dd(array_sum(array_column($donors, 'sum')), ($donors[$current_year]['sum']) , ($number_of_years));
 
-        $average_amount = (array_sum(array_column($donors, 'sum')) / ($number_of_years + 1));
         foreach ($years as $year) {
             $label = $year->year;
             $prev_year = $year->copy()->subYear();
