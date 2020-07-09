@@ -19,44 +19,9 @@ class DashboardController extends Controller
     {
         // TODO: get % of returning or % of last year but unfortunately not this year  between agc years
         $this->authorize('show-dashboard');
-
-        // number of Ignatian Retreats per Month
-        $dates = [];
-        for ($x = 0; $x <= 12; $x++) {
-            $today = \Carbon\Carbon::now();
-            $today->day = 1;
-            $dates[$x] = $today->subMonth($x);
-        }
-        // dd($dates);
-
-        $participants = [];
-
-        foreach ($dates as $date) {
-            $label = $date->month.'/'.$date->year;
-            $next_month = $date->copy()->addMonth();
-
-            $retreat = \App\Retreat::whereEventTypeId(config('polanco.event_type.ignatian'))->where('start_date', '>=', $date)->where('start_date', '<', $next_month)->with('retreatants')->get();
-
-            $participants[$label] = $retreat->count();
-        }
-
-        $chart = new RetreatOfferingChart;
-        $chart->labels(array_keys($participants));
-        $chart->dataset('Ignatian Retreats per Month', 'bar', array_values($participants))
-            ->color('rgba(255, 205, 86, 1.0)')
-            ->backgroundcolor('rgba(255, 205, 86, 0.5)');
-
-        // AGC Number of Donors per FY
         $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
         $number_of_years = 5;
-        // note: to get the running year average for the past, full 5 years, exclude current year as it is partial/incomplete
-        // upon closer inspection, the group by here will conflate a donor across the fiscal years and results in the total number of donors over the whole time period which is not what we are looking for here
-        // $average_donor_count = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', ['Annual Giving', 'Endowment', 'Scholarship', 'Buildings & Maintenance'])->where('donation_date', '>=', ($current_year - ($number_of_years + 1)).'-07-01')->where('donation_date', '<', ($current_year - 1).'-07-01')->groupBy('contact_id')->get();
-        // $average_donor_giving = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('Annual Giving')->where('donation_date', '>=', ($current_year - ($number_of_years + 1)).'-07-01')->where('donation_date', '<', ($current_year - 1).'-07-01')->groupBy('contact_id')->get();
-        // $average_donor_endowment = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('Endowment')->where('donation_date', '>=', ($current_year - ($number_of_years + 1)).'-07-01')->where('donation_date', '<', ($current_year - 1).'-07-01')->groupBy('contact_id')->get();
-        // $average_donor_scholarship = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('Scholarship')->where('donation_date', '>=', ($current_year - ($number_of_years + 1)).'-07-01')->where('donation_date', '<', ($current_year - 1).'-07-01')->groupBy('contact_id')->get();
-        // $average_donor_building = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('Buildings & Maintenance')->where('donation_date', '>=', ($current_year - ($number_of_years + 1)).'-07-01')->where('donation_date', '<', ($current_year - 1).'-07-01')->groupBy('contact_id')->get();
-        // dd($average_donor_count);
+
         $years = [];
         for ($x = -$number_of_years; $x <= 0; $x++) {
             $today = \Carbon\Carbon::now();
@@ -156,7 +121,7 @@ class DashboardController extends Controller
             ->color('rgba(244,67,54, 1.0)')
             ->backgroundcolor('rgba(244,67,54, 0.2');
 
-        return view('dashboard.agc', compact('chart', 'agc_donor_chart', 'agc_amount'));
+        return view('dashboard.agc', compact('agc_donor_chart', 'agc_amount'));
     }
 
     public function donation_description_chart($category = null)

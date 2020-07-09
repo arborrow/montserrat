@@ -33,12 +33,10 @@ class DashboardControllerTest extends TestCase
     public function agc_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-dashboard');
-
         $response = $this->actingAs($user)->get(route('dashboard.agc'));
 
         $response->assertOk();
         $response->assertViewIs('dashboard.agc');
-        $response->assertViewHas('chart');
         $response->assertViewHas('agc_donor_chart');
         $response->assertViewHas('agc_amount');
         $response->assertSee('AGC Dashboard');
