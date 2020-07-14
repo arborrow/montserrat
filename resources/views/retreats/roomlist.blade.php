@@ -25,15 +25,21 @@
                             <table class='rooms'>
                                 <thead>
                                     <tr>
-                                        <th class='room'>Room #</td>
-                                        <th class='retreatant'>Retreatant</td>
+                                        <th class='room' stlye='width:10%'>Room #</th>
+                                        <th class='retreatant' stlye='width:80%'>Retreatant</th>
+                                        <th class='blank'>Time</th>
+                                        <th class='blank'>Temp</th>
+                                        <th class='blank'>Init.</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($rooms as $room => $retreatant)
                                     <tr class='room'>
-                                        <td class='room'> {{ $room }} </td>
-                                        <td class='retreatant'> {{ $retreatant }} </td>
+                                        <td class='room' stlye='width:10%'> {{ $room }} </td>
+                                        <td class='retreatant' stlye='width:80%'> {{ $retreatant }} </td>
+                                        <td class='blank'> </td>
+                                        <td class='blank'> </td>
+                                        <td class='blank'> </td>
                                     </tr>
                                     @endforeach
                                 </tbody>

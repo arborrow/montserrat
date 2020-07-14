@@ -247,7 +247,9 @@ td.row-payment_method {
     width: 80%;
 }
 
-
+.roomlist body {
+    font-size: 11pt;
+}
 .roomlist header {
     text-align: center;
 }
@@ -268,16 +270,24 @@ td.row-payment_method {
 }
 
 .roomlist td.room, th.room {
-  width: 25%;
+  width: 15%;
 }
 .roomlist td.retreatant, th.retreatant {
-  width: 50%;
+  width: 52%;
+}
+.roomlist td.blank, th.blank {
+  width: 11%;
+  font-size: 10pt;
 }
 
 .roomlist td.room, td.retreatant {
     border-left: 1px solid black;
     margin-left: 5px;
     padding: 5px;
+}
+.roomlist td.blank {
+    margin-left: 0px;
+    padding: 0px;
 }
 
 .roomlist table.buildings {
