@@ -564,7 +564,7 @@ class RetreatController extends Controller
         $this->authorize('update-registration');
         //get this retreat's information
         $retreat = \App\Retreat::with('retreatmasters.contact', 'assistants.contact', 'innkeepers.contact', 'ambassadors.contact')->findOrFail($id);
-        $registrations = \App\Registration::where('event_id', '=', $id)->with('retreatant.parish')->orderBy('register_date', 'DESC')->get();
+        $registrations = \App\Registration::where('event_id', '=', $id)->with('retreatant.parish')->orderBy('register_date', 'DESC')->whereStatusId(config('polanco.registration_status_id.registered'))->get();
         $rooms = \App\Room::orderby('name')->pluck('name', 'id');
         $rooms->prepend('Unassigned', 0);
 
