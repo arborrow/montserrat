@@ -91,7 +91,7 @@ class Retreat extends Model
 
     public function retreatants()
     {
-        return $this->registrations()->whereCanceledAt(null)->whereRoleId(config('polanco.participant_role_id.retreatant'));
+        return $this->registrations()->whereCanceledAt(null)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereStatusId(config('polanco.registration_status_id.registered'));
     }
 
     public function retreatants_waitlist()
@@ -189,7 +189,7 @@ class Retreat extends Model
         $directors = $this->retreatmasters()->get();
         $innkeepers = $this->innkeepers()->get();
         $assistants = $this->assistants()->get();
-	
+
 	foreach ($directors as $director) {
 	    if (!empty($director->contact->last_name)) {
 	        $team .= $director->contact->last_name.'(D) ';
@@ -203,7 +203,7 @@ class Retreat extends Model
 	}
 
 	foreach ($assistants as $assistant) {
-	    if (!empty($assistant->contact->last_name)) {    
+	    if (!empty($assistant->contact->last_name)) {
 	        $team .= $assistant->contact->last_name.'(A) ';
 	    }
 	}
