@@ -293,14 +293,13 @@ class PageController extends Controller
         $this->authorize('show-contact');
 
         $retreat = \App\Retreat::whereIdnumber($idnumber)->firstOrFail();
-        $registrations = \App\Registration::select(DB::raw('participant.*', 'contact.*'))
-            ->join('contact', 'participant.contact_id', '=', 'contact.id')
-            ->where('participant.event_id', '=', $retreat->id)
-            ->whereCanceledAt(null)
-            ->with('retreat', 'retreatant.languages', 'retreatant.parish.contact_a.address_primary', 'retreatant.prefix', 'retreatant.suffix', 'retreatant.address_primary.state', 'retreatant.phones.location', 'retreatant.emails.location', 'retreatant.emergency_contact', 'retreatant.notes', 'retreatant.occupation')
-            ->orderBy('contact.sort_name')
-            ->orderBy('participant.notes')
+        $registrations = \App\Registration::whereCanceledAt(null)
+            ->whereEventId($retreat->id)
+            ->whereRoleId(config('polanco.participant_role_id.retreatant'))
+            ->whereStatusId(config('polanco.registration_status_id.registered'))
+            ->with('retreat')
             ->get();
+
 
         return view('reports.retreatroster', compact('registrations'));   //
     }
