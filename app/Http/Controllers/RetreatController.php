@@ -773,10 +773,7 @@ class RetreatController extends Controller
             // TODO: write unit tests for this method
             $this->authorize('show-registration');
             $event = \App\Retreat::findOrFail($event_id);
-
-            $retreatants = \App\Registration::whereEventId($event_id)->whereNull('canceled_at')->whereRoleId(config('polanco.participant_role_id.retreatant'))->get();
-            $ambassadors = \App\Registration::whereEventId($event_id)->whereNull('canceled_at')->whereRoleId(config('polanco.participant_role_id.ambassador'))->get();
-            $registrations = $retreatants->merge($ambassadors);
+            $registrations = \App\Registration::whereEventId($event_id)->whereNull('canceled_at')->whereStatusId(config('polanco.registration_status_id.registered'))->get();
 
             $results = [];
             foreach ($registrations as $registration) {
