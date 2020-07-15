@@ -4,29 +4,29 @@
 <div class ="retreatroster">
 @if (!$registrations->isEmpty())
 
-<h2>Retreat #{{$registrations[0]->retreat->idnumber}} Room Roster - {{$registrations[0]->retreat->title}}</h2> 
-     
+<h2>Retreat #{{$registrations[0]->retreat->idnumber}} Room Roster - {{$registrations[0]->retreat->title}}</h2>
+
 <hr />
  <table width="100%">
      <tr>
         <th class="row-1 row-name" style='width: 20%'>Full name</th>
-        <th class="row-2 row-note" style='width: 25%'>Notes</th>
-        <td align='center' class="row-3 row-room" style='width: 15%'><strong>Assigned Room</strong></td>
+        <th align='center' class="row-3 row-room" style='width: 15%'><strong>Assigned Room</strong></th>
         <th class="row-4 row-room_preference" style='width: 20%'>Room Preference</th>
+        <th class="row-2 row-note" style='width: 25%'>Health Notes</th>
         <th class="row-5 row-dietary" style='width: 20%'>Dietary Preference</th>
-     <tr>   
+     <tr>
     @foreach($registrations as $registration)
-    
+
     <tr>
         <td>{{$registration->retreatant->full_name}}</td>
-        <td>{{$registration->notes}}</td>
         <td align='center'>{{ $registration->room_name}}</td>
         <td>{{$registration->retreatant->note_room_preference_text}}</td>
+        <td>{{$registration->retreatant->note_health_text}}</td>
         <td>{{$registration->retreatant->note_dietary_text}}</td>
-       
-    </tr>    
+
+    </tr>
     @endforeach
-        
+
 </table>
 @endIf
 <br />
@@ -37,14 +37,14 @@
 
         <span class="logo">
             {!! Html::image('images/mrhlogoblack.png','Home',array('title'=>'Home','class'=>'logo','align'=>'right')) !!}
-       
-        </span>    
+
+        </span>
     <span class='pagefooter'>
                 600 N Shady Shores Drive<br />
                 Lake Dallas, TX 75065<br />
-                (940) 321-6020<br /> 
+                (940) 321-6020<br />
             <a href='http://montserratretreat.org/' target='_blank'>montserratretreat.org</a>
-        
+
     </span>
 </div>
 @stop
