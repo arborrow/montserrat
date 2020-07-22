@@ -124,7 +124,7 @@ class DonationController extends Controller
 
         //dd($donors);
         $payment_methods = config('polanco.payment_method');
-        $descriptions = \App\DonationType::orderby('name')->pluck('name', 'name');
+        $descriptions = \App\DonationType::orderby('name')->whereIsActive(1)->pluck('name', 'name');
         $dt_today = \Carbon\Carbon::today();
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
         $defaults['retreat_id'] = $event_id;
@@ -204,7 +204,7 @@ class DonationController extends Controller
         $this->authorize('update-donation');
         //get this retreat's information
         $donation = \App\Donation::with('payments', 'contact')->findOrFail($id);
-        $descriptions = \App\DonationType::orderby('name')->pluck('name', 'id');
+        $descriptions = \App\DonationType::orderby('name')->whereIsActive(1)->pluck('name', 'id');
 
         // $retreats = \App\Retreat::select(\DB::raw('CONCAT_WS(" ",CONCAT(idnumber," -"), title, CONCAT("(",DATE_FORMAT(start_date,"%m-%d-%Y"),")")) as description'), 'id')->where("end_date", ">", $donation->donation_date)->where("is_active", "=", 1)->orderBy('start_date')->pluck('description', 'id');
         $retreats = \App\Registration::leftjoin('event', 'participant.event_id', '=', 'event.id')->select(DB::raw('CONCAT(event.idnumber, "-", event.title, " (",DATE_FORMAT(event.start_date,"%m-%d-%Y"),")") as description'), 'event.id')->whereContactId($donation->contact_id)->orderBy('event.start_date', 'desc')->pluck('event.description', 'event.id');
