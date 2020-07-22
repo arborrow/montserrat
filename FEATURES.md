@@ -11,7 +11,7 @@
 - Unit Testing - functional tests of all controller methods, database seeds and factories
 
 --upcoming (major)
-- Kitchen - easy access to desired reports; list of dietary accomodations
+- Kitchen - easy access to desired reports; list of dietary accommodations
 - Maintenance - Equipment, Tasks, Work Order system to show preferred vendors and work done on equipment, rooms, etc.
 
 --tweaks and improvements
