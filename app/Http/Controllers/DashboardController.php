@@ -131,11 +131,9 @@ class DashboardController extends Controller
         switch ($category) {
             case 'bookstore': $donation_description = 'Bookstore'; break;
             case 'deposit': $donation_description = 'Deposit'; break;
-            case 'diocese': $donation_description = 'Diocesan/Provincial/Parish Retreats'; break;
             case 'donation': $donation_description = 'Donation'; break;
-            case 'flower': $donation_description = 'Flowers and Landscape'; break;
+            case 'flower': $donation_description = 'Flowers and Landscaping'; break;
             case 'gift': $donation_description = 'Gift Certificate Purchase'; break;
-            case 'other': $donation_description = 'Other Retreats'; break;
             case 'offering': $donation_description = 'Retreat Offering'; break;
             case 'tip': $donation_description = 'Tips'; break;
             default: $donation_description = 'Retreat Offering';
