@@ -14,7 +14,6 @@
         <th class="row-4 row-room_preference" style='width: 20%'>Room Preference</th>
         <th class="row-2 row-note" style='width: 25%'>Health Notes</th>
         <th class="row-5 row-dietary" style='width: 20%'>Dietary Preference</th>
-        <th class="row-5 row-note" style='width: 20%'>Notes</th>
      <tr>
     @foreach($registrations as $registration)
 
@@ -24,7 +23,6 @@
         <td>{{$registration->retreatant->note_room_preference_text}}</td>
         <td>{{$registration->retreatant->note_health_text}}</td>
         <td>{{$registration->retreatant->note_dietary_text}}</td>
-        <td>{{$registration->notes}}</td>
 
     </tr>
     @endforeach
