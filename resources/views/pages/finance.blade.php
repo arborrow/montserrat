@@ -3,7 +3,7 @@
 <h1>Welcome to the Finance Page</h1>
 @can('show-donation')
         {!! Html::link(action('DonationController@index'),'Donations',array('class' => 'btn btn-outline-dark'))!!}
-        {!! Html::link(action('DonationController@agc',2020),'AGC FY20',array('class' => 'btn btn-outline-dark'))!!}
+        {!! Html::link(action('DonationController@agc',2021),'AGC FY21',array('class' => 'btn btn-outline-dark'))!!}
         {!! Html::link(action('PageController@finance_reconcile_deposit_show'),'Unreconciled open deposits',array('class' => 'btn btn-outline-dark'))!!}
         {!! Html::link(action('DonationController@overpaid'),'Overpaid donations',array('class' => 'btn btn-outline-dark'))!!}
 
