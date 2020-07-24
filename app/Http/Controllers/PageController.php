@@ -131,7 +131,7 @@ class PageController extends Controller
             return redirect()->back();
         }
 
-        $payments = \App\Payment::wherePaymentDate($report_date)->whereIn('payment_description', ['Cash', 'Check'])->with('donation')->get();
+        $payments = \App\Payment::wherePaymentDate($report_date)->whereIn('payment_description', ['Cash', 'Check','Wire transfer'])->with('donation')->get();
         $grand_total = $payments->sum('payment_amount');
         $grouped_payments = $payments->sortBy('donation.donation_description')->groupBy('donation.donation_description');
 

@@ -2,21 +2,21 @@
 @section('content')
 
 <div class ="bankdeposit">
-<h2>Cash/Check Bank Deposit Report for {{$report_date->format('F d, Y')}}</h2> 
+<h2>Cash/Check Bank Deposit Report for {{$report_date->format('F d, Y')}}</h2>
 @if (!$grouped_payments->isEmpty())
-     
+
 <hr />
 @foreach($grouped_payments as $donation_description => $payments)
 <strong><u>{{$donation_description}}</u></strong><br />
-    
+
  <table width="100%">
         <th class="row-donor">Donor</th>
         <th class="row-retreat">Retreat</th>
         <th class="row-pledged_amount">Pledged amount</th>
         <th class="row-payment_amount">Payment amount</th>
-        <th class="row-payment_description">Payment description</th>
-    
-                
+        <th class="row-payment_description">Payment method</th>
+
+
     @foreach($payments as $payment)
     <tr>
         <td>{{$payment->donation->contact->full_name}}</td>
@@ -26,16 +26,16 @@
 	@endIf
 	</td>
 	<td>${{number_format($payment->donation->donation_amount,2)}}</td>
-        <td>${{number_format($payment->payment_amount,2)}}</td> 
+        <td>${{number_format($payment->payment_amount,2)}}</td>
         <td>{{$payment->payment_description}}</td>
-    </tr>    
-    @endforeach  
- </table> 
+    </tr>
+    @endforeach
+ </table>
 <strong>Total of {{$payments->count()}} {{$donation_description}} payments totaling: ${{number_format($payments->sum('payment_amount'),2)}} </strong>
     <hr />
    @endforeach
    <strong>Grand total of all payments: ${{number_format($grand_total,2)}} <br />
-   @endIf    
+   @endIf
 <br />
 
     <span class='pagefooter'>
