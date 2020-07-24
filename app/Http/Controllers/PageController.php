@@ -297,17 +297,17 @@ class PageController extends Controller
             ->whereEventId($retreat->id)
             ->whereRoleId(config('polanco.participant_role_id.retreatant'))
             ->whereStatusId(config('polanco.registration_status_id.registered'))
-            ->with('retreat')
+            ->with('retreat','retreatant')
             ->get();
         $ambassadors = \App\Registration::whereCanceledAt(null)
                 ->whereEventId($retreat->id)
                 ->whereRoleId(config('polanco.participant_role_id.ambassador'))
                 ->whereStatusId(config('polanco.registration_status_id.registered'))
-                ->with('retreat')
+                ->with('retreat','retreatant')
                 ->get();
         $registrations = $retreatants->merge($ambassadors);
-
-
+        $registrations = $registrations->sortBy('retreatant.sort_name');
+        
         return view('reports.retreatroster', compact('registrations'));   //
     }
 

@@ -16,7 +16,7 @@
         <th class="row-5 row-dietary" style='width: 20%'>Dietary Preference</th>
         <th class="row-5 row-note" style='width: 20%'>Notes</th>
      <tr>
-    @foreach($registrations->sortBy('reatreatant.sort_name') as $registration)
+    @foreach($registrations as $registration)
 
     <tr>
         <td>{{$registration->retreatant->full_name}}</td>
