@@ -293,12 +293,19 @@ class PageController extends Controller
         $this->authorize('show-contact');
 
         $retreat = \App\Retreat::whereIdnumber($idnumber)->firstOrFail();
-        $registrations = \App\Registration::whereCanceledAt(null)
+        $retreatants = \App\Registration::whereCanceledAt(null)
             ->whereEventId($retreat->id)
             ->whereRoleId(config('polanco.participant_role_id.retreatant'))
             ->whereStatusId(config('polanco.registration_status_id.registered'))
             ->with('retreat')
             ->get();
+        $ambassadors = \App\Registration::whereCanceledAt(null)
+                ->whereEventId($retreat->id)
+                ->whereRoleId(config('polanco.participant_role_id.ambassador'))
+                ->whereStatusId(config('polanco.registration_status_id.registered'))
+                ->with('retreat')
+                ->get();
+        $registrations = $retreatants->merge($ambassadors);
 
 
         return view('reports.retreatroster', compact('registrations'));   //
