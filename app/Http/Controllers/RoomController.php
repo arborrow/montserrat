@@ -202,7 +202,10 @@ class RoomController extends Controller
          */
 
         foreach ($registrations_start as $registration) {
+            $start_time=$registration->retreat->start_date->hour+(($registration->retreat->start_date->minute/100));
+            $end_time=$registration->retreat->end_date->hour+(($registration->retreat->end_date->minute/100));
             $numdays = ($registration->retreat->end_date->diffInDays($registration->retreat->start_date));
+            $numdays = ($start_time>$end_time) ? $numdays+1 : $numdays;
             for ($i = 0; $i <= $numdays; $i++) {
                 $matrixdate = $registration->retreat->start_date->copy()->addDays($i);
                 if (array_key_exists($matrixdate->toDateString(), $m[$registration->room_id])) {
@@ -224,8 +227,10 @@ class RoomController extends Controller
             }
         }
         foreach ($registrations_end as $registration) {
+            $start_time=$registration->retreat->start_date->hour+(($registration->retreat->start_date->minute/100));
+            $end_time=$registration->retreat->end_date->hour+(($registration->retreat->end_date->minute/100));
             $numdays = ($registration->retreat->end_date->diffInDays($registration->retreat->start_date));
-
+            $numdays = ($start_time>$end_time) ? $numdays+1 : $numdays;
             for ($i = 0; $i <= $numdays; $i++) {
                 $matrixdate = $registration->retreat->start_date->copy()->addDays($i);
                 if (array_key_exists($matrixdate->toDateString(), $m[$registration->room_id])) {
