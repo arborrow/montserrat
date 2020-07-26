@@ -251,16 +251,16 @@
                                         <td>
                                               {!!$registration->retreatant->phone_home_mobile_number!!}
                                         </td>
+                                        <td> {{ $registration->notes }} <br />
+                                            <span>Health:</span> {!! (!empty($registration->retreatant->note_health->note)) ? "<div class=\"alert alert-danger\">" . $registration->retreatant->note_health->note . "</div>" : null !!}</div><br />
+                                            <span>Dietary:</span> {!! (!empty($registration->retreatant->note_dietary->note)) ? "<div class=\"alert alert-info\">" . $registration->retreatant->note_dietary->note . "</div>" : null !!}</div>
+                                        </td>
                                         <td>
                                             @if (empty($registration->retreatant->parish_name))
                                                 N/A
                                             @else
                                                 {!! $registration->retreatant->parish_link!!}
                                             @endif
-                                        </td>
-                                        <td> {{ $registration->notes }} <br />
-                                            <span>Health:</span> {!! (!empty($registration->retreatant->note_health->note)) ? "<div class=\"alert alert-danger\">" . $registration->retreatant->note_health->note . "</div>" : null !!}</div><br />
-                                            <span>Dietary:</span> {!! (!empty($registration->retreatant->note_dietary->note)) ? "<div class=\"alert alert-info\">" . $registration->retreatant->note_dietary->note . "</div>" : null !!}</div>
                                         </td>
                                     </tr>
 				    @endforeach
