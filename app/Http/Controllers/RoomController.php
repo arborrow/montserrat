@@ -145,6 +145,7 @@ class RoomController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function schedule($ym = null, $building = null)
+    // TODO: $ym is really the start_date (yyyymmdd) and $building is not used and should be removed
     {
         $this->authorize('show-room');
         if ((! isset($ym)) or ($ym == 0)) {

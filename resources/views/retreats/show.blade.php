@@ -214,12 +214,12 @@
                                 <th>Date Registered</th>
                                 <th>Picture</th>
                                 <th>Name</th>
+                                <th>Status</th>
                                 <th>Room</th>
                                 <th>Email</th>
-                                <th>Mobile Phone</th>
-                                <th>Parish</th>
+                                <th>Mobile</th>
                                 <th>Notes</th>
-                                <th>Status</th>
+                                <th>Parish</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -234,6 +234,13 @@
                                         <td> {!!$registration->retreatant->avatar_small_link!!} </td>
                                         <td>{!!$registration->retreatant->contact_link_full_name!!} ({{$registration->retreatant_events_count}})</td>
                                         <td>
+                                            @can('update-registration')
+                                                {!! $registration->registration_status_buttons!!}
+                                            @else
+                                                {!! $registration->registration_status!!}
+                                            @endCan
+                                        </td>
+                                        <td>
                                             @if (empty($registration->room->name))
                                                 N/A
                                             @else
@@ -242,7 +249,7 @@
                                         </td>
                                         <td><a href="mailto:{{ $registration->retreatant->email_primary_text }}?subject={{ rawurlencode($retreat->title . ": Followup") }}">{{ $registration->retreatant->email_primary_text }}</a></td>
                                         <td>
-                                            {!!$registration->retreatant->phone_home_mobile_number!!}
+                                              {!!$registration->retreatant->phone_home_mobile_number!!}
                                         </td>
                                         <td>
                                             @if (empty($registration->retreatant->parish_name))
@@ -254,13 +261,6 @@
                                         <td> {{ $registration->notes }} <br />
                                             <span>Health:</span> {!! (!empty($registration->retreatant->note_health->note)) ? "<div class=\"alert alert-danger\">" . $registration->retreatant->note_health->note . "</div>" : null !!}</div><br />
                                             <span>Dietary:</span> {!! (!empty($registration->retreatant->note_dietary->note)) ? "<div class=\"alert alert-info\">" . $registration->retreatant->note_dietary->note . "</div>" : null !!}</div>
-                                        </td>
-                                        <td>
-                                            @can('update-registration')
-                                                {!! $registration->registration_status_buttons!!}
-                                            @else
-                                                {!! $registration->registration_status!!}
-                                            @endCan
                                         </td>
                                     </tr>
 				    @endforeach

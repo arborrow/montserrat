@@ -811,14 +811,23 @@ class Contact extends Model
         if (isset($this->phone_main_fax)) {
             return $this->phone_main_fax->phone.$this->phone_main_fax->phone_extension;
         } else {
-            return;
-        }
+            return;        }
     }
 
     public function getPrefixNameAttribute()
     {
         if (isset($this->prefix_id) && ($this->prefix_id > 0)) {
             return $this->prefix->name;
+        } else {
+            return;
+        }
+    }
+
+    public function getPrimaryPhoneNumberLinkAttribute()
+    {
+        if (isset($this->phone_primary->phone)) {
+            $phone_number = $this->phone_primary->phone.$this->phone_primary->phone_extension;
+            return '<a href="tel:'.$phone_number.'">'.$phone_number.'</a>';
         } else {
             return;
         }
