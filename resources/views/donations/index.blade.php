@@ -42,7 +42,7 @@
                         <th>Description</th>
                         <th>Amount</th>
                         <th>Terms</th>
-                        <th>Retreat</th>
+                        <th>Event</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,9 +51,9 @@
                         <td><a href="{{ URL('donation/'. $donation->donation_id) }}">{{ date('M d, Y g:i A', strtotime($donation->donation_date)) }}</a></td>
                         <td>{!! $donation->contact->contact_link_full_name ?? 'Unknown contact' !!} </td>
                         <td>{{ $donation->donation_description }} </td>
-                        <td>{{ $donation->donation_amount }}</td>
+                        <td>{{ '$'.$donation->donation_amount }}</td>
                         <td>{{ $donation->terms }}</td>
-                        <td>{{ $donation->retreat_id}}</td>
+                        <td>{!! $donation->retreat_link !!}</td>
                     </tr>
                     @endforeach
                 </tbody>
