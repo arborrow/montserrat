@@ -38,7 +38,7 @@ class CreateParticipantTable extends Migration
             $table->dateTime('attendance_confirm_date')->nullable();
             $table->string('confirmed_by')->nullable();
             $table->text('notes', 65535)->nullable();
-            $table->decimal('deposit', 7)->default(0.00);
+            $table->decimal('deposit', 13,2)->default(0.00);
             $table->dateTime('canceled_at')->nullable();
             $table->dateTime('arrived_at')->nullable();
             $table->dateTime('departed_at')->nullable();

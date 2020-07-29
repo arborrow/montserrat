@@ -17,8 +17,8 @@ class CreateDonationsTable extends Migration
             $table->integer('donor_id')->nullable();
             $table->string('donation_description', 100)->nullable();
             $table->dateTime('donation_date')->nullable();
-            $table->float('donation_amount', 10, 0)->nullable();
-            $table->float('donation_install', 10, 0)->nullable();
+            $table->decimal('donation_amount', 13, 2)->default('0.00');
+            $table->decimal('donation_install', 13, 2)->default('0.00');
             $table->text('terms', 65535)->nullable();
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
