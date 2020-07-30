@@ -221,9 +221,9 @@ class PageController extends Controller
     public function finance_deposits()
     {
         $this->authorize('show-donation');
-        $donations = \App\Donation::where('donation_description', 'Deposit')->whereDeletedAt(null)->where('donation_amount', '>', 0)->with('contact', 'payments', 'retreat')->get();
+        $donations = \App\Donation::where('donation_description', 'Retreat Deposits')->whereDeletedAt(null)->where('donation_amount', '>', 0)->with('contact', 'payments', 'retreat')->get();
         $payments = \App\Payment::whereHas('donation', function ($query) {
-            $query->where('donation_description', '=', 'Deposit');
+            $query->where('donation_description', '=', 'Retreat Deposits');
         })
             ->whereHas('donation', function ($query) {
                 $query->where('donation_amount', '>', 0);
@@ -248,7 +248,7 @@ class PageController extends Controller
 
         $payments = \App\Payment::where('payment_amount', '>', 0)
             ->whereHas('donation', function ($query) {
-                $query->where('donation_description', '=', 'Deposit');
+                $query->where('donation_description', '=', 'Retreat Deposits');
             })
             ->whereHas('donation', function ($query) use ($event_id) {
                 $query->where('event_id', '=', $event_id);

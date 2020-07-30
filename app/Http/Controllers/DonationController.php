@@ -319,7 +319,7 @@ class DonationController extends Controller
                          * Ideally I would like this to be the donation description id but for now I will keep the descriptioon field a varchar rather than integer
                          */
 
-                        $donation->donation_description = 'Retreat Offering'; // this page/method is only handling retreat offerings
+                        $donation->donation_description = 'Retreat Funding'; // this page/method is only handling retreat offerings
                         $donation->donation_date = $registration->retreat_end_date;
                         $donation->donation_amount = $value['pledge'];
                         $donation->terms = $value['terms'];
