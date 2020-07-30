@@ -38,7 +38,7 @@
                         <div class="row">
                             <div class="col-12 col-md-4">
                                 {!! Form::label('donation_date', 'Date of donation')  !!}
-                                {!! Form::text('donation_date',(\Carbon\Carbon::now()->format('m/d/Y')) , ['class' => 'flatpickr-date']) !!}
+                                {!! Form::text('donation_date',now() , ['class' => 'flatpickr-date']) !!}
                             </div>
                             <div class="col-12 col-md-4">
                                 {!! Form::label('donation_amount', 'Donation amount (pledged)')  !!}
@@ -58,7 +58,7 @@
                         <div class="row">
                             <div class="col-12 col-md-4">
                                 {!! Form::label('payment_date', 'Date of payment')  !!}
-                                {!! Form::text('payment_date',(\Carbon\Carbon::now()->format('m/d/Y')), ['class' => 'flatpickr-date']) !!}
+                                {!! Form::text('payment_date',now(), ['class' => 'flatpickr-date']) !!}
                             </div>
                             <div class="col-12 col-md-4">
                                 {!! Form::label('payment_amount', 'Payment amount (paid)')  !!}
@@ -108,7 +108,7 @@
                             </div>
                             <div class="col-12 col-md-4">
                                 {!! Form::label('donation_install', 'Installment')  !!}
-                                {!! Form::number('donation_install', NULL, ['class' => 'form-control','step'=>'0.01']) !!}
+                                {!! Form::number('donation_install', 0.00, ['class' => 'form-control','step'=>'0.01']) !!}
                             </div>
                         </div>
                     </div>
