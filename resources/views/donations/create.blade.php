@@ -85,7 +85,7 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-12 col-md-4">
-                                {!! Form::label('notes1', 'Primary contact')  !!}
+                                {!! Form::label('notes1', 'Primary contact for invoice')  !!}
                                 {!! Form::text('notes1', NULL, ['class' => 'form-control']) !!}
                             </div>
                             <div class="col-12 col-md-4">

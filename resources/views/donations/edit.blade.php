@@ -35,7 +35,7 @@
                         {!! Form::number('donation_amount', $donation->donation_amount, ['class' => 'form-control','step'=>'0.01']) !!}
                     </div>
                     <div class="col-12 col-md-4">
-                        {!! Form::label('notes1', 'Primary contact')  !!}
+                        {!! Form::label('notes1', 'Primary contact for invoice')  !!}
                         {!! Form::text('notes1', $donation->Notes1, ['class' => 'form-control']) !!}
                     </div>
                     <div class="col-12 col-md-4">
@@ -44,10 +44,10 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 col-md-4">
-                        {!! Form::label('terms', 'Terms')  !!}
-                        {!! Form::text('terms', $donation->terms, ['class' => 'form-control']) !!}
-                    </div>
+                  <div class="col-12 col-md-4">
+                      {!! Form::label('donation_thank_you', 'Thank you letter')  !!}
+                      {!! Form::select('donation_thank_you', ['Y' => 'Yes','N' => 'No'], $donation->donation_thank_you_sent, ['class' => 'form-control']) !!}
+                  </div>
                     <div class="col-12 col-md-4">
                         {!! Form::label('start_date_only', 'Start date')  !!}
                         {!! Form::date('start_date_only', $donation->start_date, ['class' => 'form-control flatpickr-date']) !!}
@@ -63,9 +63,10 @@
                         {!! Form::number('donation_install', $donation->donation_install, ['class' => 'form-control','step'=>'0.01']) !!}
                     </div>
                     <div class="col-12 col-md-4">
-                        {!! Form::label('donation_thank_you', 'Thank you letter')  !!}
-                        {!! Form::select('donation_thank_you', ['Y' => 'Yes','N' => 'No'], $donation->donation_thank_you_sent, ['class' => 'form-control']) !!}
+                        {!! Form::label('terms', 'Terms')  !!}
+                        {!! Form::text('terms', $donation->terms, ['class' => 'form-control']) !!}
                     </div>
+
                 </div>
                 <div class="row text-center mt-4">
                     <div class="col-12">

@@ -26,13 +26,13 @@
     <div class="col-12 col-md-4">
         <span class="font-weight-bold">Event: </span>{!!$donation->retreat_link!!} ({{$donation->retreat_start_date}})
         <br><span class="font-weight-bold">Notes: </span>{{$donation->Notes}}
-        <br><span class="font-weight-bold">Terms: </span>{{$donation->terms}}
-        <br><span class="font-weight-bold">Start date: </span>{{$donation->start_date}}
+        <br><span class="font-weight-bold">Thank you sent: </span>{{$donation['Thank You']}}
     </div>
     <div class="col-12 col-md-4">
-        <span class="font-weight-bold">End date: </span>{{$donation->end_date}}
-        <br><span class="font-weight-bold">Donation install: </span>{{$donation->donation_install}}
-        <br><span class="font-weight-bold">Thank you sent: </span>{{$donation['Thank You']}}
+      <span class="font-weight-bold">Start date: </span>{{$donation->start_date}}
+      <br><span class="font-weight-bold">End date: </span>{{$donation->end_date}}
+      <br><span class="font-weight-bold">Donation install: </span>{{$donation->donation_install}}
+        <br><span class="font-weight-bold">Terms: </span>{{$donation->terms}}
     </div>
     <div class="col-12 mt-3">
         <table class="table table-bordered table-striped table-hover table-responsive-md">
