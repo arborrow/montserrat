@@ -43,12 +43,12 @@ class SystemControllerTest extends TestCase
         $donation_1 = factory(\App\Donation::class)->create([
           'contact_id' => $offeringdedup->contact_id,
           'event_id' => $offeringdedup->event_id,
-          'donation_description' => 'Retreat Offering',
+          'donation_description' => 'Retreat Funding',
         ]);
         $donation_2 = factory(\App\Donation::class)->create([
           'contact_id' => $offeringdedup->contact_id,
           'event_id' => $offeringdedup->event_id,
-          'donation_description' => 'Retreat Offering',
+          'donation_description' => 'Retreat Funding',
         ]);
 
         $response = $this->actingAs($user)->get(route('offeringdedup.show', ['contact_id' => $offeringdedup->contact_id, 'event_id' => $offeringdedup->event_id]));

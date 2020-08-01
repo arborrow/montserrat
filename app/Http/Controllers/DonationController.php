@@ -78,8 +78,8 @@ class DonationController extends Controller
         }
         $prev_year = $year - 1;
 
-        $all_donations = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', ['Annual Giving', 'Endowment', 'Scholarship', 'Buildings & Maintenance'])->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->get();
-        $donations = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', ['Annual Giving', 'Endowment', 'Scholarship', 'Buildings & Maintenance'])->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->paginate(100);
+        $all_donations = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', ['AGC - General', 'AGC - Endowment', 'AGC - Scholarships', 'AGC - Buildings & Maintenance'])->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->get();
+        $donations = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', ['AGC - General', 'AGC - Endowment', 'AGC - Scholarships', 'AGC - Buildings & Maintenance'])->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->paginate(100);
         $total['pledged'] = $all_donations->sum('donation_amount');
         $total['paid'] = $all_donations->sum('payments_paid');
         if ($total['pledged'] > 0) {
@@ -319,7 +319,7 @@ class DonationController extends Controller
                          * Ideally I would like this to be the donation description id but for now I will keep the descriptioon field a varchar rather than integer
                          */
 
-                        $donation->donation_description = 'Retreat Offering'; // this page/method is only handling retreat offerings
+                        $donation->donation_description = 'Retreat Funding'; // this page/method is only handling retreat offerings
                         $donation->donation_date = $registration->retreat_end_date;
                         $donation->donation_amount = $value['pledge'];
                         $donation->terms = $value['terms'];

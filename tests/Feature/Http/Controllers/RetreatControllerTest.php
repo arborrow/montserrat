@@ -285,6 +285,7 @@ class RetreatControllerTest extends TestCase
         $response->assertViewHas('event_types');
         $response->assertSeeText('Upcoming '.e($event_type->type));
         $response->assertSeeText('Previous '.e($event_type->type));
+        // TODO: not particularly well written test as it may be influenced by other tests so there may be cases where there are more upcoming events than created by this test
         $this->assertEquals($number_retreats, $upcoming->count());
     }
 

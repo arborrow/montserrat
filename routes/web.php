@@ -23,20 +23,6 @@ Route::get('intercept/{code}', function ($code) {
     }
 });
 
-/*
-Route::get('/agcletters', function () {
-    $touchpoints = \App\Touchpoint::where('notes', 'LIKE', '%AGC%')
-    ->select('notes', 'person_id', 'touched_at')
-    ->with('person')
-    ->orderBy('touched_at', 'desc')
-    ->get();
-    // return $touchpoints;
-
-    return view('agcletters', compact('touchpoints'));
-
-})->middleware('auth');
-*/
-
 Route::get('/', 'PageController@welcome');
 Route::get('/welcome', 'PageController@welcome')->name('welcome');
 Route::get('/goodbye', 'HomeController@goodbye');

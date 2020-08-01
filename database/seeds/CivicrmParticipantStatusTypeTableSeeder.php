@@ -49,8 +49,8 @@ class CivicrmParticipantStatusTypeTableSeeder extends Seeder
             ],
             3 => [
                 'id' => 4,
-                'name' => 'Cancelled',
-                'label' => 'Cancelled',
+                'name' => 'Canceled',
+                'label' => 'Canceled',
                 'class' => 'Negative',
                 'is_reserved' => 1,
                 'is_active' => 1,

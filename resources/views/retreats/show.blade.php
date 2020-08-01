@@ -96,7 +96,7 @@
             </div>
             <div class="col-12 col-md-6 col-lg-4">
                 <span class="font-weight-bold">Type: </span>{{ $retreat->retreat_type}} <br>
-                <span class="font-weight-bold">Status: </span>{{ $retreat->is_active == 0 ? 'Cancelled' : 'Active' }} <br>
+                <span class="font-weight-bold">Status: </span>{{ $retreat->is_active == 0 ? 'Canceled' : 'Active' }} <br>
                 <span class="font-weight-bold">Donation: </span>{{ $retreat->amount}} <br>
                 <span class="font-weight-bold">Last updated: </span>{{ $retreat->updated_at->format('D F j, Y \a\t g:ia')}}
             </div>

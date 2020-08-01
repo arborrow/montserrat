@@ -327,7 +327,7 @@ class RetreatController extends Controller
         //get this retreat's information
         $retreat = \App\Retreat::with('retreatmasters.contact', 'assistants.contact', 'innkeepers.contact', 'ambassadors.contact')->findOrFail($id);
         $event_types = \App\EventType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
-        $is_active[0] = 'Cancelled';
+        $is_active[0] = 'Canceled';
         $is_active[1] = 'Active';
 
         //create lists of retreat directors, innkeepers, and assistants from relationship to retreat house

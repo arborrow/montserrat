@@ -60,7 +60,7 @@
                                 {!! Form::select('event_type', $event_types, $retreat->event_type_id, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-12 col-lg-4">
-                            {!! Form::label('is_active', 'Cancelled?:')  !!}
+                            {!! Form::label('is_active', 'Canceled?:')  !!}
                             {!! Form::select('is_active', $is_active, $retreat->is_active, ['class' => 'form-control']) !!}
                         </div>
                     </div>
