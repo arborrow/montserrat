@@ -368,10 +368,10 @@
             <div class="col-12 mt-3" id="donations">
                 <h2>
                     {{$person->donations->count() }}  Donation(s) for {{ $person->display_name }}
-                        - ${{number_format($person->donations->sum('payments_paid'),2)}} paid of
-                    ${{number_format($person->donations->sum('donation_amount'),2) }} pledged
+                        - ${{$person->donations->sum('payments_paid')}} paid of
+                    ${{$person->donations->sum('donation_amount') }} pledged
                     @if ($person->donations->sum('donation_amount') > 0)
-                    [{{number_format($person->donations->sum('payments_paid') / $person->donations->sum('donation_amount'),2)*100}}%]
+                    [{{($person->donations->sum('payments_paid') / $person->donations->sum('donation_amount'))*100}}%]
                     @endif
                 </h2>
                 @can('create-donation')
@@ -395,10 +395,22 @@
                             <tr>
                                 <td><a href="../donation/{{$donation->donation_id}}"> {{ $donation->donation_date_formatted}} </a></td>
                                 <td> {{ $donation->donation_description.': #'.optional($donation->retreat)->idnumber }}</td>
-                                <td> ${{number_format($donation->payments->sum('payment_amount'),2)}}
-                                    / ${{ number_format($donation->donation_amount,2) }}
-                                    [{{$donation->percent_paid}}%]
+
+                                @if ($donation->donation_amount > $donation->payments->sum('payment_amount'))
+                                  <td class="alert alert-warning" style="padding:0px;">
+                                @endIf
+                                @if ($donation->donation_amount < $donation->payments->sum('payment_amount'))
+                                  <td class="alert alert-danger" style="padding:0px;">
+                                @endIf
+                                @if ($donation->donation_amount == $donation->payments->sum('payment_amount'))
+                                  <td>
+                                @endIf
+
+                                ${{number_format($donation->payments->sum('payment_amount'),2)}}
+                                    / ${{number_format($donation->donation_amount,2) }}
+                                    [{{number_format($donation->percent_paid,0)}}%]
                                 </td>
+
                                 <td> {{ $donation->terms }}</td>
                                 <td> {{ $donation->Notes }}</td>
                             </tr>

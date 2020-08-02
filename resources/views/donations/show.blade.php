@@ -19,8 +19,19 @@
     <div class="col-12 col-md-4">
         <span class="font-weight-bold">Date: </span>{{$donation->donation_date->format('m/d/Y')}}
         <br><span class="font-weight-bold">Description: </span>{{$donation->donation_description}}
-        <br><span class="font-weight-bold">Pledged/Paid: </span>${{number_format($donation->donation_amount,2)}} / ${{number_format($donation->payments->sum('payment_amount'),2)}}
-        ({{$donation->percent_paid}}%)
+        <br>
+            @if ($donation->donation_amount > $donation->payments->sum('payment_amount'))
+              <span class="font-weight-bold alert alert-warning" style="padding:0px;">
+            @endIf
+            @if ($donation->donation_amount < $donation->payments->sum('payment_amount'))
+              <span class="font-weight-bold alert alert-danger" style="padding:0px;">
+            @endIf
+            @if ($donation->donation_amount == $donation->payments->sum('payment_amount'))
+              <span class="font-weight-bold">
+            @endIf
+          Paid/Pledegd:  ${{number_format($donation->payments->sum('payment_amount'),2)}} / ${{number_format($donation->donation_amount,2)}}
+          ({{number_format($donation->percent_paid,0)}}%)</span>
+
         <br><span class="font-weight-bold">Primary contact: </span>{{$donation->Notes1}}
     </div>
     <div class="col-12 col-md-4">

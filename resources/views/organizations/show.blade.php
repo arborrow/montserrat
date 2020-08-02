@@ -213,7 +213,7 @@
                                 <tr>
                                     <th>Date</th>
                                     <th>Description</th>
-                                    <th>Paid / Pledged</th>
+                                    <th>Paid / Pledged (%)</th>
                                     <th>Terms</th>
                                     <th>Notes</th>
                                 </tr>
@@ -224,7 +224,26 @@
                                 <tr>
                                     <td><a href="../donation/{{$donation->donation_id}}"> {{ $donation->donation_date }} </a></td>
                                     <td> {{ $donation->donation_description }}</td>
-                                    <td> ${{number_format($donation->payments->sum('payment_amount'),2)}} / ${{ number_format($donation->donation_amount,2) }} </td>
+
+                                    @if ($donation->donation_amount > $donation->payments->sum('payment_amount'))
+                                      <td class="alert alert-warning" style="padding:0px;">
+                                    @endIf
+                                    @if ($donation->donation_amount < $donation->payments->sum('payment_amount'))
+                                      <td class="alert alert-danger" style="padding:0px;">
+                                    @endIf
+                                    @if ($donation->donation_amount == $donation->payments->sum('payment_amount'))
+                                      <td>
+                                    @endIf
+
+                                    ${{number_format($donation->payments->sum('payment_amount'),2)}}
+                                    /
+                                    ${{ number_format($donation->donation_amount,2) }}
+
+                                        [{{ number_format($donation->percent_paid,0) }}%]
+                                    </td>
+
+                                    <td>  /  </td>
+
                                     <td> {{ $donation->terms }}</td>
                                     <td> {{ $donation->Notes }}</td>
                                 </tr>
