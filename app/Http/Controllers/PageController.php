@@ -363,11 +363,14 @@ class PageController extends Controller
             return view('reports.finance.acknowledgment', compact('donation'));
         }
 */
-        // return view('reports.finance.acknowledgment', compact('payments','contact','start_date','end_date'));
 
         $pdf = PDF::loadView('reports.finance.acknowledgment', compact('payments','contact','start_date','end_date'));
         $now = Carbon::now();
-        return $pdf->download($now->format('YmdHi').'-acknowledgment-'.$contact->id.'.pdf');
+        $attachment = new AttachmentController;
+        $attachment->update_attachment($pdf->stream(), 'contact', $contact->id, 'acknowledgment', $acknowlegment_touchpoint->notes);
+
+        return view('reports.finance.acknowledgment', compact('payments','contact','start_date','end_date'));
+
 
     }
 

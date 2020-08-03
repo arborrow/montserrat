@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Carbon\Carbon;
+
 
 class AttachmentController extends Controller
 {
@@ -140,6 +142,7 @@ class AttachmentController extends Controller
     public function update_attachment($file, $entity = 'event', $entity_id = 0, $type = null, $description = null)
     {
         $path = $entity.'/'.$entity_id.'/';
+        //dd($file->extension());
 
         switch ($type) {
             case 'avatar':
@@ -147,6 +150,7 @@ class AttachmentController extends Controller
                 $file_type_id = config('polanco.file_type.contact_avatar');
                 $file_name = 'avatar.png';
                 $updated_file_name = 'avatar-updated-'.time().'.png';
+                $mime_type = $file->getClientMimeType();
                 $avatar = Image::make($file->getRealPath())->fit(150, 150)->orientate();
 
                 if (File::exists(storage_path().'/app/'.$path.$file_name)) {
@@ -163,7 +167,8 @@ class AttachmentController extends Controller
                 $path = $entity.'/'.$entity_id.'/attachments/';
                 $file_type_id = config('polanco.file_type.contact_attachment');
                 $file_name = $this->sanitize_filename($file->getClientOriginalName());
-                $file_extension = $file->extension();
+                $mime_type = $file->getClientMimeType();
+                $file_extension = '$file->extension()';
                 $updated_file_name = basename($file_name,'.'.$file_extension).'-updated-'.time().'.'.$file_extension;
                 if (File::exists(storage_path().'/app/'.$path.$file_name)) {
                     Storage::move($path.$file_name, $path.$updated_file_name);
@@ -172,11 +177,29 @@ class AttachmentController extends Controller
                     Storage::disk('local')->put($path.$file_name, File::get($file));
                 }
                 break;
+            case 'acknowledgment':
+                    $this->authorize('create-attachment');
+                    $now = Carbon::now();
+                    $filename = $now->format('YmdHi').'-acknowledgment-'.$entity_id.'.pdf';
+                    $path = $entity.'/'.$entity_id.'/attachments/';
+                    $file_type_id = config('polanco.file_type.contact_attachment');
+                    $file_name = $this->sanitize_filename($filename);
+                    $updated_file_name = basename($file_name,'.pdf').'-updated-'.time().'.pdf';
+                    $mime_type = "application/pdf";
+                    if (File::exists(storage_path().'/app/'.$path.$file_name)) {
+                        Storage::move($path.$file_name, $path.$updated_file_name);
+                        Storage::disk('local')->put($path.$file_name, $file);
+                    } else {
+                        Storage::disk('local')->put($path.$file_name, $file);
+                    }
+                    break;
+
             case 'event_attachment':
                 $this->authorize('create-event-attachment');
                 $path = $entity.'/'.$entity_id.'/attachments/';
                 $file_type_id = config('polanco.file_type.event_attachment');
                 $file_name = $this->sanitize_filename($file->getClientOriginalName());
+                $mime_type = $file->getClientMimeType();
                 $file_extension = $file->extension();
                 $updated_file_name = basename($file_name,'.'.$file_extension).'-updated-'.time().'.'.$file_extension;
 
@@ -192,6 +215,7 @@ class AttachmentController extends Controller
                 $path = $entity.'/'.$entity_id.'/';
                 $file_type_id = config('polanco.file_type.event_schedule');
                 $file_name = 'schedule.pdf';
+                $mime_type = $file->getClientMimeType();
                 $updated_file_name = 'schedule-updated-'.time().'.pdf';
 
                 if (File::exists(storage_path().'/app/'.$path.$file_name)) {
@@ -206,6 +230,7 @@ class AttachmentController extends Controller
                 $path = $entity.'/'.$entity_id.'/';
                 $file_type_id = config('polanco.file_type.event_contract');
                 $file_name = 'contract.pdf';
+                $mime_type = $file->getClientMimeType();
                 $updated_file_name = 'contract-updated-'.time().'.pdf';
 
                 if (File::exists(storage_path().'/app/'.$path.$file_name)) {
@@ -220,6 +245,7 @@ class AttachmentController extends Controller
                 $path = $entity.'/'.$entity_id.'/';
                 $file_type_id = config('polanco.file_type.event_evaluation');
                 $file_name = 'evaluations.pdf';
+                $mime_type = $file->getClientMimeType();
                 $updated_file_name = 'evaluations-updated-'.time().'.pdf';
 
                 if (File::exists(storage_path().'/app/'.$path.$file_name)) {
@@ -234,6 +260,7 @@ class AttachmentController extends Controller
                 $path = $entity.'/'.$entity_id.'/';
                 $file_type_id = config('polanco.file_type.event_group_photo');
                 $file_name = 'group_photo.jpg';
+                $mime_type = $group_photo->getClientMimeType();
                 $updated_file_name = 'group_photo-updated-'.time().'.pdf';
                 $group_photo = Image::make($file->getRealPath());
                 if (File::exists(storage_path().'/app/'.$path.$file_name)) {
@@ -251,7 +278,7 @@ class AttachmentController extends Controller
         $attachment = \App\Attachment::firstOrNew(['entity'=>$entity, 'entity_id'=>$entity_id, 'file_type_id'=>$file_type_id, 'uri'=>$file_name]);
         $attachment->upload_date = \Carbon\Carbon::now();
         $attachment->description = $description;
-        $attachment->mime_type = $file->getClientMimeType();
+        $attachment->mime_type = $mime_type;
         $attachment->uri = $file_name;
 
         $attachment->save();
@@ -347,7 +374,7 @@ class AttachmentController extends Controller
 
     public function delete_event_attachment($event_id, $attachment)
         {
-            $this->authorize('delete-attachment'); // TODO: for testing simplicity I am not implementing the use of delete-event-attachment 
+            $this->authorize('delete-attachment'); // TODO: for testing simplicity I am not implementing the use of delete-event-attachment
             $this->delete_attachment($attachment, 'event', $event_id, 'event-attachment');
             // TODO: get contact type and redirect to person, parish, organization, vendor as appropriate
             return Redirect::action('RetreatController@show', $event_id);
