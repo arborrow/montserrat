@@ -166,6 +166,7 @@ return [
          * Package Service Providers...
          */
         StuYam\PhoneValidator\PhoneValidatorServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -235,6 +236,7 @@ return [
         'Mailgun' => Mailgun\Mailgun::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Hashids' => Vinkla\Hashids\Facades\Hashids::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];
