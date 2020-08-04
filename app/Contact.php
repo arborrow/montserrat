@@ -247,7 +247,7 @@ class Contact extends Model
     public function getSignatureAttribute()
     {
         if (Storage::has('contact/'.$this->id.'/signature.png')) {
-            return "<img src='".url('signature/'.$this->id)."'  style='width:320px; height:100px; padding:5px;'>";
+            return "<img src='".url('signature/'.$this->id)."'  style='width:320px; height:100px;'>";
         } else {
             return;
         }
