@@ -52,7 +52,9 @@ Route::get('/dashboard/description/{category?}', 'DashboardController@donation_d
 // Attachment routes
 
 Route::get('avatar/{user_id}', 'AttachmentController@get_avatar')->name('get_avatar');
+Route::get('signature/{user_id}', 'AttachmentController@get_signature')->name('get_signature');
 Route::get('avatar/{user_id}/delete', 'AttachmentController@delete_avatar')->name('delete_avatar');
+Route::get('signature/{user_id}/delete', 'AttachmentController@delete_signature')->name('delete_signature');
 
 Route::get('contact/{user_id}/attachment/{file_name}', 'AttachmentController@show_contact_attachment')->name('show_contact_attachment');
 Route::get('contact/{user_id}/attachment/{file_name}/delete', 'AttachmentController@delete_contact_attachment')->name('delete_contact_attachment');

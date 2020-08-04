@@ -63,6 +63,11 @@ class AttachmentController extends Controller
                 $file_name = 'group_photo.jpg';
                 $path = storage_path().'/app/'.$entity.'/'.$entity_id.'/'.$file_name;
                 break;
+            case 'signature':
+                $this->authorize('show-signature');
+                $file_name = 'signature.png';
+                $path = storage_path().'/app/'.$entity.'/'.$entity_id.'/'.$file_name;
+                break;
             default:
                 $this->authorize('show-attachment');
                 $path = storage_path().'/app/'.$entity.'/'.$entity_id.'/'.$file_name;
@@ -124,6 +129,11 @@ class AttachmentController extends Controller
                 $attachment->file_type_id = config('polanco.file_type.contact_avatar');
                 $attachment->uri = 'avatar.png';
                 break;
+            case 'signature':
+                $this->authorize('create-signature');
+                $attachment->file_type_id = config('polanco.file_type.signature');
+                $attachment->uri = 'signature.png';
+                break;
             default:
                 $this->authorize('create-attachment');
                 $attachment->file_type_id = 0;
@@ -132,10 +142,16 @@ class AttachmentController extends Controller
         }
         $attachment->save();
         //write file to filesystem (attachments seems to be missing attachments path - evaluate when implementing generic event attachments)
-        if ($type == 'avatar') {
-            Storage::disk('local')->put($entity.'/'.$entity_id.'/'.'avatar.png', $avatar->stream('png'));
-        } else {
-            Storage::disk('local')->put($entity.'/'.$entity_id.'/'.$attachment->uri, File::get($file));
+        switch ($type) {
+            case 'avatar' :
+                Storage::disk('local')->put($entity.'/'.$entity_id.'/'.'avatar.png', $avatar->stream('png'));
+                break;
+            case 'signature' :
+                Storage::disk('local')->put($entity.'/'.$entity_id.'/'.'signature.png', File::get($file));
+                break;
+            default:
+                Storage::disk('local')->put($entity.'/'.$entity_id.'/'.$attachment->uri, File::get($file));
+                break;
         }
     }
 
@@ -260,14 +276,29 @@ class AttachmentController extends Controller
                 $path = $entity.'/'.$entity_id.'/';
                 $file_type_id = config('polanco.file_type.event_group_photo');
                 $file_name = 'group_photo.jpg';
-                $mime_type = $group_photo->getClientMimeType();
-                $updated_file_name = 'group_photo-updated-'.time().'.pdf';
+                $updated_file_name = 'group_photo-updated-'.time().'.jpg';
                 $group_photo = Image::make($file->getRealPath());
+                $mime_type = $group_photo->getClientMimeType();
                 if (File::exists(storage_path().'/app/'.$path.$file_name)) {
                     Storage::move($path.$file_name, $path.$updated_file_name);
                     Storage::disk('local')->put($path.$file_name, $group_photo->stream('jpg'));
                 } else {
                     Storage::disk('local')->put($path.$file_name, $group_photo->stream('jpg'));
+                }
+                break;
+            case 'signature':
+                $this->authorize('create-signature');
+                $path = $entity.'/'.$entity_id.'/';
+                $file_type_id = config('polanco.file_type.signature');
+                $file_name = 'signature.png';
+                $mime_type = $file->getClientMimeType();
+                $updated_file_name = 'signature-updated-'.time().'.png';
+                $signature = Image::make($file->getRealPath());
+                if (File::exists(storage_path().'/app/'.$path.$file_name)) {
+                    Storage::move($path.$file_name, $path.$updated_file_name);
+                    Storage::disk('local')->put($path.$file_name, $signature->stream('png'));
+                } else {
+                    Storage::disk('local')->put($path.$file_name, $signature->stream('png'));
                 }
                 break;
 
@@ -333,6 +364,12 @@ class AttachmentController extends Controller
                 $path = $entity.'/'.$entity_id.'/';
                 $updated_file_name = 'avatar-deleted-'.time().'.png';
                 break;
+            case 'signature':
+                $attachment = \App\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->firstOrFail();
+                $path = $entity.'/'.$entity_id.'/attachments/';
+                $updated_file_name = 'signature-deleted-'.time().'.png';
+                break;
+
             default:
                 break;
         }
@@ -385,6 +422,12 @@ class AttachmentController extends Controller
         $this->authorize('show-avatar');
 
         return $this->show_attachment('contact', $user_id, 'avatar', 'avatar.png');
+    }
+    public function get_signature($contact_id)
+    {
+        $this->authorize('show-signature');
+
+        return $this->show_attachment('contact', $contact_id, 'signature', 'signature.png');
     }
 
     public function delete_avatar($user_id)

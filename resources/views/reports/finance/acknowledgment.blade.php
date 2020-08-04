@@ -50,7 +50,6 @@ Fr. Vo, S.J.<br />
                         <th>Description</th>
                         <th>Donation Amount</th>
                         <th>Method</th>
-                        <th>ID Number</th>
                         <th>Retreat</th>
                     </tr>
                 </thead>
@@ -62,8 +61,7 @@ Fr. Vo, S.J.<br />
                         <td>{{ $payment->payment_date->format('M d, Y') }}</td>
                         <td>{{ $payment->donation->donation_description ?? 'Unspecified' }} </td>
                         <td>${{ number_format($payment->payment_amount,2) }}</td>
-                        <td>{{ $payment->payment_description }}</td>
-                        <td>{{ $payment->ccnumber ?? $payment->cknumber}}</td>
+                        <td>{{ $payment->payment_description }} {{ $payment->ccnumber ?? $payment->cknumber}}</td>
                         <td>{{ $payment->donation->retreat->title ?? 'N/A'}}</td>
                     </tr>
                     @endforeach
@@ -74,7 +72,8 @@ Fr. Vo, S.J.<br />
             <br />
         @endIf
 
-Peace,<br /><br /><br /><br />
+Peace,<br />
+{!! $montserrat->signature !!}<br />
 Fr. Anthony Rauschuber, S.J.<br />
 Director <br />
         </td>

@@ -238,5 +238,20 @@ return [
         'Hashids' => Vinkla\Hashids\Facades\Hashids::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
+    
+    'debug_hide' => [
+        '_ENV' => [
+            'APP_KEY',
+            'DB_PASSWORD',
+        ],
 
+        '_SERVER' => [
+            'APP_KEY',
+            'DB_PASSWORD',
+        ],
+
+        '_POST' => [
+            'password',
+        ],
+    ],
 ];

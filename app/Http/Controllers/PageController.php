@@ -350,7 +350,7 @@ class PageController extends Controller
         $acknowlegment_touchpoint->touched_at = Carbon::parse(now());
         $acknowlegment_touchpoint->type = 'Letter';
         $acknowlegment_touchpoint->notes = 'Donation Acknowledgement Letter: '.$start_date->toDateString().' to '.$end_date->toDateString();
-        $acknowlegment_touchpoint->save();
+        // $acknowlegment_touchpoint->save();
 
         // TODO: implement a Spanish version of the email at the end, commenting out for now
 /*        if ($donation->contact->preferred_language_value == 'es') {
@@ -363,13 +363,14 @@ class PageController extends Controller
             return view('reports.finance.acknowledgment', compact('donation'));
         }
 */
-
-        $pdf = PDF::loadView('reports.finance.acknowledgment', compact('payments','contact','start_date','end_date'));
+        $montserrat = \App\Contact::findOrFail(env('SELF_CONTACT_ID'));
+        // dd($montserrat);
+        $pdf = PDF::loadView('reports.finance.acknowledgment', compact('payments','contact','montserrat','start_date','end_date'));
         $now = Carbon::now();
         $attachment = new AttachmentController;
         $attachment->update_attachment($pdf->stream(), 'contact', $contact->id, 'acknowledgment', $acknowlegment_touchpoint->notes);
 
-        return view('reports.finance.acknowledgment', compact('payments','contact','start_date','end_date'));
+        return view('reports.finance.acknowledgment', compact('payments','contact', 'montserrat','start_date','end_date'));
 
 
     }

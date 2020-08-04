@@ -322,6 +322,11 @@ class OrganizationController extends Controller
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('avatar'), 'contact', $organization->id, 'avatar', $description);
         }
+        if (null !== $request->file('signature')) {
+            $description = 'Signature for '.$organization->organization_name;
+            $attachment = new AttachmentController;
+            $attachment->update_attachment($request->file('signature'), 'contact', $organization->id, 'signature', $description);
+        }
 
         if (null !== $request->file('attachment')) {
             $description = $request->input('attachment_description');

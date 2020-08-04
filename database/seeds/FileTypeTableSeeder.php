@@ -112,6 +112,21 @@ class FileTypeTableSeeder extends Seeder
                 'created_at' => null,
                 'updated_at' => null,
             ],
+            7 => [
+                'id' => 8,
+                'label' => 'Signature',
+                'value' => 'Signature',
+                'name' => 'Signature',
+                'description' => 'Signature',
+                'is_default' => 0,
+                'is_reserved' => 0,
+                'is_active' => 1,
+                'deleted_at' => null,
+                'remember_token' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+
 
         ]);
     }
