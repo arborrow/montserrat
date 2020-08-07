@@ -425,7 +425,7 @@ class AttachmentController extends Controller
     }
     public function get_signature($contact_id)
     {
-        $this->authorize('show-signature');
+        // $this->authorize('show-signature');
 
         return $this->show_attachment('contact', $contact_id, 'signature', 'signature.png');
     }

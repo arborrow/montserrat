@@ -245,12 +245,14 @@ class Contact extends Model
     }
 
     public function getSignatureAttribute()
-    {
-        if (Storage::has('contact/'.$this->id.'/signature.png')) {
+    {   $file_name = storage_path().'/app/contact/'.env('SELF_CONTACT_ID').'/signature.png';
+        return "<img src='".$file_name."' style='width:320px; height:100px;'>";
+/*        if (Storage::has('contact/'.$this->id.'/signature.png')) {
             return "<img src='".url('signature/'.$this->id)."'  style='width:320px; height:100px;'>";
         } else {
             return;
         }
+*/
     }
 
 

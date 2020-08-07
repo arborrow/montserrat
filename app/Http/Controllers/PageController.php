@@ -365,7 +365,7 @@ class PageController extends Controller
 */
         $montserrat = \App\Contact::findOrFail(env('SELF_CONTACT_ID'));
         // dd($montserrat);
-        $pdf = PDF::loadView('reports.finance.acknowledgment', compact('payments','contact','montserrat','start_date','end_date'));
+        $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('reports.finance.acknowledgment', compact('payments','contact','montserrat','start_date','end_date'));
         $now = Carbon::now();
         $attachment = new AttachmentController;
         $attachment->update_attachment($pdf->stream(), 'contact', $contact->id, 'acknowledgment', $acknowlegment_touchpoint->notes);
