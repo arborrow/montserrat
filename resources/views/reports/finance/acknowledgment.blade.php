@@ -2,10 +2,13 @@
 @section('content')
 <meta name="format-detection" content="telephone=no">
 <div class ="agcacknowledge">
+
 <div class ="pageheader" style="text-align:center;">
-            <img style="display: block;  margin-left: auto;  margin-right: auto; height:64px; width:200px;" src="https://polanco.montserratretreat.org/images/mrhlogoblack.png"> <br />
+
+            <img style="display: block;  margin-left: auto;  margin-right: auto; height:64px; width:200px;" src="{{ public_path().'/images/mrhlogoblack.png' }}"> <br />
 </div>
 <br />
+TEST 01
 <div class ="letter">
 <table>
     <tr>
