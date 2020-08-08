@@ -6,7 +6,7 @@ use Faker\Generator as Faker;
 
 // TODO: to avoid confusion with agc letters in Spanish I'm limiting testing for now to $current_user
 $factory->define(App\Donation::class, function (Faker $faker) {
-    $description = \App\DonationType::get()->random();
+    $description = \App\DonationType::whereIsActive(1)->get()->random();
 
     return [
         'donation_description' => $description->name,

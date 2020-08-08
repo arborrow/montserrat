@@ -1,0 +1,355 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : Jan 27, 2016, 12:54:48 PM
+    Author     : anthonyb
+*/
+
+@media print {
+    @page {
+        size: 8.5in 11in;
+        margin: 1cm;
+    }
+
+    @page rotated {
+        size: landscape
+    }
+
+    .page-break {
+        display: block;
+        page-break-before: always;
+    }
+}
+
+body {
+    background: white;
+    font-family: montserrat;
+    font-size: 13pt;
+}
+
+td {
+    width: 50%;
+    padding: 0in;
+    margin: 0in;
+}
+
+h2 {
+    margin: 0;
+    font-weight: 700;
+}
+
+td.box {
+    border: solid black;
+    height: .5in;
+    vertical-align: top;
+}
+
+#menu {
+    display: none;
+}
+
+#wrapper,
+#content {
+    width: auto;
+    border: 0;
+    margin: 0 2%;
+    padding: 0;
+    float: none !important;
+}
+
+.pagefooter {
+    font-size: 10pt;
+    bottom: 0in;
+}
+
+.logo {
+    bottom: 0in;
+    right: 0in;
+    height: 62px;
+    width: 200px;
+}
+
+.square {
+    font-size: 12pt;
+}
+
+.retreatlisting {
+    page: rotated;
+    font-size: 9pt;
+}
+
+td {
+    width: auto;
+}
+
+th {
+    text-align: left;
+    font-weight: 700;
+}
+
+h2 {
+    position: relative;
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+    white-space: normal
+}
+
+.row-name {
+    width: 15%
+}
+
+.row-address {
+    width: 20%
+}
+
+.row-city {
+    width: 18%
+}
+
+.row-phone {
+    width: 9%
+}
+
+.row-notes {
+    width: 20%
+}
+
+
+
+.retreatroster {
+    page: rotated;
+    font-size: 12pt;
+}
+
+.retreatroster row-cancel {
+    width: 15%
+}
+
+.retreatroster row-room {
+    width: 20%
+}
+
+.retreatroster .row-name {
+    width: 65%
+}
+
+.bankdeposit {
+    font-size: 10pt;
+    margin-top: 25px;
+}
+
+.bankdeposit th.row-donor {
+    width: 15%
+}
+
+.bankdeposit th.row-retreat {
+    width: 41%
+}
+
+.bankdeposit th.row-pledged_amount {
+    width: 14%
+}
+
+.bankdeposit th.row-payment_amount {
+    width: 14%
+}
+
+.bankdeposit th.row-payment_description {
+    width: 16%
+}
+
+.invoice {
+    margin-top: 25px;
+}
+
+.invoice {
+    font-size: 13pt;
+}
+
+.invoice table,
+.invoice th,
+.invoice td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 2px;
+}
+
+.invoice th {
+    text-align: center;
+}
+
+.invoice td.row-payment_amount {
+    text-align: right;
+}
+
+.invoice-totals table {
+    width: 35%;
+    margin-right: 0%;
+    margin-left: 65%;
+    padding: 5px;
+
+}
+
+.invoice-totals th td {
+    padding: 5px;
+}
+
+.pageheader table,
+.pageheader td {
+    border: 0px solid white;
+    border-collapse: unset;
+}
+
+.invoice.pageheader tr,
+.invoice.pageheader td,
+.invoice.pageheader th {
+    border: 0px solid white;
+}
+
+th.row-payment_description {
+    width: 50%;
+}
+
+th.row-payment_amount,
+td.row {
+    width: 15%;
+}
+
+th.row-payment_date {
+    width: 15%;
+}
+
+th.row-payment_method,
+td.row-payment_method {
+    width: 20%;
+}
+
+.invoice.pagefooter {
+    margin-bottom: 2px;
+}
+
+.agcacknowledge td.board {
+    width: 20%;
+    vertical-align: top;
+}
+.agcacknowledge td.main {
+    width: 80%;
+}
+
+.roomlist body {
+    font-size: 11pt;
+}
+.roomlist header {
+    text-align: center;
+}
+.roomlist footer {
+  page-break-after: always;
+}
+
+.roomlist caption {
+  text-align: center;
+}
+
+.roomlist th, tr {
+  border: 1px solid black;
+  border-collapse: collapse;
+  margin-left: 5px;
+  padding: 5px;
+  vertical-align: top;
+}
+
+.roomlist td.room, th.room {
+  width: 15%;
+}
+.roomlist td.retreatant, th.retreatant {
+  width: 52%;
+}
+.roomlist td.blank, th.blank {
+  width: 11%;
+  font-size: 10pt;
+}
+
+.roomlist td.room, td.retreatant {
+    border-left: 1px solid black;
+    margin-left: 5px;
+    padding: 5px;
+}
+.roomlist td.blank {
+    margin-left: 0px;
+    padding: 0px;
+}
+
+.roomlist table.buildings {
+  border-collapse: collapse;
+}
+
+.roomlist table.rooms {
+  border-collapse: collapse;
+}
+
+.namebadges footer, .tableplacards footer {
+  page-break-after: always;
+}
+.namebadges td {
+  height: 2.2in;
+  width: 3.4in;
+  padding-left: 0.25in;
+  padding-right: 0.25in;
+  padding-top: 0.125in;
+  padding-bottom: 0.125in;
+}
+.tableplacards td {
+  height: 0.5in;
+  width: 7.0in;
+  padding-left: 0.125in;
+  padding-right: 0.125in;
+  padding-top: 0.125in;
+  padding-bottom: 0.125in;
+}
+.tableplacards hr {
+     border-top: 1px dashed;
+}
+.namebadges table {
+  margin-left: 0.5in;
+  margin-right: 0.5in;
+  margin-top: 0.75in;
+  margin-bottom: 0.75in;
+}
+.tableplacards table {
+    margin-left: 0.5in;
+    margin-right: 0.5in;
+    margin-top: 0.25in;
+    margin-bottom: 0.25in;
+}
+
+.flipped {
+  transform: scale(-1, -1);
+  -moz-transform: scale(-1, -1);
+  -webkit-transform: scale(-1, -1);
+  -o-transform: scale(-1, -1);
+  -ms-transform: scale(-1, -1);
+  transform: scale(-1, -1);
+}
+
+.main {
+    font-family: montserrat;
+}
+
+.boardmembers {
+     font-family: montserrat;
+     font-size:10pt;
+     line-height:1.3;
+     padding-top:50px;
+}
+
+.payments {
+     font-size:10pt;
+     border: solid 0.5pt;
+     border-collapse: collapse;
+}
