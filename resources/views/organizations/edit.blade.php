@@ -111,7 +111,15 @@
                             {!! Form::file('avatar'); !!}
                         </div>
                     </div>
-                    <div class="row">
+                    @if ($organization->id == env('SELF_CONTACT_ID'))
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                {!! Form::label('signature', 'Signature (max 5M)') !!}
+                                {!! Form::file('signature'); !!}
+                            </div>
+                        </div>
+                    @endIf
+                    <div class="row mt-3">
                         <div class="col-12">
                             {!! Form::label('attachment', 'Attachment (max 10M): ', ['class' => ''])  !!}
                             {!! Form::file('attachment'); !!}

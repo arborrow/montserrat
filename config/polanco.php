@@ -147,6 +147,7 @@ return [
         'event_group_photo' => '5',
         'contact_avatar' => '6',
         'event_attachment' => '7',
+        'signature' => '8',
     ],
 
     'group_id' => [

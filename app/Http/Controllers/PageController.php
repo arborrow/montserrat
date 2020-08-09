@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class PageController extends Controller
 {
@@ -317,6 +318,68 @@ class PageController extends Controller
 
         return view('reports.retreatroster', compact('registrations'));   //
     }
+
+/*
+
+ */
+
+    public function acknowledgment_pdf($contact_id=null, $start_date=NULL, $end_date=NULL)
+    {
+
+        $this->authorize('show-donation');
+
+        $start_date = (is_null($start_date)) ? Carbon::now()->subYear()->month(1)->day(1) : Carbon::parse($start_date);
+        $end_date = (is_null($end_date)) ? Carbon::now()->subYear()->month(12)->day(31) : Carbon::parse($end_date);
+
+        $current_user = auth()->user();
+        $user_email = \App\Email::whereEmail($current_user->email)->first();
+        // dd($start_date, $end_date, $contact_id, $current_user, $user_email);
+        $contact = \App\Contact::findOrFail($contact_id);
+        $payments = \App\Payment::with('donation.contact', 'donation.retreat')
+        ->whereHas('donation', function($query) use ($contact_id){
+            $query->whereContactId($contact_id);
+        })
+        ->where('payment_date','>=', $start_date->toDateString())
+        ->where('payment_date','<=', $end_date->toDateString())->get();
+        // $payments = \App\Payment::with('donation.contact', 'donation.retreat')->where('payment_date','>=', $start_date)->where('payment_date','<=',$end_date)->get();
+        // dd($contact, $start_date, $end_date, $payments);
+
+        $acknowlegment_touchpoint = new \App\Touchpoint;
+        $acknowlegment_touchpoint->person_id = $contact_id;
+        $acknowlegment_touchpoint->staff_id = $user_email->contact_id;
+        $acknowlegment_touchpoint->touched_at = Carbon::parse(now());
+        $acknowlegment_touchpoint->type = 'Letter';
+        $acknowlegment_touchpoint->notes = 'Donation Acknowledgement Letter: '.$start_date->toDateString().' to '.$end_date->toDateString();
+        // $acknowlegment_touchpoint->save();
+
+        // TODO: implement a Spanish version of the email at the end, commenting out for now
+/*        if ($donation->contact->preferred_language_value == 'es') {
+            $dt = Carbon::now();
+            $donation['today_es'] = $dt->day.' de '.$dt->locale('es')->monthName.' del '.$dt->year;
+            $donation['donation_date_es'] = $donation->donation_date->day.' de '.$donation->donation_date->locale('es')->monthName.' del '.$donation->donation_date->year;
+
+            return view('reports.finance.acknowledgment_es', compact('payments'));
+        } else {
+            return view('reports.finance.acknowledgment', compact('donation'));
+        }
+*/
+        $montserrat = \App\Contact::findOrFail(env('SELF_CONTACT_ID'));
+        // dd($montserrat);
+        $pdf = PDF::loadView('reports.finance.acknowledgment', compact('payments','contact','montserrat','start_date','end_date'));
+        $pdf->setOptions([
+                'header-html' => view('pdf._header'),
+                'footer-html' => view('pdf._footer'),
+        ]);
+        $now = Carbon::now();
+        $attachment = new AttachmentController;
+        $attachment->update_attachment($pdf->inline(), 'contact', $contact->id, 'acknowledgment', $acknowlegment_touchpoint->notes);
+        return $pdf->inline();
+        // return view('reports.finance.acknowledgment', compact('payments','contact', 'montserrat','start_date','end_date'));
+
+
+    }
+
+
 
     public function config_google_client()
     {

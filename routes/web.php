@@ -27,11 +27,7 @@ Route::get('/', 'PageController@welcome');
 Route::get('/welcome', 'PageController@welcome')->name('welcome');
 Route::get('/goodbye', 'HomeController@goodbye');
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
-Route::get('/dashboard/agc', 'DashboardController@agc')->name('dashboard.agc');
-Route::get('/dashboard/board/{year?}', 'DashboardController@board')->name('dashboard.board')->where('year', '^\\d{4}$');
-Route::get('/dashboard/description/{category?}', 'DashboardController@donation_description_chart')->name('dashboard.description');
-
+Route::get('report/acknowledgment_pdf/{contact_id}/{start_date?}/{end_date?}','PageController@acknowledgment_pdf');
 // Authentication routes...
 // Route::get('login/{provider?}', 'Auth\AuthController@login');
 // Route::get('auth/google/callback', 'Auth\AuthController@handleProviderCallback');
@@ -47,10 +43,18 @@ Route::get('search', 'SearchController@search');
 
 Route::get('results', 'SearchController@results')->name('results');
 
+// Dashboard Routes
+Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
+Route::get('/dashboard/agc', 'DashboardController@agc')->name('dashboard.agc');
+Route::get('/dashboard/board/{year?}', 'DashboardController@board')->name('dashboard.board')->where('year', '^\\d{4}$');
+Route::get('/dashboard/description/{category?}', 'DashboardController@donation_description_chart')->name('dashboard.description');
+
 // Attachment routes
 
 Route::get('avatar/{user_id}', 'AttachmentController@get_avatar')->name('get_avatar');
+Route::get('signature/{user_id}', 'AttachmentController@get_signature')->name('get_signature');
 Route::get('avatar/{user_id}/delete', 'AttachmentController@delete_avatar')->name('delete_avatar');
+Route::get('signature/{user_id}/delete', 'AttachmentController@delete_signature')->name('delete_signature');
 
 Route::get('contact/{user_id}/attachment/{file_name}', 'AttachmentController@show_contact_attachment')->name('show_contact_attachment');
 Route::get('contact/{user_id}/attachment/{file_name}/delete', 'AttachmentController@delete_contact_attachment')->name('delete_contact_attachment');
