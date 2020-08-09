@@ -752,6 +752,42 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2018-12-06 12:55:38',
                 'deleted_at' => null,
             ],
+            82 => [
+                'id' => 83,
+                'name' => 'show-donation-type',
+                'display_name' => 'Show donation type',
+                'description' => 'Show donation type',
+                'created_at' => '2018-04-04 15:06:21',
+                'updated_at' => '2018-04-04 15:06:21',
+                'deleted_at' => null,
+            ],
+            83 => [
+                'id' => 84,
+                'name' => 'create-donation-type',
+                'display_name' => 'Create donation type',
+                'description' => 'Create donation type',
+                'created_at' => '2018-04-04 15:06:58',
+                'updated_at' => '2018-04-04 15:06:58',
+                'deleted_at' => null,
+            ],
+            84 => [
+                'id' => 85,
+                'name' => 'delete-donation-type',
+                'display_name' => 'Delete donation type',
+                'description' => 'Delete donation type',
+                'created_at' => '2018-04-04 15:07:42',
+                'updated_at' => '2018-04-04 15:07:42',
+                'deleted_at' => null,
+            ],
+            85 => [
+                'id' => 86,
+                'name' => 'update-donation-type',
+                'display_name' => 'Update donation type',
+                'description' => 'Update donation type',
+                'created_at' => '2018-04-04 15:07:59',
+                'updated_at' => '2018-04-04 15:07:59',
+                'deleted_at' => null,
+            ],
         ]);
     }
 }
