@@ -278,7 +278,7 @@ class AttachmentController extends Controller
                 $file_name = 'group_photo.jpg';
                 $updated_file_name = 'group_photo-updated-'.time().'.jpg';
                 $group_photo = Image::make($file->getRealPath());
-                $mime_type = $group_photo->getClientMimeType();
+                $mime_type = $group_photo->mime();
                 if (File::exists(storage_path().'/app/'.$path.$file_name)) {
                     Storage::move($path.$file_name, $path.$updated_file_name);
                     Storage::disk('local')->put($path.$file_name, $group_photo->stream('jpg'));
