@@ -48,6 +48,7 @@ class DonationTypeController extends Controller
         $donation_type->name = $request->input('name');
         $donation_type->value = $request->input('value');
         $donation_type->description = $request->input('description');
+        $donation_type->is_active = $request->input('is_active');
 
         $donation_type->save();
 
@@ -66,7 +67,7 @@ class DonationTypeController extends Controller
 
         $donation_type = \App\DonationType::findOrFail($id);
 
-        return view('admin.donation_types.show', compact('donation_type')); 
+        return view('admin.donation_types.show', compact('donation_type'));
     }
 
     /**
@@ -97,7 +98,9 @@ class DonationTypeController extends Controller
 
         $donation_type = \App\DonationType::findOrFail($request->input('id'));
         $donation_type->name = $request->input('name');
-        $donation_type->display_name = $request->input('display_name');
+        $donation_type->label = $request->input('label');
+        $donation_type->is_active = $request->input('is_active');
+        $donation_type->value = $request->input('value');
         $donation_type->description = $request->input('description');
         $donation_type->save();
 
@@ -119,23 +122,4 @@ class DonationTypeController extends Controller
         return Redirect::action('DonationTypeController@index');
     }
 
-    public function update_permissions(Request $request)
-    {
-        $this->authorize('update-donation-type');
-        $donation_type = \App\DonationType::findOrFail($request->input('id'));
-        $donation_type->permissions()->detach();
-        $donation_type->permissions()->sync($request->input('permissions'));
-
-        return Redirect::action('DonationTypeController@index');
-    }
-
-    public function update_users(Request $request)
-    {
-        $this->authorize('update-donation-type');
-        $donation_type = \App\DonationType::findOrFail($request->input('id'));
-        $donation_type->users()->detach();
-        $donation_type->users()->sync($request->input('users'));
-
-        return Redirect::action('DonationTypeController@index');
-    }
 }

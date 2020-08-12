@@ -3,10 +3,10 @@
 
 <div class="row bg-cover">
     <div class="col-12">
-        <h1>Create Role</h1>
+        <h1>Create donation type</h1>
     </div>
     <div class="col-12">
-        {!! Form::open(['url'=>'admin/role', 'method'=>'post']) !!}
+        {!! Form::open(['url'=>'admin/donation_type', 'method'=>'post']) !!}
             <div class="form-group">
                 <div class="row">
                     <div class="col-12 col-md-4">
@@ -14,8 +14,12 @@
                         {!! Form::text('name', NULL , ['class' => 'form-control']) !!}
                     </div>
                     <div class="col-12 col-md-4">
-                        {!! Form::label('display_name', 'Display Name')  !!}
-                        {!! Form::text('display_name', NULL , ['class' => 'form-control']) !!}
+                        {!! Form::label('label', 'Label')  !!}
+                        {!! Form::text('label', NULL , ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="col-12 col-md-4">
+                        {!! Form::label('value', 'Value')  !!}
+                        {!! Form::text('value', NULL , ['class' => 'form-control']) !!}
                     </div>
                 </div>
                 <div class="row">
@@ -24,10 +28,16 @@
                         {!! Form::textarea('description', NULL, ['class' => 'form-control', 'rows' => 3]) !!}
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-12">
+                        {!! Form::label('is_active', 'Active:', ['class' => 'col-md-1'])  !!}
+                        {!! Form::checkbox('is_active', 1, true,['class' => 'col-md-1']) !!}
+                    </div>
+                </div>
             </div>
             <div class="row text-center">
                 <div class="col-12">
-                    {!! Form::submit('Add Role', ['class'=>'btn btn-outline-dark']) !!}
+                    {!! Form::submit('Add donation type', ['class'=>'btn btn-outline-dark']) !!}
                 </div>
             </div>
         {!! Form::close() !!}

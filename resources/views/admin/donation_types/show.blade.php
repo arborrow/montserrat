@@ -18,6 +18,8 @@
         <span class="font-weight-bold">Value: </span> {{$donation_type->value}}<br />
         <span class="font-weight-bold">Name: </span> {{$donation_type->name}}<br />
         <span class="font-weight-bold">Description: </span> {{$donation_type->description}}<br />
+        <span class="font-weight-bold">Active: </span>{{$donation_type->is_active ? 'Yes':'No'}}
+
     </div>
     <br />
 
