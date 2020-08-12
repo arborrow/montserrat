@@ -4,7 +4,7 @@
 <div class="row bg-cover">
     <div class="col-12">
         <h2>
-            Donation Types
+            Donation types
             @can('create-donation-type')
                 <span class="options">
                     <a href={{ action('DonationTypeController@create') }}>
