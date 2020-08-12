@@ -206,14 +206,19 @@ class DonationController extends Controller
         $donation = \App\Donation::with('payments', 'contact')->findOrFail($id);
         $descriptions = \App\DonationType::active()->orderby('name')->pluck('name', 'name');
 
+        if (! $descriptions->search($donation->donation_description)) {
+            $descriptions->prepend($donation->donation_description . ' (inactive donation type)', $donation->donation_description);
+            // dd($descriptions,$donation->donation_description);
+        }
+
         // $retreats = \App\Retreat::select(\DB::raw('CONCAT_WS(" ",CONCAT(idnumber," -"), title, CONCAT("(",DATE_FORMAT(start_date,"%m-%d-%Y"),")")) as description'), 'id')->where("end_date", ">", $donation->donation_date)->where("is_active", "=", 1)->orderBy('start_date')->pluck('description', 'id');
         $retreats = \App\Registration::leftjoin('event', 'participant.event_id', '=', 'event.id')->select(DB::raw('CONCAT(event.idnumber, "-", event.title, " (",DATE_FORMAT(event.start_date,"%m-%d-%Y"),")") as description'), 'event.id')->whereContactId($donation->contact_id)->orderBy('event.start_date', 'desc')->pluck('event.description', 'event.id');
 
         $retreats->prepend('Unassigned', 0);
         $defaults['event_id'] = $donation->event_id;
-        $descriptions->prepend('Unassigned', 0);
+        // $descriptions->prepend('Unassigned', 0);
         //$descriptions->toArray();
-        $defaults['description_key'] = $descriptions->search($donation->donation_description);
+        // $defaults['description_key'] = $descriptions->search($donation->donation_description);
 
         // check if current event is further in the past and if so add it
         if (! isset($retreats[$donation->event_id])) {

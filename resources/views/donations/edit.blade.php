@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="col-12 col-md-4">
                         {!! Form::label('donation_description', 'Description')  !!}
-                        {!! Form::select('donation_description', $descriptions, $defaults['description_key'], ['class' => 'form-control']) !!}
+                        {!! Form::select('donation_description', $descriptions, $donation->donation_description, ['class' => 'form-control']) !!}
                     </div>
                     <div class="col-12 col-md-4">
                         {!! Form::label('event_id', 'Retreat')  !!}
