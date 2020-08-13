@@ -25,11 +25,22 @@ return [
     'admin_email' => 'anthony.borrow@montserratretreat.org',
 
     // list of donation_descriptions considered to be part of annual giving campaign
+    'agc_cool_colors' => [
+        0 => "51,105,232",
+        1 => "255, 205, 86",
+        2 => "255, 99, 132",
+        3 => "244,67,54",
+        4 => "211,159,153",
+        5 => "205,211,153",
+        6 =>"229,229,201" ,
+        7 => "90,174,174" ,
+        8 => "147,131,107",
+    ],
     'agc_donation_descriptions' => [
-        'AGC - General',
-        'AGC - Endowment',
-        'AGC - Scholarships',
-        'AGC - Buildings & Maintenance'
+        'Annual Giving',
+        'Endowment',
+        'Scholarships',
+        'Buildings & Maintenance'
     ],
 
     'finance_email' => 'finance@montserratretreat.org',
