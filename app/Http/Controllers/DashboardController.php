@@ -60,7 +60,6 @@ class DashboardController extends Controller
         }
         $average_donor_count = (((array_sum(array_column($donors, 'count')))-($donors[$current_year]['count'])) / (count(array_column($donors, 'count'))-1));
         $average_agc_amount = (((array_sum(array_column($donors, 'sum'))) - ($donors[$current_year]['sum'])) / (count(array_column($donors, 'sum'))-1));
-        // dd($agc_donors, $agc_donations, $donors, $average_donor_count, $average_agc_amount);
 
         foreach ($years as $year) {
             $label = $year->year;
@@ -82,7 +81,6 @@ class DashboardController extends Controller
             ->color('rgba(22,160,133, 1.0)')
             ->backgroundcolor('rgba(22,160,133, 0.2');
         foreach (config('polanco.agc_donation_descriptions') as $key=>$description) {
-            //dd($key, config('polanco.cool_colors')[$key]);
             $agc_donor_chart->dataset($description, 'line', array_column($donors, 'count_'.$description))
                 ->color('rgba('.config('polanco.agc_cool_colors')[$key % 8].', 0.8)')
                 ->backgroundcolor('rgba('.config('polanco.agc_cool_colors')[$key % 8].', 0.2)');
@@ -133,7 +131,6 @@ class DashboardController extends Controller
             $donors[$label]['sum'] = $donations->sum('donation_amount');
         }
         $average_amount = ((((array_sum(array_column($donors, 'sum'))) - ($donors[$current_year]['sum'])) / ($number_of_years)));
-        // dd(array_sum(array_column($donors, 'sum')), ($donors[$current_year]['sum']) , ($number_of_years));
 
         foreach ($years as $year) {
             $label = $year->year;
@@ -221,8 +218,7 @@ class DashboardController extends Controller
                 'begin_date' => $begin_date,
                 'end_date' => $end_date,
             ]);
-        //dd(array_column($board_summary, 'total_paid'));
-
+        
         $total_revenue = array_sum(array_column($board_summary, 'total_paid'));
         $total_participants = array_sum(array_column($board_summary, 'total_participants'));
         $total_peoplenights = array_sum(array_column($board_summary, 'total_pn'));

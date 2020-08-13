@@ -36,11 +36,12 @@ return [
         7 => "90,174,174" ,
         8 => "147,131,107",
     ],
+    
     'agc_donation_descriptions' => [
-        'Annual Giving',
-        'Endowment',
-        'Scholarships',
-        'Buildings & Maintenance'
+        'AGC - General',
+        'AGC - Endowment',
+        'AGC - Scholarships',
+        'AGC - Buildings & Maintenance'
     ],
 
     'finance_email' => 'finance@montserratretreat.org',
