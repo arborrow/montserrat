@@ -12,7 +12,7 @@
                             <option value="">Display dashboard for ...</option>
                                 <option value="{{url('dashboard/agc')}}">AGC</option>
                                 <option value="{{url('dashboard/board')}}">Events</option>
-                                <option value="{{url('dashboard/description/offering')}}">Donation Descriptions</option>
+                                <option value="{{url('dashboard/description')}}">Donation descriptions</option>
                         </select>
                     </div>
                 </div>
