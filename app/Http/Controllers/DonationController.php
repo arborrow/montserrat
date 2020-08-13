@@ -78,8 +78,8 @@ class DonationController extends Controller
         }
         $prev_year = $year - 1;
 
-        $all_donations = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', ['AGC - General', 'AGC - Endowment', 'AGC - Scholarships', 'AGC - Buildings & Maintenance'])->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->get();
-        $donations = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', ['AGC - General', 'AGC - Endowment', 'AGC - Scholarships', 'AGC - Buildings & Maintenance'])->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->paginate(100);
+        $all_donations = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->get();
+        $donations = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->paginate(100);
         $total['pledged'] = $all_donations->sum('donation_amount');
         $total['paid'] = $all_donations->sum('payments_paid');
         if ($total['pledged'] > 0) {
@@ -216,9 +216,9 @@ class DonationController extends Controller
 
         $retreats->prepend('Unassigned', 0);
         $defaults['event_id'] = $donation->event_id;
-        // $descriptions->prepend('Unassigned', 0);
+        // $descriptions->prepend('Unassigned', 0); // no longer needed since all donations have an active donation description
         //$descriptions->toArray();
-        // $defaults['description_key'] = $descriptions->search($donation->donation_description);
+        // $defaults['description_key'] = $descriptions->search($donation->donation_description); // no longer needed to lookup donation type key, just use the existing value
 
         // check if current event is further in the past and if so add it
         if (! isset($retreats[$donation->event_id])) {

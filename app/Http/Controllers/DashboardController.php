@@ -36,13 +36,13 @@ class DashboardController extends Controller
             $label = $year->year;
             $prev_year = $year->copy()->subYear();
 
-            $agc_donors = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', ['AGC - General', 'AGC - Endowment', 'AGC - Scholarships', 'AGC - Buildings & Maintenance'])->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
+            $agc_donors = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
             $agc_donors_giving = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('AGC - General')->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
             $agc_donors_endowment = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('AGC - Endowment')->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
             $agc_donors_scholarship = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('AGC - Scholarships')->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
             $agc_donors_building = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('AGC - Buildings & Maintenance')->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
 
-            $agc_donations = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', ['AGC - General', 'AGC - Endowment', 'AGC - Scholarships', 'AGC - Buildings & Maintenance'])->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
+            $agc_donations = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
             $agc_donations_giving = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('AGC - General')->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
             $agc_donations_endowment = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('AGC - Endowment')->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
             $agc_donations_scholarship = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('AGC - Scholarships')->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
@@ -124,30 +124,12 @@ class DashboardController extends Controller
         return view('dashboard.agc', compact('agc_donor_chart', 'agc_amount'));
     }
 
-    public function donation_description_chart($category = null)
+    public function donation_description_chart($donation_description = 'Retreat Funding')
     {
         $this->authorize('show-dashboard');
 
-        switch ($category) {
-            case 'fee': $donation_description = 'Bank & Credit Card Fees'; break;
-            case 'bookstore': $donation_description = 'Bookstore Revenue'; break;
-            case 'capital': $donation_description = 'Capital Campaign'; break;
-            case 'donation': $donation_description = 'Donations'; break;
-            case 'flower': $donation_description = 'Flowers and Landscaping'; break;
-            case 'gift': $donation_description = 'Gift Certificates - Funded'; break;
-            case 'grant': $donation_description = 'Grants'; break;
-            case 'inkind': $donation_description = 'In-Kind Contribution Income'; break;
-            case 'interest': $donation_description = 'Interest Income'; break;
-            case 'memorial': $donation_description = 'Memorials'; break;
-            case 'miscellaneous': $donation_description = 'Miscellaneous'; break;
-            case 'ntgd': $donation_description = 'North Texas Giving'; break;
-            case 'rent': $donation_description = 'Rent Income'; break;
-            case 'deposit': $donation_description = 'Retreat Deposits'; break;
-            case 'offering': $donation_description = 'Retreat Funding'; break;
-            case 'tip': $donation_description = 'Tips'; break;
-            default: $donation_description = 'Retreat Funding';
-        }
-        // dd($donation_description);
+        $descriptions = \App\DonationType::active()->orderBy('name')->pluck('name','name');
+
         $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
         $number_of_years = 5;
         $years = [];
@@ -185,8 +167,6 @@ class DashboardController extends Controller
         $donation_description_chart->dataset('Donations for '.$donation_description, 'line', array_column($donors, 'sum'))
             ->color('rgba(22,160,133, 1.0)')
             ->backgroundcolor('rgba(22,160,133, 0.5)');
-
-        $descriptions = [['bookstore', 'deposit', 'diocese', 'donation', 'flower', 'gift', 'offering', 'tip']];
 
         return view('dashboard.description', compact('donation_description_chart', 'descriptions'));
     }
