@@ -35,7 +35,7 @@ class DashboardController extends Controller
         foreach ($years as $year) {
             $label = $year->year;
             $prev_year = $year->copy()->subYear();
-
+            // TODO: consider stepping throuh polanco.agc_donation_descriptions with a foreach to build collections - this will make this much more dynamic in the future
             $agc_donors = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
             $agc_donors_giving = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('AGC - General')->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
             $agc_donors_endowment = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('AGC - Endowment')->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
