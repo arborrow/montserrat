@@ -25,6 +25,8 @@ class DonationController extends Controller
     public function index()
     {
         $this->authorize('show-donation');
+
+        // rather than using the active donation_descriptions from DonationType model, let's continue to show all of the existing donation_descriptions in the Donations table so that any that are not in the DonationType table can be cleaned up
         $donation_descriptions = DB::table('Donations')->selectRaw('MIN(donation_id) as donation_id, donation_description, count(*) as count')->groupBy('donation_description')->orderBy('donation_description')->whereNull('deleted_at')->get();
         // dd($donation_descriptions);
         $donations = \App\Donation::orderBy('donation_date', 'desc')->with('contact.prefix', 'contact.suffix')->paginate(100);
