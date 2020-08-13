@@ -98,6 +98,7 @@ Route::get('admin/deposit/reconcile/{event_id?}', 'PageController@finance_reconc
 Route::prefix('admin')->middleware('auth')->group(function () {
     Route::resource('permission', 'PermissionController');
     Route::resource('role', 'RoleController');
+    Route::resource('donation_type', 'DonationTypeController');
     Route::get('phpinfo', 'SystemController@phpinfo')->name('phpinfo');
 });
 

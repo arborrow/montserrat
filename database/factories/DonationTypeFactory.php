@@ -5,11 +5,13 @@
 use Faker\Generator as Faker;
 
 $factory->define(App\DonationType::class, function (Faker $faker) {
+    $label = $faker->word;
+    $value = $faker->numberBetween(1000,2000);
     return [
-        'label' => $faker->word,
-        'value' => $faker->word,
-        'name' => $faker->name,
-        'description' => $faker->text,
+        'label' => $label,
+        'value' => $value,
+        'name' => $label,
+        'description' => $label.' ('.$value.')',
         'is_default' => $faker->boolean,
         'is_reserved' => $faker->boolean,
         'is_active' => $faker->boolean,

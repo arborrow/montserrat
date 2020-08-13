@@ -95,7 +95,7 @@ class DonationControllerTest extends TestCase
         $response->assertViewHas('defaults');
         $response->assertViewHas('retreats');
 
-        $this->assertTrue($this->findFieldValueInResponseContent('donation_description', $donation->description->id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('donation_description', $donation->donation_description, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('event_id', $donation->event_id, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('donation_date', $donation->donation_date, 'date', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('donation_amount', $donation->donation_amount, 'number', $response->getContent()));

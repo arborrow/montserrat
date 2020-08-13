@@ -578,7 +578,7 @@ class RetreatController extends Controller
         $retreat = \App\Retreat::findOrFail($id);
         $registrations = \App\Registration::where('event_id', '=', $id)->whereCanceledAt(null)->with('retreatant.parish', 'donation')->orderBy('register_date', 'DESC')->get();
         $payment_description = config('polanco.payment_method');
-        $donation_description = \App\DonationType::whereIsActive(1)->orderby('name')->pluck('name', 'id');
+        $donation_description = \App\DonationType::active()->orderby('name')->pluck('name', 'name');
         $donation_description->prepend('Unassigned', 0);
 
         return view('retreats.payments.edit', compact('retreat', 'registrations', 'donation_description', 'payment_description'));

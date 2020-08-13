@@ -25,6 +25,8 @@ class DonationController extends Controller
     public function index()
     {
         $this->authorize('show-donation');
+
+        // rather than using the active donation_descriptions from DonationType model, let's continue to show all of the existing donation_descriptions in the Donations table so that any that are not in the DonationType table can be cleaned up
         $donation_descriptions = DB::table('Donations')->selectRaw('MIN(donation_id) as donation_id, donation_description, count(*) as count')->groupBy('donation_description')->orderBy('donation_description')->whereNull('deleted_at')->get();
         // dd($donation_descriptions);
         $donations = \App\Donation::orderBy('donation_date', 'desc')->with('contact.prefix', 'contact.suffix')->paginate(100);
@@ -78,8 +80,8 @@ class DonationController extends Controller
         }
         $prev_year = $year - 1;
 
-        $all_donations = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', ['AGC - General', 'AGC - Endowment', 'AGC - Scholarships', 'AGC - Buildings & Maintenance'])->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->get();
-        $donations = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', ['AGC - General', 'AGC - Endowment', 'AGC - Scholarships', 'AGC - Buildings & Maintenance'])->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->paginate(100);
+        $all_donations = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->get();
+        $donations = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->paginate(100);
         $total['pledged'] = $all_donations->sum('donation_amount');
         $total['paid'] = $all_donations->sum('payments_paid');
         if ($total['pledged'] > 0) {
@@ -124,7 +126,7 @@ class DonationController extends Controller
 
         //dd($donors);
         $payment_methods = config('polanco.payment_method');
-        $descriptions = \App\DonationType::orderby('name')->whereIsActive(1)->pluck('name', 'name');
+        $descriptions = \App\DonationType::active()->orderby('name')->pluck('name', 'name');
         $dt_today = \Carbon\Carbon::today();
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
         $defaults['retreat_id'] = $event_id;
@@ -204,16 +206,21 @@ class DonationController extends Controller
         $this->authorize('update-donation');
         //get this retreat's information
         $donation = \App\Donation::with('payments', 'contact')->findOrFail($id);
-        $descriptions = \App\DonationType::orderby('name')->whereIsActive(1)->pluck('name', 'id');
+        $descriptions = \App\DonationType::active()->orderby('name')->pluck('name', 'name');
+
+        if (! $descriptions->search($donation->donation_description)) {
+            $descriptions->prepend($donation->donation_description . ' (inactive donation type)', $donation->donation_description);
+            // dd($descriptions,$donation->donation_description);
+        }
 
         // $retreats = \App\Retreat::select(\DB::raw('CONCAT_WS(" ",CONCAT(idnumber," -"), title, CONCAT("(",DATE_FORMAT(start_date,"%m-%d-%Y"),")")) as description'), 'id')->where("end_date", ">", $donation->donation_date)->where("is_active", "=", 1)->orderBy('start_date')->pluck('description', 'id');
         $retreats = \App\Registration::leftjoin('event', 'participant.event_id', '=', 'event.id')->select(DB::raw('CONCAT(event.idnumber, "-", event.title, " (",DATE_FORMAT(event.start_date,"%m-%d-%Y"),")") as description'), 'event.id')->whereContactId($donation->contact_id)->orderBy('event.start_date', 'desc')->pluck('event.description', 'event.id');
 
         $retreats->prepend('Unassigned', 0);
         $defaults['event_id'] = $donation->event_id;
-        $descriptions->prepend('Unassigned', 0);
+        // $descriptions->prepend('Unassigned', 0); // no longer needed since all donations have an active donation description
         //$descriptions->toArray();
-        $defaults['description_key'] = $descriptions->search($donation->donation_description);
+        // $defaults['description_key'] = $descriptions->search($donation->donation_description); // no longer needed to lookup donation type key, just use the existing value
 
         // check if current event is further in the past and if so add it
         if (! isset($retreats[$donation->event_id])) {
@@ -234,19 +241,12 @@ class DonationController extends Controller
     {
         $this->authorize('update-donation');
 
-        //dd($request->input('donation_description'));
-        if ($request->input('donation_description') > 0) {
-            $donation_description = \App\DonationType::find($request->input('donation_description'));
-        }
-        // dd($donation_description);
         $donation = \App\Donation::findOrFail($id);
         $donation->contact_id = $request->input('donor_id');
         $donation->event_id = $request->input('event_id');
         $donation->donation_date = $request->input('donation_date') ? Carbon::parse($request->input('donation_date')) : null;
         $donation->donation_amount = $request->input('donation_amount');
-        if (isset($donation_description)) {
-            $donation->donation_description = $donation_description->label;
-        }
+        $donation->donation_description = $request->input('donation_description');
         $donation->notes1 = $request->input('notes1'); //primary_contact
         $donation->notes = $request->input('notes');
         $donation->terms = $request->input('terms');

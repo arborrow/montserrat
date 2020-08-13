@@ -16,7 +16,7 @@ class DashboardController extends Controller
     }
 
     public function agc()
-    {
+    {   // polanco.cool_colors defines 9 different colors that can be used in generating charts, I take mod 8 to rotate through the first 8 colors and then repeat
         // TODO: get % of returning or % of last year but unfortunately not this year  between agc years
         $this->authorize('show-dashboard');
         $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
@@ -35,33 +35,29 @@ class DashboardController extends Controller
         foreach ($years as $year) {
             $label = $year->year;
             $prev_year = $year->copy()->subYear();
+            // TODO: consider stepping throuh polanco.agc_donation_descriptions with a foreach to build collections - this will make this much more dynamic in the future
+            $agc_donors['All'] = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
+            foreach (config('polanco.agc_donation_descriptions') as $description) {
+                $agc_donors[$description] = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription($description)->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
+            }
 
-            $agc_donors = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', ['AGC - General', 'AGC - Endowment', 'AGC - Scholarships', 'AGC - Buildings & Maintenance'])->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
-            $agc_donors_giving = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('AGC - General')->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
-            $agc_donors_endowment = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('AGC - Endowment')->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
-            $agc_donors_scholarship = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('AGC - Scholarships')->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
-            $agc_donors_building = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('AGC - Buildings & Maintenance')->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
-
-            $agc_donations = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', ['AGC - General', 'AGC - Endowment', 'AGC - Scholarships', 'AGC - Buildings & Maintenance'])->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
-            $agc_donations_giving = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('AGC - General')->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
-            $agc_donations_endowment = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('AGC - Endowment')->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
-            $agc_donations_scholarship = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('AGC - Scholarships')->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
-            $agc_donations_building = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription('AGC - Buildings & Maintenance')->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
+            $agc_donations['All'] = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
+            foreach (config('polanco.agc_donation_descriptions') as $description) {
+                $agc_donations[$description] = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription($description)->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
+            }
 
             //unique donors
-            $donors[$label]['count'] = $agc_donors->count();
-            $donors[$label]['count_giving'] = $agc_donors_giving->count();
-            $donors[$label]['count_endowment'] = $agc_donors_endowment->count();
-            $donors[$label]['count_scholarship'] = $agc_donors_scholarship->count();
-            $donors[$label]['count_building'] = $agc_donors_building->count();
+            $donors[$label]['count'] = $agc_donors['All']->count();
+            foreach (config('polanco.agc_donation_descriptions') as $description) {
+                $donors[$label]['count_'.$description] = $agc_donors[$description]->count();
+            }
 
-            $donors[$label]['sum'] = $agc_donations->sum('donation_amount');
-            $donors[$label]['sum_giving'] = $agc_donations_giving->sum('donation_amount');
-            $donors[$label]['sum_endowment'] = $agc_donations_endowment->sum('donation_amount');
-            $donors[$label]['sum_scholarship'] = $agc_donations_scholarship->sum('donation_amount');
-            $donors[$label]['sum_building'] = $agc_donations_building->sum('donation_amount');
+            $donors[$label]['sum'] = $agc_donations['All']->sum('donation_amount');
+            foreach (config('polanco.agc_donation_descriptions') as $description) {
+                $donors[$label]['sum_'.$description] = $agc_donations[$description]->sum('donation_amount');
+
+            }
         }
-
         $average_donor_count = (((array_sum(array_column($donors, 'count')))-($donors[$current_year]['count'])) / (count(array_column($donors, 'count'))-1));
         $average_agc_amount = (((array_sum(array_column($donors, 'sum'))) - ($donors[$current_year]['sum'])) / (count(array_column($donors, 'sum'))-1));
 
@@ -84,18 +80,11 @@ class DashboardController extends Controller
         $agc_donor_chart->dataset('Total Donors per Year', 'line', array_column($donors, 'count'))
             ->color('rgba(22,160,133, 1.0)')
             ->backgroundcolor('rgba(22,160,133, 0.2');
-        $agc_donor_chart->dataset('AGC - General Donors', 'line', array_column($donors, 'count_giving'))
-            ->color('rgba(51,105,232, 1.0)')
-            ->backgroundcolor('rgba(51,105,232, 0.2');
-        $agc_donor_chart->dataset('AGC - Endowment Donors', 'line', array_column($donors, 'count_endowment'))
-            ->color('rgba(255, 205, 86, 1.0)')
-            ->backgroundcolor('rgba(255, 205, 86, 132, 0.4');
-        $agc_donor_chart->dataset('AGC - Scholarships Donors', 'line', array_column($donors, 'count_scholarship'))
-            ->color('rgba(255, 99, 132, 1.0)')
-            ->backgroundcolor('rgba(255, 99, 132, 0.2');
-        $agc_donor_chart->dataset('AGC - Buildings & Maintenance Donors', 'line', array_column($donors, 'count_building'))
-            ->color('rgba(244,67,54, 1.0)')
-            ->backgroundcolor('rgba(244,67,54, 0.2');
+        foreach (config('polanco.agc_donation_descriptions') as $key=>$description) {
+            $agc_donor_chart->dataset($description, 'line', array_column($donors, 'count_'.$description))
+                ->color('rgba('.config('polanco.agc_cool_colors')[$key % 8].', 0.8)')
+                ->backgroundcolor('rgba('.config('polanco.agc_cool_colors')[$key % 8].', 0.2)');
+        }
 
         $agc_amount = new RetreatOfferingChart;
         $agc_amount->options([
@@ -108,46 +97,21 @@ class DashboardController extends Controller
         $agc_amount->dataset('Total Donations per Year', 'line', array_column($donors, 'sum'))
             ->color('rgba(22,160,133, 1.0)')
             ->backgroundcolor('rgba(22,160,133, 0.2');
-        $agc_amount->dataset('AGC - General', 'line', array_column($donors, 'sum_giving'))
-            ->color('rgba(51,105,232, 1.0)')
-            ->backgroundcolor('rgba(51,105,232, 0.2');
-        $agc_amount->dataset('AGC - Endowment', 'line', array_column($donors, 'sum_endowment'))
-            ->color('rgba(255, 205, 86, 1.0)')
-            ->backgroundcolor('rgba(255, 205, 86, 132, 0.4');
-        $agc_amount->dataset('AGC - Scholarships', 'line', array_column($donors, 'sum_scholarship'))
-            ->color('rgba(255, 99, 132, 1.0)')
-            ->backgroundcolor('rgba(255, 99, 132, 0.2');
-        $agc_amount->dataset('AGC - Buildings & Maintenance', 'line', array_column($donors, 'sum_building'))
-            ->color('rgba(244,67,54, 1.0)')
-            ->backgroundcolor('rgba(244,67,54, 0.2');
+        foreach (config('polanco.agc_donation_descriptions') as $key=>$description) {
+            $agc_amount->dataset($description, 'line', array_column($donors, 'sum_'.$description))
+                ->color('rgba('.config('polanco.agc_cool_colors')[$key % 8].', 1.0)')
+                ->backgroundcolor('rgba('.config('polanco.agc_cool_colors')[$key % 8].', 0.2');
+        }
 
         return view('dashboard.agc', compact('agc_donor_chart', 'agc_amount'));
     }
 
-    public function donation_description_chart($category = null)
+    public function donation_description_chart($donation_description = 'Retreat Funding')
     {
         $this->authorize('show-dashboard');
 
-        switch ($category) {
-            case 'fee': $donation_description = 'Bank & Credit Card Fees'; break;
-            case 'bookstore': $donation_description = 'Bookstore Revenue'; break;
-            case 'capital': $donation_description = 'Capital Campaign'; break;
-            case 'donation': $donation_description = 'Donations'; break;
-            case 'flower': $donation_description = 'Flowers and Landscaping'; break;
-            case 'gift': $donation_description = 'Gift Certificates - Funded'; break;
-            case 'grant': $donation_description = 'Grants'; break;
-            case 'inkind': $donation_description = 'In-Kind Contribution Income'; break;
-            case 'interest': $donation_description = 'Interest Income'; break;
-            case 'memorial': $donation_description = 'Memorials'; break;
-            case 'miscellaneous': $donation_description = 'Miscellaneous'; break;
-            case 'ntgd': $donation_description = 'North Texas Giving'; break;
-            case 'rent': $donation_description = 'Rent Income'; break;
-            case 'deposit': $donation_description = 'Retreat Deposits'; break;
-            case 'offering': $donation_description = 'Retreat Funding'; break;
-            case 'tip': $donation_description = 'Tips'; break;
-            default: $donation_description = 'Retreat Funding';
-        }
-        // dd($donation_description);
+        $descriptions = \App\DonationType::active()->orderBy('name')->pluck('name','name');
+
         $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
         $number_of_years = 5;
         $years = [];
@@ -167,7 +131,6 @@ class DashboardController extends Controller
             $donors[$label]['sum'] = $donations->sum('donation_amount');
         }
         $average_amount = ((((array_sum(array_column($donors, 'sum'))) - ($donors[$current_year]['sum'])) / ($number_of_years)));
-        // dd(array_sum(array_column($donors, 'sum')), ($donors[$current_year]['sum']) , ($number_of_years));
 
         foreach ($years as $year) {
             $label = $year->year;
@@ -185,8 +148,6 @@ class DashboardController extends Controller
         $donation_description_chart->dataset('Donations for '.$donation_description, 'line', array_column($donors, 'sum'))
             ->color('rgba(22,160,133, 1.0)')
             ->backgroundcolor('rgba(22,160,133, 0.5)');
-
-        $descriptions = [['bookstore', 'deposit', 'diocese', 'donation', 'flower', 'gift', 'offering', 'tip']];
 
         return view('dashboard.description', compact('donation_description_chart', 'descriptions'));
     }
@@ -257,8 +218,7 @@ class DashboardController extends Controller
                 'begin_date' => $begin_date,
                 'end_date' => $end_date,
             ]);
-        //dd(array_column($board_summary, 'total_paid'));
-
+        
         $total_revenue = array_sum(array_column($board_summary, 'total_paid'));
         $total_participants = array_sum(array_column($board_summary, 'total_participants'));
         $total_peoplenights = array_sum(array_column($board_summary, 'total_pn'));

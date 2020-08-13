@@ -14,13 +14,7 @@
                             <select class="custom-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                                 <option value="">Filter by Donation Description ...</option>
                                 @foreach($descriptions as $description)
-                                    <option value="{{url('dashboard/description/bookstore')}}">Bookstore</option>
-                                    <option value="{{url('dashboard/description/deposit')}}">Deposits</option>
-                                    <option value="{{url('dashboard/description/donation')}}">Donations</option>
-                                    <option value="{{url('dashboard/description/flower')}}">Flowers</option>
-                                    <option value="{{url('dashboard/description/gift')}}">Gift Certificates</option>
-                                    <option value="{{url('dashboard/description/offering')}}">Retreat Offerings</option>
-                                    <option value="{{url('dashboard/description/tip')}}">Tips</option>
+                                    <option value="{{url('dashboard/description/'.$description)}}">{{ $description }}</option>
                                 @endForeach
                             </select>
                         </div>

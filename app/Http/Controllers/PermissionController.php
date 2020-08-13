@@ -24,12 +24,14 @@ class PermissionController extends Controller
             'show'=>'show',
             'update'=>'update',
         ];
+        // TODO: generate this list by getting a list of all the models on the project
         $models = [
             '' => 'N/A',
             'address'=>'address',
             'attachment'=>'attachment',
             'contact'=>'contact',
             'donation'=>'donation',
+            'donation-type'=>'donation-type',
             'email'=>'email',
             'group'=>'group',
             'note'=>'note',

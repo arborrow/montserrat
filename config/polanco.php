@@ -3,57 +3,52 @@
 return [
 
     /*
-     * Restrict socialite authentication to a particular domain
-     */
-    'socialite_domain_restriction' => 'montserratretreat.org',
-
-    /*
-     *  Polanco's name
-     *  TODO: rename self.name and self.id to site.id and use site.variable consistently throughout Polanco
-     */
-
-    'site_name' => 'Polanco',
-
-    /*
-     *  Polanco's email address for sending notifications
-     */
-
-    'site_email' => 'polanco@montserratretreat.org',
-
-    /*
      * Site administrator name and email for receiving notifications
      */
 
+     'activity_contacts_type' => [
+         'assignee' => '1',
+         'creator' => '2',
+         'target' => '3',
+     ],
+
+     'activity_type' => [
+         'meeting' => '1',
+         'call' => '2',
+         'email' => '3',
+         'text' => '4',
+         'letter' => '5',
+         'other' => '8',
+     ],
+
     'admin_name' => 'Anthony Borrow',
     'admin_email' => 'anthony.borrow@montserratretreat.org',
+
+    // list of donation_descriptions considered to be part of annual giving campaign
+    'agc_cool_colors' => [
+        0 => "51,105,232",
+        1 => "255, 205, 86",
+        2 => "255, 99, 132",
+        3 => "244,67,54",
+        4 => "211,159,153",
+        5 => "205,211,153",
+        6 =>"229,229,201" ,
+        7 => "90,174,174" ,
+        8 => "147,131,107",
+    ],
+    
+    'agc_donation_descriptions' => [
+        'AGC - General',
+        'AGC - Endowment',
+        'AGC - Scholarships',
+        'AGC - Buildings & Maintenance'
+    ],
+
     'finance_email' => 'finance@montserratretreat.org',
     'notify_registration_event_change' => '1',
 
-    'relationship_type' => [
-        'child_parent' => '1',
-        'husband_wife' => '2',
-        'sibling' => '4',
-        'staff' => '5',
-        'volunteer' => '6',
-        'parishioner' => '11',
-        'bishop' => '12',
-        'diocese' => '13',
-        'pastor' => '14',
-        'superior' => '15',
-        'provincial' => '16',
-        'community_member' => '17',
-        'board_member' => '18',
-        'retreat_director' => '19',
-        'retreat_assistant' => '20',
-        'retreat_innkeeper' => '21',
-        'retreatant' => '22',
-        'donor' => '23',
-        'ambassador' => '24',
-        'priest' => '25',
-        'deacon' => '26',
-        'community' => '27',
-        'primary_contact' => '28',
-    ],
+    'country_id_usa' => '1228',
+    'state_province_id_tx' => '1042',
 
     'contact_type' => [
         'individual' => '1',
@@ -70,48 +65,6 @@ return [
         'contract' => '12',
         'foundation' => '13',
     ],
-
-    'location_type' => [
-        'home' => '1',
-        'work' => '2',
-        'main' => '3',
-        'other' => '4',
-        'billing' => '5',
-    ],
-    'activity_contacts_type' => [
-        'assignee' => '1',
-        'creator' => '2',
-        'target' => '3',
-    ],
-    'activity_type' => [
-        'meeting' => '1',
-        'call' => '2',
-        'email' => '3',
-        'text' => '4',
-        'letter' => '5',
-        'other' => '8',
-    ],
-    'medium' => [
-        'in person' => '1',
-        'phone' => '2',
-        'email' => '3',
-        'fax' => '4',
-        'letter' => '5',
-    ],
-    'priority' => [
-        'urgent' => '1',
-        'normal' => '2',
-        'low' => '3',
-    ],
-    'preferred_communication_method' => [
-        '0' => 'N/A',
-        '1' => 'Phone',
-        '2' => 'Email',
-        '3' => 'Postal Mail',
-        '4' => 'SMS',
-    ],
-    'country_id_usa' => '1228',
-    'state_province_id_tx' => '1042',
 
     'contact' => [
         'montserrat' => '620',
@@ -170,6 +123,22 @@ return [
         'hlm2017' => '17',
     ],
 
+    'location_type' => [
+        'home' => '1',
+        'work' => '2',
+        'main' => '3',
+        'other' => '4',
+        'billing' => '5',
+    ],
+
+    'medium' => [
+        'in person' => '1',
+        'phone' => '2',
+        'email' => '3',
+        'fax' => '4',
+        'letter' => '5',
+    ],
+
     'participant_role_id' => [
         'ambassador' => '11',
         'retreatant' => '5',
@@ -177,6 +146,36 @@ return [
         'retreat_innkeeper' => '9',
         'retreat_assistant' => '10',
     ],
+
+    'payment_method' => [
+        'Unassigned' => 'Unassigned',
+        'Cash' => 'Cash',
+        'Check' => 'Check',
+        'Credit card' => 'Credit card',
+        'Gift cert funded' => 'Gift cert funded',
+        'Gift cert unfunded' => 'Gift cert unfunded',
+        'Journal' => 'Journal',
+        'NSF' => 'NSF',
+        'Reallocation' => 'Reallocation',
+        'Refund' => 'Refund',
+        'Other' => 'Other',
+        'Wire transfer' => 'Wire transfer',
+    ],
+
+    'preferred_communication_method' => [
+        '0' => 'N/A',
+        '1' => 'Phone',
+        '2' => 'Email',
+        '3' => 'Postal Mail',
+        '4' => 'SMS',
+    ],
+
+    'priority' => [
+        'urgent' => '1',
+        'normal' => '2',
+        'low' => '3',
+    ],
+
     'registration_status_id' => [
         'registered' => '1',
         'no_show' => '3',
@@ -195,6 +194,32 @@ return [
         'Postal Mail' => 'Postal Mail',
     ],
 
+    'relationship_type' => [
+        'child_parent' => '1',
+        'husband_wife' => '2',
+        'sibling' => '4',
+        'staff' => '5',
+        'volunteer' => '6',
+        'parishioner' => '11',
+        'bishop' => '12',
+        'diocese' => '13',
+        'pastor' => '14',
+        'superior' => '15',
+        'provincial' => '16',
+        'community_member' => '17',
+        'board_member' => '18',
+        'retreat_director' => '19',
+        'retreat_assistant' => '20',
+        'retreat_innkeeper' => '21',
+        'retreatant' => '22',
+        'donor' => '23',
+        'ambassador' => '24',
+        'priest' => '25',
+        'deacon' => '26',
+        'community' => '27',
+        'primary_contact' => '28',
+    ],
+
     'touchpoint_source' => [
         'Call' => 'Call',
         'Email' => 'Email',
@@ -204,26 +229,30 @@ return [
     ],
 
 
-    'payment_method' => [
-        'Unassigned' => 'Unassigned',
-        'Cash' => 'Cash',
-        'Check' => 'Check',
-        'Credit card' => 'Credit card',
-        'Gift cert funded' => 'Gift cert funded',
-        'Gift cert unfunded' => 'Gift cert unfunded',
-        'Journal' => 'Journal',
-        'NSF' => 'NSF',
-        'Reallocation' => 'Reallocation',
-        'Refund' => 'Refund',
-        'Other' => 'Other',
-        'Wire transfer' => 'Wire transfer',
-    ],
-
     // when using the database seeder the first contact created is the self organization
     // name is used by database seeder to create self contact record
     'self' => [
         'id' => env('SELF_CONTACT_ID', 620),
         'name' => env('SELF_NAME', 'Montserrat Jesuit Retreat House'),
     ],
+
+
+    /*
+     *  Polanco's name
+     *  TODO: rename self.name and self.id to site.id and use site.variable consistently throughout Polanco
+     */
+
+    'site_name' => 'Polanco',
+
+    /*
+     *  Polanco's email address for sending notifications
+     */
+
+    'site_email' => 'polanco@montserratretreat.org',
+
+    /*
+     * Restrict socialite authentication to a particular domain
+     */
+    'socialite_domain_restriction' => 'montserratretreat.org',
 
 ];
