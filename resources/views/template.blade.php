@@ -109,6 +109,7 @@
 							<a class="dropdown-item" href={{ route('role.index') }}>Roles</a>
 							<a class="dropdown-item" href={{ route('permission.index') }}>Permissions</a>
 							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href={{ route('asset_type.index') }}>Asset types</a>
 							<a class="dropdown-item" href={{ route('donation_type.index') }}>Donation types</a>
 						</div>
 					</li>
