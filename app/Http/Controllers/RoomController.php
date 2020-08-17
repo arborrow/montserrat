@@ -158,6 +158,7 @@ class RoomController extends Controller
         }
         $upcoming = clone $dt;
         $previous_dt = clone $dt;
+        $m = [];
         $prev_path = url('rooms/'.$previous_dt->subDays(31)->format('Ymd'));
         $previous_link = '<a href="'.$prev_path.'">&#171;</a>';
         $dts[0] = $dt;

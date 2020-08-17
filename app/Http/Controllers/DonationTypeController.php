@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\StoreDonationTypeRequest;
+use App\Http\Requests\UpdateDonationTypeRequest;
 
 class DonationTypeController extends Controller
 {
@@ -39,14 +41,14 @@ class DonationTypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreDonationTypeRequest $request)
     {
         $this->authorize('create-donation-type');
 
         $donation_type = new \App\DonationType;
         $donation_type->label = $request->input('label');
         $donation_type->name = $request->input('name');
-        $donation_type->value = $request->input('value');
+        $donation_type->value = strval($request->input('value'));
         $donation_type->description = $request->input('description');
         $donation_type->is_active = $request->input('is_active');
 
@@ -92,7 +94,7 @@ class DonationTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateDonationTypeRequest $request, $id)
     {
         $this->authorize('update-donation-type');
 
@@ -100,11 +102,11 @@ class DonationTypeController extends Controller
         $donation_type->name = $request->input('name');
         $donation_type->label = $request->input('label');
         $donation_type->is_active = $request->input('is_active');
-        $donation_type->value = $request->input('value');
+        $donation_type->value = strval($request->input('value'));
         $donation_type->description = $request->input('description');
         $donation_type->save();
 
-        return Redirect::action('DonationTypeController@index');
+        return Redirect::action('DonationTypeController@show',$id);
     }
 
     /**

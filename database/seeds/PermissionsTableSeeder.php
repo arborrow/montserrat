@@ -788,6 +788,42 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2018-04-04 15:07:59',
                 'deleted_at' => null,
             ],
+            86 => [
+                'id' => 87,
+                'name' => 'show-asset-type',
+                'display_name' => 'Show asset type',
+                'description' => 'Show asset type',
+                'created_at' => '2018-04-04 15:06:21',
+                'updated_at' => '2018-04-04 15:06:21',
+                'deleted_at' => null,
+            ],
+            87 => [
+                'id' => 88,
+                'name' => 'create-asset-type',
+                'display_name' => 'Create asset type',
+                'description' => 'Create asset type',
+                'created_at' => '2018-04-04 15:06:58',
+                'updated_at' => '2018-04-04 15:06:58',
+                'deleted_at' => null,
+            ],
+            88 => [
+                'id' => 89,
+                'name' => 'delete-asset-type',
+                'display_name' => 'Delete asset type',
+                'description' => 'Delete asset type',
+                'created_at' => '2018-04-04 15:07:42',
+                'updated_at' => '2018-04-04 15:07:42',
+                'deleted_at' => null,
+            ],
+            89 => [
+                'id' => 90,
+                'name' => 'update-asset-type',
+                'display_name' => 'Update asset type',
+                'description' => 'Update asset type',
+                'created_at' => '2018-04-04 15:07:59',
+                'updated_at' => '2018-04-04 15:07:59',
+                'deleted_at' => null,
+            ],
         ]);
     }
 }

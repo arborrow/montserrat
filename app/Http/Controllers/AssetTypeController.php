@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\StoreAssetTypeRequest;
+use App\Http\Requests\UpdateAssetTypeRequest;
 
 class AssetTypeController extends Controller
 {
@@ -41,7 +43,7 @@ class AssetTypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAssetTypeRequest $request)
     {
         $this->authorize('create-asset-type');
 
@@ -96,7 +98,7 @@ class AssetTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateAssetTypeRequest $request, $id)
     {
         $this->authorize('update-asset-type');
 
