@@ -32,7 +32,7 @@
                 <tbody>
                     @foreach($asset_types as $asset_type)
                     <tr>
-                        <td><a href="asset_type/{{ $asset_type->id}}">{{ $asset_type->label }}</a></td>
+                        <td><a href="{{URL('admin/asset_type/'.$asset_type->id)}}">{{ $asset_type->label }}</a></td>
                         <td>{{ $asset_type->name }}</td>
                         <td>{{ $asset_type->description }}</td>
                         <td>{{ $asset_type->is_active ? 'Yes' : 'No' }}</td>

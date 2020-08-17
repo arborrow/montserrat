@@ -33,6 +33,13 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12 col-md-4">
+                                        {!! Form::label('parent_asset_type_id', 'Parent asset type')  !!}
+                                        {!! Form::select('parent_asset_type_id', $asset_types, $asset_type->parent_asset_type_id, ['class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12 col-md-4">
                                         {!! Form::label('is_active', 'Active:', ['class' => 'col-md-2'])  !!}
                                         {!! Form::checkbox('is_active', 1, $asset_type->is_active,['class' => 'col-md-2']) !!}
                                     </div>

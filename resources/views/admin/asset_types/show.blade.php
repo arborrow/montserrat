@@ -17,6 +17,7 @@
         <span class="font-weight-bold">Label: </span> {{$asset_type->label}}<br />
         <span class="font-weight-bold">Name: </span> {{$asset_type->name}}<br />
         <span class="font-weight-bold">Description: </span> {{$asset_type->description}}<br />
+        <span class="font-weight-bold">Parent: </span> {{$asset_type->parent_label}}<br />
         <span class="font-weight-bold">Active: </span>{{$asset_type->is_active ? 'Yes':'No'}}
 
     </div>

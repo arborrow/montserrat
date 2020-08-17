@@ -22,4 +22,26 @@ class AssetType extends Model
     {
         return $query->whereIsActive(1);
     }
+
+    public function parent_asset_type()
+    {
+        return $this->hasOne(AssetType::class, 'id', 'parent_asset_type_id');
+    }
+
+    public function getParentLabelAttribute() {
+        if (isset($this->parent_asset_type->label)) {
+            return $this->parent_asset_type->label;
+        } else {
+            return 'N/A';
+        }
+    }
+
+
+    public function getParentNameAttribute() {
+        if (isset($this->parent_asset_type->name)) {
+            return $this->parent_asset_type->name;
+        } else {
+            return 'N/A';
+        }
+    }
 }
