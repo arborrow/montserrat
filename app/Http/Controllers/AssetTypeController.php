@@ -110,7 +110,7 @@ class AssetTypeController extends Controller
         $asset_type->parent_asset_type_id = ($request->input('parent_asset_type_id') > 0) ? $request->input('parent_asset_type_id') : null;
         $asset_type->save();
 
-        return Redirect::action('AssetTypeController@index');
+        return Redirect::action('AssetTypeController@show',$asset_type->id);
     }
 
     /**

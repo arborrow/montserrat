@@ -7,6 +7,8 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Illuminate\Validation\ValidationException;
 
+// $this->withoutExceptionHandling();
+
 /**
  * @see \App\Http\Controllers\DonationTypeController
  */
@@ -131,7 +133,7 @@ class DonationTypeControllerTest extends TestCase
      * @test
      */
     public function update_returns_an_ok_response()
-    {   $this->withoutExceptionHandling();
+    {
         $user = $this->createUserWithPermission('update-donation-type');
         $donation_type = factory(\App\DonationType::class)->create();
         $original_donation_type_name = $donation_type->name;

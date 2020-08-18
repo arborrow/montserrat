@@ -4,7 +4,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\DonationType::class, function (Faker $faker) {
+$factory->define(App\AssetType::class, function (Faker $faker) {
     $label = $faker->word;
     return [
         'label' => $label,
