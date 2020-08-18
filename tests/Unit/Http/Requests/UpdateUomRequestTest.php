@@ -10,16 +10,16 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Requests\UpdateDonationRequest
  */
-class UpdateUomRequestTest extends TestCase
+class UpdateAssetTypeRequestTest extends TestCase
 {
-    /** @var \App\Http\Requests\UpdateUomRequest */
+    /** @var \App\Http\Requests\UpdateAssetTypeRequest */
     private $subject;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\UpdateUomRequest();
+        $this->subject = new \App\Http\Requests\UpdateAssetTypeRequest();
     }
 
     /**
@@ -41,11 +41,12 @@ class UpdateUomRequestTest extends TestCase
 
         $this->assertEquals([
             'id' => 'integer|min:1|required',
-            'type' => 'string|required',
-            'unit_name' => 'string|max:125|nullable',
-            'unit_symbol' => 'string|max:125|nullable',
+            'label' => 'string|max:125|required',
+            'name' => 'string|max:125|nullable',
             'description' => 'string|nullable',
             'is_active' => 'boolean|nullable',
+            'parent_asset_type_id' => 'integer|min:0|nullable',
+            'remember_token' => 'string|nullable',
         ], $actual);
     }
 

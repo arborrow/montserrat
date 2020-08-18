@@ -36,7 +36,7 @@ return [
         7 => "90,174,174" ,
         8 => "147,131,107",
     ],
-    
+
     'agc_donation_descriptions' => [
         'AGC - General',
         'AGC - Endowment',
@@ -254,5 +254,19 @@ return [
      * Restrict socialite authentication to a particular domain
      */
     'socialite_domain_restriction' => 'montserratretreat.org',
+
+    /*
+    * Unit of measurement types to fill uom.type enum field
+     */
+    'uom_types' => [
+        'Area' => 'Area',
+        'Electric current' => 'Electric current',
+        'Length' => 'Length',
+        'Luminosity' => 'Luminosity',
+        'Mass' => 'Mass',
+        'Temperature' => 'Temperature',
+        'Time' => 'Time',
+        'Volume' => 'Volume',
+    ],
 
 ];

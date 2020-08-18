@@ -100,6 +100,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::resource('role', 'RoleController');
     Route::resource('donation_type', 'DonationTypeController');
     Route::resource('asset_type', 'AssetTypeController');
+    Route::resource('uom', 'UomController');
     Route::get('phpinfo', 'SystemController@phpinfo')->name('phpinfo');
 });
 

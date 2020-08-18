@@ -824,6 +824,42 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2018-04-04 15:07:59',
                 'deleted_at' => null,
             ],
+            90 => [
+                'id' => 91,
+                'name' => 'show-uom',
+                'display_name' => 'Show unit of measure',
+                'description' => 'Show unit of measure',
+                'created_at' => '2018-04-04 15:06:21',
+                'updated_at' => '2018-04-04 15:06:21',
+                'deleted_at' => null,
+            ],
+            91 => [
+                'id' => 92,
+                'name' => 'create-uom',
+                'display_name' => 'Create unit of measure',
+                'description' => 'Create unit of measure',
+                'created_at' => '2018-04-04 15:06:58',
+                'updated_at' => '2018-04-04 15:06:58',
+                'deleted_at' => null,
+            ],
+            92 => [
+                'id' => 93,
+                'name' => 'delete-uom',
+                'display_name' => 'Delete unit of measure',
+                'description' => 'Delete unit of measure',
+                'created_at' => '2018-04-04 15:07:42',
+                'updated_at' => '2018-04-04 15:07:42',
+                'deleted_at' => null,
+            ],
+            93 => [
+                'id' => 94,
+                'name' => 'update-uom',
+                'display_name' => 'Update unit of measure',
+                'description' => 'Update unit of measure',
+                'created_at' => '2018-04-04 15:07:59',
+                'updated_at' => '2018-04-04 15:07:59',
+                'deleted_at' => null,
+            ],
         ]);
     }
 }
