@@ -111,8 +111,9 @@
 							Admin
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href={{ route('role.index') }}>Roles</a>
 							<a class="dropdown-item" href={{ route('permission.index') }}>Permissions</a>
+							<a class="dropdown-item" href={{ route('role.index') }}>Roles</a>
+							<a class="dropdown-item" href={{ route('user.index') }}>Users</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href={{ route('asset_type.index') }}>Asset types</a>
 							<a class="dropdown-item" href={{ route('donation_type.index') }}>Donation types</a>
