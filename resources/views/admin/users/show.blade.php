@@ -3,14 +3,10 @@
 
 <div class="row bg-cover">
     <div class="col-12">
-            <h1>
-                User details for <strong>{{$user->name}}</strong>
+           <h1>
+               User details for {{$user->name}} (<a href="mailto:{{$user->email}}">{{ $user->email }}</a>)
+               <img src="{{$user->avatar}}" alt="Avatar" height="50px" width="50px">
             </h1>
-    </div>
-    <div class="col-12">
-        Avatar: <img src="{{$user->avatar}}">
-        <h5>Name: {{$user->name}}</h5>
-        <h5>Email: {{$user->email}}</h5>
     </div>
     <table class="table table-bordered table-striped table-hover table-responsive-md">
         <caption><h2>Roles and Permissions</h2</caption>
