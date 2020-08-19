@@ -101,7 +101,7 @@ class PermissionController extends Controller
     public function show($id)
     {
         $this->authorize('show-permission');
-        $permission = \App\Permission::with('roles')->findOrFail($id);
+        $permission = \App\Permission::with('roles.users')->findOrFail($id);
         $roles = \App\Role::orderBy('name')->pluck('name', 'id');
 
         return view('admin.permissions.show', compact('permission', 'roles'));
