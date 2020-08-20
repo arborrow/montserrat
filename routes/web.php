@@ -222,6 +222,8 @@ Route::get('rooms/{ym?}/{building?}', 'RoomController@schedule')->name('rooms');
 Route::get('support', 'PageController@support')->name('support');
 Route::resource('touchpoint', 'TouchpointController');
 Route::get('touchpoint/add/{id?}', 'TouchpointController@add')->name('touchpoint.add');
+Route::get('touchpoint/type/{staff_id?}', 'TouchpointController@index_type');
+
 Route::get('users', 'PageController@user')->name('users');
 Route::resource('vendor', 'VendorController');
 

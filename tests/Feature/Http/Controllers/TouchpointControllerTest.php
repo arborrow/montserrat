@@ -247,6 +247,24 @@ class TouchpointControllerTest extends TestCase
         $response->assertSeeText('Touchpoint Index');
     }
 
+
+    /**
+     * @test
+     */
+    public function index_type_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-touchpoint');
+
+        $touchpoint = factory(\App\Touchpoint::class)->create();
+
+        $response = $this->actingAs($user)->get('touchpoint/type/'.$touchpoint->staff_id);
+        $response->assertOk();
+        $response->assertViewIs('touchpoints.index');
+        $response->assertViewHas('touchpoints');
+        $response->assertViewHas('staff');
+        $response->assertSeeText('Touchpoint Index');
+    }
+
     /**
      * @test
      */

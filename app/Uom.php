@@ -22,4 +22,53 @@ class Uom extends Model
     {
         return $query->whereIsActive(1);
     }
+
+    // scopes for various uom types based on uom.type enum
+    //  $table->enum('type', ['Data', 'Time', 'Electric current','Length','Area','Volume','Mass','Temperature','Luminosity']);
+
+    public function scopeData($query)
+    {
+        return $query->whereType('Data');
+    }
+
+    public function scopeElectric($query)
+    {
+        return $query->whereType('Electric current');
+    }
+
+    public function scopeLength($query)
+    {
+        return $query->whereType('Length');
+    }
+
+    public function scopeArea($query)
+    {
+        return $query->whereType('Area');
+    }
+
+    public function scopeVolume($query)
+    {
+        return $query->whereType('Volume');
+    }
+
+    public function scopeMass($query)
+    {
+        return $query->whereType('Mass');
+    }
+
+    // alias of scopeMass
+    public function scopeWeight($query)
+    {
+        return $query->whereType('Mass');
+    }
+
+    public function scopeTemperature($query)
+    {
+        return $query->whereType('Temperature');
+    }
+
+    public function scopeLuminosity($query)
+    {
+        return $query->whereType('Luminosity');
+    }
 }

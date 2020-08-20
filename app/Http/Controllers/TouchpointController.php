@@ -28,10 +28,23 @@ class TouchpointController extends Controller
     public function index()
     {
         $this->authorize('show-touchpoint');
+
+        $staff = \App\Touchpoint::groupBy('staff_id')->select('staff_id')->with('staff')->get()->sortBy('staff.sort_name')->pluck('staff.sort_name','staff_id');
         $touchpoints = \App\Touchpoint::orderBy('touched_at', 'desc')->with('person', 'staff')->paginate(100);
 
-        return view('touchpoints.index', compact('touchpoints'));
+        return view('touchpoints.index', compact('touchpoints','staff'));
     }
+
+    public function index_type($staff_id = null)
+    {
+        $this->authorize('show-touchpoint');
+
+        $staff = \App\Touchpoint::groupBy('staff_id')->select('staff_id')->with('staff')->get()->sortBy('staff.sort_name')->pluck('staff.sort_name','staff_id');
+        $touchpoints = \App\Touchpoint::whereStaffId($staff_id)->orderBy('touched_at', 'desc')->with('person', 'staff')->paginate(100);
+
+        return view('touchpoints.index', compact('touchpoints', 'staff'));   //
+    }
+
 
     /**
      * Show the form for creating a new resource.

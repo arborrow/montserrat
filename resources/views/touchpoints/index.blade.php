@@ -18,6 +18,18 @@
                     </h1>@endCan
                     <span>{!! $touchpoints->render() !!}</span>
                 </div>
+                <div class="row">
+                    <div class="col-md-4 col-12">
+                        <select class="custom-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                            <option value="">Filter by staff member ...</option>
+                            <option value="{{url('touchpoint')}}">All touchpoints</option>
+                            @foreach($staff as $member_id => $member_name)
+                                <option value="{{url('touchpoint/type/'.$member_id)}}">{{ $member_name }}</option>
+                            @endForeach
+                        </select>
+                    </div>
+                </div>
+
                 @if ($touchpoints->isEmpty())
                     <p>It is a brand new world, there are no touchpoints!</p>
                 @else
