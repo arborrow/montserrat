@@ -117,6 +117,7 @@
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href={{ route('asset_type.index') }}>Asset types</a>
 							<a class="dropdown-item" href={{ route('donation_type.index') }}>Donation types</a>
+							<a class="dropdown-item" href={{ route('location.index') }}>Locations</a>
 							<a class="dropdown-item" href={{ route('uom.index') }}>Units of measure</a>
 						</div>
 					</li>

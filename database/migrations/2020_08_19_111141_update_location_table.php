@@ -15,11 +15,15 @@ class UpdateLocationTable extends Migration
     {
         Schema::table('locations', function (Blueprint $table) {
             $table->string('label');
-            $table->decimal('longitude', 11,8)->nullable();
             $table->decimal('latitude', 10,8)->nullable();
-            $table->string('entity')->nullable();
-            $table->integer('entity_id')->nullable();
+            $table->decimal('longitude', 11,8)->nullable();
+            $table->string('type')->nullable();
+            $table->integer('room_id')->nullable();
             $table->integer('parent_id')->nullable();
+            $table->index(['type', 'name'], 'idx_type_name');
+            $table->index('room_id', 'idx_room_id');
+            $table->index('parent_id', 'idx_parent_id');
+            $table->index('name', 'idx_name');
         });
     }
 
@@ -31,7 +35,11 @@ class UpdateLocationTable extends Migration
     public function down()
     {
         Schema::table('locations', function (Blueprint $table) {
-            $table->dropColumn(['label', 'longitude', 'latitude','entity','entity_id','parent_id']);
+            $table->dropColumn(['label', 'latitude', 'longitude','type','room_id','parent_id']);
+            $table->dropIndex('idx_type_name');
+            $table->dropIndex('idx_room_id');
+            $table->dropIndex('idx_parent_id');
+            $table->dropIndex('idx_name');
         });
     }
 }

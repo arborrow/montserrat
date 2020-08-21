@@ -123,12 +123,23 @@ return [
         'hlm2017' => '17',
     ],
 
+    // communication locations (phone, email, address, etc.)
     'location_type' => [
         'home' => '1',
         'work' => '2',
         'main' => '3',
         'other' => '4',
         'billing' => '5',
+    ],
+    // physical types of locations
+    'locations_type' => [
+        'Site' => 'Site',
+        'Grounds' => 'Grounds',
+        'Building' => 'Building',
+        'Floor' => 'Floor',
+        'Room' => 'Room',
+        'Closet' => 'Closet',
+        'Other' => 'Other',
     ],
 
     'medium' => [

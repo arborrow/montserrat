@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUomRequest extends FormRequest
+class StoreLocationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,16 @@ class StoreUomRequest extends FormRequest
     public function rules()
     {
         return [
-            'type' => 'in:'.implode(',', config('polanco.uom_types')).'|required',
-            'unit_name' => 'string|max:125|nullable',
-            'unit_symbol' => 'string|max:125|nullable',
+            'name' => 'string|required',
+            'type' => 'in:'.implode(',', config('polanco.locations_type')).'|required',
             'description' => 'string|nullable',
-            'is_active' => 'boolean|nullable',
+            'occupancy' => 'integer|nullable',
+            'notes' => 'string|nullable',
+            'label' => 'string|nullable',
+            'latitude' => 'numeric|between:-90,90|nullable',
+            'longitude' => 'numeric|between:-180,180|nullable',
+            'room_id' => 'integer|nullable',
+            'parent_id' => 'integer|nullable',
         ];
     }
 

@@ -9,7 +9,7 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Requests\StoreUomRequest
  */
-class StoreUomRequestTest extends TestCase
+class StoreLocationRequestTest extends TestCase
 {
     /** @var \App\Http\Requests\StoreUomRequest */
     private $subject;
@@ -18,7 +18,7 @@ class StoreUomRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\StoreUomRequest();
+        $this->subject = new \App\Http\Requests\StoreLocationRequest();
     }
 
     /**
@@ -39,11 +39,16 @@ class StoreUomRequestTest extends TestCase
         $actual = $this->subject->rules();
 
         $this->assertEquals([
-            'type' => 'in:'.implode(',', config('polanco.uom_types')).'|required',
-            'unit_name' => 'string|max:125|nullable',
-            'unit_symbol' => 'string|max:125|nullable',
+            'name' => 'string|required',
+            'type' => 'in:'.implode(',', config('polanco.locations_type')).'|required',
             'description' => 'string|nullable',
-            'is_active' => 'boolean|nullable',
+            'occupancy' => 'integer|nullable',
+            'notes' => 'string|nullable',
+            'label' => 'string|nullable',
+            'latitude' => 'numeric|between:-90,90|nullable',
+            'longitude' => 'numeric|between:-180,180|nullable',
+            'room_id' => 'integer|nullable',
+            'parent_id' => 'integer|nullable',
         ], $actual);
     }
 

@@ -4,21 +4,23 @@ namespace Tests\Unit\Http\Requests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Validation\Rule;
 use Tests\TestCase;
 
 /**
- * @see \App\Http\Requests\StoreUomRequest
+ * @see \App\Http\Requests\UpdateDonationRequest
  */
-class StoreUomRequestTest extends TestCase
+class UpdateLocationRequestTest extends TestCase
 {
-    /** @var \App\Http\Requests\StoreUomRequest */
+    /** @var \App\Http\Requests\UpdateLocationRequest **/
+
     private $subject;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\StoreUomRequest();
+        $this->subject = new \App\Http\Requests\UpdateLocationRequest();
     }
 
     /**
@@ -39,11 +41,17 @@ class StoreUomRequestTest extends TestCase
         $actual = $this->subject->rules();
 
         $this->assertEquals([
-            'type' => 'in:'.implode(',', config('polanco.uom_types')).'|required',
-            'unit_name' => 'string|max:125|nullable',
-            'unit_symbol' => 'string|max:125|nullable',
+            'id' => 'integer|min:1|required',
+            'name' => 'string|required',
+            'type' => 'in:'.implode(',', config('polanco.locations_type')).'|required',
             'description' => 'string|nullable',
-            'is_active' => 'boolean|nullable',
+            'occupancy' => 'integer|nullable',
+            'notes' => 'string|nullable',
+            'label' => 'string|nullable',
+            'latitude' => 'numeric|between:-90,90|nullable',
+            'longitude' => 'numeric|between:-180,180|nullable',
+            'room_id' => 'integer|nullable',
+            'parent_id' => 'integer|nullable',
         ], $actual);
     }
 

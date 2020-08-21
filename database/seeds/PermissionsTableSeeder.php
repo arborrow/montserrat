@@ -860,6 +860,42 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2018-04-04 15:07:59',
                 'deleted_at' => null,
             ],
+            94 => [
+                'id' => 95,
+                'name' => 'show-location',
+                'display_name' => 'Show location',
+                'description' => 'Show location',
+                'created_at' => '2018-04-04 15:06:21',
+                'updated_at' => '2018-04-04 15:06:21',
+                'deleted_at' => null,
+            ],
+            95 => [
+                'id' => 96,
+                'name' => 'create-location',
+                'display_name' => 'Create location',
+                'description' => 'Create location',
+                'created_at' => '2018-04-04 15:06:58',
+                'updated_at' => '2018-04-04 15:06:58',
+                'deleted_at' => null,
+            ],
+            96 => [
+                'id' => 97,
+                'name' => 'delete-location',
+                'display_name' => 'Delete location',
+                'description' => 'Delete location',
+                'created_at' => '2018-04-04 15:07:42',
+                'updated_at' => '2018-04-04 15:07:42',
+                'deleted_at' => null,
+            ],
+            97 => [
+                'id' => 98,
+                'name' => 'update-location',
+                'display_name' => 'Update location',
+                'description' => 'Update location',
+                'created_at' => '2018-04-04 15:07:59',
+                'updated_at' => '2018-04-04 15:07:59',
+                'deleted_at' => null,
+            ],
         ]);
     }
 }
