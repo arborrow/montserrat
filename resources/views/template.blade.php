@@ -71,11 +71,24 @@
 						<a class="nav-link" href={{ route('finance') }}>Finance</a>
 					</li>
 					@endCan
+
 					@can('show-asset')
-					<li class="nav-item">
-						<a class="nav-link" href={{ route('maintenance') }}>Maintenance</a>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Maintenance
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href={{ route('maintenance') }}>Maintenance</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href={{ route('asset.index') }}>Assets</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href={{ route('asset_type.index') }}>Asset types</a>
+							<a class="dropdown-item" href={{ route('location.index') }}>Locations</a>
+							<a class="dropdown-item" href={{ route('uom.index') }}>Units of measure</a>
+						</div>
 					</li>
 					@endCan
+
 					@can('show-gate')
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -115,10 +128,7 @@
 							<a class="dropdown-item" href={{ route('role.index') }}>Roles</a>
 							<a class="dropdown-item" href={{ route('user.index') }}>Users</a>
 							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href={{ route('asset_type.index') }}>Asset types</a>
 							<a class="dropdown-item" href={{ route('donation_type.index') }}>Donation types</a>
-							<a class="dropdown-item" href={{ route('location.index') }}>Locations</a>
-							<a class="dropdown-item" href={{ route('uom.index') }}>Units of measure</a>
 						</div>
 					</li>
 					@endCan

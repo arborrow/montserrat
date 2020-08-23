@@ -28,7 +28,6 @@ class Location extends Model
         }
     }
 
-
     public function getParentNameAttribute() {
         if (isset($this->parent->name)) {
             return $this->parent->name;

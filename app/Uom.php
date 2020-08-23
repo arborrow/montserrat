@@ -26,6 +26,11 @@ class Uom extends Model
     // scopes for various uom types based on uom.type enum
     //  $table->enum('type', ['Data', 'Time', 'Electric current','Length','Area','Volume','Mass','Temperature','Luminosity']);
 
+    public function scopeTime($query)
+    {
+        return $query->whereType('Time');
+    }
+
     public function scopeData($query)
     {
         return $query->whereType('Data');

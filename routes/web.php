@@ -59,28 +59,6 @@ Route::get('signature/{user_id}/delete', 'AttachmentController@delete_signature'
 Route::get('contact/{user_id}/attachment/{file_name}', 'AttachmentController@show_contact_attachment')->name('show_contact_attachment');
 Route::get('contact/{user_id}/attachment/{file_name}/delete', 'AttachmentController@delete_contact_attachment')->name('delete_contact_attachment');
 
-Route::get('retreat/{event_id}/attachment/{file_name}', 'AttachmentController@show_event_attachment')->name('show_event_attachment');
-Route::get('retreat/{event_id}/attachment/{file_name}/delete', 'AttachmentController@delete_event_attachment')->name('delete_event_attachment');
-
-Route::get('retreat/{event_id}/contract', 'AttachmentController@get_event_contract')->name('get_event_contract');
-Route::get('retreat/{event_id}/contract/delete', 'AttachmentController@delete_event_contract')->name('delete_event_contract');
-Route::get('retreat/{event_id}/schedule', 'AttachmentController@get_event_schedule')->name('get_event_schedule');
-Route::get('retreat/{event_id}/schedule/delete', 'AttachmentController@delete_event_schedule')->name('delete_event_schedule');
-Route::get('retreat/{event_id}/evaluations', 'AttachmentController@get_event_evaluations')->name('get_event_evaluations');
-Route::get('retreat/{event_id}/evaluations/delete', 'AttachmentController@delete_event_evaluations')->name('delete_event_evaluations');
-Route::get('retreat/{event_id}/photo', 'AttachmentController@get_event_group_photo')->name('get_event_group_photo');
-Route::get('retreat/{event_id}/photo/delete', 'AttachmentController@delete_event_group_photo')->name('delete_event_group_photo');
-Route::get('retreat/{event_id}/roomlist', 'RetreatController@event_room_list')->name('event_room_list');
-Route::get('retreat/{event_id}/namebadges/{role?}', 'RetreatController@event_namebadges')->name('event_namebadges');
-Route::get('retreat/{event_id}/tableplacards', 'RetreatController@event_tableplacards')->name('event_tableplacards');
-Route::get('retreat/{event_id}/touchpoint', 'TouchpointController@add_retreat');
-Route::get('retreat/{event_id}/waitlist_touchpoint', 'TouchpointController@add_retreat_waitlist');
-Route::get('retreat/{event_id}/waitlist', 'RetreatController@show_waitlist');
-Route::get('retreat/type/{event_type_id}', 'RetreatController@index_type');
-
-Route::get('retreat/search', 'RetreatController@search')->name('retreats.search');
-Route::get('retreat/results', 'RetreatController@results')->name('retreats.results');
-
 // General routes including groups, resources, etc.
 Route::get('about', 'PageController@about')->name('about');
 Route::resource('address', 'AddressController');
@@ -110,6 +88,8 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 /* In developement - commented out for Now
 Route::resource('activity', 'ActivityController');
  */
+
+Route::resource('asset', 'AssetController');
 
 Route::get('bookstore', 'PageController@bookstore')->name('bookstore');
 Route::resource('diocese', 'DioceseController');
@@ -205,6 +185,25 @@ Route::prefix('report')->group(function () {
 Route::get('reservation', 'PageController@reservation')->name('reservation');
 Route::get('restricted', 'PageController@restricted')->name('restricted');
 
+Route::get('retreat/{event_id}/attachment/{file_name}', 'AttachmentController@show_event_attachment')->name('show_event_attachment');
+Route::get('retreat/{event_id}/attachment/{file_name}/delete', 'AttachmentController@delete_event_attachment')->name('delete_event_attachment');
+
+Route::get('retreat/{event_id}/contract', 'AttachmentController@get_event_contract')->name('get_event_contract');
+Route::get('retreat/{event_id}/contract/delete', 'AttachmentController@delete_event_contract')->name('delete_event_contract');
+Route::get('retreat/{event_id}/schedule', 'AttachmentController@get_event_schedule')->name('get_event_schedule');
+Route::get('retreat/{event_id}/schedule/delete', 'AttachmentController@delete_event_schedule')->name('delete_event_schedule');
+Route::get('retreat/{event_id}/evaluations', 'AttachmentController@get_event_evaluations')->name('get_event_evaluations');
+Route::get('retreat/{event_id}/evaluations/delete', 'AttachmentController@delete_event_evaluations')->name('delete_event_evaluations');
+Route::get('retreat/{event_id}/photo', 'AttachmentController@get_event_group_photo')->name('get_event_group_photo');
+Route::get('retreat/{event_id}/photo/delete', 'AttachmentController@delete_event_group_photo')->name('delete_event_group_photo');
+Route::get('retreat/{event_id}/roomlist', 'RetreatController@event_room_list')->name('event_room_list');
+Route::get('retreat/{event_id}/namebadges/{role?}', 'RetreatController@event_namebadges')->name('event_namebadges');
+Route::get('retreat/{event_id}/tableplacards', 'RetreatController@event_tableplacards')->name('event_tableplacards');
+Route::get('retreat/{event_id}/touchpoint', 'TouchpointController@add_retreat');
+Route::get('retreat/{event_id}/waitlist_touchpoint', 'TouchpointController@add_retreat_waitlist');
+Route::get('retreat/{event_id}/waitlist', 'RetreatController@show_waitlist');
+Route::get('retreat/type/{event_type_id}', 'RetreatController@index_type');
+
 Route::get('retreat/id/{id_number}', 'RetreatController@get_event_by_id_number')->name('get_event_by_id_number');
 Route::get('retreat/{retreat_id}/register/{contact_id?}', 'RegistrationController@register')->name('registration.register');
 Route::get('retreat/{id}/assign_rooms', 'RetreatController@assign_rooms')->name('retreat.assign_rooms');
@@ -215,6 +214,9 @@ Route::post('retreat/payments/update', 'DonationController@retreat_payments_upda
 Route::get('retreat/{id}/checkout', 'RetreatController@checkout')->name('retreat.checkout');
 Route::get('retreat/{id}/checkin', 'RetreatController@checkin')->name('retreat.checkin');
 Route::get('retreat/{id}/status/{status}', 'RetreatController@show')->name('retreat.show');
+
+Route::get('retreat/search', 'RetreatController@search')->name('retreats.search');
+Route::get('retreat/results', 'RetreatController@results')->name('retreats.results');
 
 Route::resource('retreat', 'RetreatController');
 
