@@ -13,7 +13,7 @@ $factory->define(App\Uom::class, function (Faker $faker) {
         'unit_symbol' => $label,
         'type' => $type,
         'description' => $description,
-        'is_active' => $faker->boolean,
+        'is_active' => 1,
         'created_at' => now(),
         'updated_at' => now(),
     ];

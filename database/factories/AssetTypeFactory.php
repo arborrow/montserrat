@@ -10,7 +10,7 @@ $factory->define(App\AssetType::class, function (Faker $faker) {
         'label' => $label,
         'name' => $label,
         'description' => $faker->sentence,
-        'is_active' => $faker->boolean,
+        'is_active' => 1,
         'parent_asset_type_id' => null,
         'created_at' => now(),
         'updated_at' => now(),

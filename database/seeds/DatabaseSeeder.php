@@ -44,5 +44,8 @@ class DatabaseSeeder extends Seeder
         $this->call(DonationTypeTableSeeder::class);
         $this->call(PermissionRoleTableSeeder::class);
         $this->call(UomTableSeeder::class);
+        $this->call(AssetTypeTableSeeder::class);
+        $this->call(AssetPermissionsSeeder::class);
+        
     }
 }

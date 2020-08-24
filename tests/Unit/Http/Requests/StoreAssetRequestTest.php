@@ -1,29 +1,44 @@
 <?php
 
-namespace App\Http\Requests;
+namespace Tests\Unit\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 
-class StoreAssetRequest extends FormRequest
+/**
+ * @see \App\Http\Requests\StoreUomRequest
+ */
+class StoreAssetRequestTest extends TestCase
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
+    /** @var \App\Http\Requests\StoreUomRequest */
+    private $subject;
+
+    protected function setUp(): void
     {
-        return true;
+        parent::setUp();
+
+        $this->subject = new \App\Http\Requests\StoreAssetRequest();
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
+     * @test
+     */
+    public function authorize()
+    {
+        $actual = $this->subject->authorize();
+
+        $this->assertTrue($actual);
+    }
+
+    /**
+     * @test
      */
     public function rules()
     {
-        return [
+        $actual = $this->subject->rules();
+
+        $this->assertEquals([
             'name' => 'string|max:250|required',
             'asset_type_id' => 'integer|min:0|exists:asset_type,id|required',
             'description' => 'string|nullable',
@@ -72,16 +87,18 @@ class StoreAssetRequest extends FormRequest
             'depreciation_value' => 'numeric|nullable',
             'depreciation_time' => 'numeric|nullable',
             'depreciation_time_uom_id' => 'integer|min:0|exists:uom,id|nullable',
-        ];
+        ], $actual);
     }
 
     /**
-     * Get the error messages for the defined validation rules.
-     *
-     * @return array
+     * @test
      */
     public function messages()
     {
-        return [];
+        $actual = $this->subject->messages();
+
+        $this->assertEquals([], $actual);
     }
+
+    // test cases...
 }
