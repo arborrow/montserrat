@@ -122,7 +122,7 @@ class PaymentController extends Controller
         if ($request->input('payment_description') == 'Credit card') {
             $payment->ccnumber = substr($request->input('payment_idnumber'), -4);
         }
-        if ($request->input('payment_description') == 'Check' ) || $request->input('payment_description') == 'Refund' ) {
+        if ($request->input('payment_description') == 'Check'  || $request->input('payment_description') == 'Refund' ) {
             $payment->cknumber = $request->input('payment_idnumber');
         }
         $payment->note = $request->input('note');
