@@ -45,7 +45,10 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionRoleTableSeeder::class);
         $this->call(UomTableSeeder::class);
         $this->call(AssetTypeTableSeeder::class);
+        $this->call(DepartmentTableSeeder::class);
+        // permissions
         $this->call(AssetPermissionsSeeder::class);
-        
+        $this->call(DepartmentPermissionsSeeder::class);
+
     }
 }

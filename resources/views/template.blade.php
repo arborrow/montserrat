@@ -83,6 +83,7 @@
 							<a class="dropdown-item" href={{ route('asset.index') }}>Assets</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href={{ route('asset_type.index') }}>Asset types</a>
+							<a class="dropdown-item" href={{ route('department.index') }}>Departments</a>
 							<a class="dropdown-item" href={{ route('location.index') }}>Locations</a>
 							<a class="dropdown-item" href={{ route('uom.index') }}>Units of measure</a>
 						</div>

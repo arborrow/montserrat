@@ -137,7 +137,7 @@ class LocationControllerTest extends TestCase
      * @test
      */
     public function store_returns_an_ok_response()
-    {   $this->withoutExceptionHandling();
+    {   // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-location');
 
         $location_name = $this->faker->word;

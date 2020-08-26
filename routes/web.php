@@ -75,6 +75,7 @@ Route::get('admin/deposit/reconcile/{event_id?}', 'PageController@finance_reconc
 
 Route::prefix('admin')->middleware('auth')->group(function () {
     Route::resource('asset_type', 'AssetTypeController');
+    Route::resource('department', 'DepartmentController');
     Route::resource('donation_type', 'DonationTypeController');
     Route::resource('location', 'LocationController');
     Route::get('location/type/{type?}', 'LocationController@index_type');
