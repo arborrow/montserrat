@@ -14,6 +14,24 @@
             @endCan
         </h2>
     </div>
+    <div class="col-md-2 col-12">
+        <select class="type-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+            <option value="">Filter by type ...</option>
+            <option value="{{url('asset')}}">All assets</option>
+            @foreach($asset_types as $key=>$type)
+            <option value="{{url('asset/type/'.$key)}}">{{$type}}</option>
+            @endForeach
+        </select>
+    </div>
+    <div>
+        <select class="location-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+            <option value="">Filter by location ...</option>
+            <option value="{{url('asset')}}">All locations</option>
+            @foreach($locations as $key=>$location)
+            <option value="{{url('asset/location/'.$key)}}">{{$location}}</option>
+            @endForeach
+        </select>
+    </div>
     <div class="col-12 my-3 table-responsive-md">
         @if ($assets->isEmpty())
             <div class="col-12 text-center py-5">

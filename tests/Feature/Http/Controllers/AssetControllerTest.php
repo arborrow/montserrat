@@ -100,23 +100,23 @@ class AssetControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('power_phase_voltage', $asset->power_phase_voltage, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('power_phase_voltage_uom_id', $asset->power_phase_voltage_uom_id, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('power_phases', $asset->power_phases, 'text', $response->getContent()));
-        $this->assertTrue($this->findFieldValueInResponseContent('power_amp', number_format($asset->power_amp,2), 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('power_amp', number_format($asset->power_amp, 2), 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('power_amp_uom_id', $asset->power_amp_uom_id, 'select', $response->getContent()));
 
-        $this->assertTrue($this->findFieldValueInResponseContent('length', number_format($asset->length,2), 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('length', number_format($asset->length, 2), 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('length_uom_id', $asset->length_uom_id, 'select', $response->getContent()));
-        $this->assertTrue($this->findFieldValueInResponseContent('width', number_format($asset->width,2), 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('width', number_format($asset->width, 2), 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('width_uom_id', $asset->width_uom_id, 'select', $response->getContent()));
-        $this->assertTrue($this->findFieldValueInResponseContent('height', number_format($asset->height,2), 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('height', number_format($asset->height, 2), 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('height_uom_id', $asset->height_uom_id, 'select', $response->getContent()));
-        $this->assertTrue($this->findFieldValueInResponseContent('weight', number_format($asset->weight,2), 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('weight', number_format($asset->weight, 2), 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('weight_uom_id', $asset->weight_uom_id, 'select', $response->getContent()));
-        $this->assertTrue($this->findFieldValueInResponseContent('capacity', number_format($asset->capacity,2), 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('capacity', number_format($asset->capacity, 2), 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('capacity_uom_id', $asset->capacity_uom_id, 'select', $response->getContent()));
 
         $this->assertTrue($this->findFieldValueInResponseContent('purchase_date', $asset->purchase_date, 'date', $response->getContent()));
-        $this->assertTrue($this->findFieldValueInResponseContent('purchase_price', number_format($asset->purchase_price,2), 'text', $response->getContent()));
-        $this->assertTrue($this->findFieldValueInResponseContent('life_expectancy', number_format($asset->life_expectancy,2), 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('purchase_price', number_format($asset->purchase_price, 2), 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('life_expectancy', number_format($asset->life_expectancy, 2), 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('life_expectancy_uom_id', $asset->life_expectancy_uom_id, 'select', $response->getContent()));
 
         $this->assertTrue($this->findFieldValueInResponseContent('start_date', $asset->start_date, 'text', $response->getContent()));
@@ -134,7 +134,6 @@ class AssetControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('depreciation_value', $asset->depreciation_value, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('depreciation_time', $asset->depreciation_time, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('depreciation_time_uom_id', $asset->depreciation_time_uom_id, 'select', $response->getContent()));
-
     }
 
     /**
@@ -149,7 +148,63 @@ class AssetControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('assets.index');
         $response->assertViewHas('assets');
+        $response->assertViewHas('asset_types');
+        $response->assertViewHas('locations');
         $response->assertSeeText('Assets');
+    }
+
+
+    /**
+     * @test
+     */
+    public function index_type_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-asset');
+
+        $asset = factory(\App\Asset::class)->create();
+
+        $number_assets = $this->faker->numberBetween(2, 10);
+        $assets = factory(\App\Asset::class, $number_assets)->create([
+            'asset_type_id' => $asset->asset_type_id,
+            'deleted_at' => null,
+        ]);
+
+        $response = $this->actingAs($user)->get('asset/type/'.$asset->asset_type_id);
+        $results = $response->viewData('assets');
+        $response->assertOk();
+        $response->assertViewIs('assets.index');
+        $response->assertViewHas('assets');
+        $response->assertViewHas('asset_types');
+        $response->assertViewHas('locations');
+        $response->assertSeeText('Assets');
+        $this->assertGreaterThan($number_assets, $results->count());
+    }
+
+
+    /**
+     * @test
+     */
+    public function index_location_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-asset');
+
+        $asset = factory(\App\Asset::class)->create();
+
+        $number_assets = $this->faker->numberBetween(2, 10);
+        $assets = factory(\App\Asset::class, $number_assets)->create([
+            'location_id' => $asset->location_id,
+            'deleted_at' => null,
+        ]);
+
+        $response = $this->actingAs($user)->get('asset/location/'.$asset->location_id);
+        $results = $response->viewData('assets');
+        $response->assertOk();
+        $response->assertViewIs('assets.index');
+        $response->assertViewHas('assets');
+        $response->assertViewHas('asset_types');
+        $response->assertViewHas('locations');
+        $response->assertSeeText('Assets');
+        $this->assertGreaterThan($number_assets, $results->count());
     }
 
     /**
@@ -179,7 +234,7 @@ class AssetControllerTest extends TestCase
 
         $name = $this->faker->word;
         $description = $this->faker->sentence(7, true);
-        $asset_type_id = $this->faker->numberBetween(1,10);
+        $asset_type_id = $this->faker->numberBetween(1, 10);
 
         $response = $this->actingAs($user)->post(route('asset.store'), [
             'name' => $name,
@@ -201,7 +256,8 @@ class AssetControllerTest extends TestCase
      * @test
      */
     public function update_returns_an_ok_response()
-    {   $this->withoutExceptionHandling();
+    {
+        $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('update-asset');
 
         $asset = factory(\App\Asset::class)->create();
@@ -214,12 +270,11 @@ class AssetControllerTest extends TestCase
           'asset_type_id' => $asset->asset_type_id,
           'manufacturer' => $new_manufacturer,
         ]);
-        $response->assertRedirect(action('AssetController@show',$asset->id));
+        $response->assertRedirect(action('AssetController@show', $asset->id));
         // var_dump($asset);
         $updated = \App\Asset::findOrFail($asset->id);
         $this->assertEquals($updated->manufacturer, $new_manufacturer);
         $this->assertNotEquals($updated->manufacturer, $original_asset_manufacuturer);
-
     }
 
     // test cases...

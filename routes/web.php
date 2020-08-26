@@ -91,6 +91,8 @@ Route::resource('activity', 'ActivityController');
  */
 
 Route::resource('asset', 'AssetController');
+Route::get('asset/type/{type?}', 'AssetController@index_type');
+Route::get('asset/location/{location_id?}', 'AssetController@index_location');
 
 Route::get('bookstore', 'PageController@bookstore')->name('bookstore');
 Route::resource('diocese', 'DioceseController');

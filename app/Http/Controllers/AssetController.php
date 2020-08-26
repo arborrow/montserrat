@@ -18,10 +18,39 @@ class AssetController extends Controller
     public function index()
     {
         $this->authorize('show-asset');
+
+        $asset_types = \App\AssetType::active()->orderBy('label')->pluck('label','id');
+        $locations = \App\Location::orderBy('name')->pluck('name','id');
+
         $assets = \App\Asset::orderBy('name')->get();
 
-        return view('assets.index', compact('assets'));
+        return view('assets.index', compact('assets','asset_types', 'locations'));
     }
+
+    public function index_type($type = null)
+    {
+        $this->authorize('show-asset');
+
+        $asset_types = \App\AssetType::active()->orderBy('label')->pluck('label','id');
+        $locations = \App\Location::orderBy('name')->pluck('name','id');
+
+        $assets = \App\Asset::whereAssetTypeId($type)->orderBy('name')->get();
+
+        return view('assets.index', compact('assets', 'asset_types', 'locations'));
+    }
+
+    public function index_location($location_id = null)
+    {
+        $this->authorize('show-asset');
+
+        $asset_types = \App\AssetType::active()->orderBy('label')->pluck('label','id');
+        $locations = \App\Location::orderBy('name')->pluck('name','id');
+
+        $assets = \App\Asset::whereLocationId($location_id)->orderBy('name')->get();
+
+        return view('assets.index', compact('assets', 'asset_types', 'locations'));
+    }
+
 
     /**
      * Show the form for creating a new resource.
