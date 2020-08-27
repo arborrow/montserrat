@@ -24,9 +24,25 @@ class Asset extends Model
     {
         return $this->hasOne(AssetType::class, 'id', 'asset_type_id');
     }
+
+    public function department()
+    {
+        return $this->hasOne(Department::class, 'id', 'department_id');
+    }
     public function location()
     {
         return $this->hasOne(Location::class, 'id', 'location_id');
+    }
+
+    // normally would name simply manufacturer; however, there is an existing field with that name in it
+    public function manufacturer_contact()
+    {
+        return $this->hasOne(Contact::class, 'id', 'manufacturer_id');
+    }
+
+    public function vendor()
+    {
+        return $this->hasOne(Contact::class, 'id', 'vendor_id');
     }
 
     public function power_line_voltage_uom()
@@ -79,9 +95,17 @@ class Asset extends Model
         return $this->hasOne(Uom::class, 'id', 'capacity_uom_id');
     }
 
-    public function getParentNameAttribute() {
-        if (isset($this->parent->name)) {
-            return $this->parent->name;
+    public function getAssetTypeNameAttribute() {
+        if (isset($this->asset_type->name)) {
+            return $this->asset_type->name;
+        } else {
+            return 'N/A';
+        }
+    }
+
+    public function getDepartmentNameAttribute() {
+        if (isset($this->department->name)) {
+            return $this->department->name;
         } else {
             return 'N/A';
         }
@@ -95,9 +119,25 @@ class Asset extends Model
         }
     }
 
-    public function getAssetTypeNameAttribute() {
-        if (isset($this->asset_type->name)) {
-            return $this->asset_type->name;
+    public function getManufacturerContactNameLinkAttribute() {
+        if (isset($this->manufacturer_contact->organization_name)) {
+            return '<a href ="'.$this->manufacturer_contact->contact_url.'">'.$this->manufacturer_contact->organization_name.'</a>';
+        } else {
+            return 'N/A';
+        }
+    }
+
+    public function getParentNameAttribute() {
+        if (isset($this->parent->name)) {
+            return $this->parent->name;
+        } else {
+            return 'N/A';
+        }
+    }
+
+    public function getVendorNameLinkAttribute() {
+        if (isset($this->vendor->organization_name)) {
+            return '<a href ="'.$this->vendor->contact_url.'">'.$this->vendor->organization_name.'</a>';
         } else {
             return 'N/A';
         }

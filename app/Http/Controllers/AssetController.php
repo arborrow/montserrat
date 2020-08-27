@@ -180,7 +180,7 @@ class AssetController extends Controller
         $this->authorize('show-asset');
 
         $asset = \App\Asset::findOrFail($id);
-
+        
         return view('assets.show', compact('asset'));
     }
 

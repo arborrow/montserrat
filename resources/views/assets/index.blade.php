@@ -14,7 +14,7 @@
             @endCan
         </h2>
     </div>
-    <div class="col-md-2 col-12">
+    <div class="col-md-3 col-6">
         <select class="type-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
             <option value="">Filter by type ...</option>
             <option value="{{url('asset')}}">All assets</option>
@@ -23,7 +23,7 @@
             @endForeach
         </select>
     </div>
-    <div>
+    <div class="col-md-3 col-6">
         <select class="location-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
             <option value="">Filter by location ...</option>
             <option value="{{url('asset')}}">All locations</option>

@@ -14,7 +14,7 @@
         @endCan
     </div>
     <div class="col-12">
-        <h3>General information</h3>
+        <h3 class="text-primary">General information</h3>
         <div class="row">
             <div class="col-4"><strong>Name:</strong> {{$asset->name}}</div>
             <div class="col-4"><strong>Asset Type:</strong> {{$asset->asset_type_name}}</div>
@@ -29,26 +29,26 @@
         </div>
         <div class="row">
             <div class="col-3"><strong>Parent:</strong> {{$asset->parent_name}}</div>
-            <div class="col-3"><strong>Location:</strong> {{$asset->location_id}}</div>
-            <div class="col-3"><strong>Department:</strong> {{$asset->department_id}}</div>
+            <div class="col-3"><strong>Location:</strong> {{$asset->location_name}}</div>
+            <div class="col-3"><strong>Department:</strong> {{$asset->department_name}}</div>
             <div class="col-3"><strong>Remarks:</strong> {{$asset->remarks}}</div>
             <div class="col-3"><strong>Status:</strong> {{$asset->status}}</div>
             <div class="col-3"><strong>Active:{{$asset->is_active ? 'Yes':'No'}}</strong></div>
         </div>
-        <h3>Service information</h3>
+        <h3 class="text-primary">Service information</h3>
         <div class="row">
             <div class="col-3"><strong>Replacement:</strong> {{$asset->replacement_id}}</div>
-            <div class="col-3"><strong>Manufacturer:</strong> {{$asset->manufacturer_id}}</div>
-            <div class="col-3"><strong>Vendor:</strong> {{$asset->vendor_id}}</div>
+            <div class="col-3"><strong>Manufacturer:</strong> {!!$asset->manufacturer_contact_name_link!!}</div>
+            <div class="col-3"><strong>Vendor:</strong> {!!$asset->vendor_name_link!!}</div>
         </div>
-        <h3>Power specifications</h3>
+        <h3 class="text-primary">Power specifications</h3>
         <div class="row">
             <div class="col-3"><strong>Power line voltage:</strong> {{$asset->power_line_voltage}} {{ $asset->power_line_voltage_uom_name }}</div>
             <div class="col-3"><strong>Power phase voltage:</strong> {{$asset->power_phase_voltage}} {{ $asset->power_phase_voltage_uom_name }}</div>
             <div class="col-3"><strong>Power phases:</strong> {{$asset->power_phases}}</div>
             <div class="col-3"><strong>Power amperage:</strong> {{$asset->power_amp}} {{ $asset->power_amp_uom_name }}</div>
         </div>
-        <h3>Physical specifications</h3>
+        <h3 class="text-primary">Physical specifications</h3>
         <div class="row">
             <div class="col-2"><strong>Length:</strong> {{$asset->length}} {{ $asset->length_uom_name }}</div>
             <div class="col-2"><strong>Width:</strong> {{$asset->width}} {{ $asset->width_uom_name }}</div>
@@ -56,7 +56,7 @@
             <div class="col-2"><strong>Weight:</strong> {{$asset->weight}} {{ $asset->weight_uom_name }}</div>
             <div class="col-2"><strong>Capacity:</strong> {{$asset->capacity}} {{ $asset->capacity_uom_name }}</div>
         </div>
-        <h3>Purchase info</h3>
+        <h3 class="text-primary">Purchase info</h3>
         <div class="row">
             <div class="col-2"><strong>Purchase date:</strong> {{$asset->purchase_date}}</div>
             <div class="col-2"><strong>Purchase price:</strong> {{$asset->purchase_price}}</div>
@@ -64,12 +64,12 @@
             <div class="col-2"><strong>Start date:</strong> {{$asset->start_date}}</div>
             <div class="col-2"><strong>End date:</strong> {{$asset->end_date}}</div>
         </div>
-        <h3>Warranty info</h3>
+        <h3 class="text-primary">Warranty info</h3>
         <div class="row">
             <div class="col-3"><strong>Warranty start date:</strong> {{$asset->warranty_start_date}}</div>
             <div class="col-3"><strong>Warranty end date:</strong> {{$asset->warranty_end_date}}</div>
         </div>
-        <div class="text-primary">Depreciation info</div>
+        <h3 class="text-primary">Depreciation info</h3>
         <div class="row">
             <div class="col-3"><strong>Depreciation start date:</strong> {{$asset->depreciation_start_date}}</div>
             <div class="col-3"><strong>Depreciation end date:</strong> {{$asset->depreciation_end_date}}</div>
