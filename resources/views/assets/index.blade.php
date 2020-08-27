@@ -12,6 +12,10 @@
                     </a>
                 </span>
             @endCan
+            <a href={{ action('AssetController@search') }}>
+                {!! Html::image('images/search.png', 'Search assets',array('title'=>"Search assets",'class' => 'btn btn-link')) !!}
+            </a>
+
         </h2>
     </div>
     <div class="col-md-3 col-6">

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 
 class Asset extends Model
 {
@@ -219,5 +220,181 @@ class Asset extends Model
             return ;
         }
     }
+
+    public function scopeFiltered($query, $filters)
+    {
+        //dd($filters->request);
+        foreach ($filters->request as $filter => $value) {
+
+            if ($filter == 'name' && ! empty($value)) {
+                $query->where($filter, 'like', '%'.$value.'%');
+            }
+            if ($filter == 'asset_type_id' && ! empty($value) && $value>0) {
+                $query->where($filter, '=', $value);
+            }
+            if ($filter == 'description' && ! empty($value)) {
+                $query->where($filter, 'like', '%'.$value.'%');
+            }
+            if ($filter == 'manufacturer' && ! empty($value)) {
+                $query->where($filter, 'like', '%'.$value.'%');
+            }
+            if ($filter == 'model' && ! empty($value)) {
+                $query->where($filter, 'like', '%'.$value.'%');
+            }
+            if ($filter == 'serial_number' && ! empty($value)) {
+                $query->where($filter, 'like', '%'.$value.'%');
+            }
+            if ($filter == 'year' && ! empty($value)) {
+                $query->where($filter, 'like', '%'.$value.'%');
+            }
+            if ($filter == 'location_id' && ! empty($value)) {
+                $query->where($filter, '=', $value);
+            }
+            if ($filter == 'department_id' && ! empty($value)) {
+                $query->where($filter, '=', $value);
+            }
+            if ($filter == 'parent_id' && ! empty($value)) {
+                $query->where($filter, '=', $value);
+            }
+            if ($filter == 'manufacturer_id' && ! empty($value)) {
+                $query->where($filter, '=', $value);
+            }
+            if ($filter == 'vendor_id' && ! empty($value)) {
+                $query->where($filter, '=', $value);
+            }
+            if ($filter == 'status' && ! empty($value)) {
+                $query->where($filter, 'like', '%'.$value.'%');
+            }
+            if ($filter == 'remarks' && ! empty($value)) {
+                $query->where($filter, 'like', '%'.$value.'%');
+            }
+            if ($filter == 'is_active' && isset($value)) {
+                $query->where($filter, '=', $value);
+            }
+
+            if ($filter == 'power_line_voltage' && ! empty($value)) {
+                $query->where($filter, 'LIKE', '%'.$value.'%');
+            }
+            if ($filter == 'power_line_voltage_uom_id' && ! empty($value)) {
+                $query->where($filter, '=', $value);
+            }
+
+
+            if ($filter == 'power_phase_voltage' && ! empty($value)) {
+                $query->where($filter, 'LIKE', '%'.$value.'%');
+            }
+            if ($filter == 'power_phase_voltage_uom_id' && ! empty($value)) {
+                $query->where($filter, '=', $value);
+            }
+
+            if ($filter == 'power_phases' && ! empty($value)) {
+                $query->where($filter, 'LIKE', '%'.$value.'%');
+            }
+
+            if ($filter == 'power_amp' && ! empty($value)) {
+                $query->where($filter, 'LIKE', '%'.$value.'%');
+            }
+            if ($filter == 'power_amp_uom_id' && ! empty($value)) {
+                $query->where($filter, '=', $value);
+            }
+
+            if ($filter == 'length' && ! empty($value)) {
+                $query->where($filter, 'LIKE', '%'.$value.'%');
+            }
+            if ($filter == 'length_uom_id' && ! empty($value)) {
+                $query->where($filter, '=', $value);
+            }
+
+            if ($filter == 'width' && ! empty($value)) {
+                $query->where($filter, 'LIKE', '%'.$value.'%');
+            }
+            if ($filter == 'width_uom_id' && ! empty($value)) {
+                $query->where($filter, '=', $value);
+            }
+
+            if ($filter == 'height' && ! empty($value)) {
+                $query->where($filter, 'LIKE', '%'.$value.'%');
+            }
+            if ($filter == 'height_uom_id' && ! empty($value)) {
+                $query->where($filter, '=', $value);
+            }
+
+            if ($filter == 'weight' && ! empty($value)) {
+                $query->where($filter, 'LIKE', '%'.$value.'%');
+            }
+            if ($filter == 'weight_uom_id' && ! empty($value)) {
+                $query->where($filter, '=', $value);
+            }
+
+            if ($filter == 'capacity' && ! empty($value)) {
+                $query->where($filter, 'LIKE', '%'.$value.'%');
+            }
+            if ($filter == 'capacity_uom_id' && ! empty($value)) {
+                $query->where($filter, '=', $value);
+            }
+
+            if ($filter == 'purchase_date' && ! empty($value)) {
+                $purchase_date = Carbon::parse($value);
+                $query->where('purchase_date', '<=', $purchase_date);
+            }
+            if ($filter == 'purchase_price' && ! empty($value)) {
+                $query->where($filter, 'LIKE', '%'.$value.'%');
+            }
+            if ($filter == 'life_expectancy' && ! empty($value)) {
+                $query->where($filter, 'LIKE', '%'.$value.'%');
+            }
+            if ($filter == 'life_expectancy_uom_id' && ! empty($value)) {
+                $query->where($filter, '=', $value);
+            }
+
+            if ($filter == 'start_date' && ! empty($value)) {
+                $start_date = Carbon::parse($value);
+                $query->where('start_date', '<=', $start_date);
+            }
+            if ($filter == 'end_date' && ! empty($value)) {
+                $end_date = Carbon::parse($value);
+                $query->where('end_date', '<=', $end_date);
+            }
+            if ($filter == 'replacement_id' && ! empty($value)) {
+                $query->where($filter, '=', $value);
+            }
+
+            if ($filter == 'warranty_start_date' && ! empty($value)) {
+                $warranty_start_date = Carbon::parse($value);
+                $query->where('warranty_start_date', '<=', $warranty_start_date);
+            }
+            if ($filter == 'warranty_end_date' && ! empty($value)) {
+                $warranty_end_date = Carbon::parse($value);
+                $query->where('warranty_end_date', '<=', $warranty_end_date);
+            }
+            if ($filter == 'depreciation_start_date' && ! empty($value)) {
+                $depreciation_start_date = Carbon::parse($value);
+                $query->where('depreciation_start_date', '<=', $depreciation_start_date);
+            }
+            if ($filter == 'depreciation_end_date' && ! empty($value)) {
+                $depreciation_end_date = Carbon::parse($value);
+                $query->where('depreciation_end_date', '<=', $depreciation_end_date);
+            }
+            if ($filter == 'depreciation_type_id' && ! empty($value)) {
+                $query->where($filter, '=', $value);
+            }
+            if ($filter == 'depreciation_rate' && ! empty($value)) {
+                $query->where($filter, 'LIKE', '%'.$value.'%');
+            }
+            if ($filter == 'depreciation_value' && ! empty($value)) {
+                $query->where($filter, 'LIKE', '%'.$value.'%');
+            }
+            if ($filter == 'depreciation_time' && ! empty($value)) {
+                $query->where($filter, 'LIKE', '%'.$value.'%');
+            }
+            if ($filter == 'depreciation_time_uom_id' && ! empty($value)) {
+                $query->where($filter, '=', $value);
+            }
+
+        }
+
+        return $query;
+    }
+
 
 }

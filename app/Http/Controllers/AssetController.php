@@ -51,6 +51,55 @@ class AssetController extends Controller
         return view('assets.index', compact('assets', 'asset_types', 'locations'));
     }
 
+    public function search()
+    {   
+        $this->authorize('show-asset');
+
+        $asset_types = \App\AssetType::active()->orderBy('label')->pluck('label','id');
+        $asset_types->prepend('N/A','');
+
+        $departments = \App\Department::active()->orderBy('label')->pluck('label','id');
+        $departments->prepend('N/A','');
+
+        // TODO: determine and set up various depreciation types
+        $depreciation_types = [''=>'N/A'];
+
+        $locations = \App\Location::orderBy('name')->pluck('name','id');
+        $locations->prepend('N/A','');
+
+        $parents = \App\Asset::active()->orderBy('name')->pluck('name','id');
+        $parents->prepend('N/A','');
+
+        $uoms_capacity = \App\Uom::orderBy('unit_name')->pluck('unit_name','id');
+        $uoms_capacity->prepend('N/A','');
+
+        $uoms_electric = \App\Uom::electric()->orderBy('unit_name')->pluck('unit_name','id');
+        $uoms_electric->prepend('N/A','');
+
+        $uoms_length = \App\Uom::length()->orderBy('unit_name')->pluck('unit_name','id');
+        $uoms_length->prepend('N/A','');
+
+        $uoms_time = \App\Uom::time()->orderBy('unit_name')->pluck('unit_name','id');
+        $uoms_time->prepend('N/A','');
+
+        $uoms_weight = \App\Uom::weight()->orderBy('unit_name')->pluck('unit_name','id');
+        $uoms_weight->prepend('N/A','');
+
+        $vendors = \App\Contact::vendors()->orderBy('organization_name')->pluck('organization_name','id');
+        $vendors->prepend('N/A','');
+
+        return view('assets.search', compact('asset_types','departments','depreciation_types','locations','parents','uoms_capacity','uoms_electric','uoms_length','uoms_time','uoms_weight','vendors'));
+    }
+
+    public function results(Request $request)
+    {
+        $this->authorize('show-asset');
+        if (! empty($request)) {
+            $assets = \App\Asset::filtered($request)->orderBy('name')->paginate(100);
+            $assets->appends($request->except('page')); //TODO: is this necessary?
+        }
+        return view('assets.results', compact('assets'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -180,7 +229,7 @@ class AssetController extends Controller
         $this->authorize('show-asset');
 
         $asset = \App\Asset::findOrFail($id);
-        
+
         return view('assets.show', compact('asset'));
     }
 

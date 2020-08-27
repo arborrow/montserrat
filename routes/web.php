@@ -89,10 +89,12 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 /* In developement - commented out for Now
 Route::resource('activity', 'ActivityController');
  */
+ Route::get('asset/type/{type?}', 'AssetController@index_type');
+ Route::get('asset/location/{location_id?}', 'AssetController@index_location');
+ Route::get('asset/search', 'AssetController@search')->name('assets.search');
+ Route::get('asset/results', 'AssetController@results')->name('assets.results');
 
 Route::resource('asset', 'AssetController');
-Route::get('asset/type/{type?}', 'AssetController@index_type');
-Route::get('asset/location/{location_id?}', 'AssetController@index_location');
 
 Route::get('bookstore', 'PageController@bookstore')->name('bookstore');
 Route::resource('diocese', 'DioceseController');

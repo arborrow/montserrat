@@ -277,5 +277,49 @@ class AssetControllerTest extends TestCase
         $this->assertNotEquals($updated->manufacturer, $original_asset_manufacuturer);
     }
 
+
+    /**
+     * @test
+     */
+    public function results_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-asset');
+
+        $asset = factory(\App\Asset::class)->create();
+
+        $response = $this->actingAs($user)->get('asset/results?name='.$asset->name);
+
+        $response->assertOk();
+        $response->assertViewIs('assets.results');
+        $response->assertViewHas('assets');
+        $response->assertSeeText('results found');
+        $response->assertSeeText($asset->name);
+    }
+
+    /**
+     * @test
+     */
+    public function search_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-asset');
+
+        $response = $this->actingAs($user)->get('asset/search');
+
+        $response->assertOk();
+        $response->assertViewIs('assets.search');
+        $response->assertViewHas('asset_types');
+        $response->assertViewHas('departments');
+        $response->assertViewHas('depreciation_types');
+        $response->assertViewHas('locations');
+        $response->assertViewHas('parents');
+        $response->assertViewHas('uoms_capacity');
+        $response->assertViewHas('uoms_electric');
+        $response->assertViewHas('uoms_length');
+        $response->assertViewHas('uoms_time');
+        $response->assertViewHas('uoms_weight');
+        $response->assertViewHas('vendors');
+        $response->assertSeeText('Search Assets');
+    }
+
     // test cases...
 }
