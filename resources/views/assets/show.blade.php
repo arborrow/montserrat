@@ -17,7 +17,8 @@
         <h3 class="text-primary">General information</h3>
         <div class="row">
             <div class="col-4"><strong>Name:</strong> {{$asset->name}}</div>
-            <div class="col-4"><strong>Asset Type:</strong> {{$asset->asset_type_name}}</div>
+            <div class="col-4"><strong>Asset Type:</strong>
+                <a href="{{ url('asset/type/'.$asset->asset_type_id) }}"> {{$asset->asset_type_name}} </a></div>
             <div class="col-4"><strong>Description:</strong> {{$asset->description}}</div>
         </div>
 
@@ -29,7 +30,8 @@
         </div>
         <div class="row">
             <div class="col-3"><strong>Parent:</strong> {{$asset->parent_name}}</div>
-            <div class="col-3"><strong>Location:</strong> {{$asset->location_name}}</div>
+            <div class="col-3"><strong>Location:</strong>
+                <a href="{{ url('asset/location/'.$asset->location_id) }}">{{$asset->location_name}}</a></div>
             <div class="col-3"><strong>Department:</strong> {{$asset->department_name}}</div>
             <div class="col-3"><strong>Remarks:</strong> {{$asset->remarks}}</div>
             <div class="col-3"><strong>Status:</strong> {{$asset->status}}</div>
@@ -62,7 +64,7 @@
             <div class="col-2"><strong>Start date:</strong> {{$asset->start_date}}</div>
             <div class="col-2"><strong>End date:</strong> {{$asset->end_date}}</div>
             <div class="col-2"><strong>Life expectancy:</strong> {{$asset->life_expectancy}} {{ $asset->life_expectancy_uom_name }}</div>
-            <div class="col-3"><strong>Replacement:</strong> {{$asset->replacement_id}}</div>            
+            <div class="col-3"><strong>Replacement:</strong> {{$asset->replacement_id}}</div>
         </div>
         <h3 class="text-primary">Warranty info</h3>
         <div class="row">

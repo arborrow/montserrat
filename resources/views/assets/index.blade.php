@@ -59,8 +59,12 @@
                         <td><a href="{{URL('asset/'.$asset->id)}}">{{ $asset->name }}</a></td>
                         <td>{{ $asset->manufacturer }}</td>
                         <td>{{ $asset->model }}</td>
-                        <td>{{ $asset->asset_type_name }}</td>
-                        <td>{{ $asset->location_name }}</td>
+                        <td><a href="{{ url('asset/type/'.$asset->asset_type_id) }}">{{ $asset->asset_type_name }}</a></td>
+                        @if ($asset->location_id > 0)
+                            <td><a href="{{ url('asset/location/'.$asset->location_id) }}">{{ $asset->location_name }}</a></td>
+                        @else
+                            <td>{{ $asset->location_name }}</td>
+                        @endIf
                         <td>{{ $asset->status }}</td>
                     </tr>
                     @endforeach

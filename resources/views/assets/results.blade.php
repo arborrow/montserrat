@@ -19,6 +19,7 @@
                 <thead>
                     <tr>
                         <th>Name</th>
+                        <th>Type</th>
                         <th>Manufacturer</th>
                         <th>Model</th>
                         <th>Description</th>
@@ -31,10 +32,19 @@
                         <td>
                             <a href="{{url('asset/'.$asset->id)}}">{{ $asset->name}}</a>
                         </td>
+                        <td>
+                            <a href="{{ url('asset/type/'.$asset->asset_type_id) }}">{{ $asset->asset_type_name }}</a>
+                        </td>
                         <td>{{$asset->manufacturer}}</td>
                         <td>{{$asset->model}}</td>
                         <td>{{$asset->description}}</td>
-                        <td>{{$asset->location_name}}</td>
+                        <td>
+                            @if ($asset->location_id > 0)
+                                <a href="{{ url('asset/location/'.$asset->location_id) }}">{{$asset->location_name}}</a>
+                            @else
+                                {{ $asset->location_name }}
+                            @endif
+                        </td>
                     </tr>
                     @endforeach
                     {!! $assets->render() !!}
