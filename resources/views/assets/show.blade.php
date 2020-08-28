@@ -64,7 +64,13 @@
             <div class="col-2"><strong>Start date:</strong> {{$asset->start_day}}</div>
             <div class="col-2"><strong>End date:</strong> {{$asset->end_day}}</div>
             <div class="col-2"><strong>Life expectancy:</strong> {{$asset->life_expectancy}} {{ $asset->life_expectancy_uom_name }}</div>
-            <div class="col-3"><strong>Replacement:</strong> {{$asset->replacement_id}}</div>
+            <div class="col-3"><strong>Replacement:</strong>
+                @if ($asset->replacement_id > 0)
+                    <a href="{{ url('asset/'.$asset->replacement_id) }}"> {{$asset->replacement_name}}</a>
+                @else
+                    {{ $asset->replacement_name }}
+                @endIf
+            </div>
         </div>
         <h3 class="text-primary">Warranty info</h3>
         <div class="row">

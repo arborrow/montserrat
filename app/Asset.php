@@ -79,6 +79,10 @@ class Asset extends Model
     {
         return $this->hasOne(Asset::class, 'id', 'parent_id');
     }
+    public function replacement()
+    {
+        return $this->hasOne(Asset::class, 'id', 'replacement_id');
+    }
     public function asset_type()
     {
         return $this->hasOne(AssetType::class, 'id', 'asset_type_id');
@@ -189,6 +193,13 @@ class Asset extends Model
     public function getParentNameAttribute() {
         if (isset($this->parent->name)) {
             return $this->parent->name;
+        } else {
+            return 'N/A';
+        }
+    }
+    public function getReplacementNameAttribute() {
+        if (isset($this->replacement->name)) {
+            return $this->replacement->name;
         } else {
             return 'N/A';
         }
