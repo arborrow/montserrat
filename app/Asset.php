@@ -158,7 +158,8 @@ class Asset extends Model
         return $this->hasOne(Uom::class, 'id', 'capacity_uom_id');
     }
 
-    public function getAssetTypeNameAttribute() {
+    public function getAssetTypeNameAttribute()
+    {
         if (isset($this->asset_type->name)) {
             return $this->asset_type->name;
         } else {
@@ -166,7 +167,8 @@ class Asset extends Model
         }
     }
 
-    public function getDepartmentNameAttribute() {
+    public function getDepartmentNameAttribute()
+    {
         if (isset($this->department->name)) {
             return $this->department->name;
         } else {
@@ -174,7 +176,8 @@ class Asset extends Model
         }
     }
 
-    public function getLocationNameAttribute() {
+    public function getLocationNameAttribute()
+    {
         if (isset($this->location->name)) {
             return $this->location->name;
         } else {
@@ -182,7 +185,8 @@ class Asset extends Model
         }
     }
 
-    public function getManufacturerContactNameLinkAttribute() {
+    public function getManufacturerContactNameLinkAttribute()
+    {
         if (isset($this->manufacturer_contact->organization_name)) {
             return '<a href ="'.$this->manufacturer_contact->contact_url.'">'.$this->manufacturer_contact->organization_name.'</a>';
         } else {
@@ -190,14 +194,16 @@ class Asset extends Model
         }
     }
 
-    public function getParentNameAttribute() {
+    public function getParentNameAttribute()
+    {
         if (isset($this->parent->name)) {
             return $this->parent->name;
         } else {
             return 'N/A';
         }
     }
-    public function getReplacementNameAttribute() {
+    public function getReplacementNameAttribute()
+    {
         if (isset($this->replacement->name)) {
             return $this->replacement->name;
         } else {
@@ -205,7 +211,8 @@ class Asset extends Model
         }
     }
 
-    public function getVendorNameLinkAttribute() {
+    public function getVendorNameLinkAttribute()
+    {
         if (isset($this->vendor->organization_name)) {
             return '<a href ="'.$this->vendor->contact_url.'">'.$this->vendor->organization_name.'</a>';
         } else {
@@ -213,7 +220,8 @@ class Asset extends Model
         }
     }
 
-    public function getCapacityUomNameAttribute() {
+    public function getCapacityUomNameAttribute()
+    {
         if (isset($this->capacity_uom->unit_name)) {
             return $this->capacity_uom->unit_name;
         } else {
@@ -221,7 +229,8 @@ class Asset extends Model
         }
     }
 
-    public function getPowerLineVoltageUomNameAttribute() {
+    public function getPowerLineVoltageUomNameAttribute()
+    {
         if (isset($this->power_line_voltage_uom->unit_name)) {
             return $this->power_line_voltage_uom->unit_name;
         } else {
@@ -229,7 +238,8 @@ class Asset extends Model
         }
     }
 
-    public function getPowerPhaseVoltageUomNameAttribute() {
+    public function getPowerPhaseVoltageUomNameAttribute()
+    {
         if (isset($this->power_phase_voltage_uom->unit_name)) {
             return $this->power_phase_voltage_uom->unit_name;
         } else {
@@ -238,7 +248,8 @@ class Asset extends Model
     }
 
 
-    public function getPowerAmpUomNameAttribute() {
+    public function getPowerAmpUomNameAttribute()
+    {
         if (isset($this->power_amp_uom->unit_name)) {
             return $this->power_amp_uom->unit_name;
         } else {
@@ -246,7 +257,8 @@ class Asset extends Model
         }
     }
 
-    public function getLengthUomNameAttribute() {
+    public function getLengthUomNameAttribute()
+    {
         if (isset($this->length_uom->unit_name)) {
             return $this->length_uom->unit_name;
         } else {
@@ -254,35 +266,40 @@ class Asset extends Model
         }
     }
 
-    public function getWidthUomNameAttribute() {
+    public function getWidthUomNameAttribute()
+    {
         if (isset($this->width_uom->unit_name)) {
             return $this->width_uom->unit_name;
         } else {
             return ;
         }
     }
-    public function getHeightUomNameAttribute() {
+    public function getHeightUomNameAttribute()
+    {
         if (isset($this->height_uom->unit_name)) {
             return $this->height_uom->unit_name;
         } else {
             return ;
         }
     }
-    public function getWeightUomNameAttribute() {
+    public function getWeightUomNameAttribute()
+    {
         if (isset($this->weight_uom->unit_name)) {
             return $this->weight_uom->unit_name;
         } else {
             return ;
         }
     }
-    public function getLifeExpectancyUomNameAttribute() {
+    public function getLifeExpectancyUomNameAttribute()
+    {
         if (isset($this->life_expectancy_uom->unit_name)) {
             return $this->life_expectancy_uom->unit_name;
         } else {
             return ;
         }
     }
-    public function getDepreciationTimeUomNameAttribute() {
+    public function getDepreciationTimeUomNameAttribute()
+    {
         if (isset($this->depreciation_time_uom->unit_name)) {
             return $this->depreciation_time_uom->unit_name;
         } else {
@@ -294,7 +311,6 @@ class Asset extends Model
     {
         //dd($filters->request);
         foreach ($filters->request as $filter => $value) {
-
             if ($filter == 'name' && ! empty($value)) {
                 $query->where($filter, 'like', '%'.$value.'%');
             }
@@ -459,11 +475,8 @@ class Asset extends Model
             if ($filter == 'depreciation_time_uom_id' && ! empty($value)) {
                 $query->where($filter, '=', $value);
             }
-
         }
 
         return $query;
     }
-
-
 }
