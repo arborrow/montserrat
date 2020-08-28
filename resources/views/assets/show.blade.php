@@ -37,7 +37,6 @@
         </div>
         <h3 class="text-primary">Service information</h3>
         <div class="row">
-            <div class="col-3"><strong>Replacement:</strong> {{$asset->replacement_id}}</div>
             <div class="col-3"><strong>Manufacturer:</strong> {!!$asset->manufacturer_contact_name_link!!}</div>
             <div class="col-3"><strong>Vendor:</strong> {!!$asset->vendor_name_link!!}</div>
         </div>
@@ -60,9 +59,10 @@
         <div class="row">
             <div class="col-2"><strong>Purchase date:</strong> {{$asset->purchase_date}}</div>
             <div class="col-2"><strong>Purchase price:</strong> {{$asset->purchase_price}}</div>
-            <div class="col-2"><strong>Life expectancy:</strong> {{$asset->life_expectancy}} {{ $asset->life_expectancy_uom_name }}</div>
             <div class="col-2"><strong>Start date:</strong> {{$asset->start_date}}</div>
             <div class="col-2"><strong>End date:</strong> {{$asset->end_date}}</div>
+            <div class="col-2"><strong>Life expectancy:</strong> {{$asset->life_expectancy}} {{ $asset->life_expectancy_uom_name }}</div>
+            <div class="col-3"><strong>Replacement:</strong> {{$asset->replacement_id}}</div>            
         </div>
         <h3 class="text-primary">Warranty info</h3>
         <div class="row">

@@ -144,18 +144,13 @@
 
                         <h3 class="text-primary">Purchase info</h3>
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-3">
                                 {!! Form::label('purchase_date', 'Purchase date')  !!}
                                 {!! Form::date('purchase_date', $asset->purchase_date, ['class'=>'form-control flatpickr-date', 'autocomplete'=> 'off']) !!}
                             </div>
-                            <div class="col-4">
+                            <div class="col-3">
                                 {!! Form::label('purchase_price', 'Purchase price')  !!}
                                 {!! Form::text('purchase_price', $asset->purchase_price , ['class' => 'form-control']) !!}
-                            </div>
-                            <div class="col-4">
-                                {!! Form::label('life_expectancy', 'Life expectancy')  !!}
-                                {!! Form::text('life_expectancy', $asset->life_expectancy , ['class' => 'form-control']) !!}
-                                {!! Form::select('life_expectancy_uom_id', $uoms_time, $asset->life_expectancy_uom_id, ['class' => 'form-control']) !!}
                             </div>
                             <div class="col-3">
                                 {!! Form::label('start_date', 'Start date')  !!}
@@ -165,7 +160,12 @@
                                 {!! Form::label('end_date', 'End date')  !!}
                                 {!! Form::text('end_date', $asset->end_date, ['class'=>'form-control flatpickr-date', 'autocomplete'=> 'off']) !!}
                             </div>
-                            <div class="col-4">
+                            <div class="col-3">
+                                {!! Form::label('life_expectancy', 'Life expectancy')  !!}
+                                {!! Form::text('life_expectancy', $asset->life_expectancy , ['class' => 'form-control']) !!}
+                                {!! Form::select('life_expectancy_uom_id', $uoms_time, $asset->life_expectancy_uom_id, ['class' => 'form-control']) !!}
+                            </div>
+                            <div class="col-3">
                                 {!! Form::label('replacement_id', 'Replacement')  !!}
                                 {!! Form::select('replacement_id', $parents, $asset->replacement_id, ['class' => 'form-control']) !!}
                             </div>
