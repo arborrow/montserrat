@@ -6,11 +6,11 @@
         <h2>
             Assets
             @can('create-asset')
-                <span class="options">
-                    <a href={{ action('AssetController@create') }}>
-                        <img src="{{ URL::asset('images/create.png') }}" alt="Add" class="btn btn-light" title="Add">
-                    </a>
-                </span>
+            <span class="options">
+                <a href={{ action('AssetController@create') }}>
+                    <img src="{{ URL::asset('images/create.png') }}" alt="Add" class="btn btn-light" title="Add">
+                </a>
+            </span>
             @endCan
             <a href={{ action('AssetController@search') }}>
                 {!! Html::image('images/search.png', 'Search assets',array('title'=>"Search assets",'class' => 'btn btn-link')) !!}
@@ -38,39 +38,39 @@
     </div>
     <div class="col-12 my-3 table-responsive-md">
         @if ($assets->isEmpty())
-            <div class="col-12 text-center py-5">
-                <p>It is a brand new world, there are no asset!</p>
-            </div>
+        <div class="col-12 text-center py-5">
+            <p>It is a brand new world, there are no asset!</p>
+        </div>
         @else
-            <table class="table table-striped table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Manufacturer</th>
-                        <th scope="col">Model</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Location</th>
-                        <th scope="col">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($assets as $asset)
-                    <tr>
-                        <td><a href="{{URL('asset/'.$asset->id)}}">{{ $asset->name }}</a></td>
-                        <td>{{ $asset->manufacturer }}</td>
-                        <td>{{ $asset->model }}</td>
-                        <td><a href="{{ url('asset/type/'.$asset->asset_type_id) }}">{{ $asset->asset_type_name }}</a></td>
-                        @if ($asset->location_id > 0)
-                            <td><a href="{{ url('asset/location/'.$asset->location_id) }}">{{ $asset->location_name }}</a></td>
-                        @else
-                            <td>{{ $asset->location_name }}</td>
-                        @endIf
-                        <td>{{ $asset->status }}</td>
-                    </tr>
-                    @endforeach
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Manufacturer</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($assets as $asset)
+                <tr>
+                    <td><a href="{{URL('asset/'.$asset->id)}}">{{ $asset->name }}</a></td>
+                    <td>{{ $asset->manufacturer }}</td>
+                    <td>{{ $asset->model }}</td>
+                    <td><a href="{{ url('asset/type/'.$asset->asset_type_id) }}">{{ $asset->asset_type_name }}</a></td>
+                    @if ($asset->location_id > 0)
+                    <td><a href="{{ url('asset/location/'.$asset->location_id) }}">{{ $asset->location_name }}</a></td>
+                    @else
+                    <td>{{ $asset->location_name }}</td>
+                    @endIf
+                    <td>{{ $asset->status }}</td>
+                </tr>
+                @endforeach
 
-                </tbody>
-            </table>
+            </tbody>
+        </table>
         @endif
     </div>
 </div>

@@ -66,9 +66,9 @@
             <div class="col-2"><strong>Life expectancy:</strong> {{$asset->life_expectancy}} {{ $asset->life_expectancy_uom_name }}</div>
             <div class="col-3"><strong>Replacement:</strong>
                 @if ($asset->replacement_id > 0)
-                    <a href="{{ url('asset/'.$asset->replacement_id) }}"> {{$asset->replacement_name}}</a>
+                <a href="{{ url('asset/'.$asset->replacement_id) }}"> {{$asset->replacement_name}}</a>
                 @else
-                    {{ $asset->replacement_name }}
+                {{ $asset->replacement_name }}
                 @endIf
             </div>
         </div>
@@ -105,4 +105,4 @@
     </div>
 </div>
 
-        @stop
+@stop

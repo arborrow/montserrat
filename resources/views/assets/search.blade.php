@@ -25,7 +25,7 @@
                             {!! Form::text('name', NULL , ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-4">
-                            {!! Form::label('asset_type_id', 'Asset type')  !!}
+                            {!! Form::label('asset_type_id', 'Asset type') !!}
                             {!! Form::select('asset_type_id', $asset_types, NULL, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-4">
@@ -77,7 +77,7 @@
                             {!! Form::textarea('remarks', NULL, ['class' => 'form-control', 'rows' => 1]) !!}
                         </div>
                         <div class="col-3">
-                            {!! Form::label('is_active', 'Active:', ['class' => 'col-2'])  !!}
+                            {!! Form::label('is_active', 'Active:', ['class' => 'col-2']) !!}
                             {!! Form::select('is_active', array(null => 'N/A', '1' => 'Yes', '0' => 'No'),['class' => 'col-1']) !!}
                         </div>
 
@@ -86,11 +86,11 @@
                     <h3 class="text-primary">Service information</h3>
                     <div class="row">
                         <div class="col-4">
-                            {!! Form::label('manufacturer_id', 'Manufacturer')  !!}
+                            {!! Form::label('manufacturer_id', 'Manufacturer') !!}
                             {!! Form::select('manufacturer_id', $vendors, NULL, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-4">
-                            {!! Form::label('vendor_id', 'Vendor')  !!}
+                            {!! Form::label('vendor_id', 'Vendor') !!}
                             {!! Form::select('vendor_id', $vendors, NULL, ['class' => 'form-control']) !!}
                         </div>
                     </div>
@@ -98,21 +98,21 @@
                     <h3 class="text-primary">Power specifications</h3>
                     <div class="row">
                         <div class="col-4">
-                            {!! Form::label('power_line_voltage', 'Power line voltage')  !!}
+                            {!! Form::label('power_line_voltage', 'Power line voltage') !!}
                             {!! Form::text('power_line_voltage', NULL , ['class' => 'form-control']) !!}
                             {!! Form::select('power_line_voltage_uom_id', $uoms_electric, NULL, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-4">
-                            {!! Form::label('power_phase_voltage', 'Power phase voltage')  !!}
+                            {!! Form::label('power_phase_voltage', 'Power phase voltage') !!}
                             {!! Form::text('power_phase_voltage', NULL , ['class' => 'form-control']) !!}
                             {!! Form::select('power_phase_voltage_uom_id', $uoms_electric, NULL, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-4">
-                            {!! Form::label('power_phases', 'Power phases')  !!}
+                            {!! Form::label('power_phases', 'Power phases') !!}
                             {!! Form::text('power_phases', NULL , ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-4">
-                            {!! Form::label('power_amp', 'Power amps')  !!}
+                            {!! Form::label('power_amp', 'Power amps') !!}
                             {!! Form::text('power_amp', NULL , ['class' => 'form-control']) !!}
                             {!! Form::select('power_amp_uom_id', $uoms_electric, NULL, ['class' => 'form-control']) !!}
                         </div>
@@ -121,27 +121,27 @@
                     <h3 class="text-primary">Physical specifications</h3>
                     <div class="row">
                         <div class="col-4">
-                            {!! Form::label('length', 'Length')  !!}
+                            {!! Form::label('length', 'Length') !!}
                             {!! Form::text('length', NULL , ['class' => 'form-control']) !!}
                             {!! Form::select('length_uom_id', $uoms_length, NULL, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-4">
-                            {!! Form::label('width', 'Width')  !!}
+                            {!! Form::label('width', 'Width') !!}
                             {!! Form::text('width', NULL , ['class' => 'form-control']) !!}
                             {!! Form::select('width_uom_id', $uoms_length, NULL, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-4">
-                            {!! Form::label('height', 'Height')  !!}
+                            {!! Form::label('height', 'Height') !!}
                             {!! Form::text('height', NULL , ['class' => 'form-control']) !!}
                             {!! Form::select('height_uom_id', $uoms_length, NULL, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-4">
-                            {!! Form::label('weight', 'Weight')  !!}
+                            {!! Form::label('weight', 'Weight') !!}
                             {!! Form::text('weight', NULL , ['class' => 'form-control']) !!}
                             {!! Form::select('weight_uom_id', $uoms_weight, NULL, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-4">
-                            {!! Form::label('capacity', 'Capacity')  !!}
+                            {!! Form::label('capacity', 'Capacity') !!}
                             {!! Form::text('capacity', NULL , ['class' => 'form-control']) !!}
                             {!! Form::select('capacity_uom_id', $uoms_capacity, NULL, ['class' => 'form-control']) !!}
                         </div>
@@ -150,39 +150,39 @@
                     <h3 class="text-primary">Purchase info</h3>
                     <div class="row">
                         <div class="col-3">
-                            {!! Form::label('purchase_date', 'Purchase date')  !!}
+                            {!! Form::label('purchase_date', 'Purchase date') !!}
                             {!! Form::date('purchase_date', null, ['class'=>'form-control flatpickr-date', 'autocomplete'=> 'off']) !!}
                         </div>
                         <div class="col-3">
-                            {!! Form::label('purchase_price', 'Purchase price')  !!}
+                            {!! Form::label('purchase_price', 'Purchase price') !!}
                             {!! Form::text('purchase_price', NULL , ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-3">
-                            {!! Form::label('start_date', 'Start date')  !!}
+                            {!! Form::label('start_date', 'Start date') !!}
                             {!! Form::text('start_date', null, ['class'=>'form-control flatpickr-date', 'autocomplete'=> 'off']) !!}
                         </div>
                         <div class="col-3">
-                            {!! Form::label('end_date', 'End date')  !!}
+                            {!! Form::label('end_date', 'End date') !!}
                             {!! Form::text('end_date', null, ['class'=>'form-control flatpickr-date', 'autocomplete'=> 'off']) !!}
                         </div>
                         <div class="col-3">
-                            {!! Form::label('life_expectancy', 'Life expectancy')  !!}
+                            {!! Form::label('life_expectancy', 'Life expectancy') !!}
                             {!! Form::text('life_expectancy', NULL , ['class' => 'form-control']) !!}
                             {!! Form::select('life_expectancy_uom_id', $uoms_time, NULL, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-3">
-                            {!! Form::label('replacement_id', 'Replacement')  !!}
+                            {!! Form::label('replacement_id', 'Replacement') !!}
                             {!! Form::select('replacement_id', $parents, NULL, ['class' => 'form-control']) !!}
                         </div>
                     </div>
                     <h3 class="text-primary">Warranty info</h3>
                     <div class="row">
                         <div class="col-4">
-                            {!! Form::label('warranty_start_date', 'Warranty start date')  !!}
+                            {!! Form::label('warranty_start_date', 'Warranty start date') !!}
                             {!! Form::text('warranty_start_date', null, ['class'=>'form-control flatpickr-date', 'autocomplete'=> 'off']) !!}
                         </div>
                         <div class="col-4">
-                            {!! Form::label('warranty_end_date', 'Warranty end date')  !!}
+                            {!! Form::label('warranty_end_date', 'Warranty end date') !!}
                             {!! Form::text('warranty_end_date', null, ['class'=>'form-control flatpickr-date', 'autocomplete'=> 'off']) !!}
                         </div>
                     </div>
@@ -190,27 +190,27 @@
                     <h3 class="text-primary">Depreciation info</h3>
                     <div class="row">
                         <div class="col-4">
-                            {!! Form::label('depreciation_start_date', 'Depreciation start date')  !!}
+                            {!! Form::label('depreciation_start_date', 'Depreciation start date') !!}
                             {!! Form::text('depreciation_start_date', null, ['class'=>'form-control flatpickr-date', 'autocomplete'=> 'off']) !!}
                         </div>
                         <div class="col-4">
-                            {!! Form::label('depreciation_end_date', 'Depreciation end date')  !!}
+                            {!! Form::label('depreciation_end_date', 'Depreciation end date') !!}
                             {!! Form::text('depreciation_end_date', null, ['class'=>'form-control flatpickr-date', 'autocomplete'=> 'off']) !!}
                         </div>
                         <div class="col-4">
-                            {!! Form::label('depreciation_type_id', 'Depreciation type')  !!}
+                            {!! Form::label('depreciation_type_id', 'Depreciation type') !!}
                             {!! Form::select('depreciation_type_id', $depreciation_types, NULL, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-4">
-                            {!! Form::label('depreciation_rate', 'Depreciation rate')  !!}
+                            {!! Form::label('depreciation_rate', 'Depreciation rate') !!}
                             {!! Form::text('depreciation_rate', NULL , ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-4">
-                            {!! Form::label('depreciation_value', 'Depreciation value')  !!}
+                            {!! Form::label('depreciation_value', 'Depreciation value') !!}
                             {!! Form::text('depreciation_value', NULL , ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-4">
-                            {!! Form::label('depreciation_time', 'Depreciation time')  !!}
+                            {!! Form::label('depreciation_time', 'Depreciation time') !!}
                             {!! Form::text('depreciation_time', NULL , ['class' => 'form-control']) !!}
                             {!! Form::select('depreciation_time_uom_id', $uoms_time, NULL, ['class' => 'form-control']) !!}
                         </div>

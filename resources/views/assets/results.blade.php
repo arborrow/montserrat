@@ -40,9 +40,9 @@
                         <td>{{$asset->description}}</td>
                         <td>
                             @if ($asset->location_id > 0)
-                                <a href="{{ url('asset/location/'.$asset->location_id) }}">{{$asset->location_name}}</a>
+                            <a href="{{ url('asset/location/'.$asset->location_id) }}">{{$asset->location_name}}</a>
                             @else
-                                {{ $asset->location_name }}
+                            {{ $asset->location_name }}
                             @endif
                         </td>
                     </tr>
