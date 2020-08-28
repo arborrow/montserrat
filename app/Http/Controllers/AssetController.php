@@ -52,7 +52,7 @@ class AssetController extends Controller
     }
 
     public function search()
-    {   
+    {
         $this->authorize('show-asset');
 
         $asset_types = \App\AssetType::active()->orderBy('label')->pluck('label','id');
@@ -113,6 +113,9 @@ class AssetController extends Controller
         $asset_types = \App\AssetType::active()->orderBy('label')->pluck('label','id');
         $asset_types->prepend('N/A','');
 
+        $departments = \App\Department::active()->orderBy('label')->pluck('label','id');
+        $departments->prepend('N/A','');
+
         $parents = \App\Asset::active()->orderBy('name')->pluck('name','id');
         $parents->prepend('N/A','');
 
@@ -135,7 +138,7 @@ class AssetController extends Controller
         // TODO: determine and set up various depreciation types
         $depreciation_types = [''=>'N/A'];
 
-        return view('assets.create', compact('asset_types','parents','locations','vendors','uoms_electric','uoms_length','uoms_weight','uoms_capacity','uoms_time','depreciation_types'));
+        return view('assets.create', compact('asset_types','departments','parents','locations','vendors','uoms_electric','uoms_length','uoms_weight','uoms_capacity','uoms_time','depreciation_types'));
     }
 
     /**
@@ -248,6 +251,9 @@ class AssetController extends Controller
         $asset_types = \App\AssetType::active()->orderBy('label')->pluck('label','id');
         $asset_types->prepend('N/A','');
 
+        $departments = \App\Department::active()->orderBy('label')->pluck('label','id');
+        $departments->prepend('N/A','');
+
         $parents = \App\Asset::active()->orderBy('name')->pluck('name','id');
         $parents->prepend('N/A','');
 
@@ -270,7 +276,7 @@ class AssetController extends Controller
         // TODO: determine and set up various depreciation types
         $depreciation_types = [0=>'N/A'];
 
-        return view('assets.edit', compact('asset','asset_types','parents','locations','vendors','uoms_electric','uoms_length','uoms_weight','uoms_time','uoms_capacity','depreciation_types')); //
+        return view('assets.edit', compact('asset','asset_types','departments','parents','locations','vendors','uoms_electric','uoms_length','uoms_weight','uoms_time','uoms_capacity','depreciation_types')); //
     }
 
     /**

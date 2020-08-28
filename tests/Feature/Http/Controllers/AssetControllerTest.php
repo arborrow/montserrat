@@ -25,6 +25,7 @@ class AssetControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('assets.create');
         $response->assertViewHas('asset_types');
+        $response->assertViewHas('departments');
         $response->assertViewHas('parents');
         $response->assertViewHas('locations');
         $response->assertViewHas('vendors');
@@ -65,6 +66,7 @@ class AssetControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('assets.edit');
         $response->assertViewHas('asset_types');
+        $response->assertViewHas('departments');
         $response->assertViewHas('parents');
         $response->assertViewHas('locations');
         $response->assertViewHas('vendors');
@@ -86,8 +88,7 @@ class AssetControllerTest extends TestCase
 
         $this->assertTrue($this->findFieldValueInResponseContent('location_id', $asset->location_id, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('department_id', $asset->department_id, 'select', $response->getContent()));
-        // TODO: see why this is failing
-        // $this->assertTrue($this->findFieldValueInResponseContent('parent_id', $asset->parent_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('parent_id', $asset->parent_id, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('status', $asset->status, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('remarks', $asset->remarks, 'textarea', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('is_active', $asset->is_active, 'checkbox', $response->getContent()));

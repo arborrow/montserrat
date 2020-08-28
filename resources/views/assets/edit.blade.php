@@ -55,7 +55,7 @@
                             </div>
                             <div class="col-3">
                                 {!! Form::label('department_id', 'Department') !!}
-                                {!! Form::text('department_id', $asset->department_id , ['class' => 'form-control']) !!}
+                                {!! Form::select('department_id', $departments, $asset->department_id, ['class' => 'form-control']) !!}
                             </div>
                             <div class="col-3">
                                 {!! Form::label('parent_id', 'Parent') !!}

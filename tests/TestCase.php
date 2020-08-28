@@ -117,7 +117,7 @@ abstract class TestCase extends BaseTestCase
                 // deal with cases where selected value is 0 or not yet defined by checking for 0
                 case 'select' :
                     if (is_null($field_value)) {
-                        $value_found = (!(strpos($contents_array[$line_number], "selected=\"selected\"")) || strpos($contents_array[$line_number], $field_zero_value_string));
+                        $value_found = (!(strpos($contents_array[$line_number], "selected=\"selected\"")) || strpos($contents_array[$line_number], $field_zero_value_string) || strpos($contents_array[$line_number], $field_no_value_string));
                     } else {
                         $value_found = (strpos($contents_array[$line_number], $field_value_string) || strpos($contents_array[$line_number], $field_zero_value_string)) ;
                     }
