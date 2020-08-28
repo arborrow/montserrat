@@ -12,6 +12,64 @@ class Asset extends Model
     protected $table = 'asset';
     protected $dates = ['start_date', 'end_date', 'purchase_date','warranty_start_date', 'warranty_end_date','depreciation_start_date', 'depreciation_end_date'];
 
+    public function getStartDayAttribute()
+    {
+        if (isset($this->start_date)) {
+            return $this->start_date->format('m-d-Y');
+        } else {
+            return;
+        }
+    }
+
+    public function getEndDayAttribute()
+    {
+        if (isset($this->end_date)) {
+            return $this->end_date->format('m-d-Y');
+        } else {
+            return;
+        }
+    }
+    public function getPurchaseDayAttribute()
+    {
+        if (isset($this->purchase_date)) {
+            return $this->purchase_date->format('m-d-Y');
+        } else {
+            return;
+        }
+    }
+    public function getWarrantyStartDayAttribute()
+    {
+        if (isset($this->warranty_start_date)) {
+            return $this->warranty_start_date->format('m-d-Y');
+        } else {
+            return;
+        }
+    }
+    public function getWarrantyEndDayAttribute()
+    {
+        if (isset($this->warranty_end_date)) {
+            return $this->warranty_end_date->format('m-d-Y');
+        } else {
+            return;
+        }
+    }
+    public function getDepreciationStartDayAttribute()
+    {
+        if (isset($this->depreciation_start_date)) {
+            return $this->depreciation_start_date->format('m-d-Y');
+        } else {
+            return;
+        }
+    }
+    public function getDepreciationEndDayAttribute()
+    {
+        if (isset($this->depreciation_end_date)) {
+            return $this->depreciation_end_date->format('m-d-Y');
+        } else {
+            return;
+        }
+    }
+
     public function scopeActive($query)
     {
         return $query->whereIsActive(1);

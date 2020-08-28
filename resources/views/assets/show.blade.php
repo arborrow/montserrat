@@ -59,22 +59,22 @@
         </div>
         <h3 class="text-primary">Purchase info</h3>
         <div class="row">
-            <div class="col-2"><strong>Purchase date:</strong> {{$asset->purchase_date}}</div>
+            <div class="col-2"><strong>Purchase date:</strong> {{$asset->purchase_day}}</div>
             <div class="col-2"><strong>Purchase price:</strong> {{$asset->purchase_price}}</div>
-            <div class="col-2"><strong>Start date:</strong> {{$asset->start_date}}</div>
-            <div class="col-2"><strong>End date:</strong> {{$asset->end_date}}</div>
+            <div class="col-2"><strong>Start date:</strong> {{$asset->start_day}}</div>
+            <div class="col-2"><strong>End date:</strong> {{$asset->end_day}}</div>
             <div class="col-2"><strong>Life expectancy:</strong> {{$asset->life_expectancy}} {{ $asset->life_expectancy_uom_name }}</div>
             <div class="col-3"><strong>Replacement:</strong> {{$asset->replacement_id}}</div>
         </div>
         <h3 class="text-primary">Warranty info</h3>
         <div class="row">
-            <div class="col-3"><strong>Warranty start date:</strong> {{$asset->warranty_start_date}}</div>
-            <div class="col-3"><strong>Warranty end date:</strong> {{$asset->warranty_end_date}}</div>
+            <div class="col-3"><strong>Warranty start date:</strong> {{$asset->warranty_start_day}}</div>
+            <div class="col-3"><strong>Warranty end date:</strong> {{$asset->warranty_end_day}}</div>
         </div>
         <h3 class="text-primary">Depreciation info</h3>
         <div class="row">
-            <div class="col-3"><strong>Depreciation start date:</strong> {{$asset->depreciation_start_date}}</div>
-            <div class="col-3"><strong>Depreciation end date:</strong> {{$asset->depreciation_end_date}}</div>
+            <div class="col-3"><strong>Depreciation start date:</strong> {{$asset->depreciation_start_day}}</div>
+            <div class="col-3"><strong>Depreciation end date:</strong> {{$asset->depreciation_end_day}}</div>
             <div class="col-3"><strong>Depreciation type:</strong> {{$asset->depreciation_type_id}}</div>
             <div class="col-3"><strong>Depreciation rate:</strong> {{$asset->depreciation_rate}}</div>
             <div class="col-3"><strong>Depreciation value:</strong> {{$asset->depreciation_value}}</div>
