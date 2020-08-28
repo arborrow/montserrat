@@ -10,23 +10,28 @@
                 <h2>Asset</h2>
             </div>
             <div class="col-12">
-                {!! Form::open(['method' => 'PUT', 'route' => ['asset.update', $asset->id]]) !!}
+                {!! Form::open(['method' => 'PUT', 'route' => ['asset.update', $asset->id],'enctype'=>'multipart/form-data']) !!}
                 {!! Form::hidden('id', $asset->id) !!}
                 <div class="form-group">
                     <h3 class="text-primary">General information</h3>
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-3">
                             {!! Form::label('name', 'Name') !!}
                             {!! Form::text('name', $asset->name , ['class' => 'form-control']) !!}
                         </div>
-                        <div class="col-4">
+                        <div class="col-3">
                             {!! Form::label('asset_type_id', 'Asset type') !!}
                             {!! Form::select('asset_type_id', $asset_types, $asset->asset_type_id, ['class' => 'form-control']) !!}
                         </div>
-                        <div class="col-4">
+                        <div class="col-3">
                             {!! Form::label('description', 'Description') !!}
                             {!! Form::textarea('description', $asset->description, ['class' => 'form-control', 'rows' => 1]) !!}
                         </div>
+                        <div class="col-3">
+                            {!! Form::label('asset_photo', 'Picture of asset (max 10M):')  !!}
+                            {!! Form::file('asset_photo'); !!}
+                        </div>
+
                     </div>
 
                     <div class="row">

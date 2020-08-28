@@ -101,6 +101,8 @@ return [
         'contact_avatar' => '6',
         'event_attachment' => '7',
         'signature' => '8',
+        'asset_photo' => '9',
+        'asset_attachment' => '10',
     ],
 
     'group_id' => [

@@ -72,6 +72,7 @@ class StoreAssetRequest extends FormRequest
             'depreciation_value' => 'numeric|nullable',
             'depreciation_time' => 'numeric|nullable',
             'depreciation_time_uom_id' => 'integer|min:0|exists:uom,id|nullable',
+            'asset_photo' => 'image|max:10000|nullable',
         ];
     }
 

@@ -16,10 +16,15 @@
     <div class="col-12">
         <h3 class="text-primary">General information</h3>
         <div class="row">
-            <div class="col-4"><strong>Name:</strong> {{$asset->name}}</div>
-            <div class="col-4"><strong>Asset Type:</strong>
+            <div class="col-3"><strong>Name:</strong> {{$asset->name}}</div>
+            <div class="col-3"><strong>Asset Type:</strong>
                 <a href="{{ url('asset/type/'.$asset->asset_type_id) }}"> {{$asset->asset_type_name}} </a></div>
-            <div class="col-4"><strong>Description:</strong> {{$asset->description}}</div>
+            <div class="col-3"><strong>Description:</strong> {{$asset->description}}</div>
+            <div class="col-3">
+                @if (Storage::has('asset/'.$asset->id.'/asset_photo.jpg'))
+                    <img src="{{url('asset/'.$asset->id).'/photo'}}" class="img" style="padding:5px; width:300px;">
+                @endif
+            </div>
         </div>
 
         <div class="row">

@@ -27,7 +27,7 @@ Route::get('/', 'PageController@welcome');
 Route::get('/welcome', 'PageController@welcome')->name('welcome');
 Route::get('/goodbye', 'HomeController@goodbye');
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('report/acknowledgment_pdf/{contact_id}/{start_date?}/{end_date?}','PageController@acknowledgment_pdf');
+Route::get('report/acknowledgment_pdf/{contact_id}/{start_date?}/{end_date?}', 'PageController@acknowledgment_pdf');
 // Authentication routes...
 // Route::get('login/{provider?}', 'Auth\AuthController@login');
 // Route::get('auth/google/callback', 'Auth\AuthController@handleProviderCallback');
@@ -84,15 +84,17 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::resource('role', 'RoleController');
     Route::resource('uom', 'UomController');
     Route::resource('user', 'UserController');
-    });
+});
 
 /* In developement - commented out for Now
 Route::resource('activity', 'ActivityController');
  */
- Route::get('asset/type/{type?}', 'AssetController@index_type');
- Route::get('asset/location/{location_id?}', 'AssetController@index_location');
- Route::get('asset/search', 'AssetController@search')->name('assets.search');
- Route::get('asset/results', 'AssetController@results')->name('assets.results');
+Route::get('asset/type/{type?}', 'AssetController@index_type');
+Route::get('asset/location/{location_id?}', 'AssetController@index_location');
+Route::get('asset/search', 'AssetController@search')->name('assets.search');
+Route::get('asset/results', 'AssetController@results')->name('assets.results');
+Route::get('asset/{asset_id}/photo', 'AttachmentController@get_asset_photo')->name('get_asset_photo');
+Route::get('asset/{asset_id}/photo/delete', 'AttachmentController@delete_asset_photo')->name('delete_asset_photo');
 
 Route::resource('asset', 'AssetController');
 

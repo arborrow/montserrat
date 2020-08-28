@@ -218,6 +218,12 @@ class AssetController extends Controller
 
         $asset->save();
 
+        if (null !== $request->file('asset_photo')) {
+            $description = 'Photo of '.$asset->name;
+            $attachment = new AttachmentController;
+            $attachment->update_attachment($request->file('asset_photo'), 'asset', $asset->id, 'asset_photo', $description);
+        }
+
         return Redirect::action('AssetController@index');
     }
 
@@ -357,6 +363,12 @@ class AssetController extends Controller
         $asset->depreciation_time_uom_id = ($request->input('depreciation_time_uom_id') > 0) ? $request->input('depreciation_time_uom_id') : null;
 
         $asset->save();
+
+        if (null !== $request->file('asset_photo')) {
+            $description = 'Photo of '.$asset->name;
+            $attachment = new AttachmentController;
+            $attachment->update_attachment($request->file('asset_photo'), 'asset', $asset->id, 'asset_photo', $description);
+        }
 
         return Redirect::action('AssetController@show', $asset->id);
     }
