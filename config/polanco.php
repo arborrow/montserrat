@@ -282,4 +282,21 @@ return [
         'Volume' => 'Volume',
     ],
 
+    'website_types' => [
+        'Personal' => 'Personal',
+        'Work' => 'Work',
+        'Main' => 'Main',
+        'Facebook' => 'Facebook',
+        'Google' => 'Google',
+        'Instagram' => 'Instagram',
+        'LinkedIn' => 'LinkedIn',
+        'MySpace' => 'MySpace',
+        'Other' => 'Other',
+        'Pinterest' => 'Pinterest',
+        'SnapChat' => 'SnapChat',
+        'Tumblr' => 'Tumblr',
+        'Twitter' => 'Twitter',
+        'Vine' => 'Vine',
+    ],
+
 ];

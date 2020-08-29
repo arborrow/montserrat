@@ -215,8 +215,18 @@
                             {!! Form::select('depreciation_time_uom_id', $uoms_time, $asset->depreciation_time_uom_id, ['class' => 'form-control']) !!}
                         </div>
                     </div>
+                    <h3 class="text-primary">Attachments</h3>
+                    <div class="row">
+                        <div class="col-4" id="attachments">
+                            {!! Form::label('attachment', 'Attachment (max 10M): ')  !!}
+                            {!! Form::file('attachment',['class' => 'form-control']); !!}
+                        </div>
+                        <div class="col-4">
+                            {!! Form::label('attachment_description', 'Description: (max 200)')  !!}
+                            {!! Form::text('attachment_description', NULL, ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
                 </div>
-
             </div>
         </div>
         <div class="row">

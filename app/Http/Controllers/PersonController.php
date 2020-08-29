@@ -955,7 +955,6 @@ class PersonController extends Controller
             $attachment->update_attachment($request->file('avatar'), 'contact', $person->id, 'avatar', $description);
         }
 
-        //dd($request);
         if (null !== $request->file('attachment')) {
             $description = $request->input('attachment_description');
             $attachment = new AttachmentController;

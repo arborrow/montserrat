@@ -91,7 +91,68 @@
             <div class="col-3"><strong>Depreciation value:</strong> {{$asset->depreciation_value}}</div>
             <div class="col-3"><strong>Depreciation time:</strong> {{$asset->depreciation_time}} {{ $asset->depreciation_time_uom_name }}</div>
         </div>
+        <h3 class="text-primary">Attachments ({{ $files->count() }})</h3>
+        <div class="row">
+            <div class="col-12 mt-3" id="attachments">
+                @if ($files->isEmpty())
+                    <p>There are no attachments for this asset.</p>
+                @else
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Uploaded date</th>
+                                <th>MIME type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($files->sortByDesc('upload_date') as $file)
+                            <tr>
+                                <td><a href="{{url('asset/'.$asset->id.'/attachment/'.$file->uri)}}">{{ $file->uri }}</a></td>
+                                <td>{{$file->description}}</td>
+                                <td>{{ $file->upload_date}}</td>
+                                <td>{{ $file->mime_type }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endif
+            </div>
+        </div>
+        <h3 class="text-primary">Website(s)</h3>
+        <div class="row">
+            <div class="col-12 mt-3" id="attachments">
+                @if ($asset->websites->isEmpty())
+                    <p>There are no websites associated with this asset.</p>
+                @else
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Website</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($asset->websites->sortByDesc('created_date') as $website)
+                            <tr>
+                                <td>
+                                    @can('show-website')
+                                        <a href="{{ URL('admin/website/'.$website->id) }}">{{$website->description}}</a>
+                                    @else
+                                        {{$website->description}}
+                                    @endCan
+                                </td>
+                                <td><a href="{{$website->url}}">{{ $website->url }}</a></td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endif
+            </div>
+        </div>
     </div>
+
     <div class="col-12 mt-3">
         <div class="row">
             <div class="col-6 text-right">

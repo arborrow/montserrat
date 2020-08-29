@@ -49,6 +49,7 @@ class DatabaseSeeder extends Seeder
         // permissions
         $this->call(AssetPermissionsSeeder::class);
         $this->call(DepartmentPermissionsSeeder::class);
+        $this->call(WebsitePermissionsSeeder::class);
 
     }
 }

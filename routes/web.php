@@ -84,6 +84,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::resource('role', 'RoleController');
     Route::resource('uom', 'UomController');
     Route::resource('user', 'UserController');
+    Route::resource('website', 'WebsiteController');
 });
 
 /* In developement - commented out for Now
@@ -95,6 +96,8 @@ Route::get('asset/search', 'AssetController@search')->name('assets.search');
 Route::get('asset/results', 'AssetController@results')->name('assets.results');
 Route::get('asset/{asset_id}/photo', 'AttachmentController@get_asset_photo')->name('get_asset_photo');
 Route::get('asset/{asset_id}/photo/delete', 'AttachmentController@delete_asset_photo')->name('delete_asset_photo');
+Route::get('asset/{asset_id}/attachment/{file_name}', 'AttachmentController@show_asset_attachment')->name('show_asset_attachment');
+Route::get('asset/{asset_id}/attachment/{file_name}/delete', 'AttachmentController@delete_asset_attachment')->name('delete_asset_attachment');
 
 Route::resource('asset', 'AssetController');
 

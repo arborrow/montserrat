@@ -73,6 +73,34 @@ class AttachmentControllerTest extends TestCase
     /**
      * @test
      */
+    public function delete_asset_attachment_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('delete-attachment');
+
+        $asset = factory(\App\Asset::class)->create();
+        $file_name = $this->faker->isbn10.'.pdf';
+        $file = UploadedFile::fake()->create($file_name)->storeAs('asset/'.$asset->id.'/attachments', $file_name);
+        $description = 'Random Attachment for '.$asset->name;
+
+        $attachment = factory(\App\Attachment::class)->create([
+            'mime_type' => 'application/pdf',
+            'description' => $description,
+            'upload_date' => $this->faker->dateTime('now'),
+            'entity' => 'asset',
+            'entity_id' => $asset->id,
+            'file_type_id' => config('polanco.file_type.asset_attachment'),
+            'uri' => $file_name,
+        ]);
+
+        $response = $this->actingAs($user)->get(route('delete_asset_attachment', ['asset_id' => $attachment->entity_id, 'file_name' => $attachment->uri]));
+
+        $response->assertRedirect(action('AssetController@show', $asset->id));
+
+    }
+
+    /**
+     * @test
+     */
     public function delete_contact_attachment_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-attachment');
@@ -453,6 +481,36 @@ class AttachmentControllerTest extends TestCase
         $response = $this->actingAs($user)->get(route('show_event_attachment', ['event_id' => $event->id, 'file_name' => $file_name]));
 
         $response->assertOk();
+    }
+
+
+    /**
+     * @test
+     */
+    public function show_asset_attachment_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-attachment');
+
+        //create a person, create a fake attachment for that person, see if you can display the attachment
+        $asset = factory(\App\Asset::class)->create();
+        $file_name = $this->faker->isbn10.'.pdf';
+        $file = UploadedFile::fake()->create($file_name)->storeAs('asset/'.$asset->id.'/attachments', $file_name);
+        $description = 'Random Attachment for '.$asset->name;
+
+        $attachment = factory(\App\Attachment::class)->create([
+            'mime_type' => 'application/pdf',
+            'description' => $description,
+            'upload_date' => $this->faker->dateTime('now'),
+            'entity' => 'asset',
+            'entity_id' => $asset->id,
+            'file_type_id' => config('polanco.file_type.asset_attachment'),
+            'uri' => $file_name,
+        ]);
+
+        $response = $this->actingAs($user)->get(route('show_asset_attachment', ['asset_id' => $asset->id, 'file_name' => $file_name]));
+
+        $response->assertOk();
+
     }
 
 // test cases...

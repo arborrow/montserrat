@@ -238,8 +238,9 @@ class AssetController extends Controller
         $this->authorize('show-asset');
 
         $asset = \App\Asset::findOrFail($id);
+        $files = \App\Attachment::whereEntity('asset')->whereEntityId($asset->id)->whereFileTypeId(config('polanco.file_type.asset_attachment'))->get();
 
-        return view('assets.show', compact('asset'));
+        return view('assets.show', compact('asset','files'));
     }
 
     /**
@@ -368,6 +369,12 @@ class AssetController extends Controller
             $description = 'Photo of '.$asset->name;
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('asset_photo'), 'asset', $asset->id, 'asset_photo', $description);
+        }
+
+        if (null !== $request->file('attachment')) {
+            $description = $request->input('attachment_description');
+            $attachment = new AttachmentController;
+            $attachment->update_attachment($request->file('attachment'), 'asset', $asset->id, 'attachment', $description);
         }
 
         return Redirect::action('AssetController@show', $asset->id);

@@ -12,86 +12,42 @@ class Asset extends Model
     protected $table = 'asset';
     protected $dates = ['start_date', 'end_date', 'purchase_date','warranty_start_date', 'warranty_end_date','depreciation_start_date', 'depreciation_end_date'];
 
-    public function getStartDayAttribute()
-    {
-        if (isset($this->start_date)) {
-            return $this->start_date->format('m-d-Y');
-        } else {
-            return;
-        }
-    }
-
-    public function getEndDayAttribute()
-    {
-        if (isset($this->end_date)) {
-            return $this->end_date->format('m-d-Y');
-        } else {
-            return;
-        }
-    }
-    public function getPurchaseDayAttribute()
-    {
-        if (isset($this->purchase_date)) {
-            return $this->purchase_date->format('m-d-Y');
-        } else {
-            return;
-        }
-    }
-    public function getWarrantyStartDayAttribute()
-    {
-        if (isset($this->warranty_start_date)) {
-            return $this->warranty_start_date->format('m-d-Y');
-        } else {
-            return;
-        }
-    }
-    public function getWarrantyEndDayAttribute()
-    {
-        if (isset($this->warranty_end_date)) {
-            return $this->warranty_end_date->format('m-d-Y');
-        } else {
-            return;
-        }
-    }
-    public function getDepreciationStartDayAttribute()
-    {
-        if (isset($this->depreciation_start_date)) {
-            return $this->depreciation_start_date->format('m-d-Y');
-        } else {
-            return;
-        }
-    }
-    public function getDepreciationEndDayAttribute()
-    {
-        if (isset($this->depreciation_end_date)) {
-            return $this->depreciation_end_date->format('m-d-Y');
-        } else {
-            return;
-        }
-    }
-
-    public function scopeActive($query)
-    {
-        return $query->whereIsActive(1);
-    }
-
-    public function parent()
-    {
-        return $this->hasOne(Asset::class, 'id', 'parent_id');
-    }
-    public function replacement()
-    {
-        return $this->hasOne(Asset::class, 'id', 'replacement_id');
-    }
+    // relations
     public function asset_type()
     {
         return $this->hasOne(AssetType::class, 'id', 'asset_type_id');
+    }
+
+    public function capacity_uom()
+    {
+        return $this->hasOne(Uom::class, 'id', 'capacity_uom_id');
+    }
+
+    public function depreciation_time_uom()
+    {
+        return $this->hasOne(Uom::class, 'id', 'depreciation_time_uom_id');
     }
 
     public function department()
     {
         return $this->hasOne(Department::class, 'id', 'department_id');
     }
+
+    public function height_uom()
+    {
+        return $this->hasOne(Uom::class, 'id', 'height_uom_id');
+    }
+
+    public function length_uom()
+    {
+        return $this->hasOne(Uom::class, 'id', 'length_uom_id');
+    }
+
+    public function life_expectancy_uom()
+    {
+        return $this->hasOne(Uom::class, 'id', 'life_expectancy_uom_id');
+    }
+
     public function location()
     {
         return $this->hasOne(Location::class, 'id', 'location_id');
@@ -103,9 +59,14 @@ class Asset extends Model
         return $this->hasOne(Contact::class, 'id', 'manufacturer_id');
     }
 
-    public function vendor()
+    public function parent()
     {
-        return $this->hasOne(Contact::class, 'id', 'vendor_id');
+        return $this->hasOne(Asset::class, 'id', 'parent_id');
+    }
+
+    public function power_amp_uom()
+    {
+        return $this->hasOne(Uom::class, 'id', 'power_amp_uom_id');
     }
 
     public function power_line_voltage_uom()
@@ -118,24 +79,19 @@ class Asset extends Model
         return $this->hasOne(Uom::class, 'id', 'power_phase_voltage_uom_id');
     }
 
-    public function power_amp_uom()
+    public function replacement()
     {
-        return $this->hasOne(Uom::class, 'id', 'power_amp_uom_id');
+        return $this->hasOne(Asset::class, 'id', 'replacement_id');
     }
 
-    public function length_uom()
+    public function vendor()
     {
-        return $this->hasOne(Uom::class, 'id', 'length_uom_id');
+        return $this->hasOne(Contact::class, 'id', 'vendor_id');
     }
 
-    public function width_uom()
+    public function websites()
     {
-        return $this->hasOne(Uom::class, 'id', 'width_uom_id');
-    }
-
-    public function height_uom()
-    {
-        return $this->hasOne(Uom::class, 'id', 'height_uom_id');
+        return $this->hasMany(Website::class, 'asset_id', 'id');
     }
 
     public function weight_uom()
@@ -143,21 +99,12 @@ class Asset extends Model
         return $this->hasOne(Uom::class, 'id', 'weight_uom_id');
     }
 
-    public function life_expectancy_uom()
+    public function width_uom()
     {
-        return $this->hasOne(Uom::class, 'id', 'life_expectancy_uom_id');
+        return $this->hasOne(Uom::class, 'id', 'width_uom_id');
     }
 
-    public function depreciation_time_uom()
-    {
-        return $this->hasOne(Uom::class, 'id', 'depreciation_time_uom_id');
-    }
-
-    public function capacity_uom()
-    {
-        return $this->hasOne(Uom::class, 'id', 'capacity_uom_id');
-    }
-
+    //attributes
     public function getAssetTypeNameAttribute()
     {
         if (isset($this->asset_type->name)) {
@@ -202,6 +149,7 @@ class Asset extends Model
             return 'N/A';
         }
     }
+
     public function getReplacementNameAttribute()
     {
         if (isset($this->replacement->name)) {
@@ -247,7 +195,6 @@ class Asset extends Model
         }
     }
 
-
     public function getPowerAmpUomNameAttribute()
     {
         if (isset($this->power_amp_uom->unit_name)) {
@@ -274,6 +221,7 @@ class Asset extends Model
             return ;
         }
     }
+
     public function getHeightUomNameAttribute()
     {
         if (isset($this->height_uom->unit_name)) {
@@ -282,6 +230,7 @@ class Asset extends Model
             return ;
         }
     }
+
     public function getWeightUomNameAttribute()
     {
         if (isset($this->weight_uom->unit_name)) {
@@ -290,6 +239,7 @@ class Asset extends Model
             return ;
         }
     }
+
     public function getLifeExpectancyUomNameAttribute()
     {
         if (isset($this->life_expectancy_uom->unit_name)) {
@@ -298,6 +248,7 @@ class Asset extends Model
             return ;
         }
     }
+
     public function getDepreciationTimeUomNameAttribute()
     {
         if (isset($this->depreciation_time_uom->unit_name)) {
@@ -305,6 +256,75 @@ class Asset extends Model
         } else {
             return ;
         }
+    }
+
+    public function getStartDayAttribute()
+    {
+        if (isset($this->start_date)) {
+            return $this->start_date->format('m-d-Y');
+        } else {
+            return;
+        }
+    }
+
+    public function getEndDayAttribute()
+    {
+        if (isset($this->end_date)) {
+            return $this->end_date->format('m-d-Y');
+        } else {
+            return;
+        }
+    }
+
+    public function getPurchaseDayAttribute()
+    {
+        if (isset($this->purchase_date)) {
+            return $this->purchase_date->format('m-d-Y');
+        } else {
+            return;
+        }
+    }
+
+    public function getWarrantyStartDayAttribute()
+    {
+        if (isset($this->warranty_start_date)) {
+            return $this->warranty_start_date->format('m-d-Y');
+        } else {
+            return;
+        }
+    }
+
+    public function getWarrantyEndDayAttribute()
+    {
+        if (isset($this->warranty_end_date)) {
+            return $this->warranty_end_date->format('m-d-Y');
+        } else {
+            return;
+        }
+    }
+
+    public function getDepreciationStartDayAttribute()
+    {
+        if (isset($this->depreciation_start_date)) {
+            return $this->depreciation_start_date->format('m-d-Y');
+        } else {
+            return;
+        }
+    }
+
+    public function getDepreciationEndDayAttribute()
+    {
+        if (isset($this->depreciation_end_date)) {
+            return $this->depreciation_end_date->format('m-d-Y');
+        } else {
+            return;
+        }
+    }
+
+    //scopes
+    public function scopeActive($query)
+    {
+        return $query->whereIsActive(1);
     }
 
     public function scopeFiltered($query, $filters)

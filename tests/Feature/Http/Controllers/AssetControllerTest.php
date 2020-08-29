@@ -221,6 +221,7 @@ class AssetControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('assets.show');
         $response->assertViewHas('asset');
+        $response->assertViewHas('files');
         $response->assertSeeText('Asset details');
     }
 
