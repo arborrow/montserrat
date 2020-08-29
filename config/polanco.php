@@ -36,7 +36,7 @@ return [
         7 => "90,174,174" ,
         8 => "147,131,107",
     ],
-    
+
     'agc_donation_descriptions' => [
         'AGC - General',
         'AGC - Endowment',
@@ -101,6 +101,8 @@ return [
         'contact_avatar' => '6',
         'event_attachment' => '7',
         'signature' => '8',
+        'asset_photo' => '9',
+        'asset_attachment' => '10',
     ],
 
     'group_id' => [
@@ -123,12 +125,23 @@ return [
         'hlm2017' => '17',
     ],
 
+    // communication locations (phone, email, address, etc.)
     'location_type' => [
         'home' => '1',
         'work' => '2',
         'main' => '3',
         'other' => '4',
         'billing' => '5',
+    ],
+    // physical types of locations
+    'locations_type' => [
+        'Site' => 'Site',
+        'Grounds' => 'Grounds',
+        'Building' => 'Building',
+        'Floor' => 'Floor',
+        'Room' => 'Room',
+        'Closet' => 'Closet',
+        'Other' => 'Other',
     ],
 
     'medium' => [
@@ -254,5 +267,36 @@ return [
      * Restrict socialite authentication to a particular domain
      */
     'socialite_domain_restriction' => 'montserratretreat.org',
+
+    /*
+    * Unit of measurement types to fill uom.type enum field
+     */
+    'uom_types' => [
+        'Area' => 'Area',
+        'Electric current' => 'Electric current',
+        'Length' => 'Length',
+        'Luminosity' => 'Luminosity',
+        'Mass' => 'Mass',
+        'Temperature' => 'Temperature',
+        'Time' => 'Time',
+        'Volume' => 'Volume',
+    ],
+
+    'website_types' => [
+        'Personal' => 'Personal',
+        'Work' => 'Work',
+        'Main' => 'Main',
+        'Facebook' => 'Facebook',
+        'Google' => 'Google',
+        'Instagram' => 'Instagram',
+        'LinkedIn' => 'LinkedIn',
+        'MySpace' => 'MySpace',
+        'Other' => 'Other',
+        'Pinterest' => 'Pinterest',
+        'SnapChat' => 'SnapChat',
+        'Tumblr' => 'Tumblr',
+        'Twitter' => 'Twitter',
+        'Vine' => 'Vine',
+    ],
 
 ];

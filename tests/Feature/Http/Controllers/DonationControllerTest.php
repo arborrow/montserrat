@@ -226,7 +226,6 @@ class DonationControllerTest extends TestCase
         $payment = factory(\App\Payment::class)->create();
 
         $response = $this->actingAs($user)->get(route('donation.show', [$payment->donation_id]));
-
         $response->assertOk();
         $response->assertViewIs('donations.show');
         $response->assertViewHas('donation');

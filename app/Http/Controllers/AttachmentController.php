@@ -63,6 +63,11 @@ class AttachmentController extends Controller
                 $file_name = 'group_photo.jpg';
                 $path = storage_path().'/app/'.$entity.'/'.$entity_id.'/'.$file_name;
                 break;
+            case 'asset_photo':
+                $this->authorize('show-asset');
+                $file_name = 'asset_photo.jpg';
+                $path = storage_path().'/app/'.$entity.'/'.$entity_id.'/'.$file_name;
+                break;
             case 'signature':
                 $this->authorize('show-signature');
                 $file_name = 'signature.png';
@@ -117,6 +122,11 @@ class AttachmentController extends Controller
                 $this->authorize('create-event-group-photo');
                 $attachment->file_type_id = config('polanco.file_type.event_group_photo');
                 $attachment->uri = 'group_photo.jpg';
+                break;
+            case 'asset_photo':
+                $this->authorize('update-asset');
+                $attachment->file_type_id = config('polanco.file_type.asset_photo');
+                $attachment->uri = 'asset_photo.jpg';
                 break;
             case 'attachment':
                 $this->authorize('create-attachment');
@@ -180,8 +190,8 @@ class AttachmentController extends Controller
                 break;
             case 'attachment':
                 $this->authorize('create-attachment');
+                $file_type_id = ($entity == 'asset') ? config('polanco.file_type.asset_attachment') : config('polanco.file_type.contact_attachment');
                 $path = $entity.'/'.$entity_id.'/attachments/';
-                $file_type_id = config('polanco.file_type.contact_attachment');
                 $file_name = $this->sanitize_filename($file->getClientOriginalName());
                 $mime_type = $file->getClientMimeType();
                 $file_extension = '$file->extension()';
@@ -286,6 +296,21 @@ class AttachmentController extends Controller
                     Storage::disk('local')->put($path.$file_name, $group_photo->stream('jpg'));
                 }
                 break;
+            case 'asset_photo':
+                $this->authorize('update-asset');
+                $path = $entity.'/'.$entity_id.'/';
+                $file_type_id = config('polanco.file_type.asset_photo');
+                $file_name = 'asset_photo.jpg';
+                $updated_file_name = 'asset_photo-updated-'.time().'.jpg';
+                $asset_photo = Image::make($file->getRealPath());
+                $mime_type = $asset_photo->mime();
+                if (File::exists(storage_path().'/app/'.$path.$file_name)) {
+                    Storage::move($path.$file_name, $path.$updated_file_name);
+                    Storage::disk('local')->put($path.$file_name, $asset_photo->stream('jpg'));
+                } else {
+                    Storage::disk('local')->put($path.$file_name, $asset_photo->stream('jpg'));
+                }
+                break;
             case 'signature':
                 $this->authorize('create-signature');
                 $path = $entity.'/'.$entity_id.'/';
@@ -327,6 +352,12 @@ class AttachmentController extends Controller
                 $path = $entity.'/'.$entity_id.'/';
                 $updated_file_name = 'group_photo-deleted-'.time().'.jpg';
                 break;
+            case 'asset_photo':
+                $file_name = 'asset_photo.jpg';
+                $attachment = \App\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(config('polanco.file_type.asset_photo'))->firstOrFail();
+                $path = $entity.'/'.$entity_id.'/';
+                $updated_file_name = 'asset_photo-deleted-'.time().'.jpg';
+                break;
             case 'contract':
                 $file_name = 'contract.pdf';
                 $attachment = \App\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(config('polanco.file_type.event_contract'))->firstOrFail();
@@ -346,7 +377,8 @@ class AttachmentController extends Controller
                 $updated_file_name = 'evaluations-deleted-'.time().'.pdf';
                 break;
             case 'attachment':
-                $attachment = \App\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->firstOrFail();
+                $file_type_id = ($entity == 'asset') ? config('polanco.file_type.asset_attachment') : config('polanco.file_type.contact_attachment');
+                $attachment = \App\Attachment::whereEntity($entity)->whereEntityId($entity_id)->whereUri($file_name)->whereFileTypeId($file_type_id)->firstOrFail();
                 $path = $entity.'/'.$entity_id.'/attachments/';
                 $file_extension = File::extension($path.$file_name);
                 $file_basename = File::name($path.$file_name);
@@ -497,4 +529,37 @@ class AttachmentController extends Controller
 
         return $this->show_attachment('event', $event_id, 'group_photo', null);
     }
+
+    public function delete_asset_photo($asset_id)
+    {
+        $this->authorize('delete-attachment');
+        $this->delete_attachment('asset_photo.jpg', 'asset', $asset_id, 'asset_photo');
+
+        return Redirect::action('AssetController@show', $asset_id);
+    }
+
+    public function get_asset_photo($asset_id)
+    {
+        $this->authorize('show-asset');
+
+        return $this->show_attachment('asset', $asset_id, 'asset_photo', null);
+    }
+
+    public function show_asset_attachment($asset_id, $file_name)
+    {
+        $this->authorize('show-attachment');
+
+        return $this->show_attachment('asset', $asset_id, 'attachment', $file_name);
+    }
+
+    public function delete_asset_attachment($asset_id, $file_name)
+    {
+        $this->authorize('delete-attachment');
+
+        $this->delete_attachment($file_name, 'asset', $asset_id, 'attachment');
+
+        return Redirect::action('AssetController@show', $asset_id);
+    }
+
+
 }

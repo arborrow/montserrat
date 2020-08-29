@@ -5,6 +5,9 @@ namespace Tests\Feature\Http\Controllers;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Illuminate\Validation\ValidationException;
+
+// $this->withoutExceptionHandling();
 
 /**
  * @see \App\Http\Controllers\DonationTypeController
@@ -100,13 +103,14 @@ class DonationTypeControllerTest extends TestCase
      */
     public function store_returns_an_ok_response()
     {
+        $this->withoutExceptionHandling();
+
         $user = $this->createUserWithPermission('create-donation-type');
-        $donation_type_name = 'New '.$this->faker->words(3, true);
+        $donation_type_name = 'New '.$this->faker->word;
         $donation_type_label = $this->faker->words(2, true);
         $donation_type_description = $this->faker->sentence(7, true);
-        $donation_type_value = $this->faker->numberBetween(1000,2000);
+        $donation_type_value = strval($this->faker->numberBetween(1000,2000));
         $donation_type_is_active = $this->faker->boolean();
-
         $response = $this->actingAs($user)->post(route('donation_type.store'), [
             'name' => $donation_type_name,
             'label' => $donation_type_label,
@@ -114,8 +118,8 @@ class DonationTypeControllerTest extends TestCase
             'value' => $donation_type_value,
             'is_active' => $donation_type_is_active,
         ]);
-
         $response->assertRedirect(action('DonationTypeController@index'));
+
         $this->assertDatabaseHas('donation_type', [
           'name' => $donation_type_name,
           'label' => $donation_type_label,
@@ -139,12 +143,12 @@ class DonationTypeControllerTest extends TestCase
           'id' => $donation_type->id,
           'name' => $new_donation_type_name,
           'label' => $this->faker->words(4, true),
-          'value' => $this->faker->numberBetween(1000,2000),
+          'value' => strval($this->faker->numberBetween(1000,2000)),
           'description' => $this->faker->sentence(7, true),
-          'is_value' => $this->faker->boolean(),
+          'is_active' => $this->faker->boolean(),
         ]);
 
-        $response->assertRedirect(action('DonationTypeController@index'));
+        $response->assertRedirect(action('DonationTypeController@show',$donation_type->id));
         $updated = \App\DonationType::findOrFail($donation_type->id);
         $this->assertEquals($updated->name, $new_donation_type_name);
         $this->assertNotEquals($updated->name, $original_donation_type_name);

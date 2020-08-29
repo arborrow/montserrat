@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UsersTableSeeder::class);
+        $this->call(AssetTypeTableSeeder::class);
         $this->call(CivicrmParticipantStatusTypeTableSeeder::class);
         $this->call(ContactTableSeeder::class);
         $this->call(ContactLanguagesTableSeeder::class);
@@ -42,5 +43,13 @@ class DatabaseSeeder extends Seeder
         $this->call(TouchcategoriesTableSeeder::class);
         $this->call(DonationTypeTableSeeder::class);
         $this->call(PermissionRoleTableSeeder::class);
+        $this->call(UomTableSeeder::class);
+        $this->call(AssetTypeTableSeeder::class);
+        $this->call(DepartmentTableSeeder::class);
+        // permissions
+        $this->call(AssetPermissionsSeeder::class);
+        $this->call(DepartmentPermissionsSeeder::class);
+        $this->call(WebsitePermissionsSeeder::class);
+
     }
 }

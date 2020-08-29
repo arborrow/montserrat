@@ -1214,6 +1214,12 @@ class Contact extends Model
             ]);
     }
 
+    public function scopeVendors($query)
+    {
+        return $query->whereContactType(config('polanco.contact_type.organization'))->whereSubcontactType(config('polanco.contact_type.vendor'));
+    }
+
+
     public function scopeFiltered($query, $filters)
     {
         //dd($filters->request);

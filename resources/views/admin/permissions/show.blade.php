@@ -30,6 +30,16 @@
             {!! Form::close() !!}
         @endCan
     </div>
+    <div class="col-12">Users with {{ $permission->name }} permission:
+        <ul>
+            @foreach($permission->roles as $role)
+                @foreach($role->users as $user)
+                    <li><a href = "{{ URL('admin/user/' . $user->id) }}">{{ $user->name }}</a>
+                @endforeach
+            @endforeach
+        </ul>
+    </div>
+
     <div class="col-12">
         <div class="row">
             <div class="col-6 text-right">
@@ -39,7 +49,7 @@
             </div>
             <div class="col-6 text-left">
                 {!! Form::open(['method' => 'DELETE', 'route' => ['permission.destroy', $permission->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                    {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                    {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
                 {!! Form::close() !!}</div><div class="clearfix">
             </div>
         </div>

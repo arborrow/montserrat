@@ -27,7 +27,7 @@ Route::get('/', 'PageController@welcome');
 Route::get('/welcome', 'PageController@welcome')->name('welcome');
 Route::get('/goodbye', 'HomeController@goodbye');
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('report/acknowledgment_pdf/{contact_id}/{start_date?}/{end_date?}','PageController@acknowledgment_pdf');
+Route::get('report/acknowledgment_pdf/{contact_id}/{start_date?}/{end_date?}', 'PageController@acknowledgment_pdf');
 // Authentication routes...
 // Route::get('login/{provider?}', 'Auth\AuthController@login');
 // Route::get('auth/google/callback', 'Auth\AuthController@handleProviderCallback');
@@ -59,28 +59,6 @@ Route::get('signature/{user_id}/delete', 'AttachmentController@delete_signature'
 Route::get('contact/{user_id}/attachment/{file_name}', 'AttachmentController@show_contact_attachment')->name('show_contact_attachment');
 Route::get('contact/{user_id}/attachment/{file_name}/delete', 'AttachmentController@delete_contact_attachment')->name('delete_contact_attachment');
 
-Route::get('retreat/{event_id}/attachment/{file_name}', 'AttachmentController@show_event_attachment')->name('show_event_attachment');
-Route::get('retreat/{event_id}/attachment/{file_name}/delete', 'AttachmentController@delete_event_attachment')->name('delete_event_attachment');
-
-Route::get('retreat/{event_id}/contract', 'AttachmentController@get_event_contract')->name('get_event_contract');
-Route::get('retreat/{event_id}/contract/delete', 'AttachmentController@delete_event_contract')->name('delete_event_contract');
-Route::get('retreat/{event_id}/schedule', 'AttachmentController@get_event_schedule')->name('get_event_schedule');
-Route::get('retreat/{event_id}/schedule/delete', 'AttachmentController@delete_event_schedule')->name('delete_event_schedule');
-Route::get('retreat/{event_id}/evaluations', 'AttachmentController@get_event_evaluations')->name('get_event_evaluations');
-Route::get('retreat/{event_id}/evaluations/delete', 'AttachmentController@delete_event_evaluations')->name('delete_event_evaluations');
-Route::get('retreat/{event_id}/photo', 'AttachmentController@get_event_group_photo')->name('get_event_group_photo');
-Route::get('retreat/{event_id}/photo/delete', 'AttachmentController@delete_event_group_photo')->name('delete_event_group_photo');
-Route::get('retreat/{event_id}/roomlist', 'RetreatController@event_room_list')->name('event_room_list');
-Route::get('retreat/{event_id}/namebadges/{role?}', 'RetreatController@event_namebadges')->name('event_namebadges');
-Route::get('retreat/{event_id}/tableplacards', 'RetreatController@event_tableplacards')->name('event_tableplacards');
-Route::get('retreat/{event_id}/touchpoint', 'TouchpointController@add_retreat');
-Route::get('retreat/{event_id}/waitlist_touchpoint', 'TouchpointController@add_retreat_waitlist');
-Route::get('retreat/{event_id}/waitlist', 'RetreatController@show_waitlist');
-Route::get('retreat/type/{event_type_id}', 'RetreatController@index_type');
-
-Route::get('retreat/search', 'RetreatController@search')->name('retreats.search');
-Route::get('retreat/results', 'RetreatController@results')->name('retreats.results');
-
 // General routes including groups, resources, etc.
 Route::get('about', 'PageController@about')->name('about');
 Route::resource('address', 'AddressController');
@@ -96,15 +74,32 @@ Route::get('admin/offeringdedup/show/{contact_id}/{event_id}', 'SystemController
 Route::get('admin/deposit/reconcile/{event_id?}', 'PageController@finance_reconcile_deposit_show')->name('depositreconcile.show');
 
 Route::prefix('admin')->middleware('auth')->group(function () {
-    Route::resource('permission', 'PermissionController');
-    Route::resource('role', 'RoleController');
+    Route::resource('asset_type', 'AssetTypeController');
+    Route::resource('department', 'DepartmentController');
     Route::resource('donation_type', 'DonationTypeController');
+    Route::resource('location', 'LocationController');
+    Route::get('location/type/{type?}', 'LocationController@index_type');
+    Route::resource('permission', 'PermissionController');
     Route::get('phpinfo', 'SystemController@phpinfo')->name('phpinfo');
+    Route::resource('role', 'RoleController');
+    Route::resource('uom', 'UomController');
+    Route::resource('user', 'UserController');
+    Route::resource('website', 'WebsiteController');
 });
 
 /* In developement - commented out for Now
 Route::resource('activity', 'ActivityController');
  */
+Route::get('asset/type/{type?}', 'AssetController@index_type');
+Route::get('asset/location/{location_id?}', 'AssetController@index_location');
+Route::get('asset/search', 'AssetController@search')->name('assets.search');
+Route::get('asset/results', 'AssetController@results')->name('assets.results');
+Route::get('asset/{asset_id}/photo', 'AttachmentController@get_asset_photo')->name('get_asset_photo');
+Route::get('asset/{asset_id}/photo/delete', 'AttachmentController@delete_asset_photo')->name('delete_asset_photo');
+Route::get('asset/{asset_id}/attachment/{file_name}', 'AttachmentController@show_asset_attachment')->name('show_asset_attachment');
+Route::get('asset/{asset_id}/attachment/{file_name}/delete', 'AttachmentController@delete_asset_attachment')->name('delete_asset_attachment');
+
+Route::resource('asset', 'AssetController');
 
 Route::get('bookstore', 'PageController@bookstore')->name('bookstore');
 Route::resource('diocese', 'DioceseController');
@@ -200,6 +195,25 @@ Route::prefix('report')->group(function () {
 Route::get('reservation', 'PageController@reservation')->name('reservation');
 Route::get('restricted', 'PageController@restricted')->name('restricted');
 
+Route::get('retreat/{event_id}/attachment/{file_name}', 'AttachmentController@show_event_attachment')->name('show_event_attachment');
+Route::get('retreat/{event_id}/attachment/{file_name}/delete', 'AttachmentController@delete_event_attachment')->name('delete_event_attachment');
+
+Route::get('retreat/{event_id}/contract', 'AttachmentController@get_event_contract')->name('get_event_contract');
+Route::get('retreat/{event_id}/contract/delete', 'AttachmentController@delete_event_contract')->name('delete_event_contract');
+Route::get('retreat/{event_id}/schedule', 'AttachmentController@get_event_schedule')->name('get_event_schedule');
+Route::get('retreat/{event_id}/schedule/delete', 'AttachmentController@delete_event_schedule')->name('delete_event_schedule');
+Route::get('retreat/{event_id}/evaluations', 'AttachmentController@get_event_evaluations')->name('get_event_evaluations');
+Route::get('retreat/{event_id}/evaluations/delete', 'AttachmentController@delete_event_evaluations')->name('delete_event_evaluations');
+Route::get('retreat/{event_id}/photo', 'AttachmentController@get_event_group_photo')->name('get_event_group_photo');
+Route::get('retreat/{event_id}/photo/delete', 'AttachmentController@delete_event_group_photo')->name('delete_event_group_photo');
+Route::get('retreat/{event_id}/roomlist', 'RetreatController@event_room_list')->name('event_room_list');
+Route::get('retreat/{event_id}/namebadges/{role?}', 'RetreatController@event_namebadges')->name('event_namebadges');
+Route::get('retreat/{event_id}/tableplacards', 'RetreatController@event_tableplacards')->name('event_tableplacards');
+Route::get('retreat/{event_id}/touchpoint', 'TouchpointController@add_retreat');
+Route::get('retreat/{event_id}/waitlist_touchpoint', 'TouchpointController@add_retreat_waitlist');
+Route::get('retreat/{event_id}/waitlist', 'RetreatController@show_waitlist');
+Route::get('retreat/type/{event_type_id}', 'RetreatController@index_type');
+
 Route::get('retreat/id/{id_number}', 'RetreatController@get_event_by_id_number')->name('get_event_by_id_number');
 Route::get('retreat/{retreat_id}/register/{contact_id?}', 'RegistrationController@register')->name('registration.register');
 Route::get('retreat/{id}/assign_rooms', 'RetreatController@assign_rooms')->name('retreat.assign_rooms');
@@ -211,6 +225,9 @@ Route::get('retreat/{id}/checkout', 'RetreatController@checkout')->name('retreat
 Route::get('retreat/{id}/checkin', 'RetreatController@checkin')->name('retreat.checkin');
 Route::get('retreat/{id}/status/{status}', 'RetreatController@show')->name('retreat.show');
 
+Route::get('retreat/search', 'RetreatController@search')->name('retreats.search');
+Route::get('retreat/results', 'RetreatController@results')->name('retreats.results');
+
 Route::resource('retreat', 'RetreatController');
 
 Route::get('retreats', 'PageController@retreat')->name('retreats');
@@ -219,6 +236,8 @@ Route::get('rooms/{ym?}/{building?}', 'RoomController@schedule')->name('rooms');
 Route::get('support', 'PageController@support')->name('support');
 Route::resource('touchpoint', 'TouchpointController');
 Route::get('touchpoint/add/{id?}', 'TouchpointController@add')->name('touchpoint.add');
+Route::get('touchpoint/type/{staff_id?}', 'TouchpointController@index_type');
+
 Route::get('users', 'PageController@user')->name('users');
 Route::resource('vendor', 'VendorController');
 

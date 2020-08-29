@@ -5,7 +5,7 @@
     <div class="col-12 text-center">
         {!!$parish->avatar_large_link!!}
         <h1>
-            Edit Parish: {!! $parish->organization_name !!}
+            Edit Parish: {{ $parish->organization_name }}
         </h1>
     </div>
     <div class="col-12">

@@ -12,9 +12,6 @@ $factory->define(App\DonationType::class, function (Faker $faker) {
         'value' => $value,
         'name' => $label,
         'description' => $label.' ('.$value.')',
-        'is_default' => $faker->boolean,
-        'is_reserved' => $faker->boolean,
         'is_active' => $faker->boolean,
-        'remember_token' => Str::random(10),
     ];
 });
