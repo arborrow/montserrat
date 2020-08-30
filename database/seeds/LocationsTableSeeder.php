@@ -13,11 +13,9 @@ class LocationsTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('locations')->delete();
 
         \DB::table('locations')->insert([
             0 => [
-                'id' => 1,
                 'name' => env('SELF_NAME'),
                 'label' => env('SELF_NAME'),
                 'type' => 'Site',
