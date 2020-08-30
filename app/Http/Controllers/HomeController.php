@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Http;
+use Exception;
+
+
 class HomeController extends Controller
 {
     /**
@@ -21,11 +25,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $client = new \GuzzleHttp\Client();
-        $result = $client->get('http://labs.bible.org/api/?passage=random')->getBody();
-        $quote = strip_tags($result->getContents(), '<b>');
+        try {
+            $result = Http::timeout(1)->get('http://labs.bible.org/api/?passage=random')->getBody();
+            $quote = strip_tags($result->getContents(), '<b>');
+        } catch (Exception $e) {
+                $quote = "John 3:16 - For God so loved the world that he gave his only Son, so that everyone who believes in him might not perish but might have eternal life.";
+        }
 
-//        $quote = 'Jesus loves me this I know';
         return view('home', compact('quote'));
     }
 

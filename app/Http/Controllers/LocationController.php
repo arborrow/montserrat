@@ -101,7 +101,7 @@ class LocationController extends Controller
         $this->authorize('show-location');
 
         $location = \App\Location::findOrFail($id);
-        $children = \App\Location::whereParentId($id)->get();
+        $children = \App\Location::whereParentId($id)->orderBy('name')->get();
 
         return view('admin.locations.show', compact('location', 'children'));
     }
