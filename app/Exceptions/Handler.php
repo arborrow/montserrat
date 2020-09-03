@@ -79,7 +79,7 @@ class Handler extends ExceptionHandler
         }
 
         if ($mailable) {
-            Mail::send('emails.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject], function ($m) use ($subject, $exception, $request) {
+            Mail::send('emails.en_US.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject], function ($m) use ($subject, $exception, $request) {
                 $m->to(config('polanco.admin_email'))->subject($subject);
             });
         }
