@@ -22,7 +22,7 @@ class SnippetController extends Controller
         $this->authorize('show-snippet');
 
         $titles = \App\Snippet::groupBy('label')->orderBy('label')->pluck('title', 'title');
-        $snippets = \App\Snippet::orderBy('title')->orderBy('label')->get();
+        $snippets = \App\Snippet::orderBy('title')->orderBy('locale')->orderBy('label')->get();
 
         return view('admin.snippets.index', compact('snippets','titles'));
     }
@@ -32,7 +32,7 @@ class SnippetController extends Controller
         $this->authorize('show-snippet');
 
         $titles = \App\Snippet::groupBy('label')->orderBy('label')->pluck('title', 'title');
-        $snippets = \App\Snippet::whereTitle($title)->orderBy('title')->orderBy('label')->get();
+        $snippets = \App\Snippet::whereTitle($title)->orderBy('title')->orderBy('locale')->orderBy('label')->get();
 
         return view('admin.snippets.index', compact('snippets', 'titles'));
     }
@@ -46,7 +46,7 @@ class SnippetController extends Controller
     public function create()
     {
         $this->authorize('create-snippet');
-        $locales = \App\Language::whereIsActive(1)->pluck('label','name');
+        $locales = \App\Language::whereIsActive(1)->orderBy('label')->pluck('label','name');
 
         return view('admin.snippets.create',compact('locales'));
     }
@@ -98,7 +98,7 @@ class SnippetController extends Controller
         $this->authorize('update-snippet');
 
         $snippet = \App\Snippet::findOrFail($id);
-        $locales = \App\Language::whereIsActive(1)->pluck('label','name');
+        $locales = \App\Language::whereIsActive(1)->orderBy('label')->pluck('label','name');
 
         return view('admin.snippets.edit', compact('snippet', 'locales')); //
     }

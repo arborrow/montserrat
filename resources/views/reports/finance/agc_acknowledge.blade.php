@@ -14,13 +14,12 @@
                 <td class="board" style="font-size:11pt; line-height:1.3; padding-top:50px;">
                     <div style="font-variant:small-caps">
                         <strong>Board of Trustees</strong>
-                    </div>
-                    <br />
-
+                    </div><br />
                     @include('snippets.agc_acknowledge.en_US.board')
 
-                    <div style="font-variant:small-caps"><strong>Jesuit Community</strong></div><br />
-
+                    <div style="font-variant:small-caps">
+                        <strong>Jesuit Community</strong>
+                    </div><br />
                     @include('snippets.agc_acknowledge.en_US.jesuits')
                 </td>
 
