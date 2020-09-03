@@ -40,6 +40,6 @@ class CreateParishesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('parishes');
+        Schema::dropIfExists('parishes');
     }
 }

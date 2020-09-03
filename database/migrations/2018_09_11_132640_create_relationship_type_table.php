@@ -40,6 +40,6 @@ class CreateRelationshipTypeTable extends Migration
      */
     public function down()
     {
-        Schema::drop('relationship_type');
+        Schema::dropIfExists('relationship_type');
     }
 }

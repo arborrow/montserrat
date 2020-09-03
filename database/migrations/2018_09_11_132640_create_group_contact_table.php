@@ -33,6 +33,6 @@ class CreateGroupContactTable extends Migration
      */
     public function down()
     {
-        Schema::drop('group_contact');
+        Schema::dropIfExists('group_contact');
     }
 }

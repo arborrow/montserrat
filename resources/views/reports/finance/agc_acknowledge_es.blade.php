@@ -1,7 +1,7 @@
 @extends('report')
 @section('content')
 <meta name="format-detection" content="telephone=no">
-<div class ="agcacknowledge">
+<div class ="agc_acknowledge">
 <div class ="pageheader">
             <img style="display: block;  margin-left: auto;  margin-right: auto;" src="{{URL('/images/mrhlogoblack.png')}}"> <br />
 </table>

@@ -31,6 +31,6 @@ class CreateJesuitsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('jesuits');
+        Schema::dropIfExists('jesuits');
     }
 }

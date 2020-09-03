@@ -36,6 +36,6 @@ class CreateOccupationListTable extends Migration
      */
     public function down()
     {
-        Schema::drop('occupation_list');
+        Schema::dropIfExists('occupation_list');
     }
 }

@@ -31,6 +31,6 @@ class CreateRetreatNamesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('retreat_names');
+        Schema::dropIfExists('retreat_names');
     }
 }

@@ -35,6 +35,6 @@ class CreateReservationsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('reservations');
+        Schema::dropIfExists('reservations');
     }
 }

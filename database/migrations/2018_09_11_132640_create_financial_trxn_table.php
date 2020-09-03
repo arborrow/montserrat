@@ -38,6 +38,6 @@ class CreateFinancialTrxnTable extends Migration
      */
     public function down()
     {
-        Schema::drop('financial_trxn');
+        Schema::dropIfExists('financial_trxn');
     }
 }

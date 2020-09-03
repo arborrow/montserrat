@@ -35,6 +35,6 @@ class CreateContactTypeTable extends Migration
      */
     public function down()
     {
-        Schema::drop('contact_type');
+        Schema::dropIfExists('contact_type');
     }
 }

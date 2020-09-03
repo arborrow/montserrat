@@ -30,6 +30,6 @@ class CreateRoomstatesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('roomstates');
+        Schema::dropIfExists('roomstates');
     }
 }

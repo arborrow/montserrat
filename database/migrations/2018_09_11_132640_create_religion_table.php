@@ -33,6 +33,6 @@ class CreateReligionTable extends Migration
      */
     public function down()
     {
-        Schema::drop('religion');
+        Schema::dropIfExists('religion');
     }
 }

@@ -30,6 +30,6 @@ class CreateContactLanguagesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('contact_languages');
+        Schema::dropIfExists('contact_languages');
     }
 }

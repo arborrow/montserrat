@@ -33,6 +33,6 @@ class CreateGenderTable extends Migration
      */
     public function down()
     {
-        Schema::drop('gender');
+        Schema::dropIfExists('gender');
     }
 }

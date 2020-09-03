@@ -37,6 +37,6 @@ class CreateAgcHouseholdNameTable extends Migration
      */
     public function down()
     {
-        Schema::drop('agc_household_name');
+        Schema::dropIfExists('agc_household_name');
     }
 }

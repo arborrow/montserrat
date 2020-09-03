@@ -29,6 +29,6 @@ class CreateTouchcategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('touchcategories');
+        Schema::dropIfExists('touchcategories');
     }
 }

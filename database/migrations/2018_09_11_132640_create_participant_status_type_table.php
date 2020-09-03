@@ -36,6 +36,6 @@ class CreateParticipantStatusTypeTable extends Migration
      */
     public function down()
     {
-        Schema::drop('participant_status_type');
+        Schema::dropIfExists('participant_status_type');
     }
 }

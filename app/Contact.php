@@ -1444,7 +1444,8 @@ class Contact extends Model
             birth_date,
             email.email,
             contact.nick_name,
-            contact.first_name
+            contact.first_name,
+            contact.preferred_language
         FROM
             contact
                 INNER JOIN

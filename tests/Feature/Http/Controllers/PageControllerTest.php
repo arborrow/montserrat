@@ -168,15 +168,15 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function finance_agcacknowledge_returns_an_ok_response()
+    public function finance_agc_acknowledge_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-donation');
         $payment = factory(\App\Payment::class)->create();
 
-        $response = $this->actingAs($user)->get('donation/'.$payment->donation_id.'/agcacknowledge');
+        $response = $this->actingAs($user)->get('donation/'.$payment->donation_id.'/agc_acknowledge');
 
         $response->assertOk();
-        $response->assertViewIs('reports.finance.agcacknowledge');
+        $response->assertViewIs('reports.finance.agc_acknowledge');
         $response->assertViewHas('donation');
 
     }
@@ -200,12 +200,12 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function finance_agcacknowledge_returns_403()
+    public function finance_agc_acknowledge_returns_403()
     {
         $user = factory(\App\User::class)->create();
         $payment = factory(\App\Payment::class)->create();
 
-        $response = $this->actingAs($user)->get('donation/'.$payment->donation_id.'/agcacknowledge');
+        $response = $this->actingAs($user)->get('donation/'.$payment->donation_id.'/agc_acknowledge');
 
         $response->assertForbidden();
     }

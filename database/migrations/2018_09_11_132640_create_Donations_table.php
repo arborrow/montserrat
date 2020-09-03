@@ -50,6 +50,6 @@ class CreateDonationsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('Donations');
+        Schema::dropIfExists('Donations');
     }
 }

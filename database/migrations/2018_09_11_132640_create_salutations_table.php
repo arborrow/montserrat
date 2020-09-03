@@ -25,6 +25,6 @@ class CreateSalutationsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('salutations');
+        Schema::dropIfExists('salutations');
     }
 }

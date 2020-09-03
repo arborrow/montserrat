@@ -29,6 +29,6 @@ class CreateEthnicitiesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('ethnicities');
+        Schema::dropIfExists('ethnicities');
     }
 }

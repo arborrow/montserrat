@@ -28,6 +28,6 @@ class CreatePrefixTable extends Migration
      */
     public function down()
     {
-        Schema::drop('prefix');
+        Schema::dropIfExists('prefix');
     }
 }

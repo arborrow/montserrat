@@ -54,6 +54,6 @@ class CreateContributionTable extends Migration
      */
     public function down()
     {
-        Schema::drop('contribution');
+        Schema::dropIfExists('contribution');
     }
 }

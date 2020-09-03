@@ -32,6 +32,6 @@ class CreateActivityContactTable extends Migration
      */
     public function down()
     {
-        Schema::drop('activity_contact');
+        Schema::dropIfExists('activity_contact');
     }
 }

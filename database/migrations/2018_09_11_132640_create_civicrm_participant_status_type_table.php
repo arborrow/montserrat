@@ -32,6 +32,6 @@ class CreateCivicrmParticipantStatusTypeTable extends Migration
      */
     public function down()
     {
-        Schema::drop('civicrm_participant_status_type');
+        Schema::dropIfExists('civicrm_participant_status_type');
     }
 }
