@@ -534,6 +534,6 @@ class PageControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertViewIs('welcome');
-        $response->assertViewHas('quote', '<b>Hello</b>, World!');
+        $response->assertViewHas('quote');
     }
 }
