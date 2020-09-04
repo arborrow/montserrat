@@ -28,11 +28,11 @@
                 </caption>
                 <thead>
                     <tr>
-                        <th style="border: solid 0.5pt; padding:5px;">Date</th>
-                        <th style="border: solid 0.5pt; padding:5px;">Description</th>
-                        <th style="border: solid 0.5pt; padding:5px;">Donation Amount</th>
-                        <th style="border: solid 0.5pt; padding:5px;">Method</th>
-                        <th style="border: solid 0.5pt; padding:5px;">Retreat</th>
+                        <th style="border: solid 1px; padding:5px;">Date</th>
+                        <th style="border: solid 1px; padding:5px;">Description</th>
+                        <th style="border: solid 1px; padding:5px;">Donation Amount</th>
+                        <th style="border: solid 1px; padding:5px;">Method</th>
+                        <th style="border: solid 1px; padding:5px;">Retreat</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,11 +40,11 @@
                     @foreach($payments as $payment)
                     <tr>
 
-                        <td style="border: solid 0.5pt; padding:5px;">{{ $payment->payment_date->format('M d, Y') }}</td>
-                        <td style="border: solid 0.5pt; padding:5px;">{{ $payment->donation->donation_description ?? 'Unspecified' }} </td>
-                        <td style="border: solid 0.5pt; padding:5px; text-align: right;">${{ number_format($payment->payment_amount,2) }}</td>
-                        <td style="border: solid 0.5pt; padding:5px;">{{ $payment->payment_description }} {{ $payment->ccnumber ?? $payment->cknumber}}</td>
-                        <td style="border: solid 0.5pt; padding:5px;">{{ $payment->donation->retreat->title ?? 'N/A'}}</td>
+                        <td style="border: solid 1px; padding:5px;">{{ $payment->payment_date->format('M d, Y') }}</td>
+                        <td style="border: solid 1px; padding:5px;">{{ $payment->donation->donation_description ?? 'Unspecified' }} </td>
+                        <td style="border: solid 1px; padding:5px; text-align: right;">${{ number_format($payment->payment_amount,2) }}</td>
+                        <td style="border: solid 1px; padding:5px;">{{ $payment->payment_description }} {{ $payment->ccnumber ?? $payment->cknumber}}</td>
+                        <td style="border: solid 1px; padding:5px;">{{ $payment->donation->retreat->title ?? 'N/A'}}</td>
                     </tr>
                     @endforeach
 
