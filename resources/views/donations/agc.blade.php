@@ -32,10 +32,10 @@
                             <td>${{number_format($donation->payments_paid,2)}}/${{ number_format($donation->donation_amount,2) }}</td>
                             <td>
                                 @if(isset($donation['Thank You']))
-                                    <a href='{{url("donation/".$donation->donation_id."/agcacknowledge") }}'>{{$donation['Thank You']}}</a>
+                                    <a href='{{url("donation/".$donation->donation_id."/agc_acknowledge") }}'>{{$donation['Thank You']}}</a>
                                 @else
                                     @if ($donation->percent_paid == 100)
-                                        <a href='{{ url("donation/".$donation->donation_id."/agcacknowledge") }}'><img src='{{ url("/images/letter.png") }}' alt="Print acknowledgement" title="Print acknowledgement"></a>
+                                        <a href='{{ url("donation/".$donation->donation_id."/agc_acknowledge") }}'><img src='{{ url("/images/letter.png") }}' alt="Print acknowledgement" title="Print acknowledgement"></a>
                                     @else
                                         Awaiting full payment
                                     @endIf

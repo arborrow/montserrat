@@ -1,7 +1,8 @@
 <!DOCTYPE html>
+{{-- Use of snippets not implemented as they do not seem needed --}}
 <html>
 <head>
-	<title></title>
+	<title>Registration updated</title>
 </head>
 <body>
 	<p>{{config('polanco.site_name')}} would like to notify you that <a href="{{URL('registration',$registration->id)}}">Registration #{{ $registration->id }}</a> for {!!$registration->retreatant->contact_link_full_name!!} has recently been updated as follows:</p>

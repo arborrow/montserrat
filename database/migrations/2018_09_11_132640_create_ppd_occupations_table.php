@@ -26,6 +26,6 @@ class CreatePpdOccupationsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('ppd_occupations');
+        Schema::dropIfExists('ppd_occupations');
     }
 }

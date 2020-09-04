@@ -28,6 +28,6 @@ class CreateSuffixTable extends Migration
      */
     public function down()
     {
-        Schema::drop('suffix');
+        Schema::dropIfExists('suffix');
     }
 }

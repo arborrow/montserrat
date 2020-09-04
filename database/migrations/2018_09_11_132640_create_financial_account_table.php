@@ -39,6 +39,6 @@ class CreateFinancialAccountTable extends Migration
      */
     public function down()
     {
-        Schema::drop('financial_account');
+        Schema::dropIfExists('financial_account');
     }
 }

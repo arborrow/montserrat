@@ -38,6 +38,6 @@ class CreateEmailTable extends Migration
      */
     public function down()
     {
-        Schema::drop('email');
+        Schema::dropIfExists('email');
     }
 }

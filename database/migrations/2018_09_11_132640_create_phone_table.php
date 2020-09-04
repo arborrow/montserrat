@@ -38,6 +38,6 @@ class CreatePhoneTable extends Migration
      */
     public function down()
     {
-        Schema::drop('phone');
+        Schema::dropIfExists('phone');
     }
 }

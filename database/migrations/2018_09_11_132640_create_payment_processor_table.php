@@ -45,6 +45,6 @@ class CreatePaymentProcessorTable extends Migration
      */
     public function down()
     {
-        Schema::drop('payment_processor');
+        Schema::dropIfExists('payment_processor');
     }
 }

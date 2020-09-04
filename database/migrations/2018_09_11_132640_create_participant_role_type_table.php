@@ -42,6 +42,6 @@ class CreateParticipantRoleTypeTable extends Migration
      */
     public function down()
     {
-        Schema::drop('participant_role_type');
+        Schema::dropIfExists('participant_role_type');
     }
 }

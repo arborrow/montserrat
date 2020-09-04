@@ -32,6 +32,6 @@ class CreateUomTable extends Migration
      */
     public function down()
     {
-        Schema::drop('uom');
+        Schema::dropIfExists('uom');
     }
 }

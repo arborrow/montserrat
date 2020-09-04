@@ -1,3 +1,4 @@
+{{-- Snippets not implemented/necessary at this time, default language is en_US --}}
 <h1>{{ $subject }}</h1>
 
 <h4>User Details</h4>

@@ -33,6 +33,6 @@ class CreateActivityStatusTable extends Migration
      */
     public function down()
     {
-        Schema::drop('activity_status');
+        Schema::dropIfExists('activity_status');
     }
 }

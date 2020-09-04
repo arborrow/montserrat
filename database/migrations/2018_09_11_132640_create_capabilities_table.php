@@ -30,6 +30,6 @@ class CreateCapabilitiesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('capabilities');
+        Schema::dropIfExists('capabilities');
     }
 }

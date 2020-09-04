@@ -74,6 +74,7 @@ Route::get('admin/offeringdedup/show/{contact_id}/{event_id}', 'SystemController
 Route::get('admin/deposit/reconcile/{event_id?}', 'PageController@finance_reconcile_deposit_show')->name('depositreconcile.show');
 
 Route::prefix('admin')->middleware('auth')->group(function () {
+    Route::get('snippet/title/{title?}', 'SnippetController@index_type');
     Route::resource('asset_type', 'AssetTypeController');
     Route::resource('department', 'DepartmentController');
     Route::resource('donation_type', 'DonationTypeController');
@@ -82,6 +83,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::resource('permission', 'PermissionController');
     Route::get('phpinfo', 'SystemController@phpinfo')->name('phpinfo');
     Route::resource('role', 'RoleController');
+    Route::resource('snippet', 'SnippetController');
     Route::resource('uom', 'UomController');
     Route::resource('user', 'UserController');
     Route::resource('website', 'WebsiteController');
@@ -112,7 +114,7 @@ Route::get('donation/overpaid', 'DonationController@overpaid');
 Route::resource('donation', 'DonationController');
 Route::get('donation/create/{id?}/{event_id?}/{type?}', 'DonationController@create');
 Route::get('donation/{id?}/invoice', 'PageController@finance_invoice');
-Route::get('donation/{id?}/agcacknowledge', 'PageController@finance_agcacknowledge');
+Route::get('donation/{id?}/agc_acknowledge', 'PageController@finance_agc_acknowledge');
 Route::get('donation/type/{donation_id?}', 'DonationController@index_type');
 
 Route::get('agc/{year?}', 'DonationController@agc');

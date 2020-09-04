@@ -29,6 +29,6 @@ class CreateContactReferralTable extends Migration
      */
     public function down()
     {
-        Schema::drop('contact_referral');
+        Schema::dropIfExists('contact_referral');
     }
 }

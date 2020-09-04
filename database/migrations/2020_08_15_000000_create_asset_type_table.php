@@ -34,6 +34,6 @@ class CreateAssetTypeTable extends Migration
      */
     public function down()
     {
-        Schema::drop('asset_type');
+        Schema::dropIfExists('asset_type');
     }
 }

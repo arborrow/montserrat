@@ -33,6 +33,6 @@ class CreateRetreatsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('Retreats');
+        Schema::dropIfExists('Retreats');
     }
 }

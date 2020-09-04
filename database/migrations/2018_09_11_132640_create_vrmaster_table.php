@@ -43,6 +43,6 @@ class CreateVrmasterTable extends Migration
      */
     public function down()
     {
-        Schema::drop('vrmaster');
+        Schema::dropIfExists('vrmaster');
     }
 }

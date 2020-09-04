@@ -30,6 +30,6 @@ class CreateCountyTable extends Migration
      */
     public function down()
     {
-        Schema::drop('county');
+        Schema::dropIfExists('county');
     }
 }

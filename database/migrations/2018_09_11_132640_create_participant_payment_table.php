@@ -30,6 +30,6 @@ class CreateParticipantPaymentTable extends Migration
      */
     public function down()
     {
-        Schema::drop('participant_payment');
+        Schema::dropIfExists('participant_payment');
     }
 }

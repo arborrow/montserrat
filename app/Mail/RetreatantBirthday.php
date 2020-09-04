@@ -31,8 +31,15 @@ class RetreatantBirthday extends Mailable
     {
         $nameToUse = $this->retreatant->nick_name != null ? $this->retreatant->nick_name : $this->retreatant->first_name;
 
-        return $this->replyTo('director@montserratretreat.org')
-                    ->subject('Happy Birthday '.$nameToUse.'!')
-                    ->view('emails.retreatant-birthday');
+        if ($this->retreatant->preferred_language == 'es_ES') {
+
+            return $this->replyTo('director@montserratretreat.org')
+                        ->subject('Feliz Cumpleaños '.$nameToUse.'!')
+                        ->view('emails.es_ES.birthday');
+        } else { //en_US is the default language
+            return $this->replyTo('director@montserratretreat.org')
+                        ->subject('Happy Birthday '.$nameToUse.'!')
+                        ->view('emails.en_US.birthday');
+        }
     }
 }

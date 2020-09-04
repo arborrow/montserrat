@@ -91,6 +91,6 @@ class CreateDonorsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('Donors');
+        Schema::dropIfExists('Donors');
     }
 }

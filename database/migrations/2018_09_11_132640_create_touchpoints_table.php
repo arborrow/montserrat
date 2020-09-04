@@ -36,6 +36,6 @@ class CreateTouchpointsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('touchpoints');
+        Schema::dropIfExists('touchpoints');
     }
 }

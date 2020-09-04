@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use PDF;
 use Illuminate\Support\Facades\Http;
 use Exception;
+use Illuminate\Support\Facades\Storage;
 
 class PageController extends Controller
 {
@@ -174,7 +175,7 @@ class PageController extends Controller
         return view('reports.finance.invoice', compact('donation'));
     }
 
-    public function finance_agcacknowledge(Request $request, $donation_id = null)
+    public function finance_agc_acknowledge(Request $request, $donation_id = null)
     {
         $this->authorize('show-donation');
 
@@ -193,15 +194,22 @@ class PageController extends Controller
             $donation['Thank You'] = 'Y';
             $donation->save();
         }
+
+        $snippets = \App\Snippet::whereTitle('agc_acknowledge')->get();
+        foreach ($snippets as $snippet) {
+            $decoded = html_entity_decode($snippet->snippet,ENT_QUOTES | ENT_XML1);
+            Storage::put('views/snippets/'.$snippet->title.'/'.$snippet->locale.'/'.$snippet->label.'.blade.php',$decoded);
+        }
+
         //dd($donation->contact->preferred_language_value);
         if ($donation->contact->preferred_language_value == 'es') {
             $dt = Carbon::now();
             $donation['today_es'] = $dt->day.' de '.$dt->locale('es')->monthName.' del '.$dt->year;
             $donation['donation_date_es'] = $donation->donation_date->day.' de '.$donation->donation_date->locale('es')->monthName.' del '.$donation->donation_date->year;
 
-            return view('reports.finance.agcacknowledge_es', compact('donation'));
+            return view('reports.finance.agc_acknowledge_es', compact('donation'));
         } else {
-            return view('reports.finance.agcacknowledge', compact('donation'));
+            return view('reports.finance.agc_acknowledge', compact('donation'));
         }
         //
     }

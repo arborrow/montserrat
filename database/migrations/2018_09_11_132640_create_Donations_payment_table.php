@@ -37,6 +37,6 @@ class CreateDonationsPaymentTable extends Migration
      */
     public function down()
     {
-        Schema::drop('Donations_payment');
+        Schema::dropIfExists('Donations_payment');
     }
 }

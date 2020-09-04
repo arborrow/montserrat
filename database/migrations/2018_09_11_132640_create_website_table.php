@@ -31,6 +31,6 @@ class CreateWebsiteTable extends Migration
      */
     public function down()
     {
-        Schema::drop('website');
+        Schema::dropIfExists('website');
     }
 }

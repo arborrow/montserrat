@@ -29,6 +29,6 @@ class CreateRolecapsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('rolecaps');
+        Schema::dropIfExists('rolecaps');
     }
 }
