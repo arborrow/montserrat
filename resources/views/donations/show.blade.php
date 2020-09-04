@@ -41,8 +41,8 @@
             @if ($donation->donation_amount == $donation->payments->sum('payment_amount'))
               <span class="font-weight-bold">
             @endIf
-          Paid/Pledegd:  ${{number_format($donation->payments->sum('payment_amount'),2)}} / ${{number_format($donation->donation_amount,2)}}
-          ({{number_format($donation->percent_paid,0)}}%)</span>
+          Paid/Pledged:  ${{number_format($donation->payments->sum('payment_amount'),2)}} / ${{number_format($donation->donation_amount,2)}}
+          ({{$donation->percent_paid}}%)</span>
 
         <br><span class="font-weight-bold">Primary contact: </span>{{$donation->Notes1}}
     </div>
