@@ -34,7 +34,7 @@
                                 @if(isset($donation['Thank You']))
                                     <a href='{{url("donation/".$donation->donation_id."/agc_acknowledge") }}'>{{$donation['Thank You']}}</a>
                                 @else
-                                    @if ($donation->percent_paid == 100)
+                                    @if ($donation->percent_paid >= 100)
                                         <a href='{{ url("donation/".$donation->donation_id."/agc_acknowledge") }}'><img src='{{ url("/images/letter.png") }}' alt="Print acknowledgement" title="Print acknowledgement"></a>
                                     @else
                                         Awaiting full payment

@@ -15,6 +15,18 @@
         @can('create-payment')
             {!! Html::link(action('PaymentController@create',$donation->donation_id),'Add payment',array('class' => 'btn btn-outline-dark'))!!}
         @endCan
+        @if (in_array($donation->donation_description, config('polanco.agc_donation_descriptions')) )
+            @if(isset($donation['Thank You']))
+                {!! Html::link(action('PageController@finance_agc_acknowledge',$donation->donation_id),"Reprint AGC acknowledgement",array('class' => 'btn btn-outline-dark')) !!}
+            @else
+                @if ($donation->percent_paid >= 100)
+                    {!! Html::link(action('PageController@finance_agc_acknowledge',$donation->donation_id),"Print AGC acknowledgement",array('class' => 'btn btn-outline-dark')) !!}
+                @else
+                    <div class="btn btn-outline-info">AGC awaiting full payment</div>
+                @endIf
+            @endIf
+
+        @endIf
     </div>
     <div class="col-12 col-md-4">
         <span class="font-weight-bold">Date: </span>{{$donation->donation_date->format('m/d/Y')}}
