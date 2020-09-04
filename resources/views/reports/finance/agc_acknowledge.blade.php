@@ -6,8 +6,6 @@
                 <img style="display: block;  margin-left: auto;  margin-right: auto;" src="{{URL('/images/mrhlogoblack.png')}}"> <br />
     </div>
 
-    <br />
-
     <div class ="letter">
         <table>
             <tr>
@@ -38,7 +36,6 @@
             <tr>
                 <td></td>
                 <td style="font-size: 10pt; padding-left:20px;">
-                    <br />
                     <br />
                     <i>
                         @include('snippets.agc_acknowledge.en_US.501c3')
