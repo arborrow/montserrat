@@ -66,7 +66,7 @@
                     <td></td>
                     <td style="font-size: 10pt; font-family: montserrat; padding-left:20px;">
                         <br /><br />
-                        Montserrat Jesuit Retreat House is a ministry of the Society of Jesus UCS Province. No goods or services have been provided to the donor. Your donation is deductible to the extent allowed by law.
+                        Montserrat Jesuit Retreat House is a ministry of the Society of Jesus UCS Province. Your donation is deductible to the extent allowed by law.
                     </td>
                 </tr>
 
