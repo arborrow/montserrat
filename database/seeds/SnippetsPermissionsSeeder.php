@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class SnippetPermissionsSeeder extends Seeder
+class SnippetsPermissionsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
