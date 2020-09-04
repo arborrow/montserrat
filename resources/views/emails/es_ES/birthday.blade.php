@@ -6,10 +6,10 @@
 <body>
 	<div dir="ltr"><u></u>
 		<div>
-			@include('snippets.es_ES.birthday.quote')
-			@include('snippets.es_ES.birthday.picture')
-			@include('snippets.es_ES.birthday.message')
-			@include('snippets.es_ES.birthday.footer')
+			@include('snippets.birthday.es_ES.quote')
+			@include('snippets.birthday.es_ES.picture')
+			@include('snippets.birthday.es_ES.message')
+			@include('snippets.birthday.es_ES.footer')
 		</div>
 	</div>
 

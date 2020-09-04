@@ -137,7 +137,7 @@ class SnippetsTableSeeder extends Seeder
                 'label' => 'checkin',
                 'locale' => 'en_US',
                 'snippet' =>
-                    "Check-in for your retreat is between 4:00 - 6:00 p.m. on &#123;&#123;&#36; participant-&gt;retreat_start_date-&gt;format(&apos;l F j, Y&apos;) &#125;&#125;.
+                    "Check-in for your retreat is between 4:00 - 6:00 p.m. on &#123;&#123;&#36;participant-&gt;retreat_start_date-&gt;format(&apos;l F j, Y&apos;) &#125;&#125;.
             		Dinner will be served from 6:00 - 7:00 p.m. When you arrive, please come to Campion Hall to receive your room key and retreat packet.
             		Below are some possible suggestions regarding what to bring.
             		Some frequently asked questions can be found on our FAQs webpage but feel free to call or email should you need more information.",

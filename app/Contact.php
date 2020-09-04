@@ -1440,8 +1440,8 @@ class Contact extends Model
     {
         $sql = "SELECT
             contact.id,
-            display_name,
-            birth_date,
+            contact.display_name,
+            contact.birth_date,
             email.email,
             contact.nick_name,
             contact.first_name,
@@ -1455,7 +1455,7 @@ class Contact extends Model
         WHERE
             MONTH(contact.birth_date) = MONTH(NOW())
                 AND DAY(contact.birth_date) = DAY(NOW())
-                AND contact.do_not_email = 0
+                AND contact.do_not_email <> 1
                 AND contact.is_deceased = 0
                 AND contact.deceased_date IS NULL
                 AND contact.deleted_at IS NULL";

@@ -7,10 +7,10 @@
 <body>
 	<div dir="ltr"><u></u>
 		<div>
-			@include('snippets.en_US.birthday.quote')
-			@include('snippets.en_US.birthday.picture')
-			@include('snippets.en_US.birthday.message')
-			@include('snippets.en_US.birthday.footer')
+			@include('snippets.birthday.en_US.quote')
+			@include('snippets.birthday.en_US.picture')
+			@include('snippets.birthday.en_US.message')
+			@include('snippets.birthday.en_US.footer')
 		</div>
 	</div>
 

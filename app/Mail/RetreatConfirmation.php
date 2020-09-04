@@ -30,14 +30,12 @@ class RetreatConfirmation extends Mailable
      * @return $this
      */
     public function build()
-    {
-        if ($this->participant->preferred_language == 'es_ES') {
-
-            return $this->subject('Preparing for your Upcoming Retreat #'
+    {   if ($this->participant->contact->preferred_language == 'es_ES') {
+            return $this->subject('Preparando para su retiro #'
                         .$this->participant->retreat->idnumber.' starting on '
                         .$this->participant->retreat_start_date->format('l F jS'))
                         ->replyTo('registration@montserratretreat.org')
-                        ->view('emails.sp_SP.event-confirmation');
+                        ->view('emails.es_ES.event-confirmation');
         } else { //en_US is the default locale/language
             return $this->subject('Preparing for your Upcoming Retreat #'
                         .$this->participant->retreat->idnumber.' starting on '
