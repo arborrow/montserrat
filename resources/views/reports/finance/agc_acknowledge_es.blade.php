@@ -13,7 +13,7 @@
                         <strong>La Junta Directiva</strong>
                     </div> <br />
                     @include('snippets.agc_acknowledge.es_ES.board')
-
+                    <br /><br />
                     <div style="font-variant:small-caps">
                         <strong>La Comunidad Jesuita</strong>
                     </div><br />
