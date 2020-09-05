@@ -52,7 +52,7 @@
                     <span class="font-weight-bold">Description: </span>{{$donation->donation_description}}
                 </div>
                 <div class="col-12 col-md-4">
-                    <span class="font-weight-bold">Pledged/Paid: </span>${{number_format($donation->donation_amount,2)}} / ${{number_format($donation->payments->sum('payment_amount'),2)}} ({{$donation->percent_paid}}%)
+                    <span class="font-weight-bold">Pledged/Paid: </span>${{$donation->donation_amount}} / ${{$donation->payments->sum('payment_amount')}} ({{$donation->percent_paid}}%)
                 </div>
             </div>
             <div class="row">

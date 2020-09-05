@@ -239,7 +239,7 @@
                                     /
                                     ${{ number_format($donation->donation_amount,2) }}
 
-                                        [{{ number_format($donation->percent_paid,0) }}%]
+                                        [{{ $donation->percent_paid }}%]
                                     </td>
 
                                     <td>  /  </td>
