@@ -15,7 +15,7 @@
 		@include('snippets.event-confirmation.en_US.confirm')
 		<br><br>
 		@include('snippets.event-confirmation.en_US.notices')
-		<br>
+		<br><br>
 		@include('snippets.event-confirmation.en_US.signature')
 		<br><br>
 		@include('snippets.event-confirmation.en_US.provided')

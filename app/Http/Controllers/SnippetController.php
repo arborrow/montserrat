@@ -9,8 +9,16 @@ use Illuminate\Support\Arr;
 use App\Http\Requests\StoreSnippetRequest;
 use App\Http\Requests\UpdateSnippetRequest;
 
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
+use Faker;
+use App\Mail\RetreatantBirthday;
+use App\Mail\RetreatConfirmation;
+
 class SnippetController extends Controller
 {
+
     //
     public function __construct()
     {
@@ -138,6 +146,91 @@ class SnippetController extends Controller
 
         \App\Snippet::destroy($id);
 
+        return Redirect::action('SnippetController@index');
+    }
+
+    public function test($title = null, $email=null, $language="en_US")
+    {
+        $this->authorize('show-snippet');
+        $faker = Faker\Factory::create();
+        if (empty($email)) {
+            $email = config('polanco.admin_email');
+        }
+
+        switch ($title) {
+            case "birthday" :
+                // dd($title,$email,$language);
+                // generate and store snippets
+                $snippets = \App\Snippet::whereTitle('birthday')->get();
+                foreach ($snippets as $snippet) {
+                    $decoded = html_entity_decode($snippet->snippet,ENT_QUOTES | ENT_XML1);
+                    Storage::put('views/snippets/'.$snippet->title.'/'.$snippet->locale.'/'.$snippet->label.'.blade.php',$decoded);
+                }
+                // create fake person
+                $receiver = collect();
+                $receiver->id = $faker->numberBetween(100,900);
+                $receiver->first_name = $faker->firstName;
+                $receiver->nick_name = $faker->firstName;
+                $receiver->display_name = $receiver->first_name . ' ' . $faker->lastName;
+                $receiver->birth_date = $faker->date;
+                $receiver->email = $faker->safeEmail;
+                $receiver->preferred_language = $language;
+                if (!empty($email)) {
+                    try {
+                        Mail::to($email)->queue(new RetreatantBirthday($receiver));
+                        flash ('Birthday test email successfully sent to: '.$email)->success();
+                    } catch (\Exception $e) {
+                        // dd($e);
+                        flash ('Sending of birthday test email to: '.$email.' failed')->error();
+                    }
+                }
+                break;
+
+            case "agc_acknowledge" :
+                // not needed - can test via UI by viewing an AGC letter
+                break;
+            case 'event_confirmation':
+                $snippets = \App\Snippet::whereTitle('event-confirmation')->get();
+                    foreach ($snippets as $snippet) {
+                        $decoded = html_entity_decode($snippet->snippet,ENT_QUOTES | ENT_XML1);
+                        Storage::put('views/snippets/'.$snippet->title.'/'.$snippet->locale.'/'.$snippet->label.'.blade.php',$decoded);
+                    }
+                switch ($language) {
+                    case 'es_ES' :
+                        $registration = \App\Registration::with('event.event_type','contact')
+                            ->whereHas('event', function($q) {
+                                $q->whereEventTypeId(config('polanco.event_type.ignatian'));
+                            })
+                            ->whereHas('contact', function($q) use ($language) {
+                                $q->wherePreferredLanguage($language);
+                            })
+                            ->first();
+                        break;
+                    default : // en_US
+                        $registration = \App\Registration::with('event.event_type','contact')
+                            ->whereHas('event', function($q) {
+                                $q->whereEventTypeId(config('polanco.event_type.ignatian'));
+                            })
+                            ->whereHas('contact', function($q) {
+                                $q->wherePreferredLanguage('en_US');
+                            })
+                            ->first();
+
+                }
+                if (!empty($email)) {
+                    try {
+                        Mail::to($email)->queue(new RetreatConfirmation($registration));
+                        flash ('Retreat confirmation test email successfully sent to: '.$email)->success();
+                    } catch (\Exception $e) {
+                        // dd($e);
+                        flash ('Sending of retreat confirmation test email to: '.$email.' failed')->error();
+                    }
+                }
+                break;
+            default :
+                flash ('Unknown snippet test: ' . $title)->error();
+                break;
+        }
         return Redirect::action('SnippetController@index');
     }
 }

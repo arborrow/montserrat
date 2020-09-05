@@ -72,6 +72,7 @@ Route::get('admin/config/twilio', 'PageController@config_twilio')->name('admin.c
 Route::get('admin/offeringdedup', 'SystemController@offeringdedup_index')->name('offeringdedup');
 Route::get('admin/offeringdedup/show/{contact_id}/{event_id}', 'SystemController@offeringdedup_show')->name('offeringdedup.show');
 Route::get('admin/deposit/reconcile/{event_id?}', 'PageController@finance_reconcile_deposit_show')->name('depositreconcile.show');
+Route::get('admin/snippet/test/{title?}/{email?}/{language?}', 'SnippetController@test')->name('snippet.test');
 
 Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('snippet/title/{title?}', 'SnippetController@index_type');

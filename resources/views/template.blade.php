@@ -27,6 +27,9 @@
 	</script>
 </head>
 <body>
+	<div class="container">
+    	@include('flash::message')
+	</div>
 	<div class="container pt-0">
 		<nav class="navbar navbar-expand-lg navbar-light">
 			<a class="navbar-brand" href={{ ( Auth::check() ) ? route('welcome') : route('home') }}>
