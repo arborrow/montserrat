@@ -14,7 +14,7 @@
                         <strong>Board of Trustees</strong>
                     </div><br />
                     @include('snippets.agc_acknowledge.en_US.board')
-
+                    <br />
                     <div style="font-variant:small-caps">
                         <strong>Jesuit Community</strong>
                     </div><br />
