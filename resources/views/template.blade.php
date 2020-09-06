@@ -25,6 +25,14 @@
 			return false;
 		}
 	</script>
+	<script>
+
+    $(document).ready(function(){
+          $(".alert").not('.alert-important').delay(3000).slideUp(300);
+    });
+
+    </script>
+
 </head>
 <body>
 	<div class="container">
