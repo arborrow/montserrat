@@ -198,7 +198,7 @@ class SnippetController extends Controller
                 $msg = 'AGC acknowledgment snippets can be tested by viewing an actual letter from the <a href="'. url('/agc') . '">AGC list</a>';
                 flash ($msg)->warning();
                 break;
-            case 'event_confirmation':
+            case 'event-confirmation':
                 $snippets = \App\Snippet::whereTitle('event-confirmation')->get();
                     foreach ($snippets as $snippet) {
                         $decoded = html_entity_decode($snippet->snippet,ENT_QUOTES | ENT_XML1);
