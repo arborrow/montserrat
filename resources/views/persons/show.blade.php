@@ -85,7 +85,7 @@
                     <br><span class="font-weight-bold">Subcontact type: </span>{{ $person->subcontact_type_label }}
                 </p>
             </div>
-            <div class="col-12 col-lg-6 alert alert-danger" id="safety_info">
+            <div class="col-12 col-lg-6 alert alert-danger alert-important" id="safety_info">
                 <h2>Emergency Contact Information</h2>
                 <p>
                     <span class="font-weight-bold">Name: </span>{{ !empty($person->emergency_contact->name) ? $person->emergency_contact->name : 'N/A' }}

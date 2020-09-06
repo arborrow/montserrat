@@ -71,7 +71,7 @@ class SendBirthdays extends Command
                 $touchpoint->notes = 'Automatic birthday email has been sent.';
                 $touchpoint->save();
             } catch (\Exception $e) {
-                $touchpoint->notes = 'Automatic birthday email failed to send.';
+                $touchpoint->notes = 'Automatic birthday email failed to send: '.$e->getMessage();
                 $touchpoint->save();
             }
         }
