@@ -26,7 +26,7 @@ class SnippetTestRequest extends FormRequest
         return [
             'title' => 'string|required',
             'language' => 'string|required',
-            'email' => 'string|required',
+            'email' => 'email|required',
         ];
     }
 

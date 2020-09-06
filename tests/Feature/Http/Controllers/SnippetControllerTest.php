@@ -149,6 +149,47 @@ class SnippetControllerTest extends TestCase
         ]);
     }
 
+
+    /**
+     * @test
+     */
+    public function snippet_test_returns_an_ok_response()
+    // this test is a bit of a happy path and a fail path to ensure no emails are sent
+    // we begin using a bogus title which should produce a flash session warning that the snippet was not found; however, we still wind up at the index page
+    {   $this->withoutExceptionHandling();
+        $user = $this->createUserWithPermission('show-snippet');
+
+        $response = $this->actingAs($user)->post(route('snippet.snippet_test'), [
+            'title' => $this->faker->lastName,
+            'language' => $this->faker->locale,
+            'email' => $this->faker->safeEmail,
+        ]);
+
+        $response->assertRedirect(action('SnippetController@index'));
+        $response->assertSessionHas('flash_notification');
+    }
+
+
+    /**
+     * @test
+     */
+    public function test_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-snippet');
+
+        $response = $this->actingAs($user)->get(route('snippet.test'));
+
+        $response->assertOk();
+        $response->assertViewIs('admin.snippets.test');
+        $response->assertSeeText('Snippet tests');
+        $response->assertViewHas('titles');
+        $response->assertViewHas('languages');
+        $response->assertViewHas('title');
+        $response->assertViewHas('email');
+        $response->assertViewHas('language');
+    }
+
+
     /**
      * @test
      */
