@@ -12,6 +12,11 @@
                 </a>
             </span>
             @endCan
+            <span class="options">
+                <a href={{ action('SnippetController@test') }} class="btn btn-light">
+                    Test snippets
+                </a>
+            </span>
         </h2>
     </div>
     <div class="col-md-3 col-6">

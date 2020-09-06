@@ -8,6 +8,7 @@ use Illuminate\Support\Arr;
 
 use App\Http\Requests\StoreSnippetRequest;
 use App\Http\Requests\UpdateSnippetRequest;
+use App\Http\Requests\SnippetTestRequest;
 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -15,6 +16,7 @@ use Carbon\Carbon;
 use Faker;
 use App\Mail\RetreatantBirthday;
 use App\Mail\RetreatConfirmation;
+use Auth;
 
 class SnippetController extends Controller
 {
@@ -149,9 +151,14 @@ class SnippetController extends Controller
         return Redirect::action('SnippetController@index');
     }
 
-    public function test($title = null, $email=null, $language="en_US")
+    public function snippet_test(SnippetTestRequest $request)
     {
         $this->authorize('show-snippet');
+
+        $title = $request->input('title');
+        $email = $request->input('email');
+        $language = $request->input('language');
+
         $faker = Faker\Factory::create();
         if (empty($email)) {
             $email = config('polanco.admin_email');
@@ -188,6 +195,8 @@ class SnippetController extends Controller
 
             case "agc_acknowledge" :
                 // not needed - can test via UI by viewing an AGC letter
+                $msg = 'AGC acknowledgment snippets can be tested by viewing an actual letter from the <a href="'. url('/agc') . '">AGC list</a>';
+                flash ($msg)->warning();
                 break;
             case 'event_confirmation':
                 $snippets = \App\Snippet::whereTitle('event-confirmation')->get();
@@ -233,4 +242,21 @@ class SnippetController extends Controller
         }
         return Redirect::action('SnippetController@index');
     }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function test($title = null, $email = null, $language="en_US")
+    {
+        $this->authorize('show-snippet');
+        $titles = \App\Snippet::groupBy('label')->orderBy('label')->pluck('title', 'title');
+        $languages = \App\Language::whereIsActive(1)->orderBy('label')->pluck('label','name');
+        if (empty($email)) {
+            $email = Auth::user()->email;
+        }
+        return view('admin.snippets.test',compact('language','email','title','titles','languages'));
+    }
+
 }
