@@ -23,7 +23,6 @@ class AssetController extends Controller
         $locations = \App\Location::orderBy('name')->pluck('name', 'id');
 
         $assets = \App\Asset::orderBy('name')->get();
-
         return view('assets.index', compact('assets', 'asset_types', 'locations'));
     }
 
@@ -224,6 +223,7 @@ class AssetController extends Controller
             $attachment->update_attachment($request->file('asset_photo'), 'asset', $asset->id, 'asset_photo', $description);
         }
 
+        flash ('<a href="'. url('/asset/'.$asset->id) . '">'.$asset->name.'</a> added')->success()->important();
         return Redirect::action('AssetController@index');
     }
 
@@ -377,6 +377,7 @@ class AssetController extends Controller
             $attachment->update_attachment($request->file('attachment'), 'asset', $asset->id, 'attachment', $description);
         }
 
+        flash ('<a href="'. url('/asset/'.$asset->id) . '">'.$asset->name.'</a> updated')->success()->important();
         return Redirect::action('AssetController@show', $asset->id);
     }
 
@@ -389,9 +390,10 @@ class AssetController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-asset');
+        $asset = \App\Asset::findOrFail($id);
 
         \App\Asset::destroy($id);
-
+        flash('Asset: '.$asset->name . ' deleted')->warning()->important();
         return Redirect::action('AssetController@index');
     }
 }
