@@ -157,7 +157,6 @@ class PageController extends Controller
         if (empty($report_date)) {
             return redirect()->back();
         }
-
         $payments = \App\Payment::wherePaymentDate($report_date)->where('payment_description', '=', 'Credit Card')->with('donation')->get();
         $grand_total = $payments->sum('payment_amount');
         $grouped_payments = $payments->sortBy('donation.donation_description')->groupBy('donation.donation_description');

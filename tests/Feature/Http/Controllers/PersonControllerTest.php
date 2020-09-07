@@ -183,7 +183,10 @@ class PersonControllerTest extends TestCase
           'contact_type' => config('polanco.contact_type.individual'),
           'subcontact_type' => null,
         ]);
-        $parish = factory(\App\Parish::class)->create();
+        $parish = factory(\App\Contact::class)->create([
+            'contact_type' => config('polanco.contact_type.organization'),
+            'subcontact_type' => config('polanco.contact_type.parish'),
+        ]);
         $parishioner = factory(\App\Relationship::class)->create([
             'contact_id_a' => $parish->id,
             'contact_id_b' => $person->id,

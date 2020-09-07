@@ -5,10 +5,13 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Asset extends Model
+class Asset extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'asset';
     protected $dates = ['start_date', 'end_date', 'purchase_date','warranty_start_date', 'warranty_end_date','depreciation_start_date', 'depreciation_end_date'];
 

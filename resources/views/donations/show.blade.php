@@ -33,10 +33,10 @@
         <br><span class="font-weight-bold">Description: </span>{{$donation->donation_description}}
         <br>
             @if ($donation->donation_amount > $donation->payments->sum('payment_amount'))
-              <span class="font-weight-bold alert alert-warning" style="padding:0px;">
+              <span class="font-weight-bold alert alert-warning alert-important" style="padding:0px;">
             @endIf
             @if ($donation->donation_amount < $donation->payments->sum('payment_amount'))
-              <span class="font-weight-bold alert alert-danger" style="padding:0px;">
+              <span class="font-weight-bold alert alert-danger alert-important" style="padding:0px;">
             @endIf
             @if ($donation->donation_amount == $donation->payments->sum('payment_amount'))
               <span class="font-weight-bold">

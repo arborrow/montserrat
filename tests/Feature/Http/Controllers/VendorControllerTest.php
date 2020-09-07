@@ -50,10 +50,8 @@ class VendorControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-contact');
-        $vendor = factory(\App\Contact::class)->create([
-            'contact_type' => config('polanco.contact_type.organization'),
-            'subcontact_type' => config('polanco.contact_type.vendor'),
-        ]);
+        $vendor = factory(\App\Vendor::class)->create();
+        $vendor = \App\Contact::findOrFail($vendor->id);
         $vendor_note = factory(\App\Note::class)->create([
             'entity_table' => 'contact',
             'entity_id' => $vendor->id,
@@ -147,7 +145,7 @@ class VendorControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('url_instagram', $url_instagram->url, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('url_linkedin', $url_linkedin->url, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('url_twitter', $url_twitter->url, 'text', $response->getContent()));
-        
+
     }
 
     /**

@@ -6,7 +6,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                    <span class="grey">{{$persons->total()}} results found</span> 
+                    <span class="grey">{{$persons->total()}} results found</span>
                     <span class="search"><a href={{ action('SearchController@search') }}>{!! Html::image('images/search.png', 'New search',array('title'=>"New search",'class' => 'btn btn-link')) !!}</a></span></h1>
                 </div>
                 @if ($persons->isEmpty())
@@ -31,45 +31,45 @@
                             <td>{!!$person->contact_link_full_name!!}</td>
                             <td>
                                 @if($person->do_not_mail)
-                                    <div class="alert alert-warning"><strong>Do Not Mail</strong></div>
+                                    <div class="alert alert-warning alert-important"><strong>Do Not Mail</strong></div>
                                 @endIf
-                                {!!$person->address_primary_google_map!!} 
+                                {!!$person->address_primary_google_map!!}
                             </td>
                             <td>
                                 @if($person->do_not_phone)
-                                    <div class="alert alert-warning"><strong>Do Not Call</strong></div>
+                                    <div class="alert alert-warning alert-important"><strong>Do Not Call</strong></div>
                                 @endIf
                                 @if($person->do_not_sms)
-                                    <div class="alert alert-warning"><strong>Do Not Text</strong></div>
+                                    <div class="alert alert-warning alert-important"><strong>Do Not Text</strong></div>
                                 @endIf
                                 @foreach($person->phones as $phone)
-                                @if (($phone->location_type_id==1) and ($phone->phone_type=="Phone"))  
-                                <a href="tel:{{ $phone->phone }}">{{ $phone->phone }}</a> 
+                                @if (($phone->location_type_id==1) and ($phone->phone_type=="Phone"))
+                                <a href="tel:{{ $phone->phone }}">{{ $phone->phone }}</a>
                                 @endif
                                 @endforeach
-                                
+
                             <td>
-                                
+
                                 @if($person->do_not_phone)
-                                    <div class="alert alert-warning"><strong>Do Not Call</strong></div>
+                                    <div class="alert alert-warning alert-important"><strong>Do Not Call</strong></div>
                                 @endIf
                                 @if($person->do_not_sms)
-                                    <div class="alert alert-warning"><strong>Do Not Text</strong></div>
+                                    <div class="alert alert-warning alert-important"><strong>Do Not Text</strong></div>
                                 @endIf
                                 @foreach($person->phones as $phone)
-                                @if (($phone->location_type_id==1) and ($phone->phone_type=="Mobile"))  
-                                <a href="tel:{{ $phone->phone }}">{{ $phone->phone }}</a> 
+                                @if (($phone->location_type_id==1) and ($phone->phone_type=="Mobile"))
+                                <a href="tel:{{ $phone->phone }}">{{ $phone->phone }}</a>
                                 @endif
                                 @endforeach
                             </td>
                             <td>
-                                
+
                                 @if($person->do_not_email)
-                                    <div class="alert alert-warning"><strong>Do Not Email</strong></div>
+                                    <div class="alert alert-warning alert-important"><strong>Do Not Email</strong></div>
                                 @endIf
                                 @foreach($person->emails as $email)
-                                @if ($email->is_primary)  
-                                <a href="mailto:{{ $email->email }}">{{ $email->email }}</a> 
+                                @if ($email->is_primary)
+                                <a href="mailto:{{ $email->email }}">{{ $email->email }}</a>
                                 @endif
                                 @endforeach
                             </td>
@@ -78,7 +78,7 @@
                             </td>
                         </tr>
                         @endforeach
-                    {!! $persons->render() !!}    
+                    {!! $persons->render() !!}
                     </tbody>
                 </table>
                 @endif

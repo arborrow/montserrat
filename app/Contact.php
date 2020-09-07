@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Contact extends Model
+class Contact extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'contact';
     protected $dates = [
         'birth_date', 'deceased_date', 'created_date', 'modified_date',
@@ -20,7 +23,6 @@ class Contact extends Model
         'subcontact_type' => 'integer',
     ];
     protected $appends = ['full_name_with_city', 'agc_household_name'];
-
     // TODO: refactor to lookup based on relationship
     //TODO: rename person_id to contact_id
     /*    public function retreatmasters() {
