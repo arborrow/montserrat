@@ -226,10 +226,10 @@
                                     <td> {{ $donation->donation_description }}</td>
 
                                     @if ($donation->donation_amount > $donation->payments->sum('payment_amount'))
-                                      <td class="alert alert-warning" style="padding:0px;">
+                                      <td class="alert alert-warning alert-important" style="padding:0px;">
                                     @endIf
                                     @if ($donation->donation_amount < $donation->payments->sum('payment_amount'))
-                                      <td class="alert alert-danger" style="padding:0px;">
+                                      <td class="alert alert-danger alert-important" style="padding:0px;">
                                     @endIf
                                     @if ($donation->donation_amount == $donation->payments->sum('payment_amount'))
                                       <td>

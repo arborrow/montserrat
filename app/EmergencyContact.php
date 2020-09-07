@@ -4,10 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class EmergencyContact extends Model
+class EmergencyContact extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'emergency_contact';
     protected $fillable = ['contact_id', 'name', 'relationship', 'phone', 'phone_alternate'];
 

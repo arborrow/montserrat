@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Snippet extends Model
+class Snippet extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     public function language()
     {
@@ -23,5 +25,4 @@ class Snippet extends Model
             return 'Unknown language';
         }
     }
-
 }

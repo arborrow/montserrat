@@ -108,22 +108,22 @@
                 </div>
                 <div class="row">
                     @if($person->do_not_phone)
-                        <div class="alert alert-warning col-12 col-lg-3 m-2" role="alert">
+                        <div class="alert alert-warning alert-important col-12 col-lg-3 m-2" role="alert">
                             <span class="font-weight-bold">Do Not Call</span>
                         </div>
                     @endIf
                     @if($person->do_not_sms)
-                        <div class="alert alert-warning col-12 col-lg-3 m-2" role="alert">
+                        <div class="alert alert-warning alert-important col-12 col-lg-3 m-2" role="alert">
                             <span class="font-weight-bold">Do Not Text</span>
                         </div>
                     @endIf
                     @if($person->do_not_mail)
-                        <div class="alert alert-warning col-12 col-lg-3 m-2" role="alert">
+                        <div class="alert alert-warning alert-important col-12 col-lg-3 m-2" role="alert">
                             <span class="font-weight-bold">Do Not Mail</span>
                         </div>
                     @endIf
                     @if($person->do_not_email)
-                        <div class="alert alert-warning col-12 col-lg-3 m-2" role="alert">
+                        <div class="alert alert-warning alert-important col-12 col-lg-3 m-2" role="alert">
                             <span class="font-weight-bold">Do Not Email</span>
                         </div>
                     @endIf
@@ -397,10 +397,10 @@
                                 <td> {{ $donation->donation_description.': #'.optional($donation->retreat)->idnumber }}</td>
 
                                 @if ($donation->donation_amount > $donation->payments->sum('payment_amount'))
-                                  <td class="alert alert-warning" style="padding:0px;">
+                                  <td class="alert alert-warning alert-important" style="padding:0px;">
                                 @endIf
                                 @if ($donation->donation_amount < $donation->payments->sum('payment_amount'))
-                                  <td class="alert alert-danger" style="padding:0px;">
+                                  <td class="alert alert-danger alert-important" style="padding:0px;">
                                 @endIf
                                 @if ($donation->donation_amount == $donation->payments->sum('payment_amount'))
                                   <td>

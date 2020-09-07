@@ -6,9 +6,9 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                    <span class="grey">List of duplicated sort_name ({{$duplicates->total()}} records)</span> 
+                    <span class="grey">List of duplicated sort_name ({{$duplicates->total()}} records)</span>
                 </div>
-                
+
                 @if ($duplicates->isEmpty())
                     <p>It is a brand new world, there are no persons!</p>
                 @else
@@ -30,52 +30,52 @@
                             <td><a href="{!!url('person/merge/'.$duplicate->id)!!}">{{$duplicate->full_name}}</a></td>
                             <td>
                                 @if($duplicate->do_not_mail)
-                                    <div class="alert alert-warning"><strong>Do Not Mail</strong></div>
+                                    <div class="alert alert-warning alert-important"><strong>Do Not Mail</strong></div>
                                 @endIf
-                                {!!$duplicate->address_primary_google_map!!} 
+                                {!!$duplicate->address_primary_google_map!!}
                             </td>
                             <td>
                                 @if($duplicate->do_not_phone)
-                                    <div class="alert alert-warning"><strong>Do Not Call</strong></div>
+                                    <div class="alert alert-warning alert-important"><strong>Do Not Call</strong></div>
                                 @endIf
                                 @if($duplicate->do_not_sms)
-                                    <div class="alert alert-warning"><strong>Do Not Text</strong></div>
+                                    <div class="alert alert-warning alert-important"><strong>Do Not Text</strong></div>
                                 @endIf
                                 @foreach($duplicate->phones as $phone)
-                                @if (($phone->location_type_id==1) and ($phone->phone_type=="Phone"))  
-                                <a href="tel:{{ $phone->phone }}">{{ $phone->phone }}</a> 
+                                @if (($phone->location_type_id==1) and ($phone->phone_type=="Phone"))
+                                <a href="tel:{{ $phone->phone }}">{{ $phone->phone }}</a>
                                 @endif
                                 @endforeach
-                                
+
                             <td>
-                                
+
                                 @if($duplicate->do_not_phone)
-                                    <div class="alert alert-warning"><strong>Do Not Call</strong></div>
+                                    <div class="alert alert-warning alert-important"><strong>Do Not Call</strong></div>
                                 @endIf
                                 @if($duplicate->do_not_sms)
-                                    <div class="alert alert-warning"><strong>Do Not Text</strong></div>
+                                    <div class="alert alert-warning alert-important"><strong>Do Not Text</strong></div>
                                 @endIf
                                 @foreach($duplicate->phones as $phone)
-                                @if (($phone->location_type_id==1) and ($phone->phone_type=="Mobile"))  
-                                <a href="tel:{{ $phone->phone }}">{{ $phone->phone }}</a> 
+                                @if (($phone->location_type_id==1) and ($phone->phone_type=="Mobile"))
+                                <a href="tel:{{ $phone->phone }}">{{ $phone->phone }}</a>
                                 @endif
                                 @endforeach
                             </td>
                             <td>
-                                
+
                                 @if($duplicate->do_not_email)
-                                    <div class="alert alert-warning"><strong>Do Not Email</strong></div>
+                                    <div class="alert alert-warning alert-important"><strong>Do Not Email</strong></div>
                                 @endIf
                                 @foreach($duplicate->emails as $email)
-                                @if ($email->is_primary)  
-                                <a href="mailto:{{ $email->email }}">{{ $email->email }}</a> 
+                                @if ($email->is_primary)
+                                <a href="mailto:{{ $email->email }}">{{ $email->email }}</a>
                                 @endif
                                 @endforeach
                             </td>
-                            
+
                         </tr>
                         @endforeach
-                    {!! $duplicates->render() !!}    
+                    {!! $duplicates->render() !!}
                     </tbody>
                 </table>
                 @endif

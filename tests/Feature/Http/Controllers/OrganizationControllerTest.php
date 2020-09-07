@@ -53,9 +53,8 @@ class OrganizationControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-contact');
-        $organization = factory(\App\Contact::class)->create([
-            'contact_type' => config('polanco.contact_type.organization'),
-        ]);
+        $organization = factory(\App\Organization::class)->create();
+        $organization = \App\Contact::findOrFail($organization->id);
 
         $organization_note = factory(\App\Note::class)->create([
             'entity_table' => 'contact',
@@ -151,7 +150,7 @@ class OrganizationControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('url_instagram', $url_instagram->url, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('url_linkedin', $url_linkedin->url, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('url_twitter', $url_twitter->url, 'text', $response->getContent()));
-        
+
     }
 
     /**
@@ -194,6 +193,7 @@ class OrganizationControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-contact');
         $organization = factory(\App\Organization::class)->create();
+
         $response = $this->actingAs($user)->get(route('organization.show', ['organization' => $organization]));
 
         $response->assertOk();
@@ -248,7 +248,7 @@ class OrganizationControllerTest extends TestCase
     {
         //create original data
         $user = $this->createUserWithPermission('update-contact');
-        $organization = factory(\App\Organization::class)->create();
+        $organization = factory(\App\Contact::class)->create();
         $original_name = $organization->organization_name;
         //create updated data
         $organization_name = $this->faker->company;

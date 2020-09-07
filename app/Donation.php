@@ -4,10 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Donation extends Model
+
+class Donation extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'Donations';
     protected $fillable = ['donation_id', 'donor_id', 'donation_description', 'donation_amount', 'payment_description', 'Notes', 'contact_id'];
@@ -15,6 +18,7 @@ class Donation extends Model
     protected $primaryKey = 'donation_id';
     protected $appends = ['payments_paid'];
     protected $casts = ['donation_amount' => 'decimal:2' , 'donation_install' => 'decimal:2'];
+    
 
     public function contact()
     {

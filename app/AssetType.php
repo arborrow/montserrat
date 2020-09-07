@@ -4,8 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class AssetType extends Model
+class AssetType extends Model implements Auditable
 {   /*
     Currently the donation type label is stored in Donations.donation_description. The label field has a unique index.
     The label functions as a shortname and should be considered a foreign key relationship to Donations.donation_description.
@@ -16,6 +17,8 @@ class AssetType extends Model
     The name field is more of a longer description to be used in reports.  The value field refers to the Quickbooks chart of accounts number.
     */
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'asset_type';
 
     public function scopeActive($query)

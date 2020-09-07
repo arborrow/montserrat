@@ -119,16 +119,16 @@
                         <td>{!!$person->contact_link_full_name!!}</td>
                         <td>
                             @if($person->do_not_mail)
-                            <div class="alert alert-warning"><strong>Do Not Mail</strong></div>
+                            <div class="alert alert-warning alert-important"><strong>Do Not Mail</strong></div>
                             @endIf
                             {!!$person->address_primary_google_map!!}
                         </td>
                         <td>
                             @if($person->do_not_phone)
-                            <div class="alert alert-warning"><strong>Do Not Call</strong></div>
+                            <div class="alert alert-warning alert-important"><strong>Do Not Call</strong></div>
                             @endIf
                             @if($person->do_not_sms)
-                            <div class="alert alert-warning"><strong>Do Not Text</strong></div>
+                            <div class="alert alert-warning alert-important"><strong>Do Not Text</strong></div>
                             @endIf
                             @foreach($person->phones as $phone)
                             @if (($phone->location_type_id==1) and ($phone->phone_type=="Phone"))
@@ -139,10 +139,10 @@
                         <td>
 
                             @if($person->do_not_phone)
-                            <div class="alert alert-warning"><strong>Do Not Call</strong></div>
+                            <div class="alert alert-warning alert-important"><strong>Do Not Call</strong></div>
                             @endIf
                             @if($person->do_not_sms)
-                            <div class="alert alert-warning"><strong>Do Not Text</strong></div>
+                            <div class="alert alert-warning alert-important"><strong>Do Not Text</strong></div>
                             @endIf
                             @foreach($person->phones as $phone)
                             @if (($phone->location_type_id==1) and ($phone->phone_type=="Mobile"))
@@ -153,7 +153,7 @@
                         <td>
 
                             @if($person->do_not_email)
-                            <div class="alert alert-warning"><strong>Do Not Email</strong></div>
+                            <div class="alert alert-warning alert-important"><strong>Do Not Email</strong></div>
                             @endIf
                             @foreach($person->emails as $email)
                             @if ($email->is_primary)

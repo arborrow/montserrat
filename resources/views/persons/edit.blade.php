@@ -111,7 +111,7 @@
                         @endCan
                     </div>
                 </div>
-                <div class="col-12 col-lg-6 alert alert-danger" id="safety_info">
+                <div class="col-12 col-lg-6 alert alert-danger alert-important" id="safety_info">
                     <h2>Emergency Contact Information</h2>
                     <div class="form-group">
                         <div class="row">

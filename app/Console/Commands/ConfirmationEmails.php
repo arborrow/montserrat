@@ -61,8 +61,8 @@ class ConfirmationEmails extends Command
         if ($retreats->count() >= 1) {
 
             foreach ($retreats as $retreat) {
-                $automaticSuccessMessage = 'Automatic confirmation email has been sent for retreat #'.$retreat->idnumber.'.';
-                $automaticErrorMessage = 'Automatic confirmation email failed to send for retreat #'.$retreat->idnumber.'.';
+                $automaticSuccessMessage = 'Automatic confirmation email has been sent for retreat #'.$retreat->idnumber;
+                $automaticErrorMessage = 'Automatic confirmation email failed to send for retreat #'.$retreat->idnumber.': ';
 
                 $registrations = $retreat->registrations()
                     ->where('canceled_at', null)
@@ -95,14 +95,15 @@ class ConfirmationEmails extends Command
                     $touchpoint->touched_at = Carbon::now();
                     $touchpoint->type = 'Email';
 
-                    try {
-                        $this->mailer->to($primaryEmail)->queue(new RetreatConfirmation($registration));
-                        $touchpoint->notes = $automaticSuccessMessage;
-                        $touchpoint->save();
-                    } catch (\Exception $e) {
-                        dd($e);
-                        $touchpoint->notes = $automaticErrorMessage;
-                        $touchpoint->save();
+                    if (!empty($primaryEmail)) {
+                        try {
+                            $this->mailer->to($primaryEmail)->queue(new RetreatConfirmation($registration));
+                            $touchpoint->notes = $automaticSuccessMessage;
+                            $touchpoint->save();
+                        } catch (\Exception $e) {
+                            $touchpoint->notes = $automaticErrorMessage . $e->getMessage();
+                            $touchpoint->save();
+                        }
                     }
                 }
             }

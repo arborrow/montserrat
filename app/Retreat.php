@@ -7,18 +7,14 @@ use Html;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Retreat extends Model
+class Retreat extends Model implements Auditable
 {
-    /*
-     * The database table used by the model.
-     *
-     * @var string
-     */
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'event';
-
     protected $dates = [
         'start_date', 'end_date', 'disabled_at',
     ];  //

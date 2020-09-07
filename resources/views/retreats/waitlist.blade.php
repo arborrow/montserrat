@@ -194,8 +194,8 @@
                                 @endif
                             </td>
                             <td> {{ $registration->notes }} <br />
-                                <strong>Health:</strong> {!! (!empty($registration->retreatant->note_health->note)) ? "<div class=\"alert alert-danger\">" . $registration->retreatant->note_health->note . "</div>" : null !!}</div><br />
-                                <strong>Dietary:</strong> {!! (!empty($registration->retreatant->note_dietary->note)) ? "<div class=\"alert alert-info\">" . $registration->retreatant->note_dietary->note . "</div>" : null !!}</div>
+                                <strong>Health:</strong> {!! (!empty($registration->retreatant->note_health->note)) ? "<div class=\"alert alert-danger alert-important\">" . $registration->retreatant->note_health->note . "</div>" : null !!}</div><br />
+                                <strong>Dietary:</strong> {!! (!empty($registration->retreatant->note_dietary->note)) ? "<div class=\"alert alert-info alert-important\">" . $registration->retreatant->note_dietary->note . "</div>" : null !!}</div>
                             </td>
                             <td>
                                 @can('update-registration')

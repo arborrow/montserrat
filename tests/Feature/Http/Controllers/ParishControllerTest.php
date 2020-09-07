@@ -52,11 +52,8 @@ class ParishControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-contact');
-        $parish = factory(\App\Contact::class)->create([
-            'contact_type' => config('polanco.contact_type.organization'),
-            'subcontact_type' => config('polanco.contact_type.parish'),
-        ]);
-
+        $parish = factory(\App\Parish::class)->create();
+        $parish = \App\Contact::findOrFail($parish->id);
         $main_address = factory(\App\Address::class)->create([
             'contact_id' => $parish->id,
             'location_type_id' => config('polanco.location_type.main'),
@@ -180,7 +177,10 @@ class ParishControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-contact');
 
-        $diocese = factory(\App\Diocese::class)->create();
+        $diocese = factory(\App\Diocese::class)->create([
+            'contact_type' => config('polanco.contact_type.organization'),
+            'subcontact_type' => config('polanco.contact_type.diocese'),
+        ]);
         $parish = factory(\App\Parish::class)->create();
         $relationship_diocese = factory(\App\Relationship::class)->create([
             'contact_id_a' => $diocese->id,
@@ -261,6 +261,7 @@ class ParishControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-contact');
         $parish = factory(\App\Parish::class)->create();
+
         $original_sort_name = $parish->sort_name;
         $new_parish_name = 'St. '.$this->faker->firstName.' Parish of the Renewal';
 

@@ -170,6 +170,19 @@ class SnippetControllerTest extends TestCase
     }
 
 
+        /**
+         * @test
+         */
+        public function store_validates_with_a_form_request()
+        {
+            $this->assertActionUsesFormRequest(
+                \App\Http\Controllers\SnippetController::class,
+                'store',
+                \App\Http\Requests\StoreSnippetRequest::class
+            );
+        }
+
+
     /**
      * @test
      */
@@ -187,6 +200,18 @@ class SnippetControllerTest extends TestCase
         $response->assertViewHas('title');
         $response->assertViewHas('email');
         $response->assertViewHas('language');
+    }
+
+    /**
+     * @test
+     */
+    public function test_validates_with_a_form_request()
+    {
+        $this->assertActionUsesFormRequest(
+            \App\Http\Controllers\SnippetController::class,
+            'snippet_test',
+            \App\Http\Requests\SnippetTestRequest::class
+        );
     }
 
 
@@ -217,6 +242,19 @@ class SnippetControllerTest extends TestCase
         $this->assertEquals($updated->title, $new_title);
         $this->assertNotEquals($updated->title, $original_title);
     }
+
+    /**
+     * @test
+     */
+    public function update_validates_with_a_form_request()
+    {
+        $this->assertActionUsesFormRequest(
+            \App\Http\Controllers\SnippetController::class,
+            'update',
+            \App\Http\Requests\UpdateSnippetRequest::class
+        );
+    }
+
 
     // test cases...
 }
