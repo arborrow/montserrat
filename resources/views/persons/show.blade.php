@@ -293,7 +293,7 @@
             <div class="col-12 mt-3" id="registrations">
                 <h2>Retreat Participation ({{$registrations->count()}})</h2>
                 @foreach($registrations as $registration)
-                    <div class="p-3 mb-2 alert rounded {{ $registration->canceled_at ? 'alert-warning' : 'alert-success'}}">
+                    <div class="p-3 mb-2 rounded {{ $registration->canceled_at ? 'bg-warning' : 'bg-light'}}">
                         {!!$registration->event_link!!} ({{date('F j, Y', strtotime($registration->retreat_start_date))}} - {{date('F j, Y', strtotime($registration->retreat_end_date))}}) - <u>{{$registration->participant_role_name}}</u> ({{$registration->participant_status}})
                         <a href="{{ url('registration/'.$registration->id) }}">
                             View Registration
