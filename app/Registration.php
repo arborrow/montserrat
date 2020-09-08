@@ -22,6 +22,14 @@ class Registration extends Model implements Auditable
     ];
     protected $fillable = ['contact_id', 'event_id', 'status_id', 'role_id','notes','register_date'];
 
+    public function generateTags(): array
+        {
+            return [
+                $this->contact_sort_name,
+                $this->event_idnumber,
+            ];
+        }
+
     public function getAttendanceConfirmDateTextAttribute()
     {
         if (isset($this->attendance_confirm_date)) {
@@ -30,6 +38,16 @@ class Registration extends Model implements Auditable
             return 'N/A';
         }
     }
+
+    public function getContactSortNameAttribute()
+    {
+        if (! empty($this->contact)) {
+            return $this->contact->sort_name;
+        } else {
+            return 'N/A';
+        }
+    }
+
 
     public function getDonationPledgeLinkAttribute()
     {
@@ -58,6 +76,15 @@ class Registration extends Model implements Auditable
     {
         if (! empty($this->event)) {
             return $this->event->title;
+        } else {
+            return 'N/A';
+        }
+    }
+
+    public function getEventIdnumberAttribute()
+    {
+        if (! empty($this->event)) {
+            return $this->event->idnumber;
         } else {
             return 'N/A';
         }

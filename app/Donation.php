@@ -18,8 +18,14 @@ class Donation extends Model implements Auditable
     protected $primaryKey = 'donation_id';
     protected $appends = ['payments_paid'];
     protected $casts = ['donation_amount' => 'decimal:2' , 'donation_install' => 'decimal:2'];
-    
 
+    public function generateTags(): array
+        {
+            return [
+                $this->contact->sort_name,
+                $this->RetreatIdnumber,
+            ];
+        }
     public function contact()
     {
         return $this->belongsTo(Contact::class, 'contact_id', 'id');

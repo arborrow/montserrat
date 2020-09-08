@@ -23,6 +23,14 @@ class Contact extends Model implements Auditable
         'subcontact_type' => 'integer',
     ];
     protected $appends = ['full_name_with_city', 'agc_household_name'];
+
+    public function generateTags(): array
+        {
+            return [
+                $this->sort_name,
+            ];
+        }
+
     // TODO: refactor to lookup based on relationship
     //TODO: rename person_id to contact_id
     /*    public function retreatmasters() {
