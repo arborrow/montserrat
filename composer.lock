@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c887a552811d3daa3ba52bb3f2915bb3",
+    "content-hash": "ef6652b9324f81f0965c62209822054c",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1693,6 +1693,184 @@
             "time": "2019-11-02T09:15:47+00:00"
         },
         {
+            "name": "jaybizzle/crawler-detect",
+            "version": "v1.2.99",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/JayBizzle/Crawler-Detect.git",
+                "reference": "0ffea34489b258a2709bfe93a9553e1efa5d1904"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/0ffea34489b258a2709bfe93a9553e1efa5d1904",
+                "reference": "0ffea34489b258a2709bfe93a9553e1efa5d1904",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8|^5.5|^6.5",
+                "satooshi/php-coveralls": "1.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jaybizzle\\CrawlerDetect\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Beech",
+                    "email": "m@rkbee.ch",
+                    "role": "Developer"
+                }
+            ],
+            "description": "CrawlerDetect is a PHP class for detecting bots/crawlers/spiders via the user agent",
+            "homepage": "https://github.com/JayBizzle/Crawler-Detect/",
+            "keywords": [
+                "crawler",
+                "crawler detect",
+                "crawler detector",
+                "crawlerdetect",
+                "php crawler detect"
+            ],
+            "time": "2020-08-25T21:35:55+00:00"
+        },
+        {
+            "name": "jaybizzle/laravel-crawler-detect",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/JayBizzle/Laravel-Crawler-Detect.git",
+                "reference": "e39b536fb5e4f21a49328e83a2ab26f0b64b06f7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/JayBizzle/Laravel-Crawler-Detect/zipball/e39b536fb5e4f21a49328e83a2ab26f0b64b06f7",
+                "reference": "e39b536fb5e4f21a49328e83a2ab26f0b64b06f7",
+                "shasum": ""
+            },
+            "require": {
+                "jaybizzle/crawler-detect": "1.*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "3.1.*",
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Jaybizzle\\LaravelCrawlerDetect\\LaravelCrawlerDetectServiceProvider"
+                    ],
+                    "aliases": {
+                        "Crawler": "Jaybizzle\\LaravelCrawlerDetect\\Facades\\LaravelCrawlerDetect"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Jaybizzle\\LaravelCrawlerDetect\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Beech",
+                    "email": "mbeech@mark-beech.co.uk"
+                }
+            ],
+            "description": "A Laravel package to detect web crawlers via the user agent",
+            "homepage": "http://github.com/JayBizzle/Laravel-Crawler-Detect",
+            "keywords": [
+                "bot",
+                "crawler",
+                "crawler detect",
+                "crawler detector",
+                "crawlerdetect",
+                "detect",
+                "laravel",
+                "php crawler detect",
+                "spider",
+                "user-agent"
+            ],
+            "time": "2017-06-01T20:29:30+00:00"
+        },
+        {
+            "name": "jeremykenedy/laravel-logger",
+            "version": "v3.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jeremykenedy/laravel-logger.git",
+                "reference": "7bd073ad7a76c9545c27845ee1f1c9e19a0d2524"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jeremykenedy/laravel-logger/zipball/7bd073ad7a76c9545c27845ee1f1c9e19a0d2524",
+                "reference": "7bd073ad7a76c9545c27845ee1f1c9e19a0d2524",
+                "shasum": ""
+            },
+            "require": {
+                "jaybizzle/laravel-crawler-detect": "1.*",
+                "laravelcollective/html": "^5.4|^5.5|^5.6|^5.7|^5.8|^6.0|^7.0",
+                "php": ">=7.0.0"
+            },
+            "type": "package",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "jeremykenedy\\LaravelLogger\\LaravelLoggerServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "jeremykenedy\\LaravelLogger\\": "src/"
+                },
+                "files": [
+                    "src/App/Logic/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "jeremykenedy",
+                    "email": "jeremykenedy@gmail.com"
+                }
+            ],
+            "description": "Laravel Logger Package",
+            "keywords": [
+                "Laravel activity",
+                "Laravel activity log",
+                "Laravel activity logger",
+                "Laravel log",
+                "laravel logger"
+            ],
+            "funding": [
+                {
+                    "url": "https://github.com/jeremykenedy",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/jeremykenedy",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2020-07-28T17:36:42+00:00"
+        },
+        {
             "name": "knplabs/knp-snappy",
             "version": "v1.2.1",
             "source": {
@@ -3006,89 +3184,6 @@
                 "serialize"
             ],
             "time": "2020-08-11T08:46:50+00:00"
-        },
-        {
-            "name": "owen-it/laravel-auditing",
-            "version": "v10.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/owen-it/laravel-auditing.git",
-                "reference": "50b0d9bc8d47a6fd873427c012c6710850e73a34"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/owen-it/laravel-auditing/zipball/50b0d9bc8d47a6fd873427c012c6710850e73a34",
-                "reference": "50b0d9bc8d47a6fd873427c012c6710850e73a34",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/console": "^5.8|^6.0|^7.0",
-                "illuminate/database": "^5.8|^6.0|^7.0",
-                "illuminate/filesystem": "^5.8|^6.0|^7.0",
-                "php": ">=7.2.5"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.0",
-                "orchestra/testbench": "^3.8",
-                "phpunit/phpunit": "^8.0",
-                "ramsey/uuid": "^3.0"
-            },
-            "suggest": {
-                "laravelista/lumen-vendor-publish": "Needed to publish the package configuration in Lumen"
-            },
-            "type": "package",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "10.0-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "OwenIt\\Auditing\\AuditingServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "OwenIt\\Auditing\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Antério Vieira",
-                    "email": "anteriovieira@gmail.com"
-                },
-                {
-                    "name": "Quetzy Garcia",
-                    "email": "quetzyg@altek.org"
-                },
-                {
-                    "name": "Raphael França",
-                    "email": "raphaelfrancabsb@gmail.com"
-                }
-            ],
-            "description": "Audit changes of your Eloquent models in Laravel/Lumen",
-            "homepage": "http://laravel-auditing.com",
-            "keywords": [
-                "Accountability",
-                "Audit",
-                "auditing",
-                "changes",
-                "eloquent",
-                "history",
-                "laravel",
-                "log",
-                "logging",
-                "lumen",
-                "observer",
-                "record",
-                "revision",
-                "tracking"
-            ],
-            "time": "2020-03-23T22:49:02+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -8164,6 +8259,89 @@
                 "seed"
             ],
             "time": "2020-03-06T08:28:39+00:00"
+        },
+        {
+            "name": "owen-it/laravel-auditing",
+            "version": "v10.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/owen-it/laravel-auditing.git",
+                "reference": "50b0d9bc8d47a6fd873427c012c6710850e73a34"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/owen-it/laravel-auditing/zipball/50b0d9bc8d47a6fd873427c012c6710850e73a34",
+                "reference": "50b0d9bc8d47a6fd873427c012c6710850e73a34",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^5.8|^6.0|^7.0",
+                "illuminate/database": "^5.8|^6.0|^7.0",
+                "illuminate/filesystem": "^5.8|^6.0|^7.0",
+                "php": ">=7.2.5"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0",
+                "orchestra/testbench": "^3.8",
+                "phpunit/phpunit": "^8.0",
+                "ramsey/uuid": "^3.0"
+            },
+            "suggest": {
+                "laravelista/lumen-vendor-publish": "Needed to publish the package configuration in Lumen"
+            },
+            "type": "package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "10.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "OwenIt\\Auditing\\AuditingServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "OwenIt\\Auditing\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Antério Vieira",
+                    "email": "anteriovieira@gmail.com"
+                },
+                {
+                    "name": "Quetzy Garcia",
+                    "email": "quetzyg@altek.org"
+                },
+                {
+                    "name": "Raphael França",
+                    "email": "raphaelfrancabsb@gmail.com"
+                }
+            ],
+            "description": "Audit changes of your Eloquent models in Laravel/Lumen",
+            "homepage": "http://laravel-auditing.com",
+            "keywords": [
+                "Accountability",
+                "Audit",
+                "auditing",
+                "changes",
+                "eloquent",
+                "history",
+                "laravel",
+                "log",
+                "logging",
+                "lumen",
+                "observer",
+                "record",
+                "revision",
+                "tracking"
+            ],
+            "time": "2020-03-23T22:49:02+00:00"
         },
         {
             "name": "phar-io/manifest",

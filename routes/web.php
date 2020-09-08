@@ -12,7 +12,7 @@
 */
 
 // Auth::routes();
-
+Route::group(['middleware' => ['web', 'activity']], function () {
 Route::get('intercept/{code}', function ($code) {
     $url = base64_decode($code);
     // dd($url);
@@ -260,3 +260,4 @@ Route::post('mailgun/callback', function () {
 Route::get('gate/open/{hours?}', 'GateController@open')->name('gate.open');
 Route::get('gate/close', 'GateController@close')->name('gate.close');
 Route::get('gate', 'GateController@index')->name('gate.index');
+});
