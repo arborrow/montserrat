@@ -78,6 +78,8 @@ Route::post('admin/snippet/test', 'SnippetController@snippet_test')->name('snipp
 Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('snippet/title/{title?}', 'SnippetController@index_type');
     Route::resource('asset_type', 'AssetTypeController');
+    Route::get('audit/user/{user_id?}', 'AuditController@index_type');
+    Route::resource('audit', 'AuditController');
     Route::resource('department', 'DepartmentController');
     Route::resource('donation_type', 'DonationTypeController');
     Route::resource('location', 'LocationController');

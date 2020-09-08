@@ -81,30 +81,30 @@ class SnippetControllerTest extends TestCase
     }
 
 
-        /**
-         * @test
-         */
-        public function index_type_returns_an_ok_response()
-        {
-            $user = $this->createUserWithPermission('show-snippet');
+    /**
+     * @test
+     */
+    public function index_type_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-snippet');
 
-            $snippet = factory(\App\Snippet::class)->create();
+        $snippet = factory(\App\Snippet::class)->create();
 
-            $number_snippets = $this->faker->numberBetween(2, 5);
-            $snippets = factory(\App\Snippet::class, $number_snippets)->create([
-                'title' => $snippet->title,
-                'deleted_at' => null,
-            ]);
+        $number_snippets = $this->faker->numberBetween(2, 5);
+        $snippets = factory(\App\Snippet::class, $number_snippets)->create([
+            'title' => $snippet->title,
+            'deleted_at' => null,
+        ]);
 
-            $response = $this->actingAs($user)->get('admin/snippet/title/'.$snippet->title);
-            $results = $response->viewData('snippets');
-            $response->assertOk();
-            $response->assertViewIs('admin.snippets.index');
-            $response->assertViewHas('snippets');
-            $response->assertViewHas('titles');
-            $response->assertSeeText('Snippets');
-            $this->assertGreaterThan($number_snippets, $results->count());
-        }
+        $response = $this->actingAs($user)->get('admin/snippet/title/'.$snippet->title);
+        $results = $response->viewData('snippets');
+        $response->assertOk();
+        $response->assertViewIs('admin.snippets.index');
+        $response->assertViewHas('snippets');
+        $response->assertViewHas('titles');
+        $response->assertSeeText('Snippets');
+        $this->assertGreaterThan($number_snippets, $results->count());
+    }
 
     /**
      * @test
@@ -156,7 +156,7 @@ class SnippetControllerTest extends TestCase
     public function snippet_test_returns_an_ok_response()
     // this test is a bit of a happy path and a fail path to ensure no emails are sent
     // we begin using a bogus title which should produce a flash session warning that the snippet was not found; however, we still wind up at the index page
-    {   $this->withoutExceptionHandling();
+    {   //$this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('show-snippet');
 
         $response = $this->actingAs($user)->post(route('snippet.snippet_test'), [

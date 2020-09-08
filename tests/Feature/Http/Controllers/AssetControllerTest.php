@@ -230,7 +230,7 @@ class AssetControllerTest extends TestCase
      */
     public function store_returns_an_ok_response()
     {
-        $this->withoutExceptionHandling();
+        //$this->withoutExceptionHandling();
 
         $user = $this->createUserWithPermission('create-asset');
 
@@ -259,7 +259,7 @@ class AssetControllerTest extends TestCase
      */
     public function update_returns_an_ok_response()
     {
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('update-asset');
 
         $asset = factory(\App\Asset::class)->create();

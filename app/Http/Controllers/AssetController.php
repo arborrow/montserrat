@@ -9,7 +9,7 @@ use App\Http\Requests\UpdateAssetRequest;
 
 class AssetController extends Controller
 {
-    //
+
     public function __construct()
     {
         $this->middleware('auth');
