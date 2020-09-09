@@ -51,10 +51,6 @@ if (Request::is('activity/cleared')) {
                     <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
                     {!! trans('LaravelLogger::laravel-logger.dashboard.labels.ipAddress') !!}
                 </th>
-                <th>
-                    <i class="fa fa-laptop fa-fw" aria-hidden="true"></i>
-                    {!! trans('LaravelLogger::laravel-logger.dashboard.labels.agent') !!}
-                </th>
                 @if(Request::is('activity/cleared'))
                     <th>
                         <i class="fa fa-trash-o fa-fw" aria-hidden="true"></i>
@@ -148,101 +144,6 @@ if (Request::is('activity/cleared')) {
                     <td>
                         {{ $activity->ipAddress }}
                     </td>
-                    <td>
-                        @php
-                            $platform       = $activity->userAgentDetails['platform'];
-                            $browser        = $activity->userAgentDetails['browser'];
-                            $browserVersion = $activity->userAgentDetails['version'];
-
-                            switch ($platform) {
-
-                                case 'Windows':
-                                    $platformIcon = 'fa-windows';
-                                    break;
-
-                                case 'iPad':
-                                    $platformIcon = 'fa-';
-                                    break;
-
-                                case 'iPhone':
-                                    $platformIcon = 'fa-';
-                                    break;
-
-                                case 'Macintosh':
-                                    $platformIcon = 'fa-apple';
-                                    break;
-
-                                case 'Android':
-                                    $platformIcon = 'fa-android';
-                                    break;
-
-                                case 'BlackBerry':
-                                    $platformIcon = 'fa-';
-                                    break;
-
-                                case 'Unix':
-                                case 'Linux':
-                                    $platformIcon = 'fa-linux';
-                                    break;
-
-                                default:
-                                    $platformIcon = 'fa-';
-                                    break;
-                            }
-
-                            switch ($browser) {
-
-                                case 'Chrome':
-                                    $browserIcon  = 'fa-chrome';
-                                    break;
-
-                                case 'Firefox':
-                                    $browserIcon  = 'fa-';
-                                    break;
-
-                                case 'Opera':
-                                    $browserIcon  = 'fa-opera';
-                                    break;
-
-                                case 'Safari':
-                                    $browserIcon  = 'fa-safari';
-                                    break;
-
-                                case 'Internet Explorer':
-                                    $browserIcon  = 'fa-edge';
-                                    break;
-
-                                default:
-                                    $browserIcon  = 'fa-';
-                                    break;
-                            }
-                        @endphp
-                        <i class="fa {{ $browserIcon }} fa-fw" aria-hidden="true">
-                            <span class="sr-only">
-                                {{ $browser }}
-                            </span>
-                        </i>
-                        <sup>
-                            <small>
-                                {{ $browserVersion }}
-                            </small>
-                        </sup>
-                        <i class="fa {{ $platformIcon }} fa-fw" aria-hidden="true">
-                            <span class="sr-only">
-                                {{ $platform }}
-                            </span>
-                        </i>
-                        <sup>
-                            <small>
-                                {{ $activity->langDetails }}
-                            </small>
-                        </sup>
-                    </td>
-                    @if(Request::is('activity/cleared'))
-                        <td>
-                            {{ $activity->deleted_at }}
-                        </td>
-                    @endif
                 </tr>
             @endforeach
         </tbody>
