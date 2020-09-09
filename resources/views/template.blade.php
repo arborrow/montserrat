@@ -143,6 +143,7 @@
 							<a class="dropdown-item" href={{ route('donation_type.index') }}>Donation types</a>
 							<a class="dropdown-item" href={{ route('snippet.index') }}>Snippets</a>
 							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href={{ route('activity') }}>Activity log</a>
 							<a class="dropdown-item" href={{ route('audit.index') }}>Audit log</a>
 						</div>
 					</li>
