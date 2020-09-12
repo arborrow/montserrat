@@ -65,6 +65,7 @@ class RoomController extends Controller
         $room->status = $request->input('status');
         $room->save();
 
+        flash ('Room: <a href="'. url('/room/'.$room->id) . '">'.$room->name.'</a> added')->success();
         return Redirect::action('RoomController@index');
     }
 
@@ -121,6 +122,7 @@ class RoomController extends Controller
         $room->status = $request->input('status');
         $room->save();
 
+        flash ('Room: <a href="'. url('/room/'.$room->id) . '">'.$room->name.'</a> updated')->success();
         return Redirect::action('RoomController@index');
     }
 
@@ -133,8 +135,11 @@ class RoomController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-room');
+        $room = \App\Room::findOrFail($id);
+        
         \App\Room::destroy($id);
 
+        flash('Room: '.$room->name . ' deleted')->warning()->important();
         return Redirect::action('RoomController@index');
     }
 

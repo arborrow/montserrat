@@ -183,8 +183,9 @@ class TouchpointController extends Controller
         $touchpoint->touched_at = Carbon::parse($request->input('touched_at'));
         $touchpoint->type = $request->input('type');
         $touchpoint->notes = $request->input('notes');
-
         $touchpoint->save();
+
+        flash ('Touchpoint ID#: <a href="'. url('/touchpoint/'.$touchpoint->id) . '">'.$touchpoint->id.'</a> added')->success();
 
         return Redirect::action('TouchpointController@index');
     }
@@ -193,6 +194,7 @@ class TouchpointController extends Controller
     {
         $this->authorize('create-touchpoint');
         $group_id = $request->input('group_id');
+        $group = \App\Group::findOrFail($group_id);
         $group_members = \App\GroupContact::whereGroupId($group_id)->whereStatus('Added')->get();
         foreach ($group_members as $group_member) {
             $touchpoint = new \App\Touchpoint;
@@ -204,6 +206,7 @@ class TouchpointController extends Controller
             $touchpoint->save();
         }
 
+        flash ('Touchpoint added for members of group: <a href="'. url('/group/'.$group_id) . '">'.$group->name.'</a>')->success();
         return Redirect::action('GroupController@show', $group_id);
     }
 
@@ -211,6 +214,7 @@ class TouchpointController extends Controller
     {
         $this->authorize('create-touchpoint');
         $event_id = $request->input('event_id');
+        $event = \App\Retreat::findOrFail($event_id);
         $participants = \App\Registration::whereStatusId(config('polanco.registration_status_id.registered'))->whereEventId($event_id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
         foreach ($participants as $participant) {
             $touchpoint = new \App\Touchpoint;
@@ -222,6 +226,7 @@ class TouchpointController extends Controller
             $touchpoint->save();
         }
 
+        flash ('Touchpoint added for registered event participants: <a href="'. url('/retreat/'.$event_id) . '">'.$event->title.'</a>')->success();
         return Redirect::action('RetreatController@show', $event_id);
     }
 
@@ -229,6 +234,7 @@ class TouchpointController extends Controller
     {
         $this->authorize('create-touchpoint');
         $event_id = $request->input('event_id');
+        $event = \App\Retreat::findOrFail($event_id);
         $participants = \App\Registration::whereStatusId(config('polanco.registration_status_id.waitlist'))->whereEventId($event_id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
         foreach ($participants as $participant) {
             $touchpoint = new \App\Touchpoint;
@@ -240,6 +246,7 @@ class TouchpointController extends Controller
             $touchpoint->save();
         }
 
+        flash ('Touchpoint added for waitlisted event participants: <a href="'. url('/retreat/'.$event_id) . '">'.$event->title.'</a>')->success();
         return Redirect::action('RetreatController@show', $event_id);
     }
 
@@ -310,6 +317,7 @@ class TouchpointController extends Controller
         $touchpoint->notes = $request->input('notes');
         $touchpoint->save();
 
+        flash ('Touchpoint ID#: <a href="'. url('/touchpoint/'.$touchpoint->id) . '">'.$touchpoint->id.'</a> updated')->success();
         return Redirect::action('TouchpointController@index');
     }
 
@@ -322,8 +330,10 @@ class TouchpointController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-touchpoint');
+
         \App\Touchpoint::destroy($id);
 
+        flash('Touchpoint ID#: '.$id . ' deleted')->warning()->important();
         return Redirect::action('TouchpointController@index');
     }
 }

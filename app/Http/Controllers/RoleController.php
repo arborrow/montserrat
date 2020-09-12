@@ -50,6 +50,7 @@ class RoleController extends Controller
 
         $role->save();
 
+        flash ('Role: <a href="'. url('/admin/role/'.$role->id) . '">'.$role->name.'</a> added')->success();
         return Redirect::action('RoleController@index');
     }
 
@@ -102,6 +103,7 @@ class RoleController extends Controller
         $role->description = $request->input('description');
         $role->save();
 
+        flash ('Role: <a href="'. url('/admin/role/'.$role->id) . '">'.$role->name.'</a> updated')->success();
         return Redirect::action('RoleController@index');
     }
 
@@ -115,8 +117,10 @@ class RoleController extends Controller
     {
         $this->authorize('delete-role');
 
+        $role = \App\Role::findOrFail($id);
         \App\Role::destroy($id);
 
+        flash('Role: '.$role->name . ' deleted')->warning()->important();
         return Redirect::action('RoleController@index');
     }
 
@@ -127,6 +131,7 @@ class RoleController extends Controller
         $role->permissions()->detach();
         $role->permissions()->sync($request->input('permissions'));
 
+        flash('Permissions successfully updated for role: <a href="'. url('/admin/role/'.$role->id) . '">'.$role->name.'</a>')->success();
         return Redirect::action('RoleController@index');
     }
 
@@ -137,6 +142,7 @@ class RoleController extends Controller
         $role->users()->detach();
         $role->users()->sync($request->input('users'));
 
+        flash('Users successfully updated for role: <a href="'. url('/admin/role/'.$role->id) . '">'.$role->name.'</a>')->success();
         return Redirect::action('RoleController@index');
     }
 }

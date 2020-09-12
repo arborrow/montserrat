@@ -55,6 +55,7 @@ class UomController extends Controller
 
         $uom->save();
 
+        flash ('Unit of measure: <a href="'. url('/admin/uom/'.$uom->id) . '">'.$uom->unit_name.'</a> added')->success();
         return Redirect::action('UomController@index');
     }
 
@@ -110,6 +111,7 @@ class UomController extends Controller
 
         $uom->save();
 
+        flash ('Unit of measure: <a href="'. url('/admin/uom/'.$uom->id) . '">'.$uom->unit_name.'</a> updated')->success();
         return Redirect::action('UomController@show',$uom->id);
     }
 
@@ -122,9 +124,11 @@ class UomController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-uom');
+        $uom = \App\Uom::findOrFail($id);
 
         \App\Uom::destroy($id);
 
+        flash('Unit of measure: '.$uom->unit_name . ' deleted')->warning()->important();
         return Redirect::action('UomController@index');
     }
 

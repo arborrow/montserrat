@@ -235,6 +235,7 @@ class RegistrationController extends Controller
             }
         }
 
+        flash('Registration #: <a href="'. url('/registration/'.$registration->id) . '">'.$registration->id.'</a> added')->success();
         return Redirect::action('RegistrationController@index');
     }
 
@@ -377,11 +378,12 @@ class RegistrationController extends Controller
             }
         }
         if ($registration->event_id == config('polanco.event.open_deposit')) {
-            $registration->room_id = 0; 
+            $registration->room_id = 0;
         }
 
         $registration->save();
 
+        flash ('Registration #: <a href="'. url('/registration/'.$registration->id) . '">'.$registration->id.'</a> updated')->success();
         return Redirect::action('PersonController@show', $registration->contact_id);
     }
 
@@ -403,6 +405,7 @@ class RegistrationController extends Controller
         //$retreat->attending = $countregistrations;
         $retreat->save();
 
+        flash('Registration #: '.$registration->id . ' deleted')->warning()->important();
         return Redirect::action('RegistrationController@index');
     }
 

@@ -61,6 +61,7 @@ class DepartmentController extends Controller
 
         $department->save();
 
+        flash('Department: <a href="'. url('/admin/department/'.$department->id) . '">'.$department->name.'</a> added')->success();
         return Redirect::action('DepartmentController@index');
     }
 
@@ -118,6 +119,7 @@ class DepartmentController extends Controller
         $department->parent_id = $request->input('parent_id');
         $department->is_active = $request->input('is_active');
 
+        flash('Department: <a href="'. url('/admin/department/'.$department->id) . '">'.$department->name.'</a> updated')->success();
         $department->save();
 
         return Redirect::action('DepartmentController@show', $department->id);
@@ -132,9 +134,10 @@ class DepartmentController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-department');
+        $department = \App\Department::findOrFail($id);
 
         \App\Department::destroy($id);
-
+        flash('Department: '.$department->name . ' deleted')->warning()->important();
         return Redirect::action('DepartmentController@index');
     }
 }

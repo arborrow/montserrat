@@ -170,6 +170,7 @@ class OrganizationController extends Controller
         $url_twitter->website_type = 'Twitter';
         $url_twitter->save();
 
+        flash ('Organization: <a href="'. url('/organization/'.$organization->id) . '">'.$organization->organization_name.'</a> added')->success();
         return Redirect::action('OrganizationController@index');
     }
 
@@ -376,6 +377,7 @@ class OrganizationController extends Controller
         $url_twitter->website_type = 'Twitter';
         $url_twitter->save();
 
+        flash('Organization: <a href="'. url('/organization/'.$organization->id) . '">'.$organization->organization_name.'</a> updated')->success();
         return Redirect::action('OrganizationController@show', $organization->id);
     }
 
@@ -390,6 +392,7 @@ class OrganizationController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-contact');
+        $organization = \App\Organization::findOrFail($id);
         \App\Relationship::whereContactIdA($id)->delete();
         \App\Relationship::whereContactIdB($id)->delete();
         \App\GroupContact::whereContactId($id)->delete();
@@ -406,8 +409,9 @@ class OrganizationController extends Controller
         // delete donations
         \App\Donation::whereContactId($id)->delete();
 
-        \App\Contact::destroy($id);
+        \App\Organization::destroy($id);
 
+        flash('Organization: '.$organization->organization_name . ' deleted')->warning()->important();
         return Redirect::action('OrganizationController@index');
     }
 }

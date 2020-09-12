@@ -603,6 +603,7 @@ class PersonController extends Controller
         $url_twitter->website_type = 'Twitter';
         $url_twitter->save();
 
+        flash('Person: <a href="'. url('/person/'.$person->id) . '">'.$person->display_name.'</a> added')->success();
         return Redirect::action('PersonController@show', $person->id); //
 
         //return Redirect::action('PersonController@index');//
@@ -1508,6 +1509,7 @@ class PersonController extends Controller
             }
         }
 
+        flash('Person: <a href="'. url('/person/'.$person->id) . '">'.$person->display_name.'</a> updated')->success();
         return Redirect::action('PersonController@show', $person->id);
     }
 
@@ -1522,7 +1524,7 @@ class PersonController extends Controller
         $this->authorize('delete-contact');
 
         // TODO: consider creating a restore/{id} or undelete/{id}
-
+        $person = \App\Contact::findOrFail($id);
         //delete existing groups and relationships when deleting user
         \App\Relationship::whereContactIdA($id)->delete();
         \App\Relationship::whereContactIdB($id)->delete();
@@ -1541,6 +1543,7 @@ class PersonController extends Controller
         \App\Donation::whereContactId($id)->delete();
         \App\Contact::destroy($id);
 
+        flash('Person: '.$person->display_name . ' deleted')->warning()->important();
         return Redirect::action('PersonController@index');
     }
 
@@ -1548,6 +1551,8 @@ class PersonController extends Controller
     {
         // TODO: consider creating a restore/{id} or undelete/{id}
         $this->authorize('delete-contact');
+
+        $person = \App\Contact::findOrFail($id);
 
         //delete existing groups and relationships when deleting user
         \App\Relationship::whereContactIdA($id)->delete();
@@ -1565,6 +1570,7 @@ class PersonController extends Controller
         \App\Registration::whereContactId($id)->delete();
         \App\Contact::destroy($id);
 
+        flash('Person: '.$person->sort_name . ' deleted')->warning()->important();
         return Redirect::action('PersonController@merge', $return_id);
     }
 
@@ -1924,7 +1930,7 @@ class PersonController extends Controller
                 $donation->save();
             }
         }
-
+        flash('Contact ID#: '.$merge_id . ' merged with Contact ID#: '.$contact_id)->warning()->important();
         return view('persons.merge', compact('contact', 'duplicates'));
     }
 }

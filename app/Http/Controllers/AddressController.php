@@ -42,9 +42,9 @@ class AddressController extends Controller
     {
         $this->authorize('create-address');
         $countries = \App\Country::orderBy('iso_code')->pluck('iso_code', 'id');
-        $countries->prepend('N/A', 0);
+        $countries->prepend('N/A', '');
         $states = \App\StateProvince::orderBy('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
-        $states->prepend('N/A', 0);
+        $states->prepend('N/A', '');
         $contacts = \App\Contact::orderBy('sort_name')->pluck('sort_name', 'id');
         $location_types = \App\LocationType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
 
@@ -72,6 +72,7 @@ class AddressController extends Controller
         $address->country_id = $request->input('country_id');
         $address->save();
 
+        flash ('Address ID#: <a href="'. url('/address/'.$address->id) . '">'.$address->id.'</a> added')->success();
         return Redirect::action('AddressController@index');
     }
 
@@ -100,9 +101,9 @@ class AddressController extends Controller
         $this->authorize('update-address');
 
         $countries = \App\Country::orderBy('iso_code')->pluck('iso_code', 'id');
-        $countries->prepend('N/A', 0);
+        $countries->prepend('N/A', '');
         $states = \App\StateProvince::orderBy('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
-        $states->prepend('N/A', 0);
+        $states->prepend('N/A', '');
         $contacts = \App\Contact::orderBy('sort_name')->pluck('sort_name', 'id');
         $location_types = \App\LocationType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
         $address = \App\Address::findOrFail($id);
@@ -132,6 +133,7 @@ class AddressController extends Controller
         $address->country_id = $request->input('country_id');
         $address->save();
 
+        flash('Address ID#: <a href="'. url('/address/'.$address->id) . '">'.$address->id.'</a> updated')->success();
         return Redirect::action('AddressController@show', $address->id);
     }
 
@@ -148,6 +150,7 @@ class AddressController extends Controller
         $contact_id = $address->contact_id;
         \App\Address::destroy($id);
 
+        flash('Address ID#: '.$address->id . ' deleted')->warning()->important();
         return Redirect::action('PersonController@show', $contact_id);
     }
 }

@@ -175,6 +175,7 @@ class ParishController extends Controller
             $relationship_pastor->save();
         }
 
+        flash('Parish: <a href="'. url('/parish/'.$parish->id) . '">'.$parish->organization_name.'</a> added')->success();
         return Redirect::action('ParishController@index');
     }
 
@@ -414,6 +415,7 @@ class ParishController extends Controller
             $attachment->update_attachment($request->file('attachment'), 'contact', $parish->id, 'attachment', $description);
         }
 
+        flash('Parish: <a href="'. url('/parish/'.$parish->id) . '">'.$parish->organization_name.'</a> updated')->success();
         return Redirect::action('ParishController@show', $parish->id);
     }
 
@@ -426,6 +428,7 @@ class ParishController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-contact');
+        $parish = \App\Parish::findOrFail($id);
         \App\Relationship::whereContactIdA($id)->delete();
         \App\Relationship::whereContactIdB($id)->delete();
         \App\GroupContact::whereContactId($id)->delete();
@@ -442,8 +445,9 @@ class ParishController extends Controller
         // delete donations
         \App\Donation::whereContactId($id)->delete();
 
-        \App\Contact::destroy($id);
+        \App\Parish::destroy($id);
 
+        flash('Parish: '.$parish->organization_name . ' deleted')->warning()->important();
         return Redirect::action('ParishController@index');
     }
 

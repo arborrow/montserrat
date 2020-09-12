@@ -39,9 +39,14 @@ class UpdateRoomRequestTest extends TestCase
         $actual = $this->subject->rules();
 
         $this->assertEquals([
-          'name' => 'required',
-          'location_id' => 'integer|min:0',
-          'occupancy' => 'integer|min:0',
+            'name' => 'required',
+            'location_id' => 'integer|min:0',
+            'occupancy' => 'integer|min:0',
+            'description' => 'string|nullable',
+            'notes' => 'string|nullable',
+            'access' => 'string|nullable',
+            'type' => 'string|nullable',
+            'status' => 'string|nullable',
         ], $actual);
     }
 

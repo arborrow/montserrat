@@ -36,7 +36,7 @@
                 <tbody>
                     @foreach($addresses as $address)
                     <tr>
-                        <td>{{ $address->id }}</td>
+                        <td><a href = "{{ URL('/address/'.$address->id) }}">{{ $address->id }}</a></td>
                         <td>{!! $address->addressee->contact_link_full_name !!}</td>
                         <td>{{ $address->location_type_id }}</td>
                         <td>{{ $address->street_address }}</td>

@@ -66,7 +66,7 @@ class DioceseController extends Controller
         $diocese = new \App\Contact;
         $diocese->organization_name = $request->input('organization_name');
         $diocese->display_name = $request->input('organization_name');
-        $diocese->sort_name = $request->input('sort_name');
+        $diocese->sort_name =  (empty($request->input('sort_name'))) ? $request->input('organization_name') : $request->input('sort_name');
         $diocese->contact_type = config('polanco.contact_type.organization');
         $diocese->subcontact_type = config('polanco.contact_type.diocese');
         $diocese->save();
@@ -167,7 +167,7 @@ class DioceseController extends Controller
             $relationship_bishop->is_active = 1;
             $relationship_bishop->save();
         }
-
+        flash ('Diocese: <a href="'. url('/diocese/'.$diocese->id) . '">'.$diocese->organization_name.'</a> added')->success();
         return Redirect::action('DioceseController@index');
     }
 
@@ -390,7 +390,7 @@ class DioceseController extends Controller
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('attachment'), 'contact', $diocese->id, 'attachment', $description);
         }
-
+        flash('Diocese: <a href="'. url('/diocese/'.$diocese->id) . '">'.$diocese->organization_name.'</a> updated')->success();
         return Redirect::action('DioceseController@show', $diocese->id);
     }
 
@@ -403,6 +403,8 @@ class DioceseController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-contact');
+
+        $diocese = \App\Contact::findOrFail($id);
         \App\Relationship::whereContactIdA($id)->delete();
         \App\Relationship::whereContactIdB($id)->delete();
         \App\GroupContact::whereContactId($id)->delete();
@@ -421,6 +423,7 @@ class DioceseController extends Controller
 
         \App\Contact::destroy($id);
 
+        flash('Diocese: '.$diocese->organization_name . ' deleted')->warning()->important();
         return Redirect::action('DioceseController@index');
     }
 }

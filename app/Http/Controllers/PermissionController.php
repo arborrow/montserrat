@@ -24,7 +24,7 @@ class PermissionController extends Controller
             'show'=>'show',
             'update'=>'update',
         ];
-        // TODO: generate this list by getting a list of all the models on the project
+        // TODO: generate this list by getting a list of all the models on the project - email, phone do not have independent controllers (yet)
         $models = [
             '' => 'N/A',
             'address'=>'address',
@@ -39,6 +39,7 @@ class PermissionController extends Controller
             'group'=>'group',
             'location'=>'location',
             'note'=>'note',
+            'payment'=>'payment',
             'permission'=>'permission',
             'phone'=>'phone',
             'registration'=>'registration',
@@ -47,6 +48,7 @@ class PermissionController extends Controller
             'retreat'=>'retreat',
             'role'=>'role',
             'room'=>'room',
+            'snippet'=>'snippet',
             'touchpoint'=>'touchpoint',
             'uom'=>'uom',
             'user'=>'user',
@@ -94,6 +96,7 @@ class PermissionController extends Controller
         $permission->description = $request->input('description');
         $permission->save();
 
+        flash ('Permission: <a href="'. url('/admin/permission/'.$permission->id) . '">'.$permission->name.'</a> added')->success();
         return Redirect::action('PermissionController@index');
     }
 
@@ -142,6 +145,7 @@ class PermissionController extends Controller
         $permission->description = $request->input('description');
         $permission->save();
 
+        flash('Permission: <a href="'. url('/admin/permission/'.$permission->id) . '">'.$permission->name.'</a> updated')->success();
         return Redirect::action('PermissionController@index');
     }
 
@@ -154,8 +158,12 @@ class PermissionController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-permission');
+
+        $permission = \App\Permission::findOrFail($id);
+
         \App\Permission::destroy($id);
 
+        flash('Permission: '.$permission->name . ' deleted')->warning()->important();
         return Redirect::action('PermissionController@index');
     }
 
@@ -167,6 +175,7 @@ class PermissionController extends Controller
         $permission->roles()->detach();
         $permission->roles()->sync($request->input('roles'));
 
+        flash('Role assignments for permission: <a href="' . url('/admin/permission/'.$permission->id) .'">'. $permission->name . '</a> updated')->success();
         return Redirect::action('PermissionController@index');
     }
 }
