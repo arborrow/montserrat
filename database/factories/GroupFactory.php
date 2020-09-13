@@ -2,11 +2,28 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-$factory->define(App\Group::class, function (Faker $faker) {
-    $group_name = ucfirst(implode(' ', $faker->words));
+class GroupFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \App\Group::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $group_name = ucfirst(implode(' ', $this->faker->words));
 
     return [
       'name' => $group_name,
@@ -19,7 +36,8 @@ $factory->define(App\Group::class, function (Faker $faker) {
       'created_id' => null,
       'deleted_at' => null,
       'remember_token' => Str::random(10),
-      'created_at' => $faker->dateTimeBetween($startDate = '-12 days', $endDate = '-6 days'),
-      'updated_at' => $faker->dateTimeBetween($startDate = '-5 days', $endDate = '-1 days'),
+      'created_at' => $this->faker->dateTimeBetween($startDate = '-12 days', $endDate = '-6 days'),
+      'updated_at' => $this->faker->dateTimeBetween($startDate = '-5 days', $endDate = '-1 days'),
     ];
-});
+    }
+}

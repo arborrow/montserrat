@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use JMac\Testing\Traits\HttpTestAssertions;
 
@@ -37,7 +38,7 @@ abstract class TestCase extends BaseTestCase
             throw new \InvalidArgumentException('A test role for the permission ('.$permission.') does not exist. Did you run the seeder?');
         }
 
-        $user = factory(\App\User::class)->create($data);
+        $user = User::factory()->create($data);
         $user->assignRole($role->name);
 
         return $user;

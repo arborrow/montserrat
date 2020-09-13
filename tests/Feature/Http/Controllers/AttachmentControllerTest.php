@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Attachment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
@@ -22,10 +23,10 @@ class AttachmentControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('delete-attachment');
         //create a retreat, create a fake evaluation for that retreat, see if you can display the evaluation
-        $asset = factory(\App\Asset::class)->create();
+        $asset = Asset::factory()->create();
         $file = UploadedFile::fake()->image('asset_photo.jpg', 200, 300)->storeAs('asset/'.$asset->id, 'asset_photo.jpg');
         $description = 'Photo of '.$asset->name;
-        $attachment = factory(\App\Attachment::class)->create([
+        $attachment = Attachment::factory()->create([
             'file_type_id' => config('polanco.file_type.asset_photo'),
             'uri' => 'asset_photo.jpg',
             'mime_type' => 'image/jpeg',
@@ -49,11 +50,11 @@ class AttachmentControllerTest extends TestCase
         $user = $this->createUserWithPermission('delete-attachment');
 
         //create a person, create a fake avatar for that person, see if you can delete the avatar
-        $person = factory(\App\Contact::class)->create();
+        $person = Contact::factory()->create();
         $file = UploadedFile::fake()->image('avatar.png', 150, 150)->storeAs('contact/'.$person->id, 'avatar.png');
         $description = 'Avatar for '.$person->full_name;
 
-        $attachment = factory(\App\Attachment::class)->create([
+        $attachment = Attachment::factory()->create([
             'mime_type' => 'image/jpeg',
             'description' => $description,
             'upload_date' => $this->faker->dateTime('now'),
@@ -75,12 +76,12 @@ class AttachmentControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('delete-attachment');
 
-        $asset = factory(\App\Asset::class)->create();
+        $asset = Asset::factory()->create();
         $file_name = $this->faker->isbn10.'.pdf';
         $file = UploadedFile::fake()->create($file_name)->storeAs('asset/'.$asset->id.'/attachments', $file_name);
         $description = 'Random Attachment for '.$asset->name;
 
-        $attachment = factory(\App\Attachment::class)->create([
+        $attachment = Attachment::factory()->create([
             'mime_type' => 'application/pdf',
             'description' => $description,
             'upload_date' => $this->faker->dateTime('now'),
@@ -103,12 +104,12 @@ class AttachmentControllerTest extends TestCase
         $user = $this->createUserWithPermission('delete-attachment');
 
         //create a person, create a fake attachment for that person, see if you can display the attachment
-        $person = factory(\App\Contact::class)->create();
+        $person = Contact::factory()->create();
         $file_name = $this->faker->isbn10.'.pdf';
         $file = UploadedFile::fake()->create($file_name)->storeAs('contact/'.$person->id.'/attachments', $file_name);
         $description = 'Random Attachment for '.$person->full_name;
 
-        $attachment = factory(\App\Attachment::class)->create([
+        $attachment = Attachment::factory()->create([
             'mime_type' => 'application/pdf',
             'description' => $description,
             'upload_date' => $this->faker->dateTime('now'),
@@ -131,12 +132,12 @@ class AttachmentControllerTest extends TestCase
         $user = $this->createUserWithPermission('delete-attachment');
 
         //create a person, create a fake attachment for that person, see if you can display the attachment
-        $event = factory(\App\Retreat::class)->create();
+        $event = Retreat::factory()->create();
         $file_name = $this->faker->isbn10.'.pdf';
         $file = UploadedFile::fake()->create($file_name)->storeAs('event/'.$event->id.'/attachments', $file_name);
         $description = 'Random Attachment for '.$event->idnumber;
 
-        $attachment = factory(\App\Attachment::class)->create([
+        $attachment = Attachment::factory()->create([
             'mime_type' => 'application/pdf',
             'description' => $description,
             'upload_date' => $this->faker->dateTime('now'),
@@ -158,10 +159,10 @@ class AttachmentControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('delete-attachment');
         //create a retreat, create a fake contract for that retreat, see if you can delete the contract
-        $retreat = factory(\App\Retreat::class)->create();
+        $retreat = Retreat::factory()->create();
         $file = UploadedFile::fake()->create('contract.pdf')->storeAs('event/'.$retreat->id, 'contract.pdf');
         $description = 'Contract for '.$retreat->idnumber.'-'.$retreat->title;
-        $attachment = factory(\App\Attachment::class)->create([
+        $attachment = Attachment::factory()->create([
             'file_type_id' => config('polanco.file_type.event_contract'),
             'uri' => 'contract.pdf',
             'mime_type' => 'application/pdf',
@@ -184,10 +185,10 @@ class AttachmentControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('delete-attachment');
         //create a retreat, create a fake evaluation for that retreat, see if you can delete the evaluation
-        $retreat = factory(\App\Retreat::class)->create();
+        $retreat = Retreat::factory()->create();
         $file = UploadedFile::fake()->create('evaluations.pdf')->storeAs('event/'.$retreat->id, 'evaluations.pdf');
         $description = 'Evaluations for '.$retreat->idnumber.'-'.$retreat->title;
-        $attachment = factory(\App\Attachment::class)->create([
+        $attachment = Attachment::factory()->create([
             'file_type_id' => config('polanco.file_type.event_evaluation'),
             'uri' => 'evaluations.pdf',
             'mime_type' => 'application/pdf',
@@ -210,10 +211,10 @@ class AttachmentControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('delete-attachment');
         //create a retreat, create a fake evaluation for that retreat, see if you can display the evaluation
-        $retreat = factory(\App\Retreat::class)->create();
+        $retreat = Retreat::factory()->create();
         $file = UploadedFile::fake()->image('group_photo.jpg', 200, 300)->storeAs('event/'.$retreat->id, 'group_photo.jpg');
         $description = 'Group photo for '.$retreat->idnumber.'-'.$retreat->title;
-        $attachment = factory(\App\Attachment::class)->create([
+        $attachment = Attachment::factory()->create([
             'file_type_id' => config('polanco.file_type.event_group_photo'),
             'uri' => 'group_photo.jpg',
             'mime_type' => 'image/jpeg',
@@ -236,10 +237,10 @@ class AttachmentControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('delete-attachment');
         //create a retreat, create a fake schedule for that retreat, see if you can display the schedule
-        $retreat = factory(\App\Retreat::class)->create();
+        $retreat = Retreat::factory()->create();
         $file = UploadedFile::fake()->create('schedule.pdf')->storeAs('event/'.$retreat->id, 'schedule.pdf');
         $description = 'Schedule for '.$retreat->idnumber.'-'.$retreat->title;
-        $attachment = factory(\App\Attachment::class)->create([
+        $attachment = Attachment::factory()->create([
             'file_type_id' => config('polanco.file_type.event_schedule'),
             'uri' => 'schedule.pdf',
             'mime_type' => 'application/pdf',
@@ -261,10 +262,10 @@ class AttachmentControllerTest extends TestCase
     public function get_asset_photo_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-asset');
-        $asset = factory(\App\Asset::class)->create();
+        $asset = Asset::factory()->create();
         $file = UploadedFile::fake()->image('asset_photo.jpg', 200, 300)->storeAs('asset/'.$asset->id, 'asset_photo.jpg');
         $description = 'Asset photo for '.$asset->name;
-        $attachment = factory(\App\Attachment::class)->create([
+        $attachment = Attachment::factory()->create([
             'file_type_id' => config('polanco.file_type.asset_photo'),
             'uri' => 'asset_photo.jpg',
             'mime_type' => 'image/jpeg',
@@ -288,11 +289,11 @@ class AttachmentControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-avatar');
 
         //create a person, create a fake avatar for that person, see if you can display the avatar
-        $person = factory(\App\Contact::class)->create();
+        $person = Contact::factory()->create();
         $file = UploadedFile::fake()->image('avatar.png', 150, 150)->storeAs('contact/'.$person->id, 'avatar.png');
         $description = 'Avatar for '.$person->full_name;
 
-        $attachment = factory(\App\Attachment::class)->create([
+        $attachment = Attachment::factory()->create([
             'mime_type' => 'image/jpeg',
             'description' => $description,
             'upload_date' => $this->faker->dateTime('now'),
@@ -314,10 +315,10 @@ class AttachmentControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-event-attachment');
         //create a retreat, create a fake contract for that retreat, see if you can display the contract
-        $retreat = factory(\App\Retreat::class)->create();
+        $retreat = Retreat::factory()->create();
         $file = UploadedFile::fake()->create('contract.pdf')->storeAs('event/'.$retreat->id, 'contract.pdf');
         $description = 'Contract for '.$retreat->idnumber.'-'.$retreat->title;
-        $attachment = factory(\App\Attachment::class)->create([
+        $attachment = Attachment::factory()->create([
             'file_type_id' => config('polanco.file_type.event_contract'),
             'uri' => 'contract.pdf',
             'mime_type' => 'application/pdf',
@@ -340,10 +341,10 @@ class AttachmentControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-event-evaluation');
         //create a retreat, create a fake evaluation for that retreat, see if you can display the evaluation
-        $retreat = factory(\App\Retreat::class)->create();
+        $retreat = Retreat::factory()->create();
         $file = UploadedFile::fake()->create('evaluations.pdf')->storeAs('event/'.$retreat->id, 'evaluations.pdf');
         $description = 'Evaluations for '.$retreat->idnumber.'-'.$retreat->title;
-        $attachment = factory(\App\Attachment::class)->create([
+        $attachment = Attachment::factory()->create([
             'file_type_id' => config('polanco.file_type.event_evaluation'),
             'uri' => 'evaluation.pdf',
             'mime_type' => 'application/pdf',
@@ -366,10 +367,10 @@ class AttachmentControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-event-group-photo');
         //create a retreat, create a fake evaluation for that retreat, see if you can display the evaluation
-        $retreat = factory(\App\Retreat::class)->create();
+        $retreat = Retreat::factory()->create();
         $file = UploadedFile::fake()->image('group_photo.jpg', 200, 300)->storeAs('event/'.$retreat->id, 'group_photo.jpg');
         $description = 'Group photo for '.$retreat->idnumber.'-'.$retreat->title;
-        $attachment = factory(\App\Attachment::class)->create([
+        $attachment = Attachment::factory()->create([
             'file_type_id' => config('polanco.file_type.event_group_photo'),
             'uri' => 'group_photo.jpg',
             'mime_type' => 'image/jpeg',
@@ -392,10 +393,10 @@ class AttachmentControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-event-schedule');
         //create a retreat, create a fake schedule for that retreat, see if you can display the schedule
-        $retreat = factory(\App\Retreat::class)->create();
+        $retreat = Retreat::factory()->create();
         $file = UploadedFile::fake()->create('schedule.pdf')->storeAs('event/'.$retreat->id, 'schedule.pdf');
         $description = 'Schedule for '.$retreat->idnumber.'-'.$retreat->title;
-        $attachment = factory(\App\Attachment::class)->create([
+        $attachment = Attachment::factory()->create([
             'file_type_id' => config('polanco.file_type.event_schedule'),
             'uri' => 'schedule.pdf',
             'mime_type' => 'application/pdf',
@@ -419,12 +420,12 @@ class AttachmentControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-attachment');
 
         //create a person, create a fake attachment for that person, see if you can display the attachment
-        $person = factory(\App\Contact::class)->create();
+        $person = Contact::factory()->create();
         $file_name = $this->faker->isbn10.'.pdf';
         $file = UploadedFile::fake()->create($file_name)->storeAs('contact/'.$person->id.'/attachments', $file_name);
         $description = 'Random Attachment for '.$person->full_name;
 
-        $attachment = factory(\App\Attachment::class)->create([
+        $attachment = Attachment::factory()->create([
             'mime_type' => 'application/pdf',
             'description' => $description,
             'upload_date' => $this->faker->dateTime('now'),
@@ -447,12 +448,12 @@ class AttachmentControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-event-attachment');
 
         //create a person, create a fake attachment for that person, see if you can display the attachment
-        $event = factory(\App\Retreat::class)->create();
+        $event = Retreat::factory()->create();
         $file_name = $this->faker->isbn10.'.pdf';
         $file = UploadedFile::fake()->create($file_name)->storeAs('event/'.$event->id.'/attachments', $file_name);
         $description = 'Random Attachment for '.$event->idnumber;
 
-        $attachment = factory(\App\Attachment::class)->create([
+        $attachment = Attachment::factory()->create([
             'mime_type' => 'application/pdf',
             'description' => $description,
             'upload_date' => $this->faker->dateTime('now'),
@@ -475,12 +476,12 @@ class AttachmentControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-attachment');
 
         //create a person, create a fake attachment for that person, see if you can display the attachment
-        $asset = factory(\App\Asset::class)->create();
+        $asset = Asset::factory()->create();
         $file_name = $this->faker->isbn10.'.pdf';
         $file = UploadedFile::fake()->create($file_name)->storeAs('asset/'.$asset->id.'/attachments', $file_name);
         $description = 'Random Attachment for '.$asset->name;
 
-        $attachment = factory(\App\Attachment::class)->create([
+        $attachment = Attachment::factory()->create([
             'mime_type' => 'application/pdf',
             'description' => $description,
             'upload_date' => $this->faker->dateTime('now'),

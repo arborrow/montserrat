@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Address;
 use App\StateProvince;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -36,7 +37,7 @@ class AddressControllerTest extends TestCase
      */
     public function destroy_returns_an_ok_response()
     {
-        $address = factory(\App\Address::class)->create();
+        $address = Address::factory()->create();
         $contact_id = $address->contact_id;
         $user = $this->createUserWithPermission('delete-address');
 
@@ -51,7 +52,7 @@ class AddressControllerTest extends TestCase
      */
     public function edit_returns_an_ok_response()
     {
-        $address = factory(\App\Address::class)->create([
+        $address = Address::factory()->create([
             'is_primary' => false,
         ]);
         $user = $this->createUserWithPermission('update-address');
@@ -98,7 +99,7 @@ class AddressControllerTest extends TestCase
      */
     public function show_returns_an_ok_response()
     {
-        $address = factory(\App\Address::class)->create();
+        $address = Address::factory()->create();
         $user = $this->createUserWithPermission('show-address');
 
         $response = $this->actingAs($user)->get(route('address.show', [$address]));
@@ -117,7 +118,7 @@ class AddressControllerTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-address');
-        $contact = factory(\App\Contact::class)->create();
+        $contact = Contact::factory()->create();
         $random_location_type = \App\LocationType::get()->random();
         $random_state = \App\StateProvince::whereCountryId(config('polanco.country_id_usa'))->get()->random();
         $random_street_address = $this->faker->streetAddress;
@@ -160,7 +161,7 @@ class AddressControllerTest extends TestCase
     public function update_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-address');
-        $address = factory(\App\Address::class)->create();
+        $address = Address::factory()->create();
         $contact_id = $address->contact_id;
         $original_street_address = $address->street_address;
 

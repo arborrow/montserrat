@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Group;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
@@ -34,7 +35,7 @@ class GroupControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-group');
-        $group = factory(\App\Group::class)->create();
+        $group = Group::factory()->create();
 
         $response = $this->actingAs($user)->delete(route('group.destroy', [$group]));
         $response->assertSessionHas('flash_notification');
@@ -49,7 +50,7 @@ class GroupControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-group');
-        $group = factory(\App\Group::class)->create();
+        $group = Group::factory()->create();
 
         $response = $this->actingAs($user)->get(route('group.edit', [$group]));
 
@@ -96,7 +97,7 @@ class GroupControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-group');
-        $group = factory(\App\Group::class)->create();
+        $group = Group::factory()->create();
 
         $response = $this->actingAs($user)->get(route('group.show', [$group]));
 
@@ -151,7 +152,7 @@ class GroupControllerTest extends TestCase
     public function update_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-group');
-        $group = factory(\App\Group::class)->create();
+        $group = Group::factory()->create();
         $new_group_name = ucfirst($this->faker->unique()->word);
 
         $response = $this->actingAs($user)->put(route('group.update', [$group]), [

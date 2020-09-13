@@ -2,20 +2,39 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Room::class, function (Faker $faker) {
-    return [
+use App\Location;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class RoomFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \App\Room::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
         'location_id' => function () {
-            return factory(App\Location::class)->create()->id;
+            return Location::factory()->create()->id;
         },
-        'floor' =>  $faker->numberBetween($min = 1, $max = 9),
-        'name' => $faker->lastName.' Suite',
-        'description' => $faker->catchPhrase,
-        'notes' => $faker->sentence,
-        'access' => $faker->word,
-        'type' => $faker->word,
-        'occupancy' => $faker->randomDigitNotNull,
-        'status' => $faker->word,
+        'floor' =>  $this->faker->numberBetween($min = 1, $max = 9),
+        'name' => $this->faker->lastName.' Suite',
+        'description' => $this->faker->catchPhrase,
+        'notes' => $this->faker->sentence,
+        'access' => $this->faker->word,
+        'type' => $this->faker->word,
+        'occupancy' => $this->faker->randomDigitNotNull,
+        'status' => $this->faker->word,
     ];
-});
+    }
+}

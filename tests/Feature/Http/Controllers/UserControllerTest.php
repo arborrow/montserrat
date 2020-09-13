@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -33,7 +34,7 @@ class UserControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {   // keep in mind that the destroy method does not actually delete a user from the database
         $user = $this->createUserWithPermission('delete-user');
-        $user = factory(\App\User::class)->create();
+        $user = User::factory()->create();
 
         $response = $this->actingAs($user)->delete(route('user.destroy', [$user]));
         $response->assertSessionHas('flash_notification');
@@ -47,7 +48,7 @@ class UserControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-user');
-        $user = factory(\App\User::class)->create();
+        $user = User::factory()->create();
 
         $response = $this->actingAs($user)->get(route('user.edit', [$user]));
 
@@ -82,7 +83,7 @@ class UserControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-role');
-        $new_user = factory(\App\User::class)->create();
+        $new_user = User::factory()->create();
 
         $response = $this->actingAs($user)->get(route('user.show', [$new_user]));
 
@@ -128,7 +129,7 @@ class UserControllerTest extends TestCase
     public function update_returns_an_ok_response()
     {   // keep in mind that this does not actually update a user in the database
         $user = $this->createUserWithPermission('update-user');
-        $user = factory(\App\User::class)->create();
+        $user = User::factory()->create();
 
         $original_description = $user->description;
         $new_name = $this->faker->jobTitle;

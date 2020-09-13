@@ -4,6 +4,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Donor;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -35,11 +36,11 @@ class DonorControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-donor');
-        $contact = factory(\App\Contact::class)->create([
+        $contact = Contact::factory()->create([
           'contact_type' => config('polanco.contact_type.individual'),
           'subcontact_type' => null,
         ]);
-        $donor = factory(\App\Donor::class)->create([
+        $donor = Donor::factory()->create([
           'contact_id' => $contact->id,
           'sort_name' => $contact->sort_name,
         ]);

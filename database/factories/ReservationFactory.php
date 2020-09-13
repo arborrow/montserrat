@@ -2,15 +2,34 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Reservation::class, function (Faker $faker) {
-    return [
+use App\Room;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class ReservationFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \App\Reservation::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
         'registration_id' => function () {
-            return factory(App\Registration::class)->create()->id;
+            return Registration::factory()->create()->id;
         },
         'room_id' => function () {
-            return factory(App\Room::class)->create()->id;
+            return Room::factory()->create()->id;
         },
     ];
-});
+    }
+}

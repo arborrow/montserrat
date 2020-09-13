@@ -2,11 +2,28 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Uom::class, function (Faker $faker) {
-    $label = $faker->word;
-    $type = $faker->randomElement(config('polanco.uom_types'));
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class UomFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \App\Uom::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $label = $this->faker->word;
+    $type = $this->faker->randomElement(config('polanco.uom_types'));
     $description = $label.' of '.$type;
 
     return [
@@ -18,4 +35,5 @@ $factory->define(App\Uom::class, function (Faker $faker) {
         'created_at' => now(),
         'updated_at' => now(),
     ];
-});
+    }
+}

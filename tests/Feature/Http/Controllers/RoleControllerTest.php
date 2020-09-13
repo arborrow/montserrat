@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -33,7 +34,7 @@ class RoleControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-role');
-        $role = factory(\App\Role::class)->create();
+        $role = Role::factory()->create();
 
         $response = $this->actingAs($user)->delete(route('role.destroy', [$role]));
 
@@ -48,7 +49,7 @@ class RoleControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-role');
-        $role = factory(\App\Role::class)->create();
+        $role = Role::factory()->create();
 
         $response = $this->actingAs($user)->get(route('role.edit', [$role]));
 
@@ -90,7 +91,7 @@ class RoleControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-role');
-        $role = factory(\App\Role::class)->create();
+        $role = Role::factory()->create();
 
         $response = $this->actingAs($user)->get(route('role.show', [$role]));
 
@@ -134,7 +135,7 @@ class RoleControllerTest extends TestCase
     public function update_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-role');
-        $role = factory(\App\Role::class)->create();
+        $role = Role::factory()->create();
 
         $original_description = $role->description;
         $new_name = $this->faker->jobTitle;
@@ -161,8 +162,8 @@ class RoleControllerTest extends TestCase
     public function update_permissions_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-role');
-        $role = factory(\App\Role::class)->create();
-        $permission = factory(\App\Permission::class)->create();
+        $role = Role::factory()->create();
+        $permission = Permission::factory()->create();
 
         $response = $this->actingAs($user)->post(route('admin.role.update_permissions'), [
             'id' => $role->id,
@@ -183,7 +184,7 @@ class RoleControllerTest extends TestCase
     public function update_users_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-role');
-        $role = factory(\App\Role::class)->create();
+        $role = Role::factory()->create();
 
         $response = $this->actingAs($user)->post(route('admin.role.update_users'), [
             'id' => $role->id,

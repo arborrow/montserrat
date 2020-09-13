@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Email;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -34,7 +35,7 @@ class GateControllerTest extends TestCase
     public function close_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-gate');
-        $email = factory(\App\Email::class)->create([
+        $email = Email::factory()->create([
             'email' => $user->email,
         ]);
 
@@ -51,7 +52,7 @@ class GateControllerTest extends TestCase
     public function open_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-gate');
-        $email = factory(\App\Email::class)->create([
+        $email = Email::factory()->create([
             'email' => $user->email,
         ]);
 

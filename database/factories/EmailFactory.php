@@ -2,25 +2,44 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Email::class, function (Faker $faker) {
-    return [
+use App\LocationType;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class EmailFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \App\Email::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
         'contact_id' => function () {
-            return factory(App\Contact::class)->create()->id;
+            return Contact::factory()->create()->id;
         },
         'location_type_id' => function () {
-            return factory(App\LocationType::class)->create()->id;
+            return LocationType::factory()->create()->id;
         },
-        'email' => $faker->safeEmail,
-        'is_primary' => $faker->boolean,
-        'is_billing' => $faker->boolean,
-        'on_hold' => $faker->boolean,
-        'is_bulkmail' => $faker->boolean,
-        'hold_date' => $faker->date(),
-        'reset_date' => $faker->date(),
-        'signature_text' => $faker->text,
-        'signature_html' => $faker->text,
+        'email' => $this->faker->safeEmail,
+        'is_primary' => $this->faker->boolean,
+        'is_billing' => $this->faker->boolean,
+        'on_hold' => $this->faker->boolean,
+        'is_bulkmail' => $this->faker->boolean,
+        'hold_date' => $this->faker->date(),
+        'reset_date' => $this->faker->date(),
+        'signature_text' => $this->faker->text,
+        'signature_html' => $this->faker->text,
         'remember_token' => Str::random(10),
     ];
-});
+    }
+}

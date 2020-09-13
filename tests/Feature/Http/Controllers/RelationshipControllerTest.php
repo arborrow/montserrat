@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Relationship;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -31,7 +32,7 @@ class RelationshipControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-relationship');
-        $relationship = factory(\App\Relationship::class)->create();
+        $relationship = Relationship::factory()->create();
 
         $response = $this->actingAs($user)->from('relationship.index')->delete(route('relationship.destroy', [$relationship]));
         $response->assertSessionHas('flash_notification');
@@ -47,7 +48,7 @@ class RelationshipControllerTest extends TestCase
     {   //TODO: relationship editing currently handled by person controller; this is more of a stub
 
         $user = $this->createUserWithPermission('update-relationship');
-        $relationship = factory(\App\Relationship::class)->create();
+        $relationship = Relationship::factory()->create();
 
         $response = $this->actingAs($user)->get(route('relationship.edit', [$relationship]));
 
@@ -75,7 +76,7 @@ class RelationshipControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-relationship');
-        $relationship = factory(\App\Relationship::class)->create();
+        $relationship = Relationship::factory()->create();
 
         $response = $this->actingAs($user)->get(route('relationship.show', [$relationship]));
 
@@ -108,7 +109,7 @@ class RelationshipControllerTest extends TestCase
     public function update_returns_an_ok_response()
     {   //TODO: relationship creation currently handled by person controller; this is more of a stub
         $user = $this->createUserWithPermission('update-relationship');
-        $relationship = factory(\App\Relationship::class)->create();
+        $relationship = Relationship::factory()->create();
 
         $response = $this->actingAs($user)->put(route('relationship.update', [$relationship]), [
           'contact_id_a' => $relationship->contact_id_a,

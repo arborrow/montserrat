@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Department;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -34,7 +35,7 @@ class DepartmentControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-department');
-        $department = factory(\App\Department::class)->create();
+        $department = Department::factory()->create();
 
         $response = $this->actingAs($user)->delete(route('department.destroy', [$department]));
         $response->assertSessionHas('flash_notification');
@@ -49,7 +50,7 @@ class DepartmentControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-department');
-        $department = factory(\App\Department::class)->create();
+        $department = Department::factory()->create();
 
         $response = $this->actingAs($user)->get(route('department.edit', [$department]));
 
@@ -88,7 +89,7 @@ class DepartmentControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-department');
-        $department = factory(\App\Department::class)->create();
+        $department = Department::factory()->create();
 
         $response = $this->actingAs($user)->get(route('department.show', [$department]));
 
@@ -131,7 +132,7 @@ class DepartmentControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-department');
 
-        $department = factory(\App\Department::class)->create();
+        $department = Department::factory()->create();
 
         $department_name = $this->faker->word;
         $department_description = $this->faker->sentence(7, true);

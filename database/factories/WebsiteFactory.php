@@ -2,18 +2,37 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Website::class, function (Faker $faker) {
-    return [
+use App\Asset;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class WebsiteFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \App\Website::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
         'contact_id' => function () {
-            return factory(App\Contact::class)->create()->id;
+            return Contact::factory()->create()->id;
         },
         'asset_id' => function () {
-            return factory(App\Asset::class)->create()->id;
+            return Asset::factory()->create()->id;
         },
-        'url' => $faker->url,
-        'website_type' => $faker->randomElement(config('polanco.website_types')),
-        'description' => $faker->sentence,
+        'url' => $this->faker->url,
+        'website_type' => $this->faker->randomElement(config('polanco.website_types')),
+        'description' => $this->faker->sentence,
     ];
-});
+    }
+}

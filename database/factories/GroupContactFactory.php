@@ -2,16 +2,35 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\GroupContact::class, function (Faker $faker) {
-    return [
+use App\Contact;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class GroupContactFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \App\GroupContact::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
         'status' => 'Added',
         'group_id' => function () {
-            return factory(App\Group::class)->create()->id;
+            return Group::factory()->create()->id;
         },
         'contact_id' => function () {
-            return factory(App\Contact::class)->create()->id;
+            return Contact::factory()->create()->id;
         },
     ];
-});
+    }
+}

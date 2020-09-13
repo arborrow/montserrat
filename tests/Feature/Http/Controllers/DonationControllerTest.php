@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Contact;
 use App\Registration;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -64,7 +65,7 @@ class DonationControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-donation');
-        $donation = factory(\App\Donation::class)->create();
+        $donation = Donation::factory()->create();
         $contact = \App\Contact::find($donation->contact_id);
 
         $response = $this->actingAs($user)->delete(route('donation.destroy', [$donation]));
@@ -80,7 +81,7 @@ class DonationControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-donation');
-        $donation = factory(\App\Donation::class)->create();
+        $donation = Donation::factory()->create();
 
         $response = $this->actingAs($user)->get(route('donation.edit', [$donation]));
 
@@ -126,7 +127,7 @@ class DonationControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-donation');
         // create a new event type, add a random number of retreats (2-10) to that event type ensuring they are all future events
-        $donation = factory(\App\Donation::class)->create();
+        $donation = Donation::factory()->create();
         $donation_id = $donation->donation_id;
         $number_donations = $this->faker->numberBetween(2, 10);
         $donations = factory(\App\Donation::class, $number_donations)->create([
@@ -164,7 +165,7 @@ class DonationControllerTest extends TestCase
         // update retreatant payments
         $user = $this->createUserWithPermission('update-donation');
 
-        $retreat = factory(\App\Retreat::class)->create([
+        $retreat = Retreat::factory()->create([
             'description' => 'Retreat Payments Update Test',
         ]);
         $participants = factory(\App\Registration::class, $this->faker->numberBetween(5, 10))->create([
@@ -202,7 +203,7 @@ class DonationControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-donation');
         // create a payment rather than just a donation so that things like percent_paid
-        $payment = factory(\App\Payment::class)->create();
+        $payment = Payment::factory()->create();
 
         $response = $this->actingAs($user)->get(route('donation.show', [$payment->donation_id]));
         $response->assertOk();
@@ -216,8 +217,8 @@ class DonationControllerTest extends TestCase
     public function store_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('create-donation');
-        $donor = factory(\App\Contact::class)->create();
-        $event = factory(\App\Retreat::class)->create();
+        $donor = Contact::factory()->create();
+        $event = Retreat::factory()->create();
         $start_date_only = $this->faker->dateTimeBetween('this week', '+7 days');
 
         $response = $this->actingAs($user)->post(route('donation.store'), [
@@ -260,9 +261,9 @@ class DonationControllerTest extends TestCase
     public function update_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-donation');
-        $event = factory(\App\Retreat::class)->create();
-        $donation = factory(\App\Donation::class)->create();
-        $new_contact = factory(\App\Contact::class)->create();
+        $event = Retreat::factory()->create();
+        $donation = Donation::factory()->create();
+        $new_contact = Contact::factory()->create();
         $description = \App\DonationType::get()->random();
         $start_date = $this->faker->dateTimeBetween('this week', '+7 days');
         $end_date = $this->faker->dateTimeBetween($start_date, strtotime('+7 days'));

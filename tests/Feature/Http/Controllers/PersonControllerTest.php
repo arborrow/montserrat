@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Contact;
 use App\ContactLanguage;
 use App\EmergencyContact;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -128,7 +129,7 @@ class PersonControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-contact');
-        $person = factory(\App\Contact::class)->create([
+        $person = Contact::factory()->create([
           'contact_type' => config('polanco.contact_type.individual'),
           'subcontact_type' => null,
         ]);
@@ -177,15 +178,15 @@ class PersonControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-contact');
 
-        $person = factory(\App\Contact::class)->create([
+        $person = Contact::factory()->create([
           'contact_type' => config('polanco.contact_type.individual'),
           'subcontact_type' => null,
         ]);
-        $parish = factory(\App\Contact::class)->create([
+        $parish = Contact::factory()->create([
             'contact_type' => config('polanco.contact_type.organization'),
             'subcontact_type' => config('polanco.contact_type.parish'),
         ]);
-        $parishioner = factory(\App\Relationship::class)->create([
+        $parishioner = Relationship::factory()->create([
             'contact_id_a' => $parish->id,
             'contact_id_b' => $person->id,
             'relationship_type_id' => config('polanco.relationship_type.parishioner'),
@@ -207,129 +208,129 @@ class PersonControllerTest extends TestCase
             $contact_referral->save();
         }
 
-        $emergency_contact = factory(\App\EmergencyContact::class)->create([
+        $emergency_contact = EmergencyContact::factory()->create([
             'contact_id' => $person->id,
         ]);
 
         // create addresses
-        $home_address = factory(\App\Address::class)->create([
+        $home_address = Address::factory()->create([
             'contact_id' => $person->id,
             'location_type_id' => config('polanco.location_type.home'),
         ]);
-        $work_address = factory(\App\Address::class)->create([
+        $work_address = Address::factory()->create([
             'contact_id' => $person->id,
             'location_type_id' => config('polanco.location_type.work'),
         ]);
-        $other_address = factory(\App\Address::class)->create([
+        $other_address = Address::factory()->create([
             'contact_id' => $person->id,
             'location_type_id' => config('polanco.location_type.other'),
         ]);
         // create phones
         // TODO: improve phone factory to generate some phone numbers (be mindful of possible Twilio checks and failures for fake numbers - consider hard coding some fake numbers)
-        $home_phone = factory(\App\Phone::class)->create([
+        $home_phone = Phone::factory()->create([
             'contact_id' => $person->id,
             'location_type_id' => config('polanco.location_type.home'),
             'phone_type' => 'Phone',
         ]);
-        $home_mobile = factory(\App\Phone::class)->create([
+        $home_mobile = Phone::factory()->create([
             'contact_id' => $person->id,
             'location_type_id' => config('polanco.location_type.home'),
             'phone_type' => 'Mobile',
         ]);
-        $home_fax = factory(\App\Phone::class)->create([
+        $home_fax = Phone::factory()->create([
             'contact_id' => $person->id,
             'location_type_id' => config('polanco.location_type.home'),
             'phone_type' => 'fax',
         ]);
-        $work_phone = factory(\App\Phone::class)->create([
+        $work_phone = Phone::factory()->create([
             'contact_id' => $person->id,
             'location_type_id' => config('polanco.location_type.work'),
             'phone_type' => 'Phone',
         ]);
-        $work_mobile = factory(\App\Phone::class)->create([
+        $work_mobile = Phone::factory()->create([
             'contact_id' => $person->id,
             'location_type_id' => config('polanco.location_type.work'),
             'phone_type' => 'Mobile',
         ]);
-        $work_fax = factory(\App\Phone::class)->create([
+        $work_fax = Phone::factory()->create([
             'contact_id' => $person->id,
             'location_type_id' => config('polanco.location_type.work'),
             'phone_type' => 'fax',
         ]);
-        $other_phone = factory(\App\Phone::class)->create([
+        $other_phone = Phone::factory()->create([
             'contact_id' => $person->id,
             'location_type_id' => config('polanco.location_type.other'),
             'phone_type' => 'Phone',
         ]);
-        $other_mobile = factory(\App\Phone::class)->create([
+        $other_mobile = Phone::factory()->create([
             'contact_id' => $person->id,
             'location_type_id' => config('polanco.location_type.other'),
             'phone_type' => 'Mobile',
         ]);
-        $other_fax = factory(\App\Phone::class)->create([
+        $other_fax = Phone::factory()->create([
             'contact_id' => $person->id,
             'location_type_id' => config('polanco.location_type.other'),
             'phone_type' => 'fax',
         ]);
 
-        $home_email = factory(\App\Email::class)->create([
+        $home_email = Email::factory()->create([
             'contact_id' => $person->id,
             'location_type_id' => config('polanco.location_type.home'),
         ]);
-        $work_email = factory(\App\Email::class)->create([
+        $work_email = Email::factory()->create([
             'contact_id' => $person->id,
             'location_type_id' => config('polanco.location_type.work'),
         ]);
-        $other_email = factory(\App\Email::class)->create([
+        $other_email = Email::factory()->create([
             'contact_id' => $person->id,
             'location_type_id' => config('polanco.location_type.other'),
         ]);
-        $url_main = factory(\App\Website::class)->create([
+        $url_main = Website::factory()->create([
             'contact_id' => $person->id,
             'website_type' => 'Main',
             'url' => $this->faker->url,
         ]);
-        $url_work = factory(\App\Website::class)->create([
+        $url_work = Website::factory()->create([
             'contact_id' => $person->id,
             'website_type' => 'Work',
             'url' => $this->faker->url,
         ]);
-        $url_facebook = factory(\App\Website::class)->create([
+        $url_facebook = Website::factory()->create([
             'contact_id' => $person->id,
             'website_type' => 'Facebook',
             'url' => 'https://facebook.com/'.$this->faker->slug,
         ]);
-        $url_instagram = factory(\App\Website::class)->create([
+        $url_instagram = Website::factory()->create([
             'contact_id' => $person->id,
             'website_type' => 'Instagram',
             'url' => 'https://instagram.com/'.$this->faker->slug,
         ]);
-        $url_linkedin = factory(\App\Website::class)->create([
+        $url_linkedin = Website::factory()->create([
             'contact_id' => $person->id,
             'website_type' => 'LinkedIn',
             'url' => 'https://linkedin.com/'.$this->faker->slug,
         ]);
-        $url_twitter = factory(\App\Website::class)->create([
+        $url_twitter = Website::factory()->create([
             'contact_id' => $person->id,
             'website_type' => 'Twitter',
             'url' => 'https://twitter.com/'.$this->faker->slug,
         ]);
-        $note_health = factory(\App\Note::class)->create([
+        $note_health = Note::factory()->create([
             'entity_table' => 'contact',
             'entity_id' => $person->id,
             'subject' => 'Health Note',
         ]);
-        $note_dietary = factory(\App\Note::class)->create([
+        $note_dietary = Note::factory()->create([
             'entity_table' => 'contact',
             'entity_id' => $person->id,
             'subject' => 'Dietary Note',
        ]);
-        $note_contact = factory(\App\Note::class)->create([
+        $note_contact = Note::factory()->create([
             'entity_table' => 'contact',
             'entity_id' => $person->id,
             'subject' => 'Contact Note',
         ]);
-        $note_room_preference = factory(\App\Note::class)->create([
+        $note_room_preference = Note::factory()->create([
             'entity_table' => 'contact',
             'entity_id' => $person->id,
             'subject' => 'Room Preference',
@@ -468,7 +469,7 @@ class PersonControllerTest extends TestCase
     public function envelope_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-contact');
-        $person = factory(\App\Contact::class)->create([
+        $person = Contact::factory()->create([
           'contact_type' => config('polanco.contact_type.individual'),
           'subcontact_type' => null,
         ]);
@@ -484,7 +485,7 @@ class PersonControllerTest extends TestCase
      */
     public function index_displays_paginated_contacts_contacts()
     {
-        $person = factory(\App\Contact::class)->create([
+        $person = Contact::factory()->create([
             'contact_type' => config('polanco.contact_type.individual'),
             'subcontact_type' => null,
         ]);
@@ -510,7 +511,7 @@ class PersonControllerTest extends TestCase
      */
     public function index_returns_403_without_proper_permission()
     {
-        $user = factory(\App\User::class)->create();
+        $user = User::factory()->create();
 
         $response = $this->actingAs($user)->get(route('person.index'));
 
@@ -555,7 +556,7 @@ class PersonControllerTest extends TestCase
     public function lastnames_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-contact');
-        $person = factory(\App\Contact::class)->create([
+        $person = Contact::factory()->create([
           'contact_type' => config('polanco.contact_type.individual'),
           'subcontact_type' => null,
         ]);
@@ -576,15 +577,15 @@ class PersonControllerTest extends TestCase
      */
     public function merge_returns_an_ok_response()
     {
-        $user = factory(\App\User::class)->create();
+        $user = User::factory()->create();
         $user->assignRole('test-role:merge');
 
-        $person = factory(\App\Contact::class)->create([
+        $person = Contact::factory()->create([
             'contact_type' => config('polanco.contact_type.individual'),
             'subcontact_type' => null,
         ]);
 
-        $duplicate_person = factory(\App\Contact::class)->create([
+        $duplicate_person = Contact::factory()->create([
           'contact_type' => config('polanco.contact_type.individual'),
           'subcontact_type' => null,
           'sort_name' => $person->sort_name,
@@ -612,12 +613,12 @@ class PersonControllerTest extends TestCase
     public function merge_destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-contact');
-        $person = factory(\App\Contact::class)->create([
+        $person = Contact::factory()->create([
             'contact_type' => config('polanco.contact_type.individual'),
             'subcontact_type' => null,
         ]);
 
-        $duplicate_person = factory(\App\Contact::class)->create([
+        $duplicate_person = Contact::factory()->create([
           'contact_type' => config('polanco.contact_type.individual'),
           'subcontact_type' => null,
           'sort_name' => $person->sort_name,
@@ -683,7 +684,7 @@ class PersonControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-contact');
-        $person = factory(\App\Contact::class)->create([
+        $person = Contact::factory()->create([
           'contact_type' => config('polanco.contact_type.individual'),
           'subcontact_type' => null,
         ]);
@@ -810,7 +811,7 @@ class PersonControllerTest extends TestCase
     public function update_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-contact');
-        $person = factory(\App\Contact::class)->create([
+        $person = Contact::factory()->create([
           'contact_type' => config('polanco.contact_type.individual'),
           'subcontact_type' => null,
         ]);

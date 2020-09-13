@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Retreat;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -20,7 +21,7 @@ class RetreatControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-registration');
         // create a retreat, then create a number of registrations for the retreat
-        $retreat = factory(\App\Retreat::class)->create();
+        $retreat = Retreat::factory()->create();
         $number_registrations = $this->faker->numberBetween(2, 10);
         $registration = factory(\App\Registration::class, $number_registrations)->create([
           'event_id' => $retreat->id,
@@ -31,7 +32,7 @@ class RetreatControllerTest extends TestCase
         ]);
 
         // create a single room for the test just in case none have been created
-        $room = factory(\App\Room::class)->create();
+        $room = Room::factory()->create();
 
         $response = $this->actingAs($user)->get(route('retreat.assign_rooms', ['id' => $retreat->id]));
         // TODO: $response->assertSessionHas('flash_notification');
@@ -66,7 +67,7 @@ class RetreatControllerTest extends TestCase
         $user = $this->createUserWithPermission('update-registration');
 
         // create a retreat, then create a number of registrations for the retreat
-        $retreat = factory(\App\Retreat::class)->create();
+        $retreat = Retreat::factory()->create();
         $number_registrations = $this->faker->numberBetween(2, 10);
         $registrations = factory(\App\Registration::class, $number_registrations)->create([
           'event_id' => $retreat->id,
@@ -92,7 +93,7 @@ class RetreatControllerTest extends TestCase
         $user = $this->createUserWithPermission('update-registration');
 
         // create a retreat, then create a number of registrations for the retreat
-        $retreat = factory(\App\Retreat::class)->create(
+        $retreat = Retreat::factory()->create(
             [
             'start_date' => $this->faker->dateTimeBetween('-5 days', '-2 days'),
             'end_date' => $this->faker->dateTimeBetween('-1 day', '1 day'),
@@ -141,7 +142,7 @@ class RetreatControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-retreat');
-        $retreat = factory(\App\Retreat::class)->create();
+        $retreat = Retreat::factory()->create();
 
         $response = $this->actingAs($user)->delete(route('retreat.destroy', [$retreat]));
 
@@ -156,7 +157,7 @@ class RetreatControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-retreat');
-        $retreat = factory(\App\Retreat::class)->create();
+        $retreat = Retreat::factory()->create();
 
         $response = $this->actingAs($user)->get(route('retreat.edit', [$retreat]));
 
@@ -204,8 +205,8 @@ class RetreatControllerTest extends TestCase
     public function edit_payments_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-payment');
-        $retreat = factory(\App\Retreat::class)->create();
-        $registration = factory(\App\Registration::class)->create([
+        $retreat = Retreat::factory()->create();
+        $registration = Registration::factory()->create([
           'canceled_at' => null,
           'event_id' => $retreat->id,
         ]);
@@ -227,7 +228,7 @@ class RetreatControllerTest extends TestCase
     public function get_event_by_id_number_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-retreat');
-        $retreat = factory(\App\Retreat::class)->create();
+        $retreat = Retreat::factory()->create();
 
         $response = $this->actingAs($user)->get('retreat/id/'.$retreat->idnumber);
 
@@ -245,7 +246,7 @@ class RetreatControllerTest extends TestCase
     public function index_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-retreat');
-        $retreat = factory(\App\Retreat::class)->create();
+        $retreat = Retreat::factory()->create();
         $response = $this->actingAs($user)->get(route('retreat.index'));
         $upcoming = $response->viewData('retreats');
         $previous = $response->viewData('oldretreats');
@@ -268,7 +269,7 @@ class RetreatControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-retreat');
         // create a new event type, add a random number of retreats (2-10) to that event type ensuring they are all future events
-        $event_type = factory(\App\EventType::class)->create();
+        $event_type = EventType::factory()->create();
         $number_retreats = $this->faker->numberBetween(2, 10);
         $retreat = factory(\App\Retreat::class, $number_retreats)->create([
             'event_type_id' => $event_type->id,
@@ -297,15 +298,15 @@ class RetreatControllerTest extends TestCase
     public function room_update_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-registration');
-        $retreat = factory(\App\Retreat::class)->create();
-        $registration = factory(\App\Registration::class)->create([
+        $retreat = Retreat::factory()->create();
+        $registration = Registration::factory()->create([
           'room_id' => null,
           'event_id' => $retreat->id,
           'notes' => null,
           'source' => 'room_update',
           'canceled_at' => null,
         ]);
-        $room = factory(\App\Room::class)->create();
+        $room = Room::factory()->create();
         $registrations = [];
         $notes = [];
         $registrations[$registration->id] = $room->id;
@@ -342,7 +343,7 @@ class RetreatControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-retreat');
-        $retreat = factory(\App\Retreat::class)->create();
+        $retreat = Retreat::factory()->create();
 
         $response = $this->actingAs($user)->get(route('retreat.show', [$retreat]));
 
@@ -361,7 +362,7 @@ class RetreatControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-payment');
 
-        $registration = factory(\App\Registration::class)->create();
+        $registration = Registration::factory()->create();
         $retreat = \App\Retreat::findOrFail($registration->event_id);
 
         $response = $this->actingAs($user)->get(route('retreat.payments', ['id' => $registration->event_id]));
@@ -379,7 +380,7 @@ class RetreatControllerTest extends TestCase
     public function show_waitlist_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-retreat');
-        $registration = factory(\App\Registration::class)->create([
+        $registration = Registration::factory()->create([
             'status_id' => config('polanco.registration_status_id.waitlist'),
         ]);
         $retreat = \App\Retreat::findOrFail($registration->event_id);
@@ -437,7 +438,7 @@ class RetreatControllerTest extends TestCase
     public function update_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-retreat');
-        $retreat = factory(\App\Retreat::class)->create();
+        $retreat = Retreat::factory()->create();
         $original_idnumber = $retreat->idnumber;
         $original_title = $retreat->title;
         $new_idnumber = $this->faker->numberBetween(11111111, 99999999).$this->faker->lastName;
@@ -484,12 +485,12 @@ class RetreatControllerTest extends TestCase
     public function event_room_list_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-registration');
-        $retreat = factory(\App\Retreat::class)->create();
-        $retreatant = factory(\App\Contact::class)->create([
+        $retreat = Retreat::factory()->create();
+        $retreatant = Contact::factory()->create([
             'contact_type' => config('polanco.contact_type.individual'),
         ]);
-        $room = factory(\App\Room::class)->create();
-        $registration = factory(\App\Registration::class)->create([
+        $room = Room::factory()->create();
+        $registration = Registration::factory()->create([
             'event_id' => $retreat->id,
             'contact_id' => $retreatant->id,
             'room_id' => $room->id,
@@ -511,12 +512,12 @@ class RetreatControllerTest extends TestCase
     public function event_namebadges_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-registration');
-        $retreat = factory(\App\Retreat::class)->create();
-        $retreatant = factory(\App\Contact::class)->create([
+        $retreat = Retreat::factory()->create();
+        $retreatant = Contact::factory()->create([
                 'contact_type' => config('polanco.contact_type.individual'),
             ]);
-        $room = factory(\App\Room::class)->create();
-        $registration = factory(\App\Registration::class)->create([
+        $room = Room::factory()->create();
+        $registration = Registration::factory()->create([
                 'event_id' => $retreat->id,
                 'contact_id' => $retreatant->id,
                 'room_id' => $room->id,
@@ -536,11 +537,11 @@ class RetreatControllerTest extends TestCase
     public function event_tableplacards_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-registration');
-        $retreat = factory(\App\Retreat::class)->create();
-        $retreatant = factory(\App\Contact::class)->create([
+        $retreat = Retreat::factory()->create();
+        $retreatant = Contact::factory()->create([
                 'contact_type' => config('polanco.contact_type.individual'),
             ]);
-        $registration = factory(\App\Registration::class)->create([
+        $registration = Registration::factory()->create([
                 'event_id' => $retreat->id,
                 'contact_id' => $retreatant->id,
                 'canceled_at' => null,
@@ -561,7 +562,7 @@ class RetreatControllerTest extends TestCase
     {   // create a new user and then search for that user's last name and ensure that a result appears
         $user = $this->createUserWithPermission('show-retreat');
 
-        $retreat = factory(\App\Retreat::class)->create();
+        $retreat = Retreat::factory()->create();
 
         $response = $this->actingAs($user)->get('retreat/results?idnumber='.$retreat->idnumber);
 

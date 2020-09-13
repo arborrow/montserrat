@@ -2,12 +2,31 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Roomstate::class, function (Faker $faker) {
-    return [
+use App\Room;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class RoomstateFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \App\Roomstate::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
         'room_id' => function () {
-            return factory(App\Room::class)->create()->id;
+            return Room::factory()->create()->id;
         },
     ];
-});
+    }
+}
