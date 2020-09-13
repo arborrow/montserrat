@@ -40,6 +40,7 @@ class DioceseControllerTest extends TestCase
         $user = $this->createUserWithPermission('delete-contact');
 
         $response = $this->actingAs($user)->delete(route('diocese.destroy', [$diocese]));
+        $response->assertSessionHas('flash_notification');
 
         $response->assertRedirect(action('DioceseController@index'));
         $this->assertSoftDeleted($diocese);
@@ -200,6 +201,7 @@ class DioceseControllerTest extends TestCase
             'sort_name' => $city_name,
         ]);
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('DioceseController@index'));
         $this->assertDatabaseHas('contact', [
           'contact_type' => config('polanco.contact_type.organization'),
@@ -242,6 +244,7 @@ class DioceseControllerTest extends TestCase
 
         $diocese->refresh();
         $response->assertRedirect(action('DioceseController@show', $diocese->id));
+        $response->assertSessionHas('flash_notification');
         $this->assertEquals($diocese->sort_name, $city_name);
         $this->assertNotEquals($diocese->sort_name, $sort_name);
     }

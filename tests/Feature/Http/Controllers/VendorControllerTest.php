@@ -40,6 +40,7 @@ class VendorControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('vendor.destroy', ['vendor' => $vendor]));
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('VendorController@index'));
         $this->assertSoftDeleted($vendor);
     }
@@ -145,7 +146,6 @@ class VendorControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('url_instagram', $url_instagram->url, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('url_linkedin', $url_linkedin->url, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('url_twitter', $url_twitter->url, 'text', $response->getContent()));
-
     }
 
     /**
@@ -165,7 +165,6 @@ class VendorControllerTest extends TestCase
         $response->assertViewHas('vendors');
         $response->assertSeeText('Vendors');
         $this->assertGreaterThanOrEqual('1', $vendors->count());
-
     }
 
     /**
@@ -202,6 +201,7 @@ class VendorControllerTest extends TestCase
           'subcontact_type' => config('polanco.contact_type.vendor'),
         ]);
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('VendorController@index'));
 
         $this->assertDatabaseHas('contact', [
@@ -242,6 +242,7 @@ class VendorControllerTest extends TestCase
           'id' => $vendor->id,
         ]);
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('VendorController@show', $vendor->id));
 
         $updated = \App\Contact::find($vendor->id);

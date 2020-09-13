@@ -135,7 +135,7 @@ class PersonControllerTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)->delete(route('person.destroy', ['person' => $person]));
-
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('PersonController@index'));
         $this->assertSoftDeleted($person);
     }
@@ -776,6 +776,7 @@ class PersonControllerTest extends TestCase
                 'do_not_trade' => $this->faker->boolean,
         ]);
         $person = \App\Contact::whereSortName($last_name.', '.$first_name)->first();
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('PersonController@show', $person->id));
     }
 
@@ -829,6 +830,7 @@ class PersonControllerTest extends TestCase
 
         $updated = \App\Contact::findOrFail($person->id);
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('PersonController@show', $person->id));
         $this->assertEquals($updated->sort_name, $new_sort_name);
         $this->assertNotEquals($updated->sort_name, $original_sort_name);

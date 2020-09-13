@@ -37,6 +37,7 @@ class UomControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('uom.destroy', [$uom]));
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('UomController@index'));
         $this->assertSoftDeleted($uom);
     }
@@ -61,7 +62,6 @@ class UomControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('description', $uom->description, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('is_active', $uom->is_active, 'checkbox', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('type', $uom->type, 'select', $response->getContent()));
-
     }
 
     /**
@@ -117,6 +117,7 @@ class UomControllerTest extends TestCase
             'type' => $uom_type,
         ]);
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('UomController@index'));
 
         $this->assertDatabaseHas('uom', [
@@ -148,12 +149,13 @@ class UomControllerTest extends TestCase
           'is_active' => $this->faker->boolean(),
           'type' => $uom_type,
         ]);
-        $response->assertRedirect(action('UomController@show',$uom->id));
-        // var_dump($uom);
+
+        $response->assertSessionHas('flash_notification');
+        $response->assertRedirect(action('UomController@show', $uom->id));
+
         $updated = \App\Uom::findOrFail($uom->id);
         $this->assertEquals($updated->unit_name, $new_uom_unit_name);
         $this->assertNotEquals($updated->unit_name, $original_uom_unit_name);
-
     }
 
     // test cases...

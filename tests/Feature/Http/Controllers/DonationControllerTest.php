@@ -71,7 +71,7 @@ class DonationControllerTest extends TestCase
         $contact = \App\Contact::find($donation->contact_id);
 
         $response = $this->actingAs($user)->delete(route('donation.destroy', [$donation]));
-
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect($contact->contact_url);
 
         $this->assertSoftDeleted($donation);
@@ -242,6 +242,7 @@ class DonationControllerTest extends TestCase
             // 'end_date_only' => $this->faker->dateTimeBetween($start_date_only, strtotime('+7 days')),
 
         ]);
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect($donor->contact_url.'#donations');
         $this->assertDatabaseHas('Donations', [
           'contact_id' => $donor->id,
@@ -293,6 +294,7 @@ class DonationControllerTest extends TestCase
         // TODO: remove space on Thank You field in Donation table then add to unit test
 
         $response->assertRedirect(action('DonationController@show', $donation->donation_id));
+        $response->assertSessionHas('flash_notification');
 
         $updated_donation = \App\Donation::find($donation->donation_id);
         $this->assertEquals($updated_donation->event_id, $event->id);

@@ -38,6 +38,7 @@ class SnippetControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('snippet.destroy', [$snippet]));
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('SnippetController@index'));
         $this->assertSoftDeleted($snippet);
     }
@@ -140,6 +141,7 @@ class SnippetControllerTest extends TestCase
             'snippet' => $snippet,
         ]);
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('SnippetController@index'));
 
         $this->assertDatabaseHas('snippets', [
@@ -170,17 +172,17 @@ class SnippetControllerTest extends TestCase
     }
 
 
-        /**
-         * @test
-         */
-        public function store_validates_with_a_form_request()
-        {
-            $this->assertActionUsesFormRequest(
-                \App\Http\Controllers\SnippetController::class,
-                'store',
-                \App\Http\Requests\StoreSnippetRequest::class
-            );
-        }
+    /**
+     * @test
+     */
+    public function store_validates_with_a_form_request()
+    {
+        $this->assertActionUsesFormRequest(
+            \App\Http\Controllers\SnippetController::class,
+            'store',
+            \App\Http\Requests\StoreSnippetRequest::class
+        );
+    }
 
 
     /**
@@ -235,6 +237,7 @@ class SnippetControllerTest extends TestCase
           'locale' => $snippet->locale,
         ]);
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('SnippetController@show', $snippet->id));
 
         $updated = \App\Snippet::findOrFail($snippet->id);

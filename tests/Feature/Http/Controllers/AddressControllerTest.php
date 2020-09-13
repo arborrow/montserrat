@@ -41,7 +41,7 @@ class AddressControllerTest extends TestCase
         $user = $this->createUserWithPermission('delete-address');
 
         $response = $this->actingAs($user)->delete(route('address.destroy', [$address]));
-
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('PersonController@show', $contact_id));
         $this->assertSoftDeleted($address);
     }
@@ -134,6 +134,7 @@ class AddressControllerTest extends TestCase
             'country_id' => config('polanco.country_id_usa'),
         ]);
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('AddressController@index'));
         $this->assertDatabaseHas('address', [
           'contact_id' => $contact->id,
@@ -169,9 +170,10 @@ class AddressControllerTest extends TestCase
             'street_address' => $this->faker->streetAddress,
         ]);
 
-        // $response->assertRedirect(action('AddressController@show', $address->id));
-
         $updated_address = \App\Address::find($address->id);
+
+        $response->assertRedirect(action('AddressController@show', $address->id));
+        $response->assertSessionHas('flash_notification');
         $this->assertEquals($updated_address->contact_id, $contact_id);
         $this->assertNotEquals($updated_address->street_address, $original_street_address);
     }

@@ -196,7 +196,7 @@ class TouchpointControllerTest extends TestCase
         $touchpoint = factory(\App\Touchpoint::class)->create();
 
         $response = $this->actingAs($user)->delete(route('touchpoint.destroy', [$touchpoint]));
-
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('TouchpointController@index'));
         $this->assertSoftDeleted($touchpoint);
     }
@@ -308,6 +308,7 @@ class TouchpointControllerTest extends TestCase
           'type' => array_rand(array_flip(['Email', 'Call', 'Letter', 'Face', 'Other'])),
           'notes' => $this->faker->paragraph,
         ]);
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('TouchpointController@index'));
         $this->assertDatabaseHas('touchpoints', [
           'touched_at' => $touched_at,
@@ -370,6 +371,7 @@ class TouchpointControllerTest extends TestCase
             'notes' => $notes,
         ]);
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('GroupController@show', $group->id));
         $this->assertDatabaseHas('touchpoints', [
           'touched_at' => $touched_at,
@@ -439,6 +441,7 @@ class TouchpointControllerTest extends TestCase
             'notes' => $notes,
         ]);
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('RetreatController@show', $retreat->id));
 
         $this->assertDatabaseHas('touchpoints', [
@@ -509,6 +512,7 @@ class TouchpointControllerTest extends TestCase
             'notes' => $notes,
         ]);
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('RetreatController@show', $retreat->id));
 
         $this->assertDatabaseHas('touchpoints', [
@@ -563,6 +567,7 @@ class TouchpointControllerTest extends TestCase
 
         $touchpoint->refresh();
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('TouchpointController@index'));
         $this->AssertEquals($person->id, $touchpoint->person_id);
         $this->AssertEquals($staff->id, $touchpoint->staff_id);

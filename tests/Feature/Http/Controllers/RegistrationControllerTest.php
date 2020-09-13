@@ -212,7 +212,7 @@ class RegistrationControllerTest extends TestCase
         $registration = factory(\App\Registration::class)->create();
 
         $response = $this->actingAs($user)->delete(route('registration.destroy', [$registration]));
-
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('RegistrationController@index'));
         $this->assertSoftDeleted($registration);
     }
@@ -401,6 +401,7 @@ class RegistrationControllerTest extends TestCase
             'num_registrants' => '1',
         ]);
         $response->assertRedirect(action('RegistrationController@index'));
+        $response->assertSessionHas('flash_notification');
         $this->assertDatabaseHas('participant', [
           'event_id' => $retreat->id,
           'contact_id' => $contact->id,
@@ -439,6 +440,7 @@ class RegistrationControllerTest extends TestCase
             'deposit' => $this->faker->randomFloat(2, 0, 100),
         ]);
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('RetreatController@show', $retreat->id));
         $registrations = \App\Registration::whereEventId($retreat->id)->get();
         $group_contacts = \App\GroupContact::whereGroupId($group->id)->get();
@@ -483,6 +485,7 @@ class RegistrationControllerTest extends TestCase
 
         ]);
         $registration->refresh();
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('PersonController@show', $registration->contact_id));
         $this->assertEquals($registration->deposit, $new_deposit);
         $this->assertNotEquals($registration->deposit, $original_deposit);

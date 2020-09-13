@@ -34,7 +34,7 @@ class RetreatControllerTest extends TestCase
         $room = factory(\App\Room::class)->create();
 
         $response = $this->actingAs($user)->get(route('retreat.assign_rooms', ['id' => $retreat->id]));
-
+        // TODO: $response->assertSessionHas('flash_notification');
         $response->assertOk();
         $response->assertViewIs('retreats.assign_rooms');
         $response->assertViewHas('retreat');
@@ -79,6 +79,7 @@ class RetreatControllerTest extends TestCase
         $response = $this->from('retreat.show', $retreat->id)->actingAs($user)->get(route('retreat.checkin', ['id' => $retreat->id]));
         $registration = $registrations->random();
         $registration->refresh();
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('RetreatController@show', $retreat->id));
         $this->assertNotEquals(null, $registration->arrived_at);
     }
@@ -92,7 +93,7 @@ class RetreatControllerTest extends TestCase
 
         // create a retreat, then create a number of registrations for the retreat
         $retreat = factory(\App\Retreat::class)->create(
-          [
+            [
             'start_date' => $this->faker->dateTimeBetween('-5 days', '-2 days'),
             'end_date' => $this->faker->dateTimeBetween('-1 day', '1 day'),
           ]
@@ -111,6 +112,7 @@ class RetreatControllerTest extends TestCase
         $registration = $registrations->random();
         $registration->refresh();
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('RetreatController@show', $retreat->id));
         $this->assertNotEquals(null, $registration->departed_at);
     }
@@ -143,6 +145,7 @@ class RetreatControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('retreat.destroy', [$retreat]));
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('RetreatController@index'));
         $this->assertSoftDeleted($retreat);
     }
@@ -178,7 +181,6 @@ class RetreatControllerTest extends TestCase
         // $this->assertTrue($this->findFieldValueInResponseContent('ambassadors[]', $retreat->ambassadors->pluck('contact.id'), 'select', $response->getContent()));
 
         $this->assertTrue($this->findFieldValueInResponseContent('description', $retreat->description, 'textarea', $response->getContent()));
-
     }
 
     /*
@@ -315,7 +317,8 @@ class RetreatControllerTest extends TestCase
         ]);
 
         $updated_registration = \App\Registration::findOrFail($registration->id);
-        $response->assertRedirect(action('RetreatController@show',$retreat->id));
+        $response->assertSessionHas('flash_notification');
+        $response->assertRedirect(action('RetreatController@show', $retreat->id));
         $this->assertNotEquals(null, $updated_registration->room_id);
         $this->assertEquals($room->id, $updated_registration->room_id);
         $this->assertNotEquals(null, $updated_registration->notes);
@@ -411,6 +414,7 @@ class RetreatControllerTest extends TestCase
         ]);
         // TODO: assumes that Google calendar integration is not set but eventually we will want to test that this too is working and saving the calendar event
         $retreat = \App\Retreat::whereIdnumber($idnumber)->first();
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('RetreatController@index'));
         $this->assertEquals($retreat->idnumber, $idnumber);
     }
@@ -452,6 +456,7 @@ class RetreatControllerTest extends TestCase
             'event_type_id' => $this->faker->numberBetween(1, 14),
         ]);
         $retreat->refresh();
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('RetreatController@show', $retreat->id));
         $this->assertEquals($retreat->title, $new_title);
         $this->assertEquals($retreat->idnumber, $new_idnumber);
@@ -501,89 +506,87 @@ class RetreatControllerTest extends TestCase
     }
 
 
-        /**
-         * @test
-         */
-        public function event_namebadges_returns_an_ok_response()
-        {
-            $user = $this->createUserWithPermission('show-registration');
-            $retreat = factory(\App\Retreat::class)->create();
-            $retreatant = factory(\App\Contact::class)->create([
+    /**
+     * @test
+     */
+    public function event_namebadges_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-registration');
+        $retreat = factory(\App\Retreat::class)->create();
+        $retreatant = factory(\App\Contact::class)->create([
                 'contact_type' => config('polanco.contact_type.individual'),
             ]);
-            $room = factory(\App\Room::class)->create();
-            $registration = factory(\App\Registration::class)->create([
+        $room = factory(\App\Room::class)->create();
+        $registration = factory(\App\Registration::class)->create([
                 'event_id' => $retreat->id,
                 'contact_id' => $retreatant->id,
                 'room_id' => $room->id,
                 'canceled_at' => null,
             ]);
-            $response = $this->actingAs($user)->get('retreat/'.$registration->event_id.'/namebadges');
-            $response->assertOk();
-            $response->assertViewIs('retreats.namebadges');
-            $response->assertViewHas('event');
-            $response->assertViewHas('cresults');
-            $response->assertSeeText($retreatant->first_name.' '.$retreatant->last_name);
+        $response = $this->actingAs($user)->get('retreat/'.$registration->event_id.'/namebadges');
+        $response->assertOk();
+        $response->assertViewIs('retreats.namebadges');
+        $response->assertViewHas('event');
+        $response->assertViewHas('cresults');
+        $response->assertSeeText($retreatant->first_name.' '.$retreatant->last_name);
+    }
 
-        }
-
-        /**
-         * @test
-         */
-        public function event_tableplacards_returns_an_ok_response()
-        {
-            $user = $this->createUserWithPermission('show-registration');
-            $retreat = factory(\App\Retreat::class)->create();
-            $retreatant = factory(\App\Contact::class)->create([
+    /**
+     * @test
+     */
+    public function event_tableplacards_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-registration');
+        $retreat = factory(\App\Retreat::class)->create();
+        $retreatant = factory(\App\Contact::class)->create([
                 'contact_type' => config('polanco.contact_type.individual'),
             ]);
-            $registration = factory(\App\Registration::class)->create([
+        $registration = factory(\App\Registration::class)->create([
                 'event_id' => $retreat->id,
                 'contact_id' => $retreatant->id,
                 'canceled_at' => null,
                 'role_id' => config('polanco.participant_role_id.retreatant'),
             ]);
-            $response = $this->actingAs($user)->get('retreat/'.$registration->event_id.'/tableplacards');
-            $response->assertOk();
-            $response->assertViewIs('retreats.tableplacards');
-            $response->assertViewHas('event');
-            $response->assertViewHas('cresults');
-            $response->assertSeeText($retreatant->first_name.' '.$retreatant->last_name);
+        $response = $this->actingAs($user)->get('retreat/'.$registration->event_id.'/tableplacards');
+        $response->assertOk();
+        $response->assertViewIs('retreats.tableplacards');
+        $response->assertViewHas('event');
+        $response->assertViewHas('cresults');
+        $response->assertSeeText($retreatant->first_name.' '.$retreatant->last_name);
+    }
 
-        }
+    /**
+     * @test
+     */
+    public function results_returns_an_ok_response()
+    {   // create a new user and then search for that user's last name and ensure that a result appears
+        $user = $this->createUserWithPermission('show-retreat');
 
-            /**
-             * @test
-             */
-            public function results_returns_an_ok_response()
-            {   // create a new user and then search for that user's last name and ensure that a result appears
-                $user = $this->createUserWithPermission('show-retreat');
+        $retreat = factory(\App\Retreat::class)->create();
 
-                $retreat = factory(\App\Retreat::class)->create();
+        $response = $this->actingAs($user)->get('retreat/results?idnumber='.$retreat->idnumber);
 
-                $response = $this->actingAs($user)->get('retreat/results?idnumber='.$retreat->idnumber);
+        $response->assertOk();
+        $response->assertViewIs('retreats.results');
+        $response->assertViewHas('events');
+        $response->assertSeeText('results found');
+        $response->assertSeeText($retreat->idnumber);
+    }
 
-                $response->assertOk();
-                $response->assertViewIs('retreats.results');
-                $response->assertViewHas('events');
-                $response->assertSeeText('results found');
-                $response->assertSeeText($retreat->idnumber);
-            }
+    /**
+     * @test
+     */
+    public function search_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-retreat');
 
-            /**
-             * @test
-             */
-            public function search_returns_an_ok_response()
-            {
-                $user = $this->createUserWithPermission('show-retreat');
+        $response = $this->actingAs($user)->get('retreat/search');
 
-                $response = $this->actingAs($user)->get('retreat/search');
-
-                $response->assertOk();
-                $response->assertViewIs('retreats.search');
-                $response->assertViewHas('event_types');
-                $response->assertSeeText('Search Events');
-            }
+        $response->assertOk();
+        $response->assertViewIs('retreats.search');
+        $response->assertViewHas('event_types');
+        $response->assertSeeText('Search Events');
+    }
 
 
     // test cases...

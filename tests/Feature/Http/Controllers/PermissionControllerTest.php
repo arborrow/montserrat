@@ -36,7 +36,7 @@ class PermissionControllerTest extends TestCase
         $permission = factory(\App\Permission::class)->create();
 
         $response = $this->actingAs($user)->delete(route('permission.destroy', [$permission]));
-
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('PermissionController@index'));
         $this->assertSoftDeleted($permission);
     }
@@ -112,6 +112,7 @@ class PermissionControllerTest extends TestCase
             'description' => $permission_description,
         ]);
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('PermissionController@index'));
         $this->assertDatabaseHas('permissions', [
           'name' => $permission_name,
@@ -137,6 +138,7 @@ class PermissionControllerTest extends TestCase
           'description' => $this->faker->sentence(7, true),
         ]);
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('PermissionController@index'));
         $updated = \App\Permission::findOrFail($permission->id);
         $this->assertEquals($updated->name, $new_permission_name);
@@ -159,6 +161,7 @@ class PermissionControllerTest extends TestCase
             'roles' => $random_roles,
         ]);
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('PermissionController@index'));
 
     }

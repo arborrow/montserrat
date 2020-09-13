@@ -115,6 +115,7 @@ class RelationshipTypeControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('relationship_type.destroy', [$relationship_type]));
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('RelationshipTypeController@index'));
         $this->assertSoftDeleted($relationship_type);
     }
@@ -260,6 +261,7 @@ class RelationshipTypeControllerTest extends TestCase
           'updated_at' => $this->faker->dateTime('now'),
         ]);
         $response->assertRedirect(action('RelationshipTypeController@index'));
+        $response->assertSessionHas('flash_notification');
         $this->assertDatabaseHas('relationship_type', [
           'name_a_b' => $name_a_b,
           'name_b_a' => $name_b_a,
@@ -305,6 +307,7 @@ class RelationshipTypeControllerTest extends TestCase
         // dd($response,$relationship_type->id);
         $updated = \App\RelationshipType::findOrFail($relationship_type->id);
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('RelationshipTypeController@index'));
         $this->assertEquals($updated->description, $new_description);
         $this->assertNotEquals($updated->description, $original_description);
