@@ -80,7 +80,7 @@ class PersonController extends Controller
         $preferred_communication_methods = config('polanco.preferred_communication_method');
 
         //dd($subcontact_types);
-        return view('persons.create', compact('parish_list', 'ethnicities', 'states', 'countries', 'suffixes', 'prefixes', 'languages', 'genders', 'religions', 'occupations', 'contact_types', 'subcontact_types', 'referrals','preferred_communication_methods'));
+        return view('persons.create', compact('parish_list', 'ethnicities', 'states', 'countries', 'suffixes', 'prefixes', 'languages', 'genders', 'religions', 'occupations', 'contact_types', 'subcontact_types', 'referrals', 'preferred_communication_methods'));
     }
 
     /**
@@ -603,7 +603,8 @@ class PersonController extends Controller
         $url_twitter->website_type = 'Twitter';
         $url_twitter->save();
 
-        flash('Person: <a href="'. url('/person/'.$person->id) . '">'.$person->display_name.'</a> added')->success();
+        flash('Person: <a href="'.url('/person/'.$person->id).'">'.$person->display_name.'</a> added')->success();
+
         return Redirect::action('PersonController@show', $person->id); //
 
         //return Redirect::action('PersonController@index');//
@@ -868,7 +869,7 @@ class PersonController extends Controller
         }
         //dd($person);
 
-        return view('persons.edit', compact('prefixes', 'suffixes', 'person', 'parish_list', 'ethnicities', 'states', 'countries', 'genders', 'languages', 'defaults', 'religions', 'occupations', 'contact_types', 'subcontact_types', 'referrals','preferred_communication_methods'));
+        return view('persons.edit', compact('prefixes', 'suffixes', 'person', 'parish_list', 'ethnicities', 'states', 'countries', 'genders', 'languages', 'defaults', 'religions', 'occupations', 'contact_types', 'subcontact_types', 'referrals', 'preferred_communication_methods'));
     }
 
     /**
@@ -1509,7 +1510,8 @@ class PersonController extends Controller
             }
         }
 
-        flash('Person: <a href="'. url('/person/'.$person->id) . '">'.$person->display_name.'</a> updated')->success();
+        flash('Person: <a href="'.url('/person/'.$person->id).'">'.$person->display_name.'</a> updated')->success();
+
         return Redirect::action('PersonController@show', $person->id);
     }
 
@@ -1543,7 +1545,8 @@ class PersonController extends Controller
         \App\Donation::whereContactId($id)->delete();
         \App\Contact::destroy($id);
 
-        flash('Person: '.$person->display_name . ' deleted')->warning()->important();
+        flash('Person: '.$person->display_name.' deleted')->warning()->important();
+
         return Redirect::action('PersonController@index');
     }
 
@@ -1570,7 +1573,8 @@ class PersonController extends Controller
         \App\Registration::whereContactId($id)->delete();
         \App\Contact::destroy($id);
 
-        flash('Person: '.$person->sort_name . ' deleted')->warning()->important();
+        flash('Person: '.$person->sort_name.' deleted')->warning()->important();
+
         return Redirect::action('PersonController@merge', $return_id);
     }
 
@@ -1930,7 +1934,8 @@ class PersonController extends Controller
                 $donation->save();
             }
         }
-        flash('Contact ID#: '.$merge_id . ' merged with Contact ID#: '.$contact_id)->warning()->important();
+        flash('Contact ID#: '.$merge_id.' merged with Contact ID#: '.$contact_id)->warning()->important();
+
         return view('persons.merge', compact('contact', 'duplicates'));
     }
 }

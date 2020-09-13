@@ -505,7 +505,6 @@ class RetreatControllerTest extends TestCase
         $response->assertSeeText($retreat->title);
     }
 
-
     /**
      * @test
      */
@@ -587,7 +586,6 @@ class RetreatControllerTest extends TestCase
         $response->assertViewHas('event_types');
         $response->assertSeeText('Search Events');
     }
-
 
     // test cases...
 }

@@ -7,7 +7,7 @@ class CreateAssetTypeTable extends Migration
 {
     /**
      * Run the migrations.
-     * Because asset_type.label will be used in drop down boxes they should be unique unless they have been deleted
+     * Because asset_type.label will be used in drop down boxes they should be unique unless they have been deleted.
      *
      * @return void
      */
@@ -23,7 +23,7 @@ class CreateAssetTypeTable extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->string('remember_token', 100)->nullable();
-            $table->unique(['label','deleted_at']);
+            $table->unique(['label', 'deleted_at']);
         });
     }
 

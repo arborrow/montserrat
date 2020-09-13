@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Arr;
-
 use App\Http\Requests\StoreLocationRequest;
 use App\Http\Requests\UpdateLocationRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Redirect;
 
 class LocationController extends Controller
 {
@@ -40,7 +39,6 @@ class LocationController extends Controller
 
         return view('admin.locations.index', compact('locations', 'location_types'));
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -87,7 +85,8 @@ class LocationController extends Controller
 
         $location->save();
 
-        flash ('Location: <a href="'. url('/admin/location/'.$location->id) . '">'.$location->name.'</a> added')->success();
+        flash('Location: <a href="'.url('/admin/location/'.$location->id).'">'.$location->name.'</a> added')->success();
+
         return Redirect::action('LocationController@index');
     }
 
@@ -128,7 +127,7 @@ class LocationController extends Controller
         $rooms = \App\Room::orderBy('name')->pluck('name', 'id');
         $rooms->prepend('N/A', 0);
 
-        return view('admin.locations.edit', compact('location', 'location_types','parents','rooms')); //
+        return view('admin.locations.edit', compact('location', 'location_types', 'parents', 'rooms')); //
     }
 
     /**
@@ -157,7 +156,8 @@ class LocationController extends Controller
 
         $location->save();
 
-        flash('Location: <a href="'. url('/admin/location/'.$location->id) . '">'.$location->name.'</a> updated')->success();
+        flash('Location: <a href="'.url('/admin/location/'.$location->id).'">'.$location->name.'</a> updated')->success();
+
         return Redirect::action('LocationController@show', $location->id);
     }
 
@@ -174,7 +174,8 @@ class LocationController extends Controller
         $location = \App\Location::findOrFail($id);
         \App\Location::destroy($id);
 
-        flash('Location: '.$location->name . ' deleted')->warning()->important();
+        flash('Location: '.$location->name.' deleted')->warning()->important();
+
         return Redirect::action('LocationController@index');
     }
 }

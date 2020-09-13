@@ -38,7 +38,6 @@ class AssetControllerTest extends TestCase
         $response->assertSeeText('Create asset');
     }
 
-
     /**
      * @test
      */
@@ -154,7 +153,6 @@ class AssetControllerTest extends TestCase
         $response->assertSeeText('Assets');
     }
 
-
     /**
      * @test
      */
@@ -180,7 +178,6 @@ class AssetControllerTest extends TestCase
         $response->assertSeeText('Assets');
         $this->assertGreaterThan($number_assets, $results->count());
     }
-
 
     /**
      * @test
@@ -266,7 +263,7 @@ class AssetControllerTest extends TestCase
         $asset = factory(\App\Asset::class)->create();
 
         $original_asset_manufacuturer = $asset->manufacturer;
-        $new_manufacturer = 'New ' . $this->faker->words(2, true);
+        $new_manufacturer = 'New '.$this->faker->words(2, true);
         $response = $this->actingAs($user)->put(route('asset.update', [$asset]), [
           'id' => $asset->id,
           'name' => $asset->name,
@@ -280,7 +277,6 @@ class AssetControllerTest extends TestCase
         $this->assertEquals($updated->manufacturer, $new_manufacturer);
         $this->assertNotEquals($updated->manufacturer, $original_asset_manufacuturer);
     }
-
 
     /**
      * @test

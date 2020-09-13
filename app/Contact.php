@@ -25,11 +25,11 @@ class Contact extends Model implements Auditable
     protected $appends = ['full_name_with_city', 'agc_household_name'];
 
     public function generateTags(): array
-        {
-            return [
+    {
+        return [
                 $this->sort_name,
             ];
-        }
+    }
 
     // TODO: refactor to lookup based on relationship
     //TODO: rename person_id to contact_id
@@ -216,7 +216,7 @@ class Contact extends Model implements Auditable
 
     public function getPreferredLanguageIdAttribute()
     {
-        if (!empty($this->language_pref)) {
+        if (! empty($this->language_pref)) {
             return $this->language_pref->id;
         } else {
             return;
@@ -225,7 +225,7 @@ class Contact extends Model implements Auditable
 
     public function getPreferredLanguageLabelAttribute()
     {
-        if (!empty($this->language_pref)) {
+        if (! empty($this->language_pref)) {
             return $this->language_pref->label;
         } else {
             return;
@@ -255,7 +255,9 @@ class Contact extends Model implements Auditable
     }
 
     public function getSignatureAttribute()
-    {   $file_name = storage_path().'/app/contact/'.env('SELF_CONTACT_ID').'/signature.png';
+    {
+        $file_name = storage_path().'/app/contact/'.env('SELF_CONTACT_ID').'/signature.png';
+
         return "<img src='".$file_name."' style='width:320px; height:100px;'>";
         /*
         if (Storage::has('contact/'.$this->id.'/signature.png')) {
@@ -263,9 +265,7 @@ class Contact extends Model implements Auditable
         } else {
             return;
         } */
-
     }
-
 
     public function getAvatarSmallLinkAttribute()
     {
@@ -834,7 +834,8 @@ class Contact extends Model implements Auditable
         if (isset($this->phone_main_fax)) {
             return $this->phone_main_fax->phone.$this->phone_main_fax->phone_extension;
         } else {
-            return;        }
+            return;
+        }
     }
 
     public function getPrefixNameAttribute()
@@ -850,6 +851,7 @@ class Contact extends Model implements Auditable
     {
         if (isset($this->phone_primary->phone)) {
             $phone_number = $this->phone_primary->phone.$this->phone_primary->phone_extension;
+
             return '<a href="tel:'.$phone_number.'">'.$phone_number.'</a>';
         } else {
             return;
@@ -1024,7 +1026,8 @@ class Contact extends Model implements Auditable
         return $this->hasOne(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.pastor'));
     }
 
-    public function getPastorIdAttribute() {
+    public function getPastorIdAttribute()
+    {
         if (isset($this->pastor->contact_id_b)) {
             return $this->pastor->contact_id_b;
         } else {
@@ -1228,7 +1231,6 @@ class Contact extends Model implements Auditable
     {
         return $query->whereContactType(config('polanco.contact_type.organization'))->whereSubcontactType(config('polanco.contact_type.vendor'));
     }
-
 
     public function scopeFiltered($query, $filters)
     {

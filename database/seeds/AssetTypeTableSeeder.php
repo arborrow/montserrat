@@ -5,7 +5,6 @@ use Illuminate\Database\Seeder;
 class AssetTypeTableSeeder extends Seeder
 {
     /**
-     *
      * @return void
      */
     public function run()

@@ -5,12 +5,12 @@
 use Faker\Generator as Faker;
 
 $factory->define(App\Registration::class, function (Faker $faker) {
-// in theory, 'status_id' => array_rand(array_flip(config('polanco.registration_status_id'))),
-// in theory, 'role_id' => array_rand(array_flip(config('participant_role_id'))),
-// in practice, default to registered, retreatants and in tests hard code to innkeeper, assistant, director or ambassador
-// consider defaults for room_id, donation_id
-// default contact type is an individual; however, can be overridden to test cases for organizations
-// don't create registrations for dead people
+    // in theory, 'status_id' => array_rand(array_flip(config('polanco.registration_status_id'))),
+    // in theory, 'role_id' => array_rand(array_flip(config('participant_role_id'))),
+    // in practice, default to registered, retreatants and in tests hard code to innkeeper, assistant, director or ambassador
+    // consider defaults for room_id, donation_id
+    // default contact type is an individual; however, can be overridden to test cases for organizations
+    // don't create registrations for dead people
     return [
         'contact_id' => function () {
             return factory(App\Contact::class)->create([

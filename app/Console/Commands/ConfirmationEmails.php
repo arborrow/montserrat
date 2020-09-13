@@ -6,9 +6,8 @@ use App\Mail\RetreatConfirmation;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Mail\Mailer;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Str;
 
 class ConfirmationEmails extends Command
 {
@@ -47,10 +46,10 @@ class ConfirmationEmails extends Command
     public function handle()
     {   // get and store snippets
         $snippets = \App\Snippet::whereTitle('event-confirmation')->get();
-            foreach ($snippets as $snippet) {
-                $decoded = html_entity_decode($snippet->snippet,ENT_QUOTES | ENT_XML1);
-                Storage::put('views/snippets/'.$snippet->title.'/'.$snippet->locale.'/'.$snippet->label.'.blade.php',$decoded);
-            }
+        foreach ($snippets as $snippet) {
+            $decoded = html_entity_decode($snippet->snippet, ENT_QUOTES | ENT_XML1);
+            Storage::put('views/snippets/'.$snippet->title.'/'.$snippet->locale.'/'.$snippet->label.'.blade.php', $decoded);
+        }
         // get upcoming Ignatian retreats
         $startDate = Carbon::today()->addDays(7);
         $retreats = \App\Retreat::whereDate('start_date', $startDate)
@@ -59,7 +58,6 @@ class ConfirmationEmails extends Command
             ->get();
 
         if ($retreats->count() >= 1) {
-
             foreach ($retreats as $retreat) {
                 $automaticSuccessMessage = 'Automatic confirmation email has been sent for retreat #'.$retreat->idnumber;
                 $automaticErrorMessage = 'Automatic confirmation email failed to send for retreat #'.$retreat->idnumber.': ';
@@ -95,13 +93,13 @@ class ConfirmationEmails extends Command
                     $touchpoint->touched_at = Carbon::now();
                     $touchpoint->type = 'Email';
 
-                    if (!empty($primaryEmail)) {
+                    if (! empty($primaryEmail)) {
                         try {
                             $this->mailer->to($primaryEmail)->queue(new RetreatConfirmation($registration));
                             $touchpoint->notes = $automaticSuccessMessage;
                             $touchpoint->save();
                         } catch (\Exception $e) {
-                            $touchpoint->notes = $automaticErrorMessage . $e->getMessage();
+                            $touchpoint->notes = $automaticErrorMessage.$e->getMessage();
                             $touchpoint->save();
                         }
                     }

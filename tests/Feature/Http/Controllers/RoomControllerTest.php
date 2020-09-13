@@ -70,7 +70,6 @@ class RoomControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('occupancy', $room->occupancy, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('status', $room->status, 'text', $response->getContent()));
 
-
         /*
         {!! Form::select('location_id', $locations, $room->location_id, ['class' => 'col-md-2']) !!}
 {!! Form::text('name', $room->name, ['class' => 'col-md-2']) !!}

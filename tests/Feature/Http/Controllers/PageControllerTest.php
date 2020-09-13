@@ -178,24 +178,24 @@ class PageControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('reports.finance.agc_acknowledge');
         $response->assertViewHas('donation');
-
     }
 
-        // TODO: need to create a contact with the $user->email address so that the touchpoint staff member can be created
-        public function acknowledgment_pdf_returns_an_ok_response()
-        {    $this->withoutExceptionHandling();
-            $user = $this->createUserWithPermission('show-donation');
+    // TODO: need to create a contact with the $user->email address so that the touchpoint staff member can be created
+    public function acknowledgment_pdf_returns_an_ok_response()
+    {
+        $this->withoutExceptionHandling();
+        $user = $this->createUserWithPermission('show-donation');
 
-            $donation = factory(\App\Donation::class)->create();
-            $payments = factory(\App\Payment::class,3)->create(
-                ['donation_id' => $donation->donation_id,]
+        $donation = factory(\App\Donation::class)->create();
+        $payments = factory(\App\Payment::class, 3)->create(
+                ['donation_id' => $donation->donation_id]
             );
-            // dd($donation,$payments);
-            $response = $this->actingAs($user)->get('report/acknowledgment_pdf/'.$donation->contact_id);
+        // dd($donation,$payments);
+        $response = $this->actingAs($user)->get('report/acknowledgment_pdf/'.$donation->contact_id);
 
-            $response->assertOk();
-            // TODO: assert that the pdf file is created, consider making a seperate view for display and testing number of entries depending on start and end dates
-        }
+        $response->assertOk();
+        // TODO: assert that the pdf file is created, consider making a seperate view for display and testing number of entries depending on start and end dates
+    }
 
     /**
      * @test
@@ -236,7 +236,6 @@ class PageControllerTest extends TestCase
         $response->assertViewHas('report_date');
         $response->assertViewHas('grouped_payments');
         $response->assertViewHas('grand_total');
-
     }
 
     /**
@@ -253,7 +252,6 @@ class PageControllerTest extends TestCase
         $response->assertViewHas('report_date');
         $response->assertViewHas('grouped_payments');
         $response->assertViewHas('grand_total');
-
     }
 
     /**
@@ -314,7 +312,6 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('reports.finance.reconcile_deposits');
         $response->assertViewHas('diffpg');
         $response->assertViewHas('diffrg');
-
     }
 
     /**
@@ -335,7 +332,6 @@ class PageControllerTest extends TestCase
         $response->assertViewHas('retreat');
         $response->assertViewHas('grouped_donations');
         $response->assertViewHas('donations');
-
     }
 
     /**
@@ -485,7 +481,6 @@ class PageControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('reports.retreatroster');
         $response->assertViewHas('registrations');
-
     }
 
     /**

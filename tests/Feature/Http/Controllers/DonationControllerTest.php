@@ -27,7 +27,6 @@ class DonationControllerTest extends TestCase
         $response->assertViewIs('donations.agc');
         $response->assertViewHas('donations');
         $response->assertViewHas('total');
-
     }
 
     /**
@@ -40,7 +39,6 @@ class DonationControllerTest extends TestCase
         $response = $this->actingAs($user)->get('agc/'.$year);
 
         $response->assertNotFound();
-
     }
 
     /**
@@ -58,7 +56,6 @@ class DonationControllerTest extends TestCase
         $response->assertViewHas('descriptions');
         $response->assertViewHas('payment_methods');
         $response->assertViewHas('defaults');
-
     }
 
     /**
@@ -75,7 +72,6 @@ class DonationControllerTest extends TestCase
         $response->assertRedirect($contact->contact_url);
 
         $this->assertSoftDeleted($donation);
-
     }
 
     /**
@@ -107,7 +103,6 @@ class DonationControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('donation_install', $donation->donation_install, 'number', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('donation_thank_you', $donation->donation_thank_you_sent, 'select', $response->getContent()));
         // TODO: clean up Donation.thank_you field so that it only contains Y or N and consider switching to boolean field
-
     }
 
     /**
@@ -122,7 +117,6 @@ class DonationControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('donations.index');
         $response->assertViewHas('donations');
-
     }
 
     /**
@@ -146,7 +140,7 @@ class DonationControllerTest extends TestCase
         $response->assertViewIs('donations.index');
         $response->assertViewHas('donations');
         $response->assertViewHas('donation_descriptions');
-        $this->assertGreaterThan($number_donations,$results->count());
+        $this->assertGreaterThan($number_donations, $results->count());
     }
 
     /**
@@ -160,7 +154,6 @@ class DonationControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('donations.overpaid');
         $response->assertViewHas('overpaid');
-
     }
 
     /**
@@ -215,7 +208,6 @@ class DonationControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('donations.show');
         $response->assertViewHas('donation');
-
     }
 
     /**
@@ -248,7 +240,6 @@ class DonationControllerTest extends TestCase
           'contact_id' => $donor->id,
           'event_id' => $event->id,
         ]);
-
     }
 
     /**

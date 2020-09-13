@@ -72,7 +72,8 @@ class AddressController extends Controller
         $address->country_id = $request->input('country_id');
         $address->save();
 
-        flash ('Address ID#: <a href="'. url('/address/'.$address->id) . '">'.$address->id.'</a> added')->success();
+        flash('Address ID#: <a href="'.url('/address/'.$address->id).'">'.$address->id.'</a> added')->success();
+
         return Redirect::action('AddressController@index');
     }
 
@@ -133,7 +134,8 @@ class AddressController extends Controller
         $address->country_id = $request->input('country_id');
         $address->save();
 
-        flash('Address ID#: <a href="'. url('/address/'.$address->id) . '">'.$address->id.'</a> updated')->success();
+        flash('Address ID#: <a href="'.url('/address/'.$address->id).'">'.$address->id.'</a> updated')->success();
+
         return Redirect::action('AddressController@show', $address->id);
     }
 
@@ -150,7 +152,8 @@ class AddressController extends Controller
         $contact_id = $address->contact_id;
         \App\Address::destroy($id);
 
-        flash('Address ID#: '.$address->id . ' deleted')->warning()->important();
+        flash('Address ID#: '.$address->id.' deleted')->warning()->important();
+
         return Redirect::action('PersonController@show', $contact_id);
     }
 }

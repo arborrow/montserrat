@@ -30,7 +30,6 @@ class MailgunControllerTest extends TestCase
             $response->assertViewIs('admin.config.mailgun');
             $response->assertSee('Mailgun configuration');
         }
-
     }
 
     /**
@@ -52,7 +51,6 @@ class MailgunControllerTest extends TestCase
             $response->assertViewIs('admin.config.mailgun');
             $response->assertSee('Mailgun configuration');
         }
-
     }
 
     // test cases...

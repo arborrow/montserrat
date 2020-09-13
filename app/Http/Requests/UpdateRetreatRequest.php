@@ -25,7 +25,7 @@ class UpdateRetreatRequest extends FormRequest
     public function rules()
     {   // dd($this);
         return [
-            'idnumber' => ['alpha_dash','required', Rule::unique('event')->ignore($this->id)->whereNull('deleted_at')],
+            'idnumber' => ['alpha_dash', 'required', Rule::unique('event')->ignore($this->id)->whereNull('deleted_at')],
             'start_date' => 'required|date|before:end_date',
             'end_date' => 'required|date|after:start_date',
             'title' => 'required',

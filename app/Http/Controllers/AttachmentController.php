@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-use Carbon\Carbon;
-
 
 class AttachmentController extends Controller
 {
@@ -153,10 +152,10 @@ class AttachmentController extends Controller
         $attachment->save();
         //write file to filesystem (attachments seems to be missing attachments path - evaluate when implementing generic event attachments)
         switch ($type) {
-            case 'avatar' :
+            case 'avatar':
                 Storage::disk('local')->put($entity.'/'.$entity_id.'/'.'avatar.png', $avatar->stream('png'));
                 break;
-            case 'signature' :
+            case 'signature':
                 Storage::disk('local')->put($entity.'/'.$entity_id.'/'.'signature.png', File::get($file));
                 break;
             default:
@@ -195,7 +194,7 @@ class AttachmentController extends Controller
                 $file_name = $this->sanitize_filename($file->getClientOriginalName());
                 $mime_type = $file->getClientMimeType();
                 $file_extension = '$file->extension()';
-                $updated_file_name = basename($file_name,'.'.$file_extension).'-updated-'.time().'.'.$file_extension;
+                $updated_file_name = basename($file_name, '.'.$file_extension).'-updated-'.time().'.'.$file_extension;
                 if (File::exists(storage_path().'/app/'.$path.$file_name)) {
                     Storage::move($path.$file_name, $path.$updated_file_name);
                     Storage::disk('local')->put($path.$file_name, File::get($file));
@@ -210,8 +209,8 @@ class AttachmentController extends Controller
                     $path = $entity.'/'.$entity_id.'/attachments/';
                     $file_type_id = config('polanco.file_type.contact_attachment');
                     $file_name = $this->sanitize_filename($filename);
-                    $updated_file_name = basename($file_name,'.pdf').'-updated-'.time().'.pdf';
-                    $mime_type = "application/pdf";
+                    $updated_file_name = basename($file_name, '.pdf').'-updated-'.time().'.pdf';
+                    $mime_type = 'application/pdf';
                     if (File::exists(storage_path().'/app/'.$path.$file_name)) {
                         Storage::move($path.$file_name, $path.$updated_file_name);
                         Storage::disk('local')->put($path.$file_name, $file);
@@ -227,7 +226,7 @@ class AttachmentController extends Controller
                 $file_name = $this->sanitize_filename($file->getClientOriginalName());
                 $mime_type = $file->getClientMimeType();
                 $file_extension = $file->extension();
-                $updated_file_name = basename($file_name,'.'.$file_extension).'-updated-'.time().'.'.$file_extension;
+                $updated_file_name = basename($file_name, '.'.$file_extension).'-updated-'.time().'.'.$file_extension;
 
                 if (File::exists(storage_path().'/app/'.$path.$file_name)) {
                     Storage::move($path.$file_name, $path.$updated_file_name);
@@ -440,14 +439,13 @@ class AttachmentController extends Controller
         return Redirect::action('PersonController@show', $user_id);
     }
 
-
     public function delete_event_attachment($event_id, $attachment)
-        {
-            $this->authorize('delete-attachment'); // TODO: for testing simplicity I am not implementing the use of delete-event-attachment
-            $this->delete_attachment($attachment, 'event', $event_id, 'event-attachment');
-            // TODO: get contact type and redirect to person, parish, organization, vendor as appropriate
-            return Redirect::action('RetreatController@show', $event_id);
-        }
+    {
+        $this->authorize('delete-attachment'); // TODO: for testing simplicity I am not implementing the use of delete-event-attachment
+        $this->delete_attachment($attachment, 'event', $event_id, 'event-attachment');
+        // TODO: get contact type and redirect to person, parish, organization, vendor as appropriate
+        return Redirect::action('RetreatController@show', $event_id);
+    }
 
     public function get_avatar($user_id)
     {
@@ -455,6 +453,7 @@ class AttachmentController extends Controller
 
         return $this->show_attachment('contact', $user_id, 'avatar', 'avatar.png');
     }
+
     public function get_signature($contact_id)
     {
         // $this->authorize('show-signature');
@@ -560,6 +559,4 @@ class AttachmentController extends Controller
 
         return Redirect::action('AssetController@show', $asset_id);
     }
-
-
 }

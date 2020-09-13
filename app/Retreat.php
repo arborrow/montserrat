@@ -77,7 +77,6 @@ class Retreat extends Model implements Auditable
     {
         // TODO: handle with participants of role Retreat Director or Master - be careful with difference between (registration table) retreat_id and (participant table) event_id
         return $this->hasMany(Registration::class, 'event_id', 'id')->whereRoleId(config('polanco.participant_role_id.retreat_director'));
-
     }
 
     public function registrations()
@@ -186,24 +185,23 @@ class Retreat extends Model implements Auditable
         $innkeepers = $this->innkeepers()->get();
         $assistants = $this->assistants()->get();
 
-	foreach ($directors as $director) {
-	    if (!empty($director->contact->last_name)) {
-	        $team .= $director->contact->last_name.'(D) ';
-	    }
-	}
+        foreach ($directors as $director) {
+            if (! empty($director->contact->last_name)) {
+                $team .= $director->contact->last_name.'(D) ';
+            }
+        }
 
-	foreach ($innkeepers as $innkeeper) {
-	    if (!empty($innkeeper->contact->last_name)) {
-	        $team .= $innkeeper->contact->last_name.'(I) ';
-	    }
-	}
+        foreach ($innkeepers as $innkeeper) {
+            if (! empty($innkeeper->contact->last_name)) {
+                $team .= $innkeeper->contact->last_name.'(I) ';
+            }
+        }
 
-	foreach ($assistants as $assistant) {
-	    if (!empty($assistant->contact->last_name)) {
-	        $team .= $assistant->contact->last_name.'(A) ';
-	    }
-	}
-
+        foreach ($assistants as $assistant) {
+            if (! empty($assistant->contact->last_name)) {
+                $team .= $assistant->contact->last_name.'(A) ';
+            }
+        }
 
         return $team;
     }
@@ -243,6 +241,7 @@ class Retreat extends Model implements Auditable
     {
         return $query->where('event_type_id', $event_type_id);
     }
+
     public function scopeFiltered($query, $filters)
     {
         //dd($filters->request);
@@ -269,5 +268,4 @@ class Retreat extends Model implements Auditable
 
         return $query;
     }
-
 }

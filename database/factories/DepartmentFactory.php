@@ -3,13 +3,14 @@
 use Faker\Generator as Faker;
 
 $factory->define(App\Department::class, function (Faker $faker) {
-    $name = $faker->lastname . ' of ' . $faker->city;
+    $name = $faker->lastname.' of '.$faker->city;
+
     return [
         'name' => $name,
         'label' => $name,
         'description' => $faker->sentence,
         'notes' => $faker->text(100),
         'is_active' => 1,
-        'parent_id' =>  NULL,
+        'parent_id' =>  null,
     ];
 });

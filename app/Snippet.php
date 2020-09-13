@@ -16,7 +16,6 @@ class Snippet extends Model implements Auditable
         return $this->hasOne(Language::class, 'name', 'locale');
     }
 
-
     public function getLanguageLabelAttribute()
     {
         if (isset($this->language->label)) {

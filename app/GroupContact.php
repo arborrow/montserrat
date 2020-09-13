@@ -27,12 +27,14 @@ class GroupContact extends Model implements Auditable
     public function getContactSortNameAttribute()
     {
         $sort_name = empty($this->contact->sort_name) ? null : $this->contact->sort_name;
+
         return $sort_name;
     }
 
     public function getGroupNameAttribute()
     {
         $group_name = empty($this->group->name) ? null : $this->group->name;
+
         return $group_name;
     }
 }

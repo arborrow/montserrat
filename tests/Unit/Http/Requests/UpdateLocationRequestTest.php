@@ -12,8 +12,7 @@ use Tests\TestCase;
  */
 class UpdateLocationRequestTest extends TestCase
 {
-    /** @var \App\Http\Requests\UpdateLocationRequest **/
-
+    /** @var \App\Http\Requests\UpdateLocationRequest * */
     private $subject;
 
     protected function setUp(): void

@@ -39,7 +39,6 @@ class AttachmentControllerTest extends TestCase
         $response = $this->actingAs($user)->get(route('delete_asset_photo', ['asset_id' => $attachment->entity_id]));
 
         $response->assertRedirect(action('AssetController@show', $asset->id));
-
     }
 
     /**
@@ -67,7 +66,6 @@ class AttachmentControllerTest extends TestCase
         $response = $this->actingAs($user)->get(route('delete_avatar', ['user_id' => $attachment->entity_id]));
 
         $response->assertRedirect(action('PersonController@show', $person->id));
-
     }
 
     /**
@@ -95,7 +93,6 @@ class AttachmentControllerTest extends TestCase
         $response = $this->actingAs($user)->get(route('delete_asset_attachment', ['asset_id' => $attachment->entity_id, 'file_name' => $attachment->uri]));
 
         $response->assertRedirect(action('AssetController@show', $asset->id));
-
     }
 
     /**
@@ -124,7 +121,6 @@ class AttachmentControllerTest extends TestCase
         $response = $this->actingAs($user)->get(route('delete_contact_attachment', ['user_id' => $attachment->entity_id, 'file_name' => $attachment->uri]));
 
         $response->assertRedirect(action('PersonController@show', $person->id));
-
     }
 
     /**
@@ -179,7 +175,6 @@ class AttachmentControllerTest extends TestCase
         $response = $this->actingAs($user)->get(route('delete_event_contract', ['event_id' => $attachment->entity_id]));
 
         $response->assertRedirect(action('RetreatController@show', $retreat->id));
-
     }
 
     /**
@@ -206,7 +201,6 @@ class AttachmentControllerTest extends TestCase
         $response = $this->actingAs($user)->get(route('delete_event_evaluations', ['event_id' => $attachment->entity_id]));
 
         $response->assertRedirect(action('RetreatController@show', $retreat->id));
-
     }
 
     /**
@@ -233,7 +227,6 @@ class AttachmentControllerTest extends TestCase
         $response = $this->actingAs($user)->get(route('delete_event_group_photo', ['event_id' => $attachment->entity_id]));
 
         $response->assertRedirect(action('RetreatController@show', $retreat->id));
-
     }
 
     /**
@@ -260,7 +253,6 @@ class AttachmentControllerTest extends TestCase
         $response = $this->actingAs($user)->get(route('delete_event_schedule', ['event_id' => $attachment->entity_id]));
 
         $response->assertRedirect(action('RetreatController@show', $retreat->id));
-
     }
 
     /**
@@ -286,7 +278,6 @@ class AttachmentControllerTest extends TestCase
         $response = $this->actingAs($user)->get(route('get_asset_photo', ['asset_id' => $attachment->entity_id]));
 
         $response->assertOk();
-
     }
 
     /**
@@ -314,7 +305,6 @@ class AttachmentControllerTest extends TestCase
         $response = $this->actingAs($user)->get(route('get_avatar', ['user_id' => $person->id]));
 
         $response->assertOk();
-
     }
 
     /**
@@ -341,7 +331,6 @@ class AttachmentControllerTest extends TestCase
         $response = $this->actingAs($user)->get(route('get_event_contract', ['event_id' => $retreat->id]));
 
         $response->assertOk();
-
     }
 
     /**
@@ -368,7 +357,6 @@ class AttachmentControllerTest extends TestCase
         $response = $this->actingAs($user)->get(route('get_event_evaluations', ['event_id' => $attachment->entity_id]));
 
         $response->assertOk();
-
     }
 
     /**
@@ -395,7 +383,6 @@ class AttachmentControllerTest extends TestCase
         $response = $this->actingAs($user)->get(route('get_event_group_photo', ['event_id' => $attachment->entity_id]));
 
         $response->assertOk();
-
     }
 
     /**
@@ -422,7 +409,6 @@ class AttachmentControllerTest extends TestCase
         $response = $this->actingAs($user)->get(route('get_event_schedule', ['event_id' => $attachment->entity_id]));
 
         $response->assertOk();
-
     }
 
     /**
@@ -451,9 +437,7 @@ class AttachmentControllerTest extends TestCase
         $response = $this->actingAs($user)->get(route('show_contact_attachment', ['user_id' => $person->id, 'file_name' => $file_name]));
 
         $response->assertOk();
-
     }
-
 
     /**
      * @test
@@ -483,7 +467,6 @@ class AttachmentControllerTest extends TestCase
         $response->assertOk();
     }
 
-
     /**
      * @test
      */
@@ -510,8 +493,7 @@ class AttachmentControllerTest extends TestCase
         $response = $this->actingAs($user)->get(route('show_asset_attachment', ['asset_id' => $asset->id, 'file_name' => $file_name]));
 
         $response->assertOk();
-
     }
 
-// test cases...
+    // test cases...
 }

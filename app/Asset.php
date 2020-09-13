@@ -2,9 +2,9 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Carbon\Carbon;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Asset extends Model implements Auditable
@@ -13,7 +13,7 @@ class Asset extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'asset';
-    protected $dates = ['start_date', 'end_date', 'purchase_date','warranty_start_date', 'warranty_end_date','depreciation_start_date', 'depreciation_end_date'];
+    protected $dates = ['start_date', 'end_date', 'purchase_date', 'warranty_start_date', 'warranty_end_date', 'depreciation_start_date', 'depreciation_end_date'];
 
     // relations
     public function asset_type()
@@ -64,7 +64,7 @@ class Asset extends Model implements Auditable
 
     public function parent()
     {
-        return $this->hasOne(Asset::class, 'id', 'parent_id');
+        return $this->hasOne(self::class, 'id', 'parent_id');
     }
 
     public function power_amp_uom()
@@ -84,7 +84,7 @@ class Asset extends Model implements Auditable
 
     public function replacement()
     {
-        return $this->hasOne(Asset::class, 'id', 'replacement_id');
+        return $this->hasOne(self::class, 'id', 'replacement_id');
     }
 
     public function vendor()
@@ -176,7 +176,7 @@ class Asset extends Model implements Auditable
         if (isset($this->capacity_uom->unit_name)) {
             return $this->capacity_uom->unit_name;
         } else {
-            return ;
+            return;
         }
     }
 
@@ -185,7 +185,7 @@ class Asset extends Model implements Auditable
         if (isset($this->power_line_voltage_uom->unit_name)) {
             return $this->power_line_voltage_uom->unit_name;
         } else {
-            return ;
+            return;
         }
     }
 
@@ -194,7 +194,7 @@ class Asset extends Model implements Auditable
         if (isset($this->power_phase_voltage_uom->unit_name)) {
             return $this->power_phase_voltage_uom->unit_name;
         } else {
-            return ;
+            return;
         }
     }
 
@@ -203,7 +203,7 @@ class Asset extends Model implements Auditable
         if (isset($this->power_amp_uom->unit_name)) {
             return $this->power_amp_uom->unit_name;
         } else {
-            return ;
+            return;
         }
     }
 
@@ -212,7 +212,7 @@ class Asset extends Model implements Auditable
         if (isset($this->length_uom->unit_name)) {
             return $this->length_uom->unit_name;
         } else {
-            return ;
+            return;
         }
     }
 
@@ -221,7 +221,7 @@ class Asset extends Model implements Auditable
         if (isset($this->width_uom->unit_name)) {
             return $this->width_uom->unit_name;
         } else {
-            return ;
+            return;
         }
     }
 
@@ -230,7 +230,7 @@ class Asset extends Model implements Auditable
         if (isset($this->height_uom->unit_name)) {
             return $this->height_uom->unit_name;
         } else {
-            return ;
+            return;
         }
     }
 
@@ -239,7 +239,7 @@ class Asset extends Model implements Auditable
         if (isset($this->weight_uom->unit_name)) {
             return $this->weight_uom->unit_name;
         } else {
-            return ;
+            return;
         }
     }
 
@@ -248,7 +248,7 @@ class Asset extends Model implements Auditable
         if (isset($this->life_expectancy_uom->unit_name)) {
             return $this->life_expectancy_uom->unit_name;
         } else {
-            return ;
+            return;
         }
     }
 
@@ -257,7 +257,7 @@ class Asset extends Model implements Auditable
         if (isset($this->depreciation_time_uom->unit_name)) {
             return $this->depreciation_time_uom->unit_name;
         } else {
-            return ;
+            return;
         }
     }
 
@@ -337,7 +337,7 @@ class Asset extends Model implements Auditable
             if ($filter == 'name' && ! empty($value)) {
                 $query->where($filter, 'like', '%'.$value.'%');
             }
-            if ($filter == 'asset_type_id' && ! empty($value) && $value>0) {
+            if ($filter == 'asset_type_id' && ! empty($value) && $value > 0) {
                 $query->where($filter, '=', $value);
             }
             if ($filter == 'description' && ! empty($value)) {
@@ -386,7 +386,6 @@ class Asset extends Model implements Auditable
             if ($filter == 'power_line_voltage_uom_id' && ! empty($value)) {
                 $query->where($filter, '=', $value);
             }
-
 
             if ($filter == 'power_phase_voltage' && ! empty($value)) {
                 $query->where($filter, 'LIKE', '%'.$value.'%');

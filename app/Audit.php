@@ -18,7 +18,6 @@ class Audit extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-
     public function getUserNameAttribute()
     {
         if (isset($this->user->name)) {
@@ -27,6 +26,4 @@ class Audit extends Model
             return;
         }
     }
-
-
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\StoreDonationTypeRequest;
 use App\Http\Requests\UpdateDonationTypeRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class DonationTypeController extends Controller
 {
@@ -54,7 +54,8 @@ class DonationTypeController extends Controller
 
         $donation_type->save();
 
-        flash('Donation type: <a href="'. url('/admin/donation_type/'.$donation_type->id) . '">'.$donation_type->name.'</a> added')->success();
+        flash('Donation type: <a href="'.url('/admin/donation_type/'.$donation_type->id).'">'.$donation_type->name.'</a> added')->success();
+
         return Redirect::action('DonationTypeController@index');
     }
 
@@ -107,8 +108,9 @@ class DonationTypeController extends Controller
         $donation_type->description = $request->input('description');
         $donation_type->save();
 
-        flash('Donation type: <a href="'. url('/admin/donation_type/'.$donation_type->id) . '">'.$donation_type->name.'</a> updated')->success();
-        return Redirect::action('DonationTypeController@show',$id);
+        flash('Donation type: <a href="'.url('/admin/donation_type/'.$donation_type->id).'">'.$donation_type->name.'</a> updated')->success();
+
+        return Redirect::action('DonationTypeController@show', $id);
     }
 
     /**
@@ -125,8 +127,8 @@ class DonationTypeController extends Controller
 
         \App\DonationType::destroy($id);
 
-        flash('Donation type: '.$donation_type->name . ' deleted')->warning()->important();
+        flash('Donation type: '.$donation_type->name.' deleted')->warning()->important();
+
         return Redirect::action('DonationTypeController@index');
     }
-
 }

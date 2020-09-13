@@ -45,7 +45,6 @@ class TouchpointControllerTest extends TestCase
         $response->assertViewHas('persons');
         $response->assertViewHas('defaults');
         $response->assertSeeText('Create Touchpoint');
-
     }
 
     /**
@@ -167,7 +166,6 @@ class TouchpointControllerTest extends TestCase
         $response->assertViewHas('retreats');
         $response->assertViewHas('participants');
         $response->assertViewHas('defaults');
-
     }
 
     /**
@@ -223,13 +221,13 @@ class TouchpointControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('type', $touchpoint->type, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('notes', $touchpoint->notes, 'textarea', $response->getContent()));
 
-/*
-{!! Form::text('touched_at', date('F j, Y g:i A', strtotime($touchpoint->touched_at)), ['class' => 'col-md-3']) !!}
-{!! Form::select('person_id', $persons, $touchpoint->person_id, ['class' => 'col-md-3']) !!}
-{!! Form::select('type', config('polanco.touchpoint_source'), $touchpoint->type, ['class' => 'col-md-3']) !!}
-{!! Form::textarea('notes', $touchpoint->notes, ['class' => 'col-md-3']) !!}
+        /*
+        {!! Form::text('touched_at', date('F j, Y g:i A', strtotime($touchpoint->touched_at)), ['class' => 'col-md-3']) !!}
+        {!! Form::select('person_id', $persons, $touchpoint->person_id, ['class' => 'col-md-3']) !!}
+        {!! Form::select('type', config('polanco.touchpoint_source'), $touchpoint->type, ['class' => 'col-md-3']) !!}
+        {!! Form::textarea('notes', $touchpoint->notes, ['class' => 'col-md-3']) !!}
 
- */
+         */
     }
 
     /**
@@ -246,7 +244,6 @@ class TouchpointControllerTest extends TestCase
         $response->assertViewHas('touchpoints');
         $response->assertSeeText('Touchpoint Index');
     }
-
 
     /**
      * @test

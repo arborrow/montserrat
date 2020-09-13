@@ -10,11 +10,11 @@ use App\Mail\RegistrationEventChange;
 use App\Mail\RetreatRegistration;
 use App\Registration;
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
-use Illuminate\Support\Arr;
 
 class RegistrationController extends Controller
 {
@@ -235,7 +235,8 @@ class RegistrationController extends Controller
             }
         }
 
-        flash('Registration #: <a href="'. url('/registration/'.$registration->id) . '">'.$registration->id.'</a> added')->success();
+        flash('Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a> added')->success();
+
         return Redirect::action('RegistrationController@index');
     }
 
@@ -271,7 +272,8 @@ class RegistrationController extends Controller
             $registration->save();
             //TODO: verify that the newly created room assignment does not conflict with an existing one
         }
-        flash ('Registration(s) added to ' . $retreat->title . 'for members of group: <a href="'. url('/group/'.$group->id) . '">'.$group->name.'</a>')->success();
+        flash('Registration(s) added to '.$retreat->title.'for members of group: <a href="'.url('/group/'.$group->id).'">'.$group->name.'</a>')->success();
+
         return Redirect::action('RetreatController@show', $retreat->id);
     }
 
@@ -384,7 +386,8 @@ class RegistrationController extends Controller
 
         $registration->save();
 
-        flash ('Registration #: <a href="'. url('/registration/'.$registration->id) . '">'.$registration->id.'</a> updated')->success();
+        flash('Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a> updated')->success();
+
         return Redirect::action('PersonController@show', $registration->contact_id);
     }
 
@@ -406,7 +409,8 @@ class RegistrationController extends Controller
         //$retreat->attending = $countregistrations;
         $retreat->save();
 
-        flash('Registration #: '.$registration->id . ' deleted')->warning()->important();
+        flash('Registration #: '.$registration->id.' deleted')->warning()->important();
+
         return Redirect::action('RegistrationController@index');
     }
 

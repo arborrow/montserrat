@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\StoreAssetRequest;
 use App\Http\Requests\UpdateAssetRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class AssetController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -23,6 +22,7 @@ class AssetController extends Controller
         $locations = \App\Location::orderBy('name')->pluck('name', 'id');
 
         $assets = \App\Asset::orderBy('name')->get();
+
         return view('assets.index', compact('assets', 'asset_types', 'locations'));
     }
 
@@ -97,6 +97,7 @@ class AssetController extends Controller
             $assets = \App\Asset::filtered($request)->orderBy('name')->paginate(100);
             $assets->appends($request->except('page')); //TODO: is this necessary?
         }
+
         return view('assets.results', compact('assets'));
     }
 
@@ -223,7 +224,8 @@ class AssetController extends Controller
             $attachment->update_attachment($request->file('asset_photo'), 'asset', $asset->id, 'asset_photo', $description);
         }
 
-        flash('Asset: <a href="'. url('/asset/'.$asset->id) . '">'.$asset->name.'</a> added')->success();
+        flash('Asset: <a href="'.url('/asset/'.$asset->id).'">'.$asset->name.'</a> added')->success();
+
         return Redirect::action('AssetController@index');
     }
 
@@ -240,7 +242,7 @@ class AssetController extends Controller
         $asset = \App\Asset::findOrFail($id);
         $files = \App\Attachment::whereEntity('asset')->whereEntityId($asset->id)->whereFileTypeId(config('polanco.file_type.asset_attachment'))->get();
 
-        return view('assets.show', compact('asset','files'));
+        return view('assets.show', compact('asset', 'files'));
     }
 
     /**
@@ -377,7 +379,8 @@ class AssetController extends Controller
             $attachment->update_attachment($request->file('attachment'), 'asset', $asset->id, 'attachment', $description);
         }
 
-        flash('Asset: <a href="'. url('/asset/'.$asset->id) . '">'.$asset->name.'</a> updated')->success();
+        flash('Asset: <a href="'.url('/asset/'.$asset->id).'">'.$asset->name.'</a> updated')->success();
+
         return Redirect::action('AssetController@show', $asset->id);
     }
 
@@ -393,7 +396,8 @@ class AssetController extends Controller
         $asset = \App\Asset::findOrFail($id);
 
         \App\Asset::destroy($id);
-        flash('Asset: '.$asset->name . ' deleted')->warning()->important();
+        flash('Asset: '.$asset->name.' deleted')->warning()->important();
+
         return Redirect::action('AssetController@index');
     }
 }

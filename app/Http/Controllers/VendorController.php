@@ -149,7 +149,8 @@ class VendorController extends Controller
         $url_twitter->website_type = 'Twitter';
         $url_twitter->save();
 
-        flash ('Vendor: <a href="'. url('/vendor/'.$vendor->id) . '">'.$vendor->organization_name.'</a> added')->success();
+        flash('Vendor: <a href="'.url('/vendor/'.$vendor->id).'">'.$vendor->organization_name.'</a> added')->success();
+
         return Redirect::action('VendorController@index');
     }
 
@@ -337,7 +338,8 @@ class VendorController extends Controller
         $url_twitter->website_type = 'Twitter';
         $url_twitter->save();
 
-        flash ('Vendor: <a href="'. url('/vendor/'.$vendor->id) . '">'.$vendor->organization_name.'</a> updated')->success();
+        flash('Vendor: <a href="'.url('/vendor/'.$vendor->id).'">'.$vendor->organization_name.'</a> updated')->success();
+
         return Redirect::action('VendorController@show', $vendor->id);
     }
 
@@ -370,7 +372,8 @@ class VendorController extends Controller
 
         \App\Contact::destroy($id);
 
-        flash('Vendor: '.$vendor->organization_name . ' deleted')->warning()->important();
+        flash('Vendor: '.$vendor->organization_name.' deleted')->warning()->important();
+
         return Redirect::action('VendorController@index');
     }
 }

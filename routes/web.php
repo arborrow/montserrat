@@ -55,7 +55,6 @@ Route::group(['middleware' => ['web', 'activity']], function () {
 
     // Attachment routes
 
-
     Route::get('contact/{user_id}/attachment/{file_name}', 'AttachmentController@show_contact_attachment')->name('show_contact_attachment');
     Route::get('contact/{user_id}/attachment/{file_name}/delete', 'AttachmentController@delete_contact_attachment')->name('delete_contact_attachment');
 

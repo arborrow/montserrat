@@ -50,6 +50,5 @@ class DatabaseSeeder extends Seeder
         $this->call(DepartmentPermissionsSeeder::class);
         $this->call(SnippetPermissionsSeeder::class);
         $this->call(WebsitePermissionsSeeder::class);
-
     }
 }

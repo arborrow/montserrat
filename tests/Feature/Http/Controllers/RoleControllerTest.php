@@ -61,12 +61,12 @@ class RoleControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('display_name', $role->display_name, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('description', $role->description, 'text', $response->getContent()));
 
-/*
-{!! Form::text('name', $role->name, ['class' => 'form-control']) !!}
-{!! Form::text('display_name', $role->display_name, ['class' => 'form-control']) !!}
-{!! Form::text('description', $role->description, ['class' => 'form-control']) !!}
+        /*
+        {!! Form::text('name', $role->name, ['class' => 'form-control']) !!}
+        {!! Form::text('display_name', $role->display_name, ['class' => 'form-control']) !!}
+        {!! Form::text('description', $role->description, ['class' => 'form-control']) !!}
 
- */
+         */
     }
 
     /**
@@ -196,7 +196,6 @@ class RoleControllerTest extends TestCase
           'user_id' => $user->id,
           'deleted_at' => null,
         ]);
-
     }
 
     // test cases...

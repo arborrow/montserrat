@@ -48,7 +48,8 @@ class PaymentControllerTest extends TestCase
      * @test
      */
     public function edit_returns_an_ok_response()
-    {   $user = $this->createUserWithPermission('update-payment');
+    {
+        $user = $this->createUserWithPermission('update-payment');
         $payment = factory(\App\Payment::class)->create();
 
         $response = $this->actingAs($user)->get(route('payment.edit', [$payment]));

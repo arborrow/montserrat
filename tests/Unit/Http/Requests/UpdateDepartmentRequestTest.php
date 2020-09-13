@@ -12,8 +12,7 @@ use Tests\TestCase;
  */
 class UpdateDepartmentRequestTest extends TestCase
 {
-    /** @var \App\Http\Requests\UpdateDepartmentRequest **/
-
+    /** @var \App\Http\Requests\UpdateDepartmentRequest * */
     private $subject;
 
     protected function setUp(): void

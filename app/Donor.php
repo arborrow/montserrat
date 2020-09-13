@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+
 // imported table from PPD - not actively used in Polanco - stored for archival purposes
 //use Illuminate\Database\Eloquent\SoftDeletes;
 

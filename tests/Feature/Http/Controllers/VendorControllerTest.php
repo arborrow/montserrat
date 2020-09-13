@@ -84,7 +84,6 @@ class VendorControllerTest extends TestCase
             'location_type_id' => config('polanco.location_type.main'),
         ]);
 
-
         $url_main = factory(\App\Website::class)->create([
             'contact_id' => $vendor->id,
             'website_type' => 'Main',
@@ -115,7 +114,6 @@ class VendorControllerTest extends TestCase
             'website_type' => 'Twitter',
             'url' => 'https://twitter.com/'.$this->faker->slug,
         ]);
-
 
         $response = $this->actingAs($user)->get(route('vendor.edit', $vendor->id));
         $response->assertOk();

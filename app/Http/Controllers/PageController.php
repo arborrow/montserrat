@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use PDF;
 use Illuminate\Support\Facades\Http;
-use Exception;
 use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class PageController extends Controller
 {
@@ -91,7 +91,7 @@ class PageController extends Controller
             $result = Http::timeout(1)->get('http://labs.bible.org/api/?passage=random')->getBody();
             $quote = strip_tags($result->getContents(), '<b>');
         } catch (Exception $e) {
-                $quote = "John 3:16 - For God so loved the world that he gave his only Son, so that everyone who believes in him might not perish but might have eternal life.";
+            $quote = 'John 3:16 - For God so loved the world that he gave his only Son, so that everyone who believes in him might not perish but might have eternal life.';
         }
 
         return view('welcome', compact('quote'));   //
@@ -138,7 +138,7 @@ class PageController extends Controller
             return redirect()->back();
         }
 
-        $payments = \App\Payment::wherePaymentDate($report_date)->whereIn('payment_description', ['Cash', 'Check','Wire transfer'])->with('donation')->get();
+        $payments = \App\Payment::wherePaymentDate($report_date)->whereIn('payment_description', ['Cash', 'Check', 'Wire transfer'])->with('donation')->get();
         $grand_total = $payments->sum('payment_amount');
         $grouped_payments = $payments->sortBy('donation.donation_description')->groupBy('donation.donation_description');
 
@@ -196,8 +196,8 @@ class PageController extends Controller
 
         $snippets = \App\Snippet::whereTitle('agc_acknowledge')->get();
         foreach ($snippets as $snippet) {
-            $decoded = html_entity_decode($snippet->snippet,ENT_QUOTES | ENT_XML1);
-            Storage::put('views/snippets/'.$snippet->title.'/'.$snippet->locale.'/'.$snippet->label.'.blade.php',$decoded);
+            $decoded = html_entity_decode($snippet->snippet, ENT_QUOTES | ENT_XML1);
+            Storage::put('views/snippets/'.$snippet->title.'/'.$snippet->locale.'/'.$snippet->label.'.blade.php', $decoded);
         }
 
         //dd($donation->contact->preferred_language_value);
@@ -293,17 +293,16 @@ class PageController extends Controller
             ->whereEventId($retreat->id)
             ->whereRoleId(config('polanco.participant_role_id.retreatant'))
             ->whereStatusId(config('polanco.registration_status_id.registered'))
-            ->with('retreat','retreatant')
+            ->with('retreat', 'retreatant')
             ->get();
         $ambassadors = \App\Registration::whereCanceledAt(null)
                 ->whereEventId($retreat->id)
                 ->whereRoleId(config('polanco.participant_role_id.ambassador'))
                 ->whereStatusId(config('polanco.registration_status_id.registered'))
-                ->with('retreat','retreatant')
+                ->with('retreat', 'retreatant')
                 ->get();
         $registrations = $retreatants->merge($ambassadors);
         $registrations = $registrations->sortBy('retreatant.sort_name');
-
 
         return view('reports.retreatlisting', compact('registrations'));   //
     }
@@ -317,13 +316,13 @@ class PageController extends Controller
             ->whereEventId($retreat->id)
             ->whereRoleId(config('polanco.participant_role_id.retreatant'))
             ->whereStatusId(config('polanco.registration_status_id.registered'))
-            ->with('retreat','retreatant')
+            ->with('retreat', 'retreatant')
             ->get();
         $ambassadors = \App\Registration::whereCanceledAt(null)
                 ->whereEventId($retreat->id)
                 ->whereRoleId(config('polanco.participant_role_id.ambassador'))
                 ->whereStatusId(config('polanco.registration_status_id.registered'))
-                ->with('retreat','retreatant')
+                ->with('retreat', 'retreatant')
                 ->get();
         $registrations = $retreatants->merge($ambassadors);
         $registrations = $registrations->sortBy('retreatant.sort_name');
@@ -331,13 +330,12 @@ class PageController extends Controller
         return view('reports.retreatroster', compact('registrations'));   //
     }
 
-/*
+    /*
 
- */
+     */
 
-    public function acknowledgment_pdf($contact_id=null, $start_date=NULL, $end_date=NULL)
+    public function acknowledgment_pdf($contact_id = null, $start_date = null, $end_date = null)
     {
-
         $this->authorize('show-donation');
 
         $start_date = (is_null($start_date)) ? Carbon::now()->subYear()->month(1)->day(1) : Carbon::parse($start_date);
@@ -348,11 +346,11 @@ class PageController extends Controller
         // dd($start_date, $end_date, $contact_id, $current_user, $user_email);
         $contact = \App\Contact::findOrFail($contact_id);
         $payments = \App\Payment::with('donation.contact', 'donation.retreat')
-        ->whereHas('donation', function($query) use ($contact_id){
+        ->whereHas('donation', function ($query) use ($contact_id) {
             $query->whereContactId($contact_id);
         })
-        ->where('payment_date','>=', $start_date->toDateString())
-        ->where('payment_date','<=', $end_date->toDateString())->get();
+        ->where('payment_date', '>=', $start_date->toDateString())
+        ->where('payment_date', '<=', $end_date->toDateString())->get();
         // $payments = \App\Payment::with('donation.contact', 'donation.retreat')->where('payment_date','>=', $start_date)->where('payment_date','<=',$end_date)->get();
         // dd($contact, $start_date, $end_date, $payments);
 
@@ -365,19 +363,19 @@ class PageController extends Controller
         // $acknowlegment_touchpoint->save();
 
         // TODO: implement a Spanish version of the email at the end, commenting out for now
-/*        if ($donation->contact->preferred_language_value == 'es') {
-            $dt = Carbon::now();
-            $donation['today_es'] = $dt->day.' de '.$dt->locale('es')->monthName.' del '.$dt->year;
-            $donation['donation_date_es'] = $donation->donation_date->day.' de '.$donation->donation_date->locale('es')->monthName.' del '.$donation->donation_date->year;
+        /*        if ($donation->contact->preferred_language_value == 'es') {
+                    $dt = Carbon::now();
+                    $donation['today_es'] = $dt->day.' de '.$dt->locale('es')->monthName.' del '.$dt->year;
+                    $donation['donation_date_es'] = $donation->donation_date->day.' de '.$donation->donation_date->locale('es')->monthName.' del '.$donation->donation_date->year;
 
-            return view('reports.finance.acknowledgment_es', compact('payments'));
-        } else {
-            return view('reports.finance.acknowledgment', compact('donation'));
-        }
-*/
+                    return view('reports.finance.acknowledgment_es', compact('payments'));
+                } else {
+                    return view('reports.finance.acknowledgment', compact('donation'));
+                }
+        */
         $montserrat = \App\Contact::findOrFail(env('SELF_CONTACT_ID'));
         // dd($montserrat);
-        $pdf = PDF::loadView('reports.finance.acknowledgment', compact('payments','contact','montserrat','start_date','end_date'));
+        $pdf = PDF::loadView('reports.finance.acknowledgment', compact('payments', 'contact', 'montserrat', 'start_date', 'end_date'));
         $pdf->setOptions([
                 'header-html' => view('pdf._header'),
                 'footer-html' => view('pdf._footer'),
@@ -385,13 +383,10 @@ class PageController extends Controller
         $now = Carbon::now();
         $attachment = new AttachmentController;
         $attachment->update_attachment($pdf->inline(), 'contact', $contact->id, 'acknowledgment', $acknowlegment_touchpoint->notes);
+
         return $pdf->inline();
         // return view('reports.finance.acknowledgment', compact('payments','contact', 'montserrat','start_date','end_date'));
-
-
     }
-
-
 
     public function config_google_client()
     {
