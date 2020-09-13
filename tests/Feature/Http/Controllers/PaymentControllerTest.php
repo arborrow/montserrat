@@ -39,7 +39,7 @@ class PaymentControllerTest extends TestCase
         $payment = factory(\App\Payment::class)->create();
 
         $response = $this->actingAs($user)->delete(route('payment.destroy', [$payment]));
-
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('DonationController@show', $payment->donation_id));
         $this->assertSoftDeleted($payment);
     }
@@ -114,6 +114,7 @@ class PaymentControllerTest extends TestCase
             'payment_amount' => $payment_amount,
         ]);
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('DonationController@show', $donation->donation_id));
         $this->assertDatabaseHas('Donations_payment', [
           'donation_id' => $donation->donation_id,
@@ -151,6 +152,7 @@ class PaymentControllerTest extends TestCase
         ]);
         $updated = \App\Payment::findOrFail($payment->payment_id);
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('DonationController@show', $payment->donation_id));
         $this->assertEquals($updated->payment_amount, $new_payment_amount);
         $this->assertNotEquals($updated->payment_amount, $original_payment_amount);

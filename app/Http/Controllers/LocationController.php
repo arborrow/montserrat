@@ -87,6 +87,7 @@ class LocationController extends Controller
 
         $location->save();
 
+        flash ('Location: <a href="'. url('/admin/location/'.$location->id) . '">'.$location->name.'</a> added')->success();
         return Redirect::action('LocationController@index');
     }
 
@@ -156,6 +157,7 @@ class LocationController extends Controller
 
         $location->save();
 
+        flash('Location: <a href="'. url('/admin/location/'.$location->id) . '">'.$location->name.'</a> updated')->success();
         return Redirect::action('LocationController@show', $location->id);
     }
 
@@ -169,8 +171,10 @@ class LocationController extends Controller
     {
         $this->authorize('delete-location');
 
+        $location = \App\Location::findOrFail($id);
         \App\Location::destroy($id);
 
+        flash('Location: '.$location->name . ' deleted')->warning()->important();
         return Redirect::action('LocationController@index');
     }
 }

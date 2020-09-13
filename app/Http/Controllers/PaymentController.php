@@ -35,13 +35,18 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($donation_id)
-    {
-        $this->authorize('create-payment');
-        $donation = \App\Donation::findOrFail($donation_id);
-        $payment_methods = config('polanco.payment_method');
+    public function create($donation_id=0)
+    {   if ($donation_id > 0) {
+            $this->authorize('create-payment');
+            $donation = \App\Donation::findOrFail($donation_id);
+            $payment_methods = config('polanco.payment_method');
 
-        return view('payments.create', compact('donation', 'payment_methods'));
+            return view('payments.create', compact('donation', 'payment_methods'));
+        } else {
+            flash('Cannot create a payment without an associated Donation ID#')->error()->important();
+            return Redirect::action('DonationController@index');
+        }
+
     }
 
     /**
@@ -71,6 +76,7 @@ class PaymentController extends Controller
         }
         $payment->save();
 
+        flash('Payment ID#: <a href="'. url('/payment/'.$payment->payment_id) . '">'.$payment->payment_id.'</a> added')->success();
         return Redirect::action('DonationController@show', $donation->donation_id);
     }
 
@@ -129,6 +135,7 @@ class PaymentController extends Controller
         // dd($payment);
         $payment->save();
 
+        flash('Payment ID#: <a href="'. url('/payment/'.$payment->payment_id) . '">'.$payment->payment_id.'</a> updated')->success();
         return Redirect::action('DonationController@show', $payment->donation_id);
     }
 
@@ -143,9 +150,10 @@ class PaymentController extends Controller
         $this->authorize('delete-payment');
         $payment = \App\Payment::findOrFail($id);
 
-        //deletion of payments implied on the model
         \App\Payment::destroy($id);
         // disassociate registration with a donation that is being deleted - there should only be one
+
+        flash('Payment ID#: '.$payment->payment_id . ' deleted')->warning()->important();
         return Redirect::action('DonationController@show', $payment->donation_id);
     }
 }

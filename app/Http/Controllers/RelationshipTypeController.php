@@ -81,11 +81,12 @@ class RelationshipTypeController extends Controller
         $relationship_type->label_b_a = $request->input('label_b_a');
         $relationship_type->contact_type_b = $request->input('contact_type_b');
 
-        $relationship_type->is_active = $request->input('is_active');
+        $relationship_type->is_active = empty($request->input('is_active')) ? 0 : $request->input('is_active');
         $relationship_type->is_reserved = $request->input('is_reserved');
 
         $relationship_type->save();
 
+        flash ('Relationship type: <a href="'. url('/relationship_type/'.$relationship_type->id) . '">'.$relationship_type->name_a_b.'</a> added')->success();
         return Redirect::action('RelationshipTypeController@index'); //
     }
 
@@ -140,6 +141,7 @@ class RelationshipTypeController extends Controller
 
         $relationship_type->save();
 
+        flash ('Relationship type: <a href="'. url('/relationship_type/'.$relationship_type->id) . '">'.$relationship_type->name_a_b.'</a> updated')->success();
         return Redirect::action('RelationshipTypeController@index'); //
     }
 
@@ -152,8 +154,11 @@ class RelationshipTypeController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-relationshiptype');
+
+        $relationship_type = \App\RelationshipType::findOrFail($id);
         \App\RelationshipType::destroy($id);
 
+        flash('Relationship type: '.$relationship_type->name_a_b . ' deleted')->warning()->important();
         return Redirect::action('RelationshipTypeController@index');
     }
 

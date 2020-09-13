@@ -235,6 +235,7 @@ class RegistrationController extends Controller
             }
         }
 
+        flash('Registration #: <a href="'. url('/registration/'.$registration->id) . '">'.$registration->id.'</a> added')->success();
         return Redirect::action('RegistrationController@index');
     }
 
@@ -243,11 +244,12 @@ class RegistrationController extends Controller
         $this->authorize('create-registration');
 
         $retreat = \App\Retreat::findOrFail($request->input('event_id'));
-        $group_members = \App\GroupContact::whereGroupId($request->input('group_id'))->whereStatus('Added')->get();
+        $group = \App\Group::findOrFail($request->input('group_id'));
+        $group_members = \App\GroupContact::whereGroupId($group->id)->whereStatus('Added')->get();
         foreach ($group_members as $group_member) {
             //ensure that it is a valid room (not N/A)
             $registration = new \App\Registration;
-            $registration->event_id = $request->input('event_id');
+            $registration->event_id = $retreat->id;
             $registration->contact_id = $group_member->contact_id;
             $registration->status_id = $request->input('status_id');
             $registration->register_date = $request->input('register_date');
@@ -269,7 +271,7 @@ class RegistrationController extends Controller
             $registration->save();
             //TODO: verify that the newly created room assignment does not conflict with an existing one
         }
-
+        flash ('Registration(s) added to ' . $retreat->title . 'for members of group: <a href="'. url('/group/'.$group->id) . '">'.$group->name.'</a>')->success();
         return Redirect::action('RetreatController@show', $retreat->id);
     }
 
@@ -377,11 +379,12 @@ class RegistrationController extends Controller
             }
         }
         if ($registration->event_id == config('polanco.event.open_deposit')) {
-            $registration->room_id = 0; 
+            $registration->room_id = 0;
         }
 
         $registration->save();
 
+        flash ('Registration #: <a href="'. url('/registration/'.$registration->id) . '">'.$registration->id.'</a> updated')->success();
         return Redirect::action('PersonController@show', $registration->contact_id);
     }
 
@@ -403,6 +406,7 @@ class RegistrationController extends Controller
         //$retreat->attending = $countregistrations;
         $retreat->save();
 
+        flash('Registration #: '.$registration->id . ' deleted')->warning()->important();
         return Redirect::action('RegistrationController@index');
     }
 

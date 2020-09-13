@@ -3,7 +3,7 @@
 
 <div class="row bg-cover">
     <div class="col-12">
-        <h1>Edit {!! $donation->contact->contact_link_full_name ?? 'Unknown contact' !!}'s Donation:</h1>
+        <h1>Edit Donation ID#: {{ $donation->donation_id }} for {!! $donation->contact->contact_link_full_name ?? 'Unknown contact' !!}</h1>
     </div>
     <div class="col-12">
         <h2>Donation details</h2>

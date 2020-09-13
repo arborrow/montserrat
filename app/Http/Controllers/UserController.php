@@ -29,7 +29,8 @@ class UserController extends Controller
     public function create()
     {
         $this->authorize('create-role');
-        return;
+        flash('Users cannot be created directly by the controller. Users are only created after successful authentication')->error();
+        return Redirect::action('UserController@index');
     }
 
     /**
@@ -41,7 +42,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create-role');
-        return;
+        flash('Users cannot be stored directly by the controller. Users are only created after successful authentication.')->error();
+        return Redirect::action('UserController@index');
     }
 
     /**
@@ -68,7 +70,8 @@ class UserController extends Controller
     public function edit($id)
     {
         $this->authorize('update-role');
-        return ; //
+        flash('Users cannot be edited directly by the controller. Users are managed by Google authentication.')->error();
+        return Redirect::action('UserController@show',$id);
     }
 
     /**
@@ -81,7 +84,8 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $this->authorize('update-role');
-        return ;
+        flash('Users cannot be updated directly by the controller. User profiles are managed by Google authentication.')->error();
+        return Redirect::action('UserController@show', $id);
     }
 
     /**
@@ -93,7 +97,8 @@ class UserController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-role');
-        return ;
+        flash('Users cannot be deleted directly by the controller. Users are managed by Google authentication.')->error();
+        return Redirect::action('UserController@show',$id);
     }
 
 }

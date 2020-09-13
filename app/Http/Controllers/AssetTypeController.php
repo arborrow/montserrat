@@ -56,6 +56,7 @@ class AssetTypeController extends Controller
 
         $asset_type->save();
 
+        flash('Asset type: <a href="'. url('/admin/asset_type/'.$asset_type->id) . '">'.$asset_type->name.'</a> added')->success();
         return Redirect::action('AssetTypeController@index');
     }
 
@@ -110,6 +111,7 @@ class AssetTypeController extends Controller
         $asset_type->parent_asset_type_id = ($request->input('parent_asset_type_id') > 0) ? $request->input('parent_asset_type_id') : null;
         $asset_type->save();
 
+        flash('Asset type: <a href="'. url('/admin/asset_type/'.$asset_type->id) . '">'.$asset_type->name.'</a> updated')->success();
         return Redirect::action('AssetTypeController@show',$asset_type->id);
     }
 
@@ -122,9 +124,10 @@ class AssetTypeController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-asset-type');
+        $asset_type = \App\AssetType::findOrFail($id);
 
         \App\AssetType::destroy($id);
-
+        flash('Asset type: '.$asset_type->name . ' deleted')->warning()->important();
         return Redirect::action('AssetTypeController@index');
     }
 

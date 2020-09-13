@@ -79,6 +79,7 @@ class SnippetController extends Controller
 
         $snippet->save();
 
+        flash ('Snippet: <a href="'. url('/admin/snippet/'.$snippet->id) . '">'.$snippet->title.'</a> added')->success();
         return Redirect::action('SnippetController@index');
     }
 
@@ -133,6 +134,7 @@ class SnippetController extends Controller
 
         $snippet->save();
 
+        flash ('Snippet: <a href="'. url('/admin/snippet/'.$snippet->id) . '">'.$snippet->title.'</a> updated')->success();
         return Redirect::action('SnippetController@show', $snippet->id);
     }
 
@@ -145,9 +147,11 @@ class SnippetController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-snippet');
+        $snippet = \App\Snippet::findOrFail($id);
 
         \App\Snippet::destroy($id);
 
+        flash('Snippet: '.$snippet->title . ' deleted')->warning()->important();
         return Redirect::action('SnippetController@index');
     }
 

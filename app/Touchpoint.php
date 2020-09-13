@@ -28,6 +28,12 @@ class Touchpoint extends Model implements Auditable
         return $this->belongsTo(Contact::class, 'person_id', 'id');
     }
 
+    //alias for person
+    public function contact()
+    {
+        return $this->belongsTo(Contact::class, 'person_id', 'id');
+    }
+
     public function staff()
     {
         return $this->belongsTo(Contact::class, 'staff_id', 'id');

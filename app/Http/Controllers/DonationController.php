@@ -178,6 +178,7 @@ class DonationController extends Controller
         }        //dd($payment, $donation);
         $payment->save();
 
+        flash ('Donation ID#: <a href="'. url('/donation/'.$donation->donation_id) . '">'.$donation->donation_id.'</a> added')->success();
         return redirect($donation->contact->contact_url.'#donations');
     }
 
@@ -260,6 +261,7 @@ class DonationController extends Controller
         }
         $donation->save();
 
+        flash ('Donation ID#: <a href="'. url('/donation/'.$donation->donation_id) . '">'.$donation->donation_id.'</a> updated')->success();
         return Redirect::action('DonationController@show', $donation->donation_id);
     }
 
@@ -283,6 +285,7 @@ class DonationController extends Controller
             $registration->save();
         }
 
+        flash('Donation ID#: '.$donation->donation_id . ' deleted')->warning()->important();
         return redirect()->to($contact->contact_url);
     }
 

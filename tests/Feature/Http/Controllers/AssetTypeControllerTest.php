@@ -36,7 +36,7 @@ class AssetTypeControllerTest extends TestCase
         $asset_type = factory(\App\AssetType::class)->create();
 
         $response = $this->actingAs($user)->delete(route('asset_type.destroy', [$asset_type]));
-
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('AssetTypeController@index'));
         $this->assertSoftDeleted($asset_type);
     }
@@ -119,6 +119,7 @@ class AssetTypeControllerTest extends TestCase
         ]);
 
         $response->assertRedirect(action('AssetTypeController@index'));
+        $response->assertSessionHas('flash_notification');
 
         $this->assertDatabaseHas('asset_type', [
           'name' => $asset_type_name,
@@ -133,7 +134,7 @@ class AssetTypeControllerTest extends TestCase
      * @test
      */
     public function update_returns_an_ok_response()
-    {   
+    {
         $user = $this->createUserWithPermission('update-asset-type');
         $parent_asset_type = factory(\App\AssetType::class)->create();
         $asset_type = factory(\App\AssetType::class)->create();
@@ -148,6 +149,7 @@ class AssetTypeControllerTest extends TestCase
           'is_active' => $this->faker->boolean(),
           'parent_asset_type_id' => $parent_asset_type->id,
         ]);
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('AssetTypeController@show',$asset_type->id));
         // var_dump($asset_type);
         $updated = \App\AssetType::findOrFail($asset_type->id);

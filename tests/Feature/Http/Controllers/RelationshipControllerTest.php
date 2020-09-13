@@ -34,6 +34,7 @@ class RelationshipControllerTest extends TestCase
         $relationship = factory(\App\Relationship::class)->create();
 
         $response = $this->actingAs($user)->from('relationship.index')->delete(route('relationship.destroy', [$relationship]));
+        $response->assertSessionHas('flash_notification');
 
         $response->assertRedirect('relationship.index');
         $this->assertSoftDeleted($relationship);
@@ -82,7 +83,6 @@ class RelationshipControllerTest extends TestCase
         $response->assertViewIs('relationships.show');
         $response->assertViewHas('relationship');
         $response->assertSeeText($relationship->description);
-
     }
 
     /**
@@ -98,6 +98,7 @@ class RelationshipControllerTest extends TestCase
             'contact_id_b' => null,
         ]);
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('RelationshipController@index'));
     }
 
@@ -114,6 +115,7 @@ class RelationshipControllerTest extends TestCase
           'contact_id_b' => $relationship->contact_id_b,
         ]);
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('RelationshipController@show', $relationship->id));
     }
 

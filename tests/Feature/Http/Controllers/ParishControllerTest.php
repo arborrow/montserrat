@@ -41,6 +41,7 @@ class ParishControllerTest extends TestCase
         $parish = factory(\App\Parish::class)->create();
 
         $response = $this->actingAs($user)->delete(route('parish.destroy', [$parish->id]));
+        $response->assertSessionHas('flash_notification');
 
         $response->assertRedirect(action('ParishController@index'));
         $this->assertSoftDeleted($parish);
@@ -232,6 +233,7 @@ class ParishControllerTest extends TestCase
         ]);
 
         $response->assertRedirect(action('ParishController@index'));
+        $response->assertSessionHas('flash_notification');
 
         $this->assertDatabaseHas('contact', [
           'contact_type' => config('polanco.contact_type.organization'),
@@ -273,7 +275,7 @@ class ParishControllerTest extends TestCase
         ]);
 
         $updated = \App\Contact::findOrFail($parish->id);
-
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('ParishController@show', $parish->id));
         $this->assertEquals($updated->sort_name, $new_parish_name);
         $this->assertNotEquals($updated->sort_name, $original_sort_name);

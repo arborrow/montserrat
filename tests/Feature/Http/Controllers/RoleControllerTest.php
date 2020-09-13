@@ -37,6 +37,7 @@ class RoleControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('role.destroy', [$role]));
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('RoleController@index'));
         $this->assertSoftDeleted($role);
     }
@@ -118,6 +119,7 @@ class RoleControllerTest extends TestCase
           'description' => $new_description,
         ]);
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('RoleController@index'));
         $this->assertDatabaseHas('roles', [
           'name' => $new_name,
@@ -147,6 +149,7 @@ class RoleControllerTest extends TestCase
 
         $updated = \App\Role::findOrFail($role->id);
 
+        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('RoleController@index'));
         $this->assertEquals($updated->description, $new_description);
         $this->assertNotEquals($updated->description, $original_description);

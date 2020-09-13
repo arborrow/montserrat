@@ -34,7 +34,7 @@ class RelationshipController extends Controller
     public function create()
     {   // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
         $this->authorize('create-relationship');
-
+        flash('Relationships cannot be directly created as they are managed via contacts')->error();
         return Redirect::action('RelationshipController@index');
     }
 
@@ -48,7 +48,7 @@ class RelationshipController extends Controller
     {   // relationships are not created directly here; they are created through the person controller
         // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
         $this->authorize('create-relationship');
-
+        flash('Relationships cannot be directly stored as they are managed via contacts')->error();
         return Redirect::action('RelationshipController@index');
     }
 
@@ -75,7 +75,7 @@ class RelationshipController extends Controller
     public function edit($id)
     {   // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
         $this->authorize('update-relationship');
-
+        flash('Relationships cannot be directly edited as they are managed via contacts')->error();
         return Redirect::action('RelationshipController@show', $id);
     }
 
@@ -89,7 +89,7 @@ class RelationshipController extends Controller
     public function update(Request $request, $id)
     {   // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
         $this->authorize('update-relationship');
-
+        flash('Relationships cannot be directly updated as they are managed via contacts')->error();
         return Redirect::action('RelationshipController@show', $id);
     }
 
@@ -102,8 +102,10 @@ class RelationshipController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-relationship');
+
         \App\Relationship::destroy($id);
 
+        flash('Relationship ID#: '.$id . ' deleted')->warning()->important();
         return redirect()->back();
     }
 }

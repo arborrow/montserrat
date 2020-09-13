@@ -223,7 +223,7 @@ class AssetController extends Controller
             $attachment->update_attachment($request->file('asset_photo'), 'asset', $asset->id, 'asset_photo', $description);
         }
 
-        flash ('<a href="'. url('/asset/'.$asset->id) . '">'.$asset->name.'</a> added')->success();
+        flash('Asset: <a href="'. url('/asset/'.$asset->id) . '">'.$asset->name.'</a> added')->success();
         return Redirect::action('AssetController@index');
     }
 
@@ -377,7 +377,7 @@ class AssetController extends Controller
             $attachment->update_attachment($request->file('attachment'), 'asset', $asset->id, 'attachment', $description);
         }
 
-        flash ('<a href="'. url('/asset/'.$asset->id) . '">'.$asset->name.'</a> updated')->success();
+        flash('Asset: <a href="'. url('/asset/'.$asset->id) . '">'.$asset->name.'</a> updated')->success();
         return Redirect::action('AssetController@show', $asset->id);
     }
 

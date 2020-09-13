@@ -39,6 +39,7 @@ class LocationControllerTest extends TestCase
         $location = factory(\App\Location::class)->create();
 
         $response = $this->actingAs($user)->delete(route('location.destroy', [$location]));
+        $response->assertSessionHas('flash_notification');
 
         $response->assertRedirect(action('LocationController@index'));
         $this->assertSoftDeleted($location);
@@ -155,6 +156,7 @@ class LocationControllerTest extends TestCase
         ]);
 
         $response->assertRedirect(action('LocationController@index'));
+        $response->assertSessionHas('flash_notification');
 
         $this->assertDatabaseHas('locations', [
           'name' => $location_name,
@@ -187,6 +189,7 @@ class LocationControllerTest extends TestCase
         ]);
 
         $response->assertRedirect(action('LocationController@show', $location->id));
+        $response->assertSessionHas('flash_notification');
 
         $updated = \App\Location::findOrFail($location->id);
 

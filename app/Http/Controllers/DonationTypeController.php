@@ -54,6 +54,7 @@ class DonationTypeController extends Controller
 
         $donation_type->save();
 
+        flash('Donation type: <a href="'. url('/admin/donation_type/'.$donation_type->id) . '">'.$donation_type->name.'</a> added')->success();
         return Redirect::action('DonationTypeController@index');
     }
 
@@ -106,6 +107,7 @@ class DonationTypeController extends Controller
         $donation_type->description = $request->input('description');
         $donation_type->save();
 
+        flash('Donation type: <a href="'. url('/admin/donation_type/'.$donation_type->id) . '">'.$donation_type->name.'</a> updated')->success();
         return Redirect::action('DonationTypeController@show',$id);
     }
 
@@ -119,8 +121,11 @@ class DonationTypeController extends Controller
     {
         $this->authorize('delete-donation-type');
 
+        $donation_type = \App\DonationType::findOrFail($id);
+
         \App\DonationType::destroy($id);
 
+        flash('Donation type: '.$donation_type->name . ' deleted')->warning()->important();
         return Redirect::action('DonationTypeController@index');
     }
 

@@ -25,7 +25,7 @@ class UpdateRetreatRequest extends FormRequest
     public function rules()
     {   // dd($this);
         return [
-            'idnumber' => ['required', Rule::unique('event')->ignore($this->id)->whereNull('deleted_at')],
+            'idnumber' => ['alpha_dash','required', Rule::unique('event')->ignore($this->id)->whereNull('deleted_at')],
             'start_date' => 'required|date|before:end_date',
             'end_date' => 'required|date|after:start_date',
             'title' => 'required',
@@ -42,7 +42,7 @@ class UpdateRetreatRequest extends FormRequest
             'group_photo' => 'image|max:10000|nullable',
             'event_attachment' => 'file|mimes:pdf,doc,docx,zip|max:10000|nullable',
             'event_attachment_description' => 'string|max:200|nullable',
-            
+
         ];
     }
 

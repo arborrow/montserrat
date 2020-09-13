@@ -24,7 +24,7 @@ class StoreRetreatRequest extends FormRequest
     public function rules()
     {
         return [
-            'idnumber' => 'required|unique:event,idnumber',
+            'idnumber' => 'alpha_dash|required|unique:event,idnumber',
             'start_date' => 'required|date|before:end_date',
             'end_date' => 'required|date|after:start_date',
             'title' => 'required',
