@@ -27,7 +27,7 @@ class DonationFactory extends Factory
     {
         $description = \App\DonationType::whereIsActive(1)->get()->random();
 
-    return [
+        return [
         'donation_description' => $description->name,
         'donation_date' => $this->faker->dateTime(),
         'donation_amount' => $this->faker->randomFloat(2, 0, 100000),

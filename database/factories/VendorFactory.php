@@ -24,7 +24,7 @@ class VendorFactory extends Factory
     {
         $vendor_name = $this->faker->company;
 
-    return [
+        return [
         'contact_type' => config('polanco.contact_type.organization'),
         'subcontact_type' => config('polanco.contact_type.vendor'),
         'do_not_email' => $this->faker->boolean,

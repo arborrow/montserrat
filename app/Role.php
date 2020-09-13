@@ -10,7 +10,6 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Role extends Model implements Auditable
 {
     use HasFactory;
-
     use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
 

@@ -22,7 +22,7 @@ class DepartmentFactory extends Factory
     {
         $name = $this->faker->lastname.' of '.$this->faker->city;
 
-    return [
+        return [
         'name' => $name,
         'label' => $name,
         'description' => $this->faker->sentence,

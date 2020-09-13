@@ -5,8 +5,8 @@
 namespace Database\Factories;
 
 use App\Contact;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AssetFactory extends Factory
 {
@@ -25,21 +25,21 @@ class AssetFactory extends Factory
     public function definition()
     {
         $start_date = Carbon::createFromTimestamp($this->faker->dateTimeBetween($startDate = '-60 days', $endDate = '-10 days')->getTimeStamp());
-    $asset = $this->faker->word;
-    $power_uom = Uom::factory()->create([
+        $asset = $this->faker->word;
+        $power_uom = Uom::factory()->create([
         'type' => 'Electric current',
     ]);
-    $length_uom = Uom::factory()->create([
+        $length_uom = Uom::factory()->create([
         'type' => 'Length',
     ]);
-    $weight_uom = Uom::factory()->create([
+        $weight_uom = Uom::factory()->create([
         'type' => 'Mass',
     ]);
-    $time_uom = Uom::factory()->create([
+        $time_uom = Uom::factory()->create([
         'type' => 'Time',
     ]);
 
-    return [
+        return [
         'name' => $asset,
         'asset_type_id' => function () {
             return AssetType::factory()->create()->id;

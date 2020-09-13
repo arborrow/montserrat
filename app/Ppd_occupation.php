@@ -9,6 +9,5 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Ppd_occupation extends Model implements Auditable
 {
     use HasFactory;
-
     use \OwenIt\Auditing\Auditable;
 }

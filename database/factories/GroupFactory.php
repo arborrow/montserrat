@@ -25,7 +25,7 @@ class GroupFactory extends Factory
     {
         $group_name = ucfirst(implode(' ', $this->faker->words));
 
-    return [
+        return [
       'name' => $group_name,
       'title' => Str::plural($group_name),
       'description' => 'Group of '.Str::plural($group_name),

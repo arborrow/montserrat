@@ -23,10 +23,10 @@ class PermissionFactory extends Factory
     public function definition()
     {
         $actions = ['show', 'create', 'update', 'delete', 'manage'];
-    $action = $actions[array_rand($actions)];
-    $model = $this->faker->word;
+        $action = $actions[array_rand($actions)];
+        $model = $this->faker->word;
 
-    return [
+        return [
       'name' => $action.'-'.$model.$this->faker->randomNumber(6),
       'display_name' => ucfirst($action).' '.$model,
       'description' => $this->faker->words(5, true),

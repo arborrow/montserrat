@@ -4,8 +4,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Language;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ContactFactory extends Factory
 {
@@ -24,18 +24,18 @@ class ContactFactory extends Factory
     public function definition()
     {
         $first_name = $this->faker->firstName;
-    $last_name = $this->faker->lastName;
-    $sort_name = $last_name.', '.$first_name;
-    $display_name = $first_name.' '.$last_name;
-    $ethnicity = \App\Ethnicity::get()->random();
-    $religion = \App\Religion::whereIsActive(1)->get()->random();
-    $occupation = \App\Ppd_occupation::get()->random();
-    $preferred_language = \App\Language::whereIsActive(1)->get()->random();
-    $suffix = \App\Suffix::get()->random();
-    $prefix = \App\Prefix::get()->random();
-    $preferred_communication_method = $this->faker->numberBetween(0, 4);
+        $last_name = $this->faker->lastName;
+        $sort_name = $last_name.', '.$first_name;
+        $display_name = $first_name.' '.$last_name;
+        $ethnicity = \App\Ethnicity::get()->random();
+        $religion = \App\Religion::whereIsActive(1)->get()->random();
+        $occupation = \App\Ppd_occupation::get()->random();
+        $preferred_language = \App\Language::whereIsActive(1)->get()->random();
+        $suffix = \App\Suffix::get()->random();
+        $prefix = \App\Prefix::get()->random();
+        $preferred_communication_method = $this->faker->numberBetween(0, 4);
 
-    return [
+        return [
         'contact_type' => $this->faker->numberBetween(1, 3),
         'subcontact_type' => $this->faker->numberBetween(4, 8),
         'do_not_email' => $this->faker->boolean,

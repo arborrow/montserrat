@@ -23,9 +23,9 @@ class DioceseFactory extends Factory
     public function definition()
     {
         $city_name = $this->faker->city;
-    $diocese_name = 'Diocese of '.$city_name;
+        $diocese_name = 'Diocese of '.$city_name;
 
-    return [
+        return [
         'contact_type' => config('polanco.contact_type.organization'),
         'subcontact_type' => config('polanco.contact_type.diocese'),
         'do_not_email' => $this->faker->boolean,

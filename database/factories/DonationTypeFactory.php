@@ -23,9 +23,9 @@ class DonationTypeFactory extends Factory
     public function definition()
     {
         $label = $this->faker->word;
-    $value = $this->faker->numberBetween(1000, 2000);
+        $value = $this->faker->numberBetween(1000, 2000);
 
-    return [
+        return [
         'label' => $label,
         'value' => $value,
         'name' => $label,

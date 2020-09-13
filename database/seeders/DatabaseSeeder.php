@@ -2,15 +2,15 @@
 
 namespace Database\Seeders;
 
-use Database\Seeders\CountryTableSeeder;
-use Database\Seeders\ContactTypeTableSeeder;
-use Database\Seeders\ContactTableSeeder;
-use Database\Seeders\ContactReferralTableSeeder;
-use Database\Seeders\ContactLanguagesTableSeeder;
-use Database\Seeders\CivicrmParticipantStatusTypeTableSeeder;
-use Database\Seeders\AuditPermissionsSeeder;
-use Database\Seeders\AssetTypeTableSeeder;
 use Database\Seeders\AssetPermissionsSeeder;
+use Database\Seeders\AssetTypeTableSeeder;
+use Database\Seeders\AuditPermissionsSeeder;
+use Database\Seeders\CivicrmParticipantStatusTypeTableSeeder;
+use Database\Seeders\ContactLanguagesTableSeeder;
+use Database\Seeders\ContactReferralTableSeeder;
+use Database\Seeders\ContactTableSeeder;
+use Database\Seeders\ContactTypeTableSeeder;
+use Database\Seeders\CountryTableSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder

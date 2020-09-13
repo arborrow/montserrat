@@ -23,10 +23,10 @@ class UomFactory extends Factory
     public function definition()
     {
         $label = $this->faker->word;
-    $type = $this->faker->randomElement(config('polanco.uom_types'));
-    $description = $label.' of '.$type;
+        $type = $this->faker->randomElement(config('polanco.uom_types'));
+        $description = $label.' of '.$type;
 
-    return [
+        return [
         'unit_name' => $label,
         'unit_symbol' => $label,
         'type' => $type,

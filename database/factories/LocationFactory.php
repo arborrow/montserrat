@@ -22,7 +22,7 @@ class LocationFactory extends Factory
     {
         $name = $this->faker->lastname.' of '.$this->faker->city;
 
-    return [
+        return [
         'name' => $name,
         'description' => $this->faker->sentence,
         'occupancy' => $this->faker->numberBetween(10, 50),

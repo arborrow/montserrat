@@ -24,7 +24,7 @@ class AssetTypeFactory extends Factory
     {
         $label = $this->faker->word;
 
-    return [
+        return [
         'label' => $label,
         'name' => $label,
         'description' => $this->faker->sentence,

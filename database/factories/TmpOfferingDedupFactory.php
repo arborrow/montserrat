@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Database\Factories;
 
 use App\Retreat;
@@ -26,9 +25,9 @@ class TmpOfferingDedupFactory extends Factory
       'contact_type' => config('polanco.contact_type.individual'),
       'subcontact_type' => null,
     ]);
-    $event = Retreat::factory()->create();
+        $event = Retreat::factory()->create();
 
-    return [
+        return [
       'combo' => $contact->id.'-'.$event->id,
       'contact_id' => $contact->id,
       'event_id' => $event->id,

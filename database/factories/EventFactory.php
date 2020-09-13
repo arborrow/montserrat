@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /*
  * Create generic events of various types
@@ -30,13 +30,13 @@ class EventFactory extends Factory
     public function definition()
     {
         $start_date = Carbon::createFromTimestamp($this->faker->dateTimeBetween($startDate = '-60 days', $endDate = '+60 days')->getTimeStamp());
-    $end_date = Carbon::createFromFormat('Y-m-d H:i:s', $start_date)->addDays($this->faker->numberBetween(1, 5));
-    $title = ucwords(implode(' ', $this->faker->words(2))).' Retreat';
-    $idnumber = (int) '2018'.$this->faker->unique()->randomNumber(4).'-'.$this->faker->unique()->lastName;
-    // dd($start_date,$end_date);
-    // dd($title, $start_date, $end_date, $idnumber);
+        $end_date = Carbon::createFromFormat('Y-m-d H:i:s', $start_date)->addDays($this->faker->numberBetween(1, 5));
+        $title = ucwords(implode(' ', $this->faker->words(2))).' Retreat';
+        $idnumber = (int) '2018'.$this->faker->unique()->randomNumber(4).'-'.$this->faker->unique()->lastName;
+        // dd($start_date,$end_date);
+        // dd($title, $start_date, $end_date, $idnumber);
 
-    return [
+        return [
         'title' => $title,
         'description' => $this->faker->sentence,
         'event_type_id' => $this->faker->numberBetween(1, 14),

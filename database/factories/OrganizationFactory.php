@@ -4,8 +4,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\ContactType;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class OrganizationFactory extends Factory
 {
@@ -24,9 +24,9 @@ class OrganizationFactory extends Factory
     public function definition()
     {
         $subcontact_type = $this->faker->numberBetween(9, 11);
-    $organizaton_name = $this->faker->company;
+        $organizaton_name = $this->faker->company;
 
-    return [
+        return [
         'contact_type' => config('polanco.contact_type.organization'),
         'subcontact_type' => $subcontact_type,
         'do_not_email' => $this->faker->boolean,

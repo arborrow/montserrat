@@ -5,8 +5,8 @@
 namespace Database\Factories;
 
 use App\Contact;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class RelationshipFactory extends Factory
 {
@@ -25,9 +25,9 @@ class RelationshipFactory extends Factory
     public function definition()
     {
         $relationship_type = \App\RelationshipType::whereIsActive(1)->get()->random();
-    $start_date = Carbon::createFromTimestamp($this->faker->dateTimeBetween($startDate = '-60 days', $endDate = '+60 days')->getTimeStamp());
+        $start_date = Carbon::createFromTimestamp($this->faker->dateTimeBetween($startDate = '-60 days', $endDate = '+60 days')->getTimeStamp());
 
-    return [
+        return [
       'contact_id_a' => function () {
           return Contact::factory()->create([
             ])->id;
