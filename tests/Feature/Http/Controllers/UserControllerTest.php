@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -142,7 +142,7 @@ class UserControllerTest extends TestCase
             'description' => $new_description,
         ]);
 
-        $updated = \App\User::findOrFail($user->id);
+        $updated = \App\Models\User::findOrFail($user->id);
 
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('UserController@index'));

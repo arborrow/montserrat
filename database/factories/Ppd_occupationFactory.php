@@ -13,7 +13,7 @@ class Ppd_occupationFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Ppd_occupation::class;
+    protected $model = \App\Models\Ppd_occupation::class;
 
     /**
      * Define the model's default state.

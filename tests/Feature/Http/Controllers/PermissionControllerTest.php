@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Permission;
+use App\Models\Permission;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -140,7 +140,7 @@ class PermissionControllerTest extends TestCase
 
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('PermissionController@index'));
-        $updated = \App\Permission::findOrFail($permission->id);
+        $updated = \App\Models\Permission::findOrFail($permission->id);
         $this->assertEquals($updated->name, $new_permission_name);
         $this->assertNotEquals($updated->name, $original_permission_name);
     }
@@ -153,7 +153,7 @@ class PermissionControllerTest extends TestCase
         $user = User::factory()->create();
         $user->assignRole('test-role:update_roles');
         $permission = Permission::factory()->create();
-        $random_roles = \App\Role::get()->random(2)->pluck('id');
+        $random_roles = \App\Models\Role::get()->random(2)->pluck('id');
         // dd($random_roles);
         $response = $this->actingAs($user)->post(route('admin.permission.update_roles'), [
             'id' => $permission->id,

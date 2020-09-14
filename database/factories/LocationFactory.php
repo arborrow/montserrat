@@ -11,7 +11,7 @@ class LocationFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Location::class;
+    protected $model = \App\Models\Location::class;
 
     /**
      * Define the model's default state.

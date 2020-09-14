@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\DonationType;
+use App\Models\DonationType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Validation\ValidationException;
@@ -152,7 +152,7 @@ class DonationTypeControllerTest extends TestCase
 
         $response->assertRedirect(action('DonationTypeController@show', $donation_type->id));
         $response->assertSessionHas('flash_notification');
-        $updated = \App\DonationType::findOrFail($donation_type->id);
+        $updated = \App\Models\DonationType::findOrFail($donation_type->id);
         $this->assertEquals($updated->name, $new_donation_type_name);
         $this->assertNotEquals($updated->name, $original_donation_type_name);
     }

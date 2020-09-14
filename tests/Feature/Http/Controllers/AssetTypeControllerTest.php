@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\AssetType;
+use App\Models\AssetType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -152,7 +152,7 @@ class AssetTypeControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('AssetTypeController@show', $asset_type->id));
         // var_dump($asset_type);
-        $updated = \App\AssetType::findOrFail($asset_type->id);
+        $updated = \App\Models\AssetType::findOrFail($asset_type->id);
         $this->assertEquals($updated->name, $new_asset_type_name);
         $this->assertNotEquals($updated->name, $original_asset_type_name);
     }

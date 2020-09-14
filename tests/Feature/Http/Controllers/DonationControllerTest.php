@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Contact;
-use App\Registration;
+use App\Models\Contact;
+use App\Models\Registration;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -66,7 +66,7 @@ class DonationControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('delete-donation');
         $donation = Donation::factory()->create();
-        $contact = \App\Contact::find($donation->contact_id);
+        $contact = \App\Models\Contact::find($donation->contact_id);
 
         $response = $this->actingAs($user)->delete(route('donation.destroy', [$donation]));
         $response->assertSessionHas('flash_notification');
@@ -130,7 +130,7 @@ class DonationControllerTest extends TestCase
         $donation = Donation::factory()->create();
         $donation_id = $donation->donation_id;
         $number_donations = $this->faker->numberBetween(2, 10);
-        $donations = factory(\App\Donation::class, $number_donations)->create([
+        $donations = factory(\App\Models\Donation::class, $number_donations)->create([
             'donation_description' => $donation->donation_description,
             'deleted_at' => null,
         ]);
@@ -168,13 +168,13 @@ class DonationControllerTest extends TestCase
         $retreat = Retreat::factory()->create([
             'description' => 'Retreat Payments Update Test',
         ]);
-        $participants = factory(\App\Registration::class, $this->faker->numberBetween(5, 10))->create([
+        $participants = factory(\App\Models\Registration::class, $this->faker->numberBetween(5, 10))->create([
             'event_id' => $retreat->id,
             'canceled_at' => null,
         ]);
         $donations = [];
 
-        $participants = \App\Registration::whereEventId($retreat->id)->get();
+        $participants = \App\Models\Registration::whereEventId($retreat->id)->get();
         foreach ($participants as $participant) {
             $donations[$participant->id]['id'] = $participant->id;
             $donations[$participant->id]['pledge'] = $this->faker->numberBetween(100, 200);
@@ -264,7 +264,7 @@ class DonationControllerTest extends TestCase
         $event = Retreat::factory()->create();
         $donation = Donation::factory()->create();
         $new_contact = Contact::factory()->create();
-        $description = \App\DonationType::get()->random();
+        $description = \App\Models\DonationType::get()->random();
         $start_date = $this->faker->dateTimeBetween('this week', '+7 days');
         $end_date = $this->faker->dateTimeBetween($start_date, strtotime('+7 days'));
 
@@ -288,7 +288,7 @@ class DonationControllerTest extends TestCase
         $response->assertRedirect(action('DonationController@show', $donation->donation_id));
         $response->assertSessionHas('flash_notification');
 
-        $updated_donation = \App\Donation::find($donation->donation_id);
+        $updated_donation = \App\Models\Donation::find($donation->donation_id);
         $this->assertEquals($updated_donation->event_id, $event->id);
         $this->assertNotEquals($updated_donation->donation_amount, $original_amount);
     }

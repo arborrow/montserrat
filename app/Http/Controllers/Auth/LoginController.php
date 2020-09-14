@@ -68,7 +68,7 @@ class LoginController extends Controller
         if (isset($socialite_restrict_domain)) {
             if (isset($user->user['hd'])) {
                 if ($user->user['hd'] == $socialite_restrict_domain) { // the user domain matches the social restrict domain so authenticate successfully
-                    $authuser = new \App\UserRepository;
+                    $authuser = new \App\Models\UserRepository;
                     $currentuser = $authuser->findByUserNameOrCreate($user);
                     Auth::login($currentuser, true);
 
@@ -81,7 +81,7 @@ class LoginController extends Controller
                 return redirect()->to('restricted');
             }
         } else { // not using socialite restrict domain - all domains can authenticate
-            $authuser = new \App\UserRepository;
+            $authuser = new \App\Models\UserRepository;
             $currentuser = $authuser->findByUserNameOrCreate($user);
             Auth::login($currentuser, true);
 

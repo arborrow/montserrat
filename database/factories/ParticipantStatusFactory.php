@@ -13,7 +13,7 @@ class ParticipantStatusFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\ParticipantStatus::class;
+    protected $model = \App\Models\ParticipantStatus::class;
 
     /**
      * Define the model's default state.

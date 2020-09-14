@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Parish;
+use App\Models\Parish;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -55,7 +55,7 @@ class ParishControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-contact');
         $parish = Parish::factory()->create();
-        $parish = \App\Contact::findOrFail($parish->id);
+        $parish = \App\Models\Contact::findOrFail($parish->id);
         $main_address = Address::factory()->create([
             'contact_id' => $parish->id,
             'location_type_id' => config('polanco.location_type.main'),
@@ -275,7 +275,7 @@ class ParishControllerTest extends TestCase
           'id' => $parish->id,
         ]);
 
-        $updated = \App\Contact::findOrFail($parish->id);
+        $updated = \App\Models\Contact::findOrFail($parish->id);
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('ParishController@show', $parish->id));
         $this->assertEquals($updated->sort_name, $new_parish_name);

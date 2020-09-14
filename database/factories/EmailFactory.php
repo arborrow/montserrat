@@ -4,7 +4,7 @@
 
 namespace Database\Factories;
 
-use App\LocationType;
+use App\Models\LocationType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class EmailFactory extends Factory
@@ -14,7 +14,7 @@ class EmailFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Email::class;
+    protected $model = \App\Models\Email::class;
 
     /**
      * Define the model's default state.

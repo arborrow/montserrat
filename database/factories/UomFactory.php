@@ -13,7 +13,7 @@ class UomFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Uom::class;
+    protected $model = \App\Models\Uom::class;
 
     /**
      * Define the model's default state.

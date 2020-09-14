@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Role;
+use App\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -148,7 +148,7 @@ class RoleControllerTest extends TestCase
             'description' => $new_description,
         ]);
 
-        $updated = \App\Role::findOrFail($role->id);
+        $updated = \App\Models\Role::findOrFail($role->id);
 
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('RoleController@index'));

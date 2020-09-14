@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Website;
+use App\Models\Website;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -155,7 +155,7 @@ class WebsiteControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('WebsiteController@show', $website->id));
 
-        $updated = \App\Website::findOrFail($website->id);
+        $updated = \App\Models\Website::findOrFail($website->id);
 
         $this->assertEquals($updated->description, $new_website_description);
         $this->assertNotEquals($updated->description, $original_website_description);

@@ -2,8 +2,9 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Address;
-use App\StateProvince;
+use App\Models\Address;
+use App\Models\Contact;
+use App\Models\StateProvince;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -119,8 +120,8 @@ class AddressControllerTest extends TestCase
         $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-address');
         $contact = Contact::factory()->create();
-        $random_location_type = \App\LocationType::get()->random();
-        $random_state = \App\StateProvince::whereCountryId(config('polanco.country_id_usa'))->get()->random();
+        $random_location_type = \App\Models\LocationType::get()->random();
+        $random_state = \App\Models\StateProvince::whereCountryId(config('polanco.country_id_usa'))->get()->random();
         $random_street_address = $this->faker->streetAddress;
 
         $response = $this->actingAs($user)->post(route('address.store'), [
@@ -171,7 +172,7 @@ class AddressControllerTest extends TestCase
             'street_address' => $this->faker->streetAddress,
         ]);
 
-        $updated_address = \App\Address::find($address->id);
+        $updated_address = \App\Models\Address::find($address->id);
 
         $response->assertRedirect(action('AddressController@show', $address->id));
         $response->assertSessionHas('flash_notification');

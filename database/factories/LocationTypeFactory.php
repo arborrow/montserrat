@@ -13,7 +13,7 @@ class LocationTypeFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\LocationType::class;
+    protected $model = \App\Models\LocationType::class;
 
     /**
      * Define the model's default state.

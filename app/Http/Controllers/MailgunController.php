@@ -45,17 +45,17 @@ class MailgunController extends Controller
                         }
                         $messages->push($email);
 
-                        $email->staff = \App\Contact::whereHas('groups', function ($query) {
+                        $email->staff = \App\Models\Contact::whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.staff'));
                         })
                             ->whereHas('emails', function ($query) use ($email) {
                                 $query->whereEmail($email->from);
                             })->first();
-                        $email->contact = \App\Contact::whereHas('emails', function ($query) use ($email) {
+                        $email->contact = \App\Models\Contact::whereHas('emails', function ($query) use ($email) {
                             $query->whereEmail($email->to);
                         })->first();
                         //dd($email->id);
-                        $message = \App\Message::firstOrCreate(['mailgun_id'=>$email->id]);
+                        $message = \App\Models\Message::firstOrCreate(['mailgun_id'=>$email->id]);
                         $message->from = $email->from;
                         if (isset($email->staff['id'])) {
                             $message->from_id = $email->staff['id'];
@@ -114,7 +114,7 @@ class MailgunController extends Controller
     public function process()
     {
         $this->authorize('admin-mailgun');
-        $messages = \App\Message::whereIsProcessed(0)->get();
+        $messages = \App\Models\Message::whereIsProcessed(0)->get();
 
         foreach ($messages as $message) {
             $ch = curl_init($message->storage_url);
@@ -135,7 +135,7 @@ class MailgunController extends Controller
 
             // if we have from and to ids for contacts go ahead and create a touchpoint
             if (($message->from_id > 0) && ($message->to_id > 0)) {
-                $touch = new \App\Touchpoint();
+                $touch = new \App\Models\Touchpoint();
                 $touch->person_id = $message->to_id;
                 $touch->staff_id = $message->from_id;
                 $touch->touched_at = $message->timestamp;
@@ -145,7 +145,7 @@ class MailgunController extends Controller
             }
         }
 
-        $messages = \App\Message::whereIsProcessed(1)->get();
+        $messages = \App\Models\Message::whereIsProcessed(1)->get();
         //dd($messages);
         return view('mailgun.processed', compact('messages'));
     }

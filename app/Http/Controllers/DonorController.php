@@ -22,7 +22,7 @@ class DonorController extends Controller
     {
         $this->authorize('show-donor');
         //only show donors that do not have a contact_id
-        $donors = \App\Donor::whereContactId(null)->orderBy('sort_name')->paginate(100);
+        $donors = \App\Models\Donor::whereContactId(null)->orderBy('sort_name')->paginate(100);
 
         return view('donors.index', compact('donors'));   //
     }
@@ -61,10 +61,10 @@ class DonorController extends Controller
     public function show($id)
     {
         $this->authorize('show-donor');
-        $donor = \App\Donor::whereDonorId($id)->first();
+        $donor = \App\Models\Donor::whereDonorId($id)->first();
         // dd($donor,$id);
-        $sortnames = \App\Contact::whereSortName($donor->sort_name)->get();
-        $lastnames = \App\Contact::whereLastName($donor->LName)->get();
+        $sortnames = \App\Models\Contact::whereSortName($donor->sort_name)->get();
+        $lastnames = \App\Models\Contact::whereLastName($donor->LName)->get();
 
         return view('donors.show', compact('donor', 'sortnames', 'lastnames')); //
     }
@@ -109,7 +109,7 @@ class DonorController extends Controller
     {
         // dd($donor_id, $contact_id);
         $this->authorize('update-donor');
-        $donor = \App\Donor::whereDonorId($donor_id)->first();
+        $donor = \App\Models\Donor::whereDonorId($donor_id)->first();
         if (empty($donor->contact_id)) {
             $donor->contact_id = $contact_id;
             $donor->save();
@@ -121,8 +121,8 @@ class DonorController extends Controller
     public function add($donor_id)
     {
         $this->authorize('create-contact');
-        $person = new \App\Contact;
-        $donor = \App\Donor::findOrFail($donor_id);
+        $person = new \App\Models\Contact;
+        $donor = \App\Models\Donor::findOrFail($donor_id);
         //dd($donor);
 
         if (isset($donor->FName)) {
@@ -145,8 +145,8 @@ class DonorController extends Controller
         $person->save();
 
         if (isset($donor->Address)) {
-            $home_address = new \App\Address;
-            $state = \App\StateProvince::whereAbbreviation($donor->State)->whereCountryId(config('polanco.country_id_usa'))->first();
+            $home_address = new \App\Models\Address;
+            $state = \App\Models\StateProvince::whereAbbreviation($donor->State)->whereCountryId(config('polanco.country_id_usa'))->first();
 
             $home_address->contact_id = $person->id;
             $home_address->location_type_id = config('polanco.location_type.home');
@@ -161,7 +161,7 @@ class DonorController extends Controller
         }
 
         if (isset($donor->HomePhone)) {
-            $phone_home_phone = new \App\Phone;
+            $phone_home_phone = new \App\Models\Phone;
             $phone_home_phone->contact_id = $person->id;
             $phone_home_phone->location_type_id = config('polanco.location_type.home');
             $phone_home_phone->phone = $donor->HomePhone;
@@ -169,7 +169,7 @@ class DonorController extends Controller
             $phone_home_phone->save();
         }
         if (isset($donor->cell_phone)) {
-            $phone_home_mobile = new \App\Phone;
+            $phone_home_mobile = new \App\Models\Phone;
             $phone_home_mobile->contact_id = $person->id;
             $phone_home_mobile->location_type_id = config('polanco.location_type.home');
             $phone_home_mobile->phone = $donor->cell_phone;
@@ -178,7 +178,7 @@ class DonorController extends Controller
         }
 
         if (isset($donor->WorkPhone)) {
-            $phone_work_phone = new \App\Phone;
+            $phone_work_phone = new \App\Models\Phone;
             $phone_work_phone->contact_id = $person->id;
             $phone_work_phone->location_type_id = config('polanco.location_type.work');
             $phone_work_phone->phone = $donor->WorkPhone;
@@ -186,7 +186,7 @@ class DonorController extends Controller
             $phone_work_phone->save();
         }
         if (isset($donor->EMailAddress)) {
-            $email_home = new \App\Email;
+            $email_home = new \App\Models\Email;
             $email_home->contact_id = $person->id;
             $email_home->location_type_id = config('polanco.location_type.home');
             $email_home->email = $donor->EMailAddress;

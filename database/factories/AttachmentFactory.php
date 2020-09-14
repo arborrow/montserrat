@@ -13,7 +13,7 @@ class AttachmentFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Attachment::class;
+    protected $model = \App\Models\Attachment::class;
 
     /**
      * Define the model's default state.

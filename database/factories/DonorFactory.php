@@ -13,7 +13,7 @@ class DonorFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Donor::class;
+    protected $model = \App\Models\Donor::class;
 
     /**
      * Define the model's default state.

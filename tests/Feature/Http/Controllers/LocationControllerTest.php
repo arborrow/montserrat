@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Location;
+use App\Models\Location;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -102,7 +102,7 @@ class LocationControllerTest extends TestCase
         $location = Location::factory()->create();
 
         $number_locations = $this->faker->numberBetween(2, 10);
-        $locations = factory(\App\Location::class, $number_locations)->create([
+        $locations = factory(\App\Models\Location::class, $number_locations)->create([
             'type' => $location->type,
             'deleted_at' => null,
         ]);
@@ -191,7 +191,7 @@ class LocationControllerTest extends TestCase
         $response->assertRedirect(action('LocationController@show', $location->id));
         $response->assertSessionHas('flash_notification');
 
-        $updated = \App\Location::findOrFail($location->id);
+        $updated = \App\Models\Location::findOrFail($location->id);
 
         $this->assertEquals($updated->name, $new_location_name);
         $this->assertNotEquals($updated->name, $original_location_name);

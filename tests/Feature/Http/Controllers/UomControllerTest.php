@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Uom;
+use App\Models\Uom;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -154,7 +154,7 @@ class UomControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('UomController@show', $uom->id));
 
-        $updated = \App\Uom::findOrFail($uom->id);
+        $updated = \App\Models\Uom::findOrFail($uom->id);
         $this->assertEquals($updated->unit_name, $new_uom_unit_name);
         $this->assertNotEquals($updated->unit_name, $original_uom_unit_name);
     }

@@ -13,7 +13,7 @@ class DioceseFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Diocese::class;
+    protected $model = \App\Models\Diocese::class;
 
     /**
      * Define the model's default state.

@@ -13,7 +13,7 @@ class ActivityTypeFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\ActivityType::class;
+    protected $model = \App\Models\ActivityType::class;
 
     /**
      * Define the model's default state.

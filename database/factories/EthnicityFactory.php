@@ -13,7 +13,7 @@ class EthnicityFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Ethnicity::class;
+    protected $model = \App\Models\Ethnicity::class;
 
     /**
      * Define the model's default state.

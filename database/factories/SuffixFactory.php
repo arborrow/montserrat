@@ -13,7 +13,7 @@ class SuffixFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Suffix::class;
+    protected $model = \App\Models\Suffix::class;
 
     /**
      * Define the model's default state.

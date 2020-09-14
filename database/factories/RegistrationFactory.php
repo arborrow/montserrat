@@ -4,7 +4,7 @@
 
 namespace Database\Factories;
 
-use App\Retreat;
+use App\Models\Retreat;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class RegistrationFactory extends Factory
@@ -14,7 +14,7 @@ class RegistrationFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Registration::class;
+    protected $model = \App\Models\Registration::class;
 
     /**
      * Define the model's default state.

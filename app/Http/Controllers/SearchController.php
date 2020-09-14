@@ -16,7 +16,7 @@ class SearchController extends Controller
         $this->authorize('show-contact');
         $term = $request->get('term');
         $results = [];
-        $queries = \App\Contact::orderBy('sort_name')->where('display_name', 'LIKE', '%'.$term.'%')->whereDeletedAt(null)->take(20)->get();
+        $queries = \App\Models\Contact::orderBy('sort_name')->where('display_name', 'LIKE', '%'.$term.'%')->whereDeletedAt(null)->take(20)->get();
         if (($queries->count() == 0)) {
             $results[0] = 'Add new contact (No results)';
         }
@@ -39,7 +39,7 @@ class SearchController extends Controller
         if ($id == 0) {
             return redirect()->action('PersonController@create');
         } else {
-            $contact = \App\Contact::findOrFail($id);
+            $contact = \App\Models\Contact::findOrFail($id);
 
             return redirect()->to($contact->contact_url);
             $user = $this->createUserWithPermission('show-contact');
@@ -51,7 +51,7 @@ class SearchController extends Controller
         $this->authorize('show-contact');
         // dd($request);
         if (! empty($request)) {
-            $persons = \App\Contact::filtered($request)->orderBy('sort_name')->with('attachments')->paginate(100);
+            $persons = \App\Models\Contact::filtered($request)->orderBy('sort_name')->with('attachments')->paginate(100);
             $persons->appends($request->except('page'));
         }
 
@@ -61,42 +61,42 @@ class SearchController extends Controller
     public function search()
     {
         $this->authorize('show-contact');
-        $person = new \App\Contact;
-        $parishes = \App\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
+        $person = new \App\Models\Contact;
+        $parishes = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
         $parish_list[0] = 'N/A';
-        $contact_types = \App\ContactType::whereIsReserved(true)->pluck('label', 'id');
+        $contact_types = \App\Models\ContactType::whereIsReserved(true)->pluck('label', 'id');
         $contact_types->prepend('N/A', 0);
-        $subcontact_types = \App\ContactType::whereIsReserved(false)->whereIsActive(true)->pluck('label', 'id');
+        $subcontact_types = \App\Models\ContactType::whereIsReserved(false)->whereIsActive(true)->pluck('label', 'id');
         $subcontact_types->prepend('N/A', 0);
         // while probably not the most efficient way of doing this it gets me the result
         foreach ($parishes as $parish) {
             $parish_list[$parish->id] = $parish->organization_name.' ('.$parish->address_primary_city.') - '.$parish->diocese_name;
         }
 
-        $countries = \App\Country::orderBy('iso_code')->pluck('iso_code', 'id');
+        $countries = \App\Models\Country::orderBy('iso_code')->pluck('iso_code', 'id');
         $countries->prepend('N/A', 0);
 
-        $ethnicities = \App\Ethnicity::orderBy('ethnicity')->pluck('ethnicity', 'id');
+        $ethnicities = \App\Models\Ethnicity::orderBy('ethnicity')->pluck('ethnicity', 'id');
         $ethnicities->prepend('N/A', 0);
 
-        $genders = \App\Gender::orderBy('name')->pluck('name', 'id');
+        $genders = \App\Models\Gender::orderBy('name')->pluck('name', 'id');
         $genders->prepend('N/A', 0);
-        $groups = \App\Group::orderBy('name')->pluck('name', 'id');
+        $groups = \App\Models\Group::orderBy('name')->pluck('name', 'id');
         $groups->prepend('N/A', 0);
 
-        $languages = \App\Language::orderBy('label')->whereIsActive(1)->pluck('label', 'id');
+        $languages = \App\Models\Language::orderBy('label')->whereIsActive(1)->pluck('label', 'id');
         $languages->prepend('N/A', 0);
-        $referrals = \App\Referral::orderBy('name')->whereIsActive(1)->pluck('name', 'id');
+        $referrals = \App\Models\Referral::orderBy('name')->whereIsActive(1)->pluck('name', 'id');
         $referrals->prepend('N/A', 0);
-        $prefixes = \App\Prefix::orderBy('name')->pluck('name', 'id');
+        $prefixes = \App\Models\Prefix::orderBy('name')->pluck('name', 'id');
         $prefixes->prepend('N/A', 0);
-        $religions = \App\Religion::orderBy('name')->whereIsActive(1)->pluck('name', 'id');
+        $religions = \App\Models\Religion::orderBy('name')->whereIsActive(1)->pluck('name', 'id');
         $religions->prepend('N/A', 0);
-        $states = \App\StateProvince::orderBy('name')->whereCountryId(1228)->pluck('name', 'id');
+        $states = \App\Models\StateProvince::orderBy('name')->whereCountryId(1228)->pluck('name', 'id');
         $states->prepend('N/A', 0);
-        $suffixes = \App\Suffix::orderBy('name')->pluck('name', 'id');
+        $suffixes = \App\Models\Suffix::orderBy('name')->pluck('name', 'id');
         $suffixes->prepend('N/A', 0);
-        $occupations = \App\Ppd_occupation::orderBy('name')->pluck('name', 'id');
+        $occupations = \App\Models\Ppd_occupation::orderBy('name')->pluck('name', 'id');
         $occupations->prepend('N/A', 0);
 
         //create defaults array for easier pre-populating of default values on edit/update blade

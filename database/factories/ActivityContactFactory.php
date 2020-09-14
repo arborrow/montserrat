@@ -13,7 +13,7 @@ class ActivityContactFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\ActivityContact::class;
+    protected $model = \App\Models\ActivityContact::class;
 
     /**
      * Define the model's default state.

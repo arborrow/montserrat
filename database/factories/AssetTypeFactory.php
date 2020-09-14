@@ -13,7 +13,7 @@ class AssetTypeFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\AssetType::class;
+    protected $model = \App\Models\AssetType::class;
 
     /**
      * Define the model's default state.

@@ -4,7 +4,7 @@
 
 namespace Database\Factories;
 
-use App\Room;
+use App\Models\Room;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class RoomstateFactory extends Factory
@@ -14,7 +14,7 @@ class RoomstateFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Roomstate::class;
+    protected $model = \App\Models\Roomstate::class;
 
     /**
      * Define the model's default state.

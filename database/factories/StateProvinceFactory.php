@@ -13,7 +13,7 @@ class StateProvinceFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\StateProvince::class;
+    protected $model = \App\Models\StateProvince::class;
 
     /**
      * Define the model's default state.

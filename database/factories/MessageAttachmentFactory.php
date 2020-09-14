@@ -13,7 +13,7 @@ class MessageAttachmentFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\MessageAttachment::class;
+    protected $model = \App\Models\MessageAttachment::class;
 
     /**
      * Define the model's default state.

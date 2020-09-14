@@ -4,7 +4,7 @@
 
 namespace Database\Factories;
 
-use App\Contact;
+use App\Models\Contact;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class NoteFactory extends Factory
@@ -14,7 +14,7 @@ class NoteFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Note::class;
+    protected $model = \App\Models\Note::class;
 
     /**
      * Define the model's default state.

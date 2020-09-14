@@ -21,7 +21,7 @@ class RelationshipController extends Controller
     public function index()
     {
         $this->authorize('show-relationship');
-        $relationships = \App\Relationship::paginate(100);
+        $relationships = \App\Models\Relationship::paginate(100);
 
         return view('relationships.index', compact('relationships'));   //
     }
@@ -63,7 +63,7 @@ class RelationshipController extends Controller
     public function show($id)
     {
         $this->authorize('show-relationship');
-        $relationship = \App\Relationship::findOrFail($id);
+        $relationship = \App\Models\Relationship::findOrFail($id);
 
         return view('relationships.show', compact('relationship'));
     }
@@ -107,7 +107,7 @@ class RelationshipController extends Controller
     {
         $this->authorize('delete-relationship');
 
-        \App\Relationship::destroy($id);
+        \App\Models\Relationship::destroy($id);
 
         flash('Relationship ID#: '.$id.' deleted')->warning()->important();
 

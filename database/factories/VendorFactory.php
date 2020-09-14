@@ -13,7 +13,7 @@ class VendorFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Vendor::class;
+    protected $model = \App\Models\Vendor::class;
 
     /**
      * Define the model's default state.

@@ -4,7 +4,7 @@
 
 namespace Database\Factories;
 
-use App\Contact;
+use App\Models\Contact;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -15,7 +15,7 @@ class RelationshipFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Relationship::class;
+    protected $model = \App\Models\Relationship::class;
 
     /**
      * Define the model's default state.
@@ -24,7 +24,7 @@ class RelationshipFactory extends Factory
      */
     public function definition()
     {
-        $relationship_type = \App\RelationshipType::whereIsActive(1)->get()->random();
+        $relationship_type = \App\Models\RelationshipType::whereIsActive(1)->get()->random();
         $start_date = Carbon::createFromTimestamp($this->faker->dateTimeBetween($startDate = '-60 days', $endDate = '+60 days')->getTimeStamp());
 
         return [

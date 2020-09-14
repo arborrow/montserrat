@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Group;
+use App\Models\Group;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
@@ -124,7 +124,7 @@ class GroupControllerTest extends TestCase
             'is_reserved' => '0',
         ]);
 
-        $new_group = \App\Group::whereName($group_name)->firstOrFail();
+        $new_group = \App\Models\Group::whereName($group_name)->firstOrFail();
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('GroupController@show', $new_group->id));
         $this->assertDatabaseHas('group', [
@@ -160,7 +160,7 @@ class GroupControllerTest extends TestCase
             'title' => Str::plural($new_group_name),
             'description' => 'Renewed Group of '.Str::plural($new_group_name),
         ]);
-        $updated = \App\Group::findOrFail($group->id);
+        $updated = \App\Models\Group::findOrFail($group->id);
 
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('GroupController@show', $group->id));

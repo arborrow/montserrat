@@ -2,13 +2,15 @@
 
 namespace Tests;
 
-use App\User;
+use App\Models\User;
+use App\Models\Role;
+use App\Models\Permission;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use JMac\Testing\Traits\HttpTestAssertions;
+use JMac\Testing\Traits\AdditionalAssertions;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication, HttpTestAssertions;
+    use CreatesApplication, AdditionalAssertions;
 
     protected function stristrarray($array, $str)
     {
@@ -28,12 +30,12 @@ abstract class TestCase extends BaseTestCase
 
     protected function createUserWithPermission(string $permission, array $data = [])
     {
-        $reference = \App\Permission::where('name', $permission)->first();
+        $reference = Permission::where('name', $permission)->first();
         if (is_null($reference)) {
             throw new \InvalidArgumentException('permission does not exist: '.$reference);
         }
 
-        $role = \App\Role::where('name', 'test-role:'.$permission)->first();
+        $role = Role::where('name', 'test-role:'.$permission)->first();
         if (is_null($role)) {
             throw new \InvalidArgumentException('A test role for the permission ('.$permission.') does not exist. Did you run the seeder?');
         }

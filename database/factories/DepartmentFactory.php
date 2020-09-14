@@ -11,7 +11,7 @@ class DepartmentFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Department::class;
+    protected $model = \App\Models\Department::class;
 
     /**
      * Define the model's default state.

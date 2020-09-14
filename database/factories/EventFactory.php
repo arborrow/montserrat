@@ -20,7 +20,7 @@ class EventFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Retreat::class;
+    protected $model = \App\Models\Retreat::class;
 
     /**
      * Define the model's default state.

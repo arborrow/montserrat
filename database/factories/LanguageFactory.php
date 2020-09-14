@@ -13,7 +13,7 @@ class LanguageFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Language::class;
+    protected $model = \App\Models\Language::class;
 
     /**
      * Define the model's default state.

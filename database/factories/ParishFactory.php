@@ -13,7 +13,7 @@ class ParishFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Parish::class;
+    protected $model = \App\Models\Parish::class;
 
     /**
      * Define the model's default state.
@@ -55,7 +55,7 @@ class ParishFactory extends Factory
       'remember_token' => Str::random(10),
       /* TODO: at the moment let's not deal with pasnors/dioceses and relationships
         'diocese_id' => function () {
-            return factory(App\Diocese::class)->create()->id;
+            return factory(App\Models\Diocese::class)->create()->id;
         }, */
     ];
     }

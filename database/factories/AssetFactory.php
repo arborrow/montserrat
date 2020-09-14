@@ -4,7 +4,7 @@
 
 namespace Database\Factories;
 
-use App\Contact;
+use App\Models\Contact;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -15,7 +15,7 @@ class AssetFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Asset::class;
+    protected $model = \App\Models\Asset::class;
 
     /**
      * Define the model's default state.

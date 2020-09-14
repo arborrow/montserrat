@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Department;
+use App\Models\Department;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -149,7 +149,7 @@ class DepartmentControllerTest extends TestCase
         $response->assertRedirect(action('DepartmentController@show', $department->id));
         $response->assertSessionHas('flash_notification');
 
-        $updated = \App\Department::findOrFail($department->id);
+        $updated = \App\Models\Department::findOrFail($department->id);
 
         $this->assertEquals($updated->name, $new_department_name);
         $this->assertNotEquals($updated->name, $original_department_name);

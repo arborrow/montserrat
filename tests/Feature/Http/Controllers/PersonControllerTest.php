@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Contact;
-use App\ContactLanguage;
-use App\EmergencyContact;
+use App\Models\Contact;
+use App\Models\ContactLanguage;
+use App\Models\EmergencyContact;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -193,16 +193,16 @@ class PersonControllerTest extends TestCase
             'is_active' => 1,
         ]);
 
-        $languages = \App\Language::whereIsActive(1)->get()->random(2);
+        $languages = \App\Models\Language::whereIsActive(1)->get()->random(2);
         foreach ($languages as $language) {
-            $contact_language = new \App\ContactLanguage;
+            $contact_language = new \App\Models\ContactLanguage;
             $contact_language->contact_id = $person->id;
             $contact_language->language_id = $language->id;
             $contact_language->save();
         }
-        $referrals = \App\Referral::whereIsActive(1)->get()->random(2);
+        $referrals = \App\Models\Referral::whereIsActive(1)->get()->random(2);
         foreach ($referrals as $referral) {
-            $contact_referral = new \App\ContactReferral;
+            $contact_referral = new \App\Models\ContactReferral;
             $contact_referral->contact_id = $person->id;
             $contact_referral->referral_id = $referral->id;
             $contact_referral->save();
@@ -740,14 +740,14 @@ class PersonControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('create-contact');
 
-        $prefix = \App\Prefix::get()->random();
-        $suffix = \App\Suffix::get()->random();
+        $prefix = \App\Models\Prefix::get()->random();
+        $suffix = \App\Models\Suffix::get()->random();
         $first_name = $this->faker->firstName;
         $last_name = $this->faker->lastName;
-        $ethnicity = \App\Ethnicity::get()->random();
-        $religion = \App\Religion::whereIsActive(1)->get()->random();
-        $occupation = \App\Ppd_occupation::get()->random();
-        $preferred_language = \App\Language::whereIsActive(1)->get()->random();
+        $ethnicity = \App\Models\Ethnicity::get()->random();
+        $religion = \App\Models\Religion::whereIsActive(1)->get()->random();
+        $occupation = \App\Models\Ppd_occupation::get()->random();
+        $preferred_language = \App\Models\Language::whereIsActive(1)->get()->random();
 
         $response = $this->actingAs($user)->post(route('person.store'), [
                 'sort_name' => $last_name.', '.$first_name,
@@ -772,7 +772,7 @@ class PersonControllerTest extends TestCase
                 'do_not_sms' => $this->faker->boolean,
                 'do_not_trade' => $this->faker->boolean,
         ]);
-        $person = \App\Contact::whereSortName($last_name.', '.$first_name)->first();
+        $person = \App\Models\Contact::whereSortName($last_name.', '.$first_name)->first();
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('PersonController@show', $person->id));
     }
@@ -825,7 +825,7 @@ class PersonControllerTest extends TestCase
             'sort_name' => $new_sort_name,
         ]);
 
-        $updated = \App\Contact::findOrFail($person->id);
+        $updated = \App\Models\Contact::findOrFail($person->id);
 
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('PersonController@show', $person->id));

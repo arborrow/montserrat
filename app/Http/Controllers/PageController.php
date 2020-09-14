@@ -101,9 +101,9 @@ class PageController extends Controller
     {
         $this->authorize('show-contact');
         $this->authorize('show-registration');
-        $retreat = \App\Retreat::whereIdnumber($idnumber)->firstOrFail();
+        $retreat = \App\Models\Retreat::whereIdnumber($idnumber)->firstOrFail();
 
-        $registrations = \App\Registration::select(DB::raw('participant.*', 'contact.*'))
+        $registrations = \App\Models\Registration::select(DB::raw('participant.*', 'contact.*'))
             ->join('contact', 'participant.contact_id', '=', 'contact.id')
             ->where('participant.event_id', '=', $retreat->id)
             ->where('participant.role_id', '=', config('polanco.participant_role_id.retreatant'))
@@ -120,7 +120,7 @@ class PageController extends Controller
     {
         $this->authorize('show-contact');
 
-        $person = \App\Contact::findOrFail($id);
+        $person = \App\Models\Contact::findOrFail($id);
 
         return view('reports.contact_info', compact('person'));
     }
@@ -138,7 +138,7 @@ class PageController extends Controller
             return redirect()->back();
         }
 
-        $payments = \App\Payment::wherePaymentDate($report_date)->whereIn('payment_description', ['Cash', 'Check', 'Wire transfer'])->with('donation')->get();
+        $payments = \App\Models\Payment::wherePaymentDate($report_date)->whereIn('payment_description', ['Cash', 'Check', 'Wire transfer'])->with('donation')->get();
         $grand_total = $payments->sum('payment_amount');
         $grouped_payments = $payments->sortBy('donation.donation_description')->groupBy('donation.donation_description');
 
@@ -157,7 +157,7 @@ class PageController extends Controller
         if (empty($report_date)) {
             return redirect()->back();
         }
-        $payments = \App\Payment::wherePaymentDate($report_date)->where('payment_description', '=', 'Credit Card')->with('donation')->get();
+        $payments = \App\Models\Payment::wherePaymentDate($report_date)->where('payment_description', '=', 'Credit Card')->with('donation')->get();
         $grand_total = $payments->sum('payment_amount');
         $grouped_payments = $payments->sortBy('donation.donation_description')->groupBy('donation.donation_description');
 
@@ -169,7 +169,7 @@ class PageController extends Controller
     {
         $this->authorize('show-donation');
 
-        $donation = \App\Donation::with('payments', 'contact', 'retreat')->findOrFail($donation_id);
+        $donation = \App\Models\Donation::with('payments', 'contact', 'retreat')->findOrFail($donation_id);
 
         return view('reports.finance.invoice', compact('donation'));
     }
@@ -179,11 +179,11 @@ class PageController extends Controller
         $this->authorize('show-donation');
 
         $current_user = $request->user();
-        $user_email = \App\Email::whereEmail($current_user->email)->first();
+        $user_email = \App\Models\Email::whereEmail($current_user->email)->first();
 
-        $donation = \App\Donation::with('payments', 'contact', 'retreat')->findOrFail($donation_id);
+        $donation = \App\Models\Donation::with('payments', 'contact', 'retreat')->findOrFail($donation_id);
         if (null == $donation['Thank You']) { //avoid creating another touchpoint if acknowledgement letter has already been viewed (and presumably printed and mailed)
-            $agc_touchpoint = new \App\Touchpoint;
+            $agc_touchpoint = new \App\Models\Touchpoint;
             $agc_touchpoint->person_id = $donation->contact_id;
             $agc_touchpoint->staff_id = $user_email->contact_id;
             $agc_touchpoint->touched_at = Carbon::parse(now());
@@ -194,7 +194,7 @@ class PageController extends Controller
             $donation->save();
         }
 
-        $snippets = \App\Snippet::whereTitle('agc_acknowledge')->get();
+        $snippets = \App\Models\Snippet::whereTitle('agc_acknowledge')->get();
         foreach ($snippets as $snippet) {
             $decoded = html_entity_decode($snippet->snippet, ENT_QUOTES | ENT_XML1);
             Storage::put('views/snippets/'.$snippet->title.'/'.$snippet->locale.'/'.$snippet->label.'.blade.php', $decoded);
@@ -220,9 +220,9 @@ class PageController extends Controller
         if (is_null($idnumber)) {
             $idnumber = null;
         }
-        $retreat = \App\Retreat::whereIdnumber($idnumber)->firstOrFail();
+        $retreat = \App\Models\Retreat::whereIdnumber($idnumber)->firstOrFail();
         if (isset($retreat)) {
-            $donations = \App\Donation::whereEventId($retreat->id)->with('contact', 'payments')->get();
+            $donations = \App\Models\Donation::whereEventId($retreat->id)->with('contact', 'payments')->get();
             $grouped_donations = $donations->sortBy('donation_description')->groupBy('donation_description');
 
             return view('reports.finance.retreatdonations', compact('retreat', 'grouped_donations', 'donations'));   //
@@ -234,8 +234,8 @@ class PageController extends Controller
     public function finance_deposits()
     {
         $this->authorize('show-donation');
-        $donations = \App\Donation::where('donation_description', 'Retreat Deposits')->whereDeletedAt(null)->where('donation_amount', '>', 0)->with('contact', 'payments', 'retreat')->get();
-        $payments = \App\Payment::whereHas('donation', function ($query) {
+        $donations = \App\Models\Donation::where('donation_description', 'Retreat Deposits')->whereDeletedAt(null)->where('donation_amount', '>', 0)->with('contact', 'payments', 'retreat')->get();
+        $payments = \App\Models\Payment::whereHas('donation', function ($query) {
             $query->where('donation_description', '=', 'Retreat Deposits');
         })
             ->whereHas('donation', function ($query) {
@@ -259,7 +259,7 @@ class PageController extends Controller
             $event_id = config('polanco.event.open_deposit');
         }
 
-        $payments = \App\Payment::where('payment_amount', '>', 0)
+        $payments = \App\Models\Payment::where('payment_amount', '>', 0)
             ->whereHas('donation', function ($query) {
                 $query->where('donation_description', '=', 'Retreat Deposits');
             })
@@ -274,7 +274,7 @@ class PageController extends Controller
         })->sortBy(function ($d) {
             return Carbon::parse($d[0]->donation->retreat_start_date);
         });
-        $registrations = \App\Registration::whereEventId($event_id)->whereCanceledAt(null)->orderBy('contact_id')->get();
+        $registrations = \App\Models\Registration::whereEventId($event_id)->whereCanceledAt(null)->orderBy('contact_id')->get();
         $pg = $payments->groupBy('donation.contact_id')->sortBy('donation.contact_id');
         $rg = $registrations->groupBy('contact_id')->sortBy('contact_id');
         $diffpg = $pg->diffKeys($rg); //payments with no registration
@@ -287,15 +287,15 @@ class PageController extends Controller
     {
         $this->authorize('show-contact');
 
-        $retreat = \App\Retreat::whereIdnumber($idnumber)->firstOrFail();
+        $retreat = \App\Models\Retreat::whereIdnumber($idnumber)->firstOrFail();
 
-        $retreatants = \App\Registration::whereCanceledAt(null)
+        $retreatants = \App\Models\Registration::whereCanceledAt(null)
             ->whereEventId($retreat->id)
             ->whereRoleId(config('polanco.participant_role_id.retreatant'))
             ->whereStatusId(config('polanco.registration_status_id.registered'))
             ->with('retreat', 'retreatant')
             ->get();
-        $ambassadors = \App\Registration::whereCanceledAt(null)
+        $ambassadors = \App\Models\Registration::whereCanceledAt(null)
                 ->whereEventId($retreat->id)
                 ->whereRoleId(config('polanco.participant_role_id.ambassador'))
                 ->whereStatusId(config('polanco.registration_status_id.registered'))
@@ -311,14 +311,14 @@ class PageController extends Controller
     {
         $this->authorize('show-contact');
 
-        $retreat = \App\Retreat::whereIdnumber($idnumber)->firstOrFail();
-        $retreatants = \App\Registration::whereCanceledAt(null)
+        $retreat = \App\Models\Retreat::whereIdnumber($idnumber)->firstOrFail();
+        $retreatants = \App\Models\Registration::whereCanceledAt(null)
             ->whereEventId($retreat->id)
             ->whereRoleId(config('polanco.participant_role_id.retreatant'))
             ->whereStatusId(config('polanco.registration_status_id.registered'))
             ->with('retreat', 'retreatant')
             ->get();
-        $ambassadors = \App\Registration::whereCanceledAt(null)
+        $ambassadors = \App\Models\Registration::whereCanceledAt(null)
                 ->whereEventId($retreat->id)
                 ->whereRoleId(config('polanco.participant_role_id.ambassador'))
                 ->whereStatusId(config('polanco.registration_status_id.registered'))
@@ -342,19 +342,19 @@ class PageController extends Controller
         $end_date = (is_null($end_date)) ? Carbon::now()->subYear()->month(12)->day(31) : Carbon::parse($end_date);
 
         $current_user = auth()->user();
-        $user_email = \App\Email::whereEmail($current_user->email)->first();
+        $user_email = \App\Models\Email::whereEmail($current_user->email)->first();
         // dd($start_date, $end_date, $contact_id, $current_user, $user_email);
-        $contact = \App\Contact::findOrFail($contact_id);
-        $payments = \App\Payment::with('donation.contact', 'donation.retreat')
+        $contact = \App\Models\Contact::findOrFail($contact_id);
+        $payments = \App\Models\Payment::with('donation.contact', 'donation.retreat')
         ->whereHas('donation', function ($query) use ($contact_id) {
             $query->whereContactId($contact_id);
         })
         ->where('payment_date', '>=', $start_date->toDateString())
         ->where('payment_date', '<=', $end_date->toDateString())->get();
-        // $payments = \App\Payment::with('donation.contact', 'donation.retreat')->where('payment_date','>=', $start_date)->where('payment_date','<=',$end_date)->get();
+        // $payments = \App\Models\Payment::with('donation.contact', 'donation.retreat')->where('payment_date','>=', $start_date)->where('payment_date','<=',$end_date)->get();
         // dd($contact, $start_date, $end_date, $payments);
 
-        $acknowlegment_touchpoint = new \App\Touchpoint;
+        $acknowlegment_touchpoint = new \App\Models\Touchpoint;
         $acknowlegment_touchpoint->person_id = $contact_id;
         $acknowlegment_touchpoint->staff_id = $user_email->contact_id;
         $acknowlegment_touchpoint->touched_at = Carbon::parse(now());
@@ -373,7 +373,7 @@ class PageController extends Controller
                     return view('reports.finance.acknowledgment', compact('donation'));
                 }
         */
-        $montserrat = \App\Contact::findOrFail(env('SELF_CONTACT_ID'));
+        $montserrat = \App\Models\Contact::findOrFail(env('SELF_CONTACT_ID'));
         // dd($montserrat);
         $pdf = PDF::loadView('reports.finance.acknowledgment', compact('payments', 'contact', 'montserrat', 'start_date', 'end_date'));
         $pdf->setOptions([

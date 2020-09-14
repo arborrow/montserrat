@@ -4,7 +4,7 @@
 
 namespace Database\Factories;
 
-use App\LocationType;
+use App\Models\LocationType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 // using Montserrat's number in case of Twilio checks with a random extension
@@ -16,7 +16,7 @@ class PhoneFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Phone::class;
+    protected $model = \App\Models\Phone::class;
 
     /**
      * Define the model's default state.

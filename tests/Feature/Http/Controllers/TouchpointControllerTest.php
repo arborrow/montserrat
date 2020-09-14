@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\GroupContact;
-use App\Touchpoint;
+use App\Models\GroupContact;
+use App\Models\Touchpoint;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -75,7 +75,7 @@ class TouchpointControllerTest extends TestCase
         /* for testing add we don't actually need to create the group members so I'm commenting out
 
         $number_group_members = $this->faker->numberBetween(2, 10);
-        $group_contact = factory(\App\GroupContact::class, $number_group_members)->create([
+        $group_contact = factory(\App\Models\GroupContact::class, $number_group_members)->create([
           'group_id' => $group->id,
         ]);
 
@@ -116,7 +116,7 @@ class TouchpointControllerTest extends TestCase
 
         $retreat = Retreat::factory()->create();
         /* $number_participants = $this->faker->numberBetween(3,15);
-        $registration = factory(\App\Registration::class, $number_participants)->create([
+        $registration = factory(\App\Models\Registration::class, $number_participants)->create([
             'event_id' => $retreat->id,
         ]);
         */
@@ -352,14 +352,14 @@ class TouchpointControllerTest extends TestCase
         $group = Group::factory()->create();
 
         $number_group_members = $this->faker->numberBetween(2, 10);
-        $group_contact = factory(\App\GroupContact::class, $number_group_members)->create([
+        $group_contact = factory(\App\Models\GroupContact::class, $number_group_members)->create([
           'group_id' => $group->id,
         ]);
 
         $notes = $this->faker->paragraph;
         $touched_at = $this->faker->dateTime('now');
 
-        $random_group_member = \App\GroupContact::whereGroupId($group->id)->get()->random();
+        $random_group_member = \App\Models\GroupContact::whereGroupId($group->id)->get()->random();
 
         $response = $this->actingAs($user)->post('touchpoint/add_group', [
             'group_id' => $group->id,
@@ -417,7 +417,7 @@ class TouchpointControllerTest extends TestCase
         $number_participants = $this->faker->numberBetween(3, 15);
 
         // criteria set from search criteria in touchpoint controller's store_retreat method
-        $participants = factory(\App\Registration::class, $number_participants)->create([
+        $participants = factory(\App\Models\Registration::class, $number_participants)->create([
             'event_id' => $retreat->id,
             'status_id' => config('polanco.registration_status_id.registered'),
             'role_id' => config('polanco.participant_role_id.retreatant'),
@@ -428,7 +428,7 @@ class TouchpointControllerTest extends TestCase
         $touched_at = $this->faker->dateTime('now');
 
         // where criteria copied from touchpoint controller store_retreat method for consistency
-        $actual_participants = \App\Registration::whereStatusId(config('polanco.registration_status_id.registered'))->whereEventId($retreat->id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
+        $actual_participants = \App\Models\Registration::whereStatusId(config('polanco.registration_status_id.registered'))->whereEventId($retreat->id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
         $random_participant = $actual_participants->random();
 
         $response = $this->actingAs($user)->post('touchpoint/add_retreat', [
@@ -488,7 +488,7 @@ class TouchpointControllerTest extends TestCase
         $number_participants = $this->faker->numberBetween(3, 15);
 
         // criteria set from search criteria in touchpoint controller's store_retreat method
-        $participants = factory(\App\Registration::class, $number_participants)->create([
+        $participants = factory(\App\Models\Registration::class, $number_participants)->create([
             'event_id' => $retreat->id,
             'status_id' => config('polanco.registration_status_id.waitlist'),
             'role_id' => config('polanco.participant_role_id.retreatant'),
@@ -499,7 +499,7 @@ class TouchpointControllerTest extends TestCase
         $touched_at = $this->faker->dateTime('now');
 
         // where criteria copied from touchpoint controller store_retreat method for consistency
-        $actual_participants = \App\Registration::whereStatusId(config('polanco.registration_status_id.waitlist'))->whereEventId($retreat->id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
+        $actual_participants = \App\Models\Registration::whereStatusId(config('polanco.registration_status_id.waitlist'))->whereEventId($retreat->id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
         $random_participant = $actual_participants->random();
 
         $response = $this->actingAs($user)->post('touchpoint/add_retreat_waitlist', [

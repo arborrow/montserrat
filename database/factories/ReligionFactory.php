@@ -13,7 +13,7 @@ class ReligionFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Religion::class;
+    protected $model = \App\Models\Religion::class;
 
     /**
      * Define the model's default state.

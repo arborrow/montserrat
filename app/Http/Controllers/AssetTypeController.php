@@ -18,7 +18,7 @@ class AssetTypeController extends Controller
     public function index()
     {
         $this->authorize('show-asset-type');
-        $asset_types = \App\AssetType::orderBy('label')->get();
+        $asset_types = \App\Models\AssetType::orderBy('label')->get();
 
         return view('admin.asset_types.index', compact('asset_types'));
     }
@@ -31,7 +31,7 @@ class AssetTypeController extends Controller
     public function create()
     {
         $this->authorize('create-asset-type');
-        $asset_types = \App\AssetType::active()->orderBy('label')->pluck('label', 'id');
+        $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
         $asset_types->prepend('N/A', 0);
 
         return view('admin.asset_types.create', compact('asset_types'));
@@ -47,7 +47,7 @@ class AssetTypeController extends Controller
     {
         $this->authorize('create-asset-type');
 
-        $asset_type = new \App\AssetType;
+        $asset_type = new \App\Models\AssetType;
         $asset_type->label = $request->input('label');
         $asset_type->name = $request->input('name');
         $asset_type->description = $request->input('description');
@@ -71,7 +71,7 @@ class AssetTypeController extends Controller
     {
         $this->authorize('show-asset-type');
 
-        $asset_type = \App\AssetType::findOrFail($id);
+        $asset_type = \App\Models\AssetType::findOrFail($id);
 
         return view('admin.asset_types.show', compact('asset_type'));
     }
@@ -86,8 +86,8 @@ class AssetTypeController extends Controller
     {
         $this->authorize('update-asset-type');
 
-        $asset_type = \App\AssetType::findOrFail($id);
-        $asset_types = \App\AssetType::active()->orderBy('label')->pluck('label', 'id');
+        $asset_type = \App\Models\AssetType::findOrFail($id);
+        $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
         $asset_types->prepend('N/A', 0);
 
         return view('admin.asset_types.edit', compact('asset_type', 'asset_types')); //
@@ -104,7 +104,7 @@ class AssetTypeController extends Controller
     {
         $this->authorize('update-asset-type');
 
-        $asset_type = \App\AssetType::findOrFail($request->input('id'));
+        $asset_type = \App\Models\AssetType::findOrFail($request->input('id'));
         $asset_type->name = $request->input('name');
         $asset_type->label = $request->input('label');
         $asset_type->is_active = $request->input('is_active');
@@ -126,9 +126,9 @@ class AssetTypeController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-asset-type');
-        $asset_type = \App\AssetType::findOrFail($id);
+        $asset_type = \App\Models\AssetType::findOrFail($id);
 
-        \App\AssetType::destroy($id);
+        \App\Models\AssetType::destroy($id);
         flash('Asset type: '.$asset_type->name.' deleted')->warning()->important();
 
         return Redirect::action('AssetTypeController@index');

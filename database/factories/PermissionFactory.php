@@ -13,7 +13,7 @@ class PermissionFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Permission::class;
+    protected $model = \App\Models\Permission::class;
 
     /**
      * Define the model's default state.

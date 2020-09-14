@@ -4,7 +4,7 @@
 
 namespace Database\Factories;
 
-use App\Contact;
+use App\Models\Contact;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class GroupContactFactory extends Factory
@@ -14,7 +14,7 @@ class GroupContactFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\GroupContact::class;
+    protected $model = \App\Models\GroupContact::class;
 
     /**
      * Define the model's default state.

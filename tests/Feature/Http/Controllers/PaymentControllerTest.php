@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Payment;
+use App\Models\Payment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -152,7 +152,7 @@ class PaymentControllerTest extends TestCase
             'donation_id' => $payment->donation_id,
             'payment_date' => $this->faker->dateTime(),
         ]);
-        $updated = \App\Payment::findOrFail($payment->payment_id);
+        $updated = \App\Models\Payment::findOrFail($payment->payment_id);
 
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('DonationController@show', $payment->donation_id));

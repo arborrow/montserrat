@@ -13,7 +13,7 @@ class MessageFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Message::class;
+    protected $model = \App\Models\Message::class;
 
     /**
      * Define the model's default state.

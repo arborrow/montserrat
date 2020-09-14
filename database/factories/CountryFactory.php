@@ -13,7 +13,7 @@ class CountryFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Country::class;
+    protected $model = \App\Models\Country::class;
 
     /**
      * Define the model's default state.

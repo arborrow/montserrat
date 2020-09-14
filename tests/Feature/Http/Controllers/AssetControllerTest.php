@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Asset;
+use App\Models\Asset;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -164,7 +164,7 @@ class AssetControllerTest extends TestCase
         $asset = Asset::factory()->create();
 
         $number_assets = $this->faker->numberBetween(2, 10);
-        $assets = factory(\App\Asset::class, $number_assets)->create([
+        $assets = factory(\App\Models\Asset::class, $number_assets)->create([
             'asset_type_id' => $asset->asset_type_id,
             'deleted_at' => null,
         ]);
@@ -190,7 +190,7 @@ class AssetControllerTest extends TestCase
         $asset = Asset::factory()->create();
 
         $number_assets = $this->faker->numberBetween(2, 10);
-        $assets = factory(\App\Asset::class, $number_assets)->create([
+        $assets = factory(\App\Models\Asset::class, $number_assets)->create([
             'location_id' => $asset->location_id,
             'deleted_at' => null,
         ]);
@@ -274,7 +274,7 @@ class AssetControllerTest extends TestCase
         $response->assertRedirect(action('AssetController@show', $asset->id));
         $response->assertSessionHas('flash_notification');
 
-        $updated = \App\Asset::findOrFail($asset->id);
+        $updated = \App\Models\Asset::findOrFail($asset->id);
         $this->assertEquals($updated->manufacturer, $new_manufacturer);
         $this->assertNotEquals($updated->manufacturer, $original_asset_manufacuturer);
     }

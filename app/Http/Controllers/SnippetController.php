@@ -28,8 +28,8 @@ class SnippetController extends Controller
     {
         $this->authorize('show-snippet');
 
-        $titles = \App\Snippet::groupBy('label')->orderBy('label')->pluck('title', 'title');
-        $snippets = \App\Snippet::orderBy('title')->orderBy('locale')->orderBy('label')->get();
+        $titles = \App\Models\Snippet::groupBy('label')->orderBy('label')->pluck('title', 'title');
+        $snippets = \App\Models\Snippet::orderBy('title')->orderBy('locale')->orderBy('label')->get();
 
         return view('admin.snippets.index', compact('snippets', 'titles'));
     }
@@ -38,8 +38,8 @@ class SnippetController extends Controller
     {
         $this->authorize('show-snippet');
 
-        $titles = \App\Snippet::groupBy('label')->orderBy('label')->pluck('title', 'title');
-        $snippets = \App\Snippet::whereTitle($title)->orderBy('title')->orderBy('locale')->orderBy('label')->get();
+        $titles = \App\Models\Snippet::groupBy('label')->orderBy('label')->pluck('title', 'title');
+        $snippets = \App\Models\Snippet::whereTitle($title)->orderBy('title')->orderBy('locale')->orderBy('label')->get();
 
         return view('admin.snippets.index', compact('snippets', 'titles'));
     }
@@ -52,7 +52,7 @@ class SnippetController extends Controller
     public function create()
     {
         $this->authorize('create-snippet');
-        $locales = \App\Language::whereIsActive(1)->orderBy('label')->pluck('label', 'name');
+        $locales = \App\Models\Language::whereIsActive(1)->orderBy('label')->pluck('label', 'name');
 
         return view('admin.snippets.create', compact('locales'));
     }
@@ -67,7 +67,7 @@ class SnippetController extends Controller
     {
         $this->authorize('create-snippet');
 
-        $snippet = new \App\Snippet;
+        $snippet = new \App\Models\Snippet;
         $snippet->title = $request->input('title');
         $snippet->label = $request->input('label');
         $snippet->locale = $request->input('locale');
@@ -90,7 +90,7 @@ class SnippetController extends Controller
     {
         $this->authorize('show-snippet');
 
-        $snippet = \App\Snippet::findOrFail($id);
+        $snippet = \App\Models\Snippet::findOrFail($id);
 
         return view('admin.snippets.show', compact('snippet'));
     }
@@ -105,8 +105,8 @@ class SnippetController extends Controller
     {
         $this->authorize('update-snippet');
 
-        $snippet = \App\Snippet::findOrFail($id);
-        $locales = \App\Language::whereIsActive(1)->orderBy('label')->pluck('label', 'name');
+        $snippet = \App\Models\Snippet::findOrFail($id);
+        $locales = \App\Models\Language::whereIsActive(1)->orderBy('label')->pluck('label', 'name');
 
         return view('admin.snippets.edit', compact('snippet', 'locales')); //
     }
@@ -122,7 +122,7 @@ class SnippetController extends Controller
     {
         $this->authorize('update-snippet');
 
-        $snippet = \App\Snippet::findOrFail($id);
+        $snippet = \App\Models\Snippet::findOrFail($id);
 
         $snippet->title = $request->input('title');
         $snippet->label = $request->input('label');
@@ -145,9 +145,9 @@ class SnippetController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-snippet');
-        $snippet = \App\Snippet::findOrFail($id);
+        $snippet = \App\Models\Snippet::findOrFail($id);
 
-        \App\Snippet::destroy($id);
+        \App\Models\Snippet::destroy($id);
 
         flash('Snippet: '.$snippet->title.' deleted')->warning()->important();
 
@@ -171,7 +171,7 @@ class SnippetController extends Controller
             case 'birthday':
                 // dd($title,$email,$language);
                 // generate and store snippets
-                $snippets = \App\Snippet::whereTitle('birthday')->get();
+                $snippets = \App\Models\Snippet::whereTitle('birthday')->get();
                 foreach ($snippets as $snippet) {
                     $decoded = html_entity_decode($snippet->snippet, ENT_QUOTES | ENT_XML1);
                     Storage::put('views/snippets/'.$snippet->title.'/'.$snippet->locale.'/'.$snippet->label.'.blade.php', $decoded);
@@ -202,14 +202,14 @@ class SnippetController extends Controller
                 flash($msg)->warning();
                 break;
             case 'event-confirmation':
-                $snippets = \App\Snippet::whereTitle('event-confirmation')->get();
+                $snippets = \App\Models\Snippet::whereTitle('event-confirmation')->get();
                     foreach ($snippets as $snippet) {
                         $decoded = html_entity_decode($snippet->snippet, ENT_QUOTES | ENT_XML1);
                         Storage::put('views/snippets/'.$snippet->title.'/'.$snippet->locale.'/'.$snippet->label.'.blade.php', $decoded);
                     }
                 switch ($language) {
                     case 'es_ES':
-                        $registration = \App\Registration::with('event.event_type', 'contact')
+                        $registration = \App\Models\Registration::with('event.event_type', 'contact')
                             ->whereHas('event', function ($q) {
                                 $q->whereEventTypeId(config('polanco.event_type.ignatian'));
                             })
@@ -219,7 +219,7 @@ class SnippetController extends Controller
                             ->first();
                         break;
                     default: // en_US
-                        $registration = \App\Registration::with('event.event_type', 'contact')
+                        $registration = \App\Models\Registration::with('event.event_type', 'contact')
                             ->whereHas('event', function ($q) {
                                 $q->whereEventTypeId(config('polanco.event_type.ignatian'));
                             })
@@ -255,8 +255,8 @@ class SnippetController extends Controller
     public function test($title = null, $email = null, $language = 'en_US')
     {
         $this->authorize('show-snippet');
-        $titles = \App\Snippet::groupBy('label')->orderBy('label')->pluck('title', 'title');
-        $languages = \App\Language::whereIsActive(1)->orderBy('label')->pluck('label', 'name');
+        $titles = \App\Models\Snippet::groupBy('label')->orderBy('label')->pluck('title', 'title');
+        $languages = \App\Models\Language::whereIsActive(1)->orderBy('label')->pluck('label', 'name');
         if (empty($email)) {
             $email = Auth::user()->email;
         }

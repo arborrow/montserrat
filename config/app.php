@@ -165,7 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
-        StuYam\PhoneValidator\PhoneValidatorServiceProvider::class,
+        // StuYam\PhoneValidator\PhoneValidatorServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
 
         /*

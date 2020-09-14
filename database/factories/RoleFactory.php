@@ -13,7 +13,7 @@ class RoleFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Role::class;
+    protected $model = \App\Models\Role::class;
 
     /**
      * Define the model's default state.

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Snippet;
+use App\Models\Snippet;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -92,7 +92,7 @@ class SnippetControllerTest extends TestCase
         $snippet = Snippet::factory()->create();
 
         $number_snippets = $this->faker->numberBetween(2, 5);
-        $snippets = factory(\App\Snippet::class, $number_snippets)->create([
+        $snippets = factory(\App\Models\Snippet::class, $number_snippets)->create([
             'title' => $snippet->title,
             'deleted_at' => null,
         ]);
@@ -236,7 +236,7 @@ class SnippetControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('SnippetController@show', $snippet->id));
 
-        $updated = \App\Snippet::findOrFail($snippet->id);
+        $updated = \App\Models\Snippet::findOrFail($snippet->id);
 
         $this->assertEquals($updated->title, $new_title);
         $this->assertNotEquals($updated->title, $original_title);

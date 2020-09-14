@@ -4,8 +4,9 @@
 
 namespace Database\Factories;
 
-use App\Language;
+use App\Models\Language;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class ContactFactory extends Factory
 {
@@ -14,7 +15,7 @@ class ContactFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Contact::class;
+    protected $model = \App\Models\Contact::class;
 
     /**
      * Define the model's default state.
@@ -27,12 +28,12 @@ class ContactFactory extends Factory
         $last_name = $this->faker->lastName;
         $sort_name = $last_name.', '.$first_name;
         $display_name = $first_name.' '.$last_name;
-        $ethnicity = \App\Ethnicity::get()->random();
-        $religion = \App\Religion::whereIsActive(1)->get()->random();
-        $occupation = \App\Ppd_occupation::get()->random();
-        $preferred_language = \App\Language::whereIsActive(1)->get()->random();
-        $suffix = \App\Suffix::get()->random();
-        $prefix = \App\Prefix::get()->random();
+        $ethnicity = \App\Models\Ethnicity::get()->random();
+        $religion = \App\Models\Religion::whereIsActive(1)->get()->random();
+        $occupation = \App\Models\Ppd_occupation::get()->random();
+        $preferred_language = \App\Models\Language::whereIsActive(1)->get()->random();
+        $suffix = \App\Models\Suffix::get()->random();
+        $prefix = \App\Models\Prefix::get()->random();
         $preferred_communication_method = $this->faker->numberBetween(0, 4);
 
         return [

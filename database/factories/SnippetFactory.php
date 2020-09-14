@@ -11,7 +11,7 @@ class SnippetFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Snippet::class;
+    protected $model = \App\Models\Snippet::class;
 
     /**
      * Define the model's default state.
@@ -23,7 +23,7 @@ class SnippetFactory extends Factory
         return [
         'title' => $this->faker->word,
         'label' => $this->faker->jobTitle,
-        'locale' => $this->faker->randomElement(\App\Language::whereIsActive(1)->orderBy('label')->pluck('name', 'name')),
+        'locale' => $this->faker->randomElement(\App\Models\Language::whereIsActive(1)->orderBy('label')->pluck('name', 'name')),
         'snippet' => $this->faker->sentence,
     ];
     }

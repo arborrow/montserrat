@@ -4,8 +4,10 @@
 
 namespace Database\Factories;
 
-use App\Contact;
+use App\Models\Contact;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
+
 
 class AddressFactory extends Factory
 {
@@ -14,7 +16,7 @@ class AddressFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Address::class;
+    protected $model = \App\Models\Address::class;
 
     /**
      * Define the model's default state.

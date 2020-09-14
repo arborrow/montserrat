@@ -4,7 +4,7 @@
 
 namespace Database\Factories;
 
-use App\Retreat;
+use App\Models\Retreat;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 // TODO: to avoid confusion with agc letters in Spanish I'm limiting testing for now to $current_user
@@ -16,7 +16,7 @@ class DonationFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Donation::class;
+    protected $model = \App\Models\Donation::class;
 
     /**
      * Define the model's default state.
@@ -25,7 +25,7 @@ class DonationFactory extends Factory
      */
     public function definition()
     {
-        $description = \App\DonationType::whereIsActive(1)->get()->random();
+        $description = \App\Models\DonationType::whereIsActive(1)->get()->random();
 
         return [
         'donation_description' => $description->name,

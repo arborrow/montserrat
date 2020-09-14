@@ -4,7 +4,7 @@
 
 namespace Database\Factories;
 
-use App\ContactType;
+use App\Models\ContactType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class OrganizationFactory extends Factory
@@ -14,7 +14,7 @@ class OrganizationFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Organization::class;
+    protected $model = \App\Models\Organization::class;
 
     /**
      * Define the model's default state.

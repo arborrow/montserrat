@@ -4,7 +4,7 @@
 
 namespace Database\Factories;
 
-use App\Asset;
+use App\Models\Asset;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class WebsiteFactory extends Factory
@@ -14,7 +14,7 @@ class WebsiteFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Website::class;
+    protected $model = \App\Models\Website::class;
 
     /**
      * Define the model's default state.

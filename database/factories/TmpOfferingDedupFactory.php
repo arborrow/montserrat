@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Retreat;
+use App\Models\Retreat;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TmpOfferingDedupFactory extends Factory
@@ -12,7 +12,7 @@ class TmpOfferingDedupFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\TmpOfferingDedup::class;
+    protected $model = \App\Models\TmpOfferingDedup::class;
 
     /**
      * Define the model's default state.

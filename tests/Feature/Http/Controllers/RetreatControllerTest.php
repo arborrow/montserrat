@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Retreat;
+use App\Models\Retreat;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -23,7 +23,7 @@ class RetreatControllerTest extends TestCase
         // create a retreat, then create a number of registrations for the retreat
         $retreat = Retreat::factory()->create();
         $number_registrations = $this->faker->numberBetween(2, 10);
-        $registration = factory(\App\Registration::class, $number_registrations)->create([
+        $registration = factory(\App\Models\Registration::class, $number_registrations)->create([
           'event_id' => $retreat->id,
           'canceled_at' => null,
           'arrived_at' => null,
@@ -69,7 +69,7 @@ class RetreatControllerTest extends TestCase
         // create a retreat, then create a number of registrations for the retreat
         $retreat = Retreat::factory()->create();
         $number_registrations = $this->faker->numberBetween(2, 10);
-        $registrations = factory(\App\Registration::class, $number_registrations)->create([
+        $registrations = factory(\App\Models\Registration::class, $number_registrations)->create([
           'event_id' => $retreat->id,
           'canceled_at' => null,
           'arrived_at' => null,
@@ -100,7 +100,7 @@ class RetreatControllerTest extends TestCase
           ]
         );
         $number_registrations = $this->faker->numberBetween(2, 10);
-        $registrations = factory(\App\Registration::class, $number_registrations)->create([
+        $registrations = factory(\App\Models\Registration::class, $number_registrations)->create([
           'event_id' => $retreat->id,
           'canceled_at' => null,
           'arrived_at' => $this->faker->dateTime('now'),
@@ -271,7 +271,7 @@ class RetreatControllerTest extends TestCase
         // create a new event type, add a random number of retreats (2-10) to that event type ensuring they are all future events
         $event_type = EventType::factory()->create();
         $number_retreats = $this->faker->numberBetween(2, 10);
-        $retreat = factory(\App\Retreat::class, $number_retreats)->create([
+        $retreat = factory(\App\Models\Retreat::class, $number_retreats)->create([
             'event_type_id' => $event_type->id,
             'start_date' => $this->faker->dateTimeBetween('+6 days', '+10 days'),
             'end_date' => $this->faker->dateTimeBetween('+11 days', '+15 days'),
@@ -317,7 +317,7 @@ class RetreatControllerTest extends TestCase
             'notes' => $notes,
         ]);
 
-        $updated_registration = \App\Registration::findOrFail($registration->id);
+        $updated_registration = \App\Models\Registration::findOrFail($registration->id);
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('RetreatController@show', $retreat->id));
         $this->assertNotEquals(null, $updated_registration->room_id);
@@ -363,7 +363,7 @@ class RetreatControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-payment');
 
         $registration = Registration::factory()->create();
-        $retreat = \App\Retreat::findOrFail($registration->event_id);
+        $retreat = \App\Models\Retreat::findOrFail($registration->event_id);
 
         $response = $this->actingAs($user)->get(route('retreat.payments', ['id' => $registration->event_id]));
 
@@ -383,7 +383,7 @@ class RetreatControllerTest extends TestCase
         $registration = Registration::factory()->create([
             'status_id' => config('polanco.registration_status_id.waitlist'),
         ]);
-        $retreat = \App\Retreat::findOrFail($registration->event_id);
+        $retreat = \App\Models\Retreat::findOrFail($registration->event_id);
         $response = $this->actingAs($user)->get('retreat/'.$registration->event_id.'/waitlist');
 
         $response->assertOk();
@@ -414,7 +414,7 @@ class RetreatControllerTest extends TestCase
             'assistant_id' => 0,
         ]);
         // TODO: assumes that Google calendar integration is not set but eventually we will want to test that this too is working and saving the calendar event
-        $retreat = \App\Retreat::whereIdnumber($idnumber)->first();
+        $retreat = \App\Models\Retreat::whereIdnumber($idnumber)->first();
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('RetreatController@index'));
         $this->assertEquals($retreat->idnumber, $idnumber);

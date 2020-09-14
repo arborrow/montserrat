@@ -13,7 +13,7 @@ class RelationshipTypeFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\RelationshipType::class;
+    protected $model = \App\Models\RelationshipType::class;
 
     /**
      * Define the model's default state.

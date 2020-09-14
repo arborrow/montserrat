@@ -13,7 +13,7 @@ class FileTypeFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\FileType::class;
+    protected $model = \App\Models\FileType::class;
 
     /**
      * Define the model's default state.

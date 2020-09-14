@@ -13,7 +13,7 @@ class ContactTypeFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\ContactType::class;
+    protected $model = \App\Models\ContactType::class;
 
     /**
      * Define the model's default state.

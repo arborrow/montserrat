@@ -13,7 +13,7 @@ class ReferralFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Referral::class;
+    protected $model = \App\Models\Referral::class;
 
     /**
      * Define the model's default state.

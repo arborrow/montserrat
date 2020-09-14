@@ -16,7 +16,7 @@ class RetreatFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Retreat::class;
+    protected $model = \App\Models\Retreat::class;
 
     /**
      * Define the model's default state.
@@ -33,15 +33,15 @@ class RetreatFactory extends Factory
         // for that contact_id may not exist in the relationship table
         // as an assistant/innkeeper for the retreat house (self)
         /*
-          $innkeeper = factory(\App\Contact::class)->create();
-          $innkeeper_relationship = factory(\App\Relationship::class)->create(
+          $innkeeper = factory(\App\Models\Contact::class)->create();
+          $innkeeper_relationship = factory(\App\Models\Relationship::class)->create(
               [
                  'contact_id_a' => config('polanco.self.id'),
                  'contact_id_b' => $innkeeper->id,
                  'relationship_type_id' => config('polanco.relationship_type.retreat_innkeeper'),
               ]);
-          $assistant = factory(\App\Contact::class)->create();
-          $assistant_relationship = factory(\App\Relationship::class)->create(
+          $assistant = factory(\App\Models\Contact::class)->create();
+          $assistant_relationship = factory(\App\Models\Relationship::class)->create(
               [
                  'contact_id_a' => config('polanco.self.id'),
                  'contact_id_b' => $assistant->id,

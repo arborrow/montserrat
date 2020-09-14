@@ -13,7 +13,7 @@ class PrefixFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Prefix::class;
+    protected $model = \App\Models\Prefix::class;
 
     /**
      * Define the model's default state.

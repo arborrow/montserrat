@@ -18,10 +18,10 @@ class AssetController extends Controller
     {
         $this->authorize('show-asset');
 
-        $asset_types = \App\AssetType::active()->orderBy('label')->pluck('label', 'id');
-        $locations = \App\Location::orderBy('name')->pluck('name', 'id');
+        $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
+        $locations = \App\Models\Location::orderBy('name')->pluck('name', 'id');
 
-        $assets = \App\Asset::orderBy('name')->get();
+        $assets = \App\Models\Asset::orderBy('name')->get();
 
         return view('assets.index', compact('assets', 'asset_types', 'locations'));
     }
@@ -30,10 +30,10 @@ class AssetController extends Controller
     {
         $this->authorize('show-asset');
 
-        $asset_types = \App\AssetType::active()->orderBy('label')->pluck('label', 'id');
-        $locations = \App\Location::orderBy('name')->pluck('name', 'id');
+        $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
+        $locations = \App\Models\Location::orderBy('name')->pluck('name', 'id');
 
-        $assets = \App\Asset::whereAssetTypeId($type)->orderBy('name')->get();
+        $assets = \App\Models\Asset::whereAssetTypeId($type)->orderBy('name')->get();
 
         return view('assets.index', compact('assets', 'asset_types', 'locations'));
     }
@@ -42,10 +42,10 @@ class AssetController extends Controller
     {
         $this->authorize('show-asset');
 
-        $asset_types = \App\AssetType::active()->orderBy('label')->pluck('label', 'id');
-        $locations = \App\Location::orderBy('name')->pluck('name', 'id');
+        $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
+        $locations = \App\Models\Location::orderBy('name')->pluck('name', 'id');
 
-        $assets = \App\Asset::whereLocationId($location_id)->orderBy('name')->get();
+        $assets = \App\Models\Asset::whereLocationId($location_id)->orderBy('name')->get();
 
         return view('assets.index', compact('assets', 'asset_types', 'locations'));
     }
@@ -54,37 +54,37 @@ class AssetController extends Controller
     {
         $this->authorize('show-asset');
 
-        $asset_types = \App\AssetType::active()->orderBy('label')->pluck('label', 'id');
+        $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
         $asset_types->prepend('N/A', '');
 
-        $departments = \App\Department::active()->orderBy('label')->pluck('label', 'id');
+        $departments = \App\Models\Department::active()->orderBy('label')->pluck('label', 'id');
         $departments->prepend('N/A', '');
 
         // TODO: determine and set up various depreciation types
         $depreciation_types = [''=>'N/A'];
 
-        $locations = \App\Location::orderBy('name')->pluck('name', 'id');
+        $locations = \App\Models\Location::orderBy('name')->pluck('name', 'id');
         $locations->prepend('N/A', '');
 
-        $parents = \App\Asset::active()->orderBy('name')->pluck('name', 'id');
+        $parents = \App\Models\Asset::active()->orderBy('name')->pluck('name', 'id');
         $parents->prepend('N/A', '');
 
-        $uoms_capacity = \App\Uom::orderBy('unit_name')->pluck('unit_name', 'id');
+        $uoms_capacity = \App\Models\Uom::orderBy('unit_name')->pluck('unit_name', 'id');
         $uoms_capacity->prepend('N/A', '');
 
-        $uoms_electric = \App\Uom::electric()->orderBy('unit_name')->pluck('unit_name', 'id');
+        $uoms_electric = \App\Models\Uom::electric()->orderBy('unit_name')->pluck('unit_name', 'id');
         $uoms_electric->prepend('N/A', '');
 
-        $uoms_length = \App\Uom::length()->orderBy('unit_name')->pluck('unit_name', 'id');
+        $uoms_length = \App\Models\Uom::length()->orderBy('unit_name')->pluck('unit_name', 'id');
         $uoms_length->prepend('N/A', '');
 
-        $uoms_time = \App\Uom::time()->orderBy('unit_name')->pluck('unit_name', 'id');
+        $uoms_time = \App\Models\Uom::time()->orderBy('unit_name')->pluck('unit_name', 'id');
         $uoms_time->prepend('N/A', '');
 
-        $uoms_weight = \App\Uom::weight()->orderBy('unit_name')->pluck('unit_name', 'id');
+        $uoms_weight = \App\Models\Uom::weight()->orderBy('unit_name')->pluck('unit_name', 'id');
         $uoms_weight->prepend('N/A', '');
 
-        $vendors = \App\Contact::vendors()->orderBy('organization_name')->pluck('organization_name', 'id');
+        $vendors = \App\Models\Contact::vendors()->orderBy('organization_name')->pluck('organization_name', 'id');
         $vendors->prepend('N/A', '');
 
         return view('assets.search', compact('asset_types', 'departments', 'depreciation_types', 'locations', 'parents', 'uoms_capacity', 'uoms_electric', 'uoms_length', 'uoms_time', 'uoms_weight', 'vendors'));
@@ -94,7 +94,7 @@ class AssetController extends Controller
     {
         $this->authorize('show-asset');
         if (! empty($request)) {
-            $assets = \App\Asset::filtered($request)->orderBy('name')->paginate(100);
+            $assets = \App\Models\Asset::filtered($request)->orderBy('name')->paginate(100);
             $assets->appends($request->except('page')); //TODO: is this necessary?
         }
 
@@ -110,30 +110,30 @@ class AssetController extends Controller
     {
         $this->authorize('create-asset');
 
-        $asset_types = \App\AssetType::active()->orderBy('label')->pluck('label', 'id');
+        $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
         $asset_types->prepend('N/A', '');
 
-        $departments = \App\Department::active()->orderBy('label')->pluck('label', 'id');
+        $departments = \App\Models\Department::active()->orderBy('label')->pluck('label', 'id');
         $departments->prepend('N/A', '');
 
-        $parents = \App\Asset::active()->orderBy('name')->pluck('name', 'id');
+        $parents = \App\Models\Asset::active()->orderBy('name')->pluck('name', 'id');
         $parents->prepend('N/A', '');
 
-        $locations = \App\Location::orderBy('name')->pluck('name', 'id');
+        $locations = \App\Models\Location::orderBy('name')->pluck('name', 'id');
         $locations->prepend('N/A', '');
 
-        $vendors = \App\Contact::vendors()->orderBy('organization_name')->pluck('organization_name', 'id');
+        $vendors = \App\Models\Contact::vendors()->orderBy('organization_name')->pluck('organization_name', 'id');
         $vendors->prepend('N/A', '');
 
-        $uoms_electric = \App\Uom::electric()->orderBy('unit_name')->pluck('unit_name', 'id');
+        $uoms_electric = \App\Models\Uom::electric()->orderBy('unit_name')->pluck('unit_name', 'id');
         $uoms_electric->prepend('N/A', '');
-        $uoms_length = \App\Uom::length()->orderBy('unit_name')->pluck('unit_name', 'id');
+        $uoms_length = \App\Models\Uom::length()->orderBy('unit_name')->pluck('unit_name', 'id');
         $uoms_length->prepend('N/A', '');
-        $uoms_weight = \App\Uom::weight()->orderBy('unit_name')->pluck('unit_name', 'id');
+        $uoms_weight = \App\Models\Uom::weight()->orderBy('unit_name')->pluck('unit_name', 'id');
         $uoms_weight->prepend('N/A', '');
-        $uoms_time = \App\Uom::time()->orderBy('unit_name')->pluck('unit_name', 'id');
+        $uoms_time = \App\Models\Uom::time()->orderBy('unit_name')->pluck('unit_name', 'id');
         $uoms_time->prepend('N/A', '');
-        $uoms_capacity = \App\Uom::orderBy('unit_name')->pluck('unit_name', 'id');
+        $uoms_capacity = \App\Models\Uom::orderBy('unit_name')->pluck('unit_name', 'id');
         $uoms_capacity->prepend('N/A', '');
         // TODO: determine and set up various depreciation types
         $depreciation_types = [''=>'N/A'];
@@ -151,7 +151,7 @@ class AssetController extends Controller
     {
         $this->authorize('create-asset');
 
-        $asset = new \App\Asset;
+        $asset = new \App\Models\Asset;
         //General info
         $asset->name = $request->input('name');
         $asset->asset_type_id = $request->input('asset_type_id');
@@ -239,8 +239,8 @@ class AssetController extends Controller
     {
         $this->authorize('show-asset');
 
-        $asset = \App\Asset::findOrFail($id);
-        $files = \App\Attachment::whereEntity('asset')->whereEntityId($asset->id)->whereFileTypeId(config('polanco.file_type.asset_attachment'))->get();
+        $asset = \App\Models\Asset::findOrFail($id);
+        $files = \App\Models\Attachment::whereEntity('asset')->whereEntityId($asset->id)->whereFileTypeId(config('polanco.file_type.asset_attachment'))->get();
 
         return view('assets.show', compact('asset', 'files'));
     }
@@ -255,32 +255,32 @@ class AssetController extends Controller
     {
         $this->authorize('update-asset');
 
-        $asset = \App\Asset::findOrFail($id);
+        $asset = \App\Models\Asset::findOrFail($id);
 
-        $asset_types = \App\AssetType::active()->orderBy('label')->pluck('label', 'id');
+        $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
         $asset_types->prepend('N/A', '');
 
-        $departments = \App\Department::active()->orderBy('label')->pluck('label', 'id');
+        $departments = \App\Models\Department::active()->orderBy('label')->pluck('label', 'id');
         $departments->prepend('N/A', '');
 
-        $parents = \App\Asset::active()->orderBy('name')->pluck('name', 'id');
+        $parents = \App\Models\Asset::active()->orderBy('name')->pluck('name', 'id');
         $parents->prepend('N/A', '');
 
-        $locations = \App\Location::orderBy('name')->pluck('name', 'id');
+        $locations = \App\Models\Location::orderBy('name')->pluck('name', 'id');
         $locations->prepend('N/A', '');
 
-        $vendors = \App\Contact::vendors()->orderBy('organization_name')->pluck('organization_name', 'id');
+        $vendors = \App\Models\Contact::vendors()->orderBy('organization_name')->pluck('organization_name', 'id');
         $vendors->prepend('N/A', '');
 
-        $uoms_electric = \App\Uom::electric()->orderBy('unit_name')->pluck('unit_name', 'id');
+        $uoms_electric = \App\Models\Uom::electric()->orderBy('unit_name')->pluck('unit_name', 'id');
         $uoms_electric->prepend('N/A', '');
-        $uoms_length = \App\Uom::length()->orderBy('unit_name')->pluck('unit_name', 'id');
+        $uoms_length = \App\Models\Uom::length()->orderBy('unit_name')->pluck('unit_name', 'id');
         $uoms_length->prepend('N/A', '');
-        $uoms_weight = \App\Uom::weight()->orderBy('unit_name')->pluck('unit_name', 'id');
+        $uoms_weight = \App\Models\Uom::weight()->orderBy('unit_name')->pluck('unit_name', 'id');
         $uoms_weight->prepend('N/A', '');
-        $uoms_time = \App\Uom::time()->orderBy('unit_name')->pluck('unit_name', 'id');
+        $uoms_time = \App\Models\Uom::time()->orderBy('unit_name')->pluck('unit_name', 'id');
         $uoms_time->prepend('N/A', '');
-        $uoms_capacity = \App\Uom::orderBy('unit_name')->pluck('unit_name', 'id');
+        $uoms_capacity = \App\Models\Uom::orderBy('unit_name')->pluck('unit_name', 'id');
         $uoms_capacity->prepend('N/A', '');
         // TODO: determine and set up various depreciation types
         $depreciation_types = [0=>'N/A'];
@@ -299,7 +299,7 @@ class AssetController extends Controller
     {
         $this->authorize('update-asset');
 
-        $asset = \App\Asset::findOrFail($id);
+        $asset = \App\Models\Asset::findOrFail($id);
 
         //General info
         $asset->name = $request->input('name');
@@ -393,9 +393,9 @@ class AssetController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-asset');
-        $asset = \App\Asset::findOrFail($id);
+        $asset = \App\Models\Asset::findOrFail($id);
 
-        \App\Asset::destroy($id);
+        \App\Models\Asset::destroy($id);
         flash('Asset: '.$asset->name.' deleted')->warning()->important();
 
         return Redirect::action('AssetController@index');

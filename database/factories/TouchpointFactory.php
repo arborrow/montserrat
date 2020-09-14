@@ -4,7 +4,7 @@
 
 namespace Database\Factories;
 
-use App\Contact;
+use App\Models\Contact;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TouchpointFactory extends Factory
@@ -14,7 +14,7 @@ class TouchpointFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Touchpoint::class;
+    protected $model = \App\Models\Touchpoint::class;
 
     /**
      * Define the model's default state.

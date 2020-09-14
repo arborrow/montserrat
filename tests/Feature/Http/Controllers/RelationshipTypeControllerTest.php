@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\RelationshipType;
+use App\Models\RelationshipType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -62,7 +62,7 @@ class RelationshipTypeControllerTest extends TestCase
             case 'Husband':
             case 'Sibling':
             case 'Employee':
-                $relationship_type_id = \App\RelationshipType::whereNameAB($relationship_type)->first();
+                $relationship_type_id = \App\Models\RelationshipType::whereNameAB($relationship_type)->first();
                 $response->assertRedirect(route('relationship_type.add', ['id' => $relationship_type_id->id, 'a' => $contact->id]));
                 break;
             case 'Parent':
@@ -71,7 +71,7 @@ class RelationshipTypeControllerTest extends TestCase
             case 'Volunteer':
             case 'Parishioner':
             case 'Primary contact':
-                $relationship_type_id = \App\RelationshipType::whereNameBA($relationship_type)->first();
+                $relationship_type_id = \App\Models\RelationshipType::whereNameBA($relationship_type)->first();
                 $response->assertRedirect(route('relationship_type.add', ['id' => $relationship_type_id->id, 'a' => 0, 'b' => $contact->id]));
                 break;
             }
@@ -304,7 +304,7 @@ class RelationshipTypeControllerTest extends TestCase
 
         ]);
         // dd($response,$relationship_type->id);
-        $updated = \App\RelationshipType::findOrFail($relationship_type->id);
+        $updated = \App\Models\RelationshipType::findOrFail($relationship_type->id);
 
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('RelationshipTypeController@index'));

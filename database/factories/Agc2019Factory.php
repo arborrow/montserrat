@@ -13,7 +13,7 @@ class Agc2019Factory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Agc2019::class;
+    protected $model = \App\Models\Agc2019::class;
 
     /**
      * Define the model's default state.

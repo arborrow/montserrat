@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Contact;
-use App\Organization;
+use App\Models\Contact;
+use App\Models\Organization;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -54,7 +54,7 @@ class OrganizationControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-contact');
         $organization = Organization::factory()->create();
-        $organization = \App\Contact::findOrFail($organization->id);
+        $organization = \App\Models\Contact::findOrFail($organization->id);
 
         $organization_note = Note::factory()->create([
             'entity_table' => 'contact',
@@ -256,7 +256,7 @@ class OrganizationControllerTest extends TestCase
           'sort_name' => $organization_name,
         ]);
 
-        $updated = \App\Contact::find($organization->id);
+        $updated = \App\Models\Contact::find($organization->id);
 
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('OrganizationController@show', $organization->id));

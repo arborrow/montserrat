@@ -13,7 +13,7 @@ class GenderFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\Gender::class;
+    protected $model = \App\Models\Gender::class;
 
     /**
      * Define the model's default state.

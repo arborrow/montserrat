@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Diocese;
+use App\Models\Diocese;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -54,7 +54,7 @@ class DioceseControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-contact');
         $diocese = Diocese::factory()->create();
-        $diocese = \App\Contact::findOrFail($diocese->id);
+        $diocese = \App\Models\Contact::findOrFail($diocese->id);
         $main_address = Address::factory()->create([
             'contact_id' => $diocese->id,
             'location_type_id' => config('polanco.location_type.main'),
@@ -117,7 +117,7 @@ class DioceseControllerTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)->get(route('diocese.edit', [$diocese]));
-        $contact = \App\Contact::findOrFail($diocese->id);
+        $contact = \App\Models\Contact::findOrFail($diocese->id);
         $response->assertOk();
         $response->assertViewIs('dioceses.edit');
         $response->assertViewHas('diocese');

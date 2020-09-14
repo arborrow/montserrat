@@ -13,7 +13,7 @@ class ParticipantRoleTypeFactory extends Factory
      *
      * @var string
      */
-    protected $model = \App\ParticipantRoleType::class;
+    protected $model = \App\Models\ParticipantRoleType::class;
 
     /**
      * Define the model's default state.

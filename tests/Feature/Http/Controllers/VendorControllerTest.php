@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Vendor;
+use App\Models\Vendor;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -53,7 +53,7 @@ class VendorControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-contact');
         $vendor = Vendor::factory()->create();
-        $vendor = \App\Contact::findOrFail($vendor->id);
+        $vendor = \App\Models\Contact::findOrFail($vendor->id);
         $vendor_note = Note::factory()->create([
             'entity_table' => 'contact',
             'entity_id' => $vendor->id,
@@ -244,7 +244,7 @@ class VendorControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('VendorController@show', $vendor->id));
 
-        $updated = \App\Contact::find($vendor->id);
+        $updated = \App\Models\Contact::find($vendor->id);
 
         $response->assertRedirect(action('VendorController@show', $vendor->id));
         $this->assertEquals($updated->sort_name, $vendor_name);
