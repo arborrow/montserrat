@@ -82,6 +82,7 @@ Route::group(['middleware' => ['web', 'activity']], function () {
         Route::resource('audit', 'AuditController');
         Route::resource('department', 'DepartmentController');
         Route::resource('donation_type', 'DonationTypeController');
+        Route::resource('export_list', 'ExportListController');
         Route::resource('location', 'LocationController');
         Route::get('location/type/{type?}', 'LocationController@index_type');
         Route::resource('permission', 'PermissionController');
