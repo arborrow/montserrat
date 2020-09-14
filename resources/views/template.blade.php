@@ -134,6 +134,7 @@
 							<a class="dropdown-item" href={{ route('user.index') }}>Users</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href={{ route('donation_type.index') }}>Donation types</a>
+							<a class="dropdown-item" href={{ route('export_list.index') }}>Export lists</a>
 							<a class="dropdown-item" href={{ route('snippet.index') }}>Snippets</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href={{ route('activity') }}>Activity log</a>
