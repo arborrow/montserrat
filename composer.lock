@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e4275b6e9a194faafd5c19902d9c7776",
+    "content-hash": "32ec0266e8abc5164339ae08f69c840b",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4850,6 +4850,57 @@
             "time": "2020-09-09T08:15:16+00:00"
         },
         {
+            "name": "stuyam/laravel-phone-validator",
+            "version": "1.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stuyam/laravel-phone-validator.git",
+                "reference": "2c99e643f0eb771fd683c91e0636fe96245376d3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stuyam/laravel-phone-validator/zipball/2c99e643f0eb771fd683c91e0636fe96245376d3",
+                "reference": "2c99e643f0eb771fd683c91e0636fe96245376d3",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^5.0|^6.0|^7.0|^8.0",
+                "twilio/sdk": "^5.0|^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "StuYam\\PhoneValidator\\PhoneValidatorServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "StuYam\\PhoneValidator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stuart Yamartino",
+                    "email": "stuartyamartino@gmail.com"
+                }
+            ],
+            "description": "A phone validator for Laravel using the free Twilio phone lookup service.",
+            "keywords": [
+                "laravel",
+                "phone",
+                "twilio",
+                "validation",
+                "validator"
+            ],
+            "time": "2020-09-14T19:45:01+00:00"
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "v6.2.3",
             "source": {
@@ -7168,6 +7219,56 @@
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
             "time": "2020-07-13T06:12:54+00:00"
+        },
+        {
+            "name": "twilio/sdk",
+            "version": "6.10.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twilio/twilio-php.git",
+                "reference": "1fc7b861f0df7302554a88f2c03b2d76ab184dd0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/1fc7b861f0df7302554a88f2c03b2d76ab184dd0",
+                "reference": "1fc7b861f0df7302554a88f2c03b2d76ab184dd0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "require-dev": {
+                "guzzlehttp/guzzle": "^6.3 || ^7.0",
+                "phpunit/phpunit": ">=4.5",
+                "theseer/phpdox": "^0.12.0"
+            },
+            "suggest": {
+                "guzzlehttp/guzzle": "An HTTP client to execute the API requests"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Twilio\\": "src/Twilio/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Twilio API Team",
+                    "email": "api@twilio.com"
+                }
+            ],
+            "description": "A PHP wrapper for Twilio's API",
+            "homepage": "http://github.com/twilio/twilio-php",
+            "keywords": [
+                "api",
+                "sms",
+                "twilio"
+            ],
+            "time": "2020-09-02T20:08:41+00:00"
         },
         {
             "name": "vinkla/hashids",
