@@ -140,4 +140,22 @@ class ExportListController extends Controller
         return Redirect::action('ExportListController@index');
     }
 
+    /**
+     * Setup and export to CSV the Annual Giving Campaign (AGC) export/mailing list
+     *
+     * @param  ExportListAGCRequest  $request
+     * @return \Illuminate\Http\Response
+     *
+     */
+    public function agc(ExportListAGCRequest $request)
+    {
+        $this->authorize('show-export-list');
+        $id = $request->input('id');
+        $export_list = \App\ExportList::findOrFail($id);
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
+        return Redirect::action('ExportListController@index');
+    }
+
+
 }
