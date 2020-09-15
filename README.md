@@ -60,7 +60,9 @@ Application key [...] set successfully.
 #### Setting the Key
 Copy the text inside the `[]` and uncomment `APP_KEY={app_key}` in your `.env` file. Replace `{app_key}` with the copied text.
 
-### Step 6: Generate a Google People API for SocialLite Login
+### Step 6: Generate API keys (Google People API for SocialLite Login & Twilio)
+
+#### Google+ API for SocialLite
 Navigate to [Google Cloud Console](https://console.cloud.google.com/) and login in with your preferred Google account.
 
 * Create a new project
@@ -70,13 +72,25 @@ Navigate to [Google Cloud Console](https://console.cloud.google.com/) and login 
 * Enable the API and create a new OAuth client ID.
 * Set your redirect URI as `http://localhost:8000/login/google/callback`
 
-#### Setting Client ID and Secret
+#### Twilio
+Navigate to [Twilio](https://www.twilio.com/) and login/signup.
+
+* Navigate to your console.
+* Navigate to your dashboard where you will see `ACCOUNT SID` and `AUTH TOKEN`.
+* Navigate to Phone Numbers and under Active Numbers create a new number.
+
+#### Set .env variables
 Uncomment the following lines in your `.env` file
 ```
 GOOGLE_CLIENT_ID={google_client_id}
 GOOGLE_CLIENT_SECRET={google_client_secret}
+
+TWILIO_SID={twilio_sid}
+TWILIO_TOKEN={twilio_token}
 ```
-Replace `{google_client_id}` with your `client ID` and `{google_client_secret}` with your `client secret`.
+For **Google People API** replace `{google_client_id}` with your `client ID` and `{google_client_secret}` with your `client secret`.
+
+For **Twilio** replace `{twilio_sid}` with your `ACCOUNT SID`, `{twilio_token}` with your `AUTH TOKEN`, and `{twilio_number}` with your Twilio phone number. (Do not add dashes and parentheses.)
 
 ### Step 7: Get Proper Permissions
 Once you have done everything above navigate to `localhost:8000`. Once you login using Google Auth, your user will not have any role assigned to it. Hence you will not be able to do anything. **You must do this before trying to get superuser access**
@@ -92,7 +106,7 @@ The command above will assign the very first user as the superuser. The command 
 You're all set!
 
 ### Step 9: Testing
-Prior to committing code changes, it is suggested to run the phpunit tests. Test development remains a work in progress. The test environment requires extensive setup and makes use of a fresh MySQL database. The initial database migration and seeding helps to ensure that things are setup to run well. It is recommended that you copy the .env.example file and set it up to use a testing database. Then migrate and seed the database. 
+Prior to committing code changes, it is suggested to run the phpunit tests. Test development remains a work in progress. The test environment requires extensive setup and makes use of a fresh MySQL database. The initial database migration and seeding helps to ensure that things are setup to run well. It is recommended that you copy the .env.example file and set it up to use a testing database. Then migrate and seed the database.
 
 * php artisan --env=testing migrate:fresh --seed
 * php artisan --env=testing db:seed --class=TestPermissionRolesSeeder
