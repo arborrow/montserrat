@@ -48,8 +48,6 @@
                         {!! Form::label('fields', 'Fields') !!}
                         {!! Form::textarea('fields', NULL , ['class' => 'form-control']) !!}
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-12 col-md-4">
                         {!! Form::label('filters', 'Filters') !!}
                         {!! Form::textarea('filters', NULL , ['class' => 'form-control']) !!}

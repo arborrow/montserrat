@@ -3,6 +3,7 @@
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
 use Faker\Generator as Faker;
+use Carbon\Carbon;
 
 $factory->define(App\ExportList::class, function (Faker $faker) {
     $label = $faker->word;
@@ -17,7 +18,7 @@ $factory->define(App\ExportList::class, function (Faker $faker) {
         'fields' => 'Fields for '.$type,
         'filters' => 'Filters for '.$type,
         'start_date' => $start_date,
-        'end_date' => $end_date
+        'end_date' => $end_date,
         'last_run_date' => $faker->dateTimeBetween($startDate = '-6 months', $endDate = 'now', $timezone = null),
         'end_date' => $faker->dateTimeBetween($startDate = 'now', $endDate = '+1 year', $timezone = null),
     ];
