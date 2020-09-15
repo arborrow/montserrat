@@ -60,7 +60,7 @@ Application key [...] set successfully.
 #### Setting the Key
 Copy the text inside the `[]` and uncomment `APP_KEY={app_key}` in your `.env` file. Replace `{app_key}` with the copied text.
 
-### Step 6: Generate API keys (Google People API for SocialLite Login & Twilio)
+### Step 6: Generate API keys (Google People API for SocialLite Login, Twilio, and Google Calendar)
 
 #### Google+ API for SocialLite
 Navigate to [Google Cloud Console](https://console.cloud.google.com/) and login in with your preferred Google account.
@@ -87,10 +87,14 @@ GOOGLE_CLIENT_SECRET={google_client_secret}
 
 TWILIO_SID={twilio_sid}
 TWILIO_TOKEN={twilio_token}
+
+GOOGLE_CALENDAR_ID={google_calendar_id}
 ```
 For **Google People API** replace `{google_client_id}` with your `client ID` and `{google_client_secret}` with your `client secret`.
 
 For **Twilio** replace `{twilio_sid}` with your `ACCOUNT SID`, `{twilio_token}` with your `AUTH TOKEN`, and `{twilio_number}` with your Twilio phone number. (Do not add dashes and parentheses.)
+
+For **Google Calendar** replace `{google_calendar_id}` with your `Calendar ID`. See [here](https://github.com/spatie/laravel-google-calendar#how-to-obtain-the-credentials-to-communicate-with-google-calendar) for more instructions on how to obtain the Google calendar ID.
 
 ### Step 7: Get Proper Permissions
 Once you have done everything above navigate to `localhost:8000`. Once you login using Google Auth, your user will not have any role assigned to it. Hence you will not be able to do anything. **You must do this before trying to get superuser access**
