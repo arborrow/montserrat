@@ -1745,8 +1745,6 @@ class PersonController extends Controller
         $this->authorize('update-relationship');
         $this->authorize('update-attachment');
         $this->authorize('update-touchpoint');
-        $this->authorize('update-donation');
-        $this->authorize('update-payment');
 
         $contact = \App\Contact::findOrFail($contact_id);
         $similar = \App\Contact::whereSortName($contact->sort_name)->get();
