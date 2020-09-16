@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\StoreExportListRequest;
 use App\Http\Requests\UpdateExportListRequest;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ExportListController extends Controller
 {
@@ -147,14 +149,85 @@ class ExportListController extends Controller
      * @return \Illuminate\Http\Response
      *
      */
-    public function agc(ExportListAGCRequest $request)
+//    public function agc(ExportListAGCRequest $request)
+    public function agc()
     {
         $this->authorize('show-export-list');
-        $id = $request->input('id');
-        $export_list = \App\ExportList::findOrFail($id);
-        $start_date = $request->input('start_date');
-        $end_date = $request->input('end_date');
+        // $id = $request->input('id');
+        // $export_list = \App\ExportList::findOrFail($id);
+        // $start_date = $request->input('start_date');
+        // $end_date = $request->input('end_date');
+        $start_date = new Carbon('2016-01-01 00:00:00');
+        $end_date = Carbon::now();
+        // dd($start_date,$end_date);
+
+/* get by collection
+        $participants = \App\Registration::with('event','contact.address_primary','contact.prefix','contact.suffix')
+        ->whereNull('canceled_at')
+        ->whereHas('event', function($q) use ($start_date){
+            $q->where('start_date', '>=', $start_date);
+        })
+        ->whereHas('event', function($q) use ($end_date){
+            $q->where('start_date', '<', $end_date);
+        })
+        ->whereHas('contact', function($q) {
+                $q->whereContactType(1)
+                ->whereDoNotMail(0)
+                ->whereIsDeceased(0);
+        })
+        ->whereHas('contact.address_primary', function($q) {
+                $q->with('state','country')
+                ->whereIsPrimary(1)
+                ->whereNotNull('street_address');
+        })
+        ->groupBy('contact_id')
+        ->get();
+
+        $donors = \App\Donation::with('payments','contact.address_primary.state','contact.address_primary.country','contact.prefix','contact.suffix')
+        ->where('donation_amount','>',0)
+        ->whereHas('payments', function($q) use ($start_date, $end_date){
+            $q->where('payment_date', '>=', $start_date)
+            ->where('payment_date', '<', $end_date);
+        })
+        ->whereHas('contact', function($q) {
+                $q->whereContactType(1)
+                ->whereDoNotMail(0)
+                ->whereIsDeceased(0);
+        })
+        ->whereHas('contact.address_primary', function($q) {
+                $q->with('state','country')
+                ->whereIsPrimary(1)
+                ->whereNotNull('street_address');
+        })
+        ->groupBy('contact_id')
+        ->get();
+
+        */
+
+        $participants = DB::table('participant')
+        ->distinct()
+        ->select('participant.contact_id','prefix.name','contact.first_name','contact.last_name','contact.sort_name','contact.display_name','address.street_address','address.supplemental_address_1','address.city','state_province.abbreviation','address.postal_code')
+        ->leftJoin('contact','participant.contact_id','=','contact.id')
+        ->leftJoin('prefix','prefix.id','=','contact.prefix_id')
+        ->leftJoin('event','event.id','=','participant.event_id')
+        ->leftJoin('address','address.contact_id','=','participant.contact_id')
+        ->leftJoin('state_province','state_province.id','=','address.state_province_id')
+        ->whereNull('participant.canceled_at')
+        ->whereNull('participant.deleted_at')
+        ->whereNull('address.deleted_at')
+        ->where('event.start_date','>=',$start_date)
+        ->where('event.start_date','<',$end_date)
+        ->where('contact.do_not_mail','=',0)
+        ->where('contact.is_deceased','=',0)
+        ->where('contact.contact_type','=',1)
+        ->where('address.is_primary','=',1)
+        ->whereNull('address.deleted_at')
+        ->whereNotNull('address.street_address')
+        ->orderBy('contact.sort_name')->get();
+        dd($participants->get());
         return Redirect::action('ExportListController@index');
+
+
     }
 
 
