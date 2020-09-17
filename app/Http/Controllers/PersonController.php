@@ -1927,8 +1927,9 @@ class PersonController extends Controller
                 $donation->contact_id = $contact_id;
                 $donation->save();
             }
+            // only show flash after a successful merge
+            flash('Contact ID#: '.$merge_id . ' merged with Contact ID#: '.$contact_id)->warning()->important();
         }
-        flash('Contact ID#: '.$merge_id . ' merged with Contact ID#: '.$contact_id)->warning()->important();
         return view('persons.merge', compact('contact', 'duplicates'));
     }
 }
