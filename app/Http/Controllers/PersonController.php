@@ -167,6 +167,14 @@ class PersonController extends Controller
         }
 
         $person->save();
+
+        if (null !== $request->input('agc_household_name')) {
+            $agc2019 = \App\Agc2019::findOrNew($person->id);
+            $agc2019->contact_id = $person->id;
+            $agc2019->household_name = $request->input('agc_household_name');
+            $agc2019->save();
+        }
+
         if (null !== $request->file('avatar')) {
             $description = 'Avatar for '.$person->full_name;
             $attachment = new AttachmentController;
@@ -1502,11 +1510,10 @@ class PersonController extends Controller
         }
 
         if (null !== $request->input('agc_household_name')) {
-            $agc2019 = \App\Agc2019::find($person->id);
-            if (isset($agc2019->contact_id)) {
-                $agc2019->household_name = $request->input('agc_household_name');
-                $agc2019->save();
-            }
+            $agc2019 = \App\Agc2019::findOrNew($person->id);
+            $agc2019->contact_id = $person->id;
+            $agc2019->household_name = $request->input('agc_household_name');
+            $agc2019->save();
         }
 
         flash('Person: <a href="'. url('/person/'.$person->id) . '">'.$person->display_name.'</a> updated')->success();
