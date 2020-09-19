@@ -61,7 +61,6 @@ class AssetTypeControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('description', $asset_type->description, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('is_active', $asset_type->is_active, 'checkbox', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('parent_asset_type_id', $asset_type->event_id, 'select', $response->getContent()));
-
     }
 
     /**
@@ -150,12 +149,11 @@ class AssetTypeControllerTest extends TestCase
           'parent_asset_type_id' => $parent_asset_type->id,
         ]);
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('AssetTypeController@show',$asset_type->id));
+        $response->assertRedirect(action('AssetTypeController@show', $asset_type->id));
         // var_dump($asset_type);
         $updated = \App\AssetType::findOrFail($asset_type->id);
         $this->assertEquals($updated->name, $new_asset_type_name);
         $this->assertNotEquals($updated->name, $original_asset_type_name);
-
     }
 
     // test cases...

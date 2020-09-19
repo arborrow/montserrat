@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
-
 class Donation extends Model implements Auditable
 {
     use SoftDeletes;
@@ -17,15 +16,16 @@ class Donation extends Model implements Auditable
     protected $dates = ['start_date', 'end_date', 'donation_date'];
     protected $primaryKey = 'donation_id';
     protected $appends = ['payments_paid'];
-    protected $casts = ['donation_amount' => 'decimal:2' , 'donation_install' => 'decimal:2'];
+    protected $casts = ['donation_amount' => 'decimal:2', 'donation_install' => 'decimal:2'];
 
     public function generateTags(): array
-        {
-            return [
+    {
+        return [
                 $this->contact->sort_name,
                 $this->RetreatIdnumber,
             ];
-        }
+    }
+
     public function contact()
     {
         return $this->belongsTo(Contact::class, 'contact_id', 'id');
@@ -41,7 +41,8 @@ class Donation extends Model implements Auditable
         return $this->hasOne(Retreat::class, 'id', 'event_id');
     }
 
-    public function description() {
+    public function description()
+    {
         return $this->hasOne(DonationType::class, 'name', 'donation_description');
     }
 

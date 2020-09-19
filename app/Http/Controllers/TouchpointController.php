@@ -29,22 +29,21 @@ class TouchpointController extends Controller
     {
         $this->authorize('show-touchpoint');
 
-        $staff = \App\Touchpoint::groupBy('staff_id')->select('staff_id')->with('staff')->get()->sortBy('staff.sort_name')->pluck('staff.sort_name','staff_id');
+        $staff = \App\Touchpoint::groupBy('staff_id')->select('staff_id')->with('staff')->get()->sortBy('staff.sort_name')->pluck('staff.sort_name', 'staff_id');
         $touchpoints = \App\Touchpoint::orderBy('touched_at', 'desc')->with('person', 'staff')->paginate(100);
 
-        return view('touchpoints.index', compact('touchpoints','staff'));
+        return view('touchpoints.index', compact('touchpoints', 'staff'));
     }
 
     public function index_type($staff_id = null)
     {
         $this->authorize('show-touchpoint');
 
-        $staff = \App\Touchpoint::groupBy('staff_id')->select('staff_id')->with('staff')->get()->sortBy('staff.sort_name')->pluck('staff.sort_name','staff_id');
+        $staff = \App\Touchpoint::groupBy('staff_id')->select('staff_id')->with('staff')->get()->sortBy('staff.sort_name')->pluck('staff.sort_name', 'staff_id');
         $touchpoints = \App\Touchpoint::whereStaffId($staff_id)->orderBy('touched_at', 'desc')->with('person', 'staff')->paginate(100);
 
         return view('touchpoints.index', compact('touchpoints', 'staff'));   //
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -185,7 +184,7 @@ class TouchpointController extends Controller
         $touchpoint->notes = $request->input('notes');
         $touchpoint->save();
 
-        flash ('Touchpoint ID#: <a href="'. url('/touchpoint/'.$touchpoint->id) . '">'.$touchpoint->id.'</a> added')->success();
+        flash('Touchpoint ID#: <a href="'.url('/touchpoint/'.$touchpoint->id).'">'.$touchpoint->id.'</a> added')->success();
 
         return Redirect::action('TouchpointController@index');
     }
@@ -206,7 +205,8 @@ class TouchpointController extends Controller
             $touchpoint->save();
         }
 
-        flash ('Touchpoint added for members of group: <a href="'. url('/group/'.$group_id) . '">'.$group->name.'</a>')->success();
+        flash('Touchpoint added for members of group: <a href="'.url('/group/'.$group_id).'">'.$group->name.'</a>')->success();
+
         return Redirect::action('GroupController@show', $group_id);
     }
 
@@ -226,7 +226,8 @@ class TouchpointController extends Controller
             $touchpoint->save();
         }
 
-        flash ('Touchpoint added for registered event participants: <a href="'. url('/retreat/'.$event_id) . '">'.$event->title.'</a>')->success();
+        flash('Touchpoint added for registered event participants: <a href="'.url('/retreat/'.$event_id).'">'.$event->title.'</a>')->success();
+
         return Redirect::action('RetreatController@show', $event_id);
     }
 
@@ -246,7 +247,8 @@ class TouchpointController extends Controller
             $touchpoint->save();
         }
 
-        flash ('Touchpoint added for waitlisted event participants: <a href="'. url('/retreat/'.$event_id) . '">'.$event->title.'</a>')->success();
+        flash('Touchpoint added for waitlisted event participants: <a href="'.url('/retreat/'.$event_id).'">'.$event->title.'</a>')->success();
+
         return Redirect::action('RetreatController@show', $event_id);
     }
 
@@ -317,7 +319,8 @@ class TouchpointController extends Controller
         $touchpoint->notes = $request->input('notes');
         $touchpoint->save();
 
-        flash ('Touchpoint ID#: <a href="'. url('/touchpoint/'.$touchpoint->id) . '">'.$touchpoint->id.'</a> updated')->success();
+        flash('Touchpoint ID#: <a href="'.url('/touchpoint/'.$touchpoint->id).'">'.$touchpoint->id.'</a> updated')->success();
+
         return Redirect::action('TouchpointController@index');
     }
 
@@ -333,7 +336,8 @@ class TouchpointController extends Controller
 
         \App\Touchpoint::destroy($id);
 
-        flash('Touchpoint ID#: '.$id . ' deleted')->warning()->important();
+        flash('Touchpoint ID#: '.$id.' deleted')->warning()->important();
+
         return Redirect::action('TouchpointController@index');
     }
 }

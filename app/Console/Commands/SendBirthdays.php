@@ -4,11 +4,10 @@ namespace App\Console\Commands;
 
 use App\Contact;
 use App\Mail\RetreatantBirthday;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use Carbon\Carbon;
-
 
 class SendBirthdays extends Command
 {
@@ -47,10 +46,10 @@ class SendBirthdays extends Command
         $receivers = $receivers->birthdayEmailReceivers();
         // get and store birthday snippets
         $snippets = \App\Snippet::whereTitle('birthday')->get();
-                foreach ($snippets as $snippet) {
-                    $decoded = html_entity_decode($snippet->snippet,ENT_QUOTES | ENT_XML1);
-                    Storage::put('views/snippets/'.$snippet->title.'/'.$snippet->locale.'/'.$snippet->label.'.blade.php',$decoded);
-                }
+        foreach ($snippets as $snippet) {
+            $decoded = html_entity_decode($snippet->snippet, ENT_QUOTES | ENT_XML1);
+            Storage::put('views/snippets/'.$snippet->title.'/'.$snippet->locale.'/'.$snippet->label.'.blade.php', $decoded);
+        }
         // prepare touchpoint by getting Polanco's contact.id
         // TODO: create Juan Alfonso de Polanco contact in seeder; however, if it does not exist use self id from polanco config
         $alfonso = \App\Contact::where('display_name', 'Juan Alfonso de Polanco')->first();
@@ -59,7 +58,6 @@ class SendBirthdays extends Command
         }
         // for each receiver create a touchpoint and if able to send an email document success otherwise document failed email
         foreach ($receivers as $key => $receiver) {
-
             $touchpoint = new \App\Touchpoint();
             $touchpoint->person_id = $receiver->id;
             $touchpoint->staff_id = $alfonso->id;

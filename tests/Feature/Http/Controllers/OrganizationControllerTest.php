@@ -44,7 +44,6 @@ class OrganizationControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('OrganizationController@index'));
         $this->assertSoftDeleted($organization);
-
     }
 
     /**
@@ -86,7 +85,6 @@ class OrganizationControllerTest extends TestCase
             'is_primary' => 1,
             'location_type_id' => config('polanco.location_type.main'),
         ]);
-
 
         $url_main = factory(\App\Website::class)->create([
             'contact_id' => $organization->id,
@@ -150,7 +148,6 @@ class OrganizationControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('url_instagram', $url_instagram->url, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('url_linkedin', $url_linkedin->url, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('url_twitter', $url_twitter->url, 'text', $response->getContent()));
-
     }
 
     /**
@@ -202,7 +199,6 @@ class OrganizationControllerTest extends TestCase
         $response->assertViewHas('files');
         $response->assertViewHas('relationship_types');
         $response->assertSeeText($organization->organization_name);
-
     }
 
     /**
@@ -265,7 +261,6 @@ class OrganizationControllerTest extends TestCase
         $response->assertRedirect(action('OrganizationController@show', $organization->id));
         $this->assertEquals($updated->sort_name, $organization_name);
         $this->assertNotEquals($updated->organization_name, $original_name);
-
     }
 
     /**

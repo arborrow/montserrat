@@ -81,7 +81,6 @@ class SnippetControllerTest extends TestCase
         $response->assertSeeText('Snippets');
     }
 
-
     /**
      * @test
      */
@@ -151,7 +150,6 @@ class SnippetControllerTest extends TestCase
         ]);
     }
 
-
     /**
      * @test
      */
@@ -171,7 +169,6 @@ class SnippetControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
     }
 
-
     /**
      * @test
      */
@@ -183,7 +180,6 @@ class SnippetControllerTest extends TestCase
             \App\Http\Requests\StoreSnippetRequest::class
         );
     }
-
 
     /**
      * @test
@@ -216,7 +212,6 @@ class SnippetControllerTest extends TestCase
         );
     }
 
-
     /**
      * @test
      */
@@ -227,7 +222,7 @@ class SnippetControllerTest extends TestCase
         $snippet = factory(\App\Snippet::class)->create();
 
         $original_title = $snippet->title;
-        $new_title = 'New ' . $this->faker->words(2, true);
+        $new_title = 'New '.$this->faker->words(2, true);
 
         $response = $this->actingAs($user)->put(route('snippet.update', [$snippet]), [
           'id' => $snippet->id,
@@ -257,7 +252,6 @@ class SnippetControllerTest extends TestCase
             \App\Http\Requests\UpdateSnippetRequest::class
         );
     }
-
 
     // test cases...
 }

@@ -43,7 +43,7 @@ class UpdateRetreatRequestTest extends TestCase
         $actual = $this->subject->rules();
         // dd($this->id);
         $this->assertEquals([
-            'idnumber' => ['alpha_dash','required', Rule::unique('event')->ignore($this->id)->whereNull('deleted_at')],
+            'idnumber' => ['alpha_dash', 'required', Rule::unique('event')->ignore($this->id)->whereNull('deleted_at')],
             'start_date' => 'required|date|before:end_date',
             'end_date' => 'required|date|after:start_date',
             'title' => 'required',

@@ -28,10 +28,11 @@ class Department extends Model implements Auditable
 
     public function parent()
     {
-        return $this->hasOne(Department::class, 'id', 'parent_id');
+        return $this->hasOne(self::class, 'id', 'parent_id');
     }
 
-    public function getParentLabelAttribute() {
+    public function getParentLabelAttribute()
+    {
         if (isset($this->parent->label)) {
             return $this->parent->label;
         } else {
@@ -39,12 +40,12 @@ class Department extends Model implements Auditable
         }
     }
 
-    public function getParentNameAttribute() {
+    public function getParentNameAttribute()
+    {
         if (isset($this->parent->name)) {
             return $this->parent->name;
         } else {
             return 'N/A';
         }
     }
-
 }

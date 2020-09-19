@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\StoreAssetTypeRequest;
 use App\Http\Requests\UpdateAssetTypeRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class AssetTypeController extends Controller
 {
@@ -31,8 +31,8 @@ class AssetTypeController extends Controller
     public function create()
     {
         $this->authorize('create-asset-type');
-        $asset_types = \App\AssetType::active()->orderBy('label')->pluck('label','id');
-        $asset_types->prepend('N/A',0);
+        $asset_types = \App\AssetType::active()->orderBy('label')->pluck('label', 'id');
+        $asset_types->prepend('N/A', 0);
 
         return view('admin.asset_types.create', compact('asset_types'));
     }
@@ -56,7 +56,8 @@ class AssetTypeController extends Controller
 
         $asset_type->save();
 
-        flash('Asset type: <a href="'. url('/admin/asset_type/'.$asset_type->id) . '">'.$asset_type->name.'</a> added')->success();
+        flash('Asset type: <a href="'.url('/admin/asset_type/'.$asset_type->id).'">'.$asset_type->name.'</a> added')->success();
+
         return Redirect::action('AssetTypeController@index');
     }
 
@@ -86,10 +87,10 @@ class AssetTypeController extends Controller
         $this->authorize('update-asset-type');
 
         $asset_type = \App\AssetType::findOrFail($id);
-        $asset_types = \App\AssetType::active()->orderBy('label')->pluck('label','id');
-        $asset_types->prepend('N/A',0);
+        $asset_types = \App\AssetType::active()->orderBy('label')->pluck('label', 'id');
+        $asset_types->prepend('N/A', 0);
 
-        return view('admin.asset_types.edit', compact('asset_type','asset_types')); //
+        return view('admin.asset_types.edit', compact('asset_type', 'asset_types')); //
     }
 
     /**
@@ -111,8 +112,9 @@ class AssetTypeController extends Controller
         $asset_type->parent_asset_type_id = ($request->input('parent_asset_type_id') > 0) ? $request->input('parent_asset_type_id') : null;
         $asset_type->save();
 
-        flash('Asset type: <a href="'. url('/admin/asset_type/'.$asset_type->id) . '">'.$asset_type->name.'</a> updated')->success();
-        return Redirect::action('AssetTypeController@show',$asset_type->id);
+        flash('Asset type: <a href="'.url('/admin/asset_type/'.$asset_type->id).'">'.$asset_type->name.'</a> updated')->success();
+
+        return Redirect::action('AssetTypeController@show', $asset_type->id);
     }
 
     /**
@@ -127,8 +129,8 @@ class AssetTypeController extends Controller
         $asset_type = \App\AssetType::findOrFail($id);
 
         \App\AssetType::destroy($id);
-        flash('Asset type: '.$asset_type->name . ' deleted')->warning()->important();
+        flash('Asset type: '.$asset_type->name.' deleted')->warning()->important();
+
         return Redirect::action('AssetTypeController@index');
     }
-
 }

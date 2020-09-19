@@ -59,7 +59,6 @@ class PermissionControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('name', $permission->name, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('display_name', $permission->display_name, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('description', $permission->description, 'text', $response->getContent()));
-
     }
 
     /**
@@ -143,7 +142,6 @@ class PermissionControllerTest extends TestCase
         $updated = \App\Permission::findOrFail($permission->id);
         $this->assertEquals($updated->name, $new_permission_name);
         $this->assertNotEquals($updated->name, $original_permission_name);
-
     }
 
     /**
@@ -163,7 +161,6 @@ class PermissionControllerTest extends TestCase
 
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('PermissionController@index'));
-
     }
 
     // test cases...

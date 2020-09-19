@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\StoreUomRequest;
 use App\Http\Requests\UpdateUomRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class UomController extends Controller
 {
@@ -55,7 +55,8 @@ class UomController extends Controller
 
         $uom->save();
 
-        flash ('Unit of measure: <a href="'. url('/admin/uom/'.$uom->id) . '">'.$uom->unit_name.'</a> added')->success();
+        flash('Unit of measure: <a href="'.url('/admin/uom/'.$uom->id).'">'.$uom->unit_name.'</a> added')->success();
+
         return Redirect::action('UomController@index');
     }
 
@@ -87,7 +88,7 @@ class UomController extends Controller
         $uom = \App\Uom::findOrFail($id);
         $uom_types = config('polanco.uom_types');
 
-        return view('admin.uoms.edit', compact('uom','uom_types')); //
+        return view('admin.uoms.edit', compact('uom', 'uom_types')); //
     }
 
     /**
@@ -111,8 +112,9 @@ class UomController extends Controller
 
         $uom->save();
 
-        flash ('Unit of measure: <a href="'. url('/admin/uom/'.$uom->id) . '">'.$uom->unit_name.'</a> updated')->success();
-        return Redirect::action('UomController@show',$uom->id);
+        flash('Unit of measure: <a href="'.url('/admin/uom/'.$uom->id).'">'.$uom->unit_name.'</a> updated')->success();
+
+        return Redirect::action('UomController@show', $uom->id);
     }
 
     /**
@@ -128,8 +130,8 @@ class UomController extends Controller
 
         \App\Uom::destroy($id);
 
-        flash('Unit of measure: '.$uom->unit_name . ' deleted')->warning()->important();
+        flash('Unit of measure: '.$uom->unit_name.' deleted')->warning()->important();
+
         return Redirect::action('UomController@index');
     }
-
 }

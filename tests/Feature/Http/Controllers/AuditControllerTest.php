@@ -24,8 +24,6 @@ class AuditControllerTest extends TestCase
 
         $response->assertRedirect(action('AuditController@index'));
         $response->assertSessionHas('flash_notification');
-
-
     }
 
     /**
@@ -40,7 +38,6 @@ class AuditControllerTest extends TestCase
 
         $response->assertRedirect(action('AuditController@index'));
         $response->assertSessionHas('flash_notification');
-
     }
 
     /**
@@ -55,7 +52,6 @@ class AuditControllerTest extends TestCase
 
         $response->assertRedirect(action('AuditController@index'));
         $response->assertSessionHas('flash_notification');
-
     }
 
     /**
@@ -120,8 +116,6 @@ class AuditControllerTest extends TestCase
 
         $response->assertRedirect(action('AuditController@index'));
         $response->assertSessionHas('flash_notification');
-
-
     }
 
     /**

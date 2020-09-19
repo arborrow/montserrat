@@ -82,7 +82,6 @@ class DepartmentControllerTest extends TestCase
         $response->assertSeeText('Departments');
     }
 
-
     /**
      * @test
      */
@@ -138,7 +137,7 @@ class DepartmentControllerTest extends TestCase
         $department_description = $this->faker->sentence(7, true);
 
         $original_department_name = $department->name;
-        $new_department_name = 'New ' . $this->faker->words(2, true);
+        $new_department_name = 'New '.$this->faker->words(2, true);
 
         $response = $this->actingAs($user)->put(route('department.update', [$department]), [
           'id' => $department->id,

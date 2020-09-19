@@ -96,7 +96,8 @@ class PermissionController extends Controller
         $permission->description = $request->input('description');
         $permission->save();
 
-        flash ('Permission: <a href="'. url('/admin/permission/'.$permission->id) . '">'.$permission->name.'</a> added')->success();
+        flash('Permission: <a href="'.url('/admin/permission/'.$permission->id).'">'.$permission->name.'</a> added')->success();
+
         return Redirect::action('PermissionController@index');
     }
 
@@ -145,7 +146,8 @@ class PermissionController extends Controller
         $permission->description = $request->input('description');
         $permission->save();
 
-        flash('Permission: <a href="'. url('/admin/permission/'.$permission->id) . '">'.$permission->name.'</a> updated')->success();
+        flash('Permission: <a href="'.url('/admin/permission/'.$permission->id).'">'.$permission->name.'</a> updated')->success();
+
         return Redirect::action('PermissionController@index');
     }
 
@@ -163,7 +165,8 @@ class PermissionController extends Controller
 
         \App\Permission::destroy($id);
 
-        flash('Permission: '.$permission->name . ' deleted')->warning()->important();
+        flash('Permission: '.$permission->name.' deleted')->warning()->important();
+
         return Redirect::action('PermissionController@index');
     }
 
@@ -175,7 +178,8 @@ class PermissionController extends Controller
         $permission->roles()->detach();
         $permission->roles()->sync($request->input('roles'));
 
-        flash('Role assignments for permission: <a href="' . url('/admin/permission/'.$permission->id) .'">'. $permission->name . '</a> updated')->success();
+        flash('Role assignments for permission: <a href="'.url('/admin/permission/'.$permission->id).'">'.$permission->name.'</a> updated')->success();
+
         return Redirect::action('PermissionController@index');
     }
 }

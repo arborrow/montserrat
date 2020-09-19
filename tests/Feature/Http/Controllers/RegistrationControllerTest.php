@@ -34,7 +34,6 @@ class RegistrationControllerTest extends TestCase
         $response->assertViewHas('rooms');
         $response->assertViewHas('defaults');
         $response->assertSeeText('Add A Registration');
-
     }
 
     /**
@@ -246,9 +245,8 @@ class RegistrationControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('departed_at', $registration->departed_at, 'datetime', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('canceled_at', $registration->canceled_at, 'date', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('room_id', $registration->room_id, 'select', $response->getContent()));
-        $this->assertTrue($this->findFieldValueInResponseContent('deposit', number_format($registration->deposit,2,".",""), 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('deposit', number_format($registration->deposit, 2, '.', ''), 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('notes', $registration->notes, 'textarea', $response->getContent()));
-
     }
 
     /*
@@ -357,7 +355,6 @@ class RegistrationControllerTest extends TestCase
           'type' => 'Email',
           'notes' => $event->idnumber.' registration email sent.',
         ]);
-
     }
 
     /**

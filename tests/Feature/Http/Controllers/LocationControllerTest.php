@@ -67,8 +67,8 @@ class LocationControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('label', $location->label, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('type', $location->type, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('description', $location->description, 'textarea', $response->getContent()));
-        $this->assertTrue($this->findFieldValueInResponseContent('latitude', number_format($location->latitude,8), 'text', $response->getContent()));
-        $this->assertTrue($this->findFieldValueInResponseContent('longitude', number_format($location->longitude,8), 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('latitude', number_format($location->latitude, 8), 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('longitude', number_format($location->longitude, 8), 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('occupancy', $location->occupancy, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('room_id', $location->room_id, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('parent_id', $location->parent_id, 'select', $response->getContent()));
@@ -90,7 +90,6 @@ class LocationControllerTest extends TestCase
         $response->assertViewHas('location_types');
         $response->assertSeeText('Locations');
     }
-
 
     /**
      * @test
@@ -179,7 +178,7 @@ class LocationControllerTest extends TestCase
         $location_type = $this->faker->randomElement(config('polanco.locations_type'));
 
         $original_location_name = $location->name;
-        $new_location_name = 'New ' . $this->faker->words(2, true);
+        $new_location_name = 'New '.$this->faker->words(2, true);
 
         $response = $this->actingAs($user)->put(route('location.update', [$location]), [
           'id' => $location->id,

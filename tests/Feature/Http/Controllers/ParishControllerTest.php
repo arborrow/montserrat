@@ -149,7 +149,7 @@ class ParishControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('url_linkedin', $url_linkedin->url, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('url_twitter', $url_twitter->url, 'text', $response->getContent()));
         // TODO: add note
-        }
+    }
 
     /**
      * @test

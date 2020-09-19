@@ -139,7 +139,7 @@ class UomControllerTest extends TestCase
         $uom_type = $this->faker->randomElement(config('polanco.uom_types'));
 
         $original_uom_unit_name = $uom->unit_name;
-        $new_uom_unit_name = 'New ' . $this->faker->words(2, true);
+        $new_uom_unit_name = 'New '.$this->faker->words(2, true);
 
         $response = $this->actingAs($user)->put(route('uom.update', [$uom]), [
           'id' => $uom->id,

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateUomRequest extends FormRequest
+class UpdateUomRequest0 extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -2,8 +2,8 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Faker\Generator as Faker;
 use Carbon\Carbon;
+use Faker\Generator as Faker;
 
 $factory->define(App\ExportList::class, function (Faker $faker) {
     $label = $faker->word;

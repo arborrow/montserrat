@@ -62,7 +62,6 @@ class WebsiteControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('description', $website->description, 'textarea', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('url', $website->url, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('website_type', $website->website_type, 'text', $response->getContent()));
-
     }
 
     /**
@@ -142,7 +141,7 @@ class WebsiteControllerTest extends TestCase
         $website_type = $this->faker->randomElement(config('polanco.website_types'));
 
         $original_website_description = $website->description;
-        $new_website_description = 'New ' . $this->faker->sentence;
+        $new_website_description = 'New '.$this->faker->sentence;
 
         $response = $this->actingAs($user)->put(route('website.update', [$website]), [
           'id' => $website->id,
@@ -153,13 +152,12 @@ class WebsiteControllerTest extends TestCase
           'url' => $website->url,
         ]);
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('WebsiteController@show',$website->id));
+        $response->assertRedirect(action('WebsiteController@show', $website->id));
 
         $updated = \App\Website::findOrFail($website->id);
 
         $this->assertEquals($updated->description, $new_website_description);
         $this->assertNotEquals($updated->description, $original_website_description);
-
     }
 
     // test cases...

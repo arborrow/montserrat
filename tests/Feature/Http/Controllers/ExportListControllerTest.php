@@ -30,7 +30,6 @@ class ExportListControllerTest extends TestCase
 
     /**
      * @test
-
      */
     public function destroy_returns_an_ok_response()
     {
@@ -132,7 +131,7 @@ class ExportListControllerTest extends TestCase
         $export_list_type = $this->faker->randomElement(config('polanco.export_list_types'));
 
         $original_export_list_title = $export_list->title;
-        $new_export_list_title = 'New ' . $this->faker->words(2, true);
+        $new_export_list_title = 'New '.$this->faker->words(2, true);
 
         $response = $this->actingAs($user)->put(route('export_list.update', [$export_list]), [
           'id' => $export_list->id,

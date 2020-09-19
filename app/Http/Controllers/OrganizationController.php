@@ -170,7 +170,8 @@ class OrganizationController extends Controller
         $url_twitter->website_type = 'Twitter';
         $url_twitter->save();
 
-        flash ('Organization: <a href="'. url('/organization/'.$organization->id) . '">'.$organization->organization_name.'</a> added')->success();
+        flash('Organization: <a href="'.url('/organization/'.$organization->id).'">'.$organization->organization_name.'</a> added')->success();
+
         return Redirect::action('OrganizationController@index');
     }
 
@@ -377,7 +378,8 @@ class OrganizationController extends Controller
         $url_twitter->website_type = 'Twitter';
         $url_twitter->save();
 
-        flash('Organization: <a href="'. url('/organization/'.$organization->id) . '">'.$organization->organization_name.'</a> updated')->success();
+        flash('Organization: <a href="'.url('/organization/'.$organization->id).'">'.$organization->organization_name.'</a> updated')->success();
+
         return Redirect::action('OrganizationController@show', $organization->id);
     }
 
@@ -411,7 +413,8 @@ class OrganizationController extends Controller
 
         \App\Organization::destroy($id);
 
-        flash('Organization: '.$organization->organization_name . ' deleted')->warning()->important();
+        flash('Organization: '.$organization->organization_name.' deleted')->warning()->important();
+
         return Redirect::action('OrganizationController@index');
     }
 }

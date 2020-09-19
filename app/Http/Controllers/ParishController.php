@@ -175,7 +175,8 @@ class ParishController extends Controller
             $relationship_pastor->save();
         }
 
-        flash('Parish: <a href="'. url('/parish/'.$parish->id) . '">'.$parish->organization_name.'</a> added')->success();
+        flash('Parish: <a href="'.url('/parish/'.$parish->id).'">'.$parish->organization_name.'</a> added')->success();
+
         return Redirect::action('ParishController@index');
     }
 
@@ -415,7 +416,8 @@ class ParishController extends Controller
             $attachment->update_attachment($request->file('attachment'), 'contact', $parish->id, 'attachment', $description);
         }
 
-        flash('Parish: <a href="'. url('/parish/'.$parish->id) . '">'.$parish->organization_name.'</a> updated')->success();
+        flash('Parish: <a href="'.url('/parish/'.$parish->id).'">'.$parish->organization_name.'</a> updated')->success();
+
         return Redirect::action('ParishController@show', $parish->id);
     }
 
@@ -447,7 +449,8 @@ class ParishController extends Controller
 
         \App\Parish::destroy($id);
 
-        flash('Parish: '.$parish->organization_name . ' deleted')->warning()->important();
+        flash('Parish: '.$parish->organization_name.' deleted')->warning()->important();
+
         return Redirect::action('ParishController@index');
     }
 

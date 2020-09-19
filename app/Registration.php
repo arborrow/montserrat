@@ -20,15 +20,15 @@ class Registration extends Model implements Auditable
         'arrived_at',
         'departed_at',
     ];
-    protected $fillable = ['contact_id', 'event_id', 'status_id', 'role_id','notes','register_date'];
+    protected $fillable = ['contact_id', 'event_id', 'status_id', 'role_id', 'notes', 'register_date'];
 
     public function generateTags(): array
-        {
-            return [
+    {
+        return [
                 $this->contact_sort_name,
                 $this->event_idnumber,
             ];
-        }
+    }
 
     public function getAttendanceConfirmDateTextAttribute()
     {
@@ -47,7 +47,6 @@ class Registration extends Model implements Auditable
             return 'N/A';
         }
     }
-
 
     public function getDonationPledgeLinkAttribute()
     {
@@ -125,7 +124,9 @@ class Registration extends Model implements Auditable
             return 'Unassigned status';
         }
     }
-    public function getContactLinkFullNameAttribute() {
+
+    public function getContactLinkFullNameAttribute()
+    {
         if (! empty($this->contact)) {
             return $this->contact->contact_link_full_name;
         } else {

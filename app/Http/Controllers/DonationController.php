@@ -31,7 +31,7 @@ class DonationController extends Controller
         // dd($donation_descriptions);
         $donations = \App\Donation::orderBy('donation_date', 'desc')->with('contact.prefix', 'contact.suffix')->paginate(100);
         //dd($donations);
-        return view('donations.index', compact('donations','donation_descriptions'));
+        return view('donations.index', compact('donations', 'donation_descriptions'));
     }
 
     public function index_type($donation_id = null)
@@ -44,7 +44,7 @@ class DonationController extends Controller
         $defaults = [];
         $defaults['type'] = $donation_description;
 
-        $donations = \App\Donation::whereDonationDescription($donation_description)->orderBy('donation_date', 'desc')->with('contact.prefix','contact.suffix')->paginate(100);
+        $donations = \App\Donation::whereDonationDescription($donation_description)->orderBy('donation_date', 'desc')->with('contact.prefix', 'contact.suffix')->paginate(100);
 
         return view('donations.index', compact('donations', 'donation_descriptions', 'defaults'));   //
     }
@@ -178,7 +178,8 @@ class DonationController extends Controller
         }        //dd($payment, $donation);
         $payment->save();
 
-        flash ('Donation ID#: <a href="'. url('/donation/'.$donation->donation_id) . '">'.$donation->donation_id.'</a> added')->success();
+        flash('Donation ID#: <a href="'.url('/donation/'.$donation->donation_id).'">'.$donation->donation_id.'</a> added')->success();
+
         return redirect($donation->contact->contact_url.'#donations');
     }
 
@@ -210,7 +211,7 @@ class DonationController extends Controller
         $descriptions = \App\DonationType::active()->orderby('name')->pluck('name', 'name');
 
         if (! $descriptions->search($donation->donation_description)) {
-            $descriptions->prepend($donation->donation_description . ' (inactive donation type)', $donation->donation_description);
+            $descriptions->prepend($donation->donation_description.' (inactive donation type)', $donation->donation_description);
             // dd($descriptions,$donation->donation_description);
         }
 
@@ -261,7 +262,8 @@ class DonationController extends Controller
         }
         $donation->save();
 
-        flash ('Donation ID#: <a href="'. url('/donation/'.$donation->donation_id) . '">'.$donation->donation_id.'</a> updated')->success();
+        flash('Donation ID#: <a href="'.url('/donation/'.$donation->donation_id).'">'.$donation->donation_id.'</a> updated')->success();
+
         return Redirect::action('DonationController@show', $donation->donation_id);
     }
 
@@ -285,7 +287,8 @@ class DonationController extends Controller
             $registration->save();
         }
 
-        flash('Donation ID#: '.$donation->donation_id . ' deleted')->warning()->important();
+        flash('Donation ID#: '.$donation->donation_id.' deleted')->warning()->important();
+
         return redirect()->to($contact->contact_url);
     }
 

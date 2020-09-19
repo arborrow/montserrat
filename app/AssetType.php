@@ -28,10 +28,11 @@ class AssetType extends Model implements Auditable
 
     public function parent_asset_type()
     {
-        return $this->hasOne(AssetType::class, 'id', 'parent_asset_type_id');
+        return $this->hasOne(self::class, 'id', 'parent_asset_type_id');
     }
 
-    public function getParentLabelAttribute() {
+    public function getParentLabelAttribute()
+    {
         if (isset($this->parent_asset_type->label)) {
             return $this->parent_asset_type->label;
         } else {
@@ -39,8 +40,8 @@ class AssetType extends Model implements Auditable
         }
     }
 
-
-    public function getParentNameAttribute() {
+    public function getParentNameAttribute()
+    {
         if (isset($this->parent_asset_type->name)) {
             return $this->parent_asset_type->name;
         } else {

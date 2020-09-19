@@ -19,5 +19,4 @@ class ExportList extends Model implements Auditable
         'last_run_date',
         'next_scheduled_date',
     ];
-
 }

@@ -2,8 +2,8 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Faker\Generator as Faker;
 use App\Language;
+use Faker\Generator as Faker;
 
 $factory->define(App\Contact::class, function (Faker $faker) {
     $first_name = $faker->firstName;
@@ -16,7 +16,7 @@ $factory->define(App\Contact::class, function (Faker $faker) {
     $preferred_language = \App\Language::whereIsActive(1)->get()->random();
     $suffix = \App\Suffix::get()->random();
     $prefix = \App\Prefix::get()->random();
-    $preferred_communication_method = $faker->numberBetween(0,4);
+    $preferred_communication_method = $faker->numberBetween(0, 4);
 
     return [
         'contact_type' => $faker->numberBetween(1, 3),

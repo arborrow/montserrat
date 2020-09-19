@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\ContactLanguage;
+use App\EmergencyContact;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\ContactLanguage;
-use App\EmergencyContact;
 
 /**
  * @see \App\Http\Controllers\PersonController
@@ -29,7 +29,6 @@ class PersonControllerTest extends TestCase
         $response->assertViewHas('persons');
         $response->assertViewHas('role');
         $response->assertSeeText('Assistant');
-
     }
 
     /**
@@ -178,7 +177,6 @@ class PersonControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-contact');
 
-
         $person = factory(\App\Contact::class)->create([
           'contact_type' => config('polanco.contact_type.individual'),
           'subcontact_type' => null,
@@ -196,18 +194,18 @@ class PersonControllerTest extends TestCase
 
         $languages = \App\Language::whereIsActive(1)->get()->random(2);
         foreach ($languages as $language) {
-                $contact_language = new \App\ContactLanguage ;
-                $contact_language->contact_id = $person->id;
-                $contact_language->language_id = $language->id;
-                $contact_language->save();
-        };
+            $contact_language = new \App\ContactLanguage;
+            $contact_language->contact_id = $person->id;
+            $contact_language->language_id = $language->id;
+            $contact_language->save();
+        }
         $referrals = \App\Referral::whereIsActive(1)->get()->random(2);
         foreach ($referrals as $referral) {
-                $contact_referral = new \App\ContactReferral ;
-                $contact_referral->contact_id = $person->id;
-                $contact_referral->referral_id = $referral->id;
-                $contact_referral->save();
-        };
+            $contact_referral = new \App\ContactReferral;
+            $contact_referral->contact_id = $person->id;
+            $contact_referral->referral_id = $referral->id;
+            $contact_referral->save();
+        }
 
         $emergency_contact = factory(\App\EmergencyContact::class)->create([
             'contact_id' => $person->id,
@@ -462,7 +460,6 @@ class PersonControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('url_linkedin', $url_linkedin->url, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('url_twitter', $url_twitter->url, 'text', $response->getContent()));
         // TODO: add some groups and relationships
-
     }
 
     /**
@@ -630,7 +627,6 @@ class PersonControllerTest extends TestCase
 
         $response->assertRedirect(action('PersonController@merge', $person->id));
         $this->assertSoftDeleted($duplicate_person);
-
     }
 
     /**

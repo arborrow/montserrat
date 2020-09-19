@@ -58,29 +58,29 @@ class DashboardControllerTest extends TestCase
         $response->assertSee('Donation Description Dashboard');
     }
 
-        /**
-         * @test
-         */
-        public function board_returns_an_ok_response()
-        {
-            $user = $this->createUserWithPermission('show-dashboard');
+    /**
+     * @test
+     */
+    public function board_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-dashboard');
 
-            $response = $this->actingAs($user)->get(route('dashboard.board'));
+        $response = $this->actingAs($user)->get(route('dashboard.board'));
 
-            $response->assertOk();
-            $response->assertViewIs('dashboard.board');
-            $response->assertViewHas('years');
-            $response->assertViewHas('year');
-            $response->assertViewHas('summary');
-            $response->assertViewHas('board_summary');
-            $response->assertViewHas('board_summary_revenue_chart');
-            $response->assertViewHas('board_summary_participant_chart');
-            $response->assertViewHas('board_summary_peoplenight_chart');
-            $response->assertViewHas('total_revenue');
-            $response->assertViewHas('total_participants');
-            $response->assertViewHas('total_peoplenights');
-            $response->assertSee('Board Dashboard');
-        }
+        $response->assertOk();
+        $response->assertViewIs('dashboard.board');
+        $response->assertViewHas('years');
+        $response->assertViewHas('year');
+        $response->assertViewHas('summary');
+        $response->assertViewHas('board_summary');
+        $response->assertViewHas('board_summary_revenue_chart');
+        $response->assertViewHas('board_summary_participant_chart');
+        $response->assertViewHas('board_summary_peoplenight_chart');
+        $response->assertViewHas('total_revenue');
+        $response->assertViewHas('total_participants');
+        $response->assertViewHas('total_peoplenights');
+        $response->assertSee('Board Dashboard');
+    }
 
     // test cases...
 }

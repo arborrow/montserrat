@@ -26,7 +26,6 @@ class GroupControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('groups.create');
         $response->assertSee('Create Group');
-
     }
 
     /**
@@ -66,14 +65,14 @@ class GroupControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('is_hidden', $group->is_hidden, 'checkbox', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('is_reserved', $group->is_reserved, 'checkbox', $response->getContent()));
 
-/*
-        {!! Form::text('name', $group->name, ['class' => 'col-md-3']) !!}
-        {!! Form::text('title', $group->title, ['class' => 'col-md-3']) !!}
-        {!! Form::textarea('description', $group->description, ['class' => 'col-md-3']) !!}
-        {!! Form::checkbox('is_active', 1, $group->is_active, ['class' => 'col-md-1']) !!}
-        {!! Form::checkbox('is_hidden', 1, $group->is_hidden, ['class' => 'col-md-1']) !!}
-        {!! Form::checkbox('is_reserved', 1, $group->is_reserved, ['class' => 'col-md-1']) !!}
-*/
+        /*
+                {!! Form::text('name', $group->name, ['class' => 'col-md-3']) !!}
+                {!! Form::text('title', $group->title, ['class' => 'col-md-3']) !!}
+                {!! Form::textarea('description', $group->description, ['class' => 'col-md-3']) !!}
+                {!! Form::checkbox('is_active', 1, $group->is_active, ['class' => 'col-md-1']) !!}
+                {!! Form::checkbox('is_hidden', 1, $group->is_hidden, ['class' => 'col-md-1']) !!}
+                {!! Form::checkbox('is_reserved', 1, $group->is_reserved, ['class' => 'col-md-1']) !!}
+        */
     }
 
     /**
@@ -89,7 +88,6 @@ class GroupControllerTest extends TestCase
         $response->assertViewIs('groups.index');
         $response->assertViewHas('groups');
         $response->assertSee('Group Index');
-
     }
 
     /**
@@ -107,7 +105,6 @@ class GroupControllerTest extends TestCase
         $response->assertViewHas('group');
         $response->assertViewHas('members');
         $response->assertSee($group->description);
-
     }
 
     /**
@@ -134,7 +131,6 @@ class GroupControllerTest extends TestCase
           'title' => Str::plural($group_name),
           'description' => 'New Group of '.Str::plural($group_name),
         ]);
-
     }
 
     /**
@@ -169,7 +165,6 @@ class GroupControllerTest extends TestCase
         $response->assertRedirect(action('GroupController@show', $group->id));
         $this->assertEquals($updated->name, $new_group_name);
         $this->assertNotEquals($updated->name, $group->name);
-
     }
 
     /**

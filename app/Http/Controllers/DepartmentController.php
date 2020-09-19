@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Arr;
-
 use App\Http\Requests\StoreDepartmentRequest;
 use App\Http\Requests\UpdateDepartmentRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Redirect;
 
 class DepartmentController extends Controller
 {
@@ -61,7 +60,8 @@ class DepartmentController extends Controller
 
         $department->save();
 
-        flash('Department: <a href="'. url('/admin/department/'.$department->id) . '">'.$department->name.'</a> added')->success();
+        flash('Department: <a href="'.url('/admin/department/'.$department->id).'">'.$department->name.'</a> added')->success();
+
         return Redirect::action('DepartmentController@index');
     }
 
@@ -119,7 +119,7 @@ class DepartmentController extends Controller
         $department->parent_id = $request->input('parent_id');
         $department->is_active = $request->input('is_active');
 
-        flash('Department: <a href="'. url('/admin/department/'.$department->id) . '">'.$department->name.'</a> updated')->success();
+        flash('Department: <a href="'.url('/admin/department/'.$department->id).'">'.$department->name.'</a> updated')->success();
         $department->save();
 
         return Redirect::action('DepartmentController@show', $department->id);
@@ -137,7 +137,8 @@ class DepartmentController extends Controller
         $department = \App\Department::findOrFail($id);
 
         \App\Department::destroy($id);
-        flash('Department: '.$department->name . ' deleted')->warning()->important();
+        flash('Department: '.$department->name.' deleted')->warning()->important();
+
         return Redirect::action('DepartmentController@index');
     }
 }
