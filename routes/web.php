@@ -14,7 +14,7 @@
 Route::get('avatar/{user_id}', 'AttachmentController@get_avatar')->name('get_avatar');
 Route::get('signature/{user_id}', 'AttachmentController@get_signature')->name('get_signature');
 
-Route::group(['middleware' => ['web', 'activity']], function () {
+Route::middleware('web', 'activity')->group(function () {
     Route::get('intercept/{code}', function ($code) {
         $url = base64_decode($code);
         // dd($url);
