@@ -44,7 +44,7 @@ class AssetControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-asset');
-        $asset = factory(\App\Models\Asset::class)->create();
+        $asset = \App\Models\Asset::factory()->create();
 
         $response = $this->actingAs($user)->delete(route('asset.destroy', [$asset]));
         $response->assertSessionHas('flash_notification');
@@ -58,7 +58,7 @@ class AssetControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-asset');
-        $asset = factory(\App\Models\Asset::class)->create();
+        $asset = \App\Models\Asset::factory()->create();
 
         $response = $this->actingAs($user)->get(route('asset.edit', [$asset]));
 
@@ -160,10 +160,10 @@ class AssetControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-asset');
 
-        $asset = factory(\App\Models\Asset::class)->create();
+        $asset = \App\Models\Asset::factory()->create();
 
         $number_assets = $this->faker->numberBetween(2, 10);
-        $assets = factory(\App\Models\Asset::class, $number_assets)->create([
+        $assets = \App\Models\Asset::factory()->count($number_assets)->create([
             'asset_type_id' => $asset->asset_type_id,
             'deleted_at' => null,
         ]);
@@ -186,10 +186,10 @@ class AssetControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-asset');
 
-        $asset = factory(\App\Models\Asset::class)->create();
+        $asset = \App\Models\Asset::factory()->create();
 
         $number_assets = $this->faker->numberBetween(2, 10);
-        $assets = factory(\App\Models\Asset::class, $number_assets)->create([
+        $assets = \App\Models\Asset::factory()->count($number_assets)->create([
             'location_id' => $asset->location_id,
             'deleted_at' => null,
         ]);
@@ -211,7 +211,7 @@ class AssetControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-asset');
-        $asset = factory(\App\Models\Asset::class)->create();
+        $asset = \App\Models\Asset::factory()->create();
 
         $response = $this->actingAs($user)->get(route('asset.show', [$asset]));
 
@@ -260,7 +260,7 @@ class AssetControllerTest extends TestCase
         // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('update-asset');
 
-        $asset = factory(\App\Models\Asset::class)->create();
+        $asset = \App\Models\Asset::factory()->create();
 
         $original_asset_manufacuturer = $asset->manufacturer;
         $new_manufacturer = 'New '.$this->faker->words(2, true);
@@ -285,7 +285,7 @@ class AssetControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-asset');
 
-        $asset = factory(\App\Models\Asset::class)->create();
+        $asset = \App\Models\Asset::factory()->create();
 
         $response = $this->actingAs($user)->get('asset/results?name='.$asset->name);
 

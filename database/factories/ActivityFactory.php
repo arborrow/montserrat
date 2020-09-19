@@ -2,34 +2,52 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Models\Activity::class, function (Faker $faker) {
-    return [
-        'source_record_id' => $faker->randomNumber(),
-        'activity_type_id' => $faker->randomNumber(),
-        'subject' => $faker->word,
-        'activity_date_time' => $faker->dateTime(),
-        'duration' => $faker->randomNumber(),
-        'location' => $faker->word,
-        'phone_id' => $faker->randomNumber(),
-        'phone_number' => $faker->phoneNumber,
-        'details' => $faker->text,
-        'status_id' => $faker->randomNumber(),
-        'priority_id' => $faker->randomNumber(),
-        'parent_id' => $faker->randomNumber(),
-        'is_test' => $faker->boolean,
-        'medium_id' => $faker->randomNumber(),
-        'is_auto' => $faker->boolean,
-        'relationship_id' => $faker->randomNumber(),
-        'is_current_revision' => $faker->boolean,
-        'original_id' => $faker->randomNumber(),
-        'result' => $faker->word,
-        'is_deleted' => $faker->boolean,
-        'campaign_id' => $faker->randomNumber(),
-        'engagement_level' => $faker->randomNumber(),
-        'weight' => $faker->randomNumber(),
-        'is_star' => $faker->boolean,
-        'remember_token' => Str::random(10),
-    ];
-});
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class ActivityFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \App\Models\Activity::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'source_record_id' => $this->faker->randomNumber(),
+            'activity_type_id' => $this->faker->randomNumber(),
+            'subject' => $this->faker->word,
+            'activity_date_time' => $this->faker->dateTime(),
+            'duration' => $this->faker->randomNumber(),
+            'location' => $this->faker->word,
+            'phone_id' => $this->faker->randomNumber(),
+            'phone_number' => $this->faker->phoneNumber,
+            'details' => $this->faker->text,
+            'status_id' => $this->faker->randomNumber(),
+            'priority_id' => $this->faker->randomNumber(),
+            'parent_id' => $this->faker->randomNumber(),
+            'is_test' => $this->faker->boolean,
+            'medium_id' => $this->faker->randomNumber(),
+            'is_auto' => $this->faker->boolean,
+            'relationship_id' => $this->faker->randomNumber(),
+            'is_current_revision' => $this->faker->boolean,
+            'original_id' => $this->faker->randomNumber(),
+            'result' => $this->faker->word,
+            'is_deleted' => $this->faker->boolean,
+            'campaign_id' => $this->faker->randomNumber(),
+            'engagement_level' => $this->faker->randomNumber(),
+            'weight' => $this->faker->randomNumber(),
+            'is_star' => $this->faker->boolean,
+            'remember_token' => Str::random(10),
+        ];
+    }
+}

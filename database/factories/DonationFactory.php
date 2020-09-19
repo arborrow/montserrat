@@ -2,38 +2,57 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 // TODO: to avoid confusion with agc letters in Spanish I'm limiting testing for now to $current_user
-$factory->define(App\Models\Donation::class, function (Faker $faker) {
-    $description = \App\Models\DonationType::whereIsActive(1)->get()->random();
 
-    return [
-        'donation_description' => $description->name,
-        'donation_date' => $faker->dateTime(),
-        'donation_amount' => $faker->randomFloat(2, 0, 100000),
-        'donation_install' => $faker->randomFloat(2, 0, 5000),
-        'terms' => $faker->text,
-        'start_date' => $faker->dateTime(),
-        'end_date' => $faker->dateTime(),
-        'payment_description' => $faker->word,
-        'Notes' => $faker->text,
-        'Notes1' => $faker->text,
-        'Notice' => $faker->word,
-        'Arrupe Donation Description' => $faker->word,
-        'Target Amount' => $faker->randomNumber(),
-        'Donation Type ID' => $faker->randomNumber(),
-        'Thank You' => $faker->randomElement($array = ['Y', 'N']),
-        'AGC Donation Description' => $faker->word,
-        'Pledge' => $faker->word,
-        'contact_id' => function () {
-            return factory(App\Models\Contact::class)->create([
-              'preferred_language' => 'en_US',
-              ])->id;
-        },
-        'event_id' => function () {
-            return factory(App\Models\Retreat::class)->create()->id;
-        },
-        'remember_token' => Str::random(10),
-    ];
-});
+class DonationFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \App\Models\Donation::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $description = \App\Models\DonationType::whereIsActive(1)->get()->random();
+
+        return [
+            'donation_description' => $description->name,
+            'donation_date' => $this->faker->dateTime(),
+            'donation_amount' => $this->faker->randomFloat(2, 0, 100000),
+            'donation_install' => $this->faker->randomFloat(2, 0, 5000),
+            'terms' => $this->faker->text,
+            'start_date' => $this->faker->dateTime(),
+            'end_date' => $this->faker->dateTime(),
+            'payment_description' => $this->faker->word,
+            'Notes' => $this->faker->text,
+            'Notes1' => $this->faker->text,
+            'Notice' => $this->faker->word,
+            'Arrupe Donation Description' => $this->faker->word,
+            'Target Amount' => $this->faker->randomNumber(),
+            'Donation Type ID' => $this->faker->randomNumber(),
+            'Thank You' => $this->faker->randomElement($array = ['Y', 'N']),
+            'AGC Donation Description' => $this->faker->word,
+            'Pledge' => $this->faker->word,
+            'contact_id' => function () {
+                return \App\Models\Contact::factory()->create([
+                    'preferred_language' => 'en_US',
+                ])->id;
+            },
+            'event_id' => function () {
+                return \App\Models\Retreat::factory()->create()->id;
+            },
+            'remember_token' => Str::random(10),
+        ];
+    }
+}

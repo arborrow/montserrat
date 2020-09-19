@@ -2,17 +2,35 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Models\Permission::class, function (Faker $faker) {
-    $actions = ['show', 'create', 'update', 'delete', 'manage'];
-    $action = $actions[array_rand($actions)];
-    $model = $faker->word;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-    return [
-      'name' => $action.'-'.$model.$faker->randomNumber(6),
-      'display_name' => ucfirst($action).' '.$model,
-      'description' => $faker->words(5, true),
-      'created_at' => $faker->dateTime(),
-    ];
-});
+class PermissionFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \App\Models\Permission::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $actions = ['show', 'create', 'update', 'delete', 'manage'];
+        $action = $actions[array_rand($actions)];
+        $model = $this->faker->word;
+
+        return [
+            'name' => $action.'-'.$model.$this->faker->randomNumber(6),
+            'display_name' => ucfirst($action).' '.$model,
+            'description' => $this->faker->words(5, true),
+            'created_at' => $this->faker->dateTime(),
+        ];
+    }
+}

@@ -33,7 +33,7 @@ class PermissionControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-permission');
-        $permission = factory(\App\Models\Permission::class)->create();
+        $permission = \App\Models\Permission::factory()->create();
 
         $response = $this->actingAs($user)->delete(route('permission.destroy', [$permission]));
         $response->assertSessionHas('flash_notification');
@@ -47,7 +47,7 @@ class PermissionControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-permission');
-        $permission = factory(\App\Models\Permission::class)->create();
+        $permission = \App\Models\Permission::factory()->create();
 
         $response = $this->actingAs($user)->get(route('permission.edit', [$permission]));
 
@@ -84,7 +84,7 @@ class PermissionControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-permission');
-        $permission = factory(\App\Models\Permission::class)->create();
+        $permission = \App\Models\Permission::factory()->create();
 
         $response = $this->actingAs($user)->get(route('permission.show', [$permission]));
 
@@ -126,7 +126,7 @@ class PermissionControllerTest extends TestCase
     public function update_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-permission');
-        $permission = factory(\App\Models\Permission::class)->create();
+        $permission = \App\Models\Permission::factory()->create();
         $original_permission_name = $permission->name;
         $new_permission_name = 'New '.$this->faker->words(3, true);
 
@@ -149,9 +149,9 @@ class PermissionControllerTest extends TestCase
      */
     public function update_roles_returns_an_ok_response()
     {
-        $user = factory(\App\Models\User::class)->create();
+        $user = \App\Models\User::factory()->create();
         $user->assignRole('test-role:update_roles');
-        $permission = factory(\App\Models\Permission::class)->create();
+        $permission = \App\Models\Permission::factory()->create();
         $random_roles = \App\Models\Role::get()->random(2)->pluck('id');
         // dd($random_roles);
         $response = $this->actingAs($user)->post(route('admin.permission.update_roles'), [

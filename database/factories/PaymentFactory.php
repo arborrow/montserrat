@@ -2,24 +2,42 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Models\Payment::class, function (Faker $faker) {
-    $payment_methods = config('polanco.payment_method');
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-    return [
-        'donation_id' => function () {
-            return factory(App\Models\Donation::class)->create()->donation_id;
-        },
-        'payment_amount' => $faker->randomFloat(2, 0, 100000),
-        'payment_date' => $faker->dateTime(),
-        'payment_description' => $faker->randomElement($payment_methods),
-        'cknumber' => $faker->word,
-        'ccnumber' => $faker->word,
-        'expire_date' => $faker->dateTime(),
-        'authorization_number' => $faker->word,
-        'note' => $faker->word,
-        'ty_letter_sent' => $faker->word,
-        'remember_token' => Str::random(10),
-    ];
-});
+class PaymentFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \App\Models\Payment::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $payment_methods = config('polanco.payment_method');
+
+        return [
+            'donation_id' => function () {
+                return \App\Models\Donation::factory()->create()->donation_id;
+            },
+            'payment_amount' => $this->faker->randomFloat(2, 0, 100000),
+            'payment_date' => $this->faker->dateTime(),
+            'payment_description' => $this->faker->randomElement($payment_methods),
+            'cknumber' => $this->faker->word,
+            'ccnumber' => $this->faker->word,
+            'expire_date' => $this->faker->dateTime(),
+            'authorization_number' => $this->faker->word,
+            'note' => $this->faker->word,
+            'ty_letter_sent' => $this->faker->word,
+            'remember_token' => Str::random(10),
+        ];
+    }
+}

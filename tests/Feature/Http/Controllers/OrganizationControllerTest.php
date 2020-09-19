@@ -38,7 +38,7 @@ class OrganizationControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-contact');
-        $organization = factory(\App\Models\Organization::class)->create();
+        $organization = \App\Models\Organization::factory()->create();
 
         $response = $this->actingAs($user)->delete(route('organization.destroy', ['organization' => $organization]));
         $response->assertSessionHas('flash_notification');
@@ -52,66 +52,66 @@ class OrganizationControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-contact');
-        $organization = factory(\App\Models\Organization::class)->create();
+        $organization = \App\Models\Organization::factory()->create();
         $organization = \App\Models\Contact::findOrFail($organization->id);
 
-        $organization_note = factory(\App\Models\Note::class)->create([
+        $organization_note = \App\Models\Note::factory()->create([
             'entity_table' => 'contact',
             'entity_id' => $organization->id,
             'subject' => 'Organization Note',
         ]);
 
-        $main_address = factory(\App\Models\Address::class)->create([
+        $main_address = \App\Models\Address::factory()->create([
             'contact_id' => $organization->id,
             'location_type_id' => config('polanco.location_type.main'),
             'is_primary' => 1,
         ]);
 
-        $main_phone = factory(\App\Models\Phone::class)->create([
+        $main_phone = \App\Models\Phone::factory()->create([
             'contact_id' => $organization->id,
             'location_type_id' =>  config('polanco.location_type.main'),
             'is_primary' => 1,
             'phone_type' => 'Phone',
         ]);
 
-        $main_fax = factory(\App\Models\Phone::class)->create([
+        $main_fax = \App\Models\Phone::factory()->create([
             'contact_id' => $organization->id,
             'location_type_id' =>  config('polanco.location_type.main'),
             'phone_type' => 'Fax',
         ]);
 
-        $main_email = factory(\App\Models\Email::class)->create([
+        $main_email = \App\Models\Email::factory()->create([
             'contact_id' => $organization->id,
             'is_primary' => 1,
             'location_type_id' => config('polanco.location_type.main'),
         ]);
 
-        $url_main = factory(\App\Models\Website::class)->create([
+        $url_main = \App\Models\Website::factory()->create([
             'contact_id' => $organization->id,
             'website_type' => 'Main',
             'url' => $this->faker->url,
         ]);
-        $url_work = factory(\App\Models\Website::class)->create([
+        $url_work = \App\Models\Website::factory()->create([
             'contact_id' => $organization->id,
             'website_type' => 'Work',
             'url' => $this->faker->url,
         ]);
-        $url_facebook = factory(\App\Models\Website::class)->create([
+        $url_facebook = \App\Models\Website::factory()->create([
             'contact_id' => $organization->id,
             'website_type' => 'Facebook',
             'url' => 'https://facebook.com/'.$this->faker->slug,
         ]);
-        $url_instagram = factory(\App\Models\Website::class)->create([
+        $url_instagram = \App\Models\Website::factory()->create([
             'contact_id' => $organization->id,
             'website_type' => 'Instagram',
             'url' => 'https://instagram.com/'.$this->faker->slug,
         ]);
-        $url_linkedin = factory(\App\Models\Website::class)->create([
+        $url_linkedin = \App\Models\Website::factory()->create([
             'contact_id' => $organization->id,
             'website_type' => 'LinkedIn',
             'url' => 'https://linkedin.com/'.$this->faker->slug,
         ]);
-        $url_twitter = factory(\App\Models\Website::class)->create([
+        $url_twitter = \App\Models\Website::factory()->create([
             'contact_id' => $organization->id,
             'website_type' => 'Twitter',
             'url' => 'https://twitter.com/'.$this->faker->slug,
@@ -189,7 +189,7 @@ class OrganizationControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-contact');
-        $organization = factory(\App\Models\Organization::class)->create();
+        $organization = \App\Models\Organization::factory()->create();
 
         $response = $this->actingAs($user)->get(route('organization.show', ['organization' => $organization]));
 
@@ -245,7 +245,7 @@ class OrganizationControllerTest extends TestCase
     {
         //create original data
         $user = $this->createUserWithPermission('update-contact');
-        $organization = factory(\App\Models\Contact::class)->create();
+        $organization = \App\Models\Contact::factory()->create();
         $original_name = $organization->organization_name;
         //create updated data
         $organization_name = $this->faker->company;

@@ -2,18 +2,36 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Models\ContactType::class, function (Faker $faker) {
-    return [
-        'name' => $faker->name,
-        'label' => $faker->word,
-        'description' => $faker->text,
-        'image_URL' => $faker->word,
-        'parent_id' => $faker->randomNumber(),
-        'is_active' => $faker->boolean,
-        'is_reserved' => $faker->boolean,
-        'status' => $faker->word,
-        'remember_token' => Str::random(10),
-    ];
-});
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class ContactTypeFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \App\Models\ContactType::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'name' => $this->faker->name,
+            'label' => $this->faker->word,
+            'description' => $this->faker->text,
+            'image_URL' => $this->faker->word,
+            'parent_id' => $this->faker->randomNumber(),
+            'is_active' => $this->faker->boolean,
+            'is_reserved' => $this->faker->boolean,
+            'status' => $this->faker->word,
+            'remember_token' => Str::random(10),
+        ];
+    }
+}

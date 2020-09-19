@@ -1,18 +1,36 @@
 <?php
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Models\Location::class, function (Faker $faker) {
-    $name = $faker->lastname.' of '.$faker->city;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-    return [
-        'name' => $name,
-        'description' => $faker->sentence,
-        'occupancy' => $faker->numberBetween(10, 50),
-        'notes' => $faker->text(100),
-        'label' => $name,
-        'longitude' => $faker->longitude(-93, -103),
-        'latitude' => $faker->latitude(30, 40),
-        'type' =>  $faker->randomElement(config('polanco.locations_type')),
-    ];
-});
+class LocationFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \App\Models\Location::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $name = $this->faker->lastname.' of '.$this->faker->city;
+
+        return [
+            'name' => $name,
+            'description' => $this->faker->sentence,
+            'occupancy' => $this->faker->numberBetween(10, 50),
+            'notes' => $this->faker->text(100),
+            'label' => $name,
+            'longitude' => $this->faker->longitude(-93, -103),
+            'latitude' => $this->faker->latitude(30, 40),
+            'type' =>  $this->faker->randomElement(config('polanco.locations_type')),
+        ];
+    }
+}

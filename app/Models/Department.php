@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Department extends Model implements Auditable
 {   /*
+    use HasFactory;
+
     Currently the donation type label is stored in Donations.donation_description. The label field has a unique index.
     The label functions as a shortname and should be considered a foreign key relationship to Donations.donation_description.
     TODO: create and enforce fk relationship such that if the label is edited the changes cascade down into Donations.donation_description.

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -9,6 +10,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class Touchpoint extends Model implements Auditable
 {
+    use HasFactory;
+
     //
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;

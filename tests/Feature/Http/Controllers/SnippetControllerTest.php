@@ -34,7 +34,7 @@ class SnippetControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-snippet');
-        $snippet = factory(\App\Models\Snippet::class)->create();
+        $snippet = \App\Models\Snippet::factory()->create();
 
         $response = $this->actingAs($user)->delete(route('snippet.destroy', [$snippet]));
 
@@ -49,7 +49,7 @@ class SnippetControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-snippet');
-        $snippet = factory(\App\Models\Snippet::class)->create();
+        $snippet = \App\Models\Snippet::factory()->create();
 
         $response = $this->actingAs($user)->get(route('snippet.edit', [$snippet]));
 
@@ -88,10 +88,10 @@ class SnippetControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-snippet');
 
-        $snippet = factory(\App\Models\Snippet::class)->create();
+        $snippet = \App\Models\Snippet::factory()->create();
 
         $number_snippets = $this->faker->numberBetween(2, 5);
-        $snippets = factory(\App\Models\Snippet::class, $number_snippets)->create([
+        $snippets = \App\Models\Snippet::factory()->count($number_snippets)->create([
             'title' => $snippet->title,
             'deleted_at' => null,
         ]);
@@ -112,7 +112,7 @@ class SnippetControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-snippet');
-        $snippet = factory(\App\Models\Snippet::class)->create();
+        $snippet = \App\Models\Snippet::factory()->create();
 
         $response = $this->actingAs($user)->get(route('snippet.show', [$snippet]));
 
@@ -219,7 +219,7 @@ class SnippetControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-snippet');
 
-        $snippet = factory(\App\Models\Snippet::class)->create();
+        $snippet = \App\Models\Snippet::factory()->create();
 
         $original_title = $snippet->title;
         $new_title = 'New '.$this->faker->words(2, true);

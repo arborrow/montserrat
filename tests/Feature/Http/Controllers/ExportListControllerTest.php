@@ -34,7 +34,7 @@ class ExportListControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-export-list');
-        $export_list = factory(\App\Models\ExportList::class)->create();
+        $export_list = \App\Models\ExportList::factory()->create();
 
         $response = $this->actingAs($user)->delete(route('export_list.destroy', [$export_list]));
 
@@ -49,7 +49,7 @@ class ExportListControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-export-list');
-        $export_list = factory(\App\Models\ExportList::class)->create();
+        $export_list = \App\Models\ExportList::factory()->create();
 
         $response = $this->actingAs($user)->get(route('export_list.edit', [$export_list]));
 
@@ -81,7 +81,7 @@ class ExportListControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-export-list');
-        $export_list = factory(\App\Models\ExportList::class)->create();
+        $export_list = \App\Models\ExportList::factory()->create();
 
         $response = $this->actingAs($user)->get(route('export_list.show', [$export_list]));
 
@@ -127,7 +127,7 @@ class ExportListControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-export-list');
 
-        $export_list = factory(\App\Models\ExportList::class)->create();
+        $export_list = \App\Models\ExportList::factory()->create();
         $export_list_type = $this->faker->randomElement(config('polanco.export_list_types'));
 
         $original_export_list_title = $export_list->title;

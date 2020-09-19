@@ -37,15 +37,15 @@ class SystemControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-offeringdedup');
 
         // Create a duplicate contact_id:event_id pair of donations
-        $offeringdedup = factory(\App\Models\TmpOfferingDedup::class)->create([
+        $offeringdedup = \App\Models\TmpOfferingDedup::factory()->create([
             'created_at' => $this->faker->dateTime('now'),
         ]);
-        $donation_1 = factory(\App\Models\Donation::class)->create([
+        $donation_1 = \App\Models\Donation::factory()->create([
           'contact_id' => $offeringdedup->contact_id,
           'event_id' => $offeringdedup->event_id,
           'donation_description' => 'Retreat Funding',
         ]);
-        $donation_2 = factory(\App\Models\Donation::class)->create([
+        $donation_2 = \App\Models\Donation::factory()->create([
           'contact_id' => $offeringdedup->contact_id,
           'event_id' => $offeringdedup->event_id,
           'donation_description' => 'Retreat Funding',

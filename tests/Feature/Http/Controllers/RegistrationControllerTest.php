@@ -20,7 +20,7 @@ class RegistrationControllerTest extends TestCase
     public function add_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('create-registration');
-        $contact = factory(\App\Models\Contact::class)->create([
+        $contact = \App\Models\Contact::factory()->create([
             'contact_type' => config('polanco.contact_type.individual'),
             'subcontact_type' => null,
         ]);
@@ -43,7 +43,7 @@ class RegistrationControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('create-registration');
 
-        $group = factory(\App\Models\Group::class)->create();
+        $group = \App\Models\Group::factory()->create();
 
         $response = $this->actingAs($user)->get('group/'.$group->id.'/registration');
 
@@ -62,7 +62,7 @@ class RegistrationControllerTest extends TestCase
     public function arrive_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-registration');
-        $registration = factory(\App\Models\Registration::class)->create([
+        $registration = \App\Models\Registration::factory()->create([
           'arrived_at' => null,
           'canceled_at' => null,
           'departed_at' => null,
@@ -85,7 +85,7 @@ class RegistrationControllerTest extends TestCase
     public function attend_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-registration');
-        $registration = factory(\App\Models\Registration::class)->create([
+        $registration = \App\Models\Registration::factory()->create([
             'attendance_confirm_date' => null,
           ]);
 
@@ -106,7 +106,7 @@ class RegistrationControllerTest extends TestCase
     public function cancel_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-registration');
-        $registration = factory(\App\Models\Registration::class)->create([
+        $registration = \App\Models\Registration::factory()->create([
             'canceled_at' => null,
           ]);
 
@@ -128,7 +128,7 @@ class RegistrationControllerTest extends TestCase
     public function confirm_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-registration');
-        $registration = factory(\App\Models\Registration::class)->create([
+        $registration = \App\Models\Registration::factory()->create([
             'registration_confirm_date' => null,
           ]);
 
@@ -148,7 +148,7 @@ class RegistrationControllerTest extends TestCase
      */
     public function confirm_attendance_returns_an_ok_response()
     {
-        $registration = factory(\App\Models\Registration::class)->create([
+        $registration = \App\Models\Registration::factory()->create([
               'departed_at' => null,
               'registration_confirm_date' => null,
               'arrived_at' => null,
@@ -189,7 +189,7 @@ class RegistrationControllerTest extends TestCase
     public function depart_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-registration');
-        $registration = factory(\App\Models\Registration::class)->create([
+        $registration = \App\Models\Registration::factory()->create([
             'departed_at' => null,
           ]);
         $response = $this->actingAs($user)->from(URL('retreat/'.$registration->event_id))
@@ -208,7 +208,7 @@ class RegistrationControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-registration');
-        $registration = factory(\App\Models\Registration::class)->create();
+        $registration = \App\Models\Registration::factory()->create();
 
         $response = $this->actingAs($user)->delete(route('registration.destroy', [$registration]));
         $response->assertSessionHas('flash_notification');
@@ -222,7 +222,7 @@ class RegistrationControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-registration');
-        $registration = factory(\App\Models\Registration::class)->create();
+        $registration = \App\Models\Registration::factory()->create();
 
         $response = $this->actingAs($user)->get(route('registration.edit', [$registration]));
 
@@ -271,7 +271,7 @@ class RegistrationControllerTest extends TestCase
     public function index_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-registration');
-        $registration = factory(\App\Models\Registration::class)->create();
+        $registration = \App\Models\Registration::factory()->create();
 
         $response = $this->actingAs($user)->get(route('registration.index'));
 
@@ -288,7 +288,7 @@ class RegistrationControllerTest extends TestCase
     public function offwaitlist_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-registration');
-        $registration = factory(\App\Models\Registration::class)->create([
+        $registration = \App\Models\Registration::factory()->create([
             'status_id' => config('polanco.registration_status_id.waitlist'),
         ]);
 
@@ -305,8 +305,8 @@ class RegistrationControllerTest extends TestCase
     public function register_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('create-registration');
-        $retreat = factory(\App\Models\Retreat::class)->create();
-        $contact = factory(\App\Models\Contact::class)->create([
+        $retreat = \App\Models\Retreat::factory()->create();
+        $contact = \App\Models\Contact::factory()->create([
           'contact_type' => config('polanco.contact_type.individual'),
           'subcontact_type' => null,
         ]);
@@ -331,14 +331,14 @@ class RegistrationControllerTest extends TestCase
      */
     public function registration_email_returns_an_ok_response()
     {
-        $registration = factory(\App\Models\Registration::class)->create([
+        $registration = \App\Models\Registration::factory()->create([
             'canceled_at' => null,
             'arrived_at' => null,
             'departed_at' => null,
             'status_id' => config('polanco.registration_status_id.registered'),
             'notes' => 'Registration email test',
         ]);
-        $email = factory(\App\Models\Email::class)->create([
+        $email = \App\Models\Email::factory()->create([
             'contact_id' => $registration->contact_id,
             'is_primary' => '1',
         ]);
@@ -363,7 +363,7 @@ class RegistrationControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-registration');
-        $registration = factory(\App\Models\Registration::class)->create();
+        $registration = \App\Models\Registration::factory()->create();
 
         $response = $this->actingAs($user)->get(route('registration.show', [$registration]));
 
@@ -379,8 +379,8 @@ class RegistrationControllerTest extends TestCase
     public function store_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('create-registration');
-        $retreat = factory(\App\Models\Retreat::class)->create();
-        $contact = factory(\App\Models\Contact::class)->create([
+        $retreat = \App\Models\Retreat::factory()->create();
+        $contact = \App\Models\Contact::factory()->create([
           'contact_type' => config('polanco.contact_type.individual'),
           'subcontact_type' => null,
         ]);
@@ -424,9 +424,9 @@ class RegistrationControllerTest extends TestCase
     public function store_group_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('create-registration');
-        $retreat = factory(\App\Models\Retreat::class)->create();
-        $group = factory(\App\Models\Group::class)->create();
-        $group_contacts = factory(\App\Models\GroupContact::class, $this->faker->numberBetween(2, 10))->create([
+        $retreat = \App\Models\Retreat::factory()->create();
+        $group = \App\Models\Group::factory()->create();
+        $group_contacts = \App\Models\GroupContact::factory()->count($this->faker->numberBetween(2, 10))->create([
             'group_id' => $group->id,
         ]);
         $response = $this->actingAs($user)->post('registration/add_group', [
@@ -463,7 +463,7 @@ class RegistrationControllerTest extends TestCase
     public function update_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-registration');
-        $registration = factory(\App\Models\Registration::class)->create();
+        $registration = \App\Models\Registration::factory()->create();
         $new_deposit = $this->faker->numberBetween(0, 1000);
         $original_deposit = $registration->deposit;
         $response = $this->actingAs($user)->put(route('registration.update', [$registration]), [
@@ -506,7 +506,7 @@ class RegistrationControllerTest extends TestCase
     public function waitlist_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-registration');
-        $registration = factory(\App\Models\Registration::class)->create([
+        $registration = \App\Models\Registration::factory()->create([
             'status_id' => config('polanco.registration_status_id.registered'),
         ]);
 
