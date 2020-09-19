@@ -34,7 +34,7 @@ class GateControllerTest extends TestCase
     public function close_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-gate');
-        $email = factory(\App\Email::class)->create([
+        $email = factory(\App\Models\Email::class)->create([
             'email' => $user->email,
         ]);
 
@@ -51,7 +51,7 @@ class GateControllerTest extends TestCase
     public function open_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-gate');
-        $email = factory(\App\Email::class)->create([
+        $email = factory(\App\Models\Email::class)->create([
             'email' => $user->email,
         ]);
 

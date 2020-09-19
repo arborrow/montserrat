@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\StoreUomRequest;
 use App\Http\Requests\UpdateUomRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class UomController extends Controller
 {
@@ -18,7 +18,7 @@ class UomController extends Controller
     public function index()
     {
         $this->authorize('show-uom');
-        $uoms = \App\Uom::orderBy('unit_name')->get();
+        $uoms = \App\Models\Uom::orderBy('unit_name')->get();
 
         return view('admin.uoms.index', compact('uoms'));
     }
@@ -46,7 +46,7 @@ class UomController extends Controller
     {
         $this->authorize('create-uom');
 
-        $uom = new \App\Uom;
+        $uom = new \App\Models\Uom;
         $uom->type = $request->input('type');
         $uom->unit_name = $request->input('unit_name');
         $uom->unit_symbol = $request->input('unit_symbol');
@@ -55,7 +55,8 @@ class UomController extends Controller
 
         $uom->save();
 
-        flash ('Unit of measure: <a href="'. url('/admin/uom/'.$uom->id) . '">'.$uom->unit_name.'</a> added')->success();
+        flash('Unit of measure: <a href="'.url('/admin/uom/'.$uom->id).'">'.$uom->unit_name.'</a> added')->success();
+
         return Redirect::action('UomController@index');
     }
 
@@ -69,7 +70,7 @@ class UomController extends Controller
     {
         $this->authorize('show-uom');
 
-        $uom = \App\Uom::findOrFail($id);
+        $uom = \App\Models\Uom::findOrFail($id);
 
         return view('admin.uoms.show', compact('uom'));
     }
@@ -84,10 +85,10 @@ class UomController extends Controller
     {
         $this->authorize('update-uom');
 
-        $uom = \App\Uom::findOrFail($id);
+        $uom = \App\Models\Uom::findOrFail($id);
         $uom_types = config('polanco.uom_types');
 
-        return view('admin.uoms.edit', compact('uom','uom_types')); //
+        return view('admin.uoms.edit', compact('uom', 'uom_types')); //
     }
 
     /**
@@ -101,7 +102,7 @@ class UomController extends Controller
     {
         $this->authorize('update-uom');
 
-        $uom = \App\Uom::findOrFail($id);
+        $uom = \App\Models\Uom::findOrFail($id);
 
         $uom->type = $request->input('type');
         $uom->unit_name = $request->input('unit_name');
@@ -111,8 +112,9 @@ class UomController extends Controller
 
         $uom->save();
 
-        flash ('Unit of measure: <a href="'. url('/admin/uom/'.$uom->id) . '">'.$uom->unit_name.'</a> updated')->success();
-        return Redirect::action('UomController@show',$uom->id);
+        flash('Unit of measure: <a href="'.url('/admin/uom/'.$uom->id).'">'.$uom->unit_name.'</a> updated')->success();
+
+        return Redirect::action('UomController@show', $uom->id);
     }
 
     /**
@@ -124,12 +126,12 @@ class UomController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-uom');
-        $uom = \App\Uom::findOrFail($id);
+        $uom = \App\Models\Uom::findOrFail($id);
 
-        \App\Uom::destroy($id);
+        \App\Models\Uom::destroy($id);
 
-        flash('Unit of measure: '.$uom->unit_name . ' deleted')->warning()->important();
+        flash('Unit of measure: '.$uom->unit_name.' deleted')->warning()->important();
+
         return Redirect::action('UomController@index');
     }
-
 }

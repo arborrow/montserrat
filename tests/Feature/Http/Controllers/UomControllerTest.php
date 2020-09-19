@@ -33,7 +33,7 @@ class UomControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-uom');
-        $uom = factory(\App\Uom::class)->create();
+        $uom = factory(\App\Models\Uom::class)->create();
 
         $response = $this->actingAs($user)->delete(route('uom.destroy', [$uom]));
 
@@ -48,7 +48,7 @@ class UomControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-uom');
-        $uom = factory(\App\Uom::class)->create();
+        $uom = factory(\App\Models\Uom::class)->create();
 
         $response = $this->actingAs($user)->get(route('uom.edit', [$uom]));
 
@@ -85,7 +85,7 @@ class UomControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-uom');
-        $uom = factory(\App\Uom::class)->create();
+        $uom = factory(\App\Models\Uom::class)->create();
 
         $response = $this->actingAs($user)->get(route('uom.show', [$uom]));
 
@@ -135,11 +135,11 @@ class UomControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-uom');
 
-        $uom = factory(\App\Uom::class)->create();
+        $uom = factory(\App\Models\Uom::class)->create();
         $uom_type = $this->faker->randomElement(config('polanco.uom_types'));
 
         $original_uom_unit_name = $uom->unit_name;
-        $new_uom_unit_name = 'New ' . $this->faker->words(2, true);
+        $new_uom_unit_name = 'New '.$this->faker->words(2, true);
 
         $response = $this->actingAs($user)->put(route('uom.update', [$uom]), [
           'id' => $uom->id,
@@ -153,7 +153,7 @@ class UomControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('UomController@show', $uom->id));
 
-        $updated = \App\Uom::findOrFail($uom->id);
+        $updated = \App\Models\Uom::findOrFail($uom->id);
         $this->assertEquals($updated->unit_name, $new_uom_unit_name);
         $this->assertNotEquals($updated->unit_name, $original_uom_unit_name);
     }

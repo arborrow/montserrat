@@ -4,10 +4,11 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Uom::class, function (Faker $faker) {
+$factory->define(App\Models\Uom::class, function (Faker $faker) {
     $label = $faker->word;
     $type = $faker->randomElement(config('polanco.uom_types'));
-    $description = $label . ' of ' . $type;
+    $description = $label.' of '.$type;
+
     return [
         'unit_name' => $label,
         'unit_symbol' => $label,

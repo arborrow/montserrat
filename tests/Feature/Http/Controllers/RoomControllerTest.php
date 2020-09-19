@@ -34,7 +34,7 @@ class RoomControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-room');
-        $room = factory(\App\Room::class)->create();
+        $room = factory(\App\Models\Room::class)->create();
 
         $response = $this->actingAs($user)->delete(route('room.destroy', [$room]));
 
@@ -49,7 +49,7 @@ class RoomControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-room');
-        $room = factory(\App\Room::class)->create();
+        $room = factory(\App\Models\Room::class)->create();
 
         $response = $this->actingAs($user)->get(route('room.edit', [$room]));
 
@@ -69,7 +69,6 @@ class RoomControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('type', $room->type, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('occupancy', $room->occupancy, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('status', $room->status, 'text', $response->getContent()));
-
 
         /*
         {!! Form::select('location_id', $locations, $room->location_id, ['class' => 'col-md-2']) !!}
@@ -124,7 +123,7 @@ class RoomControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-room');
-        $room = factory(\App\Room::class)->create();
+        $room = factory(\App\Models\Room::class)->create();
 
         $response = $this->actingAs($user)->get(route('room.show', [$room]));
 
@@ -141,7 +140,7 @@ class RoomControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('create-room');
 
-        $location = factory(\App\Location::class)->create();
+        $location = factory(\App\Models\Location::class)->create();
         $name = 'New '.$this->faker->lastName.' Suite';
         $description = $this->faker->catchPhrase;
 
@@ -183,10 +182,10 @@ class RoomControllerTest extends TestCase
     public function update_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-room');
-        $room = factory(\App\Room::class)->create();
+        $room = factory(\App\Models\Room::class)->create();
 
         $original_description = $room->description;
-        $new_location = factory(\App\Location::class)->create();
+        $new_location = factory(\App\Models\Location::class)->create();
         $new_name = 'Renovated '.$this->faker->lastName.' Suite';
         $new_description = $this->faker->catchPhrase;
 

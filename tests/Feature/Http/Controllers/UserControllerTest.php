@@ -14,7 +14,7 @@ class UserControllerTest extends TestCase
     use WithFaker;
 
     /**
-     * unused
+     * unused.
      */
     public function create_returns_an_ok_response()
     {
@@ -28,12 +28,12 @@ class UserControllerTest extends TestCase
     }
 
     /**
-     * test
+     * test.
      */
     public function destroy_returns_an_ok_response()
     {   // keep in mind that the destroy method does not actually delete a user from the database
         $user = $this->createUserWithPermission('delete-user');
-        $user = factory(\App\User::class)->create();
+        $user = factory(\App\Models\User::class)->create();
 
         $response = $this->actingAs($user)->delete(route('user.destroy', [$user]));
         $response->assertSessionHas('flash_notification');
@@ -42,12 +42,12 @@ class UserControllerTest extends TestCase
     }
 
     /**
-     * unused
+     * unused.
      */
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-user');
-        $user = factory(\App\User::class)->create();
+        $user = factory(\App\Models\User::class)->create();
 
         $response = $this->actingAs($user)->get(route('user.edit', [$user]));
 
@@ -59,7 +59,6 @@ class UserControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('name', $user->name, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('display_name', $user->display_name, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('description', $user->description, 'text', $response->getContent()));
-
     }
 
     /**
@@ -83,7 +82,7 @@ class UserControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-role');
-        $new_user = factory(\App\User::class)->create();
+        $new_user = factory(\App\Models\User::class)->create();
 
         $response = $this->actingAs($user)->get(route('user.show', [$new_user]));
 
@@ -95,7 +94,7 @@ class UserControllerTest extends TestCase
     }
 
     /**
-     * test
+     * test.
      */
     public function store_returns_an_ok_response()
     {   // keep in mind that this does not actually store a user record in the database
@@ -124,12 +123,12 @@ class UserControllerTest extends TestCase
     }
 
     /**
-     * test
+     * test.
      */
     public function update_returns_an_ok_response()
     {   // keep in mind that this does not actually update a user in the database
         $user = $this->createUserWithPermission('update-user');
-        $user = factory(\App\User::class)->create();
+        $user = factory(\App\Models\User::class)->create();
 
         $original_description = $user->description;
         $new_name = $this->faker->jobTitle;
@@ -142,14 +141,13 @@ class UserControllerTest extends TestCase
             'description' => $new_description,
         ]);
 
-        $updated = \App\User::findOrFail($user->id);
+        $updated = \App\Models\User::findOrFail($user->id);
 
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('UserController@index'));
 //        $this->assertEquals($updated->description, $new_description);
 //        $this->assertNotEquals($updated->description, $original_description);
     }
-
 
     // test cases...
 }

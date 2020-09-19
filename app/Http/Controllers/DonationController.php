@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDonationRequest;
 use App\Http\Requests\UpdateDonationRequest;
-use App\Payment;
+use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,22 +29,22 @@ class DonationController extends Controller
         // rather than using the active donation_descriptions from DonationType model, let's continue to show all of the existing donation_descriptions in the Donations table so that any that are not in the DonationType table can be cleaned up
         $donation_descriptions = DB::table('Donations')->selectRaw('MIN(donation_id) as donation_id, donation_description, count(*) as count')->groupBy('donation_description')->orderBy('donation_description')->whereNull('deleted_at')->get();
         // dd($donation_descriptions);
-        $donations = \App\Donation::orderBy('donation_date', 'desc')->with('contact.prefix', 'contact.suffix')->paginate(100);
+        $donations = \App\Models\Donation::orderBy('donation_date', 'desc')->with('contact.prefix', 'contact.suffix')->paginate(100);
         //dd($donations);
-        return view('donations.index', compact('donations','donation_descriptions'));
+        return view('donations.index', compact('donations', 'donation_descriptions'));
     }
 
     public function index_type($donation_id = null)
     {
         $this->authorize('show-donation');
         $donation_descriptions = DB::table('Donations')->selectRaw('MIN(donation_id) as donation_id, donation_description, count(*) as count')->groupBy('donation_description')->orderBy('donation_description')->whereNull('deleted_at')->get();
-        $donation = \App\Donation::findOrFail($donation_id);
+        $donation = \App\Models\Donation::findOrFail($donation_id);
         $donation_description = $donation->donation_description;
 
         $defaults = [];
         $defaults['type'] = $donation_description;
 
-        $donations = \App\Donation::whereDonationDescription($donation_description)->orderBy('donation_date', 'desc')->with('contact.prefix','contact.suffix')->paginate(100);
+        $donations = \App\Models\Donation::whereDonationDescription($donation_description)->orderBy('donation_date', 'desc')->with('contact.prefix', 'contact.suffix')->paginate(100);
 
         return view('donations.index', compact('donations', 'donation_descriptions', 'defaults'));   //
     }
@@ -80,8 +80,8 @@ class DonationController extends Controller
         }
         $prev_year = $year - 1;
 
-        $all_donations = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->get();
-        $donations = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->paginate(100);
+        $all_donations = \App\Models\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->get();
+        $donations = \App\Models\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->paginate(100);
         $total['pledged'] = $all_donations->sum('donation_amount');
         $total['paid'] = $all_donations->sum('payments_paid');
         if ($total['pledged'] > 0) {
@@ -106,27 +106,27 @@ class DonationController extends Controller
         $subcontact_type_id = config('polanco.contact_type.'.$type);
         // dd($subcontact_type_id,$id);
         if ($id > 0) {
-            $donor = \App\Contact::findOrFail($id); // a lazy way to fail if no donor
-            $donor_events = \App\Registration::whereContactId($id)->get();
-            $donors = \App\Contact::whereId($id)->pluck('sort_name', 'id');
+            $donor = \App\Models\Contact::findOrFail($id); // a lazy way to fail if no donor
+            $donor_events = \App\Models\Registration::whereContactId($id)->get();
+            $donors = \App\Models\Contact::whereId($id)->pluck('sort_name', 'id');
         } else {
-            $donors = \App\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name', 'id');
+            $donors = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name', 'id');
         }
         if (isset($subcontact_type_id) && ($id == 0)) {
-            $donors = \App\Contact::whereSubcontactType($subcontact_type_id)->orderBy('sort_name')->pluck('sort_name', 'id');
+            $donors = \App\Models\Contact::whereSubcontactType($subcontact_type_id)->orderBy('sort_name')->pluck('sort_name', 'id');
         }
         if (isset($event_id)) {
-            $retreats = \App\Retreat::findOrFail($event_id); // a lazy way to fail if unknown event_id
-            $retreats = \App\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->whereId($event_id)->pluck('description', 'id');
+            $retreats = \App\Models\Retreat::findOrFail($event_id); // a lazy way to fail if unknown event_id
+            $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->whereId($event_id)->pluck('description', 'id');
         } else {
-            // $retreats = \App\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("is_active", "=", 1)->orderBy('start_date')->pluck('description', 'id');
-            $retreats = \App\Registration::leftjoin('event', 'participant.event_id', '=', 'event.id')->select(DB::raw('CONCAT(event.idnumber, "-", event.title, " (",DATE_FORMAT(event.start_date,"%m-%d-%Y"),")") as description'), 'event.id')->whereContactId($id)->orderBy('event.start_date', 'desc')->pluck('event.description', 'event.id');
+            // $retreats = \App\Models\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("is_active", "=", 1)->orderBy('start_date')->pluck('description', 'id');
+            $retreats = \App\Models\Registration::leftjoin('event', 'participant.event_id', '=', 'event.id')->select(DB::raw('CONCAT(event.idnumber, "-", event.title, " (",DATE_FORMAT(event.start_date,"%m-%d-%Y"),")") as description'), 'event.id')->whereContactId($id)->orderBy('event.start_date', 'desc')->pluck('event.description', 'event.id');
             $retreats->prepend('Unassigned', 0);
         }
 
         //dd($donors);
         $payment_methods = config('polanco.payment_method');
-        $descriptions = \App\DonationType::active()->orderby('name')->pluck('name', 'name');
+        $descriptions = \App\Models\DonationType::active()->orderby('name')->pluck('name', 'name');
         $dt_today = \Carbon\Carbon::today();
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
         $defaults['retreat_id'] = $event_id;
@@ -149,7 +149,7 @@ class DonationController extends Controller
     {
         $this->authorize('create-donation');
 
-        $donation = new \App\Donation;
+        $donation = new \App\Models\Donation;
         $donation->contact_id = $request->input('donor_id');
         if ($request->input('event_id') > 0) {
             $donation->event_id = $request->input('event_id');
@@ -165,7 +165,7 @@ class DonationController extends Controller
         $donation->save();
 
         // create donation_payments
-        $payment = new \App\Payment;
+        $payment = new \App\Models\Payment;
         $payment->donation_id = $donation->donation_id;
         $payment->payment_amount = $request->input('payment_amount');
         $payment->payment_date = Carbon::parse($request->input('payment_date'));
@@ -178,7 +178,8 @@ class DonationController extends Controller
         }        //dd($payment, $donation);
         $payment->save();
 
-        flash ('Donation ID#: <a href="'. url('/donation/'.$donation->donation_id) . '">'.$donation->donation_id.'</a> added')->success();
+        flash('Donation ID#: <a href="'.url('/donation/'.$donation->donation_id).'">'.$donation->donation_id.'</a> added')->success();
+
         return redirect($donation->contact->contact_url.'#donations');
     }
 
@@ -191,7 +192,7 @@ class DonationController extends Controller
     public function show($id)
     {
         $this->authorize('show-donation');
-        $donation = \App\Donation::with('payments', 'contact')->findOrFail($id);
+        $donation = \App\Models\Donation::with('payments', 'contact')->findOrFail($id);
 
         return view('donations.show', compact('donation')); //
     }
@@ -206,16 +207,16 @@ class DonationController extends Controller
     {
         $this->authorize('update-donation');
         //get this retreat's information
-        $donation = \App\Donation::with('payments', 'contact')->findOrFail($id);
-        $descriptions = \App\DonationType::active()->orderby('name')->pluck('name', 'name');
+        $donation = \App\Models\Donation::with('payments', 'contact')->findOrFail($id);
+        $descriptions = \App\Models\DonationType::active()->orderby('name')->pluck('name', 'name');
 
         if (! $descriptions->search($donation->donation_description)) {
-            $descriptions->prepend($donation->donation_description . ' (inactive donation type)', $donation->donation_description);
+            $descriptions->prepend($donation->donation_description.' (inactive donation type)', $donation->donation_description);
             // dd($descriptions,$donation->donation_description);
         }
 
-        // $retreats = \App\Retreat::select(\DB::raw('CONCAT_WS(" ",CONCAT(idnumber," -"), title, CONCAT("(",DATE_FORMAT(start_date,"%m-%d-%Y"),")")) as description'), 'id')->where("end_date", ">", $donation->donation_date)->where("is_active", "=", 1)->orderBy('start_date')->pluck('description', 'id');
-        $retreats = \App\Registration::leftjoin('event', 'participant.event_id', '=', 'event.id')->select(DB::raw('CONCAT(event.idnumber, "-", event.title, " (",DATE_FORMAT(event.start_date,"%m-%d-%Y"),")") as description'), 'event.id')->whereContactId($donation->contact_id)->orderBy('event.start_date', 'desc')->pluck('event.description', 'event.id');
+        // $retreats = \App\Models\Retreat::select(\DB::raw('CONCAT_WS(" ",CONCAT(idnumber," -"), title, CONCAT("(",DATE_FORMAT(start_date,"%m-%d-%Y"),")")) as description'), 'id')->where("end_date", ">", $donation->donation_date)->where("is_active", "=", 1)->orderBy('start_date')->pluck('description', 'id');
+        $retreats = \App\Models\Registration::leftjoin('event', 'participant.event_id', '=', 'event.id')->select(DB::raw('CONCAT(event.idnumber, "-", event.title, " (",DATE_FORMAT(event.start_date,"%m-%d-%Y"),")") as description'), 'event.id')->whereContactId($donation->contact_id)->orderBy('event.start_date', 'desc')->pluck('event.description', 'event.id');
 
         $retreats->prepend('Unassigned', 0);
         $defaults['event_id'] = $donation->event_id;
@@ -242,7 +243,7 @@ class DonationController extends Controller
     {
         $this->authorize('update-donation');
 
-        $donation = \App\Donation::findOrFail($id);
+        $donation = \App\Models\Donation::findOrFail($id);
         $donation->contact_id = $request->input('donor_id');
         $donation->event_id = $request->input('event_id');
         $donation->donation_date = $request->input('donation_date') ? Carbon::parse($request->input('donation_date')) : null;
@@ -261,7 +262,8 @@ class DonationController extends Controller
         }
         $donation->save();
 
-        flash ('Donation ID#: <a href="'. url('/donation/'.$donation->donation_id) . '">'.$donation->donation_id.'</a> updated')->success();
+        flash('Donation ID#: <a href="'.url('/donation/'.$donation->donation_id).'">'.$donation->donation_id.'</a> updated')->success();
+
         return Redirect::action('DonationController@show', $donation->donation_id);
     }
 
@@ -274,18 +276,19 @@ class DonationController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-donation');
-        $donation = \App\Donation::findOrFail($id);
-        $contact = \App\Contact::findOrFail($donation->contact_id);
+        $donation = \App\Models\Donation::findOrFail($id);
+        $contact = \App\Models\Contact::findOrFail($donation->contact_id);
         //deletion of payments implied on the model
-        \App\Donation::destroy($id);
+        \App\Models\Donation::destroy($id);
         // disassociate registration with a donation that is being deleted - there should only be one
-        $registration = \App\Registration::whereDonationId($id)->first();
+        $registration = \App\Models\Registration::whereDonationId($id)->first();
         if (isset($registration->donation_id)) {
             $registration->donation_id = null;
             $registration->save();
         }
 
-        flash('Donation ID#: '.$donation->donation_id . ' deleted')->warning()->important();
+        flash('Donation ID#: '.$donation->donation_id.' deleted')->warning()->important();
+
         return redirect()->to($contact->contact_url);
     }
 
@@ -304,11 +307,11 @@ class DonationController extends Controller
         $event_id = $request->input('event_id');
         if (! is_null($request->input('donations'))) {
             foreach ($request->input('donations') as $key => $value) {
-                $registration = \App\Registration::findOrFail($key);
+                $registration = \App\Models\Registration::findOrFail($key);
                 // if there is not already an existing donation and there is a pledge
                 if (is_null($registration->donation_id)) { //create a new donation
                     if ($value['pledge'] > 0) {
-                        $donation = new \App\Donation;
+                        $donation = new \App\Models\Donation;
                         $donation->contact_id = $registration->contact_id;
 
                         /* n.b  that in PPD Donations retreat_id referred to Retreats and not the events table
@@ -331,7 +334,7 @@ class DonationController extends Controller
                         $registration->save();
 
                         // create donation_payments
-                        $payment = new \App\Payment;
+                        $payment = new \App\Models\Payment;
                         $payment->donation_id = $donation->donation_id;
                         $payment->payment_amount = $value['paid'];
                         $payment->payment_date = $donation->donation_date;
@@ -346,7 +349,7 @@ class DonationController extends Controller
                         $payment->save();
                     }
                 } else {
-                    $donation = \App\Donation::findOrFail($registration->donation_id); // update an existing donation
+                    $donation = \App\Models\Donation::findOrFail($registration->donation_id); // update an existing donation
                     $donation->donation_amount = $value['pledge'];
                     $donation->terms = $value['terms'];
                     $donation->save();

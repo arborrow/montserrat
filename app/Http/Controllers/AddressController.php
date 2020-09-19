@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Address;
+use App\Models\Address;
 use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
 use Illuminate\Http\Request;
@@ -28,7 +28,7 @@ class AddressController extends Controller
     public function index()
     {
         $this->authorize('show-address');
-        $addresses = \App\Address::orderBy('postal_code', 'asc')->with('addressee')->paginate(100);
+        $addresses = \App\Models\Address::orderBy('postal_code', 'asc')->with('addressee')->paginate(100);
 
         return view('addresses.index', compact('addresses'));
     }
@@ -41,12 +41,12 @@ class AddressController extends Controller
     public function create()
     {
         $this->authorize('create-address');
-        $countries = \App\Country::orderBy('iso_code')->pluck('iso_code', 'id');
+        $countries = \App\Models\Country::orderBy('iso_code')->pluck('iso_code', 'id');
         $countries->prepend('N/A', '');
-        $states = \App\StateProvince::orderBy('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
+        $states = \App\Models\StateProvince::orderBy('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', '');
-        $contacts = \App\Contact::orderBy('sort_name')->pluck('sort_name', 'id');
-        $location_types = \App\LocationType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
+        $contacts = \App\Models\Contact::orderBy('sort_name')->pluck('sort_name', 'id');
+        $location_types = \App\Models\LocationType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
 
         return view('addresses.create', compact('countries', 'states', 'contacts', 'location_types'));
     }
@@ -60,7 +60,7 @@ class AddressController extends Controller
     public function store(StoreAddressRequest $request)
     {
         $this->authorize('create-address');
-        $address = new \App\Address;
+        $address = new \App\Models\Address;
         $address->contact_id = $request->input('contact_id');
         $address->location_type_id = $request->input('location_type_id');
         $address->is_primary = $request->input('is_primary');
@@ -72,7 +72,8 @@ class AddressController extends Controller
         $address->country_id = $request->input('country_id');
         $address->save();
 
-        flash ('Address ID#: <a href="'. url('/address/'.$address->id) . '">'.$address->id.'</a> added')->success();
+        flash('Address ID#: <a href="'.url('/address/'.$address->id).'">'.$address->id.'</a> added')->success();
+
         return Redirect::action('AddressController@index');
     }
 
@@ -85,7 +86,7 @@ class AddressController extends Controller
     public function show($id)
     {
         $this->authorize('show-address');
-        $address = \App\Address::with('addressee')->findOrFail($id);
+        $address = \App\Models\Address::with('addressee')->findOrFail($id);
 
         return view('addresses.show', compact('address'));
     }
@@ -100,13 +101,13 @@ class AddressController extends Controller
     {
         $this->authorize('update-address');
 
-        $countries = \App\Country::orderBy('iso_code')->pluck('iso_code', 'id');
+        $countries = \App\Models\Country::orderBy('iso_code')->pluck('iso_code', 'id');
         $countries->prepend('N/A', '');
-        $states = \App\StateProvince::orderBy('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
+        $states = \App\Models\StateProvince::orderBy('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', '');
-        $contacts = \App\Contact::orderBy('sort_name')->pluck('sort_name', 'id');
-        $location_types = \App\LocationType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
-        $address = \App\Address::findOrFail($id);
+        $contacts = \App\Models\Contact::orderBy('sort_name')->pluck('sort_name', 'id');
+        $location_types = \App\Models\LocationType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
+        $address = \App\Models\Address::findOrFail($id);
 
         return view('addresses.edit', compact('address', 'countries', 'states', 'contacts', 'location_types'));
     }
@@ -121,7 +122,7 @@ class AddressController extends Controller
     public function update(UpdateAddressRequest $request, $id)
     {
         $this->authorize('update-address');
-        $address = \App\Address::findOrFail($id);
+        $address = \App\Models\Address::findOrFail($id);
         $address->contact_id = $request->input('contact_id');
         $address->location_type_id = $request->input('location_type_id');
         $address->is_primary = $request->input('is_primary');
@@ -133,7 +134,8 @@ class AddressController extends Controller
         $address->country_id = $request->input('country_id');
         $address->save();
 
-        flash('Address ID#: <a href="'. url('/address/'.$address->id) . '">'.$address->id.'</a> updated')->success();
+        flash('Address ID#: <a href="'.url('/address/'.$address->id).'">'.$address->id.'</a> updated')->success();
+
         return Redirect::action('AddressController@show', $address->id);
     }
 
@@ -146,11 +148,12 @@ class AddressController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-address');
-        $address = \App\Address::findOrFail($id);
+        $address = \App\Models\Address::findOrFail($id);
         $contact_id = $address->contact_id;
-        \App\Address::destroy($id);
+        \App\Models\Address::destroy($id);
 
-        flash('Address ID#: '.$address->id . ' deleted')->warning()->important();
+        flash('Address ID#: '.$address->id.' deleted')->warning()->important();
+
         return Redirect::action('PersonController@show', $contact_id);
     }
 }

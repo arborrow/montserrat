@@ -2,25 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Arr;
-
+use App\Http\Requests\SnippetTestRequest;
 use App\Http\Requests\StoreSnippetRequest;
 use App\Http\Requests\UpdateSnippetRequest;
-use App\Http\Requests\SnippetTestRequest;
-
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
-use Carbon\Carbon;
-use Faker;
 use App\Mail\RetreatantBirthday;
 use App\Mail\RetreatConfirmation;
 use Auth;
+use Carbon\Carbon;
+use Faker;
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class SnippetController extends Controller
 {
-
     //
     public function __construct()
     {
@@ -31,22 +28,21 @@ class SnippetController extends Controller
     {
         $this->authorize('show-snippet');
 
-        $titles = \App\Snippet::groupBy('label')->orderBy('label')->pluck('title', 'title');
-        $snippets = \App\Snippet::orderBy('title')->orderBy('locale')->orderBy('label')->get();
+        $titles = \App\Models\Snippet::groupBy('label')->orderBy('label')->pluck('title', 'title');
+        $snippets = \App\Models\Snippet::orderBy('title')->orderBy('locale')->orderBy('label')->get();
 
-        return view('admin.snippets.index', compact('snippets','titles'));
+        return view('admin.snippets.index', compact('snippets', 'titles'));
     }
 
     public function index_type($title = null)
     {
         $this->authorize('show-snippet');
 
-        $titles = \App\Snippet::groupBy('label')->orderBy('label')->pluck('title', 'title');
-        $snippets = \App\Snippet::whereTitle($title)->orderBy('title')->orderBy('locale')->orderBy('label')->get();
+        $titles = \App\Models\Snippet::groupBy('label')->orderBy('label')->pluck('title', 'title');
+        $snippets = \App\Models\Snippet::whereTitle($title)->orderBy('title')->orderBy('locale')->orderBy('label')->get();
 
         return view('admin.snippets.index', compact('snippets', 'titles'));
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -56,9 +52,9 @@ class SnippetController extends Controller
     public function create()
     {
         $this->authorize('create-snippet');
-        $locales = \App\Language::whereIsActive(1)->orderBy('label')->pluck('label','name');
+        $locales = \App\Models\Language::whereIsActive(1)->orderBy('label')->pluck('label', 'name');
 
-        return view('admin.snippets.create',compact('locales'));
+        return view('admin.snippets.create', compact('locales'));
     }
 
     /**
@@ -71,7 +67,7 @@ class SnippetController extends Controller
     {
         $this->authorize('create-snippet');
 
-        $snippet = new \App\Snippet;
+        $snippet = new \App\Models\Snippet;
         $snippet->title = $request->input('title');
         $snippet->label = $request->input('label');
         $snippet->locale = $request->input('locale');
@@ -79,7 +75,8 @@ class SnippetController extends Controller
 
         $snippet->save();
 
-        flash ('Snippet: <a href="'. url('/admin/snippet/'.$snippet->id) . '">'.$snippet->title.'</a> added')->success();
+        flash('Snippet: <a href="'.url('/admin/snippet/'.$snippet->id).'">'.$snippet->title.'</a> added')->success();
+
         return Redirect::action('SnippetController@index');
     }
 
@@ -93,7 +90,7 @@ class SnippetController extends Controller
     {
         $this->authorize('show-snippet');
 
-        $snippet = \App\Snippet::findOrFail($id);
+        $snippet = \App\Models\Snippet::findOrFail($id);
 
         return view('admin.snippets.show', compact('snippet'));
     }
@@ -108,8 +105,8 @@ class SnippetController extends Controller
     {
         $this->authorize('update-snippet');
 
-        $snippet = \App\Snippet::findOrFail($id);
-        $locales = \App\Language::whereIsActive(1)->orderBy('label')->pluck('label','name');
+        $snippet = \App\Models\Snippet::findOrFail($id);
+        $locales = \App\Models\Language::whereIsActive(1)->orderBy('label')->pluck('label', 'name');
 
         return view('admin.snippets.edit', compact('snippet', 'locales')); //
     }
@@ -125,7 +122,7 @@ class SnippetController extends Controller
     {
         $this->authorize('update-snippet');
 
-        $snippet = \App\Snippet::findOrFail($id);
+        $snippet = \App\Models\Snippet::findOrFail($id);
 
         $snippet->title = $request->input('title');
         $snippet->label = $request->input('label');
@@ -134,7 +131,8 @@ class SnippetController extends Controller
 
         $snippet->save();
 
-        flash ('Snippet: <a href="'. url('/admin/snippet/'.$snippet->id) . '">'.$snippet->title.'</a> updated')->success();
+        flash('Snippet: <a href="'.url('/admin/snippet/'.$snippet->id).'">'.$snippet->title.'</a> updated')->success();
+
         return Redirect::action('SnippetController@show', $snippet->id);
     }
 
@@ -147,11 +145,12 @@ class SnippetController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-snippet');
-        $snippet = \App\Snippet::findOrFail($id);
+        $snippet = \App\Models\Snippet::findOrFail($id);
 
-        \App\Snippet::destroy($id);
+        \App\Models\Snippet::destroy($id);
 
-        flash('Snippet: '.$snippet->title . ' deleted')->warning()->important();
+        flash('Snippet: '.$snippet->title.' deleted')->warning()->important();
+
         return Redirect::action('SnippetController@index');
     }
 
@@ -169,81 +168,82 @@ class SnippetController extends Controller
         }
 
         switch ($title) {
-            case "birthday" :
+            case 'birthday':
                 // dd($title,$email,$language);
                 // generate and store snippets
-                $snippets = \App\Snippet::whereTitle('birthday')->get();
+                $snippets = \App\Models\Snippet::whereTitle('birthday')->get();
                 foreach ($snippets as $snippet) {
-                    $decoded = html_entity_decode($snippet->snippet,ENT_QUOTES | ENT_XML1);
-                    Storage::put('views/snippets/'.$snippet->title.'/'.$snippet->locale.'/'.$snippet->label.'.blade.php',$decoded);
+                    $decoded = html_entity_decode($snippet->snippet, ENT_QUOTES | ENT_XML1);
+                    Storage::put('views/snippets/'.$snippet->title.'/'.$snippet->locale.'/'.$snippet->label.'.blade.php', $decoded);
                 }
                 // create fake person
                 $receiver = collect();
-                $receiver->id = $faker->numberBetween(100,900);
+                $receiver->id = $faker->numberBetween(100, 900);
                 $receiver->first_name = $faker->firstName;
                 $receiver->nick_name = $faker->firstName;
-                $receiver->display_name = $receiver->first_name . ' ' . $faker->lastName;
+                $receiver->display_name = $receiver->first_name.' '.$faker->lastName;
                 $receiver->birth_date = $faker->date;
                 $receiver->email = $faker->safeEmail;
                 $receiver->preferred_language = $language;
-                if (!empty($email)) {
+                if (! empty($email)) {
                     try {
                         Mail::to($email)->queue(new RetreatantBirthday($receiver));
-                        flash ('Birthday test email successfully sent to: '.$email)->success();
+                        flash('Birthday test email successfully sent to: '.$email)->success();
                     } catch (\Exception $e) {
                         // dd($e);
-                        flash ('Sending of birthday test email to: '.$email.' failed')->error();
+                        flash('Sending of birthday test email to: '.$email.' failed')->error();
                     }
                 }
                 break;
 
-            case "agc_acknowledge" :
+            case 'agc_acknowledge':
                 // not needed - can test via UI by viewing an AGC letter
-                $msg = 'AGC acknowledgment snippets can be tested by viewing an actual letter from the <a href="'. url('/agc') . '">AGC list</a>';
-                flash ($msg)->warning();
+                $msg = 'AGC acknowledgment snippets can be tested by viewing an actual letter from the <a href="'.url('/agc').'">AGC list</a>';
+                flash($msg)->warning();
                 break;
             case 'event-confirmation':
-                $snippets = \App\Snippet::whereTitle('event-confirmation')->get();
+                $snippets = \App\Models\Snippet::whereTitle('event-confirmation')->get();
                     foreach ($snippets as $snippet) {
-                        $decoded = html_entity_decode($snippet->snippet,ENT_QUOTES | ENT_XML1);
-                        Storage::put('views/snippets/'.$snippet->title.'/'.$snippet->locale.'/'.$snippet->label.'.blade.php',$decoded);
+                        $decoded = html_entity_decode($snippet->snippet, ENT_QUOTES | ENT_XML1);
+                        Storage::put('views/snippets/'.$snippet->title.'/'.$snippet->locale.'/'.$snippet->label.'.blade.php', $decoded);
                     }
                 switch ($language) {
-                    case 'es_ES' :
-                        $registration = \App\Registration::with('event.event_type','contact')
-                            ->whereHas('event', function($q) {
+                    case 'es_ES':
+                        $registration = \App\Models\Registration::with('event.event_type', 'contact')
+                            ->whereHas('event', function ($q) {
                                 $q->whereEventTypeId(config('polanco.event_type.ignatian'));
                             })
-                            ->whereHas('contact', function($q) use ($language) {
+                            ->whereHas('contact', function ($q) use ($language) {
                                 $q->wherePreferredLanguage($language);
                             })
                             ->first();
                         break;
-                    default : // en_US
-                        $registration = \App\Registration::with('event.event_type','contact')
-                            ->whereHas('event', function($q) {
+                    default: // en_US
+                        $registration = \App\Models\Registration::with('event.event_type', 'contact')
+                            ->whereHas('event', function ($q) {
                                 $q->whereEventTypeId(config('polanco.event_type.ignatian'));
                             })
-                            ->whereHas('contact', function($q) {
+                            ->whereHas('contact', function ($q) {
                                 $q->wherePreferredLanguage('en_US');
                             })
                             ->first();
 
                 }
-                if (!empty($email)) {
+                if (! empty($email)) {
                     try {
                         Mail::to($email)->queue(new RetreatConfirmation($registration));
-                        flash ('Retreat confirmation test email successfully sent to: '.$email)->success();
+                        flash('Retreat confirmation test email successfully sent to: '.$email)->success();
                     } catch (\Exception $e) {
                         // dd($e);
-                        flash ('Sending of retreat confirmation test email to: '.$email.' failed')->error();
+                        flash('Sending of retreat confirmation test email to: '.$email.' failed')->error();
                     }
                 }
                 break;
-            default :
-                flash ('Unknown snippet test: ' . $title)->error();
+            default:
+                flash('Unknown snippet test: '.$title)->error();
                 break;
         }
+
         return Redirect::action('SnippetController@index');
     }
 
@@ -252,15 +252,15 @@ class SnippetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function test($title = null, $email = null, $language="en_US")
+    public function test($title = null, $email = null, $language = 'en_US')
     {
         $this->authorize('show-snippet');
-        $titles = \App\Snippet::groupBy('label')->orderBy('label')->pluck('title', 'title');
-        $languages = \App\Language::whereIsActive(1)->orderBy('label')->pluck('label','name');
+        $titles = \App\Models\Snippet::groupBy('label')->orderBy('label')->pluck('title', 'title');
+        $languages = \App\Models\Language::whereIsActive(1)->orderBy('label')->pluck('label', 'name');
         if (empty($email)) {
             $email = Auth::user()->email;
         }
-        return view('admin.snippets.test',compact('language','email','title','titles','languages'));
-    }
 
+        return view('admin.snippets.test', compact('language', 'email', 'title', 'titles', 'languages'));
+    }
 }

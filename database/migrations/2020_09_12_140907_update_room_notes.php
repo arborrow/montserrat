@@ -13,8 +13,7 @@ class UpdateRoomNotes extends Migration
      */
     public function up()
     {
-        Schema::table('rooms', function($table)
-        {
+        Schema::table('rooms', function ($table) {
             $table->text('notes', 16777215)->nullable()->change();
             $table->text('description', 65535)->nullable()->change();
             $table->string('access')->nullable()->change();
@@ -31,8 +30,7 @@ class UpdateRoomNotes extends Migration
      */
     public function down()
     {
-        Schema::table('rooms', function($table)
-        {
+        Schema::table('rooms', function ($table) {
             $table->text('notes', 16777215)->nullable(false)->change();
             $table->text('description', 65535)->nullable(false)->change();
             $table->string('access')->nullable(false)->change();

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Relationship;
+use App\Models\Relationship;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -21,7 +21,7 @@ class RelationshipController extends Controller
     public function index()
     {
         $this->authorize('show-relationship');
-        $relationships = \App\Relationship::paginate(100);
+        $relationships = \App\Models\Relationship::paginate(100);
 
         return view('relationships.index', compact('relationships'));   //
     }
@@ -35,6 +35,7 @@ class RelationshipController extends Controller
     {   // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
         $this->authorize('create-relationship');
         flash('Relationships cannot be directly created as they are managed via contacts')->error();
+
         return Redirect::action('RelationshipController@index');
     }
 
@@ -49,6 +50,7 @@ class RelationshipController extends Controller
         // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
         $this->authorize('create-relationship');
         flash('Relationships cannot be directly stored as they are managed via contacts')->error();
+
         return Redirect::action('RelationshipController@index');
     }
 
@@ -61,7 +63,7 @@ class RelationshipController extends Controller
     public function show($id)
     {
         $this->authorize('show-relationship');
-        $relationship = \App\Relationship::findOrFail($id);
+        $relationship = \App\Models\Relationship::findOrFail($id);
 
         return view('relationships.show', compact('relationship'));
     }
@@ -76,6 +78,7 @@ class RelationshipController extends Controller
     {   // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
         $this->authorize('update-relationship');
         flash('Relationships cannot be directly edited as they are managed via contacts')->error();
+
         return Redirect::action('RelationshipController@show', $id);
     }
 
@@ -90,6 +93,7 @@ class RelationshipController extends Controller
     {   // TODO: stub: re-evaluate handling of relationships to refactor person controller to avoid repetition
         $this->authorize('update-relationship');
         flash('Relationships cannot be directly updated as they are managed via contacts')->error();
+
         return Redirect::action('RelationshipController@show', $id);
     }
 
@@ -103,9 +107,10 @@ class RelationshipController extends Controller
     {
         $this->authorize('delete-relationship');
 
-        \App\Relationship::destroy($id);
+        \App\Models\Relationship::destroy($id);
 
-        flash('Relationship ID#: '.$id . ' deleted')->warning()->important();
+        flash('Relationship ID#: '.$id.' deleted')->warning()->important();
+
         return redirect()->back();
     }
 }

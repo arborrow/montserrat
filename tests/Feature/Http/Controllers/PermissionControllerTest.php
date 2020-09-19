@@ -33,7 +33,7 @@ class PermissionControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-permission');
-        $permission = factory(\App\Permission::class)->create();
+        $permission = factory(\App\Models\Permission::class)->create();
 
         $response = $this->actingAs($user)->delete(route('permission.destroy', [$permission]));
         $response->assertSessionHas('flash_notification');
@@ -47,7 +47,7 @@ class PermissionControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-permission');
-        $permission = factory(\App\Permission::class)->create();
+        $permission = factory(\App\Models\Permission::class)->create();
 
         $response = $this->actingAs($user)->get(route('permission.edit', [$permission]));
 
@@ -59,7 +59,6 @@ class PermissionControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('name', $permission->name, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('display_name', $permission->display_name, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('description', $permission->description, 'text', $response->getContent()));
-
     }
 
     /**
@@ -85,7 +84,7 @@ class PermissionControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-permission');
-        $permission = factory(\App\Permission::class)->create();
+        $permission = factory(\App\Models\Permission::class)->create();
 
         $response = $this->actingAs($user)->get(route('permission.show', [$permission]));
 
@@ -127,7 +126,7 @@ class PermissionControllerTest extends TestCase
     public function update_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-permission');
-        $permission = factory(\App\Permission::class)->create();
+        $permission = factory(\App\Models\Permission::class)->create();
         $original_permission_name = $permission->name;
         $new_permission_name = 'New '.$this->faker->words(3, true);
 
@@ -140,10 +139,9 @@ class PermissionControllerTest extends TestCase
 
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('PermissionController@index'));
-        $updated = \App\Permission::findOrFail($permission->id);
+        $updated = \App\Models\Permission::findOrFail($permission->id);
         $this->assertEquals($updated->name, $new_permission_name);
         $this->assertNotEquals($updated->name, $original_permission_name);
-
     }
 
     /**
@@ -151,10 +149,10 @@ class PermissionControllerTest extends TestCase
      */
     public function update_roles_returns_an_ok_response()
     {
-        $user = factory(\App\User::class)->create();
+        $user = factory(\App\Models\User::class)->create();
         $user->assignRole('test-role:update_roles');
-        $permission = factory(\App\Permission::class)->create();
-        $random_roles = \App\Role::get()->random(2)->pluck('id');
+        $permission = factory(\App\Models\Permission::class)->create();
+        $random_roles = \App\Models\Role::get()->random(2)->pluck('id');
         // dd($random_roles);
         $response = $this->actingAs($user)->post(route('admin.permission.update_roles'), [
             'id' => $permission->id,
@@ -163,7 +161,6 @@ class PermissionControllerTest extends TestCase
 
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('PermissionController@index'));
-
     }
 
     // test cases...

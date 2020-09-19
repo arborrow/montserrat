@@ -3,7 +3,6 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-
 class LocationsTableSeeder extends Seeder
 {
     /**
@@ -13,7 +12,6 @@ class LocationsTableSeeder extends Seeder
      */
     public function run()
     {
-
         \DB::table('locations')->insert([
             0 => [
                 'name' => env('SELF_NAME'),

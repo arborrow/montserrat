@@ -4,9 +4,10 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\DonationType::class, function (Faker $faker) {
+$factory->define(App\Models\DonationType::class, function (Faker $faker) {
     $label = $faker->word;
-    $value = $faker->numberBetween(1000,2000);
+    $value = $faker->numberBetween(1000, 2000);
+
     return [
         'label' => $label,
         'value' => $value,

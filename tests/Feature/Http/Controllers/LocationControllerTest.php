@@ -36,7 +36,7 @@ class LocationControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-location');
-        $location = factory(\App\Location::class)->create();
+        $location = factory(\App\Models\Location::class)->create();
 
         $response = $this->actingAs($user)->delete(route('location.destroy', [$location]));
         $response->assertSessionHas('flash_notification');
@@ -51,7 +51,7 @@ class LocationControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-location');
-        $location = factory(\App\Location::class)->create();
+        $location = factory(\App\Models\Location::class)->create();
 
         $response = $this->actingAs($user)->get(route('location.edit', [$location]));
 
@@ -67,8 +67,8 @@ class LocationControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('label', $location->label, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('type', $location->type, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('description', $location->description, 'textarea', $response->getContent()));
-        $this->assertTrue($this->findFieldValueInResponseContent('latitude', number_format($location->latitude,8), 'text', $response->getContent()));
-        $this->assertTrue($this->findFieldValueInResponseContent('longitude', number_format($location->longitude,8), 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('latitude', number_format($location->latitude, 8), 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('longitude', number_format($location->longitude, 8), 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('occupancy', $location->occupancy, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('room_id', $location->room_id, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('parent_id', $location->parent_id, 'select', $response->getContent()));
@@ -91,7 +91,6 @@ class LocationControllerTest extends TestCase
         $response->assertSeeText('Locations');
     }
 
-
     /**
      * @test
      */
@@ -99,10 +98,10 @@ class LocationControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-location');
 
-        $location = factory(\App\Location::class)->create();
+        $location = factory(\App\Models\Location::class)->create();
 
         $number_locations = $this->faker->numberBetween(2, 10);
-        $locations = factory(\App\Location::class, $number_locations)->create([
+        $locations = factory(\App\Models\Location::class, $number_locations)->create([
             'type' => $location->type,
             'deleted_at' => null,
         ]);
@@ -123,7 +122,7 @@ class LocationControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-location');
-        $location = factory(\App\Location::class)->create();
+        $location = factory(\App\Models\Location::class)->create();
 
         $response = $this->actingAs($user)->get(route('location.show', [$location]));
 
@@ -172,14 +171,14 @@ class LocationControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-location');
 
-        $location = factory(\App\Location::class)->create();
+        $location = factory(\App\Models\Location::class)->create();
 
         $location_name = $this->faker->word;
         $location_description = $this->faker->sentence(7, true);
         $location_type = $this->faker->randomElement(config('polanco.locations_type'));
 
         $original_location_name = $location->name;
-        $new_location_name = 'New ' . $this->faker->words(2, true);
+        $new_location_name = 'New '.$this->faker->words(2, true);
 
         $response = $this->actingAs($user)->put(route('location.update', [$location]), [
           'id' => $location->id,
@@ -191,7 +190,7 @@ class LocationControllerTest extends TestCase
         $response->assertRedirect(action('LocationController@show', $location->id));
         $response->assertSessionHas('flash_notification');
 
-        $updated = \App\Location::findOrFail($location->id);
+        $updated = \App\Models\Location::findOrFail($location->id);
 
         $this->assertEquals($updated->name, $new_location_name);
         $this->assertNotEquals($updated->name, $original_location_name);

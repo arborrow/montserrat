@@ -11,7 +11,7 @@ class EventsTableSeeder extends Seeder
      */
     public function run()
     {
-        $retreat = \App\Retreat::create([
+        $retreat = \App\Models\Retreat::create([
         'title' => 'Open Deposits',
         'event_type_id' => '9',
         'idnumber' => 'opendeposits',

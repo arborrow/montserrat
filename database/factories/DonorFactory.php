@@ -4,7 +4,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Donor::class, function (Faker $faker) {
+$factory->define(App\Models\Donor::class, function (Faker $faker) {
     return [
         'donor_id' => $faker->randomNumber(5),
         'FName' => $faker->word,

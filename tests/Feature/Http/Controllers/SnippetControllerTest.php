@@ -34,7 +34,7 @@ class SnippetControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-snippet');
-        $snippet = factory(\App\Snippet::class)->create();
+        $snippet = factory(\App\Models\Snippet::class)->create();
 
         $response = $this->actingAs($user)->delete(route('snippet.destroy', [$snippet]));
 
@@ -49,7 +49,7 @@ class SnippetControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-snippet');
-        $snippet = factory(\App\Snippet::class)->create();
+        $snippet = factory(\App\Models\Snippet::class)->create();
 
         $response = $this->actingAs($user)->get(route('snippet.edit', [$snippet]));
 
@@ -81,7 +81,6 @@ class SnippetControllerTest extends TestCase
         $response->assertSeeText('Snippets');
     }
 
-
     /**
      * @test
      */
@@ -89,10 +88,10 @@ class SnippetControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-snippet');
 
-        $snippet = factory(\App\Snippet::class)->create();
+        $snippet = factory(\App\Models\Snippet::class)->create();
 
         $number_snippets = $this->faker->numberBetween(2, 5);
-        $snippets = factory(\App\Snippet::class, $number_snippets)->create([
+        $snippets = factory(\App\Models\Snippet::class, $number_snippets)->create([
             'title' => $snippet->title,
             'deleted_at' => null,
         ]);
@@ -113,7 +112,7 @@ class SnippetControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-snippet');
-        $snippet = factory(\App\Snippet::class)->create();
+        $snippet = factory(\App\Models\Snippet::class)->create();
 
         $response = $this->actingAs($user)->get(route('snippet.show', [$snippet]));
 
@@ -151,7 +150,6 @@ class SnippetControllerTest extends TestCase
         ]);
     }
 
-
     /**
      * @test
      */
@@ -171,7 +169,6 @@ class SnippetControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
     }
 
-
     /**
      * @test
      */
@@ -183,7 +180,6 @@ class SnippetControllerTest extends TestCase
             \App\Http\Requests\StoreSnippetRequest::class
         );
     }
-
 
     /**
      * @test
@@ -216,7 +212,6 @@ class SnippetControllerTest extends TestCase
         );
     }
 
-
     /**
      * @test
      */
@@ -224,10 +219,10 @@ class SnippetControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-snippet');
 
-        $snippet = factory(\App\Snippet::class)->create();
+        $snippet = factory(\App\Models\Snippet::class)->create();
 
         $original_title = $snippet->title;
-        $new_title = 'New ' . $this->faker->words(2, true);
+        $new_title = 'New '.$this->faker->words(2, true);
 
         $response = $this->actingAs($user)->put(route('snippet.update', [$snippet]), [
           'id' => $snippet->id,
@@ -240,7 +235,7 @@ class SnippetControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('SnippetController@show', $snippet->id));
 
-        $updated = \App\Snippet::findOrFail($snippet->id);
+        $updated = \App\Models\Snippet::findOrFail($snippet->id);
 
         $this->assertEquals($updated->title, $new_title);
         $this->assertNotEquals($updated->title, $original_title);
@@ -257,7 +252,6 @@ class SnippetControllerTest extends TestCase
             \App\Http\Requests\UpdateSnippetRequest::class
         );
     }
-
 
     // test cases...
 }

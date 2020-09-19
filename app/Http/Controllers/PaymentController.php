@@ -22,7 +22,7 @@ class PaymentController extends Controller
     public function index()
     {
         $this->authorize('show-payment');
-        $payments = \App\Payment::orderBy('payment_date', 'desc')->with('donation.retreat')->paginate(100);
+        $payments = \App\Models\Payment::orderBy('payment_date', 'desc')->with('donation.retreat')->paginate(100);
         //dd($donations);
         return view('payments.index', compact('payments'));
     }
@@ -35,18 +35,19 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($donation_id=0)
-    {   if ($donation_id > 0) {
+    public function create($donation_id = 0)
+    {
+        if ($donation_id > 0) {
             $this->authorize('create-payment');
-            $donation = \App\Donation::findOrFail($donation_id);
+            $donation = \App\Models\Donation::findOrFail($donation_id);
             $payment_methods = config('polanco.payment_method');
 
             return view('payments.create', compact('donation', 'payment_methods'));
         } else {
             flash('Cannot create a payment without an associated Donation ID#')->error()->important();
+
             return Redirect::action('DonationController@index');
         }
-
     }
 
     /**
@@ -60,9 +61,9 @@ class PaymentController extends Controller
         $this->authorize('create-payment');
         // dd($request);
 
-        $donation = \App\Donation::findOrFail($request->input('donation_id'));
+        $donation = \App\Models\Donation::findOrFail($request->input('donation_id'));
         // create donation_payment
-        $payment = new \App\Payment;
+        $payment = new \App\Models\Payment;
         $payment->donation_id = $donation->donation_id;
         $payment->payment_amount = $request->input('payment_amount');
         $payment->note = $request->input('note');
@@ -71,12 +72,13 @@ class PaymentController extends Controller
         if ($request->input('payment_description') == 'Credit card') {
             $payment->ccnumber = substr($request->input('payment_idnumber'), -4);
         }
-        if ($request->input('payment_description') == 'Check'  || $request->input('payment_description') == 'Refund' ) {
+        if ($request->input('payment_description') == 'Check' || $request->input('payment_description') == 'Refund') {
             $payment->cknumber = $request->input('payment_idnumber');
         }
         $payment->save();
 
-        flash('Payment ID#: <a href="'. url('/payment/'.$payment->payment_id) . '">'.$payment->payment_id.'</a> added')->success();
+        flash('Payment ID#: <a href="'.url('/payment/'.$payment->payment_id).'">'.$payment->payment_id.'</a> added')->success();
+
         return Redirect::action('DonationController@show', $donation->donation_id);
     }
 
@@ -89,7 +91,7 @@ class PaymentController extends Controller
     public function show($id)
     {
         $this->authorize('show-payment');
-        $payment = \App\Payment::with('donation.retreat', 'donation.contact')->findOrFail($id);
+        $payment = \App\Models\Payment::with('donation.retreat', 'donation.contact')->findOrFail($id);
         //dd($donation);
         return view('payments.show', compact('payment')); //
     }
@@ -104,7 +106,7 @@ class PaymentController extends Controller
     {
         $this->authorize('update-payment');
         //get this retreat's information
-        $payment = \App\Payment::with('donation.contact', 'donation.retreat')->findOrFail($id);
+        $payment = \App\Models\Payment::with('donation.contact', 'donation.retreat')->findOrFail($id);
         $payment_methods = config('polanco.payment_method');
 
         return view('payments.edit', compact('payment', 'payment_methods'));
@@ -121,21 +123,22 @@ class PaymentController extends Controller
     {
         $this->authorize('update-payment');
 
-        $payment = \App\Payment::findOrFail($id);
+        $payment = \App\Models\Payment::findOrFail($id);
         $payment->payment_amount = $request->input('payment_amount');
         $payment->payment_date = Carbon::parse($request->input('payment_date'));
         $payment->payment_description = $request->input('payment_description');
         if ($request->input('payment_description') == 'Credit card') {
             $payment->ccnumber = substr($request->input('payment_idnumber'), -4);
         }
-        if ($request->input('payment_description') == 'Check'  || $request->input('payment_description') == 'Refund' ) {
+        if ($request->input('payment_description') == 'Check' || $request->input('payment_description') == 'Refund') {
             $payment->cknumber = $request->input('payment_idnumber');
         }
         $payment->note = $request->input('note');
         // dd($payment);
         $payment->save();
 
-        flash('Payment ID#: <a href="'. url('/payment/'.$payment->payment_id) . '">'.$payment->payment_id.'</a> updated')->success();
+        flash('Payment ID#: <a href="'.url('/payment/'.$payment->payment_id).'">'.$payment->payment_id.'</a> updated')->success();
+
         return Redirect::action('DonationController@show', $payment->donation_id);
     }
 
@@ -148,12 +151,13 @@ class PaymentController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-payment');
-        $payment = \App\Payment::findOrFail($id);
+        $payment = \App\Models\Payment::findOrFail($id);
 
-        \App\Payment::destroy($id);
+        \App\Models\Payment::destroy($id);
         // disassociate registration with a donation that is being deleted - there should only be one
 
-        flash('Payment ID#: '.$payment->payment_id . ' deleted')->warning()->important();
+        flash('Payment ID#: '.$payment->payment_id.' deleted')->warning()->important();
+
         return Redirect::action('DonationController@show', $payment->donation_id);
     }
 }

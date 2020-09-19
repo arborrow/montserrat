@@ -4,7 +4,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Diocese::class, function (Faker $faker) {
+$factory->define(App\Models\Diocese::class, function (Faker $faker) {
     $city_name = $faker->city;
     $diocese_name = 'Diocese of '.$city_name;
 

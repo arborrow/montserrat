@@ -25,7 +25,7 @@ class RelationshipTypeController extends Controller
     public function index()
     {
         $this->authorize('show-relationshiptype');
-        $relationship_types = \App\RelationshipType::whereIsActive(1)->orderBy('description')->get();
+        $relationship_types = \App\Models\RelationshipType::whereIsActive(1)->orderBy('description')->get();
 
         return view('relationships.types.index', compact('relationship_types'));   //
     }
@@ -38,7 +38,7 @@ class RelationshipTypeController extends Controller
     public function create()
     {
         $this->authorize('create-relationshiptype');
-        $contact_types = \App\ContactType::OrderBy('name')->pluck('name', 'name');
+        $contact_types = \App\Models\ContactType::OrderBy('name')->pluck('name', 'name');
 
         return view('relationships.types.create', compact('contact_types'));
     }
@@ -53,13 +53,13 @@ class RelationshipTypeController extends Controller
     {
         $this->authorize('create-relationshiptype');
 
-        $relationship_type = new \App\RelationshipType;
+        $relationship_type = new \App\Models\RelationshipType;
         $relationship_type->description = $request->input('description');
         $relationship_type->name_a_b = $request->input('name_a_b');
         $relationship_type->label_a_b = $request->input('label_a_b');
 
-        $contact_type_a = \App\ContactType::whereName($request->input('contact_type_a'))->firstOrFail();
-        $contact_type_b = \App\ContactType::whereName($request->input('contact_type_b'))->firstOrFail();
+        $contact_type_a = \App\Models\ContactType::whereName($request->input('contact_type_a'))->firstOrFail();
+        $contact_type_b = \App\Models\ContactType::whereName($request->input('contact_type_b'))->firstOrFail();
 
         if ($contact_type_a->is_reserved > 0) {   // Explanation: primary type of Individual, Organization, or Household
             $relationship_type->contact_type_a = $contact_type_a->name;
@@ -86,7 +86,8 @@ class RelationshipTypeController extends Controller
 
         $relationship_type->save();
 
-        flash ('Relationship type: <a href="'. url('/relationship_type/'.$relationship_type->id) . '">'.$relationship_type->name_a_b.'</a> added')->success();
+        flash('Relationship type: <a href="'.url('/relationship_type/'.$relationship_type->id).'">'.$relationship_type->name_a_b.'</a> added')->success();
+
         return Redirect::action('RelationshipTypeController@index'); //
     }
 
@@ -99,8 +100,8 @@ class RelationshipTypeController extends Controller
     public function show($id)
     {
         $this->authorize('show-relationshiptype');
-        $relationship_type = \App\RelationshipType::findOrFail($id);
-        $relationships = \App\Relationship::whereRelationshipTypeId($id)->orderBy('contact_id_a')->with('contact_a', 'contact_b')->paginate(100);
+        $relationship_type = \App\Models\RelationshipType::findOrFail($id);
+        $relationships = \App\Models\Relationship::whereRelationshipTypeId($id)->orderBy('contact_id_a')->with('contact_a', 'contact_b')->paginate(100);
 
         return view('relationships.types.show', compact('relationship_type', 'relationships')); //
     }
@@ -114,7 +115,7 @@ class RelationshipTypeController extends Controller
     public function edit($id)
     {
         $this->authorize('update-relationshiptype');
-        $relationship_type = \App\RelationshipType::findOrFail($id);
+        $relationship_type = \App\Models\RelationshipType::findOrFail($id);
         //dd($relationship_type);
         return view('relationships.types.edit', compact('relationship_type'));
     }
@@ -130,7 +131,7 @@ class RelationshipTypeController extends Controller
     {
         $this->authorize('update-relationshiptype');
 
-        $relationship_type = \App\RelationshipType::findOrFail($request->input('id'));
+        $relationship_type = \App\Models\RelationshipType::findOrFail($request->input('id'));
         $relationship_type->description = $request->input('description');
         $relationship_type->name_a_b = $request->input('name_a_b');
         $relationship_type->label_a_b = $request->input('label_a_b');
@@ -141,7 +142,8 @@ class RelationshipTypeController extends Controller
 
         $relationship_type->save();
 
-        flash ('Relationship type: <a href="'. url('/relationship_type/'.$relationship_type->id) . '">'.$relationship_type->name_a_b.'</a> updated')->success();
+        flash('Relationship type: <a href="'.url('/relationship_type/'.$relationship_type->id).'">'.$relationship_type->name_a_b.'</a> updated')->success();
+
         return Redirect::action('RelationshipTypeController@index'); //
     }
 
@@ -155,17 +157,18 @@ class RelationshipTypeController extends Controller
     {
         $this->authorize('delete-relationshiptype');
 
-        $relationship_type = \App\RelationshipType::findOrFail($id);
-        \App\RelationshipType::destroy($id);
+        $relationship_type = \App\Models\RelationshipType::findOrFail($id);
+        \App\Models\RelationshipType::destroy($id);
 
-        flash('Relationship type: '.$relationship_type->name_a_b . ' deleted')->warning()->important();
+        flash('Relationship type: '.$relationship_type->name_a_b.' deleted')->warning()->important();
+
         return Redirect::action('RelationshipTypeController@index');
     }
 
     public function add($id, $a = null, $b = null)
     {
         $this->authorize('create-relationship');
-        $relationship_type = \App\RelationshipType::findOrFail($id);
+        $relationship_type = \App\Models\RelationshipType::findOrFail($id);
         $ignored_subtype = [];
         $ignored_subtype['Child'] = config('polanco.relationship_type.child_parent');
         $ignored_subtype['Parent'] = config('polanco.relationship_type.child_parent');
@@ -188,13 +191,13 @@ class RelationshipTypeController extends Controller
         if (! isset($a) or $a == 0) {
             $contact_a_list = $this->get_contact_type_list($relationship_type->contact_type_a, $subtype_a_name);
         } else {
-            $contacta = \App\Contact::findOrFail($a);
+            $contacta = \App\Models\Contact::findOrFail($a);
             $contact_a_list[$contacta->id] = $contacta->sort_name;
         }
         if (! isset($b) or $b == 0) {
             $contact_b_list = $this->get_contact_type_list($relationship_type->contact_type_b, $subtype_b_name);
         } else {
-            $contactb = \App\Contact::findOrFail($b);
+            $contactb = \App\Models\Contact::findOrFail($b);
             $contact_b_list[$contactb->id] = $contactb->sort_name;
         }
 
@@ -282,9 +285,9 @@ class RelationshipTypeController extends Controller
             $contact_id = $url_a_param;
         }
         //dd($url_right,$url_a_param, $url_b_param);
-        $contact = \App\Contact::findOrFail($contact_id);
+        $contact = \App\Models\Contact::findOrFail($contact_id);
         //dd(url($contact->ContactLink));
-        $relationship = new \App\Relationship;
+        $relationship = new \App\Models\Relationship;
         $relationship->contact_id_a = $request->input('contact_a_id');
         $relationship->contact_id_b = $request->input('contact_b_id');
         $relationship->relationship_type_id = $request->input('relationship_type_id');
@@ -299,7 +302,7 @@ class RelationshipTypeController extends Controller
         $this->authorize('show-contact');
         switch ($contact_type) {
             case 'Household':
-                $households = \App\Contact::whereContactType(config('polanco.contact_type.household'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+                $households = \App\Models\Contact::whereContactType(config('polanco.contact_type.household'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
 
                 return $households;
                 break;
@@ -307,7 +310,7 @@ class RelationshipTypeController extends Controller
                 switch ($contact_subtype) {
                     case 'Parish':
                         $parish_list = [];
-                        $parishes = \App\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
+                        $parishes = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
                         $parish_list = Arr::pluck($parishes->toArray(), 'full_name_with_city', 'id');
                         /* foreach($parishes as $parish) {
                             $parish_list[$parish->id] = $parish->organization_name.' ('.$parish->address_primary_city.') - '.$parish->diocese_name;
@@ -315,49 +318,49 @@ class RelationshipTypeController extends Controller
                         return $parish_list;
                         break;
                     case 'Diocese':
-                        $dioceses = \App\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+                        $dioceses = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
 
                         return $dioceses;
                         break;
                     case 'Province':
-                        $provinces = \App\Contact::whereSubcontactType(config('polanco.contact_type.province'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+                        $provinces = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.province'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
 
                         return $provinces;
                         break;
                     case 'Community':
-                        $communities = \App\Contact::whereSubcontactType(config('polanco.contact_type.community'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+                        $communities = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.community'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
 
                         return $communities;
                         break;
                     case 'Retreat House':
-                        $retreat_houses = \App\Contact::whereSubcontactType(config('polanco.contact_type.retreat_house'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+                        $retreat_houses = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.retreat_house'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
 
                         return $retreat_houses;
                         break;
                     case 'Vendor':
-                        $vendors = \App\Contact::whereSubcontactType(config('polanco.contact_type.vendor'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+                        $vendors = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.vendor'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
 
                         return $vendors;
                         break;
                     case 'Religious-Catholic':
-                        $religious_catholic = \App\Contact::whereSubcontactType(config('polanco.contact_type.religious_catholic'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+                        $religious_catholic = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.religious_catholic'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
 
                         return $religious_catholic;
                         break;
                     case 'Religious-Non-Catholic':
-                        $religious_non_catholic = \App\Contact::whereSubcontactType(config('polanco.contact_type.religious_noncatholic'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+                        $religious_non_catholic = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.religious_noncatholic'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
 
                         return $religious_non_catholic;
                         break;
                     case 'Foundation':
-                        $foundations = \App\Contact::whereSubcontactType(config('polanco.contact_type.foundation'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
+                        $foundations = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.foundation'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
 
                         return $religious_non_catholic;
                         break;
                     //default NULL (generic organization)
 
                     default:
-                        $organizations = \App\Contact::whereContactType(config('polanco.contact_type.organization'))->orderBy('organization_name', 'asc')->get();
+                        $organizations = \App\Models\Contact::whereContactType(config('polanco.contact_type.organization'))->orderBy('organization_name', 'asc')->get();
                         $organization_list = Arr::pluck($organizations->toArray(), 'full_name_with_city', 'id');
                         //dd($temp);
                         return $organization_list;
@@ -368,98 +371,98 @@ class RelationshipTypeController extends Controller
             default:
                 switch ($contact_subtype) {
                     case 'Bishop':
-                        $bishops = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $bishops = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.bishop'));
                         })->pluck('sort_name', 'id');
 
                         return $bishops;
                         break;
                     case 'Priest':
-                        $priests = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $priests = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.priest'));
                         })->pluck('sort_name', 'id');
 
                         return $priests;
                         break;
                     case 'Deacon':
-                        $deacons = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $deacons = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.deacon'));
                         })->pluck('sort_name', 'id');
 
                         return $deacons;
                         break;
                     case 'Pastor':
-                        $pastors = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $pastors = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.pastor'));
                         })->pluck('sort_name', 'id');
 
                         return $pastors;
                         break;
                     case 'Innkeeper':
-                        $innkeepers = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $innkeepers = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.innkeeper'));
                         })->pluck('sort_name', 'id');
 
                         return $innkeepers;
                         break;
                     case 'Assistant':
-                        $assistants = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $assistants = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.assistant'));
                         })->pluck('sort_name', 'id');
 
                         return $assistants;
                         break;
                     case 'Director':
-                        $directors = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $directors = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.director'));
                         })->pluck('sort_name', 'id');
 
                         return $directors;
                         break;
                     case 'Ambassador':
-                        $ambassadors = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $ambassadors = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.ambassador'));
                         })->pluck('sort_name', 'id');
 
                         return $ambassadors;
                         break;
                     case 'Jesuit':
-                        $jesuits = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $jesuits = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.jesuit'));
                         })->pluck('sort_name', 'id');
 
                         return $jesuits;
                         break;
                     case 'Provincial':
-                        $provincials = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $provincials = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.provincial'));
                         })->pluck('sort_name', 'id');
 
                         return $provincials;
                         break;
                     case 'Superior':
-                        $superiors = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $superiors = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.superior'));
                         })->pluck('sort_name', 'id');
 
                         return $superiors;
                         break;
                     case 'Board member':
-                        $board_members = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $board_members = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.board'));
                         })->pluck('sort_name', 'id');
 
                         return $board_members;
                         break;
                     case 'Employee':
-                        $staff = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $staff = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.staff'));
                         })->pluck('sort_name', 'id');
 
                         return $staff;
                         break;
                     case 'Volunteer':
-                        $volunteers = \App\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
+                        $volunteers = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.volunteer'));
                         })->pluck('sort_name', 'id');
 
@@ -468,7 +471,7 @@ class RelationshipTypeController extends Controller
 
                     //default null
                     default:
-                        $individuals = \App\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->pluck('sort_name', 'id');
+                        $individuals = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->pluck('sort_name', 'id');
 
                         return $individuals;
                         break;

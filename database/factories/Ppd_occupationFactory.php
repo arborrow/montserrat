@@ -4,7 +4,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Ppd_occupation::class, function (Faker $faker) {
+$factory->define(App\Models\Ppd_occupation::class, function (Faker $faker) {
     return [
     ];
 });

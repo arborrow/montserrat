@@ -33,7 +33,7 @@ class RoleControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-role');
-        $role = factory(\App\Role::class)->create();
+        $role = factory(\App\Models\Role::class)->create();
 
         $response = $this->actingAs($user)->delete(route('role.destroy', [$role]));
 
@@ -48,7 +48,7 @@ class RoleControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-role');
-        $role = factory(\App\Role::class)->create();
+        $role = factory(\App\Models\Role::class)->create();
 
         $response = $this->actingAs($user)->get(route('role.edit', [$role]));
 
@@ -61,12 +61,12 @@ class RoleControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('display_name', $role->display_name, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('description', $role->description, 'text', $response->getContent()));
 
-/*
-{!! Form::text('name', $role->name, ['class' => 'form-control']) !!}
-{!! Form::text('display_name', $role->display_name, ['class' => 'form-control']) !!}
-{!! Form::text('description', $role->description, ['class' => 'form-control']) !!}
+        /*
+        {!! Form::text('name', $role->name, ['class' => 'form-control']) !!}
+        {!! Form::text('display_name', $role->display_name, ['class' => 'form-control']) !!}
+        {!! Form::text('description', $role->description, ['class' => 'form-control']) !!}
 
- */
+         */
     }
 
     /**
@@ -90,7 +90,7 @@ class RoleControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-role');
-        $role = factory(\App\Role::class)->create();
+        $role = factory(\App\Models\Role::class)->create();
 
         $response = $this->actingAs($user)->get(route('role.show', [$role]));
 
@@ -134,7 +134,7 @@ class RoleControllerTest extends TestCase
     public function update_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-role');
-        $role = factory(\App\Role::class)->create();
+        $role = factory(\App\Models\Role::class)->create();
 
         $original_description = $role->description;
         $new_name = $this->faker->jobTitle;
@@ -147,7 +147,7 @@ class RoleControllerTest extends TestCase
             'description' => $new_description,
         ]);
 
-        $updated = \App\Role::findOrFail($role->id);
+        $updated = \App\Models\Role::findOrFail($role->id);
 
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('RoleController@index'));
@@ -161,8 +161,8 @@ class RoleControllerTest extends TestCase
     public function update_permissions_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-role');
-        $role = factory(\App\Role::class)->create();
-        $permission = factory(\App\Permission::class)->create();
+        $role = factory(\App\Models\Role::class)->create();
+        $permission = factory(\App\Models\Permission::class)->create();
 
         $response = $this->actingAs($user)->post(route('admin.role.update_permissions'), [
             'id' => $role->id,
@@ -183,7 +183,7 @@ class RoleControllerTest extends TestCase
     public function update_users_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-role');
-        $role = factory(\App\Role::class)->create();
+        $role = factory(\App\Models\Role::class)->create();
 
         $response = $this->actingAs($user)->post(route('admin.role.update_users'), [
             'id' => $role->id,
@@ -196,7 +196,6 @@ class RoleControllerTest extends TestCase
           'user_id' => $user->id,
           'deleted_at' => null,
         ]);
-
     }
 
     // test cases...

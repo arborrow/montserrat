@@ -36,7 +36,7 @@ class DioceseControllerTest extends TestCase
      */
     public function destroy_returns_an_ok_response()
     {
-        $diocese = factory(\App\Diocese::class)->create();
+        $diocese = factory(\App\Models\Diocese::class)->create();
         $user = $this->createUserWithPermission('delete-contact');
 
         $response = $this->actingAs($user)->delete(route('diocese.destroy', [$diocese]));
@@ -52,71 +52,71 @@ class DioceseControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-contact');
-        $diocese = factory(\App\Diocese::class)->create();
-        $diocese = \App\Contact::findOrFail($diocese->id);
-        $main_address = factory(\App\Address::class)->create([
+        $diocese = factory(\App\Models\Diocese::class)->create();
+        $diocese = \App\Models\Contact::findOrFail($diocese->id);
+        $main_address = factory(\App\Models\Address::class)->create([
             'contact_id' => $diocese->id,
             'location_type_id' => config('polanco.location_type.main'),
             'is_primary' => 1,
         ]);
 
-        $main_phone = factory(\App\Phone::class)->create([
+        $main_phone = factory(\App\Models\Phone::class)->create([
             'contact_id' => $diocese->id,
             'location_type_id' =>  config('polanco.location_type.main'),
             'is_primary' => 1,
             'phone_type' => 'Phone',
         ]);
 
-        $main_fax = factory(\App\Phone::class)->create([
+        $main_fax = factory(\App\Models\Phone::class)->create([
             'contact_id' => $diocese->id,
             'location_type_id' =>  config('polanco.location_type.main'),
             'phone_type' => 'Fax',
         ]);
 
-        $main_email = factory(\App\Email::class)->create([
+        $main_email = factory(\App\Models\Email::class)->create([
             'contact_id' => $diocese->id,
             'is_primary' => 1,
             'location_type_id' => config('polanco.location_type.main'),
         ]);
 
-        $url_main = factory(\App\Website::class)->create([
+        $url_main = factory(\App\Models\Website::class)->create([
             'contact_id' => $diocese->id,
             'website_type' => 'Main',
             'url' => $this->faker->url,
         ]);
-        $url_work = factory(\App\Website::class)->create([
+        $url_work = factory(\App\Models\Website::class)->create([
             'contact_id' => $diocese->id,
             'website_type' => 'Work',
             'url' => $this->faker->url,
         ]);
-        $url_facebook = factory(\App\Website::class)->create([
+        $url_facebook = factory(\App\Models\Website::class)->create([
             'contact_id' => $diocese->id,
             'website_type' => 'Facebook',
             'url' => 'https://facebook.com/'.$this->faker->slug,
         ]);
-        $url_google = factory(\App\Website::class)->create([
+        $url_google = factory(\App\Models\Website::class)->create([
             'contact_id' => $diocese->id,
             'website_type' => 'Google',
             'url' => 'https://google.com/'.$this->faker->slug,
         ]);
-        $url_instagram = factory(\App\Website::class)->create([
+        $url_instagram = factory(\App\Models\Website::class)->create([
             'contact_id' => $diocese->id,
             'website_type' => 'Instagram',
             'url' => 'https://instagram.com/'.$this->faker->slug,
         ]);
-        $url_linkedin = factory(\App\Website::class)->create([
+        $url_linkedin = factory(\App\Models\Website::class)->create([
             'contact_id' => $diocese->id,
             'website_type' => 'LinkedIn',
             'url' => 'https://linkedin.com/'.$this->faker->slug,
         ]);
-        $url_twitter = factory(\App\Website::class)->create([
+        $url_twitter = factory(\App\Models\Website::class)->create([
             'contact_id' => $diocese->id,
             'website_type' => 'Twitter',
             'url' => 'https://twitter.com/'.$this->faker->slug,
         ]);
 
         $response = $this->actingAs($user)->get(route('diocese.edit', [$diocese]));
-        $contact = \App\Contact::findOrFail($diocese->id);
+        $contact = \App\Models\Contact::findOrFail($diocese->id);
         $response->assertOk();
         $response->assertViewIs('dioceses.edit');
         $response->assertViewHas('diocese');
@@ -155,7 +155,7 @@ class DioceseControllerTest extends TestCase
     public function index_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-contact');
-        $diocese = factory(\App\Diocese::class)->create();
+        $diocese = factory(\App\Models\Diocese::class)->create();
 
         $response = $this->actingAs($user)->get(route('diocese.index'));
 
@@ -172,7 +172,7 @@ class DioceseControllerTest extends TestCase
      */
     public function show_returns_an_ok_response()
     {
-        $diocese = factory(\App\Diocese::class)->create();
+        $diocese = factory(\App\Models\Diocese::class)->create();
         $user = $this->createUserWithPermission('show-contact');
 
         $response = $this->actingAs($user)->get(route('diocese.show', [$diocese]));
@@ -229,7 +229,7 @@ class DioceseControllerTest extends TestCase
     public function update_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-contact');
-        $diocese = factory(\App\Diocese::class)->create();
+        $diocese = factory(\App\Models\Diocese::class)->create();
         $sort_name = $diocese->sort_name;
         $city_name = $this->faker->city;
         $org_name = 'Renewed Diocese of '.$city_name;

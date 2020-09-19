@@ -36,7 +36,7 @@ class VendorControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-contact');
-        $vendor = factory(\App\Vendor::class)->create();
+        $vendor = factory(\App\Models\Vendor::class)->create();
 
         $response = $this->actingAs($user)->delete(route('vendor.destroy', ['vendor' => $vendor]));
 
@@ -51,71 +51,69 @@ class VendorControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-contact');
-        $vendor = factory(\App\Vendor::class)->create();
-        $vendor = \App\Contact::findOrFail($vendor->id);
-        $vendor_note = factory(\App\Note::class)->create([
+        $vendor = factory(\App\Models\Vendor::class)->create();
+        $vendor = \App\Models\Contact::findOrFail($vendor->id);
+        $vendor_note = factory(\App\Models\Note::class)->create([
             'entity_table' => 'contact',
             'entity_id' => $vendor->id,
             'subject' => 'Vendor note',
         ]);
 
-        $main_address = factory(\App\Address::class)->create([
+        $main_address = factory(\App\Models\Address::class)->create([
             'contact_id' => $vendor->id,
             'location_type_id' => config('polanco.location_type.main'),
             'is_primary' => 1,
         ]);
 
-        $main_phone = factory(\App\Phone::class)->create([
+        $main_phone = factory(\App\Models\Phone::class)->create([
             'contact_id' => $vendor->id,
             'location_type_id' =>  config('polanco.location_type.main'),
             'is_primary' => 1,
             'phone_type' => 'Phone',
         ]);
 
-        $main_fax = factory(\App\Phone::class)->create([
+        $main_fax = factory(\App\Models\Phone::class)->create([
             'contact_id' => $vendor->id,
             'location_type_id' =>  config('polanco.location_type.main'),
             'phone_type' => 'Fax',
         ]);
 
-        $main_email = factory(\App\Email::class)->create([
+        $main_email = factory(\App\Models\Email::class)->create([
             'contact_id' => $vendor->id,
             'is_primary' => 1,
             'location_type_id' => config('polanco.location_type.main'),
         ]);
 
-
-        $url_main = factory(\App\Website::class)->create([
+        $url_main = factory(\App\Models\Website::class)->create([
             'contact_id' => $vendor->id,
             'website_type' => 'Main',
             'url' => $this->faker->url,
         ]);
-        $url_work = factory(\App\Website::class)->create([
+        $url_work = factory(\App\Models\Website::class)->create([
             'contact_id' => $vendor->id,
             'website_type' => 'Work',
             'url' => $this->faker->url,
         ]);
-        $url_facebook = factory(\App\Website::class)->create([
+        $url_facebook = factory(\App\Models\Website::class)->create([
             'contact_id' => $vendor->id,
             'website_type' => 'Facebook',
             'url' => 'https://facebook.com/'.$this->faker->slug,
         ]);
-        $url_instagram = factory(\App\Website::class)->create([
+        $url_instagram = factory(\App\Models\Website::class)->create([
             'contact_id' => $vendor->id,
             'website_type' => 'Instagram',
             'url' => 'https://instagram.com/'.$this->faker->slug,
         ]);
-        $url_linkedin = factory(\App\Website::class)->create([
+        $url_linkedin = factory(\App\Models\Website::class)->create([
             'contact_id' => $vendor->id,
             'website_type' => 'LinkedIn',
             'url' => 'https://linkedin.com/'.$this->faker->slug,
         ]);
-        $url_twitter = factory(\App\Website::class)->create([
+        $url_twitter = factory(\App\Models\Website::class)->create([
             'contact_id' => $vendor->id,
             'website_type' => 'Twitter',
             'url' => 'https://twitter.com/'.$this->faker->slug,
         ]);
-
 
         $response = $this->actingAs($user)->get(route('vendor.edit', $vendor->id));
         $response->assertOk();
@@ -154,7 +152,7 @@ class VendorControllerTest extends TestCase
     public function index_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-contact');
-        $vendor = factory(\App\Vendor::class)->create();
+        $vendor = factory(\App\Models\Vendor::class)->create();
 
         $response = $this->actingAs($user)->get(route('vendor.index'));
 
@@ -173,7 +171,7 @@ class VendorControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-contact');
-        $vendor = factory(\App\Vendor::class)->create();
+        $vendor = factory(\App\Models\Vendor::class)->create();
 
         $response = $this->actingAs($user)->get(route('vendor.show', ['vendor' => $vendor]));
 
@@ -231,7 +229,7 @@ class VendorControllerTest extends TestCase
     public function update_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-contact');
-        $vendor = factory(\App\Vendor::class)->create();
+        $vendor = factory(\App\Models\Vendor::class)->create();
         $original_sort_name = $vendor->sort_name;
         $vendor_name = $this->faker->company;
 
@@ -245,7 +243,7 @@ class VendorControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('VendorController@show', $vendor->id));
 
-        $updated = \App\Contact::find($vendor->id);
+        $updated = \App\Models\Contact::find($vendor->id);
 
         $response->assertRedirect(action('VendorController@show', $vendor->id));
         $this->assertEquals($updated->sort_name, $vendor_name);

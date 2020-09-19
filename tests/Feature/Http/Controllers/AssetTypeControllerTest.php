@@ -33,7 +33,7 @@ class AssetTypeControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-asset-type');
-        $asset_type = factory(\App\AssetType::class)->create();
+        $asset_type = factory(\App\Models\AssetType::class)->create();
 
         $response = $this->actingAs($user)->delete(route('asset_type.destroy', [$asset_type]));
         $response->assertSessionHas('flash_notification');
@@ -47,7 +47,7 @@ class AssetTypeControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-asset-type');
-        $asset_type = factory(\App\AssetType::class)->create();
+        $asset_type = factory(\App\Models\AssetType::class)->create();
 
         $response = $this->actingAs($user)->get(route('asset_type.edit', [$asset_type]));
 
@@ -61,7 +61,6 @@ class AssetTypeControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('description', $asset_type->description, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('is_active', $asset_type->is_active, 'checkbox', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('parent_asset_type_id', $asset_type->event_id, 'select', $response->getContent()));
-
     }
 
     /**
@@ -85,7 +84,7 @@ class AssetTypeControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-asset-type');
-        $asset_type = factory(\App\AssetType::class)->create();
+        $asset_type = factory(\App\Models\AssetType::class)->create();
 
         $response = $this->actingAs($user)->get(route('asset_type.show', [$asset_type]));
 
@@ -103,7 +102,7 @@ class AssetTypeControllerTest extends TestCase
         $this->withoutExceptionHandling();
 
         $user = $this->createUserWithPermission('create-asset-type');
-        $parent_asset_type = factory(\App\AssetType::class)->create();
+        $parent_asset_type = factory(\App\Models\AssetType::class)->create();
 
         $asset_type_name = 'New '.$this->faker->word;
         $asset_type_label = $this->faker->words(2, true);
@@ -136,8 +135,8 @@ class AssetTypeControllerTest extends TestCase
     public function update_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-asset-type');
-        $parent_asset_type = factory(\App\AssetType::class)->create();
-        $asset_type = factory(\App\AssetType::class)->create();
+        $parent_asset_type = factory(\App\Models\AssetType::class)->create();
+        $asset_type = factory(\App\Models\AssetType::class)->create();
         $original_asset_type_name = $asset_type->name;
         $new_asset_type_name = 'New '.$this->faker->words(3, true);
 
@@ -150,12 +149,11 @@ class AssetTypeControllerTest extends TestCase
           'parent_asset_type_id' => $parent_asset_type->id,
         ]);
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('AssetTypeController@show',$asset_type->id));
+        $response->assertRedirect(action('AssetTypeController@show', $asset_type->id));
         // var_dump($asset_type);
-        $updated = \App\AssetType::findOrFail($asset_type->id);
+        $updated = \App\Models\AssetType::findOrFail($asset_type->id);
         $this->assertEquals($updated->name, $new_asset_type_name);
         $this->assertNotEquals($updated->name, $original_asset_type_name);
-
     }
 
     // test cases...

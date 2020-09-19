@@ -4,16 +4,16 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Registration::class, function (Faker $faker) {
-// in theory, 'status_id' => array_rand(array_flip(config('polanco.registration_status_id'))),
-// in theory, 'role_id' => array_rand(array_flip(config('participant_role_id'))),
-// in practice, default to registered, retreatants and in tests hard code to innkeeper, assistant, director or ambassador
-// consider defaults for room_id, donation_id
-// default contact type is an individual; however, can be overridden to test cases for organizations
-// don't create registrations for dead people
+$factory->define(App\Models\Registration::class, function (Faker $faker) {
+    // in theory, 'status_id' => array_rand(array_flip(config('polanco.registration_status_id'))),
+    // in theory, 'role_id' => array_rand(array_flip(config('participant_role_id'))),
+    // in practice, default to registered, retreatants and in tests hard code to innkeeper, assistant, director or ambassador
+    // consider defaults for room_id, donation_id
+    // default contact type is an individual; however, can be overridden to test cases for organizations
+    // don't create registrations for dead people
     return [
         'contact_id' => function () {
-            return factory(App\Contact::class)->create([
+            return factory(App\Models\Contact::class)->create([
                 'contact_type' => 1,
                 'subcontact_type' => null,
                 'is_deceased' => 0,
@@ -21,7 +21,7 @@ $factory->define(App\Registration::class, function (Faker $faker) {
                 ])->id;
         },
         'event_id' => function () {
-            return factory(App\Retreat::class)->create()->id;
+            return factory(App\Models\Retreat::class)->create()->id;
         },
         'status_id' => config('polanco.registration_status_id.registered'),
         'role_id' => config('polanco.participant_role_id.retreatant'),

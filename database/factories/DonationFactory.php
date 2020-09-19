@@ -5,8 +5,8 @@
 use Faker\Generator as Faker;
 
 // TODO: to avoid confusion with agc letters in Spanish I'm limiting testing for now to $current_user
-$factory->define(App\Donation::class, function (Faker $faker) {
-    $description = \App\DonationType::whereIsActive(1)->get()->random();
+$factory->define(App\Models\Donation::class, function (Faker $faker) {
+    $description = \App\Models\DonationType::whereIsActive(1)->get()->random();
 
     return [
         'donation_description' => $description->name,
@@ -23,16 +23,16 @@ $factory->define(App\Donation::class, function (Faker $faker) {
         'Arrupe Donation Description' => $faker->word,
         'Target Amount' => $faker->randomNumber(),
         'Donation Type ID' => $faker->randomNumber(),
-        'Thank You' => $faker->randomElement($array = array ('Y','N')),
+        'Thank You' => $faker->randomElement($array = ['Y', 'N']),
         'AGC Donation Description' => $faker->word,
         'Pledge' => $faker->word,
         'contact_id' => function () {
-            return factory(App\Contact::class)->create([
+            return factory(App\Models\Contact::class)->create([
               'preferred_language' => 'en_US',
               ])->id;
         },
         'event_id' => function () {
-            return factory(App\Retreat::class)->create()->id;
+            return factory(App\Models\Retreat::class)->create()->id;
         },
         'remember_token' => Str::random(10),
     ];

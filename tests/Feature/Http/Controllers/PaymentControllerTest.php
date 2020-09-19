@@ -19,7 +19,7 @@ class PaymentControllerTest extends TestCase
     public function create_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('create-payment');
-        $donation = factory(\App\Donation::class)->create();
+        $donation = factory(\App\Models\Donation::class)->create();
 
         $response = $this->actingAs($user)->get('payment/create/'.$donation->donation_id);
 
@@ -36,7 +36,7 @@ class PaymentControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-payment');
-        $payment = factory(\App\Payment::class)->create();
+        $payment = factory(\App\Models\Payment::class)->create();
 
         $response = $this->actingAs($user)->delete(route('payment.destroy', [$payment]));
         $response->assertSessionHas('flash_notification');
@@ -48,8 +48,9 @@ class PaymentControllerTest extends TestCase
      * @test
      */
     public function edit_returns_an_ok_response()
-    {   $user = $this->createUserWithPermission('update-payment');
-        $payment = factory(\App\Payment::class)->create();
+    {
+        $user = $this->createUserWithPermission('update-payment');
+        $payment = factory(\App\Models\Payment::class)->create();
 
         $response = $this->actingAs($user)->get(route('payment.edit', [$payment]));
 
@@ -72,7 +73,7 @@ class PaymentControllerTest extends TestCase
     public function index_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-payment');
-        $payment = factory(\App\Payment::class)->create();
+        $payment = factory(\App\Models\Payment::class)->create();
         $response = $this->actingAs($user)->get(route('payment.index'));
 
         $response->assertOk();
@@ -89,7 +90,7 @@ class PaymentControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-payment');
-        $payment = factory(\App\Payment::class)->create();
+        $payment = factory(\App\Models\Payment::class)->create();
 
         $response = $this->actingAs($user)->get(route('payment.show', [$payment]));
 
@@ -105,7 +106,7 @@ class PaymentControllerTest extends TestCase
     public function store_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('create-payment');
-        $donation = factory(\App\Donation::class)->create();
+        $donation = factory(\App\Models\Donation::class)->create();
         $payment_date = $this->faker->dateTime();
         $payment_amount = $this->faker->randomFloat(2, 0, 100000);
         $response = $this->actingAs($user)->post(route('payment.store'), [
@@ -141,7 +142,7 @@ class PaymentControllerTest extends TestCase
     public function update_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-payment');
-        $payment = factory(\App\Payment::class)->create();
+        $payment = factory(\App\Models\Payment::class)->create();
         $original_payment_amount = $payment->payment_amount;
         $new_payment_amount = $this->faker->randomFloat(2, 0, 100000);
 
@@ -150,7 +151,7 @@ class PaymentControllerTest extends TestCase
             'donation_id' => $payment->donation_id,
             'payment_date' => $this->faker->dateTime(),
         ]);
-        $updated = \App\Payment::findOrFail($payment->payment_id);
+        $updated = \App\Models\Payment::findOrFail($payment->payment_id);
 
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('DonationController@show', $payment->donation_id));
@@ -164,7 +165,7 @@ class PaymentControllerTest extends TestCase
     public function update_returns_403_response()
     {
         $user = $this->createUserWithPermission('show-payment');
-        $payment = factory(\App\Payment::class)->create();
+        $payment = factory(\App\Models\Payment::class)->create();
         $original_payment_amount = $payment->payment_amount;
         $new_payment_amount = $this->faker->randomFloat(2, 0, 100000);
 

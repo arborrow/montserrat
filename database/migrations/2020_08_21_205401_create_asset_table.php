@@ -40,26 +40,26 @@ class CreateAssetTable extends Migration
             $table->integer('power_phase_voltage')->nullable();
             $table->integer('power_phase_voltage_uom_id')->nullable();
             $table->integer('power_phases')->nullable();
-            $table->decimal('power_amp', 8,2)->nullable();
+            $table->decimal('power_amp', 8, 2)->nullable();
             $table->integer('power_amp_uom_id')->nullable();
 
             // Physical dimensions
-            $table->decimal('length', 8,2)->nullable();
+            $table->decimal('length', 8, 2)->nullable();
             $table->integer('length_uom_id')->nullable();
-            $table->decimal('width', 8,2)->nullable();
+            $table->decimal('width', 8, 2)->nullable();
             $table->integer('width_uom_id')->nullable();
-            $table->decimal('height', 8,2)->nullable();
+            $table->decimal('height', 8, 2)->nullable();
             $table->integer('height_uom_id')->nullable();
-            $table->decimal('weight', 8,2)->nullable();
+            $table->decimal('weight', 8, 2)->nullable();
             $table->integer('weight_uom_id')->nullable();
-            $table->decimal('capacity', 8,2)->nullable();
+            $table->decimal('capacity', 8, 2)->nullable();
             $table->integer('capacity_uom_id')->nullable();
 
             // Dates
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
             $table->dateTime('purchase_date')->nullable();
-            $table->decimal('purchase_price', 13,2)->default('0.00')->nullable();
+            $table->decimal('purchase_price', 13, 2)->default('0.00')->nullable();
             $table->dateTime('warranty_start_date')->nullable();
             $table->dateTime('warranty_end_date')->nullable();
             $table->dateTime('depreciation_start_date')->nullable();
@@ -67,15 +67,14 @@ class CreateAssetTable extends Migration
             $table->integer('depreciation_type_id')->nullable();
             $table->integer('depreciation_time')->nullable();
             $table->integer('depreciation_time_uom_id')->nullable(); //typcially months
-            $table->decimal('depreciation_rate', 13,2)->default('0.00')->nullable();
-            $table->decimal('depreciation_value', 13,2)->default('0.00')->nullable();
-            $table->decimal('life_expectancy', 8,2)->nullable();
+            $table->decimal('depreciation_rate', 13, 2)->default('0.00')->nullable();
+            $table->decimal('depreciation_value', 13, 2)->default('0.00')->nullable();
+            $table->decimal('life_expectancy', 8, 2)->nullable();
             $table->integer('life_expectancy_uom_id')->nullable();
 
             $table->boolean('is_active')->nullable()->default(1);
             $table->timestamps();
             $table->softDeletes();
-
         });
     }
 

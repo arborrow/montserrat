@@ -7,7 +7,7 @@ class CreateUomTable extends Migration
 {
     /**
      * Run the migrations.
-     * Because asset_type.label will be used in drop down boxes they should be unique unless they have been deleted
+     * Because asset_type.label will be used in drop down boxes they should be unique unless they have been deleted.
      *
      * @return void
      */
@@ -15,7 +15,7 @@ class CreateUomTable extends Migration
     {
         Schema::create('uom', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('type', ['Data', 'Time', 'Electric current','Length','Area','Volume','Mass','Temperature','Luminosity']);
+            $table->enum('type', ['Data', 'Time', 'Electric current', 'Length', 'Area', 'Volume', 'Mass', 'Temperature', 'Luminosity']);
             $table->string('unit_name')->nullable();
             $table->string('unit_symbol')->nullable();
             $table->text('description', 65535)->nullable();

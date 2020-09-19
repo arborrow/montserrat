@@ -9,56 +9,57 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication, HttpTestAssertions;
 
-    protected function stristrarray($array, $str){
-    //This array will hold the indexes of every
-    //element that contains our substring.
-    $indexes = array();
-    foreach($array as $k => $v){
-        //If stristr, add the index to our
-        //$indexes array.
-        if(stristr($v, $str)){
-            $indexes[] = $k;
+    protected function stristrarray($array, $str)
+    {
+        //This array will hold the indexes of every
+        //element that contains our substring.
+        $indexes = [];
+        foreach ($array as $k => $v) {
+            //If stristr, add the index to our
+            //$indexes array.
+            if (stristr($v, $str)) {
+                $indexes[] = $k;
+            }
         }
+
+        return $indexes;
     }
-    return $indexes;
-}
 
     protected function createUserWithPermission(string $permission, array $data = [])
     {
-        $reference = \App\Permission::where('name', $permission)->first();
+        $reference = \App\Models\Permission::where('name', $permission)->first();
         if (is_null($reference)) {
             throw new \InvalidArgumentException('permission does not exist: '.$reference);
         }
 
-        $role = \App\Role::where('name', 'test-role:'.$permission)->first();
+        $role = \App\Models\Role::where('name', 'test-role:'.$permission)->first();
         if (is_null($role)) {
             throw new \InvalidArgumentException('A test role for the permission ('.$permission.') does not exist. Did you run the seeder?');
         }
 
-        $user = factory(\App\User::class)->create($data);
+        $user = factory(\App\Models\User::class)->create($data);
         $user->assignRole($role->name);
 
         return $user;
     }
 
     /**
-    * checks the response content to ensure that a field's default value for a particular form object is found
-    *
-    * @param string $field_name
-    * @param string $field_value
-    * @param string $form_type
-    * @param string $contents
-    * @return boolean
-    */
-
-    protected function findFieldValueInResponseContent(string $field_name, $field_value, string $form_type = 'number', $contents)
+     * checks the response content to ensure that a field's default value for a particular form object is found.
+     *
+     * @param string $field_name
+     * @param string $field_value
+     * @param string $form_type
+     * @param string $contents
+     * @return bool
+     */
+    protected function findFieldValueInResponseContent(string $field_name, $field_value, string $form_type, $contents)
     {   // form_type can be number (default), text, select, date
         // initialize default variables
         $line_number = 0;
         $value_found = 0;
         // dd($field_value);
-        $field_name_string = "name=\"".$field_name."\"";
-        $field_value_string = "value=\"".e($field_value)."\"";
+        $field_name_string = 'name="'.$field_name.'"';
+        $field_value_string = 'value="'.e($field_value).'"';
         $contents_array = explode("\n", $contents);
 
         switch ($form_type) {
@@ -66,15 +67,15 @@ abstract class TestCase extends BaseTestCase
                 break;
             case 'date':
                 // dd($field_value, gettype($field_value), $field_value->format('Y-m-d'));
-                if (!is_null($field_value)) {
-                    $field_value_string = "value=\"".$field_value->format('Y-m-d')."\"";
+                if (! is_null($field_value)) {
+                    $field_value_string = 'value="'.$field_value->format('Y-m-d').'"';
                 } else {
                     return true;
                 }
                 break;
             case 'datetime':
-                if (!is_null($field_value)) {
-                    $field_value_string = "value=\"".$field_value->format('Y-m-d\TH:i:sP')."\"";
+                if (! is_null($field_value)) {
+                    $field_value_string = 'value="'.$field_value->format('Y-m-d\TH:i:sP').'"';
                 } else {
                     return true;
                 }
@@ -82,16 +83,16 @@ abstract class TestCase extends BaseTestCase
             case 'text':
                 break;
             case 'select':
-                $field_value_string = "<option value=\"".$field_value."\" selected=\"selected\">";
-                $field_no_value_string = "<option value=\"\" selected=\"selected\">";
-                $field_zero_value_string = "<option value=\"0\" selected=\"selected\">";
+                $field_value_string = '<option value="'.$field_value.'" selected="selected">';
+                $field_no_value_string = '<option value="" selected="selected">';
+                $field_zero_value_string = '<option value="0" selected="selected">';
 
                 break;
             case 'checkbox':
-                $field_value_string = "checked=\"checked\"";
+                $field_value_string = 'checked="checked"';
                 break;
             case 'textarea': // textarea should be value and then the end of the textarea tag
-                $field_value_string = $field_value."</textarea>";
+                $field_value_string = $field_value.'</textarea>';
                 break;
             case 'multiselect':
                 break;
@@ -107,47 +108,47 @@ abstract class TestCase extends BaseTestCase
         if ($line_number) {
             switch ($form_type) {
                 // checkbox is handled differently, it adds a checked parameter rather than using the database value
-                case 'checkbox' :
-                    if ($field_value==true) { // if the database value is true, ensure the selected param is in fact present on the line
-                        $value_found = (strpos($contents_array[$line_number], "checked=\"checked\""));
+                case 'checkbox':
+                    if ($field_value == true) { // if the database value is true, ensure the selected param is in fact present on the line
+                        $value_found = (strpos($contents_array[$line_number], 'checked="checked"'));
                     } else { // if the database value is false then, ensure that the checked param is NOT on the line
-                        $value_found = !(strpos($contents_array[$line_number], "checked=\"checked\""));
+                        $value_found = ! (strpos($contents_array[$line_number], 'checked="checked"'));
                     }
                     break;
                 // deal with cases where selected value is 0 or not yet defined by checking for 0
-                case 'select' :
+                case 'select':
                     if (is_null($field_value)) {
-                        $value_found = (!(strpos($contents_array[$line_number], "selected=\"selected\"")) || strpos($contents_array[$line_number], $field_zero_value_string) || strpos($contents_array[$line_number], $field_no_value_string));
+                        $value_found = (! (strpos($contents_array[$line_number], 'selected="selected"')) || strpos($contents_array[$line_number], $field_zero_value_string) || strpos($contents_array[$line_number], $field_no_value_string));
                     } else {
-                        $value_found = (strpos($contents_array[$line_number], $field_value_string) || strpos($contents_array[$line_number], $field_zero_value_string)) ;
+                        $value_found = (strpos($contents_array[$line_number], $field_value_string) || strpos($contents_array[$line_number], $field_zero_value_string));
                     }
                     // dd($value_found, strpos($contents_array[$line_number], $field_value_string),  )
                     break;
-                case 'multiselect' : //count the number of selected options on the line & count the number of selected default field values - then compare that they are the same
+                case 'multiselect': //count the number of selected options on the line & count the number of selected default field values - then compare that they are the same
                     $results = [];
                     if (is_null($field_value)) {
-                        $value_found = (!(strpos($contents_array[$line_number], "selected=\"selected\"")) || strpos($contents_array[$line_number], $field_zero_value_string));
+                        $value_found = (! (strpos($contents_array[$line_number], 'selected="selected"')) || strpos($contents_array[$line_number], $field_zero_value_string));
                     } else { // build array $results of selected values
                         foreach ($field_value as $key => $value) {
-                            $field_value_string = "<option value=\"".$value."\" selected=\"selected\">";
-                            $field_no_value_string = "<option value=\"\" selected=\"selected\">";
-                            $field_zero_value_string = "<option value=\"0\" selected=\"selected\">";
+                            $field_value_string = '<option value="'.$value.'" selected="selected">';
+                            $field_no_value_string = '<option value="" selected="selected">';
+                            $field_zero_value_string = '<option value="0" selected="selected">';
 
-                            $value_found = boolval(strpos($contents_array[$line_number], $field_value_string) || strpos($contents_array[$line_number], $field_zero_value_string)) ;
+                            $value_found = boolval(strpos($contents_array[$line_number], $field_value_string) || strpos($contents_array[$line_number], $field_zero_value_string));
                             $results[$key] = $value_found;
                         }
-                        $options = explode("<option ",$contents_array[$line_number]);
-                        $options_count = count($this->stristrarray($options, "selected=\"selected\">"));
-                        $results_count = count($this->stristrarray($results,'1'));
+                        $options = explode('<option ', $contents_array[$line_number]);
+                        $options_count = count($this->stristrarray($options, 'selected="selected">'));
+                        $results_count = count($this->stristrarray($results, '1'));
 
 //                        dd(count($selected_options), count($field_value), $value_found, $field_name, $field_value,$line_number,$contents_array[$line_number],$results, $options);
                     }
                     // dd(count($field_value), $field_value, $options_count, $options, $results_count, $results);
                     return ($options_count == $results_count) && (count($field_value) == $results_count);
                     break;
-                case 'text' :
+                case 'text':
                     if (is_null($field_value)) { //if there is no value there shouldn't be a default value
-                        $value_found = !(strpos($contents_array[$line_number], "value=\""));
+                        $value_found = ! (strpos($contents_array[$line_number], 'value="'));
                     } else { // if there is a value it should be set as the default
                         $value_found = strpos($contents_array[$line_number], $field_value_string);
                     }
@@ -160,7 +161,8 @@ abstract class TestCase extends BaseTestCase
         if ($value_found > 0) {
             return true;
         } else {
-            dd($value_found, $line_number, $field_value, $field_name_string,$field_value_string,gettype($field_value_string),$contents_array[$line_number]);
+            dd($value_found, $line_number, $field_value, $field_name_string, $field_value_string, gettype($field_value_string), $contents_array[$line_number]);
+
             return false;
         }
     }

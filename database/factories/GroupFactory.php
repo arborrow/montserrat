@@ -5,7 +5,7 @@
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
-$factory->define(App\Group::class, function (Faker $faker) {
+$factory->define(App\Models\Group::class, function (Faker $faker) {
     $group_name = ucfirst(implode(' ', $faker->words));
 
     return [

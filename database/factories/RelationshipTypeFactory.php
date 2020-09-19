@@ -4,7 +4,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\RelationshipType::class, function (Faker $faker) {
+$factory->define(App\Models\RelationshipType::class, function (Faker $faker) {
     return [
       'name_a_b' => $faker->company,
       'name_b_a' => $faker->jobTitle,

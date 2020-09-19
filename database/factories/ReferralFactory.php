@@ -4,7 +4,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Referral::class, function (Faker $faker) {
+$factory->define(App\Models\Referral::class, function (Faker $faker) {
     return [
     ];
 });

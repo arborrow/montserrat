@@ -2,10 +2,10 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Faker\Generator as Faker;
 use Carbon\Carbon;
+use Faker\Generator as Faker;
 
-$factory->define(App\ExportList::class, function (Faker $faker) {
+$factory->define(App\Models\ExportList::class, function (Faker $faker) {
     $label = $faker->word;
     $type = $faker->randomElement(config('polanco.export_list_types'));
     $start_date = Carbon::createFromTimestamp($faker->dateTimeBetween($startDate = '-60 days', $endDate = '+60 days')->getTimeStamp());

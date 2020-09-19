@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\GroupContact;
+use App\Models\GroupContact;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -24,15 +24,15 @@ class TouchpointControllerTest extends TestCase
         // Creat a staff contact and use the authenticated user's email to associate with the staff contact
         // Add the staff contact to the staff group - probably not necessary for this test but for consistency I am adding it here
 
-        $contact = factory(\App\Contact::class)->create();
-        $staff = factory(\App\Contact::class)->create();
-        $email = factory(\App\Email::class)->create([
+        $contact = factory(\App\Models\Contact::class)->create();
+        $staff = factory(\App\Models\Contact::class)->create();
+        $email = factory(\App\Models\Email::class)->create([
             'contact_id' => $staff->id,
             'location_type_id' => config('polanco.location_type.work'),
             'email' => $user->email,
             'is_primary' => '1',
         ]);
-        $group_contact = factory(\App\GroupContact::class)->create([
+        $group_contact = factory(\App\Models\GroupContact::class)->create([
           'group_id' => config('polanco.group_id.staff'),
           'contact_id' => $staff->id,
         ]);
@@ -45,7 +45,6 @@ class TouchpointControllerTest extends TestCase
         $response->assertViewHas('persons');
         $response->assertViewHas('defaults');
         $response->assertSeeText('Create Touchpoint');
-
     }
 
     /**
@@ -58,24 +57,24 @@ class TouchpointControllerTest extends TestCase
         // Creat a staff contact and use the authenticated user's email to associate with the staff contact
         // Add the staff contact to the staff group - probably not necessary for this test but for consistency I am adding it here
 
-        $staff = factory(\App\Contact::class)->create();
-        $email = factory(\App\Email::class)->create([
+        $staff = factory(\App\Models\Contact::class)->create();
+        $email = factory(\App\Models\Email::class)->create([
             'contact_id' => $staff->id,
             'location_type_id' => config('polanco.location_type.work'),
             'email' => $user->email,
             'is_primary' => '1',
         ]);
-        $group_contact_staff = factory(\App\GroupContact::class)->create([
+        $group_contact_staff = factory(\App\Models\GroupContact::class)->create([
           'group_id' => config('polanco.group_id.staff'),
           'contact_id' => $staff->id,
         ]);
 
-        $group = factory(\App\Group::class)->create();
+        $group = factory(\App\Models\Group::class)->create();
 
         /* for testing add we don't actually need to create the group members so I'm commenting out
 
         $number_group_members = $this->faker->numberBetween(2, 10);
-        $group_contact = factory(\App\GroupContact::class, $number_group_members)->create([
+        $group_contact = factory(\App\Models\GroupContact::class, $number_group_members)->create([
           'group_id' => $group->id,
         ]);
 
@@ -101,8 +100,8 @@ class TouchpointControllerTest extends TestCase
         // Create a staff contact and use the authenticated user's email to associate with the staff contact
         // Add the staff contact to the staff group - probably not necessary for this test but for consistency I am adding it here
 
-        $staff = factory(\App\Contact::class)->create();
-        $email = factory(\App\Email::class)->create([
+        $staff = factory(\App\Models\Contact::class)->create();
+        $email = factory(\App\Models\Email::class)->create([
             'contact_id' => $staff->id,
             'location_type_id' => config('polanco.location_type.work'),
             'email' => $user->email,
@@ -114,9 +113,9 @@ class TouchpointControllerTest extends TestCase
         // Create touchpoint for the retreatants registered on that retreat
         // Since this is just the add, we don't actually need the retreatants so commenting them out
 
-        $retreat = factory(\App\Retreat::class)->create();
+        $retreat = factory(\App\Models\Retreat::class)->create();
         /* $number_participants = $this->faker->numberBetween(3,15);
-        $registration = factory(\App\Registration::class, $number_participants)->create([
+        $registration = factory(\App\Models\Registration::class, $number_participants)->create([
             'event_id' => $retreat->id,
         ]);
         */
@@ -143,8 +142,8 @@ class TouchpointControllerTest extends TestCase
         // Create a staff contact and use the authenticated user's email to associate with the staff contact
         // Add the staff contact to the staff group - probably not necessary for this test but for consistency I am adding it here
 
-        $staff = factory(\App\Contact::class)->create();
-        $email = factory(\App\Email::class)->create([
+        $staff = factory(\App\Models\Contact::class)->create();
+        $email = factory(\App\Models\Email::class)->create([
             'contact_id' => $staff->id,
             'location_type_id' => config('polanco.location_type.work'),
             'email' => $user->email,
@@ -156,7 +155,7 @@ class TouchpointControllerTest extends TestCase
         // Create touchpoint for the retreatants registered on that retreat
         // Since this is just the add, we don't actually need the retreatants so commenting them out
 
-        $retreat = factory(\App\Retreat::class)->create();
+        $retreat = factory(\App\Models\Retreat::class)->create();
 
         $response = $this->actingAs($user)->get('retreat/'.$retreat->id.'/waitlist_touchpoint');
 
@@ -167,7 +166,6 @@ class TouchpointControllerTest extends TestCase
         $response->assertViewHas('retreats');
         $response->assertViewHas('participants');
         $response->assertViewHas('defaults');
-
     }
 
     /**
@@ -193,7 +191,7 @@ class TouchpointControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-touchpoint');
-        $touchpoint = factory(\App\Touchpoint::class)->create();
+        $touchpoint = factory(\App\Models\Touchpoint::class)->create();
 
         $response = $this->actingAs($user)->delete(route('touchpoint.destroy', [$touchpoint]));
         $response->assertSessionHas('flash_notification');
@@ -207,7 +205,7 @@ class TouchpointControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-touchpoint');
-        $touchpoint = factory(\App\Touchpoint::class)->create();
+        $touchpoint = factory(\App\Models\Touchpoint::class)->create();
 
         $response = $this->actingAs($user)->get(route('touchpoint.edit', [$touchpoint]));
 
@@ -223,13 +221,13 @@ class TouchpointControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('type', $touchpoint->type, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('notes', $touchpoint->notes, 'textarea', $response->getContent()));
 
-/*
-{!! Form::text('touched_at', date('F j, Y g:i A', strtotime($touchpoint->touched_at)), ['class' => 'col-md-3']) !!}
-{!! Form::select('person_id', $persons, $touchpoint->person_id, ['class' => 'col-md-3']) !!}
-{!! Form::select('type', config('polanco.touchpoint_source'), $touchpoint->type, ['class' => 'col-md-3']) !!}
-{!! Form::textarea('notes', $touchpoint->notes, ['class' => 'col-md-3']) !!}
+        /*
+        {!! Form::text('touched_at', date('F j, Y g:i A', strtotime($touchpoint->touched_at)), ['class' => 'col-md-3']) !!}
+        {!! Form::select('person_id', $persons, $touchpoint->person_id, ['class' => 'col-md-3']) !!}
+        {!! Form::select('type', config('polanco.touchpoint_source'), $touchpoint->type, ['class' => 'col-md-3']) !!}
+        {!! Form::textarea('notes', $touchpoint->notes, ['class' => 'col-md-3']) !!}
 
- */
+         */
     }
 
     /**
@@ -247,7 +245,6 @@ class TouchpointControllerTest extends TestCase
         $response->assertSeeText('Touchpoint Index');
     }
 
-
     /**
      * @test
      */
@@ -255,7 +252,7 @@ class TouchpointControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-touchpoint');
 
-        $touchpoint = factory(\App\Touchpoint::class)->create();
+        $touchpoint = factory(\App\Models\Touchpoint::class)->create();
 
         $response = $this->actingAs($user)->get('touchpoint/type/'.$touchpoint->staff_id);
         $response->assertOk();
@@ -271,7 +268,7 @@ class TouchpointControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-touchpoint');
-        $touchpoint = factory(\App\Touchpoint::class)->create();
+        $touchpoint = factory(\App\Models\Touchpoint::class)->create();
 
         $response = $this->actingAs($user)->get(route('touchpoint.show', [$touchpoint]));
 
@@ -288,15 +285,15 @@ class TouchpointControllerTest extends TestCase
     public function store_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('create-touchpoint');
-        $person = factory(\App\Contact::class)->create();
-        $staff = factory(\App\Contact::class)->create();
-        $email = factory(\App\Email::class)->create([
+        $person = factory(\App\Models\Contact::class)->create();
+        $staff = factory(\App\Models\Contact::class)->create();
+        $email = factory(\App\Models\Email::class)->create([
             'contact_id' => $staff->id,
             'location_type_id' => config('polanco.location_type.work'),
             'email' => $user->email,
             'is_primary' => '1',
         ]);
-        $group_contact = factory(\App\GroupContact::class)->create([
+        $group_contact = factory(\App\Models\GroupContact::class)->create([
           'group_id' => config('polanco.group_id.staff'),
           'contact_id' => $staff->id,
         ]);
@@ -339,29 +336,29 @@ class TouchpointControllerTest extends TestCase
         // Creat a staff contact and use the authenticated user's email to associate with the staff contact
         // Add the staff contact to the staff group - probably not necessary for this test but for consistency I am adding it here
 
-        $staff = factory(\App\Contact::class)->create();
-        $email = factory(\App\Email::class)->create([
+        $staff = factory(\App\Models\Contact::class)->create();
+        $email = factory(\App\Models\Email::class)->create([
             'contact_id' => $staff->id,
             'location_type_id' => config('polanco.location_type.work'),
             'email' => $user->email,
             'is_primary' => '1',
         ]);
-        $group_contact_staff = factory(\App\GroupContact::class)->create([
+        $group_contact_staff = factory(\App\Models\GroupContact::class)->create([
           'group_id' => config('polanco.group_id.staff'),
           'contact_id' => $staff->id,
         ]);
 
-        $group = factory(\App\Group::class)->create();
+        $group = factory(\App\Models\Group::class)->create();
 
         $number_group_members = $this->faker->numberBetween(2, 10);
-        $group_contact = factory(\App\GroupContact::class, $number_group_members)->create([
+        $group_contact = factory(\App\Models\GroupContact::class, $number_group_members)->create([
           'group_id' => $group->id,
         ]);
 
         $notes = $this->faker->paragraph;
         $touched_at = $this->faker->dateTime('now');
 
-        $random_group_member = \App\GroupContact::whereGroupId($group->id)->get()->random();
+        $random_group_member = \App\Models\GroupContact::whereGroupId($group->id)->get()->random();
 
         $response = $this->actingAs($user)->post('touchpoint/add_group', [
             'group_id' => $group->id,
@@ -403,8 +400,8 @@ class TouchpointControllerTest extends TestCase
         // Create a staff contact and use the authenticated user's email to associate with the staff contact
         // Add the staff contact to the staff group - probably not necessary for this test but for consistency I am adding it here
 
-        $staff = factory(\App\Contact::class)->create();
-        $email = factory(\App\Email::class)->create([
+        $staff = factory(\App\Models\Contact::class)->create();
+        $email = factory(\App\Models\Email::class)->create([
             'contact_id' => $staff->id,
             'location_type_id' => config('polanco.location_type.work'),
             'email' => $user->email,
@@ -415,11 +412,11 @@ class TouchpointControllerTest extends TestCase
         // Register a random number of people for that retreat
         // Create touchpoint for the retreatants registered on that retreat
 
-        $retreat = factory(\App\Retreat::class)->create();
+        $retreat = factory(\App\Models\Retreat::class)->create();
         $number_participants = $this->faker->numberBetween(3, 15);
 
         // criteria set from search criteria in touchpoint controller's store_retreat method
-        $participants = factory(\App\Registration::class, $number_participants)->create([
+        $participants = factory(\App\Models\Registration::class, $number_participants)->create([
             'event_id' => $retreat->id,
             'status_id' => config('polanco.registration_status_id.registered'),
             'role_id' => config('polanco.participant_role_id.retreatant'),
@@ -430,7 +427,7 @@ class TouchpointControllerTest extends TestCase
         $touched_at = $this->faker->dateTime('now');
 
         // where criteria copied from touchpoint controller store_retreat method for consistency
-        $actual_participants = \App\Registration::whereStatusId(config('polanco.registration_status_id.registered'))->whereEventId($retreat->id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
+        $actual_participants = \App\Models\Registration::whereStatusId(config('polanco.registration_status_id.registered'))->whereEventId($retreat->id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
         $random_participant = $actual_participants->random();
 
         $response = $this->actingAs($user)->post('touchpoint/add_retreat', [
@@ -474,8 +471,8 @@ class TouchpointControllerTest extends TestCase
         // Create a staff contact and use the authenticated user's email to associate with the staff contact
         // Add the staff contact to the staff group - probably not necessary for this test but for consistency I am adding it here
 
-        $staff = factory(\App\Contact::class)->create();
-        $email = factory(\App\Email::class)->create([
+        $staff = factory(\App\Models\Contact::class)->create();
+        $email = factory(\App\Models\Email::class)->create([
             'contact_id' => $staff->id,
             'location_type_id' => config('polanco.location_type.work'),
             'email' => $user->email,
@@ -486,11 +483,11 @@ class TouchpointControllerTest extends TestCase
         // Register a random number of people for that retreat
         // Create touchpoint for the retreatants registered on that retreat
 
-        $retreat = factory(\App\Retreat::class)->create();
+        $retreat = factory(\App\Models\Retreat::class)->create();
         $number_participants = $this->faker->numberBetween(3, 15);
 
         // criteria set from search criteria in touchpoint controller's store_retreat method
-        $participants = factory(\App\Registration::class, $number_participants)->create([
+        $participants = factory(\App\Models\Registration::class, $number_participants)->create([
             'event_id' => $retreat->id,
             'status_id' => config('polanco.registration_status_id.waitlist'),
             'role_id' => config('polanco.participant_role_id.retreatant'),
@@ -501,7 +498,7 @@ class TouchpointControllerTest extends TestCase
         $touched_at = $this->faker->dateTime('now');
 
         // where criteria copied from touchpoint controller store_retreat method for consistency
-        $actual_participants = \App\Registration::whereStatusId(config('polanco.registration_status_id.waitlist'))->whereEventId($retreat->id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
+        $actual_participants = \App\Models\Registration::whereStatusId(config('polanco.registration_status_id.waitlist'))->whereEventId($retreat->id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
         $random_participant = $actual_participants->random();
 
         $response = $this->actingAs($user)->post('touchpoint/add_retreat_waitlist', [
@@ -541,20 +538,20 @@ class TouchpointControllerTest extends TestCase
     public function update_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-touchpoint');
-        $person = factory(\App\Contact::class)->create();
-        $staff = factory(\App\Contact::class)->create();
-        $email = factory(\App\Email::class)->create([
+        $person = factory(\App\Models\Contact::class)->create();
+        $staff = factory(\App\Models\Contact::class)->create();
+        $email = factory(\App\Models\Email::class)->create([
             'contact_id' => $staff->id,
             'location_type_id' => config('polanco.location_type.work'),
             'email' => $user->email,
             'is_primary' => '1',
         ]);
-        $group_contact = factory(\App\GroupContact::class)->create([
+        $group_contact = factory(\App\Models\GroupContact::class)->create([
           'group_id' => config('polanco.group_id.staff'),
           'contact_id' => $staff->id,
         ]);
 
-        $touchpoint = factory(\App\Touchpoint::class)->create();
+        $touchpoint = factory(\App\Models\Touchpoint::class)->create();
         $original_staff_id = $touchpoint->staff_id;
         $original_person_id = $touchpoint->person_id;
         $response = $this->actingAs($user)->put(route('touchpoint.update', [$touchpoint]), [

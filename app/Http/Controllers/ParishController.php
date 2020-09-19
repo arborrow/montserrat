@@ -23,8 +23,8 @@ class ParishController extends Controller
     {
         $this->authorize('show-contact');
         $diocese = null;
-        $dioceses = \App\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'bishops', 'primary_bishop')->get();
-        $parishes = \App\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'pastor.contact_b.prefix', 'pastor.contact_b.suffix', 'diocese.contact_a')->get();
+        $dioceses = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'bishops', 'primary_bishop')->get();
+        $parishes = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'pastor.contact_b.prefix', 'pastor.contact_b.suffix', 'diocese.contact_a')->get();
         $parishes = $parishes->sortBy(function ($parish) {
             return sprintf('%-12s%s', $parish->diocese_name, $parish->organization_name);
         });
@@ -40,14 +40,14 @@ class ParishController extends Controller
     public function create()
     {
         $this->authorize('create-contact');
-        $dioceses = \App\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderby('organization_name')->pluck('organization_name', 'id');
-        $pastors = \App\Contact::whereHas('b_relationships', function ($query) {
+        $dioceses = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderby('organization_name')->pluck('organization_name', 'id');
+        $pastors = \App\Models\Contact::whereHas('b_relationships', function ($query) {
             $query->whereRelationshipTypeId(config('polanco.relationship_type.pastor'))->whereIsActive(1);
         })->orderby('sort_name')->pluck('sort_name', 'id');
         $pastors[0] = 'No pastor assigned';
-        $states = \App\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
+        $states = \App\Models\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
-        $countries = \App\Country::orderby('iso_code')->pluck('iso_code', 'id');
+        $countries = \App\Models\Country::orderby('iso_code')->pluck('iso_code', 'id');
         $defaults['state_province_id'] = config('polanco.state_province_id_tx');
         $defaults['country_id'] = config('polanco.country_id_usa');
         $countries->prepend('N/A', 0);
@@ -64,7 +64,7 @@ class ParishController extends Controller
     public function store(StoreParishRequest $request)
     {
         $this->authorize('create-contact');
-        $parish = new \App\Contact;
+        $parish = new \App\Models\Contact;
         $parish->organization_name = $request->input('organization_name');
         $parish->display_name = $request->input('organization_name');
         $parish->sort_name = $request->input('organization_name');
@@ -72,7 +72,7 @@ class ParishController extends Controller
         $parish->subcontact_type = config('polanco.contact_type.parish');
         $parish->save();
 
-        $parish_address = new \App\Address;
+        $parish_address = new \App\Models\Address;
         $parish_address->contact_id = $parish->id;
         $parish_address->location_type_id = config('polanco.location_type.main');
         $parish_address->is_primary = 1;
@@ -84,7 +84,7 @@ class ParishController extends Controller
         $parish_address->country_id = $request->input('country_id');
         $parish_address->save();
 
-        $parish_main_phone = new \App\Phone;
+        $parish_main_phone = new \App\Models\Phone;
         $parish_main_phone->contact_id = $parish->id;
         $parish_main_phone->location_type_id = config('polanco.location_type.main');
         $parish_main_phone->is_primary = 1;
@@ -92,57 +92,57 @@ class ParishController extends Controller
         $parish_main_phone->phone_type = 'Phone';
         $parish_main_phone->save();
 
-        $parish_fax_phone = new \App\Phone;
+        $parish_fax_phone = new \App\Models\Phone;
         $parish_fax_phone->contact_id = $parish->id;
         $parish_fax_phone->location_type_id = config('polanco.location_type.main');
         $parish_fax_phone->phone = $request->input('phone_main_fax');
         $parish_fax_phone->phone_type = 'Fax';
         $parish_fax_phone->save();
 
-        $parish_email_main = new \App\Email;
+        $parish_email_main = new \App\Models\Email;
         $parish_email_main->contact_id = $parish->id;
         $parish_email_main->is_primary = 1;
         $parish_email_main->location_type_id = config('polanco.location_type.main');
         $parish_email_main->email = $request->input('email_main');
         $parish_email_main->save();
 
-        $url_main = new \App\Website;
+        $url_main = new \App\Models\Website;
         $url_main->contact_id = $parish->id;
         $url_main->url = $request->input('url_main');
         $url_main->website_type = 'Main';
         $url_main->save();
 
-        $url_work = new \App\Website;
+        $url_work = new \App\Models\Website;
         $url_work->contact_id = $parish->id;
         $url_work->url = $request->input('url_work');
         $url_work->website_type = 'Work';
         $url_work->save();
 
-        $url_facebook = new \App\Website;
+        $url_facebook = new \App\Models\Website;
         $url_facebook->contact_id = $parish->id;
         $url_facebook->url = $request->input('url_facebook');
         $url_facebook->website_type = 'Facebook';
         $url_facebook->save();
 
-        $url_google = new \App\Website;
+        $url_google = new \App\Models\Website;
         $url_google->contact_id = $parish->id;
         $url_google->url = $request->input('url_google');
         $url_google->website_type = 'Google';
         $url_google->save();
 
-        $url_instagram = new \App\Website;
+        $url_instagram = new \App\Models\Website;
         $url_instagram->contact_id = $parish->id;
         $url_instagram->url = $request->input('url_instagram');
         $url_instagram->website_type = 'Instagram';
         $url_instagram->save();
 
-        $url_linkedin = new \App\Website;
+        $url_linkedin = new \App\Models\Website;
         $url_linkedin->contact_id = $parish->id;
         $url_linkedin->url = $request->input('url_linkedin');
         $url_linkedin->website_type = 'LinkedIn';
         $url_linkedin->save();
 
-        $url_twitter = new \App\Website;
+        $url_twitter = new \App\Models\Website;
         $url_twitter->contact_id = $parish->id;
         $url_twitter->url = $request->input('url_twitter');
         $url_twitter->website_type = 'Twitter';
@@ -150,7 +150,7 @@ class ParishController extends Controller
 
         //TODO: add contact_id which is the id of the creator of the note
         if (! empty($request->input('note'))) {
-            $parish_note = new \App\Note;
+            $parish_note = new \App\Models\Note;
             $parish_note->entity_table = 'contact';
             $parish_note->entity_id = $parish->id;
             $parish_note->note = $request->input('note');
@@ -159,7 +159,7 @@ class ParishController extends Controller
         }
 
         if ($request->input('diocese_id') > 0) {
-            $relationship_diocese = new \App\Relationship;
+            $relationship_diocese = new \App\Models\Relationship;
             $relationship_diocese->contact_id_a = $request->input('diocese_id');
             $relationship_diocese->contact_id_b = $parish->id;
             $relationship_diocese->relationship_type_id = config('polanco.relationship_type.diocese');
@@ -167,7 +167,7 @@ class ParishController extends Controller
             $relationship_diocese->save();
         }
         if ($request->input('pastor_id') > 0) {
-            $relationship_pastor = new \App\Relationship;
+            $relationship_pastor = new \App\Models\Relationship;
             $relationship_pastor->contact_id_a = $parish->id;
             $relationship_pastor->contact_id_b = $request->input('pastor_id');
             $relationship_pastor->relationship_type_id = config('polanco.relationship_type.pastor');
@@ -175,7 +175,8 @@ class ParishController extends Controller
             $relationship_pastor->save();
         }
 
-        flash('Parish: <a href="'. url('/parish/'.$parish->id) . '">'.$parish->organization_name.'</a> added')->success();
+        flash('Parish: <a href="'.url('/parish/'.$parish->id).'">'.$parish->organization_name.'</a> added')->success();
+
         return Redirect::action('ParishController@index');
     }
 
@@ -188,8 +189,8 @@ class ParishController extends Controller
     public function show($id)
     {
         $this->authorize('show-contact');
-        $parish = \App\Contact::with('pastor.contact_b', 'diocese.contact_a', 'addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'parishioners.contact_b.address_primary.state', 'parishioners.contact_b.emails.location', 'parishioners.contact_b.phones.location', 'touchpoints', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations')->findOrFail($id);
-        $files = \App\Attachment::whereEntity('contact')->whereEntityId($parish->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
+        $parish = \App\Models\Contact::with('pastor.contact_b', 'diocese.contact_a', 'addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'parishioners.contact_b.address_primary.state', 'parishioners.contact_b.emails.location', 'parishioners.contact_b.phones.location', 'touchpoints', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations')->findOrFail($id);
+        $files = \App\Models\Attachment::whereEntity('contact')->whereEntityId($parish->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
         $relationship_types = [];
         $relationship_types['Primary Contact'] = 'Primary Contact';
 
@@ -206,12 +207,12 @@ class ParishController extends Controller
     {
         $this->authorize('update-contact');
 
-        $parish = \App\Contact::with('pastor.contact_b', 'diocese.contact_a', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
+        $parish = \App\Models\Contact::with('pastor.contact_b', 'diocese.contact_a', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
 
-        $dioceses = \App\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderby('organization_name')->pluck('organization_name', 'id');
+        $dioceses = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderby('organization_name')->pluck('organization_name', 'id');
         $dioceses[0] = 'No Diocese assigned';
 
-        $pastors = \App\Contact::whereHas('group_pastor', function ($query) {
+        $pastors = \App\Models\Contact::whereHas('group_pastor', function ($query) {
             $query->whereGroupId(config('polanco.group_id.pastor'))->whereStatus('Added');
         })->orderby('sort_name')->pluck('sort_name', 'id')->toArray();
         $pastors[0] = 'No pastor assigned';
@@ -227,10 +228,10 @@ class ParishController extends Controller
             }
         }
 
-        $states = \App\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
+        $states = \App\Models\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
 
-        $countries = \App\Country::orderby('iso_code')->pluck('iso_code', 'id');
+        $countries = \App\Models\Country::orderby('iso_code')->pluck('iso_code', 'id');
         $countries->prepend('N/A', 0);
 
         $defaults['state_province_id'] = config('polanco.state_province_id_tx');
@@ -267,16 +268,16 @@ class ParishController extends Controller
     {
         $this->authorize('update-contact');
 
-        $parish = \App\Contact::with('pastor.contact_a', 'diocese.contact_a', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'notes')->findOrFail($request->input('id'));
+        $parish = \App\Models\Contact::with('pastor.contact_a', 'diocese.contact_a', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'notes')->findOrFail($request->input('id'));
         $parish->organization_name = $request->input('organization_name');
         $parish->display_name = $request->input('display_name');
         $parish->sort_name = $request->input('sort_name');
         $parish->save();
 
         if (empty($parish->diocese)) {
-            $diocese = new \App\Relationship;
+            $diocese = new \App\Models\Relationship;
         } else {
-            $diocese = \App\Relationship::findOrNew($parish->diocese->id);
+            $diocese = \App\Models\Relationship::findOrNew($parish->diocese->id);
         }
         $diocese->contact_id_b = $parish->id;
         $diocese->relationship_type_id = config('polanco.relationship_type.diocese');
@@ -292,9 +293,9 @@ class ParishController extends Controller
          * if we are unassigning a pastor, delete the relationship record
          */
         if (empty($parish->pastor)) {
-            $pastor = new \App\Relationship;
+            $pastor = new \App\Models\Relationship;
         } else {
-            $pastor = \App\Relationship::findOrNew($parish->pastor->id);
+            $pastor = \App\Models\Relationship::findOrNew($parish->pastor->id);
         }
         $pastor->contact_id_a = $parish->id;
         $pastor->contact_id_b = $request->input('pastor_id');
@@ -310,9 +311,9 @@ class ParishController extends Controller
         }
 
         if (empty($parish->address_primary)) {
-            $address_primary = new \App\Address;
+            $address_primary = new \App\Models\Address;
         } else {
-            $address_primary = \App\Address::findOrNew($parish->address_primary->id);
+            $address_primary = \App\Models\Address::findOrNew($parish->address_primary->id);
         }
 
         $address_primary->contact_id = $parish->id;
@@ -327,9 +328,9 @@ class ParishController extends Controller
         $address_primary->save();
 
         if (empty($parish->phone_primary)) {
-            $phone_primary = new \App\Phone;
+            $phone_primary = new \App\Models\Phone;
         } else {
-            $phone_primary = \App\Phone::findOrNew($parish->phone_primary->id);
+            $phone_primary = \App\Models\Phone::findOrNew($parish->phone_primary->id);
         }
         $phone_primary->contact_id = $parish->id;
         $phone_primary->location_type_id = config('polanco.location_type.main');
@@ -339,9 +340,9 @@ class ParishController extends Controller
         $phone_primary->save();
 
         if (empty($parish->phone_main_fax)) {
-            $phone_main_fax = new \App\Phone;
+            $phone_main_fax = new \App\Models\Phone;
         } else {
-            $phone_main_fax = \App\Phone::findOrNew($parish->phone_main_fax->id);
+            $phone_main_fax = \App\Models\Phone::findOrNew($parish->phone_main_fax->id);
         }
         $phone_main_fax->contact_id = $parish->id;
         $phone_main_fax->location_type_id = config('polanco.location_type.main');
@@ -350,9 +351,9 @@ class ParishController extends Controller
         $phone_main_fax->save();
 
         if (empty($parish->email_primary)) {
-            $email_primary = new \App\Email;
+            $email_primary = new \App\Models\Email;
         } else {
-            $email_primary = \App\Email::findOrNew($parish->email_primary->id);
+            $email_primary = \App\Models\Email::findOrNew($parish->email_primary->id);
         }
 
         $email_primary->contact_id = $parish->id;
@@ -361,43 +362,43 @@ class ParishController extends Controller
         $email_primary->email = $request->input('email_primary');
         $email_primary->save();
 
-        $url_main = \App\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'Main']);
+        $url_main = \App\Models\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'Main']);
         $url_main->contact_id = $parish->id;
         $url_main->url = $request->input('url_main');
         $url_main->website_type = 'Main';
         $url_main->save();
 
-        $url_work = \App\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'Work']);
+        $url_work = \App\Models\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'Work']);
         $url_work->contact_id = $parish->id;
         $url_work->url = $request->input('url_work');
         $url_work->website_type = 'Work';
         $url_work->save();
 
-        $url_facebook = \App\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'Facebook']);
+        $url_facebook = \App\Models\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'Facebook']);
         $url_facebook->contact_id = $parish->id;
         $url_facebook->url = $request->input('url_facebook');
         $url_facebook->website_type = 'Facebook';
         $url_facebook->save();
 
-        $url_google = \App\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'Google']);
+        $url_google = \App\Models\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'Google']);
         $url_google->contact_id = $parish->id;
         $url_google->url = $request->input('url_google');
         $url_google->website_type = 'Google';
         $url_google->save();
 
-        $url_instagram = \App\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'Instagram']);
+        $url_instagram = \App\Models\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'Instagram']);
         $url_instagram->contact_id = $parish->id;
         $url_instagram->url = $request->input('url_instagram');
         $url_instagram->website_type = 'Instagram';
         $url_instagram->save();
 
-        $url_linkedin = \App\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'LinkedIn']);
+        $url_linkedin = \App\Models\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'LinkedIn']);
         $url_linkedin->contact_id = $parish->id;
         $url_linkedin->url = $request->input('url_linkedin');
         $url_linkedin->website_type = 'LinkedIn';
         $url_linkedin->save();
 
-        $url_twitter = \App\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'Twitter']);
+        $url_twitter = \App\Models\Website::firstOrNew(['contact_id'=>$parish->id, 'website_type'=>'Twitter']);
         $url_twitter->contact_id = $parish->id;
         $url_twitter->url = $request->input('url_twitter');
         $url_twitter->website_type = 'Twitter';
@@ -415,7 +416,8 @@ class ParishController extends Controller
             $attachment->update_attachment($request->file('attachment'), 'contact', $parish->id, 'attachment', $description);
         }
 
-        flash('Parish: <a href="'. url('/parish/'.$parish->id) . '">'.$parish->organization_name.'</a> updated')->success();
+        flash('Parish: <a href="'.url('/parish/'.$parish->id).'">'.$parish->organization_name.'</a> updated')->success();
+
         return Redirect::action('ParishController@show', $parish->id);
     }
 
@@ -428,36 +430,37 @@ class ParishController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-contact');
-        $parish = \App\Parish::findOrFail($id);
-        \App\Relationship::whereContactIdA($id)->delete();
-        \App\Relationship::whereContactIdB($id)->delete();
-        \App\GroupContact::whereContactId($id)->delete();
+        $parish = \App\Models\Parish::findOrFail($id);
+        \App\Models\Relationship::whereContactIdA($id)->delete();
+        \App\Models\Relationship::whereContactIdB($id)->delete();
+        \App\Models\GroupContact::whereContactId($id)->delete();
         //delete address, email, phone, website, emergency contact, notes for deleted users
-        \App\Address::whereContactId($id)->delete();
-        \App\Email::whereContactId($id)->delete();
-        \App\Phone::whereContactId($id)->delete();
-        \App\Website::whereContactId($id)->delete();
-        \App\EmergencyContact::whereContactId($id)->delete();
-        \App\Note::whereContactId($id)->delete();
-        \App\Touchpoint::wherePersonId($id)->delete();
+        \App\Models\Address::whereContactId($id)->delete();
+        \App\Models\Email::whereContactId($id)->delete();
+        \App\Models\Phone::whereContactId($id)->delete();
+        \App\Models\Website::whereContactId($id)->delete();
+        \App\Models\EmergencyContact::whereContactId($id)->delete();
+        \App\Models\Note::whereContactId($id)->delete();
+        \App\Models\Touchpoint::wherePersonId($id)->delete();
         //delete registrations
-        \App\Registration::whereContactId($id)->delete();
+        \App\Models\Registration::whereContactId($id)->delete();
         // delete donations
-        \App\Donation::whereContactId($id)->delete();
+        \App\Models\Donation::whereContactId($id)->delete();
 
-        \App\Parish::destroy($id);
+        \App\Models\Parish::destroy($id);
 
-        flash('Parish: '.$parish->organization_name . ' deleted')->warning()->important();
+        flash('Parish: '.$parish->organization_name.' deleted')->warning()->important();
+
         return Redirect::action('ParishController@index');
     }
 
     public function parish_index_by_diocese($diocese_id)
     {
         $this->authorize('show-contact');
-        $diocese = \App\Contact::findOrFail($diocese_id);
+        $diocese = \App\Models\Contact::findOrFail($diocese_id);
         // dd($diocese);
-        $dioceses = \App\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'bishops', 'primary_bishop')->get();
-        $parishes = \App\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'pastor.contact_b', 'diocese.contact_a')->whereHas('diocese.contact_a', function ($query) use ($diocese_id) {
+        $dioceses = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'bishops', 'primary_bishop')->get();
+        $parishes = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'pastor.contact_b', 'diocese.contact_a')->whereHas('diocese.contact_a', function ($query) use ($diocese_id) {
             $query->where('contact_id_a', '=', $diocese_id);
         })->get();
 

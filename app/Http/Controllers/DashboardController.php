@@ -12,6 +12,7 @@ class DashboardController extends Controller
     public function index()
     {
         $this->authorize('show-dashboard');
+
         return view('dashboard.index');
     }
 
@@ -36,14 +37,14 @@ class DashboardController extends Controller
             $label = $year->year;
             $prev_year = $year->copy()->subYear();
             // TODO: consider stepping throuh polanco.agc_donation_descriptions with a foreach to build collections - this will make this much more dynamic in the future
-            $agc_donors['All'] = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
+            $agc_donors['All'] = \App\Models\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
             foreach (config('polanco.agc_donation_descriptions') as $description) {
-                $agc_donors[$description] = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription($description)->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
+                $agc_donors[$description] = \App\Models\Donation::orderBy('donation_date', 'desc')->whereDonationDescription($description)->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
             }
 
-            $agc_donations['All'] = \App\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
+            $agc_donations['All'] = \App\Models\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
             foreach (config('polanco.agc_donation_descriptions') as $description) {
-                $agc_donations[$description] = \App\Donation::orderBy('donation_date', 'desc')->whereDonationDescription($description)->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
+                $agc_donations[$description] = \App\Models\Donation::orderBy('donation_date', 'desc')->whereDonationDescription($description)->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
             }
 
             //unique donors
@@ -55,11 +56,10 @@ class DashboardController extends Controller
             $donors[$label]['sum'] = $agc_donations['All']->sum('donation_amount');
             foreach (config('polanco.agc_donation_descriptions') as $description) {
                 $donors[$label]['sum_'.$description] = $agc_donations[$description]->sum('donation_amount');
-
             }
         }
-        $average_donor_count = (((array_sum(array_column($donors, 'count')))-($donors[$current_year]['count'])) / (count(array_column($donors, 'count'))-1));
-        $average_agc_amount = (((array_sum(array_column($donors, 'sum'))) - ($donors[$current_year]['sum'])) / (count(array_column($donors, 'sum'))-1));
+        $average_donor_count = (((array_sum(array_column($donors, 'count'))) - ($donors[$current_year]['count'])) / (count(array_column($donors, 'count')) - 1));
+        $average_agc_amount = (((array_sum(array_column($donors, 'sum'))) - ($donors[$current_year]['sum'])) / (count(array_column($donors, 'sum')) - 1));
 
         foreach ($years as $year) {
             $label = $year->year;
@@ -110,7 +110,7 @@ class DashboardController extends Controller
     {
         $this->authorize('show-dashboard');
 
-        $descriptions = \App\DonationType::active()->orderBy('name')->pluck('name','name');
+        $descriptions = \App\Models\DonationType::active()->orderBy('name')->pluck('name', 'name');
 
         $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
         $number_of_years = 5;
@@ -126,7 +126,7 @@ class DashboardController extends Controller
         foreach ($years as $year) {
             $label = $year->year;
             $prev_year = $year->copy()->subYear();
-            $donations = \App\Donation::whereDonationDescription($donation_description)->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
+            $donations = \App\Models\Donation::whereDonationDescription($donation_description)->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
             $donors[$label]['count'] = $donations->count();
             $donors[$label]['sum'] = $donations->sum('donation_amount');
         }
@@ -218,7 +218,7 @@ class DashboardController extends Controller
                 'begin_date' => $begin_date,
                 'end_date' => $end_date,
             ]);
-        
+
         $total_revenue = array_sum(array_column($board_summary, 'total_paid'));
         $total_participants = array_sum(array_column($board_summary, 'total_participants'));
         $total_peoplenights = array_sum(array_column($board_summary, 'total_pn'));

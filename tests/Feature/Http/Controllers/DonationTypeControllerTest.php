@@ -4,8 +4,8 @@ namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use Illuminate\Validation\ValidationException;
+use Tests\TestCase;
 
 // $this->withoutExceptionHandling();
 
@@ -36,7 +36,7 @@ class DonationTypeControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-donation-type');
-        $donation_type = factory(\App\DonationType::class)->create();
+        $donation_type = factory(\App\Models\DonationType::class)->create();
 
         $response = $this->actingAs($user)->delete(route('donation_type.destroy', [$donation_type]));
         $response->assertSessionHas('flash_notification');
@@ -51,7 +51,7 @@ class DonationTypeControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-donation-type');
-        $donation_type = factory(\App\DonationType::class)->create();
+        $donation_type = factory(\App\Models\DonationType::class)->create();
 
         $response = $this->actingAs($user)->get(route('donation_type.edit', [$donation_type]));
 
@@ -65,7 +65,6 @@ class DonationTypeControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('value', $donation_type->value, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('description', $donation_type->description, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('is_active', $donation_type->is_active, 'checkbox', $response->getContent()));
-
     }
 
     /**
@@ -89,7 +88,7 @@ class DonationTypeControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-donation-type');
-        $donation_type = factory(\App\DonationType::class)->create();
+        $donation_type = factory(\App\Models\DonationType::class)->create();
 
         $response = $this->actingAs($user)->get(route('donation_type.show', [$donation_type]));
 
@@ -110,7 +109,7 @@ class DonationTypeControllerTest extends TestCase
         $donation_type_name = 'New '.$this->faker->word;
         $donation_type_label = $this->faker->words(2, true);
         $donation_type_description = $this->faker->sentence(7, true);
-        $donation_type_value = strval($this->faker->numberBetween(1000,2000));
+        $donation_type_value = strval($this->faker->numberBetween(1000, 2000));
         $donation_type_is_active = $this->faker->boolean();
         $response = $this->actingAs($user)->post(route('donation_type.store'), [
             'name' => $donation_type_name,
@@ -137,7 +136,7 @@ class DonationTypeControllerTest extends TestCase
     public function update_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-donation-type');
-        $donation_type = factory(\App\DonationType::class)->create();
+        $donation_type = factory(\App\Models\DonationType::class)->create();
         $original_donation_type_name = $donation_type->name;
         $new_donation_type_name = 'New '.$this->faker->words(3, true);
 
@@ -145,17 +144,16 @@ class DonationTypeControllerTest extends TestCase
           'id' => $donation_type->id,
           'name' => $new_donation_type_name,
           'label' => $this->faker->words(4, true),
-          'value' => strval($this->faker->numberBetween(1000,2000)),
+          'value' => strval($this->faker->numberBetween(1000, 2000)),
           'description' => $this->faker->sentence(7, true),
           'is_active' => $this->faker->boolean(),
         ]);
 
-        $response->assertRedirect(action('DonationTypeController@show',$donation_type->id));
+        $response->assertRedirect(action('DonationTypeController@show', $donation_type->id));
         $response->assertSessionHas('flash_notification');
-        $updated = \App\DonationType::findOrFail($donation_type->id);
+        $updated = \App\Models\DonationType::findOrFail($donation_type->id);
         $this->assertEquals($updated->name, $new_donation_type_name);
         $this->assertNotEquals($updated->name, $original_donation_type_name);
-
     }
 
     // test cases...

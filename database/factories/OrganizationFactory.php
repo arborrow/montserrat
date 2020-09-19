@@ -2,10 +2,10 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use App\ContactType;
+use App\Models\ContactType;
 use Faker\Generator as Faker;
 
-$factory->define(App\Organization::class, function (Faker $faker) {
+$factory->define(App\Models\Organization::class, function (Faker $faker) {
     // organization subcontact types are in the range of
     $subcontact_type = $faker->numberBetween(9, 11);
     $organizaton_name = $faker->company;

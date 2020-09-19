@@ -4,7 +4,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\ActivityStatus::class, function (Faker $faker) {
+$factory->define(App\Models\ActivityStatus::class, function (Faker $faker) {
     return [
         'label' => $faker->word,
         'value' => $faker->word,

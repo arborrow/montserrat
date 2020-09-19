@@ -21,7 +21,7 @@ class VendorController extends Controller
     public function index()
     {
         $this->authorize('show-contact');
-        $vendors = \App\Contact::whereSubcontactType(config('polanco.contact_type.vendor'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites')->paginate(100);
+        $vendors = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.vendor'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites')->paginate(100);
 
         return view('vendors.index', compact('vendors'));   //
     }
@@ -35,9 +35,9 @@ class VendorController extends Controller
     {
         $this->authorize('create-contact');
 
-        $states = \App\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
+        $states = \App\Models\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
-        $countries = \App\Country::orderby('iso_code')->pluck('iso_code', 'id');
+        $countries = \App\Models\Country::orderby('iso_code')->pluck('iso_code', 'id');
         $defaults['state_province_id'] = config('polanco.state_province_id_tx');
         $defaults['country_id'] = config('polanco.country_id_usa');
         $countries->prepend('N/A', 0);
@@ -55,7 +55,7 @@ class VendorController extends Controller
     {
         $this->authorize('create-contact');
 
-        $vendor = new \App\Contact;
+        $vendor = new \App\Models\Contact;
         $vendor->organization_name = $request->input('organization_name');
         $vendor->display_name = $request->input('organization_name');
         $vendor->sort_name = $request->input('organization_name');
@@ -63,7 +63,7 @@ class VendorController extends Controller
         $vendor->subcontact_type = config('polanco.contact_type.vendor');
         $vendor->save();
 
-        $vendor_address = new \App\Address;
+        $vendor_address = new \App\Models\Address;
         $vendor_address->contact_id = $vendor->id;
         $vendor_address->location_type_id = config('polanco.location_type.main');
         $vendor_address->is_primary = 1;
@@ -75,7 +75,7 @@ class VendorController extends Controller
         $vendor_address->country_id = $request->input('country_id');
         $vendor_address->save();
 
-        $vendor_main_phone = new \App\Phone;
+        $vendor_main_phone = new \App\Models\Phone;
         $vendor_main_phone->contact_id = $vendor->id;
         $vendor_main_phone->location_type_id = config('polanco.location_type.main');
         $vendor_main_phone->is_primary = 1;
@@ -83,14 +83,14 @@ class VendorController extends Controller
         $vendor_main_phone->phone_type = 'Phone';
         $vendor_main_phone->save();
 
-        $vendor_fax_phone = new \App\Phone;
+        $vendor_fax_phone = new \App\Models\Phone;
         $vendor_fax_phone->contact_id = $vendor->id;
         $vendor_fax_phone->location_type_id = config('polanco.location_type.main');
         $vendor_fax_phone->phone = $request->input('phone_main_fax');
         $vendor_fax_phone->phone_type = 'Fax';
         $vendor_fax_phone->save();
 
-        $vendor_email_main = new \App\Email;
+        $vendor_email_main = new \App\Models\Email;
         $vendor_email_main->contact_id = $vendor->id;
         $vendor_email_main->is_primary = 1;
         $vendor_email_main->location_type_id = config('polanco.location_type.main');
@@ -99,7 +99,7 @@ class VendorController extends Controller
 
         //TODO: add contact_id which is the id of the creator of the note
         if (! empty($request->input('note'))) {
-            $vendor_note = new \App\Note;
+            $vendor_note = new \App\Models\Note;
             $vendor_note->entity_table = 'contact';
             $vendor_note->entity_id = $vendor->id;
             $vendor_note->note = $request->input('note');
@@ -107,49 +107,50 @@ class VendorController extends Controller
             $vendor_note->save();
         }
 
-        $url_main = new \App\Website;
+        $url_main = new \App\Models\Website;
         $url_main->contact_id = $vendor->id;
         $url_main->url = $request->input('url_main');
         $url_main->website_type = 'Main';
         $url_main->save();
 
-        $url_work = new \App\Website;
+        $url_work = new \App\Models\Website;
         $url_work->contact_id = $vendor->id;
         $url_work->url = $request->input('url_work');
         $url_work->website_type = 'Work';
         $url_work->save();
 
-        $url_facebook = new \App\Website;
+        $url_facebook = new \App\Models\Website;
         $url_facebook->contact_id = $vendor->id;
         $url_facebook->url = $request->input('url_facebook');
         $url_facebook->website_type = 'Facebook';
         $url_facebook->save();
 
-        $url_google = new \App\Website;
+        $url_google = new \App\Models\Website;
         $url_google->contact_id = $vendor->id;
         $url_google->url = $request->input('url_google');
         $url_google->website_type = 'Google';
         $url_google->save();
 
-        $url_instagram = new \App\Website;
+        $url_instagram = new \App\Models\Website;
         $url_instagram->contact_id = $vendor->id;
         $url_instagram->url = $request->input('url_instagram');
         $url_instagram->website_type = 'Instagram';
         $url_instagram->save();
 
-        $url_linkedin = new \App\Website;
+        $url_linkedin = new \App\Models\Website;
         $url_linkedin->contact_id = $vendor->id;
         $url_linkedin->url = $request->input('url_linkedin');
         $url_linkedin->website_type = 'LinkedIn';
         $url_linkedin->save();
 
-        $url_twitter = new \App\Website;
+        $url_twitter = new \App\Models\Website;
         $url_twitter->contact_id = $vendor->id;
         $url_twitter->url = $request->input('url_twitter');
         $url_twitter->website_type = 'Twitter';
         $url_twitter->save();
 
-        flash ('Vendor: <a href="'. url('/vendor/'.$vendor->id) . '">'.$vendor->organization_name.'</a> added')->success();
+        flash('Vendor: <a href="'.url('/vendor/'.$vendor->id).'">'.$vendor->organization_name.'</a> added')->success();
+
         return Redirect::action('VendorController@index');
     }
 
@@ -162,8 +163,8 @@ class VendorController extends Controller
     public function show($id)
     {
         $this->authorize('show-contact');
-        $vendor = \App\Contact::with('addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'touchpoints')->findOrFail($id);
-        $files = \App\Attachment::whereEntity('contact')->whereEntityId($vendor->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
+        $vendor = \App\Models\Contact::with('addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'touchpoints')->findOrFail($id);
+        $files = \App\Models\Attachment::whereEntity('contact')->whereEntityId($vendor->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
         $relationship_types = [];
         $relationship_types['Primary contact'] = 'Primary contact';
 
@@ -180,9 +181,9 @@ class VendorController extends Controller
     {
         $this->authorize('update-contact');
 
-        $states = \App\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
+        $states = \App\Models\StateProvince::orderby('name')->whereCountryId(config('polanco.country_id_usa'))->pluck('name', 'id');
         $states->prepend('N/A', 0);
-        $countries = \App\Country::orderby('iso_code')->pluck('iso_code', 'id');
+        $countries = \App\Models\Country::orderby('iso_code')->pluck('iso_code', 'id');
         $countries->prepend('N/A', 0);
         $defaults['state_province_id'] = config('polanco.state_province_id_tx');
         $defaults['country_id'] = config('polanco.country_id_usa');
@@ -196,7 +197,7 @@ class VendorController extends Controller
         $defaults['LinkedIn']['url'] = '';
         $defaults['Twitter']['url'] = '';
 
-        $vendor = \App\Contact::with('address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
+        $vendor = \App\Models\Contact::with('address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
         foreach ($vendor->websites as $website) {
             $defaults[$website->website_type]['url'] = $website->url;
         }
@@ -215,16 +216,16 @@ class VendorController extends Controller
     {
         $this->authorize('update-contact');
 
-        $vendor = \App\Contact::with('address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'notes')->findOrFail($request->input('id'));
+        $vendor = \App\Models\Contact::with('address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'notes')->findOrFail($request->input('id'));
         $vendor->organization_name = $request->input('organization_name');
         $vendor->display_name = $request->input('display_name');
         $vendor->sort_name = $request->input('sort_name');
         $vendor->save();
 
         if (empty($vendor->address_primary)) {
-            $address_primary = new \App\Address;
+            $address_primary = new \App\Models\Address;
         } else {
-            $address_primary = \App\Address::findOrNew($vendor->address_primary->id);
+            $address_primary = \App\Models\Address::findOrNew($vendor->address_primary->id);
         }
 
         $address_primary->contact_id = $vendor->id;
@@ -239,9 +240,9 @@ class VendorController extends Controller
         $address_primary->save();
 
         if (empty($vendor->phone_primary)) {
-            $phone_primary = new \App\Phone;
+            $phone_primary = new \App\Models\Phone;
         } else {
-            $phone_primary = \App\Phone::findOrNew($vendor->phone_primary->id);
+            $phone_primary = \App\Models\Phone::findOrNew($vendor->phone_primary->id);
         }
 
         $phone_primary->contact_id = $vendor->id;
@@ -252,9 +253,9 @@ class VendorController extends Controller
         $phone_primary->save();
 
         if (empty($vendor->phone_main_fax)) {
-            $phone_main_fax = new \App\Phone;
+            $phone_main_fax = new \App\Models\Phone;
         } else {
-            $phone_main_fax = \App\Phone::findOrNew($vendor->phone_main_fax->id);
+            $phone_main_fax = \App\Models\Phone::findOrNew($vendor->phone_main_fax->id);
         }
         $phone_main_fax->contact_id = $vendor->id;
         $phone_main_fax->location_type_id = config('polanco.location_type.main');
@@ -263,9 +264,9 @@ class VendorController extends Controller
         $phone_main_fax->save();
 
         if (empty($vendor->email_primary)) {
-            $email_primary = new \App\Email;
+            $email_primary = new \App\Models\Email;
         } else {
-            $email_primary = \App\Email::findOrNew($vendor->email_primary->id);
+            $email_primary = \App\Models\Email::findOrNew($vendor->email_primary->id);
         }
 
         $email_primary->contact_id = $vendor->id;
@@ -275,7 +276,7 @@ class VendorController extends Controller
         $email_primary->save();
 
         if (null !== ($request->input('note_vendor'))) {
-            $vendor_note = \App\Note::firstOrNew(['entity_table'=>'contact', 'entity_id'=>$vendor->id, 'subject'=>'Vendor note']);
+            $vendor_note = \App\Models\Note::firstOrNew(['entity_table'=>'contact', 'entity_id'=>$vendor->id, 'subject'=>'Vendor note']);
             $vendor_note->entity_table = 'contact';
             $vendor_note->entity_id = $vendor->id;
             $vendor_note->note = $request->input('note_vendor');
@@ -295,49 +296,50 @@ class VendorController extends Controller
             $attachment->update_attachment($request->file('attachment'), 'contact', $vendor->id, 'attachment', $description);
         }
 
-        $url_main = \App\Website::firstOrNew(['contact_id'=>$vendor->id, 'website_type'=>'Main']);
+        $url_main = \App\Models\Website::firstOrNew(['contact_id'=>$vendor->id, 'website_type'=>'Main']);
         $url_main->contact_id = $vendor->id;
         $url_main->url = $request->input('url_main');
         $url_main->website_type = 'Main';
         $url_main->save();
 
-        $url_work = \App\Website::firstOrNew(['contact_id'=>$vendor->id, 'website_type'=>'Work']);
+        $url_work = \App\Models\Website::firstOrNew(['contact_id'=>$vendor->id, 'website_type'=>'Work']);
         $url_work->contact_id = $vendor->id;
         $url_work->url = $request->input('url_work');
         $url_work->website_type = 'Work';
         $url_work->save();
 
-        $url_facebook = \App\Website::firstOrNew(['contact_id'=>$vendor->id, 'website_type'=>'Facebook']);
+        $url_facebook = \App\Models\Website::firstOrNew(['contact_id'=>$vendor->id, 'website_type'=>'Facebook']);
         $url_facebook->contact_id = $vendor->id;
         $url_facebook->url = $request->input('url_facebook');
         $url_facebook->website_type = 'Facebook';
         $url_facebook->save();
 
-        $url_google = \App\Website::firstOrNew(['contact_id'=>$vendor->id, 'website_type'=>'Google']);
+        $url_google = \App\Models\Website::firstOrNew(['contact_id'=>$vendor->id, 'website_type'=>'Google']);
         $url_google->contact_id = $vendor->id;
         $url_google->url = $request->input('url_google');
         $url_google->website_type = 'Google';
         $url_google->save();
 
-        $url_instagram = \App\Website::firstOrNew(['contact_id'=>$vendor->id, 'website_type'=>'Instagram']);
+        $url_instagram = \App\Models\Website::firstOrNew(['contact_id'=>$vendor->id, 'website_type'=>'Instagram']);
         $url_instagram->contact_id = $vendor->id;
         $url_instagram->url = $request->input('url_instagram');
         $url_instagram->website_type = 'Instagram';
         $url_instagram->save();
 
-        $url_linkedin = \App\Website::firstOrNew(['contact_id'=>$vendor->id, 'website_type'=>'LinkedIn']);
+        $url_linkedin = \App\Models\Website::firstOrNew(['contact_id'=>$vendor->id, 'website_type'=>'LinkedIn']);
         $url_linkedin->contact_id = $vendor->id;
         $url_linkedin->url = $request->input('url_linkedin');
         $url_linkedin->website_type = 'LinkedIn';
         $url_linkedin->save();
 
-        $url_twitter = \App\Website::firstOrNew(['contact_id'=>$vendor->id, 'website_type'=>'Twitter']);
+        $url_twitter = \App\Models\Website::firstOrNew(['contact_id'=>$vendor->id, 'website_type'=>'Twitter']);
         $url_twitter->contact_id = $vendor->id;
         $url_twitter->url = $request->input('url_twitter');
         $url_twitter->website_type = 'Twitter';
         $url_twitter->save();
 
-        flash ('Vendor: <a href="'. url('/vendor/'.$vendor->id) . '">'.$vendor->organization_name.'</a> updated')->success();
+        flash('Vendor: <a href="'.url('/vendor/'.$vendor->id).'">'.$vendor->organization_name.'</a> updated')->success();
+
         return Redirect::action('VendorController@show', $vendor->id);
     }
 
@@ -351,26 +353,27 @@ class VendorController extends Controller
     {
         $this->authorize('delete-contact');
 
-        $vendor = \App\Vendor::findOrFail($id);
-        \App\Relationship::whereContactIdA($id)->delete();
-        \App\Relationship::whereContactIdB($id)->delete();
-        \App\GroupContact::whereContactId($id)->delete();
+        $vendor = \App\Models\Vendor::findOrFail($id);
+        \App\Models\Relationship::whereContactIdA($id)->delete();
+        \App\Models\Relationship::whereContactIdB($id)->delete();
+        \App\Models\GroupContact::whereContactId($id)->delete();
         //delete address, email, phone, website, emergency contact, notes for deleted users
-        \App\Address::whereContactId($id)->delete();
-        \App\Email::whereContactId($id)->delete();
-        \App\Phone::whereContactId($id)->delete();
-        \App\Website::whereContactId($id)->delete();
-        \App\EmergencyContact::whereContactId($id)->delete();
-        \App\Note::whereEntityId($id)->whereEntityTable('contact')->whereSubject('Vendor note')->delete();
-        \App\Touchpoint::wherePersonId($id)->delete();
+        \App\Models\Address::whereContactId($id)->delete();
+        \App\Models\Email::whereContactId($id)->delete();
+        \App\Models\Phone::whereContactId($id)->delete();
+        \App\Models\Website::whereContactId($id)->delete();
+        \App\Models\EmergencyContact::whereContactId($id)->delete();
+        \App\Models\Note::whereEntityId($id)->whereEntityTable('contact')->whereSubject('Vendor note')->delete();
+        \App\Models\Touchpoint::wherePersonId($id)->delete();
         //delete registrations
-        \App\Registration::whereContactId($id)->delete();
+        \App\Models\Registration::whereContactId($id)->delete();
         // delete donations
-        \App\Donation::whereContactId($id)->delete();
+        \App\Models\Donation::whereContactId($id)->delete();
 
-        \App\Contact::destroy($id);
+        \App\Models\Contact::destroy($id);
 
-        flash('Vendor: '.$vendor->organization_name . ' deleted')->warning()->important();
+        flash('Vendor: '.$vendor->organization_name.' deleted')->warning()->important();
+
         return Redirect::action('VendorController@index');
     }
 }

@@ -4,7 +4,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\ContactType::class, function (Faker $faker) {
+$factory->define(App\Models\ContactType::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'label' => $faker->word,

@@ -4,7 +4,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Country::class, function (Faker $faker) {
+$factory->define(App\Models\Country::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'iso_code' => $faker->word,

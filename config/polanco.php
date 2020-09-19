@@ -26,22 +26,22 @@ return [
 
     // list of donation_descriptions considered to be part of annual giving campaign
     'agc_cool_colors' => [
-        0 => "51,105,232",
-        1 => "255, 205, 86",
-        2 => "255, 99, 132",
-        3 => "244,67,54",
-        4 => "211,159,153",
-        5 => "205,211,153",
-        6 =>"229,229,201" ,
-        7 => "90,174,174" ,
-        8 => "147,131,107",
+        0 => '51,105,232',
+        1 => '255, 205, 86',
+        2 => '255, 99, 132',
+        3 => '244,67,54',
+        4 => '211,159,153',
+        5 => '205,211,153',
+        6 =>'229,229,201',
+        7 => '90,174,174',
+        8 => '147,131,107',
     ],
 
     'agc_donation_descriptions' => [
         'AGC - General',
         'AGC - Endowment',
         'AGC - Scholarships',
-        'AGC - Buildings & Maintenance'
+        'AGC - Buildings & Maintenance',
     ],
 
     'finance_email' => 'finance@montserratretreat.org',
@@ -91,7 +91,6 @@ return [
         'jesuit' => '14',
         'saturday' => '15',
     ],
-
 
     /*
     * Export list types to fill export_list.type field
@@ -252,14 +251,12 @@ return [
         'Other' => 'Other',
     ],
 
-
     // when using the database seeder the first contact created is the self organization
     // name is used by database seeder to create self contact record
     'self' => [
         'id' => env('SELF_CONTACT_ID', 620),
         'name' => env('SELF_NAME', 'Montserrat Jesuit Retreat House'),
     ],
-
 
     /*
      *  Polanco's name

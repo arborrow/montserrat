@@ -4,7 +4,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Attachment::class, function (Faker $faker) {
+$factory->define(App\Models\Attachment::class, function (Faker $faker) {
     return [
         'file_type_id' => null,
         'mime_type' => null,

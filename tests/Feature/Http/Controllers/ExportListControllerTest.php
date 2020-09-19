@@ -30,12 +30,11 @@ class ExportListControllerTest extends TestCase
 
     /**
      * @test
-
      */
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-export-list');
-        $export_list = factory(\App\ExportList::class)->create();
+        $export_list = factory(\App\Models\ExportList::class)->create();
 
         $response = $this->actingAs($user)->delete(route('export_list.destroy', [$export_list]));
 
@@ -50,7 +49,7 @@ class ExportListControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-export-list');
-        $export_list = factory(\App\ExportList::class)->create();
+        $export_list = factory(\App\Models\ExportList::class)->create();
 
         $response = $this->actingAs($user)->get(route('export_list.edit', [$export_list]));
 
@@ -82,7 +81,7 @@ class ExportListControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-export-list');
-        $export_list = factory(\App\ExportList::class)->create();
+        $export_list = factory(\App\Models\ExportList::class)->create();
 
         $response = $this->actingAs($user)->get(route('export_list.show', [$export_list]));
 
@@ -128,11 +127,11 @@ class ExportListControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-export-list');
 
-        $export_list = factory(\App\ExportList::class)->create();
+        $export_list = factory(\App\Models\ExportList::class)->create();
         $export_list_type = $this->faker->randomElement(config('polanco.export_list_types'));
 
         $original_export_list_title = $export_list->title;
-        $new_export_list_title = 'New ' . $this->faker->words(2, true);
+        $new_export_list_title = 'New '.$this->faker->words(2, true);
 
         $response = $this->actingAs($user)->put(route('export_list.update', [$export_list]), [
           'id' => $export_list->id,
@@ -144,7 +143,7 @@ class ExportListControllerTest extends TestCase
         $response->assertRedirect(action('ExportListController@show', $export_list->id));
         $response->assertSessionHas('flash_notification');
 
-        $updated = \App\ExportList::findOrFail($export_list->id);
+        $updated = \App\Models\ExportList::findOrFail($export_list->id);
         $this->assertEquals($updated->title, $new_export_list_title);
         $this->assertNotEquals($updated->title, $original_export_list_title);
     }

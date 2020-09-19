@@ -38,14 +38,13 @@ class AssetControllerTest extends TestCase
         $response->assertSeeText('Create asset');
     }
 
-
     /**
      * @test
      */
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-asset');
-        $asset = factory(\App\Asset::class)->create();
+        $asset = factory(\App\Models\Asset::class)->create();
 
         $response = $this->actingAs($user)->delete(route('asset.destroy', [$asset]));
         $response->assertSessionHas('flash_notification');
@@ -59,7 +58,7 @@ class AssetControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-asset');
-        $asset = factory(\App\Asset::class)->create();
+        $asset = factory(\App\Models\Asset::class)->create();
 
         $response = $this->actingAs($user)->get(route('asset.edit', [$asset]));
 
@@ -154,7 +153,6 @@ class AssetControllerTest extends TestCase
         $response->assertSeeText('Assets');
     }
 
-
     /**
      * @test
      */
@@ -162,10 +160,10 @@ class AssetControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-asset');
 
-        $asset = factory(\App\Asset::class)->create();
+        $asset = factory(\App\Models\Asset::class)->create();
 
         $number_assets = $this->faker->numberBetween(2, 10);
-        $assets = factory(\App\Asset::class, $number_assets)->create([
+        $assets = factory(\App\Models\Asset::class, $number_assets)->create([
             'asset_type_id' => $asset->asset_type_id,
             'deleted_at' => null,
         ]);
@@ -181,7 +179,6 @@ class AssetControllerTest extends TestCase
         $this->assertGreaterThan($number_assets, $results->count());
     }
 
-
     /**
      * @test
      */
@@ -189,10 +186,10 @@ class AssetControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-asset');
 
-        $asset = factory(\App\Asset::class)->create();
+        $asset = factory(\App\Models\Asset::class)->create();
 
         $number_assets = $this->faker->numberBetween(2, 10);
-        $assets = factory(\App\Asset::class, $number_assets)->create([
+        $assets = factory(\App\Models\Asset::class, $number_assets)->create([
             'location_id' => $asset->location_id,
             'deleted_at' => null,
         ]);
@@ -214,7 +211,7 @@ class AssetControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-asset');
-        $asset = factory(\App\Asset::class)->create();
+        $asset = factory(\App\Models\Asset::class)->create();
 
         $response = $this->actingAs($user)->get(route('asset.show', [$asset]));
 
@@ -263,10 +260,10 @@ class AssetControllerTest extends TestCase
         // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('update-asset');
 
-        $asset = factory(\App\Asset::class)->create();
+        $asset = factory(\App\Models\Asset::class)->create();
 
         $original_asset_manufacuturer = $asset->manufacturer;
-        $new_manufacturer = 'New ' . $this->faker->words(2, true);
+        $new_manufacturer = 'New '.$this->faker->words(2, true);
         $response = $this->actingAs($user)->put(route('asset.update', [$asset]), [
           'id' => $asset->id,
           'name' => $asset->name,
@@ -276,11 +273,10 @@ class AssetControllerTest extends TestCase
         $response->assertRedirect(action('AssetController@show', $asset->id));
         $response->assertSessionHas('flash_notification');
 
-        $updated = \App\Asset::findOrFail($asset->id);
+        $updated = \App\Models\Asset::findOrFail($asset->id);
         $this->assertEquals($updated->manufacturer, $new_manufacturer);
         $this->assertNotEquals($updated->manufacturer, $original_asset_manufacuturer);
     }
-
 
     /**
      * @test
@@ -289,7 +285,7 @@ class AssetControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-asset');
 
-        $asset = factory(\App\Asset::class)->create();
+        $asset = factory(\App\Models\Asset::class)->create();
 
         $response = $this->actingAs($user)->get('asset/results?name='.$asset->name);
 

@@ -4,13 +4,13 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Email::class, function (Faker $faker) {
+$factory->define(App\Models\Email::class, function (Faker $faker) {
     return [
         'contact_id' => function () {
-            return factory(App\Contact::class)->create()->id;
+            return factory(App\Models\Contact::class)->create()->id;
         },
         'location_type_id' => function () {
-            return factory(App\LocationType::class)->create()->id;
+            return factory(App\Models\LocationType::class)->create()->id;
         },
         'email' => $faker->safeEmail,
         'is_primary' => $faker->boolean,

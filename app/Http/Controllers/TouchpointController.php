@@ -29,22 +29,21 @@ class TouchpointController extends Controller
     {
         $this->authorize('show-touchpoint');
 
-        $staff = \App\Touchpoint::groupBy('staff_id')->select('staff_id')->with('staff')->get()->sortBy('staff.sort_name')->pluck('staff.sort_name','staff_id');
-        $touchpoints = \App\Touchpoint::orderBy('touched_at', 'desc')->with('person', 'staff')->paginate(100);
+        $staff = \App\Models\Touchpoint::groupBy('staff_id')->select('staff_id')->with('staff')->get()->sortBy('staff.sort_name')->pluck('staff.sort_name', 'staff_id');
+        $touchpoints = \App\Models\Touchpoint::orderBy('touched_at', 'desc')->with('person', 'staff')->paginate(100);
 
-        return view('touchpoints.index', compact('touchpoints','staff'));
+        return view('touchpoints.index', compact('touchpoints', 'staff'));
     }
 
     public function index_type($staff_id = null)
     {
         $this->authorize('show-touchpoint');
 
-        $staff = \App\Touchpoint::groupBy('staff_id')->select('staff_id')->with('staff')->get()->sortBy('staff.sort_name')->pluck('staff.sort_name','staff_id');
-        $touchpoints = \App\Touchpoint::whereStaffId($staff_id)->orderBy('touched_at', 'desc')->with('person', 'staff')->paginate(100);
+        $staff = \App\Models\Touchpoint::groupBy('staff_id')->select('staff_id')->with('staff')->get()->sortBy('staff.sort_name')->pluck('staff.sort_name', 'staff_id');
+        $touchpoints = \App\Models\Touchpoint::whereStaffId($staff_id)->orderBy('touched_at', 'desc')->with('person', 'staff')->paginate(100);
 
         return view('touchpoints.index', compact('touchpoints', 'staff'));   //
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -54,13 +53,13 @@ class TouchpointController extends Controller
     public function create(Request $request)
     {
         $this->authorize('create-touchpoint');
-        $staff = \App\Contact::with('groups')->whereHas('groups', function ($query) {
+        $staff = \App\Models\Contact::with('groups')->whereHas('groups', function ($query) {
             $query->where('group_id', '=', config('polanco.group_id.staff'));
         })->orderBy('sort_name')->pluck('sort_name', 'id');
         // TODO: replace this with an autocomplete text box for performance rather than a dropdown box
-        $persons = \App\Contact::orderBy('sort_name')->pluck('sort_name', 'id');
+        $persons = \App\Models\Contact::orderBy('sort_name')->pluck('sort_name', 'id');
         $current_user = $request->user();
-        $user_email = \App\Email::whereEmail($current_user->email)->first();
+        $user_email = \App\Models\Email::whereEmail($current_user->email)->first();
         if (empty($user_email->contact_id)) {
             $defaults['user_id'] = 0;
         } else {
@@ -73,12 +72,12 @@ class TouchpointController extends Controller
     public function add_group(Request $request, $group_id = 0)
     {
         $this->authorize('create-touchpoint');
-        $staff = \App\Contact::with('groups')->whereHas('groups', function ($query) {
+        $staff = \App\Models\Contact::with('groups')->whereHas('groups', function ($query) {
             $query->where('group_id', '=', config('polanco.group_id.staff'));
         })->orderBy('sort_name')->pluck('sort_name', 'id');
-        $groups = \App\Group::orderBy('title')->pluck('title', 'id');
+        $groups = \App\Models\Group::orderBy('title')->pluck('title', 'id');
         $current_user = $request->user();
-        $user_email = \App\Email::whereEmail($current_user->email)->first();
+        $user_email = \App\Models\Email::whereEmail($current_user->email)->first();
         $defaults['group_id'] = $group_id;
         if (empty($user_email->contact_id)) {
             $defaults['user_id'] = 0;
@@ -92,17 +91,17 @@ class TouchpointController extends Controller
     public function add_retreat(Request $request, $event_id = 0)
     {
         $this->authorize('create-touchpoint');
-        $staff = \App\Contact::with('groups')->whereHas('groups', function ($query) {
+        $staff = \App\Models\Contact::with('groups')->whereHas('groups', function ($query) {
             $query->where('group_id', '=', config('polanco.group_id.staff'));
         })->orderBy('sort_name')->pluck('sort_name', 'id');
-        $retreats = \App\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->orderBy('start_date', 'desc')->pluck('description', 'id');
+        $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->orderBy('start_date', 'desc')->pluck('description', 'id');
         $retreats->prepend('Unassigned', 0);
 
-        $retreat = \App\Retreat::findOrFail($event_id);
+        $retreat = \App\Models\Retreat::findOrFail($event_id);
         // TODO: replace this with an autocomplete text box for performance rather than a dropdown box
-        $participants = \App\Registration::whereEventId($event_id)->whereCanceledAt(null)->get();
+        $participants = \App\Models\Registration::whereEventId($event_id)->whereCanceledAt(null)->get();
         $current_user = $request->user();
-        $user_email = \App\Email::whereEmail($current_user->email)->first();
+        $user_email = \App\Models\Email::whereEmail($current_user->email)->first();
 
         $defaults['event_id'] = $event_id;
         $defaults['event_description'] = $retreat->idnumber.'-'.$retreat->title.' ('.$retreat->start_date.')';
@@ -118,17 +117,17 @@ class TouchpointController extends Controller
     public function add_retreat_waitlist(Request $request, $event_id = 0)
     {
         $this->authorize('create-touchpoint');
-        $staff = \App\Contact::with('groups')->whereHas('groups', function ($query) {
+        $staff = \App\Models\Contact::with('groups')->whereHas('groups', function ($query) {
             $query->where('group_id', '=', config('polanco.group_id.staff'));
         })->orderBy('sort_name')->pluck('sort_name', 'id');
-        $retreats = \App\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->orderBy('start_date', 'desc')->pluck('description', 'id');
+        $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->orderBy('start_date', 'desc')->pluck('description', 'id');
         $retreats->prepend('Unassigned', 0);
 
-        $retreat = \App\Retreat::findOrFail($event_id);
+        $retreat = \App\Models\Retreat::findOrFail($event_id);
         // TODO: replace this with an autocomplete text box for performance rather than a dropdown box
-        $participants = \App\Registration::whereEventId($event_id)->whereStatusId(config('polanco.registration_status_id.waitlist'))->whereCanceledAt(null)->get();
+        $participants = \App\Models\Registration::whereEventId($event_id)->whereStatusId(config('polanco.registration_status_id.waitlist'))->whereCanceledAt(null)->get();
         $current_user = $request->user();
-        $user_email = \App\Email::whereEmail($current_user->email)->first();
+        $user_email = \App\Models\Email::whereEmail($current_user->email)->first();
 
         $defaults['event_id'] = $event_id;
         $defaults['event_description'] = $retreat->idnumber.'-'.$retreat->title.' ('.$retreat->start_date.')';
@@ -146,7 +145,7 @@ class TouchpointController extends Controller
         $this->authorize('create-touchpoint');
 
         $current_user = $request->user();
-        $user_email = \App\Email::whereEmail($current_user->email)->first();
+        $user_email = \App\Models\Email::whereEmail($current_user->email)->first();
         $defaults['contact_id'] = $id;
         if (empty($user_email->contact_id)) {
             $defaults['user_id'] = 0;
@@ -154,13 +153,13 @@ class TouchpointController extends Controller
             $defaults['user_id'] = $user_email->contact_id;
         }
         //lookup the contact type of the touchpoint being added and show similar ones in drop down (persons, parishes, etc.)
-        $contact = \App\Contact::findOrFail($id);
+        $contact = \App\Models\Contact::findOrFail($id);
         if (isset($contact->subcontact_type)) {
-            $persons = \App\Contact::whereSubcontactType($contact->subcontact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
+            $persons = \App\Models\Contact::whereSubcontactType($contact->subcontact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
         } else {
-            $persons = \App\Contact::whereContactType($contact->contact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
+            $persons = \App\Models\Contact::whereContactType($contact->contact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
         }
-        $staff = \App\Contact::with('groups')->whereHas('groups', function ($query) {
+        $staff = \App\Models\Contact::with('groups')->whereHas('groups', function ($query) {
             $query->where('group_id', '=', config('polanco.group_id.staff'));
         })->orderBy('sort_name')->pluck('sort_name', 'id');
         // TODO: replace this with an autocomplete text box for performance rather than a dropdown box
@@ -177,7 +176,7 @@ class TouchpointController extends Controller
     {
         $this->authorize('create-touchpoint');
 
-        $touchpoint = new \App\Touchpoint;
+        $touchpoint = new \App\Models\Touchpoint;
         $touchpoint->person_id = $request->input('person_id');
         $touchpoint->staff_id = $request->input('staff_id');
         $touchpoint->touched_at = Carbon::parse($request->input('touched_at'));
@@ -185,7 +184,7 @@ class TouchpointController extends Controller
         $touchpoint->notes = $request->input('notes');
         $touchpoint->save();
 
-        flash ('Touchpoint ID#: <a href="'. url('/touchpoint/'.$touchpoint->id) . '">'.$touchpoint->id.'</a> added')->success();
+        flash('Touchpoint ID#: <a href="'.url('/touchpoint/'.$touchpoint->id).'">'.$touchpoint->id.'</a> added')->success();
 
         return Redirect::action('TouchpointController@index');
     }
@@ -194,10 +193,10 @@ class TouchpointController extends Controller
     {
         $this->authorize('create-touchpoint');
         $group_id = $request->input('group_id');
-        $group = \App\Group::findOrFail($group_id);
-        $group_members = \App\GroupContact::whereGroupId($group_id)->whereStatus('Added')->get();
+        $group = \App\Models\Group::findOrFail($group_id);
+        $group_members = \App\Models\GroupContact::whereGroupId($group_id)->whereStatus('Added')->get();
         foreach ($group_members as $group_member) {
-            $touchpoint = new \App\Touchpoint;
+            $touchpoint = new \App\Models\Touchpoint;
             $touchpoint->person_id = $group_member->contact_id;
             $touchpoint->staff_id = $request->input('staff_id');
             $touchpoint->touched_at = Carbon::parse($request->input('touched_at'));
@@ -206,7 +205,8 @@ class TouchpointController extends Controller
             $touchpoint->save();
         }
 
-        flash ('Touchpoint added for members of group: <a href="'. url('/group/'.$group_id) . '">'.$group->name.'</a>')->success();
+        flash('Touchpoint added for members of group: <a href="'.url('/group/'.$group_id).'">'.$group->name.'</a>')->success();
+
         return Redirect::action('GroupController@show', $group_id);
     }
 
@@ -214,10 +214,10 @@ class TouchpointController extends Controller
     {
         $this->authorize('create-touchpoint');
         $event_id = $request->input('event_id');
-        $event = \App\Retreat::findOrFail($event_id);
-        $participants = \App\Registration::whereStatusId(config('polanco.registration_status_id.registered'))->whereEventId($event_id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
+        $event = \App\Models\Retreat::findOrFail($event_id);
+        $participants = \App\Models\Registration::whereStatusId(config('polanco.registration_status_id.registered'))->whereEventId($event_id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
         foreach ($participants as $participant) {
-            $touchpoint = new \App\Touchpoint;
+            $touchpoint = new \App\Models\Touchpoint;
             $touchpoint->person_id = $participant->contact_id;
             $touchpoint->staff_id = $request->input('staff_id');
             $touchpoint->touched_at = Carbon::parse($request->input('touched_at'));
@@ -226,7 +226,8 @@ class TouchpointController extends Controller
             $touchpoint->save();
         }
 
-        flash ('Touchpoint added for registered event participants: <a href="'. url('/retreat/'.$event_id) . '">'.$event->title.'</a>')->success();
+        flash('Touchpoint added for registered event participants: <a href="'.url('/retreat/'.$event_id).'">'.$event->title.'</a>')->success();
+
         return Redirect::action('RetreatController@show', $event_id);
     }
 
@@ -234,10 +235,10 @@ class TouchpointController extends Controller
     {
         $this->authorize('create-touchpoint');
         $event_id = $request->input('event_id');
-        $event = \App\Retreat::findOrFail($event_id);
-        $participants = \App\Registration::whereStatusId(config('polanco.registration_status_id.waitlist'))->whereEventId($event_id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
+        $event = \App\Models\Retreat::findOrFail($event_id);
+        $participants = \App\Models\Registration::whereStatusId(config('polanco.registration_status_id.waitlist'))->whereEventId($event_id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
         foreach ($participants as $participant) {
-            $touchpoint = new \App\Touchpoint;
+            $touchpoint = new \App\Models\Touchpoint;
             $touchpoint->person_id = $participant->contact_id;
             $touchpoint->staff_id = $request->input('staff_id');
             $touchpoint->touched_at = Carbon::parse($request->input('touched_at'));
@@ -246,7 +247,8 @@ class TouchpointController extends Controller
             $touchpoint->save();
         }
 
-        flash ('Touchpoint added for waitlisted event participants: <a href="'. url('/retreat/'.$event_id) . '">'.$event->title.'</a>')->success();
+        flash('Touchpoint added for waitlisted event participants: <a href="'.url('/retreat/'.$event_id).'">'.$event->title.'</a>')->success();
+
         return Redirect::action('RetreatController@show', $event_id);
     }
 
@@ -259,7 +261,7 @@ class TouchpointController extends Controller
     public function show($id)
     {
         $this->authorize('show-touchpoint');
-        $touchpoint = \App\Touchpoint::with('staff', 'person')->findOrFail($id);
+        $touchpoint = \App\Models\Touchpoint::with('staff', 'person')->findOrFail($id);
 
         return view('touchpoints.show', compact('touchpoint')); //
     }
@@ -273,9 +275,9 @@ class TouchpointController extends Controller
     public function edit($id)
     {
         $this->authorize('update-touchpoint');
-        $touchpoint = \App\Touchpoint::with('staff', 'person')->findOrFail($id);
+        $touchpoint = \App\Models\Touchpoint::with('staff', 'person')->findOrFail($id);
 
-        $staff = \App\Contact::with('groups')->whereHas('groups', function ($query) {
+        $staff = \App\Models\Contact::with('groups')->whereHas('groups', function ($query) {
             $query->where('group_id', '=', config('polanco.group_id.staff'));
         })->orderBy('sort_name')->pluck('sort_name', 'id')->toArray();
         /* ensure that a staff member has not been removed */
@@ -288,13 +290,13 @@ class TouchpointController extends Controller
         }
 
         //consider renaming touchpoint table's person_id field to contact_id
-        $contact = \App\Contact::findOrFail($touchpoint->person_id);
+        $contact = \App\Models\Contact::findOrFail($touchpoint->person_id);
         if (isset($contact->subcontact_type)) {
-            $persons = \App\Contact::whereSubcontactType($contact->subcontact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
+            $persons = \App\Models\Contact::whereSubcontactType($contact->subcontact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
         } else {
-            $persons = \App\Contact::whereContactType($contact->contact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
+            $persons = \App\Models\Contact::whereContactType($contact->contact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
         }
-        //$persons = \App\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name','id');
+        //$persons = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name','id');
 // check contact type and if parish get list of parishes if individual get list of persons
         return view('touchpoints.edit', compact('touchpoint', 'staff', 'persons')); //
     }
@@ -309,7 +311,7 @@ class TouchpointController extends Controller
     public function update(UpdateTouchpointRequest $request, $id)
     {
         $this->authorize('update-touchpoint');
-        $touchpoint = \App\Touchpoint::findOrFail($request->input('id'));
+        $touchpoint = \App\Models\Touchpoint::findOrFail($request->input('id'));
         $touchpoint->person_id = $request->input('person_id');
         $touchpoint->staff_id = $request->input('staff_id');
         $touchpoint->touched_at = $request->input('touched_at');
@@ -317,7 +319,8 @@ class TouchpointController extends Controller
         $touchpoint->notes = $request->input('notes');
         $touchpoint->save();
 
-        flash ('Touchpoint ID#: <a href="'. url('/touchpoint/'.$touchpoint->id) . '">'.$touchpoint->id.'</a> updated')->success();
+        flash('Touchpoint ID#: <a href="'.url('/touchpoint/'.$touchpoint->id).'">'.$touchpoint->id.'</a> updated')->success();
+
         return Redirect::action('TouchpointController@index');
     }
 
@@ -331,9 +334,10 @@ class TouchpointController extends Controller
     {
         $this->authorize('delete-touchpoint');
 
-        \App\Touchpoint::destroy($id);
+        \App\Models\Touchpoint::destroy($id);
 
-        flash('Touchpoint ID#: '.$id . ' deleted')->warning()->important();
+        flash('Touchpoint ID#: '.$id.' deleted')->warning()->important();
+
         return Redirect::action('TouchpointController@index');
     }
 }

@@ -4,7 +4,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Religion::class, function (Faker $faker) {
+$factory->define(App\Models\Religion::class, function (Faker $faker) {
     return [
     ];
 });

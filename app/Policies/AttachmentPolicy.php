@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Attachment;
-use App\User;
+use App\Models\Attachment;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class AttachmentPolicy

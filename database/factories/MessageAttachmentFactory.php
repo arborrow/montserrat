@@ -4,7 +4,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\MessageAttachment::class, function (Faker $faker) {
+$factory->define(App\Models\MessageAttachment::class, function (Faker $faker) {
     return [
     ];
 });

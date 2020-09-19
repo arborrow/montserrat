@@ -8,13 +8,13 @@ use App\Http\Requests\UpdateGroupRegistrationRequest;
 use App\Http\Requests\UpdateRegistrationRequest;
 use App\Mail\RegistrationEventChange;
 use App\Mail\RetreatRegistration;
-use App\Registration;
+use App\Models\Registration;
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
-use Illuminate\Support\Arr;
 
 class RegistrationController extends Controller
 {
@@ -32,7 +32,7 @@ class RegistrationController extends Controller
     {
         $this->authorize('show-registration');
 
-        $registrations = \App\Registration::whereHas('retreat', function ($query) {
+        $registrations = \App\Models\Registration::whereHas('retreat', function ($query) {
             $query->where('end_date', '>=', date('Y-m-d'));
         })->orderBy('register_date', 'desc')->with('retreatant', 'retreat', 'room')->get();
         //dd($registrations);
@@ -48,11 +48,11 @@ class RegistrationController extends Controller
     {
         $this->authorize('create-registration');
 
-        $retreats = \App\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', \Carbon\Carbon::today()->subWeek())->where('is_active', '=', 1)->orderBy('start_date')->pluck('description', 'id');
+        $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', \Carbon\Carbon::today()->subWeek())->where('is_active', '=', 1)->orderBy('start_date')->pluck('description', 'id');
         $retreats->prepend('Unassigned', 0);
-        $retreatants = \App\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name', 'id');
+        $retreatants = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name', 'id');
 
-        $rooms = \App\Room::orderby('name')->pluck('name', 'id');
+        $rooms = \App\Models\Room::orderby('name')->pluck('name', 'id');
         $rooms->prepend('Unassigned', 0);
 
         $dt_today = \Carbon\Carbon::today();
@@ -60,7 +60,7 @@ class RegistrationController extends Controller
         $defaults['retreat_id'] = 0;
         $defaults['is_multi_registration'] = false;
         $defaults['registration_source'] = config('polanco.registration_source');
-        $defaults['participant_status_type'] = \App\ParticipantStatus::whereIsActive(1)->pluck('name', 'id');
+        $defaults['participant_status_type'] = \App\Models\ParticipantStatus::whereIsActive(1)->pluck('name', 'id');
 
         return view('registrations.create', compact('retreats', 'retreatants', 'rooms', 'defaults'));
     }
@@ -68,17 +68,17 @@ class RegistrationController extends Controller
     public function add($id)
     {
         $this->authorize('create-registration');
-        $retreats = \App\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', \Carbon\Carbon::today()->subWeek())->where('is_active', '=', 1)->orderBy('start_date')->pluck('description', 'id');
+        $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', \Carbon\Carbon::today()->subWeek())->where('is_active', '=', 1)->orderBy('start_date')->pluck('description', 'id');
         $retreats->prepend('Unassigned', 0);
-        $retreatant = \App\Contact::findOrFail($id);
+        $retreatant = \App\Models\Contact::findOrFail($id);
         if ($retreatant->contact_type == config('polanco.contact_type.individual')) {
-            $retreatants = \App\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name', 'id');
+            $retreatants = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name', 'id');
         }
         if ($retreatant->contact_type == config('polanco.contact_type.organization')) {
-            $retreatants = \App\Contact::whereContactType(config('polanco.contact_type.organization'))->whereSubcontactType($retreatant->subcontact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
+            $retreatants = \App\Models\Contact::whereContactType(config('polanco.contact_type.organization'))->whereSubcontactType($retreatant->subcontact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
         }
 
-        $rooms = \App\Room::orderby('name')->pluck('name', 'id');
+        $rooms = \App\Models\Room::orderby('name')->pluck('name', 'id');
         $rooms->prepend('Unassigned', 0);
 
         $defaults['contact_id'] = $id;
@@ -87,7 +87,7 @@ class RegistrationController extends Controller
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
         $defaults['is_multi_registration'] = false;
         $defaults['registration_source'] = config('polanco.registration_source');
-        $defaults['participant_status_type'] = \App\ParticipantStatus::whereIsActive(1)->pluck('name', 'id');
+        $defaults['participant_status_type'] = \App\Models\ParticipantStatus::whereIsActive(1)->pluck('name', 'id');
 
         return view('registrations.create', compact('retreats', 'retreatants', 'rooms', 'defaults'));
     }
@@ -96,11 +96,11 @@ class RegistrationController extends Controller
     {
         $this->authorize('create-registration');
 
-        $retreats = \App\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', \Carbon\Carbon::today()->subWeek())->orderBy('start_date')->pluck('description', 'id');
+        $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', \Carbon\Carbon::today()->subWeek())->orderBy('start_date')->pluck('description', 'id');
         $retreats->prepend('Unassigned', 0);
-        $groups = \App\Group::orderBy('title')->pluck('title', 'id');
+        $groups = \App\Models\Group::orderBy('title')->pluck('title', 'id');
 
-        $rooms = \App\Room::orderby('name')->pluck('name', 'id');
+        $rooms = \App\Models\Room::orderby('name')->pluck('name', 'id');
         $rooms->prepend('Unassigned', 0);
 
         $defaults['group_id'] = $id;
@@ -108,7 +108,7 @@ class RegistrationController extends Controller
         $dt_today = \Carbon\Carbon::today();
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
         $defaults['registration_source'] = config('polanco.registration_source');
-        $defaults['participant_status_type'] = \App\ParticipantStatus::whereIsActive(1)->pluck('name', 'id');
+        $defaults['participant_status_type'] = \App\Models\ParticipantStatus::whereIsActive(1)->pluck('name', 'id');
 
         return view('registrations.add_group', compact('retreats', 'groups', 'rooms', 'defaults'));
         //dd($retreatants);
@@ -119,16 +119,16 @@ class RegistrationController extends Controller
         $this->authorize('create-registration');
 
         if ($retreat_id > 0) {
-            $retreats = \App\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->whereId($retreat_id)->orderBy('start_date')->pluck('description', 'id');
+            $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->whereId($retreat_id)->orderBy('start_date')->pluck('description', 'id');
         } else {
-            $retreats = \App\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', \Carbon\Carbon::today())->orderBy('start_date')->pluck('description', 'id');
+            $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', \Carbon\Carbon::today())->orderBy('start_date')->pluck('description', 'id');
         }
         $retreats->prepend('Unassigned', 0);
         /* get the current retreat to determine the type of retreat
          * based on the type of retreat, determine if we should allow multiple registrations
          * multiple registrations should not have a room assignment (use assign rooms if needed)
          */
-        $retreat = \App\Retreat::findOrFail($retreat_id);
+        $retreat = \App\Models\Retreat::findOrFail($retreat_id);
 
         // Day , Conference, Contract, Diocesan, Meeting, Workshop
         $multi_registration_event_types = [config('polanco.event_type.day'), config('polanco.event_type.contract'), config('polanco.event_type.conference'), config('polanco.event_type.diocesan'), config('polanco.event_type.meeting'), config('polanco.event_type.workshop'), config('polanco.event_type.jesuit')];
@@ -138,13 +138,13 @@ class RegistrationController extends Controller
             $defaults['is_multi_registration'] = false;
         }
         if ($contact_id > 0) {
-            $retreatants = \App\Contact::whereId($contact_id)->orderBy('sort_name')->pluck('sort_name', 'id');
+            $retreatants = \App\Models\Contact::whereId($contact_id)->orderBy('sort_name')->pluck('sort_name', 'id');
         } else {
-            $retreatants = \App\Contact::orderBy('sort_name')->pluck('sort_name', 'id');
+            $retreatants = \App\Models\Contact::orderBy('sort_name')->pluck('sort_name', 'id');
         }
         $retreatants->prepend('Unassigned', 0);
 
-        $rooms = \App\Room::orderby('name')->pluck('name', 'id');
+        $rooms = \App\Models\Room::orderby('name')->pluck('name', 'id');
         $rooms->prepend('Unassigned', 0);
 
         $dt_today = \Carbon\Carbon::today();
@@ -152,7 +152,7 @@ class RegistrationController extends Controller
         $defaults['contact_id'] = $contact_id;
         $defaults['today'] = $dt_today->month.'/'.$dt_today->day.'/'.$dt_today->year;
         $defaults['registration_source'] = config('polanco.registration_source');
-        $defaults['participant_status_type'] = \App\ParticipantStatus::whereIsActive(1)->pluck('name', 'id');
+        $defaults['participant_status_type'] = \App\Models\ParticipantStatus::whereIsActive(1)->pluck('name', 'id');
 
         return view('registrations.create', compact('retreats', 'retreatants', 'rooms', 'defaults'));
         //dd($retreatants);
@@ -171,8 +171,8 @@ class RegistrationController extends Controller
         $rooms = $request->input('rooms');
         $num_registrants = $request->input('num_registrants');
         //TODO: Should we check and verify that the contact type is an organization to allow multiselect or just allow any registration to book multiple rooms?
-        $retreat = \App\Retreat::findOrFail($request->input('event_id'));
-        $contact = \App\Contact::findOrFail($request->input('contact_id'));
+        $retreat = \App\Models\Retreat::findOrFail($request->input('event_id'));
+        $contact = \App\Models\Contact::findOrFail($request->input('contact_id'));
         /*
          * Used primarily for registering groups
          * If a number of registrants is selected, then add that many registrations
@@ -182,7 +182,7 @@ class RegistrationController extends Controller
          */
         if ($num_registrants > 0) {
             for ($i = 1; $i <= $num_registrants; $i++) {
-                $registration = new \App\Registration;
+                $registration = new \App\Models\Registration;
                 $registration->event_id = $request->input('event_id');
                 $registration->contact_id = $request->input('contact_id');
                 $registration->source = $request->input('source');
@@ -208,7 +208,7 @@ class RegistrationController extends Controller
         } else {
             foreach ($rooms as $room) {
                 //ensure that it is a valid room (not N/A)
-                $registration = new \App\Registration;
+                $registration = new \App\Models\Registration;
                 $registration->event_id = $request->input('event_id');
                 $registration->contact_id = $request->input('contact_id');
                 $registration->source = $request->input('source');
@@ -235,7 +235,8 @@ class RegistrationController extends Controller
             }
         }
 
-        flash('Registration #: <a href="'. url('/registration/'.$registration->id) . '">'.$registration->id.'</a> added')->success();
+        flash('Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a> added')->success();
+
         return Redirect::action('RegistrationController@index');
     }
 
@@ -243,12 +244,12 @@ class RegistrationController extends Controller
     {
         $this->authorize('create-registration');
 
-        $retreat = \App\Retreat::findOrFail($request->input('event_id'));
-        $group = \App\Group::findOrFail($request->input('group_id'));
-        $group_members = \App\GroupContact::whereGroupId($group->id)->whereStatus('Added')->get();
+        $retreat = \App\Models\Retreat::findOrFail($request->input('event_id'));
+        $group = \App\Models\Group::findOrFail($request->input('group_id'));
+        $group_members = \App\Models\GroupContact::whereGroupId($group->id)->whereStatus('Added')->get();
         foreach ($group_members as $group_member) {
             //ensure that it is a valid room (not N/A)
-            $registration = new \App\Registration;
+            $registration = new \App\Models\Registration;
             $registration->event_id = $retreat->id;
             $registration->contact_id = $group_member->contact_id;
             $registration->status_id = $request->input('status_id');
@@ -271,7 +272,8 @@ class RegistrationController extends Controller
             $registration->save();
             //TODO: verify that the newly created room assignment does not conflict with an existing one
         }
-        flash ('Registration(s) added to ' . $retreat->title . 'for members of group: <a href="'. url('/group/'.$group->id) . '">'.$group->name.'</a>')->success();
+        flash('Registration(s) added to '.$retreat->title.'for members of group: <a href="'.url('/group/'.$group->id).'">'.$group->name.'</a>')->success();
+
         return Redirect::action('RetreatController@show', $retreat->id);
     }
 
@@ -284,7 +286,7 @@ class RegistrationController extends Controller
     public function show($id)
     {
         $this->authorize('show-registration');
-        $registration = \App\Registration::with('retreat', 'retreatant', 'room')->findOrFail($id);
+        $registration = \App\Models\Registration::with('retreat', 'retreatant', 'room')->findOrFail($id);
 
         return view('registrations.show', compact('registration')); //
     }
@@ -299,19 +301,19 @@ class RegistrationController extends Controller
     {
         $this->authorize('update-registration');
 
-        $registration = \App\Registration::with('retreatant', 'retreat', 'room')->findOrFail($id);
-        $retreatant = \App\Contact::findOrFail($registration->contact_id);
-        $retreats = \App\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', \Carbon\Carbon::today())->orderBy('start_date')->pluck('description', 'id');
+        $registration = \App\Models\Registration::with('retreatant', 'retreat', 'room')->findOrFail($id);
+        $retreatant = \App\Models\Contact::findOrFail($registration->contact_id);
+        $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', \Carbon\Carbon::today())->orderBy('start_date')->pluck('description', 'id');
 
         //TODO: we will want to be able to switch between types when going from a group registration to individual room assignment
         if ($retreatant->contact_type == config('polanco.contact_type.individual')) {
-            $retreatants = \App\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name', 'id');
+            $retreatants = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name', 'id');
         }
         if ($retreatant->contact_type == config('polanco.contact_type.organization')) {
-            $retreatants = \App\Contact::whereContactType(config('polanco.contact_type.organization'))->whereSubcontactType($retreatant->subcontact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
+            $retreatants = \App\Models\Contact::whereContactType(config('polanco.contact_type.organization'))->whereSubcontactType($retreatant->subcontact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
         }
 
-        $rooms = \App\Room::orderby('name')->pluck('name', 'id');
+        $rooms = \App\Models\Room::orderby('name')->pluck('name', 'id');
         $rooms->prepend('Unassigned', 0);
 
         /* Check to see if the current registration is for a past retreat and if so, add it to the collection */
@@ -330,7 +332,7 @@ class RegistrationController extends Controller
             }
         }
 
-        $defaults['participant_status_type'] = \App\ParticipantStatus::whereIsActive(1)->pluck('name', 'id');
+        $defaults['participant_status_type'] = \App\Models\ParticipantStatus::whereIsActive(1)->pluck('name', 'id');
 
         return view('registrations.edit', compact('registration', 'retreats', 'rooms', 'defaults'));
     }
@@ -346,8 +348,8 @@ class RegistrationController extends Controller
     {
         $this->authorize('update-registration');
 
-        $registration = \App\Registration::findOrFail($request->input('id'));
-        $retreat = \App\Retreat::findOrFail($request->input('event_id'));
+        $registration = \App\Models\Registration::findOrFail($request->input('id'));
+        $retreat = \App\Models\Retreat::findOrFail($request->input('event_id'));
 
         $registration->event_id = $request->input('event_id');
         // TODO: pull this from the retreat's start_date and end_date
@@ -369,7 +371,7 @@ class RegistrationController extends Controller
         $registration->room_id = $request->input('room_id');
         if ($registration->isDirty('event_id') && config('polanco.notify_registration_event_change')) {
             $finance_email = config('polanco.finance_email');
-            $original_event = \App\Retreat::findOrFail($registration->getOriginal('event_id'));
+            $original_event = \App\Models\Retreat::findOrFail($registration->getOriginal('event_id'));
             // dd($registration,$registration->event_id,$registration->getOriginal('event_id'));
             // return view('emails.registration-event-change', compact('registration', 'retreat', 'original_event'));
             try {
@@ -384,7 +386,8 @@ class RegistrationController extends Controller
 
         $registration->save();
 
-        flash ('Registration #: <a href="'. url('/registration/'.$registration->id) . '">'.$registration->id.'</a> updated')->success();
+        flash('Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a> updated')->success();
+
         return Redirect::action('PersonController@show', $registration->contact_id);
     }
 
@@ -398,15 +401,16 @@ class RegistrationController extends Controller
     {
         $this->authorize('delete-registration');
 
-        $registration = \App\Registration::findOrFail($id);
-        $retreat = \App\Retreat::findOrFail($registration->event_id);
+        $registration = \App\Models\Registration::findOrFail($id);
+        $retreat = \App\Models\Retreat::findOrFail($registration->event_id);
 
-        \App\Registration::destroy($id);
-        $countregistrations = \App\Registration::where('event_id', '=', $registration->event_id)->count();
+        \App\Models\Registration::destroy($id);
+        $countregistrations = \App\Models\Registration::where('event_id', '=', $registration->event_id)->count();
         //$retreat->attending = $countregistrations;
         $retreat->save();
 
-        flash('Registration #: '.$registration->id . ' deleted')->warning()->important();
+        flash('Registration #: '.$registration->id.' deleted')->warning()->important();
+
         return Redirect::action('RegistrationController@index');
     }
 
@@ -414,7 +418,7 @@ class RegistrationController extends Controller
     {
         $this->authorize('update-registration');
 
-        $registration = \App\Registration::findOrFail($id);
+        $registration = \App\Models\Registration::findOrFail($id);
         $registration->registration_confirm_date = \Carbon\Carbon::now();
         $registration->save();
 
@@ -424,7 +428,7 @@ class RegistrationController extends Controller
     public function attend($id)
     {
         $this->authorize('update-registration');
-        $registration = \App\Registration::findOrFail($id);
+        $registration = \App\Models\Registration::findOrFail($id);
         $registration->attendance_confirm_date = \Carbon\Carbon::now();
         $registration->save();
 
@@ -434,7 +438,7 @@ class RegistrationController extends Controller
     public function arrive($id)
     {
         $this->authorize('update-registration');
-        $registration = \App\Registration::findOrFail($id);
+        $registration = \App\Models\Registration::findOrFail($id);
         $registration->arrived_at = \Carbon\Carbon::now();
         $registration->save();
 
@@ -444,7 +448,7 @@ class RegistrationController extends Controller
     public function depart($id)
     {
         $this->authorize('update-registration');
-        $registration = \App\Registration::findOrFail($id);
+        $registration = \App\Models\Registration::findOrFail($id);
         $registration->departed_at = \Carbon\Carbon::now();
         $registration->save();
 
@@ -454,7 +458,7 @@ class RegistrationController extends Controller
     public function cancel($id)
     {
         $this->authorize('update-registration');
-        $registration = \App\Registration::findOrFail($id);
+        $registration = \App\Models\Registration::findOrFail($id);
         $registration->canceled_at = \Carbon\Carbon::now();
         $registration->save();
 
@@ -464,7 +468,7 @@ class RegistrationController extends Controller
     public function waitlist($id)
     {
         $this->authorize('update-registration');
-        $registration = \App\Registration::findOrFail($id);
+        $registration = \App\Models\Registration::findOrFail($id);
         $registration->status_id = config('polanco.registration_status_id.waitlist');
         $registration->save();
 
@@ -474,7 +478,7 @@ class RegistrationController extends Controller
     public function offwaitlist($id)
     {
         $this->authorize('update-registration');
-        $registration = \App\Registration::findOrFail($id);
+        $registration = \App\Models\Registration::findOrFail($id);
         $registration->status_id = config('polanco.registration_status_id.registered');
         $registration->save();
 
@@ -491,7 +495,7 @@ class RegistrationController extends Controller
         if ($primaryEmail) {
 
             // 2. Setup infomration to be used with touchpoint for sending out registration email.
-            $touchpoint = new \App\Touchpoint;
+            $touchpoint = new \App\Models\Touchpoint;
             $touchpoint->person_id = $participant->contact->id;
             $touchpoint->staff_id = config('polanco.self.id');
             $touchpoint->touched_at = Carbon::now();
@@ -516,7 +520,7 @@ class RegistrationController extends Controller
 
     public function confirmAttendance($token)
     {
-        $registration = \App\Registration::where('remember_token', $token)->first();
+        $registration = \App\Models\Registration::where('remember_token', $token)->first();
 
         if ($registration) {
             $registration->registration_confirm_date = \Carbon\Carbon::now();
