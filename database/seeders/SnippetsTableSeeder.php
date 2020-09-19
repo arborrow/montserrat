@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class SnippetsTableSeeder extends Seeder
 {
@@ -13,9 +14,9 @@ class SnippetsTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('snippets')->delete();
+        DB::table('snippets')->delete();
 
-        \DB::table('snippets')->insert([
+        DB::table('snippets')->insert([
             0 => [
                 'title' => 'agc_acknowledge',
                 'label' => 'board',

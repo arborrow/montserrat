@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class GroupTableSeeder extends Seeder
 {
@@ -13,9 +14,9 @@ class GroupTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('group')->delete();
+        DB::table('group')->delete();
 
-        \DB::table('group')->insert([
+        DB::table('group')->insert([
             0 => [
                 'id' => 1,
                 'name' => 'Innkeeper',

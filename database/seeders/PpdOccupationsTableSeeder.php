@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class PpdOccupationsTableSeeder extends Seeder
 {
@@ -13,9 +14,9 @@ class PpdOccupationsTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('ppd_occupations')->delete();
+        DB::table('ppd_occupations')->delete();
 
-        \DB::table('ppd_occupations')->insert([
+        DB::table('ppd_occupations')->insert([
             0 => [
                 'id' => 1,
                 'name' => 'Accountant/CPA/Auditor',

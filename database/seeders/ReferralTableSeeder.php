@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ReferralTableSeeder extends Seeder
 {
@@ -13,9 +14,9 @@ class ReferralTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('referral')->delete();
+        DB::table('referral')->delete();
 
-        \DB::table('referral')->insert([
+        DB::table('referral')->insert([
             0 => [
                 'id' => 1,
                 'name' => 'Friend',

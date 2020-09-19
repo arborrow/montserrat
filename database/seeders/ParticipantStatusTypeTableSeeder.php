@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ParticipantStatusTypeTableSeeder extends Seeder
 {
@@ -13,9 +14,9 @@ class ParticipantStatusTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('participant_status_type')->delete();
+        DB::table('participant_status_type')->delete();
 
-        \DB::table('participant_status_type')->insert([
+        DB::table('participant_status_type')->insert([
             0 => [
                 'id' => 1,
                 'name' => 'Registered',

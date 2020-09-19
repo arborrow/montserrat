@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class PrefixTableSeeder extends Seeder
 {
@@ -13,9 +14,9 @@ class PrefixTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('prefix')->delete();
+        DB::table('prefix')->delete();
 
-        \DB::table('prefix')->insert([
+        DB::table('prefix')->insert([
             0 => [
                 'id' => 1,
                 'name' => 'Mrs.',

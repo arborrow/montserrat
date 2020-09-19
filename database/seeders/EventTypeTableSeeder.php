@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class EventTypeTableSeeder extends Seeder
 {
@@ -13,9 +14,9 @@ class EventTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('event_type')->delete();
+        DB::table('event_type')->delete();
 
-        \DB::table('event_type')->insert([
+        DB::table('event_type')->insert([
             0 => [
                 'id' => 1,
                 'label' => 'Conference',

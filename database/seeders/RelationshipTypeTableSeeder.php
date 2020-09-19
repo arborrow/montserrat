@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class RelationshipTypeTableSeeder extends Seeder
 {
@@ -13,9 +14,9 @@ class RelationshipTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('relationship_type')->delete();
+        DB::table('relationship_type')->delete();
 
-        \DB::table('relationship_type')->insert([
+        DB::table('relationship_type')->insert([
             0 => [
                 'id' => 1,
                 'name_a_b' => 'Child',

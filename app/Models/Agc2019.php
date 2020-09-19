@@ -9,7 +9,6 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Agc2019 extends Model implements Auditable
 {
     use HasFactory;
-
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'agc_household_name';

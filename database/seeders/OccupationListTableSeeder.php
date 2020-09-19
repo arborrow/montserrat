@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class OccupationListTableSeeder extends Seeder
 {
@@ -13,9 +14,9 @@ class OccupationListTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('occupation_list')->delete();
+        DB::table('occupation_list')->delete();
 
-        \DB::table('occupation_list')->insert([
+        DB::table('occupation_list')->insert([
             0 => [
                 'OCC_CODE' => '00-0000',
                 'OCC_TITLE' => 'All Occupations',
@@ -7517,7 +7518,7 @@ class OccupationListTableSeeder extends Seeder
                 'ocuupation_id' => null,
             ],
         ]);
-        \DB::table('occupation_list')->insert([
+        DB::table('occupation_list')->insert([
             0 => [
                 'OCC_CODE' => '29-1023',
                 'OCC_TITLE' => 'Orthodontists',
@@ -15019,7 +15020,7 @@ class OccupationListTableSeeder extends Seeder
                 'ocuupation_id' => null,
             ],
         ]);
-        \DB::table('occupation_list')->insert([
+        DB::table('occupation_list')->insert([
             0 => [
                 'OCC_CODE' => '47-2221',
                 'OCC_TITLE' => 'Structural Iron and Steel Workers',

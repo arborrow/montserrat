@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ContactReferralTableSeeder extends Seeder
 {
@@ -13,9 +14,9 @@ class ContactReferralTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('contact_referral')->delete();
+        DB::table('contact_referral')->delete();
 
-        \DB::table('contact_referral')->insert([
+        DB::table('contact_referral')->insert([
             0 => [
                 'contact_id' => 261,
                 'referral_id' => 3,
@@ -4017,7 +4018,7 @@ class ContactReferralTableSeeder extends Seeder
                 'updated_at' => null,
             ],
         ]);
-        \DB::table('contact_referral')->insert([
+        DB::table('contact_referral')->insert([
             0 => [
                 'contact_id' => 20087,
                 'referral_id' => 3,
@@ -8019,7 +8020,7 @@ class ContactReferralTableSeeder extends Seeder
                 'updated_at' => null,
             ],
         ]);
-        \DB::table('contact_referral')->insert([
+        DB::table('contact_referral')->insert([
             0 => [
                 'contact_id' => 22921,
                 'referral_id' => 1,

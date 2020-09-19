@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DonationTypeTableSeeder extends Seeder
 {
@@ -13,9 +14,9 @@ class DonationTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('donation_type')->delete();
+        DB::table('donation_type')->delete();
 
-        \DB::table('donation_type')->insert([
+        DB::table('donation_type')->insert([
             0 => [
                 'id' => 1,
                 'label' => 'Retreat Funding',

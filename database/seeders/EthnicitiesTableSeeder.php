@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class EthnicitiesTableSeeder extends Seeder
 {
@@ -13,9 +14,9 @@ class EthnicitiesTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('ethnicities')->delete();
+        DB::table('ethnicities')->delete();
 
-        \DB::table('ethnicities')->insert([
+        DB::table('ethnicities')->insert([
             0 => [
                 'id' => 1,
                 'ethnicity' => 'Unspecified',

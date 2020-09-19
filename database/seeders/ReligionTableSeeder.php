@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ReligionTableSeeder extends Seeder
 {
@@ -13,9 +14,9 @@ class ReligionTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('religion')->delete();
+        DB::table('religion')->delete();
 
-        \DB::table('religion')->insert([
+        DB::table('religion')->insert([
             0 => [
                 'id' => 1,
                 'label' => 'Catholic',

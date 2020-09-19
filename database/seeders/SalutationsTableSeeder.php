@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class SalutationsTableSeeder extends Seeder
 {
@@ -13,9 +14,9 @@ class SalutationsTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('salutations')->delete();
+        DB::table('salutations')->delete();
 
-        \DB::table('salutations')->insert([
+        DB::table('salutations')->insert([
             0 => [
                 'Salutation ID' => 1,
                 'Salutation Name' => 'Mr.',

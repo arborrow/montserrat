@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Vendor extends Model
 {
     use HasFactory;
-
     use SoftDeletes;
     protected $table = 'contact';
 

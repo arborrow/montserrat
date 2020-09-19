@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ContactTypeTableSeeder extends Seeder
 {
@@ -13,9 +14,9 @@ class ContactTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('contact_type')->delete();
+        DB::table('contact_type')->delete();
 
-        \DB::table('contact_type')->insert([
+        DB::table('contact_type')->insert([
             0 => [
                 'id' => 1,
                 'name' => 'Individual',

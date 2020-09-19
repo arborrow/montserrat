@@ -14,7 +14,7 @@ class LocationsTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('locations')->insert([
+        DB::table('locations')->insert([
             0 => [
                 'name' => env('SELF_NAME'),
                 'label' => env('SELF_NAME'),

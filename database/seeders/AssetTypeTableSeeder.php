@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class AssetTypeTableSeeder extends Seeder
 {
@@ -11,9 +12,9 @@ class AssetTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('asset_type')->delete();
+        DB::table('asset_type')->delete();
 
-        \DB::table('asset_type')->insert([
+        DB::table('asset_type')->insert([
             0 => [
                 'id' => 1,
                 'label' => 'Buildings',

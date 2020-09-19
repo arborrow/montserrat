@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ContactLanguagesTableSeeder extends Seeder
 {
@@ -13,9 +14,9 @@ class ContactLanguagesTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('contact_languages')->delete();
+        DB::table('contact_languages')->delete();
 
-        \DB::table('contact_languages')->insert([
+        DB::table('contact_languages')->insert([
             0 => [
                 'id' => 1,
                 'contact_id' => 622,
@@ -4517,7 +4518,7 @@ class ContactLanguagesTableSeeder extends Seeder
                 'updated_at' => null,
             ],
         ]);
-        \DB::table('contact_languages')->insert([
+        DB::table('contact_languages')->insert([
             0 => [
                 'id' => 510,
                 'contact_id' => 21005,
@@ -9019,7 +9020,7 @@ class ContactLanguagesTableSeeder extends Seeder
                 'updated_at' => null,
             ],
         ]);
-        \DB::table('contact_languages')->insert([
+        DB::table('contact_languages')->insert([
             0 => [
                 'id' => 1016,
                 'contact_id' => 301,
@@ -13521,7 +13522,7 @@ class ContactLanguagesTableSeeder extends Seeder
                 'updated_at' => null,
             ],
         ]);
-        \DB::table('contact_languages')->insert([
+        DB::table('contact_languages')->insert([
             0 => [
                 'id' => 1519,
                 'contact_id' => 2967,
@@ -18023,7 +18024,7 @@ class ContactLanguagesTableSeeder extends Seeder
                 'updated_at' => null,
             ],
         ]);
-        \DB::table('contact_languages')->insert([
+        DB::table('contact_languages')->insert([
             0 => [
                 'id' => 2024,
                 'contact_id' => 22573,
@@ -22525,7 +22526,7 @@ class ContactLanguagesTableSeeder extends Seeder
                 'updated_at' => null,
             ],
         ]);
-        \DB::table('contact_languages')->insert([
+        DB::table('contact_languages')->insert([
             0 => [
                 'id' => 2536,
                 'contact_id' => 22945,
@@ -27027,7 +27028,7 @@ class ContactLanguagesTableSeeder extends Seeder
                 'updated_at' => null,
             ],
         ]);
-        \DB::table('contact_languages')->insert([
+        DB::table('contact_languages')->insert([
             0 => [
                 'id' => 3037,
                 'contact_id' => 23325,
@@ -31529,7 +31530,7 @@ class ContactLanguagesTableSeeder extends Seeder
                 'updated_at' => null,
             ],
         ]);
-        \DB::table('contact_languages')->insert([
+        DB::table('contact_languages')->insert([
             0 => [
                 'id' => 3543,
                 'contact_id' => 23618,
@@ -36031,7 +36032,7 @@ class ContactLanguagesTableSeeder extends Seeder
                 'updated_at' => null,
             ],
         ]);
-        \DB::table('contact_languages')->insert([
+        DB::table('contact_languages')->insert([
             0 => [
                 'id' => 4045,
                 'contact_id' => 24183,

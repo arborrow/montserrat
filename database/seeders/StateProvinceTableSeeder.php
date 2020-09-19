@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class StateProvinceTableSeeder extends Seeder
 {
@@ -13,9 +14,9 @@ class StateProvinceTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('state_province')->delete();
+        DB::table('state_province')->delete();
 
-        \DB::table('state_province')->insert([
+        DB::table('state_province')->insert([
             0 => [
                 'id' => 1000,
                 'name' => 'Alabama',
@@ -5017,7 +5018,7 @@ class StateProvinceTableSeeder extends Seeder
                 'updated_at' => null,
             ],
         ]);
-        \DB::table('state_province')->insert([
+        DB::table('state_province')->insert([
             0 => [
                 'id' => 1877,
                 'name' => 'Mintaqat Juzur tawar',
@@ -10019,7 +10020,7 @@ class StateProvinceTableSeeder extends Seeder
                 'updated_at' => null,
             ],
         ]);
-        \DB::table('state_province')->insert([
+        DB::table('state_province')->insert([
             0 => [
                 'id' => 2395,
                 'name' => 'Al Gharbiyah',
@@ -15021,7 +15022,7 @@ class StateProvinceTableSeeder extends Seeder
                 'updated_at' => null,
             ],
         ]);
-        \DB::table('state_province')->insert([
+        DB::table('state_province')->insert([
             0 => [
                 'id' => 3052,
                 'name' => 'Szombathely',
@@ -20023,7 +20024,7 @@ class StateProvinceTableSeeder extends Seeder
                 'updated_at' => null,
             ],
         ]);
-        \DB::table('state_province')->insert([
+        DB::table('state_province')->insert([
             0 => [
                 'id' => 3578,
                 'name' => 'Jaghbūb',
@@ -25025,7 +25026,7 @@ class StateProvinceTableSeeder extends Seeder
                 'updated_at' => null,
             ],
         ]);
-        \DB::table('state_province')->insert([
+        DB::table('state_province')->insert([
             0 => [
                 'id' => 4078,
                 'name' => 'Lanao del Norte',
@@ -30027,7 +30028,7 @@ class StateProvinceTableSeeder extends Seeder
                 'updated_at' => null,
             ],
         ]);
-        \DB::table('state_province')->insert([
+        DB::table('state_province')->insert([
             0 => [
                 'id' => 4584,
                 'name' => 'Cabanas',
@@ -35029,7 +35030,7 @@ class StateProvinceTableSeeder extends Seeder
                 'updated_at' => null,
             ],
         ]);
-        \DB::table('state_province')->insert([
+        DB::table('state_province')->insert([
             0 => [
                 'id' => 5084,
                 'name' => 'Tay Ninh',

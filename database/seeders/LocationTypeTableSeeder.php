@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class LocationTypeTableSeeder extends Seeder
 {
@@ -13,9 +14,9 @@ class LocationTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('location_type')->delete();
+        DB::table('location_type')->delete();
 
-        \DB::table('location_type')->insert([
+        DB::table('location_type')->insert([
             0 => [
                 'id' => 1,
                 'name' => 'Home',

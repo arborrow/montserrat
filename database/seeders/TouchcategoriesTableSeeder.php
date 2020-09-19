@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class TouchcategoriesTableSeeder extends Seeder
 {
@@ -13,9 +14,9 @@ class TouchcategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('touchcategories')->delete();
+        DB::table('touchcategories')->delete();
 
-        \DB::table('touchcategories')->insert([
+        DB::table('touchcategories')->insert([
             0 => [
                 'id' => 1,
                 'name' => 'Retreat',

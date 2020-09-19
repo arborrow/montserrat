@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class FileTypeTableSeeder extends Seeder
 {
@@ -13,9 +14,9 @@ class FileTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('file_type')->delete();
+        DB::table('file_type')->delete();
 
-        \DB::table('file_type')->insert([
+        DB::table('file_type')->insert([
             0 => [
                 'id' => 1,
                 'label' => 'Attachment',

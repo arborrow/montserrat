@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class UomTableSeeder extends Seeder
 {
@@ -11,9 +12,9 @@ class UomTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('uom')->delete();
+        DB::table('uom')->delete();
 
-        \DB::table('uom')->insert([
+        DB::table('uom')->insert([
             0 => [
                 'id' => 1,
                 'unit_name' => 'Acres',

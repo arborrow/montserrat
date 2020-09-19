@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class GenderTableSeeder extends Seeder
 {
@@ -13,9 +14,9 @@ class GenderTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('gender')->delete();
+        DB::table('gender')->delete();
 
-        \DB::table('gender')->insert([
+        DB::table('gender')->insert([
             0 => [
                 'id' => 1,
                 'label' => 'Male',

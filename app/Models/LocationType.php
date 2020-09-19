@@ -10,7 +10,6 @@ use OwenIt\Auditing\Contracts\Auditable;
 class LocationType extends Model implements Auditable
 {
     use HasFactory;
-
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 

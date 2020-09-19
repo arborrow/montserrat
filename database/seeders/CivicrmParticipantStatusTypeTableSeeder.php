@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class CivicrmParticipantStatusTypeTableSeeder extends Seeder
 {
@@ -13,9 +14,9 @@ class CivicrmParticipantStatusTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('civicrm_participant_status_type')->delete();
+        DB::table('civicrm_participant_status_type')->delete();
 
-        \DB::table('civicrm_participant_status_type')->insert([
+        DB::table('civicrm_participant_status_type')->insert([
             0 => [
                 'id' => 1,
                 'name' => 'Registered',

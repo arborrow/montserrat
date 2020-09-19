@@ -5,6 +5,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 // TODO: to avoid confusion with agc letters in Spanish I'm limiting testing for now to $current_user
 
