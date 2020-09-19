@@ -2,18 +2,37 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 // using Montserrat's number in case of Twilio checks with a random extension
-$factory->define(App\Models\Phone::class, function (Faker $faker) {
-    return [
-        'contact_id' => function () {
-            return factory(App\Models\Contact::class)->create()->id;
-        },
-        'location_type_id' => function () {
-            return factory(App\Models\LocationType::class)->create()->id;
-        },
-        'phone' => '9403216020,'.$faker->numberBetween(111, 999),
-        'phone_type' => $faker->randomElement(['Phone', 'Fax', 'Mobile']),
-    ];
-});
+
+class PhoneFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \App\Models\Phone::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'contact_id' => function () {
+                return \App\Models\Contact::factory()->create()->id;
+            },
+            'location_type_id' => function () {
+                return \App\Models\LocationType::factory()->create()->id;
+            },
+            'phone' => '9403216020,'.$this->faker->numberBetween(111, 999),
+            'phone_type' => $this->faker->randomElement(['Phone', 'Fax', 'Mobile']),
+        ];
+    }
+}

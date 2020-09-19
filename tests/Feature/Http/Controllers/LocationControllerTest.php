@@ -36,7 +36,7 @@ class LocationControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-location');
-        $location = factory(\App\Models\Location::class)->create();
+        $location = \App\Models\Location::factory()->create();
 
         $response = $this->actingAs($user)->delete(route('location.destroy', [$location]));
         $response->assertSessionHas('flash_notification');
@@ -51,7 +51,7 @@ class LocationControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-location');
-        $location = factory(\App\Models\Location::class)->create();
+        $location = \App\Models\Location::factory()->create();
 
         $response = $this->actingAs($user)->get(route('location.edit', [$location]));
 
@@ -98,10 +98,10 @@ class LocationControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-location');
 
-        $location = factory(\App\Models\Location::class)->create();
+        $location = \App\Models\Location::factory()->create();
 
         $number_locations = $this->faker->numberBetween(2, 10);
-        $locations = factory(\App\Models\Location::class, $number_locations)->create([
+        $locations = \App\Models\Location::factory()->count($number_locations)->create([
             'type' => $location->type,
             'deleted_at' => null,
         ]);
@@ -122,7 +122,7 @@ class LocationControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-location');
-        $location = factory(\App\Models\Location::class)->create();
+        $location = \App\Models\Location::factory()->create();
 
         $response = $this->actingAs($user)->get(route('location.show', [$location]));
 
@@ -171,7 +171,7 @@ class LocationControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-location');
 
-        $location = factory(\App\Models\Location::class)->create();
+        $location = \App\Models\Location::factory()->create();
 
         $location_name = $this->faker->word;
         $location_description = $this->faker->sentence(7, true);

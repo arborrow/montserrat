@@ -2,17 +2,35 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Models\DonationType::class, function (Faker $faker) {
-    $label = $faker->word;
-    $value = $faker->numberBetween(1000, 2000);
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-    return [
-        'label' => $label,
-        'value' => $value,
-        'name' => $label,
-        'description' => $label.' ('.$value.')',
-        'is_active' => $faker->boolean,
-    ];
-});
+class DonationTypeFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \App\Models\DonationType::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $label = $this->faker->word;
+        $value = $this->faker->numberBetween(1000, 2000);
+
+        return [
+            'label' => $label,
+            'value' => $value,
+            'name' => $label,
+            'description' => $label.' ('.$value.')',
+            'is_active' => $this->faker->boolean,
+        ];
+    }
+}

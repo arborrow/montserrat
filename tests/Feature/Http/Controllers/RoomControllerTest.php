@@ -34,7 +34,7 @@ class RoomControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-room');
-        $room = factory(\App\Models\Room::class)->create();
+        $room = \App\Models\Room::factory()->create();
 
         $response = $this->actingAs($user)->delete(route('room.destroy', [$room]));
 
@@ -49,7 +49,7 @@ class RoomControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-room');
-        $room = factory(\App\Models\Room::class)->create();
+        $room = \App\Models\Room::factory()->create();
 
         $response = $this->actingAs($user)->get(route('room.edit', [$room]));
 
@@ -123,7 +123,7 @@ class RoomControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-room');
-        $room = factory(\App\Models\Room::class)->create();
+        $room = \App\Models\Room::factory()->create();
 
         $response = $this->actingAs($user)->get(route('room.show', [$room]));
 
@@ -140,7 +140,7 @@ class RoomControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('create-room');
 
-        $location = factory(\App\Models\Location::class)->create();
+        $location = \App\Models\Location::factory()->create();
         $name = 'New '.$this->faker->lastName.' Suite';
         $description = $this->faker->catchPhrase;
 
@@ -182,10 +182,10 @@ class RoomControllerTest extends TestCase
     public function update_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-room');
-        $room = factory(\App\Models\Room::class)->create();
+        $room = \App\Models\Room::factory()->create();
 
         $original_description = $room->description;
-        $new_location = factory(\App\Models\Location::class)->create();
+        $new_location = \App\Models\Location::factory()->create();
         $new_name = 'Renovated '.$this->faker->lastName.' Suite';
         $new_description = $this->faker->catchPhrase;
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -16,6 +17,7 @@ class DonationType extends Model implements Auditable
     Previously, when removing a donation type, a note was added indicating the previous donation type. All Donations should have a donation description (null is not allowed).
     The name field is more of a longer description to be used in reports.  The value field refers to the Quickbooks chart of accounts number.
     */
+    use HasFactory;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 

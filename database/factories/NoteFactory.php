@@ -2,17 +2,35 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Models\Note::class, function (Faker $faker) {
-    return [
-        'entity_table' => 'contact',
-        'entity_id' => function () {
-            return factory(App\Models\Contact::class)->create()->id;
-        },
-        'note' => $faker->sentence(),
-        'subject' => $faker->randomElement(['Contact Note', 'Dietary Note', 'Diocese note', 'Health Note', 'Organization Note', 'Parish note', 'Pastor', 'Room Preference', 'Vendor note']),
-        'created_at' => now(),
-        'updated_at' => now(),
-    ];
-});
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class NoteFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \App\Models\Note::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'entity_table' => 'contact',
+            'entity_id' => function () {
+                return \App\Models\Contact::factory()->create()->id;
+            },
+            'note' => $this->faker->sentence(),
+            'subject' => $this->faker->randomElement(['Contact Note', 'Dietary Note', 'Diocese note', 'Health Note', 'Organization Note', 'Parish note', 'Pastor', 'Room Preference', 'Vendor note']),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ];
+    }
+}

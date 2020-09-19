@@ -21,7 +21,7 @@ class RelationshipTypeControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('create-relationship');
         $user->assignRole('test-role:relationship_type_add');
-        $relationship_type = factory(\App\Models\RelationshipType::class)->create();
+        $relationship_type = \App\Models\RelationshipType::factory()->create();
 
         $response = $this->actingAs($user)->get(route('relationship_type.add', ['id' => $relationship_type->id]));
         // dd($response);
@@ -47,7 +47,7 @@ class RelationshipTypeControllerTest extends TestCase
 
         $user = $this->createUserWithPermission('create-relationship');
 
-        $contact = factory(\App\Models\Contact::class)->create([
+        $contact = \App\Models\Contact::factory()->create([
           'contact_type' => config('polanco.contact_type.individual'),
           'subcontact_type' => null,
         ]);
@@ -111,7 +111,7 @@ class RelationshipTypeControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('delete-relationshiptype');
 
-        $relationship_type = factory(\App\Models\RelationshipType::class)->create();
+        $relationship_type = \App\Models\RelationshipType::factory()->create();
 
         $response = $this->actingAs($user)->delete(route('relationship_type.destroy', [$relationship_type]));
 
@@ -126,7 +126,7 @@ class RelationshipTypeControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-relationshiptype');
-        $relationship_type = factory(\App\Models\RelationshipType::class)->create();
+        $relationship_type = \App\Models\RelationshipType::factory()->create();
 
         $response = $this->actingAs($user)->get(route('relationship_type.edit', [$relationship_type]));
 
@@ -161,7 +161,7 @@ class RelationshipTypeControllerTest extends TestCase
     public function index_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-relationshiptype');
-        $relationship_type = factory(\App\Models\RelationshipType::class)->create();
+        $relationship_type = \App\Models\RelationshipType::factory()->create();
 
         $response = $this->actingAs($user)->get(route('relationship_type.index'));
 
@@ -179,11 +179,11 @@ class RelationshipTypeControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('create-relationship');
 
-        $contact_a = factory(\App\Models\Contact::class)->create([
+        $contact_a = \App\Models\Contact::factory()->create([
             'contact_type' => config('polanco.contact_type.individual'),
             'subcontact_type' => null,
         ]);
-        $contact_b = factory(\App\Models\Contact::class)->create([
+        $contact_b = \App\Models\Contact::factory()->create([
             'contact_type' => config('polanco.contact_type.individual'),
             'subcontact_type' => null,
         ]);
@@ -223,7 +223,7 @@ class RelationshipTypeControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-relationshiptype');
-        $relationship_type = factory(\App\Models\RelationshipType::class)->create();
+        $relationship_type = \App\Models\RelationshipType::factory()->create();
 
         $response = $this->actingAs($user)->get(route('relationship_type.show', [$relationship_type]));
 
@@ -288,7 +288,7 @@ class RelationshipTypeControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-relationshiptype');
 
-        $relationship_type = factory(\App\Models\RelationshipType::class)->create();
+        $relationship_type = \App\Models\RelationshipType::factory()->create();
         $original_description = $relationship_type->description;
         $new_name_a_b = $this->faker->company;
         $new_name_b_a = $this->faker->jobTitle;

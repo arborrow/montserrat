@@ -36,7 +36,7 @@ class DonationTypeControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-donation-type');
-        $donation_type = factory(\App\Models\DonationType::class)->create();
+        $donation_type = \App\Models\DonationType::factory()->create();
 
         $response = $this->actingAs($user)->delete(route('donation_type.destroy', [$donation_type]));
         $response->assertSessionHas('flash_notification');
@@ -51,7 +51,7 @@ class DonationTypeControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-donation-type');
-        $donation_type = factory(\App\Models\DonationType::class)->create();
+        $donation_type = \App\Models\DonationType::factory()->create();
 
         $response = $this->actingAs($user)->get(route('donation_type.edit', [$donation_type]));
 
@@ -88,7 +88,7 @@ class DonationTypeControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-donation-type');
-        $donation_type = factory(\App\Models\DonationType::class)->create();
+        $donation_type = \App\Models\DonationType::factory()->create();
 
         $response = $this->actingAs($user)->get(route('donation_type.show', [$donation_type]));
 
@@ -136,7 +136,7 @@ class DonationTypeControllerTest extends TestCase
     public function update_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-donation-type');
-        $donation_type = factory(\App\Models\DonationType::class)->create();
+        $donation_type = \App\Models\DonationType::factory()->create();
         $original_donation_type_name = $donation_type->name;
         $new_donation_type_name = 'New '.$this->faker->words(3, true);
 

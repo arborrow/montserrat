@@ -38,7 +38,7 @@ class ParishControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-contact');
-        $parish = factory(\App\Models\Parish::class)->create();
+        $parish = \App\Models\Parish::factory()->create();
 
         $response = $this->actingAs($user)->delete(route('parish.destroy', [$parish->id]));
         $response->assertSessionHas('flash_notification');
@@ -53,64 +53,64 @@ class ParishControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-contact');
-        $parish = factory(\App\Models\Parish::class)->create();
+        $parish = \App\Models\Parish::factory()->create();
         $parish = \App\Models\Contact::findOrFail($parish->id);
-        $main_address = factory(\App\Models\Address::class)->create([
+        $main_address = \App\Models\Address::factory()->create([
             'contact_id' => $parish->id,
             'location_type_id' => config('polanco.location_type.main'),
             'is_primary' => 1,
         ]);
 
-        $main_phone = factory(\App\Models\Phone::class)->create([
+        $main_phone = \App\Models\Phone::factory()->create([
             'contact_id' => $parish->id,
             'location_type_id' =>  config('polanco.location_type.main'),
             'is_primary' => 1,
             'phone_type' => 'Phone',
         ]);
 
-        $main_fax = factory(\App\Models\Phone::class)->create([
+        $main_fax = \App\Models\Phone::factory()->create([
             'contact_id' => $parish->id,
             'location_type_id' =>  config('polanco.location_type.main'),
             'phone_type' => 'Fax',
         ]);
 
-        $main_email = factory(\App\Models\Email::class)->create([
+        $main_email = \App\Models\Email::factory()->create([
             'contact_id' => $parish->id,
             'is_primary' => 1,
             'location_type_id' => config('polanco.location_type.main'),
         ]);
 
-        $url_main = factory(\App\Models\Website::class)->create([
+        $url_main = \App\Models\Website::factory()->create([
             'contact_id' => $parish->id,
             'website_type' => 'Main',
             'url' => $this->faker->url,
         ]);
-        $url_work = factory(\App\Models\Website::class)->create([
+        $url_work = \App\Models\Website::factory()->create([
             'contact_id' => $parish->id,
             'website_type' => 'Work',
             'url' => $this->faker->url,
         ]);
-        $url_facebook = factory(\App\Models\Website::class)->create([
+        $url_facebook = \App\Models\Website::factory()->create([
             'contact_id' => $parish->id,
             'website_type' => 'Facebook',
             'url' => 'https://facebook.com/'.$this->faker->slug,
         ]);
-        $url_google = factory(\App\Models\Website::class)->create([
+        $url_google = \App\Models\Website::factory()->create([
             'contact_id' => $parish->id,
             'website_type' => 'Google',
             'url' => 'https://google.com/'.$this->faker->slug,
         ]);
-        $url_instagram = factory(\App\Models\Website::class)->create([
+        $url_instagram = \App\Models\Website::factory()->create([
             'contact_id' => $parish->id,
             'website_type' => 'Instagram',
             'url' => 'https://instagram.com/'.$this->faker->slug,
         ]);
-        $url_linkedin = factory(\App\Models\Website::class)->create([
+        $url_linkedin = \App\Models\Website::factory()->create([
             'contact_id' => $parish->id,
             'website_type' => 'LinkedIn',
             'url' => 'https://linkedin.com/'.$this->faker->slug,
         ]);
-        $url_twitter = factory(\App\Models\Website::class)->create([
+        $url_twitter = \App\Models\Website::factory()->create([
             'contact_id' => $parish->id,
             'website_type' => 'Twitter',
             'url' => 'https://twitter.com/'.$this->faker->slug,
@@ -157,7 +157,7 @@ class ParishControllerTest extends TestCase
     public function index_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-contact');
-        $parish = factory(\App\Models\Parish::class)->create();
+        $parish = \App\Models\Parish::factory()->create();
 
         $response = $this->actingAs($user)->get(route('parish.index'));
 
@@ -178,12 +178,12 @@ class ParishControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-contact');
 
-        $diocese = factory(\App\Models\Diocese::class)->create([
+        $diocese = \App\Models\Diocese::factory()->create([
             'contact_type' => config('polanco.contact_type.organization'),
             'subcontact_type' => config('polanco.contact_type.diocese'),
         ]);
-        $parish = factory(\App\Models\Parish::class)->create();
-        $relationship_diocese = factory(\App\Models\Relationship::class)->create([
+        $parish = \App\Models\Parish::factory()->create();
+        $relationship_diocese = \App\Models\Relationship::factory()->create([
             'contact_id_a' => $diocese->id,
             'contact_id_b' => $parish->id,
             'relationship_type_id' => config('polanco.relationship_type.diocese'),
@@ -206,7 +206,7 @@ class ParishControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-contact');
-        $parish = factory(\App\Models\Parish::class)->create();
+        $parish = \App\Models\Parish::factory()->create();
 
         $response = $this->actingAs($user)->get(route('parish.show', [$parish]));
 
@@ -262,7 +262,7 @@ class ParishControllerTest extends TestCase
     public function update_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-contact');
-        $parish = factory(\App\Models\Parish::class)->create();
+        $parish = \App\Models\Parish::factory()->create();
 
         $original_sort_name = $parish->sort_name;
         $new_parish_name = 'St. '.$this->faker->firstName.' Parish of the Renewal';

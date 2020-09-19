@@ -2,19 +2,38 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Models\AssetType::class, function (Faker $faker) {
-    $label = $faker->word;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
-    return [
-        'label' => $label,
-        'name' => $label,
-        'description' => $faker->sentence,
-        'is_active' => 1,
-        'parent_asset_type_id' => null,
-        'created_at' => now(),
-        'updated_at' => now(),
-        'remember_token' => Str::random(10),
-    ];
-});
+class AssetTypeFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \App\Models\AssetType::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $label = $this->faker->word;
+
+        return [
+            'label' => $label,
+            'name' => $label,
+            'description' => $this->faker->sentence,
+            'is_active' => 1,
+            'parent_asset_type_id' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
+            'remember_token' => Str::random(10),
+        ];
+    }
+}

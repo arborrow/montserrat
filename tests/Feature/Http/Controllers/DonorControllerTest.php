@@ -35,11 +35,11 @@ class DonorControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-donor');
-        $contact = factory(\App\Models\Contact::class)->create([
+        $contact = \App\Models\Contact::factory()->create([
           'contact_type' => config('polanco.contact_type.individual'),
           'subcontact_type' => null,
         ]);
-        $donor = factory(\App\Models\Donor::class)->create([
+        $donor = \App\Models\Donor::factory()->create([
           'contact_id' => $contact->id,
           'sort_name' => $contact->sort_name,
         ]);

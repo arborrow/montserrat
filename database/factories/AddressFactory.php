@@ -2,34 +2,53 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Models\Address::class, function (Faker $faker) {
-    return [
-        'contact_id' => function () {
-            return factory(App\Models\Contact::class)->create()->id;
-        },
-        'location_type_id' => $faker->numberBetween(1, 5),
-        'is_primary' => $faker->boolean,
-        'is_billing' => $faker->boolean,
-        'street_address' => $faker->streetAddress,
-        'street_number' => $faker->randomNumber(),
-        'street_number_suffix' => $faker->word,
-        'street_number_predirectional' => $faker->word,
-        'street_name' => $faker->streetName,
-        'street_type' => $faker->streetSuffix,
-        'street_number_postdirectional' => $faker->word,
-        'street_unit' => $faker->secondaryAddress,
-        'supplemental_address_1' => $faker->streetAddress,
-        'city' => $faker->city,
-        'county_id' => $faker->randomNumber(),
-        'state_province_id' => $faker->numberBetween(1000, 1050),
-        'postal_code_suffix' => $faker->numberBetween(1000, 9999),
-        'postal_code' => $faker->postcode,
-        'country_id' => '1228',
-        'timezone' => $faker->word,
-        'name' => $faker->name,
-        'master_id' => $faker->randomNumber(),
-        'remember_token' => Str::random(10),
-    ];
-});
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
+
+class AddressFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \App\Models\Address::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'contact_id' => function () {
+                return \App\Models\Contact::factory()->create()->id;
+            },
+            'location_type_id' => $this->faker->numberBetween(1, 5),
+            'is_primary' => $this->faker->boolean,
+            'is_billing' => $this->faker->boolean,
+            'street_address' => $this->faker->streetAddress,
+            'street_number' => $this->faker->randomNumber(),
+            'street_number_suffix' => $this->faker->word,
+            'street_number_predirectional' => $this->faker->word,
+            'street_name' => $this->faker->streetName,
+            'street_type' => $this->faker->streetSuffix,
+            'street_number_postdirectional' => $this->faker->word,
+            'street_unit' => $this->faker->secondaryAddress,
+            'supplemental_address_1' => $this->faker->streetAddress,
+            'city' => $this->faker->city,
+            'county_id' => $this->faker->randomNumber(),
+            'state_province_id' => $this->faker->numberBetween(1000, 1050),
+            'postal_code_suffix' => $this->faker->numberBetween(1000, 9999),
+            'postal_code' => $this->faker->postcode,
+            'country_id' => '1228',
+            'timezone' => $this->faker->word,
+            'name' => $this->faker->name,
+            'master_id' => $this->faker->randomNumber(),
+            'remember_token' => Str::random(10),
+        ];
+    }
+}

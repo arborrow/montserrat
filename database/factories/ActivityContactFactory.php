@@ -2,13 +2,32 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Models\ActivityContact::class, function (Faker $faker) {
-    return [
-        'activity_id' => $faker->randomNumber(),
-        'contact_id' => $faker->randomNumber(),
-        'record_type_id' => $faker->randomNumber(),
-        'remember_token' => Str::random(10),
-    ];
-});
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
+
+class ActivityContactFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \App\Models\ActivityContact::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'activity_id' => $this->faker->randomNumber(),
+            'contact_id' => $this->faker->randomNumber(),
+            'record_type_id' => $this->faker->randomNumber(),
+            'remember_token' => Str::random(10),
+        ];
+    }
+}

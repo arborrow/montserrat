@@ -33,7 +33,7 @@ class UomControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-uom');
-        $uom = factory(\App\Models\Uom::class)->create();
+        $uom = \App\Models\Uom::factory()->create();
 
         $response = $this->actingAs($user)->delete(route('uom.destroy', [$uom]));
 
@@ -48,7 +48,7 @@ class UomControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-uom');
-        $uom = factory(\App\Models\Uom::class)->create();
+        $uom = \App\Models\Uom::factory()->create();
 
         $response = $this->actingAs($user)->get(route('uom.edit', [$uom]));
 
@@ -85,7 +85,7 @@ class UomControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-uom');
-        $uom = factory(\App\Models\Uom::class)->create();
+        $uom = \App\Models\Uom::factory()->create();
 
         $response = $this->actingAs($user)->get(route('uom.show', [$uom]));
 
@@ -135,7 +135,7 @@ class UomControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-uom');
 
-        $uom = factory(\App\Models\Uom::class)->create();
+        $uom = \App\Models\Uom::factory()->create();
         $uom_type = $this->faker->randomElement(config('polanco.uom_types'));
 
         $original_uom_unit_name = $uom->unit_name;

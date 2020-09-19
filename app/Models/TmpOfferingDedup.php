@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 //use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TmpOfferingDedup extends Model
 {
+    use HasFactory;
+
     //use SoftDeletes;
     protected $table = 'tmp_offering_dedup';
     protected $fillable = ['contact_id', 'event_id'];

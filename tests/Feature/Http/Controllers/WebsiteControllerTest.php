@@ -33,7 +33,7 @@ class WebsiteControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-website');
-        $website = factory(\App\Models\Website::class)->create();
+        $website = \App\Models\Website::factory()->create();
 
         $response = $this->actingAs($user)->delete(route('website.destroy', [$website]));
 
@@ -48,7 +48,7 @@ class WebsiteControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-website');
-        $website = factory(\App\Models\Website::class)->create();
+        $website = \App\Models\Website::factory()->create();
 
         $response = $this->actingAs($user)->get(route('website.edit', [$website]));
 
@@ -85,7 +85,7 @@ class WebsiteControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-website');
-        $website = factory(\App\Models\Website::class)->create();
+        $website = \App\Models\Website::factory()->create();
 
         $response = $this->actingAs($user)->get(route('website.show', [$website]));
 
@@ -103,8 +103,8 @@ class WebsiteControllerTest extends TestCase
         $this->withoutExceptionHandling();
 
         $user = $this->createUserWithPermission('create-website');
-        $contact = factory(\App\Models\Contact::class)->create();
-        $asset = factory(\App\Models\Asset::class)->create();
+        $contact = \App\Models\Contact::factory()->create();
+        $asset = \App\Models\Asset::factory()->create();
 
         $website_url = $this->faker->url;
         $website_type = $this->faker->randomElement(config('polanco.website_types'));
@@ -137,7 +137,7 @@ class WebsiteControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-website');
 
-        $website = factory(\App\Models\Website::class)->create();
+        $website = \App\Models\Website::factory()->create();
         $website_type = $this->faker->randomElement(config('polanco.website_types'));
 
         $original_website_description = $website->description;

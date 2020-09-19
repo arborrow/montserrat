@@ -2,21 +2,39 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Models\Touchpoint::class, function (Faker $faker) {
-    return [
-        'type' => array_rand(array_flip(['Email', 'Call', 'Letter', 'Face', 'Other'])),
-        'notes' => $faker->paragraph,
-        'touched_at' => $faker->dateTime('now'),
-        'created_at' => $faker->dateTime('now'),
-        'updated_at' => $faker->dateTime('now'),
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-        'person_id' => function () {
-            return factory(App\Models\Contact::class)->create()->id;
-        },
-        'staff_id' => function () {
-            return factory(App\Models\Contact::class)->create()->id;
-        },
-    ];
-});
+class TouchpointFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \App\Models\Touchpoint::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'type' => array_rand(array_flip(['Email', 'Call', 'Letter', 'Face', 'Other'])),
+            'notes' => $this->faker->paragraph,
+            'touched_at' => $this->faker->dateTime('now'),
+            'created_at' => $this->faker->dateTime('now'),
+            'updated_at' => $this->faker->dateTime('now'),
+
+            'person_id' => function () {
+                return \App\Models\Contact::factory()->create()->id;
+            },
+            'staff_id' => function () {
+                return \App\Models\Contact::factory()->create()->id;
+            },
+        ];
+    }
+}

@@ -2,16 +2,35 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Models\ActivityStatus::class, function (Faker $faker) {
-    return [
-        'label' => $faker->word,
-        'value' => $faker->word,
-        'name' => $faker->name,
-        'is_active' => $faker->boolean,
-        'is_default' => $faker->boolean,
-        'weight' => $faker->randomNumber(),
-        'remember_token' => Str::random(10),
-    ];
-});
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
+
+class ActivityStatusFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \App\Models\ActivityStatus::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'label' => $this->faker->word,
+            'value' => $this->faker->word,
+            'name' => $this->faker->name,
+            'is_active' => $this->faker->boolean,
+            'is_default' => $this->faker->boolean,
+            'weight' => $this->faker->randomNumber(),
+            'remember_token' => Str::random(10),
+        ];
+    }
+}
