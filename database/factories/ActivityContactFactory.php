@@ -4,7 +4,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\ActivityContact::class, function (Faker $faker) {
+$factory->define(App\Models\ActivityContact::class, function (Faker $faker) {
     return [
         'activity_id' => $faker->randomNumber(),
         'contact_id' => $faker->randomNumber(),

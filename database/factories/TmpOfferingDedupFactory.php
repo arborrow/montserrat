@@ -3,12 +3,12 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 use Faker\Generator as Faker;
 
-$factory->define(App\TmpOfferingDedup::class, function (Faker $faker) {
-    $contact = factory(App\Contact::class)->create([
+$factory->define(App\Models\TmpOfferingDedup::class, function (Faker $faker) {
+    $contact = factory(App\Models\Contact::class)->create([
       'contact_type' => config('polanco.contact_type.individual'),
       'subcontact_type' => null,
     ]);
-    $event = factory(App\Retreat::class)->create();
+    $event = factory(App\Models\Retreat::class)->create();
 
     return [
       'combo' => $contact->id.'-'.$event->id,

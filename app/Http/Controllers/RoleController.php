@@ -16,7 +16,7 @@ class RoleController extends Controller
     public function index()
     {
         $this->authorize('show-role');
-        $roles = \App\Role::orderBy('name')->get();
+        $roles = \App\Models\Role::orderBy('name')->get();
 
         return view('admin.roles.index', compact('roles'));
     }
@@ -43,7 +43,7 @@ class RoleController extends Controller
     {
         $this->authorize('create-role');
 
-        $role = new \App\Role;
+        $role = new \App\Models\Role;
         $role->name = $request->input('name');
         $role->display_name = $request->input('display_name');
         $role->description = $request->input('description');
@@ -65,9 +65,9 @@ class RoleController extends Controller
     {
         $this->authorize('show-role');
 
-        $role = \App\Role::with('users', 'permissions')->findOrFail($id);
-        $permissions = \App\Permission::orderBy('name')->pluck('name', 'id');
-        $users = \App\User::orderBy('name')->pluck('name', 'id');
+        $role = \App\Models\Role::with('users', 'permissions')->findOrFail($id);
+        $permissions = \App\Models\Permission::orderBy('name')->pluck('name', 'id');
+        $users = \App\Models\User::orderBy('name')->pluck('name', 'id');
 
         return view('admin.roles.show', compact('role', 'permissions', 'users')); //
     }
@@ -82,7 +82,7 @@ class RoleController extends Controller
     {
         $this->authorize('update-role');
 
-        $role = \App\Role::findOrFail($id);
+        $role = \App\Models\Role::findOrFail($id);
 
         return view('admin.roles.edit', compact('role')); //
     }
@@ -98,7 +98,7 @@ class RoleController extends Controller
     {
         $this->authorize('update-role');
 
-        $role = \App\Role::findOrFail($request->input('id'));
+        $role = \App\Models\Role::findOrFail($request->input('id'));
         $role->name = $request->input('name');
         $role->display_name = $request->input('display_name');
         $role->description = $request->input('description');
@@ -119,8 +119,8 @@ class RoleController extends Controller
     {
         $this->authorize('delete-role');
 
-        $role = \App\Role::findOrFail($id);
-        \App\Role::destroy($id);
+        $role = \App\Models\Role::findOrFail($id);
+        \App\Models\Role::destroy($id);
 
         flash('Role: '.$role->name.' deleted')->warning()->important();
 
@@ -130,7 +130,7 @@ class RoleController extends Controller
     public function update_permissions(Request $request)
     {
         $this->authorize('update-role');
-        $role = \App\Role::findOrFail($request->input('id'));
+        $role = \App\Models\Role::findOrFail($request->input('id'));
         $role->permissions()->detach();
         $role->permissions()->sync($request->input('permissions'));
 
@@ -142,7 +142,7 @@ class RoleController extends Controller
     public function update_users(Request $request)
     {
         $this->authorize('update-role');
-        $role = \App\Role::findOrFail($request->input('id'));
+        $role = \App\Models\Role::findOrFail($request->input('id'));
         $role->users()->detach();
         $role->users()->sync($request->input('users'));
 

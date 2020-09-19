@@ -20,7 +20,7 @@ class DepartmentController extends Controller
     {
         $this->authorize('show-department');
 
-        $departments = \App\Department::orderBy('name')->get();
+        $departments = \App\Models\Department::orderBy('name')->get();
 
         return view('admin.departments.index', compact('departments'));
     }
@@ -34,7 +34,7 @@ class DepartmentController extends Controller
     {
         $this->authorize('create-department');
 
-        $parents = \App\Department::orderBy('name')->pluck('name', 'id');
+        $parents = \App\Models\Department::orderBy('name')->pluck('name', 'id');
         $parents->prepend('N/A', 0);
 
         return view('admin.departments.create', compact('parents'));
@@ -50,7 +50,7 @@ class DepartmentController extends Controller
     {
         $this->authorize('create-department');
 
-        $department = new \App\Department;
+        $department = new \App\Models\Department;
         $department->name = $request->input('name');
         $department->label = $request->input('label');
         $department->description = $request->input('description');
@@ -75,8 +75,8 @@ class DepartmentController extends Controller
     {
         $this->authorize('show-department');
 
-        $department = \App\Department::findOrFail($id);
-        $children = \App\Department::whereParentId($id)->get();
+        $department = \App\Models\Department::findOrFail($id);
+        $children = \App\Models\Department::whereParentId($id)->get();
 
         return view('admin.departments.show', compact('department', 'children'));
     }
@@ -91,9 +91,9 @@ class DepartmentController extends Controller
     {
         $this->authorize('update-department');
 
-        $department = \App\Department::findOrFail($id);
+        $department = \App\Models\Department::findOrFail($id);
 
-        $parents = \App\Department::orderBy('name')->pluck('name', 'id');
+        $parents = \App\Models\Department::orderBy('name')->pluck('name', 'id');
         $parents->prepend('N/A', 0);
 
         return view('admin.departments.edit', compact('department', 'parents')); //
@@ -110,7 +110,7 @@ class DepartmentController extends Controller
     {
         $this->authorize('update-department');
 
-        $department = \App\Department::findOrFail($id);
+        $department = \App\Models\Department::findOrFail($id);
 
         $department->name = $request->input('name');
         $department->label = $request->input('label');
@@ -134,9 +134,9 @@ class DepartmentController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-department');
-        $department = \App\Department::findOrFail($id);
+        $department = \App\Models\Department::findOrFail($id);
 
-        \App\Department::destroy($id);
+        \App\Models\Department::destroy($id);
         flash('Department: '.$department->name.' deleted')->warning()->important();
 
         return Redirect::action('DepartmentController@index');

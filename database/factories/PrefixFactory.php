@@ -4,7 +4,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Prefix::class, function (Faker $faker) {
+$factory->define(App\Models\Prefix::class, function (Faker $faker) {
     return [
     ];
 });

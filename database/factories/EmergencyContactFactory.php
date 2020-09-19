@@ -4,10 +4,10 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\EmergencyContact::class, function (Faker $faker) {
+$factory->define(App\Models\EmergencyContact::class, function (Faker $faker) {
     return [
         'contact_id' => function () {
-            return factory(App\Contact::class)->create()->id;
+            return factory(App\Models\Contact::class)->create()->id;
         },
         'name' => $faker->name,
         'relationship' => $faker->word,

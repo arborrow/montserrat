@@ -4,7 +4,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\ParticipantStatus::class, function (Faker $faker) {
+$factory->define(App\Models\ParticipantStatus::class, function (Faker $faker) {
     return [
     ];
 });

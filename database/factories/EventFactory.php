@@ -11,7 +11,7 @@ use Faker\Generator as Faker;
  * Idnumber begins with 2018 and adds a random and unique 4 digit number
  */
 
-$factory->define(App\Retreat::class, function (Faker $faker) {
+$factory->define(App\Models\Retreat::class, function (Faker $faker) {
     $start_date = Carbon::createFromTimestamp($faker->dateTimeBetween($startDate = '-60 days', $endDate = '+60 days')->getTimeStamp());
     $end_date = Carbon::createFromFormat('Y-m-d H:i:s', $start_date)->addDays($faker->numberBetween(1, 5));
     $title = ucwords(implode(' ', $faker->words(2))).' Retreat';

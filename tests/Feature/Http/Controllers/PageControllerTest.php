@@ -18,7 +18,7 @@ class PageControllerTest extends TestCase
      */
     public function about_displays_view()
     {
-        $user = factory(\App\User::class)->create();
+        $user = factory(\App\Models\User::class)->create();
 
         $response = $this->actingAs($user)->get(route('about'));
 
@@ -31,7 +31,7 @@ class PageControllerTest extends TestCase
      */
     public function bookstore_displays_view()
     {
-        $user = factory(\App\User::class)->create();
+        $user = factory(\App\Models\User::class)->create();
 
         $response = $this->actingAs($user)->get(route('bookstore'));
 
@@ -57,7 +57,7 @@ class PageControllerTest extends TestCase
      */
     public function config_google_client_returns_403()
     {
-        $user = factory(\App\User::class)->create();
+        $user = factory(\App\Models\User::class)->create();
 
         $response = $this->actingAs($user)->get(route('admin.config.google_client'));
         $response->assertForbidden();
@@ -81,7 +81,7 @@ class PageControllerTest extends TestCase
      */
     public function config_mailgun_returns_403()
     {
-        $user = factory(\App\User::class)->create();
+        $user = factory(\App\Models\User::class)->create();
 
         $response = $this->actingAs($user)->get(route('admin.config.mailgun'));
 
@@ -106,7 +106,7 @@ class PageControllerTest extends TestCase
      */
     public function config_twilio_returns_403()
     {
-        $user = factory(\App\User::class)->create();
+        $user = factory(\App\Models\User::class)->create();
 
         $response = $this->actingAs($user)->get(route('admin.config.twilio'));
 
@@ -119,7 +119,7 @@ class PageControllerTest extends TestCase
     public function contact_info_report_displays_view()
     {
         $user = $this->createUserWithPermission('show-contact');
-        $contact = factory(\App\Contact::class)->create();
+        $contact = factory(\App\Models\Contact::class)->create();
 
         $response = $this->actingAs($user)->get('report/contact_info_report/'.$contact->id);
 
@@ -158,7 +158,7 @@ class PageControllerTest extends TestCase
      */
     public function finance_returns_403()
     {
-        $user = factory(\App\User::class)->create();
+        $user = factory(\App\Models\User::class)->create();
 
         $response = $this->actingAs($user)->get(route('finance'));
 
@@ -171,7 +171,7 @@ class PageControllerTest extends TestCase
     public function finance_agc_acknowledge_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-donation');
-        $payment = factory(\App\Payment::class)->create();
+        $payment = factory(\App\Models\Payment::class)->create();
 
         $response = $this->actingAs($user)->get('donation/'.$payment->donation_id.'/agc_acknowledge');
 
@@ -186,8 +186,8 @@ class PageControllerTest extends TestCase
         $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('show-donation');
 
-        $donation = factory(\App\Donation::class)->create();
-        $payments = factory(\App\Payment::class, 3)->create(
+        $donation = factory(\App\Models\Donation::class)->create();
+        $payments = factory(\App\Models\Payment::class, 3)->create(
                 ['donation_id' => $donation->donation_id]
             );
         // dd($donation,$payments);
@@ -202,8 +202,8 @@ class PageControllerTest extends TestCase
      */
     public function finance_agc_acknowledge_returns_403()
     {
-        $user = factory(\App\User::class)->create();
-        $payment = factory(\App\Payment::class)->create();
+        $user = factory(\App\Models\User::class)->create();
+        $payment = factory(\App\Models\Payment::class)->create();
 
         $response = $this->actingAs($user)->get('donation/'.$payment->donation_id.'/agc_acknowledge');
 
@@ -215,8 +215,8 @@ class PageControllerTest extends TestCase
      */
     public function acknowledgment_pdf_returns_403()
     {
-        $user = factory(\App\User::class)->create();
-        $contact = factory(\App\Contact::class)->create();
+        $user = factory(\App\Models\User::class)->create();
+        $contact = factory(\App\Models\Contact::class)->create();
         $response = $this->actingAs($user)->get('report/acknowledgment_pdf/'.$contact->id);
 
         $response->assertForbidden();
@@ -276,7 +276,7 @@ class PageControllerTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('show-donation');
-        $donation = factory(\App\Donation::class)->create();
+        $donation = factory(\App\Models\Donation::class)->create();
 
         $response = $this->actingAs($user)->get('donation/'.$donation->donation_id.'/invoice');
 
@@ -303,7 +303,7 @@ class PageControllerTest extends TestCase
      */
     public function finance_reconcile_deposit_show_returns_an_ok_response()
     {
-        $user = factory(\App\User::class)->create();
+        $user = factory(\App\Models\User::class)->create();
         $user->assignRole('test-role:finance_reconcile_deposit_show');
 
         $response = $this->actingAs($user)->get(route('depositreconcile.show'));
@@ -320,8 +320,8 @@ class PageControllerTest extends TestCase
     public function finance_retreatdonations_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-donation');
-        $retreat = factory(\App\Retreat::class)->create();
-        $donation = factory(\App\Donation::class)->create([
+        $retreat = factory(\App\Models\Retreat::class)->create();
+        $donation = factory(\App\Models\Donation::class)->create([
           'event_id' => $retreat->id,
         ]);
 
@@ -339,7 +339,7 @@ class PageControllerTest extends TestCase
      */
     public function grounds_displays_view()
     {
-        $user = factory(\App\User::class)->create();
+        $user = factory(\App\Models\User::class)->create();
 
         $response = $this->actingAs($user)->get(route('grounds'));
 
@@ -352,7 +352,7 @@ class PageControllerTest extends TestCase
      */
     public function housekeeping_displays_view()
     {
-        $user = factory(\App\User::class)->create();
+        $user = factory(\App\Models\User::class)->create();
 
         $response = $this->actingAs($user)->get(route('housekeeping'));
 
@@ -365,7 +365,7 @@ class PageControllerTest extends TestCase
      */
     public function kitchen_displays_view()
     {
-        $user = factory(\App\User::class)->create();
+        $user = factory(\App\Models\User::class)->create();
 
         $response = $this->actingAs($user)->get(route('kitchen'));
 
@@ -378,7 +378,7 @@ class PageControllerTest extends TestCase
      */
     public function maintenance_displays_view()
     {
-        $user = factory(\App\User::class)->create();
+        $user = factory(\App\Models\User::class)->create();
 
         $response = $this->actingAs($user)->get(route('maintenance'));
 
@@ -391,7 +391,7 @@ class PageControllerTest extends TestCase
      */
     public function reservation_displays_view()
     {
-        $user = factory(\App\User::class)->create();
+        $user = factory(\App\Models\User::class)->create();
 
         $response = $this->actingAs($user)->get(route('reservation'));
 
@@ -404,7 +404,7 @@ class PageControllerTest extends TestCase
      */
     public function restricted_displays_view()
     {
-        $user = factory(\App\User::class)->create();
+        $user = factory(\App\Models\User::class)->create();
 
         $response = $this->actingAs($user)->get(route('restricted'));
 
@@ -417,7 +417,7 @@ class PageControllerTest extends TestCase
      */
     public function retreat_displays_view()
     {
-        $user = factory(\App\User::class)->create();
+        $user = factory(\App\Models\User::class)->create();
 
         $response = $this->actingAs($user)->get(route('retreats'));
 
@@ -430,10 +430,10 @@ class PageControllerTest extends TestCase
      */
     public function retreatantinforeport_displays_view()
     {
-        $user = factory(\App\User::class)->create();
+        $user = factory(\App\Models\User::class)->create();
         $user->assignRole('test-role:retreatantinforeport');
-        $retreat = factory(\App\Retreat::class)->create();
-        $registrants = factory(\App\Registration::class, 3)->create([
+        $retreat = factory(\App\Models\Retreat::class)->create();
+        $registrants = factory(\App\Models\Registration::class, 3)->create([
             'event_id' => $retreat->id,
             'canceled_at' => null,
         ]);
@@ -453,8 +453,8 @@ class PageControllerTest extends TestCase
     public function retreatlistingreport_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-contact');
-        $retreat = factory(\App\Retreat::class)->create();
-        $registrants = factory(\App\Registration::class, 2)->create([
+        $retreat = factory(\App\Models\Retreat::class)->create();
+        $registrants = factory(\App\Models\Registration::class, 2)->create([
             'event_id' => $retreat->id,
             'canceled_at' => null,
         ]);
@@ -474,7 +474,7 @@ class PageControllerTest extends TestCase
     public function retreatrosterreport_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-contact');
-        $retreat = factory(\App\Retreat::class)->create();
+        $retreat = factory(\App\Models\Retreat::class)->create();
 
         $response = $this->actingAs($user)->get('report/retreatroster/'.$retreat->idnumber);
 
@@ -488,7 +488,7 @@ class PageControllerTest extends TestCase
      */
     public function support_displays_view()
     {
-        $user = factory(\App\User::class)->create();
+        $user = factory(\App\Models\User::class)->create();
 
         $response = $this->actingAs($user)->get(route('support'));
 
@@ -502,7 +502,7 @@ class PageControllerTest extends TestCase
      */
     public function user_displays_view()
     {
-        $user = factory(\App\User::class)->create();
+        $user = factory(\App\Models\User::class)->create();
 
         $response = $this->actingAs($user)->get(route('users'));
 
@@ -515,7 +515,7 @@ class PageControllerTest extends TestCase
      */
     public function welcome_displays_view()
     {
-        $user = factory(\App\User::class)->create();
+        $user = factory(\App\Models\User::class)->create();
 
         $mock = new MockHandler([
             new Response(200, [], '<p><b>Hello</b>, World!</p>'),

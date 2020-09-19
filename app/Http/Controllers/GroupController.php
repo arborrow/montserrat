@@ -21,7 +21,7 @@ class GroupController extends Controller
     public function index()
     {
         $this->authorize('show-group');
-        $groups = \App\Group::whereIsActive(1)->orderBy('name')->with('members')->get();
+        $groups = \App\Models\Group::whereIsActive(1)->orderBy('name')->with('members')->get();
         foreach ($groups as $group) {
             $group->count = $group->members()->count();
         }
@@ -51,7 +51,7 @@ class GroupController extends Controller
     {
         $this->authorize('create-group');
 
-        $group = new \App\Group;
+        $group = new \App\Models\Group;
         $group->name = $request->input('name');
         $group->title = $request->input('title');
         $group->description = $request->input('description');
@@ -75,8 +75,8 @@ class GroupController extends Controller
     public function show($id)
     {
         $this->authorize('show-group');
-        $group = \App\Group::findOrFail($id);
-        $members = \App\Contact::whereHas('groups', function ($query) use ($id) {
+        $group = \App\Models\Group::findOrFail($id);
+        $members = \App\Models\Contact::whereHas('groups', function ($query) use ($id) {
             $query->whereGroupId($id)->whereStatus('Added');
         })->orderby('sort_name')->get();
 
@@ -92,7 +92,7 @@ class GroupController extends Controller
     public function edit($id)
     {
         $this->authorize('update-group');
-        $group = \App\Group::findOrFail($id);
+        $group = \App\Models\Group::findOrFail($id);
 
         return view('groups.edit', compact('group'));
     }
@@ -108,7 +108,7 @@ class GroupController extends Controller
     {
         $this->authorize('update-group');
 
-        $group = \App\Group::findOrFail($id);
+        $group = \App\Models\Group::findOrFail($id);
         $group->name = $request->input('name');
         $group->title = $request->input('title');
         $group->description = $request->input('description');
@@ -135,9 +135,9 @@ class GroupController extends Controller
     {
         $this->authorize('delete-group');
 
-        $group = \App\Group::findOrFail($id);
+        $group = \App\Models\Group::findOrFail($id);
 
-        \App\Group::destroy($id);
+        \App\Models\Group::destroy($id);
 
         flash('Group: '.$group->name.' deleted')->warning()->important();
 

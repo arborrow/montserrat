@@ -23,7 +23,7 @@ class LocationController extends Controller
         $location_types = config('polanco.locations_type');
         $location_types = Arr::sort($location_types);
 
-        $locations = \App\Location::orderBy('name')->get();
+        $locations = \App\Models\Location::orderBy('name')->get();
 
         return view('admin.locations.index', compact('locations', 'location_types'));
     }
@@ -35,7 +35,7 @@ class LocationController extends Controller
         $location_types = config('polanco.locations_type');
         $location_types = Arr::sort($location_types);
 
-        $locations = \App\Location::whereType($type)->orderBy('name')->get();
+        $locations = \App\Models\Location::whereType($type)->orderBy('name')->get();
 
         return view('admin.locations.index', compact('locations', 'location_types'));
     }
@@ -52,10 +52,10 @@ class LocationController extends Controller
         $location_types = config('polanco.locations_type');
         $location_types = Arr::sort($location_types);
 
-        $parents = \App\Location::orderBy('name')->pluck('name', 'id');
+        $parents = \App\Models\Location::orderBy('name')->pluck('name', 'id');
         $parents->prepend('N/A', 0);
 
-        $rooms = \App\Room::orderBy('name')->pluck('name', 'id');
+        $rooms = \App\Models\Room::orderBy('name')->pluck('name', 'id');
         $rooms->prepend('N/A', 0);
 
         return view('admin.locations.create', compact('location_types', 'parents', 'rooms'));
@@ -71,7 +71,7 @@ class LocationController extends Controller
     {
         $this->authorize('create-location');
 
-        $location = new \App\Location;
+        $location = new \App\Models\Location;
         $location->name = $request->input('name');
         $location->description = $request->input('description');
         $location->occupancy = $request->input('occupancy');
@@ -100,8 +100,8 @@ class LocationController extends Controller
     {
         $this->authorize('show-location');
 
-        $location = \App\Location::findOrFail($id);
-        $children = \App\Location::whereParentId($id)->orderBy('name')->get();
+        $location = \App\Models\Location::findOrFail($id);
+        $children = \App\Models\Location::whereParentId($id)->orderBy('name')->get();
 
         return view('admin.locations.show', compact('location', 'children'));
     }
@@ -116,15 +116,15 @@ class LocationController extends Controller
     {
         $this->authorize('update-location');
 
-        $location = \App\Location::findOrFail($id);
+        $location = \App\Models\Location::findOrFail($id);
 
         $location_types = config('polanco.locations_type');
         $location_types = Arr::sort($location_types);
 
-        $parents = \App\Location::orderBy('name')->pluck('name', 'id');
+        $parents = \App\Models\Location::orderBy('name')->pluck('name', 'id');
         $parents->prepend('N/A', 0);
 
-        $rooms = \App\Room::orderBy('name')->pluck('name', 'id');
+        $rooms = \App\Models\Room::orderBy('name')->pluck('name', 'id');
         $rooms->prepend('N/A', 0);
 
         return view('admin.locations.edit', compact('location', 'location_types', 'parents', 'rooms')); //
@@ -141,7 +141,7 @@ class LocationController extends Controller
     {
         $this->authorize('update-location');
 
-        $location = \App\Location::findOrFail($id);
+        $location = \App\Models\Location::findOrFail($id);
 
         $location->name = $request->input('name');
         $location->description = $request->input('description');
@@ -171,8 +171,8 @@ class LocationController extends Controller
     {
         $this->authorize('delete-location');
 
-        $location = \App\Location::findOrFail($id);
-        \App\Location::destroy($id);
+        $location = \App\Models\Location::findOrFail($id);
+        \App\Models\Location::destroy($id);
 
         flash('Location: '.$location->name.' deleted')->warning()->important();
 

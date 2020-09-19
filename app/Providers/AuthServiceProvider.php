@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Permission;
+use App\Models\Permission;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -14,7 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        \App\Attachment::class => \App\Policies\AttachmentPolicy::class,
+        \App\Models\Attachment::class => \App\Policies\AttachmentPolicy::class,
 
     ];
 
@@ -30,7 +30,7 @@ class AuthServiceProvider extends ServiceProvider
         //prior to installing the app ignore checking for superuser or permissions to avoid artisan errors about missing permissions table
         if (null !== config('app.key')) {
             Gate::before(function ($user) {
-                $superuser = \App\Permission::where('name', 'superuser')->firstOrFail();
+                $superuser = \App\Models\Permission::where('name', 'superuser')->firstOrFail();
 
                 // only return true if this user has a role with the superuser permission
                 // otherwise

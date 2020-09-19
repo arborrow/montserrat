@@ -4,7 +4,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Touchpoint::class, function (Faker $faker) {
+$factory->define(App\Models\Touchpoint::class, function (Faker $faker) {
     return [
         'type' => array_rand(array_flip(['Email', 'Call', 'Letter', 'Face', 'Other'])),
         'notes' => $faker->paragraph,
@@ -13,10 +13,10 @@ $factory->define(App\Touchpoint::class, function (Faker $faker) {
         'updated_at' => $faker->dateTime('now'),
 
         'person_id' => function () {
-            return factory(App\Contact::class)->create()->id;
+            return factory(App\Models\Contact::class)->create()->id;
         },
         'staff_id' => function () {
-            return factory(App\Contact::class)->create()->id;
+            return factory(App\Models\Contact::class)->create()->id;
         },
     ];
 });

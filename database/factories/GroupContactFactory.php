@@ -4,14 +4,14 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\GroupContact::class, function (Faker $faker) {
+$factory->define(App\Models\GroupContact::class, function (Faker $faker) {
     return [
         'status' => 'Added',
         'group_id' => function () {
-            return factory(App\Group::class)->create()->id;
+            return factory(App\Models\Group::class)->create()->id;
         },
         'contact_id' => function () {
-            return factory(App\Contact::class)->create()->id;
+            return factory(App\Models\Contact::class)->create()->id;
         },
     ];
 });

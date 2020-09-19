@@ -5,26 +5,26 @@
 use Carbon\Carbon;
 use Faker\Generator as Faker;
 
-$factory->define(App\Asset::class, function (Faker $faker) {
+$factory->define(App\Models\Asset::class, function (Faker $faker) {
     $start_date = Carbon::createFromTimestamp($faker->dateTimeBetween($startDate = '-60 days', $endDate = '-10 days')->getTimeStamp());
     $asset = $faker->word;
-    $power_uom = factory(App\Uom::class)->create([
+    $power_uom = factory(App\Models\Uom::class)->create([
         'type' => 'Electric current',
     ]);
-    $length_uom = factory(App\Uom::class)->create([
+    $length_uom = factory(App\Models\Uom::class)->create([
         'type' => 'Length',
     ]);
-    $weight_uom = factory(App\Uom::class)->create([
+    $weight_uom = factory(App\Models\Uom::class)->create([
         'type' => 'Mass',
     ]);
-    $time_uom = factory(App\Uom::class)->create([
+    $time_uom = factory(App\Models\Uom::class)->create([
         'type' => 'Time',
     ]);
 
     return [
         'name' => $asset,
         'asset_type_id' => function () {
-            return factory(App\AssetType::class)->create()->id;
+            return factory(App\Models\AssetType::class)->create()->id;
         },
         'description' => $faker->sentence,
 
@@ -33,7 +33,7 @@ $factory->define(App\Asset::class, function (Faker $faker) {
         'serial_number' => $faker->isbn10,
         'year' => $faker->year,
         'location_id' => function () {
-            return factory(App\Location::class)->create()->id;
+            return factory(App\Models\Location::class)->create()->id;
         },
         'department_id' => null,
         'parent_id' => null,
@@ -41,14 +41,14 @@ $factory->define(App\Asset::class, function (Faker $faker) {
         'remarks' => $faker->sentence,
         'is_active' => $faker->boolean,
         'manufacturer_id' => function () {
-            return factory(App\Contact::class)->create([
+            return factory(App\Models\Contact::class)->create([
                 'organization_name' => $this->faker->company,
                 'contact_type' => config('polanco.contact_type.organization'),
                 'subcontact_type' => config('polanco.contact_type.vendor'),
                 ])->id;
         },
         'vendor_id' => function () {
-            return factory(App\Contact::class)->create([
+            return factory(App\Models\Contact::class)->create([
                 'organization_name' => $this->faker->company,
                 'contact_type' => config('polanco.contact_type.organization'),
                 'subcontact_type' => config('polanco.contact_type.vendor'),

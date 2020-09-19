@@ -63,7 +63,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'defaultUserModel' => env('LARAVEL_LOGGER_USER_MODEL', App\User::class),
+    'defaultUserModel' => env('LARAVEL_LOGGER_USER_MODEL', App\Models\User::class),
 
     /*
     |--------------------------------------------------------------------------

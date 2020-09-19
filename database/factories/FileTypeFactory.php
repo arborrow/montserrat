@@ -4,7 +4,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\FileType::class, function (Faker $faker) {
+$factory->define(App\Models\FileType::class, function (Faker $faker) {
     return [
     ];
 });

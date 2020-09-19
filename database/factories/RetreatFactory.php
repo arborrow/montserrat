@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 // Create a retreat with new contacts for innkeeper and assistant defining those relationships
 
-$factory->define(App\Retreat::class, function (Faker $faker) {
+$factory->define(App\Models\Retreat::class, function (Faker $faker) {
     $start_date = Carbon::createFromTimestamp($faker->dateTimeBetween($startDate = '-60 days', $endDate = '+60 days')->getTimeStamp());
     $end_date = Carbon::createFromFormat('Y-m-d H:i:s', $start_date)->addDays($faker->numberBetween(1, 5));
     // TODO: evaluate whether this is desireable or necessary (leaving out for now)

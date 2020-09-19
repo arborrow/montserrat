@@ -61,9 +61,9 @@ class PermissionController extends Controller
             $term = $request->input('term');
         }
         if (empty($term)) {
-            $permissions = \App\Permission::orderBy('name')->get();
+            $permissions = \App\Models\Permission::orderBy('name')->get();
         } else {
-            $permissions = \App\Permission::orderBy('name')->where('name', 'like', '%'.$term.'%')->get();
+            $permissions = \App\Models\Permission::orderBy('name')->where('name', 'like', '%'.$term.'%')->get();
         }
 
         return view('admin.permissions.index', compact('permissions', 'actions', 'models'));
@@ -90,7 +90,7 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create-permission');
-        $permission = new \App\Permission;
+        $permission = new \App\Models\Permission;
         $permission->name = $request->input('name');
         $permission->display_name = $request->input('display_name');
         $permission->description = $request->input('description');
@@ -110,8 +110,8 @@ class PermissionController extends Controller
     public function show($id)
     {
         $this->authorize('show-permission');
-        $permission = \App\Permission::with('roles.users')->findOrFail($id);
-        $roles = \App\Role::orderBy('name')->pluck('name', 'id');
+        $permission = \App\Models\Permission::with('roles.users')->findOrFail($id);
+        $roles = \App\Models\Role::orderBy('name')->pluck('name', 'id');
 
         return view('admin.permissions.show', compact('permission', 'roles'));
     }
@@ -125,7 +125,7 @@ class PermissionController extends Controller
     public function edit($id)
     {
         $this->authorize('update-permission');
-        $permission = \App\Permission::findOrFail($id);
+        $permission = \App\Models\Permission::findOrFail($id);
 
         return view('admin.permissions.edit', compact('permission'));
     }
@@ -140,7 +140,7 @@ class PermissionController extends Controller
     public function update(Request $request, $id)
     {
         $this->authorize('update-permission');
-        $permission = \App\Permission::findOrFail($request->input('id'));
+        $permission = \App\Models\Permission::findOrFail($request->input('id'));
         $permission->name = $request->input('name');
         $permission->display_name = $request->input('display_name');
         $permission->description = $request->input('description');
@@ -161,9 +161,9 @@ class PermissionController extends Controller
     {
         $this->authorize('delete-permission');
 
-        $permission = \App\Permission::findOrFail($id);
+        $permission = \App\Models\Permission::findOrFail($id);
 
-        \App\Permission::destroy($id);
+        \App\Models\Permission::destroy($id);
 
         flash('Permission: '.$permission->name.' deleted')->warning()->important();
 
@@ -174,7 +174,7 @@ class PermissionController extends Controller
     {
         $this->authorize('update-permission');
         $this->authorize('update-role');
-        $permission = \App\Permission::findOrFail($request->input('id'));
+        $permission = \App\Models\Permission::findOrFail($request->input('id'));
         $permission->roles()->detach();
         $permission->roles()->sync($request->input('roles'));
 

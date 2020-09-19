@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\TmpOfferingDedup;
+use App\Models\TmpOfferingDedup;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -37,15 +37,15 @@ class SystemControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-offeringdedup');
 
         // Create a duplicate contact_id:event_id pair of donations
-        $offeringdedup = factory(\App\TmpOfferingDedup::class)->create([
+        $offeringdedup = factory(\App\Models\TmpOfferingDedup::class)->create([
             'created_at' => $this->faker->dateTime('now'),
         ]);
-        $donation_1 = factory(\App\Donation::class)->create([
+        $donation_1 = factory(\App\Models\Donation::class)->create([
           'contact_id' => $offeringdedup->contact_id,
           'event_id' => $offeringdedup->event_id,
           'donation_description' => 'Retreat Funding',
         ]);
-        $donation_2 = factory(\App\Donation::class)->create([
+        $donation_2 = factory(\App\Models\Donation::class)->create([
           'contact_id' => $offeringdedup->contact_id,
           'event_id' => $offeringdedup->event_id,
           'donation_description' => 'Retreat Funding',

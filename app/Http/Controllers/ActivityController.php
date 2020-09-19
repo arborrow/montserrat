@@ -23,7 +23,7 @@ class ActivityController extends Controller
     public function index()
     {
         $this->authorize('show-activity');
-        $activities = \App\Activity::orderBy('activity_date_time', 'desc')->paginate(100);
+        $activities = \App\Models\Activity::orderBy('activity_date_time', 'desc')->paginate(100);
 
         return view('activities.index', compact('activities'));
     }
@@ -36,21 +36,21 @@ class ActivityController extends Controller
     public function create(Request $request)
     {
         $this->authorize('create-activity');
-        $staff = \App\Contact::with('groups')->whereHas('groups', function ($query) {
+        $staff = \App\Models\Contact::with('groups')->whereHas('groups', function ($query) {
             $query->where('group_id', '=', config('polanco.group_id.staff'));
         })->orderBy('sort_name')->pluck('sort_name', 'id');
         // TODO: replace this with an autocomplete text box for performance rather than a dropdown box
-        $persons = \App\Contact::orderBy('sort_name')->pluck('sort_name', 'id');
+        $persons = \App\Models\Contact::orderBy('sort_name')->pluck('sort_name', 'id');
         $current_user = $request->user();
-        $user_email = \App\Email::whereEmail($current_user->email)->first();
+        $user_email = \App\Models\Email::whereEmail($current_user->email)->first();
         if (empty($user_email->contact_id)) {
             $defaults['user_id'] = 0;
         } else {
             $defaults['user_id'] = $user_email->contact_id;
         }
-        $status = \App\ActivityStatus::whereIsActive(1)->orderBy('label')->pluck('label', 'id');
+        $status = \App\Models\ActivityStatus::whereIsActive(1)->orderBy('label')->pluck('label', 'id');
         $status->prepend('N/A', 0);
-        $activity_type = \App\ActivityType::whereIsActive(1)->orderBy('label')->pluck('label', 'id');
+        $activity_type = \App\Models\ActivityType::whereIsActive(1)->orderBy('label')->pluck('label', 'id');
         $activity_type->prepend('N/A', 0);
         $medium = array_flip(config('polanco.medium'));
         $medium[0] = 'Unspecified';
@@ -69,8 +69,8 @@ class ActivityController extends Controller
     public function store(StoreActivityRequest $request)
     {
         $this->authorize('create-activity');
-        $activity_type = \App\ActivityType::findOrFail($request->input('activity_type_id'));
-        $activity = new \App\Activity;
+        $activity_type = \App\Models\ActivityType::findOrFail($request->input('activity_type_id'));
+        $activity = new \App\Models\Activity;
         $activity->activity_type_id = $request->input('activity_type_id');
         $activity->subject = $activity_type->label;
         $activity->activity_date_time = Carbon::parse($request->input('touched_at'));
@@ -83,19 +83,19 @@ class ActivityController extends Controller
         $activity->medium_id = $request->input('medium_id');
         $activity->save();
 
-        $activity_target = new \App\ActivityContact;
+        $activity_target = new \App\Models\ActivityContact;
         $activity_target->activity_id = $activity->id;
         $activity_target->contact_id = $request->input('person_id');
         $activity_target->record_type_id = config('polanco.activity_contacts_type.target');
         $activity_target->save();
 
-        $activity_source = new \App\ActivityContact;
+        $activity_source = new \App\Models\ActivityContact;
         $activity_source->activity_id = $activity->id;
         $activity_source->contact_id = $request->input('staff_id');
         $activity_source->record_type_id = config('polanco.activity_contacts_type.creator');
         $activity_source->save();
 
-        $activity_assignee = new \App\ActivityContact;
+        $activity_assignee = new \App\Models\ActivityContact;
         $activity_assignee->activity_id = $activity->id;
         $activity_assignee->contact_id = $request->input('staff_id');
         $activity_assignee->record_type_id = config('polanco.activity_contacts_type.assignee');
@@ -113,7 +113,7 @@ class ActivityController extends Controller
     public function show($id)
     {
         $this->authorize('show-activity');
-        $activity = \App\Activity::with('assignees', 'creators', 'targets')->findOrFail($id);
+        $activity = \App\Models\Activity::with('assignees', 'creators', 'targets')->findOrFail($id);
 
         return view('activities.show', compact('activity')); //
     }
@@ -127,30 +127,30 @@ class ActivityController extends Controller
     public function edit($id)
     {
         $this->authorize('update-activity');
-        $activity = \App\Activity::findOrFail($id);
+        $activity = \App\Models\Activity::findOrFail($id);
         $target = $activity->targets->first();
         $assignee = $activity->assignees->first();
         $creator = $activity->creators->first();
 
-        $staff = \App\Contact::with('groups')->whereHas('groups', function ($query) {
+        $staff = \App\Models\Contact::with('groups')->whereHas('groups', function ($query) {
             $query->where('group_id', '=', config('polanco.group_id.staff'));
         })->orderBy('sort_name')->pluck('sort_name', 'id');
 
-        $activity_type = \App\ActivityType::whereIsActive(1)->orderBy('label')->pluck('label', 'id');
+        $activity_type = \App\Models\ActivityType::whereIsActive(1)->orderBy('label')->pluck('label', 'id');
         $activity_type->prepend('N/A', 0);
 
-        $status = \App\ActivityStatus::whereIsActive(1)->orderBy('label')->pluck('label', 'id');
+        $status = \App\Models\ActivityStatus::whereIsActive(1)->orderBy('label')->pluck('label', 'id');
         $status->prepend('N/A', 0);
 
         $medium = array_flip(config('polanco.medium'));
         $medium[0] = 'Unspecified';
         $medium = array_map('ucfirst', $medium);
 
-        $contact = \App\Contact::findOrFail($target->contact_id);
+        $contact = \App\Models\Contact::findOrFail($target->contact_id);
         if (isset($contact->subcontact_type)) {
-            $persons = \App\Contact::whereSubcontactType($contact->subcontact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
+            $persons = \App\Models\Contact::whereSubcontactType($contact->subcontact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
         } else {
-            $persons = \App\Contact::whereContactType($contact->contact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
+            $persons = \App\Models\Contact::whereContactType($contact->contact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
         }
 
         return view('activities.edit', compact('activity', 'staff', 'persons', 'target', 'assignee', 'creator', 'activity_type', 'status', 'medium'));
@@ -166,8 +166,8 @@ class ActivityController extends Controller
     public function update(UpdateActivityRequest $request, $id)
     {
         $this->authorize('update-activity');
-        $activity_type = \App\ActivityType::findOrFail($request->input('activity_type_id'));
-        $activity = \App\Activity::findOrFail($id);
+        $activity_type = \App\Models\ActivityType::findOrFail($request->input('activity_type_id'));
+        $activity = \App\Models\Activity::findOrFail($id);
 
         $activity->activity_date_time = Carbon::parse($request->input('touched_at'));
         $activity->activity_type_id = $request->input('activity_type_id');
@@ -181,15 +181,15 @@ class ActivityController extends Controller
         // $activity->phone_number = $request->input('phone_number');
         $activity->save();
 
-        $activity_target = \App\ActivityContact::whereActivityId($id)->whereRecordTypeId(config('polanco.activity_contacts_type.target'))->firstOrFail();
+        $activity_target = \App\Models\ActivityContact::whereActivityId($id)->whereRecordTypeId(config('polanco.activity_contacts_type.target'))->firstOrFail();
         $activity_target->contact_id = $request->input('target_id');
         $activity_target->save();
 
-        $activity_source = \App\ActivityContact::whereActivityId($id)->whereRecordTypeId(config('polanco.activity_contacts_type.creator'))->firstOrFail();
+        $activity_source = \App\Models\ActivityContact::whereActivityId($id)->whereRecordTypeId(config('polanco.activity_contacts_type.creator'))->firstOrFail();
         $activity_source->contact_id = $request->input('assignee_id');
         $activity_source->save();
 
-        $activity_assignee = \App\ActivityContact::whereActivityId($id)->whereRecordTypeId(config('polanco.activity_contacts_type.assignee'))->firstOrFail();
+        $activity_assignee = \App\Models\ActivityContact::whereActivityId($id)->whereRecordTypeId(config('polanco.activity_contacts_type.assignee'))->firstOrFail();
         $activity_assignee->contact_id = $request->input('creator_id');
         $activity_assignee->save();
 
@@ -207,8 +207,8 @@ class ActivityController extends Controller
         // delete activity contacts and then the activity (could be handled in model with cascading deletes)
 
         $this->authorize('delete-activity');
-        \App\ActivityContact::whereActivityId($id)->delete();
-        \App\Activity::destroy($id);
+        \App\Models\ActivityContact::whereActivityId($id)->delete();
+        \App\Models\Activity::destroy($id);
 
         return Redirect::action('ActivityController@index');
     }

@@ -34,7 +34,7 @@ class GroupControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-group');
-        $group = factory(\App\Group::class)->create();
+        $group = factory(\App\Models\Group::class)->create();
 
         $response = $this->actingAs($user)->delete(route('group.destroy', [$group]));
         $response->assertSessionHas('flash_notification');
@@ -49,7 +49,7 @@ class GroupControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-group');
-        $group = factory(\App\Group::class)->create();
+        $group = factory(\App\Models\Group::class)->create();
 
         $response = $this->actingAs($user)->get(route('group.edit', [$group]));
 
@@ -96,7 +96,7 @@ class GroupControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-group');
-        $group = factory(\App\Group::class)->create();
+        $group = factory(\App\Models\Group::class)->create();
 
         $response = $this->actingAs($user)->get(route('group.show', [$group]));
 
@@ -123,7 +123,7 @@ class GroupControllerTest extends TestCase
             'is_reserved' => '0',
         ]);
 
-        $new_group = \App\Group::whereName($group_name)->firstOrFail();
+        $new_group = \App\Models\Group::whereName($group_name)->firstOrFail();
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('GroupController@show', $new_group->id));
         $this->assertDatabaseHas('group', [
@@ -151,7 +151,7 @@ class GroupControllerTest extends TestCase
     public function update_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-group');
-        $group = factory(\App\Group::class)->create();
+        $group = factory(\App\Models\Group::class)->create();
         $new_group_name = ucfirst($this->faker->unique()->word);
 
         $response = $this->actingAs($user)->put(route('group.update', [$group]), [
@@ -159,7 +159,7 @@ class GroupControllerTest extends TestCase
             'title' => Str::plural($new_group_name),
             'description' => 'Renewed Group of '.Str::plural($new_group_name),
         ]);
-        $updated = \App\Group::findOrFail($group->id);
+        $updated = \App\Models\Group::findOrFail($group->id);
 
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('GroupController@show', $group->id));

@@ -22,7 +22,7 @@ class SearchControllerTest extends TestCase
         $lastname = $this->faker->lastName;
         $display_name = $this->faker->firstName.' '.$lastname;
 
-        $person = factory(\App\Contact::class)->create([
+        $person = factory(\App\Models\Contact::class)->create([
             'display_name' => $display_name,
             'last_name' => $lastname,
             'contact_type' => config('polanco.contact_type.individual'),
@@ -47,7 +47,7 @@ class SearchControllerTest extends TestCase
     public function getuser_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-contact');
-        $contact = factory(\App\Contact::class)->create();
+        $contact = factory(\App\Models\Contact::class)->create();
         $response = $this->actingAs($user)->get('search/getuser?response='.$contact->id);
 
         $response->assertRedirect($contact->contact_url);
@@ -71,7 +71,7 @@ class SearchControllerTest extends TestCase
     {   // create a new user and then search for that user's last name and ensure that a result appears
         $user = $this->createUserWithPermission('show-contact');
 
-        $contact = factory(\App\Contact::class)->create();
+        $contact = factory(\App\Models\Contact::class)->create();
 
         $response = $this->actingAs($user)->get('results?last_name='.$contact->last_name);
 

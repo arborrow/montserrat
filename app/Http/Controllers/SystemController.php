@@ -62,7 +62,7 @@ class SystemController extends Controller
     {
         $this->authorize('show-offeringdedup');
 
-        $offeringdedup = \App\TmpOfferingDedup::orderBy('count', 'desc')->paginate(50);
+        $offeringdedup = \App\Models\TmpOfferingDedup::orderBy('count', 'desc')->paginate(50);
         // dd($dioceses);
         return view('offeringdedup.index', compact('offeringdedup'));
     }
@@ -70,7 +70,7 @@ class SystemController extends Controller
     public function offeringdedup_show($contact_id = null, $event_id = null)
     {
         $this->authorize('show-offeringdedup');
-        $donations = \App\Donation::whereEventId($event_id)->whereContactId($contact_id)->whereDonationDescription('Retreat Funding')->get();
+        $donations = \App\Models\Donation::whereEventId($event_id)->whereContactId($contact_id)->whereDonationDescription('Retreat Funding')->get();
         $combo = $contact_id.'-'.$event_id;
 
         return view('offeringdedup.show', compact('donations', 'combo'));

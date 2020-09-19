@@ -4,7 +4,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Permission::class, function (Faker $faker) {
+$factory->define(App\Models\Permission::class, function (Faker $faker) {
     $actions = ['show', 'create', 'update', 'delete', 'manage'];
     $action = $actions[array_rand($actions)];
     $model = $faker->word;

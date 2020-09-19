@@ -20,8 +20,8 @@ class AuditController extends Controller
     public function index()
     {
         $this->authorize('show-audit');
-        $users = \App\User::with('user')->orderBy('name')->pluck('name', 'id');
-        $audits = \App\Audit::orderBy('created_at', 'DESC')->paginate(100);
+        $users = \App\Models\User::with('user')->orderBy('name')->pluck('name', 'id');
+        $audits = \App\Models\Audit::orderBy('created_at', 'DESC')->paginate(100);
 
         return view('admin.audits.index', compact('audits', 'users'));
     }
@@ -29,8 +29,8 @@ class AuditController extends Controller
     public function index_type($user_id = null)
     {
         $this->authorize('show-audit');
-        $users = \App\User::with('user')->orderBy('name')->pluck('name', 'id');
-        $audits = \App\Audit::whereUserId($user_id)->orderBy('created_at', 'DESC')->paginate(100);
+        $users = \App\Models\User::with('user')->orderBy('name')->pluck('name', 'id');
+        $audits = \App\Models\Audit::whereUserId($user_id)->orderBy('created_at', 'DESC')->paginate(100);
 
         return view('admin.audits.index', compact('audits', 'users'));
     }
@@ -74,7 +74,7 @@ class AuditController extends Controller
     {
         $this->authorize('show-audit');
 
-        $audit = \App\Audit::findOrFail($id);
+        $audit = \App\Models\Audit::findOrFail($id);
         $old_values = collect($audit->old_values);
         $new_values = collect($audit->new_values);
 

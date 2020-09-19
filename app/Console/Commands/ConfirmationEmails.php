@@ -45,14 +45,14 @@ class ConfirmationEmails extends Command
      */
     public function handle()
     {   // get and store snippets
-        $snippets = \App\Snippet::whereTitle('event-confirmation')->get();
+        $snippets = \App\Models\Snippet::whereTitle('event-confirmation')->get();
         foreach ($snippets as $snippet) {
             $decoded = html_entity_decode($snippet->snippet, ENT_QUOTES | ENT_XML1);
             Storage::put('views/snippets/'.$snippet->title.'/'.$snippet->locale.'/'.$snippet->label.'.blade.php', $decoded);
         }
         // get upcoming Ignatian retreats
         $startDate = Carbon::today()->addDays(7);
-        $retreats = \App\Retreat::whereDate('start_date', $startDate)
+        $retreats = \App\Models\Retreat::whereDate('start_date', $startDate)
             ->where('event_type_id', config('polanco.event_type.ignatian'))
             ->whereIsActive(1)
             ->get();
@@ -83,11 +83,11 @@ class ConfirmationEmails extends Command
                         $registration->save();
                     }
                     // TODO: create Juan Alfonso de Polanco contact in seeder; however, if it does not exist use self id from polanco config
-                    $alfonso = \App\Contact::where('display_name', 'Juan Alfonso de Polanco')->first();
+                    $alfonso = \App\Models\Contact::where('display_name', 'Juan Alfonso de Polanco')->first();
                     if (! isset($alfonso->id)) {
-                        $alfonso = \App\Contact::findOrFail(config('polanco.self.id'));
+                        $alfonso = \App\Models\Contact::findOrFail(config('polanco.self.id'));
                     }
-                    $touchpoint = new \App\Touchpoint();
+                    $touchpoint = new \App\Models\Touchpoint();
                     $touchpoint->person_id = $registration->contact->id;
                     $touchpoint->staff_id = $alfonso->id;
                     $touchpoint->touched_at = Carbon::now();

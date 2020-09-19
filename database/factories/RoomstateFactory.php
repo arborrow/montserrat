@@ -4,10 +4,10 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Roomstate::class, function (Faker $faker) {
+$factory->define(App\Models\Roomstate::class, function (Faker $faker) {
     return [
         'room_id' => function () {
-            return factory(App\Room::class)->create()->id;
+            return factory(App\Models\Room::class)->create()->id;
         },
     ];
 });

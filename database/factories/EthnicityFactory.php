@@ -4,7 +4,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Ethnicity::class, function (Faker $faker) {
+$factory->define(App\Models\Ethnicity::class, function (Faker $faker) {
     return [
     ];
 });

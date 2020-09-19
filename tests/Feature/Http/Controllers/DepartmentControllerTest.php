@@ -34,7 +34,7 @@ class DepartmentControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-department');
-        $department = factory(\App\Department::class)->create();
+        $department = factory(\App\Models\Department::class)->create();
 
         $response = $this->actingAs($user)->delete(route('department.destroy', [$department]));
         $response->assertSessionHas('flash_notification');
@@ -49,7 +49,7 @@ class DepartmentControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-department');
-        $department = factory(\App\Department::class)->create();
+        $department = factory(\App\Models\Department::class)->create();
 
         $response = $this->actingAs($user)->get(route('department.edit', [$department]));
 
@@ -88,7 +88,7 @@ class DepartmentControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-department');
-        $department = factory(\App\Department::class)->create();
+        $department = factory(\App\Models\Department::class)->create();
 
         $response = $this->actingAs($user)->get(route('department.show', [$department]));
 
@@ -131,7 +131,7 @@ class DepartmentControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-department');
 
-        $department = factory(\App\Department::class)->create();
+        $department = factory(\App\Models\Department::class)->create();
 
         $department_name = $this->faker->word;
         $department_description = $this->faker->sentence(7, true);
@@ -148,7 +148,7 @@ class DepartmentControllerTest extends TestCase
         $response->assertRedirect(action('DepartmentController@show', $department->id));
         $response->assertSessionHas('flash_notification');
 
-        $updated = \App\Department::findOrFail($department->id);
+        $updated = \App\Models\Department::findOrFail($department->id);
 
         $this->assertEquals($updated->name, $new_department_name);
         $this->assertNotEquals($updated->name, $original_department_name);

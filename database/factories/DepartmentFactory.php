@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Department::class, function (Faker $faker) {
+$factory->define(App\Models\Department::class, function (Faker $faker) {
     $name = $faker->lastname.' of '.$faker->city;
 
     return [

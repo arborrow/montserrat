@@ -4,10 +4,10 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Address::class, function (Faker $faker) {
+$factory->define(App\Models\Address::class, function (Faker $faker) {
     return [
         'contact_id' => function () {
-            return factory(App\Contact::class)->create()->id;
+            return factory(App\Models\Contact::class)->create()->id;
         },
         'location_type_id' => $faker->numberBetween(1, 5),
         'is_primary' => $faker->boolean,

@@ -20,7 +20,7 @@ class ExportListController extends Controller
     public function index()
     {
         $this->authorize('show-export-list');
-        $export_lists = \App\ExportList::orderBy('label')->get();
+        $export_lists = \App\Models\ExportList::orderBy('label')->get();
 
         return view('admin.export_lists.index', compact('export_lists'));
     }
@@ -48,7 +48,7 @@ class ExportListController extends Controller
     {
         $this->authorize('create-export-list');
 
-        $export_list = new \App\ExportList;
+        $export_list = new \App\Models\ExportList;
         $export_list->title = $request->input('title');
         $export_list->label = $request->input('label');
         $export_list->type = $request->input('type');
@@ -76,7 +76,7 @@ class ExportListController extends Controller
     {
         $this->authorize('show-export-list');
 
-        $export_list = \App\ExportList::findOrFail($id);
+        $export_list = \App\Models\ExportList::findOrFail($id);
 
         return view('admin.export_lists.show', compact('export_list'));
     }
@@ -91,7 +91,7 @@ class ExportListController extends Controller
     {
         $this->authorize('update-export-list');
 
-        $export_list = \App\ExportList::findOrFail($id);
+        $export_list = \App\Models\ExportList::findOrFail($id);
         $export_list_types = config('polanco.export_list_types');
 
         return view('admin.export_lists.edit', compact('export_list', 'export_list_types')); //
@@ -108,7 +108,7 @@ class ExportListController extends Controller
     {
         $this->authorize('update-export-list');
 
-        $export_list = \App\ExportList::findOrFail($id);
+        $export_list = \App\Models\ExportList::findOrFail($id);
 
         $export_list->title = $request->input('title');
         $export_list->label = $request->input('label');
@@ -136,9 +136,9 @@ class ExportListController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-export-list');
-        $export_list = \App\ExportList::findOrFail($id);
+        $export_list = \App\Models\ExportList::findOrFail($id);
 
-        \App\ExportList::destroy($id);
+        \App\Models\ExportList::destroy($id);
 
         flash('Export list: '.$export_list->label.' deleted')->warning()->important();
 
@@ -156,7 +156,7 @@ class ExportListController extends Controller
     {
         $this->authorize('show-export-list');
         // $id = $request->input('id');
-        // $export_list = \App\ExportList::findOrFail($id);
+        // $export_list = \App\Models\ExportList::findOrFail($id);
         // $start_date = $request->input('start_date');
         // $end_date = $request->input('end_date');
         $start_date = new Carbon('2016-01-01 00:00:00');

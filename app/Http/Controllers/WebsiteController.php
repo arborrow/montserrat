@@ -18,7 +18,7 @@ class WebsiteController extends Controller
     public function index()
     {
         $this->authorize('show-website');
-        $websites = \App\Website::orderBy('url')->whereNotNull('url')->paginate(100);
+        $websites = \App\Models\Website::orderBy('url')->whereNotNull('url')->paginate(100);
 
         return view('admin.websites.index', compact('websites'));
     }
@@ -45,7 +45,7 @@ class WebsiteController extends Controller
     {
         $this->authorize('create-website');
 
-        $website = new \App\Website;
+        $website = new \App\Models\Website;
         $website->contact_id = $request->input('contact_id');
         $website->url = $request->input('url');
         $website->website_type = $request->input('website_type');
@@ -69,7 +69,7 @@ class WebsiteController extends Controller
     {
         $this->authorize('show-website');
 
-        $website = \App\Website::findOrFail($id);
+        $website = \App\Models\Website::findOrFail($id);
 
         return view('admin.websites.show', compact('website'));
     }
@@ -84,7 +84,7 @@ class WebsiteController extends Controller
     {
         $this->authorize('update-website');
 
-        $website = \App\Website::findOrFail($id);
+        $website = \App\Models\Website::findOrFail($id);
 
         return view('admin.websites.edit', compact('website')); //
     }
@@ -100,7 +100,7 @@ class WebsiteController extends Controller
     {
         $this->authorize('update-website');
 
-        $website = \App\Website::findOrFail($id);
+        $website = \App\Models\Website::findOrFail($id);
 
         $website->contact_id = $request->input('contact_id');
         $website->url = $request->input('url');
@@ -124,9 +124,9 @@ class WebsiteController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-website');
-        $website = \App\Website::findOrFail($id);
+        $website = \App\Models\Website::findOrFail($id);
 
-        \App\Website::destroy($id);
+        \App\Models\Website::destroy($id);
 
         flash('Website: '.$website->url.' deleted')->warning()->important();
 

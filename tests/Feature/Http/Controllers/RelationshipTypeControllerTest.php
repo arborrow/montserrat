@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\RelationshipType;
+use App\Models\RelationshipType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -21,7 +21,7 @@ class RelationshipTypeControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('create-relationship');
         $user->assignRole('test-role:relationship_type_add');
-        $relationship_type = factory(\App\RelationshipType::class)->create();
+        $relationship_type = factory(\App\Models\RelationshipType::class)->create();
 
         $response = $this->actingAs($user)->get(route('relationship_type.add', ['id' => $relationship_type->id]));
         // dd($response);
@@ -47,7 +47,7 @@ class RelationshipTypeControllerTest extends TestCase
 
         $user = $this->createUserWithPermission('create-relationship');
 
-        $contact = factory(\App\Contact::class)->create([
+        $contact = factory(\App\Models\Contact::class)->create([
           'contact_type' => config('polanco.contact_type.individual'),
           'subcontact_type' => null,
         ]);
@@ -62,7 +62,7 @@ class RelationshipTypeControllerTest extends TestCase
             case 'Husband':
             case 'Sibling':
             case 'Employee':
-                $relationship_type_id = \App\RelationshipType::whereNameAB($relationship_type)->first();
+                $relationship_type_id = \App\Models\RelationshipType::whereNameAB($relationship_type)->first();
                 $response->assertRedirect(route('relationship_type.add', ['id' => $relationship_type_id->id, 'a' => $contact->id]));
                 break;
             case 'Parent':
@@ -71,7 +71,7 @@ class RelationshipTypeControllerTest extends TestCase
             case 'Volunteer':
             case 'Parishioner':
             case 'Primary contact':
-                $relationship_type_id = \App\RelationshipType::whereNameBA($relationship_type)->first();
+                $relationship_type_id = \App\Models\RelationshipType::whereNameBA($relationship_type)->first();
                 $response->assertRedirect(route('relationship_type.add', ['id' => $relationship_type_id->id, 'a' => 0, 'b' => $contact->id]));
                 break;
             }
@@ -111,7 +111,7 @@ class RelationshipTypeControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('delete-relationshiptype');
 
-        $relationship_type = factory(\App\RelationshipType::class)->create();
+        $relationship_type = factory(\App\Models\RelationshipType::class)->create();
 
         $response = $this->actingAs($user)->delete(route('relationship_type.destroy', [$relationship_type]));
 
@@ -126,7 +126,7 @@ class RelationshipTypeControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-relationshiptype');
-        $relationship_type = factory(\App\RelationshipType::class)->create();
+        $relationship_type = factory(\App\Models\RelationshipType::class)->create();
 
         $response = $this->actingAs($user)->get(route('relationship_type.edit', [$relationship_type]));
 
@@ -161,7 +161,7 @@ class RelationshipTypeControllerTest extends TestCase
     public function index_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-relationshiptype');
-        $relationship_type = factory(\App\RelationshipType::class)->create();
+        $relationship_type = factory(\App\Models\RelationshipType::class)->create();
 
         $response = $this->actingAs($user)->get(route('relationship_type.index'));
 
@@ -179,11 +179,11 @@ class RelationshipTypeControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('create-relationship');
 
-        $contact_a = factory(\App\Contact::class)->create([
+        $contact_a = factory(\App\Models\Contact::class)->create([
             'contact_type' => config('polanco.contact_type.individual'),
             'subcontact_type' => null,
         ]);
-        $contact_b = factory(\App\Contact::class)->create([
+        $contact_b = factory(\App\Models\Contact::class)->create([
             'contact_type' => config('polanco.contact_type.individual'),
             'subcontact_type' => null,
         ]);
@@ -223,7 +223,7 @@ class RelationshipTypeControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-relationshiptype');
-        $relationship_type = factory(\App\RelationshipType::class)->create();
+        $relationship_type = factory(\App\Models\RelationshipType::class)->create();
 
         $response = $this->actingAs($user)->get(route('relationship_type.show', [$relationship_type]));
 
@@ -288,7 +288,7 @@ class RelationshipTypeControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-relationshiptype');
 
-        $relationship_type = factory(\App\RelationshipType::class)->create();
+        $relationship_type = factory(\App\Models\RelationshipType::class)->create();
         $original_description = $relationship_type->description;
         $new_name_a_b = $this->faker->company;
         $new_name_b_a = $this->faker->jobTitle;
@@ -304,7 +304,7 @@ class RelationshipTypeControllerTest extends TestCase
 
         ]);
         // dd($response,$relationship_type->id);
-        $updated = \App\RelationshipType::findOrFail($relationship_type->id);
+        $updated = \App\Models\RelationshipType::findOrFail($relationship_type->id);
 
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('RelationshipTypeController@index'));

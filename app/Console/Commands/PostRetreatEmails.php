@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Mail\PostRetreat;
-use App\Retreat;
+use App\Models\Retreat;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;

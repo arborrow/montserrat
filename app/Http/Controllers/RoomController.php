@@ -23,7 +23,7 @@ class RoomController extends Controller
     {
         $this->authorize('show-room');
         // TODO: consider eager loading building name and sorting on room.location.name
-        $rooms = \App\Room::with('location')->get();
+        $rooms = \App\Models\Room::with('location')->get();
         $roomsort = $rooms->sortBy(function ($building) {
             return sprintf('%-12s%s', $building->location->name, $building->name);
         });
@@ -39,7 +39,7 @@ class RoomController extends Controller
     public function create()
     {
         $this->authorize('create-room');
-        $locations = \App\Location::orderby('name')->pluck('name', 'id');
+        $locations = \App\Models\Location::orderby('name')->pluck('name', 'id');
 
         return view('rooms.create', compact('locations'));
     }
@@ -54,7 +54,7 @@ class RoomController extends Controller
     {
         $this->authorize('create-room');
 
-        $room = new \App\Room;
+        $room = new \App\Models\Room;
         $room->location_id = $request->input('location_id');
         $room->name = $request->input('name');
         $room->description = $request->input('description');
@@ -79,8 +79,8 @@ class RoomController extends Controller
     public function show($id)
     {
         $this->authorize('show-room');
-        $room = \App\Room::findOrFail($id);
-        $building = \App\Room::findOrFail($id)->location;
+        $room = \App\Models\Room::findOrFail($id);
+        $building = \App\Models\Room::findOrFail($id)->location;
         $room->building = $building->name;
 
         return view('rooms.show', compact('room')); //
@@ -95,8 +95,8 @@ class RoomController extends Controller
     public function edit($id)
     {
         $this->authorize('update-room');
-        $locations = \App\Location::orderby('name')->pluck('name', 'id');
-        $room = \App\Room::findOrFail($id);
+        $locations = \App\Models\Location::orderby('name')->pluck('name', 'id');
+        $room = \App\Models\Room::findOrFail($id);
 
         return view('rooms.edit', compact('room', 'locations'));
     }
@@ -112,7 +112,7 @@ class RoomController extends Controller
     {
         $this->authorize('update-room');
 
-        $room = \App\Room::findOrFail($request->input('id'));
+        $room = \App\Models\Room::findOrFail($request->input('id'));
         $room->location_id = $request->input('location_id');
         $room->name = $request->input('name');
         $room->description = $request->input('description');
@@ -137,9 +137,9 @@ class RoomController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-room');
-        $room = \App\Room::findOrFail($id);
+        $room = \App\Models\Room::findOrFail($id);
 
-        \App\Room::destroy($id);
+        \App\Models\Room::destroy($id);
 
         flash('Room: '.$room->name.' deleted')->warning()->important();
 
@@ -178,15 +178,15 @@ class RoomController extends Controller
         $next_path = url('rooms/'.$upcoming->format('Ymd'));
         $next_link = '<a href="'.$next_path.'">&#187;</a>';
 
-        $rooms = \App\Room::with('location')->get();
+        $rooms = \App\Models\Room::with('location')->get();
         $roomsort = $rooms->sortBy(function ($room) {
             return sprintf('%-12s%s', $room->location_id, $room->name);
         });
 
-        $registrations_start = \App\Registration::with('room', 'room.location', 'retreatant', 'retreat')->whereNull('canceled_at')->where('room_id', '>', 0)->whereHas('retreat', function ($query) use ($dts) {
+        $registrations_start = \App\Models\Registration::with('room', 'room.location', 'retreatant', 'retreat')->whereNull('canceled_at')->where('room_id', '>', 0)->whereHas('retreat', function ($query) use ($dts) {
             $query->where('start_date', '>=', $dts[0])->where('start_date', '<=', $dts[30]);
         })->get();
-        $registrations_end = \App\Registration::with('room', 'room.location', 'retreatant', 'retreat')->whereNull('canceled_at')->where('room_id', '>', 0)->whereHas('retreat', function ($query) use ($dts) {
+        $registrations_end = \App\Models\Registration::with('room', 'room.location', 'retreatant', 'retreat')->whereNull('canceled_at')->where('room_id', '>', 0)->whereHas('retreat', function ($query) use ($dts) {
             $query->where('end_date', '>=', $dts[0])->where('start_date', '<=', $dts[0]);
         })->get();
 
