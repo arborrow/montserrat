@@ -92,6 +92,17 @@ return [
         'saturday' => '15',
     ],
 
+
+    /*
+    * Export list types to fill export_list.type field
+    */
+
+    'export_list_types' => [
+        'Email' => 'Email',
+        'Mailing' => 'Mailing',
+        'Other' => 'Other',
+    ],
+
     'file_type' => [
         'contact_attachment' => '1',
         'event_schedule' => '2',

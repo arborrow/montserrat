@@ -46,7 +46,7 @@ class Address extends Model implements Auditable
 
     public function getStateNameAttribute()
     {
-        if (isset($this->state_province_id)) {
+        if (isset($this->state->name)) {
             return $this->state->name;
         } else {
             return;

@@ -74,6 +74,7 @@ Route::group(['middleware' => ['web', 'activity']], function () {
     Route::get('admin/deposit/reconcile/{event_id?}', 'PageController@finance_reconcile_deposit_show')->name('depositreconcile.show');
     Route::get('admin/snippet/test', 'SnippetController@test')->name('snippet.test');
     Route::post('admin/snippet/test', 'SnippetController@snippet_test')->name('snippet.snippet_test');
+    Route::get('admin/export_list/agc', 'ExportListController@agc')->name('admin.export_list.agc');
 
     Route::prefix('admin')->middleware('auth')->group(function () {
         Route::get('snippet/title/{title?}', 'SnippetController@index_type');
@@ -82,6 +83,7 @@ Route::group(['middleware' => ['web', 'activity']], function () {
         Route::resource('audit', 'AuditController');
         Route::resource('department', 'DepartmentController');
         Route::resource('donation_type', 'DonationTypeController');
+        Route::resource('export_list', 'ExportListController');
         Route::resource('location', 'LocationController');
         Route::get('location/type/{type?}', 'LocationController@index_type');
         Route::resource('permission', 'PermissionController');

@@ -48,6 +48,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AssetPermissionsSeeder::class);
         $this->call(AuditPermissionsSeeder::class);
         $this->call(DepartmentPermissionsSeeder::class);
+        $this->call(ExportListPermissionsSeeder::class);
         $this->call(SnippetPermissionsSeeder::class);
         $this->call(WebsitePermissionsSeeder::class);
 
