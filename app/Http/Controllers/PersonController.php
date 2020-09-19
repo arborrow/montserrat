@@ -1557,7 +1557,7 @@ class PersonController extends Controller
     public function merge_destroy($id, $return_id)
     {
         // TODO: consider creating a restore/{id} or undelete/{id}
-        $this->authorize('delete-contact');
+        $this->authorize('delete-duplicate');
 
         $person = \App\Contact::findOrFail($id);
 

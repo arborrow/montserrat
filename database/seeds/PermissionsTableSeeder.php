@@ -896,6 +896,15 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2018-04-04 15:07:59',
                 'deleted_at' => null,
             ],
+            98 => [
+                'id' => 99,
+                'name' => 'delete-duplicate',
+                'display_name' => 'Delete duplicate',
+                'description' => 'Delete duplicate',
+                'created_at' => '2018-04-04 15:07:59',
+                'updated_at' => '2018-04-04 15:07:59',
+                'deleted_at' => null,
+            ],
         ]);
     }
 }
