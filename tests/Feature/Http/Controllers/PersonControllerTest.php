@@ -611,7 +611,7 @@ class PersonControllerTest extends TestCase
      */
     public function merge_destroy_returns_an_ok_response()
     {
-        $user = $this->createUserWithPermission('delete-contact');
+        $user = $this->createUserWithPermission('delete-duplicate');
         $person = factory(\App\Models\Contact::class)->create([
             'contact_type' => config('polanco.contact_type.individual'),
             'subcontact_type' => null,
