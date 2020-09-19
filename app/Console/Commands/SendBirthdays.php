@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Contact;
 use App\Mail\RetreatantBirthday;
+use App\Models\Contact;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;

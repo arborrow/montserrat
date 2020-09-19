@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use App\Traits\HasRoles;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Traits\HasRoles;
 
 class User extends Authenticatable
 {
