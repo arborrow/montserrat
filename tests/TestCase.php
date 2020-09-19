@@ -3,11 +3,11 @@
 namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use JMac\Testing\Traits\HttpTestAssertions;
+use JMac\Testing\Traits\AdditionalAssertions;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication, HttpTestAssertions;
+    use CreatesApplication, AdditionalAssertions;
 
     protected function stristrarray($array, $str)
     {
