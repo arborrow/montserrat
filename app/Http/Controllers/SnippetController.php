@@ -75,7 +75,7 @@ class SnippetController extends Controller
 
         $snippet->save();
 
-        flash('Snippet: <a href="'.url('/admin/snippet/'.$snippet->id).'">'.$snippet->title.'</a> added')->success();
+        flash('Snippet: <a href="'.url('/admin/snippet/'.$snippet->id).'">'.$snippet->title.' - '.$snippet->label.'</a> added')->success();
 
         return Redirect::action('SnippetController@index');
     }
@@ -131,7 +131,7 @@ class SnippetController extends Controller
 
         $snippet->save();
 
-        flash('Snippet: <a href="'.url('/admin/snippet/'.$snippet->id).'">'.$snippet->title.'</a> updated')->success();
+        flash('Snippet: <a href="'.url('/admin/snippet/'.$snippet->id).'">'.$snippet->title.' - '.$snippet->label.'</a> updated')->success();
 
         return Redirect::action('SnippetController@show', $snippet->id);
     }
@@ -149,7 +149,7 @@ class SnippetController extends Controller
 
         \App\Models\Snippet::destroy($id);
 
-        flash('Snippet: '.$snippet->title.' deleted')->warning()->important();
+        flash('Snippet: '.$snippet->title.' - '.$snippet->label.' deleted')->warning()->important();
 
         return Redirect::action('SnippetController@index');
     }

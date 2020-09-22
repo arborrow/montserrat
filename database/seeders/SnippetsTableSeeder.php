@@ -502,6 +502,106 @@ class SnippetsTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            32 => [
+                'title' => 'agc_acknowledge',
+                'label' => 'board',
+                'locale' => 'en_US',
+                'snippet' => 'Peter Bowler <br />
+                    <i>President</i> <br />
+                    <br />
+                    Mark Vehslage <br />
+                    <i>Secretary Treasurer</i> <br />
+                    <br />
+                    Mary Del Olmo <br />
+                    Fr. Holguin <br />
+                    John Luna <br />
+                    Paul Pederson <br />
+                    Richard Rolland <br />
+                    Jeannette Santos <br />
+                    Fr. Thompson <br /><br />',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            33 => [
+                'title' => 'agc_acknowledge',
+                'label' => 'jesuits',
+                'locale' => 'en_US',
+                'snippet' => 'Fr. Rauschuber, S.J.<br />
+                    Fr. Gonzales, S.J.<br />
+                    Fr. Joseph, S.J.<br />
+                    Fr. Vo, S.J.<br />',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            34 => [
+                'title' => 'agc_acknowledge',
+                'label' => 'letter',
+                'locale' => 'en_US',
+                'snippet' => '@if ($payments->isEmpty())
+                <p>It appears that our records do not show any donations made to Montserrat from {{ $start_date }} to {{ $end_date }}.</p>
+                @else
+                    <p>Thank you for your support of Montserrat Jesuits Retreat House. Below is a listing of the donations received.</p>
+                    <table class="payments" style="width: 100%; font-size:10pt; font-family:montserrat; border: solid 0.5pt; border-collapse: collapse; ">
+                        <caption>
+                            <strong>Donations from {{ $start_date->format('m-d-Y') }} to {{ $end_date->format('m-d-Y') }}</strong>
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th style="border: solid 1px; padding:5px;">Date</th>
+                                <th style="border: solid 1px; padding:5px;">Description</th>
+                                <th style="border: solid 1px; padding:5px;">Donation Amount</th>
+                                <th style="border: solid 1px; padding:5px;">Method</th>
+                                <th style="border: solid 1px; padding:5px;">Retreat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($payments as $payment)
+                                <tr>
+                                    <td style="border: solid 1px; padding:5px;">{{ $payment->payment_date->format('M d, Y') }}</td>
+                                    <td style="border: solid 1px; padding:5px;">{{ $payment->donation->donation_description ?? 'Unspecified' }} </td>
+                                    <td style="border: solid 1px; padding:5px; text-align: right;">${{ payment->payment_amount }}</td>
+                                    <td style="border: solid 1px; padding:5px;">{{ $payment->payment_description }} {{ $payment->ccnumber ?? $payment->cknumber}}</td>
+                                    <td style="border: solid 1px; padding:5px;">{{ $payment->donation->retreat->title ?? 'N/A'}}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                <br />
+                @endIf
+                Peace,<br />',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            36 => [
+                'title' => 'agc_acknowledge',
+                'label' => '501c3',
+                'locale' => 'en_US',
+                'snippet' => 'Montserrat Jesuit Retreat House is a ministry of the Society of Jesus UCS Province
+                    <br />
+                    Your donation is deductible to the extent allowed by law.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            37 => [
+                'title' => 'agc_acknowledge',
+                'label' => 'footer',
+                'locale' => 'en_US',
+                'snippet' => '<table style="width:100%; margin:auto;">
+                        <tr>
+                            <td style="width:33%; margin:auto; text-align:center">PO Box 1390</td>
+                            <td style="width:33%; margin:auto; text-align:center">600 N. Shady Shores Dr</td>
+                            <td style="width:33%; margin:auto; text-align:center">Lake Dallas, TX 75065<td>
+                        </tr>
+                            <tr>
+                            <td style="text-align:center">(940) 321-6020</td>
+                            <td> </td>
+                            <td style="text-align:center">montserratretreat.org </td>
+
+                        </tr>
+                    </table>',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
     ]);
     }
 }

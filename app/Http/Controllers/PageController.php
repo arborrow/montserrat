@@ -334,7 +334,7 @@ class PageController extends Controller
 
      */
 
-    public function acknowledgment_pdf($contact_id = null, $start_date = null, $end_date = null)
+    public function eoy_acknowledgment($contact_id = null, $start_date = null, $end_date = null)
     {
         $this->authorize('show-donation');
 
@@ -359,8 +359,14 @@ class PageController extends Controller
         $acknowlegment_touchpoint->staff_id = $user_email->contact_id;
         $acknowlegment_touchpoint->touched_at = Carbon::parse(now());
         $acknowlegment_touchpoint->type = 'Letter';
-        $acknowlegment_touchpoint->notes = 'Donation Acknowledgement Letter: '.$start_date->toDateString().' to '.$end_date->toDateString();
-        // $acknowlegment_touchpoint->save();
+        $acknowlegment_touchpoint->notes = 'End-of-year Donation Acknowledgement Letter: '.$start_date->toDateString().' to '.$end_date->toDateString();
+        $acknowlegment_touchpoint->save();
+
+        $snippets = \App\Models\Snippet::whereTitle('eoy_acknowledgment')->get();
+        foreach ($snippets as $snippet) {
+            $decoded = html_entity_decode($snippet->snippet, ENT_QUOTES | ENT_XML1);
+            Storage::put('views/snippets/'.$snippet->title.'/'.$snippet->locale.'/'.$snippet->label.'.blade.php', $decoded);
+        }
 
         // TODO: implement a Spanish version of the email at the end, commenting out for now
         /*        if ($donation->contact->preferred_language_value == 'es') {
@@ -375,7 +381,7 @@ class PageController extends Controller
         */
         $montserrat = \App\Models\Contact::findOrFail(env('SELF_CONTACT_ID'));
         // dd($montserrat);
-        $pdf = PDF::loadView('reports.finance.acknowledgment', compact('payments', 'contact', 'montserrat', 'start_date', 'end_date'));
+        $pdf = PDF::loadView('reports.finance.eoy_acknowledgment', compact('payments', 'contact', 'montserrat', 'start_date', 'end_date'));
         $pdf->setOptions([
                 'header-html' => view('pdf._header'),
                 'footer-html' => view('pdf._footer'),

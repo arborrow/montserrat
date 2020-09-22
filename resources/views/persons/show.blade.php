@@ -374,9 +374,12 @@
                     [{{($person->donations->sum('payments_paid') / $person->donations->sum('donation_amount'))*100}}%]
                     @endif
                 </h2>
+
                 @can('create-donation')
                     {!! Html::link(action('DonationController@create',$person->id),'Create donation',array('class' => 'btn btn-outline-dark'))!!}
                 @endCan
+                {!! Html::link(action('PageController@eoy_acknowledgment',$person->id),'EOY Acknowledgment',array('class' => 'btn btn-outline-dark'))!!}
+                
                 @if ($person->donations->isEmpty())
                     <p>No donations for this person!</p>
                 @else

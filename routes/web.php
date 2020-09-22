@@ -31,7 +31,7 @@ Route::group(['middleware' => ['web', 'activity']], function () {
     Route::get('/welcome', 'PageController@welcome')->name('welcome');
     Route::get('/goodbye', 'HomeController@goodbye');
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('report/acknowledgment_pdf/{contact_id}/{start_date?}/{end_date?}', 'PageController@acknowledgment_pdf');
+    Route::get('person/{contact_id}/eoy_acknowledgment/{start_date?}/{end_date?}', 'PageController@eoy_acknowledgment');
     // Authentication routes...
     // Route::get('login/{provider?}', 'Auth\AuthController@login');
     // Route::get('auth/google/callback', 'Auth\AuthController@handleProviderCallback');

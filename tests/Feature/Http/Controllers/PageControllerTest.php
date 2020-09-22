@@ -181,7 +181,7 @@ class PageControllerTest extends TestCase
     }
 
     // TODO: need to create a contact with the $user->email address so that the touchpoint staff member can be created
-    public function acknowledgment_pdf_returns_an_ok_response()
+    public function eoy_acknowledgment_returns_an_ok_response()
     {
         $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('show-donation');
@@ -191,7 +191,7 @@ class PageControllerTest extends TestCase
                 ['donation_id' => $donation->donation_id]
             );
         // dd($donation,$payments);
-        $response = $this->actingAs($user)->get('report/acknowledgment_pdf/'.$donation->contact_id);
+        $response = $this->actingAs($user)->get('person/' . $donation->contact_id . '/eoy_acknowledgment');
 
         $response->assertOk();
         // TODO: assert that the pdf file is created, consider making a seperate view for display and testing number of entries depending on start and end dates
@@ -213,11 +213,11 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
-    public function acknowledgment_pdf_returns_403()
+    public function eoy_acknowledgment_returns_403()
     {
         $user = \App\Models\User::factory()->create();
         $contact = \App\Models\Contact::factory()->create();
-        $response = $this->actingAs($user)->get('report/acknowledgment_pdf/'.$contact->id);
+        $response = $this->actingAs($user)->get('person/'.$contact->id.'/eoy_acknowledgment');
 
         $response->assertForbidden();
     }
