@@ -28,7 +28,7 @@ class SnippetController extends Controller
     {
         $this->authorize('show-snippet');
 
-        $titles = \App\Models\Snippet::groupBy('label')->orderBy('label')->pluck('title', 'title');
+        $titles = \App\Models\Snippet::groupBy('title')->orderBy('label')->pluck('title', 'title');
         $snippets = \App\Models\Snippet::orderBy('title')->orderBy('locale')->orderBy('label')->get();
 
         return view('admin.snippets.index', compact('snippets', 'titles'));
@@ -38,7 +38,7 @@ class SnippetController extends Controller
     {
         $this->authorize('show-snippet');
 
-        $titles = \App\Models\Snippet::groupBy('label')->orderBy('label')->pluck('title', 'title');
+        $titles = \App\Models\Snippet::groupBy('title')->orderBy('label')->pluck('title', 'title');
         $snippets = \App\Models\Snippet::whereTitle($title)->orderBy('title')->orderBy('locale')->orderBy('label')->get();
 
         return view('admin.snippets.index', compact('snippets', 'titles'));
@@ -255,7 +255,7 @@ class SnippetController extends Controller
     public function test($title = null, $email = null, $language = 'en_US')
     {
         $this->authorize('show-snippet');
-        $titles = \App\Models\Snippet::groupBy('label')->orderBy('label')->pluck('title', 'title');
+        $titles = \App\Models\Snippet::groupBy('title')->orderBy('label')->pluck('title', 'title');
         $languages = \App\Models\Language::whereIsActive(1)->orderBy('label')->pluck('label', 'name');
         if (empty($email)) {
             $email = Auth::user()->email;
