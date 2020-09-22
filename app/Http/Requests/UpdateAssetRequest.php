@@ -75,6 +75,8 @@ class UpdateAssetRequest extends FormRequest
             'depreciation_time' => 'numeric|nullable',
             'depreciation_time_uom_id' => 'integer|min:0|exists:uom,id|nullable',
             'asset_photo' => 'image|max:10000|nullable',
+            'attachment' => 'file|mimes:pdf,doc,docx,zip|max:20000|nullable',
+            'attachment_description' => 'string|max:200|nullable',
         ];
     }
 

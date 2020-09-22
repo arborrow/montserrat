@@ -218,7 +218,7 @@
                     <h3 class="text-primary">Attachments</h3>
                     <div class="row">
                         <div class="col-4" id="attachments">
-                            {!! Form::label('attachment', 'Attachment (max 10M): ')  !!}
+                            {!! Form::label('attachment', 'Attachment (max 20M): ')  !!}
                             {!! Form::file('attachment',['class' => 'form-control']); !!}
                         </div>
                         <div class="col-4">
