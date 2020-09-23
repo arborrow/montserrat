@@ -44,12 +44,8 @@ Route::group(['middleware' => ['web', 'activity']], function () {
     Route::get('search/autocomplete', 'SearchController@autocomplete');
     Route::get('search/getuser', 'SearchController@getuser');
     Route::get('search', 'SearchController@search');
-    Route::get('results', 'SearchController@results');
-    Route::post('results', 'SearchController@results')->name('results');
+    Route::get('results', 'SearchController@results')->name('results');
 
-    //need to figure out how to paginate results and keep the various variables passed along with it
-
-//    Route::get('results', 'SearchController@results')->name('results');
 
     // Dashboard Routes
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');

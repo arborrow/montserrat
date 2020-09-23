@@ -9,13 +9,13 @@
             <h1><strong>Search Contacts</strong></h1>
         </div>
 
-        {!! Form::open(['url'=>'results', 'method'=>'post']) !!}
+        {!! Form::open(['url'=>'results', 'method'=>'get']) !!}
 
         <div class="panel-body">
             <div class='panel-heading'>
                 <h2>
                     <span>Name</span>
-                    <span>{!! Form::image('images/submit.png','btnSave',['class' => 'btn btn-outline-dark pull-right']) !!}</span>
+                    <span>{!! Form::image('images/submit.png','search',['class' => 'btn btn-outline-dark pull-right']) !!}</span>
                 </h2>
             </div>
             <div class="panel-body">
