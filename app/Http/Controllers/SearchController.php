@@ -54,7 +54,7 @@ class SearchController extends Controller
         if (! empty($request)) {
             $persons = \App\Models\Contact::filtered($request)->orderBy('sort_name')->with('attachments')->paginate(100);
             $persons->appends($request->except('page'));
-            dd($persons);
+            // dd($persons);
         }
 
         return view('search.results', compact('persons'));
