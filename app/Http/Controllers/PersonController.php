@@ -627,7 +627,8 @@ class PersonController extends Controller
     public function show($id)
     {
         $this->authorize('show-contact');
-        $person = \App\Models\Contact::with('addresses.country', 'addresses.location', 'addresses.state', 'emails.location', 'emergency_contact', 'ethnicity', 'languages', 'notes', 'occupation', 'parish.contact_a.address_primary', 'parish.contact_a.diocese.contact_a', 'phones.location', 'prefix', 'suffix', 'religion', 'touchpoints.staff', 'websites', 'groups.group', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations', 'donations.payments')->findOrFail($id);
+        $person = \App\Models\Contact::with('addresses.country', 'addresses.location', 'addresses.state', 'emails.location', 'emergency_contact', 'ethnicity', 'languages', 'notes', 'occupation', 'parish.contact_a.address_primary', 'parish.contact_a.diocese.contact_a', 'phones.location', 'prefix', 'suffix', 'religion', 'touchpoints.staff', 'websites',
+        'groups.group', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations', 'donations.payments')->findOrFail($id);
         //dd($person->donations);
         $files = \App\Models\Attachment::whereEntity('contact')->whereEntityId($person->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
         $relationship_types = [];

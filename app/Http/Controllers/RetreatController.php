@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RoomUpdateRetreatRequest;
 use App\Http\Requests\StoreRetreatRequest;
 use App\Http\Requests\UpdateRetreatRequest;
+use App\Http\Requests\EventSearchRequest;
 use App\Models\Registration;
 use Auth;
 use Illuminate\Http\Request;
@@ -576,7 +577,7 @@ class RetreatController extends Controller
         $retreat = \App\Models\Retreat::with('retreatmasters.contact', 'assistants.contact', 'innkeepers.contact', 'ambassadors.contact')->findOrFail($id);
         $registrations = \App\Models\Registration::where('event_id', '=', $id)->with('retreatant.parish')->orderBy('register_date', 'DESC')->whereStatusId(config('polanco.registration_status_id.registered'))->get();
         $rooms = \App\Models\Room::orderby('name')->pluck('name', 'id');
-        $rooms->prepend('Unassigned', 0);
+        $rooms->prepend('Unassigned', '');
 
         return view('retreats.assign_rooms', compact('retreat', 'registrations', 'rooms'));
     }
@@ -589,7 +590,7 @@ class RetreatController extends Controller
         $registrations = \App\Models\Registration::where('event_id', '=', $id)->whereCanceledAt(null)->with('retreatant.parish', 'donation')->orderBy('register_date', 'DESC')->get();
         $payment_description = config('polanco.payment_method');
         $donation_description = \App\Models\DonationType::active()->orderby('name')->pluck('name', 'name');
-        $donation_description->prepend('Unassigned', 0);
+        $donation_description->prepend('Unassigned', '');
 
         return view('retreats.payments.edit', compact('retreat', 'registrations', 'donation_description', 'payment_description'));
     }
@@ -818,19 +819,23 @@ class RetreatController extends Controller
     {
         $this->authorize('show-retreat');
         $event_types = \App\Models\EventType::whereIsActive(true)->orderBy('label')->pluck('label', 'id');
-        $event_types->prepend('N/A', 0);
+        $event_types->prepend('N/A', '');
 
         return view('retreats.search', compact('event_types'));
     }
 
-    public function results(Request $request)
+    public function results(EventSearchRequest $request)
     {
         $this->authorize('show-retreat');
+
         if (! empty($request)) {
             $events = \App\Models\Retreat::filtered($request)->orderBy('idnumber')->paginate(100);
             $events->appends($request->except('page'));
+        } else {
+            $events = \App\Models\Retreat::orderBy('idnumber')->paginate(100);
         }
 
         return view('retreats.results', compact('events'));
+
     }
 }

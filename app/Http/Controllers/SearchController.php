@@ -50,13 +50,14 @@ class SearchController extends Controller
     public function results(SearchRequest $request)
     {
         $this->authorize('show-contact');
-        //dd($request);
         if (! empty($request)) {
             $persons = \App\Models\Contact::filtered($request)->orderBy('sort_name')->with('attachments')->paginate(100);
             $persons->appends($request->except('page'));
             // dd($persons);
+        } else {
+            $persons = \App\Models\Contact::orderBy('sort_name')->with('attachments')->paginate(100);
         }
-
+        //dd($request);
         return view('search.results', compact('persons'));
     }
 

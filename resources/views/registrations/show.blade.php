@@ -19,10 +19,10 @@
                 <strong>Retreatant: </strong><a href="../person/{{ $registration->retreatant->id}}">{{ $registration->retreatant->full_name}}</a>
             </div>
             <div class="col-12 col-md-4">
-                <strong>Retreat: </strong><a href="../retreat/{{ $registration->event_id}}">{{ $registration->retreat->title}} ({{ $registration->retreat->idnumber}})</a>
+                <strong>Retreat: </strong><a href="../retreat/{{ $registration->event_id}}">{{ $registration->event_name}} ({{ $registration->event_idnumber}})</a>
             </div>
             <div class="col-12 col-md-4">
-                <strong>Retreat Dates: </strong>{{ date('F d, Y', strtotime($registration->retreat->start_date))}} - {{ date('F d, Y', strtotime($registration->retreat->end_date))}}
+                <strong>Retreat Dates: </strong>{{ date('F d, Y', strtotime($registration->retreat_start_date))}} - {{ date('F d, Y', strtotime($registration->retreat_end_date))}}
             </div>
         </div>
         <div class="row">
