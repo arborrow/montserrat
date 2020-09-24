@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDonationRequest;
 use App\Http\Requests\UpdateDonationRequest;
+use App\Http\Requests\DonationSearchRequest;
 use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -48,6 +49,33 @@ class DonationController extends Controller
 
         return view('donations.index', compact('donations', 'donation_descriptions', 'defaults'));   //
     }
+
+
+        public function search()
+        {
+            $this->authorize('show-donation');
+
+            $descriptions = \App\Models\DonationType::active()->orderby('name')->pluck('name', 'name');
+            $descriptions->prepend('N/A', '');
+
+            $retreats = \App\Models\Registration::leftjoin('event', 'participant.event_id', '=', 'event.id')->select(DB::raw('CONCAT(event.idnumber, "-", event.title, " (",DATE_FORMAT(event.start_date,"%m-%d-%Y"),")") as description'), 'event.id')->orderBy('event.start_date', 'desc')->pluck('event.description', 'event.id');
+            $retreats->prepend('Unassigned', '');
+
+            return view('donations.search', compact('retreats','descriptions'));
+        }
+
+        public function results(DonationSearchRequest $request)
+        {
+            $this->authorize('show-donation');
+            if (! empty($request)) {
+                $donations = \App\Models\Donation::filtered($request)->orderBy('donation_date')->paginate(100);
+                $donations->appends($request->except('page'));
+            } else {
+                $donations = \App\Models\Donation::orderBy('name')->paginate(100);
+            }
+
+            return view('donations.results', compact('donations'));
+        }
 
     public function overpaid()
     {
@@ -121,7 +149,7 @@ class DonationController extends Controller
         } else {
             // $retreats = \App\Models\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("is_active", "=", 1)->orderBy('start_date')->pluck('description', 'id');
             $retreats = \App\Models\Registration::leftjoin('event', 'participant.event_id', '=', 'event.id')->select(DB::raw('CONCAT(event.idnumber, "-", event.title, " (",DATE_FORMAT(event.start_date,"%m-%d-%Y"),")") as description'), 'event.id')->whereContactId($id)->orderBy('event.start_date', 'desc')->pluck('event.description', 'event.id');
-            $retreats->prepend('Unassigned', 0);
+            $retreats->prepend('Unassigned', '');
         }
 
         //dd($donors);

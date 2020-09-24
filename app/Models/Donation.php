@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Carbon\Carbon;
 
 class Donation extends Model implements Auditable
 {
@@ -151,6 +152,80 @@ class Donation extends Model implements Auditable
             return 'N';
         }
     }
+
+        public function scopeFiltered($query, $filters)
+        {
+            //while not the most efficient - I want to get the comparison operators first so I can assign them to variables to use
+            foreach ($filters->request as $filter => $value) {
+
+                switch($filter) {
+                    case 'donation_date_operator' :
+                        $donation_date_operator = ! empty($value) ? $value : '=';
+                        break;
+                    case 'donation_amount_operator' :
+                        $donation_amount_operator = ! empty($value) ? $value : '=';
+                        break;
+                    case 'start_date_only_operator' :
+                        $start_date_only_operator = ! empty($value) ? $value : '=';
+                        break;
+                    case 'end_date_only_operator' :
+                        $end_date_only_operator = ! empty($value) ? $value : '=';
+                        break;
+                    case 'donation_install_operator' :
+                        $donation_install_operator = ! empty($value) ? $value : '=';
+                        break;
+                }
+            }
+            foreach ($filters->request as $filter => $value) {
+
+                if ($filter == 'donation_date' && ! empty($value)) {
+                    $donation_date = Carbon::parse($value);
+                    $query->where($filter, $donation_date_operator, $donation_date);
+                }
+                if ($filter == 'donation_amount' && ! empty($value)) {
+                    $query->where($filter, $donation_amount_operator, $value);
+                }
+                if ($filter == 'start_date_only' && ! empty($value)) {
+                    $start_date_only = Carbon::parse($value);
+                    $query->where('start_date', $start_date_only_operator, $start_date_only);
+                }
+                if ($filter == 'end_date_only' && ! empty($value)) {
+                    $end_date_only = Carbon::parse($value);
+                    $query->where('end_date', $end_date_only_operator, $end_date_only);
+                }
+                if ($filter == 'donation_install' && ! empty($value)) {
+                    $query->where($filter, $donation_install_operator, $value);
+                }
+                if ($filter == 'donation_install' && ! empty($value)) {
+                    $query->where($filter, $donation_install_operator, $value);
+                }
+                if ($filter == 'donation_description' && ! empty($value)) {
+                    $query->where($filter, "=", $value);
+                }
+                if ($filter == 'event_id' && ! empty($value)) {
+                    $query->where($filter, "=", $value);
+                }
+                if ($filter == 'notes1' && ! empty($value)) {
+                    $query->where($filter, 'LIKE', '%'.$value.'%');
+                }
+                if ($filter == 'notes' && ! empty($value)) {
+                    $query->where($filter, 'LIKE', '%'.$value.'%');
+                }
+                if ($filter == 'terms' && ! empty($value)) {
+                    $query->where($filter, 'LIKE', '%'.$value.'%');
+                }
+                if ($filter == 'donation_thank_you' && ! empty($value)) {
+                    if ($value == 'Y') {
+                        $query->where("Thank You", '=', $value);
+                    } else {
+                        $query->where("Thank You", '=', NULL);
+                    }
+                }
+            }
+
+            return $query;
+        }
+
 
     public static function boot()
     {

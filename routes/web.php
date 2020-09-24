@@ -115,12 +115,14 @@ Route::group(['middleware' => ['web', 'activity']], function () {
     Route::get('donor/{donor_id?}/assign/{contact_id?}', 'DonorController@assign');
     Route::get('donor/{donor_id?}/add', 'DonorController@add');
     Route::resource('donor', 'DonorController');
-    Route::get('donation/overpaid', 'DonationController@overpaid');
-    Route::resource('donation', 'DonationController');
-    Route::get('donation/create/{id?}/{event_id?}/{type?}', 'DonationController@create');
-    Route::get('donation/{id?}/invoice', 'PageController@finance_invoice');
     Route::get('donation/{id?}/agc_acknowledge', 'PageController@finance_agc_acknowledge');
+    Route::get('donation/{id?}/invoice', 'PageController@finance_invoice');
+    Route::get('donation/create/{id?}/{event_id?}/{type?}', 'DonationController@create');
+    Route::get('donation/overpaid', 'DonationController@overpaid');
+    Route::get('donation/search', 'DonationController@search')->name('donations.search');
+    Route::get('donation/results', 'DonationController@results')->name('donations.results');
     Route::get('donation/type/{donation_id?}', 'DonationController@index_type');
+    Route::resource('donation', 'DonationController');
 
     Route::get('agc/{year?}', 'DonationController@agc');
     Route::get('group/{group_id?}/touchpoint', 'TouchpointController@add_group');

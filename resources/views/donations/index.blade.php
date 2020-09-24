@@ -12,6 +12,10 @@
                     </a>
                 </span>
             @endCan
+            <a href={{ action('DonationController@search') }}>
+                {!! Html::image('images/search.png', 'Search donations',array('title'=>"Search donations",'class' => 'btn btn-link')) !!}
+            </a>
+
             <p class="lead">{{$donations->total()}} records</p>
         </h1>
         <div class="row">
