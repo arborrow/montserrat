@@ -6,7 +6,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h1>
-                    <span class="grey">{{$donations->total()}} results found</span>
+                    <span class="grey">{{$donations->total()}} result(s) found</span>
                     <span class="search"><a href={{ action('DonationController@search') }}>{!! Html::image('images/search.png', 'New search',array('title'=>"New search",'class' => 'btn btn-link')) !!}</a></span></h1>
             </div>
             @if ($donations->isEmpty())

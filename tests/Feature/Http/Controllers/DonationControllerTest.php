@@ -304,5 +304,41 @@ class DonationControllerTest extends TestCase
         );
     }
 
+
+        /**
+         * @test
+         */
+        public function results_returns_an_ok_response()
+        {
+            $user = $this->createUserWithPermission('show-donation');
+
+            $donation = \App\Models\Donation::factory()->create();
+
+            $response = $this->actingAs($user)->get('donation/results?donation_amount='.$donation->donation_amount);
+
+            $response->assertOk();
+            $response->assertViewIs('donations.results');
+            $response->assertViewHas('donations');
+            $response->assertSeeText('result(s) found');
+            $response->assertSeeText($donation->donation_amount);
+        }
+
+        /**
+         * @test
+         */
+        public function search_returns_an_ok_response()
+        {
+            $user = $this->createUserWithPermission('show-donation');
+
+            $response = $this->actingAs($user)->get('donation/search');
+
+            $response->assertOk();
+            $response->assertViewIs('donations.search');
+            $response->assertViewHas('descriptions');
+            $response->assertViewHas('retreats');
+            $response->assertSeeText('Search Donations');
+        }
+
+
     // test cases...
 }

@@ -154,7 +154,13 @@ class Donation extends Model implements Auditable
     }
 
         public function scopeFiltered($query, $filters)
-        {
+        {   //initialize comparison operators to equals
+            $donation_date_operator = "=";
+            $donation_amount_operator = "=";
+            $start_date_only_operator = "=";
+            $end_date_only_operator = "=" ;
+            $donation_install_operator = "=";
+            
             //while not the most efficient - I want to get the comparison operators first so I can assign them to variables to use
             foreach ($filters->request as $filter => $value) {
 

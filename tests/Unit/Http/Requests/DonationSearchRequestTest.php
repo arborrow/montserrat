@@ -10,16 +10,16 @@ use Tests\TestCase;
 /**
  * @see \App\Http\Requests\SearchRequest
  */
-class EventSearchRequestTest extends TestCase
+class DonationSearchRequestTest extends TestCase
 {
-    /** @var \App\Http\Requests\EventSearchRequest */
+    /** @var \App\Http\Requests\DonationSearchRequest */
     private $subject;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->subject = new \App\Http\Requests\EventSearchRequest();
+        $this->subject = new \App\Http\Requests\DonationSearchRequest();
     }
 
     /**
