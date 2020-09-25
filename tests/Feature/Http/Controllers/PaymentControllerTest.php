@@ -190,5 +190,41 @@ class PaymentControllerTest extends TestCase
         );
     }
 
+
+    /**
+     * @test
+     */
+    public function results_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-payment');
+
+        $payment = \App\Models\Payment::factory()->create();
+
+        $response = $this->actingAs($user)->get('payment/results?payment_amount='.$payment->payment_amount);
+
+        $response->assertOk();
+        $response->assertViewIs('payments.results');
+        $response->assertViewHas('payments');
+        $response->assertSeeText('result(s) found');
+        $response->assertSeeText($payment->payment_amount);
+    }
+
+    /**
+     * @test
+     */
+    public function search_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-payment');
+
+        $response = $this->actingAs($user)->get('payment/search');
+
+        $response->assertOk();
+        $response->assertViewIs('payments.search');
+        $response->assertViewHas('payment_methods');
+        $response->assertSeeText('Search Payments');
+    }
+
+
+
     // test cases...
 }

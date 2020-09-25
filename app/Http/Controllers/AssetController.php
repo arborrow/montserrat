@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreAssetRequest;
 use App\Http\Requests\UpdateAssetRequest;
+use App\Http\Requests\AssetSearchRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -90,12 +91,14 @@ class AssetController extends Controller
         return view('assets.search', compact('asset_types', 'departments', 'depreciation_types', 'locations', 'parents', 'uoms_capacity', 'uoms_electric', 'uoms_length', 'uoms_time', 'uoms_weight', 'vendors'));
     }
 
-    public function results(Request $request)
+    public function results(AssetSearchRequest $request)
     {
         $this->authorize('show-asset');
         if (! empty($request)) {
             $assets = \App\Models\Asset::filtered($request)->orderBy('name')->paginate(100);
-            $assets->appends($request->except('page')); //TODO: is this necessary?
+            $assets->appends($request->except('page'));
+        } else {
+            $assets = \App\Models\Asset::orderBy('name')->paginate(100);
         }
 
         return view('assets.results', compact('assets'));

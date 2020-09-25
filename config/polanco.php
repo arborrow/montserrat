@@ -162,6 +162,14 @@ return [
         'letter' => '5',
     ],
 
+    'operators' => [
+        '<' => '<',
+        '<=' => '<=',
+        '=' => '=',
+        '>=' => '>=',
+        '>' => '>',
+    ],
+
     'participant_role_id' => [
         'ambassador' => '11',
         'retreatant' => '5',

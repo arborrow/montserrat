@@ -11,8 +11,6 @@
 |
 */
 // Auth::routes();
-Route::get('avatar/{user_id}', 'AttachmentController@get_avatar')->name('get_avatar');
-Route::get('signature/{user_id}', 'AttachmentController@get_signature')->name('get_signature');
 
 Route::group(['middleware' => ['web', 'activity']], function () {
     Route::get('intercept/{code}', function ($code) {
@@ -24,6 +22,10 @@ Route::group(['middleware' => ['web', 'activity']], function () {
             abort(404);
         }
     });
+
+    Route::get('avatar/{user_id}', 'AttachmentController@get_avatar')->name('get_avatar');
+    Route::get('signature/{user_id}', 'AttachmentController@get_signature')->name('get_signature');
+
     Route::get('avatar/{user_id}/delete', 'AttachmentController@delete_avatar')->name('delete_avatar');
     Route::get('signature/{user_id}/delete', 'AttachmentController@delete_signature')->name('delete_signature');
 
@@ -42,10 +44,8 @@ Route::group(['middleware' => ['web', 'activity']], function () {
     Route::get('search/autocomplete', 'SearchController@autocomplete');
     Route::get('search/getuser', 'SearchController@getuser');
     Route::get('search', 'SearchController@search');
-
-    //need to figure out how to paginate results and keep the various variables passed along with it
-
     Route::get('results', 'SearchController@results')->name('results');
+
 
     // Dashboard Routes
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
@@ -115,12 +115,14 @@ Route::group(['middleware' => ['web', 'activity']], function () {
     Route::get('donor/{donor_id?}/assign/{contact_id?}', 'DonorController@assign');
     Route::get('donor/{donor_id?}/add', 'DonorController@add');
     Route::resource('donor', 'DonorController');
-    Route::get('donation/overpaid', 'DonationController@overpaid');
-    Route::resource('donation', 'DonationController');
-    Route::get('donation/create/{id?}/{event_id?}/{type?}', 'DonationController@create');
-    Route::get('donation/{id?}/invoice', 'PageController@finance_invoice');
     Route::get('donation/{id?}/agc_acknowledge', 'PageController@finance_agc_acknowledge');
+    Route::get('donation/{id?}/invoice', 'PageController@finance_invoice');
+    Route::get('donation/create/{id?}/{event_id?}/{type?}', 'DonationController@create');
+    Route::get('donation/overpaid', 'DonationController@overpaid');
+    Route::get('donation/search', 'DonationController@search')->name('donations.search');
+    Route::get('donation/results', 'DonationController@results')->name('donations.results');
     Route::get('donation/type/{donation_id?}', 'DonationController@index_type');
+    Route::resource('donation', 'DonationController');
 
     Route::get('agc/{year?}', 'DonationController@agc');
     Route::get('group/{group_id?}/touchpoint', 'TouchpointController@add_group');
@@ -140,8 +142,10 @@ Route::group(['middleware' => ['web', 'activity']], function () {
 
     Route::resource('organization', 'OrganizationController');
     Route::resource('parish', 'ParishController');
-    Route::resource('payment', 'PaymentController');
+    Route::get('payment/search', 'PaymentController@search')->name('payments.search');
+    Route::get('payment/results', 'PaymentController@results')->name('payments.results');
     Route::get('payment/create/{donation_id}', 'PaymentController@create');
+    Route::resource('payment', 'PaymentController');
 
     Route::get('parishes/diocese/{diocese_id}', 'ParishController@parish_index_by_diocese');
 

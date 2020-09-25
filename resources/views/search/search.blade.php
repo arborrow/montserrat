@@ -9,13 +9,13 @@
             <h1><strong>Search Contacts</strong></h1>
         </div>
 
-        {!! Form::open(['method' => 'GET', 'class' => 'form-horizontal', 'route' => ['results']]) !!}
+        {!! Form::open(['url'=>'results', 'method'=>'get']) !!}
 
         <div class="panel-body">
             <div class='panel-heading'>
                 <h2>
                     <span>Name</span>
-                    <span>{!! Form::image('images/submit.png','btnSave',['class' => 'btn btn-outline-dark pull-right']) !!}</span>
+                    <span>{!! Form::image('images/submit.png','search',['class' => 'btn btn-outline-dark pull-right']) !!}</span>
                 </h2>
             </div>
             <div class="panel-body">
@@ -152,6 +152,12 @@
                     {!! Form::label('postal_code', 'Zip:', ['class' => 'control-label col-sm-3'])  !!}
                     <div class="col-sm-8">
                         {!! Form::text('postal_code', NULL, ['class' => 'form-control']) !!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {!! Form::label('country_id', 'Country:', ['class' => 'control-label col-sm-3'])  !!}
+                    <div class="col-sm-8">
+                        {!! Form::select('country_id', $countries, NULL, ['class' => 'form-control']) !!}
                     </div>
                 </div>
                 <div class="form-group">
@@ -314,74 +320,7 @@
             </div>
         </div>
 
-
-
-{{--
-        <div class='row'>
-                <div class='col-md-8'>
-                    <div class='panel-heading'><h2>Groups and Relationships</h2></div>
-                        <div class="form-group">
-                            {!! Form::label('is_donor', 'Donor:', ['class' => ''])  !!}
-                            {!! Form::checkbox('is_donor', 1, NULL, ['class' => 'col-md-1']) !!}
-                            {!! Form::label('is_steward', 'Steward:', ['class' => ''])  !!}
-                            {!! Form::checkbox('is_steward', 1, NULL, ['class' => 'col-md-1']) !!}
-                            {!! Form::label('is_volunteer', 'Volunteer:', ['class' => ''])  !!}
-                            {!! Form::checkbox('is_volunteer', 1, NULL,['class' => 'col-md-1']) !!}
-                        </div><div class="clearfix"> </div>
-                        <div class="form-group">
-                            {!! Form::label('is_retreatant', 'Retreatant:', ['class' => ''])  !!}
-                            {!! Form::checkbox('is_retreatant', 1, 0,['class' => 'col-md-1']) !!}
-                            {!! Form::label('is_ambassador', 'Ambassador:', ['class' => ''])  !!}
-                            {!! Form::checkbox('is_ambassador', 1, 0,['class' => 'col-md-1']) !!}
-                        </div><div class="clearfix"> </div>
-
-                        <div class="form-group">
-                            {!! Form::label('is_bishop', 'Bishop:', ['class' => ''])  !!}
-                            {!! Form::checkbox('is_bishop', 1, 0,['class' => 'col-md-1']) !!}
-                            {!! Form::label('is_priest', 'Priest:', ['class' => ''])  !!}
-                            {!! Form::checkbox('is_priest', 1, 0,['class' => 'col-md-1']) !!}
-                            {!! Form::label('is_deacon', 'Deacon:', ['class' => ''])  !!}
-                            {!! Form::checkbox('is_deacon', 1, 0,['class' => 'col-md-1']) !!}
-                            {!! Form::label('is_pastor', 'Pastor:', ['class' => ''])  !!}
-                            {!! Form::checkbox('is_pastor', 1, 0,['class' => 'col-md-1']) !!}
-                        </div><div class="clearfix"> </div>
-
-                        <div class="form-group">
-                            {!! Form::label('is_jesuit', 'Jesuit:', ['class' => ''])  !!}
-                            {!! Form::checkbox('is_jesuit', 1, 0,['class' => 'col-md-1']) !!}
-                            {!! Form::label('is_provincial', 'Provincial:', ['class' => ''])  !!}
-                            {!! Form::checkbox('is_provincial', 1, 0,['class' => 'col-md-1']) !!}
-                            {!! Form::label('is_superior', 'Superior:', ['class' => ''])  !!}
-                            {!! Form::checkbox('is_superior', 1, 0,['class' => 'col-md-1']) !!}
-                        </div><div class="clearfix"> </div>
-
-                        <div class="form-group">
-                            {!! Form::label('is_board', 'Board Member:', ['class' => ''])  !!}
-                            {!! Form::checkbox('is_board', 1, 0,['class' => 'col-md-1']) !!}
-                            {!! Form::label('is_formerboard', 'Former Board:', ['class' => ''])  !!}
-                            {!! Form::checkbox('is_formerboard', 1, 0,['class' => 'col-md-1','disabled']) !!}
-                        </div><div class="clearfix"> </div>
-
-                        <div class="form-group">
-                            {!! Form::label('is_staff', 'Staff:', ['class' => ''])  !!}
-                            {!! Form::checkbox('is_staff', 1, 0,['class' => 'col-md-1']) !!}
-                            {!! Form::label('is_director', 'Retreat Director:', ['class' => ''])  !!}
-                            {!! Form::checkbox('is_director', 1, 0,['class' => 'col-md-1']) !!}
-                            {!! Form::label('is_innkeeper', 'Retreat Innkeeper:', ['class' => ''])  !!}
-                            {!! Form::checkbox('is_innkeeper', 1, 0,['class' => 'col-md-1']) !!}
-                            {!! Form::label('is_assistant', 'Retreat Assistant:', ['class' => ''])  !!}
-                            {!! Form::checkbox('is_assistant', 1, 0,['class' => 'col-md-1']) !!}
-                        </div><div class="clearfix"> </div>
-
-                </div>
-        </div>
-        <div class="clearfix"> </div>
-
---}}
    </div>
-    {{-- <div class="form-group">
-        {!! Form::image('images/save.png','btnSave',['class' => 'btn btn-outline-dark']) !!}
-    </div> --}}
     {!! Form::close() !!}
 </div>
 

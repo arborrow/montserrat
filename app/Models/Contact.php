@@ -1286,7 +1286,7 @@ class Contact extends Model implements Auditable
             if ($filter == 'ethnicity_id' && $value > 0) {
                 $query->where($filter, $value);
             }
-            if ($filter == 'is_deceased' && $value > 0) {
+            if ($filter == 'is_deceased' && $value >= 0) {
                 $query->where($filter, $value);
             }
             // ignore year but get everyone born on that month/day

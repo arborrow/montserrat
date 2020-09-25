@@ -93,22 +93,21 @@ class SearchControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertViewIs('search.search');
-        $response->assertViewHas('prefixes');
-        $response->assertViewHas('suffixes');
-        $response->assertViewHas('person');
-        $response->assertViewHas('parish_list');
-        $response->assertViewHas('ethnicities');
-        $response->assertViewHas('states');
-        $response->assertViewHas('countries');
-        $response->assertViewHas('genders');
-        $response->assertViewHas('languages');
-        $response->assertViewHas('defaults');
-        $response->assertViewHas('religions');
-        $response->assertViewHas('occupations');
         $response->assertViewHas('contact_types');
-        $response->assertViewHas('subcontact_types');
+        $response->assertViewHas('countries');
+        $response->assertViewHas('ethnicities');
+        $response->assertViewHas('genders');
         $response->assertViewHas('groups');
+        $response->assertViewHas('languages');
+        $response->assertViewHas('occupations');
+        $response->assertViewHas('parish_list');
+        $response->assertViewHas('prefixes');
         $response->assertViewHas('referrals');
+        $response->assertViewHas('religions');
+        $response->assertViewHas('states');
+        $response->assertViewHas('subcontact_types');
+        $response->assertViewHas('suffixes');
+
         $response->assertSeeText('Search Contacts');
     }
 

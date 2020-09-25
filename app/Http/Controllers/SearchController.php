@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\SearchRequest;
 
 class SearchController extends Controller
 {
@@ -46,125 +47,70 @@ class SearchController extends Controller
         }
     }
 
-    public function results(Request $request)
+    public function results(SearchRequest $request)
     {
         $this->authorize('show-contact');
-        // dd($request);
         if (! empty($request)) {
             $persons = \App\Models\Contact::filtered($request)->orderBy('sort_name')->with('attachments')->paginate(100);
             $persons->appends($request->except('page'));
+            // dd($persons);
+        } else {
+            $persons = \App\Models\Contact::orderBy('sort_name')->with('attachments')->paginate(100);
         }
-
+        //dd($request);
         return view('search.results', compact('persons'));
     }
 
     public function search()
     {
         $this->authorize('show-contact');
-        $person = new \App\Models\Contact;
-        $parishes = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
-        $parish_list[0] = 'N/A';
+
         $contact_types = \App\Models\ContactType::whereIsReserved(true)->pluck('label', 'id');
-        $contact_types->prepend('N/A', 0);
-        $subcontact_types = \App\Models\ContactType::whereIsReserved(false)->whereIsActive(true)->pluck('label', 'id');
-        $subcontact_types->prepend('N/A', 0);
+        $contact_types->prepend('N/A', '');
+
+        $countries = \App\Models\Country::orderBy('iso_code')->pluck('iso_code', 'id');
+        $countries->prepend('N/A', '');
+
+        $ethnicities = \App\Models\Ethnicity::orderBy('ethnicity')->pluck('ethnicity', 'id');
+        $ethnicities->prepend('N/A', '');
+
+        $genders = \App\Models\Gender::orderBy('name')->pluck('name', 'id');
+        $genders->prepend('N/A', '');
+
+        $groups = \App\Models\Group::orderBy('name')->pluck('name', 'id');
+        $groups->prepend('N/A', '');
+
+        $languages = \App\Models\Language::orderBy('label')->whereIsActive(1)->pluck('label', 'id');
+        $languages->prepend('N/A', '');
+
+        $occupations = \App\Models\Ppd_occupation::orderBy('name')->pluck('name', 'id');
+        $occupations->prepend('N/A', '');
+
+        $parishes = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
         // while probably not the most efficient way of doing this it gets me the result
+        $parish_list[''] = 'N/A';
         foreach ($parishes as $parish) {
             $parish_list[$parish->id] = $parish->organization_name.' ('.$parish->address_primary_city.') - '.$parish->diocese_name;
         }
 
-        $countries = \App\Models\Country::orderBy('iso_code')->pluck('iso_code', 'id');
-        $countries->prepend('N/A', 0);
-
-        $ethnicities = \App\Models\Ethnicity::orderBy('ethnicity')->pluck('ethnicity', 'id');
-        $ethnicities->prepend('N/A', 0);
-
-        $genders = \App\Models\Gender::orderBy('name')->pluck('name', 'id');
-        $genders->prepend('N/A', 0);
-        $groups = \App\Models\Group::orderBy('name')->pluck('name', 'id');
-        $groups->prepend('N/A', 0);
-
-        $languages = \App\Models\Language::orderBy('label')->whereIsActive(1)->pluck('label', 'id');
-        $languages->prepend('N/A', 0);
-        $referrals = \App\Models\Referral::orderBy('name')->whereIsActive(1)->pluck('name', 'id');
-        $referrals->prepend('N/A', 0);
         $prefixes = \App\Models\Prefix::orderBy('name')->pluck('name', 'id');
-        $prefixes->prepend('N/A', 0);
+        $prefixes->prepend('N/A', '');
+
+        $referrals = \App\Models\Referral::orderBy('name')->whereIsActive(1)->pluck('name', 'id');
+        $referrals->prepend('N/A', '');
+
         $religions = \App\Models\Religion::orderBy('name')->whereIsActive(1)->pluck('name', 'id');
-        $religions->prepend('N/A', 0);
+        $religions->prepend('N/A', '');
+
         $states = \App\Models\StateProvince::orderBy('name')->whereCountryId(1228)->pluck('name', 'id');
-        $states->prepend('N/A', 0);
+        $states->prepend('N/A', '');
+
+        $subcontact_types = \App\Models\ContactType::orderBy('label')->whereIsReserved(false)->whereIsActive(true)->pluck('label', 'id');
+        $subcontact_types->prepend('N/A', '');
+
         $suffixes = \App\Models\Suffix::orderBy('name')->pluck('name', 'id');
-        $suffixes->prepend('N/A', 0);
-        $occupations = \App\Models\Ppd_occupation::orderBy('name')->pluck('name', 'id');
-        $occupations->prepend('N/A', 0);
+        $suffixes->prepend('N/A', '');
 
-        //create defaults array for easier pre-populating of default values on edit/update blade
-        // initialize defaults to avoid undefined index errors
-        $defaults = [];
-        $defaults['Home']['street_address'] = '';
-        $defaults['Home']['supplemental_address_1'] = '';
-        $defaults['Home']['city'] = '';
-        $defaults['Home']['state_province_id'] = '';
-        $defaults['Home']['postal_code'] = '';
-        $defaults['Home']['country_id'] = '';
-        $defaults['Home']['Phone'] = '';
-        $defaults['Home']['Mobile'] = '';
-        $defaults['Home']['Fax'] = '';
-        $defaults['Home']['email'] = '';
-
-        $defaults['Work']['street_address'] = '';
-        $defaults['Work']['supplemental_address_1'] = '';
-        $defaults['Work']['city'] = '';
-        $defaults['Work']['state_province_id'] = '';
-        $defaults['Work']['postal_code'] = '';
-        $defaults['Work']['country_id'] = '';
-        $defaults['Work']['Phone'] = '';
-        $defaults['Work']['Mobile'] = '';
-        $defaults['Work']['Fax'] = '';
-        $defaults['Work']['email'] = '';
-
-        $defaults['Other']['street_address'] = '';
-        $defaults['Other']['supplemental_address_1'] = '';
-        $defaults['Other']['city'] = '';
-        $defaults['Other']['state_province_id'] = '';
-        $defaults['Other']['postal_code'] = '';
-        $defaults['Other']['country_id'] = '';
-        $defaults['Other']['Phone'] = '';
-        $defaults['Other']['Mobile'] = '';
-        $defaults['Other']['Fax'] = '';
-        $defaults['Other']['email'] = '';
-
-        $defaults['Main']['url'] = '';
-        $defaults['Work']['url'] = '';
-        $defaults['Facebook']['url'] = '';
-        $defaults['Google']['url'] = '';
-        $defaults['Instagram']['url'] = '';
-        $defaults['LinkedIn']['url'] = '';
-        $defaults['Twitter']['url'] = '';
-
-        foreach ($person->addresses as $address) {
-            $defaults[$address->location->name]['street_address'] = $address->street_address;
-            $defaults[$address->location->name]['supplemental_address_1'] = $address->supplemental_address_1;
-            $defaults[$address->location->name]['city'] = $address->city;
-            $defaults[$address->location->name]['state_province_id'] = $address->state_province_id;
-            $defaults[$address->location->name]['postal_code'] = $address->postal_code;
-            $defaults[$address->location->name]['country_id'] = $address->country_id;
-        }
-
-        foreach ($person->phones as $phone) {
-            $defaults[$phone->location->name][$phone->phone_type] = $phone->phone;
-        }
-
-        foreach ($person->emails as $email) {
-            $defaults[$email->location->name]['email'] = $email->email;
-        }
-
-        foreach ($person->websites as $website) {
-            $defaults[$website->website_type]['url'] = $website->url;
-        }
-        //dd($person);
-
-        return view('search.search', compact('prefixes', 'suffixes', 'person', 'parish_list', 'ethnicities', 'states', 'countries', 'genders', 'languages', 'defaults', 'religions', 'occupations', 'contact_types', 'subcontact_types', 'groups', 'referrals'));
+        return view('search.search', compact('prefixes', 'suffixes', 'parish_list', 'ethnicities', 'states', 'countries', 'genders', 'languages', 'religions', 'occupations', 'contact_types', 'subcontact_types', 'groups', 'referrals'));
     }
 }

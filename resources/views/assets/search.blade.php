@@ -77,8 +77,8 @@
                             {!! Form::textarea('remarks', NULL, ['class' => 'form-control', 'rows' => 1]) !!}
                         </div>
                         <div class="col-3">
-                            {!! Form::label('is_active', 'Active:', ['class' => 'col-2']) !!}
-                            {!! Form::select('is_active', array(null => 'N/A', '1' => 'Yes', '0' => 'No'),['class' => 'col-1']) !!}
+                            {!! Form::label('is_active', 'Active') !!}
+                            {!! Form::select('is_active', array('' => 'N/A', '1' => 'Yes', '0' => 'No'), NULL, ['class' => 'form-control']) !!}
                         </div>
 
                     </div>
