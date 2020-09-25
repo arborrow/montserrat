@@ -8,8 +8,7 @@
             @can('create-donation')
                 <span class="create">
                     <a href={{ action('DonationController@create') }}>
-                        {!! Html::image('images/create.png', 'Add Donation',array('title'=>"Add Donation",'class' => 'btn btn-light')) !!}
-                    </a>
+                        {!! Html::image('images/create.png', 'Add Donation',array('title'=>"Add Donation",'class' => 'btn btn-light')) !!}</a>
                 </span>
             @endCan
             <a href={{ action('DonationController@search') }}>
