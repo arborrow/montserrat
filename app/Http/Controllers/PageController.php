@@ -178,21 +178,7 @@ class PageController extends Controller
     {
         $this->authorize('show-donation');
 
-        $current_user = $request->user();
-        $user_email = \App\Models\Email::whereEmail($current_user->email)->first();
-
         $donation = \App\Models\Donation::with('payments', 'contact', 'retreat')->findOrFail($donation_id);
-        if (null == $donation['Thank You']) { //avoid creating another touchpoint if acknowledgement letter has already been viewed (and presumably printed and mailed)
-            $agc_touchpoint = new \App\Models\Touchpoint;
-            $agc_touchpoint->person_id = $donation->contact_id;
-            $agc_touchpoint->staff_id = $user_email->contact_id;
-            $agc_touchpoint->touched_at = Carbon::parse(now());
-            $agc_touchpoint->type = 'Letter';
-            $agc_touchpoint->notes = 'AGC Acknowledgement Letter for Donation #'.$donation->donation_id;
-            $agc_touchpoint->save();
-            $donation['Thank You'] = 'Y';
-            $donation->save();
-        }
 
         $snippets = \App\Models\Snippet::whereTitle('agc_acknowledge')->get();
         foreach ($snippets as $snippet) {
@@ -200,16 +186,36 @@ class PageController extends Controller
             Storage::put('views/snippets/'.$snippet->title.'/'.$snippet->locale.'/'.$snippet->label.'.blade.php', $decoded);
         }
 
-        //dd($donation->contact->preferred_language_value);
-        if ($donation->contact->preferred_language_value == 'es') {
-            $dt = Carbon::now();
-            $donation['today_es'] = $dt->day.' de '.$dt->locale('es')->monthName.' del '.$dt->year;
-            $donation['donation_date_es'] = $donation->donation_date->day.' de '.$donation->donation_date->locale('es')->monthName.' del '.$donation->donation_date->year;
+        $current_user = $request->user();
+        $user_email = \App\Models\Email::whereEmail($current_user->email)->first();
 
-            return view('reports.finance.agc_acknowledge_es', compact('donation'));
+        if (! empty($user_email)) {
+            if (null == $donation['Thank You']) { //avoid creating another touchpoint if acknowledgement letter has already been viewed (and presumably printed and mailed)
+                $agc_touchpoint = new \App\Models\Touchpoint;
+                $agc_touchpoint->person_id = $donation->contact_id;
+                $agc_touchpoint->staff_id = $user_email->contact_id;
+                $agc_touchpoint->touched_at = Carbon::parse(now());
+                $agc_touchpoint->type = 'Letter';
+                $agc_touchpoint->notes = 'AGC Acknowledgement Letter for Donation #'.$donation->donation_id;
+                $agc_touchpoint->save();
+                $donation['Thank You'] = 'Y';
+                $donation->save();
+            }
+            //dd($donation->contact->preferred_language_value);
+            if ($donation->contact->preferred_language_value == 'es') {
+                $dt = Carbon::now();
+                $donation['today_es'] = $dt->day.' de '.$dt->locale('es')->monthName.' del '.$dt->year;
+                $donation['donation_date_es'] = $donation->donation_date->day.' de '.$donation->donation_date->locale('es')->monthName.' del '.$donation->donation_date->year;
+
+                return view('reports.finance.agc_acknowledge_es', compact('donation'));
+            } else {
+                return view('reports.finance.agc_acknowledge', compact('donation'));
+            }
         } else {
-            return view('reports.finance.agc_acknowledge', compact('donation'));
+            flash('No known contact associated with the current user\'s email. AGC acknowledgment letter touchpoint cannot be created. Verify '.$current_user->email.' is associated with a contact record and then try again.')->error()->important();
+            return redirect()->back();
         }
+
         //
     }
 

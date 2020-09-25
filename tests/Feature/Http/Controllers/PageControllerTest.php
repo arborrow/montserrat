@@ -171,6 +171,10 @@ class PageControllerTest extends TestCase
     public function finance_agc_acknowledge_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-donation');
+        $email = \App\Models\Email::factory()->create([
+            'email' => $user->email,
+        ]);
+
         $payment = \App\Models\Payment::factory()->create();
 
         $response = $this->actingAs($user)->get('donation/'.$payment->donation_id.'/agc_acknowledge');
@@ -178,6 +182,24 @@ class PageControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('reports.finance.agc_acknowledge');
         $response->assertViewHas('donation');
+    }
+
+
+    /**
+     * @test
+     *
+     * when there is no contact associated with the current authenticated user, the AGC Acknowledgement letter touchpoint cannot be created
+     * the user is redirected back to the page they came from and a flash error message tells them to create a contact associated with their email address
+     */
+    public function finance_agc_acknowledge_no_email_returns_a_flash_response()
+    {   $user = $this->createUserWithPermission('show-donation');
+        $payment = \App\Models\Payment::factory()->create();
+
+        $response = $this->actingAs($user)->from(URL('donation/'.$payment->donation_id))->get('donation/'.$payment->donation_id.'/agc_acknowledge');
+
+        $response->assertSessionHas('flash_notification');
+        $response->assertRedirect(route('donation.show',$payment->donation_id));
+
     }
 
     // TODO: need to create a contact with the $user->email address so that the touchpoint staff member can be created

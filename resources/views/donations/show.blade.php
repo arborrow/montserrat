@@ -13,7 +13,7 @@
         </h1>
         {!! Html::link(action('PageController@finance_invoice',$donation->donation_id),'Invoice',array('class' => 'btn btn-outline-dark'))!!}
         @can('create-payment')
-            {!! Html::link(action('PaymentController@create',$donation->donation_id),'Add payment',array('class' => 'btn btn-outline-dark'))!!}
+            <a href={{ url('payment/create/'.$donation->donation_id) }} class="btn btn-outline-dark">Add payment</a>
         @endCan
         @if (in_array($donation->donation_description, config('polanco.agc_donation_descriptions')) )
             @if(isset($donation['Thank You']))
