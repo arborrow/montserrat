@@ -149,7 +149,7 @@ class DonationController extends Controller
         } else {
             // $retreats = \App\Models\Retreat::select(\DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where("is_active", "=", 1)->orderBy('start_date')->pluck('description', 'id');
             $retreats = \App\Models\Registration::leftjoin('event', 'participant.event_id', '=', 'event.id')->select(DB::raw('CONCAT(event.idnumber, "-", event.title, " (",DATE_FORMAT(event.start_date,"%m-%d-%Y"),")") as description'), 'event.id')->whereContactId($id)->orderBy('event.start_date', 'desc')->pluck('event.description', 'event.id');
-            $retreats->prepend('Unassigned', '');
+            $retreats->prepend('Unassigned', 0);
         }
 
         //dd($donors);
