@@ -202,7 +202,7 @@
             <div class="col-12" id="donations">
                 <h2>Donations for {{ $vendor->display_name }} ({{$vendor->donations->count() }} donations totaling:  ${{ number_format($vendor->donations->sum('donation_amount'),2)}})</h2>
                 @can('create-donation')
-                    <a href={{ url('donation/create/'.$vendor->id) }} class="btn btn-outline-dark">Create donation</a>
+                    <a href={{ url('donation/add/'.$vendor->id) }} class="btn btn-outline-dark">Add donation</a>
                 @endCan
                 @if ($vendor->donations->isEmpty())
                     <div class="text-center">

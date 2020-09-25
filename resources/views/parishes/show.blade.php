@@ -302,7 +302,7 @@
             </div>
             <div class="col-12">
                 @can('create-donation')
-                    {!! Html::link(action('DonationController@create',$parish->id),'Create donation',array('class' => 'btn btn-outline-dark'))!!}
+                    {!! Html::link(route('donation.add',$parish->id),'Create donation',array('class' => 'btn btn-outline-dark'))!!}
                 @endCan
             </div>
             <div class="col-12">

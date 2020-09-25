@@ -7,7 +7,7 @@
             Donations
             @can('create-donation')
                 <span class="create">
-                    <a href={{ action('DonationController@create') }}>
+                    <a href={{ route('donation.create') }}>
                         {!! Html::image('images/create.png', 'Add Donation',array('title'=>"Add Donation",'class' => 'btn btn-light')) !!}</a>
                 </span>
             @endCan

@@ -115,9 +115,9 @@ Route::group(['middleware' => ['web', 'activity']], function () {
     Route::get('donor/{donor_id?}/assign/{contact_id?}', 'DonorController@assign');
     Route::get('donor/{donor_id?}/add', 'DonorController@add');
     Route::resource('donor', 'DonorController');
+    Route::get('donation/add/{id?}/{event_id?}/{type?}', 'DonationController@create')->name('donation.add');
     Route::get('donation/{id?}/agc_acknowledge', 'PageController@finance_agc_acknowledge');
     Route::get('donation/{id?}/invoice', 'PageController@finance_invoice');
-    Route::get('donation/create/{id?}/{event_id?}/{type?}', 'DonationController@create');
     Route::get('donation/overpaid', 'DonationController@overpaid');
     Route::get('donation/search', 'DonationController@search')->name('donations.search');
     Route::get('donation/results', 'DonationController@results')->name('donations.results');
@@ -144,8 +144,8 @@ Route::group(['middleware' => ['web', 'activity']], function () {
     Route::resource('parish', 'ParishController');
     Route::get('payment/search', 'PaymentController@search')->name('payments.search');
     Route::get('payment/results', 'PaymentController@results')->name('payments.results');
-    Route::get('payment/create/{donation_id}', 'PaymentController@create');
     Route::resource('payment', 'PaymentController');
+    Route::get('payment/create/{donation_id}', 'PaymentController@create');
 
     Route::get('parishes/diocese/{diocese_id}', 'ParishController@parish_index_by_diocese');
 

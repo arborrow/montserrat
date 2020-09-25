@@ -231,7 +231,7 @@
                     <h2>Donations for {{ $diocese->display_name }} ({{$diocese->donations->count() }} donations totaling:  ${{ number_format($diocese->donations->sum('donation_amount'),2)}})</h2>
                     <div class="text-center">
                         @can('create-donation')
-                            {!! Html::link(action('DonationController@create',$diocese->id),'Create donation',array('class' => 'btn btn-outline-dark'))!!}
+                            {!! Html::link(route('donation.add',$diocese->id),'Add donation',array('class' => 'btn btn-outline-dark'))!!}
                         @endCan
                     </div>
                     @if ($diocese->donations->isEmpty())

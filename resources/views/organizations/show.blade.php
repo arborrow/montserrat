@@ -201,7 +201,7 @@
                 <div class="col-12" id="donations">
                     <h2>Donations for {{ $organization->display_name }} ({{$organization->donations->count() }} donations totaling:  ${{ number_format($organization->donations->sum('donation_amount'),2)}})</h2>
                     @can('create-donation')
-                        {!! Html::link(action('DonationController@create',$organization->id),'Create donation',array('class' => 'btn btn-outline-dark'))!!}
+                        {!! Html::link(route('donation.add',$organization->id),'Create donation',array('class' => 'btn btn-outline-dark'))!!}
                     @endCan
                     @if ($organization->donations->isEmpty())
                         <div class="text-center">
