@@ -51,31 +51,31 @@ class DonationController extends Controller
     }
 
 
-        public function search()
-        {
-            $this->authorize('show-donation');
+    public function search()
+    {
+        $this->authorize('show-donation');
 
-            $descriptions = \App\Models\DonationType::active()->orderby('name')->pluck('name', 'name');
-            $descriptions->prepend('N/A', '');
+        $descriptions = \App\Models\DonationType::active()->orderby('name')->pluck('name', 'name');
+        $descriptions->prepend('N/A', '');
 
-            $retreats = \App\Models\Registration::leftjoin('event', 'participant.event_id', '=', 'event.id')->select(DB::raw('CONCAT(event.idnumber, "-", event.title, " (",DATE_FORMAT(event.start_date,"%m-%d-%Y"),")") as description'), 'event.id')->orderBy('event.start_date', 'desc')->pluck('event.description', 'event.id');
-            $retreats->prepend('Unassigned', '');
+        $retreats = \App\Models\Registration::leftjoin('event', 'participant.event_id', '=', 'event.id')->select(DB::raw('CONCAT(event.idnumber, "-", event.title, " (",DATE_FORMAT(event.start_date,"%m-%d-%Y"),")") as description'), 'event.id')->orderBy('event.start_date', 'desc')->pluck('event.description', 'event.id');
+        $retreats->prepend('Unassigned', '');
 
-            return view('donations.search', compact('retreats','descriptions'));
+        return view('donations.search', compact('retreats','descriptions'));
+    }
+
+    public function results(DonationSearchRequest $request)
+    {
+        $this->authorize('show-donation');
+        if (! empty($request)) {
+            $donations = \App\Models\Donation::filtered($request)->orderBy('donation_date')->paginate(100);
+            $donations->appends($request->except('page'));
+        } else {
+            $donations = \App\Models\Donation::orderBy('name')->paginate(100);
         }
 
-        public function results(DonationSearchRequest $request)
-        {
-            $this->authorize('show-donation');
-            if (! empty($request)) {
-                $donations = \App\Models\Donation::filtered($request)->orderBy('donation_date')->paginate(100);
-                $donations->appends($request->except('page'));
-            } else {
-                $donations = \App\Models\Donation::orderBy('name')->paginate(100);
-            }
-
-            return view('donations.results', compact('donations'));
-        }
+        return view('donations.results', compact('donations'));
+    }
 
     public function overpaid()
     {

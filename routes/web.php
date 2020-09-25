@@ -142,8 +142,10 @@ Route::group(['middleware' => ['web', 'activity']], function () {
 
     Route::resource('organization', 'OrganizationController');
     Route::resource('parish', 'ParishController');
-    Route::resource('payment', 'PaymentController');
+    Route::get('payment/search', 'PaymentController@search')->name('payments.search');
+    Route::get('payment/results', 'PaymentController@results')->name('payments.results');
     Route::get('payment/create/{donation_id}', 'PaymentController@create');
+    Route::resource('payment', 'PaymentController');
 
     Route::get('parishes/diocese/{diocese_id}', 'ParishController@parish_index_by_diocese');
 

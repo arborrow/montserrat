@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
+use App\Http\Requests\PaymentSearchRequest;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
 
@@ -48,6 +49,29 @@ class PaymentController extends Controller
 
             return Redirect::action('DonationController@index');
         }
+    }
+
+    public function search()
+    {
+        $this->authorize('show-payment');
+
+        $payment_methods = config('polanco.payment_method');
+        $payment_methods[''] = 'N/A';
+
+        return view('payments.search', compact('payment_methods'));
+    }
+
+    public function results(PaymentSearchRequest $request)
+    {
+        $this->authorize('show-payment');
+        if (! empty($request)) {
+            $payments = \App\Models\Payment::filtered($request)->orderBy('payment_date')->paginate(100);
+            $payments->appends($request->except('page'));
+        } else {
+            $payments = \App\Models\Payment::orderBy('payment_date')->paginate(100);
+        }
+
+        return view('payments.results', compact('payments'));
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -56,4 +57,48 @@ class Payment extends Model implements Auditable
             return 0;
         }
     }
+
+    public function scopeFiltered($query, $filters)
+    {   //initialize comparison operators to equals
+        $payment_date_operator = "=";
+        $payment_amount_operator = "=";
+
+        //while not the most efficient - I want to get the comparison operators first so I can assign them to variables to use
+        foreach ($filters->request as $filter => $value) {
+
+            switch($filter) {
+                case 'payment_date_operator' :
+                    $payment_date_operator = ! empty($value) ? $value : '=';
+                    break;
+                case 'payment_amount_operator' :
+                    $payment_amount_operator = ! empty($value) ? $value : '=';
+                    break;
+            }
+        }
+        foreach ($filters->request as $filter => $value) {
+
+            if ($filter == 'payment_date' && ! empty($value)) {
+                $payment_date = Carbon::parse($value);
+                $query->where($filter, $payment_date_operator, $payment_date);
+            }
+            if ($filter == 'payment_amount' && ! empty($value)) {
+                $query->where($filter, $payment_amount_operator, $value);
+            }
+            if ($filter == 'payment_description' && ! empty($value)) {
+                $query->where($filter, "=", $value);
+            }
+            if ($filter == 'note' && ! empty($value)) {
+                $query->where($filter, 'LIKE', '%'.$value.'%');
+            }
+            if ($filter == 'ccnumber' && ! empty($value)) {
+                $query->where($filter, 'LIKE', '%'.$value.'%');
+            }
+            if ($filter == 'cknumber' && ! empty($value)) {
+                $query->where($filter, 'LIKE', '%'.$value.'%');
+            }
+        }
+
+        return $query;
+    }
+
 }

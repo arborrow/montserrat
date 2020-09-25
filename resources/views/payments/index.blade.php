@@ -7,6 +7,8 @@
                 <div class="panel-heading">
                     <h1>
                         <span class="grey">Payment Index</span>
+                        <a href={{ action('PaymentController@search') }}>
+                            {!! Html::image('images/search.png', 'Search payments',array('title'=>"Search payments",'class' => 'btn btn-link')) !!}</a>
                         <span class="grey">({{$payments->total()}} records)</span>
                         <!-- payments are not created independently of donations so there should not be an option here to create a payment -->
                     </h1>
