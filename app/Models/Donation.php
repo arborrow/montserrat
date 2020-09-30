@@ -160,7 +160,7 @@ class Donation extends Model implements Auditable
             $start_date_only_operator = "=";
             $end_date_only_operator = "=" ;
             $donation_install_operator = "=";
-            
+
             //while not the most efficient - I want to get the comparison operators first so I can assign them to variables to use
             foreach ($filters->request as $filter => $value) {
 
@@ -188,7 +188,7 @@ class Donation extends Model implements Auditable
                     $donation_date = Carbon::parse($value);
                     $query->where($filter, $donation_date_operator, $donation_date);
                 }
-                if ($filter == 'donation_amount' && ! empty($value)) {
+                if ($filter == 'donation_amount' && isset($value)) {
                     $query->where($filter, $donation_amount_operator, $value);
                 }
                 if ($filter == 'start_date_only' && ! empty($value)) {

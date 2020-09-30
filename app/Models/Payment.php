@@ -81,7 +81,7 @@ class Payment extends Model implements Auditable
                 $payment_date = Carbon::parse($value);
                 $query->where($filter, $payment_date_operator, $payment_date);
             }
-            if ($filter == 'payment_amount' && ! empty($value)) {
+            if ($filter == 'payment_amount' && isset($value)) {
                 $query->where($filter, $payment_amount_operator, $value);
             }
             if ($filter == 'payment_description' && ! empty($value)) {
