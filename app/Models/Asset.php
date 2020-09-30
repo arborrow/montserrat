@@ -18,6 +18,17 @@ class Asset extends Model implements Auditable
     protected $dates = ['start_date', 'end_date', 'purchase_date', 'warranty_start_date', 'warranty_end_date', 'depreciation_start_date', 'depreciation_end_date'];
 
     // relations
+
+    public function tasks()
+    {
+        return $this->hasMany(AssetTask::class, 'id', 'asset_id');
+    }
+
+    public function jobs()
+    {
+        return $this->hasManyThrough(AssetJob::class, AssetTask::class, 'asset_id','asset_task_id','id','id');
+    }
+
     public function asset_type()
     {
         return $this->hasOne(AssetType::class, 'id', 'asset_type_id');
