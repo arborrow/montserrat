@@ -31,7 +31,7 @@ class MailgunController extends Controller
 
         $results = $mg->events()->get("$domain", $queryString);
         //dd($results);
-        if (array_key_exists('http_response_body', $results)) {
+        if (isset($results->http_response_body)) {
             //dd('found');
             foreach ($results->http_response_body as $body) {
                 //dd($body);
