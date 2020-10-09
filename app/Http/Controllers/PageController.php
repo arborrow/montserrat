@@ -131,13 +131,18 @@ class PageController extends Controller
 
         if (is_null($day)) {
             $day = Carbon::now();
+        } else {
+          if ( (strpos($day,'-') == 0) && (strlen($day) == 8) && is_numeric($day) ) {
+            $new_day = substr($day,0,4).'-'.substr($day,4,2).'-'.substr($day,6,2);
+            $day = $new_day;
+          }
         }
 
         $report_date = Carbon::parse($day);
         if (empty($report_date)) {
             return redirect()->back();
         }
-
+        
         $payments = \App\Models\Payment::wherePaymentDate($report_date)->whereIn('payment_description', ['Cash', 'Check', 'Wire transfer'])->with('donation')->get();
         $grand_total = $payments->sum('payment_amount');
         $grouped_payments = $payments->sortBy('donation.donation_description')->groupBy('donation.donation_description');
@@ -151,6 +156,11 @@ class PageController extends Controller
 
         if (is_null($day)) {
             $day = Carbon::now();
+        } else {
+          if ( (strpos($day,'-') == 0) && (strlen($day) == 8) && is_numeric($day) ) {
+            $new_day = substr($day,0,4).'-'.substr($day,4,2).'-'.substr($day,6,2);
+            $day = $new_day;
+          }
         }
 
         $report_date = Carbon::parse($day);
@@ -343,6 +353,25 @@ class PageController extends Controller
     public function eoy_acknowledgment($contact_id = null, $start_date = null, $end_date = null)
     {
         $this->authorize('show-donation');
+
+        if (is_null($start_date)) {
+            $start_date = Carbon::now();
+        } else {
+          if ( (strpos($start_date,'-') == 0) && (strlen($start_date) == 8) && is_numeric($start_date) ) {
+            $new_day = substr($start_date,0,4).'-'.substr($start_date,4,2).'-'.substr($start_date,6,2);
+            $start_date = $new_day;
+          }
+        }
+
+        if (is_null($end_date)) {
+            $end_date = Carbon::now();
+        } else {
+          if ( (strpos($end_date,'-') == 0) && (strlen($end_date) == 8) && is_numeric($end_date) ) {
+            $new_day = substr($end_date,0,4).'-'.substr($end_date,4,2).'-'.substr($end_date,6,2);
+            $end_date = $new_day;
+          }
+        }
+
 
         $start_date = (is_null($start_date)) ? Carbon::now()->subYear()->month(1)->day(1) : Carbon::parse($start_date);
         $end_date = (is_null($end_date)) ? Carbon::now()->subYear()->month(12)->day(31) : Carbon::parse($end_date);
