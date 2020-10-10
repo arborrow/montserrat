@@ -32,13 +32,13 @@
         <span class="font-weight-bold">Date: </span>{{$donation->donation_date->format('m/d/Y')}}
         <br><span class="font-weight-bold">Description: </span>{{$donation->donation_description}}
         <br>
-            @if ($donation->donation_amount > $donation->payments->sum('payment_amount'))
+            @if (number_format($donation->donation_amount - $donation->payments->sum('payment_amount'),2) >= 0.01)
               <span class="font-weight-bold alert alert-warning alert-important" style="padding:0px;">
             @endIf
-            @if ($donation->donation_amount < $donation->payments->sum('payment_amount'))
+            @if (number_format($donation->donation_amount - $donation->payments->sum('payment_amount'),2) <= -0.01)
               <span class="font-weight-bold alert alert-danger alert-important" style="padding:0px;">
             @endIf
-            @if ($donation->donation_amount == $donation->payments->sum('payment_amount'))
+            @if (number_format(($donation->donation_amount - $donation->payments->sum('payment_amount')),2) == 0.00)
               <span class="font-weight-bold">
             @endIf
           Paid/Pledged:  ${{number_format($donation->payments->sum('payment_amount'),2)}} / ${{number_format($donation->donation_amount,2)}}
