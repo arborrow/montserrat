@@ -27,4 +27,15 @@ class AssetTask extends Model implements Auditable
     {
         return $this->hasMany(AssetJob::class, 'asset_task_id', 'id');
     }
+
+    public function getAssetNameAttribute()
+    {
+        if (isset($this->asset->name)) {
+            return $this->asset->name;
+        } else {
+            return 'N/A';
+        }
+    }
+
+
 }

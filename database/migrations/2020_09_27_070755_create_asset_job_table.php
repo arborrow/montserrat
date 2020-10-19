@@ -28,6 +28,7 @@ class CreateAssetJobTable extends Migration
             $table->text('note')->nullable();
             $table->string('tag')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

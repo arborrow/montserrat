@@ -44,6 +44,13 @@ return [
         'AGC - Buildings & Maintenance',
     ],
 
+    'asset_task_frequency' => [
+        'daily' => 'daily',
+        'weekly' => 'weekly',
+        'monthly' => 'monthly',
+        'yearly' => 'yearly',
+    ],
+
     'finance_email' => 'finance@montserratretreat.org',
     'notify_registration_event_change' => '1',
 
@@ -202,9 +209,11 @@ return [
     ],
 
     'priority' => [
+        'emergency' => '0',
         'urgent' => '1',
-        'normal' => '2',
-        'low' => '3',
+        'serious' => '2',
+        'normal' => '3',
+        'low' => '4',
     ],
 
     'registration_status_id' => [

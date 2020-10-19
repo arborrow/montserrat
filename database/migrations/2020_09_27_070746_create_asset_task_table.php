@@ -19,10 +19,14 @@ class CreateAssetTaskTable extends Migration
             $table->string('title')->required();
             $table->dateTime('start_date')->nullable();
             $table->string('frequency')->nullable();
+            $table->integer('frequency_interval')->nullable();
+            $table->integer('frequency_month')->nullable();
+            $table->integer('frequency_day')->nullable();
+            $table->time('frequency_time', 0)->nullable();
             $table->dateTime('scheduled_until_date')->nullable();
             $table->text('description')->nullable();
             $table->integer('priority_id')->nullable();
-            $table->integer('needed_labor')->nullable();
+            $table->integer('needed_labor_minutes')->nullable();
             $table->decimal('estimated_labor_cost', 13, 2)->default('0.00')->nullable();
             $table->text('needed_material')->nullable();
             $table->decimal('estimated_material_cost', 13, 2)->default('0.00')->nullable();
@@ -30,6 +34,8 @@ class CreateAssetTaskTable extends Migration
             $table->string('category')->nullable();
             $table->string('tag')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 
