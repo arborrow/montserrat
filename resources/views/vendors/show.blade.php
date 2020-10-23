@@ -224,7 +224,7 @@
                         @foreach($vendor->donations->sortByDesc('donation_date') as $donation)
                             <tr>
                                 <td><a href="../donation/{{$donation->donation_id}}"> {{ $donation->donation_date }} </a></td>
-                                <td> {{ $donation->donation_description }}</td>
+                                <td> {{ $donation->donation_description.': #'.optional($donation->retreat)->idnumber }}</td>
 
                                 @if ($donation->donation_amount > $donation->payments->sum('payment_amount'))
                                     <td class="bg-warning" style="padding:0px;">
