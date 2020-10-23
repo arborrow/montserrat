@@ -230,7 +230,7 @@
                                     @else
                                         <tr>
                                     @endif
-                                        <td id='registration-{{$registration->id}}'><a href="{{action('RegistrationController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }} </a> {{$registration->participant_role_name}}</td>
+                                        <td id='registration-{{$registration->id}}'><a href="{{action('RegistrationController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }} </a> {{$registration->participant_role_name}} [{{ $loop->index +1 }}]</td>
                                         <td> {!!$registration->retreatant->avatar_small_link!!} </td>
                                         <td>{!!$registration->retreatant->contact_link_full_name!!} ({{$registration->retreatant_events_count}})</td>
                                         <td>

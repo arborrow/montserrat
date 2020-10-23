@@ -286,6 +286,17 @@ class RetreatController extends Controller
                   withCount('retreatant_events')->
                   paginate(50);
                 break;
+            case 'retreatants':
+                    $registrations = \App\Models\Registration::select('participant.*', 'contact.sort_name')->
+                      leftjoin('contact', 'participant.contact_id', '=', 'contact.id')->
+                      orderBy('participant.register_date')->
+                      whereEventId($id)->
+                      whereNull('canceled_at')->
+                      whereRoleId(config('polanco.participant_role_id.retreatant'))->
+                      withCount('retreatant_events')->
+                      paginate(50);
+                      // dd($registrations);
+                    break;
             default:
 //                $registrations = \App\Models\Registration::whereEventId($id)->whereNull('canceled_at')->with('retreatant.parish')->paginate(100);
                 $registrations = \App\Models\Registration::select('participant.*', 'contact.sort_name')->
