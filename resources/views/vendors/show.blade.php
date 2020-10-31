@@ -226,13 +226,13 @@
                                 <td><a href="../donation/{{$donation->donation_id}}"> {{ $donation->donation_date }} </a></td>
                                 <td> {{ $donation->donation_description.': #'.optional($donation->retreat)->idnumber }}</td>
 
-                                @if ($donation->donation_amount > $donation->payments->sum('payment_amount'))
-                                    <td class="bg-warning" style="padding:0px;">
+                                @if ($donation->donation_amount - $donation->payments->sum('payment_amount') > 0.001)
+                                  <td class="alert alert-warning alert-important" style="padding:0px;">
                                 @endIf
-                                @if ($donation->donation_amount < $donation->payments->sum('payment_amount'))
-                                  <td class="bg-danger" style="padding:0px;">
+                                @if ($donation->donation_amount - $donation->payments->sum('payment_amount') < -0.001)
+                                  <td class="alert alert-danger alert-important" style="padding:0px;">
                                 @endIf
-                                @if ($donation->donation_amount == $donation->payments->sum('payment_amount'))
+                                @if (abs($donation->donation_amount - $donation->payments->sum('payment_amount')) < 0.001)
                                   <td>
                                 @endIf
 
