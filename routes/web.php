@@ -195,6 +195,7 @@ Route::group(['middleware' => ['web', 'activity']], function () {
     Route::prefix('report')->group(function () {
         Route::get('retreatantinfo/{retreat_id}', 'PageController@retreatantinforeport');
         Route::get('retreatlisting/{retreat_id}', 'PageController@retreatlistingreport');
+        Route::get('retreatregistrations/{retreat_id}', 'PageController@retreatregistrations');
         Route::get('retreatroster/{retreat_id}', 'PageController@retreatrosterreport');
         Route::get('contact_info_report/{id}', 'PageController@contact_info_report');
         Route::get('finance/cash_deposit/{day?}', 'PageController@finance_cash_deposit')->name('report.finance.cash_deposit');

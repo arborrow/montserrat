@@ -142,7 +142,7 @@ class PageController extends Controller
         if (empty($report_date)) {
             return redirect()->back();
         }
-        
+
         $payments = \App\Models\Payment::wherePaymentDate($report_date)->whereIn('payment_description', ['Cash', 'Check', 'Wire transfer'])->with('donation')->get();
         $grand_total = $payments->sum('payment_amount');
         $grouped_payments = $payments->sortBy('donation.donation_description')->groupBy('donation.donation_description');
@@ -344,6 +344,22 @@ class PageController extends Controller
         $registrations = $registrations->sortBy('retreatant.sort_name');
 
         return view('reports.retreatroster', compact('registrations'));   //
+    }
+
+    public function retreatregistrations($idnumber)
+    {
+        $this->authorize('show-registration');
+
+        $retreat = \App\Models\Retreat::whereIdnumber($idnumber)->firstOrFail();
+        $registrations = \App\Models\Registration::whereCanceledAt(null)
+            ->whereEventId($retreat->id)
+            ->whereRoleId(config('polanco.participant_role_id.retreatant'))
+            ->whereStatusId(config('polanco.registration_status_id.registered'))
+            ->with('retreat', 'retreatant')
+            ->orderBy('register_date')
+            ->get();
+
+        return view('reports.retreatregistrations', compact('registrations'));   //
     }
 
     /*

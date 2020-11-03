@@ -508,6 +508,21 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
+    public function retreatregistrationsreport_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-registration');
+        $retreat = \App\Models\Retreat::factory()->create();
+
+        $response = $this->actingAs($user)->get('report/retreatregistrations/'.$retreat->idnumber);
+
+        $response->assertOk();
+        $response->assertViewIs('reports.retreatregistrations');
+        $response->assertViewHas('registrations');
+    }
+
+    /**
+     * @test
+     */
     public function support_displays_view()
     {
         $user = \App\Models\User::factory()->create();
