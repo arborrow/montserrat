@@ -1,7 +1,7 @@
 @extends('report')
 @section('content')
 
-<div class ="retreatroster">
+<div class ="retreatregistrations">
 @if (!$registrations->isEmpty())
 
 <h2>Retreat #{{$registrations[0]->retreat->idnumber}} Registrations by Date of Registration - {{$registrations[0]->retreat->title}}</h2>
