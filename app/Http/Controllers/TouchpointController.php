@@ -64,6 +64,9 @@ class TouchpointController extends Controller
             $defaults['user_id'] = 0;
         } else {
             $defaults['user_id'] = $user_email->contact_id;
+            if (! $staff->has($user_email->contact_id)) {
+                $staff->prepend($user_email->owner->sort_name,$user_email->contact_id);
+            }
         }
 
         return view('touchpoints.create', compact('staff', 'persons', 'defaults'));
@@ -83,8 +86,11 @@ class TouchpointController extends Controller
             $defaults['user_id'] = 0;
         } else {
             $defaults['user_id'] = $user_email->contact_id;
+            if (! $staff->has($user_email->contact_id)) {
+                $staff->prepend($user_email->owner->sort_name,$user_email->contact_id);
+                dd($staff);
+            }
         }
-
         return view('touchpoints.add_group', compact('staff', 'groups', 'defaults'));
     }
 
@@ -109,6 +115,9 @@ class TouchpointController extends Controller
             $defaults['user_id'] = 0;
         } else {
             $defaults['user_id'] = $user_email->contact_id;
+            if (! $staff->has($user_email->contact_id)) {
+                $staff->prepend($user_email->owner->sort_name,$user_email->contact_id);
+            }
         }
 
         return view('touchpoints.add_retreat', compact('staff', 'retreat', 'retreats', 'participants', 'defaults'));
@@ -135,6 +144,9 @@ class TouchpointController extends Controller
             $defaults['user_id'] = 0;
         } else {
             $defaults['user_id'] = $user_email->contact_id;
+            if (! $staff->has($user_email->contact_id)) {
+                $staff->prepend($user_email->owner->sort_name,$user_email->contact_id);
+            }
         }
 
         return view('touchpoints.add_retreat_waitlist', compact('staff', 'retreat', 'retreats', 'participants', 'defaults'));
@@ -144,14 +156,6 @@ class TouchpointController extends Controller
     {
         $this->authorize('create-touchpoint');
 
-        $current_user = $request->user();
-        $user_email = \App\Models\Email::whereEmail($current_user->email)->first();
-        $defaults['contact_id'] = $id;
-        if (empty($user_email->contact_id)) {
-            $defaults['user_id'] = 0;
-        } else {
-            $defaults['user_id'] = $user_email->contact_id;
-        }
         //lookup the contact type of the touchpoint being added and show similar ones in drop down (persons, parishes, etc.)
         $contact = \App\Models\Contact::findOrFail($id);
         if (isset($contact->subcontact_type)) {
@@ -162,7 +166,21 @@ class TouchpointController extends Controller
         $staff = \App\Models\Contact::with('groups')->whereHas('groups', function ($query) {
             $query->where('group_id', '=', config('polanco.group_id.staff'));
         })->orderBy('sort_name')->pluck('sort_name', 'id');
+
         // TODO: replace this with an autocomplete text box for performance rather than a dropdown box
+
+        $current_user = $request->user();
+        $user_email = \App\Models\Email::whereEmail($current_user->email)->first();
+        $defaults['contact_id'] = $id;
+        if (empty($user_email->contact_id)) {
+            $defaults['user_id'] = 0;
+        } else {
+            $defaults['user_id'] = $user_email->contact_id;
+            if (! $staff->has($user_email->contact_id)) {
+                $staff->prepend($user_email->owner->sort_name,$user_email->contact_id);
+            }
+        }
+
         return view('touchpoints.create', compact('staff', 'persons', 'defaults'));
     }
 
