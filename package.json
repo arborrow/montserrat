@@ -22,7 +22,7 @@
         "jquery": "~>3.5.0",
         "jquery-ui-bundle": "^1.12.1-migrate",
         "laravel-mix": "^5.0.2",
-        "lodash": "^4.17.13",
+        "lodash": "^4.17.19",
         "popper.js": "^1.16.1",
         "resolve-url-loader": "^3.1.0",
         "sass": "^1.15.2",
