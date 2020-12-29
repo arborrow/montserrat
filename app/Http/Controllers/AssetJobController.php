@@ -8,7 +8,7 @@ use App\Http\Requests\AssetSearchRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
-class AssetController extends Controller
+class AssetJobController extends Controller
 {
     public function __construct()
     {
