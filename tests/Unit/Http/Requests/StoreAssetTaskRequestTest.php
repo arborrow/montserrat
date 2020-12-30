@@ -47,7 +47,7 @@ class StoreAssetTaskRequestTest extends TestCase
           'frequency' => 'in:'.implode(',', config('polanco.asset_task_frequency')).'|required',
           'frequency_month' => 'integer|nullable',
           'frequency_day' => 'integer|nullable',
-          'frequency_time' => 'time|nullable',
+          'frequency_time' => 'date_format:H:i|nullable',
           'description' => 'string|nullable',
           'priority_id' => 'in:'.implode(',', config('polanco.priority')).'|required',
           'needed_labor_minutes' => 'integer|nullable',

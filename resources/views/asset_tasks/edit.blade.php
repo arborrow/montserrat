@@ -54,7 +54,7 @@
                         </div>
                         <div class="col-3">
                             {!! Form::label('frequency_time', 'Time') !!}
-                            {!! Form::time('frequency_time', $asset_task->frequency_time, ['class'=>'form-control flatpickr-date', 'autocomplete'=> 'off']) !!}
+                            {!! Form::text('frequency_time', $asset_task->frequency_time, ['class'=>'form-control flatpickr-time', 'autocomplete'=> 'off']) !!}
                         </div>
                     </div>
                     <div class="row">
