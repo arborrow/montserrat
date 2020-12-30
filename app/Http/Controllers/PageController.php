@@ -371,7 +371,6 @@ class PageController extends Controller
         $this->authorize('show-donation');
 
         if (is_null($start_date)) {
-            $start_date = Carbon::now();
         } else {
           if ( (strpos($start_date,'-') == 0) && (strlen($start_date) == 8) && is_numeric($start_date) ) {
             $new_day = substr($start_date,0,4).'-'.substr($start_date,4,2).'-'.substr($start_date,6,2);
@@ -380,14 +379,12 @@ class PageController extends Controller
         }
 
         if (is_null($end_date)) {
-            $end_date = Carbon::now();
         } else {
           if ( (strpos($end_date,'-') == 0) && (strlen($end_date) == 8) && is_numeric($end_date) ) {
             $new_day = substr($end_date,0,4).'-'.substr($end_date,4,2).'-'.substr($end_date,6,2);
             $end_date = $new_day;
           }
         }
-
 
         $start_date = (is_null($start_date)) ? Carbon::now()->subYear()->month(1)->day(1) : Carbon::parse($start_date);
         $end_date = (is_null($end_date)) ? Carbon::now()->subYear()->month(12)->day(31) : Carbon::parse($end_date);
