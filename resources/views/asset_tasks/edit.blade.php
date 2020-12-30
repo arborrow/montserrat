@@ -76,7 +76,7 @@
                         </div>
                         <div class="col-3">
                             {!! Form::label('estimated_labor_cost', 'Estimated labor cost') !!}
-                            {!! Form::text('estimated_labor_cost', $asset_task->estimated_labor_cost , ['class' => 'form-control']) !!}
+                            {!! Form::number('estimated_labor_cost', $asset_task->estimated_labor_cost , ['class' => 'form-control']) !!}
                         </div>
                     </div>
                     <div class="row">
@@ -86,7 +86,7 @@
                         </div>
                         <div class="col-3">
                             {!! Form::label('estimated_material_cost', 'Estimated material cost') !!}
-                            {!! Form::text('estimated_material_cost', $asset_task->estimated_material_cost , ['class' => 'form-control']) !!}
+                            {!! Form::number('estimated_material_cost', $asset_task->estimated_material_cost , ['class' => 'form-control']) !!}
                         </div>
                     </div>
                     <div class="row">
