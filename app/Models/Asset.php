@@ -21,7 +21,7 @@ class Asset extends Model implements Auditable
 
     public function tasks()
     {
-        return $this->hasMany(AssetTask::class, 'id', 'asset_id');
+        return $this->hasMany(AssetTask::class, 'asset_id', 'id');
     }
 
     public function jobs()

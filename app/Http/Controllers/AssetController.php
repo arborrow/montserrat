@@ -242,9 +242,8 @@ class AssetController extends Controller
     {
         $this->authorize('show-asset');
 
-        $asset = \App\Models\Asset::findOrFail($id);
+        $asset = \App\Models\Asset::with('tasks.jobs')->findOrFail($id);
         $files = \App\Models\Attachment::whereEntity('asset')->whereEntityId($asset->id)->whereFileTypeId(config('polanco.file_type.asset_attachment'))->get();
-
         return view('assets.show', compact('asset', 'files'));
     }
 
