@@ -11,7 +11,7 @@ use Tests\TestCase;
  */
 class StoreAssetRequestTest extends TestCase
 {
-    /** @var \App\Http\Requests\StoreUomRequest */
+    /** @var \App\Http\Requests\StoreAssetRequest */
     private $subject;
 
     protected function setUp(): void

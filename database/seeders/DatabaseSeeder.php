@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use Database\Seeders\AssetPermissionsSeeder;
+use Database\Seeders\AssetTaskPermissionsSeeder;
+use Database\Seeders\AssetJobPermissionsSeeder;
 use Database\Seeders\AssetTypeTableSeeder;
 use Database\Seeders\AuditPermissionsSeeder;
 use Database\Seeders\CivicrmParticipantStatusTypeTableSeeder;
@@ -57,6 +59,8 @@ class DatabaseSeeder extends Seeder
         $this->call(DepartmentTableSeeder::class);
         // permissions
         $this->call(AssetPermissionsSeeder::class);
+        $this->call(AssetTaskPermissionsSeeder::class);
+        $this->call(AssetJobPermissionsSeeder::class);
         $this->call(AuditPermissionsSeeder::class);
         $this->call(DepartmentPermissionsSeeder::class);
         $this->call(ExportListPermissionsSeeder::class);

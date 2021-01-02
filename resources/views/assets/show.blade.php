@@ -151,6 +151,35 @@
                 @endif
             </div>
         </div>
+        <h3 class="text-primary">Tasks</h3>
+        <div class="row">
+            <div class="col-12 mt-3" id="attachments">
+                @if ($asset->tasks->isEmpty())
+                    <p>There are no tasks for this asset.</p>
+                @else
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Task</th>
+                                <th>Dates (Start - Until)</th>
+                                <th>Frequency</th>
+                                <th>Priority</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($asset->tasks->sortByDesc('scheduled_date') as $task)
+                            <tr>
+                                <td><a href="{{ URL('asset_task/'.$task->id) }}"> {{$task->title}} </a></td>
+                                <td>{{$task->start_date}} - {{ $task->scheduled_until_date }}</td>
+                                <td>{{$task->frequency}}</td>
+                                <td>{{$task->priority}} </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endif
+            </div>
+        </div>
     </div>
 
     <div class="col-12 mt-3">
