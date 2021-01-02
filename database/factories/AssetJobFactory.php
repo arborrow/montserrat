@@ -24,13 +24,16 @@ class AssetJobFactory extends Factory
     public function definition()
     {   // start and end dates are NULL for the factory so assuming that no job has been completed
         $start_date = Carbon::createFromTimestamp($this->faker->dateTimeBetween($startDate = '+30 days', $endDate = '+90 days')->getTimeStamp());
+        $staff = \App\Models\Contact::factory()->create();
 
         return [
 
             'asset_task_id' => function () {
                 return \App\Models\AssetTask::factory()->create()->id;
             },
-            'assigned_to_id' => $this->faker->sentence,
+            'assigned_to_id' => function() {
+                return \App\Models\Contact::factory()->create()->id;
+            },
             'scheduled_date' => $start_date,
             'start_date' => NULL,
             'end_date' => NULL,

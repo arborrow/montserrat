@@ -80,8 +80,6 @@
                           {!! Form::text('tag', $asset_job->tag , ['class' => 'form-control']) !!}
                       </div>
                   </div>
-
-
                 </div>
             </div>
         </div>

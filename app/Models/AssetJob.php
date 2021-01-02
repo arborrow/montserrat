@@ -28,4 +28,22 @@ class AssetJob extends Model implements Auditable
         return $this->belongsTo(Contact::class, 'assigned_to_id', 'id');
     }
 
+    public function getAssignedSortNameAttribute()
+    {
+        if (isset($this->assigned_to->sort_name)) {
+            return $this->assigned_to->sort_name;
+        } else {
+            return 'Unassigned';
+        }
+    }
+
+    public function getAssignedContactUrlAttribute()
+    {
+        if (isset($this->assigned_to->contact_url)) {
+            return $this->assigned_to->contact_url;
+        } else {
+            return 'Unassigned';
+        }
+    }
+
 }

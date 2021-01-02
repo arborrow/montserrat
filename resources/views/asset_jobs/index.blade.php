@@ -36,7 +36,7 @@
                     <td><a href="{{URL('asset_job/'.$asset_job->id)}}">{{ $asset_job->scheduled_date }}</a></td>
                     <td><a href="{{URL('asset/'.$asset_job->asset_task->asset->id)}}">{{ $asset_job->asset_task->asset->name }}</a></td>
                     <td><a href="{{URL('asset_task/'.$asset_job->asset_task->id)}}">{{ $asset_job->asset_task->title }}</a></td>
-                    <td><a href="{{$asset_job->assigned_to->contact_url}}">{{ $asset_job->assigned_to->sort_name }}</a></td>
+                    <td><a href="{{$asset_job->assigned_contact_url}}">{{ $asset_job->assigned_sort_name }}</a></td>
                     <td>{{ $asset_job->status }}</td>
                 </tr>
                 @endforeach

@@ -107,7 +107,7 @@ class AssetJobController extends Controller
      */
     public function edit($id)
     {
-        $this->authorize('update-asset');
+        $this->authorize('update-asset-job');
 
         $asset_job = \App\Models\AssetJob::findOrFail($id);
 
@@ -163,7 +163,7 @@ class AssetJobController extends Controller
         $asset_job->tag = $request->input('tag');
 
         $asset_job->save();
-        
+
         //TODO: implement on asset_job edit blade
         if (null !== $request->file('attachment')) {
             $description = $request->input('attachment_description');
