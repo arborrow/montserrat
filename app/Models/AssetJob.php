@@ -23,4 +23,9 @@ class AssetJob extends Model implements Auditable
         return $this->belongsTo(AssetTask::class, 'asset_task_id');
     }
 
+    public function assigned_to()
+    {
+        return $this->belongsTo(Contact::class, 'assigned_to_id', 'id');
+    }
+
 }

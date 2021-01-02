@@ -51,6 +51,12 @@ return [
         'yearly' => 'yearly',
     ],
 
+    'asset_job_status' => [
+        'Scheduled' => 'Scheduled',
+        'Completed' => 'Completed',
+        'Canceled' => 'Canceled',
+    ],
+
     'finance_email' => 'finance@montserratretreat.org',
     'notify_registration_event_change' => '1',
 

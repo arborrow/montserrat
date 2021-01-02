@@ -21,10 +21,10 @@ class CreateAssetJobTable extends Migration
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
             $table->string('status')->required();
-            $table->text('needed_materials')->nullable();
-            $table->integer('needed_labor')->nullable();
-            $table->decimal('estimated_labor_cost', 13, 2)->default('0.00')->nullable();
-            $table->decimal('estimated_material_cost', 13, 2)->default('0.00')->nullable();
+            $table->text('additional_materials')->nullable();
+            $table->integer('actual_labor')->nullable();
+            $table->decimal('actual_labor_cost', 13, 2)->default('0.00')->nullable();
+            $table->decimal('actual_material_cost', 13, 2)->default('0.00')->nullable();
             $table->text('note')->nullable();
             $table->string('tag')->nullable();
             $table->timestamps();
