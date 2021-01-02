@@ -91,9 +91,11 @@ class AssetTaskController extends Controller
     {
         $this->authorize('show-asset-task');
 
-        $asset_task = \App\Models\AssetTask::findOrFail($id);
-
-        return view('asset_tasks.show', compact('asset_task'));
+        $asset_task = \App\Models\AssetTask::with('jobs')->findOrFail($id);
+        $jobs_scheduled = \App\Models\AssetJob::whereAssetTaskId($id)->where('scheduled_date','>=',now())->orderBy('scheduled_date')->get();
+        $jobs_past = \App\Models\AssetJob::whereAssetTaskId($id)->where('scheduled_date','<',now())->orderBy('scheduled_date')->get();
+        
+        return view('asset_tasks.show', compact('asset_task','jobs_scheduled','jobs_past'));
     }
 
     /**

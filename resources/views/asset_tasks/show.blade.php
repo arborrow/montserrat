@@ -52,6 +52,73 @@
             <div class="col-3"><strong>Category:</strong> {{$asset_task->category}}</div>
             <div class="col-3"><strong>Tag:</strong> {{$asset_task->tag}}</div>
         </div>
+        <div class="row"></div>
+    </div>
+
+    <div class="col-12 my-3 table-responsive-md">
+      <h3 class="text-primary">Scheduled jobs</h3>
+        @if ($jobs_scheduled->isEmpty())
+        <div class="col-12 text-center py-5">
+            <p>There are no scheduled jobs for this task</p>
+        </div>
+        @else
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Scheduled</th>
+                    <th scope="col">Asset</th>
+                    <th scope="col">Task</th>
+                    <th scope="col">Assigned</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($jobs_scheduled as $asset_job)
+                <tr>
+                    <td><a href="{{URL('asset_job/'.$asset_job->id)}}">{{ $asset_job->scheduled_date }}</a></td>
+                    <td><a href="{{URL('asset/'.$asset_job->asset_task->asset->id)}}">{{ $asset_job->asset_task->asset->name }}</a></td>
+                    <td><a href="{{URL('asset_task/'.$asset_job->asset_task->id)}}">{{ $asset_job->asset_task->title }}</a></td>
+                    <td><a href="{{$asset_job->assigned_contact_url}}">{{ $asset_job->assigned_sort_name }}</a></td>
+                    <td>{{ $asset_job->status }}</td>
+                </tr>
+                @endforeach
+
+            </tbody>
+        </table>
+        @endif
+    </div>
+
+    <div class="col-12 my-3 table-responsive-md">
+      <h3 class="text-primary">Past jobs</h3>
+        @if ($jobs_past->isEmpty())
+        <div class="col-12 text-center py-5">
+            <p>There are no past jobs for this task</p>
+        </div>
+        @else
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Scheduled</th>
+                    <th scope="col">Asset</th>
+                    <th scope="col">Task</th>
+                    <th scope="col">Assigned</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($jobs_past as $asset_job)
+                <tr>
+                    <td><a href="{{URL('asset_job/'.$asset_job->id)}}">{{ $asset_job->scheduled_date }}</a></td>
+                    <td><a href="{{URL('asset/'.$asset_job->asset_task->asset->id)}}">{{ $asset_job->asset_task->asset->name }}</a></td>
+                    <td><a href="{{URL('asset_task/'.$asset_job->asset_task->id)}}">{{ $asset_job->asset_task->title }}</a></td>
+                    <td><a href="{{$asset_job->assigned_contact_url}}">{{ $asset_job->assigned_sort_name }}</a></td>
+                    <td>{{ $asset_job->status }}</td>
+                </tr>
+                @endforeach
+
+            </tbody>
+        </table>
+        @endif
     </div>
 
     <div class="col-12 mt-3">
