@@ -105,6 +105,8 @@ Route::group(['middleware' => ['web', 'activity']], function () {
     Route::get('asset/{asset_id}/photo/delete', 'AttachmentController@delete_asset_photo')->name('delete_asset_photo');
     Route::get('asset/{asset_id}/attachment/{file_name}', 'AttachmentController@show_asset_attachment')->name('show_asset_attachment');
     Route::get('asset/{asset_id}/attachment/{file_name}/delete', 'AttachmentController@delete_asset_attachment')->name('delete_asset_attachment');
+    Route::get('asset_task/create/{asset_id}', 'AssetTaskController@create');
+    Route::get('asset_job/create/{asset_task_id}', 'AssetJobController@create');
 
     Route::resource('asset', 'AssetController');
     Route::resource('asset_task', 'AssetTaskController');

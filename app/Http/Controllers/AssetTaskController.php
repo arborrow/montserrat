@@ -28,12 +28,18 @@ class AssetTaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($asset_id = 0)
     {
         $this->authorize('create-asset-task');
 
-        $assets = \App\Models\Asset::orderBy('name')->pluck('name', 'id');
-        $assets->prepend('N/A', '');
+        // if creating a task for a particular asset (default behavior from asset.show blade) then no need to get long list of assets to choose from
+        if ( isset($asset_id) && $asset_id > 0) {
+            $assets = \App\Models\Asset::whereId($asset_id)->pluck('name','id');
+            // dd($asset_id, $assets);
+        } else {
+            $assets = \App\Models\Asset::orderBy('name')->pluck('name', 'id');
+            $assets->prepend('N/A', '');
+        }
 
         $vendors = \App\Models\Contact::vendors()->orderBy('organization_name')->pluck('organization_name', 'id');
         $vendors->prepend('N/A', '');
@@ -94,7 +100,7 @@ class AssetTaskController extends Controller
         $asset_task = \App\Models\AssetTask::with('jobs')->findOrFail($id);
         $jobs_scheduled = \App\Models\AssetJob::whereAssetTaskId($id)->where('scheduled_date','>=',now())->orderBy('scheduled_date')->get();
         $jobs_past = \App\Models\AssetJob::whereAssetTaskId($id)->where('scheduled_date','<',now())->orderBy('scheduled_date')->get();
-        
+
         return view('asset_tasks.show', compact('asset_task','jobs_scheduled','jobs_past'));
     }
 

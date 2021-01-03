@@ -35,6 +35,26 @@ class AssetJobControllerTest extends TestCase
     /**
      * @test
      */
+    public function create_with_asset_task_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('create-asset-job');
+        $asset_task = \App\Models\AssetTask::factory()->create();
+
+        $response = $this->actingAs($user)->get('asset_job/create/'.$asset_task->id);
+
+        $response->assertOk();
+        $response->assertViewIs('asset_jobs.create');
+        $response->assertViewHas('asset_tasks');
+        $response->assertViewHas('staff');
+        $response->assertViewHas('status');
+        $response->assertSeeText('Create asset job');
+        $response->assertSeeText($asset_task->title);
+    }
+
+
+    /**
+     * @test
+     */
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-asset-job');

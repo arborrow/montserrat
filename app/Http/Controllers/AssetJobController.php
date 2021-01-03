@@ -29,11 +29,19 @@ class AssetJobController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($asset_task_id = 0)
     {
         $this->authorize('create-asset-job');
 
-        $asset_tasks = \App\Models\AssetTask::orderBy('title')->pluck('title', 'id');
+        // if creating a task for a particular asset (default behavior from asset.show blade) then no need to get long list of assets to choose from
+        if ( isset($asset_task_id) && $asset_task_id > 0) {
+            $asset_tasks = \App\Models\AssetTask::whereId($asset_task_id)->pluck('title','id');
+            // dd($asset_id, $assets);
+        } else {
+            $asset_tasks = \App\Models\AssetTask::orderBy('title')->pluck('title', 'id');
+            $asset_tasks->prepend('N/A', '');
+        }
+
 
         $staff = \App\Models\Contact::with('groups')->whereHas('groups', function ($query) {
             $query->where('group_id', '=', config('polanco.group_id.staff'));

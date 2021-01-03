@@ -35,6 +35,26 @@ class AssetTaskControllerTest extends TestCase
     /**
      * @test
      */
+    public function create_with_asset_task_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('create-asset-task');
+        $asset = \App\Models\Asset::factory()->create();
+
+        $response = $this->actingAs($user)->get('asset_task/create/'.$asset->id);
+
+        $response->assertOk();
+        $response->assertViewIs('asset_tasks.create');
+        $response->assertViewHas('assets');
+        $response->assertViewHas('frequencies');
+        $response->assertViewHas('priorities');
+        $response->assertViewHas('vendors');
+        $response->assertSeeText('Create asset task');
+        $response->assertSeeText($asset->name);
+    }
+
+    /**
+     * @test
+     */
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-asset-task');

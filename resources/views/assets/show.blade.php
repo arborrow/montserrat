@@ -153,7 +153,11 @@
         </div>
         <h3 class="text-primary">Tasks</h3>
         <div class="row">
-            <div class="col-12 mt-3" id="attachments">
+            <div class="col-12 mt-3" id="tasks">
+              @can('create-asset-task')
+                  <a href={{ url('asset_task/create/'.$asset->id) }} class="btn btn-outline-dark">Add task</a>
+              @endCan
+
                 @if ($asset->tasks->isEmpty())
                     <p>There are no tasks for this asset.</p>
                 @else

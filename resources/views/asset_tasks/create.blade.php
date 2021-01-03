@@ -8,15 +8,13 @@
     <div class="col-12">
         {!! Form::open(['url'=>'asset_task', 'method'=>'post', 'enctype'=>'multipart/form-data']) !!}
         <div class="form-group">
-
-            <h3 class="text-primary">Asset task</h3>
             <div class="row">
                 <div class="col-3">
                     {!! Form::label('asset_id', 'Asset') !!}
                     {!! Form::select('asset_id', $assets, NULL, ['class' => 'form-control']) !!}
                 </div>
                 <div class="col-3">
-                    {!! Form::label('title', 'Title') !!}
+                    {!! Form::label('title', 'Task') !!}
                     {!! Form::text('title', NULL , ['class' => 'form-control']) !!}
                 </div>
             </div>
@@ -56,7 +54,7 @@
             </div>
             <div class="row">
                 <div class="col-6">
-                    {!! Form::label('description', 'Description') !!}
+                    {!! Form::label('description', 'Detailed description') !!}
                     {!! Form::textarea('description', NULL, ['class' => 'form-control', 'rows' => 3]) !!}
                 </div>
             </div>
