@@ -28,8 +28,8 @@ class SnippetController extends Controller
     {
         $this->authorize('show-snippet');
 
-        $titles = \App\Models\Snippet::groupBy('title')->orderBy('title')->pluck('title', 'title');
-        $snippets = \App\Models\Snippet::orderBy('title')->orderBy('locale')->orderBy('label')->get();
+        $titles = \App\Models\Snippet::groupBy('title')->with('language')->orderBy('title')->pluck('title', 'title');
+        $snippets = \App\Models\Snippet::orderBy('title')->with('language')->orderBy('locale')->orderBy('label')->get();
 
         return view('admin.snippets.index', compact('snippets', 'titles'));
     }
@@ -38,8 +38,8 @@ class SnippetController extends Controller
     {
         $this->authorize('show-snippet');
 
-        $titles = \App\Models\Snippet::groupBy('title')->orderBy('title')->pluck('title', 'title');
-        $snippets = \App\Models\Snippet::whereTitle($title)->orderBy('title')->orderBy('locale')->orderBy('label')->get();
+        $titles = \App\Models\Snippet::groupBy('title')->with('language')->orderBy('title')->pluck('title', 'title');
+        $snippets = \App\Models\Snippet::whereTitle($title)->with('language')->orderBy('title')->orderBy('locale')->orderBy('label')->get();
 
         return view('admin.snippets.index', compact('snippets', 'titles'));
     }

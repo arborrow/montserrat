@@ -21,7 +21,7 @@ class AuditController extends Controller
     {
         $this->authorize('show-audit');
         $users = \App\Models\User::with('user')->orderBy('name')->pluck('name', 'id');
-        $audits = \App\Models\Audit::orderBy('created_at', 'DESC')->paginate(100);
+        $audits = \App\Models\Audit::with('user')->orderBy('created_at', 'DESC')->paginate(100);
 
         return view('admin.audits.index', compact('audits', 'users'));
     }
@@ -30,7 +30,7 @@ class AuditController extends Controller
     {
         $this->authorize('show-audit');
         $users = \App\Models\User::with('user')->orderBy('name')->pluck('name', 'id');
-        $audits = \App\Models\Audit::whereUserId($user_id)->orderBy('created_at', 'DESC')->paginate(100);
+        $audits = \App\Models\Audit::with('user')->whereUserId($user_id)->orderBy('created_at', 'DESC')->paginate(100);
 
         return view('admin.audits.index', compact('audits', 'users'));
     }

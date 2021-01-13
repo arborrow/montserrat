@@ -30,7 +30,7 @@ class TouchpointController extends Controller
         $this->authorize('show-touchpoint');
 
         $staff = \App\Models\Touchpoint::groupBy('staff_id')->select('staff_id')->with('staff')->get()->sortBy('staff.sort_name')->pluck('staff.sort_name', 'staff_id');
-        $touchpoints = \App\Models\Touchpoint::orderBy('touched_at', 'desc')->with('person', 'staff')->paginate(100);
+        $touchpoints = \App\Models\Touchpoint::orderBy('touched_at', 'desc')->with('person.prefix', 'person.suffix','staff.prefix','staff.suffix')->paginate(100);
 
         return view('touchpoints.index', compact('touchpoints', 'staff'));
     }
@@ -40,7 +40,7 @@ class TouchpointController extends Controller
         $this->authorize('show-touchpoint');
 
         $staff = \App\Models\Touchpoint::groupBy('staff_id')->select('staff_id')->with('staff')->get()->sortBy('staff.sort_name')->pluck('staff.sort_name', 'staff_id');
-        $touchpoints = \App\Models\Touchpoint::whereStaffId($staff_id)->orderBy('touched_at', 'desc')->with('person', 'staff')->paginate(100);
+        $touchpoints = \App\Models\Touchpoint::whereStaffId($staff_id)->orderBy('touched_at', 'desc')->with('person.prefix', 'person.suffix', 'staff.prefix','staff.suffix')->paginate(100);
 
         return view('touchpoints.index', compact('touchpoints', 'staff'));   //
     }

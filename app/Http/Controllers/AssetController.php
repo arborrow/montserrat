@@ -22,7 +22,7 @@ class AssetController extends Controller
         $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
         $locations = \App\Models\Location::orderBy('name')->pluck('name', 'id');
 
-        $assets = \App\Models\Asset::orderBy('name')->get();
+        $assets = \App\Models\Asset::orderBy('name')->with('asset_type','location')->get();
 
         return view('assets.index', compact('assets', 'asset_types', 'locations'));
     }
