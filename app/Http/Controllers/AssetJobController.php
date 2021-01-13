@@ -19,7 +19,7 @@ class AssetJobController extends Controller
     {
         $this->authorize('show-asset-job');
 
-        $asset_jobs = \App\Models\AssetJob::orderBy('scheduled_date')->get();
+        $asset_jobs = \App\Models\AssetJob::with('asset_task.asset','assigned_to')->orderBy('scheduled_date')->get();
 
         return view('asset_jobs.index',compact('asset_jobs'));
     }

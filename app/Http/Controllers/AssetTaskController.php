@@ -18,7 +18,7 @@ class AssetTaskController extends Controller
     {
         $this->authorize('show-asset-task');
 
-        $asset_tasks = \App\Models\AssetTask::orderBy('title')->get();
+        $asset_tasks = \App\Models\AssetTask::with('asset')->orderBy('title')->get();
 
         return view('asset_tasks.index', compact('asset_tasks'));
     }
