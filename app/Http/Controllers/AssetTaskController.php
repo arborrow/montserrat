@@ -184,4 +184,22 @@ class AssetTaskController extends Controller
 
         return Redirect::action('AssetTaskController@index');
     }
+
+
+        /**
+         * Schedule upcoming jobs for the specified asset_task.
+         *
+         * @param  int  $id
+         * @return \Illuminate\Http\Response
+         */
+        public function schedule_jobs($id)
+        {
+            $this->authorize('update-asset-task');
+            $asset_task = \App\Models\AssetTask::findOrFail($id);
+
+            flash('Asset Task: '.$asset_task->asset_name.': '.$asset_task->title.' upcoming jobs scheduled')->warning()->important();
+
+            return Redirect::action('AssetTaskController@show',$id);
+        }
+
 }
