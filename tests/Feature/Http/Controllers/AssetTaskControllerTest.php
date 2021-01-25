@@ -167,6 +167,7 @@ class AssetTaskControllerTest extends TestCase
             'description' => $description,
             'priority_id' => $priority_id,
             'frequency' => $frequency,
+            'frequency_interval' => $this->faker->numberBetween(1,10),
         ]);
 
         $response->assertRedirect(action('AssetTaskController@index'));
@@ -199,6 +200,7 @@ class AssetTaskControllerTest extends TestCase
           'start_date' => $asset_task->start_date,
           'scheduled_until_date' => $asset_task->scheduled_until_date,
           'frequency' => $asset_task->frequency,
+          'frequency_interval' => $this->faker->numberBetween(1,10),
           'priority_id' => $asset_task->priority_id,
         ]);
 
@@ -208,6 +210,21 @@ class AssetTaskControllerTest extends TestCase
         $updated = \App\Models\AssetTask::findOrFail($asset_task->id);
         $this->assertEquals($updated->title, $updated_title);
         $this->assertNotEquals($updated->title, $original_title);
+    }
+
+    /**
+     * @test
+     */
+    public function schedule_jobs_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('update-asset-task');
+        $asset_task = \App\Models\AssetTask::factory()->create();
+
+        $response = $this->actingAs($user)->get(route('asset_tasks.schedule_jobs', [$asset_task]));
+
+        $response->assertRedirect(action('AssetTaskController@show', $asset_task->id));
+        $response->assertSessionHas('flash_notification');
+
     }
 
     // test cases...
