@@ -31,7 +31,7 @@
             <div class="row">
                 <div class="col-3">
                     {!! Form::label('frequency_interval', 'Every') !!}
-                    {!! Form::text('frequency_interval', NULL , ['class' => 'form-control']) !!}
+                    {!! Form::text('frequency_interval', 1, ['class' => 'form-control']) !!}
                 </div>
                 <div class="col-3">
                     {!! Form::label('frequency', 'Frequency') !!}
