@@ -53,6 +53,7 @@ return [
 
     'asset_job_status' => [
         'Scheduled' => 'Scheduled',
+        'Nonscheduled' => 'Nonscheduled',
         'Completed' => 'Completed',
         'Canceled' => 'Canceled',
     ],

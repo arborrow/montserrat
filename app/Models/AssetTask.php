@@ -37,5 +37,41 @@ class AssetTask extends Model implements Auditable
         }
     }
 
+    public function getScheduledTimeAttribute()
+    {
+        if (isset($this->frequency_time)) {
+            return $this->frequency_time;
+        } else {
+            return $this->start_date->toTimeString();
+        }
+    }
+
+    public function getScheduledDayAttribute()
+    {
+        if (isset($this->frequency_day)) {
+            return $this->frequency_day;
+        } else {
+            return $this->start_date->day;
+        }
+    }
+
+    public function getScheduledDowAttribute()
+    {
+        if (isset($this->frequency_day)) {
+            return $this->frequency_day;
+        } else {
+            return $this->start_date->dayOfWeek;
+        }
+    }
+
+    public function getScheduledMonthAttribute()
+    {
+        if (isset($this->frequency_month)) {
+            return $this->frequency_month;
+        } else {
+            return $this->start_date->month;
+        }
+    }
+
 
 }

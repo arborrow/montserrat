@@ -58,7 +58,8 @@
     <div class="col-12 my-3 table-responsive-md">
       <h3 class="text-primary">Scheduled jobs</h3>
       @can('create-asset-job')
-          <a href={{ url('asset_job/create/'.$asset_task->id) }} class="btn btn-outline-dark">Add job</a>
+        <a href={{ url('asset_job/create/'.$asset_task->id) }} class="btn btn-outline-dark">Add job</a>
+        <a href={{ url('asset_task/'.$asset_task->id.'/schedule_jobs') }} class="btn btn-outline-dark">Schedule jobs</a>
       @endCan
 
         @if ($jobs_scheduled->isEmpty())
@@ -129,7 +130,7 @@
         <div class="row">
             <div class="col-6 text-right">
                 @can('update-asset-task')
-                <a href="{{ action('AssetTaskController@edit', $asset_task->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                  <a href="{{ action('AssetTaskController@edit', $asset_task->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                 @endCan
             </div>
             <div class="col-6 text-left">
