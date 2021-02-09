@@ -36,6 +36,7 @@
     },
     "dependencies": {
         "autoprefixer": "10.1.0",
-        "font-awesome": "^4.7.0"
+        "font-awesome": "^4.7.0",
+        "jpegtran-bin": "^5.0.2"
     }
 }

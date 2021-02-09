@@ -5062,6 +5062,15 @@ jpegtran-bin@^4.0.0:
     bin-wrapper "^4.0.0"
     logalot "^2.0.0"
 
+jpegtran-bin@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/jpegtran-bin/-/jpegtran-bin-5.0.2.tgz#5870fd7e68317bd203a1c94572bd06ae7732cac3"
+  integrity sha512-4FSmgIcr8d5+V6T1+dHbPZjaFH0ogVyP4UVsE+zri7S9YLO4qAT2our4IN3sW3STVgNTbqPermdIgt2XuAJ4EA==
+  dependencies:
+    bin-build "^3.0.0"
+    bin-wrapper "^4.0.0"
+    logalot "^2.0.0"
+
 jquery-ui-bundle@^1.12.1-migrate:
   version "1.12.1-migrate"
   resolved "https://registry.yarnpkg.com/jquery-ui-bundle/-/jquery-ui-bundle-1.12.1-migrate.tgz#b9343e2c310743527632cff8bedb0c5e9600b14c"
