@@ -252,7 +252,7 @@ class RetreatController extends Controller
                   withCount('retreatant_events')->
                   paginate(50);
                 break;
-            case 'cancel':
+            case 'canceled':
                 $registrations = \App\Models\Registration::select('participant.*', 'contact.sort_name')->
                   leftjoin('contact', 'participant.contact_id', '=', 'contact.id')->
                   orderBy('contact.sort_name')->
@@ -261,7 +261,7 @@ class RetreatController extends Controller
                   withCount('retreatant_events')->
                   paginate(50);
                 break;
-            case 'confirm':
+            case 'confirmed':
                 $registrations = \App\Models\Registration::select('participant.*', 'contact.sort_name')->
                   leftjoin('contact', 'participant.contact_id', '=', 'contact.id')->
                   orderBy('contact.sort_name')->whereEventId($id)->
@@ -269,16 +269,34 @@ class RetreatController extends Controller
                   withCount('retreatant_events')->
                   paginate(50);
                 break;
-            case 'arrive':
+            case 'unconfirmed':
                 $registrations = \App\Models\Registration::select('participant.*', 'contact.sort_name')->
                   leftjoin('contact', 'participant.contact_id', '=', 'contact.id')->
-                  orderBy('contact.sort_name')->
-                  whereEventId($id)->
-                  whereNotNull('arrived_at')->
+                  orderBy('contact.sort_name')->whereEventId($id)->
+                  whereNull('registration_confirm_date')->
                   withCount('retreatant_events')->
                   paginate(50);
                 break;
-            case 'depart':
+            case 'arrived':
+            $registrations = \App\Models\Registration::select('participant.*', 'contact.sort_name')->
+              leftjoin('contact', 'participant.contact_id', '=', 'contact.id')->
+              orderBy('contact.sort_name')->
+              whereEventId($id)->
+              whereNotNull('arrived_at')->
+              withCount('retreatant_events')->
+              paginate(50);
+            break;
+            case 'dawdler':
+            $registrations = \App\Models\Registration::select('participant.*', 'contact.sort_name')->
+              leftjoin('contact', 'participant.contact_id', '=', 'contact.id')->
+              orderBy('contact.sort_name')->
+              whereEventId($id)->
+              whereNull('arrived_at')->
+              whereNull('canceled_at')->
+              withCount('retreatant_events')->
+              paginate(50);
+            break;
+            case 'departed':
                 $registrations = \App\Models\Registration::select('participant.*', 'contact.sort_name')->
                   leftjoin('contact', 'participant.contact_id', '=', 'contact.id')->
                   orderBy('contact.sort_name')->

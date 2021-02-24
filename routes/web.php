@@ -240,7 +240,7 @@ Route::group(['middleware' => ['web', 'activity']], function () {
     Route::post('retreat/payments/update', 'DonationController@retreat_payments_update')->name('retreat.payments.update');
     Route::get('retreat/{id}/checkout', 'RetreatController@checkout')->name('retreat.checkout');
     Route::get('retreat/{id}/checkin', 'RetreatController@checkin')->name('retreat.checkin');
-    Route::get('retreat/{id}/status/{status}', 'RetreatController@show')->name('retreat.show');
+    Route::get('retreat/{id}/status/{status}', 'RetreatController@show')->name('retreat.status');
 
     Route::get('retreat/search', 'RetreatController@search')->name('retreats.search');
     Route::get('retreat/results', 'RetreatController@results')->name('retreats.results');

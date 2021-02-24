@@ -354,6 +354,25 @@ class RetreatControllerTest extends TestCase
         $response->assertSeeText($retreat->title);
     }
 
+
+        /**
+         * @test
+         */
+        public function show_with_status_returns_an_ok_response()
+        {
+            $user = $this->createUserWithPermission('show-retreat');
+            $retreat = \App\Models\Retreat::factory()->create();
+            $status = $this->faker->randomElement(config('polanco.registration_filters'));
+            $response = $this->actingAs($user)->get(route('retreat.status', ['id' => $retreat->id, 'status' => $status]));
+            
+            $response->assertOk();
+            $response->assertViewIs('retreats.show');
+            $response->assertViewHas('retreat');
+            $response->assertViewHas('registrations');
+            $response->assertViewHas('status');
+            $response->assertSeeText($retreat->title);
+        }
+
     /**
      * @test
      */

@@ -223,6 +223,17 @@ return [
         'low' => '4',
     ],
 
+    'registration_filters' => [
+        'active' ,
+        'canceled',
+        'confirmed',
+        'unconfirmed',
+        'arrived',
+        'departed',
+        'retreatant',
+        'dawdler',
+    ],
+
     'registration_status_id' => [
         'registered' => '1',
         'no_show' => '3',
