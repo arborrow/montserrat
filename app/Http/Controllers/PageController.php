@@ -427,7 +427,7 @@ class PageController extends Controller
                     return view('reports.finance.acknowledgment', compact('donation'));
                 }
         */
-        $montserrat = \App\Models\Contact::findOrFail(env('SELF_CONTACT_ID'));
+        $montserrat = \App\Models\Contact::findOrFail(config('polanco.self.id'));
         // dd($montserrat);
         $pdf = PDF::loadView('reports.finance.eoy_acknowledgment', compact('payments', 'contact', 'montserrat', 'start_date', 'end_date'));
         $pdf->setOptions([

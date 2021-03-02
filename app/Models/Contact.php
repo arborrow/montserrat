@@ -258,7 +258,7 @@ class Contact extends Model implements Auditable
 
     public function getSignatureAttribute()
     {
-        $file_name = storage_path().'/app/contact/'.env('SELF_CONTACT_ID').'/signature.png';
+        $file_name = storage_path().'/app/contact/'.config('polanco.self.id').'/signature.png';
 
         return "<img src='".$file_name."' style='width:320px; height:100px;'>";
         /*
