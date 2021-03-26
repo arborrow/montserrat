@@ -1326,7 +1326,10 @@ class PersonController extends Controller
             $relationship_board->contact_id_a = config('polanco.self.id');
             $relationship_board->contact_id_b = $person->id;
             $relationship_board->relationship_type_id = config('polanco.relationship_type.board_member');
-            $relationship_board->start_date = \Carbon\Carbon::now();
+            // do not overwrite the start date of a board member if one already exists
+            if (! isset($relationship_board->start_date)) {
+              $relationship_board->start_date = \Carbon\Carbon::now()->toDateString();
+            }
             $relationship_board->is_active = 1;
             $relationship_board->save();
         }
