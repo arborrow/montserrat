@@ -1315,10 +1315,11 @@ class PersonController extends Controller
         }
 
         // for Board Members we are not deleting the relationship but ending it and making it inactive
-        $relationship_board = \App\Models\Relationship::firstOrNew(['contact_id_b'=>$person->id, 'relationship_type_id'=>config('polanco.relationship_type.board_member')]);
+        // if it is turned back on it will presume a new relationship is being created
+        $relationship_board = \App\Models\Relationship::firstOrNew(['contact_id_b'=>$person->id, 'relationship_type_id'=>config('polanco.relationship_type.board_member'), 'end_date'=>null]);
         if ($request->input('is_board') == 0) {
             if (isset($relationship_board->id)) {
-                $relationship_board->end_date = \Carbon\Carbon::now();
+                $relationship_board->end_date = \Carbon\Carbon::now()->toDateString();
                 $relationship_board->is_active = 0;
                 $relationship_board->save();
             }
@@ -1326,7 +1327,10 @@ class PersonController extends Controller
             $relationship_board->contact_id_a = config('polanco.self.id');
             $relationship_board->contact_id_b = $person->id;
             $relationship_board->relationship_type_id = config('polanco.relationship_type.board_member');
-            $relationship_board->start_date = \Carbon\Carbon::now();
+            // do not overwrite the start date of a board member if one already exists
+            if (! isset($relationship_board->start_date)) {
+              $relationship_board->start_date = \Carbon\Carbon::now()->toDateString();
+            }
             $relationship_board->is_active = 1;
             $relationship_board->save();
         }

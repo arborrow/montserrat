@@ -265,7 +265,7 @@
                     <li>
                         @can('delete-relationship')
                             {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $a_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                                {!!$person->contact_link_full_name!!} is {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link_full_name !!}
+                                {!!$person->contact_link_full_name!!} is {{ $a_relationship->is_former }} {{ $a_relationship->relationship_type->label_a_b }} {!! $a_relationship->contact_b->contact_link_full_name !!}
                                 <button type="submit" class="btn btn-outline-dark btn-sm"><i class="fas fa-trash"></i></button>
                             {!! Form::close() !!}
                         @else
@@ -278,7 +278,7 @@
                     <li>
                         @can('delete-relationship')
                             {!! Form::open(['method' => 'DELETE', 'route' => ['relationship.destroy', $b_relationship->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                                {!!$person->contact_link_full_name!!} is {{ $b_relationship->relationship_type->label_b_a }} {!! $b_relationship->contact_a->contact_link_full_name!!}
+                                {!!$person->contact_link_full_name!!} is {{ $b_relationship->is_former }} {{ $b_relationship->relationship_type->label_b_a }} {!! $b_relationship->contact_a->contact_link_full_name!!}
                                 <button type="submit" class="btn btn-outline-dark btn-sm"><i class="fas fa-trash"></i></button>
                             {!! Form::close() !!}
                         @else

@@ -70,4 +70,16 @@ class Relationship extends Model implements Auditable
             return;
         }
     }
+
+    /*
+    * returns former if is_active is 0 to distinguish between current/active relationships
+    */
+    public function getIsFormerAttribute() {
+        if (! $this->is_active) {
+          return 'former';
+        } else {
+          return null;
+        }
+    }
+
 }
