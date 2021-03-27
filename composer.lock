@@ -7718,16 +7718,16 @@
         },
         {
             "name": "twilio/sdk",
-            "version": "6.19.0",
+            "version": "6.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twilio/twilio-php.git",
-                "reference": "e4288c184ad2fddbb637c1036626cf16814618b0"
+                "reference": "7494b78da4f5af5b761dd7b4fd9bbe52bd746f55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/e4288c184ad2fddbb637c1036626cf16814618b0",
-                "reference": "e4288c184ad2fddbb637c1036626cf16814618b0",
+                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/7494b78da4f5af5b761dd7b4fd9bbe52bd746f55",
+                "reference": "7494b78da4f5af5b761dd7b4fd9bbe52bd746f55",
                 "shasum": ""
             },
             "require": {
@@ -7766,9 +7766,9 @@
             ],
             "support": {
                 "issues": "https://github.com/twilio/twilio-php/issues",
-                "source": "https://github.com/twilio/twilio-php/tree/6.19.0"
+                "source": "https://github.com/twilio/twilio-php/tree/6.20.0"
             },
-            "time": "2021-03-15T22:38:22+00:00"
+            "time": "2021-03-24T21:42:05+00:00"
         },
         {
             "name": "vinkla/hashids",
@@ -8349,16 +8349,16 @@
         },
         {
             "name": "facade/ignition",
-            "version": "2.5.14",
+            "version": "2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facade/ignition.git",
-                "reference": "17097f7a83e200d90d1cf9f4d1b35c1001513a47"
+                "reference": "4be10a998815f77952b9eb983fb0b64c8a4defbb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facade/ignition/zipball/17097f7a83e200d90d1cf9f4d1b35c1001513a47",
-                "reference": "17097f7a83e200d90d1cf9f4d1b35c1001513a47",
+                "url": "https://api.github.com/repos/facade/ignition/zipball/4be10a998815f77952b9eb983fb0b64c8a4defbb",
+                "reference": "4be10a998815f77952b9eb983fb0b64c8a4defbb",
                 "shasum": ""
             },
             "require": {
@@ -8422,7 +8422,7 @@
                 "issues": "https://github.com/facade/ignition/issues",
                 "source": "https://github.com/facade/ignition"
             },
-            "time": "2021-03-04T08:48:01+00:00"
+            "time": "2021-03-24T18:58:31+00:00"
         },
         {
             "name": "facade/ignition-contracts",

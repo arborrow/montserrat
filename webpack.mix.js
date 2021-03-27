@@ -16,10 +16,13 @@ mix.js('resources/assets/js/app.js', 'public/dist/bundle.js')
 mix.webpackConfig({
     plugins: [
         //Compress images
-        new CopyWebpackPlugin([{
-            from: 'resources/assets/images',
-            to: 'images/',
-        }]),
+
+        new CopyWebpackPlugin({
+          patterns: [
+            { from: "resources/assets/images", to: "images/" },
+          ],
+        }),
+
         new ImageminPlugin({
             test: /\.(jpe?g|png|gif|svg)$/i,
             pngquant: {
