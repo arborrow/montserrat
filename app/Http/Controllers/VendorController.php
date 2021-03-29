@@ -275,14 +275,12 @@ class VendorController extends Controller
         $email_primary->email = $request->input('email_primary');
         $email_primary->save();
 
-        if (null !== ($request->input('note_vendor'))) {
-            $vendor_note = \App\Models\Note::firstOrNew(['entity_table'=>'contact', 'entity_id'=>$vendor->id, 'subject'=>'Vendor note']);
-            $vendor_note->entity_table = 'contact';
-            $vendor_note->entity_id = $vendor->id;
-            $vendor_note->note = $request->input('note_vendor');
-            $vendor_note->subject = 'Vendor note';
-            $vendor_note->save();
-        }
+        $vendor_note = \App\Models\Note::firstOrNew(['entity_table'=>'contact', 'entity_id'=>$vendor->id, 'subject'=>'Vendor note']);
+        $vendor_note->entity_table = 'contact';
+        $vendor_note->entity_id = $vendor->id;
+        $vendor_note->note = $request->input('note_vendor');
+        $vendor_note->subject = 'Vendor note';
+        $vendor_note->save();
 
         if (null !== $request->file('avatar')) {
             $description = 'Avatar for '.$vendor->organization_name;

@@ -308,11 +308,7 @@ class OrganizationController extends Controller
         $email_primary->email = $request->input('email_primary');
         $email_primary->save();
 
-        if (empty($organization->note_organization)) {
-            $organization_note = new \App\Models\Note;
-        } else {
-            $organization_note = \App\Models\Note::findOrNew($organization->note_organization->id);
-        }
+        $organization_note = \App\Models\Note::firstOrNew(['entity_table'=>'contact', 'entity_id'=>$organization->id, 'subject'=>'Organization Note']);
         $organization_note->entity_table = 'contact';
         $organization_note->entity_id = $organization->id;
         $organization_note->note = $request->input('note');

@@ -1000,62 +1000,35 @@ class PersonController extends Controller
         }
 
         // save health, dietary, general and room preference notes
+        // simplifying logic - with audit log there is less risk of data loss  so no need to soft delete the notes
 
-        if (null !== ($request->input('note_health'))) {
-            $person_note_health = \App\Models\Note::firstOrNew(['entity_table'=>'contact', 'entity_id'=>$person->id, 'subject'=>'Health Note']);
-            $person_note_health->entity_table = 'contact';
-            $person_note_health->entity_id = $person->id;
-            $person_note_health->note = $request->input('note_health');
-            $person_note_health->subject = 'Health Note';
-            $person_note_health->save();
-        } else {
-            $person_note_health = \App\Models\Note::whereEntityTable('contact')->whereEntityId($person->id)->whereSubject('Health Note')->first();
-            if (isset($person_note_health) && $person_note_health->id > 0) {
-                $person_note_health->delete();
-            }
-        }
+        $person_note_health = \App\Models\Note::firstOrNew(['entity_table'=>'contact', 'entity_id'=>$person->id, 'subject'=>'Health Note']);
+        $person_note_health->entity_table = 'contact';
+        $person_note_health->entity_id = $person->id;
+        $person_note_health->note = $request->input('note_health');
+        $person_note_health->subject = 'Health Note';
+        $person_note_health->save();
 
-        if (null !== ($request->input('note_dietary'))) {
-            $person_note_dietary = \App\Models\Note::firstOrNew(['entity_table'=>'contact', 'entity_id'=>$person->id, 'subject'=>'Dietary Note']);
-            $person_note_dietary->entity_table = 'contact';
-            $person_note_dietary->entity_id = $person->id;
-            $person_note_dietary->note = $request->input('note_dietary');
-            $person_note_dietary->subject = 'Dietary Note';
-            $person_note_dietary->save();
-        } else {
-            $person_note_dietary = \App\Models\Note::whereEntityTable('contact')->whereEntityId($person->id)->whereSubject('Dietary Note')->first();
-            if (isset($person_note_dietary) && $person_note_dietary->id > 0) {
-                $person_note_dietary->delete();
-            }
-        }
+        $person_note_dietary = \App\Models\Note::firstOrNew(['entity_table'=>'contact', 'entity_id'=>$person->id, 'subject'=>'Dietary Note']);
+        $person_note_dietary->entity_table = 'contact';
+        $person_note_dietary->entity_id = $person->id;
+        $person_note_dietary->note = $request->input('note_dietary');
+        $person_note_dietary->subject = 'Dietary Note';
+        $person_note_dietary->save();
 
-        if (null !== ($request->input('note_contact'))) {
-            $person_note_contact = \App\Models\Note::firstOrNew(['entity_table'=>'contact', 'entity_id'=>$person->id, 'subject'=>'Contact Note']);
-            $person_note_contact->entity_table = 'contact';
-            $person_note_contact->entity_id = $person->id;
-            $person_note_contact->note = $request->input('note_contact');
-            $person_note_contact->subject = 'Contact Note';
-            $person_note_contact->save();
-        } else {
-            $person_note_contact = \App\Models\Note::whereEntityTable('contact')->whereEntityId($person->id)->whereSubject('Contact Note')->first();
-            if (isset($person_note_contact) && $person_note_contact->id > 0) {
-                $person_note_contact->delete();
-            }
-        }
+        $person_note_contact = \App\Models\Note::firstOrNew(['entity_table'=>'contact', 'entity_id'=>$person->id, 'subject'=>'Contact Note']);
+        $person_note_contact->entity_table = 'contact';
+        $person_note_contact->entity_id = $person->id;
+        $person_note_contact->note = $request->input('note_contact');
+        $person_note_contact->subject = 'Contact Note';
+        $person_note_contact->save();
 
-        if (null !== ($request->input('note_room_preference'))) {
-            $person_note_room_preference = \App\Models\Note::firstOrNew(['entity_table'=>'contact', 'entity_id'=>$person->id, 'subject'=>'Room Preference']);
-            $person_note_room_preference->entity_table = 'contact';
-            $person_note_room_preference->entity_id = $person->id;
-            $person_note_room_preference->note = $request->input('note_room_preference');
-            $person_note_room_preference->subject = 'Room Preference';
-            $person_note_room_preference->save();
-        } else {
-            $person_note_room_preference = \App\Models\Note::whereEntityTable('contact')->whereEntityId($person->id)->whereSubject('Room Preference')->first();
-            if (isset($person_note_room_preference) && $person_note_room_preference->id > 0) {
-                $person_note_room_preference->delete();
-            }
-        }
+        $person_note_room_preference = \App\Models\Note::firstOrNew(['entity_table'=>'contact', 'entity_id'=>$person->id, 'subject'=>'Room Preference']);
+        $person_note_room_preference->entity_table = 'contact';
+        $person_note_room_preference->entity_id = $person->id;
+        $person_note_room_preference->note = $request->input('note_room_preference');
+        $person_note_room_preference->subject = 'Room Preference';
+        $person_note_room_preference->save();
 
         $home_address = \App\Models\Address::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.home')]);
         $home_address->contact_id = $person->id;
