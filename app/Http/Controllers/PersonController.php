@@ -124,46 +124,17 @@ class PersonController extends Controller
         $person->ethnicity_id = $request->input('ethnicity_id');
         $person->religion_id = $request->input('religion_id');
         $person->occupation_id = $request->input('occupation_id');
-
-        // communication preferences
-        if (empty($request->input('do_not_mail'))) {
-            $person->do_not_mail = 0;
-        } else {
-            $person->do_not_mail = $request->input('do_not_mail');
-        }
-        if (empty($request->input('do_not_email'))) {
-            $person->do_not_email = 0;
-        } else {
-            $person->do_not_email = $request->input('do_not_email');
-        }
-
-        if (empty($request->input('do_not_phone'))) {
-            $person->do_not_phone = 0;
-        } else {
-            $person->do_not_phone = $request->input('do_not_phone');
-        }
-
-        if (empty($request->input('do_not_sms'))) {
-            $person->do_not_sms = 0;
-        } else {
-            $person->do_not_sms = $request->input('do_not_sms');
-        }
+        $person->do_not_mail = empty($request->input('do_not_mail')) ? 0 : $request->input('do_not_mail');
+        $person->do_not_email = empty($request->input('do_not_email')) ? 0 :  $request->input('do_not_email');
+        $person->do_not_phone = empty($request->input('do_not_phone')) ? 0 :  $request->input('do_not_phone');
+        $person->do_not_sms = empty($request->input('do_not_sms')) ? 0 :  $request->input('do_not_sms');
+        $person->is_deceased = empty($request->input('is_deceased')) ? 0 :  $request->input('is_deceased');
+        $person->deceased_date = empty($request->input('deceased_date')) ? null :  $request->input('deceased_date');
 
         // CiviCRM stores the language name rather than the language id in the contact's preferred_language field
         if (! empty($request->input('preferred_language_id'))) {
             $language = \App\Models\Language::findOrFail($request->input('preferred_language_id'));
             $person->preferred_language = $language->name;
-        }
-
-        if (empty($request->input('is_deceased'))) {
-            $person->is_deceased = 0;
-        } else {
-            $person->is_deceased = $request->input('is_deceased');
-        }
-        if (empty($request->input('deceased_date'))) {
-            $person->deceased_date = null;
-        } else {
-            $person->deceased_date = $request->input('deceased_date');
         }
 
         $person->save();
@@ -180,6 +151,7 @@ class PersonController extends Controller
             $attachment = new AttachmentController;
             $attachment->store_attachment($request->file('avatar'), 'contact', $person->id, 'avatar', $description);
         }
+
         // emergency contact information - not part of CiviCRM squema
         $emergency_contact = new \App\Models\EmergencyContact;
         $emergency_contact->contact_id = $person->id;
