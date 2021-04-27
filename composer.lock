@@ -357,40 +357,39 @@
         },
         {
             "name": "doctrine/cache",
-            "version": "1.10.2",
+            "version": "1.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "13e3381b25847283a91948d04640543941309727"
+                "reference": "a9c1b59eba5a08ca2770a76eddb88922f504e8e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/13e3381b25847283a91948d04640543941309727",
-                "reference": "13e3381b25847283a91948d04640543941309727",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/a9c1b59eba5a08ca2770a76eddb88922f504e8e0",
+                "reference": "a9c1b59eba5a08ca2770a76eddb88922f504e8e0",
                 "shasum": ""
             },
             "require": {
                 "php": "~7.1 || ^8.0"
             },
             "conflict": {
-                "doctrine/common": ">2.2,<2.4"
+                "doctrine/common": ">2.2,<2.4",
+                "psr/cache": ">=3"
             },
             "require-dev": {
                 "alcaeus/mongo-php-adapter": "^1.1",
-                "doctrine/coding-standard": "^6.0",
+                "cache/integration-tests": "dev-master",
+                "doctrine/coding-standard": "^8.0",
                 "mongodb/mongodb": "^1.1",
-                "phpunit/phpunit": "^7.0",
-                "predis/predis": "~1.0"
+                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0",
+                "predis/predis": "~1.0",
+                "psr/cache": "^1.0 || ^2.0",
+                "symfony/cache": "^4.4 || ^5.2"
             },
             "suggest": {
                 "alcaeus/mongo-php-adapter": "Required to use legacy MongoDB driver"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.9.x-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Doctrine\\Common\\Cache\\": "lib/Doctrine/Common/Cache"
@@ -437,7 +436,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/cache/issues",
-                "source": "https://github.com/doctrine/cache/tree/1.10.x"
+                "source": "https://github.com/doctrine/cache/tree/1.11.0"
             },
             "funding": [
                 {
@@ -453,7 +452,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-07-07T18:54:01+00:00"
+            "time": "2021-04-13T14:46:17+00:00"
         },
         {
             "name": "doctrine/dbal",
@@ -1117,16 +1116,16 @@
         },
         {
             "name": "fruitcake/laravel-cors",
-            "version": "v2.0.3",
+            "version": "v2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fruitcake/laravel-cors.git",
-                "reference": "01de0fe5f71c70d1930ee9a80385f9cc28e0f63a"
+                "reference": "a8ccedc7ca95189ead0e407c43b530dc17791d6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fruitcake/laravel-cors/zipball/01de0fe5f71c70d1930ee9a80385f9cc28e0f63a",
-                "reference": "01de0fe5f71c70d1930ee9a80385f9cc28e0f63a",
+                "url": "https://api.github.com/repos/fruitcake/laravel-cors/zipball/a8ccedc7ca95189ead0e407c43b530dc17791d6a",
+                "reference": "a8ccedc7ca95189ead0e407c43b530dc17791d6a",
                 "shasum": ""
             },
             "require": {
@@ -1139,8 +1138,8 @@
             },
             "require-dev": {
                 "laravel/framework": "^6|^7|^8",
-                "orchestra/testbench-dusk": "^4|^5|^6",
-                "phpunit/phpunit": "^6|^7|^8",
+                "orchestra/testbench-dusk": "^4|^5|^6|^7",
+                "phpunit/phpunit": "^6|^7|^8|^9",
                 "squizlabs/php_codesniffer": "^3.5"
             },
             "type": "library",
@@ -1182,7 +1181,7 @@
             ],
             "support": {
                 "issues": "https://github.com/fruitcake/laravel-cors/issues",
-                "source": "https://github.com/fruitcake/laravel-cors/tree/v2.0.3"
+                "source": "https://github.com/fruitcake/laravel-cors/tree/v2.0.4"
             },
             "funding": [
                 {
@@ -1190,7 +1189,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-22T13:57:20+00:00"
+            "time": "2021-04-26T11:24:25+00:00"
         },
         {
             "name": "google/apiclient",
@@ -1263,16 +1262,16 @@
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.169.0",
+            "version": "v0.172.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client-services.git",
-                "reference": "46b71684a100f3d976e0321cf24f487b314add68"
+                "reference": "85e8a9f0062a9e1aba3cdc0f499968bc8de78b7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/46b71684a100f3d976e0321cf24f487b314add68",
-                "reference": "46b71684a100f3d976e0321cf24f487b314add68",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/85e8a9f0062a9e1aba3cdc0f499968bc8de78b7d",
+                "reference": "85e8a9f0062a9e1aba3cdc0f499968bc8de78b7d",
                 "shasum": ""
             },
             "require": {
@@ -1298,22 +1297,22 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/google-api-php-client-services/issues",
-                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.169.0"
+                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.172.0"
             },
-            "time": "2021-03-22T11:26:04+00:00"
+            "time": "2021-04-27T16:21:24+00:00"
         },
         {
             "name": "google/auth",
-            "version": "v1.15.0",
+            "version": "v1.15.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-auth-library-php.git",
-                "reference": "b346c07de6613e26443d7b4830e5e1933b830dc4"
+                "reference": "4e0c9367719df9703e96f5ad613041b87742471c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-auth-library-php/zipball/b346c07de6613e26443d7b4830e5e1933b830dc4",
-                "reference": "b346c07de6613e26443d7b4830e5e1933b830dc4",
+                "url": "https://api.github.com/repos/googleapis/google-auth-library-php/zipball/4e0c9367719df9703e96f5ad613041b87742471c",
+                "reference": "4e0c9367719df9703e96f5ad613041b87742471c",
                 "shasum": ""
             },
             "require": {
@@ -1327,7 +1326,7 @@
             "require-dev": {
                 "guzzlehttp/promises": "0.1.1|^1.3",
                 "kelvinmo/simplejwt": "^0.2.5|^0.5.1",
-                "phpseclib/phpseclib": "^2",
+                "phpseclib/phpseclib": "^2.0.31",
                 "phpunit/phpunit": "^4.8.36|^5.7",
                 "sebastian/comparator": ">=1.2.3",
                 "squizlabs/php_codesniffer": "^3.5"
@@ -1355,9 +1354,9 @@
             "support": {
                 "docs": "https://googleapis.github.io/google-auth-library-php/master/",
                 "issues": "https://github.com/googleapis/google-auth-library-php/issues",
-                "source": "https://github.com/googleapis/google-auth-library-php/tree/v1.15.0"
+                "source": "https://github.com/googleapis/google-auth-library-php/tree/v1.15.1"
             },
-            "time": "2021-02-05T20:50:04+00:00"
+            "time": "2021-04-21T17:42:05+00:00"
         },
         {
             "name": "graham-campbell/manager",
@@ -1654,16 +1653,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "1.8.1",
+            "version": "1.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "35ea11d335fd638b5882ff1725228b3d35496ab1"
+                "reference": "dc960a912984efb74d0a90222870c72c87f10c91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/35ea11d335fd638b5882ff1725228b3d35496ab1",
-                "reference": "35ea11d335fd638b5882ff1725228b3d35496ab1",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/dc960a912984efb74d0a90222870c72c87f10c91",
+                "reference": "dc960a912984efb74d0a90222870c72c87f10c91",
                 "shasum": ""
             },
             "require": {
@@ -1723,9 +1722,9 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/1.8.1"
+                "source": "https://github.com/guzzle/psr7/tree/1.8.2"
             },
-            "time": "2021-03-21T16:25:00+00:00"
+            "time": "2021-04-26T09:17:50+00:00"
         },
         {
             "name": "h4cc/wkhtmltoimage-amd64",
@@ -2353,16 +2352,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.38.0",
+            "version": "v8.39.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "26a73532c54d2c090692bf2e3e64e449669053ba"
+                "reference": "0c6f9acb55c8d1621b6f42e3dd5e242cf3b17680"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/26a73532c54d2c090692bf2e3e64e449669053ba",
-                "reference": "26a73532c54d2c090692bf2e3e64e449669053ba",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/0c6f9acb55c8d1621b6f42e3dd5e242cf3b17680",
+                "reference": "0c6f9acb55c8d1621b6f42e3dd5e242cf3b17680",
                 "shasum": ""
             },
             "require": {
@@ -2517,7 +2516,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-04-20T13:50:21+00:00"
+            "time": "2021-04-27T14:24:05+00:00"
         },
         {
             "name": "laravel/helpers",
@@ -7718,16 +7717,16 @@
         },
         {
             "name": "twilio/sdk",
-            "version": "6.21.0",
+            "version": "6.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twilio/twilio-php.git",
-                "reference": "bccca0cf5d853c29cbc8b676558e249b0132404f"
+                "reference": "b24040f9bcd2237e4210dcafd9a287fad9759a8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/bccca0cf5d853c29cbc8b676558e249b0132404f",
-                "reference": "bccca0cf5d853c29cbc8b676558e249b0132404f",
+                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/b24040f9bcd2237e4210dcafd9a287fad9759a8a",
+                "reference": "b24040f9bcd2237e4210dcafd9a287fad9759a8a",
                 "shasum": ""
             },
             "require": {
@@ -7766,9 +7765,9 @@
             ],
             "support": {
                 "issues": "https://github.com/twilio/twilio-php/issues",
-                "source": "https://github.com/twilio/twilio-php/tree/6.21.0"
+                "source": "https://github.com/twilio/twilio-php/tree/6.22.0"
             },
-            "time": "2021-04-07T19:07:34+00:00"
+            "time": "2021-04-21T19:45:05+00:00"
         },
         {
             "name": "vinkla/hashids",
@@ -8135,16 +8134,16 @@
         },
         {
             "name": "brianium/paratest",
-            "version": "v6.2.0",
+            "version": "v6.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paratestphp/paratest.git",
-                "reference": "9a94366983ce32c7724fc92e3b544327d4adb9be"
+                "reference": "268d5b2b4237c0abf76c4aa9633ad8580be01e1e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paratestphp/paratest/zipball/9a94366983ce32c7724fc92e3b544327d4adb9be",
-                "reference": "9a94366983ce32c7724fc92e3b544327d4adb9be",
+                "url": "https://api.github.com/repos/paratestphp/paratest/zipball/268d5b2b4237c0abf76c4aa9633ad8580be01e1e",
+                "reference": "268d5b2b4237c0abf76c4aa9633ad8580be01e1e",
                 "shasum": ""
             },
             "require": {
@@ -8153,28 +8152,28 @@
                 "ext-reflection": "*",
                 "ext-simplexml": "*",
                 "php": "^7.3 || ^8.0",
-                "phpunit/php-code-coverage": "^9.2.5",
+                "phpunit/php-code-coverage": "^9.2.6",
                 "phpunit/php-file-iterator": "^3.0.5",
                 "phpunit/php-timer": "^5.0.3",
-                "phpunit/phpunit": "^9.5.1",
+                "phpunit/phpunit": "^9.5.4",
                 "sebastian/environment": "^5.1.3",
-                "symfony/console": "^4.4 || ^5.2",
-                "symfony/process": "^4.4 || ^5.2"
+                "symfony/console": "^4.4.21 || ^5.2.6",
+                "symfony/process": "^4.4.21 || ^5.2.4"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^8.2.0",
-                "ekino/phpstan-banned-code": "^0.3.1",
+                "doctrine/coding-standard": "^9.0.0",
+                "ekino/phpstan-banned-code": "^0.4.0",
                 "ergebnis/phpstan-rules": "^0.15.3",
                 "ext-posix": "*",
-                "infection/infection": "^0.20.2",
-                "phpstan/phpstan": "^0.12.70",
+                "infection/infection": "^0.21.5",
+                "phpstan/phpstan": "^0.12.84",
                 "phpstan/phpstan-deprecation-rules": "^0.12.6",
-                "phpstan/phpstan-phpunit": "^0.12.17",
+                "phpstan/phpstan-phpunit": "^0.12.18",
                 "phpstan/phpstan-strict-rules": "^0.12.9",
-                "squizlabs/php_codesniffer": "^3.5.8",
-                "symfony/filesystem": "^5.2.2",
+                "squizlabs/php_codesniffer": "^3.6.0",
+                "symfony/filesystem": "^5.2.6",
                 "thecodingmachine/phpstan-strict-rules": "^0.12.1",
-                "vimeo/psalm": "^4.4.1"
+                "vimeo/psalm": "^4.7.1"
             },
             "bin": [
                 "bin/paratest"
@@ -8195,8 +8194,12 @@
                 {
                     "name": "Brian Scaturro",
                     "email": "scaturrob@gmail.com",
-                    "homepage": "http://brianscaturro.com",
-                    "role": "Lead"
+                    "role": "Developer"
+                },
+                {
+                    "name": "Filippo Tessarotto",
+                    "email": "zoeslam@gmail.com",
+                    "role": "Developer"
                 }
             ],
             "description": "Parallel testing for PHP",
@@ -8209,9 +8212,19 @@
             ],
             "support": {
                 "issues": "https://github.com/paratestphp/paratest/issues",
-                "source": "https://github.com/paratestphp/paratest/tree/v6.2.0"
+                "source": "https://github.com/paratestphp/paratest/tree/v6.3.0"
             },
-            "time": "2021-01-29T15:25:31+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/Slamdunk",
+                    "type": "github"
+                },
+                {
+                    "url": "https://paypal.me/filippotessarotto",
+                    "type": "paypal"
+                }
+            ],
+            "time": "2021-04-27T09:24:27+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -8544,16 +8557,16 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.12.0",
+            "version": "2.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "d501fd2658d55491a2295ff600ae5978eaad7403"
+                "reference": "c13c0be93cff50f88bbd70827d993026821914dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/d501fd2658d55491a2295ff600ae5978eaad7403",
-                "reference": "d501fd2658d55491a2295ff600ae5978eaad7403",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/c13c0be93cff50f88bbd70827d993026821914dd",
+                "reference": "c13c0be93cff50f88bbd70827d993026821914dd",
                 "shasum": ""
             },
             "require": {
@@ -8603,7 +8616,7 @@
             ],
             "support": {
                 "issues": "https://github.com/filp/whoops/issues",
-                "source": "https://github.com/filp/whoops/tree/2.12.0"
+                "source": "https://github.com/filp/whoops/tree/2.12.1"
             },
             "funding": [
                 {
@@ -8611,7 +8624,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-03-30T12:00:00+00:00"
+            "time": "2021-04-25T12:00:00+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
