@@ -20,7 +20,11 @@
                         <th>Donor (Household name)</th>
                         <th>Description</th>
                         <th>Amount (Paid/Pledged)</th>
-                        <th>Thank you</th>
+                        @if (is_null($total['unthanked']))
+                            <th>Acknowledged (<a href='{{url("agc/".$total['year']."?unthanked=1")}}'>Show unthanked</a>)</th>
+                        @else
+                            <th>Acknowledged (<a href='{{url("agc/".$total['year'])}}'>Show all</a>)</th>
+                        @endIf
                     </tr>
                 </thead>
                 <tbody>

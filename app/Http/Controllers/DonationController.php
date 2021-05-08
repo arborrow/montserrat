@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDonationRequest;
 use App\Http\Requests\UpdateDonationRequest;
 use App\Http\Requests\DonationSearchRequest;
+use App\Http\Requests\DonationAgcRequest;
 use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -30,7 +31,7 @@ class DonationController extends Controller
         // rather than using the active donation_descriptions from DonationType model, let's continue to show all of the existing donation_descriptions in the Donations table so that any that are not in the DonationType table can be cleaned up
         $donation_descriptions = DB::table('Donations')->selectRaw('MIN(donation_id) as donation_id, donation_description, count(*) as count')->groupBy('donation_description')->orderBy('donation_description')->whereNull('deleted_at')->get();
         // dd($donation_descriptions);
-        $donations = \App\Models\Donation::orderBy('donation_date', 'desc')->with('contact.prefix', 'contact.suffix','retreat')->paginate(100);
+        $donations = \App\Models\Donation::orderBy('donation_date', 'desc')->with('contact.prefix', 'contact.suffix', 'retreat')->paginate(100);
         //dd($donations);
         return view('donations.index', compact('donations', 'donation_descriptions'));
     }
@@ -61,7 +62,7 @@ class DonationController extends Controller
         $retreats = \App\Models\Registration::leftjoin('event', 'participant.event_id', '=', 'event.id')->select(DB::raw('CONCAT(event.idnumber, "-", event.title, " (",DATE_FORMAT(event.start_date,"%m-%d-%Y"),")") as description'), 'event.id')->orderBy('event.start_date', 'desc')->pluck('event.description', 'event.id');
         $retreats->prepend('Unassigned', '');
 
-        return view('donations.search', compact('retreats','descriptions'));
+        return view('donations.search', compact('retreats', 'descriptions'));
     }
 
     public function results(DonationSearchRequest $request)
@@ -92,13 +93,14 @@ class DonationController extends Controller
         return view('donations.overpaid', compact('overpaid'));
     }
 
-    public function agc($year = null)
+    public function agc($year = null, DonationAgcRequest $request)
     {
         $this->authorize('show-donation');
 
         if (! isset($year)) {
             $year = (date('m') > 6) ? date('Y') + 1 : date('Y');
         }
+        $unthanked = !is_null($request->input('unthanked')) ? $request->input('unthanked') : null;
 
         // only show for FY 2008 and above because data does not exist
         // this is rather hacky and particular to MJRH data
@@ -108,8 +110,16 @@ class DonationController extends Controller
         }
         $prev_year = $year - 1;
 
-        $all_donations = \App\Models\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->get();
-        $donations = \App\Models\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->paginate(100);
+        if (is_null($unthanked)) {
+            $all_donations = \App\Models\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->get();
+            $donations = \App\Models\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->paginate(100);
+        } else {
+            $all_donations = \App\Models\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')
+                ->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->whereNull('Thank you')-> get();
+            $donations = \App\Models\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')
+                ->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->whereNull('Thank you')->paginate(100);
+        }
+
         $total['pledged'] = $all_donations->sum('donation_amount');
         $total['paid'] = $all_donations->sum('payments_paid');
         if ($total['pledged'] > 0) {
@@ -118,6 +128,7 @@ class DonationController extends Controller
             $total['percent'] = 0;
         }
         $total['year'] = $year;
+        $total['unthanked'] = $unthanked;
 
         return view('donations.agc', compact('donations', 'total'));
     }
