@@ -1494,7 +1494,7 @@ class PersonController extends Controller
         \App\Models\Phone::whereContactId($id)->delete();
         \App\Models\Website::whereContactId($id)->delete();
         \App\Models\EmergencyContact::whereContactId($id)->delete();
-        \App\Models\Note::whereContactId($id)->delete();
+        \App\Models\Note::whereEntityId($id)->whereEntityTable('contact')->delete();
         \App\Models\Touchpoint::wherePersonId($id)->delete();
         //delete registrations
         \App\Models\Registration::whereContactId($id)->delete();
