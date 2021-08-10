@@ -1874,6 +1874,7 @@ class PersonController extends Controller
                     $path = 'contact/'.$merge_id.'/'.$attachment->uri;
                     $newpath = 'contact/'.$contact_id.'/'.$attachment->uri;
                 }
+                //TODO: https://github.com/arborrow/montserrat/issues/205 - better handle when both contact records have an avatar
                 Storage::move($path, $newpath);
                 $attachment->entity_id = $contact->id;
                 $attachment->save();
