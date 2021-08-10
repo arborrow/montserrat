@@ -4,9 +4,9 @@
 <table class="table table-bordered table-striped">
     <tr>
     <th>Contact ID</th>
-    <th><a href="{!!url('person/merge/'.$contact->id)!!}">{{$contact->id}}</a></th>
+    <th>{!!$contact->avatar_small_link!!} <a href="{!!url('person/merge/'.$contact->id)!!}">{{$contact->id}}</a></th>
     @foreach ($duplicates as $duplicate)
-    <th><a href="{!!url('person/merge/'.$duplicate->id)!!}">{{$duplicate->id}}</a>
+    <th>{!!$duplicate->avatar_small_link!!} <a href="{!!url('person/merge/'.$duplicate->id)!!}">{{$duplicate->id}}</a>
         <br />
         <span class='btn btn-outline-dark'>
             <a href="{!!url('person/merge/'.$contact->id.'/'.$duplicate->id)!!}">Merge</a>
@@ -222,7 +222,7 @@
             <td>{{$duplicate->donations->count()}}</td>
         @endforeach
     </tr>
-    
+
 
     <tr>
         <td><strong>Contact Type</strong></td>

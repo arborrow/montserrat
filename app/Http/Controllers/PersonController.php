@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Carbon\Carbon;
 
 class PersonController extends Controller
 {
@@ -599,8 +600,32 @@ class PersonController extends Controller
     public function show($id)
     {
         $this->authorize('show-contact');
-        $person = \App\Models\Contact::with('addresses.country', 'addresses.location', 'addresses.state', 'emails.location', 'emergency_contact', 'ethnicity', 'languages', 'notes', 'occupation', 'parish.contact_a.address_primary', 'parish.contact_a.diocese.contact_a', 'phones.location', 'prefix', 'suffix', 'religion', 'touchpoints.staff', 'websites',
-        'groups.group', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations', 'donations.payments')->findOrFail($id);
+        $person = \App\Models\Contact::with(
+            'addresses.country',
+            'addresses.location',
+            'addresses.state',
+            'emails.location',
+            'emergency_contact',
+            'ethnicity',
+            'languages',
+            'notes',
+            'occupation',
+            'parish.contact_a.address_primary',
+            'parish.contact_a.diocese.contact_a',
+            'phones.location',
+            'prefix',
+            'suffix',
+            'religion',
+            'touchpoints.staff',
+            'websites',
+            'groups.group',
+            'a_relationships.relationship_type',
+            'a_relationships.contact_b',
+            'b_relationships.relationship_type',
+            'b_relationships.contact_a',
+            'event_registrations',
+            'donations.payments'
+        )->findOrFail($id);
         //dd($person->donations);
         $files = \App\Models\Attachment::whereEntity('contact')->whereEntityId($person->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
         $relationship_types = [];
@@ -1274,7 +1299,7 @@ class PersonController extends Controller
             $relationship_board->relationship_type_id = config('polanco.relationship_type.board_member');
             // do not overwrite the start date of a board member if one already exists
             if (! isset($relationship_board->start_date)) {
-              $relationship_board->start_date = \Carbon\Carbon::now()->toDateString();
+                $relationship_board->start_date = \Carbon\Carbon::now()->toDateString();
             }
             $relationship_board->is_active = 1;
             $relationship_board->save();
@@ -1720,6 +1745,52 @@ class PersonController extends Controller
 
         if (! empty($merge_id)) {
             $merge = \App\Models\Contact::findOrFail($merge_id);
+
+            //attachments - including avatar
+            foreach ($merge->attachments as $attachment) {
+                $attachment_controller = new AttachmentController;
+                $path = 'contact/'.$merge_id.'/attachments/'.$attachment->uri;
+                $newpath = 'contact/'.$contact_id.'/attachments/'.$attachment->uri;
+                $entity = 'attachment';
+
+                // if avatar.png change paths and entity to contact/id/ otherwise move contact attachment to contact/id/attachments
+
+                if ($attachment->uri == 'avatar.png') {
+                    $path = 'contact/'.$merge_id.'/'.$attachment->uri;
+                    $newpath = 'contact/'.$contact_id.'/'.$attachment->uri;
+                    $entity = 'avatar';
+                }
+
+                // if an attachment with the same name exists in both records use the latest one and soft-delete the older file
+                // if the newpath is the latest there is no need to move anything - just keep using it and soft-delete the older file
+                // if the path is the latest then soft-delete the older (newpath) file and then move the path file to newpath
+
+                if (Storage::exists($newpath)) {
+                    $path_lastModified_date = Carbon::createFromTimestamp(Storage::lastModified($path));
+                    $newpath_lastModified_date = Carbon::createFromTimestamp(Storage::lastModified($newpath));
+                    if ($newpath_lastModified_date > $path_lastModified_date) { //newpath is the latest file
+                        if ($entity == 'avatar') {
+                            $attachment_controller->delete_avatar($merge_id);
+                        } else {
+                            $attachment_controller->delete_contact_attachment($merge_id, $attachment->uri);
+                        }
+                    } else { //path is the latest file
+                        if ($entity == 'avatar') {
+                            $attachment_controller->delete_avatar($contact_id);
+                        } else {
+                            $attachment_controller->delete_contact_attachment($contact_id, $attachment->uri);
+                        }
+                        Storage::move($path, $newpath);
+                        $attachment->entity_id = $contact->id;
+                        $attachment->save();
+                    }
+                } else { // there is no dupilcate file, go ahead and move the attachment and update entity_id
+                    Storage::move($path, $newpath);
+                    $attachment->entity_id = $contact->id;
+                    $attachment->save();
+                }
+            }
+
             //dd($merge);
             if ((empty($contact->prefix_id)) && (! empty($merge->prefix_id))) {
                 $contact->prefix_id = $merge->prefix_id;
@@ -1864,20 +1935,6 @@ class PersonController extends Controller
             foreach ($merge->touchpoints as $touchpoint) {
                 $touchpoint->person_id = $contact_id;
                 $touchpoint->save();
-            }
-            //attachments
-            foreach ($merge->attachments as $attachment) {
-                $path = 'contact/'.$merge_id.'/attachments/'.$attachment->uri;
-                $newpath = 'contact/'.$contact_id.'/attachments/'.$attachment->uri;
-                //check for avatar.png and move appropriately otherwise move the attachment
-                if ($attachment->uri == 'avatar.png') {
-                    $path = 'contact/'.$merge_id.'/'.$attachment->uri;
-                    $newpath = 'contact/'.$contact_id.'/'.$attachment->uri;
-                }
-                //TODO: https://github.com/arborrow/montserrat/issues/205 - better handle when both contact records have an avatar
-                Storage::move($path, $newpath);
-                $attachment->entity_id = $contact->id;
-                $attachment->save();
             }
             //event registrations
             foreach ($merge->event_registrations as $registration) {
