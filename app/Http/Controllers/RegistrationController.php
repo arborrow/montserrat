@@ -7,6 +7,7 @@ use App\Http\Requests\StoreRegistrationRequest;
 use App\Http\Requests\UpdateGroupRegistrationRequest;
 use App\Http\Requests\UpdateRegistrationRequest;
 use App\Mail\RegistrationEventChange;
+use App\Mail\RegistrationCanceledChange;
 use App\Mail\RetreatRegistration;
 use App\Models\Registration;
 use Carbon\Carbon;
@@ -369,17 +370,35 @@ class RegistrationController extends Controller
         $registration->departed_at = $request->input('departed_at');
 
         $registration->room_id = $request->input('room_id');
-        if ($registration->isDirty('event_id') && config('polanco.notify_registration_event_change')) {
+
+        // email finance if a (registration's event_id changes) or (the event is canceled and the registration has a deposit amount)
+        if (config('polanco.notify_registration_event_change')) { // if finance notification is enabled
             $finance_email = config('polanco.finance_email');
             $original_event = \App\Models\Retreat::findOrFail($registration->getOriginal('event_id'));
-            // dd($registration,$registration->event_id,$registration->getOriginal('event_id'));
-            // return view('emails.registration-event-change', compact('registration', 'retreat', 'original_event'));
-            try {
-                Mail::to($finance_email)->send(new RegistrationEventChange($registration, $retreat, $original_event));
-            } catch (\Exception $e) { //failed to send finance notification of event_id change on registration
-                dd($e);
+
+            if  ($registration->isDirty('event_id')) {
+                // dd($registration,$registration->event_id,$registration->getOriginal('event_id'));
+                // return view('emails.registration-event-change', compact('registration', 'retreat', 'original_event'));
+                try {
+                    Mail::to($finance_email)->send(new RegistrationEventChange($registration, $retreat, $original_event));
+                } catch (\Exception $e) { //failed to send finance notification of event_id change on registration
+                    dd($e);
+                }
+                flash('Email notification sent to finance regarding event change to Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a>')->success();
+
             }
+
+            if (($registration->deposit > 0) && ($registration->status_id == config('polanco.registration_status_id.canceled')) && $registration->isDirty('status_id')) {
+                try {
+                    Mail::to($finance_email)->send(new RegistrationCanceledChange($registration, $retreat));
+                } catch (\Exception $e) { //failed to send finance notification of event_id change on registration
+                    dd($e);
+                }
+                flash('Email notification sent to finance regarding cancelation (with deposit) of Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a>')->success();
+            }
+
         }
+
         if ($registration->event_id == config('polanco.event.open_deposit')) {
             $registration->room_id = 0;
         }
