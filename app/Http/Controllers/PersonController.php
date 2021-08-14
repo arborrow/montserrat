@@ -1903,11 +1903,17 @@ class PersonController extends Controller
                 }
             }
 
-            //notes - move all from merge to contact
+            //notes - move all notes from merge to contact
             foreach ($merge->notes as $note) {
-                $note->entity_id = $contact_id;
-                $note->save();
+                $contact_note = \App\Models\Note::firstOrNew(['entity_id' => $contact->id, 'entity_table' => 'contact', 'subject' => $note->subject]);
+                if (isset($note->note)) { //if there is no note to move skip it
+                    if ((!isset($contact_note->note)) || ($note->modified_date>$contact_note->modified_date)) { //overwrite note if blank or older
+                        $contact_note->note = $note->note;
+                    }
+                }
+                $contact_note->save();
             }
+
             //groups - move all from merge to contact
             foreach ($merge->groups as $group) {
                 $group_exist = \App\Models\GroupContact::whereContactId($contact_id)->whereGroupId($group->group_id)->first();
@@ -1941,7 +1947,7 @@ class PersonController extends Controller
                 $registration->contact_id = $contact_id;
                 $registration->save();
             }
-            //event registrations
+            //donations
             foreach ($merge->donations as $donation) {
                 $donation->contact_id = $contact_id;
                 $donation->save();
