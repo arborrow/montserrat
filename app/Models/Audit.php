@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 
 class Audit extends Model
 {
+    use HasFactory;
+
     protected $table = 'audits';
     protected $casts = [
         'old_values' => 'array',
