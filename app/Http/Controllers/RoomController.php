@@ -40,8 +40,9 @@ class RoomController extends Controller
     {
         $this->authorize('create-room');
         $locations = \App\Models\Location::orderby('name')->pluck('name', 'id');
+        $floors=$this->get_floors();
 
-        return view('rooms.create', compact('locations'));
+        return view('rooms.create', compact('locations','floors'));
     }
 
     /**
@@ -63,6 +64,7 @@ class RoomController extends Controller
         $room->type = $request->input('type');
         $room->occupancy = $request->input('occupancy');
         $room->status = $request->input('status');
+        $room->floor = $request->input('floor');
         $room->save();
 
         flash('Room: <a href="'.url('/room/'.$room->id).'">'.$room->name.'</a> added')->success();
@@ -96,9 +98,10 @@ class RoomController extends Controller
     {
         $this->authorize('update-room');
         $locations = \App\Models\Location::orderby('name')->pluck('name', 'id');
+        $floors=$this->get_floors();
         $room = \App\Models\Room::findOrFail($id);
 
-        return view('rooms.edit', compact('room', 'locations'));
+        return view('rooms.edit', compact('room', 'locations','floors'));
     }
 
     /**
@@ -121,6 +124,7 @@ class RoomController extends Controller
         $room->type = $request->input('type');
         $room->occupancy = $request->input('occupancy');
         $room->status = $request->input('status');
+        $room->floor = $request->input('floor');
         $room->save();
 
         flash('Room: <a href="'.url('/room/'.$room->id).'">'.$room->name.'</a> updated')->success();
@@ -145,6 +149,24 @@ class RoomController extends Controller
 
         return Redirect::action('RoomController@index');
     }
+
+    /**
+     * Generate an array of floors.
+     *
+     * @return array
+     */
+    public function get_floors()
+    {
+        $floors = collect([]);
+        $max_floors = config('polanco.rooms.max_floors');
+        $floors->prepend('N/A', 0);
+        for ($x = 1; $x <= $max_floors; $x++) {
+            $floors->put($x,$x);
+        }
+
+        return $floors;
+    }
+
 
     /**
      * Display the room schedules for a particular month/year - default this month.

@@ -25,6 +25,7 @@ class RoomControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('rooms.create');
         $response->assertViewHas('locations');
+        $response->assertViewHas('floors');
         $response->assertSeeText('Add A Room');
     }
 
@@ -57,11 +58,13 @@ class RoomControllerTest extends TestCase
         $response->assertViewIs('rooms.edit');
         $response->assertViewHas('room');
         $response->assertViewHas('locations');
+        $response->assertViewHas('floors');
         $room_data = $response->viewData('room');
         $this->assertEquals($room_data->description, $room->description);
         $response->assertSeeText('Edit Room');
 
         $this->assertTrue($this->findFieldValueInResponseContent('location_id', $room->location_id, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('floor', $room->floor, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('name', $room->name, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('description', $room->description, 'textarea', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('notes', $room->notes, 'textarea', $response->getContent()));
@@ -72,14 +75,14 @@ class RoomControllerTest extends TestCase
 
         /*
         {!! Form::select('location_id', $locations, $room->location_id, ['class' => 'col-md-2']) !!}
-{!! Form::text('name', $room->name, ['class' => 'col-md-2']) !!}
-{!! Form::textarea('description', $room->description, ['class' => 'col-md-5', 'rows'=>'3']) !!}
-{!! Form::textarea('notes', $room->notes, ['class' => 'col-md-5', 'rows'=>'3']) !!}
-{!! Form::text('access', $room->access, ['class' => 'col-md-1']) !!}
-{!! Form::text('type', $room->type, ['class' => 'col-md-1']) !!}
-{!! Form::text('occupancy', $room->occupancy, ['class' => 'col-md-1']) !!}
-{!! Form::text('status', $room->status, ['class' => 'col-md-1']) !!}
-
+        {!! Form::select('floor', $floors, $room->floor, ['class' => 'col-md-2']) !!}
+        {!! Form::text('name', $room->name, ['class' => 'col-md-2']) !!}
+        {!! Form::textarea('description', $room->description, ['class' => 'col-md-5', 'rows'=>'3']) !!}
+        {!! Form::textarea('notes', $room->notes, ['class' => 'col-md-5', 'rows'=>'3']) !!}
+        {!! Form::text('access', $room->access, ['class' => 'col-md-1']) !!}
+        {!! Form::text('type', $room->type, ['class' => 'col-md-1']) !!}
+        {!! Form::text('occupancy', $room->occupancy, ['class' => 'col-md-1']) !!}
+        {!! Form::text('status', $room->status, ['class' => 'col-md-1']) !!}
          */
     }
 
@@ -146,6 +149,7 @@ class RoomControllerTest extends TestCase
 
         $response = $this->actingAs($user)->post(route('room.store'), [
           'location_id' => $location->id,
+          'floor' => $this->faker->numberBetween($min = 1, $max = 2),
           'name' => $name,
           'description' => $description,
           'notes' => $this->faker->sentence,

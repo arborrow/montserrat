@@ -26,6 +26,7 @@ class StoreRoomRequest extends FormRequest
         return [
             'name' => 'required',
             'location_id' => 'integer|required|min:0',
+            'floor' => 'integer|min:0',
             'occupancy' => 'integer|min:0',
             'description' => 'string|nullable',
             'notes' => 'string|nullable',

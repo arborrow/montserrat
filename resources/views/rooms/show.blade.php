@@ -29,6 +29,7 @@
                     <div class='col-md-6'><strong>Notes: </strong>{{ $room->notes}}</div>
                 </div><div class="clearfix"> </div>
                 <div class='row'>
+                    <div class='col-md-3'><strong>Floor: </strong>{{ $room->floor}}</div>
                     <div class='col-md-3'><strong>Access: </strong>{{ $room->access}}</div>
                     <div class='col-md-3'><strong>Type: </strong>{{ $room->type}}</div>
                     <div class='col-md-3'><strong>Occupancy: </strong>{{ $room->occupancy}}</div>
@@ -43,7 +44,7 @@
                     @can('delete-room')
                         <div class='col-md-1'>
                             {!! Form::open(['method' => 'DELETE', 'route' => ['room.destroy', $room->id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                            {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!} 
+                            {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
                             {!! Form::close() !!}
                         </div>
                     @endCan
