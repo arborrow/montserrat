@@ -41,6 +41,7 @@ class StoreRoomRequestTest extends TestCase
         $this->assertEquals([
             'name' => 'required',
             'location_id' => 'integer|required|min:0',
+            'floor' => 'integer|min:0',
             'occupancy' => 'integer|min:0',
             'description' => 'string|nullable',
             'notes' => 'string|nullable',
@@ -60,5 +61,4 @@ class StoreRoomRequestTest extends TestCase
         $this->assertEquals([], $actual);
     }
 
-    // test cases...
 }

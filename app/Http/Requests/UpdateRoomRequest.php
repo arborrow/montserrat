@@ -26,6 +26,7 @@ class UpdateRoomRequest extends FormRequest
         return [
             'name' => 'required',
             'location_id' => 'integer|min:0',
+            'floor' => 'integer|min:0',
             'occupancy' => 'integer|min:0',
             'description' => 'string|nullable',
             'notes' => 'string|nullable',
@@ -43,5 +44,9 @@ class UpdateRoomRequest extends FormRequest
     public function messages()
     {
         return [];
+        $actual = $this->subject->messages();
+
+        $this->assertEquals([], $actual);
+
     }
 }

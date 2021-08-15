@@ -278,6 +278,10 @@ return [
         'primary_contact' => '28',
     ],
 
+    'rooms' => [
+        'max_floors' => '2',
+    ],
+
     'touchpoint_source' => [
         'Call' => 'Call',
         'Email' => 'Email',

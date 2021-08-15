@@ -25,6 +25,9 @@
     </div>
     <div class="clearfix"> </div>
     <div class="form-group">
+        {!! Form::label('floor', 'Floor:', ['class' => 'col-md-1'])  !!}
+        {!! Form::select('floor', $floors, $room->floor, ['class' => 'col-md-2']) !!}
+
         {!! Form::label('access', 'Access:', ['class' => 'col-md-1']) !!}
         {!! Form::text('access', $room->access, ['class' => 'col-md-1']) !!}
 
@@ -33,12 +36,12 @@
 
         {!! Form::label('occupancy', 'Occupancy:', ['class' => 'col-md-1']) !!}
         {!! Form::text('occupancy', $room->occupancy, ['class' => 'col-md-1']) !!}
-    
+
         {!! Form::label('status', 'Status:', ['class' => 'col-md-1']) !!}
         {!! Form::text('status', $room->status, ['class' => 'col-md-1']) !!}
     </div>
     <div class="clearfix"> </div>
-    
+
     <div class="form-group">
         {!! Form::image('images/save.png','btnSave',['class' => 'btn btn-primary']) !!}
     </div>

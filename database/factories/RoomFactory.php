@@ -26,7 +26,7 @@ class RoomFactory extends Factory
             'location_id' => function () {
                 return \App\Models\Location::factory()->create()->id;
             },
-            'floor' =>  $this->faker->numberBetween($min = 1, $max = 9),
+            'floor' =>  $this->faker->numberBetween($min = 1, $max = 2),
             'name' => $this->faker->lastName.' Suite',
             'description' => $this->faker->catchPhrase,
             'notes' => $this->faker->sentence,
