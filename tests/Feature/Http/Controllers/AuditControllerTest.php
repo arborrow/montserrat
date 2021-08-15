@@ -32,7 +32,7 @@ class AuditControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-audit');
-        $audit = \App\Models\Audit::first();
+        $audit = \App\Models\Audit::factory()->create();
 
         $response = $this->actingAs($user)->delete(route('audit.destroy', [$audit]));
 
@@ -46,7 +46,7 @@ class AuditControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {   // no editing of audit records - redirect to index
         $user = $this->createUserWithPermission('update-audit');
-        $audit = \App\Models\Audit::first();
+        $audit = \App\Models\Audit::factory()->create();
 
         $response = $this->actingAs($user)->get(route('audit.edit', [$audit]));
 
@@ -92,7 +92,7 @@ class AuditControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-audit');
-        $audit = \App\Models\Audit::first();
+        $audit = \App\Models\Audit::factory()->create();
 
         $response = $this->actingAs($user)->get(route('audit.show', [$audit]));
 
@@ -124,7 +124,7 @@ class AuditControllerTest extends TestCase
     public function update_returns_an_ok_response()
     {   // no updating of audit records - redirect to audit.index
         $user = $this->createUserWithPermission('update-audit');
-        $audit = \App\Models\Audit::first();
+        $audit = \App\Models\Audit::factory()->create();
 
         $response = $this->actingAs($user)->put(route('audit.update', [$audit]), [
           'ip_address' => $this->faker->ipv4,
