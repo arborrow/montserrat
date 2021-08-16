@@ -91,6 +91,10 @@
                                 {!! Form::label('email_primary', 'Email') !!}
                                 {!! Form::text('email_primary', $diocese->email_primary_text, ['class' => 'form-control']) !!}
                             </div>
+                            <div class="col-12 col-md-4">
+                                {!! Form::label('diocese_note', 'Note:') !!}
+                                {!! Form::textarea('diocese_note', $diocese->note_diocese_text, ['class' => 'form-control', 'rows' => 3]) !!}
+                            </div>
                         </div>
                     </div>
                 </div>

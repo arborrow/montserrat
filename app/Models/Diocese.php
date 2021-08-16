@@ -12,5 +12,18 @@ class Diocese extends Model
     use SoftDeletes;
     protected $table = 'contact';
 
-    //
+    public function getNoteDioceseTextAttribute()
+    {
+        if (isset($this->note_diocese->note)) {
+            return $this->note_diocese->note;
+        } else {
+            return;
+        }
+    }
+
+    public function note_diocese()
+    {
+        return $this->hasOne(Note::class, 'entity_id', 'id')->whereEntityTable('contact')->whereSubject('Diocese Note');
+    }
+
 }

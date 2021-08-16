@@ -139,6 +139,7 @@ class DioceseControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('phone_main_phone', $diocese->phone_main_phone_number, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('phone_main_fax', $diocese->phone_main_fax_number, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('email_primary', $diocese->email_primary_text, 'text', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('diocese_note', $diocese->note_diocese_text, 'textarea', $response->getContent()));
 
         // urls
         $this->assertTrue($this->findFieldValueInResponseContent('url_main', $url_main->url, 'text', $response->getContent()));
@@ -199,6 +200,7 @@ class DioceseControllerTest extends TestCase
             'organization_name' => $org_name,
             'display_name' => $org_name,
             'sort_name' => $city_name,
+            'diocese_note' => $city_name.' Diocesan note',
         ]);
 
         $response->assertSessionHas('flash_notification');
@@ -208,6 +210,11 @@ class DioceseControllerTest extends TestCase
           'subcontact_type' => config('polanco.contact_type.diocese'),
           'sort_name' => $city_name,
           'display_name' => $org_name,
+        ]);
+        $this->assertDatabaseHas('note', [
+          'entity_table' => 'contact',
+          'note' => $city_name.' Diocesan note',
+          'subject' => 'Diocese Note',
         ]);
     }
 
@@ -233,12 +240,13 @@ class DioceseControllerTest extends TestCase
         $sort_name = $diocese->sort_name;
         $city_name = $this->faker->city;
         $org_name = 'Renewed Diocese of '.$city_name;
+        $diocese_note = $city_name.' Diocesan note updated';
 
         $response = $this->actingAs($user)->put(route('diocese.update', [$diocese]), [
           'sort_name' => $city_name,
           'display_name' => $org_name,
           'organization_name' => $org_name,
-
+          'diocese_note' => $diocese_note,
         ]);
         // TODO: test for updating of other fields on the diocese.edit blade like email, phone, address, etc.
 
@@ -247,6 +255,7 @@ class DioceseControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
         $this->assertEquals($diocese->sort_name, $city_name);
         $this->assertNotEquals($diocese->sort_name, $sort_name);
+        $this->assertEquals($diocese->note_diocese_text, $diocese_note);
     }
 
     /**
@@ -260,6 +269,4 @@ class DioceseControllerTest extends TestCase
             \App\Http\Requests\UpdateDioceseRequest::class
         );
     }
-
-    // test cases...
 }

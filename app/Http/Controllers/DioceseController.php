@@ -147,17 +147,13 @@ class DioceseController extends Controller
         $url_twitter->website_type = 'Twitter';
         $url_twitter->save();
 
-        //TODO: add contact_id which is the id of the creator of the note
-        if (! empty($request->input('note'))) {
+        $current_user = $request->user();
+        $diocese_note = \App\Models\Note::firstOrNew(['entity_id'=>$diocese->id, 'entity_table'=>'contact','subject'=>'Diocese Note']);
+        if (isset($current_user->contact_id)) {
+            $diocese_note->contact_id = $current_user->contact_id;
         }
-        {
-            $diocese_note = new \App\Models\Note;
-            $diocese_note->entity_table = 'contact';
-            $diocese_note->entity_id = $diocese->id;
-            $diocese_note->note = $request->input('note');
-            $diocese_note->subject = 'Diocese note';
-            $diocese_note->save();
-        }
+        $diocese_note->note = $request->input('diocese_note');
+        $diocese_note->save();
 
         if ($request->input('bishop_id') > 0) {
             $relationship_bishop = new \App\Models\Relationship;
@@ -181,7 +177,7 @@ class DioceseController extends Controller
     public function show($id)
     {
         $this->authorize('show-contact');
-        $diocese = \App\Models\Contact::with('bishops.contact_b', 'parishes.contact_b', 'addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations')->findOrFail($id);
+        $diocese = \App\Models\Contact::with('bishops.contact_b', 'parishes.contact_b', 'addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'note_diocese', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations')->findOrFail($id);
         $files = \App\Models\Attachment::whereEntity('contact')->whereEntityId($diocese->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
         $relationship_types = [];
         $relationship_types['Primary Contact'] = 'Primary Contact';
@@ -201,7 +197,7 @@ class DioceseController extends Controller
     public function edit($id)
     {
         $this->authorize('update-contact');
-        $diocese = \App\Models\Contact::with('primary_bishop.contact_b', 'bishops.contact_b', 'parishes.contact_b', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
+        $diocese = \App\Models\Contact::with('primary_bishop.contact_b', 'bishops.contact_b', 'parishes.contact_b', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax.location', 'email_primary.location', 'website_main', 'note_diocese')->findOrFail($id);
         if (empty($diocese->primary_bishop)) {
             $diocese->bishop_id = 0;
         } else {
@@ -391,6 +387,15 @@ class DioceseController extends Controller
             $attachment = new AttachmentController;
             $attachment->update_attachment($request->file('attachment'), 'contact', $diocese->id, 'attachment', $description);
         }
+
+        $diocese_note = \App\Models\Note::firstOrNew(['entity_id'=>$diocese->id, 'entity_table'=>'contact','subject'=>'Diocese Note']);
+        $current_user = $request->user();
+        if (isset($current_user->contact_id)) {
+            $diocese_note->contact_id = $current_user->contact_id;
+        }
+        $diocese_note->note = $request->input('diocese_note');
+        $diocese_note->save();
+
         flash('Diocese: <a href="'.url('/diocese/'.$diocese->id).'">'.$diocese->organization_name.'</a> updated')->success();
 
         return Redirect::action('DioceseController@show', $diocese->id);
@@ -416,7 +421,7 @@ class DioceseController extends Controller
         \App\Models\Phone::whereContactId($id)->delete();
         \App\Models\Website::whereContactId($id)->delete();
         \App\Models\EmergencyContact::whereContactId($id)->delete();
-        \App\Models\Note::whereContactId($id)->delete();
+        \App\Models\Note::whereEntityId($id)->whereEntityTable('contact')->whereSubject('Diocese Note')->delete();
         \App\Models\Touchpoint::wherePersonId($id)->delete();
         //delete registrations
         \App\Models\Registration::whereContactId($id)->delete();

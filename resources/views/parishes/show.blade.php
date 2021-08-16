@@ -9,7 +9,7 @@
             <div class="col-12">
                 <h1>
                 @can('update-contact')
-                    <a href="{{url('parish/'.$parish->id.'/edit')}}">{!! $parish->display_name !!}</a> (<a href="../diocese/{{$parish->diocese_id}}">{{ $parish->diocese_name}}</a>)
+                    <a href="{{url('parish/'.$parish->id.'/edit')}}">{{ $parish->display_name }}</a> (<a href="../diocese/{{$parish->diocese_id}}">{{ $parish->diocese_name}}</a>)
                 @else
                     {{ $parish->display_name }} (<a href="../diocese/{{$parish->diocese_id}}">{{ $parish->diocese_name}}</a>)
                 @endCan
@@ -93,12 +93,10 @@
         </div>
         <div class="row">
             <div class="col-12" id="notes">
-                <h2>Notes for {{ $parish->display_name }} ({{$parish->notes->count()}})</h2>
-                @foreach($parish->notes as $note)
-                    @if(!empty($note->note))
-                        <strong>{{$note->subject}}: </strong>{{$note->note}} (modified: {{$note->modified_date}})<br />
-                    @endif
-                @endforeach
+                <h2>Notes for {{ $parish->display_name }} </h2>
+                @if(!empty($parish->note_parish->note))
+                    <strong>{{$parish->note_parish->subject}}: </strong>{{$parish->note_parish->note}} (modified: {{$parish->note_parish->modified_date}})<br />
+                @endif
             </div>
         </div>
         <div class="row">

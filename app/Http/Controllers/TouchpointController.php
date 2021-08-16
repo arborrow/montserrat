@@ -58,14 +58,14 @@ class TouchpointController extends Controller
         })->orderBy('sort_name')->pluck('sort_name', 'id');
         // TODO: replace this with an autocomplete text box for performance rather than a dropdown box
         $persons = \App\Models\Contact::orderBy('sort_name')->pluck('sort_name', 'id');
+        // TODO: review similar instances in other methods to make use of contact_email relationship in User model
         $current_user = $request->user();
-        $user_email = \App\Models\Email::whereEmail($current_user->email)->first();
-        if (empty($user_email->contact_id)) {
+        if (empty($current_user->contact_id)) {
             $defaults['user_id'] = 0;
         } else {
-            $defaults['user_id'] = $user_email->contact_id;
-            if (! $staff->has($user_email->contact_id)) {
-                $staff->prepend($user_email->owner->sort_name,$user_email->contact_id);
+            $defaults['user_id'] = $current_user->contact_id;
+            if (! $staff->has($current_user->contact_id)) {
+                $staff->prepend($current_user->contact_email->owner->sort_name,$current_user->contact_id);
             }
         }
 

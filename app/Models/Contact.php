@@ -685,6 +685,15 @@ class Contact extends Model implements Auditable
         }
     }
 
+    public function getNoteDioceseTextAttribute()
+    {
+        if (isset($this->note_diocese->note)) {
+            return $this->note_diocese->note;
+        } else {
+            return;
+        }
+    }
+
     public function getNoteHealthTextAttribute()
     {
         if (isset($this->note_health->note)) {
@@ -707,6 +716,15 @@ class Contact extends Model implements Auditable
     {
         if (isset($this->note_organization->note)) {
             return $this->note_organization->note;
+        } else {
+            return;
+        }
+    }
+
+    public function getNoteParishTextAttribute()
+    {
+        if (isset($this->note_parish->note)) {
+            return $this->note_parish->note;
         } else {
             return;
         }
@@ -996,6 +1014,16 @@ class Contact extends Model implements Auditable
     public function note_organization()
     {
         return $this->hasOne(Note::class, 'entity_id', 'id')->whereEntityTable('contact')->whereSubject('Organization Note');
+    }
+
+    public function note_parish()
+    {
+        return $this->hasOne(Note::class, 'entity_id', 'id')->whereEntityTable('contact')->whereSubject('Parish Note');
+    }
+
+    public function note_diocese()
+    {
+        return $this->hasOne(Note::class, 'entity_id', 'id')->whereEntityTable('contact')->whereSubject('Diocese Note');
     }
 
     public function note_registration()
