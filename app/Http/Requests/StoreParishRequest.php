@@ -36,6 +36,7 @@ class StoreParishRequest extends FormRequest
             'url_linkedin' => 'url|regex:/linkedin\\.com\\/.+/i|nullable',
             'phone_main_phone' => 'phone|nullable',
             'phone_main_fax' => 'phone|nullable',
+            'parish_note' => 'string|nullable',
         ];
     }
 

@@ -57,6 +57,7 @@ class UpdateParishRequestTest extends TestCase
           'phone_main_phone' => 'phone|nullable',
           'phone_main_fax' => 'phone|nullable',
           'parish_email_main' => 'email|nullable',
+          'parish_note' => 'string|nullable',
         ], $actual);
     }
 

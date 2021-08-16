@@ -36,4 +36,18 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
+
+    public function contact_email() {
+        return $this->hasOne(Email::class, 'email', 'email');
+    }
+
+    public function getContactIdAttribute()
+    {
+        if (isset($this->contact_email->contact_id)) {
+            return $this->contact_email->contact_id;
+        } else {
+            return;
+        }
+    }
+
 }

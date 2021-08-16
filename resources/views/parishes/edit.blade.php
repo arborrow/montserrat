@@ -84,6 +84,14 @@
                     {!! Form::text('email_primary', $parish->email_primary_text, ['class' => 'form-control']) !!}
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    {!! Form::label('parish_note', 'Parish note:') !!}
+                    {!! Form::textarea('parish_note', $parish->note_parish_text, ['class' => 'form-control', 'rows' => 3]) !!}
+
+                </div>
+            </div>
             <div class="row">
                 <div class="col-12">
                     {!! Form::label('avatar', 'Picture (max 5M): ')  !!}

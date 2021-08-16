@@ -148,15 +148,13 @@ class ParishController extends Controller
         $url_twitter->website_type = 'Twitter';
         $url_twitter->save();
 
-        //TODO: add contact_id which is the id of the creator of the note
-        if (! empty($request->input('note'))) {
-            $parish_note = new \App\Models\Note;
-            $parish_note->entity_table = 'contact';
-            $parish_note->entity_id = $parish->id;
-            $parish_note->note = $request->input('note');
-            $parish_note->subject = 'Parish note';
-            $parish_note->save();
+        $current_user = $request->user();
+        $parish_note = \App\Models\Note::firstOrNew(['entity_id'=>$parish->id, 'entity_table'=>'contact','subject'=>'Parish Note']);
+        if (isset($current_user->contact_id)) {
+            $parish_note->contact_id = $current_user->contact_email->contact_id;
         }
+        $parish_note->note = $request->input('parish_note');
+        $parish_note->save();
 
         if ($request->input('diocese_id') > 0) {
             $relationship_diocese = new \App\Models\Relationship;
@@ -189,7 +187,7 @@ class ParishController extends Controller
     public function show($id)
     {
         $this->authorize('show-contact');
-        $parish = \App\Models\Contact::with('pastor.contact_b', 'diocese.contact_a', 'addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'parishioners.contact_b.address_primary.state', 'parishioners.contact_b.emails.location', 'parishioners.contact_b.phones.location', 'touchpoints', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations')->findOrFail($id);
+        $parish = \App\Models\Contact::with('pastor.contact_b', 'diocese.contact_a', 'addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'note_parish', 'parishioners.contact_b.address_primary.state', 'parishioners.contact_b.emails.location', 'parishioners.contact_b.phones.location', 'touchpoints', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations')->findOrFail($id);
         $files = \App\Models\Attachment::whereEntity('contact')->whereEntityId($parish->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
         $relationship_types = [];
         $relationship_types['Primary Contact'] = 'Primary Contact';
@@ -207,7 +205,7 @@ class ParishController extends Controller
     {
         $this->authorize('update-contact');
 
-        $parish = \App\Models\Contact::with('pastor.contact_b', 'diocese.contact_a', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'notes')->findOrFail($id);
+        $parish = \App\Models\Contact::with('pastor.contact_b', 'diocese.contact_a', 'address_primary.state', 'address_primary.location', 'phone_primary.location', 'phone_main_fax', 'email_primary.location', 'website_main', 'note_parish')->findOrFail($id);
 
         $dioceses = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderby('organization_name')->pluck('organization_name', 'id');
         $dioceses[0] = 'No Diocese assigned';
@@ -416,6 +414,14 @@ class ParishController extends Controller
             $attachment->update_attachment($request->file('attachment'), 'contact', $parish->id, 'attachment', $description);
         }
 
+        $parish_note = \App\Models\Note::firstOrNew(['entity_id'=>$parish->id, 'entity_table'=>'contact','subject'=>'Parish Note']);
+        $current_user = $request->user();
+        if (isset($current_user->contact_email->contact_id)) {
+            $parish_note->contact_id = $current_user->contact_email->contact_id;
+        }
+        $parish_note->note = $request->input('parish_note');
+        $parish_note->save();
+
         flash('Parish: <a href="'.url('/parish/'.$parish->id).'">'.$parish->organization_name.'</a> updated')->success();
 
         return Redirect::action('ParishController@show', $parish->id);
@@ -440,7 +446,7 @@ class ParishController extends Controller
         \App\Models\Phone::whereContactId($id)->delete();
         \App\Models\Website::whereContactId($id)->delete();
         \App\Models\EmergencyContact::whereContactId($id)->delete();
-        \App\Models\Note::whereContactId($id)->delete();
+        \App\Models\Note::whereEntitytId($id)->whereEntityTable('contact')->whereSubject('Parish Note')->delete();
         \App\Models\Touchpoint::wherePersonId($id)->delete();
         //delete registrations
         \App\Models\Registration::whereContactId($id)->delete();
