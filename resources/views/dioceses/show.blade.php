@@ -90,12 +90,10 @@
         </div>
         <div class="row">
             <div class="col-12" id="notes">
-                <h2>Notes for {{ $diocese->display_name }} ({{ $diocese->notes->count() }})</h2>
-                @foreach($diocese->notes as $note)
-                    @if(!empty($note->note))
-                        <span class="font-weight-bold">{{$note->subject}}: </span>{{$note->note}} (modified: {{$note->modified_date}})<br>
-                    @endif
-                @endforeach
+                <h2>Notes for {{ $diocese->display_name }} </h2>
+                @if(!empty($diocese->note_diocese->note))
+                    <strong>{{$diocese->note_diocese->subject}}: </strong>{{$diocese->note_diocese->note}} (modified: {{$diocese->note_diocese->modified_date}})<br />
+                @endif
             </div>
         </div>
         <div class="row">

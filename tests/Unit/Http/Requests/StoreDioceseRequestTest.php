@@ -50,6 +50,7 @@ class StoreDioceseRequestTest extends TestCase
           'url_linkedin' => 'url|regex:/linkedin\\.com\\/.+/i|nullable',
           'phone_main_phone' => 'phone|nullable',
           'phone_main_fax' => 'phone|nullable',
+          'diocese_note' => 'string|nullable',
         ], $actual);
     }
 

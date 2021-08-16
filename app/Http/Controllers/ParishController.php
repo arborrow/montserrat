@@ -151,7 +151,7 @@ class ParishController extends Controller
         $current_user = $request->user();
         $parish_note = \App\Models\Note::firstOrNew(['entity_id'=>$parish->id, 'entity_table'=>'contact','subject'=>'Parish Note']);
         if (isset($current_user->contact_id)) {
-            $parish_note->contact_id = $current_user->contact_email->contact_id;
+            $parish_note->contact_id = $current_user->contact_id;
         }
         $parish_note->note = $request->input('parish_note');
         $parish_note->save();

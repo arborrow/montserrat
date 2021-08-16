@@ -56,8 +56,8 @@
                 </div>
                 <div class="row">
                     <div class="col-12 col-lg-4">
-                        {!! Form::label('notes', 'Notes') !!}
-                        {!! Form::textarea('notes', null, ['class'=>'form-control', 'rows'=>'3']) !!}
+                        {!! Form::label('diocese_note', 'Notes') !!}
+                        {!! Form::textarea('diocese_note', null, ['class'=>'form-control', 'rows'=>'3']) !!}
                     </div>
                 </div>
                 <div class="row mt-4">

@@ -685,6 +685,15 @@ class Contact extends Model implements Auditable
         }
     }
 
+    public function getNoteDioceseTextAttribute()
+    {
+        if (isset($this->note_diocese->note)) {
+            return $this->note_diocese->note;
+        } else {
+            return;
+        }
+    }
+
     public function getNoteHealthTextAttribute()
     {
         if (isset($this->note_health->note)) {
