@@ -446,7 +446,7 @@ class ParishController extends Controller
         \App\Models\Phone::whereContactId($id)->delete();
         \App\Models\Website::whereContactId($id)->delete();
         \App\Models\EmergencyContact::whereContactId($id)->delete();
-        \App\Models\Note::whereEntitytId($id)->whereEntityTable('contact')->whereSubject('Parish Note')->delete();
+        \App\Models\Note::whereEntityId($id)->whereEntityTable('contact')->whereSubject('Parish Note')->delete();
         \App\Models\Touchpoint::wherePersonId($id)->delete();
         //delete registrations
         \App\Models\Registration::whereContactId($id)->delete();
