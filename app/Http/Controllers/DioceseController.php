@@ -390,8 +390,8 @@ class DioceseController extends Controller
 
         $diocese_note = \App\Models\Note::firstOrNew(['entity_id'=>$diocese->id, 'entity_table'=>'contact','subject'=>'Diocese Note']);
         $current_user = $request->user();
-        if (isset($current_user->contact_email->contact_id)) {
-            $diocese_note->contact_id = $current_user->contact_email->contact_id;
+        if (isset($current_user->contact_id)) {
+            $diocese_note->contact_id = $current_user->contact_id;
         }
         $diocese_note->note = $request->input('diocese_note');
         $diocese_note->save();
