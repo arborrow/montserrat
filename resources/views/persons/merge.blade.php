@@ -8,13 +8,18 @@
     @foreach ($duplicates as $duplicate)
     <th>{!!$duplicate->avatar_small_link!!} <a href="{!!url('person/merge/'.$duplicate->id)!!}">{{$duplicate->id}}</a>
         <br />
-        <span class='btn btn-outline-dark'>
-            <a href="{!!url('person/merge/'.$contact->id.'/'.$duplicate->id)!!}">Merge</a>
-        </span>
-        <span class='btn btn-outline-dark'>
-            <a href="{!!url('person/merge_delete/'.$duplicate->id.'/'.$contact->id)!!}">Delete</a>
-        </span>
-
+        @if (($duplicate->touchpoints_owned->count()>0) || ($duplicate->jobs_owned->count()>0))
+            <span class="table-danger">
+                Staff member owns touchpoints or jobs: do not merge or delete
+            </span>
+        @else
+            <span class='btn btn-outline-dark'>
+                <a href="{!!url('person/merge/'.$contact->id.'/'.$duplicate->id)!!}">Merge</a>
+            </span>
+            <span class='btn btn-outline-dark'>
+                <a href="{!!url('person/merge_delete/'.$duplicate->id.'/'.$contact->id)!!}">Delete</a>
+            </span>
+        @endIf
     </th>
     @endforeach
     </tr>

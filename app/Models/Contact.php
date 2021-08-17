@@ -971,6 +971,11 @@ class Contact extends Model implements Auditable
         return $this->hasMany(GroupContact::class, 'contact_id', 'id')->whereStatus('Added');
     }
 
+    public function jobs_owned()
+    {
+        return $this->hasMany(AssetJob::class, 'assigned_to_id', 'id');
+    }
+
     public function languages()
     {
         return $this->belongsToMany(Language::class, 'contact_languages', 'contact_id', 'language_id');
@@ -1237,6 +1242,11 @@ class Contact extends Model implements Auditable
     public function touchpoints()
     {
         return $this->hasMany(Touchpoint::class, 'person_id', 'id');
+    }
+
+    public function touchpoints_owned()
+    {
+        return $this->hasMany(Touchpoint::class, 'staff_id', 'id');
     }
 
     public function websites()
