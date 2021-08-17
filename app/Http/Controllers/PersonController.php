@@ -1738,224 +1738,237 @@ class PersonController extends Controller
         $duplicates = $similar->keyBy('id');
         $duplicates->forget($contact->id);
 
+
         //if there are no duplicates for the user go back to duplicates list
         if (! $duplicates->count()) {
+            flash('There currently are no duplicates for Contact ID#: '.$contact_id)->success();
+
             return Redirect::action('PersonController@duplicates');
         }
 
         if (! empty($merge_id)) {
             $merge = \App\Models\Contact::findOrFail($merge_id);
 
-            //attachments - including avatar
-            foreach ($merge->attachments as $attachment) {
-                $attachment_controller = new AttachmentController;
-                $path = 'contact/'.$merge_id.'/attachments/'.$attachment->uri;
-                $newpath = 'contact/'.$contact_id.'/attachments/'.$attachment->uri;
-                $entity = 'attachment';
+            // wip-455 - verify that the record associated with merge_id does not have touchpoints or jobs assigned to them
 
-                // if avatar.png change paths and entity to contact/id/ otherwise move contact attachment to contact/id/attachments
+            $staff_touchpoints = \App\Models\Touchpoint::whereStaffId($merge_id)->get()->count();
+            $staff_jobs = \App\Models\AssetJob::whereAssignedToId($merge_id)->get()->count();
 
-                if ($attachment->uri == 'avatar.png') {
-                    $path = 'contact/'.$merge_id.'/'.$attachment->uri;
-                    $newpath = 'contact/'.$contact_id.'/'.$attachment->uri;
-                    $entity = 'avatar';
-                }
+            if (($staff_touchpoints > 0) || ($staff_jobs > 0)) {
+                // show error flash if failing because of staff member merge attempt
+                flash('Contact ID#: '.$merge_id.' cannot be merged with Contact ID#: '.$contact_id.'. Staff members with touchpoints or assigned jobs cannot be merged.')->error()->important();
+            } else { // not a staff member with existing touchpoints or assigned jobs; safe to merge
 
-                // if an attachment with the same name exists in both records use the latest one and soft-delete the older file
-                // if the newpath is the latest there is no need to move anything - just keep using it and soft-delete the older file
-                // if the path is the latest then soft-delete the older (newpath) file and then move the path file to newpath
+                //attachments - including avatar
+                foreach ($merge->attachments as $attachment) {
+                    $attachment_controller = new AttachmentController;
+                    $path = 'contact/'.$merge_id.'/attachments/'.$attachment->uri;
+                    $newpath = 'contact/'.$contact_id.'/attachments/'.$attachment->uri;
+                    $entity = 'attachment';
 
-                if (Storage::exists($newpath)) {
-                    $path_lastModified_date = Carbon::createFromTimestamp(Storage::lastModified($path));
-                    $newpath_lastModified_date = Carbon::createFromTimestamp(Storage::lastModified($newpath));
-                    if ($newpath_lastModified_date > $path_lastModified_date) { //newpath is the latest file
-                        if ($entity == 'avatar') {
-                            $attachment_controller->delete_avatar($merge_id);
-                        } else {
-                            $attachment_controller->delete_contact_attachment($merge_id, $attachment->uri);
+                    // if avatar.png change paths and entity to contact/id/ otherwise move contact attachment to contact/id/attachments
+
+                    if ($attachment->uri == 'avatar.png') {
+                        $path = 'contact/'.$merge_id.'/'.$attachment->uri;
+                        $newpath = 'contact/'.$contact_id.'/'.$attachment->uri;
+                        $entity = 'avatar';
+                    }
+
+                    // if an attachment with the same name exists in both records use the latest one and soft-delete the older file
+                    // if the newpath is the latest there is no need to move anything - just keep using it and soft-delete the older file
+                    // if the path is the latest then soft-delete the older (newpath) file and then move the path file to newpath
+
+                    if (Storage::exists($newpath)) {
+                        $path_lastModified_date = Carbon::createFromTimestamp(Storage::lastModified($path));
+                        $newpath_lastModified_date = Carbon::createFromTimestamp(Storage::lastModified($newpath));
+                        if ($newpath_lastModified_date > $path_lastModified_date) { //newpath is the latest file
+                            if ($entity == 'avatar') {
+                                $attachment_controller->delete_avatar($merge_id);
+                            } else {
+                                $attachment_controller->delete_contact_attachment($merge_id, $attachment->uri);
+                            }
+                        } else { //path is the latest file
+                            if ($entity == 'avatar') {
+                                $attachment_controller->delete_avatar($contact_id);
+                            } else {
+                                $attachment_controller->delete_contact_attachment($contact_id, $attachment->uri);
+                            }
+                            Storage::move($path, $newpath);
+                            $attachment->entity_id = $contact->id;
+                            $attachment->save();
                         }
-                    } else { //path is the latest file
-                        if ($entity == 'avatar') {
-                            $attachment_controller->delete_avatar($contact_id);
-                        } else {
-                            $attachment_controller->delete_contact_attachment($contact_id, $attachment->uri);
-                        }
+                    } else { // there is no dupilcate file, go ahead and move the attachment and update entity_id
                         Storage::move($path, $newpath);
                         $attachment->entity_id = $contact->id;
                         $attachment->save();
                     }
-                } else { // there is no dupilcate file, go ahead and move the attachment and update entity_id
-                    Storage::move($path, $newpath);
-                    $attachment->entity_id = $contact->id;
-                    $attachment->save();
                 }
-            }
 
-            //dd($merge);
-            if ((empty($contact->prefix_id)) && (! empty($merge->prefix_id))) {
-                $contact->prefix_id = $merge->prefix_id;
-            }
-            if (empty($contact->first_name) && ! empty($merge->first_name)) {
-                $contact->first_name = $merge->first_name;
-            }
-            if (empty($contact->nick_name) && ! empty($merge->nick_name)) {
-                $contact->nick_name = $merge->nick_name;
-            }
-            if (empty($contact->middle_name) && ! empty($merge->middle_name)) {
-                $contact->middle_name = $merge->middle_name;
-            }
-            if (empty($contact->last_name) && ! empty($merge->last_name)) {
-                $contact->last_name = $merge->last_name;
-            }
-            if (empty($contact->organization_name) && ! empty($merge->organization_name)) {
-                $contact->organization_name = $merge->organization_name;
-            }
-            if (empty($contact->suffix_id) && ! empty($merge->suffix_id)) {
-                $contact->suffix_id = $merge->suffix_id;
-            }
-            if (empty($contact->gender_id) && ! empty($merge->gender_id)) {
-                $contact->gender_id = $merge->gender_id;
-            }
-            if (empty($contact->birth_date) && ! empty($merge->birth_date)) {
-                $contact->birth_date = $merge->birth_date;
-            }
-            if (empty($contact->religion_id) && ! empty($merge->religion_id)) {
-                $contact->religion_id = $merge->religion_id;
-            }
-            if (empty($contact->occupation_id) && ! empty($merge->occupation_id)) {
-                $contact->occupation_id = $merge->occupation_id;
-            }
-            if (empty($contact->ethnicity_id) && ! empty($merge->ethnicity_id)) {
-                $contact->ethnicity_id = $merge->ethnicity_id;
-            }
-            $contact->save();
-
-            //addresses
-            if (null === $contact->address_primary) {
-                $contact->address_primary = new \App\Models\Address;
-                $contact->address_primary->contact_id = $contact->id;
-                $contact->address_primary->is_primary = 1;
-            }
-            if ((empty($contact->address_primary->street_address)) && (! empty($merge->address_primary->street_address))) {
-                $contact->address_primary->street_address = $merge->address_primary->street_address;
-            }
-            if ((empty($contact->address_primary->supplemental_address_1)) && (! empty($merge->address_primary->supplemental_address_1))) {
-                $contact->address_primary->supplemental_address_1 = $merge->address_primary->supplemental_address_1;
-            }
-            if ((empty($contact->address_primary_city)) && (! empty($merge->address_primary_city))) {
-                $contact->address_primary->city = $merge->address_primary->city;
-            }
-            if ((empty($contact->address_primary->state_province_id)) && (! empty($merge->address_primary->state_province_id))) {
-                $contact->address_primary->state_province_id = $merge->address_primary->state_province_id;
-            }
-            if ((empty($contact->address_primary->postal_code)) && (! empty($merge->address_primary->postal_code))) {
-                $contact->address_primary->postal_code = $merge->address_primary->postal_code;
-            }
-            if ((empty($contact->address_primary->country_code)) && (! empty($merge->address_primary->country_code))) {
-                $contact->address_primary->country_code = $merge->address_primary->country_code;
-            }
-            $contact->address_primary->save();
-
-            //emergency_contact_info
-            if (null === $contact->emergency_contact) {
-                $contact->emergency_contact = new \App\Models\EmergencyContact;
-                $contact->emergency_contact->contact_id = $contact->id;
-            }
-
-            if ((empty($contact->emergency_contact->name)) && (! empty($merge->emergency_contact->name))) {
-                $contact->emergency_contact->name = $merge->emergency_contact->name;
-            }
-            if ((empty($contact->emergency_contact->relationship)) && (! empty($merge->emergency_contact->relationship))) {
-                $contact->emergency_contact->relationship = $merge->emergency_contact->relationship;
-            }
-            if ((empty($contact->emergency_contact->phone)) && (! empty($merge->emergency_contact->phone))) {
-                $contact->emergency_contact->phone = $merge->emergency_contact->phone;
-            }
-            if ((empty($contact->emergency_contact->phone_alternate)) && (! empty($merge->emergency_contact->phone_alternate))) {
-                $contact->emergency_contact->phone_alternate = $merge->emergency_contact->phone_alternate;
-            }
-            $contact->emergency_contact->save();
-
-            //emails
-            foreach ($merge->emails as $email) {
-                $contact_email = \App\Models\Email::firstOrNew(['contact_id' => $contact->id, 'location_type_id' => $email->location_type_id]);
-                $contact_email->contact_id = $contact->id;
-                $contact_email->location_type_id = $email->location_type_id;
-                $contact_email->is_primary = $email->is_primary;
-                //only create or overwrite if the current email address for the location is empty
-                if (empty($contact_email->email)) {
-                    $contact_email->email = $email->email;
-                    $contact_email->save();
+                //dd($merge);
+                if ((empty($contact->prefix_id)) && (! empty($merge->prefix_id))) {
+                    $contact->prefix_id = $merge->prefix_id;
                 }
-            }
-
-            //phones
-            foreach ($merge->phones as $phone) {
-                $contact_phone = \App\Models\Phone::firstOrNew(['contact_id' => $contact->id, 'location_type_id' => $phone->location_type_id, 'phone_type' => $phone->phone_type]);
-                $contact_phone->contact_id = $contact->id;
-                $contact_phone->location_type_id = $phone->location_type_id;
-                $contact_phone->phone_type = $phone->phone_type;
-                $contact_phone->is_primary = $phone->is_primary;
-                //only create or overwrite if the current email address for the location is empty
-                if (empty($contact_phone->phone)) {
-                    $contact_phone->phone = $phone->phone;
-                    $contact_phone->save();
+                if (empty($contact->first_name) && ! empty($merge->first_name)) {
+                    $contact->first_name = $merge->first_name;
                 }
-            }
+                if (empty($contact->nick_name) && ! empty($merge->nick_name)) {
+                    $contact->nick_name = $merge->nick_name;
+                }
+                if (empty($contact->middle_name) && ! empty($merge->middle_name)) {
+                    $contact->middle_name = $merge->middle_name;
+                }
+                if (empty($contact->last_name) && ! empty($merge->last_name)) {
+                    $contact->last_name = $merge->last_name;
+                }
+                if (empty($contact->organization_name) && ! empty($merge->organization_name)) {
+                    $contact->organization_name = $merge->organization_name;
+                }
+                if (empty($contact->suffix_id) && ! empty($merge->suffix_id)) {
+                    $contact->suffix_id = $merge->suffix_id;
+                }
+                if (empty($contact->gender_id) && ! empty($merge->gender_id)) {
+                    $contact->gender_id = $merge->gender_id;
+                }
+                if (empty($contact->birth_date) && ! empty($merge->birth_date)) {
+                    $contact->birth_date = $merge->birth_date;
+                }
+                if (empty($contact->religion_id) && ! empty($merge->religion_id)) {
+                    $contact->religion_id = $merge->religion_id;
+                }
+                if (empty($contact->occupation_id) && ! empty($merge->occupation_id)) {
+                    $contact->occupation_id = $merge->occupation_id;
+                }
+                if (empty($contact->ethnicity_id) && ! empty($merge->ethnicity_id)) {
+                    $contact->ethnicity_id = $merge->ethnicity_id;
+                }
+                $contact->save();
 
-            //notes - move all notes from merge to contact
-            foreach ($merge->notes as $note) {
-                $contact_note = \App\Models\Note::firstOrNew(['entity_id' => $contact->id, 'entity_table' => 'contact', 'subject' => $note->subject]);
-                if (isset($note->note)) { //if there is no note to move skip it
-                    if ((!isset($contact_note->note)) || ($note->modified_date>$contact_note->modified_date)) { //overwrite note if blank or older
-                        $contact_note->note = $note->note;
+                //addresses
+                if (null === $contact->address_primary) {
+                    $contact->address_primary = new \App\Models\Address;
+                    $contact->address_primary->contact_id = $contact->id;
+                    $contact->address_primary->is_primary = 1;
+                }
+                if ((empty($contact->address_primary->street_address)) && (! empty($merge->address_primary->street_address))) {
+                    $contact->address_primary->street_address = $merge->address_primary->street_address;
+                }
+                if ((empty($contact->address_primary->supplemental_address_1)) && (! empty($merge->address_primary->supplemental_address_1))) {
+                    $contact->address_primary->supplemental_address_1 = $merge->address_primary->supplemental_address_1;
+                }
+                if ((empty($contact->address_primary_city)) && (! empty($merge->address_primary_city))) {
+                    $contact->address_primary->city = $merge->address_primary->city;
+                }
+                if ((empty($contact->address_primary->state_province_id)) && (! empty($merge->address_primary->state_province_id))) {
+                    $contact->address_primary->state_province_id = $merge->address_primary->state_province_id;
+                }
+                if ((empty($contact->address_primary->postal_code)) && (! empty($merge->address_primary->postal_code))) {
+                    $contact->address_primary->postal_code = $merge->address_primary->postal_code;
+                }
+                if ((empty($contact->address_primary->country_code)) && (! empty($merge->address_primary->country_code))) {
+                    $contact->address_primary->country_code = $merge->address_primary->country_code;
+                }
+                $contact->address_primary->save();
+
+                //emergency_contact_info
+                if (null === $contact->emergency_contact) {
+                    $contact->emergency_contact = new \App\Models\EmergencyContact;
+                    $contact->emergency_contact->contact_id = $contact->id;
+                }
+
+                if ((empty($contact->emergency_contact->name)) && (! empty($merge->emergency_contact->name))) {
+                    $contact->emergency_contact->name = $merge->emergency_contact->name;
+                }
+                if ((empty($contact->emergency_contact->relationship)) && (! empty($merge->emergency_contact->relationship))) {
+                    $contact->emergency_contact->relationship = $merge->emergency_contact->relationship;
+                }
+                if ((empty($contact->emergency_contact->phone)) && (! empty($merge->emergency_contact->phone))) {
+                    $contact->emergency_contact->phone = $merge->emergency_contact->phone;
+                }
+                if ((empty($contact->emergency_contact->phone_alternate)) && (! empty($merge->emergency_contact->phone_alternate))) {
+                    $contact->emergency_contact->phone_alternate = $merge->emergency_contact->phone_alternate;
+                }
+                $contact->emergency_contact->save();
+
+                //emails
+                foreach ($merge->emails as $email) {
+                    $contact_email = \App\Models\Email::firstOrNew(['contact_id' => $contact->id, 'location_type_id' => $email->location_type_id]);
+                    $contact_email->contact_id = $contact->id;
+                    $contact_email->location_type_id = $email->location_type_id;
+                    $contact_email->is_primary = $email->is_primary;
+                    //only create or overwrite if the current email address for the location is empty
+                    if (empty($contact_email->email)) {
+                        $contact_email->email = $email->email;
+                        $contact_email->save();
                     }
                 }
-                $contact_note->save();
-            }
 
-            //groups - move all from merge to contact
-            foreach ($merge->groups as $group) {
-                $group_exist = \App\Models\GroupContact::whereContactId($contact_id)->whereGroupId($group->group_id)->first();
-                if (! isset($group_exist)) {
-                    $group->contact_id = $contact_id;
-                    $group->save();
+                //phones
+                foreach ($merge->phones as $phone) {
+                    $contact_phone = \App\Models\Phone::firstOrNew(['contact_id' => $contact->id, 'location_type_id' => $phone->location_type_id, 'phone_type' => $phone->phone_type]);
+                    $contact_phone->contact_id = $contact->id;
+                    $contact_phone->location_type_id = $phone->location_type_id;
+                    $contact_phone->phone_type = $phone->phone_type;
+                    $contact_phone->is_primary = $phone->is_primary;
+                    //only create or overwrite if the current email address for the location is empty
+                    if (empty($contact_phone->phone)) {
+                        $contact_phone->phone = $phone->phone;
+                        $contact_phone->save();
+                    }
                 }
-            }
-            //relationships
-            foreach ($merge->a_relationships as $a_relationship) {
-                $a_relationship_exist = \App\Models\Relationship::whereContactIdA($contact_id)->whereContactIdB($a_relationship->contact_id_b)->whereRelationshipTypeId($a_relationship->relationship_type_id)->first();
-                if (! isset($a_relationship_exist)) {
-                    $a_relationship->contact_id_a = $contact_id;
-                    $a_relationship->save();
+
+                //notes - move all notes from merge to contact
+                foreach ($merge->notes as $note) {
+                    $contact_note = \App\Models\Note::firstOrNew(['entity_id' => $contact->id, 'entity_table' => 'contact', 'subject' => $note->subject]);
+                    if (isset($note->note)) { //if there is no note to move skip it
+                        if ((!isset($contact_note->note)) || ($note->modified_date>$contact_note->modified_date)) { //overwrite note if blank or older
+                            $contact_note->note = $note->note;
+                        }
+                    }
+                    $contact_note->save();
                 }
-            }
-            foreach ($merge->b_relationships as $b_relationship) {
-                $b_relationship_exist = \App\Models\Relationship::whereContactIdB($contact_id)->whereContactIdA($b_relationship->contact_id_a)->whereRelationshipTypeId($b_relationship->relationship_type_id)->first();
-                if (! isset($b_relationship_exist)) {
-                    $b_relationship->contact_id_b = $contact_id;
-                    $b_relationship->save();
+
+                //groups - move all from merge to contact
+                foreach ($merge->groups as $group) {
+                    $group_exist = \App\Models\GroupContact::whereContactId($contact_id)->whereGroupId($group->group_id)->first();
+                    if (! isset($group_exist)) {
+                        $group->contact_id = $contact_id;
+                        $group->save();
+                    }
                 }
+                //relationships
+                foreach ($merge->a_relationships as $a_relationship) {
+                    $a_relationship_exist = \App\Models\Relationship::whereContactIdA($contact_id)->whereContactIdB($a_relationship->contact_id_b)->whereRelationshipTypeId($a_relationship->relationship_type_id)->first();
+                    if (! isset($a_relationship_exist)) {
+                        $a_relationship->contact_id_a = $contact_id;
+                        $a_relationship->save();
+                    }
+                }
+                foreach ($merge->b_relationships as $b_relationship) {
+                    $b_relationship_exist = \App\Models\Relationship::whereContactIdB($contact_id)->whereContactIdA($b_relationship->contact_id_a)->whereRelationshipTypeId($b_relationship->relationship_type_id)->first();
+                    if (! isset($b_relationship_exist)) {
+                        $b_relationship->contact_id_b = $contact_id;
+                        $b_relationship->save();
+                    }
+                }
+                //touchpoints
+                foreach ($merge->touchpoints as $touchpoint) {
+                    $touchpoint->person_id = $contact_id;
+                    $touchpoint->save();
+                }
+                //event registrations
+                foreach ($merge->event_registrations as $registration) {
+                    $registration->contact_id = $contact_id;
+                    $registration->save();
+                }
+                //donations
+                foreach ($merge->donations as $donation) {
+                    $donation->contact_id = $contact_id;
+                    $donation->save();
+                }
+                // show flash after a successful merge
+                flash('Contact ID#: '.$merge_id.' merged with Contact ID#: '.$contact_id)->success()->important();
             }
-            //touchpoints
-            foreach ($merge->touchpoints as $touchpoint) {
-                $touchpoint->person_id = $contact_id;
-                $touchpoint->save();
-            }
-            //event registrations
-            foreach ($merge->event_registrations as $registration) {
-                $registration->contact_id = $contact_id;
-                $registration->save();
-            }
-            //donations
-            foreach ($merge->donations as $donation) {
-                $donation->contact_id = $contact_id;
-                $donation->save();
-            }
-            // only show flash after a successful merge
-            flash('Contact ID#: '.$merge_id.' merged with Contact ID#: '.$contact_id)->warning()->important();
         }
-
         return view('persons.merge', compact('contact', 'duplicates'));
     }
 }

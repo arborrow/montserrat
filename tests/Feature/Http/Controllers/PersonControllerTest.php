@@ -7,7 +7,7 @@ use App\Models\EmergencyContact;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-
+use Session;
 /**
  * @see \App\Http\Controllers\PersonController
  */
@@ -604,6 +604,37 @@ class PersonControllerTest extends TestCase
         $response->assertViewHas('duplicates');
 
         // TODO: perform additional assertions and create additional tests to ensure that the merging functionality actually works
+    }
+
+    /**
+     * @test
+     */
+    public function merge_staff_returns_fail_response()
+    {
+        $user = \App\Models\User::factory()->create();
+        $user->assignRole('test-role:merge');
+
+        $person = \App\Models\Contact::factory()->create([
+            'contact_type' => config('polanco.contact_type.individual'),
+            'subcontact_type' => null,
+        ]);
+
+        $duplicate_person = \App\Models\Contact::factory()->create([
+          'contact_type' => config('polanco.contact_type.individual'),
+          'subcontact_type' => null,
+          'sort_name' => $person->sort_name,
+        ]);
+
+        $touchpoint = \App\Models\Touchpoint::factory()->create([
+            'staff_id' => $duplicate_person->id,
+        ]);
+
+        $response = $this->actingAs($user)->get(route('merge', ['contact_id' => $person->id, 'merge_id' => $duplicate_person->id]));
+        $response->assertOk();
+        $response->assertViewIs('persons.merge');
+        $response->assertViewHas('contact');
+        $response->assertViewHas('duplicates');
+        $response->assertSeeText('Staff members with touchpoints or assigned jobs cannot be merged');
     }
 
     /**
