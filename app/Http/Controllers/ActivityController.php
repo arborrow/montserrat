@@ -42,11 +42,11 @@ class ActivityController extends Controller
         // TODO: replace this with an autocomplete text box for performance rather than a dropdown box
         $persons = \App\Models\Contact::orderBy('sort_name')->pluck('sort_name', 'id');
         $current_user = $request->user();
-        $user_email = \App\Models\Email::whereEmail($current_user->email)->first();
-        if (empty($user_email->contact_id)) {
+
+        if (empty($current_user->contact_id)) {
             $defaults['user_id'] = 0;
         } else {
-            $defaults['user_id'] = $user_email->contact_id;
+            $defaults['user_id'] = $current_user->contact_id;
         }
         $status = \App\Models\ActivityStatus::whereIsActive(1)->orderBy('label')->pluck('label', 'id');
         $status->prepend('N/A', 0);
