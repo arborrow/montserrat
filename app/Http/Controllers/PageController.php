@@ -190,13 +190,12 @@ class PageController extends Controller
         }
 
         $current_user = $request->user();
-        $user_email = \App\Models\Email::whereEmail($current_user->email)->first();
 
-        if (! empty($user_email)) {
+        if (! empty($current_user->contact_id)) {
             if (null == $donation['Thank You']) { //avoid creating another touchpoint if acknowledgement letter has already been viewed (and presumably printed and mailed)
                 $agc_touchpoint = new \App\Models\Touchpoint;
                 $agc_touchpoint->person_id = $donation->contact_id;
-                $agc_touchpoint->staff_id = $user_email->contact_id;
+                $agc_touchpoint->staff_id = $current_user->contact_id;
                 $agc_touchpoint->touched_at = Carbon::now();
                 $agc_touchpoint->type = 'Letter';
                 $agc_touchpoint->notes = 'AGC Acknowledgement Letter for Donation #'.$donation->donation_id;
@@ -204,7 +203,7 @@ class PageController extends Controller
                 $donation['Thank You'] = 'Y';
                 $donation->save();
             }
-            //dd($donation->contact->preferred_language_value);
+
             if ($donation->contact->preferred_language_value == 'es') {
                 $dt = Carbon::now();
                 $donation['today_es'] = $dt->day.' de '.$dt->locale('es')->monthName.' del '.$dt->year;
@@ -218,8 +217,6 @@ class PageController extends Controller
             flash('No known contact associated with the current user\'s email. AGC acknowledgment letter touchpoint cannot be created. Verify '.$current_user->email.' is associated with a contact record and then try again.')->error()->important();
             return redirect()->back();
         }
-
-        //
     }
 
     public function finance_retreatdonations($idnumber = null)
@@ -375,8 +372,7 @@ class PageController extends Controller
         $end_date = (is_null($end_date)) ? Carbon::now()->subYear()->month(12)->day(31) : Carbon::parse($end_date);
 
         $current_user = auth()->user();
-        $user_email = \App\Models\Email::whereEmail($current_user->email)->first();
-        // dd($start_date, $end_date, $contact_id, $current_user, $user_email);
+
         $contact = \App\Models\Contact::findOrFail($contact_id);
         $payments = \App\Models\Payment::with('donation.contact', 'donation.retreat')
         ->whereHas('donation', function ($query) use ($contact_id) {
@@ -384,12 +380,10 @@ class PageController extends Controller
         })
         ->where('payment_date', '>=', $start_date->toDateString())
         ->where('payment_date', '<=', $end_date->toDateString())->get();
-        // $payments = \App\Models\Payment::with('donation.contact', 'donation.retreat')->where('payment_date','>=', $start_date)->where('payment_date','<=',$end_date)->get();
-        // dd($contact, $start_date, $end_date, $payments);
 
         $acknowlegment_touchpoint = new \App\Models\Touchpoint;
         $acknowlegment_touchpoint->person_id = $contact_id;
-        $acknowlegment_touchpoint->staff_id = $user_email->contact_id;
+        $acknowlegment_touchpoint->staff_id = $current_user->contact_id;
         $acknowlegment_touchpoint->touched_at = Carbon::now();
         $acknowlegment_touchpoint->type = 'Letter';
         $acknowlegment_touchpoint->notes = 'End-of-year Donation Acknowledgement Letter: '.$start_date->toDateString().' to '.$end_date->toDateString();

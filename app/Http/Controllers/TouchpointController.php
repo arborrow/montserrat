@@ -80,15 +80,14 @@ class TouchpointController extends Controller
         })->orderBy('sort_name')->pluck('sort_name', 'id');
         $groups = \App\Models\Group::orderBy('title')->pluck('title', 'id');
         $current_user = $request->user();
-        $user_email = \App\Models\Email::whereEmail($current_user->email)->first();
         $defaults['group_id'] = $group_id;
-        if (empty($user_email->contact_id)) {
+        if (empty($current_user->contact_id)) {
             $defaults['user_id'] = 0;
         } else {
-            $defaults['user_id'] = $user_email->contact_id;
-            if (! $staff->has($user_email->contact_id)) {
-                $staff->prepend($user_email->owner->sort_name,$user_email->contact_id);
-                dd($staff);
+            $defaults['user_id'] = $current_user->contact_id;
+            if (! $staff->has($current_user->contact_id)) {
+                $staff->prepend($current_user->contact_email->owner->sort_name,$current_user->contact_id);
+//                dd($staff);
             }
         }
         return view('touchpoints.add_group', compact('staff', 'groups', 'defaults'));
@@ -107,16 +106,15 @@ class TouchpointController extends Controller
         // TODO: replace this with an autocomplete text box for performance rather than a dropdown box
         $participants = \App\Models\Registration::whereEventId($event_id)->whereCanceledAt(null)->get();
         $current_user = $request->user();
-        $user_email = \App\Models\Email::whereEmail($current_user->email)->first();
 
         $defaults['event_id'] = $event_id;
         $defaults['event_description'] = $retreat->idnumber.'-'.$retreat->title.' ('.$retreat->start_date.')';
-        if (empty($user_email->contact_id)) {
+        if (empty($current_user->contact_id)) {
             $defaults['user_id'] = 0;
         } else {
-            $defaults['user_id'] = $user_email->contact_id;
-            if (! $staff->has($user_email->contact_id)) {
-                $staff->prepend($user_email->owner->sort_name,$user_email->contact_id);
+            $defaults['user_id'] = $current_user->contact_id;
+            if (! $staff->has($current_user->contact_id)) {
+                $staff->prepend($current_user->contact_email->owner->sort_name,$current_user->contact_id);
             }
         }
 
@@ -136,16 +134,15 @@ class TouchpointController extends Controller
         // TODO: replace this with an autocomplete text box for performance rather than a dropdown box
         $participants = \App\Models\Registration::whereEventId($event_id)->whereStatusId(config('polanco.registration_status_id.waitlist'))->whereCanceledAt(null)->get();
         $current_user = $request->user();
-        $user_email = \App\Models\Email::whereEmail($current_user->email)->first();
 
         $defaults['event_id'] = $event_id;
         $defaults['event_description'] = $retreat->idnumber.'-'.$retreat->title.' ('.$retreat->start_date.')';
-        if (empty($user_email->contact_id)) {
+        if (empty($current_user->contact_id)) {
             $defaults['user_id'] = 0;
         } else {
-            $defaults['user_id'] = $user_email->contact_id;
-            if (! $staff->has($user_email->contact_id)) {
-                $staff->prepend($user_email->owner->sort_name,$user_email->contact_id);
+            $defaults['user_id'] = $current_user->contact_id;
+            if (! $staff->has($current_user->contact_id)) {
+                $staff->prepend($current_user->contact_email->owner->sort_name,$current_user->contact_id);
             }
         }
 
@@ -170,14 +167,14 @@ class TouchpointController extends Controller
         // TODO: replace this with an autocomplete text box for performance rather than a dropdown box
 
         $current_user = $request->user();
-        $user_email = \App\Models\Email::whereEmail($current_user->email)->first();
+
         $defaults['contact_id'] = $id;
-        if (empty($user_email->contact_id)) {
+        if (empty($current_user->contact_id)) {
             $defaults['user_id'] = 0;
         } else {
-            $defaults['user_id'] = $user_email->contact_id;
-            if (! $staff->has($user_email->contact_id)) {
-                $staff->prepend($user_email->owner->sort_name,$user_email->contact_id);
+            $defaults['user_id'] = $current_user->contact_id;
+            if (! $staff->has($current_user->contact_id)) {
+                $staff->prepend($current_user->contact_email->owner->sort_name,$current_user->contact_id);
             }
         }
 
