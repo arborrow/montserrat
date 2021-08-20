@@ -73,7 +73,7 @@ class ActivityController extends Controller
         $activity = new \App\Models\Activity;
         $activity->activity_type_id = $request->input('activity_type_id');
         $activity->subject = $activity_type->label;
-        $activity->activity_date_time = Carbon::parse($request->input('touched_at'));
+        $activity->activity_date_time = $request->input('activity_date_time');
         $activity->duration = $request->input('duration');
         $activity->location = $request->input('location');
         // $activity->phone_number = $request->input('phone_number');
@@ -169,7 +169,7 @@ class ActivityController extends Controller
         $activity_type = \App\Models\ActivityType::findOrFail($request->input('activity_type_id'));
         $activity = \App\Models\Activity::findOrFail($id);
 
-        $activity->activity_date_time = Carbon::parse($request->input('touched_at'));
+        $activity->activity_date_time = $request->input('activity_date_time');
         $activity->activity_type_id = $request->input('activity_type_id');
         $activity->subject = $request->input('subject');
         $activity->details = $request->input('details');

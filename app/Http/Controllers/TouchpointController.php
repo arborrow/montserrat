@@ -197,7 +197,7 @@ class TouchpointController extends Controller
         $touchpoint = new \App\Models\Touchpoint;
         $touchpoint->person_id = $request->input('person_id');
         $touchpoint->staff_id = $request->input('staff_id');
-        $touchpoint->touched_at = Carbon::parse($request->input('touched_at'));
+        $touchpoint->touched_at = $request->input('touched_at');
         $touchpoint->type = $request->input('type');
         $touchpoint->notes = $request->input('notes');
         $touchpoint->save();
@@ -217,7 +217,7 @@ class TouchpointController extends Controller
             $touchpoint = new \App\Models\Touchpoint;
             $touchpoint->person_id = $group_member->contact_id;
             $touchpoint->staff_id = $request->input('staff_id');
-            $touchpoint->touched_at = Carbon::parse($request->input('touched_at'));
+            $touchpoint->touched_at = $request->input('touched_at');
             $touchpoint->type = $request->input('type');
             $touchpoint->notes = $request->input('notes');
             $touchpoint->save();
@@ -238,7 +238,7 @@ class TouchpointController extends Controller
             $touchpoint = new \App\Models\Touchpoint;
             $touchpoint->person_id = $participant->contact_id;
             $touchpoint->staff_id = $request->input('staff_id');
-            $touchpoint->touched_at = Carbon::parse($request->input('touched_at'));
+            $touchpoint->touched_at = $request->input('touched_at');
             $touchpoint->type = $request->input('type');
             $touchpoint->notes = $request->input('notes');
             $touchpoint->save();
@@ -259,7 +259,7 @@ class TouchpointController extends Controller
             $touchpoint = new \App\Models\Touchpoint;
             $touchpoint->person_id = $participant->contact_id;
             $touchpoint->staff_id = $request->input('staff_id');
-            $touchpoint->touched_at = Carbon::parse($request->input('touched_at'));
+            $touchpoint->touched_at = $request->input('touched_at');
             $touchpoint->type = $request->input('type');
             $touchpoint->notes = $request->input('notes');
             $touchpoint->save();

@@ -99,12 +99,12 @@
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-4">
-                                {!! Form::label('start_date_only', 'Start date')  !!}
-                                {!! Form::text('start_date_only', NULL, ['class'=>'flatpickr-date']) !!}
+                                {!! Form::label('start_date', 'Start date')  !!}
+                                {!! Form::text('start_date', NULL, ['class'=>'flatpickr-date']) !!}
                             </div>
                             <div class="col-12 col-md-4">
-                                {!! Form::label('end_date_only', 'End date')  !!}
-                                {!! Form::text('end_date_only', NULL, ['class'=>'flatpickr-date']) !!}
+                                {!! Form::label('end_date', 'End date')  !!}
+                                {!! Form::text('end_date', NULL, ['class'=>'flatpickr-date']) !!}
                             </div>
                             <div class="col-12 col-md-4">
                                 {!! Form::label('donation_install', 'Installment')  !!}

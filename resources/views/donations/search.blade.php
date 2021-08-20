@@ -57,20 +57,20 @@
                     </div>
                     <div class="row">
                       <div class="col-1">
-                          {!! Form::label('start_date_only_operator', 'Comp.')  !!}
-                          {!! Form::select('start_date_only_operator', config('polanco.operators'), '=', ['class' => 'form-control']) !!}
+                          {!! Form::label('start_date_operator', 'Comp.')  !!}
+                          {!! Form::select('start_date_operator', config('polanco.operators'), '=', ['class' => 'form-control']) !!}
                       </div>
                         <div class="col-3">
-                            {!! Form::label('start_date_only', 'Start date')  !!}
-                            {!! Form::date('start_date_only', NULL, ['class' => 'form-control flatpickr-date']) !!}
+                            {!! Form::label('start_date', 'Start date')  !!}
+                            {!! Form::date('start_date', NULL, ['class' => 'form-control flatpickr-date']) !!}
                         </div>
                         <div class="col-1">
-                            {!! Form::label('end_date_only_operator', 'Comp.')  !!}
-                            {!! Form::select('end_date_only_operator', config('polanco.operators'), '=', ['class' => 'form-control']) !!}
+                            {!! Form::label('end_date_operator', 'Comp.')  !!}
+                            {!! Form::select('end_date_operator', config('polanco.operators'), '=', ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-3">
-                            {!! Form::label('end_date_only', 'End date')  !!}
-                            {!! Form::date('end_date_only', NULL, ['class' => 'form-control flatpickr-date']) !!}
+                            {!! Form::label('end_date', 'End date')  !!}
+                            {!! Form::date('end_date', NULL, ['class' => 'form-control flatpickr-date']) !!}
                         </div>
                     </div>
                     <div class="row">

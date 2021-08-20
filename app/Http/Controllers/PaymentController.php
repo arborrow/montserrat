@@ -91,7 +91,7 @@ class PaymentController extends Controller
         $payment->donation_id = $donation->donation_id;
         $payment->payment_amount = $request->input('payment_amount');
         $payment->note = $request->input('note');
-        $payment->payment_date = Carbon::parse($request->input('payment_date'));
+        $payment->payment_date = $request->input('payment_date');
         $payment->payment_description = $request->input('payment_description');
         if ($request->input('payment_description') == 'Credit card') {
             $payment->ccnumber = substr($request->input('payment_idnumber'), -4);
@@ -149,7 +149,7 @@ class PaymentController extends Controller
 
         $payment = \App\Models\Payment::findOrFail($id);
         $payment->payment_amount = $request->input('payment_amount');
-        $payment->payment_date = Carbon::parse($request->input('payment_date'));
+        $payment->payment_date = $request->input('payment_date');
         $payment->payment_description = $request->input('payment_description');
         if ($request->input('payment_description') == 'Credit card') {
             $payment->ccnumber = substr($request->input('payment_idnumber'), -4);

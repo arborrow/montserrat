@@ -31,8 +31,8 @@ class StoreDonationRequest extends FormRequest
             'donation_amount' => 'required|numeric',
             'payment_amount' => 'required|numeric',
             'payment_idnumber' => 'nullable|numeric|min:0',
-            'start_date_only' => 'date|nullable|before:end_date_only',
-            'end_date_only' => 'date|nullable|after:start_date_only',
+            'start_date' => 'date|nullable|before:end_date',
+            'end_date' => 'date|nullable|after:start_date',
             'donation_install' => 'numeric|min:0|nullable',
         ];
     }

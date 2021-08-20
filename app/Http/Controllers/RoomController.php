@@ -174,14 +174,14 @@ class RoomController extends Controller
      * @param  int  $ym
      * @return \Illuminate\Http\Response
      */
-    public function schedule($ym = null, $building = null)
-    // TODO: $ym is really the start_date (yyyymmdd) and $building is not used and should be removed
+    public function schedule($ym = null)
     {
         $this->authorize('show-room');
         if ((! isset($ym)) or ($ym == 0)) {
             $dt = Carbon::now();
         //dd($dt);
         } else {
+            $ym = hyphenate_date($ym);
             if (! $dt = Carbon::parse($ym)) {
                 return view('404');
             }
@@ -194,7 +194,7 @@ class RoomController extends Controller
         $dts[0] = $dt;
         //dd($dts);
         for ($i = 1; $i <= 31; $i++) {
-            $dts[$i] = Carbon::parse($upcoming->addDays((1)));
+            $dts[$i] = $upcoming->addDays((1));
         }
 
         $next_path = url('rooms/'.$upcoming->format('Ymd'));
@@ -286,4 +286,24 @@ class RoomController extends Controller
 
         return view('rooms.sched2', compact('dts', 'roomsort', 'm', 'previous_link', 'next_link'));
     }
+
+    /**
+     * Hyphenates an 8 digit number to yyyy-mm-dd
+     * Ensures dashes added to create hyphenated string prior to parsing date
+     * Helps address issue #448
+     *
+     * @param  int  $unhyphenated_date
+     * @return string $hyphenated_date
+     */
+
+    public function hyphenate_date($unhyphenated_date) {
+
+        if ( (strpos($unhyphenated_date,'-') == 0) && (strlen($unhyphenated_date) == 8) && is_numeric($unhyphenated_date) ) {
+            $hyphenated_date = substr($day,0,4).'-'.substr($day,4,2).'-'.substr($day,6,2);
+            return $hyphenated_date;
+        } else {
+            return null;
+        }
+    }
+
 }

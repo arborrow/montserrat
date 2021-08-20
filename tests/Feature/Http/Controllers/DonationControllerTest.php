@@ -98,8 +98,8 @@ class DonationControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('notes1', $donation->Notes1, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('notes', $donation->Notes, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('terms', $donation->terms, 'text', $response->getContent()));
-        $this->assertTrue($this->findFieldValueInResponseContent('start_date_only', $donation->start_date, 'date', $response->getContent()));
-        $this->assertTrue($this->findFieldValueInResponseContent('end_date_only', $donation->end_date, 'date', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('start_date', $donation->start_date, 'date', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('end_date', $donation->end_date, 'date', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('donation_install', $donation->donation_install, 'number', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('donation_thank_you', $donation->donation_thank_you_sent, 'select', $response->getContent()));
         // TODO: clean up Donation.thank_you field so that it only contains Y or N and consider switching to boolean field
@@ -218,7 +218,7 @@ class DonationControllerTest extends TestCase
         $user = $this->createUserWithPermission('create-donation');
         $donor = \App\Models\Contact::factory()->create();
         $event = \App\Models\Retreat::factory()->create();
-        $start_date_only = $this->faker->dateTimeBetween('this week', '+7 days');
+        $start_date = $this->faker->dateTimeBetween('this week', '+7 days');
 
         $response = $this->actingAs($user)->post(route('donation.store'), [
             'donor_id' => $donor->id,
@@ -259,6 +259,7 @@ class DonationControllerTest extends TestCase
      */
     public function update_returns_an_ok_response()
     {
+         $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('update-donation');
         $event = \App\Models\Retreat::factory()->create();
         $donation = \App\Models\Donation::factory()->create();

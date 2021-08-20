@@ -638,7 +638,7 @@ class PersonController extends Controller
         $relationship_types['Wife'] = 'Wife';
 
         //dd($files);
-        //not at all elegant but this parses out the notes for easy display and use in the edit blade
+        //not at all elegant but this prepares notes for easy display and use in the edit blade
         $person->note_health = '';
         $person->note_dietary = '';
         $person->note_contact = '';
@@ -761,7 +761,7 @@ class PersonController extends Controller
             $person->parish_id = 0;
         }
 
-        //again not at all elegant but this parses out the notes for easy display and use in the edit blade
+        //again not at all elegant but this prepares the notes for easy display and use in the edit blade
         $person->note_health = '';
         $person->note_dietary = '';
         $person->note_contact = '';

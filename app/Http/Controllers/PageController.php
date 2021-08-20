@@ -131,11 +131,8 @@ class PageController extends Controller
 
         if (is_null($day)) {
             $day = Carbon::now();
-        } else {
-          if ( (strpos($day,'-') == 0) && (strlen($day) == 8) && is_numeric($day) ) {
-            $new_day = substr($day,0,4).'-'.substr($day,4,2).'-'.substr($day,6,2);
-            $day = $new_day;
-          }
+        } else { //ensures that we are adding dashes to string prior to parsing in response to issue #448
+            $day = $this->hyphenate_date($day);
         }
 
         $report_date = Carbon::parse($day);
@@ -157,10 +154,7 @@ class PageController extends Controller
         if (is_null($day)) {
             $day = Carbon::now();
         } else {
-          if ( (strpos($day,'-') == 0) && (strlen($day) == 8) && is_numeric($day) ) {
-            $new_day = substr($day,0,4).'-'.substr($day,4,2).'-'.substr($day,6,2);
-            $day = $new_day;
-          }
+            $day = $this->hyphenate_date($day);
         }
 
         $report_date = Carbon::parse($day);
@@ -204,7 +198,7 @@ class PageController extends Controller
                 $agc_touchpoint = new \App\Models\Touchpoint;
                 $agc_touchpoint->person_id = $donation->contact_id;
                 $agc_touchpoint->staff_id = $user_email->contact_id;
-                $agc_touchpoint->touched_at = Carbon::parse(now());
+                $agc_touchpoint->touched_at = Carbon::now();
                 $agc_touchpoint->type = 'Letter';
                 $agc_touchpoint->notes = 'AGC Acknowledgement Letter for Donation #'.$donation->donation_id;
                 $agc_touchpoint->save();
@@ -370,20 +364,12 @@ class PageController extends Controller
     {
         $this->authorize('show-donation');
 
-        if (is_null($start_date)) {
-        } else {
-          if ( (strpos($start_date,'-') == 0) && (strlen($start_date) == 8) && is_numeric($start_date) ) {
-            $new_day = substr($start_date,0,4).'-'.substr($start_date,4,2).'-'.substr($start_date,6,2);
-            $start_date = $new_day;
-          }
+        if (!is_null($start_date)) {
+            $start_date = $this->hyphenate_date($start_date);
         }
 
-        if (is_null($end_date)) {
-        } else {
-          if ( (strpos($end_date,'-') == 0) && (strlen($end_date) == 8) && is_numeric($end_date) ) {
-            $new_day = substr($end_date,0,4).'-'.substr($end_date,4,2).'-'.substr($end_date,6,2);
-            $end_date = $new_day;
-          }
+        if (!is_null($end_date)) {
+            $end_date = $this->hyphenate_date($end_date);
         }
 
         $start_date = (is_null($start_date)) ? Carbon::now()->subYear()->month(1)->day(1) : Carbon::parse($start_date);
@@ -405,7 +391,7 @@ class PageController extends Controller
         $acknowlegment_touchpoint = new \App\Models\Touchpoint;
         $acknowlegment_touchpoint->person_id = $contact_id;
         $acknowlegment_touchpoint->staff_id = $user_email->contact_id;
-        $acknowlegment_touchpoint->touched_at = Carbon::parse(now());
+        $acknowlegment_touchpoint->touched_at = Carbon::now();
         $acknowlegment_touchpoint->type = 'Letter';
         $acknowlegment_touchpoint->notes = 'End-of-year Donation Acknowledgement Letter: '.$start_date->toDateString().' to '.$end_date->toDateString();
         $acknowlegment_touchpoint->save();
@@ -462,4 +448,24 @@ class PageController extends Controller
 
         return view('admin.config.twilio');
     }
+
+    /**
+     * Hyphenates an 8 digit number to yyyy-mm-dd
+     * Ensures dashes added to create hyphenated string prior to parsing date
+     * Helps address issue #448
+     *
+     * @param  int  $unhyphenated_date
+     * @return string $hyphenated_date
+     */
+
+    public function hyphenate_date($unhyphenated_date) {
+
+        if ( (strpos($unhyphenated_date,'-') == 0) && (strlen($unhyphenated_date) == 8) && is_numeric($unhyphenated_date) ) {
+            $hyphenated_date = substr($day,0,4).'-'.substr($day,4,2).'-'.substr($day,6,2);
+            return $hyphenated_date;
+        } else {
+            return null;
+        }
+    }
+
 }

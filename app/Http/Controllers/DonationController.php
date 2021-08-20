@@ -193,13 +193,13 @@ class DonationController extends Controller
         if ($request->input('event_id') > 0) {
             $donation->event_id = $request->input('event_id');
         }
-        $donation->donation_date = Carbon::parse($request->input('donation_date'));
+        $donation->donation_date = $request->input('donation_date');
         $donation->donation_amount = $request->input('donation_amount');
         $donation->donation_description = $request->input('donation_description');
         $donation->Notes = $request->input('notes');
         $donation->terms = $request->input('terms');
-        $donation->start_date = $request->filled('start_date_only') ? Carbon::parse($request->input('start_date_only')) : null;
-        $donation->end_date = $request->filled('end_date_only') ? Carbon::parse($request->input('end_date_only')) : null;
+        $donation->start_date = $request->input('start_date');
+        $donation->end_date = $request->input('end_date');
         $donation->donation_install = $request->input('donation_install');
         $donation->save();
 
@@ -207,7 +207,7 @@ class DonationController extends Controller
         $payment = new \App\Models\Payment;
         $payment->donation_id = $donation->donation_id;
         $payment->payment_amount = $request->input('payment_amount');
-        $payment->payment_date = Carbon::parse($request->input('payment_date'));
+        $payment->payment_date = $request->input('payment_date');
         $payment->payment_description = $request->input('payment_description');
         if ($request->input('payment_description') == 'Credit card') {
             $payment->ccnumber = substr($request->input('payment_idnumber'), -4);
@@ -285,14 +285,14 @@ class DonationController extends Controller
         $donation = \App\Models\Donation::findOrFail($id);
         $donation->contact_id = $request->input('donor_id');
         $donation->event_id = $request->input('event_id');
-        $donation->donation_date = $request->input('donation_date') ? Carbon::parse($request->input('donation_date')) : null;
+        $donation->donation_date = $request->input('donation_date') ? $request->input('donation_date') : null;
         $donation->donation_amount = $request->input('donation_amount');
         $donation->donation_description = $request->input('donation_description');
         $donation->notes1 = $request->input('notes1'); //primary_contact
         $donation->notes = $request->input('notes');
         $donation->terms = $request->input('terms');
-        $donation->start_date = $request->filled('start_date_only') ? Carbon::parse($request->input('start_date_only')) : null;
-        $donation->end_date = $request->filled('end_date_only') ? Carbon::parse($request->input('end_date_only')) : null;
+        $donation->start_date = $request->input('start_date');
+        $donation->end_date = $request->input('end_date');
         $donation->donation_install = $request->input('donation_install');
         if ($request->input('donation_thank_you') == 'Y') {
             $donation['Thank You'] = $request->input('donation_thank_you'); //field has space in database and should be changed at some point

@@ -49,12 +49,12 @@
                       {!! Form::select('donation_thank_you', ['Y' => 'Yes','N' => 'No'], $donation->donation_thank_you_sent, ['class' => 'form-control']) !!}
                   </div>
                     <div class="col-12 col-md-4">
-                        {!! Form::label('start_date_only', 'Start date')  !!}
-                        {!! Form::date('start_date_only', $donation->start_date, ['class' => 'form-control flatpickr-date']) !!}
+                        {!! Form::label('start_date', 'Start date')  !!}
+                        {!! Form::date('start_date', $donation->start_date, ['class' => 'form-control flatpickr-date']) !!}
                     </div>
                     <div class="col-12 col-md-4">
-                        {!! Form::label('end_date_only', 'End date')  !!}
-                        {!! Form::date('end_date_only', $donation->end_date, ['class' => 'form-control flatpickr-date']) !!}
+                        {!! Form::label('end_date', 'End date')  !!}
+                        {!! Form::date('end_date', $donation->end_date, ['class' => 'form-control flatpickr-date']) !!}
                     </div>
                 </div>
                 <div class="row">
