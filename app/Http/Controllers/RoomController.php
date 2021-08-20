@@ -299,7 +299,7 @@ class RoomController extends Controller
     public function hyphenate_date($unhyphenated_date) {
 
         if ( (strpos($unhyphenated_date,'-') == 0) && (strlen($unhyphenated_date) == 8) && is_numeric($unhyphenated_date) ) {
-            $hyphenated_date = substr($day,0,4).'-'.substr($day,4,2).'-'.substr($day,6,2);
+            $hyphenated_date = substr($unhyphenated_date,0,4).'-'.substr($unhyphenated_date,4,2).'-'.substr($unhyphenated_date,6,2);
             return $hyphenated_date;
         } else {
             return null;
