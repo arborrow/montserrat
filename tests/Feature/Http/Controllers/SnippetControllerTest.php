@@ -103,6 +103,7 @@ class SnippetControllerTest extends TestCase
         $response->assertViewHas('snippets');
         $response->assertViewHas('titles');
         $response->assertSeeText('Snippets');
+        $response->assertSeeText($snippet->title);
         $this->assertGreaterThan($number_snippets, $results->count());
     }
 
