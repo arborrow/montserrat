@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use PDF;
+use DateTime;
 
 class PageController extends Controller
 {
@@ -128,12 +129,12 @@ class PageController extends Controller
     public function finance_cash_deposit($day = null)
     {
         $this->authorize('show-donation');
-
         if (is_null($day)) {
             $day = Carbon::now();
         } else { //ensures that we are adding dashes to string prior to parsing in response to issue #448
             $day = $this->hyphenate_date($day);
         }
+
         $report_date = Carbon::parse($day);
         if (empty($report_date)) {
             return redirect()->back();
@@ -444,7 +445,8 @@ class PageController extends Controller
 
     /**
      * Hyphenates an 8 digit number to yyyy-mm-dd
-     * Ensures dashes added to create hyphenated string prior to parsing date
+     * Ensures dashes added to create hyphenated string prior to parsing date if unhyphanted
+     * If already hyphenated and valid format of yyyy-mm-dd returns hyphanated string
      * Helps address issue #448
      *
      * @param  int  $unhyphenated_date
@@ -457,8 +459,19 @@ class PageController extends Controller
             $hyphenated_date = substr($unhyphenated_date,0,4).'-'.substr($unhyphenated_date,4,2).'-'.substr($unhyphenated_date,6,2);
             return $hyphenated_date;
         } else {
-            return null;
+            if ($this->validateDate($unhyphenated_date)) { //already hyphenated
+                $hyphenated_date = $unhyphenated_date;
+                return $hyphenated_date;
+            } else {
+                return null;
+            }
         }
+    }
+
+    function validateDate($date, $format = 'Y-m-d')
+    {
+        $d = DateTime::createFromFormat($format, $date);
+        return $d && $d->format($format) == $date;
     }
 
 }

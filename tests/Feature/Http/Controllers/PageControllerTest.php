@@ -7,12 +7,15 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Tests\TestCase;
+use Carbon\Carbon;
+use Illuminate\Foundation\Testing\WithFaker;
 
 /**
  * @see \App\Http\Controllers\PageController
  */
 class PageControllerTest extends TestCase
 {
+    use WithFaker;
     /**
      * @test
      */
@@ -263,6 +266,62 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
+    public function finance_cash_deposit_with_hyphenated_date_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-donation');
+        $yesterday = Carbon::now()->subDay()->toDateString();
+        $description = $this->faker->randomElement(['Cash', 'Check', 'Wire transfer']);
+
+        $payment = \App\Models\Payment::factory()->create([
+            'payment_date' =>   $yesterday,
+            'payment_description' => $description,
+        ]);
+
+        //test with hyphens
+        $response = $this->actingAs($user)->get('report/finance/cash_deposit/'.$yesterday);
+        $response->assertOk();
+        $response->assertViewIs('reports.finance.cash_deposit');
+        $response->assertViewHas('report_date');
+        $response->assertViewHas('grouped_payments');
+        $response->assertViewHas('grand_total');
+        $response->assertSeeText("Cash/Check Bank Deposit Report for");
+        $response->assertSeeText(number_format($payment->donation->donation_amount,2));
+
+    }
+
+
+    /**
+     * @test
+     */
+    public function finance_cash_deposit_with_unhyphenated_date_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-donation');
+        $yesterday = Carbon::now()->subDay()->toDateString();
+        $description = $this->faker->randomElement(['Cash', 'Check', 'Wire transfer']);
+
+        $payment = \App\Models\Payment::factory()->create([
+            'payment_date' =>   $yesterday,
+            'payment_description' => $description,
+        ]);
+
+        // remove hyphens
+        $yesterday = str_replace("-","",$yesterday);
+
+        // test without hyphens
+        $response = $this->actingAs($user)->get('report/finance/cash_deposit/'.$yesterday);
+        $response->assertOk();
+        $response->assertViewIs('reports.finance.cash_deposit');
+        $response->assertViewHas('report_date');
+        $response->assertViewHas('grouped_payments');
+        $response->assertViewHas('grand_total');
+        $response->assertSeeText("Cash/Check Bank Deposit Report for");
+        $response->assertSeeText(number_format($payment->donation->donation_amount,2));
+
+    }
+
+    /**
+     * @test
+     */
     public function finance_cc_deposit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-donation');
@@ -328,12 +387,39 @@ class PageControllerTest extends TestCase
         $user = \App\Models\User::factory()->create();
         $user->assignRole('test-role:finance_reconcile_deposit_show');
 
+        $registration = \App\Models\Registration::factory()->create([
+            'event_id' => config('polanco.event.open_deposit'),
+        ]);
         $response = $this->actingAs($user)->get(route('depositreconcile.show'));
 
         $response->assertOk();
         $response->assertViewIs('reports.finance.reconcile_deposits');
         $response->assertViewHas('diffpg');
         $response->assertViewHas('diffrg');
+        $response->assertSeeText("Open Deposit Reconciliation Report");
+        $response->assertSeeText(number_format($registration->deposit,2));
+    }
+
+
+    /**
+     * @test
+     */
+    public function finance_reconcile_deposit_show_with_event_id_returns_an_ok_response()
+    {
+        $user = \App\Models\User::factory()->create();
+        $user->assignRole('test-role:finance_reconcile_deposit_show');
+
+        $registration = \App\Models\Registration::factory()->create();
+        $event_id = $registration->event_id;
+
+        $response = $this->actingAs($user)->get('admin/deposit/reconcile/'.$event_id);
+
+        $response->assertOk();
+        $response->assertViewIs('reports.finance.reconcile_deposits');
+        $response->assertViewHas('diffpg');
+        $response->assertViewHas('diffrg');
+        $response->assertSeeText("Open Deposit Reconciliation Report");
+        $response->assertSeeText(number_format($registration->deposit,2));
     }
 
     /**

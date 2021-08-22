@@ -31,6 +31,7 @@ The following contacts appear to have a registration for an open deposit but no 
 <table width="100%">
        <th class="row-donor">Retreatant</th>
        <th class="row-pledged">Date</th>
+       <th class="row-pledged">Deposit Amount</th>
 
 @foreach($diffrg as $contact => $contact_registrations)
 
@@ -39,6 +40,7 @@ The following contacts appear to have a registration for an open deposit but no 
     <tr>
         <td>{!!$registration->contact->contact_link_full_name!!}</td>
         <td><a href="{{ URL('registration/'.$registration->id) }}">{{$registration->register_date->format('m/d/Y')}}</a></td>
+        <td>${{ number_format($registration->deposit,2) }}
     </tr>
     @endforeach
    @endforeach

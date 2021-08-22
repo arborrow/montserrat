@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Carbon\Carbon;
 
 /**
  * @see \App\Http\Controllers\DashboardController
@@ -58,6 +59,29 @@ class DashboardControllerTest extends TestCase
         $response->assertSee('Donation Description Dashboard');
     }
 
+
+        /**
+         * @test
+         */
+        public function donation_description_chart_with_donation_description_returns_an_ok_response()
+        {
+            $user = $this->createUserWithPermission('show-dashboard');
+            $donation_type = \App\Models\DonationType::active()->get()->random();
+            $donation = \App\Models\Donation::factory()->create([
+                'donation_description' => $donation_type->name,
+            ]);
+
+            $response = $this->actingAs($user)->get('/dashboard/description/'.$donation_type->name);
+
+            $response->assertOk();
+            $response->assertViewIs('dashboard.description');
+            $response->assertViewHas('donation_description_chart');
+            $response->assertViewHas('descriptions');
+            $response->assertSee('Donation Description Dashboard');
+            $response->assertSee($donation_type->name);
+
+        }
+
     /**
      * @test
      */
@@ -82,5 +106,30 @@ class DashboardControllerTest extends TestCase
         $response->assertSee('Board Dashboard');
     }
 
-    // test cases...
+    /**
+     * @test
+     */
+    public function board_with_year_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-dashboard');
+        $last_year = Carbon::now()->subYear()->year;
+
+        $response = $this->actingAs($user)->get('/dashboard/board/'.$last_year);
+
+        $response->assertOk();
+        $response->assertViewIs('dashboard.board');
+        $response->assertViewHas('years');
+        $response->assertViewHas('year');
+        $response->assertViewHas('summary');
+        $response->assertViewHas('board_summary');
+        $response->assertViewHas('board_summary_revenue_chart');
+        $response->assertViewHas('board_summary_participant_chart');
+        $response->assertViewHas('board_summary_peoplenight_chart');
+        $response->assertViewHas('total_revenue');
+        $response->assertViewHas('total_participants');
+        $response->assertViewHas('total_peoplenights');
+        $response->assertSee('Board Dashboard');
+        $response->assertSeeText("FY".$last_year);
+
+    }
 }
