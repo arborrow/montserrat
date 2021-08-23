@@ -142,8 +142,8 @@ class DonationController extends Controller
     {
         $this->authorize('create-donation');
 
-        $subcontact_type_id = config('polanco.contact_type.'.$type);
-        // dd($subcontact_type_id,$id);
+        $subcontact_type_id = (isset($type)) ?  config('polanco.contact_type.'.$type) : null;
+
         if ($id > 0) {
             $donor = \App\Models\Contact::findOrFail($id); // a lazy way to fail if no donor
             $donor_events = \App\Models\Registration::whereContactId($id)->get();
