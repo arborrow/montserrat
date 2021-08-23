@@ -117,9 +117,14 @@ Route::group(['middleware' => ['web', 'activity']], function () {
     Route::resource('diocese', 'DioceseController');
     //Route::get('donation', ['as' => 'donation','uses' => 'PageController@donation']);
 
-    Route::get('donor/{donor_id?}/assign/{contact_id?}', 'DonorController@assign');
-    Route::get('donor/{donor_id?}/add', 'DonorController@add');
+    /*
+    * donor assign and add methods are no longer needed - they were used to import contacts from the Access PPD Donors table
+    * donor index and show are used for historical purposes only and likely at this point is completely obsolete
+    * // Route::get('donor/{donor_id?}/assign/{contact_id?}', 'DonorController@assign');
+    * // Route::get('donor/{donor_id?}/add', 'DonorController@add');
+    */
     Route::resource('donor', 'DonorController');
+
     Route::get('donation/add/{id?}/{event_id?}/{type?}', 'DonationController@create')->name('donation.add');
     Route::get('donation/{id?}/agc_acknowledge', 'PageController@finance_agc_acknowledge');
     Route::get('donation/{id?}/invoice', 'PageController@finance_invoice');
