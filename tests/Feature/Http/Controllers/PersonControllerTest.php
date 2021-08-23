@@ -560,9 +560,9 @@ class PersonControllerTest extends TestCase
           'subcontact_type' => null,
         ]);
 
-        $response = $this->actingAs($user)->get(route('lastnames'), [
-            'lastname' => substr($person->last_name, 0, 1),
-          ]);
+        $response = $this->actingAs($user)->get(route('lastnames', [
+            'letter' => strtolower(substr($person->last_name, 0, 1)),
+        ]));
         $persons = $response->viewData('persons');
 
         $response->assertOk();

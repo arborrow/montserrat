@@ -176,7 +176,7 @@ Route::group(['middleware' => ['web', 'activity']], function () {
         Route::get('superiors', 'PersonController@superiors')->name('superiors');
         Route::get('stewards', 'PersonController@stewards')->name('stewards');
         Route::get('volunteers', 'PersonController@volunteers')->name('volunteers');
-        Route::get('lastnames/{id}', 'PersonController@lastnames')->name('lastnames')->where('id', '[a-z]');
+        Route::get('lastnames/{letter}', 'PersonController@lastnames')->name('lastnames')->where('letter', '[a-z]');
         Route::get('duplicates', 'PersonController@duplicates')->name('duplicates');
         Route::get('merge/{contact_id}/{merge_id?}', 'PersonController@merge')->name('merge');
         Route::get('merge_delete/{id}/{return_id}', 'PersonController@merge_destroy')->name('merge_delete');
