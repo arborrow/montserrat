@@ -126,8 +126,8 @@ Route::group(['middleware' => ['web', 'activity']], function () {
     Route::resource('donor', 'DonorController');
 
     Route::get('donation/add/{id?}/{event_id?}/{type?}', 'DonationController@create')->name('donation.add');
-    Route::get('donation/{id?}/agc_acknowledge', 'PageController@finance_agc_acknowledge');
-    Route::get('donation/{id?}/invoice', 'PageController@finance_invoice');
+    Route::get('donation/{id}/agc_acknowledge', 'PageController@finance_agc_acknowledge');
+    Route::get('donation/{id}/invoice', 'PageController@finance_invoice');
     Route::get('donation/overpaid', 'DonationController@overpaid');
     Route::get('donation/search', 'DonationController@search')->name('donations.search');
     Route::get('donation/results', 'DonationController@results')->name('donations.results');
@@ -176,7 +176,7 @@ Route::group(['middleware' => ['web', 'activity']], function () {
         Route::get('superiors', 'PersonController@superiors')->name('superiors');
         Route::get('stewards', 'PersonController@stewards')->name('stewards');
         Route::get('volunteers', 'PersonController@volunteers')->name('volunteers');
-        Route::get('lastnames/{id?}', 'PersonController@lastnames')->name('lastnames')->where('id', '[a-z]');
+        Route::get('lastnames/{id}', 'PersonController@lastnames')->name('lastnames')->where('id', '[a-z]');
         Route::get('duplicates', 'PersonController@duplicates')->name('duplicates');
         Route::get('merge/{contact_id}/{merge_id?}', 'PersonController@merge')->name('merge');
         Route::get('merge_delete/{id}/{return_id}', 'PersonController@merge_destroy')->name('merge_delete');

@@ -191,9 +191,10 @@ class PageController extends Controller
         }
 
         $current_user = $request->user();
+//        dd($current_user->contact_id,  $donation->donation_thank_you_sent);
 
         if (! empty($current_user->contact_id)) {
-            if (null == $donation['Thank You']) { //avoid creating another touchpoint if acknowledgement letter has already been viewed (and presumably printed and mailed)
+            if ($donation->donation_thank_you_sent=="N") { //avoid creating another touchpoint if acknowledgement letter has already been viewed (and presumably printed and mailed)
                 $agc_touchpoint = new \App\Models\Touchpoint;
                 $agc_touchpoint->person_id = $donation->contact_id;
                 $agc_touchpoint->staff_id = $current_user->contact_id;
@@ -204,29 +205,27 @@ class PageController extends Controller
                 $donation['Thank You'] = 'Y';
                 $donation->save();
             }
-
-            if ($donation->contact->preferred_language_value == 'es') {
-                $dt = Carbon::now();
-                $donation['today_es'] = $dt->day.' de '.$dt->locale('es')->monthName.' del '.$dt->year;
-                $donation['donation_date_es'] = $donation->donation_date->day.' de '.$donation->donation_date->locale('es')->monthName.' del '.$donation->donation_date->year;
-
-                return view('reports.finance.agc_acknowledge_es', compact('donation'));
-            } else {
-                return view('reports.finance.agc_acknowledge', compact('donation'));
-            }
         } else {
             flash('No known contact associated with the current user\'s email. AGC acknowledgment letter touchpoint cannot be created. Verify '.$current_user->email.' is associated with a contact record and then try again.')->error()->important();
             return redirect()->back();
         }
+
+        if ($donation->contact->preferred_language_value == 'es') {
+            $dt = Carbon::now();
+            $donation['today_es'] = $dt->day.' de '.$dt->locale('es')->monthName.' del '.$dt->year;
+            $donation['donation_date_es'] = $donation->donation_date->day.' de '.$donation->donation_date->locale('es')->monthName.' del '.$donation->donation_date->year;
+
+            return view('reports.finance.agc_acknowledge_es', compact('donation'));
+        } else {
+            return view('reports.finance.agc_acknowledge', compact('donation'));
+        }
+
     }
 
     public function finance_retreatdonations($idnumber = null)
     {
         $this->authorize('show-donation');
 
-        if (is_null($idnumber)) {
-            $idnumber = null;
-        }
         $retreat = \App\Models\Retreat::whereIdnumber($idnumber)->firstOrFail();
         if (isset($retreat)) {
             $donations = \App\Models\Donation::whereEventId($retreat->id)->with('contact', 'payments')->get();
