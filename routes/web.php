@@ -254,7 +254,7 @@ Route::group(['middleware' => ['web', 'activity']], function () {
 
     Route::get('retreats', 'PageController@retreat')->name('retreats');
     Route::resource('room', 'RoomController');
-    Route::get('rooms/{ym?}', 'RoomController@schedule')->name('rooms');
+    Route::get('rooms/{ymd?}', 'RoomController@schedule')->name('rooms');
     Route::get('support', 'PageController@support')->name('support');
     Route::resource('touchpoint', 'TouchpointController');
     Route::get('touchpoint/add/{id}', 'TouchpointController@add')->name('touchpoint.add');
