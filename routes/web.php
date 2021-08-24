@@ -135,8 +135,8 @@ Route::group(['middleware' => ['web', 'activity']], function () {
     Route::resource('donation', 'DonationController');
 
     Route::get('agc/{year?}', 'DonationController@agc');
-    Route::get('group/{group_id?}/touchpoint', 'TouchpointController@add_group');
-    Route::get('group/{group_id?}/registration', 'RegistrationController@add_group');
+    Route::get('group/{group_id}/touchpoint', 'TouchpointController@add_group');
+    Route::get('group/{group_id}/registration', 'RegistrationController@add_group');
     Route::post('touchpoint/add_group', 'TouchpointController@store_group');
     Route::post('touchpoint/add_retreat', 'TouchpointController@store_retreat');
     Route::post('touchpoint/add_retreat_waitlist', 'TouchpointController@store_retreat_waitlist');
@@ -186,7 +186,7 @@ Route::group(['middleware' => ['web', 'activity']], function () {
 
     Route::get('registration/confirm/{token}', 'RegistrationController@confirmAttendance');
     Route::get('registration/{participant}/email', 'RegistrationController@registrationEmail');
-    Route::get('registration/add/{id?}', 'RegistrationController@add');
+    Route::get('registration/add/{id}', 'RegistrationController@add');
     Route::post('relationship/add', 'RelationshipTypeController@make');
     Route::get('registration/{id}/confirm', 'RegistrationController@confirm')->name('registration.confirm');
     Route::get('registration/{id}/waitlist', 'RegistrationController@waitlist')->name('registration.waitlist');
