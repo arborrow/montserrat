@@ -32,10 +32,10 @@ class PersonController extends Controller
         return view('persons.index', compact('persons'));   //
     }
 
-    public function lastnames($lastname = null)
+    public function lastnames($letter = null)
     {
         $this->authorize('show-contact');
-        $persons = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'parish.contact_a')->where('last_name', 'LIKE', $lastname.'%')->paginate(100);
+        $persons = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'parish.contact_a')->where('last_name', 'LIKE', $letter.'%')->paginate(100);
 
         return view('persons.index', compact('persons'));   //
     }

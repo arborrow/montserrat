@@ -113,6 +113,7 @@ class LocationControllerTest extends TestCase
         $response->assertViewHas('locations');
         $response->assertViewHas('location_types');
         $response->assertSeeText('Locations');
+        $response->assertSeeText($location->type);
         $this->assertGreaterThan($number_locations, $results->count());
     }
 

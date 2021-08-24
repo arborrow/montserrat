@@ -3,6 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\RelationshipType;
+use Illuminate\Support\Arr;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -31,6 +32,42 @@ class RelationshipTypeControllerTest extends TestCase
         $response->assertViewHas('contact_a_list');
         $response->assertViewHas('contact_b_list');
 
+        $response->assertSeeText($relationship_type->description);
+    }
+    /**
+     * @test
+     */
+    public function add_with_a_and_b_returns_an_ok_response()
+    {   $this->withoutExceptionHandling();
+
+        $user = $this->createUserWithPermission('create-relationship');
+        $user->assignRole('test-role:relationship_type_add');
+        $relationship_type = \App\Models\RelationshipType::factory()->create();
+
+        // for simplicity just testing with individuals
+        $contact_a = \App\Models\Contact::factory()->create([
+            'contact_type' => config('polanco.contact_type.individual'),
+            'subcontact_type' => '0',
+        ]);
+        $contact_b = \App\Models\Contact::factory()->create([
+            'contact_type' => config('polanco.contact_type.individual'),
+            'subcontact_type' => '0',
+        ]);
+
+        $relationship_type = \App\Models\RelationshipType::factory()->create();
+
+        $response = $this->actingAs($user)->get(route('relationship_type.add',
+            ['id' => $relationship_type->id, 'a' => $contact_a->id, 'b' => $contact_b->id]));
+        // dd($response);
+        $response->assertOk();
+        $response->assertViewIs('relationships.types.add');
+        $response->assertViewHas('relationship_type');
+        $response->assertViewHas('contact_a_list', function($a_contacts) use ($contact_a) {
+            return Arr::exists($a_contacts, $contact_a->id);
+        });
+        $response->assertViewHas('contact_b_list', function($b_contacts) use ($contact_b) {
+            return Arr::exists($b_contacts, $contact_b->id);
+        });
         $response->assertSeeText($relationship_type->description);
     }
 

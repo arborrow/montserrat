@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use PDF;
+use DateTime;
 
 class PageController extends Controller
 {
@@ -128,12 +129,12 @@ class PageController extends Controller
     public function finance_cash_deposit($day = null)
     {
         $this->authorize('show-donation');
-
         if (is_null($day)) {
             $day = Carbon::now();
         } else { //ensures that we are adding dashes to string prior to parsing in response to issue #448
             $day = $this->hyphenate_date($day);
         }
+
         $report_date = Carbon::parse($day);
         if (empty($report_date)) {
             return redirect()->back();
@@ -190,9 +191,10 @@ class PageController extends Controller
         }
 
         $current_user = $request->user();
+//        dd($current_user->contact_id,  $donation->donation_thank_you_sent);
 
         if (! empty($current_user->contact_id)) {
-            if (null == $donation['Thank You']) { //avoid creating another touchpoint if acknowledgement letter has already been viewed (and presumably printed and mailed)
+            if ($donation->donation_thank_you_sent=="N") { //avoid creating another touchpoint if acknowledgement letter has already been viewed (and presumably printed and mailed)
                 $agc_touchpoint = new \App\Models\Touchpoint;
                 $agc_touchpoint->person_id = $donation->contact_id;
                 $agc_touchpoint->staff_id = $current_user->contact_id;
@@ -203,29 +205,27 @@ class PageController extends Controller
                 $donation['Thank You'] = 'Y';
                 $donation->save();
             }
-
-            if ($donation->contact->preferred_language_value == 'es') {
-                $dt = Carbon::now();
-                $donation['today_es'] = $dt->day.' de '.$dt->locale('es')->monthName.' del '.$dt->year;
-                $donation['donation_date_es'] = $donation->donation_date->day.' de '.$donation->donation_date->locale('es')->monthName.' del '.$donation->donation_date->year;
-
-                return view('reports.finance.agc_acknowledge_es', compact('donation'));
-            } else {
-                return view('reports.finance.agc_acknowledge', compact('donation'));
-            }
         } else {
             flash('No known contact associated with the current user\'s email. AGC acknowledgment letter touchpoint cannot be created. Verify '.$current_user->email.' is associated with a contact record and then try again.')->error()->important();
             return redirect()->back();
         }
+
+        if ($donation->contact->preferred_language_value == 'es') {
+            $dt = Carbon::now();
+            $donation['today_es'] = $dt->day.' de '.$dt->locale('es')->monthName.' del '.$dt->year;
+            $donation['donation_date_es'] = $donation->donation_date->day.' de '.$donation->donation_date->locale('es')->monthName.' del '.$donation->donation_date->year;
+
+            return view('reports.finance.agc_acknowledge_es', compact('donation'));
+        } else {
+            return view('reports.finance.agc_acknowledge', compact('donation'));
+        }
+
     }
 
     public function finance_retreatdonations($idnumber = null)
     {
         $this->authorize('show-donation');
 
-        if (is_null($idnumber)) {
-            $idnumber = null;
-        }
         $retreat = \App\Models\Retreat::whereIdnumber($idnumber)->firstOrFail();
         if (isset($retreat)) {
             $donations = \App\Models\Donation::whereEventId($retreat->id)->with('contact', 'payments')->get();
@@ -444,7 +444,8 @@ class PageController extends Controller
 
     /**
      * Hyphenates an 8 digit number to yyyy-mm-dd
-     * Ensures dashes added to create hyphenated string prior to parsing date
+     * Ensures dashes added to create hyphenated string prior to parsing date if unhyphanted
+     * If already hyphenated and valid format of yyyy-mm-dd returns hyphanated string
      * Helps address issue #448
      *
      * @param  int  $unhyphenated_date
@@ -457,8 +458,19 @@ class PageController extends Controller
             $hyphenated_date = substr($unhyphenated_date,0,4).'-'.substr($unhyphenated_date,4,2).'-'.substr($unhyphenated_date,6,2);
             return $hyphenated_date;
         } else {
-            return null;
+            if ($this->validateDate($unhyphenated_date)) { //already hyphenated
+                $hyphenated_date = $unhyphenated_date;
+                return $hyphenated_date;
+            } else {
+                return null;
+            }
         }
+    }
+
+    function validateDate($date, $format = 'Y-m-d')
+    {
+        $d = DateTime::createFromFormat($format, $date);
+        return $d && $d->format($format) == $date;
     }
 
 }

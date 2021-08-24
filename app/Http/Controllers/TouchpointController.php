@@ -30,17 +30,24 @@ class TouchpointController extends Controller
         $this->authorize('show-touchpoint');
 
         $staff = \App\Models\Touchpoint::groupBy('staff_id')->select('staff_id')->with('staff')->get()->sortBy('staff.sort_name')->pluck('staff.sort_name', 'staff_id');
-        $touchpoints = \App\Models\Touchpoint::orderBy('touched_at', 'desc')->with('person.prefix', 'person.suffix','staff.prefix','staff.suffix')->paginate(100);
+        $touchpoints = \App\Models\Touchpoint::orderBy('touched_at', 'desc')->with('person.prefix', 'person.suffix', 'staff.prefix', 'staff.suffix')->paginate(100);
 
         return view('touchpoints.index', compact('touchpoints', 'staff'));
     }
 
+    /**
+     * Display a listing of touchpoints associated with a particular staff member
+     *
+     * @param  int  $staff_id
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index_type($staff_id = null)
     {
         $this->authorize('show-touchpoint');
 
         $staff = \App\Models\Touchpoint::groupBy('staff_id')->select('staff_id')->with('staff')->get()->sortBy('staff.sort_name')->pluck('staff.sort_name', 'staff_id');
-        $touchpoints = \App\Models\Touchpoint::whereStaffId($staff_id)->orderBy('touched_at', 'desc')->with('person.prefix', 'person.suffix', 'staff.prefix','staff.suffix')->paginate(100);
+        $touchpoints = \App\Models\Touchpoint::whereStaffId($staff_id)->orderBy('touched_at', 'desc')->with('person.prefix', 'person.suffix', 'staff.prefix', 'staff.suffix')->paginate(100);
 
         return view('touchpoints.index', compact('touchpoints', 'staff'));   //
     }
@@ -65,7 +72,7 @@ class TouchpointController extends Controller
         } else {
             $defaults['user_id'] = $current_user->contact_id;
             if (! $staff->has($current_user->contact_id)) {
-                $staff->prepend($current_user->contact_email->owner->sort_name,$current_user->contact_id);
+                $staff->prepend($current_user->contact_email->owner->sort_name, $current_user->contact_id);
             }
         }
 
@@ -79,15 +86,18 @@ class TouchpointController extends Controller
             $query->where('group_id', '=', config('polanco.group_id.staff'));
         })->orderBy('sort_name')->pluck('sort_name', 'id');
         $groups = \App\Models\Group::orderBy('title')->pluck('title', 'id');
-        $current_user = $request->user();
         $defaults['group_id'] = $group_id;
+        // if a group_id is provided ensure that the group actually exists otherwise fail with 404
+        if ($group_id>0) {
+            $group = \App\Models\Group::findOrFail($group_id);
+        }
+        $current_user = $request->user();
         if (empty($current_user->contact_id)) {
             $defaults['user_id'] = 0;
         } else {
             $defaults['user_id'] = $current_user->contact_id;
             if (! $staff->has($current_user->contact_id)) {
-                $staff->prepend($current_user->contact_email->owner->sort_name,$current_user->contact_id);
-//                dd($staff);
+                $staff->prepend($current_user->contact_email->owner->sort_name, $current_user->contact_id);
             }
         }
         return view('touchpoints.add_group', compact('staff', 'groups', 'defaults'));
@@ -114,7 +124,7 @@ class TouchpointController extends Controller
         } else {
             $defaults['user_id'] = $current_user->contact_id;
             if (! $staff->has($current_user->contact_id)) {
-                $staff->prepend($current_user->contact_email->owner->sort_name,$current_user->contact_id);
+                $staff->prepend($current_user->contact_email->owner->sort_name, $current_user->contact_id);
             }
         }
 
@@ -142,7 +152,7 @@ class TouchpointController extends Controller
         } else {
             $defaults['user_id'] = $current_user->contact_id;
             if (! $staff->has($current_user->contact_id)) {
-                $staff->prepend($current_user->contact_email->owner->sort_name,$current_user->contact_id);
+                $staff->prepend($current_user->contact_email->owner->sort_name, $current_user->contact_id);
             }
         }
 
@@ -174,7 +184,7 @@ class TouchpointController extends Controller
         } else {
             $defaults['user_id'] = $current_user->contact_id;
             if (! $staff->has($current_user->contact_id)) {
-                $staff->prepend($current_user->contact_email->owner->sort_name,$current_user->contact_id);
+                $staff->prepend($current_user->contact_email->owner->sort_name, $current_user->contact_id);
             }
         }
 

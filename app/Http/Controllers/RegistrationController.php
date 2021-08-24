@@ -66,7 +66,7 @@ class RegistrationController extends Controller
         return view('registrations.create', compact('retreats', 'retreatants', 'rooms', 'defaults'));
     }
 
-    public function add($id)
+    public function add($id = null)
     {
         $this->authorize('create-registration');
         $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', \Carbon\Carbon::today()->subWeek())->where('is_active', '=', 1)->orderBy('start_date')->pluck('description', 'id');
@@ -99,6 +99,9 @@ class RegistrationController extends Controller
 
         $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', \Carbon\Carbon::today()->subWeek())->orderBy('start_date')->pluck('description', 'id');
         $retreats->prepend('Unassigned', 0);
+        // if the $id parameter is not a valid group fail with 404
+        $group = \App\Models\Group::findOrFail($id);
+
         $groups = \App\Models\Group::orderBy('title')->pluck('title', 'id');
 
         $rooms = \App\Models\Room::orderby('name')->pluck('name', 'id');

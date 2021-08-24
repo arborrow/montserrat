@@ -176,6 +176,7 @@ class AssetControllerTest extends TestCase
         $response->assertViewHas('asset_types');
         $response->assertViewHas('locations');
         $response->assertSeeText('Assets');
+        $response->assertSeeText($asset->asset_type_name);
         $this->assertGreaterThan($number_assets, $results->count());
     }
 
@@ -202,6 +203,7 @@ class AssetControllerTest extends TestCase
         $response->assertViewHas('asset_types');
         $response->assertViewHas('locations');
         $response->assertSeeText('Assets');
+        $response->assertSeeText($asset->location_name);
         $this->assertGreaterThan($number_assets, $results->count());
     }
 

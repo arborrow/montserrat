@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Support\Facades\Redirect;
 
 class RoomController extends Controller
@@ -171,18 +172,17 @@ class RoomController extends Controller
     /**
      * Display the room schedules for a particular month/year - default this month.
      *
-     * @param  int  $ym
+     * @param  int  $ymd
      * @return \Illuminate\Http\Response
      */
-    public function schedule($ym = null)
+    public function schedule($ymd = null)
     {
         $this->authorize('show-room');
-        if ((! isset($ym)) or ($ym == 0)) {
+        if ((! isset($ymd)) or ($ymd == 0)) {
             $dt = Carbon::now();
-        //dd($dt);
         } else {
-            $ym = hyphenate_date($ym);
-            if (! $dt = Carbon::parse($ym)) {
+            $ymd = $this->hyphenate_date($ymd);
+            if (! $dt = Carbon::parse($ymd)) {
                 return view('404');
             }
         }
@@ -289,7 +289,8 @@ class RoomController extends Controller
 
     /**
      * Hyphenates an 8 digit number to yyyy-mm-dd
-     * Ensures dashes added to create hyphenated string prior to parsing date
+     * Ensures dashes added to create hyphenated string prior to parsing date if unhyphanted
+     * If already hyphenated and valid format of yyyy-mm-dd returns hyphanated string
      * Helps address issue #448
      *
      * @param  int  $unhyphenated_date
@@ -302,8 +303,19 @@ class RoomController extends Controller
             $hyphenated_date = substr($unhyphenated_date,0,4).'-'.substr($unhyphenated_date,4,2).'-'.substr($unhyphenated_date,6,2);
             return $hyphenated_date;
         } else {
-            return null;
+            if ($this->validateDate($unhyphenated_date)) { //already hyphenated
+                $hyphenated_date = $unhyphenated_date;
+                return $hyphenated_date;
+            } else {
+                return null;
+            }
         }
+    }
+
+    function validateDate($date, $format = 'Y-m-d')
+    {
+        $d = DateTime::createFromFormat($format, $date);
+        return $d && $d->format($format) == $date;
     }
 
 }

@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Carbon\Carbon;
 
 /**
  * @see \App\Http\Controllers\RoomController
@@ -109,6 +110,48 @@ class RoomControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-room');
 
         $response = $this->actingAs($user)->get(route('rooms'));
+
+        $response->assertOk();
+        $response->assertViewIs('rooms.sched2');
+        $response->assertViewHas('roomsort');
+        $response->assertViewHas('dts');
+        $response->assertViewHas('m');
+        $response->assertViewHas('previous_link');
+        $response->assertViewHas('next_link');
+        $response->assertSeeText('Room Schedules');
+    }
+
+    /**
+     * @test
+     */
+    public function schedule_with_hyphenated_date_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-room');
+        $yesterday = Carbon::now()->subDay()->toDateString();
+
+        $response = $this->actingAs($user)->get(route('rooms',['ymd' => $yesterday]));
+
+        $response->assertOk();
+        $response->assertViewIs('rooms.sched2');
+        $response->assertViewHas('roomsort');
+        $response->assertViewHas('dts');
+        $response->assertViewHas('m');
+        $response->assertViewHas('previous_link');
+        $response->assertViewHas('next_link');
+        $response->assertSeeText('Room Schedules');
+    }
+
+    /**
+     * @test
+     */
+    public function schedule_with_unhyphenated_date_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-room');
+        $yesterday = Carbon::now()->subDay()->toDateString();
+        // remove hyphens
+        $yesterday = str_replace("-","",$yesterday);
+
+        $response = $this->actingAs($user)->get(route('rooms',['ymd' => $yesterday]));
 
         $response->assertOk();
         $response->assertViewIs('rooms.sched2');

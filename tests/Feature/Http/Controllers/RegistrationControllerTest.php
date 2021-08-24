@@ -6,6 +6,7 @@ use App\Models\GroupContact;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Illuminate\Support\Arr;
 
 /**
  * @see \App\Http\Controllers\RegistrationController
@@ -31,6 +32,9 @@ class RegistrationControllerTest extends TestCase
         $response->assertViewIs('registrations.create');
         $response->assertViewHas('retreats');
         $response->assertViewHas('retreatants');
+        $response->assertViewHas('retreatants', function($retreatants) use ($contact) {
+            return Arr::exists($retreatants, $contact->id);
+        });
         $response->assertViewHas('rooms');
         $response->assertViewHas('defaults');
         $response->assertSeeText('Add A Registration');
@@ -50,7 +54,9 @@ class RegistrationControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('registrations.add_group');
         $response->assertViewHas('retreats');
-        $response->assertViewHas('groups');
+        $response->assertViewHas('groups', function($groups) use ($group) {
+            return Arr::exists($groups, $group->id);;
+        });
         $response->assertViewHas('rooms');
         $response->assertViewHas('defaults');
         $response->assertSeeText($group->title);
@@ -295,6 +301,7 @@ class RegistrationControllerTest extends TestCase
         $response = $this->actingAs($user)->from(URL('retreat/'.$registration->event_id))->
             get(route('registration.offwaitlist', ['id' => $registration->id]));
         $updated = \App\Models\Registration::findOrFail($registration->id);
+
         $response->assertRedirect(URL('retreat/'.$registration->event_id));
         $this->assertEquals(config('polanco.registration_status_id.registered'), $updated->status_id);
     }
@@ -318,8 +325,12 @@ class RegistrationControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertViewIs('registrations.create');
-        $response->assertViewHas('retreats');
-        $response->assertViewHas('retreatants');
+        $response->assertViewHas('retreats', function($retreats) use ($retreat) {
+            return Arr::exists($retreats, $retreat->id);;
+        });
+        $response->assertViewHas('retreatants', function($retreatants) use ($contact) {
+            return Arr::exists($retreatants, $contact->id);;
+        });
         $response->assertViewHas('rooms');
         $response->assertViewHas('defaults');
         $response->assertSeeText($retreat->title);

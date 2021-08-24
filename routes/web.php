@@ -117,12 +117,17 @@ Route::group(['middleware' => ['web', 'activity']], function () {
     Route::resource('diocese', 'DioceseController');
     //Route::get('donation', ['as' => 'donation','uses' => 'PageController@donation']);
 
-    Route::get('donor/{donor_id?}/assign/{contact_id?}', 'DonorController@assign');
-    Route::get('donor/{donor_id?}/add', 'DonorController@add');
+    /*
+    * donor assign and add methods are no longer needed - they were used to import contacts from the Access PPD Donors table
+    * donor index and show are used for historical purposes only and likely at this point is completely obsolete
+    * // Route::get('donor/{donor_id?}/assign/{contact_id?}', 'DonorController@assign');
+    * // Route::get('donor/{donor_id?}/add', 'DonorController@add');
+    */
     Route::resource('donor', 'DonorController');
+
     Route::get('donation/add/{id?}/{event_id?}/{type?}', 'DonationController@create')->name('donation.add');
-    Route::get('donation/{id?}/agc_acknowledge', 'PageController@finance_agc_acknowledge');
-    Route::get('donation/{id?}/invoice', 'PageController@finance_invoice');
+    Route::get('donation/{id}/agc_acknowledge', 'PageController@finance_agc_acknowledge');
+    Route::get('donation/{id}/invoice', 'PageController@finance_invoice');
     Route::get('donation/overpaid', 'DonationController@overpaid');
     Route::get('donation/search', 'DonationController@search')->name('donations.search');
     Route::get('donation/results', 'DonationController@results')->name('donations.results');
@@ -130,8 +135,8 @@ Route::group(['middleware' => ['web', 'activity']], function () {
     Route::resource('donation', 'DonationController');
 
     Route::get('agc/{year?}', 'DonationController@agc');
-    Route::get('group/{group_id?}/touchpoint', 'TouchpointController@add_group');
-    Route::get('group/{group_id?}/registration', 'RegistrationController@add_group');
+    Route::get('group/{group_id}/touchpoint', 'TouchpointController@add_group');
+    Route::get('group/{group_id}/registration', 'RegistrationController@add_group');
     Route::post('touchpoint/add_group', 'TouchpointController@store_group');
     Route::post('touchpoint/add_retreat', 'TouchpointController@store_retreat');
     Route::post('touchpoint/add_retreat_waitlist', 'TouchpointController@store_retreat_waitlist');
@@ -171,7 +176,7 @@ Route::group(['middleware' => ['web', 'activity']], function () {
         Route::get('superiors', 'PersonController@superiors')->name('superiors');
         Route::get('stewards', 'PersonController@stewards')->name('stewards');
         Route::get('volunteers', 'PersonController@volunteers')->name('volunteers');
-        Route::get('lastnames/{id?}', 'PersonController@lastnames')->name('lastnames')->where('id', '[a-z]');
+        Route::get('lastnames/{letter}', 'PersonController@lastnames')->name('lastnames')->where('letter', '[a-z]');
         Route::get('duplicates', 'PersonController@duplicates')->name('duplicates');
         Route::get('merge/{contact_id}/{merge_id?}', 'PersonController@merge')->name('merge');
         Route::get('merge_delete/{id}/{return_id}', 'PersonController@merge_destroy')->name('merge_delete');
@@ -181,7 +186,7 @@ Route::group(['middleware' => ['web', 'activity']], function () {
 
     Route::get('registration/confirm/{token}', 'RegistrationController@confirmAttendance');
     Route::get('registration/{participant}/email', 'RegistrationController@registrationEmail');
-    Route::get('registration/add/{id?}', 'RegistrationController@add');
+    Route::get('registration/add/{id}', 'RegistrationController@add');
     Route::post('relationship/add', 'RelationshipTypeController@make');
     Route::get('registration/{id}/confirm', 'RegistrationController@confirm')->name('registration.confirm');
     Route::get('registration/{id}/waitlist', 'RegistrationController@waitlist')->name('registration.waitlist');
@@ -249,11 +254,11 @@ Route::group(['middleware' => ['web', 'activity']], function () {
 
     Route::get('retreats', 'PageController@retreat')->name('retreats');
     Route::resource('room', 'RoomController');
-    Route::get('rooms/{ym?}', 'RoomController@schedule')->name('rooms');
+    Route::get('rooms/{ymd?}', 'RoomController@schedule')->name('rooms');
     Route::get('support', 'PageController@support')->name('support');
     Route::resource('touchpoint', 'TouchpointController');
-    Route::get('touchpoint/add/{id?}', 'TouchpointController@add')->name('touchpoint.add');
-    Route::get('touchpoint/type/{staff_id?}', 'TouchpointController@index_type');
+    Route::get('touchpoint/add/{id}', 'TouchpointController@add')->name('touchpoint.add');
+    Route::get('touchpoint/type/{staff_id}', 'TouchpointController@index_type');
 
     Route::get('users', 'PageController@user')->name('users');
     Route::resource('vendor', 'VendorController');

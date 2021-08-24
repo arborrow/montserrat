@@ -10,7 +10,9 @@ use Tests\TestCase;
  * @see \App\Http\Controllers\GateController
  */
 class GateControllerTest extends TestCase
-{   // TODO: develop funcitonal tests
+{
+    use WithFaker;
+    // TODO: develop funcitonal tests
     // for now, I am not actually going to test the functionality but just ensure the controller methods function
 
     /**
@@ -61,6 +63,26 @@ class GateControllerTest extends TestCase
         $response->assertViewHas('hours');
         $response->assertViewHas('message');
         $response->assertSeeText('OPEN');
+    }
+
+    /**
+     * @test
+     */
+    public function open_with_hours_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-gate');
+        $hours = $this->faker->numberBetween(2,6);
+        $email = \App\Models\Email::factory()->create([
+            'email' => $user->email,
+        ]);
+
+        $response = $this->actingAs($user)->get(route('gate.open'),['hours' => $hours]);
+        $response->assertOk();
+        $response->assertViewIs('gate.open');
+        $response->assertViewHas('hours');
+        $response->assertViewHas('message');
+        $response->assertSeeText('OPEN');
+        $response->assertSeeText($hours.' hours');
     }
 
     // test cases...

@@ -76,6 +76,9 @@ class AuditControllerTest extends TestCase
     public function index_type_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-audit');
+        $audit = \App\Models\Audit::factory()->create([
+            'user_id' => $user->id,
+        ]);
 
         $response = $this->actingAs($user)->get('admin/audit/user/'.$user->id);
         $results = $response->viewData('audits');
@@ -84,6 +87,7 @@ class AuditControllerTest extends TestCase
         $response->assertViewHas('audits');
         $response->assertViewHas('users');
         $response->assertSeeText('Audits');
+        $response->assertSeeText($audit->user_name);
     }
 
     /**

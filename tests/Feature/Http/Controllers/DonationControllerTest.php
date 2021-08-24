@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Models\Registration;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -53,6 +52,84 @@ class DonationControllerTest extends TestCase
         $response->assertViewIs('donations.create');
         $response->assertViewHas('retreats');
         $response->assertViewHas('donors');
+        $response->assertViewHas('descriptions');
+        $response->assertViewHas('payment_methods');
+        $response->assertViewHas('defaults');
+    }
+
+
+    /**
+     * @test
+     */
+    public function create_with_contact_id_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('create-donation');
+        $contact = \App\Models\Contact::factory()->create();
+
+        $response = $this->actingAs($user)->get('donation/add/'.$contact->id);
+
+        $response->assertOk();
+        $response->assertViewIs('donations.create');
+        $response->assertViewHas('retreats');
+        $response->assertViewHas('donors', function($donors) use ($contact) {
+            return $donors->contains($contact->sort_name);
+        });
+        $response->assertViewHas('descriptions');
+        $response->assertViewHas('payment_methods');
+        $response->assertViewHas('defaults');
+    }
+
+    /**
+     * @test
+     */
+    public function create_with_event_id_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('create-donation');
+        $contact = \App\Models\Contact::factory()->create();
+        $event = \App\Models\Retreat::factory()->create();
+
+        $response = $this->actingAs($user)->get('donation/add/'.$contact->id.'/'.$event->id);
+
+        $response->assertOk();
+        $response->assertViewIs('donations.create');
+
+        $response->assertViewHas('retreats', function($events) use ($event) {
+            return $events->has($event->id);
+        });
+
+        $response->assertViewHas('donors', function($donors) use ($contact) {
+            return $donors->has($contact->id);
+        });
+        $response->assertViewHas('descriptions');
+        $response->assertViewHas('payment_methods');
+        $response->assertViewHas('defaults');
+    }
+
+
+    /**
+     * @test
+     */
+    public function create_with_type_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('create-donation');
+        $type = array_rand(config('polanco.contact_type'));
+        $contact = \App\Models\Contact::factory()->create([
+            'subcontact_type' => config('polanco.contact_type.'.$type),
+        ]);
+        $event = \App\Models\Retreat::factory()->create();
+
+        $response = $this->actingAs($user)->get('donation/add/'.$contact->id.'/'.$event->id.'/'.$type);
+
+        $response->assertOk();
+        $response->assertViewIs('donations.create');
+
+        $response->assertViewHas('retreats', function($events) use ($event) {
+            return $events->has($event->id);
+        });
+
+        $response->assertViewHas('donors', function($donors) use ($contact) {
+            return $donors->has($contact->id);
+        });
         $response->assertViewHas('descriptions');
         $response->assertViewHas('payment_methods');
         $response->assertViewHas('defaults');
@@ -140,6 +217,7 @@ class DonationControllerTest extends TestCase
         $response->assertViewIs('donations.index');
         $response->assertViewHas('donations');
         $response->assertViewHas('donation_descriptions');
+        $response->assertSeeText($donation->donation_description);
         $this->assertGreaterThan($number_donations, $results->count());
     }
 

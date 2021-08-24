@@ -364,7 +364,7 @@ class RetreatControllerTest extends TestCase
             $retreat = \App\Models\Retreat::factory()->create();
             $status = $this->faker->randomElement(config('polanco.registration_filters'));
             $response = $this->actingAs($user)->get(route('retreat.status', ['id' => $retreat->id, 'status' => $status]));
-            
+
             $response->assertOk();
             $response->assertViewIs('retreats.show');
             $response->assertViewHas('retreat');
@@ -548,6 +548,39 @@ class RetreatControllerTest extends TestCase
         $response->assertViewHas('cresults');
         $response->assertSeeText($retreatant->first_name.' '.$retreatant->last_name);
     }
+
+
+        /**
+         * @test
+         */
+        public function event_namebadges_with_role_returns_an_ok_response()
+        {
+            $user = $this->createUserWithPermission('show-registration');
+            $retreat = \App\Models\Retreat::factory()->create();
+            $retreatant = \App\Models\Contact::factory()->create([
+                    'contact_type' => config('polanco.contact_type.individual'),
+                ]);
+            $room = \App\Models\Room::factory()->create();
+            $role = $this->faker->randomElement(array_flip(config('polanco.participant_role_id')));
+
+            // TODO: perhaps ideally this would be refactored so that the case select would work for all pariticipant role types
+            // $role = \App\Models\ParticipantRoleType::whereIsActive(1)->get()->random();
+            $registration = \App\Models\Registration::factory()->create([
+                    'event_id' => $retreat->id,
+                    'contact_id' => $retreatant->id,
+                    'room_id' => $room->id,
+                    'canceled_at' => null,
+                    'role_id' => config('polanco.participant_role_id.'.$role),
+                ]);
+
+            $response = $this->actingAs($user)->get('retreat/'.$registration->event_id.'/namebadges/'.$role);
+
+            $response->assertOk();
+            $response->assertViewIs('retreats.namebadges');
+            $response->assertViewHas('event');
+            $response->assertViewHas('cresults');
+            $response->assertSeeText($retreatant->first_name.' '.$retreatant->last_name);
+        }
 
     /**
      * @test

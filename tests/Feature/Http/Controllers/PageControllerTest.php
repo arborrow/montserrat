@@ -7,12 +7,15 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Tests\TestCase;
+use Carbon\Carbon;
+use Illuminate\Foundation\Testing\WithFaker;
 
 /**
  * @see \App\Http\Controllers\PageController
  */
 class PageControllerTest extends TestCase
 {
+    use WithFaker;
     /**
      * @test
      */
@@ -176,12 +179,17 @@ class PageControllerTest extends TestCase
         ]);
 
         $payment = \App\Models\Payment::factory()->create();
+        $donation = \App\Models\Donation::findOrFail($payment->donation_id);
+        $donation->donation_description = "AGC - General";
+        $donation->save();
+        $contact = \App\Models\Contact::findOrFail($donation->contact_id);
 
         $response = $this->actingAs($user)->get('donation/'.$payment->donation_id.'/agc_acknowledge');
 
         $response->assertOk();
         $response->assertViewIs('reports.finance.agc_acknowledge');
         $response->assertViewHas('donation');
+        $response->assertSeeText($contact->agc_household_name);
     }
 
 
@@ -202,11 +210,13 @@ class PageControllerTest extends TestCase
 
     }
 
-    // TODO: need to create a contact with the $user->email address so that the touchpoint staff member can be created
     public function eoy_acknowledgment_returns_an_ok_response()
     {
-        $this->withoutExceptionHandling();
+        //$this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('show-donation');
+        $email = \App\Models\Email::factory()->create([
+            'email' => $user->email,
+        ]);
 
         $donation = \App\Models\Donation::factory()->create();
         $payments = \App\Models\Payment::factory()->count(3)->create(
@@ -217,6 +227,7 @@ class PageControllerTest extends TestCase
 
         $response->assertOk();
         // TODO: assert that the pdf file is created, consider making a seperate view for display and testing number of entries depending on start and end dates
+        
     }
 
     /**
@@ -263,6 +274,62 @@ class PageControllerTest extends TestCase
     /**
      * @test
      */
+    public function finance_cash_deposit_with_hyphenated_date_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-donation');
+        $yesterday = Carbon::now()->subDay()->toDateString();
+        $description = $this->faker->randomElement(['Cash', 'Check', 'Wire transfer']);
+
+        $payment = \App\Models\Payment::factory()->create([
+            'payment_date' =>   $yesterday,
+            'payment_description' => $description,
+        ]);
+
+        //test with hyphens
+        $response = $this->actingAs($user)->get('report/finance/cash_deposit/'.$yesterday);
+        $response->assertOk();
+        $response->assertViewIs('reports.finance.cash_deposit');
+        $response->assertViewHas('report_date');
+        $response->assertViewHas('grouped_payments');
+        $response->assertViewHas('grand_total');
+        $response->assertSeeText("Cash/Check Bank Deposit Report for");
+        $response->assertSeeText(number_format($payment->donation->donation_amount,2));
+
+    }
+
+
+    /**
+     * @test
+     */
+    public function finance_cash_deposit_with_unhyphenated_date_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-donation');
+        $yesterday = Carbon::now()->subDay()->toDateString();
+        $description = $this->faker->randomElement(['Cash', 'Check', 'Wire transfer']);
+
+        $payment = \App\Models\Payment::factory()->create([
+            'payment_date' =>   $yesterday,
+            'payment_description' => $description,
+        ]);
+
+        // remove hyphens
+        $yesterday = str_replace("-","",$yesterday);
+
+        // test without hyphens
+        $response = $this->actingAs($user)->get('report/finance/cash_deposit/'.$yesterday);
+        $response->assertOk();
+        $response->assertViewIs('reports.finance.cash_deposit');
+        $response->assertViewHas('report_date');
+        $response->assertViewHas('grouped_payments');
+        $response->assertViewHas('grand_total');
+        $response->assertSeeText("Cash/Check Bank Deposit Report for");
+        $response->assertSeeText(number_format($payment->donation->donation_amount,2));
+
+    }
+
+    /**
+     * @test
+     */
     public function finance_cc_deposit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-donation');
@@ -274,6 +341,73 @@ class PageControllerTest extends TestCase
         $response->assertViewHas('report_date');
         $response->assertViewHas('grouped_payments');
         $response->assertViewHas('grand_total');
+    }
+
+
+    /**
+     * @test
+     */
+    public function finance_cc_deposit_with_hyphenated_date_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-donation');
+        $yesterday = Carbon::now()->subDay()->toDateString();
+
+        $description = 'Credit card';
+
+        $payment = \App\Models\Payment::factory()->create([
+            'payment_date' =>   $yesterday,
+            'payment_description' => $description,
+        ]);
+
+
+        $response = $this->actingAs($user)->get(route('report.finance.cc_deposit',['day' => $yesterday]));
+        $response->assertOk();
+        $response->assertViewIs('reports.finance.cc_deposit');
+        $response->assertViewHas('report_date', function($date) use ($yesterday) {
+            return ($date->toDateString() === $yesterday);
+        });
+
+        $response->assertViewHas('grouped_payments');
+        $response->assertViewHas('grand_total');
+        $response->assertSeeText("Credit Card (Internet) Bank Deposit Report");
+        $response->assertSeeText($description);
+        $response->assertSeeText(number_format($payment->donation->donation_amount,2));
+
+    }
+
+
+    /**
+     * @test
+     */
+    public function finance_cc_deposit_with_unhyphenated_date_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-donation');
+        $yesterday = Carbon::now()->subDay()->toDateString();
+
+        // remove hyphens
+        $yesterday_unhyphenated = str_replace("-","",$yesterday);
+
+        $description = 'Credit card';
+
+        $payment = \App\Models\Payment::factory()->create([
+            'payment_date' =>   $yesterday,
+            'payment_description' => $description,
+        ]);
+
+
+        $response = $this->actingAs($user)->get(route('report.finance.cc_deposit',['day' => $yesterday_unhyphenated]));
+        $response->assertOk();
+        $response->assertViewIs('reports.finance.cc_deposit');
+        $response->assertViewHas('report_date', function($date) use ($yesterday) {
+            return ($date->toDateString() === $yesterday);
+        });
+
+        $response->assertViewHas('grouped_payments');
+        $response->assertViewHas('grand_total');
+        $response->assertSeeText("Credit Card (Internet) Bank Deposit Report");
+        $response->assertSeeText($description);
+        $response->assertSeeText(number_format($payment->donation->donation_amount,2));
+
     }
 
     /**
@@ -296,7 +430,7 @@ class PageControllerTest extends TestCase
      */
     public function finance_invoice_report_displays_view()
     {
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('show-donation');
         $donation = \App\Models\Donation::factory()->create();
 
@@ -328,12 +462,39 @@ class PageControllerTest extends TestCase
         $user = \App\Models\User::factory()->create();
         $user->assignRole('test-role:finance_reconcile_deposit_show');
 
+        $registration = \App\Models\Registration::factory()->create([
+            'event_id' => config('polanco.event.open_deposit'),
+        ]);
         $response = $this->actingAs($user)->get(route('depositreconcile.show'));
 
         $response->assertOk();
         $response->assertViewIs('reports.finance.reconcile_deposits');
         $response->assertViewHas('diffpg');
         $response->assertViewHas('diffrg');
+        $response->assertSeeText("Open Deposit Reconciliation Report");
+        $response->assertSeeText(number_format($registration->deposit,2));
+    }
+
+
+    /**
+     * @test
+     */
+    public function finance_reconcile_deposit_show_with_event_id_returns_an_ok_response()
+    {
+        $user = \App\Models\User::factory()->create();
+        $user->assignRole('test-role:finance_reconcile_deposit_show');
+
+        $registration = \App\Models\Registration::factory()->create();
+        $event_id = $registration->event_id;
+
+        $response = $this->actingAs($user)->get('admin/deposit/reconcile/'.$event_id);
+
+        $response->assertOk();
+        $response->assertViewIs('reports.finance.reconcile_deposits');
+        $response->assertViewHas('diffpg');
+        $response->assertViewHas('diffrg');
+        $response->assertSeeText("Open Deposit Reconciliation Report");
+        $response->assertSeeText(number_format($registration->deposit,2));
     }
 
     /**
@@ -351,9 +512,18 @@ class PageControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertViewIs('reports.finance.retreatdonations');
-        $response->assertViewHas('retreat');
+
+        $response->assertViewHas('retreat', function($r) use ($retreat) {
+            return $r->idnumber == $retreat->idnumber;
+        });
+
         $response->assertViewHas('grouped_donations');
         $response->assertViewHas('donations');
+        $response->assertViewHas('donations', function($donations) use ($donation) {
+            return $donations->contains('donation_description',$donation->donation_description);
+        });
+        $response->assertSeeText('Donations for '.$retreat->title);
+        $response->assertSeeText($retreat->idnumber);
     }
 
     /**
