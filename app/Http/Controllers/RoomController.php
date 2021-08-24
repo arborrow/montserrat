@@ -43,7 +43,7 @@ class RoomController extends Controller
         $locations = \App\Models\Location::orderby('name')->pluck('name', 'id');
         $floors=$this->get_floors();
 
-        return view('rooms.create', compact('locations','floors'));
+        return view('rooms.create', compact('locations', 'floors'));
     }
 
     /**
@@ -102,7 +102,7 @@ class RoomController extends Controller
         $floors=$this->get_floors();
         $room = \App\Models\Room::findOrFail($id);
 
-        return view('rooms.edit', compact('room', 'locations','floors'));
+        return view('rooms.edit', compact('room', 'locations', 'floors'));
     }
 
     /**
@@ -162,7 +162,7 @@ class RoomController extends Controller
         $max_floors = config('polanco.rooms.max_floors');
         $floors->prepend('N/A', 0);
         for ($x = 1; $x <= $max_floors; $x++) {
-            $floors->put($x,$x);
+            $floors->put($x, $x);
         }
 
         return $floors;
@@ -194,7 +194,7 @@ class RoomController extends Controller
         $dts[0] = $dt;
         //dd($dts);
         for ($i = 1; $i <= 31; $i++) {
-            $dts[$i] = $upcoming->addDays((1));
+            $dts[$i] = clone $upcoming->addDay();
         }
 
         $next_path = url('rooms/'.$upcoming->format('Ymd'));
@@ -297,10 +297,10 @@ class RoomController extends Controller
      * @return string $hyphenated_date
      */
 
-    public function hyphenate_date($unhyphenated_date) {
-
-        if ( (strpos($unhyphenated_date,'-') == 0) && (strlen($unhyphenated_date) == 8) && is_numeric($unhyphenated_date) ) {
-            $hyphenated_date = substr($unhyphenated_date,0,4).'-'.substr($unhyphenated_date,4,2).'-'.substr($unhyphenated_date,6,2);
+    public function hyphenate_date($unhyphenated_date)
+    {
+        if ((strpos($unhyphenated_date, '-') == 0) && (strlen($unhyphenated_date) == 8) && is_numeric($unhyphenated_date)) {
+            $hyphenated_date = substr($unhyphenated_date, 0, 4).'-'.substr($unhyphenated_date, 4, 2).'-'.substr($unhyphenated_date, 6, 2);
             return $hyphenated_date;
         } else {
             if ($this->validateDate($unhyphenated_date)) { //already hyphenated
@@ -312,10 +312,9 @@ class RoomController extends Controller
         }
     }
 
-    function validateDate($date, $format = 'Y-m-d')
+    public function validateDate($date, $format = 'Y-m-d')
     {
         $d = DateTime::createFromFormat($format, $date);
         return $d && $d->format($format) == $date;
     }
-
 }
