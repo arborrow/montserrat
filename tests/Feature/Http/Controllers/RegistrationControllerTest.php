@@ -33,7 +33,7 @@ class RegistrationControllerTest extends TestCase
         $response->assertViewHas('retreats');
         $response->assertViewHas('retreatants');
         $response->assertViewHas('retreatants', function($retreatants) use ($contact) {
-            return Arr::exists($retreatants, $contact->id);;
+            return Arr::exists($retreatants, $contact->id);
         });
         $response->assertViewHas('rooms');
         $response->assertViewHas('defaults');

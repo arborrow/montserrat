@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Models\GroupContact;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Illuminate\Support\Arr;
 
 /**
  * @see \App\Http\Controllers\TouchpointController
@@ -41,8 +41,12 @@ class TouchpointControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertViewIs('touchpoints.create');
-        $response->assertViewHas('staff');
-        $response->assertViewHas('persons');
+        $response->assertViewHas('staff', function($staff_members) use ($staff) {
+            return Arr::exists($staff_members, $staff->id);
+        });
+        $response->assertViewHas('persons', function($people) use ($contact) {
+            return Arr::exists($people, $contact->id);
+        });
         $response->assertViewHas('defaults');
         $response->assertSeeText('Create Touchpoint');
     }
@@ -84,8 +88,12 @@ class TouchpointControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertViewIs('touchpoints.add_group');
-        $response->assertViewHas('staff');
-        $response->assertViewHas('groups');
+        $response->assertViewHas('staff', function($staff_members) use ($staff) {
+            return Arr::exists($staff_members, $staff->id);
+        });
+        $response->assertViewHas('groups', function($group_members) use ($group) {
+            return Arr::exists($group_members, $group->id);
+        });
         $response->assertViewHas('defaults');
         $response->assertSeeText('Create Group Touchpoint');
     }
@@ -258,7 +266,9 @@ class TouchpointControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('touchpoints.index');
         $response->assertViewHas('touchpoints');
-        $response->assertViewHas('staff');
+        $response->assertViewHas('staff', function($staff_members) use ($touchpoint) {
+            return Arr::exists($staff_members, $touchpoint->staff_id);
+        });
         $response->assertSeeText('Touchpoint Index');
     }
 
