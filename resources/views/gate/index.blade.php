@@ -15,7 +15,7 @@
                 @else
                 <table class="table table-bordered table-striped table-hover">
                     <caption>
-                        <h2>History</h2>
+                        <h2>History of gate activity</h2>
                     </caption>
                     <thead>
                         <tr>

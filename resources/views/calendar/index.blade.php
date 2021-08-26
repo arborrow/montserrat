@@ -10,9 +10,9 @@
                     </h1>
                 </div>
                 @if ($calendar_events->isEmpty())
-                    <p>It is a brand new world, there are no stored messages!</p>
+                    <p>It is a brand new world, there are no event posted on the Google Master Calendar!</p>
                 @else
-                <table class="table table-bordered table-striped"><caption><h2>Mailgun stored messages</h2></caption>
+                <table class="table table-bordered table-striped"><caption><h2>Events posted to Google Master Calendar</h2></caption>
                     <thead>
                         <tr>
                             <th>Start</th>
