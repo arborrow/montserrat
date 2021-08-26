@@ -241,7 +241,7 @@ class RetreatController extends Controller
         $this->authorize('show-retreat');
         $retreat = \App\Models\Retreat::with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact', 'ambassadors.contact')->findOrFail($id);
         $attachments = \App\Models\Attachment::whereEntity('event')->whereEntityId($id)->whereFileTypeId(config('polanco.file_type.event_attachment'))->get();
-
+        
         switch ($status) {
             case 'active':
                 $registrations = \App\Models\Registration::select('participant.*', 'contact.sort_name')->
@@ -306,18 +306,16 @@ class RetreatController extends Controller
                   paginate(50);
                 break;
             case 'retreatants':
-                    $registrations = \App\Models\Registration::select('participant.*', 'contact.sort_name')->
-                      leftjoin('contact', 'participant.contact_id', '=', 'contact.id')->
-                      orderBy('participant.register_date')->
-                      whereEventId($id)->
-                      whereNull('canceled_at')->
-                      whereRoleId(config('polanco.participant_role_id.retreatant'))->
-                      withCount('retreatant_events')->
-                      paginate(50);
-                      // dd($registrations);
-                    break;
-            default:
-//                $registrations = \App\Models\Registration::whereEventId($id)->whereNull('canceled_at')->with('retreatant.parish')->paginate(100);
+                $registrations = \App\Models\Registration::select('participant.*', 'contact.sort_name')->
+                  leftjoin('contact', 'participant.contact_id', '=', 'contact.id')->
+                  orderBy('participant.register_date')->
+                  whereEventId($id)->
+                  whereNull('canceled_at')->
+                  whereRoleId(config('polanco.participant_role_id.retreatant'))->
+                  withCount('retreatant_events')->
+                  paginate(50);
+                break;
+            default: //all
                 $registrations = \App\Models\Registration::select('participant.*', 'contact.sort_name')->
                   leftjoin('contact', 'participant.contact_id', '=', 'contact.id')->
                   orderBy('contact.sort_name')->
@@ -866,6 +864,5 @@ class RetreatController extends Controller
         }
 
         return view('retreats.results', compact('events'));
-
     }
 }
