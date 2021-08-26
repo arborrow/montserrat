@@ -202,6 +202,19 @@
                         {!! Html::link(action('RetreatController@checkout',$retreat->id),'Checkout',array('class' => 'btn btn-outline-dark'))!!}
                     @endIf
                 @endCan
+                <select class="custom-select col-3" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                    <option value="">Filter registrations by status ...</option>
+                    <option value="{{url('retreat/'.$retreat->id)}}">All</option>
+                    <option value="{{url('retreat/'.$retreat->id.'/status/active')}}">Active</option>
+                    <option value="{{url('retreat/'.$retreat->id.'/status/arrived')}}">Arrived</option>
+                    <option value="{{url('retreat/'.$retreat->id.'/status/canceled')}}">Canceled</option>
+                    <option value="{{url('retreat/'.$retreat->id.'/status/confirmed')}}">Confirmed</option>
+                    <option value="{{url('retreat/'.$retreat->id.'/status/dawdler')}}">Dawdler</option>
+                    <option value="{{url('retreat/'.$retreat->id.'/status/departed')}}">Departed</option>
+                    <option value="{{url('retreat/'.$retreat->id.'/status/retreatants')}}">Retreatants</option>
+                    <option value="{{url('retreat/'.$retreat->id.'/status/unconfirmed')}}">Unconfirmed</option>
+                </select>
+
             </div>
             <div class="col-12 mt-3">
                 @if ($registrations->isEmpty())
