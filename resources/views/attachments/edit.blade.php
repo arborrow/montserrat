@@ -16,8 +16,7 @@
                 </div>
                 <div class="form-group">
 
-                Entity: {{$attachment->entity}}<br />
-                Entity ID: {{$attachment->entity_id}}<br />
+                Entity: {!!$attachment->entity_link!!}<br />
 
                 Mime Type: {{$attachment->mime_type}}<br />
                 Upload date: {{$attachment->upload_date}}<br />

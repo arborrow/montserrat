@@ -200,22 +200,20 @@
                         <p>This user currently has no attachments</p>
                     </div>
                 @else
-                    <table class="table table-striped table-bordered table-hover table-responsive">
+                    <table class="table table-striped table-bordered table-hover table-responsive-md">
                         <thead>
                             <tr>
                                 <th scope="col">Name</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">Uploaded date</th>
-                                <th scope="col">MIME type</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($files->sortByDesc('upload_date') as $file)
                             <tr>
                                 <td><a href="{{url('contact/'.$diocese->id.'/attachment/'.$file->uri)}}">{{ $file->uri }}</a></td>
-                                <td>{{$file->description}}</td>
+                                <td><a href="{{url('attachment/'.$file->id)}}">{{$file->description_text}}</a></td>
                                 <td>{{ $file->upload_date}}</td>
-                                <td>{{ $file->mime_type }}</td>
                             </tr>
                             @endforeach
                         </tbody>

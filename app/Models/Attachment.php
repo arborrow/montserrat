@@ -24,12 +24,12 @@ class Attachment extends Model implements Auditable
         return $this->hasOne(FileType::class, 'id', 'file_type_id');
     }
 
-    public function getFileDescriptionTextAttribute()
+    public function getDescriptionTextAttribute()
     {
         if (isset($this->description)) {
-            return $this->uri . ' ('.$this->description.')';
+            return $this->description;
         } else {
-            return $this->uri;
+            return 'N/A';
         }
     }
 
@@ -43,14 +43,13 @@ class Attachment extends Model implements Auditable
                 $path = $contact->contact_url;
                 break;
             case 'event':
-                $path = url('retreat/'.$this->id);
+                $path = url('retreat/'.$this->entity_id);
                 break;
             default:
                 $path = null;
         }
         return "<a href='".$path."'>".ucfirst($this->entity).' '.$this->entity_id.'</a>';
-
-
     }
+
 
 }

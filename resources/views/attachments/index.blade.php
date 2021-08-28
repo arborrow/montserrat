@@ -21,7 +21,6 @@
                         <th scope="col">Description</th>
                         <th scope="col">Entity ID</th>
                         <th scope="col">Upload Date</th>
-                        <th scope="col">Mime Type</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,7 +31,6 @@
                         <td>{{ $attachment->description }}</td>
                         <td>{!! $attachment->entity_link !!}</td>
                         <td>{{ $attachment->upload_date }}</td>
-                        <td>{{ $attachment->mime_type }}</td>
                     </tr>
                     @endforeach
                     {!! $attachments->render() !!}

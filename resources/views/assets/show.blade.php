@@ -103,16 +103,14 @@
                                 <th>Name</th>
                                 <th>Description</th>
                                 <th>Uploaded date</th>
-                                <th>MIME type</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($files->sortByDesc('upload_date') as $file)
                             <tr>
                                 <td><a href="{{url('asset/'.$asset->id.'/attachment/'.$file->uri)}}">{{ $file->uri }}</a></td>
-                                <td>{{$file->description}}</td>
+                                <td><a href="{{url('attachment/'.$file->id)}}">{{$file->description}}</a></td>
                                 <td>{{ $file->upload_date}}</td>
-                                <td>{{ $file->mime_type }}</td>
                             </tr>
                             @endforeach
                         </tbody>

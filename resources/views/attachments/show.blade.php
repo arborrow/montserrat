@@ -22,8 +22,7 @@
                         <strong>Filename: </strong>{{$attachment->uri}}
                         <br /><strong>Description: </strong>{{$attachment->description}}
                         <br /><strong>Mime Type: </strong>{{$attachment->mime_type}}
-                        <br /><strong>Entity: </strong>{{$attachment->entity}}
-                        <br /><strong>Entity ID: </strong>{{$attachment->entity_id}}
+                        <br /><strong>Entity: </strong>{!!$attachment->entity_link!!}
                         <br /><strong>Upload date: </strong>{{$attachment->upload_date}}
                 </div>
             </div>
