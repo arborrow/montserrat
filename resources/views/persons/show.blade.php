@@ -344,8 +344,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Description</th>
+                                <th>File Name (Description)</th>
                                 <th>Uploaded date</th>
                                 <th>MIME type</th>
                             </tr>
@@ -353,8 +352,7 @@
                         <tbody>
                             @foreach($files->sortByDesc('upload_date') as $file)
                             <tr>
-                                <td><a href="{{url('contact/'.$person->id.'/attachment/'.$file->uri)}}">{{ $file->uri }}</a></td>
-                                <td>{{$file->description}}</td>
+                                <td><a href="{{url('contact/'.$person->id.'/attachment/'.$file->uri)}}">{{ $file->file_description_text }}</a></td>
                                 <td>{{ $file->upload_date}}</td>
                                 <td>{{ $file->mime_type }}</td>
                             </tr>
