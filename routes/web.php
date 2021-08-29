@@ -54,6 +54,7 @@ Route::group(['middleware' => ['web', 'activity']], function () {
     Route::get('/dashboard/description/{category?}', 'DashboardController@donation_description_chart')->name('dashboard.description');
 
     // Attachment routes
+    Route::resource('attachment', 'AttachmentController');
 
     Route::get('contact/{user_id}/attachment/{file_name}', 'AttachmentController@show_contact_attachment')->name('show_contact_attachment');
     Route::get('contact/{user_id}/attachment/{file_name}/delete', 'AttachmentController@delete_contact_attachment')->name('delete_contact_attachment');

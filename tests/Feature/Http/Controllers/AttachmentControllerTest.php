@@ -495,5 +495,166 @@ class AttachmentControllerTest extends TestCase
         $response->assertOk();
     }
 
-    // test cases...
+    /**
+     * @test
+     */
+    public function create_returns_back_with_flash_response()
+    {
+        $user = $this->createUserWithPermission('create-attachment');
+
+        $response = $this->actingAs($user)->from(URL('attachment'))->get(route('attachment.create'));
+
+        $response->assertSessionHas('flash_notification');
+        $response->assertRedirect(route('attachment.index'));
+
+    }
+
+    /**
+     * @test
+     */
+    public function destroy_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('delete-attachment');
+        $contact = \App\Models\Contact::factory()->create([
+            'contact_type' => '1',
+            'subcontact_type' => '0',
+        ]);
+        $attachment = \App\Models\Attachment::factory()->create([
+            'uri' => $this->faker->word.'.pdf',
+            'entity_id' => $contact->id,
+            'entity' => 'contact',
+        ]);
+
+        $response = $this->actingAs($user)->from(URL('attachment'))->delete(route('attachment.destroy', [$attachment]));
+
+        $response->assertSessionHas('flash_notification');
+        $response->assertRedirect(route('attachment.index'));
+
+    }
+
+    /**
+     * @test
+     */
+    public function edit_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('update-attachment');
+        $contact = \App\Models\Contact::factory()->create([
+            'contact_type' => '1',
+            'subcontact_type' => '0',
+        ]);
+        $attachment = \App\Models\Attachment::factory()->create([
+            'uri' => $this->faker->word.'.pdf',
+            'description' => $this->faker->sentence,
+            'entity_id' => $contact->id,
+            'entity' => 'contact',
+        ]);
+
+        $response = $this->actingAs($user)->get(route('attachment.edit', [$attachment]));
+
+        $response->assertOk();
+        $response->assertViewIs('attachments.edit');
+        $response->assertViewHas('attachment');
+        $response->assertSeeText('Edit');
+
+        $this->assertTrue($this->findFieldValueInResponseContent('description', $attachment->description, 'textarea', $response->getContent()));
+    }
+
+    /**
+     * @test
+     */
+    public function index_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-attachment');
+
+        $response = $this->actingAs($user)->get(route('attachment.index'));
+
+        $response->assertOk();
+        $response->assertViewIs('attachments.index');
+        $response->assertViewHas('attachments');
+        $response->assertSeeText('Attachments');
+    }
+
+    /**
+     * @test
+     */
+    public function show_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-attachment');
+        $contact = \App\Models\Contact::factory()->create([
+            'contact_type' => '1',
+            'subcontact_type' => '0',
+        ]);
+        $attachment = \App\Models\Attachment::factory()->create([
+            'uri' => $this->faker->word.'.pdf',
+            'description' => $this->faker->sentence,
+            'entity_id' => $contact->id,
+            'entity' => 'contact',
+        ]);
+
+        $response = $this->actingAs($user)->get(route('attachment.show', [$attachment]));
+
+        $response->assertOk();
+        $response->assertViewIs('attachments.show');
+        $response->assertViewHas('attachment');
+        $response->assertSeeText('Attachment details');
+    }
+
+    /**
+     * @test
+     */
+    public function store_returns_an_ok_response()
+    {   // $this->withoutExceptionHandling();
+        $user = $this->createUserWithPermission('create-attachment');
+
+        $attachment_uri = $this->faker->word.'.pdf';
+        $attachment_description = $this->faker->sentence(7, true);
+
+        $response = $this->actingAs($user)->from(URL('attachment'))->post(route('attachment.store'), [
+            'uri' => $attachment_uri,
+            'description' => $attachment_description,
+        ]);
+        // $response->assertSessionHas('flash_notification');
+        $response->assertRedirect(route('attachment.index'));
+        // $response->assertSeeText('Attachments');
+        // $response->assertSeeText('Storing attachment');
+
+    }
+
+    /**
+     * @test
+     */
+    public function update_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('update-attachment');
+        $contact = \App\Models\Contact::factory()->create([
+            'contact_type' => '1',
+            'subcontact_type' => '0',
+        ]);
+
+        $attachment_uri = $this->faker->word.'.pdf';
+        $attachment_description = $this->faker->sentence(7, true);
+
+        $attachment = \App\Models\Attachment::factory()->create([
+            'uri' => $attachment_uri,
+            'description' => $attachment_description,
+            'entity_id' => $contact->id,
+            'entity' => 'contact',
+        ]);
+
+        $new_attachment_description = 'New '.$this->faker->words(2, true);
+
+        $response = $this->actingAs($user)->put(route('attachment.update', [$attachment]), [
+          'id' => $attachment->id,
+          'description' => $new_attachment_description,
+        ]);
+
+        $response->assertRedirect(action('AttachmentController@show', $attachment->id));
+        $response->assertSessionHas('flash_notification');
+
+        $updated = \App\Models\Attachment::findOrFail($attachment->id);
+
+        $this->assertEquals($updated->description, $new_attachment_description);
+        $this->assertNotEquals($updated->description, $attachment_description);
+    }
+
 }

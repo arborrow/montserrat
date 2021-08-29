@@ -23,4 +23,33 @@ class Attachment extends Model implements Auditable
     {
         return $this->hasOne(FileType::class, 'id', 'file_type_id');
     }
+
+    public function getDescriptionTextAttribute()
+    {
+        if (isset($this->description)) {
+            return $this->description;
+        } else {
+            return 'N/A';
+        }
+    }
+
+    public function getEntityLinkAttribute() {
+        switch ($this->entity) {
+            case 'asset':
+                $path = url('asset/'.$this->entity_id);
+                break;
+            case 'contact':
+                $contact = \App\Models\Contact::findOrFail($this->entity_id);
+                $path = $contact->contact_url;
+                break;
+            case 'event':
+                $path = url('retreat/'.$this->entity_id);
+                break;
+            default:
+                $path = null;
+        }
+        return "<a href='".$path."'>".ucfirst($this->entity).' '.$this->entity_id.'</a>';
+    }
+
+
 }

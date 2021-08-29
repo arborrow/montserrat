@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreAttachmentRequest;
+use App\Http\Requests\UpdateAttachmentRequest;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
@@ -559,4 +561,118 @@ class AttachmentController extends Controller
 
         return Redirect::action('AssetController@show', $asset_id);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $this->authorize('show-attachment');
+        $attachment = \App\Models\Attachment::findOrFail($id);
+        //$this->authorize('show-'.$attachment->entity);
+
+        return view('attachments.show', compact('attachment')); //
+    }
+
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $this->authorize('update-attachment');
+        $attachment = \App\Models\Attachment::findOrFail($id);
+
+        return view('attachments.edit', compact('attachment'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     * Really only used to allow for changing the description of a file
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdateAttachmentRequest $request, $id)
+    {
+        $this->authorize('update-attachment');
+
+        $attachment = \App\Models\Attachment::findOrFail($id);
+        $attachment->description = $request->input('description');
+        $attachment->save();
+
+        flash('Attachment: <a href="'.url('/attachment/'.$attachment->id).'">'.$attachment->uri.'</a> updated')->success();
+
+        return Redirect::action('AttachmentController@show', $id);
+    }
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $this->authorize('show-attachment');
+        $attachments = \App\Models\Attachment::orderByDesc('upload_date')->paginate(100);
+
+        return view('attachments.index', compact('attachments'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $this->authorize('create-attachment');
+
+        flash('Attachment create route is undefined. To create an attachment upload it using the asset, contact or event pages.')->warning()->important();
+
+        return Redirect::back();   //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(StoreAttachmentRequest $request)
+    {
+        $this->authorize('create-attachment');
+
+        flash('Storing attachment is undefined.')->warning()->important();
+
+        return Redirect::back();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $this->authorize('delete-attachment');
+
+        flash('Deleting attachment method is undefined.')->warning()->important();
+
+        return Redirect::back();
+    }
+
+
+
+
+
 }
