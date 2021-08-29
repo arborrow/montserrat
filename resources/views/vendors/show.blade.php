@@ -159,7 +159,7 @@
                             @foreach($vendor->touchpoints->sortByDesc('touched_at') as $touchpoint)
                             <tr>
                                 <td><a href="../touchpoint/{{ $touchpoint->id}}">{{ $touchpoint->touched_at }}</a></td>
-                                <td><a href="../person/{{ $touchpoint->staff->id}}">{{ $touchpoint->staff->display_name }}</a></td>
+                                <td>{!! $touchpoint->staff->contact_link_full_name ?? 'Unknown staff member' !!}</a></td>
                                 <td>{{ $touchpoint->type }}</td>
                                 <td>{{ $touchpoint->notes }}</td>
                             </tr>
@@ -187,7 +187,7 @@
                         <tbody>
                             @foreach($files->sortByDesc('upload_date') as $file)
                             <tr>
-                                <td><a href="{{url('contact/'.$vendor->id.'/attachment/'.$file->uri)}}">{{ $file->uri }}</a></td>                                
+                                <td><a href="{{url('contact/'.$vendor->id.'/attachment/'.$file->uri)}}">{{ $file->uri }}</a></td>
                                 <td>{{ $file->description_text }}</td>
                                 <td>{{ $file->upload_date}}</td>
                             </tr>
