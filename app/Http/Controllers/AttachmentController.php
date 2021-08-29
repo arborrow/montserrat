@@ -572,7 +572,7 @@ class AttachmentController extends Controller
     {
         $this->authorize('show-attachment');
         $attachment = \App\Models\Attachment::findOrFail($id);
-        $this->authorize('show-'.$attachment->entity);
+        //$this->authorize('show-'.$attachment->entity);
 
         return view('attachments.show', compact('attachment')); //
     }
@@ -588,9 +588,8 @@ class AttachmentController extends Controller
     {
         $this->authorize('update-attachment');
         $attachment = \App\Models\Attachment::findOrFail($id);
-        $entities = ['asset' => 'Asset','contact'=>'Contact','event'=>'Event',];
 
-        return view('attachments.edit', compact('attachment','entities'));
+        return view('attachments.edit', compact('attachment'));
     }
 
     /**
@@ -637,7 +636,7 @@ class AttachmentController extends Controller
     {
         $this->authorize('create-attachment');
 
-        flash('Attachment create route is undefined. To create an attachment upload it using the asset, contact or event pages.')->warning();
+        flash('Attachment create route is undefined. To create an attachment upload it using the asset, contact or event pages.')->warning()->important();
 
         return Redirect::back();   //
     }
@@ -652,7 +651,7 @@ class AttachmentController extends Controller
     {
         $this->authorize('create-attachment');
 
-        flash('Storing attachment is undefined.')->warning();
+        flash('Storing attachment is undefined.')->warning()->important();
 
         return Redirect::back();
     }

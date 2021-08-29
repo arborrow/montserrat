@@ -6,7 +6,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <span>
-                    <h2><strong>
+                    <h2><strong>Attachment details: 
                         @can('update-attachment')
                             {!! Html::link(url('attachment/'.$attachment->id.'/edit'),$attachment->uri) !!}
                         @else
