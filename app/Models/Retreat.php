@@ -52,7 +52,7 @@ class Retreat extends Model implements Auditable
 
     public function assistants()
     {   // TODO: evaluate whether the assumption that this is an individual makes a difference, currently retreat factory will force individual to avoid undefined variable on retreat.show
-        return $this->hasMany(Registration::class, 'event_id', 'id')->whereRoleId(config('polanco.participant_role_id.retreat_assistant'));
+        return $this->hasMany(Registration::class, 'event_id', 'id')->whereRoleId(config('polanco.participant_role_id.assistant'));
     }
 
     public function attachments()
@@ -68,7 +68,7 @@ class Retreat extends Model implements Auditable
 
     public function innkeepers()
     {   // TODO: evaluate whether the assumption that this is an individual makes a difference, currently retreat factory will force individual to avoid undefined variable on retreat.show
-        return $this->hasMany(Registration::class, 'event_id', 'id')->whereRoleId(config('polanco.participant_role_id.retreat_innkeeper'));
+        return $this->hasMany(Registration::class, 'event_id', 'id')->whereRoleId(config('polanco.participant_role_id.innkeeper'));
     }
 
     public function event_type()
@@ -79,7 +79,7 @@ class Retreat extends Model implements Auditable
     public function retreatmasters()
     {
         // TODO: handle with participants of role Retreat Director or Master - be careful with difference between (registration table) retreat_id and (participant table) event_id
-        return $this->hasMany(Registration::class, 'event_id', 'id')->whereRoleId(config('polanco.participant_role_id.retreat_director'));
+        return $this->hasMany(Registration::class, 'event_id', 'id')->whereRoleId(config('polanco.participant_role_id.director'));
     }
 
     public function registrations()

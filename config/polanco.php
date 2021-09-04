@@ -187,9 +187,9 @@ return [
     'participant_role_id' => [
         'ambassador' => '11',
         'retreatant' => '5',
-        'retreat_director' => '8',
-        'retreat_innkeeper' => '9',
-        'retreat_assistant' => '10',
+        'director' => '8',
+        'innkeeper' => '9',
+        'assistant' => '10',
     ],
 
     'payment_method' => [

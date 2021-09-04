@@ -157,7 +157,7 @@ class RetreatController extends Controller
             // nothing to store
         } else {
             foreach ($directors as $director) {
-                $this->add_participant($director, $retreat->id, config('polanco.participant_role_id.retreat_director'));
+                $this->add_participant($director, $retreat->id, config('polanco.participant_role_id.director'));
             }
         }
 
@@ -165,7 +165,7 @@ class RetreatController extends Controller
             // nothing to store
         } else {
             foreach ($innkeepers as $innkeeper) {
-                $this->add_participant($innkeeper, $retreat->id, config('polanco.participant_role_id.retreat_innkeeper'));
+                $this->add_participant($innkeeper, $retreat->id, config('polanco.participant_role_id.innkeeper'));
             }
         }
 
@@ -173,7 +173,7 @@ class RetreatController extends Controller
             // nothing to store
         } else {
             foreach ($assistants as $assistant) {
-                $this->add_participant($assistant, $retreat->id, config('polanco.participant_role_id.retreat_assistant'));
+                $this->add_participant($assistant, $retreat->id, config('polanco.participant_role_id.assistant'));
             }
         }
 
@@ -241,7 +241,7 @@ class RetreatController extends Controller
         $this->authorize('show-retreat');
         $retreat = \App\Models\Retreat::with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact', 'ambassadors.contact')->findOrFail($id);
         $attachments = \App\Models\Attachment::whereEntity('event')->whereEntityId($id)->whereFileTypeId(config('polanco.file_type.event_attachment'))->get();
-        
+
         switch ($status) {
             case 'active':
                 $registrations = \App\Models\Registration::select('participant.*', 'contact.sort_name')->
@@ -502,7 +502,7 @@ class RetreatController extends Controller
 
         if (! empty($directors)) {
             foreach ($directors as $director) {
-                $this->add_participant($director, $retreat->id, config('polanco.participant_role_id.retreat_director'));
+                $this->add_participant($director, $retreat->id, config('polanco.participant_role_id.director'));
             }
         }
         if (! $removed_directors->isEmpty()) {
@@ -514,7 +514,7 @@ class RetreatController extends Controller
         $removed_innkeepers = $existing_innkeepers->diff($innkeepers);
         if (! empty($innkeepers)) {
             foreach ($innkeepers as $innkeeper) {
-                $this->add_participant($innkeeper, $retreat->id, config('polanco.participant_role_id.retreat_innkeeper'));
+                $this->add_participant($innkeeper, $retreat->id, config('polanco.participant_role_id.innkeeper'));
             }
         }
         if (! $removed_innkeepers->isEmpty()) {
@@ -526,7 +526,7 @@ class RetreatController extends Controller
         $removed_assistants = $existing_assistants->diff($assistants);
         if (! empty($assistants)) {
             foreach ($assistants as $assistant) {
-                $this->add_participant($assistant, $retreat->id, config('polanco.participant_role_id.retreat_assistant'));
+                $this->add_participant($assistant, $retreat->id, config('polanco.participant_role_id.assistant'));
             }
         }
         if (! $removed_assistants->isEmpty()) {
@@ -768,11 +768,11 @@ class RetreatController extends Controller
         switch ($role) {
             case  'retreatant': $role = config('polanco.participant_role_id.retreatant');
                 break;
-            case  'director': $role = config('polanco.participant_role_id.retreat_director');
+            case  'director': $role = config('polanco.participant_role_id.director');
                     break;
-            case  'innkeeper': $role = config('polanco.participant_role_id.retreat_innkeeper');
+            case  'innkeeper': $role = config('polanco.participant_role_id.innkeeper');
                     break;
-            case  'assistant': $role = config('polanco.participant_role_id.retreat_assistant');
+            case  'assistant': $role = config('polanco.participant_role_id.assistant');
                     break;
             case 'ambassador':
                 $role = config('polanco.participant_role_id.ambassador');
