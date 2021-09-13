@@ -6,7 +6,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                        <span class="grey">Board Dashboard</span>
+                        <span class="grey">Board Dashboard Drilldown</span>
                     </h1>
                 </div>
 
@@ -21,16 +21,16 @@
 
 
                 <div>FY{{ $year }} Revenue by Event Type</div>
-                <div> {!! $board_summary_revenue_chart->container() !!} </div>
+{{--                 <div> {!! $board_summary_revenue_chart->container() !!} </div> --}}
 
                 <div>Total Revenue: ${{ number_format($total_revenue,2) }} </div>
                 <hr />
                 <div>FY{{ $year }} Participants by Event Type</div>
-                <div> {!! $board_summary_participant_chart->container() !!} </div>
+{{--                <div> {!! $board_summary_participant_chart->container() !!} </div>  --}}
                 <div>Total Participants: {{ number_format($total_participants,0) }} </div>
                 <hr />
                 <div>FY{{ $year }} People Nights by Event Type</div>
-                <div> {!! $board_summary_peoplenight_chart->container() !!} </div>
+{{--                <div> {!! $board_summary_peoplenight_chart->container() !!} </div>  --}}
                 <div>Total People Nights: {{ number_format($total_peoplenights,0) }} </div>
                 <hr />
                 <div>FY{{ $year }} Summary</div>
@@ -47,7 +47,7 @@
                         </thead>
                         @foreach($board_summary as $category)
                         <tr style='text-align: right'>
-                            <td style='text-align: left; font-weight: bold;'><a href="{{ url('dashboard/board/drilldown/'.$category->type.'/'.$year) }}">{{ $category->type }}</a></td>
+                            <td style='text-align: left; font-weight: bold;'>{{ $category->type }}</td>
                             <td>${{ number_format($category->total_pledged,2) }}</td>
                             <td>
                                 ${{ number_format($category->total_paid,2) }}
@@ -107,8 +107,8 @@
             </div>
         </div>
     </section>
-    {!! $board_summary_revenue_chart->script() !!}
-    {!! $board_summary_participant_chart->script() !!}
-    {!! $board_summary_peoplenight_chart->script() !!}
+    {{-- !! $board_summary_revenue_chart->script() !! --}}
+    {{-- !! $board_summary_participant_chart->script() !! --}}
+    {{-- !! $board_summary_peoplenight_chart->script() !! --}}
 
 @stop

@@ -270,4 +270,22 @@ class DashboardController extends Controller
 
         return view('dashboard.board', compact('years', 'year', 'summary', 'board_summary', 'board_summary_revenue_chart', 'board_summary_participant_chart', 'board_summary_peoplenight_chart', 'total_revenue', 'total_participants', 'total_peoplenights'));
     }
+
+
+    public function drilldown($event_type = null, $year = null)
+    {
+        $year = '2021';
+        $years = [];
+        $summary = [];
+        $board_summary = [];
+        $board_summary_revenue_chart = [];
+        $board_summary_participant_chart = [];
+        $board_summary_peoplenight_chart = [];
+        $total_revenue = 1000000.0000;
+        $total_participants = 500.0000;
+        $total_peoplenights = 1500.0000;
+
+        return view('dashboard.drilldown', compact('event_type', 'years', 'year', 'summary', 'board_summary', 'board_summary_revenue_chart', 'board_summary_participant_chart', 'board_summary_peoplenight_chart', 'total_revenue', 'total_participants', 'total_peoplenights'));
+
+    }
 }
