@@ -44,7 +44,7 @@
                 <span class="font-weight-bold">Starts: </span>{{ date('F j, Y g:i A', strtotime($retreat->start_date)) }} <br>
                 <span class="font-weight-bold">Ends: </span>{{ date('F j, Y g:i A', strtotime($retreat->end_date)) }} <br>
                 <span class="font-weight-bold">Title: </span>{{ $retreat->title}} <br>
-                <span class="font-weight-bold">Attending: </span>{{ $retreat->retreatant_count}} <br>
+                <span class="font-weight-bold">Attending: </span>{{ $retreat->participant_count}} <br>
                 @if ($retreat->retreatant_waitlist_count > 0)
                 ({!!Html::link(url('retreat/'.$retreat->id.'/waitlist'), $retreat->retreatant_waitlist_count) !!}) <br>
                 @endif
