@@ -32,6 +32,12 @@ class Retreat extends Model implements Auditable
         $this->attributes['end_date'] = Carbon::parse($date);
     }
 
+    public function getParticipantCountAttribute()
+    {
+        // returns count of retreatants and participating ambassadors - does not return directors, innkeepers or assistants
+        return $this->participants->count();
+    }
+
     public function getRegistrationCountAttribute()
     {
         // keep in mind that if/when innkeeper and other not retreatant roles are added will not to use where clause to keep the count accurate and exclude non-participating participants
@@ -76,6 +82,11 @@ class Retreat extends Model implements Auditable
         return $this->hasOne(EventType::class, 'id', 'event_type_id');
     }
 
+    public function participants()
+    {
+        return $this->registrations()->whereCanceledAt(null)->whereIn('role_id',[config('polanco.participant_role_id.retreatant'),config('polanco.participant_role_id.ambassador')])->whereStatusId(config('polanco.registration_status_id.registered'));
+    }
+
     public function retreatmasters()
     {
         // TODO: handle with participants of role Retreat Director or Master - be careful with difference between (registration table) retreat_id and (participant table) event_id
@@ -91,6 +102,7 @@ class Retreat extends Model implements Auditable
     {
         return $this->registrations()->whereCanceledAt(null)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereStatusId(config('polanco.registration_status_id.registered'));
     }
+
 
     public function retreatants_waitlist()
     {
