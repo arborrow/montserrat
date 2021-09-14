@@ -32,7 +32,7 @@
                                 {{ date('M j, Y', strtotime($event->start_date)) }} - {{ date('M j, Y', strtotime($event->end_date)) }}
                             </td>
                             <td>
-                                <a href="{{url('retreat/'.$event->id.'#registrations')}}">{{ $event->retreatant_count}}</a>
+                                <a href="{{url('retreat/'.$event->id.'#registrations')}}">{{ $event->participant_count}}</a>
                             </td>
                         </tr>
                         @endforeach
