@@ -51,7 +51,7 @@ Route::group(['middleware' => ['web', 'activity']], function () {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
     Route::get('/dashboard/agc', 'DashboardController@agc')->name('dashboard.agc');
     Route::get('/dashboard/board/{year?}', 'DashboardController@board')->name('dashboard.board')->where('year', '^\\d{4}$');
-    Route::get('/dashboard/board/drilldown/{event_type_id}/{year}', 'DashboardController@drilldown')->name('dashboard.drilldown')->where('year', '^\\d{4}$');
+    Route::get('/dashboard/board/drilldown/{event_type_id}/{year?}', 'DashboardController@drilldown')->name('dashboard.drilldown')->where('year', '^\\d{4}$');
     Route::get('/dashboard/description/{category?}', 'DashboardController@donation_description_chart')->name('dashboard.description');
 
     // Attachment routes
