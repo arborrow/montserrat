@@ -46,6 +46,14 @@
                             <td>${{ number_format($retreat->average_paid_per_night,2) }}</td>
                         </tr>
                         @endforeach
+                        <tr><strong>
+                            <td>Totals</td>
+                            <td></td>
+                            <td></td>
+                            <td>${{ number_format($retreats->sum('payments_paid_sum'),2) }} / /${{ number_format($retreats->sum('donations_pledged_sum'),2) }}</td>
+                            <td>{{ $retreats->sum('participant_count') }}</td>
+                            <td>${{ number_format($retreats->average('average_paid_per_night'),2) }}</td>
+                        </strong></tr>
                     </tbody>
                 </table>
                 @endif
