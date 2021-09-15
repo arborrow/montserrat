@@ -286,7 +286,7 @@ class DashboardController extends Controller
         $begin_date = $prev_year.'-07-01';
         $end_date = $year.'-07-01';
         $event_type = \App\Models\EventType::findOrFail($event_type_id);
-        $retreats = \App\Models\Retreat::whereEventTypeId($event_type_id)->where('start_date','>=',$begin_date)->where('start_date','<',$end_date)->orderBy('start_date')->get();
+        $retreats = \App\Models\Retreat::whereIsActive(1)->whereEventTypeId($event_type_id)->where('start_date','>=',$begin_date)->where('start_date','<',$end_date)->orderBy('start_date')->get();
 
         return view('dashboard.drilldown', compact('event_type', 'year','retreats'));
 

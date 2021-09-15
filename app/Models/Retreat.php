@@ -35,7 +35,11 @@ class Retreat extends Model implements Auditable
     public function getParticipantCountAttribute()
     {
         // returns count of retreatants and participating ambassadors - does not return directors, innkeepers or assistants
-        return $this->participants->count();
+        if ($this->is_active) {
+            return $this->participants->count();
+        } else {
+            return 0;
+        }
     }
 
     public function getDonationsPledgedSumAttribute()
