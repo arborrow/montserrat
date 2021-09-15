@@ -71,8 +71,10 @@ class Retreat extends Model implements Auditable
 
     public function getNightsAttribute()
     {
+        $start = $this->start_date->setHour(0)->setMinute(0)->setSecond(0);
+        $end = $this->end_date->setHour(0)->setMinute(0)->setSecond(0);
         // keep in mind that if/when innkeeper and other not retreatant roles are added will not to use where clause to keep the count accurate and exclude non-participating participants
-        return $this->start_date->diffInDays($this->end_date);
+        return $start->diffInDays($end);
     }
 
     public function getPeopleNightsAttribute() {
