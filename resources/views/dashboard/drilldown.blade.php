@@ -6,109 +6,54 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                        <span class="grey">Board Dashboard Drilldown</span>
+                        <span class="grey">Board Dashboard Drilldown: {{ $event_type->name }}</span>
                     </h1>
                 </div>
 
-                <div class="col-md-4 col-12">
-                    <select class="custom-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-                        <option value="">Select fiscal year ...</option>
-                        @foreach($years as $y)
-                            <option value="{{url('dashboard/board/'.$y->year)}}">FY{{$y->year}}</option>
-                        @endForeach
-                    </select>
-                </div>
-
-
-                <div>FY{{ $year }} Revenue by Event Type</div>
-{{--                 <div> {!! $board_summary_revenue_chart->container() !!} </div> --}}
-
-                <div>Total Revenue: ${{ number_format($total_revenue,2) }} </div>
-                <hr />
-                <div>FY{{ $year }} Participants by Event Type</div>
-{{--                <div> {!! $board_summary_participant_chart->container() !!} </div>  --}}
-                <div>Total Participants: {{ number_format($total_participants,0) }} </div>
-                <hr />
-                <div>FY{{ $year }} People Nights by Event Type</div>
-{{--                <div> {!! $board_summary_peoplenight_chart->container() !!} </div>  --}}
-                <div>Total People Nights: {{ number_format($total_peoplenights,0) }} </div>
-                <hr />
-                <div>FY{{ $year }} Summary</div>
-                <div>
-                    <table class="table table-bordered table-striped table-hover table-responsive-md">
-                        <thead style='text-align:center'>
-                            <th>Type</th>
-                            <th>Pledged</th>
-                            <th>Paid</th>
-                            <th>Participants</th>
-                            <th>Nights</th>
-                            <th>People Nights</th>
-                            <th>Avg.$/Person/Night</th>
-                        </thead>
-                        @foreach($board_summary as $category)
-                        <tr style='text-align: right'>
-                            <td style='text-align: left; font-weight: bold;'>{{ $category->type }}</td>
-                            <td>${{ number_format($category->total_pledged,2) }}</td>
+                <div class="col-12">
+                    @if ($retreats->isEmpty())
+                    <p>There are no retreats in this category</p>
+                @else
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID#</th>
+                            <th>Title</th>
+                            <th>Starts - Ends (Nights)</th>
+                            <th>Pledged/Paid (%)</th>
+                            <th>Partipants</th>
+                            <th>$/Person/Night</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($retreats as $retreat)
+                        @if ($retreat->is_active == 0)
+                            <tr style="text-decoration:line-through">
+                        @else
+                            <tr>
+                        @endIf
+                            <td><a href="{{url('retreat/'.$retreat->id)}}">{{ $retreat->idnumber}}</a></td>
+                            <td>{{ $retreat->title }}</td>
+                            <td>{{ date('M j, Y', strtotime($retreat->start_date)) }} - {{ date('M j, Y', strtotime($retreat->end_date)) }} ({{ $retreat->nights }})</td>
                             <td>
-                                ${{ number_format($category->total_paid,2) }}
-                                (
-                                @if (array_sum(array_column($board_summary,'total_paid')) > 0)
-                                    {{ number_format(((($category->total_paid)/(array_sum(array_column($board_summary,'total_paid'))))*100),0) }}%)
+                                @can('show-donation')
+                                    <a href="{{ url('report/finance/retreatdonations/'.$retreat->idnumber) }}">${{ number_format($retreat->donations_pledged_sum,2) }}/${{ number_format($retreat->payments_paid_sum,2) }}</a> ({{ $retreat->percent_paid }}%)
                                 @else
-                                    N/A
-                                @endIf
+                                    ${{ number_format($retreat->donations_pledged_sum,2) }}/${{ number_format($retreat->payments_paid_sum,2) }} ({{ $retreat->percent_paid }}%)
+                                @endCan
                             </td>
-                            <td>
-                                {{ $category->total_participants }}
-                                @if (array_sum(array_column($board_summary,'total_participants')) > 0)
-                                    ( {{ number_format(((($category->total_participants)/(array_sum(array_column($board_summary,'total_participants'))))*100),0) }}%)
-                                @else
-                                    N/A
-                                @endIf
-                            </td>
-                            <td>
-                                {{ $category->total_nights }}
-                            </td>
-                            <td>
-                                {{ $category->total_pn }}
-                                @if (array_sum(array_column($board_summary,'total_pn'))>0)
-                                    ( {{ number_format(((($category->total_pn)/(array_sum(array_column($board_summary,'total_pn'))))*100),0) }}%)
-                                @else
-                                   n/a
-                                @endIf
-                            </td>
-                            <td>
-                              @if ($category->total_pn > 0)
-                                  ${{ ($category->total_pn>0) ? (number_format(($category->total_paid/$category->total_pn),2)) : '0.00' }}
-                              @else
-                                  n/a
-                              @endIf
-                            </td>
+                            <td>{{ $retreat->participant_count }}</td>
+                            <td>${{ number_format($retreat->average_paid_per_night,2) }}</td>
                         </tr>
                         @endforeach
-                        <tr style='text-align: right; font-weight: bold;'>
-                            <td style='text-align: left;'>Total</td>
-                            <td>${{ number_format(array_sum(array_column($board_summary,'total_pledged')),2) }}</td>
-                            <td>${{ number_format(array_sum(array_column($board_summary,'total_paid')),2) }}</td>
-                            <td>{{ number_format(array_sum(array_column($board_summary,'total_participants')),0) }}</td>
-                            <td>{{ number_format(array_sum(array_column($board_summary,'total_nights')),0) }}</td>
-                            <td>{{ number_format(array_sum(array_column($board_summary,'total_pn')),0) }}</td>
-                            <td>
-                                @if (array_sum(array_column($board_summary,'total_pn')) > 0)
-                                    ${{ number_format((array_sum(array_column($board_summary,'total_paid')))/(array_sum(array_column($board_summary,'total_pn'))),2) }}
-                                @else
-                                    n/a
-                                @endIf
-                            </td>
-
-                        </tr>
-                    </table>
+                    </tbody>
+                </table>
+                @endif
                 </div>
+
+
             </div>
         </div>
     </section>
-    {{-- !! $board_summary_revenue_chart->script() !! --}}
-    {{-- !! $board_summary_participant_chart->script() !! --}}
-    {{-- !! $board_summary_peoplenight_chart->script() !! --}}
 
 @stop

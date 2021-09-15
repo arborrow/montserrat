@@ -209,9 +209,9 @@ class DashboardController extends Controller
        ];
 
        // TODO: using role_id = 5 as hardcoded value - explore how to use config('polanco.participant_role_id.retreatant') instead
-        $board_summary = DB::select("SELECT tmp.type, SUM(tmp.pledged) as total_pledged, SUM(tmp.paid) as total_paid, SUM(tmp.participants) as total_participants, SUM(tmp.peoplenights) as total_pn, SUM(tmp.nights) as total_nights
+        $board_summary = DB::select("SELECT tmp.type, tmp.type_id, SUM(tmp.pledged) as total_pledged, SUM(tmp.paid) as total_paid, SUM(tmp.participants) as total_participants, SUM(tmp.peoplenights) as total_pn, SUM(tmp.nights) as total_nights
             FROM
-            (SELECT e.id as event_id, e.title as event, et.name as type, e.idnumber, e.start_date, e.end_date, DATEDIFF(e.end_date,e.start_date) as nights,
+            (SELECT e.id as event_id, e.title as event, et.name as type, et.id as type_id, e.idnumber, e.start_date, e.end_date, DATEDIFF(e.end_date,e.start_date) as nights,
             	(SELECT SUM(d.donation_amount) FROM Donations as d WHERE d.event_id=e.id) as pledged,
             	(SELECT SUM(p.payment_amount) FROM Donations as d LEFT JOIN Donations_payment as p ON (p.donation_id = d.donation_id) WHERE d.event_id=e.id AND d.deleted_at IS NULL AND p.deleted_at IS NULL) as paid,
             	(SELECT COUNT(*) FROM participant as reg WHERE reg.event_id = e.id AND reg.deleted_at IS NULL AND reg.canceled_at IS NULL AND reg.role_id IN (5,11) AND reg.status_id IN (1)) as participants,
@@ -273,8 +273,21 @@ class DashboardController extends Controller
     }
 
 
-    public function drilldown($event_type = null, $year = null)
+    public function drilldown($event_type_id = null, $year = null)
     {
+
+        // default to current fiscal year
+        if (! isset($year)) {
+            $year = (date('m') > 6) ? date('Y') + 1 : date('Y');
+        }
+
+        $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
+        $prev_year = $year - 1;
+        $begin_date = $prev_year.'-07-01';
+        $end_date = $year.'-07-01';
+        $event_type = \App\Models\EventType::findOrFail($event_type_id);
+        $retreats = \App\Models\Retreat::whereEventTypeId($event_type_id)->where('start_date','>=',$begin_date)->where('start_date','<',$end_date)->orderBy('start_date')->get();
+
         $year = '2021';
         $years = [];
         $summary = [];
@@ -286,7 +299,7 @@ class DashboardController extends Controller
         $total_participants = 500.0000;
         $total_peoplenights = 1500.0000;
 
-        return view('dashboard.drilldown', compact('event_type', 'years', 'year', 'summary', 'board_summary', 'board_summary_revenue_chart', 'board_summary_participant_chart', 'board_summary_peoplenight_chart', 'total_revenue', 'total_participants', 'total_peoplenights'));
+        return view('dashboard.drilldown', compact('event_type', 'year','retreats'));
 
     }
 }
