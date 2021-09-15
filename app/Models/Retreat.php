@@ -38,6 +38,47 @@ class Retreat extends Model implements Auditable
         return $this->participants->count();
     }
 
+    public function getDonationsPledgedSumAttribute()
+    {
+        // keep in mind that if/when innkeeper and other not retreatant roles are added will not to use where clause to keep the count accurate and exclude non-participating participants
+        return $this->donations->sum('donation_amount');
+    }
+
+    public function getPaymentsPaidSumAttribute()
+    {
+        return $this->donations->sum('payments_sum_payment_amount');
+
+    }
+
+    public function getPercentPaidAttribute()
+    {
+        if ($this->donations_pledged_sum > 0) { //avoid divide by 0 cases
+            return number_format((($this->payments_paid_sum / $this->donations_pledged_sum) * 100), 0);
+        } else {
+            return 0;
+        }
+    }
+
+    public function getAveragePaidPerNightAttribute()
+    {
+        if ($this->people_nights > 0) { //avoid divide by 0 cases
+            return $this->payments_paid_sum / $this->people_nights;
+        } else {
+            return 0;
+        }
+
+    }
+
+    public function getNightsAttribute()
+    {
+        // keep in mind that if/when innkeeper and other not retreatant roles are added will not to use where clause to keep the count accurate and exclude non-participating participants
+        return $this->start_date->diffInDays($this->end_date);
+    }
+
+    public function getPeopleNightsAttribute() {
+        return $this->nights * $this->participant_count;
+    }
+
     public function getRegistrationCountAttribute()
     {
         // keep in mind that if/when innkeeper and other not retreatant roles are added will not to use where clause to keep the count accurate and exclude non-participating participants
@@ -80,6 +121,10 @@ class Retreat extends Model implements Auditable
     public function event_type()
     {
         return $this->hasOne(EventType::class, 'id', 'event_type_id');
+    }
+
+    public function donations() {
+        return $this->hasMany(Donation::class, 'event_id', 'id')->withSum('payments','payment_amount');
     }
 
     public function participants()

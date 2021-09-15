@@ -132,4 +132,23 @@ class DashboardControllerTest extends TestCase
         $response->assertSeeText("FY".$last_year);
 
     }
+
+    /**
+     * @test
+     */
+    public function drilldown_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-dashboard');
+        $event_type = \App\Models\EventType::get()->random();
+        $response = $this->actingAs($user)->get(route('dashboard.drilldown',$event_type->id));
+
+        $response->assertOk();
+        $response->assertViewIs('dashboard.drilldown');
+        $response->assertViewHas('year');
+        $response->assertViewHas('retreats');
+        $response->assertViewHas('event_type');
+        $response->assertSee('Drilldown');
+    }
+
+
 }

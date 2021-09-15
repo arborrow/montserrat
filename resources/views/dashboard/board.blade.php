@@ -47,7 +47,7 @@
                         </thead>
                         @foreach($board_summary as $category)
                         <tr style='text-align: right'>
-                            <td style='text-align: left; font-weight: bold;'>{{ $category->type }}</td>
+                            <td style='text-align: left; font-weight: bold;'><a href="{{ url('dashboard/board/drilldown/'.$category->type_id.'/'.$year) }}">{{ $category->type }}</a></td>
                             <td>${{ number_format($category->total_pledged,2) }}</td>
                             <td>
                                 ${{ number_format($category->total_paid,2) }}
