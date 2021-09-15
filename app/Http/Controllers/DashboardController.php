@@ -288,17 +288,6 @@ class DashboardController extends Controller
         $event_type = \App\Models\EventType::findOrFail($event_type_id);
         $retreats = \App\Models\Retreat::whereEventTypeId($event_type_id)->where('start_date','>=',$begin_date)->where('start_date','<',$end_date)->orderBy('start_date')->get();
 
-        $year = '2021';
-        $years = [];
-        $summary = [];
-        $board_summary = [];
-        $board_summary_revenue_chart = [];
-        $board_summary_participant_chart = [];
-        $board_summary_peoplenight_chart = [];
-        $total_revenue = 1000000.0000;
-        $total_participants = 500.0000;
-        $total_peoplenights = 1500.0000;
-
         return view('dashboard.drilldown', compact('event_type', 'year','retreats'));
 
     }

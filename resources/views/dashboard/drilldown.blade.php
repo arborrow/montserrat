@@ -6,7 +6,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                        <span class="grey">Board Dashboard Drilldown: {{ $event_type->name }}</span>
+                        <span class="grey">Board Dashboard Drilldown: {{ $event_type->name }} FY{{ $year }}</span>
                     </h1>
                 </div>
 
@@ -20,7 +20,7 @@
                             <th>ID#</th>
                             <th>Title</th>
                             <th>Starts - Ends (Nights)</th>
-                            <th>Pledged/Paid (%)</th>
+                            <th>Paid/Pledged (%)</th>
                             <th>Partipants</th>
                             <th>$/Person/Night</th>
                         </tr>
@@ -37,9 +37,9 @@
                             <td>{{ date('M j, Y', strtotime($retreat->start_date)) }} - {{ date('M j, Y', strtotime($retreat->end_date)) }} ({{ $retreat->nights }})</td>
                             <td>
                                 @can('show-donation')
-                                    <a href="{{ url('report/finance/retreatdonations/'.$retreat->idnumber) }}">${{ number_format($retreat->donations_pledged_sum,2) }}/${{ number_format($retreat->payments_paid_sum,2) }}</a> ({{ $retreat->percent_paid }}%)
+                                    <a href="{{ url('report/finance/retreatdonations/'.$retreat->idnumber) }}">${{ number_format($retreat->payments_paid_sum,2) }}/${{ number_format($retreat->donations_pledged_sum,2) }}</a> ({{ $retreat->percent_paid }}%)
                                 @else
-                                    ${{ number_format($retreat->donations_pledged_sum,2) }}/${{ number_format($retreat->payments_paid_sum,2) }} ({{ $retreat->percent_paid }}%)
+                                    ${{ number_format($retreat->payments_paid_sum,2) }}/${{ number_format($retreat->donations_pledged_sum,2) }} ({{ $retreat->percent_paid }}%)
                                 @endCan
                             </td>
                             <td>{{ $retreat->participant_count }}</td>
