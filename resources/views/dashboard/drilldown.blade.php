@@ -50,7 +50,7 @@
                             <td style="font-weight:bold">Totals</td>
                             <td></td>
                             <td></td>
-                            <td style="font-weight:bold">${{ number_format($retreats->sum('payments_paid_sum'),2) }} / /${{ number_format($retreats->sum('donations_pledged_sum'),2) }}</td>
+                            <td style="font-weight:bold">${{ number_format($retreats->sum('payments_paid_sum'),2) }} / ${{ number_format($retreats->sum('donations_pledged_sum'),2) }}</td>
                             <td style="font-weight:bold">{{ $retreats->sum('participant_count') }}</td>
                             <td style="font-weight:bold">${{ number_format($retreats->average('average_paid_per_night'),2) }}</td>
                         </tr>
