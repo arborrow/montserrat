@@ -21,7 +21,7 @@
                             <th>Title</th>
                             <th>Starts - Ends (Nights)</th>
                             <th>Paid/Pledged (%)</th>
-                            <th>Partipants</th>
+                            <th>Participants</th>
                             <th>$/Person/Night</th>
                         </tr>
                     </thead>
