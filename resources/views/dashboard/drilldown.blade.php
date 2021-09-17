@@ -21,7 +21,7 @@
                             <th>Title</th>
                             <th>Starts - Ends (Nights)</th>
                             <th>Paid/Pledged (%)</th>
-                            <th>Participants</th>
+                            <th>Participants/People nights</th>
                             <th>$/Person/Night</th>
                         </tr>
                     </thead>
@@ -42,7 +42,7 @@
                                     ${{ number_format($retreat->payments_paid_sum,2) }}/${{ number_format($retreat->donations_pledged_sum,2) }} ({{ $retreat->percent_paid }}%)
                                 @endCan
                             </td>
-                            <td>{{ $retreat->participant_count }}</td>
+                            <td>{{ $retreat->participant_count }} / {{ $retreat->people_nights }}</td>
                             <td>${{ number_format($retreat->average_paid_per_night,2) }}</td>
                         </tr>
                         @endforeach
@@ -51,8 +51,13 @@
                             <td></td>
                             <td></td>
                             <td style="font-weight:bold">${{ number_format($retreats->sum('payments_paid_sum'),2) }} / ${{ number_format($retreats->sum('donations_pledged_sum'),2) }}</td>
-                            <td style="font-weight:bold">{{ $retreats->sum('participant_count') }}</td>
-                            <td style="font-weight:bold">${{ number_format($retreats->average('average_paid_per_night'),2) }}</td>
+                            <td style="font-weight:bold">{{ $retreats->sum('participant_count') }} / {{ $retreats->sum('people_nights') }}</td>
+                            <td style="font-weight:bold">
+                                @if ($retreats->sum('people_nights') > 0)
+                                    ${{ number_format($retreats->sum('payments_paid_sum') / $retreats->sum('people_nights'),2) }}
+                                @else N/A
+                                @endIf
+                            </td>
                         </tr>
                     </tbody>
                 </table>
