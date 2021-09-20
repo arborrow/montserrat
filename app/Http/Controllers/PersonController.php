@@ -1849,6 +1849,9 @@ class PersonController extends Controller
                     $contact->address_primary->contact_id = $contact->id;
                     $contact->address_primary->is_primary = 1;
                 }
+                if ((empty($contact->address_primary->location_type_id)) && (! empty($merge->address_primary->location_type_id))) {
+                    $contact->address_primary->location_type_id = $merge->address_primary->location_type_id;
+                }
                 if ((empty($contact->address_primary->street_address)) && (! empty($merge->address_primary->street_address))) {
                     $contact->address_primary->street_address = $merge->address_primary->street_address;
                 }
