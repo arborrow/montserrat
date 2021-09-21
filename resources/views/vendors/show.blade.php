@@ -169,6 +169,7 @@
                 @endif
             </div>
             @endcan
+            @can('show-attachment')
             <div class="col-12" id="attachments">
                 <h2>Attachments for {{ $vendor->display_name }}</h2>
                 @if ($files->isEmpty())
@@ -196,6 +197,7 @@
                     </table>
                 @endif
             </div>
+            @endCan
             @can('show-donation')
             <div class="col-12" id="donations">
                 <h2>Donations for {{ $vendor->display_name }} ({{$vendor->donations->count() }} donations totaling:  ${{ number_format($vendor->donations->sum('donation_amount'),2)}})</h2>

@@ -192,6 +192,7 @@
                 </ul>
             </div>
         </div>
+        @can('show-attachment')
         <div class="row">
             <div class="col-12" id="attachments">
                 <h2>Attachments for {{ $diocese->display_name }} ({{ $files->count() }})</h2>
@@ -221,6 +222,7 @@
                 @endif
             </div>
         </div>
+        @endCan
         @can('show-donation')
             <div class="row">
                 <div class="col-12" id="donations">
