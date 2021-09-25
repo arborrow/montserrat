@@ -59,6 +59,38 @@ class Contact extends Model implements Auditable
         return $this->hasOne(Address::class, 'contact_id', 'id')->whereIsPrimary(1);
     }
 
+    public function getPrimaryEmailLocationNameAttribute() {
+        if (isset($this->email_primary)) {
+            return $this->email_primary->location_type_name;
+        } else {
+            return 'N/A';
+        }
+    }
+
+    public function getPrimaryAddressLocationNameAttribute() {
+        if (isset($this->address_primary)) {
+            return $this->address_primary->location_type_name;
+        } else {
+            return 'N/A';
+        }
+    }
+
+    public function getPrimaryPhoneLocationNameAttribute() {
+        if (isset($this->phone_primary)) {
+            return $this->phone_primary->location_type_name;
+        } else {
+            return 'N/A';
+        }
+    }
+
+    public function getPrimaryPhoneTypeAttribute() {
+        if (isset($this->phone_primary)) {
+            return $this->phone_primary->phone_type;
+        } else {
+            return;
+        }
+    }
+
     public function bishops()
     {
         return $this->hasMany(Relationship::class, 'contact_id_a', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.bishop'));

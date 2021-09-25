@@ -128,7 +128,7 @@
                         </div>
                     @endIf
                 </div>
-                <div><h3>Address(es)</h3>
+                <div><h3>Address(es) [Primary: {{ $person->primary_address_location_name }}]</h3>
                 @foreach($person->addresses as $address)
                     @if (!empty($address->street_address))
                         <span class="font-weight-bold">{{$address->location->display_name}}:</span>
@@ -142,7 +142,7 @@
                     @endif
                 @endforeach
             </div>
-                <div><h3>Phone(s)</h3>
+                <div><h3>Phone(s) [Primary: {{ $person->primary_phone_location_name}} {{ $person->primary_phone_type }}]</h3>
                     @foreach($person->phones as $phone)
                         @if(!empty($phone->phone))
                             <span class="font-weight-bold">{{$phone->location->display_name}} - {{$phone->phone_type}}: </span>
@@ -151,7 +151,7 @@
                         @endif
                     @endforeach
                 </div>
-                <div><h3>Email(s)</h3>
+                <div><h3>Email(s) [Primary: {{ $person->primary_email_location_name }}]</h3>
                     @foreach($person->emails as $email)
                         @if(!empty($email->email))
                             <span class="font-weight-bold">{{$email->location->display_name}} - Email: </span><a href="mailto:{{$email->email}}">{{$email->email}}</a>
