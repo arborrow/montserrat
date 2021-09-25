@@ -808,6 +808,23 @@ class PersonController extends Controller
         $occupations = \App\Models\Ppd_occupation::orderBy('name')->pluck('name', 'id');
         $occupations->prepend('N/A', 0);
         $preferred_communication_methods = config('polanco.preferred_communication_method');
+        $primary_address_locations = \App\Models\LocationType::orderBy('name')->whereIsActive(1)->pluck('name','id');
+        $primary_address_locations->forget(config('polanco.location_type.main'));
+        $primary_address_locations->forget(config('polanco.location_type.billing'));
+        $primary_address_locations->prepend('N/A', 0);
+
+        $primary_email_locations = \App\Models\LocationType::orderBy('name')->whereIsActive(1)->pluck('name','id');
+        $primary_email_locations->forget(config('polanco.location_type.main'));
+        $primary_email_locations->forget(config('polanco.location_type.billing'));
+        $primary_email_locations->prepend('N/A', 0);
+
+        $primary_phone_locations = \App\Models\LocationType::orderBy('name')->whereIsActive(1)->whereNotIn('id',[config('polanco.location_type.billing'),config('polanco.location_type.main')])->get();
+        $primary_phones = [];
+        //dd($primary_phone_locations);
+        foreach ($primary_phone_locations as $phone_location) {
+            $primary_phones[$phone_location->id.":Main"] = $phone_location->name . ':Main';
+            $primary_phones[$phone_location->id.":Mobile"] = $phone_location->name . ':Mobile';
+        }
 
         //create defaults array for easier pre-populating of default values on edit/update blade
         // initialize defaults to avoid undefined index errors
@@ -875,7 +892,7 @@ class PersonController extends Controller
         }
         //dd($person);
 
-        return view('persons.edit', compact('prefixes', 'suffixes', 'person', 'parish_list', 'ethnicities', 'states', 'countries', 'genders', 'languages', 'defaults', 'religions', 'occupations', 'contact_types', 'subcontact_types', 'referrals', 'preferred_communication_methods'));
+        return view('persons.edit', compact('prefixes', 'suffixes', 'person', 'parish_list', 'ethnicities', 'states', 'countries', 'genders', 'languages', 'defaults', 'religions', 'occupations', 'contact_types', 'subcontact_types', 'referrals', 'preferred_communication_methods','primary_address_locations','primary_email_locations','primary_phones'));
     }
 
     /**

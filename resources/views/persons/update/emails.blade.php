@@ -1,6 +1,10 @@
-<div class="form-group form-check">
-    {!! Form::checkbox('do_not_email', 1, $person->do_not_email,['class' => 'form-check-input', 'id' => 'do_not_email']) !!}
-    {!! Form::label('do_not_email', 'Do not email', ['class' => 'form-check-label', 'id' => 'do_not_email']) !!}
+<div class="form-group">
+    <div class="row">
+        <div class="col-12 col-md-8">
+            {!! Form::label('primary_email', 'Primary email:') !!}
+            {!! Form::select('primary_email', $primary_email_locations, $person->primary_email_location_name, ['class' => 'form-control']) !!}
+        </div>
+    </div>
 </div>
 <div class="form-group">
     <ul role="tablist" class="nav nav-tabs">
@@ -52,4 +56,8 @@
             </div>
         </div>
     </div>
+</div>
+<div class="form-group form-check">
+    {!! Form::checkbox('do_not_email', 1, $person->do_not_email,['class' => 'form-check-input', 'id' => 'do_not_email']) !!}
+    {!! Form::label('do_not_email', 'Do not email', ['class' => 'form-check-label', 'id' => 'do_not_email']) !!}
 </div>
