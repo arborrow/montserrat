@@ -67,6 +67,14 @@ class Contact extends Model implements Auditable
         }
     }
 
+    public function getPrimaryEmailLocationTypeIdAttribute() {
+        if (isset($this->email_primary)) {
+            return $this->email_primary->location_type_id;
+        } else {
+            return 0;
+        }
+    }
+
     public function getPrimaryAddressLocationNameAttribute() {
         if (isset($this->address_primary)) {
             return $this->address_primary->location_type_name;
@@ -75,11 +83,27 @@ class Contact extends Model implements Auditable
         }
     }
 
+    public function getPrimaryAddressLocationTypeIdAttribute() {
+        if (isset($this->address_primary)) {
+            return $this->address_primary->location_type_id;
+        } else {
+            return 0;
+        }
+    }
+
     public function getPrimaryPhoneLocationNameAttribute() {
         if (isset($this->phone_primary)) {
             return $this->phone_primary->location_type_name;
         } else {
             return 'N/A';
+        }
+    }
+
+    public function getPrimaryPhoneLocationTypeIdAttribute() {
+        if (isset($this->phone_primary)) {
+            return $this->phone_primary->location_type_id;
+        } else {
+            return 0;
         }
     }
 

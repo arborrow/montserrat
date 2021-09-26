@@ -131,6 +131,7 @@
                 <div><h3>Address(es) [Primary: {{ $person->primary_address_location_name }}]</h3>
                 @foreach($person->addresses as $address)
                     @if (!empty($address->street_address))
+                        @if($address->is_primary) * @endIf
                         <span class="font-weight-bold">{{$address->location->display_name}}:</span>
                         <address class="d-inline">{!!$address->google_map!!}</address>
                         @can('delete-address')
@@ -145,6 +146,7 @@
                 <div><h3>Phone(s) [Primary: {{ $person->primary_phone_location_name}} {{ $person->primary_phone_type }}]</h3>
                     @foreach($person->phones as $phone)
                         @if(!empty($phone->phone))
+                            @if($phone->is_primary) * @endIf
                             <span class="font-weight-bold">{{$phone->location->display_name}} - {{$phone->phone_type}}: </span>
                             <a href="tel:{{$phone->phone}}{{$phone->phone_extension}}">{{$phone->phone}}{{$phone->phone_extension}}</a>
                             <br>
@@ -154,6 +156,7 @@
                 <div><h3>Email(s) [Primary: {{ $person->primary_email_location_name }}]</h3>
                     @foreach($person->emails as $email)
                         @if(!empty($email->email))
+                            @if($email->is_primary) * @endIf
                             <span class="font-weight-bold">{{$email->location->display_name}} - Email: </span><a href="mailto:{{$email->email}}">{{$email->email}}</a>
                             <br>
                         @endif
