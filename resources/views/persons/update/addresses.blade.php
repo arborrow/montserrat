@@ -1,8 +1,8 @@
 <div class="form-group">
     <div class="row">
         <div class="col-12 col-md-8">
-            {!! Form::label('primary_address', 'Primary address:') !!}
-            {!! Form::select('primary_address', $primary_address_locations, $person->primary_address_location_name, ['class' => 'form-control']) !!}
+            {!! Form::label('primary_address_location_id', 'Primary address:') !!}
+            {!! Form::select('primary_address_location_id', $primary_address_locations, $person->primary_address_location_name, ['class' => 'form-control']) !!}
         </div>
     </div>
 </div>

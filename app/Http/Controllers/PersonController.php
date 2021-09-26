@@ -822,7 +822,7 @@ class PersonController extends Controller
         $primary_phones = [];
         //dd($primary_phone_locations);
         foreach ($primary_phone_locations as $phone_location) {
-            $primary_phones[$phone_location->id.":Main"] = $phone_location->name . ':Main';
+            $primary_phones[$phone_location->id.":Phone"] = $phone_location->name . ':Main';
             $primary_phones[$phone_location->id.":Mobile"] = $phone_location->name . ':Mobile';
         }
 
@@ -1047,7 +1047,7 @@ class PersonController extends Controller
         $home_address = \App\Models\Address::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.home')]);
         $home_address->contact_id = $person->id;
         $home_address->location_type_id = config('polanco.location_type.home');
-        $home_address->is_primary = 1;
+        $request->input('primary_address_location_id') == config('polanco.location_type.home') ? $home_address->is_primary = 1 : $home_address->is_primary = 0;
         $home_address->street_address = $request->input('address_home_address1');
         $home_address->supplemental_address_1 = $request->input('address_home_address2');
         $home_address->city = $request->input('address_home_city');
@@ -1059,7 +1059,7 @@ class PersonController extends Controller
         $work_address = \App\Models\Address::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.work')]);
         $work_address->contact_id = $person->id;
         $work_address->location_type_id = config('polanco.location_type.work');
-        $work_address->is_primary = 0;
+        $request->input('primary_address_location_id') == config('polanco.location_type.work') ? $work_address->is_primary = 1 : $work_address->is_primary = 0;
         $work_address->street_address = $request->input('address_work_address1');
         $work_address->supplemental_address_1 = $request->input('address_work_address2');
         $work_address->city = $request->input('address_work_city');
@@ -1071,7 +1071,7 @@ class PersonController extends Controller
         $other_address = \App\Models\Address::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.other')]);
         $other_address->contact_id = $person->id;
         $other_address->location_type_id = config('polanco.location_type.other');
-        $other_address->is_primary = 0;
+        $request->input('primary_address_location_id') == config('polanco.location_type.other') ? $other_address->is_primary = 1 : $other_address->is_primary = 0;
         $other_address->street_address = $request->input('address_other_address1');
         $other_address->supplemental_address_1 = $request->input('address_other_address2');
         $other_address->city = $request->input('address_other_city');
@@ -1079,10 +1079,19 @@ class PersonController extends Controller
         $other_address->postal_code = $request->input('address_other_zip');
         $other_address->country_id = $request->input('address_other_country');
         $other_address->save();
+
+        if (null !== $request->input('primary_phone_location_id')) {
+                $primary_phone_input = explode(':',$request->input('primary_phone_location_id'));
+        } else {
+            $primary_phone_input[0] = 0;
+            $primary_phone_input[1] = null;
+        }
+        // dd($primary_phone_input);
         // because of how the phone_ext field is handled by the model, reset to null on every update to ensure it gets removed and then re-added during the update
         $phone_home_phone = \App\Models\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.home'), 'phone_type'=>'Phone']);
         $phone_home_phone->phone_ext = null;
         $phone_home_phone->contact_id = $person->id;
+        ($primary_phone_input[0] == config('polanco.location_type.home') && $primary_phone_input[1]=='Phone') ? $phone_home_phone->is_primary = 1 : $phone_home_phone->is_primary = 0;
         $phone_home_phone->location_type_id = config('polanco.location_type.home');
         $phone_home_phone->phone = $request->input('phone_home_phone');
         $phone_home_phone->phone_type = 'Phone';
@@ -1091,6 +1100,7 @@ class PersonController extends Controller
         $phone_home_mobile = \App\Models\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.home'), 'phone_type'=>'Mobile']);
         $phone_home_mobile->phone_ext = null;
         $phone_home_mobile->contact_id = $person->id;
+        ($primary_phone_input[0] == config('polanco.location_type.home') && $primary_phone_input[1]=='Mobile') ? $phone_home_mobile->is_primary = 1 : $phone_home_mobile->is_primary = 0;
         $phone_home_mobile->location_type_id = config('polanco.location_type.home');
         $phone_home_mobile->phone = $request->input('phone_home_mobile');
         $phone_home_mobile->phone_type = 'Mobile';
@@ -1107,6 +1117,7 @@ class PersonController extends Controller
         $phone_work_phone = \App\Models\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.work'), 'phone_type'=>'Phone']);
         $phone_work_phone->phone_ext = null;
         $phone_work_phone->contact_id = $person->id;
+        ($primary_phone_input[0] == config('polanco.location_type.work') && $primary_phone_input[1]=='Phone') ? $phone_work_phone->is_primary = 1 : $phone_work_phone->is_primary = 0;
         $phone_work_phone->location_type_id = config('polanco.location_type.work');
         $phone_work_phone->phone = $request->input('phone_work_phone');
         $phone_work_phone->phone_type = 'Phone';
@@ -1115,6 +1126,7 @@ class PersonController extends Controller
         $phone_work_mobile = \App\Models\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.work'), 'phone_type'=>'Mobile']);
         $phone_work_mobile->phone_ext = null;
         $phone_work_mobile->contact_id = $person->id;
+        ($primary_phone_input[0] == config('polanco.location_type.work') && $primary_phone_input[1]=='Mobile') ? $phone_work_mobile->is_primary = 1 : $phone_work_mobile->is_primary = 0;
         $phone_work_mobile->location_type_id = config('polanco.location_type.work');
         $phone_work_mobile->phone = $request->input('phone_work_mobile');
         $phone_work_mobile->phone_type = 'Mobile';
@@ -1131,6 +1143,7 @@ class PersonController extends Controller
         $phone_other_phone = \App\Models\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.other'), 'phone_type'=>'Phone']);
         $phone_other_phone->phone_ext = null;
         $phone_other_phone->contact_id = $person->id;
+        ($primary_phone_input[0] == config('polanco.location_type.other') && $primary_phone_input[1]=='Phone') ? $phone_other_phone->is_primary = 1 : $phone_other_phone->is_primary = 0;
         $phone_other_phone->location_type_id = config('polanco.location_type.other');
         $phone_other_phone->phone = $request->input('phone_other_phone');
         $phone_other_phone->phone_type = 'Phone';
@@ -1139,6 +1152,7 @@ class PersonController extends Controller
         $phone_other_mobile = \App\Models\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.other'), 'phone_type'=>'Mobile']);
         $phone_other_mobile->phone_ext = null;
         $phone_other_mobile->contact_id = $person->id;
+        ($primary_phone_input[0] == config('polanco.location_type.other') && $primary_phone_input[1]=='Mobile') ? $phone_other_mobile->is_primary = 1 : $phone_other_mobile->is_primary = 0;
         $phone_other_mobile->location_type_id = config('polanco.location_type.other');
         $phone_other_mobile->phone = $request->input('phone_other_mobile');
         $phone_other_mobile->phone_type = 'Mobile';
@@ -1154,18 +1168,21 @@ class PersonController extends Controller
 
         $email_home = \App\Models\Email::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.home')]);
         $email_home->contact_id = $person->id;
+        $request->input('primary_email_location_id') == config('polanco.location_type.home') ? $email_home->is_primary = 1 : $email_home->is_primary = 0;
         $email_home->location_type_id = config('polanco.location_type.home');
         $email_home->email = $request->input('email_home');
         $email_home->save();
 
         $email_work = \App\Models\Email::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.work')]);
         $email_work->contact_id = $person->id;
+        $request->input('primary_email_location_id') == config('polanco.location_type.work') ? $email_work->is_primary = 1 : $email_work->is_primary = 0;
         $email_work->location_type_id = config('polanco.location_type.work');
         $email_work->email = $request->input('email_work');
         $email_work->save();
 
         $email_other = \App\Models\Email::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.other')]);
         $email_other->contact_id = $person->id;
+        $request->input('primary_email_location_id') == config('polanco.location_type.other') ? $email_other->is_primary = 1 : $email_other->is_primary = 0;
         $email_other->location_type_id = config('polanco.location_type.other');
         $email_other->email = $request->input('email_other');
         $email_other->save();

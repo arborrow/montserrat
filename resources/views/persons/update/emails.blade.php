@@ -1,8 +1,8 @@
 <div class="form-group">
     <div class="row">
         <div class="col-12 col-md-8">
-            {!! Form::label('primary_email', 'Primary email:') !!}
-            {!! Form::select('primary_email', $primary_email_locations, $person->primary_email_location_name, ['class' => 'form-control']) !!}
+            {!! Form::label('primary_email_location_id', 'Primary email:') !!}
+            {!! Form::select('primary_email_location_id', $primary_email_locations, $person->primary_email_location_name, ['class' => 'form-control']) !!}
         </div>
     </div>
 </div>
