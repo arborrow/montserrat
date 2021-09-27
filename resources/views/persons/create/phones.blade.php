@@ -1,27 +1,26 @@
-<div class="form-group form-check">
-    {!! Form::checkbox('do_not_phone', 1, 0,['class' => 'form-check-input', 'id' => 'do_not_phone']) !!}
-    {!! Form::label('do_not_phone', 'Do not call', ['class' => 'form-check-label', 'id' => 'do_not_phone']) !!}
-</div>
-<div class="form-group form-check">
-    {!! Form::checkbox('do_not_sms', 1, 0,['class' => 'form-check-input', 'id' => 'do_not_sms']) !!}
-    {!! Form::label('do_not_sms', 'Do not text', ['class' => 'form-check-label', 'id' => 'do_not_sms']) !!}
-</div>
 <div class="form-group">
+    <div class="row">
+        <div class="col-12 col-md-8">
+            {!! Form::label('primary_phone_location_id', 'Primary phone:') !!}
+            {!! Form::select('primary_phone_location_id', $primary_phones, config('polanco.location_type.home').":Phone", ['class' => 'form-control']) !!}
+        </div>
+    </div>
+</div><div class="form-group">
     <ul role="tablist" class="nav nav-tabs">
         <li class="nav-item" role="tab">
-            <a class="nav-link active" data-toggle="tab" role="tab" href="#phone_home">
+                <a class="nav-link active" data-toggle="tab" role="tab" href="#phone_home">
                 <i class="fa fa-home"></i>
                 <label>Home</label>
             </a>
         </li>
         <li class="nav-item" role="tab">
-            <a class="nav-link" data-toggle="tab" role="tab" href="#phone_work">
+                <a class="nav-link" data-toggle="tab" role="tab" href="#phone_work">
                 <i class="fa fa-archive"></i>
                 <label>Work</label>
             </a>
         </li>
         <li class="nav-item" role="tab">
-            <a class="nav-link" data-toggle="tab" role="tab" href="#phone_other">
+                <a class="nav-link" data-toggle="tab" role="tab" href="#phone_other">
                 <i class="fa fa-cog"></i>
                 <label>Other</label>
             </a>
@@ -33,7 +32,7 @@
 
             <div class="row">
                 <div class="col-12 col-md-4">
-                    {!! Form::label('phone_home_phone', 'Home:') !!}
+                    {!! Form::label('phone_home_phone', 'Main:') !!}
                     {!! Form::text('phone_home_phone', null, ['class' => 'form-control']) !!}
                 </div>
                 <div class="col-12 col-md-4">
@@ -51,7 +50,7 @@
 
             <div class="row">
                 <div class="col-12 col-md-4">
-                    {!! Form::label('phone_work_phone', 'Home:') !!}
+                    {!! Form::label('phone_work_phone', 'Main:') !!}
                     {!! Form::text('phone_work_phone', null, ['class' => 'form-control']) !!}
                 </div>
                 <div class="col-12 col-md-4">
@@ -69,7 +68,7 @@
 
             <div class="row">
                 <div class="col-12 col-md-4">
-                    {!! Form::label('phone_other_phone', 'Home:') !!}
+                    {!! Form::label('phone_other_phone', 'Main:') !!}
                     {!! Form::text('phone_other_phone', null, ['class' => 'form-control']) !!}
                 </div>
                 <div class="col-12 col-md-4">
@@ -83,4 +82,12 @@
             </div>
         </div>
     </div>
+</div>
+<div class="form-group form-check">
+    {!! Form::checkbox('do_not_phone', 1, 0,['class' => 'form-check-input', 'id' => 'do_not_phone']) !!}
+    {!! Form::label('do_not_phone', 'Do not call', ['class' => 'form-check-label', 'id' => 'do_not_phone']) !!}
+</div>
+<div class="form-group form-check">
+    {!! Form::checkbox('do_not_sms', 1, 0,['class' => 'form-check-input', 'id' => 'do_not_sms']) !!}
+    {!! Form::label('do_not_sms', 'Do not text', ['class' => 'form-check-label', 'id' => 'do_not_sms']) !!}
 </div>

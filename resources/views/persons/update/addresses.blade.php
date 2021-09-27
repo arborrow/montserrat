@@ -2,14 +2,18 @@
     <div class="row">
         <div class="col-12 col-md-8">
             {!! Form::label('primary_address_location_id', 'Primary address:') !!}
-            {!! Form::select('primary_address_location_id', $primary_address_locations, $person->primary_address_location_type_id, ['class' => 'form-control']) !!}
+            @if ($person->primary_email_location_type_id == 0)
+                {!! Form::select('primary_address_location_id', $primary_address_locations, config('polanco.location_type.home'), ['class' => 'form-control']) !!}
+            @else
+                {!! Form::select('primary_address_location_id', $primary_address_locations, $person->primary_address_location_type_id, ['class' => 'form-control']) !!}
+            @endIf
         </div>
     </div>
 </div>
 <div class="form-group">
     <ul role="tablist" class="nav nav-tabs">
         <li class="nav-item" role="tab">
-            @if ($person->primary_address_location_type_id == config('polanco.location_type.home'))
+            @if ($person->primary_address_location_type_id == config('polanco.location_type.home') || $person->primary_address_location_type_id == 0)
                 <a class="nav-link active" data-toggle="tab" role="tab" href="#address_home">
             @else
                 <a class="nav-link" data-toggle="tab" role="tab" href="#address_home">
@@ -40,7 +44,7 @@
         </li>
     </ul>
     <div class="tab-content">
-        @if ($person->primary_address_location_type_id == config('polanco.location_type.home'))
+        @if ($person->primary_address_location_type_id == config('polanco.location_type.home') || $person->primary_address_location_type_id == 0)
             <div id="address_home" class="tab-pane fade show active" role="tabpanel">
         @else
             <div id="address_home" class="tab-pane fade" role="tabpanel">

@@ -2,13 +2,17 @@
     <div class="row">
         <div class="col-12 col-md-8">
             {!! Form::label('primary_phone_location_id', 'Primary phone:') !!}
-            {!! Form::select('primary_phone_location_id', $primary_phones, $person->primary_phone_location_type_id.":".$person->primary_phone_type, ['class' => 'form-control']) !!}
+            @if ($person->primary_phone_location_type_id == 0)
+                {!! Form::select('primary_phone_location_id', $primary_phones, config('polanco.location_type.home').":Phone", ['class' => 'form-control']) !!}
+            @else
+                {!! Form::select('primary_phone_location_id', $primary_phones, $person->primary_phone_location_type_id.":".$person->primary_phone_type, ['class' => 'form-control']) !!}
+            @endIf
         </div>
     </div>
 </div><div class="form-group">
     <ul role="tablist" class="nav nav-tabs">
         <li class="nav-item" role="tab">
-            @if ($person->primary_phone_location_type_id == config('polanco.location_type.home'))
+            @if ($person->primary_phone_location_type_id == config('polanco.location_type.home') || $person->primary_phone_location_type_id == 0)
                 <a class="nav-link active" data-toggle="tab" role="tab" href="#phone_home">
             @else
                 <a class="nav-link" data-toggle="tab" role="tab" href="#phone_home">
@@ -39,7 +43,7 @@
         </li>
     </ul>
     <div class="tab-content">
-        @if ($person->primary_phone_location_type_id == config('polanco.location_type.home'))
+        @if ($person->primary_phone_location_type_id == config('polanco.location_type.home') || $person->primary_phone_location_type_id == 0)
             <div id="phone_home" class="tab-pane fade show active" role="tabpanel">
         @else
             <div id="phone_home" class="tab-pane fade" role="tabpanel">

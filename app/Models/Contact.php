@@ -56,7 +56,7 @@ class Contact extends Model implements Auditable
 
     public function address_primary()
     {
-        return $this->hasOne(Address::class, 'contact_id', 'id')->whereIsPrimary(1);
+        return $this->hasOne(Address::class, 'contact_id', 'id')->whereIsPrimary(1)->whereNotNull('street_address');
     }
 
     public function getPrimaryEmailLocationNameAttribute() {
@@ -92,7 +92,7 @@ class Contact extends Model implements Auditable
     }
 
     public function getPrimaryPhoneLocationNameAttribute() {
-        if (isset($this->phone_primary)) {
+        if (isset($this->phone_primary) && !empty($this->phone_primary->phone)) {
             return $this->phone_primary->location_type_name;
         } else {
             return 'N/A';
@@ -100,7 +100,7 @@ class Contact extends Model implements Auditable
     }
 
     public function getPrimaryPhoneLocationTypeIdAttribute() {
-        if (isset($this->phone_primary)) {
+        if (isset($this->phone_primary) && !empty($this->phone_primary->phone)) {
             return $this->phone_primary->location_type_id;
         } else {
             return 0;
@@ -108,7 +108,7 @@ class Contact extends Model implements Auditable
     }
 
     public function getPrimaryPhoneTypeAttribute() {
-        if (isset($this->phone_primary)) {
+        if (isset($this->phone_primary) && !empty($this->phone_primary->phone)) {
             return $this->phone_primary->phone_type;
         } else {
             return;
@@ -1133,7 +1133,7 @@ class Contact extends Model implements Auditable
 
     public function phone_primary()
     {
-        return $this->hasOne(Phone::class, 'contact_id', 'id')->whereIsPrimary(1);
+        return $this->hasOne(Phone::class, 'contact_id', 'id')->whereIsPrimary(1)->whereNotNull('phone');
     }
 
     public function phone_main_phone()
