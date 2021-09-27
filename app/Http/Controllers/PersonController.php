@@ -479,7 +479,7 @@ class PersonController extends Controller
         $other_address->country_id = $request->input('address_other_country');
         $other_address->save();
 
-        if ((null !== $request->input('primary_phone_location_id')) && ($request->input('primary_phone_location_id' > 0))) {
+        if ((null !== $request->input('primary_phone_location_id'))) {
             $primary_phone_input = explode(':',$request->input('primary_phone_location_id'));
         } else {
             $primary_phone_input[0] = 0;
@@ -853,6 +853,7 @@ class PersonController extends Controller
 
         $primary_phone_locations = \App\Models\LocationType::orderBy('name')->whereIsActive(1)->whereNotIn('id',[config('polanco.location_type.main')])->get();
         $primary_phones = [];
+        $primary_phones['0:0'] = "N/A";
         //dd($primary_phone_locations);
         foreach ($primary_phone_locations as $phone_location) {
             $primary_phones[$phone_location->id.":Phone"] = $phone_location->name . ':Main';
@@ -1113,7 +1114,7 @@ class PersonController extends Controller
         $other_address->country_id = $request->input('address_other_country');
         $other_address->save();
 
-        if ((null !== $request->input('primary_phone_location_id')) && ($request->input('primary_phone_location_id' > 0))) {
+        if ((null !== $request->input('primary_phone_location_id'))) {
             $primary_phone_input = explode(':',$request->input('primary_phone_location_id'));
         } else {
             $primary_phone_input[0] = 0;
