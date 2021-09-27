@@ -25,4 +25,14 @@ class Email extends Model implements Auditable
     {
         return $this->belongsTo(LocationType::class, 'location_type_id', 'id');
     }
+
+    public function getLocationTypeNameAttribute()
+    {
+        if (isset($this->location_type_id) && isset($this->location->name)) {
+            return $this->location->name;
+        } else {
+            return;
+        }
+    }
+
 }

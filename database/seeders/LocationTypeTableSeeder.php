@@ -80,7 +80,7 @@ class LocationTypeTableSeeder extends Seeder
                 'vcard_name' => null,
                 'description' => 'Billing Address location',
                 'is_reserved' => 1,
-                'is_active' => 1,
+                'is_active' => 0,
                 'is_default' => null,
                 'deleted_at' => null,
                 'remember_token' => null,

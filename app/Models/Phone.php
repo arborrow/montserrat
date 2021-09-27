@@ -35,6 +35,15 @@ class Phone extends Model implements Auditable
         }
     }
 
+    public function getLocationTypeNameAttribute()
+    {
+        if (isset($this->location_type_id) && isset($this->location->name)) {
+            return $this->location->name;
+        } else {
+            return;
+        }
+    }
+
     public function setPhoneAttribute($phone)
     {
         $phone_extension = '';
