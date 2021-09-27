@@ -103,6 +103,9 @@ class PersonControllerTest extends TestCase
         $response->assertViewHas('contact_types');
         $response->assertViewHas('subcontact_types');
         $response->assertViewHas('referrals');
+        $response->assertViewHas('primary_address_locations');
+        $response->assertViewHas('primary_email_locations');
+        $response->assertViewHas('primary_phones');
         $response->assertSeeText('Create Person');
     }
 
@@ -215,6 +218,7 @@ class PersonControllerTest extends TestCase
         $home_address = \App\Models\Address::factory()->create([
             'contact_id' => $person->id,
             'location_type_id' => config('polanco.location_type.home'),
+            'is_primary' => 1,
         ]);
         $work_address = \App\Models\Address::factory()->create([
             'contact_id' => $person->id,
@@ -230,6 +234,7 @@ class PersonControllerTest extends TestCase
             'contact_id' => $person->id,
             'location_type_id' => config('polanco.location_type.home'),
             'phone_type' => 'Phone',
+            'is_primary' => 1,
         ]);
         $home_mobile = \App\Models\Phone::factory()->create([
             'contact_id' => $person->id,
@@ -275,6 +280,7 @@ class PersonControllerTest extends TestCase
         $home_email = \App\Models\Email::factory()->create([
             'contact_id' => $person->id,
             'location_type_id' => config('polanco.location_type.home'),
+            'is_primary' => 1,
         ]);
         $work_email = \App\Models\Email::factory()->create([
             'contact_id' => $person->id,
@@ -354,6 +360,9 @@ class PersonControllerTest extends TestCase
         $response->assertViewHas('contact_types');
         $response->assertViewHas('subcontact_types');
         $response->assertViewHas('referrals');
+        $response->assertViewHas('primary_address_locations');
+        $response->assertViewHas('primary_email_locations');
+        $response->assertViewHas('primary_phones');
         $response->assertSeeText('Edit');
         $response->assertSee($person->display_name);
         // names
@@ -414,7 +423,8 @@ class PersonControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('is_innkeeper', $person->is_innkeeper, 'checkbox', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('is_assistant', $person->is_assistant, 'checkbox', $response->getContent()));
         // addresses
-        $this->assertTrue($this->findFieldValueInResponseContent('do_not_mail', $person->do_not_mail, 'checkbox', $response->getContent()));
+
+        $this->assertTrue($this->findFieldValueInResponseContent('primary_address_location_id', $person->primary_address_location_type_id, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('address_home_address1', $home_address->street_address, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('address_home_address2', $home_address->supplemental_address_1, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('address_home_city', $home_address->city, 'text', $response->getContent()));
@@ -436,6 +446,7 @@ class PersonControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('address_other_zip', $other_address->postal_code, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('address_other_country', $other_address->country_id, 'select', $response->getContent()));
         // phones
+        $this->assertTrue($this->findFieldValueInResponseContent('primary_phone_location_id', $person->primary_phone_location_type_id.":".$person->primary_phone_type, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('do_not_phone', $person->do_not_phone, 'checkbox', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('do_not_sms', $person->do_not_sms, 'checkbox', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('phone_home_phone', $home_phone->phone.$home_phone->phone_extension, 'text', $response->getContent()));
@@ -448,6 +459,7 @@ class PersonControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('phone_other_mobile', $other_mobile->phone.$other_mobile->phone_extension, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('phone_other_fax', $other_fax->phone.$other_fax->phone_extension, 'text', $response->getContent()));
         // emails
+        $this->assertTrue($this->findFieldValueInResponseContent('primary_email_location_id', $person->primary_email_location_type_id, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('do_not_email', $person->do_not_email, 'checkbox', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('email_home', $home_email->email, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('email_work', $work_email->email, 'text', $response->getContent()));
@@ -801,6 +813,10 @@ class PersonControllerTest extends TestCase
                 'do_not_mail' => $this->faker->boolean,
                 'do_not_sms' => $this->faker->boolean,
                 'do_not_trade' => $this->faker->boolean,
+                'primary_address_location_id' => config('polanco.location_type.home'),
+                'primary_email_location_id' => config('polanco.location_type.work'),
+                'primary_phone_location_id' => config('polanco.location_type.other').":Phone",
+
         ]);
         $person = \App\Models\Contact::whereSortName($last_name.', '.$first_name)->first();
         $response->assertSessionHas('flash_notification');
