@@ -226,13 +226,11 @@
         @can('show-donation')
             <div class="row">
                 <div class="col-12" id="donations">
-                    <h2>Donations for {{ $diocese->display_name }} ({{$diocese->donations->count() }} donations totaling:  ${{ number_format($diocese->donations->sum('donation_amount'),2)}})</h2>
-                    <div class="text-center">
-                        @can('create-donation')
-                            {!! Html::link(route('donation.add',$diocese->id),'Add donation',array('class' => 'btn btn-outline-dark'))!!}
-                        @endCan
-                    </div>
-                    @if ($diocese->donations->isEmpty())
+                    <h2>Donations for {{ $diocese->display_name }} ({{$donations->total() }} donations totaling:  ${{ number_format($donations->sum('donation_amount'),2)}})</h2>
+                    @can('create-donation')
+                        {!! Html::link(route('donation.add',$diocese->id),'Add donation',array('class' => 'btn btn-outline-dark'))!!}
+                    @endCan
+                    @if ($donations->isEmpty())
                         <div class="text-center">
                             <p>No donations for this Diocese!</p>
                         </div>
@@ -249,7 +247,7 @@
                             </thead>
                             <tbody>
 
-                            @foreach($diocese->donations->sortByDesc('donation_date')  as $donation)
+                            @foreach($donations->sortByDesc('donation_date')  as $donation)
                                 <tr>
                                     <td><a href="../donation/{{$donation->donation_id}}"> {{ $donation->donation_date_formatted }} </a></td>
                                     <td> {{ $donation->donation_description.': #'.optional($donation->retreat)->idnumber }}</td>
@@ -274,7 +272,9 @@
                                 </tr>
                             @endforeach
                             </tbody>
+                            {!! $donations->render() !!}
                         </table>
+
                     @endif
                 </div>
             </div>

@@ -200,11 +200,11 @@
         @can('show-donation')
             <div class="row">
                 <div class="col-12" id="donations">
-                    <h2>Donations for {{ $organization->display_name }} ({{$organization->donations->count() }} donations totaling:  ${{ number_format($organization->donations->sum('donation_amount'),2)}})</h2>
+                    <h2>Donations for {{ $organization->display_name }} ({{$donations->total() }} donations totaling:  ${{ number_format($donations->sum('donation_amount'),2)}})</h2>
                     @can('create-donation')
                         {!! Html::link(route('donation.add',$organization->id),'Create donation',array('class' => 'btn btn-outline-dark'))!!}
                     @endCan
-                    @if ($organization->donations->isEmpty())
+                    @if ($donations->isEmpty())
                         <div class="text-center">
                             <p>No donations for this organization!</p>
                         </div>
@@ -221,7 +221,7 @@
                             </thead>
                             <tbody>
 
-                            @foreach($organization->donations->sortByDesc('donation_date') as $donation)
+                            @foreach($donations->sortByDesc('donation_date') as $donation)
                                 <tr>
                                     <td><a href="../donation/{{$donation->donation_id}}"> {{ $donation->donation_date_formatted }} </a></td>
                                     <td> {{ $donation->donation_description.': #'.optional($donation->retreat)->idnumber }}</td>
@@ -250,6 +250,7 @@
                                 </tr>
                             @endforeach
                             </tbody>
+                            {!! $donations->render() !!}
                         </table>
                     @endif
                 </div>

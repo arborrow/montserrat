@@ -297,7 +297,7 @@
         @can('show-donation')
         <div class="row">
             <div class="col-12" id="donations">
-                <h2>Donations for {{ $parish->display_name }} ({{$parish->donations->count() }} donations totaling:  ${{ number_format($parish->donations->sum('donation_amount'),2)}})</h2>
+                <h2>Donations for {{ $parish->display_name }} ({{$donations->total() }} donations totaling:  ${{ number_format($donations->sum('donation_amount'),2)}})</h2>
             </div>
             <div class="col-12">
                 @can('create-donation')
@@ -305,7 +305,7 @@
                 @endCan
             </div>
             <div class="col-12">
-                @if ($parish->donations->isEmpty())
+                @if ($donations->isEmpty())
                     <p>No donations for this parish!</p>
                 @else
                     <table class="table table-striped table-hover table-responsive-md">
@@ -319,7 +319,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($parish->donations->sortByDesc('donation_date') as $donation)
+                            @foreach($donations->sortByDesc('donation_date') as $donation)
                                 <tr>
                                     <td><a href="{{URL('/donation/'.$donation->donation_id)}}"> {{ $donation->donation_date_formatted }} </a></td>
                                     <td> {{ $donation->donation_description.': #'.optional($donation->retreat)->idnumber }}</td>
@@ -342,6 +342,7 @@
                                     <td> {{ $donation->Notes }}</td>
                                 </tr>
                             @endforeach
+                            {!! $donations->render() !!}
                         </tbody>
                     </table>
                 @endif
