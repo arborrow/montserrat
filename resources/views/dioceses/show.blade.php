@@ -271,8 +271,8 @@
                                     <td> {{ $donation->Notes }}</td>
                                 </tr>
                             @endforeach
-                            </tbody>
                             {!! $donations->render() !!}
+                            </tbody>
                         </table>
 
                     @endif
