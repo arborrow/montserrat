@@ -24,10 +24,10 @@ class EventTypeFactory extends Factory
     public function definition()
     {
         return [
-            'label' => $this->faker->word,
-            'value' => $this->faker->word,
-            'name' => $this->faker->word,
-            'description' => $this->faker->sentence,
+            'label' => $this->faker->word(),
+            'value' => $this->faker->word(),
+            'name' => $this->faker->word(),
+            'description' => $this->faker->sentence(),
             'created_at' => $this->faker->dateTime('now'),
             'updated_at' => $this->faker->dateTime('now'),
             'remember_token' => Str::random(10),

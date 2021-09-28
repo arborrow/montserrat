@@ -659,9 +659,10 @@ class PersonController extends Controller
             'b_relationships.relationship_type',
             'b_relationships.contact_a',
             'event_registrations',
-            'donations.payments'
         )->findOrFail($id);
-        //dd($person->donations);
+
+        $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date','DESC')->paginate(100);
+
         $files = \App\Models\Attachment::whereEntity('contact')->whereEntityId($person->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
         $relationship_types = [];
         $relationship_types['Child'] = 'Child';
@@ -712,7 +713,7 @@ class PersonController extends Controller
             return $registration->retreat_start_date;
         });
         //dd($registrations);
-        return view('persons.show', compact('person', 'files', 'relationship_types', 'touchpoints', 'registrations')); //
+        return view('persons.show', compact('person', 'donations','files', 'relationship_types', 'touchpoints', 'registrations')); //
     }
 
     /**

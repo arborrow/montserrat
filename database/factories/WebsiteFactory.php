@@ -31,7 +31,7 @@ class WebsiteFactory extends Factory
             },
             'url' => $this->faker->url,
             'website_type' => $this->faker->randomElement(config('polanco.website_types')),
-            'description' => $this->faker->sentence,
+            'description' => $this->faker->sentence(),
         ];
     }
 }

@@ -21,10 +21,10 @@ class SnippetFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->word,
+            'title' => $this->faker->word(),
             'label' => $this->faker->jobTitle,
             'locale' => $this->faker->randomElement(\App\Models\Language::whereIsActive(1)->orderBy('label')->pluck('name', 'name')),
-            'snippet' => $this->faker->sentence,
+            'snippet' => $this->faker->sentence(),
         ];
     }
 }

@@ -40,7 +40,7 @@ class RelationshipFactory extends Factory
             'start_date' => $start_date,
             'end_date' => null,
             'is_active' => '1',
-            'description' => $this->faker->sentence,
+            'description' => $this->faker->sentence(),
             'remember_token' => Str::random(10),
         ];
     }

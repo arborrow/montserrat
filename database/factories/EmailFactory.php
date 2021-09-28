@@ -31,14 +31,14 @@ class EmailFactory extends Factory
                 return \App\Models\LocationType::factory()->create()->id;
             },
             'email' => $this->faker->safeEmail,
-            'is_primary' => $this->faker->boolean,
-            'is_billing' => $this->faker->boolean,
-            'on_hold' => $this->faker->boolean,
-            'is_bulkmail' => $this->faker->boolean,
+            'is_primary' => $this->faker->boolean(),
+            'is_billing' => $this->faker->boolean(),
+            'on_hold' => $this->faker->boolean(),
+            'is_bulkmail' => $this->faker->boolean(),
             'hold_date' => $this->faker->date(),
             'reset_date' => $this->faker->date(),
-            'signature_text' => $this->faker->text,
-            'signature_html' => $this->faker->text,
+            'signature_text' => $this->faker->text(),
+            'signature_html' => $this->faker->text(),
             'remember_token' => Str::random(10),
         ];
     }

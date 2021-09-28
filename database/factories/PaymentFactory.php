@@ -32,12 +32,12 @@ class PaymentFactory extends Factory
             'payment_amount' => $this->faker->randomFloat(2, 0, 100000),
             'payment_date' => $this->faker->dateTime(),
             'payment_description' => $this->faker->randomElement($payment_methods),
-            'cknumber' => $this->faker->word,
-            'ccnumber' => $this->faker->word,
+            'cknumber' => $this->faker->word(),
+            'ccnumber' => $this->faker->word(),
             'expire_date' => $this->faker->dateTime(),
-            'authorization_number' => $this->faker->word,
-            'note' => $this->faker->word,
-            'ty_letter_sent' => $this->faker->word,
+            'authorization_number' => $this->faker->word(),
+            'note' => $this->faker->word(),
+            'ty_letter_sent' => $this->faker->word(),
             'remember_token' => Str::random(10),
         ];
     }

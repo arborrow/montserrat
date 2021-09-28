@@ -31,7 +31,7 @@ class TmpOfferingDedupFactory extends Factory
             'contact_id' => $contact->id,
             'event_id' => $event->id,
             'count' => $this->faker->numberBetween(1, 5),
-            'merged' => $this->faker->boolean,
+            'merged' => $this->faker->boolean(),
             'created_at' => $this->faker->dateTime(),
         ];
     }

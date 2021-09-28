@@ -24,7 +24,7 @@ class LocationFactory extends Factory
 
         return [
             'name' => $name,
-            'description' => $this->faker->sentence,
+            'description' => $this->faker->sentence(),
             'occupancy' => $this->faker->numberBetween(10, 50),
             'notes' => $this->faker->text(100),
             'label' => $name,

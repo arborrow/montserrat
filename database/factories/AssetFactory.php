@@ -43,7 +43,7 @@ class AssetFactory extends Factory
             'asset_type_id' => function () {
                 return \App\Models\AssetType::factory()->create()->id;
             },
-            'description' => $this->faker->sentence,
+            'description' => $this->faker->sentence(),
 
             'manufacturer' => $this->faker->company,
             'model' => $this->faker->md5,
@@ -54,9 +54,9 @@ class AssetFactory extends Factory
             },
             'department_id' => null,
             'parent_id' => null,
-            'status' => $this->faker->word,
-            'remarks' => $this->faker->sentence,
-            'is_active' => $this->faker->boolean,
+            'status' => $this->faker->word(),
+            'remarks' => $this->faker->sentence(),
+            'is_active' => $this->faker->boolean(),
             'manufacturer_id' => function () {
                 return \App\Models\Contact::factory()->create([
                     'organization_name' => $this->faker->company,

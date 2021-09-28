@@ -38,7 +38,7 @@ class EventFactory extends Factory
 
         return [
             'title' => $title,
-            'description' => $this->faker->sentence,
+            'description' => $this->faker->sentence(),
             'event_type_id' => $this->faker->numberBetween(1, 14),
             'start_date' => $start_date,
             'end_date' => $end_date,

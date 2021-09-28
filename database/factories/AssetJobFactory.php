@@ -38,12 +38,12 @@ class AssetJobFactory extends Factory
             'start_date' => NULL,
             'end_date' => NULL,
             'status' => $this->faker->randomElement(config('polanco.asset_job_status')),
-            'additional_materials' => $this->faker->sentence,
+            'additional_materials' => $this->faker->sentence(),
             'actual_labor' => $this->faker->numberBetween(15,60),
             'actual_labor_cost' => number_format($this->faker->numberBetween(0,500),2),
             'actual_material_cost' => number_format($this->faker->numberBetween(0,500),2),
-            'note' => $this->faker->sentence,
-            'tag' => $this->faker->word,
+            'note' => $this->faker->sentence(),
+            'tag' => $this->faker->word(),
         ];
     }
 }

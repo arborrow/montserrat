@@ -51,17 +51,17 @@ class RetreatFactory extends Factory
           // innkeeper and assistant methods in retreat model assume individual contact type and so we force it here in the factory as well
         */
         return [
-            'title' => $this->faker->word,
-            'summary' => $this->faker->text,
-            'description' => $this->faker->text,
+            'title' => $this->faker->word(),
+            'summary' => $this->faker->text(),
+            'description' => $this->faker->text(),
             'event_type_id' => $this->faker->numberBetween($min = 1, $max = 15),
             'start_date' => $start_date,
             'end_date' => $end_date,
             'is_active' => '1',
             'max_participants' => $this->faker->randomNumber(),
-            'event_full_text' => $this->faker->text,
-            'has_waitlist' => $this->faker->boolean,
-            'idnumber' => $this->faker->unique()->randomNumber(8).$this->faker->unique()->lastName,
+            'event_full_text' => $this->faker->text(),
+            'has_waitlist' => $this->faker->boolean(),
+            'idnumber' => $this->faker->unique()->randomNumber(8).$this->faker->unique()->lastName(),
             'remember_token' => Str::random(10),
         ];
     }

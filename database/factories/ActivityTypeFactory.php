@@ -24,11 +24,11 @@ class ActivityTypeFactory extends Factory
     public function definition()
     {
         return [
-            'label' => $this->faker->word,
-            'value' => $this->faker->word,
+            'label' => $this->faker->word(),
+            'value' => $this->faker->word(),
             'name' => $this->faker->name,
-            'is_active' => $this->faker->boolean,
-            'is_default' => $this->faker->boolean,
+            'is_active' => $this->faker->boolean(),
+            'is_default' => $this->faker->boolean(),
             'weight' => $this->faker->randomNumber(),
             'remember_token' => Str::random(10),
         ];

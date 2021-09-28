@@ -368,11 +368,11 @@
             @can('show-donation')
             <div class="col-12 mt-3" id="donations">
                 <h2>
-                    {{$person->donations->count() }}  Donation(s) for {{ $person->display_name }}
-                        - ${{$person->donations->sum('payments_paid')}} paid of
-                    ${{$person->donations->sum('donation_amount') }} pledged
-                    @if ($person->donations->sum('donation_amount') > 0)
-                    [{{($person->donations->sum('payments_paid') / $person->donations->sum('donation_amount'))*100}}%]
+                    {{$donations->total() }}  Donation(s) for {{ $person->display_name }}
+                        - ${{$donations->sum('payments_paid')}} paid of
+                    ${{$donations->sum('donation_amount') }} pledged
+                    @if ($donations->sum('donation_amount') > 0)
+                    [{{($donations->sum('payments_paid') / $donations->sum('donation_amount'))*100}}%]
                     @endif
                 </h2>
 
@@ -381,7 +381,7 @@
                 @endCan
                 {!! Html::link(action('PageController@eoy_acknowledgment',$person->id),'EOY Acknowledgment',array('class' => 'btn btn-outline-dark'))!!}
 
-                @if ($person->donations->isEmpty())
+                @if ($donations->isEmpty())
                     <p>No donations for this person!</p>
                 @else
                     <table class="table table-striped table-responsive-lg">
@@ -395,7 +395,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($person->donations->sortByDesc('donation_date') as $donation)
+                            @foreach($donations->sortByDesc('donation_date') as $donation)
                             <tr>
                                 <td><a href="../donation/{{$donation->donation_id}}"> {{ $donation->donation_date_formatted}} </a></td>
                                 <td> {{ $donation->donation_description.': #'.optional($donation->retreat)->idnumber }}</td>
@@ -419,6 +419,8 @@
                                 <td> {{ $donation->Notes }}</td>
                             </tr>
                             @endforeach
+                            {!! $donations->render() !!}
+
                         </tbody>
                     </table>
                 @endif

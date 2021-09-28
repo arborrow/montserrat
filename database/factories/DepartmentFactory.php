@@ -25,7 +25,7 @@ class DepartmentFactory extends Factory
         return [
             'name' => $name,
             'label' => $name,
-            'description' => $this->faker->sentence,
+            'description' => $this->faker->sentence(),
             'notes' => $this->faker->text(100),
             'is_active' => 1,
             'parent_id' =>  null,

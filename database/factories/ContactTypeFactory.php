@@ -25,13 +25,13 @@ class ContactTypeFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'label' => $this->faker->word,
-            'description' => $this->faker->text,
-            'image_URL' => $this->faker->word,
+            'label' => $this->faker->word(),
+            'description' => $this->faker->text(),
+            'image_URL' => $this->faker->word(),
             'parent_id' => $this->faker->randomNumber(),
-            'is_active' => $this->faker->boolean,
-            'is_reserved' => $this->faker->boolean,
-            'status' => $this->faker->word,
+            'is_active' => $this->faker->boolean(),
+            'is_reserved' => $this->faker->boolean(),
+            'status' => $this->faker->word(),
             'remember_token' => Str::random(10),
         ];
     }

@@ -28,7 +28,7 @@ class AssetTypeFactory extends Factory
         return [
             'label' => $label,
             'name' => $label,
-            'description' => $this->faker->sentence,
+            'description' => $this->faker->sentence(),
             'is_active' => 1,
             'parent_asset_type_id' => null,
             'created_at' => now(),

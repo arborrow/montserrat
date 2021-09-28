@@ -30,7 +30,7 @@ class DonationTypeFactory extends Factory
             'value' => $value,
             'name' => $label,
             'description' => $label.' ('.$value.')',
-            'is_active' => $this->faker->boolean,
+            'is_active' => $this->faker->boolean(),
         ];
     }
 }

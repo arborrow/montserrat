@@ -30,7 +30,7 @@ class AssetTaskFactory extends Factory
             'asset_id' => function () {
                 return \App\Models\Asset::factory()->create()->id;
             },
-            'title' => $this->faker->sentence,
+            'title' => $this->faker->sentence(),
             'start_date' => $start_date,
             'frequency' => $this->faker->randomElement(config('polanco.asset_task_frequency')),
             'frequency_interval' => $this->faker->numberBetween(1,4),
@@ -38,15 +38,15 @@ class AssetTaskFactory extends Factory
             'frequency_day' => $this->faker->numberBetween(1,7),
             'frequency_time' => $this->faker->time(),
             'scheduled_until_date' => $scheduled_until_date,
-            'description' => $this->faker->sentence,
+            'description' => $this->faker->sentence(),
             'priority_id' => $this->faker->randomElement(config('polanco.priority')),
             'needed_labor_minutes' => $this->faker->numberBetween(5,120),
             'estimated_labor_cost' => number_format($this->faker->numberBetween(0,500),2),
-            'needed_material' => $this->faker->sentence,
+            'needed_material' => $this->faker->sentence(),
             'estimated_material_cost' => number_format($this->faker->numberBetween(0,500),2),
             'vendor_id' => null,
-            'category' => $this->faker->word,
-            'tag' => $this->faker->word,
+            'category' => $this->faker->word(),
+            'tag' => $this->faker->word(),
         ];
     }
 }

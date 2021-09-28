@@ -29,11 +29,11 @@ class RoomFactory extends Factory
             'floor' =>  $this->faker->numberBetween($min = 1, $max = 2),
             'name' => $this->faker->lastName.' Suite',
             'description' => $this->faker->catchPhrase,
-            'notes' => $this->faker->sentence,
-            'access' => $this->faker->word,
-            'type' => $this->faker->word,
+            'notes' => $this->faker->sentence(),
+            'access' => $this->faker->word(),
+            'type' => $this->faker->word(),
             'occupancy' => $this->faker->randomDigitNotNull,
-            'status' => $this->faker->word,
+            'status' => $this->faker->word(),
         ];
     }
 }

@@ -28,7 +28,7 @@ class AttachmentFactory extends Factory
             'mime_type' => null,
             'uri' => null,
             'document' => null,
-            'description' => $this->faker->sentence,
+            'description' => $this->faker->sentence(),
             'upload_date' => $this->faker->dateTime(),
             'remember_token' => Str::random(10),
             'entity' => null,
