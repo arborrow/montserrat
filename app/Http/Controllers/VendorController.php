@@ -164,11 +164,12 @@ class VendorController extends Controller
     {
         $this->authorize('show-contact');
         $vendor = \App\Models\Contact::with('addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'touchpoints')->findOrFail($id);
+        $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date','DESC')->paginate(100);
         $files = \App\Models\Attachment::whereEntity('contact')->whereEntityId($vendor->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
         $relationship_types = [];
         $relationship_types['Primary contact'] = 'Primary contact';
 
-        return view('vendors.show', compact('vendor', 'relationship_types', 'files')); //
+        return view('vendors.show', compact('vendor', 'relationship_types', 'files','donations')); //
     }
 
     /**

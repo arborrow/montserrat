@@ -200,11 +200,11 @@
             @endCan
             @can('show-donation')
             <div class="col-12" id="donations">
-                <h2>Donations for {{ $vendor->display_name }} ({{$vendor->donations->count() }} donations totaling:  ${{ number_format($vendor->donations->sum('donation_amount'),2)}})</h2>
+                <h2>Donations for {{ $vendor->display_name }} ({{$donations->total() }} donations totaling:  ${{ number_format($donations->sum('donation_amount'),2)}})</h2>
                 @can('create-donation')
                     <a href={{ url('donation/add/'.$vendor->id) }} class="btn btn-outline-dark">Add donation</a>
                 @endCan
-                @if ($vendor->donations->isEmpty())
+                @if ($donations->isEmpty())
                     <div class="text-center">
                         <p>No donations for this vendor!</p>
                     </div>
@@ -221,7 +221,7 @@
                         </thead>
                         <tbody>
 
-                        @foreach($vendor->donations->sortByDesc('donation_date') as $donation)
+                        @foreach($donations->sortByDesc('donation_date') as $donation)
                             <tr>
                                 <td><a href="../donation/{{$donation->donation_id}}"> {{ $donation->donation_date_formatted }} </a></td>
                                 <td> {{ $donation->donation_description.': #'.optional($donation->retreat)->idnumber }}</td>
@@ -245,6 +245,7 @@
                                 <td> {{ $donation->Notes }}</td>
                             </tr>
                         @endforeach
+                        {!! $donations->render()!!}
                         </tbody>
                     </table>
                 @endif
