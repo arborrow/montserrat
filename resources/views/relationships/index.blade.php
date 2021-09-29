@@ -44,7 +44,7 @@
                     </tbody>
                 </table>
                 @endif
-                {!! $relationships->render() !!}
+                {{ $relationships->links() }}
             </div>
         </div>
     </section>

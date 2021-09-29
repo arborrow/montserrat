@@ -8,13 +8,13 @@
                     <h1>
                         <span class="grey">PPD Donor Index</span>
                         <span>({{$donors->total()}} records)</span>
-                        
+
                         @can('create-donor')
                             <span class="create">
                                 <a href="{{ action('DonorController@create') }}">
                                    {!! Html::image('images/create.png', 'Add Donor',array('title'=>"Add Donor",'class' => 'btn btn-primary')) !!}
                                 </a>
-                 
+
                             </span>
                         @endCan
                     </h1>
@@ -42,10 +42,10 @@
                             <td>
                                 <!-- Add to Polanco (not yet implemented)-->
                             </td>
-                            
+
                         </tr>
                         @endforeach
-                       {!! $donors->render() !!}  
+                       {{ $donors->links() }}  
                     </tbody>
                 </table>
                 @endif

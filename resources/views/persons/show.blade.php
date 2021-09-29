@@ -294,8 +294,9 @@
             @endCan
             @can('show-registration')
             <div class="col-12 mt-3" id="registrations">
-                <h2>Retreat Participation ({{$registrations->count()}})</h2>
-                @foreach($registrations as $registration)
+                <h2>Retreat Participation ({{$registrations->total()}})</h2>
+                {{ $registrations->links() }}
+                @foreach($registrations->sortByDesc('retreat_start_date') as $registration)
                     <div class="p-3 mb-2 rounded {{ $registration->canceled_at ? 'bg-warning' : 'bg-light'}}">
                         {!!$registration->event_link!!} ({{date('F j, Y', strtotime($registration->retreat_start_date))}} - {{date('F j, Y', strtotime($registration->retreat_end_date))}}) - <u>{{$registration->participant_role_name}}</u> ({{$registration->participant_status}})
                         <a href="{{ url('registration/'.$registration->id) }}">
@@ -308,7 +309,7 @@
             @endCan
             @can('show-touchpoint')
             <div class="col-12 mt-3" id="touchpoints">
-                <h2>Touchpoints ({{ $person->touchpoints->count() }})</h2>
+                <h2>Touchpoints ({{ $touchpoints->total() }})</h2>
                 @can('create-touchpoint')
                 <button class="btn btn-outline-dark"><a href={{ action('TouchpointController@add',$person->id) }}>Add Touchpoint</a></button>
                 @endCan
@@ -325,7 +326,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($touchpoints as $touchpoint)
+                            @foreach($touchpoints->sortByDesc('touched_at') as $touchpoint)
                             <tr>
                                 <td><a href="{{url('touchpoint/'.$touchpoint->id)}}">{{ $touchpoint->touched_at }}</a></td>
                                 <td>{!! $touchpoint->staff->contact_link_full_name ?? 'Unknown staff member' !!}</td>
@@ -333,6 +334,7 @@
                                 <td>{{ $touchpoint->notes }}</td>
                             </tr>
                             @endforeach
+                            {{ $touchpoints->links() }}
                         </tbody>
                     </table>
                 @endif
@@ -368,7 +370,7 @@
             @can('show-donation')
             <div class="col-12 mt-3" id="donations">
                 <h2>
-                    {{$donations->total() }}  Donation(s) for {{ $person->display_name }}
+                    {{$donations->total() }} Donation(s) for {{ $person->display_name }}
                         - ${{$donations->sum('payments_paid')}} paid of
                     ${{$donations->sum('donation_amount') }} pledged
                     @if ($donations->sum('donation_amount') > 0)
@@ -419,8 +421,7 @@
                                 <td> {{ $donation->Notes }}</td>
                             </tr>
                             @endforeach
-                            {!! $donations->render() !!}
-
+                            {{ $donations->links() }}
                         </tbody>
                     </table>
                 @endif

@@ -47,7 +47,7 @@
                         </td>
                     </tr>
                     @endforeach
-                    {!! $assets->render() !!}
+                    {{ $assets->links() }}
                 </tbody>
             </table>
             @endif

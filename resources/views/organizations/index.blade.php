@@ -90,7 +90,7 @@
                     </td>
                 </tr>
                 @endforeach
-                {!! $organizations->render() !!}
+                {{ $organizations->links() }}
             </tbody>
         </table>
         @endif

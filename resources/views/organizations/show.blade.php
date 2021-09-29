@@ -125,8 +125,8 @@
         </div>
         <div class="row">
             <div class="col-12" id="touchpoints">
-                <h2>Touchpoints for {{ $organization->display_name }} ({{ $organization->touchpoints->count() }})</h2>
-                @if ($organization->touchpoints->isEmpty())
+                <h2>Touchpoints for {{ $organization->display_name }} ({{ $touchpoints->total() }})</h2>
+                @if ($touchpoints->isEmpty())
                     <div class="text-center">
                         <p>It is a brand new world, there are no touchpoints for this organization!</p>
                     </div>
@@ -141,7 +141,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($organization->touchpoints as $touchpoint)
+                            @foreach($touchpoints as $touchpoint)
                             <tr>
                                 <td><a href="{{url('touchpoint/'.$touchpoint->id)}}">{{ $touchpoint->touched_at }}</a></td>
                                 <td>{!! $touchpoint->staff->contact_link_full_name ?? 'Unknown staff member' !!}</td>
@@ -149,7 +149,7 @@
                                 <td>{{ $touchpoint->notes }}</td>
                             </tr>
                             @endforeach
-
+                            {{ $touchpoints->links() }}
                         </tbody>
                     </table>
                 @endif
@@ -157,12 +157,15 @@
         </div>
         <div class="row">
             <div class="col-12" id="registrations">
-                <h2>Retreat Participation for {{ $organization->display_name }} ({{ $organization->event_registrations->count() }})</h2>
-                <ul>
-                    @foreach($organization->event_registrations as $registration)
-                        <li>{!!$registration->event_link!!}  ({{date('F j, Y', strtotime($registration->retreat_start_date))}} - {{date('F j, Y', strtotime($registration->retreat_end_date))}})</li>
-                    @endforeach
-                </ul>
+                <h2>Retreat Participation for {{ $organization->display_name }} ({{ $registrations->total() }})</h2>
+                {{ $registrations->links() }}
+                <div class="col-12">
+                    <ul>
+                        @foreach($organization->event_registrations as $registration)
+                            <li>{!!$registration->event_link!!}  ({{date('F j, Y', strtotime($registration->retreat_start_date))}} - {{date('F j, Y', strtotime($registration->retreat_end_date))}})</li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -250,7 +253,7 @@
                                 </tr>
                             @endforeach
                             </tbody>
-                            {!! $donations->render() !!}
+                            {{ $donations->links() }}
                         </table>
                     @endif
                 </div>

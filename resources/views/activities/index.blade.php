@@ -14,7 +14,7 @@
                             </span>
                          @endCan
                     </h1>
-                    <span>{!! $activities->render() !!}</span>
+                    <span>{{ $activities->links() }}</span>
                 </div>
                 @if ($activities->isEmpty())
                     <p>It is a brand new world, there are no activities!</p>
@@ -45,7 +45,7 @@
                     </tbody>
 
                 </table>
-                {!! $activities->render() !!}
+                {{ $activities->links() }}
 
                 @endif
             </div>

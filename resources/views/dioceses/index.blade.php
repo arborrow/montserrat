@@ -77,7 +77,7 @@
                     </td>
                 </tr>
                 @endforeach
-                {!!$dioceses->render()!!}
+                {{ $dioceses->links() }}
             </tbody>
         </table>
         @endif

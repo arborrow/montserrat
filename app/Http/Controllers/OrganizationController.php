@@ -185,14 +185,16 @@ class OrganizationController extends Controller
     {
         $this->authorize('show-contact');
         $organization = \App\Models\Contact::with('addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'phone_main_phone.location', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations')->findOrFail($id);
-        $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date','DESC')->paginate(100);
+        $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date','DESC')->paginate(25,['*'],'donations');
+        $touchpoints = \App\Models\Touchpoint::wherePersonId($id)->orderBy('touched_at','DESC')->paginate(25,['*'],'touchpoints');
+        $registrations = \App\Models\Registration::whereContactId($id)->orderBy('created_at','DESC')->paginate(25,['*'],'registrations');
 
         $files = \App\Models\Attachment::whereEntity('contact')->whereEntityId($organization->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
         $relationship_types = [];
         $relationship_types['Employer'] = 'Employer';
         $relationship_types['Primary Contact'] = 'Primary Contact';
 
-        return view('organizations.show', compact('organization', 'files', 'relationship_types','donations')); //
+        return view('organizations.show', compact('organization', 'files', 'relationship_types','donations','registrations','touchpoints')); //
     }
 
     /**

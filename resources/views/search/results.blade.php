@@ -78,7 +78,7 @@
                             </td>
                         </tr>
                         @endforeach
-                    {!! $persons->render() !!}
+                    {{ $persons->links() }}
                     </tbody>
                 </table>
                 @endif

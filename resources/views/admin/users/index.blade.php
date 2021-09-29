@@ -17,7 +17,7 @@
         @else
 
             <table class="table table-striped table-bordered table-hover">
-                {{ $users->render() }}
+                {{ $users->links() }}
                 <thead>
                     <tr>
                         <th scope="col">Avatar</th>

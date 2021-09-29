@@ -658,12 +658,8 @@ class PersonController extends Controller
             'a_relationships.contact_b',
             'b_relationships.relationship_type',
             'b_relationships.contact_a',
-            'event_registrations',
         )->findOrFail($id);
 
-        $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date','DESC')->paginate(100);
-
-        $files = \App\Models\Attachment::whereEntity('contact')->whereEntityId($person->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
         $relationship_types = [];
         $relationship_types['Child'] = 'Child';
         $relationship_types['Employee'] = 'Employee';
@@ -707,11 +703,17 @@ class PersonController extends Controller
             $person->parish_name = $person->parish->contact_a->organization_name.' ('.$person->parish->contact_a->address_primary_city.') - '.$person->parish->contact_a->diocese->contact_a->organization_name;
         }
         */
-        $touchpoints = \App\Models\Touchpoint::wherePersonId($person->id)->orderBy('touched_at', 'desc')->with('staff')->get();
-        $registrations = \App\Models\Registration::whereContactId($person->id)->get();
-        $registrations = $registrations->sortByDesc(function ($registration) {
+
+        $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date','DESC')->paginate(25,['*'],'donations');
+        $files = \App\Models\Attachment::whereEntity('contact')->whereEntityId($person->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
+
+        $registrations = \App\Models\Registration::whereContactId($id)->paginate(25,['*'],'registrations');
+/*        $registrations = $registrations->sortByDesc(function ($registration) {
             return $registration->retreat_start_date;
-        });
+        })->paginate(15);
+*/
+        $touchpoints = \App\Models\Touchpoint::wherePersonId($id)->with('staff')->orderBy('touched_at','DESC')->paginate(15,['*'],'touchpoints');
+
         //dd($registrations);
         return view('persons.show', compact('person', 'donations','files', 'relationship_types', 'touchpoints', 'registrations')); //
     }

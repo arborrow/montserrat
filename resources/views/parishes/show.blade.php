@@ -165,10 +165,10 @@
         </div>
         <div class="row">
             <div class="col-12" id="touchpoints">
-                <h2>Touchpoints for {{ $parish->display_name }} ({{$parish->touchpoints->count()}})</h2>
+                <h2>Touchpoints for {{ $parish->display_name }} ({{$touchpoints->total()}})</h2>
             </div>
             <div class="col-12">
-                @if ($parish->touchpoints->isEmpty())
+                @if ($touchpoints->isEmpty())
                     <p>It is a brand new world, there are no touchpoints for this contact!</p>
                 @else
                     <span class="btn btn-outline-dark">
@@ -184,7 +184,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($parish->touchpoints as $touchpoint)
+                            @foreach($touchpoints as $touchpoint)
                             <tr>
                                 <td><a href="{{url('touchpoint/'.$touchpoint->id)}}">{{ $touchpoint->touched_at }}</a></td>
                                 <td>{!! $touchpoint->staff->contact_link_full_name ?? 'Unknown staff member' !!}</a></td>
@@ -192,6 +192,7 @@
                                 <td>{{ $touchpoint->notes }}</td>
                             </tr>
                             @endforeach
+                            {{ $touchpoints->links() }}
                         </tbody>
                     </table>
                 @endif
@@ -253,11 +254,12 @@
         </div>
         <div class="row">
             <div class="col-12" id="registrations">
-                <h2>Retreat Participation for {{ $parish->display_name }}</h2>
+                <h2>Registrations for {{ $parish->display_name }} ({{ $registrations->total() }})</h2>
             </div>
+            {{ $registrations->links() }}
             <div class="col-12">
                 <ul>
-                    @foreach($parish->event_registrations as $registration)
+                    @foreach($registrations->sortByDesc('retreat_start_date') as $registration)
                         <li>{!!$registration->event_link!!} ({{date('F j, Y', strtotime($registration->event->start_date))}} - {{date('F j, Y', strtotime($registration->event->end_date))}}) </li>
                     @endforeach
                 </ul>
@@ -342,7 +344,7 @@
                                     <td> {{ $donation->Notes }}</td>
                                 </tr>
                             @endforeach
-                            {!! $donations->render() !!}
+                            {{ $donations->links() }}
                         </tbody>
                     </table>
                 @endif

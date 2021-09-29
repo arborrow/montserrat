@@ -36,7 +36,7 @@
                             </td>
                         </tr>
                         @endforeach
-                    {!! $events->render() !!}
+                    {{ $events->links() }}
                     </tbody>
                 </table>
                 @endif

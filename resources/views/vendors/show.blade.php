@@ -126,22 +126,25 @@
                 @endforeach
             </div>
             <div class="col-12" id="registrations">
-                <h2>Retreat Participation for {{ $vendor->display_name }} ({{ $vendor->event_registrations->count() }})</h2>
-                <ul>
-                    @foreach($vendor->event_registrations as $registration)
-                        <li>{!!$registration->event_link!!} ({{date('F j, Y', strtotime($registration->event->start_date))}} - {{date('F j, Y', strtotime($registration->event->end_date))}}) </li>
-                    @endforeach
-                </ul>
+                <div class="col-12">
+                    <h2>Retreat Participation for {{ $vendor->display_name }} ({{ $registrations->total() }})</h2>
+                    {{ $registrations->links() }}
+                    <ul>
+                        @foreach($registrations as $registration)
+                            <li>{!!$registration->event_link!!} ({{date('F j, Y', strtotime($registration->event->start_date))}} - {{date('F j, Y', strtotime($registration->event->end_date))}}) </li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
             @can('show-touchpoint')
             <div class="col-12" id="touchpoints">
-                <h2>Touchpoints for {{ $vendor->display_name }} ({{ $vendor->touchpoints->count() }})</h2>
+                <h2>Touchpoints for {{ $vendor->display_name }} ({{ $touchpoints->total() }})</h2>
                 @can('create-touchpoint')
                     <span class="btn btn-outline-dark">
                         <a href={{ action('TouchpointController@add',$vendor->id) }}>Add Touchpoint</a>
                     </span>
                 @endCan
-                @if ($vendor->touchpoints->isEmpty())
+                @if ($touchpoints->isEmpty())
                     <div class="text-center">
                         <p>It is a brand new world, there are no touchpoints for this person!</p>
                     </div>
@@ -156,7 +159,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($vendor->touchpoints->sortByDesc('touched_at') as $touchpoint)
+                            @foreach($touchpoints->sortByDesc('touched_at') as $touchpoint)
                             <tr>
                                 <td><a href="../touchpoint/{{ $touchpoint->id}}">{{ $touchpoint->touched_at }}</a></td>
                                 <td>{!! $touchpoint->staff->contact_link_full_name ?? 'Unknown staff member' !!}</a></td>
@@ -164,6 +167,7 @@
                                 <td>{{ $touchpoint->notes }}</td>
                             </tr>
                             @endforeach
+                            {{ $touchpoints->links() }}
                         </tbody>
                     </table>
                 @endif
@@ -245,7 +249,7 @@
                                 <td> {{ $donation->Notes }}</td>
                             </tr>
                         @endforeach
-                        {!! $donations->render()!!}
+                        {!! $donations->links()!!}
                         </tbody>
                     </table>
                 @endif

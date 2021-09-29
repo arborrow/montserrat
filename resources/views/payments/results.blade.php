@@ -41,7 +41,7 @@
                         <td>{{ $payment->note }}</td>
                     </tr>
                     @endforeach
-                    {!! $payments->render() !!}
+                    {{ $payments->links() }}
                 </tbody>
             </table>
             @endif

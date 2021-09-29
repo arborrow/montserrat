@@ -20,7 +20,7 @@ class LocationFactory extends Factory
      */
     public function definition()
     {
-        $name = $this->faker->lastname.' of '.$this->faker->city;
+        $name = $this->faker->lastname.' of '.$this->faker->city();
 
         return [
             'name' => $name,

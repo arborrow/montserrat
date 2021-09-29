@@ -68,7 +68,7 @@
                 </td>
             </tr>
             @endforeach
-          {!!$vendors->render()!!}
+          {!!$vendors->links()!!}
         </tbody>
     </table>
     @endif

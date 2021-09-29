@@ -75,7 +75,7 @@
 
                         </tr>
                         @endforeach
-                    {!! $duplicates->render() !!}
+                    {{ $duplicates->links() }}
                     </tbody>
                 </table>
                 @endif

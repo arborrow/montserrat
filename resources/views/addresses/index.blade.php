@@ -46,7 +46,7 @@
                         <td>{{ $address->postal_code}}</td>
                     </tr>
                     @endforeach
-                    {!! $addresses->render() !!}
+                    {{ $addresses->links() }}
                 </tbody>
             </table>
         @endif

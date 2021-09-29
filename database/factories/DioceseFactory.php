@@ -23,7 +23,7 @@ class DioceseFactory extends Factory
      */
     public function definition()
     {
-        $city_name = $this->faker->city;
+        $city_name = $this->faker->city();
         $diocese_name = 'Diocese of '.$city_name;
 
         return [
@@ -40,7 +40,7 @@ class DioceseFactory extends Factory
             'legal_name' => $diocese_name,
             'image_URL' => $this->faker->word(),
             'preferred_communication_method' => $this->faker->word(),
-            'preferred_language' => $this->faker->locale,
+            'preferred_language' => $this->faker->locale(),
             'preferred_mail_format' => $this->faker->word(),
             'hash' => $this->faker->word(),
             'api_key' => $this->faker->word(),

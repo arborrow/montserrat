@@ -16,7 +16,7 @@
                                 <a href={{ action('TouchpointController@add_group',0) }}>{!! Html::image('images/group_add.png', 'Add Group Touchpoint',array('title'=>"Add Group Touchpoint",'class' => 'btn btn-primary')) !!}</a>
                             </span>
                     </h1>@endCan
-                    <span>{!! $touchpoints->render() !!}</span>
+                    <span>{{ $touchpoints->links() }}</span>
                 </div>
                 <div class="row">
                     <div class="col-md-4 col-12">
@@ -59,7 +59,7 @@
                     </tbody>
 
                 </table>
-                {!! $touchpoints->render() !!}
+                {{ $touchpoints->links() }}
 
                 @endif
             </div>

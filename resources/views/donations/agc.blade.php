@@ -5,7 +5,7 @@
     <div class="col-12">
         <h1>AGC FY {{$total['year']}} Index - ({{$donations->total()}} donations)</h1>
         <p class="lead">${{number_format($total['paid'],2)}} of ${{number_format($total['pledged'],2)}} ({{number_format($total['percent'],0)}}%)</p>
-        {!! $donations->render() !!}
+        {{ $donations->links() }}
     </div>
     <div class="col-12">
         @if ($donations->isEmpty())
@@ -50,7 +50,7 @@
                     @endforeach
                 </tbody>
             </table>
-            {!! $donations->render() !!}
+            {{ $donations->links() }}
         @endif
     </div>
 </div>

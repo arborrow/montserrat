@@ -39,7 +39,7 @@ class AddressFactory extends Factory
             'street_number_postdirectional' => $this->faker->word(),
             'street_unit' => $this->faker->secondaryAddress,
             'supplemental_address_1' => $this->faker->streetAddress,
-            'city' => $this->faker->city,
+            'city' => $this->faker->city(),
             'county_id' => $this->faker->randomNumber(),
             'state_province_id' => $this->faker->numberBetween(1000, 1050),
             'postal_code_suffix' => $this->faker->numberBetween(1000, 9999),

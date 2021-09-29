@@ -8,8 +8,8 @@
                     <h1>
                         <span class="grey">Offering Dedup Index</span>
                         <span>({{$offeringdedup->total()}} records)</span>
-                        
-                        
+
+
                     </h1>
                 </div>
                 @if ($offeringdedup->isEmpty())
@@ -31,10 +31,10 @@
                             <td>{{$duplicate->contact->sort_name}}</td>
                             <td>{{$duplicate->retreat_name.' ('.$duplicate->retreat_idnumber.')'}}</td>
                             <td>{{$duplicate->count}}</td>
-                            
+
                         </tr>
                         @endforeach
-                       {!! $offeringdedup->render() !!}  
+                       {{ $offeringdedup->links() }}  
                     </tbody>
                 </table>
                 @endif

@@ -8,7 +8,7 @@
                     <h1>
                         <span class="grey">Gate activity</span>
                     </h1>
-                    <span>{!! $touchpoints->render() !!}</span>
+                    <span>{{ $touchpoints->links() }}</span>
                 </div>
                 @if ($touchpoints->isEmpty())
                     <p>It is a brand new world, there is no gate activity!</p>
@@ -40,7 +40,7 @@
                     </tbody>
 
                 </table>
-                {!! $touchpoints->render() !!}
+                {{ $touchpoints->links() }}
 
                 @endif
             </div>

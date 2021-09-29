@@ -163,13 +163,16 @@ class VendorController extends Controller
     public function show($id)
     {
         $this->authorize('show-contact');
-        $vendor = \App\Models\Contact::with('addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'touchpoints')->findOrFail($id);
-        $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date','DESC')->paginate(100);
+        $vendor = \App\Models\Contact::with('addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes')->findOrFail($id);
+        $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date','DESC')->paginate(25,['*'],'donations');
+        $touchpoints = \App\Models\Touchpoint::wherePersonId($id)->orderBy('touched_at','DESC')->paginate(25,['*'],'touchpoints');
+        $registrations = \App\Models\Registration::whereContactId($id)->orderBy('created_at','DESC')->paginate(25,['*'],'registrations');
+
         $files = \App\Models\Attachment::whereEntity('contact')->whereEntityId($vendor->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
         $relationship_types = [];
         $relationship_types['Primary contact'] = 'Primary contact';
 
-        return view('vendors.show', compact('vendor', 'relationship_types', 'files','donations')); //
+        return view('vendors.show', compact('vendor', 'relationship_types', 'files','donations','touchpoints','registrations')); //
     }
 
     /**

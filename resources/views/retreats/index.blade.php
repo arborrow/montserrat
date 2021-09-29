@@ -191,7 +191,7 @@
                 @endforeach
             </tbody>
         </table>
-        {!! $oldretreats->render() !!}
+        {{ $oldretreats->links() }}
         @endif
     </div>
 </div>

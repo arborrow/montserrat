@@ -187,14 +187,16 @@ class ParishController extends Controller
     public function show($id)
     {
         $this->authorize('show-contact');
-        $parish = \App\Models\Contact::with('pastor.contact_b', 'diocese.contact_a', 'addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'note_parish', 'parishioners.contact_b.address_primary.state', 'parishioners.contact_b.emails.location', 'parishioners.contact_b.phones.location', 'touchpoints', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations')->findOrFail($id);
-        $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date','DESC')->paginate(100);
+        $parish = \App\Models\Contact::with('pastor.contact_b', 'diocese.contact_a', 'addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'note_parish', 'parishioners.contact_b.address_primary.state', 'parishioners.contact_b.emails.location', 'parishioners.contact_b.phones.location', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a')->findOrFail($id);
+        $touchpoints = \App\Models\Touchpoint::wherePersonId($id)->orderBy('touched_at','DESC')->paginate(25,['*'],'touchpoints');
+        $registrations = \App\Models\Registration::whereContactId($id)->orderBy('created_at','DESC')->paginate(25,['*'],'registrations');
+        $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date','DESC')->paginate(25,['*'],'donations');
 
         $files = \App\Models\Attachment::whereEntity('contact')->whereEntityId($parish->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
         $relationship_types = [];
         $relationship_types['Primary Contact'] = 'Primary Contact';
 
-        return view('parishes.show', compact('parish', 'files', 'relationship_types','donations')); //
+        return view('parishes.show', compact('parish', 'files', 'relationship_types','donations','touchpoints','registrations')); //
     }
 
     /**

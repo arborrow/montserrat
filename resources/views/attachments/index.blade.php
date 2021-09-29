@@ -33,7 +33,7 @@
                         <td>{{ $attachment->upload_date }}</td>
                     </tr>
                     @endforeach
-                    {!! $attachments->render() !!}
+                    {{ $attachments->links() }}
                 </tbody>
             </table>
         @endif

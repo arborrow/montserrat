@@ -37,7 +37,7 @@
                         <td>{{ $donation->Notes }}</td>
                     </tr>
                     @endforeach
-                    {!! $donations->render() !!}
+                    {{ $donations->links() }}
                 </tbody>
             </table>
             @endif

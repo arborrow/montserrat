@@ -24,7 +24,7 @@ class ParishFactory extends Factory
     public function definition()
     {
         $name = $this->faker->firstName;
-        $parish_name = 'St. '.$name.' of '.$this->faker->city.' Parish';
+        $parish_name = 'St. '.$name.' of '.$this->faker->city().' Parish';
 
         return [
             'contact_type' => config('polanco.contact_type.organization'),
@@ -40,7 +40,7 @@ class ParishFactory extends Factory
             'legal_name' => $parish_name,
             'image_URL' => $this->faker->word(),
             'preferred_communication_method' => $this->faker->word(),
-            'preferred_language' => $this->faker->locale,
+            'preferred_language' => $this->faker->locale(),
             'preferred_mail_format' => $this->faker->word(),
             'hash' => $this->faker->word(),
             'api_key' => $this->faker->word(),

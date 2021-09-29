@@ -12,7 +12,7 @@
                         <span class="grey">({{$payments->total()}} records)</span>
                         <!-- payments are not created independently of donations so there should not be an option here to create a payment -->
                     </h1>
-                    <span>{!! $payments->render() !!}</span>
+                    <span>{{ $payments->links() }}</span>
                 </div>
                 @if ($payments->isEmpty())
                     <p>It is an impoverished new world, there are no donations!</p>
@@ -46,7 +46,7 @@
                     </tbody>
 
                 </table>
-                {!! $payments->render() !!}
+                {{ $payments->links() }}
 
                 @endif
             </div>

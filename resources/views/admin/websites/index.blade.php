@@ -42,7 +42,7 @@
                         <td>{{ $website->asset_id }}</td>
                     </tr>
                     @endforeach
-                    {!! $websites->render() !!}
+                    {{ $websites->links() }}
                 </tbody>
             </table>
         @endif

@@ -278,7 +278,7 @@
         </td>
         </tr>
         @endforeach
-        {{ $registrations->render() }}
+        {{ $registrations->links() }}
         @endCan
         </tbody>
         </table>

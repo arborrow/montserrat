@@ -24,7 +24,7 @@ class TouchpointFactory extends Factory
     {
         return [
             'type' => array_rand(array_flip(['Email', 'Call', 'Letter', 'Face', 'Other'])),
-            'notes' => $this->faker->paragraph,
+            'notes' => $this->faker->paragraph(),
             'touched_at' => $this->faker->dateTime('now'),
             'created_at' => $this->faker->dateTime('now'),
             'updated_at' => $this->faker->dateTime('now'),
