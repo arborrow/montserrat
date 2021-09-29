@@ -22,7 +22,7 @@ class DonorController extends Controller
     {
         $this->authorize('show-donor');
         //only show donors that do not have a contact_id
-        $donors = \App\Models\Donor::whereContactId(null)->orderBy('sort_name')->paginate(100);
+        $donors = \App\Models\Donor::whereContactId(null)->orderBy('sort_name')->paginate(25);
 
         return view('donors.index', compact('donors'));   //
     }

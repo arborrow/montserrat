@@ -23,7 +23,7 @@ class ActivityController extends Controller
     public function index()
     {
         $this->authorize('show-activity');
-        $activities = \App\Models\Activity::orderBy('activity_date_time', 'desc')->paginate(100);
+        $activities = \App\Models\Activity::orderBy('activity_date_time', 'desc')->paginate(25);
 
         return view('activities.index', compact('activities'));
     }

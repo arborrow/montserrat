@@ -161,7 +161,7 @@
                 {{ $registrations->links() }}
                 <div class="col-12">
                     <ul>
-                        @foreach($organization->event_registrations as $registration)
+                        @foreach($registrations as $registration)
                             <li>{!!$registration->event_link!!}  ({{date('F j, Y', strtotime($registration->retreat_start_date))}} - {{date('F j, Y', strtotime($registration->retreat_end_date))}})</li>
                         @endforeach
                     </ul>

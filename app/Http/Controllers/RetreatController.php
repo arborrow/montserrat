@@ -39,7 +39,7 @@ class RetreatController extends Controller
         $event_types = \App\Models\EventType::whereIsActive(1)->orderBy('name')->pluck('id', 'name');
 
         $retreats = \App\Models\Retreat::whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->withCount('retreatants')->get();
-        $oldretreats = \App\Models\Retreat::whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date', 'desc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->withCount('retreatants')->paginate(100);
+        $oldretreats = \App\Models\Retreat::whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date', 'desc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->withCount('retreatants')->paginate(25);
 
         return view('retreats.index', compact('retreats', 'oldretreats', 'defaults', 'event_types', 'results'));   //
     }
@@ -57,7 +57,7 @@ class RetreatController extends Controller
         $defaults['type'] = $event_type->label;
 
         $retreats = \App\Models\Retreat::whereEventTypeId($event_type_id)->whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->withCount('retreatants')->get();
-        $oldretreats = \App\Models\Retreat::whereEventTypeId($event_type_id)->whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date', 'desc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->withCount('retreatants')->paginate(100);
+        $oldretreats = \App\Models\Retreat::whereEventTypeId($event_type_id)->whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date', 'desc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->withCount('retreatants')->paginate(25);
 
         return view('retreats.index', compact('retreats', 'oldretreats', 'defaults', 'event_types', 'results'));   //
     }
@@ -857,10 +857,10 @@ class RetreatController extends Controller
         $this->authorize('show-retreat');
 
         if (! empty($request)) {
-            $events = \App\Models\Retreat::filtered($request)->orderBy('idnumber')->paginate(100);
+            $events = \App\Models\Retreat::filtered($request)->orderBy('idnumber')->paginate(25);
             $events->appends($request->except('page'));
         } else {
-            $events = \App\Models\Retreat::orderBy('idnumber')->paginate(100);
+            $events = \App\Models\Retreat::orderBy('idnumber')->paginate(25);
         }
 
         return view('retreats.results', compact('events'));

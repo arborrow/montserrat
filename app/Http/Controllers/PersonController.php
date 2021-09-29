@@ -27,7 +27,7 @@ class PersonController extends Controller
     {
         $this->authorize('show-contact');
 
-        $persons = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->with('address_primary.state', 'phones', 'emails', 'websites', 'parish.contact_a.address_primary', 'prefix', 'suffix')->paginate(100);
+        $persons = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->with('address_primary.state', 'phones', 'emails', 'websites', 'parish.contact_a.address_primary', 'prefix', 'suffix')->paginate(25);
 
         return view('persons.index', compact('persons'));   //
     }
@@ -35,7 +35,7 @@ class PersonController extends Controller
     public function lastnames($letter = null)
     {
         $this->authorize('show-contact');
-        $persons = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'parish.contact_a')->where('last_name', 'LIKE', $letter.'%')->paginate(100);
+        $persons = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'parish.contact_a')->where('last_name', 'LIKE', $letter.'%')->paginate(25);
 
         return view('persons.index', compact('persons'));   //
     }
@@ -1791,7 +1791,7 @@ class PersonController extends Controller
 
         $duplicates = \App\Models\Contact::whereIn('id', function ($query) {
             $query->select('id')->from('contact')->groupBy('sort_name')->whereDeletedAt(null)->havingRaw('count(*)>1');
-        })->orderBy('sort_name')->paginate(100);
+        })->orderBy('sort_name')->paginate(25);
         // dd($duplicates,$duplicates->total());
         return view('persons.duplicates', compact('duplicates'));
     }

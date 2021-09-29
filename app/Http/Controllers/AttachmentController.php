@@ -622,7 +622,7 @@ class AttachmentController extends Controller
     public function index()
     {
         $this->authorize('show-attachment');
-        $attachments = \App\Models\Attachment::orderByDesc('upload_date')->paginate(100);
+        $attachments = \App\Models\Attachment::orderByDesc('upload_date')->paginate(25);
 
         return view('attachments.index', compact('attachments'));
     }

@@ -31,7 +31,7 @@ class DonationController extends Controller
         // rather than using the active donation_descriptions from DonationType model, let's continue to show all of the existing donation_descriptions in the Donations table so that any that are not in the DonationType table can be cleaned up
         $donation_descriptions = DB::table('Donations')->selectRaw('MIN(donation_id) as donation_id, donation_description, count(*) as count')->groupBy('donation_description')->orderBy('donation_description')->whereNull('deleted_at')->get();
         // dd($donation_descriptions);
-        $donations = \App\Models\Donation::orderBy('donation_date', 'desc')->with('contact.prefix', 'contact.suffix', 'retreat')->paginate(100);
+        $donations = \App\Models\Donation::orderBy('donation_date', 'desc')->with('contact.prefix', 'contact.suffix', 'retreat')->paginate(25);
         //dd($donations);
         return view('donations.index', compact('donations', 'donation_descriptions'));
     }
@@ -46,7 +46,7 @@ class DonationController extends Controller
         $defaults = [];
         $defaults['type'] = $donation_description;
 
-        $donations = \App\Models\Donation::whereDonationDescription($donation_description)->orderBy('donation_date', 'desc')->with('contact.prefix', 'contact.suffix')->paginate(100);
+        $donations = \App\Models\Donation::whereDonationDescription($donation_description)->orderBy('donation_date', 'desc')->with('contact.prefix', 'contact.suffix')->paginate(25);
 
         return view('donations.index', compact('donations', 'donation_descriptions', 'defaults'));   //
     }
@@ -69,10 +69,10 @@ class DonationController extends Controller
     {
         $this->authorize('show-donation');
         if (! empty($request)) {
-            $donations = \App\Models\Donation::filtered($request)->orderBy('donation_date')->paginate(100);
+            $donations = \App\Models\Donation::filtered($request)->orderBy('donation_date')->paginate(25);
             $donations->appends($request->except('page'));
         } else {
-            $donations = \App\Models\Donation::orderBy('name')->paginate(100);
+            $donations = \App\Models\Donation::orderBy('name')->paginate(25);
         }
 
         return view('donations.results', compact('donations'));
@@ -112,12 +112,12 @@ class DonationController extends Controller
 
         if (is_null($unthanked)) {
             $all_donations = \App\Models\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->get();
-            $donations = \App\Models\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->paginate(100);
+            $donations = \App\Models\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->paginate(25);
         } else {
             $all_donations = \App\Models\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')
                 ->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->whereNull('Thank you')-> get();
             $donations = \App\Models\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year.'-07-01')->where('donation_date', '<', $year.'-07-01')
-                ->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->whereNull('Thank you')->paginate(100);
+                ->with('contact.prefix', 'contact.suffix', 'contact.agc2019', 'payments')->whereNull('Thank you')->paginate(25);
         }
 
         $total['pledged'] = $all_donations->sum('donation_amount');

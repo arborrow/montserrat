@@ -21,7 +21,7 @@ class RelationshipController extends Controller
     public function index()
     {
         $this->authorize('show-relationship');
-        $relationships = \App\Models\Relationship::paginate(100);
+        $relationships = \App\Models\Relationship::paginate(25);
 
         return view('relationships.index', compact('relationships'));   //
     }

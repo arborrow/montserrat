@@ -23,7 +23,7 @@ class OrganizationController extends Controller
     public function index()
     {
         $this->authorize('show-contact');
-        $organizations = \App\Models\Contact::with('addresses','phone_main_phone','email_primary','websites','subcontacttype')->organizations_generic()->orderBy('organization_name', 'asc')->paginate(100);
+        $organizations = \App\Models\Contact::with('addresses','phone_main_phone','email_primary','websites','subcontacttype')->organizations_generic()->orderBy('organization_name', 'asc')->paginate(25);
         $subcontact_types = \App\Models\ContactType::generic()->whereIsActive(1)->orderBy('label')->pluck('id', 'label');
         //dd($subcontact_types);
         return view('organizations.index', compact('organizations', 'subcontact_types'));   //
@@ -36,7 +36,7 @@ class OrganizationController extends Controller
         $subcontact_type = \App\Models\ContactType::findOrFail($subcontact_type_id);
         $defaults = [];
         $defaults['type'] = $subcontact_type->label;
-        $organizations = \App\Models\Contact::with('addresses','phone_main_phone','email_primary','websites','subcontacttype')->organizations_generic()->whereSubcontactType($subcontact_type_id)->orderBy('organization_name', 'asc')->paginate(100);
+        $organizations = \App\Models\Contact::with('addresses','phone_main_phone','email_primary','websites','subcontacttype')->organizations_generic()->whereSubcontactType($subcontact_type_id)->orderBy('organization_name', 'asc')->paginate(25);
 
         return view('organizations.index', compact('organizations', 'subcontact_types', 'defaults'));
     }

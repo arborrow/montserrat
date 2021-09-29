@@ -28,7 +28,7 @@ class AddressController extends Controller
     public function index()
     {
         $this->authorize('show-address');
-        $addresses = \App\Models\Address::orderBy('postal_code', 'asc')->with('addressee')->paginate(100);
+        $addresses = \App\Models\Address::orderBy('postal_code', 'asc')->with('addressee')->paginate(25);
 
         return view('addresses.index', compact('addresses'));
     }
