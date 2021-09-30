@@ -2,7 +2,8 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -11,7 +12,8 @@ use Tests\TestCase;
  */
 class RetreatControllerTest extends TestCase
 {
-    use WithFaker;
+    // use DatabaseTransactions;
+    use withFaker;
 
     /**
      * @test
@@ -572,7 +574,7 @@ class RetreatControllerTest extends TestCase
                     'canceled_at' => null,
                     'role_id' => config('polanco.participant_role_id.'.$role),
                 ]);
-            
+
             $response = $this->actingAs($user)->get('retreat/'.$registration->event_id.'/namebadges/'.$role);
 
             $response->assertOk();

@@ -2,7 +2,8 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Carbon\Carbon;
@@ -12,7 +13,8 @@ use Carbon\Carbon;
  */
 class DashboardControllerTest extends TestCase
 {
-    use WithFaker;
+    // use DatabaseTransactions;
+    use withFaker;
 
     /**
      * @test

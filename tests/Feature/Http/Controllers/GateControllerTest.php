@@ -2,7 +2,8 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -11,7 +12,9 @@ use Tests\TestCase;
  */
 class GateControllerTest extends TestCase
 {
-    use WithFaker;
+    // use DatabaseTransactions;
+    use withFaker;
+    
     // TODO: develop funcitonal tests
     // for now, I am not actually going to test the functionality but just ensure the controller methods function
 

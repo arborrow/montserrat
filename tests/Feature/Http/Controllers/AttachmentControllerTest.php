@@ -2,7 +2,8 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -13,7 +14,8 @@ use Tests\TestCase;
  */
 class AttachmentControllerTest extends TestCase
 {
-    use WithFaker;
+    // use DatabaseTransactions;
+    use withFaker;
 
     /**
      * @test
@@ -506,7 +508,6 @@ class AttachmentControllerTest extends TestCase
 
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(route('attachment.index'));
-
     }
 
     /**
@@ -529,7 +530,6 @@ class AttachmentControllerTest extends TestCase
 
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(route('attachment.index'));
-
     }
 
     /**
@@ -617,7 +617,6 @@ class AttachmentControllerTest extends TestCase
         $response->assertRedirect(route('attachment.index'));
         // $response->assertSeeText('Attachments');
         // $response->assertSeeText('Storing attachment');
-
     }
 
     /**
@@ -656,5 +655,4 @@ class AttachmentControllerTest extends TestCase
         $this->assertEquals($updated->description, $new_attachment_description);
         $this->assertNotEquals($updated->description, $attachment_description);
     }
-
 }

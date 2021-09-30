@@ -6,6 +6,7 @@ use App\Models\ContactLanguage;
 use App\Models\EmergencyContact;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
+
 use Tests\TestCase;
 
 /**
@@ -13,6 +14,7 @@ use Tests\TestCase;
  */
 class PersonControllerTest extends TestCase
 {
+    // use DatabaseTransactions;
     use withFaker;
 
     /**

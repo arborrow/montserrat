@@ -3,7 +3,8 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\GroupContact;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Illuminate\Support\Arr;
@@ -13,6 +14,7 @@ use Illuminate\Support\Arr;
  */
 class RegistrationControllerTest extends TestCase
 {
+    // use DatabaseTransactions;
     use withFaker;
 
     /**

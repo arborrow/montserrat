@@ -9,13 +9,17 @@ use GuzzleHttp\Psr7\Response;
 use Tests\TestCase;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
+
 
 /**
  * @see \App\Http\Controllers\PageController
  */
 class PageControllerTest extends TestCase
 {
-    use WithFaker;
+    // use DatabaseTransactions;
+    use withFaker;
     /**
      * @test
      */
@@ -227,7 +231,7 @@ class PageControllerTest extends TestCase
 
         $response->assertOk();
         // TODO: assert that the pdf file is created, consider making a seperate view for display and testing number of entries depending on start and end dates
-        
+
     }
 
     /**

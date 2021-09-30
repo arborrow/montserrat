@@ -3,7 +3,8 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Organization;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -12,7 +13,8 @@ use Tests\TestCase;
  */
 class OrganizationControllerTest extends TestCase
 {
-    use WithFaker;
+    // use DatabaseTransactions;
+    use withFaker;
 
     /**
      * @test

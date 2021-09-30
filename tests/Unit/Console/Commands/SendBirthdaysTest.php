@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Console\Commands;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Mail;
 use Tests\TestCase;
@@ -12,7 +12,8 @@ use Tests\TestCase;
  */
 class SendBirthdaysTest extends TestCase
 {
-    use WithFaker;
+    // use DatabaseTransactions; 
+    use withFaker;
 
     /**
      * @test
