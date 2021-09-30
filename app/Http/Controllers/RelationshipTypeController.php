@@ -101,7 +101,7 @@ class RelationshipTypeController extends Controller
     {
         $this->authorize('show-relationshiptype');
         $relationship_type = \App\Models\RelationshipType::findOrFail($id);
-        $relationships = \App\Models\Relationship::whereRelationshipTypeId($id)->orderBy('contact_id_a')->with('contact_a', 'contact_b')->paginate(25);
+        $relationships = \App\Models\Relationship::whereRelationshipTypeId($id)->orderBy('contact_id_a')->with('contact_a', 'contact_b')->paginate(25,['*'],'relationships');
 
         return view('relationships.types.show', compact('relationship_type', 'relationships')); //
     }

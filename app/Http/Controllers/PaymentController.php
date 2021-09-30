@@ -23,7 +23,7 @@ class PaymentController extends Controller
     public function index()
     {
         $this->authorize('show-payment');
-        $payments = \App\Models\Payment::orderBy('payment_date', 'desc')->with('donation.retreat')->paginate(25);
+        $payments = \App\Models\Payment::orderBy('payment_date', 'desc')->with('donation.retreat')->paginate(25,['*'],'payments');
         //dd($donations);
         return view('payments.index', compact('payments'));
     }
@@ -65,10 +65,10 @@ class PaymentController extends Controller
     {
         $this->authorize('show-payment');
         if (! empty($request)) {
-            $payments = \App\Models\Payment::filtered($request)->orderBy('payment_date')->paginate(25);
+            $payments = \App\Models\Payment::filtered($request)->orderBy('payment_date')->paginate(25,['*'],'payments');
             $payments->appends($request->except('page'));
         } else {
-            $payments = \App\Models\Payment::orderBy('payment_date')->paginate(25);
+            $payments = \App\Models\Payment::orderBy('payment_date')->paginate(25,['*'],'payments');
         }
 
         return view('payments.results', compact('payments'));

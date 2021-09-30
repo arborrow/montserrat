@@ -17,7 +17,7 @@ class GateController extends Controller
     public function index()
     {
         $this->authorize('show-gate');
-        $touchpoints = \App\Models\Touchpoint::whereType('Gate activity')->orderBy('touched_at', 'desc')->with('person', 'staff')->paginate(25);
+        $touchpoints = \App\Models\Touchpoint::whereType('Gate activity')->orderBy('touched_at', 'desc')->with('person', 'staff')->paginate(25,['*'],'touchpoints');
 
         return view('gate.index', compact('touchpoints'));
     }

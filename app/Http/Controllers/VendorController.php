@@ -21,7 +21,7 @@ class VendorController extends Controller
     public function index()
     {
         $this->authorize('show-contact');
-        $vendors = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.vendor'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites')->paginate(25);
+        $vendors = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.vendor'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites')->paginate(25,['*'],'vendors');
 
         return view('vendors.index', compact('vendors'));   //
     }

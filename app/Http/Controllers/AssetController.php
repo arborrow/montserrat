@@ -95,10 +95,10 @@ class AssetController extends Controller
     {
         $this->authorize('show-asset');
         if (! empty($request)) {
-            $assets = \App\Models\Asset::filtered($request)->orderBy('name')->paginate(25);
+            $assets = \App\Models\Asset::filtered($request)->orderBy('name')->paginate(25,['*'],'assets');
             $assets->appends($request->except('page'));
         } else {
-            $assets = \App\Models\Asset::orderBy('name')->paginate(25);
+            $assets = \App\Models\Asset::orderBy('name')->paginate(25,['*'],'assets');
         }
 
         return view('assets.results', compact('assets'));
