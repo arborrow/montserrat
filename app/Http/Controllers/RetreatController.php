@@ -38,7 +38,7 @@ class RetreatController extends Controller
         $defaults['type'] = 'Retreat';
         $event_types = \App\Models\EventType::whereIsActive(1)->orderBy('name')->pluck('id', 'name');
 
-        $retreats = \App\Models\Retreat::whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->withCount('retreatants')->get();
+        $retreats = \App\Models\Retreat::whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->withCount('retreatants')->paginate(25,['*'],'retreats');
         $oldretreats = \App\Models\Retreat::whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date', 'desc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->withCount('retreatants')->paginate(25,['*'],'oldretreats');
 
         return view('retreats.index', compact('retreats', 'oldretreats', 'defaults', 'event_types', 'results'));   //
@@ -56,7 +56,7 @@ class RetreatController extends Controller
         $defaults = [];
         $defaults['type'] = $event_type->label;
 
-        $retreats = \App\Models\Retreat::whereEventTypeId($event_type_id)->whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->withCount('retreatants')->get();
+        $retreats = \App\Models\Retreat::whereEventTypeId($event_type_id)->whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->withCount('retreatants')->paginate(25,['*'],'retreats');
         $oldretreats = \App\Models\Retreat::whereEventTypeId($event_type_id)->whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date', 'desc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->withCount('retreatants')->paginate(25,['*'],'oldretreats');
 
         return view('retreats.index', compact('retreats', 'oldretreats', 'defaults', 'event_types', 'results'));   //

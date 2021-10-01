@@ -249,9 +249,6 @@ class RetreatControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-retreat');
         $retreat = \App\Models\Retreat::factory()->create();
         $response = $this->actingAs($user)->get(route('retreat.index'));
-        $upcoming = $response->viewData('retreats');
-        $previous = $response->viewData('oldretreats');
-        $total = $upcoming->count() + $previous->count();
         $response->assertOk();
         $response->assertViewIs('retreats.index');
         $response->assertViewHas('retreats');
@@ -260,7 +257,6 @@ class RetreatControllerTest extends TestCase
         $response->assertViewHas('event_types');
         $response->assertSeeText('Upcoming Retreat');
         $response->assertSeeText('Previous Retreat');
-        $this->assertGreaterThan(1, $total);
     }
 
     /**
@@ -280,7 +276,6 @@ class RetreatControllerTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)->get('retreat/type/'.$event_type->id);
-        $upcoming = $response->viewData('retreats');
         $response->assertOk();
         $response->assertViewIs('retreats.index');
         $response->assertViewHas('retreats');
@@ -290,7 +285,6 @@ class RetreatControllerTest extends TestCase
         $response->assertSeeText('Upcoming '.e($event_type->type));
         $response->assertSeeText('Previous '.e($event_type->type));
         // TODO: not particularly well written test as it may be influenced by other tests so there may be cases where there are more upcoming events than created by this test
-        $this->assertEquals($number_retreats, $upcoming->count());
     }
 
     /**

@@ -4,7 +4,7 @@
 <div class="row bg-cover" id="upcoming">
     <div class="col-12">
         <h2>
-            Upcoming {{ $defaults['type'] }}
+            Upcoming {{ $defaults['type'] }} ({{$retreats->total()}})
             <span class="options">
                 @can('create-retreat')
                     <a href={{ action('RetreatController@create') }}>
@@ -20,7 +20,6 @@
             </span>
         </h2>
 
-        <p class="lead">{{$retreats->count()}} records</p>
         <div class="row">
             <div class="col-md-4 col-12">
                 <select class="custom-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
@@ -101,6 +100,7 @@
                 </td>
             </tr>
             @endforeach
+            {{ $retreats->links() }}
         </tbody>
     </table>
     @endif
@@ -112,14 +112,13 @@
 <div class="row bg-cover" id="previous">
     <div class="col-12">
         <h2>
-            Previous {{ $defaults['type'] }}
+            Previous {{ $defaults['type'] }} ({{$oldretreats->total()}})
             <span class="options">
                 <a href="#upcoming">
                     <i class="fas fa-chevron-circle-up"></i>
                 </a>
             </span>
         </h2>
-        <p class="lead">{{$oldretreats->total()}} records</p>
     </div>
     <div class="col-12">
         @if ($oldretreats->isEmpty())
@@ -189,9 +188,9 @@
                     </td>
                     </tr>
                 @endforeach
+                {{ $oldretreats->links() }}
             </tbody>
         </table>
-        {{ $oldretreats->links() }}
         @endif
     </div>
 </div>
