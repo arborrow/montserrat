@@ -14,7 +14,7 @@ class GateControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;
-    
+
     // TODO: develop funcitonal tests
     // for now, I am not actually going to test the functionality but just ensure the controller methods function
 
@@ -74,7 +74,7 @@ class GateControllerTest extends TestCase
     public function open_with_hours_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-gate');
-        $hours = $this->faker->numberBetween(2,6);
+        $hours = $this->faker->numberBetween(2,5);
         $email = \App\Models\Email::factory()->create([
             'email' => $user->email,
         ]);

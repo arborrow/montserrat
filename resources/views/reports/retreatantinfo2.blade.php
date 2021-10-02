@@ -10,7 +10,7 @@
 <table width="100%">
     <tr>
         <td>
-            <h2>Name and Address</h2>
+            <h2>Name and Address ({{ $registration->retreatant->primary_address_location_name }})</h2>
         </td>
     </tr>
 	<tr><td>{!!$registration->retreatant->avatar_small_link!!}</td></tr>
@@ -29,31 +29,31 @@
 
     <tr>
         <td>
-            <h2>Phone numbers</h2>
+            <h2>Phone numbers ({{ $registration->retreatant->primary_phone_location_name }} {{ $registration->retreatant->primary_phone_type }})</h2>
         </td>
     </tr>
     <tr>
-        <td><strong>Home phone: </strong>{{$registration->retreatant->phone_home_phone_number}}</td>
+        <td><strong>{{ !empty(($registration->retreatant->phone_home_phone->is_primary)) ? '*' : null }} Home phone: </strong>{{$registration->retreatant->phone_home_phone_number}}</td>
         <td><hr/></td>
     </tr>
     <tr>
-        <td><strong>Mobile phone: </strong>{{$registration->retreatant->phone_home_mobile_number}}</td>
+        <td><strong>{{ !empty(($registration->retreatant->phone_home_mobile->is_primary)) ? '*' : null }} Mobile phone: </strong>{{$registration->retreatant->phone_home_mobile_number}}</td>
         <td><hr/></td>
     </tr>
     <tr>
-        <td><strong>Work phone: </strong>{{$registration->retreatant->phone_work_phone_number}}</td>
+        <td><strong>{{ !empty(($registration->retreatant->phone_work_phone->is_primary)) ? '*' : null }} Work phone: </strong>{{$registration->retreatant->phone_work_phone_number}}</td>
         <td><hr/></td>
     </tr>
     <tr>
         <td>
-            <h2>Email addresses</h2>
+            <h2>Email addresses ({{ $registration->retreatant->primary_email_location_name }})</h2>
         </td>
     </tr>
 
     @foreach ($registration->retreatant->emails as $email)
     @if (!empty($email->email))
     <tr>
-        <td><strong>{{$email->location->name}} - Email: </strong>{{$email->email}}</td>
+        <td><strong>{{ ($email->is_primary) ? '*' : null }} {{$email->location->name}} - Email: </strong>{{$email->email}}</td>
         <td><hr/></td>
     </tr>
     @endif
@@ -62,7 +62,7 @@
         <td><h2>Preferred contact method</h2>
     </tr>
     <tr>
-        <td>(Email, Cell, Home, Work, Mail, etc.): {{$registration->retreatant->preferred_communication_method}}</td>
+        <td><strong>(Email, Cell, Home, Work, Mail, etc.):</strong>  {{config('polanco.preferred_communication_method.'.$registration->retreatant->preferred_communication_method) }}</td>
         <td><hr/></td>
     </tr>
     <tr>

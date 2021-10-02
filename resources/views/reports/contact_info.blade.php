@@ -6,7 +6,7 @@
 <table width="100%">
     <tr>
         <td>
-            <h2>Name and Address</h2>
+            <h2>Name and Address ({{ $person->primary_address_location_name }})</h2>
         </td>
     </tr>
     <tr>
@@ -24,58 +24,44 @@
 
     <tr>
         <td>
-            <h2>Phone numbers</h2>
+            <h2>Phone numbers ({{ $person->primary_phone_location_name }} {{ $person->primary_phone_type }})</h2>
         </td>
     </tr>
     <tr>
-        <td><strong>Home phone: </strong>{{$person->phone_home_phone_number}}</td>
+        <td><strong>{{ !empty(($person->phone_home_phone->is_primary)) ? '*' : null }} Home phone: </strong>{{$person->phone_home_phone_number}}</td>
         <td><hr/></td>
     </tr>
     <tr>
-        <td><strong>Mobile phone: </strong>{{$person->phone_home_mobile_number}}</td>
+        <td><strong>{{ !empty(($person->phone_home_mobile->is_primary)) ? '*' : null }} Mobile phone: </strong>{{$person->phone_home_mobile_number}}</td>
         <td><hr/></td>
     </tr>
     <tr>
-        <td><strong>Work phone: </strong>{{$person->phone_work_phone_number}}</td>
+        <td><strong>{{ !empty(($person->phone_work_phone->is_primary)) ? '*' : null }}Work phone: </strong>{{$person->phone_work_phone_number}}</td>
         <td><hr/></td>
     </tr>
     <tr>
         <td>
-            <h2>Email addresses</h2>
+            <h2>Email addresses ({{ $person->primary_email_location_name }})</h2>
         </td>
     </tr>
 
     @foreach ($person->emails as $email)
     @if (!empty($email->email))
     <tr>
-        <td><strong>{{$email->location->name}} - Email: </strong>{{$email->email}}</td>
+        <td><strong>{{ ($email->is_primary) ? '*' : null }} {{$email->location->name}} {{$email->location->name}} - Email: </strong>{{$email->email}}</td>
         <td><hr/></td>
     </tr>
     @endif
     @endforeach
-    <tr>
-        <td><strong>Preferred contact method (Email, Cell, Home, Work, Mail, etc.): </strong> {{$person->preferred_communication_method}}</td>
-        <td><hr/></td>
-    </tr>
-    <tr><td> </td></tr>
-    <tr><td><h2>Emergency Contact Information</h2></td></tr>
 
     <tr>
-        <td><strong>Name (Relationship): </strong>{{$person->emergency_contact_name}}
-                @if (!empty($person->emergency_contact_relationship))
-                    ({{$person->emergency_contact_relationship}})
-                @endIf
-        </td>
-        <td><hr/></td>
+        <td><h2>Preferred contact method</h2>
     </tr>
     <tr>
-        <td><strong>Phone #: </strong>{{$person->emergency_contact_phone}}</td>
+        <td><strong>(Email, Cell, Home, Work, Mail, etc.):</strong>  {{config('polanco.preferred_communication_method.'.$person->preferred_communication_method) }}</td>
         <td><hr/></td>
     </tr>
-    <tr>
-        <td><strong>Alternate Phone #: </strong>{{$person->emergency_contact_phone_alternate}}</td>
-        <td><hr/></td>
-    </tr>
+
     <tr>
         <td>
             <h2>Demographics</h2>
@@ -122,6 +108,26 @@
         <td><hr/></td>
 
     </tr>
+
+    <tr><td><h2>Emergency Contact Information</h2></td></tr>
+
+    <tr>
+        <td><strong>Name (Relationship): </strong>{{$person->emergency_contact_name}}
+                @if (!empty($person->emergency_contact_relationship))
+                    ({{$person->emergency_contact_relationship}})
+                @endIf
+        </td>
+        <td><hr/></td>
+    </tr>
+    <tr>
+        <td><strong>Phone #: </strong>{{$person->emergency_contact_phone}}</td>
+        <td><hr/></td>
+    </tr>
+    <tr>
+        <td><strong>Alternate Phone #: </strong>{{$person->emergency_contact_phone_alternate}}</td>
+        <td><hr/></td>
+    </tr>
+
     <tr>
         <td>
             <h2>Notes</h2>
