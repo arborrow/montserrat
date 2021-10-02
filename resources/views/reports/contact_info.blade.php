@@ -48,7 +48,7 @@
     @foreach ($person->emails as $email)
     @if (!empty($email->email))
     <tr>
-        <td><strong>{{ ($email->is_primary) ? '*' : null }} {{$email->location->name}} {{$email->location->name}} - Email: </strong>{{$email->email}}</td>
+        <td><strong>{{ ($email->is_primary) ? '*' : null }} {{$email->location->name}} - Email: </strong>{{$email->email}}</td>
         <td><hr/></td>
     </tr>
     @endif
