@@ -24,7 +24,7 @@
 
     <tr>
         <td>
-            <h2>Phone numbers ({{ $person->primary_phone_location_name }} {{ $person->primary_phone_type }})</h2>
+            <h2>Phone numbers ({{ $person->primary_phone_location_name }}{{!empty($person->primary_phone_type) ? ' '.$person->primary_phone_type : null  }})</h2>
         </td>
     </tr>
     <tr>

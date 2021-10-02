@@ -29,7 +29,7 @@
 
     <tr>
         <td>
-            <h2>Phone numbers ({{ $registration->retreatant->primary_phone_location_name }} {{ $registration->retreatant->primary_phone_type }})</h2>
+            <h2>Phone numbers ({{ $registration->retreatant->primary_phone_location_name }}{{!empty($registration->retreatant->primary_phone_type) ? ' '.$registration->retreatant->primary_phone_type : null  }})</h2>
         </td>
     </tr>
     <tr>
