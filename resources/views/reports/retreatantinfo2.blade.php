@@ -62,7 +62,7 @@
         <td><h2>Preferred contact method</h2>
     </tr>
     <tr>
-        <td><strong>(Email, Cell, Home, Work, Mail, etc.):</strong>  {{config('polanco.preferred_communication_method.'.$registration->retreatant->preferred_communication_method) }}</td>
+        <td><strong>(Email, Phone, Postal Mail, or SMS/Text):</strong>  {{config('polanco.preferred_communication_method.'.$registration->retreatant->preferred_communication_method) }}</td>
         <td><hr/></td>
     </tr>
     <tr>
