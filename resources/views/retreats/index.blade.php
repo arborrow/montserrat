@@ -42,9 +42,7 @@
                 <th>ID#</th>
                 <th>Title</th>
                 <th>Starts - Ends</th>
-                <th>Director(s)</th>
-                <th>Innkeeper(s)</th>
-                <th>Assistant(s)</th>
+                <th>Roles</th>
                 <th># Attending</th>
                 <th>Attachments</th>
             </tr>
@@ -61,30 +59,35 @@
                 <td>{{ date('M j, Y', strtotime($retreat->start_date)) }} - {{ date('M j, Y', strtotime($retreat->end_date)) }}</td>
                 <td>
                     @if ($retreat->retreatmasters->isEmpty())
-                    N/A
+                    Director: N/A <br />
                     @else
+                        Director(s):
                         @foreach($retreat->retreatmasters as $retreatmaster)
                             {!!$retreatmaster->contact_link_full_name!!}<br />
                         @endforeach
                     @endif
-                </td>
-                <td>
                   @if ($retreat->innkeepers->isEmpty())
-                  N/A
                   @else
+                      Innkeeper(s):
                       @foreach($retreat->innkeepers as $innkeeper)
                           {!!$innkeeper->contact_link_full_name!!}<br />
                       @endforeach
                   @endif
-                </td>
-                <td>
                   @if ($retreat->assistants->isEmpty())
-                  N/A
                   @else
+                      Assistant(s):
                       @foreach($retreat->assistants as $assistant)
                           {!!$assistant->contact_link_full_name!!}<br />
                       @endforeach
                   @endif
+                  @if ($retreat->ambassadors->isEmpty())
+                  @else
+                      Ambassador(s):
+                      @foreach($retreat->ambassadors as $ambassador)
+                          {!!$ambassador->contact_link_full_name!!}<br />
+                      @endforeach
+                  @endif
+
                 </td>
                 <td><a href="{{url('retreat/'.$retreat->id.'#registrations')}}"> {{ $retreat->participant_count }}</a></td>
                 <td>
@@ -130,9 +133,7 @@
                     <th>ID#</th>
                     <th>Title</th>
                     <th>Starts - Ends</th>
-                    <th>Director(s)</th>
-                    <th>Innkeeper</th>
-                    <th>Assistant</th>
+                    <th>Roles</th>
                     <th># Attended</th>
                     <th>Attachments</th>
                 </tr>
@@ -149,28 +150,32 @@
                     <td>{{ date('M j, Y', strtotime($oldretreat->start_date)) }} - {{ date('M j, Y', strtotime($oldretreat->end_date)) }}</td>
                     <td>
                         @if ($oldretreat->retreatmasters->isEmpty())
-                        N/A
+                        Director: N/A <br />
                         @else
+                            Director(s):
                             @foreach($oldretreat->retreatmasters as $retreatmaster)
                                 {!!$retreatmaster->contact_link_full_name!!}<br />
                             @endforeach
                         @endif
-                    </td>
-                    <td>
                       @if ($oldretreat->innkeepers->isEmpty())
-                      N/A
                       @else
+                          Innkeeper(s):
                           @foreach($oldretreat->innkeepers as $innkeeper)
                               {!!$innkeeper->contact_link_full_name!!}<br />
                           @endforeach
                       @endif
-                    </td>
-                    <td>
                       @if ($oldretreat->assistants->isEmpty())
-                      N/A
                       @else
+                          Assistant(s):
                           @foreach($oldretreat->assistants as $assistant)
                               {!!$assistant->contact_link_full_name!!}<br />
+                          @endforeach
+                      @endif
+                      @if ($oldretreat->ambassadors->isEmpty())
+                      @else
+                          Ambassador(s):
+                          @foreach($oldretreat->ambassadors as $ambassador)
+                              {!!$ambassador->contact_link_full_name!!}<br />
                           @endforeach
                       @endif
                     </td>
