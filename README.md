@@ -12,7 +12,7 @@ git clone https://github.com/arborrow/montserrat.git
 ### Step 2: Install the dependencies
 **Must have the following installed:**
 * Composer
-* Node
+* Node (Node is not required if using Laravel Sail as your virtual environment)
 #### Backend Dependencies
 Running the following command will also add `Homestead` to the current project.
 ```
@@ -23,20 +23,15 @@ composer install
 yarn install
 ```
 
-### Step 3: Setup Laravel Homestead
-Must have the following installed:
-* [VirtualBox 5.2](https://www.virtualbox.org/wiki/Downloads) installed.
+### Step 3: Setup Virtual Environment (Laravel Homestead or Laravel Sail)
+For Laravel Homestead, install:
+* [VirtualBox 5.2](https://www.virtualbox.org/wiki/Downloads)
 * [Vagrant](https://www.vagrantup.com/downloads.html)
+* [Read more about using Laravel Homestead](https://laravel.com/docs/8.x/homestead)
 
-#### Starting Vagrant
-Run the following command to wake up Vagrant. When running for the first time this command will take a while
-```
-vagrant up
-```
-Once the command has executed sucessfully `ssh` into the Vagrant box by running the following commmand.
-```
-vagrant ssh
-```
+For Laravel Sail, install:
+* [Docker](https://docs.docker.com/get-docker/)
+* [Read more about using Laravel Sail](https://laravel.com/docs/8.x/sail)
 
 ### Step 4: Setup the Database
 
@@ -47,6 +42,7 @@ Following commands must be executed **inside** your vagrant box.
 * `cd code`
 * `php artisan migrate:fresh --seed`
 *
+
 ### Step 5: Generate and Set Application Key
 #### Generating Key
 Run the following command to generate an application key
@@ -97,7 +93,7 @@ For **Twilio** replace `{twilio_sid}` with your `ACCOUNT SID`, `{twilio_token}` 
 For **Google Calendar** replace `{google_calendar_id}` with your `Calendar ID`. See [here](https://github.com/spatie/laravel-google-calendar#how-to-obtain-the-credentials-to-communicate-with-google-calendar) for more instructions on how to obtain the Google calendar ID.
 
 ### Step 7: Get Proper Permissions
-Once you have done everything above navigate to `localhost:8000`. Once you login using Google Auth, your user will not have any role assigned to it. Hence you will not be able to do anything. **You must do this before trying to get superuser access**
+Once you have done everything above navigate to `localhost:8000` (Laravel Homestead) or `localhost` (Laravel Sail) . Once you login using Google Auth, your user will not have any role assigned to it. Hence you will not be able to do anything. **You must do this before trying to get superuser access**
 
 #### Become the Superuser
 Run the following command to assign yourself (given that you are the first user to login) as the `superuser`.
