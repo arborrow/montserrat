@@ -42,7 +42,6 @@ the database configuration settings (host, name, username and password).
 Following commands must be executed **inside** your vagrant box.
 * `cd code`
 * `php artisan migrate:fresh --seed`
-*
 
 ### Step 5: Generate and Set Application Key
 #### Generating Key
