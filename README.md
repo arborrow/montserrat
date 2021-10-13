@@ -31,7 +31,7 @@ For Laravel Homestead, install:
 
 For Laravel Sail, install:
 * [Docker](https://docs.docker.com/get-docker/)
-** For [installing Docker in Ubuntu](https://docs.docker.com/engine/install/ubuntu/#installation-methods) or you can follow the [Digital Ocean instructions](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04)
+- For [installing Docker in Ubuntu](https://docs.docker.com/engine/install/ubuntu/#installation-methods) or you can follow the [Digital Ocean instructions](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04)
 * [docker-compose](https://docs.docker.com/compose/install/)
 * [Read more about using Laravel Sail](https://laravel.com/docs/8.x/sail)
 
