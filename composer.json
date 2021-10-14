@@ -42,6 +42,7 @@
         "fakerphp/faker": "^1.9.1",
         "jasonmccreary/laravel-test-assertions": "^2.0",
         "laravel/homestead": "^10.7",
+        "laravel/sail": "^1.11",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
         "orangehill/iseed": "^2.6.2",

@@ -24,12 +24,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(AssetTypeTableSeeder::class);
         $this->call(CivicrmParticipantStatusTypeTableSeeder::class);
         $this->call(ContactTableSeeder::class);
         $this->call(ContactLanguagesTableSeeder::class);
         $this->call(ContactReferralTableSeeder::class);
         $this->call(ContactTypeTableSeeder::class);
         $this->call(CountryTableSeeder::class);
+        $this->call(DepartmentTableSeeder::class);
+        $this->call(DonationTypeTableSeeder::class);
         $this->call(EthnicitiesTableSeeder::class);
         $this->call(EventsTableSeeder::class);
         $this->call(EventTypeTableSeeder::class);
@@ -49,15 +52,13 @@ class DatabaseSeeder extends Seeder
         $this->call(ReligionTableSeeder::class);
         $this->call(RolesTableSeeder::class);
         $this->call(SalutationsTableSeeder::class);
+        $this->call(SnippetsTableSeeder::class);
         $this->call(StateProvinceTableSeeder::class);
         $this->call(SuffixTableSeeder::class);
         $this->call(TouchcategoriesTableSeeder::class);
-        $this->call(DonationTypeTableSeeder::class);
-        $this->call(PermissionRoleTableSeeder::class);
         $this->call(UomTableSeeder::class);
-        $this->call(AssetTypeTableSeeder::class);
-        $this->call(DepartmentTableSeeder::class);
         // permissions
+        $this->call(PermissionRoleTableSeeder::class);
         $this->call(AssetPermissionsSeeder::class);
         $this->call(AssetTaskPermissionsSeeder::class);
         $this->call(AssetJobPermissionsSeeder::class);

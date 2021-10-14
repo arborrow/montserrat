@@ -52,7 +52,7 @@
                 </div>
                 <div class="col-12 col-md-4">
                     {!! Form::label("address_home_state", "State:") !!}
-                    {!! Form::select("address_home_state", $states, 0, ["class" => "form-control"]) !!}
+                    {!! Form::select("address_home_state", $states, config('polanco.state_province_id_tx'), ["class" => "form-control"]) !!}
                 </div>
                 <div class="col-12 col-md-4">
                     {!! Form::label("address_home_zip", "Zip:") !!}
