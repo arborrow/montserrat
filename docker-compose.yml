@@ -44,6 +44,9 @@ services:
 networks:
     sail:
         driver: bridge
+        ipam:
+            config:
+                - subnet: 172.16.0.0/24
 volumes:
     sailmysql:
         driver: local
