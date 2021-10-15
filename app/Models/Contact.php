@@ -56,7 +56,7 @@ class Contact extends Model implements Auditable
 
     public function address_primary()
     {
-        return $this->hasOne(Address::class, 'contact_id', 'id')->whereIsPrimary(1)->whereNotNull('street_address');
+        return $this->hasOne(Address::class, 'contact_id', 'id')->whereIsPrimary(1);
     }
 
     public function getPrimaryEmailLocationNameAttribute() {
@@ -178,7 +178,7 @@ class Contact extends Model implements Auditable
 
     public function email_primary()
     {
-        return $this->hasOne(Email::class, 'contact_id', 'id')->whereIsPrimary(1)->whereNotNull('email');
+        return $this->hasOne(Email::class, 'contact_id', 'id')->whereIsPrimary(1);
     }
 
     public function emergency_contact()
@@ -1133,7 +1133,7 @@ class Contact extends Model implements Auditable
 
     public function phone_primary()
     {
-        return $this->hasOne(Phone::class, 'contact_id', 'id')->whereIsPrimary(1)->whereNotNull('phone');
+        return $this->hasOne(Phone::class, 'contact_id', 'id')->whereIsPrimary(1);
     }
 
     public function phone_main_phone()
