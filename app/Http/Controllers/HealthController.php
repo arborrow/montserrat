@@ -104,6 +104,7 @@ class HealthController extends Controller
         $results = collect([]);
 
         $duplicate_relationships = DB::table('relationship')
+        ->whereNull('deleted_at')
         ->groupBy('contact_id_a','contact_id_b','relationship_type_id')
         ->havingRaw('count(id) > 1')
         ->select('contact_id_a','contact_id_b','relationship_type_id')
