@@ -22,21 +22,40 @@ class StoreDioceseRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
-        return [
-            'organization_name' => 'required',
-            'bishop_id' => 'integer|min:0',
-            'email_main' => 'email|nullable',
-            'url_main' => 'url|nullable',
-            'url_facebook' => 'url|regex:/facebook\\.com\\/.+/i|nullable',
-            'url_google' => 'url|regex:/plus\\.google\\.com\\/.+/i|nullable',
-            'url_twitter' => 'url|regex:/twitter\\.com\\/.+/i|nullable',
-            'url_instagram' => 'url|regex:/instagram\\.com\\/.+/i|nullable',
-            'url_linkedin' => 'url|regex:/linkedin\\.com\\/.+/i|nullable',
-            'phone_main_phone' => 'phone|nullable',
-            'phone_main_fax' => 'phone|nullable',
-            'diocese_note' => 'string|nullable',
-        ];
+    {   // if Twilio is enabled then validate phone numbers otherwise allow strings
+        if (null !== config('settings.twilio_sid') && null !== config('settings.twilio_token')) {
+
+            return [
+                'organization_name' => 'required',
+                'bishop_id' => 'integer|min:0',
+                'email_main' => 'email|nullable',
+                'url_main' => 'url|nullable',
+                'url_facebook' => 'url|regex:/facebook\\.com\\/.+/i|nullable',
+                'url_google' => 'url|regex:/plus\\.google\\.com\\/.+/i|nullable',
+                'url_twitter' => 'url|regex:/twitter\\.com\\/.+/i|nullable',
+                'url_instagram' => 'url|regex:/instagram\\.com\\/.+/i|nullable',
+                'url_linkedin' => 'url|regex:/linkedin\\.com\\/.+/i|nullable',
+                'phone_main_phone' => 'phone|nullable',
+                'phone_main_fax' => 'phone|nullable',
+                'diocese_note' => 'string|nullable',
+            ];
+          } else {
+            return [
+                'organization_name' => 'required',
+                'bishop_id' => 'integer|min:0',
+                'email_main' => 'email|nullable',
+                'url_main' => 'url|nullable',
+                'url_facebook' => 'url|regex:/facebook\\.com\\/.+/i|nullable',
+                'url_google' => 'url|regex:/plus\\.google\\.com\\/.+/i|nullable',
+                'url_twitter' => 'url|regex:/twitter\\.com\\/.+/i|nullable',
+                'url_instagram' => 'url|regex:/instagram\\.com\\/.+/i|nullable',
+                'url_linkedin' => 'url|regex:/linkedin\\.com\\/.+/i|nullable',
+                'phone_main_phone' => 'string|nullable',
+                'phone_main_fax' => 'string|nullable',
+                'diocese_note' => 'string|nullable',
+            ];
+
+          }
     }
 
     /**

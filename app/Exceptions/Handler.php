@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -78,8 +79,8 @@ class Handler extends ExceptionHandler
             $mailable = 1;
             $subject = '500 '.$subject.': '.$exception->getMessage();
         }
-
-        if ($mailable) {
+        // Do not actually mail if we are not in production
+        if ($mailable && App::environment()=='production') {
             Mail::send('emails.en_US.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject], function ($m) use ($subject, $exception, $request) {
                 $m->to(config('polanco.admin_email'))->subject($subject);
             });

@@ -6,33 +6,53 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                        <span class="grey">Database Health Index</span>
+                        <span class="grey">Database Health Checks</span>
                     </h1>
                 </div>
-                @if ($results->isEmpty())
+                @if (empty($results))
                     <p>It is a brand new world, there are no database health results!</p>
                 @else
-                <table class="table table-bordered table-striped table-responsive"><caption><h2>results</h2></caption>
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Results</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($results as $result)
-                        <tr>
-                            <td>{{ $result->title }}</td>
-                            <td>{{ $result->description }}</td>
-                            <td>{{ $result->results }}</td>
-                            <td>{{ $result->status }}</td>
-                        </tr>
-                        @endforeach
+                    <table class="table table-bordered table-striped table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Database check name</th>
+                                <th>Results</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($results as $check=>$result)
+                            @if($result->count()==0)
+                              <tr class="table-success">
+                            @else
+                              <tr class="table-warning">
+                            @endIf
+                                <td>{{ $check }} ({{$result->count()}})</td>
+                                <td>
+                                  <table class="table-danger">
+                                    @foreach($result as $field)
+                                    @if($loop->first)
+                                      <thead><tr>
 
-                    </tbody>
-                </table>
+                                      @foreach($field as $column=>$value)
+                                        <th>{{$column}}</th>
+                                      @endforeach
+
+                                      </tr></thead>
+                                    @endIf
+                                    <tbody>
+                                      <tr>@foreach($field as $column=>$value)
+                                        <td>{{$value}}</td>
+                                      @endforeach
+                                    </tr>
+                                    </tbody>
+                                    @endforeach
+                                  </table>
+
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 @endif
             </div>
         </div>
