@@ -15,7 +15,7 @@
                     <table class="table table-bordered table-striped table-responsive">
                         <thead>
                             <tr>
-                                <th>Database check name</th>
+                                <th>Name of database check</th>
                                 <th>Results</th>
                             </tr>
                         </thead>
