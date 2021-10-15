@@ -28,26 +28,29 @@
                             @endIf
                                 <td>{{ $check }} ({{$result->count()}})</td>
                                 <td>
-                                  <table class="table-danger">
-                                    @foreach($result as $field)
-                                    @if($loop->first)
-                                      <thead><tr>
+                                  @if($result->count()==0)
+                                    Passed
+                                  @else
+                                      <table class="table-danger">
+                                        @foreach($result as $field)
+                                        @if($loop->first)
+                                          <thead><tr>
 
-                                      @foreach($field as $column=>$value)
-                                        <th>{{$column}}</th>
-                                      @endforeach
+                                          @foreach($field as $column=>$value)
+                                            <th>{{$column}}</th>
+                                          @endforeach
 
-                                      </tr></thead>
-                                    @endIf
-                                    <tbody>
-                                      <tr>@foreach($field as $column=>$value)
-                                        <td>{{$value}}</td>
-                                      @endforeach
-                                    </tr>
-                                    </tbody>
-                                    @endforeach
-                                  </table>
-
+                                          </tr></thead>
+                                        @endIf
+                                        <tbody>
+                                          <tr>@foreach($field as $column=>$value)
+                                            <td>{{$value}}</td>
+                                          @endforeach
+                                        </tr>
+                                        </tbody>
+                                        @endforeach
+                                      </table>
+                                  @endIf
                                 </td>
                             </tr>
                             @endforeach
