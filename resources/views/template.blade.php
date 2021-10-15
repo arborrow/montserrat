@@ -116,12 +116,11 @@
 							</div>
 						</div>
 					</li>
-                    @endcan
+          @endcan
 					@can('show-dashboard')
 						<li class="nav-item">
 							<a class="nav-link" href={{ route('dashboard.index') }}>Dashboards</a>
 						</li>
-
 					@endcan
 					@can('show-admin-menu')
 					<li class="nav-item dropdown">

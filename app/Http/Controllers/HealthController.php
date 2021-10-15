@@ -20,7 +20,7 @@ class HealthController extends Controller
      */
     public function index()
     {
-        $this->authorize('show-admin');
+        $this->authorize('show-admin-menu');
         $results = collect([]);
         $results->put('primary_address',$this->check_primary_address());
         $results->put('primary_email',$this->check_primary_email());
@@ -37,7 +37,7 @@ class HealthController extends Controller
      */
     public function check_primary_address()
     {
-        $this->authorize('show-admin');
+        $this->authorize('show-admin-menu');
         $results = collect([]);
         $address_primary = DB::table('address')->whereIsPrimary(1)->groupBy('contact_id')->havingRaw('count(id) > 1')->select('contact_id','street_address')->get();
 
@@ -51,7 +51,7 @@ class HealthController extends Controller
      */
     public function check_primary_email()
     {
-        $this->authorize('show-admin');
+        $this->authorize('show-admin-menu');
         $results = collect([]);
         $email_primary = DB::table('email')->whereIsPrimary(1)->groupBy('contact_id')->havingRaw('count(id) > 1')->select('contact_id','email')->get();
 
@@ -65,7 +65,7 @@ class HealthController extends Controller
      */
     public function check_primary_phone()
     {
-        $this->authorize('show-admin');
+        $this->authorize('show-admin-menu');
         $results = collect([]);
         $phone_primary = DB::table('phone')->whereIsPrimary(1)->groupBy('contact_id')->havingRaw('count(id) > 1')->select('contact_id','phone')->get();
 
@@ -79,7 +79,7 @@ class HealthController extends Controller
      */
     public function check_abandoned_payments()
     {
-        $this->authorize('show-admin');
+        $this->authorize('show-admin-menu');
         $results = collect([]);
 
         $abandoned_payments = DB::table('Donations_payment')->where('Donations_payment.payment_amount','>',0)
