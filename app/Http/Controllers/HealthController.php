@@ -26,6 +26,7 @@ class HealthController extends Controller
         $results->put('primary_email',$this->check_primary_email());
         $results->put('primary_phone',$this->check_primary_phone());
         $results->put('abandoned_payments',$this->check_abandoned_payments());
+        $results->put('duplicate_relationships',$this->check_duplicate_relationships());
 
         return view('health.index', compact('results'));   //
     }
@@ -89,6 +90,26 @@ class HealthController extends Controller
         ->get();
         return $abandoned_payments;   //
     }
+
+    /**
+     * Run the duplicate relationships check to ensure there are no duplicated relationships
+     * // SELECT CONCAT(contact_id_a,":",contact_id_b,":",relationship_type_id) , COUNT(*) FROM relationship WHERE deleted_at IS NULL GROUP BY (CONCAT(contact_id_a,":",contact_id_b,":",relationship_type_id)) HAVING COUNT(*)>1
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function check_duplicate_relationships()
+    {
+        $this->authorize('show-admin-menu');
+        $results = collect([]);
+
+        $duplicate_relationships = DB::table('relationship')
+        ->groupBy('contact_id_a','contact_id_b','relationship_type_id')
+        ->havingRaw('count(id) > 1')
+        ->select('contact_id_a','contact_id_b','relationship_type_id')
+        ->get();
+        return $duplicate_relationships;
+
+    }
+
 
 
 }
