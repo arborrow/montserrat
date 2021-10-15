@@ -221,6 +221,7 @@ class StorePersonRequestTest extends TestCase
                 'url_twitter' => 'url|regex:/twitter\\.com\\/.+/i|nullable',
                 'url_instagram' => 'url|regex:/instagram\\.com\\/.+/i|nullable',
                 'url_linkedin' => 'url|regex:/linkedin\\.com\\/.+/i|nullable',
+            ], $actual);
         }
     }
 
