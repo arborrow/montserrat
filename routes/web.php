@@ -85,6 +85,7 @@ Route::group(['middleware' => ['web', 'activity']], function () {
         Route::resource('department', 'DepartmentController');
         Route::resource('donation_type', 'DonationTypeController');
         Route::resource('export_list', 'ExportListController');
+        Route::get('health', 'HealthController@index')->name('admin.health.index');
         Route::resource('location', 'LocationController');
         Route::get('location/type/{type?}', 'LocationController@index_type');
         Route::resource('permission', 'PermissionController');
