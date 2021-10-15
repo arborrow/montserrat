@@ -40,7 +40,7 @@ class HealthController extends Controller
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
-        $address_primary = DB::table('address')->whereIsPrimary(1)->groupBy('contact_id')->havingRaw('count(id) > 1')->select('contact_id','street_address')->get();
+        $address_primary = DB::table('address')->whereIsPrimary(1)->whereNull('deleted_at')->groupBy('contact_id')->havingRaw('count(id) > 1')->select('contact_id','street_address')->get();
 
         return $address_primary;   //
     }
@@ -54,7 +54,7 @@ class HealthController extends Controller
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
-        $email_primary = DB::table('email')->whereIsPrimary(1)->groupBy('contact_id')->havingRaw('count(id) > 1')->select('contact_id','email')->get();
+        $email_primary = DB::table('email')->whereIsPrimary(1)->whereNull('deleted_at')->groupBy('contact_id')->havingRaw('count(id) > 1')->select('contact_id','email')->get();
 
         return $email_primary;   //
     }
@@ -68,7 +68,7 @@ class HealthController extends Controller
     {
         $this->authorize('show-admin-menu');
         $results = collect([]);
-        $phone_primary = DB::table('phone')->whereIsPrimary(1)->groupBy('contact_id')->havingRaw('count(id) > 1')->select('contact_id','phone')->get();
+        $phone_primary = DB::table('phone')->whereIsPrimary(1)->whereNull('deleted_at')->groupBy('contact_id')->havingRaw('count(id) > 1')->select('contact_id','phone')->get();
 
         return $phone_primary;   //
     }
@@ -83,8 +83,10 @@ class HealthController extends Controller
         $this->authorize('show-admin-menu');
         $results = collect([]);
 
-        $abandoned_payments = DB::table('Donations_payment')->where('Donations_payment.payment_amount','>',0)
+        $abandoned_payments = DB::table('Donations_payment')
         ->leftJoin('Donations','Donations.donation_id','=','Donations_payment.donation_id')
+        ->where('Donations_payment.payment_amount','>',0)
+        ->whereNull('Donations_payment.deleted_at')
         ->whereNotNull('Donations.deleted_at')
         ->select('Donations.contact_id','Donations_payment.donation_id','Donations.donation_amount','Donations_payment.payment_id','Donations_payment.payment_amount')
         ->get();
