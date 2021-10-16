@@ -28,6 +28,7 @@ class HealthController extends Controller
         $results->put('abandoned_payments',$this->check_abandoned_payments());
         $results->put('duplicate_relationships',$this->check_duplicate_relationships());
         $results->put('address_with_no_country',$this->check_address_with_no_country());
+        $results->put('polygamy',$this->check_polygamy());
 
         return view('health.index', compact('results'));   //
     }
@@ -135,6 +136,41 @@ class HealthController extends Controller
         return $address_with_no_country;
 
     }
+
+    /**
+     * Check for husbands with more than one wife and wives with more than one husband
+     *     // SELECT contact_id_b FROM relationship WHERE deleted_at IS NULL AND relationship_type_id=2 GROUP BY contact_id_b HAVING COUNT(contact_id_b)>1;
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function check_polygamy()
+    {
+        $this->authorize('show-admin-menu');
+        $results = collect([]);
+
+        $husbands = DB::table('relationship')
+        ->whereNull('deleted_at')
+        ->whereRelationshipTypeId(config('polanco.relationship_type.husband_wife'))
+        ->groupBy('contact_id_a')
+        ->havingRaw('count(id) > 1')
+        ->select('id','contact_id_a','contact_id_b')
+        ->get();
+
+        $wives = DB::table('relationship')
+        ->whereNull('deleted_at')
+        ->whereRelationshipTypeId(config('polanco.relationship_type.husband_wife'))
+        ->groupBy('contact_id_b')
+        ->havingRaw('count(id) > 1')
+        ->select('id','contact_id_a','contact_id_b')
+        ->get();
+        return
+
+
+        $polygamy = $husbands->merge($wives);
+        return $polygamy;
+
+    }
+
+    // SELECT contact_id_b FROM relationship WHERE deleted_at IS NULL AND relationship_type_id=2 GROUP BY contact_id_b HAVING COUNT(contact_id_b)>1;
 
 
 }
