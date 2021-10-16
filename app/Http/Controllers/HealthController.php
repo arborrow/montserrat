@@ -128,7 +128,7 @@ class HealthController extends Controller
         $address_with_no_country = DB::table('address')
         ->whereNull('deleted_at')
         ->whereIsPrimary(1)
-        ->whereNull('street_address')
+        ->whereNotNull('street_address')
         ->whereCountryId(0)
         ->select('id','contact_id','street_address','city','postal_code')
         ->get();
