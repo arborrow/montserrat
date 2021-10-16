@@ -90,8 +90,8 @@ class HealthController extends Controller
           $abandoned_donations = DB::table('Donations')
           ->leftJoin('contact','Donations.contact_id','=','contact.id')
           ->where('Donations.donation_amount','>',0)
-          ->whereNull('contact.deleted_at')
-          ->whereNotNull('Donations.deleted_at')
+          ->whereNotNull('contact.deleted_at')
+          ->whereNull('Donations.deleted_at')
           ->select('Donations.donation_id','Donations.contact_id','contact.sort_name','Donations.donation_amount','Donations.donation_date')
           ->get();
           return $abandoned_donations;   //
