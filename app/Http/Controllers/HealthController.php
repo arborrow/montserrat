@@ -27,6 +27,7 @@ class HealthController extends Controller
         $results->put('primary_phone',$this->check_primary_phone());
         $results->put('abandoned_payments',$this->check_abandoned_payments());
         $results->put('duplicate_relationships',$this->check_duplicate_relationships());
+        $results->put('address_with_no_country',$this->check_address_with_no_country());
 
         return view('health.index', compact('results'));   //
     }
@@ -114,6 +115,26 @@ class HealthController extends Controller
 
     }
 
+    /**
+     * Check for primary addresses with no country
+     * // SELECT * FROM address WHERE country_id = 0 AND deleted_at IS NULL AND street_address IS NOT NULL AND is_primary = 1;
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function check_address_with_no_country()
+    {
+        $this->authorize('show-admin-menu');
+        $results = collect([]);
+
+        $address_with_no_country = DB::table('address')
+        ->whereNull('deleted_at')
+        ->whereIsPrimary(1)
+        ->whereNull('street_address')
+        ->whereCountryId(0)
+        ->select('id','contact_id','street_address','city','postal_code')
+        ->get();
+        return $address_with_no_country;
+
+    }
 
 
 }
