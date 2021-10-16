@@ -25,7 +25,9 @@ class HealthController extends Controller
         $results->put('primary_address',$this->check_primary_address());
         $results->put('primary_email',$this->check_primary_email());
         $results->put('primary_phone',$this->check_primary_phone());
+        $results->put('abandoned_donations',$this->check_abandoned_donations());
         $results->put('abandoned_payments',$this->check_abandoned_payments());
+        $results->put('abandoned_registrations',$this->check_abandoned_registrations());
         $results->put('duplicate_relationships',$this->check_duplicate_relationships());
         $results->put('address_with_no_country',$this->check_address_with_no_country());
         $results->put('polygamy',$this->check_polygamy());
@@ -75,6 +77,26 @@ class HealthController extends Controller
         return $phone_primary;   //
     }
 
+      /**
+       * Run the abandoned payments check to ensure there are no payments with a deleted donation
+       *
+       * @return \Illuminate\Database\Eloquent\Collection
+       */
+      public function check_abandoned_donations()
+      {
+          $this->authorize('show-admin-menu');
+          $results = collect([]);
+
+          $abandoned_donations = DB::table('Donations')
+          ->leftJoin('contact','Donations.contact_id','=','contact.id')
+          ->where('Donations.donation_amount','>',0)
+          ->whereNull('contact.deleted_at')
+          ->whereNotNull('Donations.deleted_at')
+          ->select('Donations.donation_id','Donations.contact_id','contact.sort_name','Donations.donation_amount','Donations.donation_date')
+          ->get();
+          return $abandoned_donations;   //
+      }
+
     /**
      * Run the abandoned payments check to ensure there are no payments with a deleted donation
      *
@@ -94,6 +116,26 @@ class HealthController extends Controller
         ->get();
         return $abandoned_payments;   //
     }
+
+
+      /**
+       * Run the abandoned registrations check to ensure there are no registrations (participant) with a deleted contact
+       *
+       * @return \Illuminate\Database\Eloquent\Collection
+       */
+      public function check_abandoned_registrations()
+      {
+          $this->authorize('show-admin-menu');
+          $results = collect([]);
+
+          $abandoned_registrations = DB::table('participant')
+          ->leftJoin('contact','participant.contact_id','=','contact.id')
+          ->whereNull('participant.deleted_at')
+          ->whereNotNull('contact.deleted_at')
+          ->select('participant.contact_id','participant.id','contact.sort_name')
+          ->get();
+          return $abandoned_registrations;   //
+      }
 
     /**
      * Run the duplicate relationships check to ensure there are no duplicated relationships
