@@ -199,6 +199,9 @@ Route::group(['middleware' => ['web', 'activity']], function () {
     Route::get('registration/{id}/cancel', 'RegistrationController@cancel')->name('registration.cancel');
     Route::get('registration/{id}/depart', 'RegistrationController@depart')->name('registration.depart');
     Route::resource('registration', 'RegistrationController');
+    
+    Route::get('relationship/disjoined', ['as' => 'relationship.disjoined', 'uses' => 'RelationshipController@disjoined']);
+    Route::get('relationship/rejoin/{id}/{dominant}', ['as' => 'relationship.rejoin', 'uses' => 'RelationshipController@rejoin']);
     Route::resource('relationship', 'RelationshipController');
 
     Route::post('relationship_type/addme', 'RelationshipTypeController@addme')->name('relationship_type.addme');
