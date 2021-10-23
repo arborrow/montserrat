@@ -6,11 +6,14 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                    <span class="grey">Disjoined Couples Index ({{ $couples->count() }})</span>
+                      <span class="grey">Disjoined Couples Index ({{ $couples->count() }})</span>
+                    </h1>
                 </div>
                 @if ($couples->isEmpty())
                     <p>Aleluya, there are no disjoined couples!</p>
                 @else
+                Couples that have different mailing addresses can be re-joined by clicking on the correct address. The address clicked upon will overwrite the incorrect address.
+                This is especially useful in fixing minor indescrepancies between spouses living together. <br />
                 <table class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
