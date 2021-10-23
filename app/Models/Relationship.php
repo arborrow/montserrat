@@ -14,7 +14,8 @@ class Relationship extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'relationship';
-    protected $fillable = ['contact_id_a', 'contact_id_b', 'relationship_type_id', 'is_active', 'description'];
+    protected $fillable = ['contact_id_a','contact_id_b','relationship_type_id','is_active','description'];
+    protected $appends = ['contact_a_address','contact_b_address'];
 
     public function relationship_type()
     {
@@ -82,4 +83,18 @@ class Relationship extends Model implements Auditable
         }
     }
 
+    public function getContactAAddressAttribute() {
+      if (isset($this->contact_a->address_primary->street_address)) {
+        return $this->contact_a->address_primary->street_address;
+      } else {
+        return 'No A Address';
+      }
+    }
+    public function getContactBAddressAttribute() {
+      if (isset($this->contact_b->address_primary->street_address)) {
+        return $this->contact_b->address_primary->street_address;
+      } else {
+        return 'No B Address';
+      }
+    }
 }
