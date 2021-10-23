@@ -142,6 +142,7 @@ class RelationshipController extends Controller
           $relationship->contact_b->address_primary->city = $relationship->contact_a->address_primary->city;
           $relationship->contact_b->address_primary->state_province_id = $relationship->contact_a->address_primary->state_province_id;
           $relationship->contact_b->address_primary->postal_code = $relationship->contact_a->address_primary->postal_code;
+          $relationship->contact_b->address_primary->country_id = $relationship->contact_a->address_primary->country_id;
           $relationship->contact_b->address_primary->save();
         break;
         case $relationship->contact_id_b :
@@ -149,6 +150,7 @@ class RelationshipController extends Controller
           $relationship->contact_a->address_primary->city = $relationship->contact_b->address_primary->city;
           $relationship->contact_a->address_primary->state_province_id = $relationship->contact_b->address_primary->state_province_id;
           $relationship->contact_a->address_primary->postal_code = $relationship->contact_b->address_primary->postal_code;
+          $relationship->contact_a->address_primary->country_id = $relationship->contact_b->address_primary->country_id;
           $relationship->contact_a->address_primary->save();
         break;
         default : // do not do anything as there is a relationship mismatch error
