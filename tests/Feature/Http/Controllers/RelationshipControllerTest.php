@@ -13,6 +13,8 @@ use Tests\TestCase;
 class RelationshipControllerTest extends TestCase
 {
     // use DatabaseTransactions;
+    use withFaker;
+
 
     /**
      * @test
@@ -119,6 +121,41 @@ class RelationshipControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('RelationshipController@show', $relationship->id));
     }
+
+        /**
+         * @test
+         */
+        public function disjoined_returns_an_ok_response()
+        {
+            $user = $this->createUserWithPermission('update-contact');
+
+            $response = $this->actingAs($user)->get(route('relationship.disjoined'));
+
+            $response->assertOk();
+            $response->assertViewIs('relationships.disjoined');
+            $response->assertViewHas('couples');
+            $response->assertSeeText('Disjoined Couples Index');
+        }
+
+        /**
+         * @test
+         */
+        public function rejoin_returns_an_ok_response()
+        {
+            $user = $this->createUserWithPermission('update-contact');
+            $relationship = \App\Models\Relationship::factory()->create(['relationship_type_id'=>config('polanco.relationship_type.husband_wife')]);
+            $husband_address = \App\Models\Address::factory()->create(['contact_id'=>$relationship->contact_id_a, 'is_primary'=>1]);
+            $wife_address = \App\Models\Address::factory()->create(['contact_id'=>$relationship->contact_id_b, 'is_primary'=>1]);
+
+            $response = $this->actingAs($user)->from(URL('registration/disjoined'))->get(route('relationship.rejoin',[
+                'id'=>$relationship->id,
+                'dominant'=>$relationship->contact_id_a,
+            ]));
+
+            $response->assertRedirect('registration/disjoined');
+            $this->assertEquals($relationship->contact_a_address,$relationship->contact_b_address);
+
+        }
 
     // test cases...
 }
