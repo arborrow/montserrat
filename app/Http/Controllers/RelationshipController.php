@@ -116,7 +116,6 @@ class RelationshipController extends Controller
         return redirect()->back();
     }
     public function disjoined() {
-      $this->authorize('update-relationship');
       $this->authorize('update-contact');
       $couples = DB::table('relationship as r')
         ->select('r.id','r.contact_id_a as husband_id', 'h.sort_name as husband_name', 'r.contact_id_b as wife_id', 'w.sort_name as wife_name','ha.street_address as husband_address','ha.city as husband_city','ha.postal_code as husband_zip','wa.street_address as wife_address','wa.city as wife_city','wa.postal_code as wife_zip')
@@ -133,9 +132,8 @@ class RelationshipController extends Controller
         ->get();
       return view('relationships.disjoined', compact('couples'));
     }
-    
+
     public function rejoin($id,$dominant) {
-      $this->authorize('update-relationship');
       $this->authorize('update-contact');
       $relationship = \App\Models\Relationship::with('contact_a.address_primary','contact_b.address_primary')->findOrFail($id);
       switch ($dominant) {
