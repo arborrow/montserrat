@@ -127,6 +127,10 @@ class RelationshipController extends Controller
         ->where('ha.is_primary','=',1)
         ->where('wa.is_primary','=',1)
         ->whereNull('r.deleted_at')
+        ->whereNull('ha.deleted_at')
+        ->whereNull('wa.deleted_at')
+        ->whereNull('w.deleted_at')
+        ->whereNull('h.deleted_at')
         ->whereRaw('ha.street_address <> wa.street_address')
         ->orderBy('husband_name')
         ->get();
