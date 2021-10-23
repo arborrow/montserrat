@@ -133,10 +133,11 @@ class RelationshipController extends Controller
         ->get();
       return view('relationships.disjoined', compact('couples'));
     }
+    
     public function rejoin($id,$dominant) {
       $this->authorize('update-relationship');
       $this->authorize('update-contact');
-      $relationship = \App\Relationship::with('contact_a.address_primary','contact_b.address_primary')->findOrFail($id);
+      $relationship = \App\Models\Relationship::with('contact_a.address_primary','contact_b.address_primary')->findOrFail($id);
       switch ($dominant) {
         case $relationship->contact_id_a :
           $relationship->contact_b->address_primary->street_address = $relationship->contact_a->address_primary->street_address;
