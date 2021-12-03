@@ -28,7 +28,7 @@
 
 </head>
 <body>
-	<div class="container">
+	<div class="container flash-messages">
     	@include('flash::message')
 	</div>
 	<div class="container pt-0">
