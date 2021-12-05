@@ -14,13 +14,13 @@
     <div class="col-12">
         {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-outline-dark')) !!}
         @can('create-touchpoint')
-        {!! Html::link(action('TouchpointController@add_retreat',$retreat->id),'Retreat touchpoint',array('class' => 'btn btn-outline-dark'))!!}
-            @endCan
-            @can('show-donation')
+            {!! Html::link(action('TouchpointController@add_retreat',$retreat->id),'Retreat touchpoint',array('class' => 'btn btn-outline-dark'))!!}
+        @endCan
+        @can('show-donation')
             {!! Html::link('retreat/'.$retreat->id.'/payments','Retreat donations',array('class' => 'btn btn-outline-dark')) !!}
             {!! Html::link('report/finance/retreatdonations/'.$retreat->idnumber,'Donations report',array('class' => 'btn btn-outline-dark')) !!}
-            @endCan
-            @can('show-registration')
+        @endCan
+        @can('show-registration')
             <select class="custom-select col-3" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                 <option value="">Print ...</option>
                 <option value="{{url('retreat/'.$retreat->id.'/namebadges/all')}}">Namebadges</option>
@@ -31,10 +31,7 @@
                 <option value="{{url('retreat/'.$retreat->id.'/tableplacards')}}">Table placards</option>
                 <option value="{{url('report/retreatregistrations/'.$retreat->idnumber)}}">Retreat registrations</option>
             </select>
-            @endCan
-
-            </select>
-
+        @endCan
     </div>
     <div class="col-12 mt-3">
         <h2>Details</h2>
@@ -185,33 +182,33 @@
                     @endCan
                 </h2>
                 @can('create-registration')
-                {!! Html::link(action('RegistrationController@register',$retreat->id),'Register a retreatant',array('class' => 'btn btn-outline-dark'))!!}
-                    @endCan
-                    @can('show-contact')
+                    {!! Html::link(action('RegistrationController@register',$retreat->id),'Register a retreatant',array('class' => 'btn btn-outline-dark'))!!}
+                @endCan
+                @can('show-contact')
                     {!! Html::link($retreat->email_registered_retreatants,'Email registered retreatants',array('class' => 'btn btn-outline-dark'))!!}
-                    @endCan
-                    @can('update-registration')
+                @endCan
+                @can('update-registration')
                     {!! Html::link(action('RetreatController@assign_rooms',$retreat->id),'Assign rooms',array('class' => 'btn btn-outline-dark'))!!}
-                        @if (($retreat->start_date <= now()) && ($retreat->end_date >= now()))
-                            {!! Html::link(action('RetreatController@checkin',$retreat->id),'Checkin',array('class' => 'btn btn-outline-dark'))!!}
-                                @endIf
+                    @if (($retreat->start_date <= now()) && ($retreat->end_date >= now()))
+                        {!! Html::link(action('RetreatController@checkin',$retreat->id),'Checkin',array('class' => 'btn btn-outline-dark'))!!}
+                    @endIf
 
-                                @if ($retreat->end_date < now()) {!! Html::link(action('RetreatController@checkout',$retreat->id),'Checkout',array('class' => 'btn btn-outline-dark'))!!}
-                                    @endIf
-                                    @endCan
-                                    <select class="custom-select col-3" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-                                        <option value="">Filter registrations by status ...</option>
-                                        <option value="{{url('retreat/'.$retreat->id)}}">All</option>
-                                        <option value="{{url('retreat/'.$retreat->id.'/status/active')}}">Active</option>
-                                        <option value="{{url('retreat/'.$retreat->id.'/status/arrived')}}">Arrived</option>
-                                        <option value="{{url('retreat/'.$retreat->id.'/status/canceled')}}">Canceled</option>
-                                        <option value="{{url('retreat/'.$retreat->id.'/status/confirmed')}}">Confirmed</option>
-                                        <option value="{{url('retreat/'.$retreat->id.'/status/dawdler')}}">Dawdler</option>
-                                        <option value="{{url('retreat/'.$retreat->id.'/status/departed')}}">Departed</option>
-                                        <option value="{{url('retreat/'.$retreat->id.'/status/retreatants')}}">Retreatants</option>
-                                        <option value="{{url('retreat/'.$retreat->id.'/status/unconfirmed')}}">Unconfirmed</option>
-                                    </select>
-
+                    @if ($retreat->end_date < now())
+                        {!! Html::link(action('RetreatController@checkout',$retreat->id),'Checkout',array('class' => 'btn btn-outline-dark'))!!}
+                    @endIf
+                @endCan
+                <select class="custom-select col-3" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                    <option value="">Filter registrations by status ...</option>
+                    <option value="{{url('retreat/'.$retreat->id)}}">All</option>
+                    <option value="{{url('retreat/'.$retreat->id.'/status/active')}}">Active</option>
+                    <option value="{{url('retreat/'.$retreat->id.'/status/arrived')}}">Arrived</option>
+                    <option value="{{url('retreat/'.$retreat->id.'/status/canceled')}}">Canceled</option>
+                    <option value="{{url('retreat/'.$retreat->id.'/status/confirmed')}}">Confirmed</option>
+                    <option value="{{url('retreat/'.$retreat->id.'/status/dawdler')}}">Dawdler</option>
+                    <option value="{{url('retreat/'.$retreat->id.'/status/departed')}}">Departed</option>
+                    <option value="{{url('retreat/'.$retreat->id.'/status/retreatants')}}">Retreatants</option>
+                    <option value="{{url('retreat/'.$retreat->id.'/status/unconfirmed')}}">Unconfirmed</option>
+                    </select>
             </div>
             <div class="col-12 mt-3">
                 @if ($registrations->isEmpty())
@@ -219,72 +216,81 @@
                     <p>Currently, there are no registrations for this retreat.</p>
                 </div>
                 @else
-                <table class="table table-bordered table-striped table-hover table-responsive">
-                    <thead>
-                        <tr>
-                            <th>Date Registered</th>
-                            <th>Picture</th>
-                            <th>Name</th>
-                            <th>Status</th>
-                            <th>Room</th>
-                            <th>Email</th>
-                            <th>Mobile</th>
-                            <th>Notes</th>
-                            <th>Parish</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @can('show-registration')
-                        @foreach($registrations as $registration)
-                        @if ($registration->status_id == config('polanco.registration_status_id.waitlist'))
-                        <tr class="warning">
-                            @else
-                        <tr>
-                            @endif
-                            <td id='registration-{{$registration->id}}'><a href="{{action('RegistrationController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }} </a>
-                                {{$registration->participant_role_name}} [{{ $loop->index +1 }}]</td>
-                            <td> {!!$registration->retreatant->avatar_small_link!!} </td>
-                            <td>{!!$registration->retreatant->contact_link_full_name!!} ({{$registration->retreatant_events_count}})</td>
-                            <td>
-                                @can('update-registration')
-                                {!! $registration->registration_status_buttons!!}
-                                @else
-                                {!! $registration->registration_status!!}
-                                @endCan
-                            </td>
-                            <td>
-                                @if (empty($registration->room->name))
-                                N/A
-                                @else
-                                <a href="{{action('RoomController@show', $registration->room->id)}}">{{ $registration->room->name}}</a>
-                                @endif
-                            </td>
-                            <td><a href="mailto:{{ $registration->retreatant->email_primary_text }}?subject={{ rawurlencode($retreat->title . ": Followup") }}">{{ $registration->retreatant->email_primary_text }}</a></td>
-                            <td>
-                                {!!$registration->retreatant->phone_home_mobile_number!!}
-                            </td>
-                            <td> {{ $registration->notes }} <br />
-                                <span>Health:</span> {!! (!empty($registration->retreatant->note_health->note)) ? "<div class=\"alert alert-danger alert-important\">" . $registration->retreatant->note_health->note . "</div>" : null !!}
-            </div><br />
-            <span>Dietary:</span> {!! (!empty($registration->retreatant->note_dietary->note)) ? "<div class=\"alert alert-info alert-important\">" . $registration->retreatant->note_dietary->note . "</div>" : null !!}
+                    @can('show-registration')
+                        {{ $registrations->links() }}
+                        <table class="table table-bordered table-striped table-hover table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>Date Registered</th>
+                                    <th>Picture</th>
+                                    <th>Name</th>
+                                    <th>Status</th>
+                                    <th>Room</th>
+                                    <th>Email</th>
+                                    <th>Mobile</th>
+                                    <th>Notes</th>
+                                    <th>Parish</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    @foreach($registrations as $registration)
+                                        @if ($registration->status_id == config('polanco.registration_status_id.waitlist'))
+                                            <tr class="warning">
+                                        @else
+                                            <tr>
+                                        @endif
+                                        <td id='registration-{{$registration->id}}'><a href="{{action('RegistrationController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }} </a>
+                                            {{$registration->participant_role_name}} [{{ $loop->index +1 }}]
+                                        </td>
+                                        <td> {!!$registration->retreatant->avatar_small_link!!} </td>
+                                        <td>{!!$registration->retreatant->contact_link_full_name!!} ({{$registration->retreatant_events_count}})</td>
+                                        <td>
+                                            @can('update-registration')
+                                                {!! $registration->registration_status_buttons!!}
+                                            @else
+                                                {!! $registration->registration_status!!}
+                                            @endCan
+                                        </td>
+                                        <td>
+                                            @if (empty($registration->room->name))
+                                                N/A
+                                            @else
+                                                <a href="{{action('RoomController@show', $registration->room->id)}}">{{ $registration->room->name}}</a>
+                                            @endif
+                                        </td>
+                                        <td><a href="mailto:{{ $registration->retreatant->email_primary_text }}?subject={{ rawurlencode($retreat->title . ": Followup") }}">{{ $registration->retreatant->email_primary_text }}</a></td>
+                                        <td>
+                                            {!!$registration->retreatant->phone_home_mobile_number!!}
+                                        </td>
+                                        <td>
+                                            {{ $registration->notes }} <br />
+                                            <span>
+                                                Health:
+                                            </span>
+                                            {!! (!empty($registration->retreatant->note_health->note)) ? "<div class=\"alert alert-danger alert-important\">" . $registration->retreatant->note_health->note . "</div>" : null !!}
+                                            <br />
+                                            <span>
+                                                Dietary:
+                                            </span>
+                                            {!! (!empty($registration->retreatant->note_dietary->note)) ? "<div class=\"alert alert-info alert-important\">" . $registration->retreatant->note_dietary->note . "</div>" : null !!}
+                                        </td>
+                                        <td>
+                                            @if (empty($registration->retreatant->parish_name))
+                                            N/A
+                                            @else
+                                            {!! $registration->retreatant->parish_link!!}
+                                            @endif
+                                        </td>
+                                        </tr>
+                                    @endforeach
+
+                            </tbody>
+                        </table>
+                    {{ $registrations->links() }}
+                    @endCan
+                @endif
+            </div>
         </div>
-        </td>
-        <td>
-            @if (empty($registration->retreatant->parish_name))
-            N/A
-            @else
-            {!! $registration->retreatant->parish_link!!}
-            @endif
-        </td>
-        </tr>
-        @endforeach
-        {{ $registrations->links() }}
-        @endCan
-        </tbody>
-        </table>
-        @endif
     </div>
-</div>
-</div>
 </div>
 @stop
