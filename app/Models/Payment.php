@@ -87,6 +87,11 @@ class Payment extends Model implements Auditable
             if ($filter == 'payment_description' && ! empty($value)) {
                 $query->where($filter, "=", $value);
             }
+            if ($filter == 'donation_description' && ! empty($value)) {
+                $query->whereHas('Donation', function ($q) use ($value) {
+                  $q->where('donation_description', '=', $value);
+                });
+            }
             if ($filter == 'note' && ! empty($value)) {
                 $query->where($filter, 'LIKE', '%'.$value.'%');
             }

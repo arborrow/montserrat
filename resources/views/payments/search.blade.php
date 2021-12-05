@@ -40,6 +40,11 @@
                             {!! Form::label('payment_description', 'Payment method')  !!}
                             {!! Form::select('payment_description', $payment_methods, NULL, ['class' => 'form-control']) !!}
                         </div>
+                        <div class="col-4">
+                            {!! Form::label('donation_description', 'Donation description')  !!}
+                            {!! Form::select('donation_description', $descriptions, NULL, ['class' => 'form-control']) !!}
+                        </div>
+
                     </div>
                     <div class="row">
                         <div class="col-4">

@@ -58,7 +58,11 @@ class PaymentController extends Controller
         $payment_methods = config('polanco.payment_method');
         $payment_methods[''] = 'N/A';
 
-        return view('payments.search', compact('payment_methods'));
+        $descriptions = \App\Models\DonationType::active()->orderby('name')->pluck('name', 'name');
+        $descriptions->prepend('N/A', '');
+
+
+        return view('payments.search', compact('payment_methods','descriptions'));
     }
 
     public function results(PaymentSearchRequest $request)
