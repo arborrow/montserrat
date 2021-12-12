@@ -19,47 +19,52 @@
             <div class="panel-body">
                 <div class="form-group">
                     <h3 class="text-primary">Payment information</h3>
+
                     <div class="row">
-                        <div class="col-1">
+                        <div class="col-lg-1">
                             {!! Form::label('payment_date_operator', 'Comp.')  !!}
                             {!! Form::select('payment_date_operator', config('polanco.operators'), '=', ['class' => 'form-control']) !!}
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-4">
                             {!! Form::label('payment_date', 'Date')  !!}
                             {!! Form::date('payment_date', NULL, ['class'=>'form-control flatpickr-date']) !!}
                         </div>
-                        <div class="col-1">
+                        <div class="col-lg-1">
                             {!! Form::label('payment_amount_operator', 'Comp.')  !!}
                             {!! Form::select('payment_amount_operator', config('polanco.operators'), '=', ['class' => 'form-control']) !!}
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-4">
                             {!! Form::label('payment_amount', 'Amount')  !!}
                             {!! Form::number('payment_amount', NULL, ['class' => 'form-control','step'=>'0.01']) !!}
                         </div>
-                        <div class="col-4">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-5">
                             {!! Form::label('payment_description', 'Payment method')  !!}
                             {!! Form::select('payment_description', $payment_methods, NULL, ['class' => 'form-control']) !!}
                         </div>
-                        <div class="col-4">
+                        <div class="col-lg-5">
                             {!! Form::label('donation_description', 'Donation description')  !!}
                             {!! Form::select('donation_description', $descriptions, NULL, ['class' => 'form-control']) !!}
                         </div>
-
                     </div>
+
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-lg-4">
                             {!! Form::label('note', 'Notes')  !!}
                             {!! Form::text('note', NULL, ['class' => 'form-control']) !!}
                         </div>
-                        <div class="col-4">
+                        <div class="col-lg-3">
                             {!! Form::label('cknumber', 'Check #')  !!}
                             {!! Form::number('cknumber', NULL, ['class' => 'form-control']) !!}
                         </div>
-                        <div class="col-4">
+                        <div class="col-lg-3">
                             {!! Form::label('ccnumber', 'Credit Card #')  !!}
                             {!! Form::number('ccnumber', NULL, ['class' => 'form-control']) !!}
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
