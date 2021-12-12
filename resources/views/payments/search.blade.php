@@ -25,7 +25,7 @@
                             {!! Form::label('payment_date_operator', 'Comp.')  !!}
                             {!! Form::select('payment_date_operator', config('polanco.operators'), '=', ['class' => 'form-control']) !!}
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-2">
                             {!! Form::label('payment_date', 'Date')  !!}
                             {!! Form::date('payment_date', NULL, ['class'=>'form-control flatpickr-date']) !!}
                         </div>
@@ -33,17 +33,17 @@
                             {!! Form::label('payment_amount_operator', 'Comp.')  !!}
                             {!! Form::select('payment_amount_operator', config('polanco.operators'), '=', ['class' => 'form-control']) !!}
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-2">
                             {!! Form::label('payment_amount', 'Amount')  !!}
                             {!! Form::number('payment_amount', NULL, ['class' => 'form-control','step'=>'0.01']) !!}
+                        </div>
+                        <div class="col-lg-2">
+                            {!! Form::label('payment_description', 'Payment method')  !!}
+                            {!! Form::select('payment_description', $payment_methods, NULL, ['class' => 'form-control']) !!}
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-lg-5">
-                            {!! Form::label('payment_description', 'Payment method')  !!}
-                            {!! Form::select('payment_description', $payment_methods, NULL, ['class' => 'form-control']) !!}
-                        </div>
                         <div class="col-lg-5">
                             {!! Form::label('donation_description', 'Donation description')  !!}
                             {!! Form::select('donation_description', $descriptions, NULL, ['class' => 'form-control']) !!}

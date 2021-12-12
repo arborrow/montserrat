@@ -12,7 +12,7 @@
             @if ($payments->isEmpty())
             <p>Oops, no known payments with the given search criteria</p>
             @else
-            <table class="table table-striped table-bordered table-hover">
+            <table class="table table-striped table-bordered table-hover table-responsive">
                 <caption>
                     <h2>Payments</h2>
                 </caption>
