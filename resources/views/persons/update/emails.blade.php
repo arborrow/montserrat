@@ -1,6 +1,6 @@
 <div class="form-group">
     <div class="row">
-        <div class="col-12 col-md-8">
+        <div class="col-lg-12 col-md-8">
             {!! Form::label('primary_email_location_id', 'Primary email:') !!}
             @if ($person->primary_email_location_type_id == 0)
                 {!! Form::select('primary_email_location_id', $primary_email_locations, config('polanco.location_type.home'), ['class' => 'form-control']) !!}
@@ -51,7 +51,7 @@
         @endIf
             <h4>Home email</h4>
             <div class="row">
-                <div class="col-12 col-md-8">
+                <div class="col-lg-12 col-md-8">
                     {!! Form::label('email_home', 'Email:') !!}
                     {!! Form::text('email_home', $defaults['Home']['email'], ['class' => 'form-control']) !!}
                 </div>
@@ -64,7 +64,7 @@
         @endIf
             <h4>Work email</h4>
             <div class="row">
-                <div class="col-12 col-md-8">
+                <div class="col-lg-12 col-md-8">
                     {!! Form::label('email_work', 'Email:') !!}
                     {!! Form::text('email_work', $defaults['Work']['email'], ['class' => 'form-control']) !!}
                 </div>
@@ -77,7 +77,7 @@
         @endIf
             <h4>Other email</h4>
             <div class="row">
-                <div class="col-12 col-md-8">
+                <div class="col-lg-12 col-md-8">
                     {!! Form::label('email_other', 'Email:') !!}
                     {!! Form::text('email_other', $defaults['Other']['email'], ['class' => 'form-control']) !!}
                 </div>

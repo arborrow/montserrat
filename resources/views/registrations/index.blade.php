@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="row bg-cover">
-    <div class="col-12">
+    <div class="col-lg-12">
         <h1>
             Registration Index
             @can('create-registration')
@@ -12,9 +12,9 @@
             @endCan
         </h1>
     </div>
-    <div class="col-12 table-responsive-lg">
+    <div class="col-lg-12 table-responsive-lg">
         @if ($registrations->isEmpty())
-            <div class="col-12 text-center py-5">
+            <div class="col-lg-12 text-center py-5">
                 <p>Yikes, there are no registrations!</p>
             </div>
         @else

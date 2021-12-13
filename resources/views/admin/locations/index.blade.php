@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="row bg-cover">
-    <div class="col-12">
+    <div class="col-lg-12">
         <h2>
             Locations
             @can('create-location')
@@ -14,7 +14,7 @@
             @endCan
         </h2>
     </div>
-        <div class="col-md-2 col-12">
+        <div class="col-md-2 col-lg-12">
             <select class="custom-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                 <option value="">Filter by type ...</option>
                 <option value="{{url('admin/location')}}">All locations</option>
@@ -24,9 +24,9 @@
             </select>
         </div>
 
-    <div class="col-12 my-3 table-responsive-md">
+    <div class="col-lg-12 my-3 table-responsive-md">
         @if ($locations->isEmpty())
-        <div class="col-12 text-center py-5">
+        <div class="col-lg-12 text-center py-5">
             <p>It is a brand new world, there are no locations!</p>
         </div>
         @else

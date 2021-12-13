@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="row bg-cover">
-    <div class="col-12">
+    <div class="col-lg-12">
         <h1>
             Organizations
             @can('create-contact')
@@ -16,7 +16,7 @@
         <p class="lead">{{$organizations->total()}} records</p>
         <form>
             <div class="form-row">
-                <div class="col-3">
+                <div class="col-lg-3">
                     <select class="custom-select" id="org_type" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                         <option value="">Filter by type</option>
                         <option value="{{url('organization')}}">All organizations</option>
@@ -38,9 +38,9 @@
             </div>
         </form>
     </div>
-    <div class="col-12">
+    <div class="col-lg-12">
         @if ($organizations->isEmpty())
-            <div class="col-12 text-center py-5">
+            <div class="col-lg-12 text-center py-5">
                 <p>No Organizations are currently in the database.</p>
             </div>
         @else

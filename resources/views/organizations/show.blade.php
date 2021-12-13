@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="row bg-cover">
-    <div class="col-12 text-center">
+    <div class="col-lg-12 text-center">
         {!!$organization->avatar_large_link!!}
         <h1>
             @can('update-contact')
@@ -12,7 +12,7 @@
             @endCan
         </h1>
         <div class="row">
-            <div class="col-12">
+            <div class="col-lg-12">
                 {!! Html::link('#notes','Notes',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#relationships','Relationships',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#touchpoints','Touchpoints',array('class' => 'btn btn-outline-dark')) !!}
@@ -20,7 +20,7 @@
                 {!! Html::link('#attachments','Attachments',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#donations','Donations',array('class' => 'btn btn-outline-dark')) !!}
             </div>
-            <div class="col-12 mt-3">
+            <div class="col-lg-12 mt-3">
                 <span><a href={{ action('OrganizationController@index') }}>{!! Html::image('images/organization.png', 'Organization Index',array('title'=>"Organization Index",'class' => 'btn btn-outline-dark')) !!}</a></span>
                 @can('create-touchpoint')
                 <span class="btn btn-outline-dark">
@@ -33,9 +33,9 @@
             </div>
         </div>
     </div>
-    <div class="col-12 mt-3">
+    <div class="col-lg-12 mt-3">
         <div class="row">
-            <div class="col-12 col-lg-6">
+            <div class="col-lg-12 col-lg-6">
                 <h2>Addresses</h2>
                 @foreach($organization->addresses as $address)
                     @if (!empty($address->street_address))
@@ -48,7 +48,7 @@
                     @endif
                 @endforeach
             </div>
-            <div class="col-12 col-lg-6">
+            <div class="col-lg-12 col-lg-6">
                 <h2>Phone Numbers</h2>
                 @foreach($organization->phones as $phone)
                     @if(!empty($phone->phone))
@@ -58,7 +58,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-lg-6">
+            <div class="col-lg-12 col-lg-6">
                 <h2>Electronic Communications</h2>
                 @foreach($organization->emails as $email)
                     @if(!empty($email->email))
@@ -71,25 +71,25 @@
                     @endif
                 @endforeach
             </div>
-            <div class="col-12 col-lg-6" id="notes">
+            <div class="col-lg-12 col-lg-6" id="notes">
                 <h2>Note</h2>
                 {{ $organization->note_organization_text }}
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-lg-6" id="relationships">
+            <div class="col-lg-12 col-lg-6" id="relationships">
                 <h2>Relationships ({{ $organization->a_relationships->count() + $organization->b_relationships->count() }})</h2>
                 {!! Form::open(['method' => 'POST', 'route' => ['relationship_type.addme']]) !!}
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-lg-12">
                             {!! Form::label('relationship_type', 'Add Relationship: ')  !!}
                         </div>
-                        <div class="col-6">
+                        <div class="col-lg-6">
                             {!! Form::select('relationship_type', $relationship_types, NULL, ['class' => 'form-control']) !!}
                             {!! Form::hidden('contact_id',$organization->id)!!}
                         </div>
-                        <div class="col-6">
+                        <div class="col-lg-6">
                             {!! Form::submit('Create relationship', ['class' => 'btn btn-primary']) !!}
                         </div>
                     </div>
@@ -124,7 +124,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12" id="touchpoints">
+            <div class="col-lg-12" id="touchpoints">
                 <h2>Touchpoints for {{ $organization->display_name }} ({{ $touchpoints->total() }})</h2>
                 @if ($touchpoints->isEmpty())
                     <div class="text-center">
@@ -156,10 +156,10 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12" id="registrations">
+            <div class="col-lg-12" id="registrations">
                 <h2>Retreat Participation for {{ $organization->display_name }} ({{ $registrations->total() }})</h2>
                 {{ $registrations->links() }}
-                <div class="col-12">
+                <div class="col-lg-12">
                     <ul>
                         @foreach($registrations as $registration)
                             <li>{!!$registration->event_link!!}  ({{date('F j, Y', strtotime($registration->retreat_start_date))}} - {{date('F j, Y', strtotime($registration->retreat_end_date))}})</li>
@@ -171,7 +171,7 @@
 
         @can('show-attachment')
         <div class="row">
-            <div class="col-12" id="attachments">
+            <div class="col-lg-12" id="attachments">
                 <h2>Attachments for {{ $organization->display_name }}</h2>
                 @if ($files->isEmpty())
                     <div class="text-center">
@@ -202,7 +202,7 @@
         @endCan
         @can('show-donation')
             <div class="row">
-                <div class="col-12" id="donations">
+                <div class="col-lg-12" id="donations">
                     <h2>Donations for {{ $organization->display_name }} ({{$donations->total() }} donations totaling:  ${{ number_format($donations->sum('donation_amount'),2)}})</h2>
                     @can('create-donation')
                         {!! Html::link(route('donation.add',$organization->id),'Create donation',array('class' => 'btn btn-outline-dark'))!!}
@@ -260,12 +260,12 @@
             </div>
         @endcan
         <div class="row">
-            <div class="col-6 text-right">
+            <div class="col-lg-6 text-right">
                 @can('update-contact')
                     <a href="{{ action('OrganizationController@edit', $organization->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                 @endCan
             </div>
-            <div class="col-6 text-left">
+            <div class="col-lg-6 text-left">
                 @can('delete-contact')
                     {!! Form::open(['method' => 'DELETE', 'route' => ['organization.destroy', $organization->id],'onsubmit'=>'return ConfirmDelete()']) !!}
                     {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}

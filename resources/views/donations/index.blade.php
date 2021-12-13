@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="row bg-cover">
-    <div class="col-12">
+    <div class="col-lg-12">
         <h1>
             Donations
             @can('create-donation')
@@ -18,7 +18,7 @@
             <p class="lead">{{$donations->total()}} records</p>
         </h1>
         <div class="row">
-            <div class="col-md-4 col-12">
+            <div class="col-md-4 col-lg-12">
                 <select class="custom-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                     <option value="">Filter by donation description ...</option>
                     <option value="{{url('donation')}}">All donations</option>
@@ -30,7 +30,7 @@
         </div>
 
     </div>
-    <div class="col-12 mt-2">
+    <div class="col-lg-12 mt-2">
         @if ($donations->isEmpty())
             <div class="text-center">
                 <p>It is an impoverished new world, there are no donations!</p>

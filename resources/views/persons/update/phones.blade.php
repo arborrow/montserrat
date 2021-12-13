@@ -1,6 +1,6 @@
 <div class="form-group">
     <div class="row">
-        <div class="col-12 col-md-8">
+        <div class="col-lg-12 col-md-8">
             {!! Form::label('primary_phone_location_id', 'Primary phone:') !!}
             @if ($person->primary_phone_location_type_id == 0)
                 {!! Form::select('primary_phone_location_id', $primary_phones, config('polanco.location_type.home').":Phone", ['class' => 'form-control']) !!}
@@ -51,15 +51,15 @@
             <h4>Home phone numbers</h4>
 
             <div class="row">
-                <div class="col-12 col-md-4">
+                <div class="col-lg-12 col-md-4">
                     {!! Form::label('phone_home_phone', 'Main:') !!}
                     {!! Form::text('phone_home_phone', $defaults['Home']['Phone'], ['class' => 'form-control']) !!}
                 </div>
-                <div class="col-12 col-md-4">
+                <div class="col-lg-12 col-md-4">
                     {!! Form::label('phone_home_mobile', 'Mobile:') !!}
                     {!! Form::text('phone_home_mobile', $defaults['Home']['Mobile'], ['class' => 'form-control']) !!}
                 </div>
-                <div class="col-12 col-md-4">
+                <div class="col-lg-12 col-md-4">
                     {!! Form::label('phone_home_fax', 'Fax:') !!}
                     {!! Form::text('phone_home_fax', $defaults['Home']['Fax'], ['class' => 'form-control']) !!}
                 </div>
@@ -73,15 +73,15 @@
             <h4>Work phone numbers</h4>
 
             <div class="row">
-                <div class="col-12 col-md-4">
+                <div class="col-lg-12 col-md-4">
                     {!! Form::label('phone_work_phone', 'Main:') !!}
                     {!! Form::text('phone_work_phone', $defaults['Work']['Phone'], ['class' => 'form-control']) !!}
                 </div>
-                <div class="col-12 col-md-4">
+                <div class="col-lg-12 col-md-4">
                     {!! Form::label('phone_work_mobile', 'Mobile:') !!}
                     {!! Form::text('phone_work_mobile', $defaults['Work']['Mobile'], ['class' => 'form-control']) !!}
                 </div>
-                <div class="col-12 col-md-4">
+                <div class="col-lg-12 col-md-4">
                     {!! Form::label('phone_work_fax', 'Fax:') !!}
                     {!! Form::text('phone_work_fax', $defaults['Work']['Fax'], ['class' => 'form-control']) !!}
                 </div>
@@ -95,15 +95,15 @@
             <h4>Other phone numbers</h4>
 
             <div class="row">
-                <div class="col-12 col-md-4">
+                <div class="col-lg-12 col-md-4">
                     {!! Form::label('phone_other_phone', 'Main:') !!}
                     {!! Form::text('phone_other_phone', $defaults['Other']['Phone'], ['class' => 'form-control']) !!}
                 </div>
-                <div class="col-12 col-md-4">
+                <div class="col-lg-12 col-md-4">
                     {!! Form::label('phone_other_mobile', 'Mobile:') !!}
                     {!! Form::text('phone_other_mobile', $defaults['Other']['Mobile'], ['class' => 'form-control']) !!}
                 </div>
-                <div class="col-12 col-md-4">
+                <div class="col-lg-12 col-md-4">
                     {!! Form::label('phone_other_fax', 'Fax:') !!}
                     {!! Form::text('phone_other_fax', $defaults['Other']['Fax'], ['class' => 'form-control']) !!}
                 </div>

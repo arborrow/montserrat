@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="row bg-cover">
-    <div class="col-12">
+    <div class="col-lg-12">
            <h1>
                User details for {{$user->name}} (<a href="mailto:{{$user->email}}">{{ $user->email }}</a>)
                <img src="{{$user->avatar}}" alt="Avatar" height="50px" width="50px">

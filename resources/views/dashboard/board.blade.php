@@ -10,7 +10,7 @@
                     </h1>
                 </div>
 
-                <div class="col-md-4 col-12">
+                <div class="col-md-4 col-lg-12">
                     <select class="custom-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                         <option value="">Select fiscal year ...</option>
                         @foreach($years as $y)
