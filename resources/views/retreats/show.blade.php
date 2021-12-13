@@ -110,8 +110,7 @@
                 @endIf
 
             </div>
-
-            <div class="col-12">
+            <div class="col-lg-12">
                 <h2>Attachments</h2>
                 <div class="row">
                     <div class="col-lg-12 col-lg-4">
@@ -168,8 +167,7 @@
 
         </div>
     </div>
-
-    <div class="col-12">
+    <div class="col-lg-12">
         <div class="row">
             <div class="col-lg-6 text-right">
                 @can('update-retreat')
