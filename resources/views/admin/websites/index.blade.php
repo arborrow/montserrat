@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="row bg-cover">
-    <div class="col-12">
+    <div class="col-lg-12">
         <h2>
             Websites
             @can('create-website')
@@ -16,9 +16,9 @@
         <p class="lead">{{$websites->total()}} records</p>
 
     </div>
-    <div class="col-12 my-3 table-responsive-md">
+    <div class="col-lg-12 my-3 table-responsive-md">
         @if ($websites->isEmpty())
-            <div class="col-12 text-center py-5">
+            <div class="col-lg-12 text-center py-5">
                 <p>It is a brand new world, there are no units of measure!</p>
             </div>
         @else

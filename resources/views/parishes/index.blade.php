@@ -1,7 +1,7 @@
 @extends('template')
 @section('content')
     <div class="row bg-cover">
-        <div class="col-12">
+        <div class="col-lg-12">
             <h1>
                 Parish
                 @can('create-contact')
@@ -19,7 +19,7 @@
             </p>
             @if ($dioceses->isEmpty())
                 <div class="row">
-                    <div class="col-md-4 col-12">
+                    <div class="col-md-4 col-lg-12">
                         <select class="custom-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                             <option value="">Filter by Diocese ...</option>
                             <option value="{{url('parish')}}">All Dioceses</option>
@@ -28,7 +28,7 @@
                 </div>
             @else
                 <div class="row">
-                    <div class="col-md-4 col-12">
+                    <div class="col-md-4 col-lg-12">
                         <select class="custom-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                             <option value="">Filter by Diocese ...</option>
                             <option value="{{url('parish')}}">All Dioceses</option>
@@ -41,9 +41,9 @@
             @endIf
 
         </div>
-        <div class="col-12">
+        <div class="col-lg-12">
             @if ($parishes->isEmpty())
-            <div class="col-12 text-center py-5">
+            <div class="col-lg-12 text-center py-5">
                 <p>No parishes are currently in the database.</p>
             </div>
             @else

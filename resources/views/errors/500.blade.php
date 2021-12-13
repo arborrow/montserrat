@@ -1,7 +1,7 @@
 @extends('template')
 @section('content')
   <div class="row">
-  	<div class="col-12 text-center">
+  	<div class="col-lg-12 text-center">
         <div class="text-danger">
           Oops! Looks like {{config('polanco.admin_name')}} is using the SQL to corrupt Polanco.<br />
         </div>

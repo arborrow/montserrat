@@ -1,12 +1,12 @@
 @extends('template')
 @section('content')
 <div class="row bg-cover">
-    <div class="col-12 text-center">
+    <div class="col-lg-12 text-center">
         <div class="row">
-            <div class="col-12">
+            <div class="col-lg-12">
                 {!!$parish->avatar_large_link!!}
             </div>
-            <div class="col-12">
+            <div class="col-lg-12">
                 <h1>
                 @can('update-contact')
                     <a href="{{url('parish/'.$parish->id.'/edit')}}">{{ $parish->display_name }}</a> (<a href="../diocese/{{$parish->diocese_id}}">{{ $parish->diocese_name}}</a>)
@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-lg-12">
                 {!! Html::link('#notes','Notes',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#parishioners','Parishioners',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#touchpoints','Touchpoints',array('class' => 'btn btn-outline-dark')) !!}
@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-12">
+            <div class="col-lg-12">
                 <span class="back">
                     <a href={{ action('ParishController@index') }}>
                         {!! Html::image('images/parish.png', 'Parish Index',array('title'=>"Parish Index",'class' => 'btn btn-outline-dark')) !!}
@@ -45,9 +45,9 @@
             </div>
         </div>
     </div>
-    <div class="col-12 mt-5">
+    <div class="col-lg-12 mt-5">
         <div class="row">
-            <div class="col-12 col-lg-6">
+            <div class="col-lg-12 col-lg-6">
                 <h2>Addresses</h2>
                 @foreach($parish->addresses as $address)
                     @if (!empty($address->street_address))
@@ -59,7 +59,7 @@
                     @endif
                 @endforeach
             </div>
-            <div class="col-12 col-lg-6">
+            <div class="col-lg-12 col-lg-6">
                 <h2>Phone Numbers</h2>
                 @foreach($parish->phones as $phone)
                 @if(!empty($phone->phone))
@@ -69,7 +69,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-lg-6">
+            <div class="col-lg-12 col-lg-6">
                 <h2>Electronic Communications</h2>
                 @foreach($parish->emails as $email)
                     @if(!empty($email->email))
@@ -82,7 +82,7 @@
                     @endif
                 @endforeach
             </div>
-            <div class="col-12 col-lg-6">
+            <div class="col-lg-12 col-lg-6">
                 <h2>Pastor</h2>
                 @if (isset($parish->pastor->contact_b))
                     {!! $parish->pastor->contact_b->contact_link_full_name !!}
@@ -92,7 +92,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12" id="notes">
+            <div class="col-lg-12" id="notes">
                 <h2>Notes for {{ $parish->display_name }} </h2>
                 @if(!empty($parish->note_parish->note))
                     <strong>{{$parish->note_parish->subject}}: </strong>{{$parish->note_parish->note}} (modified: {{$parish->note_parish->modified_date}})<br />
@@ -100,10 +100,10 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12" id="parishioners">
+            <div class="col-lg-12" id="parishioners">
                 <h2>Parishioners of {{$parish->display_name}} ({{$parish->parishioners->count()}})</h2>
             </div>
-            <div class="col-12">
+            <div class="col-lg-12">
                 @if (empty($parish->parishioners))
                     <p>No parishioners are currently registered in the database.</p>
                 @else
@@ -164,10 +164,10 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12" id="touchpoints">
+            <div class="col-lg-12" id="touchpoints">
                 <h2>Touchpoints for {{ $parish->display_name }} ({{$touchpoints->total()}})</h2>
             </div>
-            <div class="col-12">
+            <div class="col-lg-12">
                 @if ($touchpoints->isEmpty())
                     <p>It is a brand new world, there are no touchpoints for this contact!</p>
                 @else
@@ -199,21 +199,21 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12" id="relationships">
+            <div class="col-lg-12" id="relationships">
                 <h2>Relationships for {{ $parish->display_name }} ({{$parish->a_relationships->count()+$parish->b_relationships->count()}})</h2>
             </div>
-            <div class="col-12 col-lg-6">
+            <div class="col-lg-12 col-lg-6">
                 @can('create-relationship')
                     {!! Form::open(['method' => 'POST', 'route' => ['relationship_type.addme']]) !!}
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-lg-12">
                                     {!! Form::label('relationship_type', 'Add Relationship: ') !!}
                                 </div>
-                                <div class="col-6">
+                                <div class="col-lg-6">
                                     {!! Form::select('relationship_type', $relationship_types, NULL, ['class' => 'form-control']) !!}
                                 </div>
-                                <div class="col-6">
+                                <div class="col-lg-6">
                                     {!! Form::hidden('contact_id',$parish->id)!!}
                                     {!! Form::submit('Create relationship', ['class' => 'btn btn-primary']) !!}
                                 </div>
@@ -222,7 +222,7 @@
                     {!! Form::close() !!}
                 @endcan
             </div>
-            <div class="col-12">
+            <div class="col-lg-12">
                 <ul>
                   @foreach($parish->a_relationships as $a_relationship)
                       <li>
@@ -253,11 +253,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12" id="registrations">
+            <div class="col-lg-12" id="registrations">
                 <h2>Registrations for {{ $parish->display_name }} ({{ $registrations->total() }})</h2>
             </div>
             {{ $registrations->links() }}
-            <div class="col-12">
+            <div class="col-lg-12">
                 <ul>
                     @foreach($registrations->sortByDesc('retreat_start_date') as $registration)
                         <li>{!!$registration->event_link!!} ({{date('F j, Y', strtotime($registration->event->start_date))}} - {{date('F j, Y', strtotime($registration->event->end_date))}}) </li>
@@ -267,10 +267,10 @@
         </div>
         @can('show-attachment')
         <div class="row">
-            <div class="col-12" id="attachments">
+            <div class="col-lg-12" id="attachments">
                 <h2>Attachments for {{ $parish->display_name }} ({{$files->count()}})</h2>
             </div>
-            <div class="col-12">
+            <div class="col-lg-12">
                 @if ($files->isEmpty())
                     <p>This user currently has no attachments</p>
                 @else
@@ -298,15 +298,15 @@
         @endCan
         @can('show-donation')
         <div class="row">
-            <div class="col-12" id="donations">
+            <div class="col-lg-12" id="donations">
                 <h2>Donations for {{ $parish->display_name }} ({{$donations->total() }} donations totaling:  ${{ number_format($donations->sum('donation_amount'),2)}})</h2>
             </div>
-            <div class="col-12">
+            <div class="col-lg-12">
                 @can('create-donation')
                     {!! Html::link(route('donation.add',$parish->id),'Create donation',array('class' => 'btn btn-outline-dark'))!!}
                 @endCan
             </div>
-            <div class="col-12">
+            <div class="col-lg-12">
                 @if ($donations->isEmpty())
                     <p>No donations for this parish!</p>
                 @else
@@ -352,12 +352,12 @@
         </div>
         @endCan
         <div class="row">
-            <div class="col-6 text-right">
+            <div class="col-lg-6 text-right">
                 <a href="{{ action('ParishController@edit', $parish->id) }}" class="btn btn-info">
                     {!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}
                 </a>
             </div>
-            <div class="col-6 text-left">
+            <div class="col-lg-6 text-left">
                 {!! Form::open(['method' => 'DELETE', 'route' => ['parish.destroy', $parish->id],'onsubmit'=>'return ConfirmDelete()']) !!}
                 {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
                 {!! Form::close() !!}

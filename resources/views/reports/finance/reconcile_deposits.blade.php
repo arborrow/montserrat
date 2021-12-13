@@ -50,7 +50,7 @@ The following contacts appear to have a registration for an open deposit but no 
 <br />
 @if ($diffpg->isEmpty() && $diffrg->isEmpty())
   <div class="row">
-  	<div class="col-12 text-center">
+  	<div class="col-lg-12 text-center">
   		<div class="text-danger"> Nothing to see here, please disperse<br />
   	<a href="https://www.youtube.com/watch?v=aKnX5wci404">
       {!! Html::image('images/nothing.png', 'Nothing to see here',array('title'=>"Nothing to see here")) !!}

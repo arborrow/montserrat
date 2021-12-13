@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="row bg-cover">
-    <div class="col-12">
+    <div class="col-lg-12">
         @can('update-permission')
             <h1>
                 Permission details: <strong><a href="{{url('admin/permission/'.$permission->id.'/edit')}}">{{ $permission->name }}</a></strong>
@@ -13,12 +13,12 @@
             </h1>
         @endCan
     </div>
-    <div class="col-12">
+    <div class="col-lg-12">
         <h5>Name: {{$permission->name}}</h5>
         <h5>Display name: {{$permission->display_name}}</h5>
         <h5>Description: {{$permission->description}}</h5>
     </div>
-    <div class="col-12">
+    <div class="col-lg-12">
         @can('manage-permission')
             {!! Form::open(['url' => 'admin/permission/update_roles', 'method' => 'POST', 'route' => ['admin.permission.update_roles']]) !!}
                 <div class="form-group">
@@ -30,7 +30,7 @@
             {!! Form::close() !!}
         @endCan
     </div>
-    <div class="col-12">Users with {{ $permission->name }} permission:
+    <div class="col-lg-12">Users with {{ $permission->name }} permission:
         <ul>
             @foreach($permission->roles as $role)
                 @foreach($role->users as $user)
@@ -40,14 +40,14 @@
         </ul>
     </div>
 
-    <div class="col-12">
+    <div class="col-lg-12">
         <div class="row">
-            <div class="col-6 text-right">
+            <div class="col-lg-6 text-right">
                 <a href="{{ action('PermissionController@edit', $permission->id) }}" class="btn btn-info">
                     {!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}
                 </a>
             </div>
-            <div class="col-6 text-left">
+            <div class="col-lg-6 text-left">
                 {!! Form::open(['method' => 'DELETE', 'route' => ['permission.destroy', $permission->id],'onsubmit'=>'return ConfirmDelete()']) !!}
                     {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
                 {!! Form::close() !!}</div><div class="clearfix">

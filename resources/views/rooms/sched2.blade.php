@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="row bg-cover">
-    <div class="col-12 text-center">
+    <div class="col-lg-12 text-center">
         <h2>Room Schedules for</h2>
         <h2>
             {!!$previous_link!!}
@@ -18,7 +18,7 @@
         </p>
     </div>
 
-    <div class="col-12 text-center">
+    <div class="col-lg-12 text-center">
         @if (empty($m))
             
                 <p>Yikes, there is nothing to schedule!</p>

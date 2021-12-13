@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="row bg-cover">
-    <div class="col-12">
+    <div class="col-lg-12">
         <h1>
             Permissions
             @can('create-permission')
@@ -14,7 +14,7 @@
             @endcan
         </h1>
     </div>
-    <div class="col-12">
+    <div class="col-lg-12">
         @can('manage-permission')
             {!! Form::open(['url' => 'admin/permission', 'method' => 'GET', 'route' => ['admin.permission'], 'class' => 'form-inline']) !!}
                 <div class="form-group mb-2 mx-2">
@@ -31,9 +31,9 @@
             {!! Form::close() !!}
         @endCan
     </div>
-    <div class="col-12 my-3 table-responsive-md">
+    <div class="col-lg-12 my-3 table-responsive-md">
         @if ($permissions->isEmpty())
-            <div class="col-12 text-center py-5">
+            <div class="col-lg-12 text-center py-5">
                 <p>It is a brand new world, there are no permissions!</p>
             </div>
         @else

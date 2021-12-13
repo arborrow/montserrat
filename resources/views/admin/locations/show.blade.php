@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="row bg-cover">
-    <div class="col-12">
+    <div class="col-lg-12">
         @can('update-location')
         <h1>
             Location details: <strong><a href="{{url('admin/location/'.$location->id.'/edit')}}">{{ $location->name }}</a></strong>
@@ -13,7 +13,7 @@
         </h1>
         @endCan
     </div>
-    <div class="col-12">
+    <div class="col-lg-12">
         <span class="font-weight-bold">Label: </span> {{$location->label}}<br />
         <span class="font-weight-bold">Description: </span> {{$location->description}}<br />
         <span class="font-weight-bold">Type: </span> {{$location->type}}<br />
@@ -27,9 +27,9 @@
         @endIf
     </div>
 
-    <div class="col-12 my-3 table-responsive-md">
+    <div class="col-lg-12 my-3 table-responsive-md">
         @if ($children->isEmpty())
-        <div class="col-12 text-center py-5">
+        <div class="col-lg-12 text-center py-5">
             <p>This location does not have any sub-locations</p>
         </div>
         @else
@@ -62,14 +62,14 @@
 
     <br />
 
-    <div class="col-12 mt-3">
+    <div class="col-lg-12 mt-3">
         <div class="row">
-            <div class="col-6 text-right">
+            <div class="col-lg-6 text-right">
                 @can('update-location')
                     <a href="{{ action('LocationController@edit', $location->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                 @endCan
             </div>
-            <div class="col-6 text-left">
+            <div class="col-lg-6 text-left">
                 @can('delete-location')
                     {!! Form::open(['method' => 'DELETE', 'route' => ['location.destroy', $location->id],'onsubmit'=>'return ConfirmDelete()']) !!}
                     {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}

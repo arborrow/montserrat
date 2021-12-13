@@ -10,7 +10,7 @@
                     </h1>
                 </div>
 
-                <div class="col-12">
+                <div class="col-lg-12">
                     @if ($retreats->isEmpty())
                     <p>There are no retreats in this category</p>
                 @else

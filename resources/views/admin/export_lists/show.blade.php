@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="row bg-cover">
-    <div class="col-12">
+    <div class="col-lg-12">
         @can('update-export-list')
         <h1>
             Export list details: <strong><a href="{{url('admin/export_list/'.$export_list->id.'/edit')}}">{{ $export_list->label }}</a></strong>
@@ -13,7 +13,7 @@
         </h1>
         @endCan
     </div>
-    <div class="col-12">
+    <div class="col-lg-12">
         <span class="font-weight-bold">Title: </span> {{$export_list->title}}<br />
         <span class="font-weight-bold">Label: </span> {{$export_list->label}}<br />
         <span class="font-weight-bold">Type: </span> {{$export_list->type}}<br />
@@ -26,14 +26,14 @@
     </div>
     <br />
 
-    <div class="col-12 mt-3">
+    <div class="col-lg-12 mt-3">
         <div class="row">
-            <div class="col-6 text-right">
+            <div class="col-lg-6 text-right">
                 @can('update-export-list')
                     <a href="{{ action('ExportListController@edit', $export_list->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                 @endCan
             </div>
-            <div class="col-6 text-left">
+            <div class="col-lg-6 text-left">
                 @can('delete-export-list')
                     {!! Form::open(['method' => 'DELETE', 'route' => ['export_list.destroy', $export_list->id],'onsubmit'=>'return ConfirmDelete()']) !!}
                     {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}

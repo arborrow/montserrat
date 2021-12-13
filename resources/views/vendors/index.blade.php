@@ -1,7 +1,7 @@
 @extends('template')
 @section('content')
 <div class="row bg-cover">
-    <div class="col-12">
+    <div class="col-lg-12">
         <h1>
             Vendors
             @can('create-contact')
@@ -14,9 +14,9 @@
         </h1>
         <p class="lead">{{$vendors->total()}} records</p>
     </div>
-    <div class="col-12">
+    <div class="col-lg-12">
     @if ($vendors->isEmpty())
-        <div class="col-12 text-center py-5">
+        <div class="col-lg-12 text-center py-5">
             <p>No vendors are currently in the database.</p>
         </div>
     @else

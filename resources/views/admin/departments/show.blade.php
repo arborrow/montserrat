@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="row bg-cover">
-    <div class="col-12">
+    <div class="col-lg-12">
         @can('update-department')
         <h1>
             Department details: <strong><a href="{{url('admin/department/'.$department->id.'/edit')}}">{{ $department->name }}</a></strong>
@@ -13,7 +13,7 @@
         </h1>
         @endCan
     </div>
-    <div class="col-12">
+    <div class="col-lg-12">
         <span class="font-weight-bold">Label: </span> {{$department->label}}<br />
         <span class="font-weight-bold">Description: </span> {{$department->description}}<br />
         <span class="font-weight-bold">Notes: </span> {{$department->notes}}<br />
@@ -26,9 +26,9 @@
     </div>
 
 
-    <div class="col-12 my-3 table-responsive-md">
+    <div class="col-lg-12 my-3 table-responsive-md">
         @if ($children->isEmpty())
-        <div class="col-12 text-center py-5">
+        <div class="col-lg-12 text-center py-5">
             <p>This department does not have any sub-departments</p>
         </div>
         @else
@@ -59,14 +59,14 @@
 
     <br />
 
-    <div class="col-12 mt-3">
+    <div class="col-lg-12 mt-3">
         <div class="row">
-            <div class="col-6 text-right">
+            <div class="col-lg-6 text-right">
                 @can('update-department')
                     <a href="{{ action('DepartmentController@edit', $department->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                 @endCan
             </div>
-            <div class="col-6 text-left">
+            <div class="col-lg-6 text-left">
                 @can('delete-department')
                     {!! Form::open(['method' => 'DELETE', 'route' => ['department.destroy', $department->id],'onsubmit'=>'return ConfirmDelete()']) !!}
                     {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}

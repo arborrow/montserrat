@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="row bg-cover">
-    <div class="col-12">
+    <div class="col-lg-12">
         <h1>
             @can('update-donation')
                 <a href="{{url('donation/'.$donation->donation_id.'/edit')}}">Donation details</a>
@@ -28,7 +28,7 @@
 
         @endIf
     </div>
-    <div class="col-12 col-md-4">
+    <div class="col-lg-12 col-md-4">
         <span class="font-weight-bold">Date: </span>{{$donation->donation_date->format('m/d/Y')}}
         <br><span class="font-weight-bold">Description: </span>{{$donation->donation_description}}
         <br>
@@ -46,18 +46,18 @@
 
         <br><span class="font-weight-bold">Primary contact: </span>{{$donation->Notes1}}
     </div>
-    <div class="col-12 col-md-4">
+    <div class="col-lg-12 col-md-4">
         <span class="font-weight-bold">Event: </span>{!!$donation->retreat_link!!} ({{$donation->retreat_start_date}})
         <br><span class="font-weight-bold">Notes: </span>{{$donation->Notes}}
         <br><span class="font-weight-bold">Thank you sent: </span>{{$donation['Thank You']}}
     </div>
-    <div class="col-12 col-md-4">
+    <div class="col-lg-12 col-md-4">
       <span class="font-weight-bold">Start date: </span>{{$donation->start_date}}
       <br><span class="font-weight-bold">End date: </span>{{$donation->end_date}}
       <br><span class="font-weight-bold">Donation install: </span>{{$donation->donation_install}}
         <br><span class="font-weight-bold">Terms: </span>{{$donation->terms}}
     </div>
-    <div class="col-12 mt-3">
+    <div class="col-lg-12 mt-3">
         <table class="table table-bordered table-striped table-hover table-responsive-md">
             <thead>
                 <tr>
@@ -81,14 +81,14 @@
             </tbody>
         </table>
     </div>
-    <div class="col-12">
+    <div class="col-lg-12">
         <div class="row">
-            <div class="col-6 text-right">
+            <div class="col-lg-6 text-right">
                 @can('update-donation')
                     <a href="{{ action('DonationController@edit', $donation->donation_id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                 @endCan
             </div>
-            <div class="col-6 text-left">
+            <div class="col-lg-6 text-left">
                 @can('delete-donation')
                     {!! Form::open(['method' => 'DELETE', 'route' => ['donation.destroy', $donation->donation_id],'onsubmit'=>'return ConfirmDelete()']) !!}
                     {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
