@@ -25,14 +25,12 @@
 
     <div class="col-lg-12 mt-3">
         <div class="row">
-            <div class="col-lg-6 text-right">
+            <div class="col-lg-6 mt-4 mb-4">
                 @can('update-asset-type')
-                    <a href="{{ action('AssetTypeController@edit', $asset_type->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                    <a href="{{ action('AssetTypeController@edit', $asset_type->id) }}" class="btn btn-info mr-4">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                 @endCan
-            </div>
-            <div class="col-lg-6 text-left">
                 @can('delete-asset-type')
-                    {!! Form::open(['method' => 'DELETE', 'route' => ['asset_type.destroy', $asset_type->id],'onsubmit'=>'return ConfirmDelete()']) !!}
+                    {!! Form::open(['method' => 'DELETE', 'route' => ['asset_type.destroy', $asset_type->id],'onsubmit'=>'return ConfirmDelete()','class' => 'd-inline']) !!}
                     {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
                     {!! Form::close() !!}
                 @endCan
