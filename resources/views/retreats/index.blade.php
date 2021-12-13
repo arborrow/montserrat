@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="row bg-cover" id="upcoming">
-    <div class="col-12">
+    <div class="col-lg-12">
         <h2>
             Upcoming {{ $defaults['type'] }} ({{$retreats->total()}})
             <span class="options">
@@ -21,7 +21,7 @@
         </h2>
 
         <div class="row">
-            <div class="col-md-4 col-12">
+            <div class="col-md-4 col-lg-12">
                 <select class="custom-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                     <option value="">Filter by retreat type...</option>
                     <option value="{{url('retreat')}}">All retreats</option>
@@ -32,7 +32,7 @@
             </div>
         </div>
     </div>
-    <div class="col-12">
+    <div class="col-lg-12">
         @if ($retreats->isEmpty())
         <p> Currently, there are no upcoming {{$defaults['type']}}!</p>
     @else
@@ -113,7 +113,7 @@
 <hr>
 
 <div class="row bg-cover" id="previous">
-    <div class="col-12">
+    <div class="col-lg-12">
         <h2>
             Previous {{ $defaults['type'] }} ({{$oldretreats->total()}})
             <span class="options">
@@ -123,7 +123,7 @@
             </span>
         </h2>
     </div>
-    <div class="col-12">
+    <div class="col-lg-12">
         @if ($oldretreats->isEmpty())
             <p> Currently, there are no previous {{$defaults['type']}}!</p>
         @else

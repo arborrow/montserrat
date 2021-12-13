@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="row bg-cover">
-    <div class="col-12">
+    <div class="col-lg-12">
         <h2>
             Asset tasks
             @can('create-asset-task')
@@ -15,9 +15,9 @@
 
         </h2>
     </div>
-    <div class="col-12 my-3 table-responsive-md">
+    <div class="col-lg-12 my-3 table-responsive-md">
         @if ($asset_tasks->isEmpty())
-        <div class="col-12 text-center py-5">
+        <div class="col-lg-12 text-center py-5">
             <p>It is a brand new world, there are no asset tasks!</p>
         </div>
         @else

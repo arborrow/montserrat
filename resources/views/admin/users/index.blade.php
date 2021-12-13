@@ -2,16 +2,16 @@
 @section('content')
 
 <div class="row bg-cover">
-    <div class="col-12">
+    <div class="col-lg-12">
         <h2>
             Index of Users
         </h2>
         <p class="lead">{{$users->total()}} records</p>
 
     </div>
-    <div class="col-12 my-3 table-responsive-md">
+    <div class="col-lg-12 my-3 table-responsive-md">
         @if ($users->isEmpty())
-            <div class="col-12 text-center py-5">
+            <div class="col-lg-12 text-center py-5">
                 <p>It is a brand new world, there are no users!</p>
             </div>
         @else

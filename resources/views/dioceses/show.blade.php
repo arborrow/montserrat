@@ -2,9 +2,9 @@
 @section('content')
 
 <div class="row bg-cover">
-    <div class="col-12 text-center">
+    <div class="col-lg-12 text-center">
         <div class="row">
-            <div class="col-12">
+            <div class="col-lg-12">
                 {!!$diocese->avatar_large_link!!}
                 <h1>
                     @can('update-contact')
@@ -14,7 +14,7 @@
                     @endCan
                 </h1>
             </div>
-            <div class="col-12">
+            <div class="col-lg-12">
                 {!! Html::link('#notes','Notes',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#touchpoints','Touchpoints',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#relationships','Relationships',array('class' => 'btn btn-outline-dark')) !!}
@@ -22,7 +22,7 @@
                 {!! Html::link('#attachments','Attachments',array('class' => 'btn btn-outline-dark')) !!}
                 {!! Html::link('#donations','Donations',array('class' => 'btn btn-outline-dark')) !!}
             </div>
-            <div class="col-12 mt-3">
+            <div class="col-lg-12 mt-3">
                 <a href={{ action('DioceseController@index') }}>
                     {!! Html::image('images/diocese.png', 'Diocese Index', array('title'=>"Diocese Index",'class' => 'btn btn-outline-dark')) !!}
                 </a>
@@ -35,9 +35,9 @@
             </div>
         </div>
     </div>
-    <div class="col-12 mt-3">
+    <div class="col-lg-12 mt-3">
         <div class="row">
-            <div class="col-12 col-lg-6">
+            <div class="col-lg-12 col-lg-6">
                 <h2>Bishop(s)</h2>
                 @if ($diocese->bishops->isEmpty())
                     <p>No Bishop(s) assigned</p>
@@ -47,7 +47,7 @@
                     @endforeach
                 @endif
             </div>
-            <div class="col-12 col-lg-6">
+            <div class="col-lg-12 col-lg-6">
                 <h2>Addresses</h2>
                 @foreach($diocese->addresses as $address)
                     @if (!empty($address->street_address))
@@ -65,7 +65,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-lg-6">
+            <div class="col-lg-12 col-lg-6">
                 <h2>Phone Numbers</h2>
                 @foreach($diocese->phones as $phone)
                     @if(!empty($phone->phone))
@@ -73,7 +73,7 @@
                     @endif
                 @endforeach
             </div>
-            <div class="col-12 col-lg-6">
+            <div class="col-lg-12 col-lg-6">
                 <h2>Electronic Communications</h2>
                 @foreach($diocese->emails as $email)
                     @if(!empty($email->email))
@@ -89,7 +89,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12" id="notes">
+            <div class="col-lg-12" id="notes">
                 <h2>Notes for {{ $diocese->display_name }} </h2>
                 @if(!empty($diocese->note_diocese->note))
                     <strong>{{$diocese->note_diocese->subject}}: </strong>{{$diocese->note_diocese->note}} (modified: {{$diocese->note_diocese->modified_date}})<br />
@@ -97,7 +97,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12" id="touchpoints">
+            <div class="col-lg-12" id="touchpoints">
                 <h2>Touchpoints for {{ $diocese->display_name }} ({{ $touchpoints->total() }})</h2>
                 @if ($touchpoints->isEmpty())
                     <div class="text-center">
@@ -127,25 +127,25 @@
                     </table>
                 @endif
             </div>
-            <div class="col-12 text-center">
+            <div class="col-lg-12 text-center">
                 <span class="btn btn-outline-dark">
                     <a href={{ action('TouchpointController@add',$diocese->id) }}>Add Touchpoint</a>
                 </span>
             </div>
         </div>
         <div class="row">
-            <div class="col-12" id="relationships">
+            <div class="col-lg-12" id="relationships">
                 <h2>Relationships for {{$diocese->display_name}} ({{ $diocese->a_relationships->count() + $diocese->b_relationships->count() }})</h2>
             </div>
-            <div class="col-12">
+            <div class="col-lg-12">
                 <div class="form-group">
                     {!! Form::open(['method' => 'POST', 'route' => ['relationship_type.addme']]) !!}
                         <div class="row">
-                            <div class="col-12 col-lg-4">
+                            <div class="col-lg-12 col-lg-4">
                                 {!! Form::label('relationship_type', 'Add Relationship')  !!}
                                 {!! Form::select('relationship_type', $relationship_types, NULL, ['class' => 'form-control']) !!}
                             </div>
-                            <div class="col-12 mt-3">
+                            <div class="col-lg-12 mt-3">
                                 {!! Form::hidden('contact_id',$diocese->id)!!}
                                 {!! Form::submit('Create relationship', ['class' => 'btn btn-dark-outline']) !!}
                             </div>
@@ -153,7 +153,7 @@
                     {!! Form::close() !!}
                 </div>
             </div>
-            <div class="col-12">
+            <div class="col-lg-12">
                 <ul>
                     @foreach($diocese->a_relationships as $a_relationship)
                         <li>
@@ -184,10 +184,10 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12" id="registrations">
+            <div class="col-lg-12" id="registrations">
                 <h2>Registrations for {{ $diocese->display_name }} ({{ $registrations->total() }})</h2>
                 {{ $registrations->links() }}
-                <div class="col-12">
+                <div class="col-lg-12">
                     <ul>
                         @foreach($registrations as $registration)
                             <li>{!!$registration->event_link!!} ({{date('F j, Y', strtotime($registration->event->start_date))}} - {{date('F j, Y', strtotime($registration->event->end_date))}}) </li>
@@ -198,7 +198,7 @@
         </div>
         @can('show-attachment')
         <div class="row">
-            <div class="col-12" id="attachments">
+            <div class="col-lg-12" id="attachments">
                 <h2>Attachments for {{ $diocese->display_name }} ({{ $files->count() }})</h2>
                 @if ($files->isEmpty())
                     <div class="text-center">
@@ -229,7 +229,7 @@
         @endCan
         @can('show-donation')
             <div class="row">
-                <div class="col-12" id="donations">
+                <div class="col-lg-12" id="donations">
                     <h2>Donations for {{ $diocese->display_name }} ({{$donations->total() }} donations totaling:  ${{ number_format($donations->sum('donation_amount'),2)}})</h2>
                     @can('create-donation')
                         {!! Html::link(route('donation.add',$diocese->id),'Add donation',array('class' => 'btn btn-outline-dark'))!!}
@@ -284,12 +284,12 @@
             </div>
         @endcan
         <div class="row">
-            <div class="col-6 text-right">
+            <div class="col-lg-6 text-right">
                 @can('update-contact')
                     <a href="{{ action('DioceseController@edit', $diocese->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                 @endCan
             </div>
-            <div class="col-6 text-left">
+            <div class="col-lg-6 text-left">
                 @can('delete-contact')
                     {!! Form::open(['method' => 'DELETE', 'route' => ['diocese.destroy', $diocese->id],'onsubmit'=>'return ConfirmDelete()']) !!}
                     {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}

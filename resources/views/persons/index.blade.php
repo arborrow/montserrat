@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="row bg-cover">
-    <div class="col-12">
+    <div class="col-lg-12">
         <h1>
             Persons
             @can('create-contact')
@@ -15,7 +15,7 @@
         </h1>
         <p class="lead">{{$persons->total()}} records</p>
     </div>
-    <div class="col-12 my-2">
+    <div class="col-lg-12 my-2">
         <div class="filters">
             <span>
                 <a href={{ action('PersonController@boardmembers') }}>
@@ -94,9 +94,9 @@
             </span>
         </div>
     </div>
-    <div class="col-12 table-responsive-lg">
+    <div class="col-lg-12 table-responsive-lg">
         @if ($persons->isEmpty())
-            <div class="col-12 text-center py-5">
+            <div class="col-lg-12 text-center py-5">
                 <p>It is a brand new world, there are no persons. Let there be light!</p>
             </div>
         @else

@@ -2,12 +2,12 @@
 @section('content')
 
 <div class="row bg-cover">
-    <div class="col-12">
+    <div class="col-lg-12">
         <h1>AGC FY {{$total['year']}} Index - ({{$donations->total()}} donations)</h1>
         <p class="lead">${{number_format($total['paid'],2)}} of ${{number_format($total['pledged'],2)}} ({{number_format($total['percent'],0)}}%)</p>
         {{ $donations->links() }}
     </div>
-    <div class="col-12">
+    <div class="col-lg-12">
         @if ($donations->isEmpty())
             <div class="text-center">
                 <p>It is an impoverished new world, there are no AGC donations!</p>

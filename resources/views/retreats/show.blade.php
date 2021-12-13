@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="row bg-cover">
-    <div class="col-12">
+    <div class="col-lg-12">
         <h1>
             @can('update-retreat')
             Retreat {!!Html::link(url('retreat/'.$retreat->id.'/edit'),$retreat->title.' ('.$retreat->idnumber.')')!!}
@@ -11,7 +11,7 @@
             @endCan
         </h1>
     </div>
-    <div class="col-12">
+    <div class="col-lg-12">
         {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-outline-dark')) !!}
         @can('create-touchpoint')
             {!! Html::link(action('TouchpointController@add_retreat',$retreat->id),'Retreat touchpoint',array('class' => 'btn btn-outline-dark'))!!}
@@ -21,7 +21,7 @@
             {!! Html::link('report/finance/retreatdonations/'.$retreat->idnumber,'Donations report',array('class' => 'btn btn-outline-dark')) !!}
         @endCan
         @can('show-registration')
-            <select class="custom-select col-3" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+            <select class="custom-select col-lg-3" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                 <option value="">Print ...</option>
                 <option value="{{url('retreat/'.$retreat->id.'/namebadges/all')}}">Namebadges</option>
                 <option value="{{url('report/retreatroster/'.$retreat->idnumber)}}">Retreat roster</option>
@@ -33,10 +33,10 @@
             </select>
         @endCan
     </div>
-    <div class="col-12 mt-3">
+    <div class="col-lg-12 mt-3">
         <h2>Details</h2>
         <div class="row">
-            <div class="col-12 col-md-6 col-lg-4">
+            <div class="col-lg-12 col-md-6 col-lg-4">
                 <span class="font-weight-bold">ID#: </span>{{ $retreat->idnumber}} <br>
                 <span class="font-weight-bold">Starts: </span>{{ date('F j, Y g:i A', strtotime($retreat->start_date)) }} <br>
                 <span class="font-weight-bold">Ends: </span>{{ date('F j, Y g:i A', strtotime($retreat->end_date)) }} <br>
@@ -46,7 +46,7 @@
                 ({!!Html::link(url('retreat/'.$retreat->id.'/waitlist'), $retreat->retreatant_waitlist_count) !!}) <br>
                 @endif
             </div>
-            <div class="col-12 col-md-6 col-lg-4">
+            <div class="col-lg-12 col-md-6 col-lg-4">
                 <span class="font-weight-bold">Description: </span>
                 @if (!$retreat->description)
                 N/A
@@ -92,26 +92,26 @@
                             </ul>
                             @endif
             </div>
-            <div class="col-12 col-md-6 col-lg-4">
+            <div class="col-lg-12 col-md-6 col-lg-4">
                 <span class="font-weight-bold">Type: </span>{{ $retreat->retreat_type}} <br>
                 <span class="font-weight-bold">Status: </span>{{ $retreat->is_active == 0 ? 'Canceled' : 'Active' }} <br>
                 <span class="font-weight-bold">Donation: </span>{{ $retreat->amount}} <br>
                 <span class="font-weight-bold">Last updated: </span>{{ $retreat->updated_at->format('D F j, Y \a\t g:ia')}}
             </div>
-            <div class="col-12">
+            <div class="col-lg-12">
                 <h2>Attachments</h2>
                 <div class="row">
-                    <div class="col-12 col-lg-4">
+                    <div class="col-lg-12 col-lg-4">
                         @can('show-event-contract')
                         {!!$retreat->retreat_contract_link!!}
                         @endCan
                     </div>
-                    <div class="col-12 col-lg-4">
+                    <div class="col-lg-12 col-lg-4">
                         @can('show-event-schedule')
                         {!!$retreat->retreat_schedule_link!!}
                         @endCan
                     </div>
-                    <div class="col-12 col-lg-4">
+                    <div class="col-lg-12 col-lg-4">
                         @can('show-event-evaluation')
                         {!!$retreat->retreat_evaluations_link!!}
                         @endCan
@@ -145,7 +145,7 @@
             </div>
             @can('show-event-group-photo')
             @if (Storage::has('event/'.$retreat->id.'/group_photo.jpg'))
-            <div class="col-12">
+            <div class="col-lg-12">
                 <h2>Group Photo</h2>
                 <img src="{{url('retreat/'.$retreat->id).'/photo'}}" class="img" style="padding:5px; width:75%">
             </div>
@@ -153,14 +153,14 @@
             @endCan
         </div>
     </div>
-    <div class="col-12">
+    <div class="col-lg-12">
         <div class="row">
-            <div class="col-6 text-right">
+            <div class="col-lg-6 text-right">
                 @can('update-retreat')
                 <a href="{{ action('RetreatController@edit', $retreat->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                 @endCan
             </div>
-            <div class="col-6 text-left">
+            <div class="col-lg-6 text-left">
                 @can('delete-retreat')
                 {!! Form::open(['method' => 'DELETE', 'route' => ['retreat.destroy', $retreat->id],'onsubmit'=>'return ConfirmDelete()']) !!}
                 {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
@@ -169,9 +169,9 @@
             </div>
         </div>
     </div>
-    <div class="col-12 mt-3">
+    <div class="col-lg-12 mt-3">
         <div class="row" id='registrations'>
-            <div class="col-12">
+            <div class="col-lg-12">
                 <h2>
                     {{$registrations->total()}} Registrations
                     {{($status ? '('.ucfirst($status).')' : NULL) }} for
@@ -197,7 +197,7 @@
                         {!! Html::link(action('RetreatController@checkout',$retreat->id),'Checkout',array('class' => 'btn btn-outline-dark'))!!}
                     @endIf
                 @endCan
-                <select class="custom-select col-3" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                <select class="custom-select col-lg-3" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                     <option value="">Filter registrations by status ...</option>
                     <option value="{{url('retreat/'.$retreat->id)}}">All</option>
                     <option value="{{url('retreat/'.$retreat->id.'/status/active')}}">Active</option>
@@ -210,7 +210,7 @@
                     <option value="{{url('retreat/'.$retreat->id.'/status/unconfirmed')}}">Unconfirmed</option>
                     </select>
             </div>
-            <div class="col-12 mt-3">
+            <div class="col-lg-12 mt-3">
                 @if ($registrations->isEmpty())
                 <div class="text-center">
                     <p>Currently, there are no registrations for this retreat.</p>
