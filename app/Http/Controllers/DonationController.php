@@ -69,13 +69,15 @@ class DonationController extends Controller
     {
         $this->authorize('show-donation');
         if (! empty($request)) {
+            $all_donations = \App\Models\Donation::filtered($request)->orderBy('donation_date')->get();
             $donations = \App\Models\Donation::filtered($request)->orderBy('donation_date')->paginate(25,['*'],'donations');
             $donations->appends($request->except('page'));
         } else {
-            $donations = \App\Models\Donation::orderBy('name')->paginate(25,['*'],'donations');
+          $all_donations = \App\Models\Donation::orderBy('name')->get();
+          $donations = \App\Models\Donation::orderBy('name')->paginate(25,['*'],'donations');
         }
 
-        return view('donations.results', compact('donations'));
+        return view('donations.results', compact('donations','all_donations'));
     }
 
     public function overpaid()
