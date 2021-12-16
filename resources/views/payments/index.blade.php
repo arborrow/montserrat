@@ -6,12 +6,13 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                        <span class="grey">Payment Index</span>
+                        Payment Index
                         <a href={{ action('PaymentController@search') }}>
                             {!! Html::image('images/search.png', 'Search payments',array('title'=>"Search payments",'class' => 'btn btn-link')) !!}</a>
-                        <span class="grey">({{$payments->total()}} records)</span>
+                        <p class="lead">({{$payments->total()}} records)</p>
                         <!-- payments are not created independently of donations so there should not be an option here to create a payment -->
                     </h1>
+
                     <span>{{ $payments->links() }}</span>
                 </div>
                 @if ($payments->isEmpty())

@@ -69,13 +69,15 @@ class PaymentController extends Controller
     {
         $this->authorize('show-payment');
         if (! empty($request)) {
+            $all_payments = \App\Models\Payment::filtered($request)->orderBy('payment_date')->get();
             $payments = \App\Models\Payment::filtered($request)->orderBy('payment_date')->paginate(25,['*'],'payments');
             $payments->appends($request->except('page'));
         } else {
+            $all_payments = \App\Models\Payment::orderBy('payment_date')->get();
             $payments = \App\Models\Payment::orderBy('payment_date')->paginate(25,['*'],'payments');
         }
 
-        return view('payments.results', compact('payments'));
+        return view('payments.results', compact('payments','all_payments'));
     }
 
     /**

@@ -7,12 +7,13 @@
             <div class="panel-heading">
                 <h1>
                     <span class="grey">{{$donations->total()}} result(s) found</span>
-                    <span class="search"><a href={{ action('DonationController@search') }}>{!! Html::image('images/search.png', 'New search',array('title'=>"New search",'class' => 'btn btn-link')) !!}</a></span></h1>
-                    <p class="lead">${{number_format($all_donations->sum('payments_paid'),2)}} paid of ${{number_format($all_donations->sum('donation_amount'),2) }} pledged
-                      @if ($all_donations->sum('donation_amount') > 0)
-                        ({{number_format(($all_donations->sum('payments_paid')/$all_donations->sum('donation_amount'))*100,0)}}%)
-                      @endif
-                    </p>
+                    <span class="search"><a href={{ action('DonationController@search') }}>{!! Html::image('images/search.png', 'New search',array('title'=>"New search",'class' => 'btn btn-link')) !!}</a></span>
+                </h1>
+                <p class="lead">${{number_format($all_donations->sum('payments_paid'),2)}} paid of ${{number_format($all_donations->sum('donation_amount'),2) }} pledged
+                  @if ($all_donations->sum('donation_amount') > 0)
+                    ({{number_format(($all_donations->sum('payments_paid')/$all_donations->sum('donation_amount'))*100,0)}}%)
+                  @endif
+                </p>
             </div>
             @if ($donations->isEmpty())
             <p>Oops, no known donations with the given search criteria</p>
