@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Spatie\GoogleCalendar\Exceptions\InvalidConfiguration;
+
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -75,15 +77,19 @@ class Handler extends ExceptionHandler
         }
 
         // 500
-        if ($exception instanceof \ErrorException) {
+        if ($exception instanceof \ErrorException || ($exception->getMessage() == "Google Calendar Error")) {
             $mailable = 1;
             $subject = '500 '.$subject.': '.$exception->getMessage();
         }
+
+
         // Do not actually mail if we are not in production
         if ($mailable && App::environment()=='production') {
             Mail::send('emails.en_US.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject], function ($m) use ($subject, $exception, $request) {
                 $m->to(config('polanco.admin_email'))->subject($subject);
             });
+            flash('Email sent to site administrator regarding: '.$subject)->error();
+
         }
 
         if (($exception instanceof \ErrorException) && (! config('app.debug'))) { // avoid displaying error details to the user unless debugging

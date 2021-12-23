@@ -12,6 +12,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use Spatie\GoogleCalendar\Event;
+use Storage;
+use Exception;
+
 
 class RetreatController extends Controller
 {
@@ -142,11 +145,7 @@ class RetreatController extends Controller
         //$retreat->attending = $request->input('attending');
         //$retreat->year = $request->input('year');
 
-        if (null !== (config('settings.google_calendar_id'))) {
-            $calendar_event = new Event;
-            $calendar_event->id = uniqid();
-            $retreat->calendar_id = $calendar_event->id;
-        }
+
         $directors = $request->input('directors');
         $innkeepers = $request->input('innkeepers');
         $assistants = $request->input('assistants');
@@ -185,14 +184,26 @@ class RetreatController extends Controller
             }
         }
 
-        if (null !== (config('settings.google_calendar_id'))) {
+        if ($this->is_google_calendar_enabled()) {
+            $calendar_event = new Event;
+            $calendar_event->id = uniqid();
             $calendar_event->name = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
             $calendar_event->summary = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
             $calendar_event->startDateTime = $retreat->start_date;
             $calendar_event->endDateTime = $retreat->end_date;
             $retreat_url = url('retreat/'.$retreat->id);
             $calendar_event->description = "<a href='".$retreat_url."'>".$retreat->idnumber.' - '.$retreat->title.'</a> : '.$retreat->description;
-            $calendar_event->save('insertEvent');
+            $retreat->calendar_id = $calendar_event->id;
+            $retreat->save();
+            try {
+                $calendar_event->save('insertEvent');
+            } catch (Exception $e) {
+                $retreat->calendar_id = null;
+                $retreat->save();
+                flash('Retreat: <a href="'.url('/retreat/'.$retreat->id).'">'.$retreat->title.'</a> added; however, the Google Calendar Event was not Created')->error();
+                abort(500,"Google Calendar Error");
+            }
+
         }
 
         flash('Retreat: <a href="'.url('/retreat/'.$retreat->id).'">'.$retreat->title.'</a> added')->success();
@@ -702,7 +713,7 @@ class RetreatController extends Controller
     public function calendar()
     {
         $this->authorize('show-retreat');
-        if (null !== config('settings.google_calendar_id')) {
+        if ($this->is_google_calendar_enabled()) {
             $calendar_events = \Spatie\GoogleCalendar\Event::get();
         } else {
             $calendar_events = collect([]);
@@ -864,5 +875,15 @@ class RetreatController extends Controller
         }
 
         return view('retreats.results', compact('events'));
+    }
+
+    public function is_google_calendar_enabled() {
+      $file = "google-calendar/service-account-credentials.json";
+      //dd(config('settings.google_calendar_id'));
+      if (null !== config('settings.google_calendar_id') && Storage::exists($file)) {
+          return TRUE;
+      } else {
+        return FALSE;
+      }
     }
 }

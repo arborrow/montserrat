@@ -97,6 +97,11 @@
                 <span class="font-weight-bold">Status: </span>{{ $retreat->is_active == 0 ? 'Canceled' : 'Active' }} <br>
                 <span class="font-weight-bold">Donation: </span>{{ $retreat->amount}} <br>
                 <span class="font-weight-bold">Last updated: </span>{{ $retreat->updated_at->format('D F j, Y \a\t g:ia')}}
+                @can('show-admin-menu')
+                    <br>
+                    <span class="font-weight-bold">Calendar ID: </span>{{ $retreat->calendar_id}}
+                @endCan
+
             </div>
             <div class="col-12">
                 <h2>Attachments</h2>
