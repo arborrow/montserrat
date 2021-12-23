@@ -138,6 +138,7 @@
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href={{ route('activity') }}>Activity log</a>
 							<a class="dropdown-item" href={{ route('audit.index') }}>Audit log</a>
+							<a class="dropdown-item" href={{ route('admin.config') }}>Configuration</a>
 						</div>
 					</li>
 					@endCan
