@@ -427,12 +427,14 @@ class PageController extends Controller
 
         return view('admin.config.index');
     }
+
     public function config_application()
     {
         $this->authorize('show-admin-menu');
 
         return view('admin.config.application');
     }
+
     public function config_mail()
     {
         $this->authorize('show-admin-menu');

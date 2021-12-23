@@ -11,7 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-
+//TODO: Create unit tests for new admin.config pages (index, mail, google_calendar, etc.)
 
 /**
  * @see \App\Http\Controllers\PageController
@@ -44,6 +44,129 @@ class PageControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertViewIs('pages.bookstore');
+    }
+
+
+    /**
+     * @test
+     */
+    public function config_index_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-admin-menu');
+
+        $response = $this->actingAs($user)->get(route('admin.config.index'));
+
+        $response->assertOk();
+        $response->assertViewIs('admin.config.index');
+    }
+
+    /**
+     * @test
+     */
+    public function config_index_client_returns_403()
+    {
+        $user = \App\Models\User::factory()->create();
+
+        $response = $this->actingAs($user)->get(route('admin.config.index'));
+        $response->assertForbidden();
+    }
+
+
+    /**
+     * @test
+     */
+    public function config_application_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-admin-menu');
+
+        $response = $this->actingAs($user)->get(route('admin.config.application'));
+
+        $response->assertOk();
+        $response->assertViewIs('admin.config.application');
+    }
+
+    /**
+     * @test
+     */
+    public function config_application_client_returns_403()
+    {
+        $user = \App\Models\User::factory()->create();
+
+        $response = $this->actingAs($user)->get(route('admin.config.application'));
+        $response->assertForbidden();
+    }
+
+
+    /**
+     * @test
+     */
+    public function config_mail_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-admin-menu');
+
+        $response = $this->actingAs($user)->get(route('admin.config.mail'));
+
+        $response->assertOk();
+        $response->assertViewIs('admin.config.mail');
+    }
+
+    /**
+     * @test
+     */
+    public function config_mail_client_returns_403()
+    {
+        $user = \App\Models\User::factory()->create();
+
+        $response = $this->actingAs($user)->get(route('admin.config.mail'));
+        $response->assertForbidden();
+    }
+
+    /**
+     * @test
+     */
+    public function config_gate_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-admin-menu');
+
+        $response = $this->actingAs($user)->get(route('admin.config.gate'));
+
+        $response->assertOk();
+        $response->assertViewIs('admin.config.gate');
+    }
+
+    /**
+     * @test
+     */
+    public function config_gate_client_returns_403()
+    {
+        $user = \App\Models\User::factory()->create();
+
+        $response = $this->actingAs($user)->get(route('admin.config.gate'));
+        $response->assertForbidden();
+    }
+
+    /**
+     * @test
+     */
+    public function config_google_calendar_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-admin-menu');
+
+        $response = $this->actingAs($user)->get(route('admin.config.google_calendar'));
+
+        $response->assertOk();
+        $response->assertViewIs('admin.config.google_calendar');
+    }
+
+    /**
+     * @test
+     */
+    public function config_google_calendar_client_returns_403()
+    {
+        $user = \App\Models\User::factory()->create();
+
+        $response = $this->actingAs($user)->get(route('admin.config.google_calendar'));
+        $response->assertForbidden();
     }
 
     /**

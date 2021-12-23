@@ -67,7 +67,7 @@ Route::group(['middleware' => ['web', 'activity']], function () {
     Route::post('admin/permission/update_roles', 'PermissionController@update_roles')->name('admin.permission.update_roles');
     Route::post('admin/role/update_permissions', 'RoleController@update_permissions')->name('admin.role.update_permissions');
     Route::post('admin/role/update_users', 'RoleController@update_users')->name('admin.role.update_users');
-    Route::get('admin/config', 'PageController@config_index')->name('admin.config');
+    Route::get('admin/config', 'PageController@config_index')->name('admin.config.index');
     Route::get('admin/config/application', 'PageController@config_application')->name('admin.config.application');
     Route::get('admin/config/gate', 'PageController@config_gate')->name('admin.config.gate');
     Route::get('admin/config/mail', 'PageController@config_mail')->name('admin.config.mail');
