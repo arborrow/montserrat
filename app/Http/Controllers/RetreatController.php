@@ -200,7 +200,7 @@ class RetreatController extends Controller
             } catch (Exception $e) {
                 $retreat->calendar_id = null;
                 $retreat->save();
-                flash('Retreat: <a href="'.url('/retreat/'.$retreat->id).'">'.$retreat->title.'</a> added; however, the Google Calendar Event was not Created')->error();
+                flash('Retreat: <a href="'.url('/retreat/'.$retreat->id).'">'.$retreat->title.'</a> added; however, the Google Calendar Event (' .$calendar_event->id.') was not Created')->error();
                 abort(500,"Google Calendar Error");
             }
 
