@@ -24,13 +24,11 @@
                         <div class="col-12 col-lg-4">
                             {!! Form::label('start_date', 'Starts:') !!}
                             {!! Form::datetime('start_date', $retreat->start_date, ['class'=>'form-control flatpickr-date-time','id' => 'start_date']) !!}
-
                         </div>
                         <div class="col-12 col-lg-4">
                             {!! Form::label('end_date', 'Ends:') !!}
                             {!! Form::datetime('end_date', $retreat->end_date, ['class' => 'form-control flatpickr-date-time','id' => 'end_date']) !!}
                         </div>
-
                     </div>
                     <div class="row">
                         <div class="col-12 col-lg-4">
@@ -63,6 +61,11 @@
                             {!! Form::label('is_active', 'Canceled?:')  !!}
                             {!! Form::select('is_active', $is_active, $retreat->is_active, ['class' => 'form-control']) !!}
                         </div>
+                        <div class="col-12 col-lg-4">
+                            {!! Form::label('calendar_id', 'Google Calendar ID:')  !!}
+                            {!! Form::text('calendar_id', $retreat->calendar_id, ['class' => 'form-control','readonly']) !!}
+                        </div>
+
                     </div>
                     <div class="row">
                         <div class="col-12">
