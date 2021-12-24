@@ -16,27 +16,27 @@
         @can('create-touchpoint')
             {!! Html::link(action('TouchpointController@add_retreat',$retreat->id),'Retreat touchpoint',array('class' => 'btn btn-outline-dark'))!!}
         @endCan
-        @can('show-donation')
-            {!! Html::link('retreat/'.$retreat->id.'/payments','Retreat donations',array('class' => 'btn btn-outline-dark')) !!}
-            {!! Html::link('report/finance/retreatdonations/'.$retreat->idnumber,'Donations report',array('class' => 'btn btn-outline-dark')) !!}
-        @endCan
         @can('show-registration')
             <select class="custom-select col-3" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                 <option value="">Print ...</option>
                 <option value="{{url('retreat/'.$retreat->id.'/namebadges/all')}}">Namebadges</option>
-                <option value="{{url('report/retreatroster/'.$retreat->idnumber)}}">Retreat roster</option>
-                <option value="{{url('report/retreatlisting/'.$retreat->idnumber)}}">Retreat listing</option>
+                <option value="{{url('report/retreatroster/'.$retreat->idnumber)}}">Roster</option>
+                <option value="{{url('report/retreatlisting/'.$retreat->idnumber)}}">Listing</option>
                 <option value="{{url('report/retreatantinfo/'.$retreat->idnumber)}}">Retreatant info sheets</option>
                 <option value="{{url('retreat/'.$retreat->id.'/roomlist')}}">Room list</option>
                 <option value="{{url('retreat/'.$retreat->id.'/tableplacards')}}">Table placards</option>
-                <option value="{{url('report/retreatregistrations/'.$retreat->idnumber)}}">Retreat registrations</option>
+                <option value="{{url('report/retreatregistrations/'.$retreat->idnumber)}}">Registrations</option>
+                @can('show-donation')
+                    <option value="{{url('report/finance/retreatdonations/'.$retreat->idnumber)}}">Donations</option>
+                @endCan
+
             </select>
         @endCan
     </div>
     <div class="col-12 mt-3">
         <h2>Details</h2>
         <div class="row">
-            <div class="col-12 col-md-6 col-lg-4">
+            <div class="col-lg-4 col-md-6 ">
                 <span class="font-weight-bold">ID#: </span>{{ $retreat->idnumber}} <br>
                 <span class="font-weight-bold">Starts: </span>{{ date('F j, Y g:i A', strtotime($retreat->start_date)) }} <br>
                 <span class="font-weight-bold">Ends: </span>{{ date('F j, Y g:i A', strtotime($retreat->end_date)) }} <br>
@@ -46,58 +46,71 @@
                 ({!!Html::link(url('retreat/'.$retreat->id.'/waitlist'), $retreat->retreatant_waitlist_count) !!}) <br>
                 @endif
             </div>
-            <div class="col-12 col-md-6 col-lg-4">
+            <div class="col-lg-4 col-md-6 ">
                 <span class="font-weight-bold">Description: </span>
                 @if (!$retreat->description)
-                N/A
+                    N/A
                 @else
-                {{ $retreat->description }}
+                    {{ $retreat->description }}
                 @endif
                 <br>
+
                 <span class="font-weight-bold">Director(s): </span>
                 @if ($retreat->retreatmasters->isEmpty())
-                N/A <br>
-                @else
-                @foreach($retreat->retreatmasters as $retreatmaster)
-                    {!!$retreatmaster->contact_link_full_name!!}
-                    @endforeach
-                    @endif
-                    <span class="font-weight-bold">Innkeeper: </span>
-                    @if ($retreat->innkeepers->isEmpty())
                     N/A <br>
-                    @else
+                @else
+                    @foreach($retreat->retreatmasters as $retreatmaster)
+                        {!!$retreatmaster->contact_link_full_name!!}
+                    @endforeach
+                @endif
+
+                <span class="font-weight-bold">Innkeeper: </span>
+                @if ($retreat->innkeepers->isEmpty())
+                    N/A <br>
+                @else
                     @foreach($retreat->innkeepers as $innkeeper)
                         {!!$innkeeper->contact_link_full_name!!}
-                        @endforeach
-                        @endif
-                        <br>
-                        <span class="font-weight-bold">Assistant: </span>
-                        @if ($retreat->assistants->isEmpty())
-                        N/A <br>
-                        @else
-                        @foreach($retreat->assistants as $assistant)
-                            {!!$assistant->contact_link_full_name!!}
-                            @endforeach
-                            @endif
-                            <span class="font-weight-bold">Ambassador(s): </span>
-                            @if ($retreat->ambassadors->isEmpty())
-                            N/A <br>
-                            @else
-                            <ul>
-                                @foreach($retreat->ambassadors as $ambassador)
-                                    <li>
-                                        {!!$ambassador->contact_link_full_name!!}
-                                    </li>
-                                    @endforeach
-                            </ul>
-                            @endif
+                    @endforeach
+                @endif
+
+                <span class="font-weight-bold">Assistant: </span>
+                @if ($retreat->assistants->isEmpty())
+                    N/A <br>
+                @else
+                    @foreach($retreat->assistants as $assistant)
+                        {!!$assistant->contact_link_full_name!!}
+                    @endforeach
+                @endif
+
+                <span class="font-weight-bold">Ambassador(s): </span>
+                @if ($retreat->ambassadors->isEmpty())
+                    N/A <br>
+                @else
+                    @foreach($retreat->ambassadors as $ambassador)
+                        {!!$ambassador->contact_link_full_name!!}
+                    @endforeach
+                @endif
             </div>
-            <div class="col-12 col-md-6 col-lg-4">
+
+            <div class="col-lg-4 col-md-6">
                 <span class="font-weight-bold">Type: </span>{{ $retreat->retreat_type}} <br>
                 <span class="font-weight-bold">Status: </span>{{ $retreat->is_active == 0 ? 'Canceled' : 'Active' }} <br>
-                <span class="font-weight-bold">Donation: </span>{{ $retreat->amount}} <br>
-                <span class="font-weight-bold">Last updated: </span>{{ $retreat->updated_at->format('D F j, Y \a\t g:ia')}}
+                @can('show-donation')
+                    <span class="font-weight-bold">Donations: </span>
+                    {!! Html::link('report/finance/retreatdonations/'.$retreat->idnumber,
+                        ($retreat->donations_pledged_sum)>0 ? '$'.number_format($retreat->donations_pledged_sum,2) : '$'.number_format(0,2))
+                    !!}<br>
+                @endCan
+                <span class="font-weight-bold">Last updated: </span>{{ $retreat->updated_at->format('F j, Y g:i A')}}<br>
+                <span class="font-weight-bold">Calendar ID: </span>
+                @if (isset($retreat->google_calendar_html))
+                    <a href="{{$retreat->google_calendar_html}}"> {{$retreat->calendar_id}}</a>
+                @else
+                    {{ $retreat->calendar_id}}
+                @endIf
+
             </div>
+
             <div class="col-12">
                 <h2>Attachments</h2>
                 <div class="row">
@@ -143,6 +156,7 @@
                     @endCan
                 </div>
             </div>
+
             @can('show-event-group-photo')
             @if (Storage::has('event/'.$retreat->id.'/group_photo.jpg'))
             <div class="col-12">
@@ -151,8 +165,10 @@
             </div>
             @endif
             @endCan
+
         </div>
     </div>
+
     <div class="col-12">
         <div class="row">
             <div class="col-6 text-right">

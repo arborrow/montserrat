@@ -12,6 +12,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use Spatie\GoogleCalendar\Event;
+use Storage;
+use Exception;
+
 
 class RetreatController extends Controller
 {
@@ -142,11 +145,7 @@ class RetreatController extends Controller
         //$retreat->attending = $request->input('attending');
         //$retreat->year = $request->input('year');
 
-        if (null !== (config('settings.google_calendar_id'))) {
-            $calendar_event = new Event;
-            $calendar_event->id = uniqid();
-            $retreat->calendar_id = $calendar_event->id;
-        }
+
         $directors = $request->input('directors');
         $innkeepers = $request->input('innkeepers');
         $assistants = $request->input('assistants');
@@ -185,14 +184,27 @@ class RetreatController extends Controller
             }
         }
 
-        if (null !== (config('settings.google_calendar_id'))) {
+        if ($this->is_google_calendar_enabled()) {
+            $calendar_event = new Event;
+            $calendar_event->id = uniqid();
             $calendar_event->name = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
             $calendar_event->summary = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
             $calendar_event->startDateTime = $retreat->start_date;
             $calendar_event->endDateTime = $retreat->end_date;
+            $calendar_event->status="confirmed";
             $retreat_url = url('retreat/'.$retreat->id);
             $calendar_event->description = "<a href='".$retreat_url."'>".$retreat->idnumber.' - '.$retreat->title.'</a> : '.$retreat->description;
-            $calendar_event->save('insertEvent');
+            $retreat->calendar_id = $calendar_event->id;
+            $retreat->save();
+            try {
+                $calendar_event->save('insertEvent');
+            } catch (Exception $e) {
+                $retreat->calendar_id = null;
+                $retreat->save();
+                flash('Retreat: <a href="'.url('/retreat/'.$retreat->id).'">'.$retreat->title.'</a> added; however, the Google Calendar Event (' .$calendar_event->id.') was not Created')->error();
+                abort(500,"Google Calendar Error");
+            }
+
         }
 
         flash('Retreat: <a href="'.url('/retreat/'.$retreat->id).'">'.$retreat->title.'</a> added')->success();
@@ -325,6 +337,18 @@ class RetreatController extends Controller
                 break;
         }
 
+        if ($this->is_google_calendar_enabled()) {
+            if (! empty($retreat->calendar_id)) { //there is already a calendar_id so try to find the existing Google calendar event
+                try { // if successful the calendar_event will be the existing Google calendar event
+                    $calendar_event = Event::find($retreat->calendar_id);
+                    $retreat->google_calendar_html = $calendar_event->htmlLink;
+                }
+                catch (Exception $e) { // if successful the calendar_event will be a new Google calendar event
+                    flash('Google Calendar Event (' .$retreat->calendar_id.') was not found.')->error();
+                }
+            }
+        }
+
         return view('retreats.show', compact('retreat', 'registrations', 'status', 'attachments')); //
     }
 
@@ -452,7 +476,9 @@ class RetreatController extends Controller
     public function update(UpdateRetreatRequest $request, $id)
     {
         $this->authorize('update-retreat');
+
         $retreat = \App\Models\Retreat::findOrFail($request->input('id'));
+
         $retreat->idnumber = $request->input('idnumber');
         $retreat->start_date = $request->input('start_date');
         $retreat->end_date = $request->input('end_date');
@@ -460,10 +486,6 @@ class RetreatController extends Controller
         $retreat->description = $request->input('description');
         $retreat->event_type_id = $request->input('event_type');
         $retreat->is_active = $request->input('is_active');
-
-        if (null !== $request->input('calendar_id')) {
-            $retreat->calendar_id = $request->input('calendar_id');
-        }
         $retreat->save();
 
         if (null !== $request->file('contract')) {
@@ -544,25 +566,68 @@ class RetreatController extends Controller
         if (! $removed_ambassadors->isEmpty()) {
             $retreat->ambassadors()->whereIn('contact_id', $removed_ambassadors)->delete();
         }
-        if (! empty($retreat->calendar_id)) {
-            $calendar_event = Event::find($retreat->calendar_id);
+        /*
+        * if there is existing calendar_id but the Google Calendar configuration becomes invalid
+        * leave the data untouched in the calendar_id field
+        * hoping that the configuration will be repaired and then functionality can resume
+        * this could potentially be problematic if changing calendars
+        * in the event of calendar change, it is recommended to manually clear all calendar_id data from the event table
+        */
+        if ($this->is_google_calendar_enabled()) {
+            if (! empty($retreat->calendar_id)) { //there is already a calendar_id so try to find the existing Google calendar event
+                try { // if successful the calendar_event will be the existing Google calendar event
+                    $calendar_event = Event::find($retreat->calendar_id);
+                }
+                catch (Exception $e) { // if successful the calendar_event will be a new Google calendar event
+                    flash('Google Calendar Event (' .$retreat->calendar_id.') was not found. Polanco will try to create a new Google Calendar Event.')->error();
+                    try {
+                        $calendar_event = new Event;
+                        $calendar_event->id = uniqid();
+                    }
+                    catch (Exception $e) {
+                        flash('Polanco failed to create a new Google Calendar Event')->error();
+                        abort(500,"Google Calendar Error");
+                    }
+                }
 
-            /*
-                 * Initial work to manage attendees from Polanco
-                 * Need to clean up management of primary emails
-                 * Should this be limited to montserratretreat.org emails?
-                 * What about guest directors?
-                 */
-            //$calendar_event->attendees = $retreat->retreat_attendees;
-
-            if (! empty($calendar_event)) {
+                // we now have either the existing or a new calendar_event so update the data
                 $calendar_event->name = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
                 $calendar_event->summary = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
                 $calendar_event->startDateTime = $retreat->start_date;
                 $calendar_event->endDateTime = $retreat->end_date;
+                $calendar_event->status="confirmed";
                 $retreat_url = url('retreat/'.$retreat->id);
                 $calendar_event->description = "<a href='".$retreat_url."'>".$retreat->idnumber.' - '.$retreat->title.'</a> : '.$retreat->description;
-                $calendar_event->save();
+                try { // try to save/update the Google Calendar event
+                    $calendar_event->save();
+                    $retreat->calendar_id = $calendar_event->id;
+                    $retreat->save();
+                } // if there is an error updating inform user of failure and clear calendar_id
+                catch (Exception $e) {
+                    flash('Retreat: <a href="'.url('/retreat/'.$retreat->id).'">'.$retreat->title.'</a> updated; however, the Google Calendar Event was not saved.')->error();
+                    abort(500,"Google Calendar Error");
+                }
+            } else { // there is not existing calendar_id so we will attempt to create a new Google Calendar Event
+                try {
+                    $calendar_event = new Event;
+                    $calendar_event->id = uniqid();
+                    $calendar_event->name = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
+                    $calendar_event->summary = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
+                    $calendar_event->startDateTime = $retreat->start_date;
+                    $calendar_event->endDateTime = $retreat->end_date;
+                    $retreat_url = url('retreat/'.$retreat->id);
+                    $retreat->calendar_id = $calendar_event->id;
+                    $retreat->save();
+
+                    $calendar_event->description = "<a href='".$retreat_url."'>".$retreat->idnumber.' - '.$retreat->title.'</a> : '.$retreat->description;
+                    $calendar_event->save('insertEvent');
+                }
+                catch (Exception $e) {
+                    $retreat->calendar_id = null;
+                    $retreat->save(); // there was not a calendar_id and we failed to save it so do not save the calendar_event id
+                    flash('Retreat: <a href="'.url('/retreat/'.$retreat->id).'">'.$retreat->title.'</a> updated; however, the Google Calendar Event was not created.')->error();
+                    abort(500,"Google Calendar Error");
+                }
             }
         }
 
@@ -583,11 +648,13 @@ class RetreatController extends Controller
         $retreat = \App\Models\Retreat::findOrFail($id);
         // if there is a calendar id for the event then find the Google Calendar event, mark it as canceled and then remove it from the calendar (soft delete)
         if (! empty($retreat->calendar_id)) {
-            $calendar_event = Event::find($retreat->calendar_id);
-            if (! empty($calendar_event)) {
+            try {
+                $calendar_event = Event::find($retreat->calendar_id);
                 $calendar_event->name = '[CANCELED] '.$retreat->title.' ('.$retreat->idnumber.')';
+                $calendar_event->status="cancelled";
                 $calendar_event->save();
-                $calendar_event->delete();
+            } catch (Exception $e) {
+                flash('Polanco was unable to delete the Google Calendar Event ('.$retreat->calendar_id.').')->error();
             }
         }
 
@@ -702,7 +769,7 @@ class RetreatController extends Controller
     public function calendar()
     {
         $this->authorize('show-retreat');
-        if (null !== config('settings.google_calendar_id')) {
+        if ($this->is_google_calendar_enabled()) {
             $calendar_events = \Spatie\GoogleCalendar\Event::get();
         } else {
             $calendar_events = collect([]);
@@ -864,5 +931,15 @@ class RetreatController extends Controller
         }
 
         return view('retreats.results', compact('events'));
+    }
+
+    public function is_google_calendar_enabled() {
+      $file = "google-calendar/service-account-credentials.json";
+      //dd(config('settings.google_calendar_id'));
+      if (null !== config('settings.google_calendar_id') && Storage::exists($file)) {
+          return TRUE;
+      } else {
+        return FALSE;
+      }
     }
 }

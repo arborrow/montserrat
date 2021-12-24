@@ -421,6 +421,38 @@ class PageController extends Controller
         // return view('reports.finance.acknowledgment', compact('payments','contact', 'montserrat','start_date','end_date'));
     }
 
+    public function config_index()
+    {
+        $this->authorize('show-admin-menu');
+
+        return view('admin.config.index');
+    }
+
+    public function config_application()
+    {
+        $this->authorize('show-admin-menu');
+
+        return view('admin.config.application');
+    }
+
+    public function config_mail()
+    {
+        $this->authorize('show-admin-menu');
+
+        return view('admin.config.mail');
+    }
+    public function config_gate()
+    {
+        $this->authorize('show-admin-menu');
+
+        return view('admin.config.gate');
+    }
+    public function config_google_calendar()
+    {
+        $this->authorize('show-admin-menu');
+
+        return view('admin.config.google_calendar');
+    }
     public function config_google_client()
     {
         $this->authorize('show-admin-menu');
