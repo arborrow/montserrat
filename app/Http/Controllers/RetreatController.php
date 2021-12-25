@@ -198,7 +198,7 @@ class RetreatController extends Controller
             $retreat->save();
             try {
                 $calendar_event->save('insertEvent');
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $retreat->calendar_id = null;
                 $retreat->save();
                 flash('Retreat: <a href="'.url('/retreat/'.$retreat->id).'">'.$retreat->title.'</a> added; however, the Google Calendar Event (' .$calendar_event->id.') was not Created')->error();
@@ -343,7 +343,7 @@ class RetreatController extends Controller
                     $calendar_event = Event::find($retreat->calendar_id);
                     $retreat->google_calendar_html = $calendar_event->htmlLink;
                 }
-                catch (Exception $e) { // if successful the calendar_event will be a new Google calendar event
+                catch (\Exception $e) { // if successful the calendar_event will be a new Google calendar event
                     flash('Google Calendar Event (' .$retreat->calendar_id.') was not found.')->error();
                 }
             }
@@ -478,7 +478,6 @@ class RetreatController extends Controller
         $this->authorize('update-retreat');
 
         $retreat = \App\Models\Retreat::findOrFail($request->input('id'));
-
         $retreat->idnumber = $request->input('idnumber');
         $retreat->start_date = $request->input('start_date');
         $retreat->end_date = $request->input('end_date');
@@ -578,13 +577,13 @@ class RetreatController extends Controller
                 try { // if successful the calendar_event will be the existing Google calendar event
                     $calendar_event = Event::find($retreat->calendar_id);
                 }
-                catch (Exception $e) { // if successful the calendar_event will be a new Google calendar event
+                catch (\Exception $e) { // if successful the calendar_event will be a new Google calendar event
                     flash('Google Calendar Event (' .$retreat->calendar_id.') was not found. Polanco will try to create a new Google Calendar Event.')->error();
                     try {
                         $calendar_event = new Event;
                         $calendar_event->id = uniqid();
                     }
-                    catch (Exception $e) {
+                    catch (\Exception $e) { // creating a new Google Calendar event really should not be failing and is probably unnecessary
                         flash('Polanco failed to create a new Google Calendar Event')->error();
                         abort(500,"Google Calendar Error");
                     }
@@ -599,11 +598,15 @@ class RetreatController extends Controller
                 $retreat_url = url('retreat/'.$retreat->id);
                 $calendar_event->description = "<a href='".$retreat_url."'>".$retreat->idnumber.' - '.$retreat->title.'</a> : '.$retreat->description;
                 try { // try to save/update the Google Calendar event
-                    $calendar_event->save();
+                    if ($calendar_event->id == $retreat->calendar_id) {
+                        $calendar_event->save();
+                    } else {
+                        $calendar_event->save('insertEvent');
+                    }
                     $retreat->calendar_id = $calendar_event->id;
                     $retreat->save();
                 } // if there is an error updating inform user of failure and clear calendar_id
-                catch (Exception $e) {
+                catch (\Exception $e) {
                     flash('Retreat: <a href="'.url('/retreat/'.$retreat->id).'">'.$retreat->title.'</a> updated; however, the Google Calendar Event was not saved.')->error();
                     abort(500,"Google Calendar Error");
                 }
@@ -622,7 +625,7 @@ class RetreatController extends Controller
                     $calendar_event->description = "<a href='".$retreat_url."'>".$retreat->idnumber.' - '.$retreat->title.'</a> : '.$retreat->description;
                     $calendar_event->save('insertEvent');
                 }
-                catch (Exception $e) {
+                catch (\Exception $e) {
                     $retreat->calendar_id = null;
                     $retreat->save(); // there was not a calendar_id and we failed to save it so do not save the calendar_event id
                     flash('Retreat: <a href="'.url('/retreat/'.$retreat->id).'">'.$retreat->title.'</a> updated; however, the Google Calendar Event was not created.')->error();
@@ -653,7 +656,7 @@ class RetreatController extends Controller
                 $calendar_event->name = '[CANCELED] '.$retreat->title.' ('.$retreat->idnumber.')';
                 $calendar_event->status="cancelled";
                 $calendar_event->save();
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 flash('Polanco was unable to delete the Google Calendar Event ('.$retreat->calendar_id.').')->error();
             }
         }
