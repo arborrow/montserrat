@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="row bg-cover">
-    <div class="col-12">
+    <div class="col-lg-12">
         <h1>
             @can('update-retreat')
             Retreat {!!Html::link(url('retreat/'.$retreat->id.'/edit'),$retreat->title.' ('.$retreat->idnumber.')')!!}
@@ -11,7 +11,7 @@
             @endCan
         </h1>
     </div>
-    <div class="col-12">
+    <div class="col-lg-12">
         {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-outline-dark')) !!}
         @can('create-touchpoint')
             {!! Html::link(action('TouchpointController@add_retreat',$retreat->id),'Retreat touchpoint',array('class' => 'btn btn-outline-dark'))!!}
@@ -33,7 +33,7 @@
             </select>
         @endCan
     </div>
-    <div class="col-12 mt-3">
+    <div class="col-lg-12 mt-3">
         <h2>Details</h2>
         <div class="row">
             <div class="col-lg-4 col-md-6 ">
@@ -111,20 +111,20 @@
 
             </div>
 
-            <div class="col-12">
+            <div class="col-lg-12">
                 <h2>Attachments</h2>
                 <div class="row">
-                    <div class="col-12 col-lg-4">
+                    <div class="col-lg-4 col-md-6">
                         @can('show-event-contract')
                         {!!$retreat->retreat_contract_link!!}
                         @endCan
                     </div>
-                    <div class="col-12 col-lg-4">
+                    <div class="col-lg-4 col-md-6">
                         @can('show-event-schedule')
                         {!!$retreat->retreat_schedule_link!!}
                         @endCan
                     </div>
-                    <div class="col-12 col-lg-4">
+                    <div class="col-lg-4 col-md-6">
                         @can('show-event-evaluation')
                         {!!$retreat->retreat_evaluations_link!!}
                         @endCan
@@ -159,7 +159,7 @@
 
             @can('show-event-group-photo')
             @if (Storage::has('event/'.$retreat->id.'/group_photo.jpg'))
-            <div class="col-12">
+            <div class="col-lg-12">
                 <h2>Group Photo</h2>
                 <img src="{{url('retreat/'.$retreat->id).'/photo'}}" class="img" style="padding:5px; width:75%">
             </div>
@@ -169,7 +169,7 @@
         </div>
     </div>
 
-    <div class="col-12">
+    <div class="col-lg-12">
         <div class="row">
             <div class="col-6 text-right">
                 @can('update-retreat')
@@ -185,9 +185,9 @@
             </div>
         </div>
     </div>
-    <div class="col-12 mt-3">
+    <div class="col-lg-12 mt-3">
         <div class="row" id='registrations'>
-            <div class="col-12">
+            <div class="col-lg-12">
                 <h2>
                     {{$registrations->total()}} Registrations
                     {{($status ? '('.ucfirst($status).')' : NULL) }} for
@@ -226,7 +226,7 @@
                     <option value="{{url('retreat/'.$retreat->id.'/status/unconfirmed')}}">Unconfirmed</option>
                     </select>
             </div>
-            <div class="col-12 mt-3">
+            <div class="col-lg-12 mt-3">
                 @if ($registrations->isEmpty())
                 <div class="text-center">
                     <p>Currently, there are no registrations for this retreat.</p>
