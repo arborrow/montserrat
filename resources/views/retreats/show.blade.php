@@ -17,7 +17,7 @@
             {!! Html::link(action('TouchpointController@add_retreat',$retreat->id),'Retreat touchpoint',array('class' => 'btn btn-outline-dark'))!!}
         @endCan
         @can('show-registration')
-            <select class="custom-select col-lg-3" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+            <select class="custom-select col-3" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                 <option value="">Print ...</option>
                 <option value="{{url('retreat/'.$retreat->id.'/namebadges/all')}}">Namebadges</option>
                 <option value="{{url('report/retreatroster/'.$retreat->idnumber)}}">Roster</option>
@@ -110,20 +110,21 @@
                 @endIf
 
             </div>
+
             <div class="col-lg-12">
                 <h2>Attachments</h2>
                 <div class="row">
-                    <div class="col-lg-12 col-lg-4">
+                    <div class="col-lg-4 col-md-6">
                         @can('show-event-contract')
                         {!!$retreat->retreat_contract_link!!}
                         @endCan
                     </div>
-                    <div class="col-lg-12 col-lg-4">
+                    <div class="col-lg-4 col-md-6">
                         @can('show-event-schedule')
                         {!!$retreat->retreat_schedule_link!!}
                         @endCan
                     </div>
-                    <div class="col-lg-12 col-lg-4">
+                    <div class="col-lg-4 col-md-6">
                         @can('show-event-evaluation')
                         {!!$retreat->retreat_evaluations_link!!}
                         @endCan
@@ -167,14 +168,15 @@
 
         </div>
     </div>
+
     <div class="col-lg-12">
         <div class="row">
-            <div class="col-lg-6 text-right">
+            <div class="col-6 text-right">
                 @can('update-retreat')
                 <a href="{{ action('RetreatController@edit', $retreat->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                 @endCan
             </div>
-            <div class="col-lg-6 text-left">
+            <div class="col-6 text-left">
                 @can('delete-retreat')
                 {!! Form::open(['method' => 'DELETE', 'route' => ['retreat.destroy', $retreat->id],'onsubmit'=>'return ConfirmDelete()']) !!}
                 {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
@@ -211,7 +213,7 @@
                         {!! Html::link(action('RetreatController@checkout',$retreat->id),'Checkout',array('class' => 'btn btn-outline-dark'))!!}
                     @endIf
                 @endCan
-                <select class="custom-select col-lg-3" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                <select class="custom-select col-3" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                     <option value="">Filter registrations by status ...</option>
                     <option value="{{url('retreat/'.$retreat->id)}}">All</option>
                     <option value="{{url('retreat/'.$retreat->id.'/status/active')}}">Active</option>
