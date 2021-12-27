@@ -16,27 +16,27 @@
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <div class="row">
-                                    <div class="col-lg-12 col-md-4">
+                                    <div class="col-lg-3 col-md-4">
                                         {!! Form::label('name', 'Name')  !!}
                                         {!! Form::text('name', $donation_type->name, ['class' => 'form-control']) !!}
                                     </div>
-                                    <div class="col-lg-12 col-md-4">
+                                    <div class="col-lg-3 col-md-4">
                                         {!! Form::label('label', 'Label')  !!}
                                         {!! Form::text('label', $donation_type->label, ['class' => 'form-control']) !!}
                                     </div>
-                                    <div class="col-lg-12 col-md-4">
+                                    <div class="col-lg-3 col-md-4">
                                         {!! Form::label('value', 'Value')  !!}
                                         {!! Form::text('value', $donation_type->value, ['class' => 'form-control']) !!}
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-12 col-md-4">
+                                    <div class="col-lg-3 col-md-4">
                                         {!! Form::label('description', 'Description')  !!}
                                         {!! Form::text('description', $donation_type->description, ['class' => 'form-control']) !!}
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-12 col-md-4">
+                                    <div class="col-lg-3 col-md-4">
                                         {!! Form::label('is_active', 'Active:', ['class' => 'col-md-2'])  !!}
                                         {!! Form::checkbox('is_active', 1, $donation_type->is_active,['class' => 'col-md-2']) !!}
                                     </div>

@@ -9,11 +9,11 @@
         {!! Form::open(['url' => 'admin/permission', 'method' => 'post', 'class' => 'form-horizontal panel']) !!}
             <div class="form-group">
                 <div class="row">
-                    <div class="col-lg-12 col-md-4">
+                    <div class="col-lg-3 col-md-4">
                         {!! Form::label('name', 'Name') !!}
                         {!! Form::text('name', NULL , ['class' => 'form-control']) !!}
                     </div>
-                    <div class="col-lg-12 col-md-4">
+                    <div class="col-lg-3 col-md-4">
                         {!! Form::label('display_name', 'Display Name') !!}
                         {!! Form::text('display_name', NULL , ['class' => 'form-control']) !!}
                     </div>

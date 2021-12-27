@@ -20,16 +20,16 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-12 col-md-4">
+                        <div class="col-lg-3 col-md-4">
                             {!! Form::label('first_name', 'First: ') !!}
                             {!! Form::text('first_name', null, ['required'=>'', 'class' =>
                             'form-control','oninvalid'=>"this.setCustomValidity('First name required')"]) !!}
                         </div>
-                        <div class="col-lg-12 col-md-4">
+                        <div class="col-lg-3 col-md-4">
                             {!! Form::label('middle_name', 'Middle: ') !!}
                             {!! Form::text('middle_name', null, ['class' => 'form-control']) !!}
                         </div>
-                        <div class="col-lg-12 col-md-4">
+                        <div class="col-lg-3 col-md-4">
                             {!! Form::label('last_name', 'Last: ') !!}
                             {!! Form::text('last_name', null, ['required'=>'','class' => 'form-control']) !!}
                         </div>
@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-12 col-md-4">
+                        <div class="col-lg-3 col-md-4">
                             {!! Form::label('nick_name', 'Nickname: ') !!}
                             {!! Form::text('nick_name', null, ['class' => 'form-control']) !!}
                         </div>
@@ -65,7 +65,7 @@
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-lg-12 col-md-4">
+                        <div class="col-lg-3 col-md-4">
                             <div class="form-check mt-4">
                                 {!! Form::checkbox('is_deceased', 1, false,['class' => 'form-check-input', 'id' =>
                                 'is_deceased']) !!}
@@ -73,7 +73,7 @@
                                 'is_deceased']) !!}
                             </div>
                         </div>
-                        <div class="col-lg-12 col-md-4">
+                        <div class="col-lg-3 col-md-4">
                             {!! Form::label('deceased_date', 'Deceased Date:') !!}
                             {!! Form::text('deceased_date', null, ['class'=>'form-control flatpickr-date']) !!}
                         </div>
@@ -89,21 +89,21 @@
             <div class="col-lg-12">
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-lg-12 col-md-4">
+                        <div class="col-lg-3 col-md-4">
                             {!! Form::label('emergency_contact_name', 'Name: ') !!}
                             {!! Form::text('emergency_contact_name', null, ['class' => 'form-control']) !!}
                         </div>
-                        <div class="col-lg-12 col-md-4">
+                        <div class="col-lg-3 col-md-4">
                             {!! Form::label('emergency_contact_relationship', 'Relationship: ') !!}
                             {!! Form::text('emergency_contact_relationship', null, ['class' => 'form-control']) !!}
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-12 col-md-4">
+                        <div class="col-lg-3 col-md-4">
                             {!! Form::label('emergency_contact_phone', 'Phone: ') !!}
                             {!! Form::text('emergency_contact_phone', null, ['class' => 'form-control']) !!}
                         </div>
-                        <div class="col-lg-12 col-md-4">
+                        <div class="col-lg-3 col-md-4">
                             {!! Form::label('emergency_contact_phone_alternate', 'Alt. Phone: ') !!}
                             {!! Form::text('emergency_contact_phone_alternate', null, ['class' => 'form-control']) !!}
                         </div>
@@ -112,7 +112,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 {!! Form::label('preferred_communication_method_id', 'Preferred communication method:') !!}
                 {!! Form::select('preferred_communication_method_id', $preferred_communication_methods, 0, ['class' => 'form-control']) !!}
             </div>
@@ -162,34 +162,34 @@
             <div class="col-lg-12">
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-lg-12 col-md-4">
+                        <div class="col-lg-3 col-md-4">
                             {!! Form::label('gender_id', 'Gender:') !!}
                             {!! Form::select('gender_id', $genders, 0, ['class' => 'form-control']) !!}
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-12 col-md-4">
+                        <div class="col-lg-3 col-md-4">
                             {!! Form::label('birth_date', 'Birth Date:') !!}
                             {!! Form::text('birth_date', null, ['class'=>'form-control flatpickr-date', 'autocomplete'
                             => 'off']) !!}
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-12 col-md-4">
+                        <div class="col-lg-3 col-md-4">
                             {!! Form::label('religion_id', 'Religion:') !!}
                             {!! Form::select('religion_id', $religions, 1, ['class' => 'form-control']) !!}
                         </div>
-                        <div class="col-lg-12 col-md-4">
+                        <div class="col-lg-3 col-md-4">
                             {!! Form::label('occupation_id', 'Occupation:') !!}
                             {!! Form::select('occupation_id', $occupations, 0, ['class' => 'form-control']) !!}
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-12 col-md-4">
+                        <div class="col-lg-3 col-md-4">
                             {!! Form::label('parish_id', 'Parish:') !!}
                             {!! Form::select('parish_id', $parish_list, 0, ['class' => 'form-control']) !!}
                         </div>
-                        <div class="col-lg-12 col-md-4">
+                        <div class="col-lg-3 col-md-4">
                             {!! Form::label('ethnicity_id', 'Ethnicity:') !!}
                             {!! Form::select('ethnicity_id', $ethnicities, 'Unspecified', ['class' => 'form-control'])
                             !!}
@@ -206,18 +206,18 @@
             <div class="col-lg-12">
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-lg-12 col-md-4">
+                        <div class="col-lg-3 col-md-4">
                             {!! Form::label('languages', 'Languages:') !!}
                             {!! Form::select('languages[]', $languages, 45, ['id' => 'languages', 'class' =>
                             'form-control select2', 'multiple' => 'multiple']) !!}
                         </div>
-                        <div class="col-lg-12 col-md-4">
+                        <div class="col-lg-3 col-md-4">
                             {!! Form::label('preferred_language_id', 'Preferred Language:') !!}
                             {!! Form::select('preferred_language_id', $languages, 45, ['class' => 'form-control']) !!}
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-12 col-md-4">
+                        <div class="col-lg-3 col-md-4">
                             {!! Form::label('referrals', 'Referrals:') !!}
                             {!! Form::select('referrals[]', $referrals, NULL, ['id' => 'referrals', 'class' =>
                             'form-control select2', 'multiple' => 'multiple']) !!}

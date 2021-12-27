@@ -10,15 +10,15 @@
         {!! Form::hidden('id', $permission->id) !!}
             <div class="form-group">
                 <div class="row">
-                    <div class="col-lg-12 col-md-4">
+                    <div class="col-lg-3 col-md-4">
                         {!! Form::label('name', 'Name')  !!}
                         {!! Form::text('name', $permission->name, ['class' => 'form-control']) !!}
                     </div>
-                    <div class="col-lg-12 col-md-4">
+                    <div class="col-lg-3 col-md-4">
                         {!! Form::label('display_name', 'Display name')  !!}
                         {!! Form::text('display_name', $permission->display_name, ['class' => 'form-control']) !!}
                     </div>
-                    <div class="col-lg-12 col-md-4">
+                    <div class="col-lg-3 col-md-4">
                         {!! Form::label('description', 'Description')  !!}
                         {!! Form::text('description', $permission->description, ['class' => 'form-control']) !!}
                     </div>

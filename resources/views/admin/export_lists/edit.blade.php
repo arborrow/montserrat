@@ -50,13 +50,13 @@
                                   </div>
                               </div>
                               <div class="row">
-                                  <div class="col-lg-12 col-md-4">
+                                  <div class="col-lg-3 col-md-4">
                                       {!! Form::label('fields', 'Fields') !!}
                                       {!! Form::textarea('fields', $export_list->fields , ['class' => 'form-control']) !!}
                                   </div>
                               </div>
                               <div class="row">
-                                  <div class="col-lg-12 col-md-4">
+                                  <div class="col-lg-3 col-md-4">
                                       {!! Form::label('filters', 'Filters') !!}
                                       {!! Form::textarea('filters', $export_list->filters , ['class' => 'form-control']) !!}
                                   </div>

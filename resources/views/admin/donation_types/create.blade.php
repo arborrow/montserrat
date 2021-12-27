@@ -9,15 +9,15 @@
         {!! Form::open(['url'=>'admin/donation_type', 'method'=>'post']) !!}
             <div class="form-group">
                 <div class="row">
-                    <div class="col-lg-12 col-md-4">
+                    <div class="col-lg-3 col-md-4">
                         {!! Form::label('name', 'Name') !!}
                         {!! Form::text('name', NULL , ['class' => 'form-control']) !!}
                     </div>
-                    <div class="col-lg-12 col-md-4">
+                    <div class="col-lg-3 col-md-4">
                         {!! Form::label('label', 'Label')  !!}
                         {!! Form::text('label', NULL , ['class' => 'form-control']) !!}
                     </div>
-                    <div class="col-lg-12 col-md-4">
+                    <div class="col-lg-3 col-md-4">
                         {!! Form::label('value', 'Value')  !!}
                         {!! Form::text('value', NULL , ['class' => 'form-control']) !!}
                     </div>

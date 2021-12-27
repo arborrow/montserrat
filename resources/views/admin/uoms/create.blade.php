@@ -9,15 +9,15 @@
         {!! Form::open(['url'=>'admin/uom', 'method'=>'post']) !!}
             <div class="form-group">
                 <div class="row">
-                    <div class="col-lg-12 col-md-4">
+                    <div class="col-lg-3 col-md-4">
                         {!! Form::label('unit_name', 'Unit name') !!}
                         {!! Form::text('unit_name', NULL , ['class' => 'form-control']) !!}
                     </div>
-                    <div class="col-lg-12 col-md-4">
+                    <div class="col-lg-3 col-md-4">
                         {!! Form::label('type', 'Type') !!}
                         {!! Form::select('type', $uom_types, NULL, ['class' => 'form-control']) !!}
                     </div>
-                    <div class="col-lg-12 col-md-4">
+                    <div class="col-lg-3 col-md-4">
                         {!! Form::label('unit_symbol', 'Unit symbol')  !!}
                         {!! Form::text('unit_symbol', NULL , ['class' => 'form-control']) !!}
                     </div>

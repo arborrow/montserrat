@@ -21,19 +21,19 @@
                 <div class="col-lg-12">
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-lg-12 col-md-4">
+                            <div class="col-lg-3 col-md-4">
                                 {!! Form::label('bishop_id', 'Bishop')  !!}
                                 {!! Form::select('bishop_id', $bishops, $diocese->bishop_id, ['class' => 'form-control']) !!}
                             </div>
-                            <div class="col-lg-12 col-md-4">
+                            <div class="col-lg-3 col-md-4">
                                 {!! Form::label('organization_name', 'Name') !!}
                                 {!! Form::text('organization_name', $diocese->organization_name, ['class' => 'form-control']) !!}
                             </div>
-                            <div class="col-lg-12 col-md-4">
+                            <div class="col-lg-3 col-md-4">
                                 {!! Form::label('display_name', 'Display') !!}
                                 {!! Form::text('display_name', $diocese->display_name, ['class' => 'form-control']) !!}
                             </div>
-                            <div class="col-lg-12 col-md-4">
+                            <div class="col-lg-3 col-md-4">
                                 {!! Form::label('sort_name', 'Sort') !!}
                                 {!! Form::text('sort_name', $diocese->sort_name, ['class' => 'form-control']) !!}
                             </div>
@@ -79,19 +79,19 @@
                 <div class="col-lg-12">
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-lg-12 col-md-4">
+                            <div class="col-lg-3 col-md-4">
                                 {!! Form::label('phone_main_phone', 'Phone') !!}
                                 {!! Form::text('phone_main_phone', $diocese->phone_main_phone_number, ['class' => 'form-control']) !!}
                             </div>
-                            <div class="col-lg-12 col-md-4">
+                            <div class="col-lg-3 col-md-4">
                                 {!! Form::label('phone_main_fax', 'Fax') !!}
                                 {!! Form::text('phone_main_fax', $diocese->phone_main_fax_number, ['class' => 'form-control']) !!}
                             </div>
-                            <div class="col-lg-12 col-md-4">
+                            <div class="col-lg-3 col-md-4">
                                 {!! Form::label('email_primary', 'Email') !!}
                                 {!! Form::text('email_primary', $diocese->email_primary_text, ['class' => 'form-control']) !!}
                             </div>
-                            <div class="col-lg-12 col-md-4">
+                            <div class="col-lg-3 col-md-4">
                                 {!! Form::label('diocese_note', 'Note:') !!}
                                 {!! Form::textarea('diocese_note', $diocese->note_diocese_text, ['class' => 'form-control', 'rows' => 3]) !!}
                             </div>

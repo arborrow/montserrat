@@ -15,30 +15,30 @@
     </div>
     <div class="col-lg-12">
         <div class="row">
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <strong>Contact A: </strong>{!! $relationship->contact_a->contact_link_full_name!!}</a>
             </div>
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <strong>Contact B: </strong>{!! $relationship->contact_b->contact_link_full_name!!}</a>
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <strong>Relationship Type: </strong>{{ $relationship->relationship_type->description}}
             </div>
         </div>
         <div class="row">
-              <div class="col-lg-12 col-md-4">
+              <div class="col-lg-3 col-md-4">
                   <strong>Relationship Description: </strong>{{ $relationship->description}}
               </div>
         </div>
         <div class="row">
-                <div class="col-lg-12 col-md-4">
+                <div class="col-lg-3 col-md-4">
                     <strong>Start / End Dates: </strong>{{ $relationship->start_date }} / {{ $relationship->end_date }}
                 </div>
         </div>
         <div class="row">
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <strong>Is active: </strong>{{ $relationship->is_active ? 'Yes':'No' }}
             </div>
         </div>

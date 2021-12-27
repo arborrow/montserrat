@@ -16,15 +16,15 @@
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <div class="row">
-                                    <div class="col-lg-12 col-md-4">
+                                    <div class="col-lg-3 col-md-4">
                                         {!! Form::label('name', 'Name')  !!}
                                         {!! Form::text('name', $role->name, ['class' => 'form-control']) !!}
                                     </div>
-                                    <div class="col-lg-12 col-md-4">
+                                    <div class="col-lg-3 col-md-4">
                                         {!! Form::label('display_name', 'Display name')  !!}
                                         {!! Form::text('display_name', $role->display_name, ['class' => 'form-control']) !!}
                                     </div>
-                                    <div class="col-lg-12 col-md-4">
+                                    <div class="col-lg-3 col-md-4">
                                         {!! Form::label('description', 'Description')  !!}
                                         {!! Form::text('description', $role->description, ['class' => 'form-control']) !!}
                                     </div>

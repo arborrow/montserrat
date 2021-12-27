@@ -50,7 +50,7 @@
                             {!! Form::label('notes1', 'Primary contact for invoice')  !!}
                             {!! Form::text('notes1', NULL, ['class' => 'form-control']) !!}
                         </div>
-                        <div class="col-lg-12 col-md-4">
+                        <div class="col-lg-3 col-md-4">
                             {!! Form::label('notes', 'Notes')  !!}
                             {!! Form::text('notes', NULL, ['class' => 'form-control']) !!}
                         </div>

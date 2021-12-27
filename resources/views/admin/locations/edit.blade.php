@@ -16,15 +16,15 @@
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <div class="row">
-                                    <div class="col-lg-12 col-md-4">
+                                    <div class="col-lg-3 col-md-4">
                                         {!! Form::label('name', 'Name') !!}
                                         {!! Form::text('name', $location->name , ['class' => 'form-control']) !!}
                                     </div>
-                                    <div class="col-lg-12 col-md-4">
+                                    <div class="col-lg-3 col-md-4">
                                         {!! Form::label('label', 'Label') !!}
                                         {!! Form::text('label', $location->label , ['class' => 'form-control']) !!}
                                     </div>
-                                    <div class="col-lg-12 col-md-4">
+                                    <div class="col-lg-3 col-md-4">
                                         {!! Form::label('type', 'Type') !!}
                                         {!! Form::select('type', $location_types, $location->type, ['class' => 'form-control']) !!}
                                     </div>
@@ -37,25 +37,25 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-12 col-md-4">
+                                    <div class="col-lg-3 col-md-4">
                                         {!! Form::label('latitude', 'Latitude') !!}
                                         {!! Form::text('latitude', number_format($location->latitude,8) , ['class' => 'form-control']) !!}
                                     </div>
-                                    <div class="col-lg-12 col-md-4">
+                                    <div class="col-lg-3 col-md-4">
                                         {!! Form::label('longitude', 'Longitude') !!}
                                         {!! Form::text('longitude', number_format($location->longitude,8) , ['class' => 'form-control']) !!}
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-12 col-md-4">
+                                    <div class="col-lg-3 col-md-4">
                                         {!! Form::label('occupancy', 'Occupancy') !!}
                                         {!! Form::text('occupancy', $location->occupancy, ['class' => 'form-control']) !!}
                                     </div>
-                                    <div class="col-lg-12 col-md-4">
+                                    <div class="col-lg-3 col-md-4">
                                         {!! Form::label('room_id', 'Room') !!}
                                         {!! Form::select('room_id', $rooms, $location->room_id, ['class' => 'form-control']) !!}
                                     </div>
-                                    <div class="col-lg-12 col-md-4">
+                                    <div class="col-lg-3 col-md-4">
                                         {!! Form::label('parent_id', 'Parent') !!}
                                         {!! Form::select('parent_id', $parents, $location->parent_id, ['class' => 'form-control']) !!}
                                     </div>

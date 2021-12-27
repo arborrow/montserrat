@@ -46,7 +46,7 @@
     <div class="tab-content">
         <div id="url_main" class="tab-pane fade show active" role="tabpanel">
             <div class="row">
-                <div class="col-lg-12 col-md-4">
+                <div class="col-lg-3 col-md-4">
                     {!! Form::label('url_main', 'Personal (main):')  !!}
                     {!! Form::text('url_main', null, ['class' => 'form-control']) !!}
                 </div>
@@ -54,7 +54,7 @@
         </div>
         <div id="url_work" class="tab-pane fade" role="tabpanel">
             <div class="row">
-                <div class="col-lg-12 col-md-4">
+                <div class="col-lg-3 col-md-4">
                     {!! Form::label('url_work', 'Work:')  !!}
                     {!! Form::text('url_work', null, ['class' => 'form-control']) !!}
                 </div>
@@ -62,7 +62,7 @@
         </div>
         <div id="url_facebook" class="tab-pane fade" role="tabpanel">
             <div class="row">
-                <div class="col-lg-12 col-md-4">
+                <div class="col-lg-3 col-md-4">
                     {!! Form::label('url_facebook', 'Facebook:')  !!}
                     {!! Form::text('url_facebook', null, ['class' => 'form-control']) !!}
                 </div>
@@ -70,7 +70,7 @@
         </div>
         <div id="url_google" class="tab-pane fade" role="tabpanel">
             <div class="row">
-                <div class="col-lg-12 col-md-4">
+                <div class="col-lg-3 col-md-4">
                     {!! Form::label('url_google', 'Google+:')  !!}
                     {!! Form::text('url_google', null, ['class' => 'form-control']) !!}
                 </div>
@@ -78,7 +78,7 @@
         </div>
         <div id="url_instagram" class="tab-pane fade" role="tabpanel">
             <div class="row">
-                <div class="col-lg-12 col-md-4">
+                <div class="col-lg-3 col-md-4">
                     {!! Form::label('url_instagram', 'Instagram:')  !!}
                     {!! Form::text('url_instagram', null, ['class' => 'form-control']) !!}
                 </div>
@@ -86,7 +86,7 @@
         </div>
         <div id="url_linkedin" class="tab-pane fade" role="tabpanel">
             <div class="row">
-                <div class="col-lg-12 col-md-4">
+                <div class="col-lg-3 col-md-4">
                     {!! Form::label('url_linkedin', 'LinkedIn:')  !!}
                     {!! Form::text('url_linkedin', null, ['class' => 'form-control']) !!}
                 </div>
@@ -94,7 +94,7 @@
         </div>
         <div id="url_twitter" class="tab-pane fade" role="tabpanel">
             <div class="row">
-                <div class="col-lg-12 col-md-4">
+                <div class="col-lg-3 col-md-4">
                     {!! Form::label('url_twitter', 'Twitter:')  !!}
                     {!! Form::text('url_twitter', null, ['class' => 'form-control']) !!}
                 </div>

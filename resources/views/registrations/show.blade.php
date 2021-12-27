@@ -15,29 +15,29 @@
     </div>
     <div class="col-lg-12">
         <div class="row">
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <strong>Retreatant: </strong><a href="../person/{{ $registration->retreatant->id}}">{{ $registration->retreatant->full_name}}</a>
             </div>
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <strong>Retreat: </strong><a href="../retreat/{{ $registration->event_id}}">{{ $registration->event_name}} ({{ $registration->event_idnumber}})</a>
             </div>
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <strong>Retreat Dates: </strong>{{ date('F d, Y', strtotime($registration->retreat_start_date))}} - {{ date('F d, Y', strtotime($registration->retreat_end_date))}}
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <strong>Registered: </strong>{{ isset($registration->register_date) ? date('F d, Y h:i A', strtotime($registration->register_date)) : null }}
             </div>
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <strong>Status: </strong>{{ $registration->status_name }}
             </div>
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <strong>Registration from: </strong>{{ $registration->source ? $registration->source : 'N/A' }}
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <strong>Registration Confirmed: </strong>
                 @if ($registration->registration_confirm_date == NULL)
                     N/A
@@ -45,12 +45,12 @@
                     {{date('F d, Y', strtotime($registration->registration_confirm_date))}}
                 @endif
             </div>
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <strong>Confirmed by: </strong>{{ $registration->confirmed_by}}
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <strong>Arrived at: </strong>
                 @if (empty($registration->arrived_at))
                     N/A
@@ -58,7 +58,7 @@
                     {{date('F d, Y H:i', strtotime($registration->arrived_at))}}
                 @endif
             </div>
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <strong>Departed at: </strong>
                 @if ($registration->departed_at == NULL)
                     N/A
@@ -66,7 +66,7 @@
                     {{date('F d, Y H:i', strtotime($registration->departed_at))}}
                 @endif
             </div>
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <strong>Canceled at: </strong>
                 @if ($registration->canceled_at == NULL)
                     N/A
@@ -76,7 +76,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <strong>Room: </strong>{{ $registration->room_name}}
             </div>
         </div>

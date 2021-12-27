@@ -44,11 +44,11 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-12 col-md-4">
+                    <div class="col-lg-3 col-md-4">
                         {!! Form::label('fields', 'Fields') !!}
                         {!! Form::textarea('fields', NULL , ['class' => 'form-control']) !!}
                     </div>
-                    <div class="col-lg-12 col-md-4">
+                    <div class="col-lg-3 col-md-4">
                         {!! Form::label('filters', 'Filters') !!}
                         {!! Form::textarea('filters', NULL , ['class' => 'form-control']) !!}
                     </div>

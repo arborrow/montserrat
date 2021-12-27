@@ -9,11 +9,11 @@
         {!! Form::open(['url'=>'admin/website', 'method'=>'post']) !!}
             <div class="form-group">
                 <div class="row">
-                    <div class="col-lg-12 col-md-4">
+                    <div class="col-lg-3 col-md-4">
                         {!! Form::label('url', 'URL')  !!}
                         {!! Form::text('url', NULL , ['class' => 'form-control']) !!}
                     </div>
-                    <div class="col-lg-12 col-md-4">
+                    <div class="col-lg-3 col-md-4">
                         {!! Form::label('website_type', 'Type') !!}
                         {!! Form::select('website_type', config('polanco.website_types'), NULL, ['class' => 'form-control']) !!}
                     </div>
@@ -25,11 +25,11 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-12 col-md-4">
+                    <div class="col-lg-3 col-md-4">
                         {!! Form::label('asset_id', 'Asset ID') !!}
                         {!! Form::text('asset_id', NULL , ['class' => 'form-control']) !!}
                     </div>
-                    <div class="col-lg-12 col-md-4">
+                    <div class="col-lg-3 col-md-4">
                         {!! Form::label('contact_id', 'Contact ID') !!}
                         {!! Form::text('contact_id', NULL , ['class' => 'form-control']) !!}
                     </div>

@@ -15,21 +15,21 @@
     </div>
     <div class="col-lg-12">
         <div class="row">
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <span class="font-weight-bold">Date: </span>{{$payment->payment_date->format('m/d/Y')}}
             </div>
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <span class="font-weight-bold">Amount: </span>${{ number_format($payment->payment_amount,2)}}
             </div>
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <span class="font-weight-bold">Method: </span>{{$payment->payment_description}}
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <span class="font-weight-bold">Check/CC#: </span>{{ $payment->ccnumber ?? $payment->cknumber}}
             </div>
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <span class="font-weight-bold">Note: </span>{{$payment->note}}
             </div>
         </div>
@@ -39,32 +39,32 @@
     </div>
     <div class="col-lg-12">
         <div class="row">
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <span class="font-weight-bold">Date: </span> {{$payment->donation->donation_date->format('m/d/Y')}}
             </div>
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <span class="font-weight-bold">Description: </span>{{$payment->donation->donation_description}}
             </div>
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <span class="font-weight-bold">Amount pledged (% paid): </span>${{$payment->donation->donation_amount}} ({{$payment->donation->percent_paid}}%)
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <span class="font-weight-bold">Terms: </span>{{$payment->donation->terms}}
             </div>
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <span class="font-weight-bold">Notes: </span>{{$payment->donation->notes}}
             </div>
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <span class="font-weight-bold">Start date: </span>{{$payment->donation->start_date}}
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <span class="font-weight-bold">End date: </span>{{$payment->donation->end_date}}
             </div>
-            <div class="col-lg-12 col-md-4">
+            <div class="col-lg-3 col-md-4">
                 <span class="font-weight-bold">Donation install: </span>{{$payment->donation->donation_install}}
             </div>
         </div>
