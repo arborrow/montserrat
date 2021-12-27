@@ -28,7 +28,7 @@
 
         @endIf
     </div>
-    <div class="col-lg-3 col-md-4">
+    <div class="col-lg-4 col-md-6">
         <span class="font-weight-bold">Date: </span>{{$donation->donation_date->format('m/d/Y')}}
         <br><span class="font-weight-bold">Description: </span>{{$donation->donation_description}}
         <br>
@@ -46,12 +46,12 @@
 
         <br><span class="font-weight-bold">Primary contact: </span>{{$donation->Notes1}}
     </div>
-    <div class="col-lg-3 col-md-4">
+    <div class="col-lg-4 col-md-6">
         <span class="font-weight-bold">Event: </span>{!!$donation->retreat_link!!} ({{$donation->retreat_start_date}})
         <br><span class="font-weight-bold">Notes: </span>{{$donation->Notes}}
         <br><span class="font-weight-bold">Thank you sent: </span>{{$donation['Thank You']}}
     </div>
-    <div class="col-lg-3 col-md-4">
+    <div class="col-lg-4 col-md-6">
       <span class="font-weight-bold">Start date: </span>{{$donation->start_date}}
       <br><span class="font-weight-bold">End date: </span>{{$donation->end_date}}
       <br><span class="font-weight-bold">Donation install: </span>{{$donation->donation_install}}
