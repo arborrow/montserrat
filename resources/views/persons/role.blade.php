@@ -1,7 +1,7 @@
 @extends('template')
 @section('content')
 <div class="row bg-cover">
-    <div class="col-12">
+    <div class="col-lg-12">
         <h2>
             {{$role['name']}}
             @can('create-contact')
@@ -16,7 +16,7 @@
             {{$persons->count()}} records
         </p>
     </div>
-    <div class="col-12">
+    <div class="col-lg-12">
         @can('show-contact')
             <span class="person">
                 <a href={{ action('PersonController@index') }} class="btn btn-light">
@@ -34,9 +34,9 @@
             <a href={{ action('TouchpointController@add_group',$role['group_id']) }} class="btn btn-link">Add Group Touchpoint</a>
         @endCan
     </div>
-    <div class="col-12">
+    <div class="col-lg-12">
         @if ($persons->isEmpty())
-            <div class="col-12 text-center py-5">
+            <div class="col-lg-12 text-center py-5">
                 <h3>Currently, there are no {{$role['name']}}s.</h3>
             </div>
         @else

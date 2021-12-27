@@ -174,7 +174,7 @@
         </div>
         <div class="{{ $containerBodyClass }}">
             <div class="row">
-                <div class="col-xs-12 col-12">
+                <div class="col-xs-12 col-lg-12">
                     <div class="row">
                         <div class="col-md-6 col-lg-4">
                             <ul class="list-group">
@@ -329,7 +329,7 @@
 
             @if(!$isClearedEntry)
                 <div class="row">
-                    <div class="col-xs-12 col-12">
+                    <div class="col-xs-12 col-lg-12">
                         <ul class="list-group">
                             <li class="list-group-item list-group-item-info">
                                 {!! trans('LaravelLogger::laravel-logger.drilldown.title-user-activity') !!}

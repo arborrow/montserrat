@@ -184,7 +184,7 @@
 			@yield('content')
 			<hr/>
 			<div class="footer row">
-				<div class="col-12 text-center">
+				<div class="col-lg-12 text-center">
 					<p>
 						<a href='https://goo.gl/QmEUut' target='_blank'>
 							600 N Shady Shores Drive<br />

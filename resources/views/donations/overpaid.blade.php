@@ -2,13 +2,13 @@
 @section('content')
 
 <div class="row bg-cover">
-    <div class="col-12">
+    <div class="col-lg-12">
         <h1>
             Overpaid Donations
             <p class="lead">{{$overpaid->count()}} Overpaid records</p>
         </h1>
     </div>
-    <div class="col-12 mt-2">
+    <div class="col-lg-12 mt-2">
         @if ($overpaid->isEmpty())
             <div class="text-center">
                 <p>The world is perfectly balanced, there are no overpaid donations!</p>
