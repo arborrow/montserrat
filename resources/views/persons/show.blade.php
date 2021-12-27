@@ -69,7 +69,7 @@
     </div>
     <div class="col-lg-12 mt-5">
         <div class="row">
-            <div class="col-lg-12 col-lg-6" id="basic_info">
+            <div class="col-lg-6" id="basic_info">
                 <h2>Basic Information</h2>
                 <p>
                     <span class="font-weight-bold">Title: </span>{{ (!empty($person->prefix_name)) ? $person->prefix_name : null }}
@@ -85,7 +85,7 @@
                     <br><span class="font-weight-bold">Subcontact type: </span>{{ $person->subcontact_type_label }}
                 </p>
             </div>
-            <div class="col-lg-12 col-lg-6 alert alert-danger alert-important" id="safety_info">
+            <div class="col-lg-6  alert alert-danger alert-important" id="safety_info">
                 <h2>Emergency Contact Information</h2>
                 <p>
                     <span class="font-weight-bold">Name: </span>{{ !empty($person->emergency_contact->name) ? $person->emergency_contact->name : 'N/A' }}
@@ -101,29 +101,29 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-12 col-lg-6" id="contact_info">
+            <div class="col-lg-6 " id="contact_info">
                 <h2>Contact Information</h2>
                 <div class="row">
                     <strong>Preferred communication method: </strong> {{ config('polanco.preferred_communication_method.'.$person->preferred_communication_method) }}
                 </div>
                 <div class="row">
                     @if($person->do_not_phone)
-                        <div class="alert alert-warning alert-important col-lg-12 col-lg-3 m-2" role="alert">
+                        <div class="alert alert-warning alert-important col-lg-12 col-lg-6 m-2" role="alert">
                             <span class="font-weight-bold">Do Not Call</span>
                         </div>
                     @endIf
                     @if($person->do_not_sms)
-                        <div class="alert alert-warning alert-important col-lg-12 col-lg-3 m-2" role="alert">
+                        <div class="alert alert-warning alert-important col-lg-12 col-lg-6 m-2" role="alert">
                             <span class="font-weight-bold">Do Not Text</span>
                         </div>
                     @endIf
                     @if($person->do_not_mail)
-                        <div class="alert alert-warning alert-important col-lg-12 col-lg-3 m-2" role="alert">
+                        <div class="alert alert-warning alert-important col-lg-12 col-lg-6 m-2" role="alert">
                             <span class="font-weight-bold">Do Not Mail</span>
                         </div>
                     @endIf
                     @if($person->do_not_email)
-                        <div class="alert alert-warning alert-important col-lg-12 col-lg-3 m-2" role="alert">
+                        <div class="alert alert-warning alert-important col-lg-12 col-lg-6 m-2" role="alert">
                             <span class="font-weight-bold">Do Not Email</span>
                         </div>
                     @endIf
@@ -171,7 +171,7 @@
                 @endforeach
                 </div>
             </div>
-            <div class="col-lg-12 col-lg-6" id="demographics">
+            <div class="col-lg-6" id="demographics">
                 <h2>Demographics</h2>
                 <p>
                     <span class="font-weight-bold">Gender: </span>{{ !empty($person->gender_name) ? $person->gender_name : 'N/A' }}
@@ -193,7 +193,7 @@
                     @endif
                 </p>
             </div>
-            <div class="col-lg-12 col-lg-6" id="other_info">
+            <div class="col-lg-6 " id="other_info">
                 <h2>Other</h2>
                 <p>
                     <span class="font-weight-bold">Referral sources: </span>
@@ -223,7 +223,7 @@
                 </p>
             </div>
             @can('show-group')
-            <div class="col-lg-12 col-lg-6" id="groups">
+            <div class="col-lg-6 " id="groups">
                 <h2>Groups</h2>
                 @if(!empty(array_filter((array)$person->groups)))
                     <ul>
@@ -236,14 +236,14 @@
                 @endif
             </div>
             @endCan
-            <div class="col-lg-12 col-lg-6" id="notes">
+            <div class="col-lg-6 " id="notes">
                 <h2>Notes</h2>
                 <p><span class="font-weight-bold">General: </span> {!! $person->note_contact ? $person->note_contact : 'N/A' !!}
                 <br><span class="font-weight-bold">Room Preference: </span> {!! $person->note_room_preference ? $person->note_room_preference : 'N/A' !!}</p>
             </div>
 
             @can('show-relationship')
-            <div class="col-lg-12 col-lg-6" id="relationships">
+            <div class="col-lg-6 " id="relationships">
                 <h2>Relationships ({{ $person->a_relationships->count() + $person->b_relationships->count() }})</h2>
                 @can('create-relationship')
                 {!! Form::open(['method' => 'POST', 'route' => ['relationship_type.addme']]) !!}
@@ -293,7 +293,7 @@
             </div>
             @endCan
             @can('show-registration')
-            <div class="col-lg-12 mt-3" id="registrations">
+            <div class="col-lg-6  mt-3" id="registrations">
                 <h2>Retreat Participation ({{$registrations->total()}})</h2>
                 {{ $registrations->links() }}
                 @foreach($registrations->sortByDesc('retreat_start_date') as $registration)
@@ -308,7 +308,7 @@
             </div>
             @endCan
             @can('show-touchpoint')
-            <div class="col-lg-12 mt-3" id="touchpoints">
+            <div class="col-lg-6  mt-3" id="touchpoints">
                 <h2>Touchpoints ({{ $touchpoints->total() }})</h2>
                 @can('create-touchpoint')
                 <button class="btn btn-outline-dark"><a href={{ action('TouchpointController@add',$person->id) }}>Add Touchpoint</a></button>
@@ -341,7 +341,7 @@
             </div>
             @endCan
             @can('show-attachment')
-            <div class="col-lg-12 mt-3" id="attachments">
+            <div class="col-lg-6  mt-3" id="attachments">
                 <h2>Attachments ({{ $files->count() }})</h2>
                 @if ($files->isEmpty())
                     <p>There are no attachments for this person.</p>
@@ -368,7 +368,7 @@
             </div>
             @endCan
             @can('show-donation')
-            <div class="col-lg-12 mt-3" id="donations">
+            <div class="col-lg-6  mt-3" id="donations">
                 <h2>
                     {{$donations->total() }} Donation(s) for {{ $person->display_name }}
                         - ${{$donations->sum('payments_paid')}} paid of
@@ -429,7 +429,7 @@
             @endCan
         </div>
         <div class="row" id="commands">
-          <div class='col-lg-6 mt-4 mb-4'>
+          <div class='col-lg-6  mt-4 mb-4'>
             @can('update-contact')
                 <a href="{{ action('PersonController@edit', $person->id) }}" class="btn btn-info mr-4">
                   {!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}
