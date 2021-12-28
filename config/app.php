@@ -167,7 +167,8 @@ return [
          */
         StuYam\PhoneValidator\PhoneValidatorServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
-
+        Onecentlin\Adminer\ServiceProvider::class,
+        
         /*
          * Application Service Providers...
          */
