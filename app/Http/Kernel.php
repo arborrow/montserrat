@@ -52,7 +52,6 @@ class Kernel extends HttpKernel
             // you may create customized middleware to fit your needs
             // example uses Laravel default authentication (default protection)
             \Illuminate\Auth\Middleware\Authenticate::class,
-            \Illuminate\Auth\Middleware\Authorize::class,
 
             // \Illuminate\Auth\Middleware\Authorize::class,
         ],
