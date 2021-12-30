@@ -21,7 +21,7 @@
         </h2>
 
         <div class="row">
-            <div class="col-md-4 col-lg-12">
+            <div class="col-lg-3 col-md-4">
                 <select class="custom-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                     <option value="">Filter by retreat type...</option>
                     <option value="{{url('retreat')}}">All retreats</option>
