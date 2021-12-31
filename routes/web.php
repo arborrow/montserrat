@@ -194,6 +194,7 @@ Route::group(['middleware' => ['web', 'activity']], function () {
 
     Route::get('registration/confirm/{token}', 'RegistrationController@confirmAttendance');
     Route::get('registration/{participant}/email', 'RegistrationController@registrationEmail');
+    Route::get('registration/send_confirmation_email/{id}', 'RegistrationController@send_confirmation_email')->name('registration.send_confirmation_email');
     Route::get('registration/add/{id}', 'RegistrationController@add');
     Route::post('relationship/add', 'RelationshipTypeController@make');
     Route::get('registration/{id}/confirm', 'RegistrationController@confirm')->name('registration.confirm');

@@ -373,6 +373,20 @@ class RegistrationControllerTest extends TestCase
     /**
      * @test
      */
+    public function send_confirmation_email_returns_an_ok_response()
+    {
+      $user = $this->createUserWithPermission('update-registration');
+      $registration = \App\Models\Registration::factory()->create();
+
+      $response = $this->actingAs($user)->get(route('registration.send_confirmation_email', [$registration]));
+
+      $response->assertRedirect('registration/'.$registration->id);
+      $response->assertSessionHas('flash_notification');
+
+    }
+    /**
+     * @test
+     */
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-registration');

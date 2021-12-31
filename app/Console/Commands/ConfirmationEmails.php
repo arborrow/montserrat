@@ -23,7 +23,7 @@ class ConfirmationEmails extends Command
      *
      * @var string
      */
-    protected $description = 'Send out confirmation emails 1 week in advance for a retreat';
+    protected $description = 'Send out confirmation emails one week prior to start date for Ignatian retreats';
 
     protected $mailer;
 
@@ -64,6 +64,7 @@ class ConfirmationEmails extends Command
 
                 $registrations = $retreat->registrations()
                     ->where('canceled_at', null)
+                    ->whereNull('registration_confirm_date')
                     ->where('status_id', config('polanco.registration_status_id.registered'))
                     ->with('contact')
                     ->whereHas('contact', function ($query) {

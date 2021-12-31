@@ -5,12 +5,20 @@
     <div class="col-lg-12">
         <h1>
             Details for
+
             @can('update-registration')
                 <a href="{{url('registration/'.$registration->id.'/edit')}}">Registration #{{ $registration->id }}</a>
             @else
                 Registration #{{ $registration->id }}
             @endCan
+
             <span class="back"><a href={{ action('RegistrationController@index') }}>{!! Html::image('images/registration.png', 'Registration Index',array('title'=>"Registration Index",'class' => 'btn btn-light')) !!}</a>
+
+            @can('update-registration')
+                @if (empty($registration->registration_confirm_date))
+                    <a href="{{ action('RegistrationController@send_confirmation_email',$registration->id) }}" class="btn btn-light">Send confirmation email</a>
+                @endIf
+            @endCan
         </h1>
     </div>
     <div class="col-lg-12">
@@ -93,7 +101,14 @@
         <div class="row">
             @can('delete-registration')
                 <div class="col-lg-12">
-                    <strong>Encoded Registration Link: </strong> <a href={{  url('intercept/'.base64_encode("registration/confirm/$registration->remember_token")) }}>{{  url('intercept/'.base64_encode("registration/confirm/$registration->remember_token")) }}</a>
+                    <strong>Encoded Registration Link: </strong>
+                    @if (isset($registration->remember_token) && !isset($registration->registration_confirm_date))
+                        <a href={{  url('intercept/'.base64_encode("registration/confirm/$registration->remember_token")) }}>
+                            {{  url('intercept/'.base64_encode("registration/confirm/$registration->remember_token")) }}
+                        </a>
+                    @else
+                        {{ isset($registration->registration_confirm_date) ? 'Confirmed' : 'N/A' }}
+                    @endIf
                 </div>
             @endCan
         </div>
