@@ -1,6 +1,6 @@
 <div class="form-group">
     <div class="row">
-        <div class="col-lg-12 col-md-8">
+        <div class="col-lg-3 col-md-4">
             {!! Form::label('primary_phone_location_id', 'Primary phone:') !!}
             @if ($person->primary_phone_location_type_id == 0)
                 {!! Form::select('primary_phone_location_id', $primary_phones, config('polanco.location_type.home').":Phone", ['class' => 'form-control']) !!}
