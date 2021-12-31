@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
+use Auth;
+
 
 class RegistrationController extends Controller
 {
@@ -540,13 +542,58 @@ class RegistrationController extends Controller
         return redirect('person/'.$participant->contact->id);
     }
 
+    public function send_confirmation_email($id)
+    {
+        $this->authorize('update-registration');
+        $registration = \App\Models\Registration::findOrFail($id);
+        $current_user = Auth::user();
+        $primary_email = $registration->retreatant->email_primary_text;
+
+        $success_message = 'Confirmation email has been sent for retreat #'.$registration->event_idnumber;
+        $error_message = 'Confirmation email failed to send for retreat #'.$registration->event_idnumber.': ';
+
+        if (! empty($primary_email) && $registration->contact->do_not_email==0) { // the retreatant does not have a primary email address to send to
+            if (! isset($registration->registration_confirm_date)) { // ensure that the retreatant has not already confirmed
+                // For registration emails, remember_token must be set for the retreat participant.
+                if ($registration->remember_token == null) {
+                    $registration->remember_token = Str::random(60);
+                    $registration->save();
+                }
+
+                // Setup touchpoint for this Registrations Confirmation Email
+                $touchpoint = new \App\Models\Touchpoint();
+                $touchpoint->person_id = $registration->contact_id;
+                $touchpoint->staff_id = (isset($current_user->contact_id)) ? $current_user->contact_id : config('polanco.self.id');
+                $touchpoint->touched_at = Carbon::now();
+                $touchpoint->type = 'Email';
+
+                try {
+                    Mail::to($primary_email)->queue(new \App\Mail\RetreatConfirmation($registration));
+                    $touchpoint->notes = $success_message;
+                    $touchpoint->save();
+                    flash('Confirmation email sent to '.$registration->contact_sort_name.' for Retreat #'.$registration->event_idnumber)->success();
+
+                } catch (\Exception $e) {
+                    $touchpoint->notes = $error_message.$e->getMessage();
+                    $touchpoint->save();
+                    flash('Confirmation email failed to send. See <a href="/touchpoint/'.$touchpoint->id.'">touchpoint</a> for details.')->warning();
+                }
+            } else {
+                flash('Confirmation email not sent. It appears that the retreatant ('.$registration->contact_sort_name.') has already confirmed his/her attendance for Retreat #'.$registration->event_idnumber)->info();
+            }
+        } else {
+            flash('Confirmation email not sent because the retreatant ('.$registration->contact_sort_name.') does not appear to have a primary email address or has requested NOT to receive emails.')->warning();
+        }
+        return redirect('registration/'.$registration->id);
+    }
+
     public function confirmAttendance($token)
     {
         $registration = \App\Models\Registration::where('remember_token', $token)->first();
 
         if ($registration) {
             $registration->registration_confirm_date = \Carbon\Carbon::now();
-            $registration->remember_token = '';
+            $registration->remember_token = null;
             $registration->save();
         }
 
