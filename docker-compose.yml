@@ -1,6 +1,7 @@
 # For more information: https://laravel.com/docs/sail
 version: '3'
 services:
+
     laravel.test:
         build:
             context: ./vendor/laravel/sail/runtimes/7.4
@@ -41,6 +42,18 @@ services:
             test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
             retries: 3
             timeout: 5s
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        links:
+          - mysql:mysql
+        ports:
+          - 8080:80
+        environment:
+          MYSQL_USERNAME: "${DB_USERNAME}"
+          MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+          PMA_HOST: mysql
+        networks:
+          - sail
 networks:
     sail:
         driver: bridge
