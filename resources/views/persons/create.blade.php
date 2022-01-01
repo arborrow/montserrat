@@ -247,7 +247,7 @@
         </div>
         <div class="row">
             <div class="col-lg-3 col-md-4 mt-2">
-                {!! Form::label('referrals', 'Referrals:') !!}
+                {!! Form::label('referrals', 'Referral sources:') !!}
                 {!! Form::select('referrals[]', $referrals, NULL, ['id' => 'referrals', 'class' =>
                 'form-control select2', 'multiple' => 'multiple']) !!}
             </div>
