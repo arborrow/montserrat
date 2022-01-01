@@ -230,15 +230,15 @@
 
 
                         <div class="row">
-                            <div class="col-lg-3 col-md-4">
+                            <div class="col-lg-2 col-md-3">
                                 {!! Form::label('ethnicity_id', 'Ethnicity:')  !!}
                                 {!! Form::select('ethnicity_id', $ethnicities, $person->ethnicity_id, ['class' => 'form-control']) !!}
                             </div>
-                            <div class="col-lg-3 col-md-4">
+                            <div class="col-lg-2 col-md-3">
                                 {!! Form::label('religion_id', 'Religion:')  !!}
                                 {!! Form::select('religion_id', $religions, $person->religion_id, ['class' => 'form-control']) !!}
                             </div>
-                            <div class="col-lg-3 col-md-4">
+                            <div class="col-lg-5 col-md-6">
                                 {!! Form::label('parish_id', 'Parish:')  !!}
                                 {!! Form::select('parish_id', $parish_list, $person->parish_id, ['class' => 'form-control']) !!}
                             </div>
