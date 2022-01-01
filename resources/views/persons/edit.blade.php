@@ -299,6 +299,12 @@
                         </div>
 
                 </div>
+            </div>
+
+            <hr>
+
+            <div class="row">
+
                 @can('create-attachment')
                 <div class="col-lg-12" id="attachments">
                     <h3>Attachments</h3>
@@ -315,9 +321,12 @@
                         </div>
                     </div>
                 </div>
+                <hr>
                 @endCan
             </div>
 
+            <hr>
+            
             <div class="row">
                 <div class="col-lg-12" id="groups">
                     <h3>Groups and Relationships</h3>
