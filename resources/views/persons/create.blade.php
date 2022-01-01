@@ -228,11 +228,11 @@
             <div class="col-lg-12">
                 <h3>Notes</h3>
             </div>
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-3 col-md-6 alert alert-info alert-important">
                 {!! Form::label('note_health', 'Health Notes:') !!}
                 {!! Form::textarea('note_health', null, ['class' => 'form-control', 'rows' => '3']) !!}
             </div>
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-3 col-md-6 alert alert-info alert-important">
                 {!! Form::label('note_dietary', 'Dietary Notes:') !!}
                 {!! Form::textarea('note_dietary', null, ['class' => 'form-control', 'rows' => '3']) !!}
             </div>
