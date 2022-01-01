@@ -56,8 +56,6 @@
                     {!! Form::label("address_home_address1", "Address Line 1:") !!}
                     {!! Form::text("address_home_address1", $defaults['Home']['street_address'], ["class" => "form-control"]) !!}
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-lg-3 col-md-4">
                     {!! Form::label("address_home_address2", "Address Line 2:") !!}
                     {!! Form::text("address_home_address2", $defaults['Home']['supplemental_address_1'], ["class" => "form-control"]) !!}
@@ -76,9 +74,7 @@
                     {!! Form::label("address_home_zip", "Zip:") !!}
                     {!! Form::text("address_home_zip", $defaults['Home']['postal_code'], ["class" => "form-control"]) !!}
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-3 col-md-4">
+                <div class="col-lg-2 col-md-3">
                     {!! Form::label("address_home_country", "Country:") !!}
                     {!! Form::select("address_home_country", $countries, $defaults['Home']['country_id'], ["class" => "form-control"]) !!}
                 </div>
@@ -97,8 +93,6 @@
                     {!! Form::label("address_work_address1", "Address Line 1:") !!}
                     {!! Form::text("address_work_address1", $defaults['Work']['street_address'], ["class" => "form-control"]) !!}
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-lg-3 col-md-4">
                     {!! Form::label("address_work_address2", "Address Line 2:") !!}
                     {!! Form::text("address_work_address2", $defaults['Work']['supplemental_address_1'], ["class" => "form-control"]) !!}
@@ -117,9 +111,7 @@
                     {!! Form::label("address_work_zip", "Zip:") !!}
                     {!! Form::text("address_work_zip", $defaults['Work']['postal_code'], ["class" => "form-control"]) !!}
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-3 col-md-4">
+                <div class="col-lg-2 col-md-3">
                     {!! Form::label("address_work_country", "Country:") !!}
                     {!! Form::select("address_work_country", $countries, $defaults['Work']['country_id'], ["class" => "form-control"]) !!}
                 </div>
@@ -138,8 +130,6 @@
                     {!! Form::label("address_other_address1", "Address Line 1:") !!}
                     {!! Form::text("address_other_address1", $defaults['Other']['street_address'], ["class" => "form-control"]) !!}
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-lg-3 col-md-4">
                     {!! Form::label("address_other_address2", "Address Line 2:") !!}
                     {!! Form::text("address_other_address2", $defaults['Other']['supplemental_address_1'], ["class" => "form-control"]) !!}
@@ -158,9 +148,7 @@
                     {!! Form::label("address_other_zip", "Zip:") !!}
                     {!! Form::text("address_other_zip", $defaults['Other']['postal_code'], ["class" => "form-control"]) !!}
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-3 col-md-4">
+                <div class="col-lg-2 col-md-3">
                     {!! Form::label("address_other_country", "Country:") !!}
                     {!! Form::select("address_other_country", $countries, $defaults['Other']['country_id'], ["class" => "form-control"]) !!}
                 </div>

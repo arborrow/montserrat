@@ -68,37 +68,36 @@
         </div>
 
         <hr>
-
-        <div class="row">
-            <div class="col-lg-12">
-                <h3>Emergency Contact Information</h3>
-            </div>
-            <div class="col-lg-12">
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-4">
-                            {!! Form::label('emergency_contact_name', 'Name: ') !!}
-                            {!! Form::text('emergency_contact_name', null, ['class' => 'form-control']) !!}
-                        </div>
-                        <div class="col-lg-3 col-md-4">
-                            {!! Form::label('emergency_contact_relationship', 'Relationship: ') !!}
-                            {!! Form::text('emergency_contact_relationship', null, ['class' => 'form-control']) !!}
-                        </div>
-                        <div class="col-lg-3 col-md-4">
-                            {!! Form::label('emergency_contact_phone', 'Phone: ') !!}
-                            {!! Form::text('emergency_contact_phone', null, ['class' => 'form-control']) !!}
-                        </div>
-                        <div class="col-lg-3 col-md-4">
-                            {!! Form::label('emergency_contact_phone_alternate', 'Alt. Phone: ') !!}
-                            {!! Form::text('emergency_contact_phone_alternate', null, ['class' => 'form-control']) !!}
-                        </div>
+        <div class="col-lg-12 alert alert-danger alert-important" id="safety_info">
+            <h3>Emergency Contact Information</h3>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        {!! Form::label('emergency_contact_name', 'Name: ') !!}
+                        {!! Form::text('emergency_contact_name', null, ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        {!! Form::label('emergency_contact_relationship', 'Relationship: ') !!}
+                        {!! Form::text('emergency_contact_relationship', null, ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        {!! Form::label('emergency_contact_phone', 'Phone: ') !!}
+                        {!! Form::text('emergency_contact_phone', null, ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        {!! Form::label('emergency_contact_phone_alternate', 'Alt. Phone: ') !!}
+                        {!! Form::text('emergency_contact_phone_alternate', null, ['class' => 'form-control']) !!}
                     </div>
                 </div>
             </div>
         </div>
+
         <hr>
+
         <div class="row">
-            <div class="col-lg-3 col-md-4">
+            <div class="col-lg-3 col-md-4" id="contact_info">
+                <h3>Contact Information</h3>
+
                 {!! Form::label('preferred_communication_method_id', 'Preferred communication method:') !!}
                 {!! Form::select('preferred_communication_method_id', $preferred_communication_methods, 0, ['class' => 'form-control']) !!}
             </div>
@@ -154,12 +153,10 @@
             <div class="col-lg-12">
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-lg-3 col-md-4">
+                        <div class="col-lg-2 col-md-4">
                             {!! Form::label('gender_id', 'Gender:') !!}
                             {!! Form::select('gender_id', $genders, 0, ['class' => 'form-control']) !!}
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-lg-3 col-md-4">
                             {!! Form::label('birth_date', 'Birth Date:') !!}
                             {!! Form::text('birth_date', null, ['class'=>'form-control flatpickr-date', 'autocomplete'
@@ -307,32 +304,6 @@
         <div class="row">
             <div class="col-lg-2 col-md-3">
                 <div class="form-check">
-                    {!! Form::checkbox('is_staff', 1, false,['class' => 'form-check-input']) !!}
-                    {!! Form::label('is_staff', 'Staff', ['class' => 'form-check-label']) !!}
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3">
-                <div class="form-check">
-                    {!! Form::checkbox('is_director', 1, false,['class' => 'form-check-input']) !!}
-                    {!! Form::label('is_director', 'Retreat Director', ['class' => 'form-check-label']) !!}
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3">
-                <div class="form-check">
-                    {!! Form::checkbox('is_innkeeper', 1, false,['class' => 'form-check-input']) !!}
-                    {!! Form::label('is_innkeeper', 'Retreat Innkeeper', ['class' => 'form-check-label']) !!}
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3">
-                <div class="form-check">
-                    {!! Form::checkbox('is_assistant', 1, false,['class' => 'form-check-input']) !!}
-                    {!! Form::label('is_assistant', 'Retreat Assistant', ['class' => 'form-check-label']) !!}
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-2 col-md-3">
-                <div class="form-check">
                     {!! Form::checkbox('is_bishop', 1, false,['class' => 'form-check-input']) !!}
                     {!! Form::label('is_bishop', 'Bishop', ['class' => 'form-check-label']) !!}
                 </div>
@@ -376,6 +347,33 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-2 col-md-3">
+                <div class="form-check">
+                    {!! Form::checkbox('is_staff', 1, false,['class' => 'form-check-input']) !!}
+                    {!! Form::label('is_staff', 'Staff', ['class' => 'form-check-label']) !!}
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3">
+                <div class="form-check">
+                    {!! Form::checkbox('is_director', 1, false,['class' => 'form-check-input']) !!}
+                    {!! Form::label('is_director', 'Retreat Director', ['class' => 'form-check-label']) !!}
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3">
+                <div class="form-check">
+                    {!! Form::checkbox('is_innkeeper', 1, false,['class' => 'form-check-input']) !!}
+                    {!! Form::label('is_innkeeper', 'Retreat Innkeeper', ['class' => 'form-check-label']) !!}
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3">
+                <div class="form-check">
+                    {!! Form::checkbox('is_assistant', 1, false,['class' => 'form-check-input']) !!}
+                    {!! Form::label('is_assistant', 'Retreat Assistant', ['class' => 'form-check-label']) !!}
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div class="row">
