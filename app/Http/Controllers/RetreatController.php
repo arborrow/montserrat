@@ -76,6 +76,8 @@ class RetreatController extends Controller
 
         $retreat_house = \App\Models\Contact::with('retreat_directors.contact_b', 'retreat_innkeepers.contact_b', 'retreat_assistants.contact_b', 'retreat_ambassadors.contact_b')->findOrFail(config('polanco.self.id'));
         $event_types = \App\Models\EventType::whereIsActive(1)->orderBy('name')->pluck('name', 'id');
+        $is_active[0] = 'Canceled';
+        $is_active[1] = 'Active';
 
         // initialize null arrays for innkeeper, assistant, director and ambassador dropdowns
         $i = [];
@@ -115,7 +117,7 @@ class RetreatController extends Controller
             $c = [0=>'N/A'] + $c;
         }
 
-        return view('retreats.create', compact('d', 'i', 'a', 'c', 'event_types'));
+        return view('retreats.create', compact('d', 'i', 'a', 'c', 'event_types','is_active'));
     }
 
     /**
@@ -136,7 +138,8 @@ class RetreatController extends Controller
         $retreat->title = $request->input('title');
         $retreat->description = $request->input('description');
         $retreat->event_type_id = $request->input('event_type');
-        $retreat->is_active = 1; //assume active event upon creation
+        $retreat->is_active = $request->input('is_active');
+
         // TODO: find a way to tag silent retreats, perhaps with event_type_id - for now disabled
         //$retreat->silent = $request->input('silent');
         // amount will be related to default_fee_id?

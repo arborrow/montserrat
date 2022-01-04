@@ -134,6 +134,7 @@ class RetreatControllerTest extends TestCase
         $response->assertViewHas('a');
         $response->assertViewHas('c');
         $response->assertViewHas('event_types');
+        $response->assertViewHas('is_active');
         $response->assertSeeText('Create Retreat');
     }
 

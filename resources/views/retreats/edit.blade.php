@@ -57,16 +57,16 @@
                             {!! Form::select('directors[]', $options['directors'], $retreat->retreatmasters->pluck('contact.id'), ['id'=>'directors','class' => 'form-control select2','multiple' => 'multiple']) !!}
                         </div>
                         <div class="col-lg-3">
-                            {!! Form::label('ambassadors', 'Ambassador(s):') !!}
-                            {!! Form::select('ambassadors[]', $options['ambassadors'], $retreat->ambassadors->pluck('contact.id'), ['id'=>'ambassadors','class' => 'form-control select2','multiple' => 'multiple']) !!}
-                        </div>
-                        <div class="col-lg-3">
                             {!! Form::label('innkeepers', 'Innkeeper:') !!}
                             {!! Form::select('innkeepers[]', $options['innkeepers'], $retreat->innkeepers->pluck('contact.id'), ['id'=>'innkeepers','class' => 'form-control select2','multiple' => 'multiple']) !!}
                         </div>
                         <div class="col-lg-3">
                             {!! Form::label('assistants', 'Assistant:') !!}
                             {!! Form::select('assistants[]', $options['assistants'], $retreat->assistants->pluck('contact.id'), ['id'=>'assistants','class' => 'form-control select2','multiple' => 'multiple']) !!}
+                        </div>
+                        <div class="col-lg-3">
+                            {!! Form::label('ambassadors', 'Ambassador(s):') !!}
+                            {!! Form::select('ambassadors[]', $options['ambassadors'], $retreat->ambassadors->pluck('contact.id'), ['id'=>'ambassadors','class' => 'form-control select2','multiple' => 'multiple']) !!}
                         </div>
                     </div>
                     <div class="row">
