@@ -7,7 +7,8 @@
                 <div class="panel-heading">
                     <h1>
                         <span class="grey">Dashboard Index</span>
-                    </h1>                    <div class="col-lg-3 col-md-4">
+                    </h1>
+                    <div class="col-lg-3 col-md-4">
                         <select class="custom-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                             <option value="">Display dashboard for ...</option>
                                 <option value="{{url('dashboard/agc')}}">AGC</option>
