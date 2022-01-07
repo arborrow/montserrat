@@ -26,6 +26,7 @@ class HealthController extends Controller
         $results->put('primary_email',$this->check_primary_email());
         $results->put('primary_phone',$this->check_primary_phone());
         $results->put('abandoned_donations',$this->check_abandoned_donations());
+        $results->put('donations_with_zero_event_id',$this->check_donations_with_zero_event_id());
         $results->put('abandoned_payments',$this->check_abandoned_payments());
         $results->put('abandoned_registrations',$this->check_abandoned_registrations());
         $results->put('duplicate_relationships',$this->check_duplicate_relationships());
@@ -95,6 +96,26 @@ class HealthController extends Controller
           ->select('Donations.donation_id','Donations.contact_id','contact.sort_name','Donations.donation_amount','Donations.donation_date')
           ->get();
           return $abandoned_donations;   //
+      }
+
+      /**
+       * Run the abandoned payments check to ensure there are no payments with a deleted donation
+       *
+       * @return \Illuminate\Database\Eloquent\Collection
+       */
+      public function check_donations_with_zero_event_id()
+      {
+          $this->authorize('show-admin-menu');
+          $results = collect([]);
+
+          $donations_with_zero_event_id = DB::table('Donations')
+          ->leftJoin('contact','Donations.contact_id','=','contact.id')
+          ->where('Donations.event_id','=',0)
+          ->whereNull('contact.deleted_at')
+          ->whereNull('Donations.deleted_at')
+          ->select('Donations.donation_id','Donations.contact_id','contact.sort_name','Donations.donation_amount','Donations.donation_date')
+          ->get();
+          return $donations_with_zero_event_id;   //
       }
 
     /**

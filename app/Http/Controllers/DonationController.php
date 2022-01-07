@@ -288,7 +288,9 @@ class DonationController extends Controller
 
         $donation = \App\Models\Donation::findOrFail($id);
         $donation->contact_id = $request->input('donor_id');
-        $donation->event_id = $request->input('event_id');
+        if ($request->input('event_id') > 0) {
+            $donation->event_id = $request->input('event_id');
+        }
         $donation->donation_date = $request->input('donation_date') ? $request->input('donation_date') : null;
         $donation->donation_amount = $request->input('donation_amount');
         $donation->donation_description = $request->input('donation_description');
@@ -347,7 +349,9 @@ class DonationController extends Controller
     public function retreat_payments_update(Request $request)
     {   // I removed the permission check for update-payment as it seemed redundant to update-donation and it makes testing a little easier
         $this->authorize('update-donation');
-        $event_id = $request->input('event_id');
+        if ($request->input('event_id')) {
+            $event_id = $request->input('event_id');
+        }
         if (! is_null($request->input('donations'))) {
             foreach ($request->input('donations') as $key => $value) {
                 $registration = \App\Models\Registration::findOrFail($key);
