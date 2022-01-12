@@ -43,10 +43,10 @@
         "jasonmccreary/laravel-test-assertions": "^2.0",
         "laravel/homestead": "^10.7",
         "laravel/sail": "^1.11",
-        "mockery/mockery": "^1.4.2",
-        "nunomaduro/collision": "^5.0",
+        "mockery/mockery": "^1.4.4",
+        "nunomaduro/collision": "^5.10",
         "orangehill/iseed": "^2.6.2",
-        "phpunit/phpunit": "^9.3.3",
+        "phpunit/phpunit": "^9.5.10",
         "symfony/css-selector": "^4.4",
         "symfony/dom-crawler": "^5.2"
     },
