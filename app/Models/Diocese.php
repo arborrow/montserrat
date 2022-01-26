@@ -10,6 +10,7 @@ class Diocese extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
     protected $table = 'contact';
 
     public function getNoteDioceseTextAttribute()
@@ -25,5 +26,4 @@ class Diocese extends Model
     {
         return $this->hasOne(Note::class, 'entity_id', 'id')->whereEntityTable('contact')->whereSubject('Diocese Note');
     }
-
 }

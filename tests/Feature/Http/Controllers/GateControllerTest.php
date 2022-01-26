@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -74,12 +73,12 @@ class GateControllerTest extends TestCase
     public function open_with_hours_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-gate');
-        $hours = $this->faker->numberBetween(2,5);
+        $hours = $this->faker->numberBetween(2, 5);
         $email = \App\Models\Email::factory()->create([
             'email' => $user->email,
         ]);
 
-        $response = $this->actingAs($user)->get(route('gate.open'),['hours' => $hours]);
+        $response = $this->actingAs($user)->get(route('gate.open'), ['hours' => $hours]);
         $response->assertOk();
         $response->assertViewIs('gate.open');
         $response->assertViewHas('hours');

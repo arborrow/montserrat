@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -208,15 +207,15 @@ class DioceseControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('DioceseController@index'));
         $this->assertDatabaseHas('contact', [
-          'contact_type' => config('polanco.contact_type.organization'),
-          'subcontact_type' => config('polanco.contact_type.diocese'),
-          'sort_name' => $city_name,
-          'display_name' => $org_name,
+            'contact_type' => config('polanco.contact_type.organization'),
+            'subcontact_type' => config('polanco.contact_type.diocese'),
+            'sort_name' => $city_name,
+            'display_name' => $org_name,
         ]);
         $this->assertDatabaseHas('note', [
-          'entity_table' => 'contact',
-          'note' => $city_name.' Diocesan note',
-          'subject' => 'Diocese Note',
+            'entity_table' => 'contact',
+            'note' => $city_name.' Diocesan note',
+            'subject' => 'Diocese Note',
         ]);
     }
 
@@ -245,10 +244,10 @@ class DioceseControllerTest extends TestCase
         $diocese_note = $city_name.' Diocesan note updated';
 
         $response = $this->actingAs($user)->put(route('diocese.update', [$diocese]), [
-          'sort_name' => $city_name,
-          'display_name' => $org_name,
-          'organization_name' => $org_name,
-          'diocese_note' => $diocese_note,
+            'sort_name' => $city_name,
+            'display_name' => $org_name,
+            'organization_name' => $org_name,
+            'diocese_note' => $diocese_note,
         ]);
         // TODO: test for updating of other fields on the diocese.edit blade like email, phone, address, etc.
 

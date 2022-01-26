@@ -6,20 +6,20 @@ return [
      * Site administrator name and email for receiving notifications
      */
 
-     'activity_contacts_type' => [
-         'assignee' => '1',
-         'creator' => '2',
-         'target' => '3',
-     ],
+    'activity_contacts_type' => [
+        'assignee' => '1',
+        'creator' => '2',
+        'target' => '3',
+    ],
 
-     'activity_type' => [
-         'meeting' => '1',
-         'call' => '2',
-         'email' => '3',
-         'text' => '4',
-         'letter' => '5',
-         'other' => '8',
-     ],
+    'activity_type' => [
+        'meeting' => '1',
+        'call' => '2',
+        'email' => '3',
+        'text' => '4',
+        'letter' => '5',
+        'other' => '8',
+    ],
 
     'admin_name' => 'Anthony Borrow',
     'admin_email' => 'anthony.borrow@montserratretreat.org',
@@ -224,7 +224,7 @@ return [
     ],
 
     'registration_filters' => [
-        'active' ,
+        'active',
         'canceled',
         'confirmed',
         'unconfirmed',

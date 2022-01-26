@@ -17,7 +17,7 @@ class GateController extends Controller
     public function index()
     {
         $this->authorize('show-gate');
-        $touchpoints = \App\Models\Touchpoint::whereType('Gate activity')->orderBy('touched_at', 'desc')->with('person', 'staff')->paginate(25,['*'],'touchpoints');
+        $touchpoints = \App\Models\Touchpoint::whereType('Gate activity')->orderBy('touched_at', 'desc')->with('person', 'staff')->paginate(25, ['*'], 'touchpoints');
 
         return view('gate.index', compact('touchpoints'));
     }
@@ -41,16 +41,16 @@ class GateController extends Controller
                         $to_number,
                         $twilio_number,
                         [
-                        'sendDigits' => config('settings.open_hours_digits').$hours.config('settings.end_call_digits'),
-                        'url' => 'http://demo.twilio.com/docs/voice.xml', ]
+                            'sendDigits' => config('settings.open_hours_digits').$hours.config('settings.end_call_digits'),
+                            'url' => 'http://demo.twilio.com/docs/voice.xml', ]
                     );
                 } else {
                     $client->calls->create(
                         $to_number,
                         $twilio_number,
                         [
-                        'sendDigits' => config('settings.open_digits').config('settings.end_call_digits'),
-                        'url' => 'http://demo.twilio.com/docs/voice.xml', ]
+                            'sendDigits' => config('settings.open_digits').config('settings.end_call_digits'),
+                            'url' => 'http://demo.twilio.com/docs/voice.xml', ]
                     );
                 }
             } catch (\Exception $e) {
@@ -92,8 +92,8 @@ class GateController extends Controller
                     $to_number,
                     $twilio_number,
                     [
-                'sendDigits' => config('settings.close_digits').config('settings.end_call_digits'),
-                'url' => 'http://demo.twilio.com/docs/voice.xml', ]
+                        'sendDigits' => config('settings.close_digits').config('settings.end_call_digits'),
+                        'url' => 'http://demo.twilio.com/docs/voice.xml', ]
                 );
             } catch (\Exception $e) {
                 report($e);

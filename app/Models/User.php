@@ -37,7 +37,8 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
-    public function contact_email() {
+    public function contact_email()
+    {
         return $this->hasOne(Email::class, 'email', 'email');
     }
 
@@ -49,5 +50,4 @@ class User extends Authenticatable
             return;
         }
     }
-
 }

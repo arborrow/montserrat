@@ -13,8 +13,10 @@ class Donor extends Model implements Auditable
 {
     use HasFactory;
     use \OwenIt\Auditing\Auditable;
+
     //use SoftDeletes;
     protected $table = 'Donors';
+
     // protected $primaryKey = 'donor_id';
     public $timestamps = false;
 

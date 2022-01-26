@@ -14,6 +14,7 @@ class Website extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'website';
+
     protected $fillable = ['contact_id', 'url', 'website_type'];
 
     public function owner()

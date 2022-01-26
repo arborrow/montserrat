@@ -31,17 +31,17 @@ class AssetJobFactory extends Factory
             'asset_task_id' => function () {
                 return \App\Models\AssetTask::factory()->create()->id;
             },
-            'assigned_to_id' => function() {
+            'assigned_to_id' => function () {
                 return \App\Models\Contact::factory()->create()->id;
             },
             'scheduled_date' => $start_date,
-            'start_date' => NULL,
-            'end_date' => NULL,
+            'start_date' => null,
+            'end_date' => null,
             'status' => $this->faker->randomElement(config('polanco.asset_job_status')),
             'additional_materials' => $this->faker->sentence(),
-            'actual_labor' => $this->faker->numberBetween(15,60),
-            'actual_labor_cost' => number_format($this->faker->numberBetween(0,500),2),
-            'actual_material_cost' => number_format($this->faker->numberBetween(0,500),2),
+            'actual_labor' => $this->faker->numberBetween(15, 60),
+            'actual_labor_cost' => number_format($this->faker->numberBetween(0, 500), 2),
+            'actual_material_cost' => number_format($this->faker->numberBetween(0, 500), 2),
             'note' => $this->faker->sentence(),
             'tag' => $this->faker->word(),
         ];

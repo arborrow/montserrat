@@ -14,6 +14,7 @@ class Registration extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'participant';
+
     protected $dates = [
         'register_date',
         'registration_confirm_date',
@@ -22,14 +23,15 @@ class Registration extends Model implements Auditable
         'arrived_at',
         'departed_at',
     ];
+
     protected $fillable = ['contact_id', 'event_id', 'status_id', 'role_id', 'notes', 'register_date'];
 
     public function generateTags(): array
     {
         return [
-                $this->contact_sort_name,
-                $this->event_idnumber,
-            ];
+            $this->contact_sort_name,
+            $this->event_idnumber,
+        ];
     }
 
     public function getAttendanceConfirmDateTextAttribute()

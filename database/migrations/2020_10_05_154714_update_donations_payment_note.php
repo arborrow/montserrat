@@ -13,9 +13,9 @@ class UpdateDonationsPaymentNote extends Migration
      */
     public function up()
     {
-      Schema::table('Donations_payment', function (Blueprint $table) {
-        $table->string('note',250)->change();
-      });
+        Schema::table('Donations_payment', function (Blueprint $table) {
+            $table->string('note', 250)->change();
+        });
     }
 
     /**
@@ -25,8 +25,8 @@ class UpdateDonationsPaymentNote extends Migration
      */
     public function down()
     {
-      Schema::table('Donations_payment', function (Blueprint $table) {
-        $table->string('note',100 )->change();
-      });
+        Schema::table('Donations_payment', function (Blueprint $table) {
+            $table->string('note', 100)->change();
+        });
     }
 }

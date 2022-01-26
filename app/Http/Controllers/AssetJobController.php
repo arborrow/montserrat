@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAssetJobRequest;
 use App\Http\Requests\UpdateAssetJobRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Redirect;
 
 class AssetJobController extends Controller
 {
@@ -19,9 +19,9 @@ class AssetJobController extends Controller
     {
         $this->authorize('show-asset-job');
 
-        $asset_jobs = \App\Models\AssetJob::with('asset_task.asset','assigned_to')->orderBy('scheduled_date')->get();
+        $asset_jobs = \App\Models\AssetJob::with('asset_task.asset', 'assigned_to')->orderBy('scheduled_date')->get();
 
-        return view('asset_jobs.index',compact('asset_jobs'));
+        return view('asset_jobs.index', compact('asset_jobs'));
     }
 
     /**
@@ -34,14 +34,13 @@ class AssetJobController extends Controller
         $this->authorize('create-asset-job');
 
         // if creating a task for a particular asset (default behavior from asset.show blade) then no need to get long list of assets to choose from
-        if ( isset($asset_task_id) && $asset_task_id > 0) {
-            $asset_tasks = \App\Models\AssetTask::whereId($asset_task_id)->pluck('title','id');
-            // dd($asset_id, $assets);
+        if (isset($asset_task_id) && $asset_task_id > 0) {
+            $asset_tasks = \App\Models\AssetTask::whereId($asset_task_id)->pluck('title', 'id');
+        // dd($asset_id, $assets);
         } else {
             $asset_tasks = \App\Models\AssetTask::orderBy('title')->pluck('title', 'id');
             $asset_tasks->prepend('N/A', '');
         }
-
 
         $staff = \App\Models\Contact::with('groups')->whereHas('groups', function ($query) {
             $query->where('group_id', '=', config('polanco.group_id.staff'));
@@ -77,7 +76,7 @@ class AssetJobController extends Controller
         // Labor & materials
         $asset_job->actual_labor = $request->input('actual_labor');
         $asset_job->actual_labor_cost = $request->input('actual_labor_cost');
-        $asset_job->additional_materials= $request->input('additional_materials');
+        $asset_job->additional_materials = $request->input('additional_materials');
         $asset_job->actual_material_cost = $request->input('actual_material_cost');
 
         // Notes
@@ -163,7 +162,7 @@ class AssetJobController extends Controller
         // Labor & materials
         $asset_job->actual_labor = $request->input('actual_labor');
         $asset_job->actual_labor_cost = $request->input('actual_labor_cost');
-        $asset_job->additional_materials= $request->input('additional_materials');
+        $asset_job->additional_materials = $request->input('additional_materials');
         $asset_job->actual_material_cost = $request->input('actual_material_cost');
 
         // Notes

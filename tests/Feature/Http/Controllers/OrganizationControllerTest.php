@@ -4,7 +4,6 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Organization;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -212,19 +211,19 @@ class OrganizationControllerTest extends TestCase
         $organization_name = $this->faker->company;
 
         $response = $this->actingAs($user)->post(route('organization.store'), [
-          'organization_name' => $organization_name,
-          'display_name' => $organization_name,
-          'sort_name' => $organization_name,
-          'contact_type' => config('polanco.contact_type.organization'),
-          'subcontact_type' => $this->faker->numberBetween(9, 11),
+            'organization_name' => $organization_name,
+            'display_name' => $organization_name,
+            'sort_name' => $organization_name,
+            'contact_type' => config('polanco.contact_type.organization'),
+            'subcontact_type' => $this->faker->numberBetween(9, 11),
 
         ]);
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('OrganizationController@index'));
         $this->assertDatabaseHas('contact', [
-          'contact_type' => config('polanco.contact_type.organization'),
-          'sort_name' => $organization_name,
-          'display_name' => $organization_name,
+            'contact_type' => config('polanco.contact_type.organization'),
+            'sort_name' => $organization_name,
+            'display_name' => $organization_name,
         ]);
     }
 
@@ -252,9 +251,9 @@ class OrganizationControllerTest extends TestCase
         //create updated data
         $organization_name = $this->faker->company;
         $response = $this->actingAs($user)->put(route('organization.update', ['organization' => $organization]), [
-          'organization_name' => $organization_name,
-          'display_name' => $organization_name,
-          'sort_name' => $organization_name,
+            'organization_name' => $organization_name,
+            'display_name' => $organization_name,
+            'sort_name' => $organization_name,
         ]);
 
         $updated = \App\Models\Contact::find($organization->id);

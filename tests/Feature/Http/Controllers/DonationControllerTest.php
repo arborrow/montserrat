@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -59,7 +58,6 @@ class DonationControllerTest extends TestCase
         $response->assertViewHas('defaults');
     }
 
-
     /**
      * @test
      */
@@ -73,7 +71,7 @@ class DonationControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('donations.create');
         $response->assertViewHas('retreats');
-        $response->assertViewHas('donors', function($donors) use ($contact) {
+        $response->assertViewHas('donors', function ($donors) use ($contact) {
             return $donors->contains($contact->sort_name);
         });
         $response->assertViewHas('descriptions');
@@ -95,18 +93,17 @@ class DonationControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('donations.create');
 
-        $response->assertViewHas('retreats', function($events) use ($event) {
+        $response->assertViewHas('retreats', function ($events) use ($event) {
             return $events->has($event->id);
         });
 
-        $response->assertViewHas('donors', function($donors) use ($contact) {
+        $response->assertViewHas('donors', function ($donors) use ($contact) {
             return $donors->has($contact->id);
         });
         $response->assertViewHas('descriptions');
         $response->assertViewHas('payment_methods');
         $response->assertViewHas('defaults');
     }
-
 
     /**
      * @test
@@ -125,11 +122,11 @@ class DonationControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('donations.create');
 
-        $response->assertViewHas('retreats', function($events) use ($event) {
+        $response->assertViewHas('retreats', function ($events) use ($event) {
             return $events->has($event->id);
         });
 
-        $response->assertViewHas('donors', function($donors) use ($contact) {
+        $response->assertViewHas('donors', function ($donors) use ($contact) {
             return $donors->has($contact->id);
         });
         $response->assertViewHas('descriptions');
@@ -270,8 +267,8 @@ class DonationControllerTest extends TestCase
         ]);
         $response->assertRedirect(action('RetreatController@show', $retreat->id));
         $this->assertDatabaseHas('Donations', [
-          'event_id' => $retreat->id,
-          'contact_id' => $random_participant->contact_id,
+            'event_id' => $retreat->id,
+            'contact_id' => $random_participant->contact_id,
         ]);
     }
 
@@ -317,8 +314,8 @@ class DonationControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect($donor->contact_url.'#donations');
         $this->assertDatabaseHas('Donations', [
-          'contact_id' => $donor->id,
-          'event_id' => $event->id,
+            'contact_id' => $donor->id,
+            'event_id' => $event->id,
         ]);
     }
 
@@ -339,7 +336,7 @@ class DonationControllerTest extends TestCase
      */
     public function update_returns_an_ok_response()
     {
-         $this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('update-donation');
         $event = \App\Models\Retreat::factory()->create();
         $donation = \App\Models\Donation::factory()->create();
@@ -385,7 +382,6 @@ class DonationControllerTest extends TestCase
         );
     }
 
-
     /**
      * @test
      */
@@ -419,7 +415,6 @@ class DonationControllerTest extends TestCase
         $response->assertViewHas('retreats');
         $response->assertSeeText('Search Donations');
     }
-
 
     // test cases...
 }

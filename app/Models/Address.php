@@ -14,6 +14,7 @@ class Address extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'address';
+
     protected $fillable = ['contact_id', 'location_type_id', 'is_primary', 'street_address', 'supplemental_address_1', 'city', 'state_province_id', 'postal_code', 'country_id'];
 
     // the contact for whom this is an address for

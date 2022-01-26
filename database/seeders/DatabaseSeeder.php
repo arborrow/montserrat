@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\AssetJobPermissionsSeeder;
 use Database\Seeders\AssetPermissionsSeeder;
 use Database\Seeders\AssetTaskPermissionsSeeder;
-use Database\Seeders\AssetJobPermissionsSeeder;
 use Database\Seeders\AssetTypeTableSeeder;
 use Database\Seeders\AuditPermissionsSeeder;
 use Database\Seeders\CivicrmParticipantStatusTypeTableSeeder;

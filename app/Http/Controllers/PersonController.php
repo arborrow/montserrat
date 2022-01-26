@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePersonRequest;
 use App\Http\Requests\UpdatePersonRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use Carbon\Carbon;
 
 class PersonController extends Controller
 {
@@ -27,7 +27,7 @@ class PersonController extends Controller
     {
         $this->authorize('show-contact');
 
-        $persons = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->with('address_primary.state', 'phones', 'emails', 'websites', 'parish.contact_a.address_primary', 'prefix', 'suffix')->paginate(25,['*'],'persons');
+        $persons = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->with('address_primary.state', 'phones', 'emails', 'websites', 'parish.contact_a.address_primary', 'prefix', 'suffix')->paginate(25, ['*'], 'persons');
 
         return view('persons.index', compact('persons'));
     }
@@ -35,9 +35,9 @@ class PersonController extends Controller
     public function lastnames($letter = null)
     {
         $this->authorize('show-contact');
-        $persons = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'parish.contact_a')->where('last_name', 'LIKE', $letter.'%')->paginate(25,['*'],'persons');
+        $persons = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'parish.contact_a')->where('last_name', 'LIKE', $letter.'%')->paginate(25, ['*'], 'persons');
 
-        return view('persons.index', compact('persons'));   
+        return view('persons.index', compact('persons'));
     }
 
     /**
@@ -80,27 +80,27 @@ class PersonController extends Controller
         $subcontact_types->prepend('N/A', 0);
         $preferred_communication_methods = config('polanco.preferred_communication_method');
 
-        $primary_address_locations = \App\Models\LocationType::orderBy('name')->whereIsActive(1)->pluck('name','id');
+        $primary_address_locations = \App\Models\LocationType::orderBy('name')->whereIsActive(1)->pluck('name', 'id');
         $primary_address_locations->forget(config('polanco.location_type.main'));
         $primary_address_locations->prepend('N/A', 0);
 
-        $primary_email_locations = \App\Models\LocationType::orderBy('name')->whereIsActive(1)->pluck('name','id');
+        $primary_email_locations = \App\Models\LocationType::orderBy('name')->whereIsActive(1)->pluck('name', 'id');
         $primary_email_locations->forget(config('polanco.location_type.main'));
         $primary_email_locations->prepend('N/A', 0);
 
-        $primary_phone_locations = \App\Models\LocationType::orderBy('name')->whereIsActive(1)->whereNotIn('id',[config('polanco.location_type.main')])->get();
+        $primary_phone_locations = \App\Models\LocationType::orderBy('name')->whereIsActive(1)->whereNotIn('id', [config('polanco.location_type.main')])->get();
         $primary_phones = [];
         //dd($primary_phone_locations);
         foreach ($primary_phone_locations as $phone_location) {
             // for simpler UI syntax, using the terminology of the main phone number for home, work and other for consistency
             // however, this creates ambiguity/confusion as it is not intended to be the location type of main used for a main office location
             // main office location is not properly implemented in Polanco at this time but the main location type is used in other controllers (organization, parish, diocese, and vendor)
-            $primary_phones[$phone_location->id.":Phone"] = $phone_location->name . ':Main';
-            $primary_phones[$phone_location->id.":Mobile"] = $phone_location->name . ':Mobile';
+            $primary_phones[$phone_location->id.':Phone'] = $phone_location->name.':Main';
+            $primary_phones[$phone_location->id.':Mobile'] = $phone_location->name.':Mobile';
         }
 
         //dd($subcontact_types);
-        return view('persons.create', compact('parish_list', 'ethnicities', 'states', 'countries', 'suffixes', 'prefixes', 'languages', 'genders', 'religions', 'occupations', 'contact_types', 'subcontact_types', 'referrals', 'preferred_communication_methods','primary_address_locations','primary_email_locations','primary_phones'));
+        return view('persons.create', compact('parish_list', 'ethnicities', 'states', 'countries', 'suffixes', 'prefixes', 'languages', 'genders', 'religions', 'occupations', 'contact_types', 'subcontact_types', 'referrals', 'preferred_communication_methods', 'primary_address_locations', 'primary_email_locations', 'primary_phones'));
     }
 
     /**
@@ -145,11 +145,11 @@ class PersonController extends Controller
         $person->religion_id = $request->input('religion_id');
         $person->occupation_id = $request->input('occupation_id');
         $person->do_not_mail = empty($request->input('do_not_mail')) ? 0 : $request->input('do_not_mail');
-        $person->do_not_email = empty($request->input('do_not_email')) ? 0 :  $request->input('do_not_email');
-        $person->do_not_phone = empty($request->input('do_not_phone')) ? 0 :  $request->input('do_not_phone');
-        $person->do_not_sms = empty($request->input('do_not_sms')) ? 0 :  $request->input('do_not_sms');
-        $person->is_deceased = empty($request->input('is_deceased')) ? 0 :  $request->input('is_deceased');
-        $person->deceased_date = empty($request->input('deceased_date')) ? null :  $request->input('deceased_date');
+        $person->do_not_email = empty($request->input('do_not_email')) ? 0 : $request->input('do_not_email');
+        $person->do_not_phone = empty($request->input('do_not_phone')) ? 0 : $request->input('do_not_phone');
+        $person->do_not_sms = empty($request->input('do_not_sms')) ? 0 : $request->input('do_not_sms');
+        $person->is_deceased = empty($request->input('is_deceased')) ? 0 : $request->input('is_deceased');
+        $person->deceased_date = empty($request->input('deceased_date')) ? null : $request->input('deceased_date');
 
         // CiviCRM stores the language name rather than the language id in the contact's preferred_language field
         if (! empty($request->input('preferred_language_id'))) {
@@ -480,7 +480,7 @@ class PersonController extends Controller
         $other_address->save();
 
         if ((null !== $request->input('primary_phone_location_id'))) {
-            $primary_phone_input = explode(':',$request->input('primary_phone_location_id'));
+            $primary_phone_input = explode(':', $request->input('primary_phone_location_id'));
         } else {
             $primary_phone_input[0] = 0;
             $primary_phone_input[1] = null;
@@ -492,7 +492,7 @@ class PersonController extends Controller
         $phone_home_phone->phone = $request->input('phone_home_phone');
         $phone_home_phone->phone_type = 'Phone';
         // if no primary_phone_location_id exists then make home:phone the default primary location
-        (($primary_phone_input[0] == config('polanco.location_type.home') && $primary_phone_input[1]=='Phone') || ($primary_phone_input[0] == 0)) ? $phone_home_phone->is_primary = 1 : $phone_home_phone->is_primary = 0;
+        (($primary_phone_input[0] == config('polanco.location_type.home') && $primary_phone_input[1] == 'Phone') || ($primary_phone_input[0] == 0)) ? $phone_home_phone->is_primary = 1 : $phone_home_phone->is_primary = 0;
         $phone_home_phone->save();
 
         $phone_home_mobile = new \App\Models\Phone;
@@ -500,7 +500,7 @@ class PersonController extends Controller
         $phone_home_mobile->location_type_id = config('polanco.location_type.home');
         $phone_home_mobile->phone = $request->input('phone_home_mobile');
         $phone_home_mobile->phone_type = 'Mobile';
-        ($primary_phone_input[0] == config('polanco.location_type.home') && $primary_phone_input[1]=='Mobile') ? $phone_home_mobile->is_primary = 1 : $phone_home_mobile->is_primary = 0;
+        ($primary_phone_input[0] == config('polanco.location_type.home') && $primary_phone_input[1] == 'Mobile') ? $phone_home_mobile->is_primary = 1 : $phone_home_mobile->is_primary = 0;
         $phone_home_mobile->save();
 
         $phone_home_fax = new \App\Models\Phone;
@@ -515,7 +515,7 @@ class PersonController extends Controller
         $phone_work_phone->location_type_id = config('polanco.location_type.work');
         $phone_work_phone->phone = $request->input('phone_work_phone');
         $phone_work_phone->phone_type = 'Phone';
-        ($primary_phone_input[0] == config('polanco.location_type.work') && $primary_phone_input[1]=='Phone') ? $phone_work_phone->is_primary = 1 : $phone_work_phone->is_primary = 0;
+        ($primary_phone_input[0] == config('polanco.location_type.work') && $primary_phone_input[1] == 'Phone') ? $phone_work_phone->is_primary = 1 : $phone_work_phone->is_primary = 0;
         $phone_work_phone->save();
 
         $phone_work_mobile = new \App\Models\Phone;
@@ -523,7 +523,7 @@ class PersonController extends Controller
         $phone_work_mobile->location_type_id = config('polanco.location_type.work');
         $phone_work_mobile->phone = $request->input('phone_work_mobile');
         $phone_work_mobile->phone_type = 'Mobile';
-        ($primary_phone_input[0] == config('polanco.location_type.work') && $primary_phone_input[1]=='Mobile') ? $phone_work_mobile->is_primary = 1 : $phone_work_mobile->is_primary = 0;
+        ($primary_phone_input[0] == config('polanco.location_type.work') && $primary_phone_input[1] == 'Mobile') ? $phone_work_mobile->is_primary = 1 : $phone_work_mobile->is_primary = 0;
         $phone_work_mobile->save();
 
         $phone_work_fax = new \App\Models\Phone;
@@ -538,7 +538,7 @@ class PersonController extends Controller
         $phone_other_phone->location_type_id = config('polanco.location_type.other');
         $phone_other_phone->phone = $request->input('phone_other_phone');
         $phone_other_phone->phone_type = 'Phone';
-        ($primary_phone_input[0] == config('polanco.location_type.other') && $primary_phone_input[1]=='Phone') ? $phone_other_phone->is_primary = 1 : $phone_other_phone->is_primary = 0;
+        ($primary_phone_input[0] == config('polanco.location_type.other') && $primary_phone_input[1] == 'Phone') ? $phone_other_phone->is_primary = 1 : $phone_other_phone->is_primary = 0;
         $phone_other_phone->save();
 
         $phone_other_mobile = new \App\Models\Phone;
@@ -546,7 +546,7 @@ class PersonController extends Controller
         $phone_other_mobile->location_type_id = config('polanco.location_type.other');
         $phone_other_mobile->phone = $request->input('phone_other_mobile');
         $phone_other_mobile->phone_type = 'Mobile';
-        ($primary_phone_input[0] == config('polanco.location_type.other') && $primary_phone_input[1]=='Mobile') ? $phone_other_mobile->is_primary = 1 : $phone_other_mobile->is_primary = 0;
+        ($primary_phone_input[0] == config('polanco.location_type.other') && $primary_phone_input[1] == 'Mobile') ? $phone_other_mobile->is_primary = 1 : $phone_other_mobile->is_primary = 0;
         $phone_other_mobile->save();
 
         $phone_other_fax = new \App\Models\Phone;
@@ -704,18 +704,18 @@ class PersonController extends Controller
         }
         */
 
-        $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date','DESC')->paginate(25,['*'],'donations');
+        $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date', 'DESC')->paginate(25, ['*'], 'donations');
         $files = \App\Models\Attachment::whereEntity('contact')->whereEntityId($person->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
 
-        $registrations = \App\Models\Registration::whereContactId($id)->paginate(25,['*'],'registrations');
-/*        $registrations = $registrations->sortByDesc(function ($registration) {
-            return $registration->retreat_start_date;
-        })->paginate(15);
-*/
-        $touchpoints = \App\Models\Touchpoint::wherePersonId($id)->with('staff')->orderBy('touched_at','DESC')->paginate(15,['*'],'touchpoints');
+        $registrations = \App\Models\Registration::whereContactId($id)->paginate(25, ['*'], 'registrations');
+        /*        $registrations = $registrations->sortByDesc(function ($registration) {
+                    return $registration->retreat_start_date;
+                })->paginate(15);
+        */
+        $touchpoints = \App\Models\Touchpoint::wherePersonId($id)->with('staff')->orderBy('touched_at', 'DESC')->paginate(15, ['*'], 'touchpoints');
 
         //dd($registrations);
-        return view('persons.show', compact('person', 'donations','files', 'relationship_types', 'touchpoints', 'registrations')); //
+        return view('persons.show', compact('person', 'donations', 'files', 'relationship_types', 'touchpoints', 'registrations')); //
     }
 
     /**
@@ -736,10 +736,10 @@ class PersonController extends Controller
 
         $person = \App\Models\Contact::findOrFail($id);
         $v = Validator::make($request->all(), [
-             'size' => Rule::in(['10', '9x6']),
-             'logo' => 'boolean',
-             'name' => Rule::in(['full', 'display', 'household']),
-         ]);
+            'size' => Rule::in(['10', '9x6']),
+            'logo' => 'boolean',
+            'name' => Rule::in(['full', 'display', 'household']),
+        ]);
         if (empty($v->invalid())) {
             $size = isset($request->size) ? (string) $request->size : $size;
             $logo = isset($request->logo) ? (bool) $request->logo : $logo;
@@ -846,21 +846,21 @@ class PersonController extends Controller
         $occupations = \App\Models\Ppd_occupation::orderBy('name')->pluck('name', 'id');
         $occupations->prepend('N/A', 0);
         $preferred_communication_methods = config('polanco.preferred_communication_method');
-        $primary_address_locations = \App\Models\LocationType::orderBy('name')->whereIsActive(1)->pluck('name','id');
+        $primary_address_locations = \App\Models\LocationType::orderBy('name')->whereIsActive(1)->pluck('name', 'id');
         $primary_address_locations->forget(config('polanco.location_type.main'));
         $primary_address_locations->prepend('N/A', 0);
 
-        $primary_email_locations = \App\Models\LocationType::orderBy('name')->whereIsActive(1)->pluck('name','id');
+        $primary_email_locations = \App\Models\LocationType::orderBy('name')->whereIsActive(1)->pluck('name', 'id');
         $primary_email_locations->forget(config('polanco.location_type.main'));
         $primary_email_locations->prepend('N/A', 0);
 
-        $primary_phone_locations = \App\Models\LocationType::orderBy('name')->whereIsActive(1)->whereNotIn('id',[config('polanco.location_type.main')])->get();
+        $primary_phone_locations = \App\Models\LocationType::orderBy('name')->whereIsActive(1)->whereNotIn('id', [config('polanco.location_type.main')])->get();
         $primary_phones = [];
-        $primary_phones['0:0'] = "N/A";
+        $primary_phones['0:0'] = 'N/A';
         //dd($primary_phone_locations);
         foreach ($primary_phone_locations as $phone_location) {
-            $primary_phones[$phone_location->id.":Phone"] = $phone_location->name . ':Main';
-            $primary_phones[$phone_location->id.":Mobile"] = $phone_location->name . ':Mobile';
+            $primary_phones[$phone_location->id.':Phone'] = $phone_location->name.':Main';
+            $primary_phones[$phone_location->id.':Mobile'] = $phone_location->name.':Mobile';
         }
 
         //create defaults array for easier pre-populating of default values on edit/update blade
@@ -929,7 +929,7 @@ class PersonController extends Controller
         }
         //dd($person);
 
-        return view('persons.edit', compact('prefixes', 'suffixes', 'person', 'parish_list', 'ethnicities', 'states', 'countries', 'genders', 'languages', 'defaults', 'religions', 'occupations', 'contact_types', 'subcontact_types', 'referrals', 'preferred_communication_methods','primary_address_locations','primary_email_locations','primary_phones'));
+        return view('persons.edit', compact('prefixes', 'suffixes', 'person', 'parish_list', 'ethnicities', 'states', 'countries', 'genders', 'languages', 'defaults', 'religions', 'occupations', 'contact_types', 'subcontact_types', 'referrals', 'preferred_communication_methods', 'primary_address_locations', 'primary_email_locations', 'primary_phones'));
     }
 
     /**
@@ -1118,7 +1118,7 @@ class PersonController extends Controller
         $other_address->save();
 
         if ((null !== $request->input('primary_phone_location_id'))) {
-            $primary_phone_input = explode(':',$request->input('primary_phone_location_id'));
+            $primary_phone_input = explode(':', $request->input('primary_phone_location_id'));
         } else {
             $primary_phone_input[0] = 0;
             $primary_phone_input[1] = null;
@@ -1128,7 +1128,7 @@ class PersonController extends Controller
         $phone_home_phone = \App\Models\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.home'), 'phone_type'=>'Phone']);
         $phone_home_phone->phone_ext = null;
         $phone_home_phone->contact_id = $person->id;
-        (($primary_phone_input[0] == config('polanco.location_type.home') && $primary_phone_input[1]=='Phone') || ($primary_phone_input[0] == 0)) ? $phone_home_phone->is_primary = 1 : $phone_home_phone->is_primary = 0;
+        (($primary_phone_input[0] == config('polanco.location_type.home') && $primary_phone_input[1] == 'Phone') || ($primary_phone_input[0] == 0)) ? $phone_home_phone->is_primary = 1 : $phone_home_phone->is_primary = 0;
         $phone_home_phone->location_type_id = config('polanco.location_type.home');
         $phone_home_phone->phone = $request->input('phone_home_phone');
         $phone_home_phone->phone_type = 'Phone';
@@ -1137,7 +1137,7 @@ class PersonController extends Controller
         $phone_home_mobile = \App\Models\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.home'), 'phone_type'=>'Mobile']);
         $phone_home_mobile->phone_ext = null;
         $phone_home_mobile->contact_id = $person->id;
-        ($primary_phone_input[0] == config('polanco.location_type.home') && $primary_phone_input[1]=='Mobile') ? $phone_home_mobile->is_primary = 1 : $phone_home_mobile->is_primary = 0;
+        ($primary_phone_input[0] == config('polanco.location_type.home') && $primary_phone_input[1] == 'Mobile') ? $phone_home_mobile->is_primary = 1 : $phone_home_mobile->is_primary = 0;
         $phone_home_mobile->location_type_id = config('polanco.location_type.home');
         $phone_home_mobile->phone = $request->input('phone_home_mobile');
         $phone_home_mobile->phone_type = 'Mobile';
@@ -1154,7 +1154,7 @@ class PersonController extends Controller
         $phone_work_phone = \App\Models\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.work'), 'phone_type'=>'Phone']);
         $phone_work_phone->phone_ext = null;
         $phone_work_phone->contact_id = $person->id;
-        ($primary_phone_input[0] == config('polanco.location_type.work') && $primary_phone_input[1]=='Phone') ? $phone_work_phone->is_primary = 1 : $phone_work_phone->is_primary = 0;
+        ($primary_phone_input[0] == config('polanco.location_type.work') && $primary_phone_input[1] == 'Phone') ? $phone_work_phone->is_primary = 1 : $phone_work_phone->is_primary = 0;
         $phone_work_phone->location_type_id = config('polanco.location_type.work');
         $phone_work_phone->phone = $request->input('phone_work_phone');
         $phone_work_phone->phone_type = 'Phone';
@@ -1163,7 +1163,7 @@ class PersonController extends Controller
         $phone_work_mobile = \App\Models\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.work'), 'phone_type'=>'Mobile']);
         $phone_work_mobile->phone_ext = null;
         $phone_work_mobile->contact_id = $person->id;
-        ($primary_phone_input[0] == config('polanco.location_type.work') && $primary_phone_input[1]=='Mobile') ? $phone_work_mobile->is_primary = 1 : $phone_work_mobile->is_primary = 0;
+        ($primary_phone_input[0] == config('polanco.location_type.work') && $primary_phone_input[1] == 'Mobile') ? $phone_work_mobile->is_primary = 1 : $phone_work_mobile->is_primary = 0;
         $phone_work_mobile->location_type_id = config('polanco.location_type.work');
         $phone_work_mobile->phone = $request->input('phone_work_mobile');
         $phone_work_mobile->phone_type = 'Mobile';
@@ -1180,7 +1180,7 @@ class PersonController extends Controller
         $phone_other_phone = \App\Models\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.other'), 'phone_type'=>'Phone']);
         $phone_other_phone->phone_ext = null;
         $phone_other_phone->contact_id = $person->id;
-        ($primary_phone_input[0] == config('polanco.location_type.other') && $primary_phone_input[1]=='Phone') ? $phone_other_phone->is_primary = 1 : $phone_other_phone->is_primary = 0;
+        ($primary_phone_input[0] == config('polanco.location_type.other') && $primary_phone_input[1] == 'Phone') ? $phone_other_phone->is_primary = 1 : $phone_other_phone->is_primary = 0;
         $phone_other_phone->location_type_id = config('polanco.location_type.other');
         $phone_other_phone->phone = $request->input('phone_other_phone');
         $phone_other_phone->phone_type = 'Phone';
@@ -1189,7 +1189,7 @@ class PersonController extends Controller
         $phone_other_mobile = \App\Models\Phone::firstOrNew(['contact_id'=>$person->id, 'location_type_id'=>config('polanco.location_type.other'), 'phone_type'=>'Mobile']);
         $phone_other_mobile->phone_ext = null;
         $phone_other_mobile->contact_id = $person->id;
-        ($primary_phone_input[0] == config('polanco.location_type.other') && $primary_phone_input[1]=='Mobile') ? $phone_other_mobile->is_primary = 1 : $phone_other_mobile->is_primary = 0;
+        ($primary_phone_input[0] == config('polanco.location_type.other') && $primary_phone_input[1] == 'Mobile') ? $phone_other_mobile->is_primary = 1 : $phone_other_mobile->is_primary = 0;
         $phone_other_mobile->location_type_id = config('polanco.location_type.other');
         $phone_other_mobile->phone = $request->input('phone_other_mobile');
         $phone_other_mobile->phone_type = 'Mobile';
@@ -1791,7 +1791,7 @@ class PersonController extends Controller
 
         $duplicates = \App\Models\Contact::whereIn('id', function ($query) {
             $query->select('id')->from('contact')->groupBy('sort_name')->whereDeletedAt(null)->havingRaw('count(*)>1');
-        })->orderBy('sort_name')->paginate(25,['*'],'duplicates');
+        })->orderBy('sort_name')->paginate(25, ['*'], 'duplicates');
         // dd($duplicates,$duplicates->total());
         return view('persons.duplicates', compact('duplicates'));
     }
@@ -1808,7 +1808,6 @@ class PersonController extends Controller
 
         $duplicates = $similar->keyBy('id');
         $duplicates->forget($contact->id);
-
 
         //if there are no duplicates for the user go back to duplicates list
         if (! $duplicates->count()) {
@@ -1994,7 +1993,7 @@ class PersonController extends Controller
                 foreach ($merge->notes as $note) {
                     $contact_note = \App\Models\Note::firstOrNew(['entity_id' => $contact->id, 'entity_table' => 'contact', 'subject' => $note->subject]);
                     if (isset($note->note)) { //if there is no note to move skip it
-                        if ((!isset($contact_note->note)) || ($note->modified_date>$contact_note->modified_date)) { //overwrite note if blank or older
+                        if ((! isset($contact_note->note)) || ($note->modified_date > $contact_note->modified_date)) { //overwrite note if blank or older
                             $contact_note->note = $note->note;
                         }
                     }
@@ -2043,6 +2042,7 @@ class PersonController extends Controller
                 flash('Contact ID#: '.$merge_id.' merged with Contact ID#: '.$contact_id)->success()->important();
             }
         }
+
         return view('persons.merge', compact('contact', 'duplicates'));
     }
 }

@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -194,22 +193,22 @@ class VendorControllerTest extends TestCase
         $vendor_name = $this->faker->company;
 
         $response = $this->actingAs($user)->post(route('vendor.store'), [
-          'organization_name' => $vendor_name,
-          'display_name' => $vendor_name,
-          'sort_name' => $vendor_name,
-          'contact_type' => config('polanco.contact_type.organization'),
-          'subcontact_type' => config('polanco.contact_type.vendor'),
+            'organization_name' => $vendor_name,
+            'display_name' => $vendor_name,
+            'sort_name' => $vendor_name,
+            'contact_type' => config('polanco.contact_type.organization'),
+            'subcontact_type' => config('polanco.contact_type.vendor'),
         ]);
 
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('VendorController@index'));
 
         $this->assertDatabaseHas('contact', [
-          'contact_type' => config('polanco.contact_type.organization'),
-          'subcontact_type' => config('polanco.contact_type.vendor'),
-          'sort_name' => $vendor_name,
-          'display_name' => $vendor_name,
-          'organization_name' => $vendor_name,
+            'contact_type' => config('polanco.contact_type.organization'),
+            'subcontact_type' => config('polanco.contact_type.vendor'),
+            'sort_name' => $vendor_name,
+            'display_name' => $vendor_name,
+            'organization_name' => $vendor_name,
         ]);
     }
 
@@ -236,10 +235,10 @@ class VendorControllerTest extends TestCase
         $vendor_name = $this->faker->company;
 
         $response = $this->actingAs($user)->put(route('vendor.update', $vendor), [
-          'sort_name' => $vendor_name,
-          'display_name' => $vendor_name,
-          'organization_name' => $vendor_name,
-          'id' => $vendor->id,
+            'sort_name' => $vendor_name,
+            'display_name' => $vendor_name,
+            'organization_name' => $vendor_name,
+            'id' => $vendor->id,
         ]);
 
         $response->assertSessionHas('flash_notification');

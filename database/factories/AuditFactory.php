@@ -33,12 +33,12 @@ class AuditFactory extends Factory
             'auditable_id' => function () {
                 return \App\Models\Contact::factory()->create()->id;
             },
-            'old_values' => NULL,
-            'new_values' => NULL,
+            'old_values' => null,
+            'new_values' => null,
             'url' => $this->faker->url(),
             'ip_address' => $this->faker->ipv4(),
             'user_agent' => $this->faker->userAgent(),
-            'tags' => NULL,
+            'tags' => null,
             'created_at' => $this->faker->dateTimeThisMonth(),
             'updated_at' => $this->faker->dateTimeThisMonth(),
         ];

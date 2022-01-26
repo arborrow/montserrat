@@ -4,10 +4,9 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\GroupContact;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use Illuminate\Support\Arr;
+use Tests\TestCase;
 
 /**
  * @see \App\Http\Controllers\RegistrationController
@@ -34,7 +33,7 @@ class RegistrationControllerTest extends TestCase
         $response->assertViewIs('registrations.create');
         $response->assertViewHas('retreats');
         $response->assertViewHas('retreatants');
-        $response->assertViewHas('retreatants', function($retreatants) use ($contact) {
+        $response->assertViewHas('retreatants', function ($retreatants) use ($contact) {
             return Arr::exists($retreatants, $contact->id);
         });
         $response->assertViewHas('rooms');
@@ -56,8 +55,8 @@ class RegistrationControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('registrations.add_group');
         $response->assertViewHas('retreats');
-        $response->assertViewHas('groups', function($groups) use ($group) {
-            return Arr::exists($groups, $group->id);;
+        $response->assertViewHas('groups', function ($groups) use ($group) {
+            return Arr::exists($groups, $group->id);
         });
         $response->assertViewHas('rooms');
         $response->assertViewHas('defaults');
@@ -71,11 +70,11 @@ class RegistrationControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-registration');
         $registration = \App\Models\Registration::factory()->create([
-          'arrived_at' => null,
-          'canceled_at' => null,
-          'departed_at' => null,
-          'registration_confirm_date' => null,
-          'attendance_confirm_date' => null,
+            'arrived_at' => null,
+            'canceled_at' => null,
+            'departed_at' => null,
+            'registration_confirm_date' => null,
+            'attendance_confirm_date' => null,
         ]);
 
         $response = $this->actingAs($user)->from(URL('retreat/'.$registration->event_id))
@@ -95,7 +94,7 @@ class RegistrationControllerTest extends TestCase
         $user = $this->createUserWithPermission('update-registration');
         $registration = \App\Models\Registration::factory()->create([
             'attendance_confirm_date' => null,
-          ]);
+        ]);
 
         $response = $this->actingAs($user)->from(URL('retreat/'.$registration->event_id))
             ->get(route('registration.attend', ['id' => $registration->id]));
@@ -116,7 +115,7 @@ class RegistrationControllerTest extends TestCase
         $user = $this->createUserWithPermission('update-registration');
         $registration = \App\Models\Registration::factory()->create([
             'canceled_at' => null,
-          ]);
+        ]);
 
         $response = $this->actingAs($user)->get(route('registration.cancel', ['id' => $registration->id]));
         $response = $this->actingAs($user)->from(URL('retreat/'.$registration->event_id))
@@ -138,7 +137,7 @@ class RegistrationControllerTest extends TestCase
         $user = $this->createUserWithPermission('update-registration');
         $registration = \App\Models\Registration::factory()->create([
             'registration_confirm_date' => null,
-          ]);
+        ]);
 
         $response = $this->actingAs($user)->from(URL('retreat/'.$registration->event_id))
             ->get(route('registration.confirm', ['id' => $registration->id]));
@@ -157,12 +156,12 @@ class RegistrationControllerTest extends TestCase
     public function confirm_attendance_returns_an_ok_response()
     {
         $registration = \App\Models\Registration::factory()->create([
-              'departed_at' => null,
-              'registration_confirm_date' => null,
-              'arrived_at' => null,
-              'canceled_at' => null,
-              'attendance_confirm_date' => null,
-          ]);
+            'departed_at' => null,
+            'registration_confirm_date' => null,
+            'arrived_at' => null,
+            'canceled_at' => null,
+            'attendance_confirm_date' => null,
+        ]);
 
         $path = 'registration/confirm/'.$registration->remember_token;
         $response = $this->get($path);
@@ -199,7 +198,7 @@ class RegistrationControllerTest extends TestCase
         $user = $this->createUserWithPermission('update-registration');
         $registration = \App\Models\Registration::factory()->create([
             'departed_at' => null,
-          ]);
+        ]);
         $response = $this->actingAs($user)->from(URL('retreat/'.$registration->event_id))
             ->get(route('registration.depart', ['id' => $registration->id]));
 
@@ -316,8 +315,8 @@ class RegistrationControllerTest extends TestCase
         $user = $this->createUserWithPermission('create-registration');
         $retreat = \App\Models\Retreat::factory()->create();
         $contact = \App\Models\Contact::factory()->create([
-          'contact_type' => config('polanco.contact_type.individual'),
-          'subcontact_type' => null,
+            'contact_type' => config('polanco.contact_type.individual'),
+            'subcontact_type' => null,
         ]);
 
         $response = $this->actingAs($user)->get(route('registration.register', [
@@ -327,11 +326,11 @@ class RegistrationControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertViewIs('registrations.create');
-        $response->assertViewHas('retreats', function($retreats) use ($retreat) {
-            return Arr::exists($retreats, $retreat->id);;
+        $response->assertViewHas('retreats', function ($retreats) use ($retreat) {
+            return Arr::exists($retreats, $retreat->id);
         });
-        $response->assertViewHas('retreatants', function($retreatants) use ($contact) {
-            return Arr::exists($retreatants, $contact->id);;
+        $response->assertViewHas('retreatants', function ($retreatants) use ($contact) {
+            return Arr::exists($retreatants, $contact->id);
         });
         $response->assertViewHas('rooms');
         $response->assertViewHas('defaults');
@@ -363,10 +362,10 @@ class RegistrationControllerTest extends TestCase
 
         $response->assertRedirect('person/'.$registration->contact_id);
         $this->assertDatabaseHas('touchpoints', [
-          'person_id' => $registration->contact_id,
-          'staff_id' => config('polanco.self.id'),
-          'type' => 'Email',
-          'notes' => $event->idnumber.' registration email sent.',
+            'person_id' => $registration->contact_id,
+            'staff_id' => config('polanco.self.id'),
+            'type' => 'Email',
+            'notes' => $event->idnumber.' registration email sent.',
         ]);
     }
 
@@ -375,15 +374,15 @@ class RegistrationControllerTest extends TestCase
      */
     public function send_confirmation_email_returns_an_ok_response()
     {
-      $user = $this->createUserWithPermission('update-registration');
-      $registration = \App\Models\Registration::factory()->create();
+        $user = $this->createUserWithPermission('update-registration');
+        $registration = \App\Models\Registration::factory()->create();
 
-      $response = $this->actingAs($user)->get(route('registration.send_confirmation_email', [$registration]));
+        $response = $this->actingAs($user)->get(route('registration.send_confirmation_email', [$registration]));
 
-      $response->assertRedirect('registration/'.$registration->id);
-      $response->assertSessionHas('flash_notification');
-
+        $response->assertRedirect('registration/'.$registration->id);
+        $response->assertSessionHas('flash_notification');
     }
+
     /**
      * @test
      */
@@ -408,8 +407,8 @@ class RegistrationControllerTest extends TestCase
         $user = $this->createUserWithPermission('create-registration');
         $retreat = \App\Models\Retreat::factory()->create();
         $contact = \App\Models\Contact::factory()->create([
-          'contact_type' => config('polanco.contact_type.individual'),
-          'subcontact_type' => null,
+            'contact_type' => config('polanco.contact_type.individual'),
+            'subcontact_type' => null,
         ]);
         $response = $this->actingAs($user)->post(route('registration.store'), [
             'register_date' => $this->faker->dateTime('now'),
@@ -427,9 +426,9 @@ class RegistrationControllerTest extends TestCase
         $response->assertRedirect(action('RegistrationController@index'));
         $response->assertSessionHas('flash_notification');
         $this->assertDatabaseHas('participant', [
-          'event_id' => $retreat->id,
-          'contact_id' => $contact->id,
-          'status_id' => config('polanco.registration_status_id.registered'),
+            'event_id' => $retreat->id,
+            'contact_id' => $contact->id,
+            'status_id' => config('polanco.registration_status_id.registered'),
         ]);
     }
 

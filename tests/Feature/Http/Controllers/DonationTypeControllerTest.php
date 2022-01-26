@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
@@ -124,11 +123,11 @@ class DonationTypeControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
 
         $this->assertDatabaseHas('donation_type', [
-          'name' => $donation_type_name,
-          'label' => $donation_type_label,
-          'description' => $donation_type_description,
-          'value' => $donation_type_value,
-          'is_active' => $donation_type_is_active,
+            'name' => $donation_type_name,
+            'label' => $donation_type_label,
+            'description' => $donation_type_description,
+            'value' => $donation_type_value,
+            'is_active' => $donation_type_is_active,
         ]);
     }
 
@@ -143,12 +142,12 @@ class DonationTypeControllerTest extends TestCase
         $new_donation_type_name = 'New '.$this->faker->words(3, true);
 
         $response = $this->actingAs($user)->put(route('donation_type.update', [$donation_type]), [
-          'id' => $donation_type->id,
-          'name' => $new_donation_type_name,
-          'label' => $this->faker->words(4, true),
-          'value' => strval($this->faker->numberBetween(1000, 2000)),
-          'description' => $this->faker->sentence(7, true),
-          'is_active' => $this->faker->boolean(),
+            'id' => $donation_type->id,
+            'name' => $new_donation_type_name,
+            'label' => $this->faker->words(4, true),
+            'value' => strval($this->faker->numberBetween(1000, 2000)),
+            'description' => $this->faker->sentence(7, true),
+            'is_active' => $this->faker->boolean(),
         ]);
 
         $response->assertRedirect(action('DonationTypeController@show', $donation_type->id));

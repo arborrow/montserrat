@@ -24,7 +24,6 @@ class StoreOrganizationRequest extends FormRequest
     public function rules()
     {   // if Twilio is enabled then validate phone numbers otherwise allow strings
         if (null !== config('settings.twilio_sid') && null !== config('settings.twilio_token')) {
-
             return [
                 'organization_name' => 'required',
                 'subcontact_type' => 'integer|min:0',
@@ -38,7 +37,7 @@ class StoreOrganizationRequest extends FormRequest
                 'phone_main_phone' => 'phone|nullable',
                 'phone_main_fax' => 'phone|nullable',
             ];
-          } else {
+        } else {
             return [
                 'organization_name' => 'required',
                 'subcontact_type' => 'integer|min:0',
@@ -52,7 +51,7 @@ class StoreOrganizationRequest extends FormRequest
                 'phone_main_phone' => 'string|nullable',
                 'phone_main_fax' => 'string|nullable',
             ];
-          }
+        }
     }
 
     /**

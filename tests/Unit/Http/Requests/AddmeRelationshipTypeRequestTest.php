@@ -39,8 +39,8 @@ class AddmeRelationshipTypeRequestTest extends TestCase
         $actual = $this->subject->rules();
 
         $this->assertEquals([
-          'contact_id' => 'integer|min:1|required',
-          'relationship_type' => 'required|in:Child,Parent,Husband,Wife,Sibling,Employee,Volunteer,Parishioner,Primary contact,Employer',
+            'contact_id' => 'integer|min:1|required',
+            'relationship_type' => 'required|in:Child,Parent,Husband,Wife,Sibling,Employee,Volunteer,Parishioner,Primary contact,Employer',
         ], $actual);
     }
 

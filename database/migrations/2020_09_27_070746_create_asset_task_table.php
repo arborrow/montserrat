@@ -35,7 +35,6 @@ class CreateAssetTaskTable extends Migration
             $table->string('tag')->nullable();
             $table->timestamps();
             $table->softDeletes();
-
         });
     }
 

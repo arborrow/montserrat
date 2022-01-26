@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -229,20 +228,20 @@ class ParishControllerTest extends TestCase
         $parish_name = 'St. '.$this->faker->firstName.' Parish';
 
         $response = $this->actingAs($user)->post(route('parish.store'), [
-          'organization_name' => $parish_name,
-          'display_name' => $parish_name,
-          'sort_name' => $parish_name,
+            'organization_name' => $parish_name,
+            'display_name' => $parish_name,
+            'sort_name' => $parish_name,
         ]);
 
         $response->assertRedirect(action('ParishController@index'));
         $response->assertSessionHas('flash_notification');
 
         $this->assertDatabaseHas('contact', [
-          'contact_type' => config('polanco.contact_type.organization'),
-          'subcontact_type' => config('polanco.contact_type.parish'),
-          'sort_name' => $parish_name,
-          'display_name' => $parish_name,
-          'organization_name' => $parish_name,
+            'contact_type' => config('polanco.contact_type.organization'),
+            'subcontact_type' => config('polanco.contact_type.parish'),
+            'sort_name' => $parish_name,
+            'display_name' => $parish_name,
+            'organization_name' => $parish_name,
         ]);
     }
 
@@ -270,10 +269,10 @@ class ParishControllerTest extends TestCase
         $new_parish_name = 'St. '.$this->faker->firstName.' Parish of the Renewal';
 
         $response = $this->actingAs($user)->put(route('parish.update', [$parish]), [
-          'sort_name' => $new_parish_name,
-          'display_name' => $new_parish_name,
-          'organization_name' => $new_parish_name,
-          'id' => $parish->id,
+            'sort_name' => $new_parish_name,
+            'display_name' => $new_parish_name,
+            'organization_name' => $new_parish_name,
+            'id' => $parish->id,
         ]);
 
         $updated = \App\Models\Contact::findOrFail($parish->id);

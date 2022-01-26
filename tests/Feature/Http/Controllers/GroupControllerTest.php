@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
 use Tests\TestCase;
@@ -129,9 +128,9 @@ class GroupControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('GroupController@show', $new_group->id));
         $this->assertDatabaseHas('group', [
-          'name' => $group_name,
-          'title' => Str::plural($group_name),
-          'description' => 'New Group of '.Str::plural($group_name),
+            'name' => $group_name,
+            'title' => Str::plural($group_name),
+            'description' => 'New Group of '.Str::plural($group_name),
         ]);
     }
 

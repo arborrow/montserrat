@@ -11,6 +11,7 @@ class RegistrationCanceledChange extends Mailable
     use Queueable, SerializesModels;
 
     public $registration;
+
     public $retreat;
 
     /**

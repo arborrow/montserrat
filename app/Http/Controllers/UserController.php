@@ -16,7 +16,7 @@ class UserController extends Controller
     public function index()
     {
         $this->authorize('show-role');
-        $users = \App\Models\User::orderBy('name')->with('roles.permissions')->paginate(25,['*'],'users');
+        $users = \App\Models\User::orderBy('name')->with('roles.permissions')->paginate(25, ['*'], 'users');
 
         return view('admin.users.index', compact('users'));
     }

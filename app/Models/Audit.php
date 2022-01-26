@@ -2,19 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
+use Illuminate\Database\Eloquent\Model;
 
 class Audit extends Model
 {
     use HasFactory;
 
     protected $table = 'audits';
+
     protected $casts = [
         'old_values' => 'array',
         'new_values' => 'array',
     ];
+
     protected $appends = ['user_name'];
 
     public function user()

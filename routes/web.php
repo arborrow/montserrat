@@ -46,7 +46,6 @@ Route::group(['middleware' => ['web', 'activity']], function () {
     Route::get('search', 'SearchController@search');
     Route::get('results', 'SearchController@results')->name('results');
 
-
     // Dashboard Routes
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
     Route::get('/dashboard/agc', 'DashboardController@agc')->name('dashboard.agc');

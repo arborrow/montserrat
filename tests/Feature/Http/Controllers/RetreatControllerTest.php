@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -25,11 +24,11 @@ class RetreatControllerTest extends TestCase
         $retreat = \App\Models\Retreat::factory()->create();
         $number_registrations = $this->faker->numberBetween(2, 10);
         $registration = \App\Models\Registration::factory()->count($number_registrations)->create([
-          'event_id' => $retreat->id,
-          'canceled_at' => null,
-          'arrived_at' => null,
-          'departed_at' => null,
-          'room_id' => null,
+            'event_id' => $retreat->id,
+            'canceled_at' => null,
+            'arrived_at' => null,
+            'departed_at' => null,
+            'room_id' => null,
         ]);
 
         // create a single room for the test just in case none have been created
@@ -71,11 +70,11 @@ class RetreatControllerTest extends TestCase
         $retreat = \App\Models\Retreat::factory()->create();
         $number_registrations = $this->faker->numberBetween(2, 10);
         $registrations = \App\Models\Registration::factory()->count($number_registrations)->create([
-          'event_id' => $retreat->id,
-          'canceled_at' => null,
-          'arrived_at' => null,
-          'departed_at' => null,
-          'room_id' => null,
+            'event_id' => $retreat->id,
+            'canceled_at' => null,
+            'arrived_at' => null,
+            'departed_at' => null,
+            'room_id' => null,
         ]);
 
         $response = $this->from('retreat.show', $retreat->id)->actingAs($user)->get(route('retreat.checkin', ['id' => $retreat->id]));
@@ -96,17 +95,17 @@ class RetreatControllerTest extends TestCase
         // create a retreat, then create a number of registrations for the retreat
         $retreat = \App\Models\Retreat::factory()->create(
             [
-            'start_date' => $this->faker->dateTimeBetween('-5 days', '-2 days'),
-            'end_date' => $this->faker->dateTimeBetween('-1 day', '1 day'),
-          ]
+                'start_date' => $this->faker->dateTimeBetween('-5 days', '-2 days'),
+                'end_date' => $this->faker->dateTimeBetween('-1 day', '1 day'),
+            ]
         );
         $number_registrations = $this->faker->numberBetween(2, 10);
         $registrations = \App\Models\Registration::factory()->count($number_registrations)->create([
-          'event_id' => $retreat->id,
-          'canceled_at' => null,
-          'arrived_at' => $this->faker->dateTime('now'),
-          'departed_at' => null,
-          'room_id' => null,
+            'event_id' => $retreat->id,
+            'canceled_at' => null,
+            'arrived_at' => $this->faker->dateTime('now'),
+            'departed_at' => null,
+            'room_id' => null,
         ]);
 
         $response = $this->actingAs($user)->get(route('retreat.checkout', ['id' => $retreat->id]));
@@ -209,8 +208,8 @@ class RetreatControllerTest extends TestCase
         $user = $this->createUserWithPermission('update-payment');
         $retreat = \App\Models\Retreat::factory()->create();
         $registration = \App\Models\Registration::factory()->create([
-          'canceled_at' => null,
-          'event_id' => $retreat->id,
+            'canceled_at' => null,
+            'event_id' => $retreat->id,
         ]);
 
         $response = $this->actingAs($user)->get(route('retreat.payments.edit', ['id' => $retreat->id]));
@@ -296,11 +295,11 @@ class RetreatControllerTest extends TestCase
         $user = $this->createUserWithPermission('update-registration');
         $retreat = \App\Models\Retreat::factory()->create();
         $registration = \App\Models\Registration::factory()->create([
-          'room_id' => null,
-          'event_id' => $retreat->id,
-          'notes' => null,
-          'source' => 'room_update',
-          'canceled_at' => null,
+            'room_id' => null,
+            'event_id' => $retreat->id,
+            'notes' => null,
+            'source' => 'room_update',
+            'canceled_at' => null,
         ]);
         $room = \App\Models\Room::factory()->create();
         $registrations = [];
@@ -351,24 +350,23 @@ class RetreatControllerTest extends TestCase
         $response->assertSeeText($retreat->title);
     }
 
+    /**
+     * @test
+     */
+    public function show_with_status_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-retreat');
+        $retreat = \App\Models\Retreat::factory()->create();
+        $status = $this->faker->randomElement(config('polanco.registration_filters'));
+        $response = $this->actingAs($user)->get(route('retreat.status', ['id' => $retreat->id, 'status' => $status]));
 
-        /**
-         * @test
-         */
-        public function show_with_status_returns_an_ok_response()
-        {
-            $user = $this->createUserWithPermission('show-retreat');
-            $retreat = \App\Models\Retreat::factory()->create();
-            $status = $this->faker->randomElement(config('polanco.registration_filters'));
-            $response = $this->actingAs($user)->get(route('retreat.status', ['id' => $retreat->id, 'status' => $status]));
-
-            $response->assertOk();
-            $response->assertViewIs('retreats.show');
-            $response->assertViewHas('retreat');
-            $response->assertViewHas('registrations');
-            $response->assertViewHas('status');
-            $response->assertSeeText($retreat->title);
-        }
+        $response->assertOk();
+        $response->assertViewIs('retreats.show');
+        $response->assertViewHas('retreat');
+        $response->assertViewHas('registrations');
+        $response->assertViewHas('status');
+        $response->assertSeeText($retreat->title);
+    }
 
     /**
      * @test
@@ -529,15 +527,15 @@ class RetreatControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-registration');
         $retreat = \App\Models\Retreat::factory()->create();
         $retreatant = \App\Models\Contact::factory()->create([
-                'contact_type' => config('polanco.contact_type.individual'),
-            ]);
+            'contact_type' => config('polanco.contact_type.individual'),
+        ]);
         $room = \App\Models\Room::factory()->create();
         $registration = \App\Models\Registration::factory()->create([
-                'event_id' => $retreat->id,
-                'contact_id' => $retreatant->id,
-                'room_id' => $room->id,
-                'canceled_at' => null,
-            ]);
+            'event_id' => $retreat->id,
+            'contact_id' => $retreatant->id,
+            'room_id' => $room->id,
+            'canceled_at' => null,
+        ]);
         $response = $this->actingAs($user)->get('retreat/'.$registration->event_id.'/namebadges');
         $response->assertOk();
         $response->assertViewIs('retreats.namebadges');
@@ -546,38 +544,37 @@ class RetreatControllerTest extends TestCase
         $response->assertSeeText($retreatant->first_name.' '.$retreatant->last_name);
     }
 
+    /**
+     * @test
+     */
+    public function event_namebadges_with_role_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-registration');
+        $retreat = \App\Models\Retreat::factory()->create();
+        $retreatant = \App\Models\Contact::factory()->create([
+            'contact_type' => config('polanco.contact_type.individual'),
+        ]);
+        $room = \App\Models\Room::factory()->create();
+        $role = $this->faker->randomElement(array_flip(config('polanco.participant_role_id')));
 
-        /**
-         * @test
-         */
-        public function event_namebadges_with_role_returns_an_ok_response()
-        {
-            $user = $this->createUserWithPermission('show-registration');
-            $retreat = \App\Models\Retreat::factory()->create();
-            $retreatant = \App\Models\Contact::factory()->create([
-                    'contact_type' => config('polanco.contact_type.individual'),
-                ]);
-            $room = \App\Models\Room::factory()->create();
-            $role = $this->faker->randomElement(array_flip(config('polanco.participant_role_id')));
+        // TODO: perhaps ideally this would be refactored so that the case select would work for all pariticipant role types
+        // $role = \App\Models\ParticipantRoleType::whereIsActive(1)->get()->random();
+        $registration = \App\Models\Registration::factory()->create([
+            'event_id' => $retreat->id,
+            'contact_id' => $retreatant->id,
+            'room_id' => $room->id,
+            'canceled_at' => null,
+            'role_id' => config('polanco.participant_role_id.'.$role),
+        ]);
 
-            // TODO: perhaps ideally this would be refactored so that the case select would work for all pariticipant role types
-            // $role = \App\Models\ParticipantRoleType::whereIsActive(1)->get()->random();
-            $registration = \App\Models\Registration::factory()->create([
-                    'event_id' => $retreat->id,
-                    'contact_id' => $retreatant->id,
-                    'room_id' => $room->id,
-                    'canceled_at' => null,
-                    'role_id' => config('polanco.participant_role_id.'.$role),
-                ]);
+        $response = $this->actingAs($user)->get('retreat/'.$registration->event_id.'/namebadges/'.$role);
 
-            $response = $this->actingAs($user)->get('retreat/'.$registration->event_id.'/namebadges/'.$role);
-
-            $response->assertOk();
-            $response->assertViewIs('retreats.namebadges');
-            $response->assertViewHas('event');
-            $response->assertViewHas('cresults');
-            $response->assertSeeText($retreatant->first_name.' '.$retreatant->last_name);
-        }
+        $response->assertOk();
+        $response->assertViewIs('retreats.namebadges');
+        $response->assertViewHas('event');
+        $response->assertViewHas('cresults');
+        $response->assertSeeText($retreatant->first_name.' '.$retreatant->last_name);
+    }
 
     /**
      * @test
@@ -587,14 +584,14 @@ class RetreatControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-registration');
         $retreat = \App\Models\Retreat::factory()->create();
         $retreatant = \App\Models\Contact::factory()->create([
-                'contact_type' => config('polanco.contact_type.individual'),
-            ]);
+            'contact_type' => config('polanco.contact_type.individual'),
+        ]);
         $registration = \App\Models\Registration::factory()->create([
-                'event_id' => $retreat->id,
-                'contact_id' => $retreatant->id,
-                'canceled_at' => null,
-                'role_id' => config('polanco.participant_role_id.retreatant'),
-            ]);
+            'event_id' => $retreat->id,
+            'contact_id' => $retreatant->id,
+            'canceled_at' => null,
+            'role_id' => config('polanco.participant_role_id.retreatant'),
+        ]);
         $response = $this->actingAs($user)->get('retreat/'.$registration->event_id.'/tableplacards');
         $response->assertOk();
         $response->assertViewIs('retreats.tableplacards');

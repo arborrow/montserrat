@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -146,12 +145,12 @@ class WebsiteControllerTest extends TestCase
         $new_website_description = 'New '.$this->faker->sentence;
 
         $response = $this->actingAs($user)->put(route('website.update', [$website]), [
-          'id' => $website->id,
-          'asset_id' => $website->asset_id,
-          'contact_id' => $website->contact_id,
-          'description' => $new_website_description,
-          'website_type' => $website_type,
-          'url' => $website->url,
+            'id' => $website->id,
+            'asset_id' => $website->asset_id,
+            'contact_id' => $website->contact_id,
+            'description' => $new_website_description,
+            'website_type' => $website_type,
+            'url' => $website->url,
         ]);
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('WebsiteController@show', $website->id));
