@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class AddForeignKeysToFinancialTrxnTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -32,4 +32,4 @@ class AddForeignKeysToFinancialTrxnTable extends Migration
             $table->dropForeign('financial_trxn_to_financial_account_id_foreign');
         });
     }
-}
+};

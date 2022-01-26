@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class AddForeignKeysToParticipantPaymentTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -30,4 +30,4 @@ class AddForeignKeysToParticipantPaymentTable extends Migration
             $table->dropForeign('participant_payment_participant_id_foreign');
         });
     }
-}
+};

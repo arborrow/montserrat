@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateLocationTypeTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -36,4 +36,4 @@ class CreateLocationTypeTable extends Migration
     {
         Schema::dropIfExists('location_type');
     }
-}
+};
