@@ -12,9 +12,9 @@ class Message extends Model implements Auditable
     use HasFactory;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
-
-    protected $dates = [
-        'mailgun_timestamp', 'disabled_at',
+    protected $casts = [
+        'mailgun_timestamp' => 'datetime',
+        'disabled_at' => 'datetime',
     ];  //
 
     protected $fillable = ['mailgun_id', 'mailgun_timestamp', 'storage_url', 'from', 'to', 'subject', 'from_id', 'to_id', 'is_processed'];

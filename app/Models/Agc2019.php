@@ -12,8 +12,10 @@ class Agc2019 extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'agc_household_name';
-
-    protected $dates = ['last_event', 'last_payment'];
+    protected $casts = [
+        'last_event' => 'datetime',
+        'last_payment' => 'datetime',
+    ];
 
     protected $fillable = ['contact_id'];
 

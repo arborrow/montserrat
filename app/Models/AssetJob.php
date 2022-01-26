@@ -15,8 +15,11 @@ class AssetJob extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'asset_job';
-
-    protected $dates = ['start_date', 'end_date', 'scheduled_date'];
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+        'scheduled_date' => 'datetime',
+    ];
 
     // relations
     public function asset_task()
