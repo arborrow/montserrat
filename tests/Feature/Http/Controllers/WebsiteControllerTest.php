@@ -107,7 +107,7 @@ class WebsiteControllerTest extends TestCase
         $contact = \App\Models\Contact::factory()->create();
         $asset = \App\Models\Asset::factory()->create();
 
-        $website_url = $this->faker->url;
+        $website_url = $this->faker->url();
         $website_type = $this->faker->randomElement(config('polanco.website_types'));
         $website_description = $this->faker->sentence(7, true);
 
@@ -142,7 +142,7 @@ class WebsiteControllerTest extends TestCase
         $website_type = $this->faker->randomElement(config('polanco.website_types'));
 
         $original_website_description = $website->description;
-        $new_website_description = 'New '.$this->faker->sentence;
+        $new_website_description = 'New '.$this->faker->sentence();
 
         $response = $this->actingAs($user)->put(route('website.update', [$website]), [
             'id' => $website->id,

@@ -24,7 +24,7 @@ class CountryFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
+            'name' => $this->faker->name(),
             'iso_code' => $this->faker->word(),
             'country_code' => $this->faker->word(),
             'address_format_id' => $this->faker->randomNumber(),

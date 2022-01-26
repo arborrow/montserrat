@@ -24,7 +24,7 @@ class PermissionFactory extends Factory
     {
         $actions = ['show', 'create', 'update', 'delete', 'manage'];
         $action = $actions[array_rand($actions)];
-        $model = $this->faker->word;
+        $model = $this->faker->word();
 
         return [
             'name' => $action.'-'.$model.$this->faker->randomNumber(6),

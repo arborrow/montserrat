@@ -20,8 +20,8 @@ class SearchControllerTest extends TestCase
     public function autocomplete_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-contact');
-        $lastname = $this->faker->lastName;
-        $display_name = $this->faker->firstName.' '.$lastname;
+        $lastname = $this->faker->lastName();
+        $display_name = $this->faker->firstName().' '.$lastname;
 
         $person = \App\Models\Contact::factory()->create([
             'display_name' => $display_name,

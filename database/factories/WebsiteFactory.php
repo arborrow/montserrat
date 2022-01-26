@@ -29,7 +29,7 @@ class WebsiteFactory extends Factory
             'asset_id' => function () {
                 return \App\Models\Asset::factory()->create()->id;
             },
-            'url' => $this->faker->url,
+            'url' => $this->faker->url(),
             'website_type' => $this->faker->randomElement(config('polanco.website_types')),
             'description' => $this->faker->sentence(),
         ];

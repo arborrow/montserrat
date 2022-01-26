@@ -305,7 +305,7 @@ class RetreatControllerTest extends TestCase
         $registrations = [];
         $notes = [];
         $registrations[$registration->id] = $room->id;
-        $notes[$registration->id] = $this->faker->sentence;
+        $notes[$registration->id] = $this->faker->sentence();
 
         $response = $this->actingAs($user)->post(route('retreat.room_update'), [
             'registrations' => $registrations,
@@ -413,15 +413,15 @@ class RetreatControllerTest extends TestCase
     public function store_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('create-retreat');
-        $idnumber = $this->faker->numberBetween(11111111, 99999999).$this->faker->lastName;
+        $idnumber = $this->faker->numberBetween(11111111, 99999999).$this->faker->lastName();
         $response = $this->actingAs($user)->post(route('retreat.store'), [
             'idnumber' => $idnumber,
             'start_date' => $this->faker->dateTimeBetween('+6 days', '+10 days'),
             'end_date' => $this->faker->dateTimeBetween('+11 days', '+15 days'),
-            'title' => $this->faker->catchPhrase,
+            'title' => $this->faker->catchPhrase(),
             'silent' => $this->faker->boolean(90),
             'is_active' => '1',
-            'description' => $this->faker->paragraph,
+            'description' => $this->faker->paragraph(),
             'event_type_id' => $this->faker->numberBetween(1, 14),
             'innkeeper_id' => 0,
             'assistant_id' => 0,
@@ -454,8 +454,8 @@ class RetreatControllerTest extends TestCase
         $retreat = \App\Models\Retreat::factory()->create();
         $original_idnumber = $retreat->idnumber;
         $original_title = $retreat->title;
-        $new_idnumber = $this->faker->numberBetween(11111111, 99999999).$this->faker->lastName;
-        $new_title = $this->faker->catchPhrase;
+        $new_idnumber = $this->faker->numberBetween(11111111, 99999999).$this->faker->lastName();
+        $new_title = $this->faker->catchPhrase();
         $response = $this->actingAs($user)->put(route('retreat.update', [$retreat]), [
             'id' => $retreat->id,
             'idnumber' => $new_idnumber,
@@ -466,7 +466,7 @@ class RetreatControllerTest extends TestCase
             'assistant_id' => '0',
             'silent' => $this->faker->boolean(90),
             'is_active' => '1',
-            'description' => $this->faker->paragraph,
+            'description' => $this->faker->paragraph(),
             'event_type_id' => $this->faker->numberBetween(1, 14),
         ]);
         $retreat->refresh();

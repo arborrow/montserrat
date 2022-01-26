@@ -281,15 +281,15 @@ class RelationshipTypeControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('create-relationshiptype');
 
-        $name_a_b = $this->faker->company;
-        $name_b_a = $this->faker->jobTitle;
-        $description = $this->faker->catchPhrase;
+        $name_a_b = $this->faker->company();
+        $name_b_a = $this->faker->jobTitle();
+        $description = $this->faker->catchPhrase();
 
         $response = $this->actingAs($user)->post(route('relationship_type.store'), [
             'name_a_b' => $name_a_b,
             'name_b_a' => $name_b_a,
-            'label_a_b' => 'has a '.$this->faker->word.' of ',
-            'label_b_a' => $this->faker->word.' for ',
+            'label_a_b' => 'has a '.$this->faker->word().' of ',
+            'label_b_a' => $this->faker->word().' for ',
             'description' => $description,
             'contact_type_a' => array_rand(array_flip(['Individual', 'Organization', 'Household'])),
             'contact_type_b' => array_rand(array_flip(['Individual', 'Organization', 'Household'])),
@@ -330,16 +330,16 @@ class RelationshipTypeControllerTest extends TestCase
 
         $relationship_type = \App\Models\RelationshipType::factory()->create();
         $original_description = $relationship_type->description;
-        $new_name_a_b = $this->faker->company;
-        $new_name_b_a = $this->faker->jobTitle;
-        $new_description = $this->faker->catchPhrase;
+        $new_name_a_b = $this->faker->company();
+        $new_name_b_a = $this->faker->jobTitle();
+        $new_description = $this->faker->catchPhrase();
 
         $response = $this->actingAs($user)->put(route('relationship_type.update', [$relationship_type]), [
             'id' => $relationship_type->id,
             'name_a_b' => $new_name_a_b,
             'name_b_a' => $new_name_b_a,
-            'label_a_b' => 'has a '.$this->faker->word.' of ',
-            'label_b_a' => $this->faker->word.' for ',
+            'label_a_b' => 'has a '.$this->faker->word().' of ',
+            'label_b_a' => $this->faker->word().' for ',
             'description' => $new_description,
 
         ]);

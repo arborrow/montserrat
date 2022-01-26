@@ -25,7 +25,7 @@ class OrganizationFactory extends Factory
     public function definition()
     {
         $subcontact_type = $this->faker->numberBetween(9, 11);
-        $organizaton_name = $this->faker->company;
+        $organizaton_name = $this->faker->company();
 
         return [
             'contact_type' => config('polanco.contact_type.organization'),

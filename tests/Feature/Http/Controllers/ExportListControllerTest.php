@@ -101,7 +101,7 @@ class ExportListControllerTest extends TestCase
 
         $user = $this->createUserWithPermission('create-export-list');
 
-        $export_list_label = $this->faker->word;
+        $export_list_label = $this->faker->word();
         $export_list_title = 'Title of '.$export_list_label;
         $export_list_type = $this->faker->randomElement(config('polanco.export_list_types'));
 

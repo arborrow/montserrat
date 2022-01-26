@@ -22,7 +22,7 @@ class SnippetFactory extends Factory
     {
         return [
             'title' => $this->faker->word(),
-            'label' => $this->faker->jobTitle,
+            'label' => $this->faker->jobTitle(),
             'locale' => $this->faker->randomElement(\App\Models\Language::whereIsActive(1)->orderBy('label')->pluck('name', 'name')),
             'snippet' => $this->faker->sentence(),
         ];

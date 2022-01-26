@@ -111,8 +111,8 @@ class RoleControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('create-role');
 
-        $new_name = $this->faker->jobTitle;
-        $new_description = $this->faker->sentence;
+        $new_name = $this->faker->jobTitle();
+        $new_description = $this->faker->sentence();
 
         $response = $this->actingAs($user)->post(route('role.store'), [
             'name' => $new_name,
@@ -138,8 +138,8 @@ class RoleControllerTest extends TestCase
         $role = \App\Models\Role::factory()->create();
 
         $original_description = $role->description;
-        $new_name = $this->faker->jobTitle;
-        $new_description = $this->faker->sentence;
+        $new_name = $this->faker->jobTitle();
+        $new_description = $this->faker->sentence();
 
         $response = $this->actingAs($user)->put(route('role.update', [$role]), [
             'id'  => $role->id,

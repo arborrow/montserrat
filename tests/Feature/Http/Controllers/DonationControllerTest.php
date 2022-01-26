@@ -257,7 +257,7 @@ class DonationControllerTest extends TestCase
             $donations[$participant->id]['paid'] = $this->faker->numberBetween(100, 200);
             $donations[$participant->id]['method'] = 'Credit Card';
             $donations[$participant->id]['idnumber'] = $this->faker->randomNumber(6);
-            $donations[$participant->id]['terms'] = $this->faker->sentence;
+            $donations[$participant->id]['terms'] = $this->faker->sentence();
         }
         $random_participant = $participants->random();
 
@@ -350,13 +350,13 @@ class DonationControllerTest extends TestCase
             'donation_description' => $description->id,
             'donor_id' => $new_contact->id,
             'event_id' => $event->id,
-            'donation_date' => $this->faker->dateTime,
+            'donation_date' => $this->faker->dateTime(),
             'start_date' => $start_date,
             'end_date' => $end_date,
             'donation_amount' => $this->faker->randomFloat(2, 0, 100000),
-            'notes1' => $this->faker->text,
-            'notes' => $this->faker->text,
-            'terms' => $this->faker->text,
+            'notes1' => $this->faker->text(),
+            'notes' => $this->faker->text(),
+            'terms' => $this->faker->text(),
             'donation_install' => $this->faker->randomFloat(2, 0, 100000),
         ]);
 

@@ -107,7 +107,7 @@ class DepartmentControllerTest extends TestCase
     {   // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-department');
 
-        $department_name = $this->faker->word;
+        $department_name = $this->faker->word();
         $department_description = $this->faker->sentence(7, true);
 
         $response = $this->actingAs($user)->post(route('department.store'), [
@@ -134,7 +134,7 @@ class DepartmentControllerTest extends TestCase
 
         $department = \App\Models\Department::factory()->create();
 
-        $department_name = $this->faker->word;
+        $department_name = $this->faker->word();
         $department_description = $this->faker->sentence(7, true);
 
         $original_department_name = $department->name;

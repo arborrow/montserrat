@@ -23,7 +23,7 @@ class GroupFactory extends Factory
      */
     public function definition()
     {
-        $group_name = ucfirst(implode(' ', $this->faker->words));
+        $group_name = ucfirst(implode(' ', $this->faker->words()));
 
         return [
             'name' => $group_name,

@@ -32,7 +32,7 @@ class AttachmentFactory extends Factory
             'upload_date' => $this->faker->dateTime(),
             'remember_token' => Str::random(10),
             'entity' => null,
-            'entity_id' => $this->faker->randomDigit,
+            'entity_id' => $this->faker->randomDigit(),
         ];
     }
 }

@@ -148,7 +148,7 @@ class AssetTaskControllerTest extends TestCase
 
         $asset = \App\Models\Asset::factory()->create();
 
-        $title = $this->faker->word;
+        $title = $this->faker->word();
         $description = $this->faker->sentence(7, true);
 
         // required by StoreAssetTaskRequest
@@ -188,7 +188,7 @@ class AssetTaskControllerTest extends TestCase
 
         $asset_task = \App\Models\AssetTask::factory()->create();
 
-        $title = $this->faker->word;
+        $title = $this->faker->word();
         $original_title = $asset_task->title;
         $updated_title = 'Updated '.$title;
 

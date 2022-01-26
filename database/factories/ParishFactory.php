@@ -23,7 +23,7 @@ class ParishFactory extends Factory
      */
     public function definition()
     {
-        $name = $this->faker->firstName;
+        $name = $this->faker->firstName();
         $parish_name = 'St. '.$name.' of '.$this->faker->city().' Parish';
 
         return [

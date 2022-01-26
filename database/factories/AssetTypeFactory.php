@@ -23,7 +23,7 @@ class AssetTypeFactory extends Factory
      */
     public function definition()
     {
-        $label = $this->faker->word;
+        $label = $this->faker->word();
 
         return [
             'label' => $label,

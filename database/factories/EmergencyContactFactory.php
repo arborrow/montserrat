@@ -27,7 +27,7 @@ class EmergencyContactFactory extends Factory
             'contact_id' => function () {
                 return \App\Models\Contact::factory()->create()->id;
             },
-            'name' => $this->faker->name,
+            'name' => $this->faker->name(),
             'relationship' => $this->faker->word(),
             'phone' => '9403216010,'.$this->faker->numberBetween(111, 999),
             'phone_alternate' => '9403216030,'.$this->faker->numberBetween(111, 999),

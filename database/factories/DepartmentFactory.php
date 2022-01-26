@@ -20,7 +20,7 @@ class DepartmentFactory extends Factory
      */
     public function definition()
     {
-        $name = $this->faker->lastname.' of '.$this->faker->city();
+        $name = $this->faker->lastName().' of '.$this->faker->city();
 
         return [
             'name' => $name,

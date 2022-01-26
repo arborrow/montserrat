@@ -294,32 +294,32 @@ class PersonControllerTest extends TestCase
         $url_main = \App\Models\Website::factory()->create([
             'contact_id' => $person->id,
             'website_type' => 'Main',
-            'url' => $this->faker->url,
+            'url' => $this->faker->url(),
         ]);
         $url_work = \App\Models\Website::factory()->create([
             'contact_id' => $person->id,
             'website_type' => 'Work',
-            'url' => $this->faker->url,
+            'url' => $this->faker->url(),
         ]);
         $url_facebook = \App\Models\Website::factory()->create([
             'contact_id' => $person->id,
             'website_type' => 'Facebook',
-            'url' => 'https://facebook.com/'.$this->faker->slug,
+            'url' => 'https://facebook.com/'.$this->faker->slug(),
         ]);
         $url_instagram = \App\Models\Website::factory()->create([
             'contact_id' => $person->id,
             'website_type' => 'Instagram',
-            'url' => 'https://instagram.com/'.$this->faker->slug,
+            'url' => 'https://instagram.com/'.$this->faker->slug(),
         ]);
         $url_linkedin = \App\Models\Website::factory()->create([
             'contact_id' => $person->id,
             'website_type' => 'LinkedIn',
-            'url' => 'https://linkedin.com/'.$this->faker->slug,
+            'url' => 'https://linkedin.com/'.$this->faker->slug(),
         ]);
         $url_twitter = \App\Models\Website::factory()->create([
             'contact_id' => $person->id,
             'website_type' => 'Twitter',
-            'url' => 'https://twitter.com/'.$this->faker->slug,
+            'url' => 'https://twitter.com/'.$this->faker->slug(),
         ]);
         $note_health = \App\Models\Note::factory()->create([
             'entity_table' => 'contact',
@@ -785,8 +785,8 @@ class PersonControllerTest extends TestCase
 
         $prefix = \App\Models\Prefix::get()->random();
         $suffix = \App\Models\Suffix::get()->random();
-        $first_name = $this->faker->firstName;
-        $last_name = $this->faker->lastName;
+        $first_name = $this->faker->firstName();
+        $last_name = $this->faker->lastName();
         $ethnicity = \App\Models\Ethnicity::get()->random();
         $religion = \App\Models\Religion::whereIsActive(1)->get()->random();
         $occupation = \App\Models\Ppd_occupation::get()->random();
@@ -797,23 +797,23 @@ class PersonControllerTest extends TestCase
             '$display_name' => $first_name.' '.$last_name,
             'prefix_id' => $prefix->id,
             'first_name' => $first_name,
-            'middle_name' => $this->faker->firstName,
+            'middle_name' => $this->faker->firstName(),
             'last_name' => $last_name,
             'suffix_id' => $suffix->id,
-            'nick_name' => $this->faker->name,
+            'nick_name' => $this->faker->name(),
             'contact_type' => config('polanco.contact_type.individual'),
             'subcontact_type' => null,
             'gender_id' => $this->faker->numberBetween(1, 2),
-            'birth_date' => $this->faker->dateTime,
+            'birth_date' => $this->faker->dateTime(),
             '$ethnicity_id' => $ethnicity->id,
             'religion_id' => $religion->id,
             'occupation_id' => $occupation->id,
             'preferred_language' => $preferred_language->name,
-            'do_not_email' => $this->faker->boolean,
-            'do_not_phone' => $this->faker->boolean,
-            'do_not_mail' => $this->faker->boolean,
-            'do_not_sms' => $this->faker->boolean,
-            'do_not_trade' => $this->faker->boolean,
+            'do_not_email' => $this->faker->boolean(),
+            'do_not_phone' => $this->faker->boolean(),
+            'do_not_mail' => $this->faker->boolean(),
+            'do_not_sms' => $this->faker->boolean(),
+            'do_not_trade' => $this->faker->boolean(),
             'primary_address_location_id' => config('polanco.location_type.home'),
             'primary_email_location_id' => config('polanco.location_type.work'),
             'primary_phone_location_id' => config('polanco.location_type.other').':Phone',
@@ -863,7 +863,7 @@ class PersonControllerTest extends TestCase
             'subcontact_type' => null,
         ]);
         $original_sort_name = $person->sort_name;
-        $new_sort_name = $this->faker->lastName.', '.$this->faker->firstName;
+        $new_sort_name = $this->faker->lastName().', '.$this->faker->firstName();
 
         $response = $this->actingAs($user)->put(route('person.update', [$person]), [
             'contact_type' => config('polanco.contact_type.individual'),

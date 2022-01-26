@@ -83,37 +83,37 @@ class DioceseControllerTest extends TestCase
         $url_main = \App\Models\Website::factory()->create([
             'contact_id' => $diocese->id,
             'website_type' => 'Main',
-            'url' => $this->faker->url,
+            'url' => $this->faker->url(),
         ]);
         $url_work = \App\Models\Website::factory()->create([
             'contact_id' => $diocese->id,
             'website_type' => 'Work',
-            'url' => $this->faker->url,
+            'url' => $this->faker->url(),
         ]);
         $url_facebook = \App\Models\Website::factory()->create([
             'contact_id' => $diocese->id,
             'website_type' => 'Facebook',
-            'url' => 'https://facebook.com/'.$this->faker->slug,
+            'url' => 'https://facebook.com/'.$this->faker->slug(),
         ]);
         $url_google = \App\Models\Website::factory()->create([
             'contact_id' => $diocese->id,
             'website_type' => 'Google',
-            'url' => 'https://google.com/'.$this->faker->slug,
+            'url' => 'https://google.com/'.$this->faker->slug(),
         ]);
         $url_instagram = \App\Models\Website::factory()->create([
             'contact_id' => $diocese->id,
             'website_type' => 'Instagram',
-            'url' => 'https://instagram.com/'.$this->faker->slug,
+            'url' => 'https://instagram.com/'.$this->faker->slug(),
         ]);
         $url_linkedin = \App\Models\Website::factory()->create([
             'contact_id' => $diocese->id,
             'website_type' => 'LinkedIn',
-            'url' => 'https://linkedin.com/'.$this->faker->slug,
+            'url' => 'https://linkedin.com/'.$this->faker->slug(),
         ]);
         $url_twitter = \App\Models\Website::factory()->create([
             'contact_id' => $diocese->id,
             'website_type' => 'Twitter',
-            'url' => 'https://twitter.com/'.$this->faker->slug,
+            'url' => 'https://twitter.com/'.$this->faker->slug(),
         ]);
 
         $response = $this->actingAs($user)->get(route('diocese.edit', [$diocese]));
@@ -194,7 +194,7 @@ class DioceseControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('create-contact');
 
-        $city_name = $this->faker->city;
+        $city_name = $this->faker->city();
         $org_name = 'New Diocese of '.$city_name;
 
         $response = $this->actingAs($user)->post(route('diocese.store'), [
@@ -239,7 +239,7 @@ class DioceseControllerTest extends TestCase
         $user = $this->createUserWithPermission('update-contact');
         $diocese = \App\Models\Diocese::factory()->create();
         $sort_name = $diocese->sort_name;
-        $city_name = $this->faker->city;
+        $city_name = $this->faker->city();
         $org_name = 'Renewed Diocese of '.$city_name;
         $diocese_note = $city_name.' Diocesan note updated';
 

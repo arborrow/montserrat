@@ -24,7 +24,7 @@ class ContactTypeFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
+            'name' => $this->faker->name(),
             'label' => $this->faker->word(),
             'description' => $this->faker->text(),
             'image_URL' => $this->faker->word(),

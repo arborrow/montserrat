@@ -105,7 +105,7 @@ class UomControllerTest extends TestCase
 
         $user = $this->createUserWithPermission('create-uom');
 
-        $uom_unit_name = $this->faker->word;
+        $uom_unit_name = $this->faker->word();
         $uom_description = $this->faker->sentence(7, true);
         $uom_is_active = $this->faker->boolean();
         $uom_type = $this->faker->randomElement(config('polanco.uom_types'));

@@ -131,8 +131,8 @@ class SnippetControllerTest extends TestCase
     {   // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-snippet');
 
-        $title = $this->faker->word;
-        $label = $this->faker->word;
+        $title = $this->faker->word();
+        $label = $this->faker->word();
         $snippet = $this->faker->sentence(7, true);
 
         $response = $this->actingAs($user)->post(route('snippet.store'), [
@@ -162,9 +162,9 @@ class SnippetControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-snippet');
 
         $response = $this->actingAs($user)->post(route('snippet.snippet_test'), [
-            'title' => $this->faker->lastName,
-            'language' => $this->faker->locale,
-            'email' => $this->faker->safeEmail,
+            'title' => $this->faker->lastName(),
+            'language' => $this->faker->locale(),
+            'email' => $this->faker->safeEmail(),
         ]);
 
         $response->assertRedirect(action('SnippetController@index'));

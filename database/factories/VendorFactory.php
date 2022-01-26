@@ -23,7 +23,7 @@ class VendorFactory extends Factory
      */
     public function definition()
     {
-        $vendor_name = $this->faker->company;
+        $vendor_name = $this->faker->company();
 
         return [
             'contact_type' => config('polanco.contact_type.organization'),

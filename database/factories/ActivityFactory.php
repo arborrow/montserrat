@@ -31,7 +31,7 @@ class ActivityFactory extends Factory
             'duration' => $this->faker->randomNumber(),
             'location' => $this->faker->word(),
             'phone_id' => $this->faker->randomNumber(),
-            'phone_number' => $this->faker->phoneNumber,
+            'phone_number' => $this->faker->phoneNumber(),
             'details' => $this->faker->text(),
             'status_id' => $this->faker->randomNumber(),
             'priority_id' => $this->faker->randomNumber(),

@@ -84,37 +84,37 @@ class ParishControllerTest extends TestCase
         $url_main = \App\Models\Website::factory()->create([
             'contact_id' => $parish->id,
             'website_type' => 'Main',
-            'url' => $this->faker->url,
+            'url' => $this->faker->url(),
         ]);
         $url_work = \App\Models\Website::factory()->create([
             'contact_id' => $parish->id,
             'website_type' => 'Work',
-            'url' => $this->faker->url,
+            'url' => $this->faker->url(),
         ]);
         $url_facebook = \App\Models\Website::factory()->create([
             'contact_id' => $parish->id,
             'website_type' => 'Facebook',
-            'url' => 'https://facebook.com/'.$this->faker->slug,
+            'url' => 'https://facebook.com/'.$this->faker->slug(),
         ]);
         $url_google = \App\Models\Website::factory()->create([
             'contact_id' => $parish->id,
             'website_type' => 'Google',
-            'url' => 'https://google.com/'.$this->faker->slug,
+            'url' => 'https://google.com/'.$this->faker->slug(),
         ]);
         $url_instagram = \App\Models\Website::factory()->create([
             'contact_id' => $parish->id,
             'website_type' => 'Instagram',
-            'url' => 'https://instagram.com/'.$this->faker->slug,
+            'url' => 'https://instagram.com/'.$this->faker->slug(),
         ]);
         $url_linkedin = \App\Models\Website::factory()->create([
             'contact_id' => $parish->id,
             'website_type' => 'LinkedIn',
-            'url' => 'https://linkedin.com/'.$this->faker->slug,
+            'url' => 'https://linkedin.com/'.$this->faker->slug(),
         ]);
         $url_twitter = \App\Models\Website::factory()->create([
             'contact_id' => $parish->id,
             'website_type' => 'Twitter',
-            'url' => 'https://twitter.com/'.$this->faker->slug,
+            'url' => 'https://twitter.com/'.$this->faker->slug(),
         ]);
 
         $response = $this->actingAs($user)->get(route('parish.edit', [$parish]));
@@ -225,7 +225,7 @@ class ParishControllerTest extends TestCase
     public function store_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('create-contact');
-        $parish_name = 'St. '.$this->faker->firstName.' Parish';
+        $parish_name = 'St. '.$this->faker->firstName().' Parish';
 
         $response = $this->actingAs($user)->post(route('parish.store'), [
             'organization_name' => $parish_name,
@@ -266,7 +266,7 @@ class ParishControllerTest extends TestCase
         $parish = \App\Models\Parish::factory()->create();
 
         $original_sort_name = $parish->sort_name;
-        $new_parish_name = 'St. '.$this->faker->firstName.' Parish of the Renewal';
+        $new_parish_name = 'St. '.$this->faker->firstName().' Parish of the Renewal';
 
         $response = $this->actingAs($user)->put(route('parish.update', [$parish]), [
             'sort_name' => $new_parish_name,

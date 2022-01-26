@@ -26,7 +26,7 @@ class ActivityTypeFactory extends Factory
         return [
             'label' => $this->faker->word(),
             'value' => $this->faker->word(),
-            'name' => $this->faker->name,
+            'name' => $this->faker->name(),
             'is_active' => $this->faker->boolean(),
             'is_default' => $this->faker->boolean(),
             'weight' => $this->faker->randomNumber(),

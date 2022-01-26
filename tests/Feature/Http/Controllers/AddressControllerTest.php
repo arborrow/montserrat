@@ -121,17 +121,17 @@ class AddressControllerTest extends TestCase
         $contact = \App\Models\Contact::factory()->create();
         $random_location_type = \App\Models\LocationType::get()->random();
         $random_state = \App\Models\StateProvince::whereCountryId(config('polanco.country_id_usa'))->get()->random();
-        $random_street_address = $this->faker->streetAddress;
+        $random_street_address = $this->faker->streetAddress();
 
         $response = $this->actingAs($user)->post(route('address.store'), [
             'contact_id' => $contact->id,
             'location_type_id' => $random_location_type->id,
-            'is_primary' => $this->faker->boolean,
+            'is_primary' => $this->faker->boolean(),
             'street_address' => $random_street_address,
-            'supplemental_address_1' => $this->faker->streetAddress,
-            'city' => $this->faker->city,
+            'supplemental_address_1' => $this->faker->streetAddress(),
+            'city' => $this->faker->city(),
             'state_province_id' => $random_state->id,
-            'postal_code' => $this->faker->postcode,
+            'postal_code' => $this->faker->postcode(),
             'country_id' => config('polanco.country_id_usa'),
         ]);
 
@@ -168,7 +168,7 @@ class AddressControllerTest extends TestCase
         $response = $this->actingAs($user)->put(route('address.update', [$address]), [
             'contact_id' => $address->contact_id,
             'location_type_id' => $address->location_type_id,
-            'street_address' => $this->faker->streetAddress,
+            'street_address' => $this->faker->streetAddress(),
         ]);
 
         $updated_address = \App\Models\Address::find($address->id);

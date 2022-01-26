@@ -116,7 +116,7 @@ class AuditControllerTest extends TestCase
         $user = $this->createUserWithPermission('create-audit');
 
         $response = $this->actingAs($user)->post(route('audit.store'), [
-            'ip_address' => $this->faker->ipv4,
+            'ip_address' => $this->faker->ipv4(),
         ]);
 
         $response->assertRedirect(action('AuditController@index'));
@@ -132,7 +132,7 @@ class AuditControllerTest extends TestCase
         $audit = \App\Models\Audit::factory()->create();
 
         $response = $this->actingAs($user)->put(route('audit.update', [$audit]), [
-            'ip_address' => $this->faker->ipv4,
+            'ip_address' => $this->faker->ipv4(),
         ]);
 
         $response->assertRedirect(action('AuditController@index'));

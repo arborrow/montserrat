@@ -23,7 +23,7 @@ class ExportListFactory extends Factory
      */
     public function definition()
     {
-        $label = $this->faker->word;
+        $label = $this->faker->word();
         $type = $this->faker->randomElement(config('polanco.export_list_types'));
         $start_date = Carbon::createFromTimestamp($this->faker->dateTimeBetween($startDate = '-60 days', $endDate = '+60 days')->getTimeStamp());
         $end_date = Carbon::createFromFormat('Y-m-d H:i:s', $start_date)->addDays($this->faker->numberBetween(1, 5));

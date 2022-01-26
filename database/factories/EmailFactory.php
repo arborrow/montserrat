@@ -30,7 +30,7 @@ class EmailFactory extends Factory
             'location_type_id' => function () {
                 return \App\Models\LocationType::factory()->create()->id;
             },
-            'email' => $this->faker->safeEmail,
+            'email' => $this->faker->safeEmail(),
             'is_primary' => $this->faker->boolean(),
             'is_billing' => $this->faker->boolean(),
             'on_hold' => $this->faker->boolean(),
