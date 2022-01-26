@@ -37,7 +37,7 @@ class RelationshipController extends Controller
         $this->authorize('create-relationship');
         flash('Relationships cannot be directly created as they are managed via contacts')->error();
 
-        return Redirect::action([\App\Http\Controllers\RelationshipController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -52,7 +52,7 @@ class RelationshipController extends Controller
         $this->authorize('create-relationship');
         flash('Relationships cannot be directly stored as they are managed via contacts')->error();
 
-        return Redirect::action([\App\Http\Controllers\RelationshipController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -80,7 +80,7 @@ class RelationshipController extends Controller
         $this->authorize('update-relationship');
         flash('Relationships cannot be directly edited as they are managed via contacts')->error();
 
-        return Redirect::action([\App\Http\Controllers\RelationshipController::class, 'show'], $id);
+        return Redirect::action([self::class, 'show'], $id);
     }
 
     /**
@@ -95,7 +95,7 @@ class RelationshipController extends Controller
         $this->authorize('update-relationship');
         flash('Relationships cannot be directly updated as they are managed via contacts')->error();
 
-        return Redirect::action([\App\Http\Controllers\RelationshipController::class, 'show'], $id);
+        return Redirect::action([self::class, 'show'], $id);
     }
 
     /**

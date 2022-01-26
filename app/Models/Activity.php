@@ -14,6 +14,7 @@ class Activity extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'activity';
+
     protected $casts = [
         'activity_date_time' => 'datetime',
     ];

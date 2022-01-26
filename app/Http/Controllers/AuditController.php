@@ -46,7 +46,7 @@ class AuditController extends Controller
         $this->authorize('create-audit');
         flash('Manually creating an audit record is not allowed')->warning();
 
-        return Redirect::action([\App\Http\Controllers\AuditController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -61,7 +61,7 @@ class AuditController extends Controller
         $this->authorize('create-audit');
         flash('Manually storing an audit record is not allowed')->warning();
 
-        return Redirect::action([\App\Http\Controllers\AuditController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -93,7 +93,7 @@ class AuditController extends Controller
         $this->authorize('update-audit');
         flash('Manually editing an audit record is not allowed')->warning();
 
-        return Redirect::action([\App\Http\Controllers\AuditController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -109,7 +109,7 @@ class AuditController extends Controller
         $this->authorize('update-audit');
         flash('Manually updating an audit record is not allowed')->warning();
 
-        return Redirect::action([\App\Http\Controllers\AuditController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -124,6 +124,6 @@ class AuditController extends Controller
         $this->authorize('delete-audit');
         flash('Manually destroying an audit record is not allowed')->warning();
 
-        return Redirect::action([\App\Http\Controllers\AuditController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 }

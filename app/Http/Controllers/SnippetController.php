@@ -77,7 +77,7 @@ class SnippetController extends Controller
 
         flash('Snippet: <a href="'.url('/admin/snippet/'.$snippet->id).'">'.$snippet->title.' - '.$snippet->label.'</a> added')->success();
 
-        return Redirect::action([\App\Http\Controllers\SnippetController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -133,7 +133,7 @@ class SnippetController extends Controller
 
         flash('Snippet: <a href="'.url('/admin/snippet/'.$snippet->id).'">'.$snippet->title.' - '.$snippet->label.'</a> updated')->success();
 
-        return Redirect::action([\App\Http\Controllers\SnippetController::class, 'show'], $snippet->id);
+        return Redirect::action([self::class, 'show'], $snippet->id);
     }
 
     /**
@@ -151,7 +151,7 @@ class SnippetController extends Controller
 
         flash('Snippet: '.$snippet->title.' - '.$snippet->label.' deleted')->warning()->important();
 
-        return Redirect::action([\App\Http\Controllers\SnippetController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 
     public function snippet_test(SnippetTestRequest $request)
@@ -244,7 +244,7 @@ class SnippetController extends Controller
                 break;
         }
 
-        return Redirect::action([\App\Http\Controllers\SnippetController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 
     /**

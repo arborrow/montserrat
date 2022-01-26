@@ -18,7 +18,6 @@ class Donation extends Model implements Auditable
 
     protected $fillable = ['donation_id', 'donor_id', 'donation_description', 'donation_amount', 'payment_description', 'Notes', 'contact_id'];
 
-
     protected $primaryKey = 'donation_id';
 
     protected $appends = ['payments_paid'];
@@ -26,7 +25,7 @@ class Donation extends Model implements Auditable
     protected $casts = [
         'start_date' => 'datetime',
         'end_date' => 'datetime',
-        'donation_date' => 'datetime','donation_amount' => 'decimal:2', 'donation_install' => 'decimal:2'
+        'donation_date' => 'datetime', 'donation_amount' => 'decimal:2', 'donation_install' => 'decimal:2',
     ];
 
     public function generateTags(): array

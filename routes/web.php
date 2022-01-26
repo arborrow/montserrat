@@ -1,26 +1,22 @@
 <?php
 
-use App\Http\Controllers\WebsiteController;
-use App\Http\Controllers\VendorController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\UomController;
-use App\Http\Controllers\GroupController;
-use App\Http\Controllers\DonationTypeController;
-use App\Http\Controllers\DioceseController;
-use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\AssetTypeController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AssetController;
 use App\Http\Controllers\AssetJobController;
 use App\Http\Controllers\AssetTaskController;
+use App\Http\Controllers\AssetTypeController;
 use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\Auth;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\DioceseController;
 use App\Http\Controllers\DonationController;
+use App\Http\Controllers\DonationTypeController;
 use App\Http\Controllers\DonorController;
 use App\Http\Controllers\ExportListController;
 use App\Http\Controllers\GateController;
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\HealthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocationController;
@@ -41,6 +37,10 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SnippetController;
 use App\Http\Controllers\SystemController;
 use App\Http\Controllers\TouchpointController;
+use App\Http\Controllers\UomController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\VendorController;
+use App\Http\Controllers\WebsiteController;
 use Illuminate\Support\Facades\Route;
 
 /*

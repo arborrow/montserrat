@@ -14,6 +14,7 @@ class Registration extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'participant';
+
     protected $casts = [
         'register_date' => 'datetime',
         'registration_confirm_date' => 'datetime',

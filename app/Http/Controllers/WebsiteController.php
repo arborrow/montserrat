@@ -56,7 +56,7 @@ class WebsiteController extends Controller
 
         flash('Website: <a href="'.url('/admin/website/'.$website->id).'">'.$website->url.'</a> added')->success();
 
-        return Redirect::action([\App\Http\Controllers\WebsiteController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -112,7 +112,7 @@ class WebsiteController extends Controller
 
         flash('Website: <a href="'.url('/website/'.$website->id).'">'.$website->url.'</a> updated')->success();
 
-        return Redirect::action([\App\Http\Controllers\WebsiteController::class, 'show'], $website->id);
+        return Redirect::action([self::class, 'show'], $website->id);
     }
 
     /**
@@ -130,6 +130,6 @@ class WebsiteController extends Controller
 
         flash('Website: '.$website->url.' deleted')->warning()->important();
 
-        return Redirect::action([\App\Http\Controllers\WebsiteController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 }

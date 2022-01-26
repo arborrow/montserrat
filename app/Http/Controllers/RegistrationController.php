@@ -242,7 +242,7 @@ class RegistrationController extends Controller
 
         flash('Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a> added')->success();
 
-        return Redirect::action([\App\Http\Controllers\RegistrationController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 
     public function store_group(StoreGroupRegistrationRequest $request)
@@ -432,7 +432,7 @@ class RegistrationController extends Controller
 
         flash('Registration #: '.$registration->id.' deleted')->warning()->important();
 
-        return Redirect::action([\App\Http\Controllers\RegistrationController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 
     public function confirm($id)

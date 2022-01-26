@@ -14,6 +14,7 @@ class ExportList extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'export_list';
+
     protected $casts = [
         'start_date' => 'datetime',
         'end_date' => 'datetime',

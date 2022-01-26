@@ -115,7 +115,7 @@ class DonorController extends Controller
             $donor->save();
         }
 
-        return redirect()->action([\App\Http\Controllers\DonorController::class, 'index']);
+        return redirect()->action([self::class, 'index']);
     }
 
     public function add($donor_id)
@@ -199,6 +199,6 @@ class DonorController extends Controller
             $donor->save();
         }
 
-        return redirect()->action([\App\Http\Controllers\DonorController::class, 'index']);
+        return redirect()->action([self::class, 'index']);
     }
 }

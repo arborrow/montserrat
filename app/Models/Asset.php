@@ -15,6 +15,7 @@ class Asset extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'asset';
+
     protected $casts = [
         'start_date' => 'datetime',
         'end_date' => 'datetime',

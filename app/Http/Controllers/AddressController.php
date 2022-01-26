@@ -74,7 +74,7 @@ class AddressController extends Controller
 
         flash('Address ID#: <a href="'.url('/address/'.$address->id).'">'.$address->id.'</a> added')->success();
 
-        return Redirect::action([\App\Http\Controllers\AddressController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -136,7 +136,7 @@ class AddressController extends Controller
 
         flash('Address ID#: <a href="'.url('/address/'.$address->id).'">'.$address->id.'</a> updated')->success();
 
-        return Redirect::action([\App\Http\Controllers\AddressController::class, 'show'], $address->id);
+        return Redirect::action([self::class, 'show'], $address->id);
     }
 
     /**

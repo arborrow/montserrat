@@ -151,7 +151,7 @@ class VendorController extends Controller
 
         flash('Vendor: <a href="'.url('/vendor/'.$vendor->id).'">'.$vendor->organization_name.'</a> added')->success();
 
-        return Redirect::action([\App\Http\Controllers\VendorController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -342,7 +342,7 @@ class VendorController extends Controller
 
         flash('Vendor: <a href="'.url('/vendor/'.$vendor->id).'">'.$vendor->organization_name.'</a> updated')->success();
 
-        return Redirect::action([\App\Http\Controllers\VendorController::class, 'show'], $vendor->id);
+        return Redirect::action([self::class, 'show'], $vendor->id);
     }
 
     /**
@@ -376,6 +376,6 @@ class VendorController extends Controller
 
         flash('Vendor: '.$vendor->organization_name.' deleted')->warning()->important();
 
-        return Redirect::action([\App\Http\Controllers\VendorController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 }

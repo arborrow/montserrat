@@ -14,6 +14,7 @@ class Attachment extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'file';
+
     protected $casts = [
         'upload_date' => 'datetime',
     ];
