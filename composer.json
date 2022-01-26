@@ -10,45 +10,45 @@
     "require": {
         "php": "^7.3|^8.0",
         "barryvdh/laravel-snappy": "^0.4.7",
-        "consoletvs/charts": "6.*",
-        "doctrine/dbal": "^2.13",
-        "fideloper/proxy": "^4.4",
-        "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^7.0.1",
+        "consoletvs/charts": "^6.5",
+        "doctrine/dbal": "^3.3",
+        "fruitcake/laravel-cors": "^2.0.5",
+        "guzzlehttp/guzzle": "^7.2",
         "h4cc/wkhtmltoimage-amd64": "0.12.x",
         "h4cc/wkhtmltopdf-amd64": "0.12.x",
-        "intervention/image": "^2.5",
-        "jeremykenedy/laravel-logger": "^3.7",
+        "intervention/image": "^2.7",
+        "jeremykenedy/laravel-logger": "^6.0",
         "kriswallsmith/buzz": "^1.1",
         "laracasts/flash": "^3.2",
-        "laravel/framework": "^8.35",
-        "laravel/helpers": "^1.4",
-        "laravel/socialite": "^5.2",
-        "laravel/tinker": "^2.5",
-        "laravel/ui": "^3.2",
+        "laravel/framework": "^9.0",
+        "laravel/helpers": "^1.5",
+        "laravel/socialite": "^5.3",
+        "laravel/tinker": "^2.7",
+        "laravel/ui": "^3.4",
         "laravelcollective/html": "^6.2",
-        "mailgun/mailgun-php": "^3.0",
-        "nyholm/psr7": "^1.2",
+        "mailgun/mailgun-php": "^3.5",
+        "nyholm/psr7": "^1.4",
         "owen-it/laravel-auditing": "^11.0",
-        "php-http/curl-client": "^2.0",
-        "spatie/laravel-google-calendar": "^3.2",
+        "php-http/curl-client": "^2.2",
+        "spatie/laravel-google-calendar": "^3.5",
         "stuyam/laravel-phone-validator": "^1.0",
-        "vinkla/hashids": "^9.1"
+        "vinkla/hashids": "^10.0",
+        "laravel/sanctum": "^2.14"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.5",
-        "brianium/paratest": "^6.1",
-        "facade/ignition": "^2.5",
+        "barryvdh/laravel-debugbar": "dev-master",
+        "brianium/paratest": "^6.4",
         "fakerphp/faker": "^1.9.1",
         "jasonmccreary/laravel-test-assertions": "^2.0",
         "laravel/homestead": "^10.7",
-        "laravel/sail": "^1.11",
-        "mockery/mockery": "^1.4.2",
-        "nunomaduro/collision": "^5.0",
+        "laravel/sail": "^1.13",
+        "mockery/mockery": "^1.4.4",
+        "nunomaduro/collision": "^6.0",
         "orangehill/iseed": "^2.6.2",
-        "phpunit/phpunit": "^9.3.3",
-        "symfony/css-selector": "^4.4",
-        "symfony/dom-crawler": "^5.2"
+        "phpunit/phpunit": "^9.5.10",
+        "symfony/css-selector": "^5.4",
+        "symfony/dom-crawler": "^5.4",
+        "spatie/laravel-ignition": "^1.0"
     },
     "config": {
         "optimize-autoloader": true,
@@ -87,6 +87,9 @@
         ],
         "post-install-cmd": [
             "homestead make"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
         ]
     }
 }
