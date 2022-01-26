@@ -63,7 +63,7 @@ class AssetTaskControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('asset_task.destroy', [$asset_task]));
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('AssetTaskController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AssetTaskController::class, 'index']));
         $this->assertSoftDeleted($asset_task);
     }
 
@@ -169,7 +169,7 @@ class AssetTaskControllerTest extends TestCase
             'frequency_interval' => $this->faker->numberBetween(1, 10),
         ]);
 
-        $response->assertRedirect(action('AssetTaskController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AssetTaskController::class, 'index']));
         $response->assertSessionHas('flash_notification');
 
         $this->assertDatabaseHas('asset_task', [
@@ -203,7 +203,7 @@ class AssetTaskControllerTest extends TestCase
             'priority_id' => $asset_task->priority_id,
         ]);
 
-        $response->assertRedirect(action('AssetTaskController@show', $asset_task->id));
+        $response->assertRedirect(action([\App\Http\Controllers\AssetTaskController::class, 'show'], $asset_task->id));
         $response->assertSessionHas('flash_notification');
 
         $updated = \App\Models\AssetTask::findOrFail($asset_task->id);
@@ -221,7 +221,7 @@ class AssetTaskControllerTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('asset_tasks.schedule_jobs', [$asset_task]));
 
-        $response->assertRedirect(action('AssetTaskController@show', $asset_task->id));
+        $response->assertRedirect(action([\App\Http\Controllers\AssetTaskController::class, 'show'], $asset_task->id));
         $response->assertSessionHas('flash_notification');
     }
 

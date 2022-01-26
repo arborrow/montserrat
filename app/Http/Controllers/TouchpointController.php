@@ -212,7 +212,7 @@ class TouchpointController extends Controller
 
         flash('Touchpoint ID#: <a href="'.url('/touchpoint/'.$touchpoint->id).'">'.$touchpoint->id.'</a> added')->success();
 
-        return Redirect::action('TouchpointController@index');
+        return Redirect::action([\App\Http\Controllers\TouchpointController::class, 'index']);
     }
 
     public function store_group(StoreGroupTouchpointRequest $request)
@@ -233,7 +233,7 @@ class TouchpointController extends Controller
 
         flash('Touchpoint added for members of group: <a href="'.url('/group/'.$group_id).'">'.$group->name.'</a>')->success();
 
-        return Redirect::action('GroupController@show', $group_id);
+        return Redirect::action([\App\Http\Controllers\GroupController::class, 'show'], $group_id);
     }
 
     public function store_retreat(StoreRetreatTouchpointRequest $request)
@@ -254,7 +254,7 @@ class TouchpointController extends Controller
 
         flash('Touchpoint added for registered event participants: <a href="'.url('/retreat/'.$event_id).'">'.$event->title.'</a>')->success();
 
-        return Redirect::action('RetreatController@show', $event_id);
+        return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
     }
 
     public function store_retreat_waitlist(StoreRetreatWaitlistTouchpointRequest $request)
@@ -275,7 +275,7 @@ class TouchpointController extends Controller
 
         flash('Touchpoint added for waitlisted event participants: <a href="'.url('/retreat/'.$event_id).'">'.$event->title.'</a>')->success();
 
-        return Redirect::action('RetreatController@show', $event_id);
+        return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
     }
 
     /**
@@ -347,7 +347,7 @@ class TouchpointController extends Controller
 
         flash('Touchpoint ID#: <a href="'.url('/touchpoint/'.$touchpoint->id).'">'.$touchpoint->id.'</a> updated')->success();
 
-        return Redirect::action('TouchpointController@index');
+        return Redirect::action([\App\Http\Controllers\TouchpointController::class, 'index']);
     }
 
     /**
@@ -364,6 +364,6 @@ class TouchpointController extends Controller
 
         flash('Touchpoint ID#: '.$id.' deleted')->warning()->important();
 
-        return Redirect::action('TouchpointController@index');
+        return Redirect::action([\App\Http\Controllers\TouchpointController::class, 'index']);
     }
 }

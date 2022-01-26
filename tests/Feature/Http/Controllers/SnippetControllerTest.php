@@ -40,7 +40,7 @@ class SnippetControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('snippet.destroy', [$snippet]));
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('SnippetController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\SnippetController::class, 'index']));
         $this->assertSoftDeleted($snippet);
     }
 
@@ -143,7 +143,7 @@ class SnippetControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('SnippetController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\SnippetController::class, 'index']));
 
         $this->assertDatabaseHas('snippets', [
             'title' => $title,
@@ -167,7 +167,7 @@ class SnippetControllerTest extends TestCase
             'email' => $this->faker->safeEmail(),
         ]);
 
-        $response->assertRedirect(action('SnippetController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\SnippetController::class, 'index']));
         $response->assertSessionHas('flash_notification');
     }
 
@@ -235,7 +235,7 @@ class SnippetControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('SnippetController@show', $snippet->id));
+        $response->assertRedirect(action([\App\Http\Controllers\SnippetController::class, 'show'], $snippet->id));
 
         $updated = \App\Models\Snippet::findOrFail($snippet->id);
 

@@ -88,7 +88,7 @@ class RelationshipTypeController extends Controller
 
         flash('Relationship type: <a href="'.url('/relationship_type/'.$relationship_type->id).'">'.$relationship_type->name_a_b.'</a> added')->success();
 
-        return Redirect::action('RelationshipTypeController@index'); //
+        return Redirect::action([\App\Http\Controllers\RelationshipTypeController::class, 'index']); //
     }
 
     /**
@@ -144,7 +144,7 @@ class RelationshipTypeController extends Controller
 
         flash('Relationship type: <a href="'.url('/relationship_type/'.$relationship_type->id).'">'.$relationship_type->name_a_b.'</a> updated')->success();
 
-        return Redirect::action('RelationshipTypeController@index'); //
+        return Redirect::action([\App\Http\Controllers\RelationshipTypeController::class, 'index']); //
     }
 
     /**
@@ -162,7 +162,7 @@ class RelationshipTypeController extends Controller
 
         flash('Relationship type: '.$relationship_type->name_a_b.' deleted')->warning()->important();
 
-        return Redirect::action('RelationshipTypeController@index');
+        return Redirect::action([\App\Http\Controllers\RelationshipTypeController::class, 'index']);
     }
 
     public function add($id, $a = null, $b = null)

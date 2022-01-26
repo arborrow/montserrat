@@ -9,7 +9,7 @@
                         <span class="grey">Group Index</span>
                         @can('create-group')
                             <span class="create">
-                                <a href="{{ action('GroupController@create') }}">
+                                <a href="{{ action([\App\Http\Controllers\GroupController::class, 'create']) }}">
                                    {!! Html::image('images/create.png', 'Add Group',array('title'=>"Add Group",'class' => 'btn btn-primary')) !!}
                                 </a>
                  

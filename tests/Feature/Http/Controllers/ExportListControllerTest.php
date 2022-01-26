@@ -40,7 +40,7 @@ class ExportListControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('export_list.destroy', [$export_list]));
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('ExportListController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\ExportListController::class, 'index']));
         $this->assertSoftDeleted($export_list);
     }
 
@@ -112,7 +112,7 @@ class ExportListControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('ExportListController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\ExportListController::class, 'index']));
 
         $this->assertDatabaseHas('export_list', [
             'title' => $export_list_title,
@@ -141,7 +141,7 @@ class ExportListControllerTest extends TestCase
             'type' => $export_list_type,
         ]);
 
-        $response->assertRedirect(action('ExportListController@show', $export_list->id));
+        $response->assertRedirect(action([\App\Http\Controllers\ExportListController::class, 'show'], $export_list->id));
         $response->assertSessionHas('flash_notification');
 
         $updated = \App\Models\ExportList::findOrFail($export_list->id);

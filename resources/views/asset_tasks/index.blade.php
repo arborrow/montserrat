@@ -7,7 +7,7 @@
             Asset tasks
             @can('create-asset-task')
             <span class="options">
-                <a href={{ action('AssetTaskController@create') }}>
+                <a href={{ action([\App\Http\Controllers\AssetTaskController::class, 'create']) }}>
                     <img src="{{ URL::asset('images/create.png') }}" alt="Add" class="btn btn-light" title="Add">
                 </a>
             </span>

@@ -7,7 +7,7 @@
             <div class="panel-heading">
                 <h1>
                     <span class="grey">{{$assets->total()}} results found</span>
-                    <span class="search"><a href={{ action('AssetController@search') }}>{!! Html::image('images/search.png', 'New search',array('title'=>"New search",'class' => 'btn btn-link')) !!}</a></span></h1>
+                    <span class="search"><a href={{ action([\App\Http\Controllers\AssetController::class, 'search']) }}>{!! Html::image('images/search.png', 'New search',array('title'=>"New search",'class' => 'btn btn-link')) !!}</a></span></h1>
             </div>
             @if ($assets->isEmpty())
             <p>Oops, no known assets with the given search criteria</p>

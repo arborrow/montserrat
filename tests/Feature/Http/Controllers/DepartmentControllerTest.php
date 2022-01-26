@@ -40,7 +40,7 @@ class DepartmentControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('department.destroy', [$department]));
         $response->assertSessionHas('flash_notification');
 
-        $response->assertRedirect(action('DepartmentController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\DepartmentController::class, 'index']));
         $this->assertSoftDeleted($department);
     }
 
@@ -116,7 +116,7 @@ class DepartmentControllerTest extends TestCase
             'description' => $department_description,
         ]);
 
-        $response->assertRedirect(action('DepartmentController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\DepartmentController::class, 'index']));
         $response->assertSessionHas('flash_notification');
 
         $this->assertDatabaseHas('departments', [
@@ -146,7 +146,7 @@ class DepartmentControllerTest extends TestCase
             'description' => $this->faker->sentence(7, true),
         ]);
 
-        $response->assertRedirect(action('DepartmentController@show', $department->id));
+        $response->assertRedirect(action([\App\Http\Controllers\DepartmentController::class, 'show'], $department->id));
         $response->assertSessionHas('flash_notification');
 
         $updated = \App\Models\Department::findOrFail($department->id);

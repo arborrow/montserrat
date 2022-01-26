@@ -204,7 +204,7 @@ class TouchpointControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('touchpoint.destroy', [$touchpoint]));
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('TouchpointController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\TouchpointController::class, 'index']));
         $this->assertSoftDeleted($touchpoint);
     }
 
@@ -317,7 +317,7 @@ class TouchpointControllerTest extends TestCase
             'notes' => $this->faker->paragraph(),
         ]);
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('TouchpointController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\TouchpointController::class, 'index']));
         $this->assertDatabaseHas('touchpoints', [
             'touched_at' => $touched_at,
             'person_id' => $person->id,
@@ -380,7 +380,7 @@ class TouchpointControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('GroupController@show', $group->id));
+        $response->assertRedirect(action([\App\Http\Controllers\GroupController::class, 'show'], $group->id));
         $this->assertDatabaseHas('touchpoints', [
             'touched_at' => $touched_at,
             'person_id' => $random_group_member->contact_id,
@@ -450,7 +450,7 @@ class TouchpointControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RetreatController@show', $retreat->id));
+        $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id));
 
         $this->assertDatabaseHas('touchpoints', [
             'touched_at' => $touched_at,
@@ -521,7 +521,7 @@ class TouchpointControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RetreatController@show', $retreat->id));
+        $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id));
 
         $this->assertDatabaseHas('touchpoints', [
             'touched_at' => $touched_at,
@@ -576,7 +576,7 @@ class TouchpointControllerTest extends TestCase
         $touchpoint->refresh();
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('TouchpointController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\TouchpointController::class, 'index']));
         $this->AssertEquals($person->id, $touchpoint->person_id);
         $this->AssertEquals($staff->id, $touchpoint->staff_id);
         $this->AssertNotEquals($original_staff_id, $touchpoint->staff_id);

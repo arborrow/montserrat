@@ -165,7 +165,7 @@ class DioceseController extends Controller
         }
         flash('Diocese: <a href="'.url('/diocese/'.$diocese->id).'">'.$diocese->organization_name.'</a> added')->success();
 
-        return Redirect::action('DioceseController@index');
+        return Redirect::action([\App\Http\Controllers\DioceseController::class, 'index']);
     }
 
     /**
@@ -402,7 +402,7 @@ class DioceseController extends Controller
 
         flash('Diocese: <a href="'.url('/diocese/'.$diocese->id).'">'.$diocese->organization_name.'</a> updated')->success();
 
-        return Redirect::action('DioceseController@show', $diocese->id);
+        return Redirect::action([\App\Http\Controllers\DioceseController::class, 'show'], $diocese->id);
     }
 
     /**
@@ -436,6 +436,6 @@ class DioceseController extends Controller
 
         flash('Diocese: '.$diocese->organization_name.' deleted')->warning()->important();
 
-        return Redirect::action('DioceseController@index');
+        return Redirect::action([\App\Http\Controllers\DioceseController::class, 'index']);
     }
 }

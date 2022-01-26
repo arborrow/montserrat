@@ -39,7 +39,7 @@ class RoleControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('role.destroy', [$role]));
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RoleController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\RoleController::class, 'index']));
         $this->assertSoftDeleted($role);
     }
 
@@ -121,7 +121,7 @@ class RoleControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RoleController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\RoleController::class, 'index']));
         $this->assertDatabaseHas('roles', [
             'name' => $new_name,
             'display_name' => $new_name,
@@ -151,7 +151,7 @@ class RoleControllerTest extends TestCase
         $updated = \App\Models\Role::findOrFail($role->id);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RoleController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\RoleController::class, 'index']));
         $this->assertEquals($updated->description, $new_description);
         $this->assertNotEquals($updated->description, $original_description);
     }
@@ -170,7 +170,7 @@ class RoleControllerTest extends TestCase
             'permissions' => [$permission->id],
         ]);
 
-        $response->assertRedirect(action('RoleController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\RoleController::class, 'index']));
         $this->assertDatabaseHas('permission_role', [
             'role_id' => $role->id,
             'permission_id' => $permission->id,
@@ -191,7 +191,7 @@ class RoleControllerTest extends TestCase
             'users' => [$user->id],
         ]);
 
-        $response->assertRedirect(action('RoleController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\RoleController::class, 'index']));
         $this->assertDatabaseHas('role_user', [
             'role_id' => $role->id,
             'user_id' => $user->id,

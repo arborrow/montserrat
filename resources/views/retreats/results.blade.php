@@ -7,7 +7,7 @@
                 <div class="panel-heading">
                     <h1>
                     <span class="grey">{{$events->total()}} results found</span>
-                    <span class="search"><a href={{ action('RetreatController@search') }}>{!! Html::image('images/search.png', 'New search',array('title'=>"New search",'class' => 'btn btn-link')) !!}</a></span></h1>
+                    <span class="search"><a href={{ action([\App\Http\Controllers\RetreatController::class, 'search']) }}>{!! Html::image('images/search.png', 'New search',array('title'=>"New search",'class' => 'btn btn-link')) !!}</a></span></h1>
                 </div>
                 @if ($events->isEmpty())
                     <p>Oops, no known events with the given search criteria</p>

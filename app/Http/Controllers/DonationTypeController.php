@@ -56,7 +56,7 @@ class DonationTypeController extends Controller
 
         flash('Donation type: <a href="'.url('/admin/donation_type/'.$donation_type->id).'">'.$donation_type->name.'</a> added')->success();
 
-        return Redirect::action('DonationTypeController@index');
+        return Redirect::action([\App\Http\Controllers\DonationTypeController::class, 'index']);
     }
 
     /**
@@ -110,7 +110,7 @@ class DonationTypeController extends Controller
 
         flash('Donation type: <a href="'.url('/admin/donation_type/'.$donation_type->id).'">'.$donation_type->name.'</a> updated')->success();
 
-        return Redirect::action('DonationTypeController@show', $id);
+        return Redirect::action([\App\Http\Controllers\DonationTypeController::class, 'show'], $id);
     }
 
     /**
@@ -129,6 +129,6 @@ class DonationTypeController extends Controller
 
         flash('Donation type: '.$donation_type->name.' deleted')->warning()->important();
 
-        return Redirect::action('DonationTypeController@index');
+        return Redirect::action([\App\Http\Controllers\DonationTypeController::class, 'index']);
     }
 }

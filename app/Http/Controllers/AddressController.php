@@ -74,7 +74,7 @@ class AddressController extends Controller
 
         flash('Address ID#: <a href="'.url('/address/'.$address->id).'">'.$address->id.'</a> added')->success();
 
-        return Redirect::action('AddressController@index');
+        return Redirect::action([\App\Http\Controllers\AddressController::class, 'index']);
     }
 
     /**
@@ -136,7 +136,7 @@ class AddressController extends Controller
 
         flash('Address ID#: <a href="'.url('/address/'.$address->id).'">'.$address->id.'</a> updated')->success();
 
-        return Redirect::action('AddressController@show', $address->id);
+        return Redirect::action([\App\Http\Controllers\AddressController::class, 'show'], $address->id);
     }
 
     /**
@@ -154,6 +154,6 @@ class AddressController extends Controller
 
         flash('Address ID#: '.$address->id.' deleted')->warning()->important();
 
-        return Redirect::action('PersonController@show', $contact_id);
+        return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $contact_id);
     }
 }

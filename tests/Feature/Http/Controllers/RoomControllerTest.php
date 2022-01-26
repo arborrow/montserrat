@@ -42,7 +42,7 @@ class RoomControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('room.destroy', [$room]));
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RoomController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\RoomController::class, 'index']));
         $this->assertSoftDeleted($room);
     }
 
@@ -204,7 +204,7 @@ class RoomControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RoomController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\RoomController::class, 'index']));
         $this->assertDatabaseHas('rooms', [
             'name' => $name,
             'description' => $description,
@@ -246,7 +246,7 @@ class RoomControllerTest extends TestCase
 
         $room->refresh();
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RoomController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\RoomController::class, 'index']));
         $this->assertEquals($new_description, $room->description);
         $this->assertNotEquals($original_description, $room->description);
     }

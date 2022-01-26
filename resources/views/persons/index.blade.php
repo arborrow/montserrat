@@ -7,7 +7,7 @@
             Persons
             @can('create-contact')
                 <span class="options">
-                    <a href={{ action('PersonController@create') }}>
+                    <a href={{ action([\App\Http\Controllers\PersonController::class, 'create']) }}>
                         {!! Html::image('images/create.png', 'Create Person',array('title'=>"Create Person",'class' => 'btn btn-light')) !!}
                     </a>
                 </span>
@@ -18,77 +18,77 @@
     <div class="col-lg-12 my-2">
         <div class="filters">
             <span>
-                <a href={{ action('PersonController@boardmembers') }}>
+                <a href={{ action([\App\Http\Controllers\PersonController::class, 'boardmembers']) }}>
                     <img src="{{ URL::asset('images/board.png')}}" class="btn btn-info" alt="Board Members" title="Board Members">
                 </a>
             </span>
             <span>
-                <a href={{ action('PersonController@ambassadors') }}>
+                <a href={{ action([\App\Http\Controllers\PersonController::class, 'ambassadors']) }}>
                     <img src="{{ URL::asset('images/ambassador.png') }}" alt="Ambassadors" class="btn btn-info" title="Ambassadors">
                 </a>
             </span>
             <span>
-                <a href={{ action('PersonController@staff') }}>
+                <a href={{ action([\App\Http\Controllers\PersonController::class, 'staff']) }}>
                     <img src="{{ URL::asset('images/employee.png') }}" alt="Employees" class="btn btn-info" title="Employees">
                 </a>
             </span>
             <span>
-                <a href={{ action('PersonController@stewards') }}>
+                <a href={{ action([\App\Http\Controllers\PersonController::class, 'stewards']) }}>
                     <img src="{{ URL::asset('images/steward.png') }}" alt="Stewards" class="btn btn-info" title="Stewards">
                 </a>
             </span>
             <span>
-                <a href={{ action('PersonController@volunteers') }}>
+                <a href={{ action([\App\Http\Controllers\PersonController::class, 'volunteers']) }}>
                     <img src="{{ URL::asset('images/volunteer.png') }}" alt="Volunteers" class="btn btn-info" title="Volunteers">
                 </a>
             </span>
             <span>
-                <a href={{ action('PersonController@directors') }}>
+                <a href={{ action([\App\Http\Controllers\PersonController::class, 'directors']) }}>
                     <img src="{{ URL::asset('images/director.png') }}" alt="Directors" class="btn btn-info" title="Directors">
                 </a>
             </span>
             <span>
-                <a href={{ action('PersonController@innkeepers') }}>
+                <a href={{ action([\App\Http\Controllers\PersonController::class, 'innkeepers']) }}>
                     <img src="{{ URL::asset('images/innkeeper.png') }}" alt="Innkeepers" class="btn btn-info" title="Innkeepers">
                 </a>
             </span>
             <span>
-                <a href={{ action('PersonController@assistants') }}>
+                <a href={{ action([\App\Http\Controllers\PersonController::class, 'assistants']) }}>
                     <img src="{{ URL::asset('images/assistant.png') }}" alt="Assistants" class="btn btn-info" title="Assistants">
                 </a>
             </span>
             <span>
-                <a href={{ action('PersonController@bishops') }}>
+                <a href={{ action([\App\Http\Controllers\PersonController::class, 'bishops']) }}>
                     <img src="{{ URL::asset('images/bishop.png') }}" alt="Bishops" class="btn btn-info" title="Bishops">
                 </a>
             </span>
             <span>
-                <a href={{ action('PersonController@pastors') }}>
+                <a href={{ action([\App\Http\Controllers\PersonController::class, 'pastors']) }}>
                     <img src="{{ URL::asset('images/pastor.png') }}" alt="Pastor" class="btn btn-info" title="Pastor">
                 </a>
             </span>
             <span class="priests">
-                <a href={{ action('PersonController@priests') }}>
+                <a href={{ action([\App\Http\Controllers\PersonController::class, 'priests']) }}>
                     <img src="{{ URL::asset('images/priest.png') }}" alt="Priests" class="btn btn-info" title="Priests">
                 </a>
             </span>
             <span>
-                <a href={{ action('PersonController@deacons') }}>
+                <a href={{ action([\App\Http\Controllers\PersonController::class, 'deacons']) }}>
                     <img src="{{ URL::asset('images/deacon.png') }}" alt="Deacons" class="btn btn-info" title="Deacons">
                 </a>
             </span>
             <span class="provincials">
-                <a href={{ action('PersonController@provincials') }}>
+                <a href={{ action([\App\Http\Controllers\PersonController::class, 'provincials']) }}>
                     <img src="{{ URL::asset('images/provincial.png') }}" alt="Provincials" class="btn btn-info" title="Provincials">
                 </a>
             </span>
             <span>
-                <a href={{ action('PersonController@superiors') }}>
+                <a href={{ action([\App\Http\Controllers\PersonController::class, 'superiors']) }}>
                     <img src="{{ URL::asset('images/superior.png') }}" alt="Superiors" class="btn btn-info" title="Superiors">
                 </a>
             </span>
             <span>
-                <a href={{ action('PersonController@jesuits') }}>
+                <a href={{ action([\App\Http\Controllers\PersonController::class, 'jesuits']) }}>
                     <img src="{{ URL::asset('images/jesuit.png') }}" alt="Jesuits" class="btn btn-info" title="Jesuits">
                 </a>
             </span>

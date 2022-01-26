@@ -49,7 +49,7 @@ class AssetControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('asset.destroy', [$asset]));
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('AssetController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AssetController::class, 'index']));
         $this->assertSoftDeleted($asset);
     }
 
@@ -245,7 +245,7 @@ class AssetControllerTest extends TestCase
             'is_active' => 1,
         ]);
 
-        $response->assertRedirect(action('AssetController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AssetController::class, 'index']));
         $response->assertSessionHas('flash_notification');
 
         $this->assertDatabaseHas('asset', [
@@ -273,7 +273,7 @@ class AssetControllerTest extends TestCase
             'asset_type_id' => $asset->asset_type_id,
             'manufacturer' => $new_manufacturer,
         ]);
-        $response->assertRedirect(action('AssetController@show', $asset->id));
+        $response->assertRedirect(action([\App\Http\Controllers\AssetController::class, 'show'], $asset->id));
         $response->assertSessionHas('flash_notification');
 
         $updated = \App\Models\Asset::findOrFail($asset->id);

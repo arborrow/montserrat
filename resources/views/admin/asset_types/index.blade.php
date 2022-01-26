@@ -7,7 +7,7 @@
             Asset types
             @can('create-asset-type')
                 <span class="options">
-                    <a href={{ action('AssetTypeController@create') }}>
+                    <a href={{ action([\App\Http\Controllers\AssetTypeController::class, 'create']) }}>
                         <img src="{{ URL::asset('images/create.png') }}" alt="Add" class="btn btn-light" title="Add">
                     </a>
                 </span>

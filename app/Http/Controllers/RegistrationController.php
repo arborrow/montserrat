@@ -242,7 +242,7 @@ class RegistrationController extends Controller
 
         flash('Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a> added')->success();
 
-        return Redirect::action('RegistrationController@index');
+        return Redirect::action([\App\Http\Controllers\RegistrationController::class, 'index']);
     }
 
     public function store_group(StoreGroupRegistrationRequest $request)
@@ -279,7 +279,7 @@ class RegistrationController extends Controller
         }
         flash('Registration(s) added to '.$retreat->title.'for members of group: <a href="'.url('/group/'.$group->id).'">'.$group->name.'</a>')->success();
 
-        return Redirect::action('RetreatController@show', $retreat->id);
+        return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id);
     }
 
     /**
@@ -409,7 +409,7 @@ class RegistrationController extends Controller
 
         flash('Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a> updated')->success();
 
-        return Redirect::action('PersonController@show', $registration->contact_id);
+        return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $registration->contact_id);
     }
 
     /**
@@ -432,7 +432,7 @@ class RegistrationController extends Controller
 
         flash('Registration #: '.$registration->id.' deleted')->warning()->important();
 
-        return Redirect::action('RegistrationController@index');
+        return Redirect::action([\App\Http\Controllers\RegistrationController::class, 'index']);
     }
 
     public function confirm($id)

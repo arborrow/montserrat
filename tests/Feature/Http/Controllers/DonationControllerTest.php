@@ -265,7 +265,7 @@ class DonationControllerTest extends TestCase
             'event_id' => $retreat->id,
             'donations' => $donations,
         ]);
-        $response->assertRedirect(action('RetreatController@show', $retreat->id));
+        $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id));
         $this->assertDatabaseHas('Donations', [
             'event_id' => $retreat->id,
             'contact_id' => $random_participant->contact_id,
@@ -362,7 +362,7 @@ class DonationControllerTest extends TestCase
 
         // TODO: remove space on Thank You field in Donation table then add to unit test
 
-        $response->assertRedirect(action('DonationController@show', $donation->donation_id));
+        $response->assertRedirect(action([\App\Http\Controllers\DonationController::class, 'show'], $donation->donation_id));
         $response->assertSessionHas('flash_notification');
 
         $updated_donation = \App\Models\Donation::find($donation->donation_id);

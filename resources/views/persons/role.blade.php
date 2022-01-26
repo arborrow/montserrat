@@ -6,7 +6,7 @@
             {{$role['name']}}
             @can('create-contact')
                 <span class="create">
-                    <a href={{ action('PersonController@create') }}>
+                    <a href={{ action([\App\Http\Controllers\PersonController::class, 'create']) }}>
                         <img src="{{URL::asset('images/create.png')}}" alt="Add" class="btn btn-light" title="Add">
                     </a>
                 </span>
@@ -19,7 +19,7 @@
     <div class="col-lg-12">
         @can('show-contact')
             <span class="person">
-                <a href={{ action('PersonController@index') }} class="btn btn-light">
+                <a href={{ action([\App\Http\Controllers\PersonController::class, 'index']) }} class="btn btn-light">
                     {!! Html::image('images/person.png', 'Show Persons',array('title'=>"Show Persons")) !!}
                 </a>
             </span>
@@ -28,10 +28,10 @@
         @endif
         @endCan
         @can('create-registration')
-            <a href={{ action('RegistrationController@add_group',$role['group_id']) }} class="btn btn-link">Add Group Registration</a>
+            <a href={{ action([\App\Http\Controllers\RegistrationController::class, 'add_group'],$role['group_id']) }} class="btn btn-link">Add Group Registration</a>
         @endCan
         @can('create-touchpoint')
-            <a href={{ action('TouchpointController@add_group',$role['group_id']) }} class="btn btn-link">Add Group Touchpoint</a>
+            <a href={{ action([\App\Http\Controllers\TouchpointController::class, 'add_group'],$role['group_id']) }} class="btn btn-link">Add Group Touchpoint</a>
         @endCan
     </div>
     <div class="col-lg-12">

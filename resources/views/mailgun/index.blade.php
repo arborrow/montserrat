@@ -8,7 +8,7 @@
                     <h1>
                         <span class="grey">Index of Mailgun Stored Messages</span>
                         <span class="create">
-                            <a href="{{ action('MailgunController@get') }}">
+                            <a href="{{ action([\App\Http\Controllers\MailgunController::class, 'get']) }}">
                                {!! Html::image('images/create.png', 'Add Group',array('title'=>"Add Group",'class' => 'btn btn-primary')) !!}
                             </a>
 

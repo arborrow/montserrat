@@ -7,7 +7,7 @@
             Departments
             @can('create-department')
             <span class="options">
-                <a href={{ action('DepartmentController@create') }}>
+                <a href={{ action([\App\Http\Controllers\DepartmentController::class, 'create']) }}>
                     <img src="{{ URL::asset('images/create.png') }}" alt="Add" class="btn btn-light" title="Add">
                 </a>
             </span>

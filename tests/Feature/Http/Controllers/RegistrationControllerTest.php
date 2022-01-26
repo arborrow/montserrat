@@ -219,7 +219,7 @@ class RegistrationControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('registration.destroy', [$registration]));
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RegistrationController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\RegistrationController::class, 'index']));
         $this->assertSoftDeleted($registration);
     }
 
@@ -423,7 +423,7 @@ class RegistrationControllerTest extends TestCase
             'departed_at' => null,
             'num_registrants' => '1',
         ]);
-        $response->assertRedirect(action('RegistrationController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\RegistrationController::class, 'index']));
         $response->assertSessionHas('flash_notification');
         $this->assertDatabaseHas('participant', [
             'event_id' => $retreat->id,
@@ -464,7 +464,7 @@ class RegistrationControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RetreatController@show', $retreat->id));
+        $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id));
         $registrations = \App\Models\Registration::whereEventId($retreat->id)->get();
         $group_contacts = \App\Models\GroupContact::whereGroupId($group->id)->get();
         // assert that every group contact now has a registration for the event
@@ -509,7 +509,7 @@ class RegistrationControllerTest extends TestCase
         ]);
         $registration->refresh();
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('PersonController@show', $registration->contact_id));
+        $response->assertRedirect(action([\App\Http\Controllers\PersonController::class, 'show'], $registration->contact_id));
         $this->assertEquals($registration->deposit, $new_deposit);
         $this->assertNotEquals($registration->deposit, $original_deposit);
     }

@@ -43,7 +43,7 @@ class DioceseControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('diocese.destroy', [$diocese]));
         $response->assertSessionHas('flash_notification');
 
-        $response->assertRedirect(action('DioceseController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\DioceseController::class, 'index']));
         $this->assertSoftDeleted($diocese);
     }
 
@@ -205,7 +205,7 @@ class DioceseControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('DioceseController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\DioceseController::class, 'index']));
         $this->assertDatabaseHas('contact', [
             'contact_type' => config('polanco.contact_type.organization'),
             'subcontact_type' => config('polanco.contact_type.diocese'),
@@ -252,7 +252,7 @@ class DioceseControllerTest extends TestCase
         // TODO: test for updating of other fields on the diocese.edit blade like email, phone, address, etc.
 
         $diocese->refresh();
-        $response->assertRedirect(action('DioceseController@show', $diocese->id));
+        $response->assertRedirect(action([\App\Http\Controllers\DioceseController::class, 'show'], $diocese->id));
         $response->assertSessionHas('flash_notification');
         $this->assertEquals($diocese->sort_name, $city_name);
         $this->assertNotEquals($diocese->sort_name, $sort_name);

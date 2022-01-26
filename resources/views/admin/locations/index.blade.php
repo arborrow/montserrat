@@ -7,7 +7,7 @@
             Locations
             @can('create-location')
             <span class="options">
-                <a href={{ action('LocationController@create') }}>
+                <a href={{ action([\App\Http\Controllers\LocationController::class, 'create']) }}>
                     <img src="{{ URL::asset('images/create.png') }}" alt="Add" class="btn btn-light" title="Add">
                 </a>
             </span>

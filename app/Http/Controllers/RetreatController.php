@@ -209,7 +209,7 @@ class RetreatController extends Controller
 
         flash('Retreat: <a href="'.url('/retreat/'.$retreat->id).'">'.$retreat->title.'</a> added')->success();
 
-        return Redirect::action('RetreatController@index'); //
+        return Redirect::action([\App\Http\Controllers\RetreatController::class, 'index']); //
     }
 
     /**
@@ -632,7 +632,7 @@ class RetreatController extends Controller
 
         flash('Retreat: <a href="'.url('/retreat/'.$retreat->id).'">'.$retreat->title.'</a> updated')->success();
 
-        return Redirect::action('RetreatController@show', $id);
+        return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $id);
     }
 
     /**
@@ -661,7 +661,7 @@ class RetreatController extends Controller
 
         flash('Retreat: '.$retreat->title.' deleted')->warning()->important();
 
-        return Redirect::action('RetreatController@index');
+        return Redirect::action([\App\Http\Controllers\RetreatController::class, 'index']);
     }
 
     public function assign_rooms($id)
@@ -712,7 +712,7 @@ class RetreatController extends Controller
 
         flash('Retreatants for '.$retreat->title.' successfully checked out')->success();
 
-        return Redirect::action('RetreatController@show', $retreat->id);
+        return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id);
     }
 
     public function checkin($id)
@@ -728,7 +728,7 @@ class RetreatController extends Controller
 
         flash('Retreatants for '.$retreat->title.' successfully checked in')->success();
 
-        return Redirect::action('RetreatController@show', $retreat->id);
+        return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id);
     }
 
     public function room_update(RoomUpdateRetreatRequest $request)
@@ -759,9 +759,9 @@ class RetreatController extends Controller
             $retreat = \App\Models\Retreat::findOrFail($event_id);
             flash('Room assignments for '.$retreat->title.' successfully assigned')->success();
 
-            return Redirect::action('RetreatController@show', $event_id);
+            return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
         } else { // this should never really happen as it means an event registration did not have an event_id; unit test will assume returning to retreat.show blade
-            return Redirect::action('RetreatController@index');
+            return Redirect::action([\App\Http\Controllers\RetreatController::class, 'index']);
         }
     }
 

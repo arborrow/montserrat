@@ -6,7 +6,7 @@
             Vendors
             @can('create-contact')
                 <span class="options">
-                    <a href={{ action('VendorController@create') }}>
+                    <a href={{ action([\App\Http\Controllers\VendorController::class, 'create']) }}>
                         {!! Html::image('images/create.png', 'Create Vendor',array('title'=>"Create Vendor",'class' => 'btn btn-light')) !!}
                     </a>
                 </span>

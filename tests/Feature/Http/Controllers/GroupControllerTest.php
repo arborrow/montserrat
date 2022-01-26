@@ -40,7 +40,7 @@ class GroupControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('group.destroy', [$group]));
         $response->assertSessionHas('flash_notification');
 
-        $response->assertRedirect(action('GroupController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\GroupController::class, 'index']));
         $this->assertSoftDeleted($group);
     }
 
@@ -126,7 +126,7 @@ class GroupControllerTest extends TestCase
 
         $new_group = \App\Models\Group::whereName($group_name)->firstOrFail();
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('GroupController@show', $new_group->id));
+        $response->assertRedirect(action([\App\Http\Controllers\GroupController::class, 'show'], $new_group->id));
         $this->assertDatabaseHas('group', [
             'name' => $group_name,
             'title' => Str::plural($group_name),
@@ -163,7 +163,7 @@ class GroupControllerTest extends TestCase
         $updated = \App\Models\Group::findOrFail($group->id);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('GroupController@show', $group->id));
+        $response->assertRedirect(action([\App\Http\Controllers\GroupController::class, 'show'], $group->id));
         $this->assertEquals($updated->name, $new_group_name);
         $this->assertNotEquals($updated->name, $group->name);
     }

@@ -621,9 +621,9 @@ class PersonController extends Controller
 
         flash('Person: <a href="'.url('/person/'.$person->id).'">'.$person->display_name.'</a> added')->success();
 
-        return Redirect::action('PersonController@show', $person->id); //
+        return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $person->id); //
 
-        //return Redirect::action('PersonController@index');//
+        //return Redirect::action([\App\Http\Controllers\PersonController::class, 'index']);//
     }
 
     /**
@@ -757,7 +757,7 @@ class PersonController extends Controller
                 break;
            }
         } else {
-            return Redirect::action('PersonController@show', $person->id);
+            return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $person->id);
         }
 
         switch ($size) {
@@ -768,7 +768,7 @@ class PersonController extends Controller
                return view('persons.envelope9x6', compact('person'));
                break;
            default:
-               return Redirect::action('PersonController@show', $person->id);
+               return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $person->id);
         }
     }
 
@@ -1565,7 +1565,7 @@ class PersonController extends Controller
 
         flash('Person: <a href="'.url('/person/'.$person->id).'">'.$person->display_name.'</a> updated')->success();
 
-        return Redirect::action('PersonController@show', $person->id);
+        return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $person->id);
     }
 
     /**
@@ -1600,7 +1600,7 @@ class PersonController extends Controller
 
         flash('Person: '.$person->display_name.' deleted')->warning()->important();
 
-        return Redirect::action('PersonController@index');
+        return Redirect::action([\App\Http\Controllers\PersonController::class, 'index']);
     }
 
     public function merge_destroy($id, $return_id)
@@ -1628,7 +1628,7 @@ class PersonController extends Controller
 
         flash('Person: '.$person->sort_name.' deleted')->warning()->important();
 
-        return Redirect::action('PersonController@merge', $return_id);
+        return Redirect::action([\App\Http\Controllers\PersonController::class, 'merge'], $return_id);
     }
 
     public function assistants()
@@ -1813,7 +1813,7 @@ class PersonController extends Controller
         if (! $duplicates->count()) {
             flash('There currently are no duplicates for Contact ID#: '.$contact_id)->success();
 
-            return Redirect::action('PersonController@duplicates');
+            return Redirect::action([\App\Http\Controllers\PersonController::class, 'duplicates']);
         }
 
         if (! empty($merge_id)) {

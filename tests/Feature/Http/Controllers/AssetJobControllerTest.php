@@ -62,7 +62,7 @@ class AssetJobControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('asset_job.destroy', [$asset_job]));
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('AssetJobController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AssetJobController::class, 'index']));
         $this->assertSoftDeleted($asset_job);
     }
 
@@ -171,7 +171,7 @@ class AssetJobControllerTest extends TestCase
             'tag' => $this->faker->word(),
         ]);
 
-        $response->assertRedirect(action('AssetJobController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AssetJobController::class, 'index']));
         $response->assertSessionHas('flash_notification');
 
         $this->assertDatabaseHas('asset_job', [
@@ -204,7 +204,7 @@ class AssetJobControllerTest extends TestCase
             'note' => $updated_note,
         ]);
 
-        $response->assertRedirect(action('AssetJobController@show', $asset_job->id));
+        $response->assertRedirect(action([\App\Http\Controllers\AssetJobController::class, 'show'], $asset_job->id));
         $response->assertSessionHas('flash_notification');
 
         $updated = \App\Models\AssetJob::findOrFail($asset_job->id);

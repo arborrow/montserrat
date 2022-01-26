@@ -43,7 +43,7 @@ class AddressControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('address.destroy', [$address]));
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('PersonController@show', $contact_id));
+        $response->assertRedirect(action([\App\Http\Controllers\PersonController::class, 'show'], $contact_id));
         $this->assertSoftDeleted($address);
     }
 
@@ -136,7 +136,7 @@ class AddressControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('AddressController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AddressController::class, 'index']));
         $this->assertDatabaseHas('address', [
             'contact_id' => $contact->id,
             'street_address' => $random_street_address,
@@ -173,7 +173,7 @@ class AddressControllerTest extends TestCase
 
         $updated_address = \App\Models\Address::find($address->id);
 
-        $response->assertRedirect(action('AddressController@show', $address->id));
+        $response->assertRedirect(action([\App\Http\Controllers\AddressController::class, 'show'], $address->id));
         $response->assertSessionHas('flash_notification');
         $this->assertEquals($updated_address->contact_id, $contact_id);
         $this->assertNotEquals($updated_address->street_address, $original_street_address);

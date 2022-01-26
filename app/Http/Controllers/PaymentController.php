@@ -47,7 +47,7 @@ class PaymentController extends Controller
         } else {
             flash('Cannot create a payment without an associated Donation ID#')->error()->important();
 
-            return Redirect::action('DonationController@index');
+            return Redirect::action([\App\Http\Controllers\DonationController::class, 'index']);
         }
     }
 
@@ -108,7 +108,7 @@ class PaymentController extends Controller
 
         flash('Payment ID#: <a href="'.url('/payment/'.$payment->payment_id).'">'.$payment->payment_id.'</a> added')->success();
 
-        return Redirect::action('DonationController@show', $donation->donation_id);
+        return Redirect::action([\App\Http\Controllers\DonationController::class, 'show'], $donation->donation_id);
     }
 
     /**
@@ -168,7 +168,7 @@ class PaymentController extends Controller
 
         flash('Payment ID#: <a href="'.url('/payment/'.$payment->payment_id).'">'.$payment->payment_id.'</a> updated')->success();
 
-        return Redirect::action('DonationController@show', $payment->donation_id);
+        return Redirect::action([\App\Http\Controllers\DonationController::class, 'show'], $payment->donation_id);
     }
 
     /**
@@ -187,6 +187,6 @@ class PaymentController extends Controller
 
         flash('Payment ID#: '.$payment->payment_id.' deleted')->warning()->important();
 
-        return Redirect::action('DonationController@show', $payment->donation_id);
+        return Redirect::action([\App\Http\Controllers\DonationController::class, 'show'], $payment->donation_id);
     }
 }
