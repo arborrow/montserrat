@@ -13,13 +13,6 @@ use Illuminate\Support\Str;
 class RetreatFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = \App\Models\Retreat::class;
-
-    /**
      * Define the model's default state.
      *
      * @return array

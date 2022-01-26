@@ -10,13 +10,6 @@ use Illuminate\Support\Str;
 class AssetTypeFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = \App\Models\AssetType::class;
-
-    /**
      * Define the model's default state.
      *
      * @return array

@@ -11,13 +11,6 @@ use Illuminate\Support\Str;
 class ContactFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = \App\Models\Contact::class;
-
-    /**
      * Define the model's default state.
      *
      * @return array
