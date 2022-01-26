@@ -24,7 +24,7 @@ class AuditFactory extends Factory
     public function definition()
     {
         return [
-            'user_type' => 'App\Models\User',
+            'user_type' => \App\Models\User::class,
             'user_id' => function () {
                 return \App\Models\User::factory()->create()->id;
             },
