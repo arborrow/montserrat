@@ -66,7 +66,7 @@ Navigate to [Google Cloud Console](https://console.cloud.google.com/) and login 
 * Once in `APIs & Service`, navigate to `Library`
 * Search for `Google People API` and select it (Socialite previously used Google+ API; however, Google+ API was suspended in 2019)
 * Enable the API and create a new OAuth client ID.
-* Set your redirect URI as `http://localhost:8000/login/google/callback`
+* Set your redirect URI depending on your development environment. For Sail,  `http://localhost/login/google/callback`. For Vagrant/Homestead, `http://localhost:8000/login/google/callback`
 
 #### Twilio
 Navigate to [Twilio](https://www.twilio.com/) and login/signup.
