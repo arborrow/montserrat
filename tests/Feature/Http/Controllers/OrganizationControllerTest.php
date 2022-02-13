@@ -43,7 +43,7 @@ class OrganizationControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('organization.destroy', ['organization' => $organization]));
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('OrganizationController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\OrganizationController::class, 'index']));
         $this->assertSoftDeleted($organization);
     }
 
@@ -219,7 +219,7 @@ class OrganizationControllerTest extends TestCase
 
         ]);
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('OrganizationController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\OrganizationController::class, 'index']));
         $this->assertDatabaseHas('contact', [
             'contact_type' => config('polanco.contact_type.organization'),
             'sort_name' => $organization_name,
@@ -259,7 +259,7 @@ class OrganizationControllerTest extends TestCase
         $updated = \App\Models\Contact::find($organization->id);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('OrganizationController@show', $organization->id));
+        $response->assertRedirect(action([\App\Http\Controllers\OrganizationController::class, 'show'], $organization->id));
         $this->assertEquals($updated->sort_name, $organization_name);
         $this->assertNotEquals($updated->organization_name, $original_name);
     }

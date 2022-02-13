@@ -7,12 +7,12 @@
             Assets
             @can('create-asset')
             <span class="options">
-                <a href={{ action('AssetController@create') }}>
+                <a href={{ action([\App\Http\Controllers\AssetController::class, 'create']) }}>
                     <img src="{{ URL::asset('images/create.png') }}" alt="Add" class="btn btn-light" title="Add">
                 </a>
             </span>
             @endCan
-            <a href={{ action('AssetController@search') }}>
+            <a href={{ action([\App\Http\Controllers\AssetController::class, 'search']) }}>
                 {!! Html::image('images/search.png', 'Search assets',array('title'=>"Search assets",'class' => 'btn btn-link')) !!}
             </a>
 

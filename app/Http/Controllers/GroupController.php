@@ -63,7 +63,7 @@ class GroupController extends Controller
 
         flash('Group: <a href="'.url('/group/'.$group->id).'">'.$group->name.'</a> added')->success();
 
-        return Redirect::action('GroupController@show', $group->id); //
+        return Redirect::action([\App\Http\Controllers\GroupController::class, 'show'], $group->id); //
     }
 
     /**
@@ -120,9 +120,9 @@ class GroupController extends Controller
 
         flash('Group: <a href="'.url('/group/'.$group->id).'">'.$group->name.'</a> updated')->success();
 
-        return Redirect::action('GroupController@show', $id);
+        return Redirect::action([\App\Http\Controllers\GroupController::class, 'show'], $id);
 
-        //return Redirect::action('GroupController@index');//
+        //return Redirect::action([\App\Http\Controllers\GroupController::class, 'index']);//
     }
 
     /**
@@ -141,6 +141,6 @@ class GroupController extends Controller
 
         flash('Group: '.$group->name.' deleted')->warning()->important();
 
-        return Redirect::action('GroupController@index');
+        return Redirect::action([\App\Http\Controllers\GroupController::class, 'index']);
     }
 }

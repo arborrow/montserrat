@@ -11,7 +11,7 @@
 
                         @can('create-donor')
                             <span class="create">
-                                <a href="{{ action('DonorController@create') }}">
+                                <a href="{{ action([\App\Http\Controllers\DonorController::class, 'create']) }}">
                                    {!! Html::image('images/create.png', 'Add Donor',array('title'=>"Add Donor",'class' => 'btn btn-primary')) !!}
                                 </a>
 

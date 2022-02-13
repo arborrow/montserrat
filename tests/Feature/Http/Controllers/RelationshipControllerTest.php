@@ -23,7 +23,7 @@ class RelationshipControllerTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('relationship.create'));
 
-        $response->assertRedirect(action('RelationshipController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\RelationshipController::class, 'index']));
     }
 
     /**
@@ -52,7 +52,7 @@ class RelationshipControllerTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('relationship.edit', [$relationship]));
 
-        $response->assertRedirect(action('RelationshipController@show', $relationship->id));
+        $response->assertRedirect(action([\App\Http\Controllers\RelationshipController::class, 'show'], $relationship->id));
     }
 
     /**
@@ -100,7 +100,7 @@ class RelationshipControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RelationshipController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\RelationshipController::class, 'index']));
     }
 
     /**
@@ -117,7 +117,7 @@ class RelationshipControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RelationshipController@show', $relationship->id));
+        $response->assertRedirect(action([\App\Http\Controllers\RelationshipController::class, 'show'], $relationship->id));
     }
 
     /**

@@ -21,14 +21,14 @@
                 {!! Html::link('#donations','Donations',array('class' => 'btn btn-outline-dark')) !!}
             </div>
             <div class="col-lg-12 mt-3">
-                <span><a href={{ action('OrganizationController@index') }}>{!! Html::image('images/organization.png', 'Organization Index',array('title'=>"Organization Index",'class' => 'btn btn-outline-dark')) !!}</a></span>
+                <span><a href={{ action([\App\Http\Controllers\OrganizationController::class, 'index']) }}>{!! Html::image('images/organization.png', 'Organization Index',array('title'=>"Organization Index",'class' => 'btn btn-outline-dark')) !!}</a></span>
                 @can('create-touchpoint')
                 <span class="btn btn-outline-dark">
-                    <a href={{ action('TouchpointController@add',$organization->id) }}>Add Touchpoint</a>
+                    <a href={{ action([\App\Http\Controllers\TouchpointController::class, 'add'],$organization->id) }}>Add Touchpoint</a>
                 </span>
                 @endCan
                 <span class="btn btn-outline-dark">
-                    <a href={{ action('RegistrationController@add',$organization->id) }}>Add Registration</a>
+                    <a href={{ action([\App\Http\Controllers\RegistrationController::class, 'add'],$organization->id) }}>Add Registration</a>
                 </span>
             </div>
         </div>
@@ -262,7 +262,7 @@
         <div class="row">
             <div class="col-lg-6 text-right">
                 @can('update-contact')
-                    <a href="{{ action('OrganizationController@edit', $organization->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                    <a href="{{ action([\App\Http\Controllers\OrganizationController::class, 'edit'], $organization->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                 @endCan
             </div>
             <div class="col-lg-6 text-left">

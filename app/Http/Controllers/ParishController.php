@@ -175,7 +175,7 @@ class ParishController extends Controller
 
         flash('Parish: <a href="'.url('/parish/'.$parish->id).'">'.$parish->organization_name.'</a> added')->success();
 
-        return Redirect::action('ParishController@index');
+        return Redirect::action([\App\Http\Controllers\ParishController::class, 'index']);
     }
 
     /**
@@ -428,7 +428,7 @@ class ParishController extends Controller
 
         flash('Parish: <a href="'.url('/parish/'.$parish->id).'">'.$parish->organization_name.'</a> updated')->success();
 
-        return Redirect::action('ParishController@show', $parish->id);
+        return Redirect::action([\App\Http\Controllers\ParishController::class, 'show'], $parish->id);
     }
 
     /**
@@ -461,7 +461,7 @@ class ParishController extends Controller
 
         flash('Parish: '.$parish->organization_name.' deleted')->warning()->important();
 
-        return Redirect::action('ParishController@index');
+        return Redirect::action([\App\Http\Controllers\ParishController::class, 'index']);
     }
 
     public function parish_index_by_diocese($diocese_id)

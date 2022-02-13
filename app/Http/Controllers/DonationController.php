@@ -308,7 +308,7 @@ class DonationController extends Controller
 
         flash('Donation ID#: <a href="'.url('/donation/'.$donation->donation_id).'">'.$donation->donation_id.'</a> updated')->success();
 
-        return Redirect::action('DonationController@show', $donation->donation_id);
+        return Redirect::action([\App\Http\Controllers\DonationController::class, 'show'], $donation->donation_id);
     }
 
     /**
@@ -403,6 +403,6 @@ class DonationController extends Controller
             }
         }
 
-        return Redirect::action('RetreatController@show', $request->input('event_id'));
+        return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $request->input('event_id'));
     }
 }

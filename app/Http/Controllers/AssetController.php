@@ -229,7 +229,7 @@ class AssetController extends Controller
 
         flash('Asset: <a href="'.url('/asset/'.$asset->id).'">'.$asset->name.'</a> added')->success();
 
-        return Redirect::action('AssetController@index');
+        return Redirect::action([\App\Http\Controllers\AssetController::class, 'index']);
     }
 
     /**
@@ -384,7 +384,7 @@ class AssetController extends Controller
 
         flash('Asset: <a href="'.url('/asset/'.$asset->id).'">'.$asset->name.'</a> updated')->success();
 
-        return Redirect::action('AssetController@show', $asset->id);
+        return Redirect::action([\App\Http\Controllers\AssetController::class, 'show'], $asset->id);
     }
 
     /**
@@ -401,6 +401,6 @@ class AssetController extends Controller
         \App\Models\Asset::destroy($id);
         flash('Asset: '.$asset->name.' deleted')->warning()->important();
 
-        return Redirect::action('AssetController@index');
+        return Redirect::action([\App\Http\Controllers\AssetController::class, 'index']);
     }
 }

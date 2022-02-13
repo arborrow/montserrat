@@ -39,7 +39,7 @@ class WebsiteControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('website.destroy', [$website]));
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('WebsiteController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\WebsiteController::class, 'index']));
         $this->assertSoftDeleted($website);
     }
 
@@ -120,7 +120,7 @@ class WebsiteControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('WebsiteController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\WebsiteController::class, 'index']));
 
         $this->assertDatabaseHas('website', [
             'asset_id' => $asset->id,
@@ -153,7 +153,7 @@ class WebsiteControllerTest extends TestCase
             'url' => $website->url,
         ]);
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('WebsiteController@show', $website->id));
+        $response->assertRedirect(action([\App\Http\Controllers\WebsiteController::class, 'show'], $website->id));
 
         $updated = \App\Models\Website::findOrFail($website->id);
 

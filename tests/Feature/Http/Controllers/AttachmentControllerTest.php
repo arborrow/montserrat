@@ -39,7 +39,7 @@ class AttachmentControllerTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('delete_asset_photo', ['asset_id' => $attachment->entity_id]));
 
-        $response->assertRedirect(action('AssetController@show', $asset->id));
+        $response->assertRedirect(action([\App\Http\Controllers\AssetController::class, 'show'], $asset->id));
     }
 
     /**
@@ -66,7 +66,7 @@ class AttachmentControllerTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('delete_avatar', ['user_id' => $attachment->entity_id]));
 
-        $response->assertRedirect(action('PersonController@show', $person->id));
+        $response->assertRedirect(action([\App\Http\Controllers\PersonController::class, 'show'], $person->id));
     }
 
     /**
@@ -93,7 +93,7 @@ class AttachmentControllerTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('delete_asset_attachment', ['asset_id' => $attachment->entity_id, 'file_name' => $attachment->uri]));
 
-        $response->assertRedirect(action('AssetController@show', $asset->id));
+        $response->assertRedirect(action([\App\Http\Controllers\AssetController::class, 'show'], $asset->id));
     }
 
     /**
@@ -121,7 +121,7 @@ class AttachmentControllerTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('delete_contact_attachment', ['user_id' => $attachment->entity_id, 'file_name' => $attachment->uri]));
 
-        $response->assertRedirect(action('PersonController@show', $person->id));
+        $response->assertRedirect(action([\App\Http\Controllers\PersonController::class, 'show'], $person->id));
     }
 
     /**
@@ -148,7 +148,7 @@ class AttachmentControllerTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)->get(route('delete_event_attachment', ['event_id' => $attachment->entity_id, 'file_name' => $attachment->uri]));
-        $response->assertRedirect(action('RetreatController@show', $event->id));
+        $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'show'], $event->id));
         // TODO: perform additional assertions such as verify that the deleted file has been renamed to name-deleted-time.extension
     }
 
@@ -175,7 +175,7 @@ class AttachmentControllerTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('delete_event_contract', ['event_id' => $attachment->entity_id]));
 
-        $response->assertRedirect(action('RetreatController@show', $retreat->id));
+        $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id));
     }
 
     /**
@@ -201,7 +201,7 @@ class AttachmentControllerTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('delete_event_evaluations', ['event_id' => $attachment->entity_id]));
 
-        $response->assertRedirect(action('RetreatController@show', $retreat->id));
+        $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id));
     }
 
     /**
@@ -227,7 +227,7 @@ class AttachmentControllerTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('delete_event_group_photo', ['event_id' => $attachment->entity_id]));
 
-        $response->assertRedirect(action('RetreatController@show', $retreat->id));
+        $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id));
     }
 
     /**
@@ -253,7 +253,7 @@ class AttachmentControllerTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('delete_event_schedule', ['event_id' => $attachment->entity_id]));
 
-        $response->assertRedirect(action('RetreatController@show', $retreat->id));
+        $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id));
     }
 
     /**
@@ -646,7 +646,7 @@ class AttachmentControllerTest extends TestCase
             'description' => $new_attachment_description,
         ]);
 
-        $response->assertRedirect(action('AttachmentController@show', $attachment->id));
+        $response->assertRedirect(action([\App\Http\Controllers\AttachmentController::class, 'show'], $attachment->id));
         $response->assertSessionHas('flash_notification');
 
         $updated = \App\Models\Attachment::findOrFail($attachment->id);

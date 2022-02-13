@@ -23,7 +23,7 @@ class AuditControllerTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('audit.create'));
 
-        $response->assertRedirect(action('AuditController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AuditController::class, 'index']));
         $response->assertSessionHas('flash_notification');
     }
 
@@ -37,7 +37,7 @@ class AuditControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('audit.destroy', [$audit]));
 
-        $response->assertRedirect(action('AuditController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AuditController::class, 'index']));
         $response->assertSessionHas('flash_notification');
     }
 
@@ -51,7 +51,7 @@ class AuditControllerTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('audit.edit', [$audit]));
 
-        $response->assertRedirect(action('AuditController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AuditController::class, 'index']));
         $response->assertSessionHas('flash_notification');
     }
 
@@ -119,7 +119,7 @@ class AuditControllerTest extends TestCase
             'ip_address' => $this->faker->ipv4(),
         ]);
 
-        $response->assertRedirect(action('AuditController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AuditController::class, 'index']));
         $response->assertSessionHas('flash_notification');
     }
 
@@ -135,7 +135,7 @@ class AuditControllerTest extends TestCase
             'ip_address' => $this->faker->ipv4(),
         ]);
 
-        $response->assertRedirect(action('AuditController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AuditController::class, 'index']));
         $response->assertSessionHas('flash_notification');
     }
 

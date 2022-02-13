@@ -81,7 +81,7 @@ class RetreatControllerTest extends TestCase
         $registration = $registrations->random();
         $registration->refresh();
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RetreatController@show', $retreat->id));
+        $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id));
         $this->assertNotEquals(null, $registration->arrived_at);
     }
 
@@ -114,7 +114,7 @@ class RetreatControllerTest extends TestCase
         $registration->refresh();
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RetreatController@show', $retreat->id));
+        $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id));
         $this->assertNotEquals(null, $registration->departed_at);
     }
 
@@ -148,7 +148,7 @@ class RetreatControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('retreat.destroy', [$retreat]));
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RetreatController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'index']));
         $this->assertSoftDeleted($retreat);
     }
 
@@ -314,7 +314,7 @@ class RetreatControllerTest extends TestCase
 
         $updated_registration = \App\Models\Registration::findOrFail($registration->id);
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RetreatController@show', $retreat->id));
+        $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id));
         $this->assertNotEquals(null, $updated_registration->room_id);
         $this->assertEquals($room->id, $updated_registration->room_id);
         $this->assertNotEquals(null, $updated_registration->notes);
@@ -429,7 +429,7 @@ class RetreatControllerTest extends TestCase
         // TODO: assumes that Google calendar integration is not set but eventually we will want to test that this too is working and saving the calendar event
         $retreat = \App\Models\Retreat::whereIdnumber($idnumber)->first();
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RetreatController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'index']));
         $this->assertEquals($retreat->idnumber, $idnumber);
     }
 
@@ -471,7 +471,7 @@ class RetreatControllerTest extends TestCase
         ]);
         $retreat->refresh();
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RetreatController@show', $retreat->id));
+        $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id));
         $this->assertEquals($retreat->title, $new_title);
         $this->assertEquals($retreat->idnumber, $new_idnumber);
         $this->assertNotEquals($retreat->title, $original_title);

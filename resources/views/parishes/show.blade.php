@@ -30,17 +30,17 @@
         <div class="row mt-3">
             <div class="col-lg-12">
                 <span class="back">
-                    <a href={{ action('ParishController@index') }}>
+                    <a href={{ action([\App\Http\Controllers\ParishController::class, 'index']) }}>
                         {!! Html::image('images/parish.png', 'Parish Index',array('title'=>"Parish Index",'class' => 'btn btn-outline-dark')) !!}
                     </a>
                 </span>
                 @can('create-touchpoint')
                     <span class="btn btn-outline-dark">
-                        <a href={{ action('TouchpointController@add',$parish->id) }}>Add Touchpoint</a>
+                        <a href={{ action([\App\Http\Controllers\TouchpointController::class, 'add'],$parish->id) }}>Add Touchpoint</a>
                     </span>
                 @endCan
                 <span class="btn btn-outline-dark">
-                    <a href={{ action('RegistrationController@add',$parish->id) }}>Add Registration</a>
+                    <a href={{ action([\App\Http\Controllers\RegistrationController::class, 'add'],$parish->id) }}>Add Registration</a>
                 </span>
             </div>
         </div>
@@ -172,7 +172,7 @@
                     <p>It is a brand new world, there are no touchpoints for this contact!</p>
                 @else
                     <span class="btn btn-outline-dark">
-                        <a href={{ action('TouchpointController@add',$parish->id) }}>Add Touchpoint</a>
+                        <a href={{ action([\App\Http\Controllers\TouchpointController::class, 'add'],$parish->id) }}>Add Touchpoint</a>
                     </span>
                     <table class="table table-striped table-hover table-responsive-md">
                         <thead>
@@ -353,7 +353,7 @@
         @endCan
         <div class="row">
             <div class="col-lg-6 text-right">
-                <a href="{{ action('ParishController@edit', $parish->id) }}" class="btn btn-info">
+                <a href="{{ action([\App\Http\Controllers\ParishController::class, 'edit'], $parish->id) }}" class="btn btn-info">
                     {!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}
                 </a>
             </div>

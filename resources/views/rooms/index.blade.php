@@ -11,7 +11,7 @@
                     <span class="grey">Room Index</span>
                         @can('room-create')
                             <span class="create">
-                                <a href={{ action('RoomController@create') }}>{!! Html::image('images/create.png', 'Create a Room',array('title'=>"Create Room",'class' => 'btn btn-primary')) !!}</a>
+                                <a href={{ action([\App\Http\Controllers\RoomController::class, 'create']) }}>{!! Html::image('images/create.png', 'Create a Room',array('title'=>"Create Room",'class' => 'btn btn-primary')) !!}</a>
                             </span>
                         @endCan
                     </h1>

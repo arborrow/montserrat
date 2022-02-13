@@ -39,7 +39,7 @@ class UomControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('uom.destroy', [$uom]));
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('UomController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\UomController::class, 'index']));
         $this->assertSoftDeleted($uom);
     }
 
@@ -119,7 +119,7 @@ class UomControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('UomController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\UomController::class, 'index']));
 
         $this->assertDatabaseHas('uom', [
             'unit_name' => $uom_unit_name,
@@ -152,7 +152,7 @@ class UomControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('UomController@show', $uom->id));
+        $response->assertRedirect(action([\App\Http\Controllers\UomController::class, 'show'], $uom->id));
 
         $updated = \App\Models\Uom::findOrFail($uom->id);
         $this->assertEquals($updated->unit_name, $new_uom_unit_name);

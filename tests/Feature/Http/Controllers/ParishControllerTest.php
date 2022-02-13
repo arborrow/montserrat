@@ -44,7 +44,7 @@ class ParishControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('parish.destroy', [$parish->id]));
         $response->assertSessionHas('flash_notification');
 
-        $response->assertRedirect(action('ParishController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\ParishController::class, 'index']));
         $this->assertSoftDeleted($parish);
     }
 
@@ -233,7 +233,7 @@ class ParishControllerTest extends TestCase
             'sort_name' => $parish_name,
         ]);
 
-        $response->assertRedirect(action('ParishController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\ParishController::class, 'index']));
         $response->assertSessionHas('flash_notification');
 
         $this->assertDatabaseHas('contact', [
@@ -277,7 +277,7 @@ class ParishControllerTest extends TestCase
 
         $updated = \App\Models\Contact::findOrFail($parish->id);
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('ParishController@show', $parish->id));
+        $response->assertRedirect(action([\App\Http\Controllers\ParishController::class, 'show'], $parish->id));
         $this->assertEquals($updated->sort_name, $new_parish_name);
         $this->assertNotEquals($updated->sort_name, $original_sort_name);
     }

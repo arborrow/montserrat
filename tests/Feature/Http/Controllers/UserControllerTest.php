@@ -38,7 +38,7 @@ class UserControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('user.destroy', [$user]));
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('UserController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\UserController::class, 'index']));
         // $this->assertSoftDeleted($user);
     }
 
@@ -111,7 +111,7 @@ class UserControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('UserController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\UserController::class, 'index']));
 
         // normally one would expect the data to be stored; however, in this case authentication and not the controller stores the user
         /*
@@ -145,7 +145,7 @@ class UserControllerTest extends TestCase
         $updated = \App\Models\User::findOrFail($user->id);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('UserController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\UserController::class, 'index']));
 //        $this->assertEquals($updated->description, $new_description);
 //        $this->assertNotEquals($updated->description, $original_description);
     }

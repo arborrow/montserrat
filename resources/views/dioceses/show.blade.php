@@ -23,13 +23,13 @@
                 {!! Html::link('#donations','Donations',array('class' => 'btn btn-outline-dark')) !!}
             </div>
             <div class="col-lg-12 mt-3">
-                <a href={{ action('DioceseController@index') }}>
+                <a href={{ action([\App\Http\Controllers\DioceseController::class, 'index']) }}>
                     {!! Html::image('images/diocese.png', 'Diocese Index', array('title'=>"Diocese Index",'class' => 'btn btn-outline-dark')) !!}
                 </a>
-                <a href={{ action('TouchpointController@add',$diocese->id) }} class="btn btn-outline-dark">
+                <a href={{ action([\App\Http\Controllers\TouchpointController::class, 'add'],$diocese->id) }} class="btn btn-outline-dark">
                     Add Touchpoint
                 </a>
-                <a href={{ action('RegistrationController@add',$diocese->id) }} class="btn btn-outline-dark">
+                <a href={{ action([\App\Http\Controllers\RegistrationController::class, 'add'],$diocese->id) }} class="btn btn-outline-dark">
                     Add Registration
                 </a>
             </div>
@@ -129,7 +129,7 @@
             </div>
             <div class="col-lg-12 text-center">
                 <span class="btn btn-outline-dark">
-                    <a href={{ action('TouchpointController@add',$diocese->id) }}>Add Touchpoint</a>
+                    <a href={{ action([\App\Http\Controllers\TouchpointController::class, 'add'],$diocese->id) }}>Add Touchpoint</a>
                 </span>
             </div>
         </div>
@@ -286,7 +286,7 @@
         <div class="row">
             <div class="col-lg-6 text-right">
                 @can('update-contact')
-                    <a href="{{ action('DioceseController@edit', $diocese->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                    <a href="{{ action([\App\Http\Controllers\DioceseController::class, 'edit'], $diocese->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                 @endCan
             </div>
             <div class="col-lg-6 text-left">

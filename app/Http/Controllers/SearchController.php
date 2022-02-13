@@ -38,7 +38,7 @@ class SearchController extends Controller
         }
 
         if ($id == 0) {
-            return redirect()->action('PersonController@create');
+            return redirect()->action([\App\Http\Controllers\PersonController::class, 'create']);
         } else {
             $contact = \App\Models\Contact::findOrFail($id);
 

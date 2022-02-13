@@ -58,7 +58,7 @@ class AssetTypeController extends Controller
 
         flash('Asset type: <a href="'.url('/admin/asset_type/'.$asset_type->id).'">'.$asset_type->name.'</a> added')->success();
 
-        return Redirect::action('AssetTypeController@index');
+        return Redirect::action([\App\Http\Controllers\AssetTypeController::class, 'index']);
     }
 
     /**
@@ -114,7 +114,7 @@ class AssetTypeController extends Controller
 
         flash('Asset type: <a href="'.url('/admin/asset_type/'.$asset_type->id).'">'.$asset_type->name.'</a> updated')->success();
 
-        return Redirect::action('AssetTypeController@show', $asset_type->id);
+        return Redirect::action([\App\Http\Controllers\AssetTypeController::class, 'show'], $asset_type->id);
     }
 
     /**
@@ -131,6 +131,6 @@ class AssetTypeController extends Controller
         \App\Models\AssetType::destroy($id);
         flash('Asset type: '.$asset_type->name.' deleted')->warning()->important();
 
-        return Redirect::action('AssetTypeController@index');
+        return Redirect::action([\App\Http\Controllers\AssetTypeController::class, 'index']);
     }
 }

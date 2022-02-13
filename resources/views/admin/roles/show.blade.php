@@ -15,7 +15,7 @@
     </div>
     <div class="col-lg-12 mb-4">
         @can('update-role')
-            <a href="{{ action('RoleController@edit', $role->id) }}" class="btn btn-light">Update Role</a>
+            <a href="{{ action([\App\Http\Controllers\RoleController::class, 'edit'], $role->id) }}" class="btn btn-light">Update Role</a>
         @endcan
         @can('delete-role')
             {!! Form::open(['method' => 'DELETE', 'route' => ['role.destroy', $role->id], 'onsubmit'=>'return ConfirmDelete()', 'class' => 'd-inline']) !!}

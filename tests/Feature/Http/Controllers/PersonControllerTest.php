@@ -139,7 +139,7 @@ class PersonControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('person.destroy', ['person' => $person]));
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('PersonController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\PersonController::class, 'index']));
         $this->assertSoftDeleted($person);
     }
 
@@ -669,7 +669,7 @@ class PersonControllerTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('merge_delete', ['id' => $duplicate_person->id, 'return_id' => $person->id]));
 
-        $response->assertRedirect(action('PersonController@merge', $person->id));
+        $response->assertRedirect(action([\App\Http\Controllers\PersonController::class, 'merge'], $person->id));
         $this->assertSoftDeleted($duplicate_person);
     }
 
@@ -821,7 +821,7 @@ class PersonControllerTest extends TestCase
         ]);
         $person = \App\Models\Contact::whereSortName($last_name.', '.$first_name)->first();
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('PersonController@show', $person->id));
+        $response->assertRedirect(action([\App\Http\Controllers\PersonController::class, 'show'], $person->id));
     }
 
     /**
@@ -875,7 +875,7 @@ class PersonControllerTest extends TestCase
         $updated = \App\Models\Contact::findOrFail($person->id);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('PersonController@show', $person->id));
+        $response->assertRedirect(action([\App\Http\Controllers\PersonController::class, 'show'], $person->id));
         $this->assertEquals($updated->sort_name, $new_sort_name);
         $this->assertNotEquals($updated->sort_name, $original_sort_name);
     }

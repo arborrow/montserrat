@@ -43,7 +43,7 @@
     <div class="col-lg-12">
         <div class="row">
             <div class="col-lg-6 text-right">
-                <a href="{{ action('PermissionController@edit', $permission->id) }}" class="btn btn-info">
+                <a href="{{ action([\App\Http\Controllers\PermissionController::class, 'edit'], $permission->id) }}" class="btn btn-info">
                     {!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}
                 </a>
             </div>

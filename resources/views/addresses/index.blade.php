@@ -7,7 +7,7 @@
             Addresses
             @can('create-address')
                 <span class="options">
-                    <a href={{ action('AddressController@create') }}>
+                    <a href={{ action([\App\Http\Controllers\AddressController::class, 'create']) }}>
                         <img src="{{ URL::asset('images/create.png') }}" alt="Add" class="btn btn-light" title="Add">
                     </a>
                 </span>

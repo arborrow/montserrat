@@ -26,7 +26,7 @@
     </div>
     <div class="col-lg-6 mt-4 mb-4">
         @can('update-address')
-            <a href="{{ action('AddressController@edit', $address->id) }}" class="btn btn-info mr-4">
+            <a href="{{ action([\App\Http\Controllers\AddressController::class, 'edit'], $address->id) }}" class="btn btn-info mr-4">
               {!! Html::image('images/edit.png', 'Edit address',array('title'=>"Edit address")) !!}
             </a>
         @endcan

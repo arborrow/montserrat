@@ -85,7 +85,7 @@ class AssetTaskController extends Controller
 
         flash('Asset Task: <a href="'.url('/asset_task/'.$asset_task->id).'">'.$asset_task->asset_name.': '.$asset_task->title.'</a> added')->success();
 
-        return Redirect::action('AssetTaskController@index');
+        return Redirect::action([\App\Http\Controllers\AssetTaskController::class, 'index']);
     }
 
     /**
@@ -165,7 +165,7 @@ class AssetTaskController extends Controller
 
         flash('Asset Task: <a href="'.url('/asset_task/'.$asset_task->id).'">'.$asset_task->asset_name.': '.$asset_task->title.'</a> updated')->success();
 
-        return Redirect::action('AssetTaskController@show', $asset_task->id);
+        return Redirect::action([\App\Http\Controllers\AssetTaskController::class, 'show'], $asset_task->id);
     }
 
     /**
@@ -182,7 +182,7 @@ class AssetTaskController extends Controller
         \App\Models\AssetTask::destroy($id);
         flash('Asset Task: '.$asset_task->asset_name.': '.$asset_task->title.' deleted')->warning()->important();
 
-        return Redirect::action('AssetTaskController@index');
+        return Redirect::action([\App\Http\Controllers\AssetTaskController::class, 'index']);
     }
 
     /**
@@ -326,6 +326,6 @@ class AssetTaskController extends Controller
 
         flash('Asset Task: '.$asset_task->asset_name.': '.$asset_task->title.' '.$jobs_created.' upcoming jobs scheduled')->warning()->important();
 
-        return Redirect::action('AssetTaskController@show', $id);
+        return Redirect::action([\App\Http\Controllers\AssetTaskController::class, 'show'], $id);
     }
 }

@@ -42,7 +42,7 @@ class DonationTypeControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('donation_type.destroy', [$donation_type]));
         $response->assertSessionHas('flash_notification');
 
-        $response->assertRedirect(action('DonationTypeController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\DonationTypeController::class, 'index']));
         $this->assertSoftDeleted($donation_type);
     }
 
@@ -119,7 +119,7 @@ class DonationTypeControllerTest extends TestCase
             'value' => $donation_type_value,
             'is_active' => $donation_type_is_active,
         ]);
-        $response->assertRedirect(action('DonationTypeController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\DonationTypeController::class, 'index']));
         $response->assertSessionHas('flash_notification');
 
         $this->assertDatabaseHas('donation_type', [
@@ -150,7 +150,7 @@ class DonationTypeControllerTest extends TestCase
             'is_active' => $this->faker->boolean(),
         ]);
 
-        $response->assertRedirect(action('DonationTypeController@show', $donation_type->id));
+        $response->assertRedirect(action([\App\Http\Controllers\DonationTypeController::class, 'show'], $donation_type->id));
         $response->assertSessionHas('flash_notification');
         $updated = \App\Models\DonationType::findOrFail($donation_type->id);
         $this->assertEquals($updated->name, $new_donation_type_name);

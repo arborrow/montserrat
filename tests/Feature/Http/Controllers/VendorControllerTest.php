@@ -42,7 +42,7 @@ class VendorControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('vendor.destroy', ['vendor' => $vendor]));
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('VendorController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\VendorController::class, 'index']));
         $this->assertSoftDeleted($vendor);
     }
 
@@ -201,7 +201,7 @@ class VendorControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('VendorController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\VendorController::class, 'index']));
 
         $this->assertDatabaseHas('contact', [
             'contact_type' => config('polanco.contact_type.organization'),
@@ -242,11 +242,11 @@ class VendorControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('VendorController@show', $vendor->id));
+        $response->assertRedirect(action([\App\Http\Controllers\VendorController::class, 'show'], $vendor->id));
 
         $updated = \App\Models\Contact::find($vendor->id);
 
-        $response->assertRedirect(action('VendorController@show', $vendor->id));
+        $response->assertRedirect(action([\App\Http\Controllers\VendorController::class, 'show'], $vendor->id));
         $this->assertEquals($updated->sort_name, $vendor_name);
         $this->assertNotEquals($updated->sort_name, $original_sort_name);
     }
