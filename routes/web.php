@@ -12,7 +12,7 @@
 */
 // Auth::routes();
 
-Route::group(['middleware' => ['web', 'activity']], function () {
+Route::middleware('web', 'activity')->group(function () {
     Route::get('intercept/{code}', function ($code) {
         $url = base64_decode($code);
         // dd($url);
