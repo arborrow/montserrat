@@ -60,5 +60,4 @@ class StoreRoomRequestTest extends TestCase
 
         $this->assertEquals([], $actual);
     }
-
 }

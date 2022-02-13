@@ -64,7 +64,7 @@ class CivicrmParticipantStatusTypeTableSeeder extends Seeder
             4 => [
                 'id' => 5,
                 'name' => 'Pending from pay later',
-            'label' => 'Pending (pay later)',
+                'label' => 'Pending (pay later)',
                 'class' => 'Pending',
                 'is_reserved' => 1,
                 'is_active' => 1,
@@ -75,7 +75,7 @@ class CivicrmParticipantStatusTypeTableSeeder extends Seeder
             5 => [
                 'id' => 6,
                 'name' => 'Pending from incomplete transaction',
-            'label' => 'Pending (incomplete transaction)',
+                'label' => 'Pending (incomplete transaction)',
                 'class' => 'Pending',
                 'is_reserved' => 1,
                 'is_active' => 1,

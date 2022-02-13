@@ -39,8 +39,7 @@ class StorePersonRequestTest extends TestCase
         $actual = $this->subject->rules();
 
         // if Twilio is enabled then validate phone numbers otherwise allow strings
-         if (null !== config('settings.twilio_sid') && null !== config('settings.twilio_token')) {
-
+        if (null !== config('settings.twilio_sid') && null !== config('settings.twilio_token')) {
             $this->assertEquals([
                 'address_home_address1' => 'string|max:125|nullable',
                 'address_home_address2' => 'string|max:125|nullable',

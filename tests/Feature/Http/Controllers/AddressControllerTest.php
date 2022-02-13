@@ -4,7 +4,6 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\StateProvince;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -139,8 +138,8 @@ class AddressControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('AddressController@index'));
         $this->assertDatabaseHas('address', [
-          'contact_id' => $contact->id,
-          'street_address' => $random_street_address,
+            'contact_id' => $contact->id,
+            'street_address' => $random_street_address,
         ]);
     }
 

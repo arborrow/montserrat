@@ -709,7 +709,7 @@ class CountryTableSeeder extends Seeder
             ],
             46 => [
                 'id' => 1047,
-            'name' => 'COCOS (KEELING) ISLANDS',
+                'name' => 'COCOS (KEELING) ISLANDS',
                 'iso_code' => 'CC',
                 'country_code' => null,
                 'address_format_id' => null,
@@ -1069,7 +1069,7 @@ class CountryTableSeeder extends Seeder
             ],
             70 => [
                 'id' => 1072,
-            'name' => 'FALKLAND ISLANDS (MALVINAS)',
+                'name' => 'FALKLAND ISLANDS (MALVINAS)',
                 'iso_code' => 'FK',
                 'country_code' => null,
                 'address_format_id' => null,
@@ -1429,7 +1429,7 @@ class CountryTableSeeder extends Seeder
             ],
             94 => [
                 'id' => 1096,
-            'name' => 'HOLY SEE (VATICAN CITY STATE)',
+                'name' => 'HOLY SEE (VATICAN CITY STATE)',
                 'iso_code' => 'VA',
                 'country_code' => null,
                 'address_format_id' => null,
@@ -3709,7 +3709,7 @@ class CountryTableSeeder extends Seeder
             ],
             246 => [
                 'id' => 1249,
-            'name' => 'SINT MAARTEN (DUTCH PART)',
+                'name' => 'SINT MAARTEN (DUTCH PART)',
                 'iso_code' => 'SX',
                 'country_code' => null,
                 'address_format_id' => null,
@@ -3769,7 +3769,7 @@ class CountryTableSeeder extends Seeder
             ],
             250 => [
                 'id' => 1253,
-            'name' => 'SAINT MARTIN (FRENCH PART)',
+                'name' => 'SAINT MARTIN (FRENCH PART)',
                 'iso_code' => 'MF',
                 'country_code' => null,
                 'address_format_id' => null,

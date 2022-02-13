@@ -41,7 +41,7 @@ class RoomController extends Controller
     {
         $this->authorize('create-room');
         $locations = \App\Models\Location::orderby('name')->pluck('name', 'id');
-        $floors=$this->get_floors();
+        $floors = $this->get_floors();
 
         return view('rooms.create', compact('locations', 'floors'));
     }
@@ -99,7 +99,7 @@ class RoomController extends Controller
     {
         $this->authorize('update-room');
         $locations = \App\Models\Location::orderby('name')->pluck('name', 'id');
-        $floors=$this->get_floors();
+        $floors = $this->get_floors();
         $room = \App\Models\Room::findOrFail($id);
 
         return view('rooms.edit', compact('room', 'locations', 'floors'));
@@ -167,7 +167,6 @@ class RoomController extends Controller
 
         return $floors;
     }
-
 
     /**
      * Display the room schedules for a particular month/year - default this month.
@@ -296,15 +295,16 @@ class RoomController extends Controller
      * @param  int  $unhyphenated_date
      * @return string $hyphenated_date
      */
-
     public function hyphenate_date($unhyphenated_date)
     {
         if ((strpos($unhyphenated_date, '-') == 0) && (strlen($unhyphenated_date) == 8) && is_numeric($unhyphenated_date)) {
             $hyphenated_date = substr($unhyphenated_date, 0, 4).'-'.substr($unhyphenated_date, 4, 2).'-'.substr($unhyphenated_date, 6, 2);
+
             return $hyphenated_date;
         } else {
             if ($this->validateDate($unhyphenated_date)) { //already hyphenated
                 $hyphenated_date = $unhyphenated_date;
+
                 return $hyphenated_date;
             } else {
                 return null;
@@ -315,6 +315,7 @@ class RoomController extends Controller
     public function validateDate($date, $format = 'Y-m-d')
     {
         $d = DateTime::createFromFormat($format, $date);
+
         return $d && $d->format($format) == $date;
     }
 }

@@ -47,6 +47,5 @@ class UpdateRoomRequest extends FormRequest
         $actual = $this->subject->messages();
 
         $this->assertEquals([], $actual);
-
     }
 }

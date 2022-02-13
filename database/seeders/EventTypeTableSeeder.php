@@ -204,7 +204,7 @@ class EventTypeTableSeeder extends Seeder
                 'label' => 'Jesuit',
                 'value' => 'Jesuit',
                 'name' => 'Jesuit',
-            'description' => 'Events sponsored by the Jesuits (Assistancy, Province, or other Jesuit ministry)',
+                'description' => 'Events sponsored by the Jesuits (Assistancy, Province, or other Jesuit ministry)',
                 'is_default' => 0,
                 'is_reserved' => 0,
                 'is_active' => 1,

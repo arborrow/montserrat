@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -116,9 +115,9 @@ class ExportListControllerTest extends TestCase
         $response->assertRedirect(action('ExportListController@index'));
 
         $this->assertDatabaseHas('export_list', [
-          'title' => $export_list_title,
-          'label' => $export_list_label,
-          'type' => $export_list_type,
+            'title' => $export_list_title,
+            'label' => $export_list_label,
+            'type' => $export_list_type,
         ]);
     }
 
@@ -136,10 +135,10 @@ class ExportListControllerTest extends TestCase
         $new_export_list_title = 'New '.$this->faker->words(2, true);
 
         $response = $this->actingAs($user)->put(route('export_list.update', [$export_list]), [
-          'id' => $export_list->id,
-          'title' => $new_export_list_title,
-          'label' => $export_list->label,
-          'type' => $export_list_type,
+            'id' => $export_list->id,
+            'title' => $new_export_list_title,
+            'label' => $export_list->label,
+            'type' => $export_list_type,
         ]);
 
         $response->assertRedirect(action('ExportListController@show', $export_list->id));

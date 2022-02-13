@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -116,17 +115,17 @@ class RoleControllerTest extends TestCase
         $new_description = $this->faker->sentence;
 
         $response = $this->actingAs($user)->post(route('role.store'), [
-          'name' => $new_name,
-          'display_name' => $new_name,
-          'description' => $new_description,
+            'name' => $new_name,
+            'display_name' => $new_name,
+            'description' => $new_description,
         ]);
 
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('RoleController@index'));
         $this->assertDatabaseHas('roles', [
-          'name' => $new_name,
-          'display_name' => $new_name,
-          'description' => $new_description,
+            'name' => $new_name,
+            'display_name' => $new_name,
+            'description' => $new_description,
         ]);
     }
 
@@ -173,9 +172,9 @@ class RoleControllerTest extends TestCase
 
         $response->assertRedirect(action('RoleController@index'));
         $this->assertDatabaseHas('permission_role', [
-          'role_id' => $role->id,
-          'permission_id' => $permission->id,
-          'deleted_at' => null,
+            'role_id' => $role->id,
+            'permission_id' => $permission->id,
+            'deleted_at' => null,
         ]);
     }
 
@@ -194,9 +193,9 @@ class RoleControllerTest extends TestCase
 
         $response->assertRedirect(action('RoleController@index'));
         $this->assertDatabaseHas('role_user', [
-          'role_id' => $role->id,
-          'user_id' => $user->id,
-          'deleted_at' => null,
+            'role_id' => $role->id,
+            'user_id' => $user->id,
+            'deleted_at' => null,
         ]);
     }
 

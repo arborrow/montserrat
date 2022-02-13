@@ -14,6 +14,7 @@ class GroupContact extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'group_contact';
+
     protected $fillable = ['contact_id', 'group_id', 'status'];
 
     public function group()

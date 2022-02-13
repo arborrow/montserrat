@@ -24,7 +24,6 @@ class StoreVendorRequest extends FormRequest
     public function rules()
     {   // if Twilio is enabled then validate phone numbers otherwise allow strings
         if (null !== config('settings.twilio_sid') && null !== config('settings.twilio_token')) {
-
             return [
                 'organization_name' => 'required',
                 'vendor_email_main' => 'email|nullable',
@@ -38,18 +37,18 @@ class StoreVendorRequest extends FormRequest
                 'phone_main_fax' => 'phone|nullable',
             ];
         } else {
-          return [
-              'organization_name' => 'required',
-              'vendor_email_main' => 'email|nullable',
-              'url_main' => 'url|nullable',
-              'url_facebook' => 'url|regex:/facebook\\.com\\/.+/i|nullable',
-              'url_google' => 'url|regex:/plus\\.google\\.com\\/.+/i|nullable',
-              'url_twitter' => 'url|regex:/twitter\\.com\\/.+/i|nullable',
-              'url_instagram' => 'url|regex:/instagram\\.com\\/.+/i|nullable',
-              'url_linkedin' => 'url|regex:/linkedin\\.com\\/.+/i|nullable',
-              'phone_main_phone' => 'string|nullable',
-              'phone_main_fax' => 'string|nullable',
-          ];
+            return [
+                'organization_name' => 'required',
+                'vendor_email_main' => 'email|nullable',
+                'url_main' => 'url|nullable',
+                'url_facebook' => 'url|regex:/facebook\\.com\\/.+/i|nullable',
+                'url_google' => 'url|regex:/plus\\.google\\.com\\/.+/i|nullable',
+                'url_twitter' => 'url|regex:/twitter\\.com\\/.+/i|nullable',
+                'url_instagram' => 'url|regex:/instagram\\.com\\/.+/i|nullable',
+                'url_linkedin' => 'url|regex:/linkedin\\.com\\/.+/i|nullable',
+                'phone_main_phone' => 'string|nullable',
+                'phone_main_fax' => 'string|nullable',
+            ];
         }
     }
 

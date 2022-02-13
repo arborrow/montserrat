@@ -11,6 +11,7 @@ class RetreatConfirmation extends Mailable
     use Queueable, SerializesModels;
 
     public $participant;
+
     public $encodedUrl;
 
     /**

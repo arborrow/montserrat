@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -643,8 +642,8 @@ class AttachmentControllerTest extends TestCase
         $new_attachment_description = 'New '.$this->faker->words(2, true);
 
         $response = $this->actingAs($user)->put(route('attachment.update', [$attachment]), [
-          'id' => $attachment->id,
-          'description' => $new_attachment_description,
+            'id' => $attachment->id,
+            'description' => $new_attachment_description,
         ]);
 
         $response->assertRedirect(action('AttachmentController@show', $attachment->id));

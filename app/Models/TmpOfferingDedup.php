@@ -13,6 +13,7 @@ class TmpOfferingDedup extends Model
 
     //use SoftDeletes;
     protected $table = 'tmp_offering_dedup';
+
     protected $fillable = ['contact_id', 'event_id'];
 
     public function contact()

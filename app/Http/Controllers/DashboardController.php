@@ -183,32 +183,32 @@ class DashboardController extends Controller
         }
 
         $borderColors = [
-           'rgba(255, 99, 132, 1.0)',
-           'rgba(22,160,133, 1.0)',
-           'rgba(255, 205, 86, 1.0)',
-           'rgba(51,105,232, 1.0)',
-           'rgba(244,67,54, 1.0)',
-           'rgba(34,198,246, 1.0)',
-           'rgba(153, 102, 255, 1.0)',
-           'rgba(255, 159, 64, 1.0)',
-           'rgba(233,30,99, 1.0)',
-           'rgba(205,220,57, 1.0)',
-       ];
+            'rgba(255, 99, 132, 1.0)',
+            'rgba(22,160,133, 1.0)',
+            'rgba(255, 205, 86, 1.0)',
+            'rgba(51,105,232, 1.0)',
+            'rgba(244,67,54, 1.0)',
+            'rgba(34,198,246, 1.0)',
+            'rgba(153, 102, 255, 1.0)',
+            'rgba(255, 159, 64, 1.0)',
+            'rgba(233,30,99, 1.0)',
+            'rgba(205,220,57, 1.0)',
+        ];
         $fillColors = [
-           'rgba(255, 99, 132, 0.5)',
-           'rgba(22,160,133, 0.5)',
-           'rgba(255, 205, 86, 0.5)',
-           'rgba(51,105,232, 0.5)',
-           'rgba(244,67,54, 0.5)',
-           'rgba(34,198,246, 0.5)',
-           'rgba(153, 102, 255, 0.5)',
-           'rgba(255, 159, 64, 0.5)',
-           'rgba(233,30,99, 0.5)',
-           'rgba(205,220,57, 0.5)',
+            'rgba(255, 99, 132, 0.5)',
+            'rgba(22,160,133, 0.5)',
+            'rgba(255, 205, 86, 0.5)',
+            'rgba(51,105,232, 0.5)',
+            'rgba(244,67,54, 0.5)',
+            'rgba(34,198,246, 0.5)',
+            'rgba(153, 102, 255, 0.5)',
+            'rgba(255, 159, 64, 0.5)',
+            'rgba(233,30,99, 0.5)',
+            'rgba(205,220,57, 0.5)',
 
-       ];
+        ];
 
-       // TODO: using role_id = 5 as hardcoded value - explore how to use config('polanco.participant_role_id.retreatant') instead
+        // TODO: using role_id = 5 as hardcoded value - explore how to use config('polanco.participant_role_id.retreatant') instead
         $board_summary = DB::select("SELECT tmp.type, tmp.type_id, SUM(tmp.pledged) as total_pledged, SUM(tmp.paid) as total_paid, SUM(tmp.participants) as total_participants, SUM(tmp.peoplenights) as total_pn, SUM(tmp.nights) as total_nights
             FROM
             (SELECT e.id as event_id, e.title as event, et.name as type, et.id as type_id, e.idnumber, e.start_date, e.end_date, DATEDIFF(e.end_date,e.start_date) as nights,
@@ -221,9 +221,9 @@ class DashboardController extends Controller
             GROUP BY e.id) as tmp
             GROUP BY tmp.type
             ORDER BY `tmp`.`type` ASC", [
-                'begin_date' => $begin_date,
-                'end_date' => $end_date,
-            ]);
+            'begin_date' => $begin_date,
+            'end_date' => $end_date,
+        ]);
 
         $total_revenue = array_sum(array_column($board_summary, 'total_paid'));
         $total_participants = array_sum(array_column($board_summary, 'total_participants'));
@@ -272,7 +272,6 @@ class DashboardController extends Controller
         return view('dashboard.board', compact('years', 'year', 'summary', 'board_summary', 'board_summary_revenue_chart', 'board_summary_participant_chart', 'board_summary_peoplenight_chart', 'total_revenue', 'total_participants', 'total_peoplenights'));
     }
 
-
     public function drilldown($event_type_id = null, $year = null)
     {
 
@@ -286,9 +285,8 @@ class DashboardController extends Controller
         $begin_date = $prev_year.'-07-01';
         $end_date = $year.'-07-01';
         $event_type = \App\Models\EventType::findOrFail($event_type_id);
-        $retreats = \App\Models\Retreat::whereIsActive(1)->whereEventTypeId($event_type_id)->where('start_date','>=',$begin_date)->where('start_date','<',$end_date)->orderBy('start_date')->get();
+        $retreats = \App\Models\Retreat::whereIsActive(1)->whereEventTypeId($event_type_id)->where('start_date', '>=', $begin_date)->where('start_date', '<', $end_date)->orderBy('start_date')->get();
 
-        return view('dashboard.drilldown', compact('event_type', 'year','retreats'));
-
+        return view('dashboard.drilldown', compact('event_type', 'year', 'retreats'));
     }
 }

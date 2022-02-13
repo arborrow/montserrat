@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use DateTime;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use PDF;
-use DateTime;
 
 class PageController extends Controller
 {
@@ -194,7 +194,7 @@ class PageController extends Controller
 //        dd($current_user->contact_id,  $donation->donation_thank_you_sent);
 
         if (! empty($current_user->contact_id)) {
-            if ($donation->donation_thank_you_sent=="N") { //avoid creating another touchpoint if acknowledgement letter has already been viewed (and presumably printed and mailed)
+            if ($donation->donation_thank_you_sent == 'N') { //avoid creating another touchpoint if acknowledgement letter has already been viewed (and presumably printed and mailed)
                 $agc_touchpoint = new \App\Models\Touchpoint;
                 $agc_touchpoint->person_id = $donation->contact_id;
                 $agc_touchpoint->staff_id = $current_user->contact_id;
@@ -207,6 +207,7 @@ class PageController extends Controller
             }
         } else {
             flash('No known contact associated with the current user\'s email. AGC acknowledgment letter touchpoint cannot be created. Verify '.$current_user->email.' is associated with a contact record and then try again.')->error()->important();
+
             return redirect()->back();
         }
 
@@ -219,7 +220,6 @@ class PageController extends Controller
         } else {
             return view('reports.finance.agc_acknowledge', compact('donation'));
         }
-
     }
 
     public function finance_retreatdonations($idnumber = null)
@@ -360,11 +360,11 @@ class PageController extends Controller
     {
         $this->authorize('show-donation');
 
-        if (!is_null($start_date)) {
+        if (! is_null($start_date)) {
             $start_date = $this->hyphenate_date($start_date);
         }
 
-        if (!is_null($end_date)) {
+        if (! is_null($end_date)) {
             $end_date = $this->hyphenate_date($end_date);
         }
 
@@ -410,8 +410,8 @@ class PageController extends Controller
         // dd($montserrat);
         $pdf = PDF::loadView('reports.finance.eoy_acknowledgment', compact('payments', 'contact', 'montserrat', 'start_date', 'end_date'));
         $pdf->setOptions([
-                'header-html' => view('pdf._header'),
-                'footer-html' => view('pdf._footer'),
+            'header-html' => view('pdf._header'),
+            'footer-html' => view('pdf._footer'),
         ]);
         $now = Carbon::now();
         $attachment = new AttachmentController;
@@ -441,18 +441,21 @@ class PageController extends Controller
 
         return view('admin.config.mail');
     }
+
     public function config_gate()
     {
         $this->authorize('show-admin-menu');
 
         return view('admin.config.gate');
     }
+
     public function config_google_calendar()
     {
         $this->authorize('show-admin-menu');
 
         return view('admin.config.google_calendar');
     }
+
     public function config_google_client()
     {
         $this->authorize('show-admin-menu');
@@ -483,15 +486,16 @@ class PageController extends Controller
      * @param  int  $unhyphenated_date
      * @return string $hyphenated_date
      */
+    public function hyphenate_date($unhyphenated_date)
+    {
+        if ((strpos($unhyphenated_date, '-') == 0) && (strlen($unhyphenated_date) == 8) && is_numeric($unhyphenated_date)) {
+            $hyphenated_date = substr($unhyphenated_date, 0, 4).'-'.substr($unhyphenated_date, 4, 2).'-'.substr($unhyphenated_date, 6, 2);
 
-    public function hyphenate_date($unhyphenated_date) {
-
-        if ( (strpos($unhyphenated_date,'-') == 0) && (strlen($unhyphenated_date) == 8) && is_numeric($unhyphenated_date) ) {
-            $hyphenated_date = substr($unhyphenated_date,0,4).'-'.substr($unhyphenated_date,4,2).'-'.substr($unhyphenated_date,6,2);
             return $hyphenated_date;
         } else {
             if ($this->validateDate($unhyphenated_date)) { //already hyphenated
                 $hyphenated_date = $unhyphenated_date;
+
                 return $hyphenated_date;
             } else {
                 return null;
@@ -499,10 +503,10 @@ class PageController extends Controller
         }
     }
 
-    function validateDate($date, $format = 'Y-m-d')
+    public function validateDate($date, $format = 'Y-m-d')
     {
         $d = DateTime::createFromFormat($format, $date);
+
         return $d && $d->format($format) == $date;
     }
-
 }

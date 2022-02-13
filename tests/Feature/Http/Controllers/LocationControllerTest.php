@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -161,9 +160,9 @@ class LocationControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
 
         $this->assertDatabaseHas('locations', [
-          'name' => $location_name,
-          'description' => $location_description,
-          'type' => $location_type,
+            'name' => $location_name,
+            'description' => $location_description,
+            'type' => $location_type,
         ]);
     }
 
@@ -184,10 +183,10 @@ class LocationControllerTest extends TestCase
         $new_location_name = 'New '.$this->faker->words(2, true);
 
         $response = $this->actingAs($user)->put(route('location.update', [$location]), [
-          'id' => $location->id,
-          'name' => $new_location_name,
-          'description' => $this->faker->sentence(7, true),
-          'type' => $location_type,
+            'id' => $location->id,
+            'name' => $new_location_name,
+            'description' => $this->faker->sentence(7, true),
+            'type' => $location_type,
         ]);
 
         $response->assertRedirect(action('LocationController@show', $location->id));

@@ -3,10 +3,9 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use Illuminate\Support\Arr;
+use Tests\TestCase;
 
 /**
  * @see \App\Http\Controllers\TouchpointController
@@ -35,18 +34,18 @@ class TouchpointControllerTest extends TestCase
             'is_primary' => '1',
         ]);
         $group_contact = \App\Models\GroupContact::factory()->create([
-          'group_id' => config('polanco.group_id.staff'),
-          'contact_id' => $staff->id,
+            'group_id' => config('polanco.group_id.staff'),
+            'contact_id' => $staff->id,
         ]);
 
         $response = $this->actingAs($user)->get('touchpoint/add/'.$contact->id);
 
         $response->assertOk();
         $response->assertViewIs('touchpoints.create');
-        $response->assertViewHas('staff', function($staff_members) use ($staff) {
+        $response->assertViewHas('staff', function ($staff_members) use ($staff) {
             return Arr::exists($staff_members, $staff->id);
         });
-        $response->assertViewHas('persons', function($people) use ($contact) {
+        $response->assertViewHas('persons', function ($people) use ($contact) {
             return Arr::exists($people, $contact->id);
         });
         $response->assertViewHas('defaults');
@@ -71,8 +70,8 @@ class TouchpointControllerTest extends TestCase
             'is_primary' => '1',
         ]);
         $group_contact_staff = \App\Models\GroupContact::factory()->create([
-          'group_id' => config('polanco.group_id.staff'),
-          'contact_id' => $staff->id,
+            'group_id' => config('polanco.group_id.staff'),
+            'contact_id' => $staff->id,
         ]);
 
         $group = \App\Models\Group::factory()->create();
@@ -90,10 +89,10 @@ class TouchpointControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertViewIs('touchpoints.add_group');
-        $response->assertViewHas('staff', function($staff_members) use ($staff) {
+        $response->assertViewHas('staff', function ($staff_members) use ($staff) {
             return Arr::exists($staff_members, $staff->id);
         });
-        $response->assertViewHas('groups', function($group_members) use ($group) {
+        $response->assertViewHas('groups', function ($group_members) use ($group) {
             return Arr::exists($group_members, $group->id);
         });
         $response->assertViewHas('defaults');
@@ -268,7 +267,7 @@ class TouchpointControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('touchpoints.index');
         $response->assertViewHas('touchpoints');
-        $response->assertViewHas('staff', function($staff_members) use ($touchpoint) {
+        $response->assertViewHas('staff', function ($staff_members) use ($touchpoint) {
             return Arr::exists($staff_members, $touchpoint->staff_id);
         });
         $response->assertSeeText('Touchpoint Index');
@@ -306,23 +305,23 @@ class TouchpointControllerTest extends TestCase
             'is_primary' => '1',
         ]);
         $group_contact = \App\Models\GroupContact::factory()->create([
-          'group_id' => config('polanco.group_id.staff'),
-          'contact_id' => $staff->id,
+            'group_id' => config('polanco.group_id.staff'),
+            'contact_id' => $staff->id,
         ]);
         $touched_at = $this->faker->dateTime('now');
         $response = $this->actingAs($user)->post(route('touchpoint.store'), [
-          'touched_at' => $touched_at,
-          'person_id' => $person->id,
-          'staff_id' => $staff->id,
-          'type' => array_rand(array_flip(['Email', 'Call', 'Letter', 'Face', 'Other'])),
-          'notes' => $this->faker->paragraph,
+            'touched_at' => $touched_at,
+            'person_id' => $person->id,
+            'staff_id' => $staff->id,
+            'type' => array_rand(array_flip(['Email', 'Call', 'Letter', 'Face', 'Other'])),
+            'notes' => $this->faker->paragraph,
         ]);
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('TouchpointController@index'));
         $this->assertDatabaseHas('touchpoints', [
-          'touched_at' => $touched_at,
-          'person_id' => $person->id,
-          'staff_id' => $staff->id,
+            'touched_at' => $touched_at,
+            'person_id' => $person->id,
+            'staff_id' => $staff->id,
         ]);
     }
 
@@ -356,15 +355,15 @@ class TouchpointControllerTest extends TestCase
             'is_primary' => '1',
         ]);
         $group_contact_staff = \App\Models\GroupContact::factory()->create([
-          'group_id' => config('polanco.group_id.staff'),
-          'contact_id' => $staff->id,
+            'group_id' => config('polanco.group_id.staff'),
+            'contact_id' => $staff->id,
         ]);
 
         $group = \App\Models\Group::factory()->create();
 
         $number_group_members = $this->faker->numberBetween(2, 10);
         $group_contact = \App\Models\GroupContact::factory()->count($number_group_members)->create([
-          'group_id' => $group->id,
+            'group_id' => $group->id,
         ]);
 
         $notes = $this->faker->paragraph;
@@ -383,10 +382,10 @@ class TouchpointControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('GroupController@show', $group->id));
         $this->assertDatabaseHas('touchpoints', [
-          'touched_at' => $touched_at,
-          'person_id' => $random_group_member->contact_id,
-          'staff_id' => $staff->id,
-          'notes' => $notes,
+            'touched_at' => $touched_at,
+            'person_id' => $random_group_member->contact_id,
+            'staff_id' => $staff->id,
+            'notes' => $notes,
         ]);
     }
 
@@ -454,10 +453,10 @@ class TouchpointControllerTest extends TestCase
         $response->assertRedirect(action('RetreatController@show', $retreat->id));
 
         $this->assertDatabaseHas('touchpoints', [
-          'touched_at' => $touched_at,
-          'person_id' => $random_participant->contact_id,
-          'staff_id' => $staff->id,
-          'notes' => $notes,
+            'touched_at' => $touched_at,
+            'person_id' => $random_participant->contact_id,
+            'staff_id' => $staff->id,
+            'notes' => $notes,
         ]);
     }
 
@@ -525,11 +524,11 @@ class TouchpointControllerTest extends TestCase
         $response->assertRedirect(action('RetreatController@show', $retreat->id));
 
         $this->assertDatabaseHas('touchpoints', [
-          'touched_at' => $touched_at,
-          'person_id' => $random_participant->contact_id,
-          'staff_id' => $staff->id,
-          'notes' => $notes,
-      ]);
+            'touched_at' => $touched_at,
+            'person_id' => $random_participant->contact_id,
+            'staff_id' => $staff->id,
+            'notes' => $notes,
+        ]);
     }
 
     /**
@@ -559,19 +558,19 @@ class TouchpointControllerTest extends TestCase
             'is_primary' => '1',
         ]);
         $group_contact = \App\Models\GroupContact::factory()->create([
-          'group_id' => config('polanco.group_id.staff'),
-          'contact_id' => $staff->id,
+            'group_id' => config('polanco.group_id.staff'),
+            'contact_id' => $staff->id,
         ]);
 
         $touchpoint = \App\Models\Touchpoint::factory()->create();
         $original_staff_id = $touchpoint->staff_id;
         $original_person_id = $touchpoint->person_id;
         $response = $this->actingAs($user)->put(route('touchpoint.update', [$touchpoint]), [
-          'id' => $touchpoint->id,
-          'touched_at' => $this->faker->dateTime('now'),
-          'person_id' => $person->id,
-          'staff_id' => $staff->id,
-          'notes' => $this->faker->paragraph,
+            'id' => $touchpoint->id,
+            'touched_at' => $this->faker->dateTime('now'),
+            'person_id' => $person->id,
+            'staff_id' => $staff->id,
+            'notes' => $this->faker->paragraph,
         ]);
 
         $touchpoint->refresh();

@@ -577,7 +577,6 @@ class AttachmentController extends Controller
         return view('attachments.show', compact('attachment')); //
     }
 
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -613,7 +612,6 @@ class AttachmentController extends Controller
         return Redirect::action('AttachmentController@show', $id);
     }
 
-
     /**
      * Display a listing of the resource.
      *
@@ -622,7 +620,7 @@ class AttachmentController extends Controller
     public function index()
     {
         $this->authorize('show-attachment');
-        $attachments = \App\Models\Attachment::orderByDesc('upload_date')->paginate(25,['*'],'attachments');
+        $attachments = \App\Models\Attachment::orderByDesc('upload_date')->paginate(25, ['*'], 'attachments');
 
         return view('attachments.index', compact('attachments'));
     }
@@ -670,9 +668,4 @@ class AttachmentController extends Controller
 
         return Redirect::back();
     }
-
-
-
-
-
 }

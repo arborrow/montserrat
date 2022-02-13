@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -133,7 +132,7 @@ class AuditControllerTest extends TestCase
         $audit = \App\Models\Audit::factory()->create();
 
         $response = $this->actingAs($user)->put(route('audit.update', [$audit]), [
-          'ip_address' => $this->faker->ipv4,
+            'ip_address' => $this->faker->ipv4,
         ]);
 
         $response->assertRedirect(action('AuditController@index'));

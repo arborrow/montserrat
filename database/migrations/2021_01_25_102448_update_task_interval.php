@@ -25,8 +25,8 @@ class UpdateTaskInterval extends Migration
      */
     public function down()
     {
-      Schema::table('asset_task', function (Blueprint $table) {
-          $table->integer('frequency_interval')->nullable(true)->default(null)->change();
-      });
+        Schema::table('asset_task', function (Blueprint $table) {
+            $table->integer('frequency_interval')->nullable(true)->default(null)->change();
+        });
     }
 }

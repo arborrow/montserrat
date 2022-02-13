@@ -24,7 +24,6 @@ class StoreParishRequest extends FormRequest
     public function rules()
     {   // if Twilio is enabled then validate phone numbers otherwise allow strings
         if (null !== config('settings.twilio_sid') && null !== config('settings.twilio_token')) {
-
             return [
                 'organization_name' => 'required',
                 'diocese_id' => 'integer|min:0',
@@ -40,7 +39,7 @@ class StoreParishRequest extends FormRequest
                 'phone_main_fax' => 'phone|nullable',
                 'parish_note' => 'string|nullable',
             ];
-          } else {
+        } else {
             return [
                 'organization_name' => 'required',
                 'diocese_id' => 'integer|min:0',
@@ -56,7 +55,7 @@ class StoreParishRequest extends FormRequest
                 'phone_main_fax' => 'string|nullable',
                 'parish_note' => 'string|nullable',
             ];
-          }
+        }
     }
 
     /**

@@ -5,7 +5,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -37,12 +36,12 @@ class DonorControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-donor');
         $contact = \App\Models\Contact::factory()->create([
-          'contact_type' => config('polanco.contact_type.individual'),
-          'subcontact_type' => null,
+            'contact_type' => config('polanco.contact_type.individual'),
+            'subcontact_type' => null,
         ]);
         $donor = \App\Models\Donor::factory()->create([
-          'contact_id' => $contact->id,
-          'sort_name' => $contact->sort_name,
+            'contact_id' => $contact->id,
+            'sort_name' => $contact->sort_name,
         ]);
 
         $response = $this->actingAs($user)->get(route('donor.show', $donor->donor_id));

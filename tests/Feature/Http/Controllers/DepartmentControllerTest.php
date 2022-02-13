@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -121,8 +120,8 @@ class DepartmentControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
 
         $this->assertDatabaseHas('departments', [
-          'name' => $department_name,
-          'description' => $department_description,
+            'name' => $department_name,
+            'description' => $department_description,
         ]);
     }
 
@@ -142,9 +141,9 @@ class DepartmentControllerTest extends TestCase
         $new_department_name = 'New '.$this->faker->words(2, true);
 
         $response = $this->actingAs($user)->put(route('department.update', [$department]), [
-          'id' => $department->id,
-          'name' => $new_department_name,
-          'description' => $this->faker->sentence(7, true),
+            'id' => $department->id,
+            'name' => $new_department_name,
+            'description' => $this->faker->sentence(7, true),
         ]);
 
         $response->assertRedirect(action('DepartmentController@show', $department->id));

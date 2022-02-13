@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -123,10 +122,10 @@ class UomControllerTest extends TestCase
         $response->assertRedirect(action('UomController@index'));
 
         $this->assertDatabaseHas('uom', [
-          'unit_name' => $uom_unit_name,
-          'description' => $uom_description,
-          'is_active' => $uom_is_active,
-          'type' => $uom_type,
+            'unit_name' => $uom_unit_name,
+            'description' => $uom_description,
+            'is_active' => $uom_is_active,
+            'type' => $uom_type,
         ]);
     }
 
@@ -144,12 +143,12 @@ class UomControllerTest extends TestCase
         $new_uom_unit_name = 'New '.$this->faker->words(2, true);
 
         $response = $this->actingAs($user)->put(route('uom.update', [$uom]), [
-          'id' => $uom->id,
-          'unit_name' => $new_uom_unit_name,
-          'unit_symbol' => $new_uom_unit_name,
-          'description' => $this->faker->sentence(7, true),
-          'is_active' => $this->faker->boolean(),
-          'type' => $uom_type,
+            'id' => $uom->id,
+            'unit_name' => $new_uom_unit_name,
+            'unit_symbol' => $new_uom_unit_name,
+            'description' => $this->faker->sentence(7, true),
+            'is_active' => $this->faker->boolean(),
+            'type' => $uom_type,
         ]);
 
         $response->assertSessionHas('flash_notification');

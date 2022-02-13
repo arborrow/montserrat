@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PaymentSearchRequest;
 use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
-use App\Http\Requests\PaymentSearchRequest;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
 
@@ -23,7 +23,7 @@ class PaymentController extends Controller
     public function index()
     {
         $this->authorize('show-payment');
-        $payments = \App\Models\Payment::orderBy('payment_date', 'desc')->with('donation.retreat')->paginate(25,['*'],'payments');
+        $payments = \App\Models\Payment::orderBy('payment_date', 'desc')->with('donation.retreat')->paginate(25, ['*'], 'payments');
         //dd($donations);
         return view('payments.index', compact('payments'));
     }
@@ -61,8 +61,7 @@ class PaymentController extends Controller
         $descriptions = \App\Models\DonationType::active()->orderby('name')->pluck('name', 'name');
         $descriptions->prepend('N/A', '');
 
-
-        return view('payments.search', compact('payment_methods','descriptions'));
+        return view('payments.search', compact('payment_methods', 'descriptions'));
     }
 
     public function results(PaymentSearchRequest $request)
@@ -70,14 +69,14 @@ class PaymentController extends Controller
         $this->authorize('show-payment');
         if (! empty($request)) {
             $all_payments = \App\Models\Payment::filtered($request)->orderBy('payment_date')->get();
-            $payments = \App\Models\Payment::filtered($request)->orderBy('payment_date')->paginate(25,['*'],'payments');
+            $payments = \App\Models\Payment::filtered($request)->orderBy('payment_date')->paginate(25, ['*'], 'payments');
             $payments->appends($request->except('page'));
         } else {
             $all_payments = \App\Models\Payment::orderBy('payment_date')->get();
-            $payments = \App\Models\Payment::orderBy('payment_date')->paginate(25,['*'],'payments');
+            $payments = \App\Models\Payment::orderBy('payment_date')->paginate(25, ['*'], 'payments');
         }
 
-        return view('payments.results', compact('payments','all_payments'));
+        return view('payments.results', compact('payments', 'all_payments'));
     }
 
     /**

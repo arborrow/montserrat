@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -106,9 +105,9 @@ class UserControllerTest extends TestCase
         $new_description = $this->faker->sentence;
 
         $response = $this->actingAs($user)->post(route('user.store'), [
-          'name' => $new_name,
-          'display_name' => $new_name,
-          'description' => $new_description,
+            'name' => $new_name,
+            'display_name' => $new_name,
+            'description' => $new_description,
         ]);
 
         $response->assertSessionHas('flash_notification');

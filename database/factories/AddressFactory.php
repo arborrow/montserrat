@@ -27,7 +27,7 @@ class AddressFactory extends Factory
             'contact_id' => function () {
                 return \App\Models\Contact::factory()->create()->id;
             },
-            'location_type_id' => $this->faker->randomElement([1,2,4]),
+            'location_type_id' => $this->faker->randomElement([1, 2, 4]),
             'is_primary' => $this->faker->boolean(),
             'is_billing' => $this->faker->boolean(),
             'street_address' => $this->faker->streetAddress,

@@ -40,8 +40,7 @@ class UpdatePersonRequestTest extends TestCase
         $actual = $this->subject->rules();
 
         // if Twilio is enabled then validate phone numbers otherwise allow strings
-         if (null !== config('settings.twilio_sid') && null !== config('settings.twilio_token')) {
-
+        if (null !== config('settings.twilio_sid') && null !== config('settings.twilio_token')) {
             $this->assertEquals([
                 'address_home_address1' => 'string|max:125|nullable',
                 'address_home_address2' => 'string|max:125|nullable',
@@ -137,7 +136,7 @@ class UpdatePersonRequestTest extends TestCase
                 'url_instagram' => 'url|regex:/instagram\\.com\\/.+/i|nullable',
                 'url_linkedin' => 'url|regex:/linkedin\\.com\\/.+/i|nullable',
             ], $actual);
-          } else {
+        } else {
             $this->assertEquals([
                 'address_home_address1' => 'string|max:125|nullable',
                 'address_home_address2' => 'string|max:125|nullable',
@@ -233,8 +232,7 @@ class UpdatePersonRequestTest extends TestCase
                 'url_instagram' => 'url|regex:/instagram\\.com\\/.+/i|nullable',
                 'url_linkedin' => 'url|regex:/linkedin\\.com\\/.+/i|nullable',
             ], $actual);
-
-          }
+        }
     }
 
     /**

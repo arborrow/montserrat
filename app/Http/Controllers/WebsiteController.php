@@ -18,7 +18,7 @@ class WebsiteController extends Controller
     public function index()
     {
         $this->authorize('show-website');
-        $websites = \App\Models\Website::orderBy('url')->whereNotNull('url')->paginate(25,['*'],'websites');
+        $websites = \App\Models\Website::orderBy('url')->whereNotNull('url')->paginate(25, ['*'], 'websites');
 
         return view('admin.websites.index', compact('websites'));
     }

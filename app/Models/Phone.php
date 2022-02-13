@@ -14,6 +14,7 @@ class Phone extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'phone';
+
     protected $fillable = ['contact_id', 'location_type_id', 'is_primary', 'phone', 'phone_type'];
 
     public function owner()

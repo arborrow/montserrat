@@ -24,7 +24,6 @@ class UpdateOrganizationRequest extends FormRequest
     public function rules()
     {   // if Twilio is enabled then validate phone numbers otherwise allow strings
         if (null !== config('settings.twilio_sid') && null !== config('settings.twilio_token')) {
-
             return [
                 'organization_name' => 'required',
                 'bishop_id' => 'integer|min:0',
@@ -42,7 +41,7 @@ class UpdateOrganizationRequest extends FormRequest
                 'attachment' => 'file|mimes:pdf,doc,docx,zip|max:10000|nullable',
                 'attachment_description' => 'string|max:200|nullable',
             ];
-          } else {
+        } else {
             return [
                 'organization_name' => 'required',
                 'bishop_id' => 'integer|min:0',
@@ -60,7 +59,7 @@ class UpdateOrganizationRequest extends FormRequest
                 'attachment' => 'file|mimes:pdf,doc,docx,zip|max:10000|nullable',
                 'attachment_description' => 'string|max:200|nullable',
             ];
-          }
+        }
     }
 
     /**

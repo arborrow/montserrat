@@ -2,11 +2,10 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use Carbon\Carbon;
 
 /**
  * @see \App\Http\Controllers\DashboardController
@@ -61,28 +60,26 @@ class DashboardControllerTest extends TestCase
         $response->assertSee('Donation Description Dashboard');
     }
 
+    /**
+     * @test
+     */
+    public function donation_description_chart_with_donation_description_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-dashboard');
+        $donation_type = \App\Models\DonationType::active()->get()->random();
+        $donation = \App\Models\Donation::factory()->create([
+            'donation_description' => $donation_type->name,
+        ]);
 
-        /**
-         * @test
-         */
-        public function donation_description_chart_with_donation_description_returns_an_ok_response()
-        {
-            $user = $this->createUserWithPermission('show-dashboard');
-            $donation_type = \App\Models\DonationType::active()->get()->random();
-            $donation = \App\Models\Donation::factory()->create([
-                'donation_description' => $donation_type->name,
-            ]);
+        $response = $this->actingAs($user)->get('/dashboard/description/'.$donation_type->name);
 
-            $response = $this->actingAs($user)->get('/dashboard/description/'.$donation_type->name);
-
-            $response->assertOk();
-            $response->assertViewIs('dashboard.description');
-            $response->assertViewHas('donation_description_chart');
-            $response->assertViewHas('descriptions');
-            $response->assertSee('Donation Description Dashboard');
-            $response->assertSee($donation_type->name);
-
-        }
+        $response->assertOk();
+        $response->assertViewIs('dashboard.description');
+        $response->assertViewHas('donation_description_chart');
+        $response->assertViewHas('descriptions');
+        $response->assertSee('Donation Description Dashboard');
+        $response->assertSee($donation_type->name);
+    }
 
     /**
      * @test
@@ -131,8 +128,7 @@ class DashboardControllerTest extends TestCase
         $response->assertViewHas('total_participants');
         $response->assertViewHas('total_peoplenights');
         $response->assertSee('Board Dashboard');
-        $response->assertSeeText("FY".$last_year);
-
+        $response->assertSeeText('FY'.$last_year);
     }
 
     /**
@@ -142,7 +138,7 @@ class DashboardControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-dashboard');
         $event_type = \App\Models\EventType::get()->random();
-        $response = $this->actingAs($user)->get(route('dashboard.drilldown',$event_type->id));
+        $response = $this->actingAs($user)->get(route('dashboard.drilldown', $event_type->id));
 
         $response->assertOk();
         $response->assertViewIs('dashboard.drilldown');
@@ -151,6 +147,4 @@ class DashboardControllerTest extends TestCase
         $response->assertViewHas('event_type');
         $response->assertSee('Drilldown');
     }
-
-
 }

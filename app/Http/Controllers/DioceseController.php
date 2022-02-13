@@ -23,7 +23,7 @@ class DioceseController extends Controller
     {
         $this->authorize('show-contact');
 
-        $dioceses = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'bishops.contact_b', 'parishes.contact_a')->paginate(25,['*'],'dioceses');
+        $dioceses = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'bishops.contact_b', 'parishes.contact_a')->paginate(25, ['*'], 'dioceses');
         // dd($dioceses);
         return view('dioceses.index', compact('dioceses'));   //
     }
@@ -148,7 +148,7 @@ class DioceseController extends Controller
         $url_twitter->save();
 
         $current_user = $request->user();
-        $diocese_note = \App\Models\Note::firstOrNew(['entity_id'=>$diocese->id, 'entity_table'=>'contact','subject'=>'Diocese Note']);
+        $diocese_note = \App\Models\Note::firstOrNew(['entity_id'=>$diocese->id, 'entity_table'=>'contact', 'subject'=>'Diocese Note']);
         if (isset($current_user->contact_id)) {
             $diocese_note->contact_id = $current_user->contact_id;
         }
@@ -178,15 +178,15 @@ class DioceseController extends Controller
     {
         $this->authorize('show-contact');
         $diocese = \App\Models\Contact::with('bishops.contact_b', 'parishes.contact_b', 'addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'note_diocese', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a')->findOrFail($id);
-        $touchpoints = \App\Models\Touchpoint::wherePersonId($id)->orderBy('touched_at','DESC')->paginate(25,['*'],'touchpoints');
-        $registrations = \App\Models\Registration::whereContactId($id)->orderBy('created_at','DESC')->paginate(25,['*'],'registrations');
-        $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date','DESC')->paginate(25,['*'],'donations');
+        $touchpoints = \App\Models\Touchpoint::wherePersonId($id)->orderBy('touched_at', 'DESC')->paginate(25, ['*'], 'touchpoints');
+        $registrations = \App\Models\Registration::whereContactId($id)->orderBy('created_at', 'DESC')->paginate(25, ['*'], 'registrations');
+        $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date', 'DESC')->paginate(25, ['*'], 'donations');
 
         $files = \App\Models\Attachment::whereEntity('contact')->whereEntityId($diocese->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
         $relationship_types = [];
         $relationship_types['Primary Contact'] = 'Primary Contact';
 
-        return view('dioceses.show', compact('diocese', 'relationship_types', 'files','donations','registrations','touchpoints'));
+        return view('dioceses.show', compact('diocese', 'relationship_types', 'files', 'donations', 'registrations', 'touchpoints'));
     }
 
     /**
@@ -392,7 +392,7 @@ class DioceseController extends Controller
             $attachment->update_attachment($request->file('attachment'), 'contact', $diocese->id, 'attachment', $description);
         }
 
-        $diocese_note = \App\Models\Note::firstOrNew(['entity_id'=>$diocese->id, 'entity_table'=>'contact','subject'=>'Diocese Note']);
+        $diocese_note = \App\Models\Note::firstOrNew(['entity_id'=>$diocese->id, 'entity_table'=>'contact', 'subject'=>'Diocese Note']);
         $current_user = $request->user();
         if (isset($current_user->contact_id)) {
             $diocese_note->contact_id = $current_user->contact_id;

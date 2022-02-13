@@ -39,16 +39,16 @@ class StoreDonationRequestTest extends TestCase
         $actual = $this->subject->rules();
 
         $this->assertEquals([
-          'donor_id' => 'required|integer|min:0',
-          'event_id' => 'integer|min:0',
-          'donation_date' => 'required|date',
-          'payment_date' => 'required|date',
-          'donation_amount' => 'required|numeric',
-          'payment_amount' => 'required|numeric',
-          'payment_idnumber' => 'nullable|numeric|min:0',
-          'start_date' => 'date|nullable|before:end_date',
-          'end_date' => 'date|nullable|after:start_date',
-          'donation_install' => 'numeric|min:0|nullable',
+            'donor_id' => 'required|integer|min:0',
+            'event_id' => 'integer|min:0',
+            'donation_date' => 'required|date',
+            'payment_date' => 'required|date',
+            'donation_amount' => 'required|numeric',
+            'payment_amount' => 'required|numeric',
+            'payment_idnumber' => 'nullable|numeric|min:0',
+            'start_date' => 'date|nullable|before:end_date',
+            'end_date' => 'date|nullable|after:start_date',
+            'donation_install' => 'numeric|min:0|nullable',
         ], $actual);
     }
 

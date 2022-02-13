@@ -6,7 +6,6 @@ use App\Models\ContactLanguage;
 use App\Models\EmergencyContact;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
-
 use Tests\TestCase;
 
 /**
@@ -134,8 +133,8 @@ class PersonControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('delete-contact');
         $person = \App\Models\Contact::factory()->create([
-          'contact_type' => config('polanco.contact_type.individual'),
-          'subcontact_type' => null,
+            'contact_type' => config('polanco.contact_type.individual'),
+            'subcontact_type' => null,
         ]);
 
         $response = $this->actingAs($user)->delete(route('person.destroy', ['person' => $person]));
@@ -183,8 +182,8 @@ class PersonControllerTest extends TestCase
         $user = $this->createUserWithPermission('update-contact');
 
         $person = \App\Models\Contact::factory()->create([
-          'contact_type' => config('polanco.contact_type.individual'),
-          'subcontact_type' => null,
+            'contact_type' => config('polanco.contact_type.individual'),
+            'subcontact_type' => null,
         ]);
         $parish = \App\Models\Contact::factory()->create([
             'contact_type' => config('polanco.contact_type.organization'),
@@ -331,7 +330,7 @@ class PersonControllerTest extends TestCase
             'entity_table' => 'contact',
             'entity_id' => $person->id,
             'subject' => 'Dietary Note',
-       ]);
+        ]);
         $note_contact = \App\Models\Note::factory()->create([
             'entity_table' => 'contact',
             'entity_id' => $person->id,
@@ -448,7 +447,7 @@ class PersonControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('address_other_zip', $other_address->postal_code, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('address_other_country', $other_address->country_id, 'select', $response->getContent()));
         // phones
-        $this->assertTrue($this->findFieldValueInResponseContent('primary_phone_location_id', $person->primary_phone_location_type_id.":".$person->primary_phone_type, 'select', $response->getContent()));
+        $this->assertTrue($this->findFieldValueInResponseContent('primary_phone_location_id', $person->primary_phone_location_type_id.':'.$person->primary_phone_type, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('do_not_phone', $person->do_not_phone, 'checkbox', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('do_not_sms', $person->do_not_sms, 'checkbox', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('phone_home_phone', $home_phone->phone.$home_phone->phone_extension, 'text', $response->getContent()));
@@ -483,8 +482,8 @@ class PersonControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-contact');
         $person = \App\Models\Contact::factory()->create([
-          'contact_type' => config('polanco.contact_type.individual'),
-          'subcontact_type' => null,
+            'contact_type' => config('polanco.contact_type.individual'),
+            'subcontact_type' => null,
         ]);
 
         $response = $this->actingAs($user)->get(route('envelope', ['id' => $person->id]));
@@ -570,8 +569,8 @@ class PersonControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-contact');
         $person = \App\Models\Contact::factory()->create([
-          'contact_type' => config('polanco.contact_type.individual'),
-          'subcontact_type' => null,
+            'contact_type' => config('polanco.contact_type.individual'),
+            'subcontact_type' => null,
         ]);
 
         $response = $this->actingAs($user)->get(route('lastnames', [
@@ -599,9 +598,9 @@ class PersonControllerTest extends TestCase
         ]);
 
         $duplicate_person = \App\Models\Contact::factory()->create([
-          'contact_type' => config('polanco.contact_type.individual'),
-          'subcontact_type' => null,
-          'sort_name' => $person->sort_name,
+            'contact_type' => config('polanco.contact_type.individual'),
+            'subcontact_type' => null,
+            'sort_name' => $person->sort_name,
         ]);
 
         $response = $this->actingAs($user)->get(route('merge', ['contact_id' => $person->id]));
@@ -634,9 +633,9 @@ class PersonControllerTest extends TestCase
         ]);
 
         $duplicate_person = \App\Models\Contact::factory()->create([
-          'contact_type' => config('polanco.contact_type.individual'),
-          'subcontact_type' => null,
-          'sort_name' => $person->sort_name,
+            'contact_type' => config('polanco.contact_type.individual'),
+            'subcontact_type' => null,
+            'sort_name' => $person->sort_name,
         ]);
 
         $touchpoint = \App\Models\Touchpoint::factory()->create([
@@ -663,9 +662,9 @@ class PersonControllerTest extends TestCase
         ]);
 
         $duplicate_person = \App\Models\Contact::factory()->create([
-          'contact_type' => config('polanco.contact_type.individual'),
-          'subcontact_type' => null,
-          'sort_name' => $person->sort_name,
+            'contact_type' => config('polanco.contact_type.individual'),
+            'subcontact_type' => null,
+            'sort_name' => $person->sort_name,
         ]);
 
         $response = $this->actingAs($user)->get(route('merge_delete', ['id' => $duplicate_person->id, 'return_id' => $person->id]));
@@ -729,8 +728,8 @@ class PersonControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('show-contact');
         $person = \App\Models\Contact::factory()->create([
-          'contact_type' => config('polanco.contact_type.individual'),
-          'subcontact_type' => null,
+            'contact_type' => config('polanco.contact_type.individual'),
+            'subcontact_type' => null,
         ]);
         // var_dump($person->id);
         $response = $this->actingAs($user)->get(route('person.show', ['person' => $person]));
@@ -794,30 +793,30 @@ class PersonControllerTest extends TestCase
         $preferred_language = \App\Models\Language::whereIsActive(1)->get()->random();
 
         $response = $this->actingAs($user)->post(route('person.store'), [
-                'sort_name' => $last_name.', '.$first_name,
-                '$display_name' => $first_name.' '.$last_name,
-                'prefix_id' => $prefix->id,
-                'first_name' => $first_name,
-                'middle_name' => $this->faker->firstName,
-                'last_name' => $last_name,
-                'suffix_id' => $suffix->id,
-                'nick_name' => $this->faker->name,
-                'contact_type' => config('polanco.contact_type.individual'),
-                'subcontact_type' => null,
-                'gender_id' => $this->faker->numberBetween(1, 2),
-                'birth_date' => $this->faker->dateTime,
-                '$ethnicity_id' => $ethnicity->id,
-                'religion_id' => $religion->id,
-                'occupation_id' => $occupation->id,
-                'preferred_language' => $preferred_language->name,
-                'do_not_email' => $this->faker->boolean,
-                'do_not_phone' => $this->faker->boolean,
-                'do_not_mail' => $this->faker->boolean,
-                'do_not_sms' => $this->faker->boolean,
-                'do_not_trade' => $this->faker->boolean,
-                'primary_address_location_id' => config('polanco.location_type.home'),
-                'primary_email_location_id' => config('polanco.location_type.work'),
-                'primary_phone_location_id' => config('polanco.location_type.other').":Phone",
+            'sort_name' => $last_name.', '.$first_name,
+            '$display_name' => $first_name.' '.$last_name,
+            'prefix_id' => $prefix->id,
+            'first_name' => $first_name,
+            'middle_name' => $this->faker->firstName,
+            'last_name' => $last_name,
+            'suffix_id' => $suffix->id,
+            'nick_name' => $this->faker->name,
+            'contact_type' => config('polanco.contact_type.individual'),
+            'subcontact_type' => null,
+            'gender_id' => $this->faker->numberBetween(1, 2),
+            'birth_date' => $this->faker->dateTime,
+            '$ethnicity_id' => $ethnicity->id,
+            'religion_id' => $religion->id,
+            'occupation_id' => $occupation->id,
+            'preferred_language' => $preferred_language->name,
+            'do_not_email' => $this->faker->boolean,
+            'do_not_phone' => $this->faker->boolean,
+            'do_not_mail' => $this->faker->boolean,
+            'do_not_sms' => $this->faker->boolean,
+            'do_not_trade' => $this->faker->boolean,
+            'primary_address_location_id' => config('polanco.location_type.home'),
+            'primary_email_location_id' => config('polanco.location_type.work'),
+            'primary_phone_location_id' => config('polanco.location_type.other').':Phone',
 
         ]);
         $person = \App\Models\Contact::whereSortName($last_name.', '.$first_name)->first();
@@ -860,8 +859,8 @@ class PersonControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-contact');
         $person = \App\Models\Contact::factory()->create([
-          'contact_type' => config('polanco.contact_type.individual'),
-          'subcontact_type' => null,
+            'contact_type' => config('polanco.contact_type.individual'),
+            'subcontact_type' => null,
         ]);
         $original_sort_name = $person->sort_name;
         $new_sort_name = $this->faker->lastName.', '.$this->faker->firstName;

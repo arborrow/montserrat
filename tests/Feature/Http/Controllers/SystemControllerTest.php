@@ -4,7 +4,6 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\TmpOfferingDedup;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -43,14 +42,14 @@ class SystemControllerTest extends TestCase
             'created_at' => $this->faker->dateTime('now'),
         ]);
         $donation_1 = \App\Models\Donation::factory()->create([
-          'contact_id' => $offeringdedup->contact_id,
-          'event_id' => $offeringdedup->event_id,
-          'donation_description' => 'Retreat Funding',
+            'contact_id' => $offeringdedup->contact_id,
+            'event_id' => $offeringdedup->event_id,
+            'donation_description' => 'Retreat Funding',
         ]);
         $donation_2 = \App\Models\Donation::factory()->create([
-          'contact_id' => $offeringdedup->contact_id,
-          'event_id' => $offeringdedup->event_id,
-          'donation_description' => 'Retreat Funding',
+            'contact_id' => $offeringdedup->contact_id,
+            'event_id' => $offeringdedup->event_id,
+            'donation_description' => 'Retreat Funding',
         ]);
 
         $response = $this->actingAs($user)->get(route('offeringdedup.show', ['contact_id' => $offeringdedup->contact_id, 'event_id' => $offeringdedup->event_id]));

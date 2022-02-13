@@ -39,11 +39,11 @@ class StoreTouchpointRequestTest extends TestCase
         $actual = $this->subject->rules();
 
         $this->assertEquals([
-          'touched_at' => 'required|date',
-          'person_id' => 'required|integer|min:0',
-          'staff_id' => 'required|integer|min:0',
-          'type' => 'in:Email,Call,Letter,Face,Other',
-          'notes' => 'required',
+            'touched_at' => 'required|date',
+            'person_id' => 'required|integer|min:0',
+            'staff_id' => 'required|integer|min:0',
+            'type' => 'in:Email,Call,Letter,Face,Other',
+            'notes' => 'required',
         ], $actual);
     }
 

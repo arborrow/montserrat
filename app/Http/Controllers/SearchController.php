@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\SearchRequest;
+use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
@@ -51,11 +51,11 @@ class SearchController extends Controller
     {
         $this->authorize('show-contact');
         if (! empty($request)) {
-            $persons = \App\Models\Contact::filtered($request)->orderBy('sort_name')->with('attachments')->paginate(25,['*'],'persons');
+            $persons = \App\Models\Contact::filtered($request)->orderBy('sort_name')->with('attachments')->paginate(25, ['*'], 'persons');
             $persons->appends($request->except('page'));
-            // dd($persons);
+        // dd($persons);
         } else {
-            $persons = \App\Models\Contact::orderBy('sort_name')->with('attachments')->paginate(25,['*'],'persons');
+            $persons = \App\Models\Contact::orderBy('sort_name')->with('attachments')->paginate(25, ['*'], 'persons');
         }
         //dd($request);
         return view('search.results', compact('persons'));

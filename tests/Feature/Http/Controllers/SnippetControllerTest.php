@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -147,9 +146,9 @@ class SnippetControllerTest extends TestCase
         $response->assertRedirect(action('SnippetController@index'));
 
         $this->assertDatabaseHas('snippets', [
-          'title' => $title,
-          'snippet' => $snippet,
-          'label' => $label,
+            'title' => $title,
+            'snippet' => $snippet,
+            'label' => $label,
         ]);
     }
 
@@ -228,11 +227,11 @@ class SnippetControllerTest extends TestCase
         $new_title = 'New '.$this->faker->words(2, true);
 
         $response = $this->actingAs($user)->put(route('snippet.update', [$snippet]), [
-          'id' => $snippet->id,
-          'title' => $new_title,
-          'snippet' => $this->faker->sentence(7, true),
-          'label' => $snippet->label,
-          'locale' => $snippet->locale,
+            'id' => $snippet->id,
+            'title' => $new_title,
+            'snippet' => $this->faker->sentence(7, true),
+            'label' => $snippet->label,
+            'locale' => $snippet->locale,
         ]);
 
         $response->assertSessionHas('flash_notification');

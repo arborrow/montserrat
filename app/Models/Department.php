@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Department extends Model implements Auditable
-{   use HasFactory;
+{
+    use HasFactory;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 

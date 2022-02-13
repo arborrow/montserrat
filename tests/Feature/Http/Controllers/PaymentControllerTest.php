@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -120,9 +119,9 @@ class PaymentControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('DonationController@show', $donation->donation_id));
         $this->assertDatabaseHas('Donations_payment', [
-          'donation_id' => $donation->donation_id,
-          'payment_date' => $payment_date,
-          'payment_amount' => $payment_amount,
+            'donation_id' => $donation->donation_id,
+            'payment_date' => $payment_date,
+            'payment_amount' => $payment_amount,
         ]);
     }
 
@@ -192,7 +191,6 @@ class PaymentControllerTest extends TestCase
         );
     }
 
-
     /**
      * @test
      */
@@ -225,8 +223,6 @@ class PaymentControllerTest extends TestCase
         $response->assertViewHas('payment_methods');
         $response->assertSeeText('Search Payments');
     }
-
-
 
     // test cases...
 }

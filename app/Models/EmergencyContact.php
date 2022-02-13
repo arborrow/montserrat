@@ -14,6 +14,7 @@ class EmergencyContact extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'emergency_contact';
+
     protected $fillable = ['contact_id', 'name', 'relationship', 'phone', 'phone_alternate'];
 
     public function contact()

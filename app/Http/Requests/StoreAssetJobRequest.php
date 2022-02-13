@@ -36,7 +36,7 @@ class StoreAssetJobRequest extends FormRequest
             'actual_material_cost' => 'numeric|min:0|nullable',
             'note' => 'string|nullable',
             'tag' => 'string|nullable',
-       ];
+        ];
     }
 
     /**
