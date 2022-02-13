@@ -98,7 +98,7 @@ class PermissionController extends Controller
 
         flash('Permission: <a href="'.url('/admin/permission/'.$permission->id).'">'.$permission->name.'</a> added')->success();
 
-        return Redirect::action([\App\Http\Controllers\PermissionController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -148,7 +148,7 @@ class PermissionController extends Controller
 
         flash('Permission: <a href="'.url('/admin/permission/'.$permission->id).'">'.$permission->name.'</a> updated')->success();
 
-        return Redirect::action([\App\Http\Controllers\PermissionController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -167,7 +167,7 @@ class PermissionController extends Controller
 
         flash('Permission: '.$permission->name.' deleted')->warning()->important();
 
-        return Redirect::action([\App\Http\Controllers\PermissionController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 
     public function update_roles(Request $request)
@@ -180,6 +180,6 @@ class PermissionController extends Controller
 
         flash('Role assignments for permission: <a href="'.url('/admin/permission/'.$permission->id).'">'.$permission->name.'</a> updated')->success();
 
-        return Redirect::action([\App\Http\Controllers\PermissionController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 }

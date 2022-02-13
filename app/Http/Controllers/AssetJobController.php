@@ -88,7 +88,7 @@ class AssetJobController extends Controller
         flash('Asset job #: <a href="'.url('/asset_job/'.$asset_job->id).'">'.$asset_job->id.'</a> added')->success();
 
         // TODO: consider where best to redirect - possible to asset task or the asset itself
-        return Redirect::action([\App\Http\Controllers\AssetJobController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -180,7 +180,7 @@ class AssetJobController extends Controller
 
         flash('Asset job #<a href="'.url('/asset_job/'.$asset_job->id).'">'.$asset_job->id.'</a> updated')->success();
 
-        return Redirect::action([\App\Http\Controllers\AssetJobController::class, 'show'], $asset_job->id);
+        return Redirect::action([self::class, 'show'], $asset_job->id);
     }
 
     /**
@@ -197,6 +197,6 @@ class AssetJobController extends Controller
         \App\Models\AssetJob::destroy($id);
         flash('Asset job #'.$asset_job->id.' deleted')->warning()->important();
         // consider where to redirect to Asset, Asset Task, or Asset Job Index - I'm inclined toward asset_task
-        return Redirect::action([\App\Http\Controllers\AssetJobController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 }

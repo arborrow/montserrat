@@ -70,7 +70,7 @@ class RoomController extends Controller
 
         flash('Room: <a href="'.url('/room/'.$room->id).'">'.$room->name.'</a> added')->success();
 
-        return Redirect::action([\App\Http\Controllers\RoomController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -130,7 +130,7 @@ class RoomController extends Controller
 
         flash('Room: <a href="'.url('/room/'.$room->id).'">'.$room->name.'</a> updated')->success();
 
-        return Redirect::action([\App\Http\Controllers\RoomController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -148,7 +148,7 @@ class RoomController extends Controller
 
         flash('Room: '.$room->name.' deleted')->warning()->important();
 
-        return Redirect::action([\App\Http\Controllers\RoomController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 
     /**

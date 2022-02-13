@@ -609,7 +609,7 @@ class AttachmentController extends Controller
 
         flash('Attachment: <a href="'.url('/attachment/'.$attachment->id).'">'.$attachment->uri.'</a> updated')->success();
 
-        return Redirect::action([\App\Http\Controllers\AttachmentController::class, 'show'], $id);
+        return Redirect::action([self::class, 'show'], $id);
     }
 
     /**

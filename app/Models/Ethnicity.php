@@ -12,6 +12,7 @@ class Ethnicity extends Model implements Auditable
     use HasFactory;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+
     protected $casts = [
         'disabled_at' => 'datetime',
     ];  //

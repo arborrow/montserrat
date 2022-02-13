@@ -212,7 +212,7 @@ class TouchpointController extends Controller
 
         flash('Touchpoint ID#: <a href="'.url('/touchpoint/'.$touchpoint->id).'">'.$touchpoint->id.'</a> added')->success();
 
-        return Redirect::action([\App\Http\Controllers\TouchpointController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 
     public function store_group(StoreGroupTouchpointRequest $request)
@@ -347,7 +347,7 @@ class TouchpointController extends Controller
 
         flash('Touchpoint ID#: <a href="'.url('/touchpoint/'.$touchpoint->id).'">'.$touchpoint->id.'</a> updated')->success();
 
-        return Redirect::action([\App\Http\Controllers\TouchpointController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -364,6 +364,6 @@ class TouchpointController extends Controller
 
         flash('Touchpoint ID#: '.$id.' deleted')->warning()->important();
 
-        return Redirect::action([\App\Http\Controllers\TouchpointController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 }

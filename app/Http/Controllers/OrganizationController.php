@@ -172,7 +172,7 @@ class OrganizationController extends Controller
 
         flash('Organization: <a href="'.url('/organization/'.$organization->id).'">'.$organization->organization_name.'</a> added')->success();
 
-        return Redirect::action([\App\Http\Controllers\OrganizationController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -379,7 +379,7 @@ class OrganizationController extends Controller
 
         flash('Organization: <a href="'.url('/organization/'.$organization->id).'">'.$organization->organization_name.'</a> updated')->success();
 
-        return Redirect::action([\App\Http\Controllers\OrganizationController::class, 'show'], $organization->id);
+        return Redirect::action([self::class, 'show'], $organization->id);
     }
 
     /**
@@ -414,6 +414,6 @@ class OrganizationController extends Controller
 
         flash('Organization: '.$organization->organization_name.' deleted')->warning()->important();
 
-        return Redirect::action([\App\Http\Controllers\OrganizationController::class, 'index']);
+        return Redirect::action([self::class, 'index']);
     }
 }

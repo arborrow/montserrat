@@ -15,6 +15,7 @@ class Touchpoint extends Model implements Auditable
     //
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+
     protected $casts = [
         'touched_at' => 'datetime',
     ];

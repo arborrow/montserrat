@@ -18,12 +18,11 @@ class Payment extends Model implements Auditable
 
     protected $fillable = ['donation_id', 'payment_id', 'payment_amount', 'payment_description', 'cknumber', 'ccnumber', 'authorization_number', 'note', 'ty_letter_sent'];
 
-
     protected $primaryKey = 'payment_id';
 
     protected $casts = [
         'payment_date' => 'datetime',
-        'expire_date' => 'datetime','payment_amount'=>'decimal:2'
+        'expire_date' => 'datetime', 'payment_amount'=>'decimal:2',
     ];
 
     public function donation()

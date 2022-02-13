@@ -12,6 +12,7 @@ class Roomstate extends Model implements Auditable
     use HasFactory;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+
     protected $casts = [
         'statechange_at' => 'datetime',
     ];  //
