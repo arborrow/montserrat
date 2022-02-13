@@ -18,11 +18,12 @@ class Contact extends Model implements Auditable
 
     protected $table = 'contact';
 
-    protected $dates = [
-        'birth_date', 'deceased_date', 'created_date', 'modified_date',
-    ];
 
     protected $casts = [
+        'birth_date' => 'datetime',
+        'deceased_date' => 'datetime',
+        'created_date' => 'datetime',
+        'modified_date' => 'datetime',
         'contact_type' => 'integer',
         'subcontact_type' => 'integer',
     ];

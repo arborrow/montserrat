@@ -15,8 +15,15 @@ class Asset extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'asset';
-
-    protected $dates = ['start_date', 'end_date', 'purchase_date', 'warranty_start_date', 'warranty_end_date', 'depreciation_start_date', 'depreciation_end_date'];
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+        'purchase_date' => 'datetime',
+        'warranty_start_date' => 'datetime',
+        'warranty_end_date' => 'datetime',
+        'depreciation_start_date' => 'datetime',
+        'depreciation_end_date' => 'datetime',
+    ];
 
     // relations
 

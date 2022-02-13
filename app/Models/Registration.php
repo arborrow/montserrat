@@ -14,14 +14,13 @@ class Registration extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'participant';
-
-    protected $dates = [
-        'register_date',
-        'registration_confirm_date',
-        'attendance_confirm_date',
-        'canceled_at',
-        'arrived_at',
-        'departed_at',
+    protected $casts = [
+        'register_date' => 'datetime',
+        'registration_confirm_date' => 'datetime',
+        'attendance_confirm_date' => 'datetime',
+        'canceled_at' => 'datetime',
+        'arrived_at' => 'datetime',
+        'departed_at' => 'datetime',
     ];
 
     protected $fillable = ['contact_id', 'event_id', 'status_id', 'role_id', 'notes', 'register_date'];

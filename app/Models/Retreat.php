@@ -18,9 +18,10 @@ class Retreat extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'event';
-
-    protected $dates = [
-        'start_date', 'end_date', 'disabled_at',
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+        'disabled_at' => 'datetime',
     ];  //
 
     public function setStartDateAttribute($date)
