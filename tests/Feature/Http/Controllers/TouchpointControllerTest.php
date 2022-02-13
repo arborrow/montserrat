@@ -314,7 +314,7 @@ class TouchpointControllerTest extends TestCase
             'person_id' => $person->id,
             'staff_id' => $staff->id,
             'type' => array_rand(array_flip(['Email', 'Call', 'Letter', 'Face', 'Other'])),
-            'notes' => $this->faker->paragraph,
+            'notes' => $this->faker->paragraph(),
         ]);
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action('TouchpointController@index'));
@@ -366,7 +366,7 @@ class TouchpointControllerTest extends TestCase
             'group_id' => $group->id,
         ]);
 
-        $notes = $this->faker->paragraph;
+        $notes = $this->faker->paragraph();
         $touched_at = $this->faker->dateTime('now');
 
         $random_group_member = \App\Models\GroupContact::whereGroupId($group->id)->get()->random();
@@ -434,7 +434,7 @@ class TouchpointControllerTest extends TestCase
             'canceled_at' => null,
         ]);
 
-        $notes = $this->faker->paragraph;
+        $notes = $this->faker->paragraph();
         $touched_at = $this->faker->dateTime('now');
 
         // where criteria copied from touchpoint controller store_retreat method for consistency
@@ -505,7 +505,7 @@ class TouchpointControllerTest extends TestCase
             'canceled_at' => null,
         ]);
 
-        $notes = $this->faker->paragraph;
+        $notes = $this->faker->paragraph();
         $touched_at = $this->faker->dateTime('now');
 
         // where criteria copied from touchpoint controller store_retreat method for consistency
@@ -570,7 +570,7 @@ class TouchpointControllerTest extends TestCase
             'touched_at' => $this->faker->dateTime('now'),
             'person_id' => $person->id,
             'staff_id' => $staff->id,
-            'notes' => $this->faker->paragraph,
+            'notes' => $this->faker->paragraph(),
         ]);
 
         $touchpoint->refresh();

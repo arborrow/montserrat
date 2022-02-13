@@ -10,20 +10,13 @@ use Illuminate\Support\Str;
 class ParishFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = \App\Models\Parish::class;
-
-    /**
      * Define the model's default state.
      *
      * @return array
      */
     public function definition()
     {
-        $name = $this->faker->firstName;
+        $name = $this->faker->firstName();
         $parish_name = 'St. '.$name.' of '.$this->faker->city().' Parish';
 
         return [

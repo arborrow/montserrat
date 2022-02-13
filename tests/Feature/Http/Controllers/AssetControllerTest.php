@@ -234,7 +234,7 @@ class AssetControllerTest extends TestCase
 
         $user = $this->createUserWithPermission('create-asset');
 
-        $name = $this->faker->word;
+        $name = $this->faker->word();
         $description = $this->faker->sentence(7, true);
         $asset_type_id = $this->faker->numberBetween(1, 10);
 

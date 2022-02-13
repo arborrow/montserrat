@@ -142,7 +142,7 @@ class LocationControllerTest extends TestCase
     {   // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-location');
 
-        $location_name = $this->faker->word;
+        $location_name = $this->faker->word();
         $location_description = $this->faker->sentence(7, true);
         $location_type = $this->faker->randomElement(config('polanco.locations_type'));
 
@@ -175,7 +175,7 @@ class LocationControllerTest extends TestCase
 
         $location = \App\Models\Location::factory()->create();
 
-        $location_name = $this->faker->word;
+        $location_name = $this->faker->word();
         $location_description = $this->faker->sentence(7, true);
         $location_type = $this->faker->randomElement(config('polanco.locations_type'));
 

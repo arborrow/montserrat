@@ -188,19 +188,19 @@ class RoomControllerTest extends TestCase
         $user = $this->createUserWithPermission('create-room');
 
         $location = \App\Models\Location::factory()->create();
-        $name = 'New '.$this->faker->lastName.' Suite';
-        $description = $this->faker->catchPhrase;
+        $name = 'New '.$this->faker->lastName().' Suite';
+        $description = $this->faker->catchPhrase();
 
         $response = $this->actingAs($user)->post(route('room.store'), [
             'location_id' => $location->id,
             'floor' => $this->faker->numberBetween($min = 1, $max = 2),
             'name' => $name,
             'description' => $description,
-            'notes' => $this->faker->sentence,
-            'access' => $this->faker->word,
-            'type' => $this->faker->word,
-            'occupancy' => $this->faker->randomDigitNotNull,
-            'status' => $this->faker->word,
+            'notes' => $this->faker->sentence(),
+            'access' => $this->faker->word(),
+            'type' => $this->faker->word(),
+            'occupancy' => $this->faker->randomDigitNotNull(),
+            'status' => $this->faker->word(),
         ]);
 
         $response->assertSessionHas('flash_notification');
@@ -234,8 +234,8 @@ class RoomControllerTest extends TestCase
 
         $original_description = $room->description;
         $new_location = \App\Models\Location::factory()->create();
-        $new_name = 'Renovated '.$this->faker->lastName.' Suite';
-        $new_description = $this->faker->catchPhrase;
+        $new_name = 'Renovated '.$this->faker->lastName().' Suite';
+        $new_description = $this->faker->catchPhrase();
 
         $response = $this->actingAs($user)->put(route('room.update', [$room]), [
             'id' => $room->id,

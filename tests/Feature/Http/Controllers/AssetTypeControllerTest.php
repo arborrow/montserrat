@@ -105,7 +105,7 @@ class AssetTypeControllerTest extends TestCase
         $user = $this->createUserWithPermission('create-asset-type');
         $parent_asset_type = \App\Models\AssetType::factory()->create();
 
-        $asset_type_name = 'New '.$this->faker->word;
+        $asset_type_name = 'New '.$this->faker->word();
         $asset_type_label = $this->faker->words(2, true);
         $asset_type_description = $this->faker->sentence(7, true);
         $asset_type_is_active = $this->faker->boolean();

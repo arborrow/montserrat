@@ -179,11 +179,11 @@ class SnippetController extends Controller
                 // create fake person
                 $receiver = collect();
                 $receiver->id = $faker->numberBetween(100, 900);
-                $receiver->first_name = $faker->firstName;
-                $receiver->nick_name = $faker->firstName;
-                $receiver->display_name = $receiver->first_name.' '.$faker->lastName;
-                $receiver->birth_date = $faker->date;
-                $receiver->email = $faker->safeEmail;
+                $receiver->first_name = $faker->firstName();
+                $receiver->nick_name = $faker->firstName();
+                $receiver->display_name = $receiver->first_name.' '.$faker->lastName();
+                $receiver->birth_date = $faker->date();
+                $receiver->email = $faker->safeEmail();
                 $receiver->preferred_language = $language;
                 if (! empty($email)) {
                     try {

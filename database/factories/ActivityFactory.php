@@ -10,13 +10,6 @@ use Illuminate\Support\Str;
 class ActivityFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = \App\Models\Activity::class;
-
-    /**
      * Define the model's default state.
      *
      * @return array
@@ -31,7 +24,7 @@ class ActivityFactory extends Factory
             'duration' => $this->faker->randomNumber(),
             'location' => $this->faker->word(),
             'phone_id' => $this->faker->randomNumber(),
-            'phone_number' => $this->faker->phoneNumber,
+            'phone_number' => $this->faker->phoneNumber(),
             'details' => $this->faker->text(),
             'status_id' => $this->faker->randomNumber(),
             'priority_id' => $this->faker->randomNumber(),

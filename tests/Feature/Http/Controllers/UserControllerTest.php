@@ -101,8 +101,8 @@ class UserControllerTest extends TestCase
     {   // keep in mind that this does not actually store a user record in the database
         $user = $this->createUserWithPermission('create-user');
 
-        $new_name = $this->faker->jobTitle;
-        $new_description = $this->faker->sentence;
+        $new_name = $this->faker->jobTitle();
+        $new_description = $this->faker->sentence();
 
         $response = $this->actingAs($user)->post(route('user.store'), [
             'name' => $new_name,
@@ -132,8 +132,8 @@ class UserControllerTest extends TestCase
         $user = \App\Models\User::factory()->create();
 
         $original_description = $user->description;
-        $new_name = $this->faker->jobTitle;
-        $new_description = $this->faker->sentence;
+        $new_name = $this->faker->jobTitle();
+        $new_description = $this->faker->sentence();
 
         $response = $this->actingAs($user)->put(route('user.update', [$user]), [
             'id'  => $user->id,

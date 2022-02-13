@@ -114,7 +114,7 @@ class GroupControllerTest extends TestCase
     public function store_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('create-group');
-        $group_name = ucfirst(implode(' ', $this->faker->words));
+        $group_name = ucfirst(implode(' ', $this->faker->words()));
         $response = $this->actingAs($user)->post(route('group.store'), [
             'name' => $group_name,
             'title' => Str::plural($group_name),
@@ -153,7 +153,7 @@ class GroupControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-group');
         $group = \App\Models\Group::factory()->create();
-        $new_group_name = ucfirst($this->faker->unique()->word);
+        $new_group_name = ucfirst($this->faker->unique()->word());
 
         $response = $this->actingAs($user)->put(route('group.update', [$group]), [
             'name' => $new_group_name,

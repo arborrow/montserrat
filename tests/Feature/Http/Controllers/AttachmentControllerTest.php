@@ -77,7 +77,7 @@ class AttachmentControllerTest extends TestCase
         $user = $this->createUserWithPermission('delete-attachment');
 
         $asset = \App\Models\Asset::factory()->create();
-        $file_name = $this->faker->isbn10.'.pdf';
+        $file_name = $this->faker->isbn10().'.pdf';
         $file = UploadedFile::fake()->create($file_name)->storeAs('asset/'.$asset->id.'/attachments', $file_name);
         $description = 'Random Attachment for '.$asset->name;
 
@@ -105,7 +105,7 @@ class AttachmentControllerTest extends TestCase
 
         //create a person, create a fake attachment for that person, see if you can display the attachment
         $person = \App\Models\Contact::factory()->create();
-        $file_name = $this->faker->isbn10.'.pdf';
+        $file_name = $this->faker->isbn10().'.pdf';
         $file = UploadedFile::fake()->create($file_name)->storeAs('contact/'.$person->id.'/attachments', $file_name);
         $description = 'Random Attachment for '.$person->full_name;
 
@@ -133,7 +133,7 @@ class AttachmentControllerTest extends TestCase
 
         //create a person, create a fake attachment for that person, see if you can display the attachment
         $event = \App\Models\Retreat::factory()->create();
-        $file_name = $this->faker->isbn10.'.pdf';
+        $file_name = $this->faker->isbn10().'.pdf';
         $file = UploadedFile::fake()->create($file_name)->storeAs('event/'.$event->id.'/attachments', $file_name);
         $description = 'Random Attachment for '.$event->idnumber;
 
@@ -421,7 +421,7 @@ class AttachmentControllerTest extends TestCase
 
         //create a person, create a fake attachment for that person, see if you can display the attachment
         $person = \App\Models\Contact::factory()->create();
-        $file_name = $this->faker->isbn10.'.pdf';
+        $file_name = $this->faker->isbn10().'.pdf';
         $file = UploadedFile::fake()->create($file_name)->storeAs('contact/'.$person->id.'/attachments', $file_name);
         $description = 'Random Attachment for '.$person->full_name;
 
@@ -449,7 +449,7 @@ class AttachmentControllerTest extends TestCase
 
         //create a person, create a fake attachment for that person, see if you can display the attachment
         $event = \App\Models\Retreat::factory()->create();
-        $file_name = $this->faker->isbn10.'.pdf';
+        $file_name = $this->faker->isbn10().'.pdf';
         $file = UploadedFile::fake()->create($file_name)->storeAs('event/'.$event->id.'/attachments', $file_name);
         $description = 'Random Attachment for '.$event->idnumber;
 
@@ -477,7 +477,7 @@ class AttachmentControllerTest extends TestCase
 
         //create a person, create a fake attachment for that person, see if you can display the attachment
         $asset = \App\Models\Asset::factory()->create();
-        $file_name = $this->faker->isbn10.'.pdf';
+        $file_name = $this->faker->isbn10().'.pdf';
         $file = UploadedFile::fake()->create($file_name)->storeAs('asset/'.$asset->id.'/attachments', $file_name);
         $description = 'Random Attachment for '.$asset->name;
 
@@ -520,7 +520,7 @@ class AttachmentControllerTest extends TestCase
             'subcontact_type' => '0',
         ]);
         $attachment = \App\Models\Attachment::factory()->create([
-            'uri' => $this->faker->word.'.pdf',
+            'uri' => $this->faker->word().'.pdf',
             'entity_id' => $contact->id,
             'entity' => 'contact',
         ]);
@@ -542,8 +542,8 @@ class AttachmentControllerTest extends TestCase
             'subcontact_type' => '0',
         ]);
         $attachment = \App\Models\Attachment::factory()->create([
-            'uri' => $this->faker->word.'.pdf',
-            'description' => $this->faker->sentence,
+            'uri' => $this->faker->word().'.pdf',
+            'description' => $this->faker->sentence(),
             'entity_id' => $contact->id,
             'entity' => 'contact',
         ]);
@@ -584,8 +584,8 @@ class AttachmentControllerTest extends TestCase
             'subcontact_type' => '0',
         ]);
         $attachment = \App\Models\Attachment::factory()->create([
-            'uri' => $this->faker->word.'.pdf',
-            'description' => $this->faker->sentence,
+            'uri' => $this->faker->word().'.pdf',
+            'description' => $this->faker->sentence(),
             'entity_id' => $contact->id,
             'entity' => 'contact',
         ]);
@@ -605,7 +605,7 @@ class AttachmentControllerTest extends TestCase
     {   // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-attachment');
 
-        $attachment_uri = $this->faker->word.'.pdf';
+        $attachment_uri = $this->faker->word().'.pdf';
         $attachment_description = $this->faker->sentence(7, true);
 
         $response = $this->actingAs($user)->from(URL('attachment'))->post(route('attachment.store'), [
@@ -629,7 +629,7 @@ class AttachmentControllerTest extends TestCase
             'subcontact_type' => '0',
         ]);
 
-        $attachment_uri = $this->faker->word.'.pdf';
+        $attachment_uri = $this->faker->word().'.pdf';
         $attachment_description = $this->faker->sentence(7, true);
 
         $attachment = \App\Models\Attachment::factory()->create([

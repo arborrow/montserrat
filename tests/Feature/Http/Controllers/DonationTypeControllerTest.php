@@ -107,7 +107,7 @@ class DonationTypeControllerTest extends TestCase
         $this->withoutExceptionHandling();
 
         $user = $this->createUserWithPermission('create-donation-type');
-        $donation_type_name = 'New '.$this->faker->word;
+        $donation_type_name = 'New '.$this->faker->word();
         $donation_type_label = $this->faker->words(2, true);
         $donation_type_description = $this->faker->sentence(7, true);
         $donation_type_value = strval($this->faker->numberBetween(1000, 2000));

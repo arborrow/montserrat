@@ -32,7 +32,7 @@ class EventFactory extends Factory
         $start_date = Carbon::createFromTimestamp($this->faker->dateTimeBetween($startDate = '-60 days', $endDate = '+60 days')->getTimeStamp());
         $end_date = Carbon::createFromFormat('Y-m-d H:i:s', $start_date)->addDays($this->faker->numberBetween(1, 5));
         $title = ucwords(implode(' ', $this->faker->words(2))).' Retreat';
-        $idnumber = (int) '2018'.$this->faker->unique()->randomNumber(4).'-'.$this->faker->unique()->lastName;
+        $idnumber = (int) '2018'.$this->faker->unique()->randomNumber(4).'-'.$this->faker->unique()->lastName();
         // dd($start_date,$end_date);
         // dd($title, $start_date, $end_date, $idnumber);
 

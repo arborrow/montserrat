@@ -10,13 +10,6 @@ use Illuminate\Support\Str;
 class ContactTypeFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = \App\Models\ContactType::class;
-
-    /**
      * Define the model's default state.
      *
      * @return array
@@ -24,7 +17,7 @@ class ContactTypeFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
+            'name' => $this->faker->name(),
             'label' => $this->faker->word(),
             'description' => $this->faker->text(),
             'image_URL' => $this->faker->word(),

@@ -90,32 +90,32 @@ class OrganizationControllerTest extends TestCase
         $url_main = \App\Models\Website::factory()->create([
             'contact_id' => $organization->id,
             'website_type' => 'Main',
-            'url' => $this->faker->url,
+            'url' => $this->faker->url(),
         ]);
         $url_work = \App\Models\Website::factory()->create([
             'contact_id' => $organization->id,
             'website_type' => 'Work',
-            'url' => $this->faker->url,
+            'url' => $this->faker->url(),
         ]);
         $url_facebook = \App\Models\Website::factory()->create([
             'contact_id' => $organization->id,
             'website_type' => 'Facebook',
-            'url' => 'https://facebook.com/'.$this->faker->slug,
+            'url' => 'https://facebook.com/'.$this->faker->slug(),
         ]);
         $url_instagram = \App\Models\Website::factory()->create([
             'contact_id' => $organization->id,
             'website_type' => 'Instagram',
-            'url' => 'https://instagram.com/'.$this->faker->slug,
+            'url' => 'https://instagram.com/'.$this->faker->slug(),
         ]);
         $url_linkedin = \App\Models\Website::factory()->create([
             'contact_id' => $organization->id,
             'website_type' => 'LinkedIn',
-            'url' => 'https://linkedin.com/'.$this->faker->slug,
+            'url' => 'https://linkedin.com/'.$this->faker->slug(),
         ]);
         $url_twitter = \App\Models\Website::factory()->create([
             'contact_id' => $organization->id,
             'website_type' => 'Twitter',
-            'url' => 'https://twitter.com/'.$this->faker->slug,
+            'url' => 'https://twitter.com/'.$this->faker->slug(),
         ]);
 
         $response = $this->actingAs($user)->get(route('organization.edit', ['organization' => $organization]));
@@ -208,7 +208,7 @@ class OrganizationControllerTest extends TestCase
     public function store_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('create-contact');
-        $organization_name = $this->faker->company;
+        $organization_name = $this->faker->company();
 
         $response = $this->actingAs($user)->post(route('organization.store'), [
             'organization_name' => $organization_name,
@@ -249,7 +249,7 @@ class OrganizationControllerTest extends TestCase
         $organization = \App\Models\Contact::factory()->create();
         $original_name = $organization->organization_name;
         //create updated data
-        $organization_name = $this->faker->company;
+        $organization_name = $this->faker->company();
         $response = $this->actingAs($user)->put(route('organization.update', ['organization' => $organization]), [
             'organization_name' => $organization_name,
             'display_name' => $organization_name,

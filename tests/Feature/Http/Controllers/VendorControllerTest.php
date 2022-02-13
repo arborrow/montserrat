@@ -88,32 +88,32 @@ class VendorControllerTest extends TestCase
         $url_main = \App\Models\Website::factory()->create([
             'contact_id' => $vendor->id,
             'website_type' => 'Main',
-            'url' => $this->faker->url,
+            'url' => $this->faker->url(),
         ]);
         $url_work = \App\Models\Website::factory()->create([
             'contact_id' => $vendor->id,
             'website_type' => 'Work',
-            'url' => $this->faker->url,
+            'url' => $this->faker->url(),
         ]);
         $url_facebook = \App\Models\Website::factory()->create([
             'contact_id' => $vendor->id,
             'website_type' => 'Facebook',
-            'url' => 'https://facebook.com/'.$this->faker->slug,
+            'url' => 'https://facebook.com/'.$this->faker->slug(),
         ]);
         $url_instagram = \App\Models\Website::factory()->create([
             'contact_id' => $vendor->id,
             'website_type' => 'Instagram',
-            'url' => 'https://instagram.com/'.$this->faker->slug,
+            'url' => 'https://instagram.com/'.$this->faker->slug(),
         ]);
         $url_linkedin = \App\Models\Website::factory()->create([
             'contact_id' => $vendor->id,
             'website_type' => 'LinkedIn',
-            'url' => 'https://linkedin.com/'.$this->faker->slug,
+            'url' => 'https://linkedin.com/'.$this->faker->slug(),
         ]);
         $url_twitter = \App\Models\Website::factory()->create([
             'contact_id' => $vendor->id,
             'website_type' => 'Twitter',
-            'url' => 'https://twitter.com/'.$this->faker->slug,
+            'url' => 'https://twitter.com/'.$this->faker->slug(),
         ]);
 
         $response = $this->actingAs($user)->get(route('vendor.edit', $vendor->id));
@@ -190,7 +190,7 @@ class VendorControllerTest extends TestCase
     public function store_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('create-contact');
-        $vendor_name = $this->faker->company;
+        $vendor_name = $this->faker->company();
 
         $response = $this->actingAs($user)->post(route('vendor.store'), [
             'organization_name' => $vendor_name,
@@ -232,7 +232,7 @@ class VendorControllerTest extends TestCase
         $user = $this->createUserWithPermission('update-contact');
         $vendor = \App\Models\Vendor::factory()->create();
         $original_sort_name = $vendor->sort_name;
-        $vendor_name = $this->faker->company;
+        $vendor_name = $this->faker->company();
 
         $response = $this->actingAs($user)->put(route('vendor.update', $vendor), [
             'sort_name' => $vendor_name,
