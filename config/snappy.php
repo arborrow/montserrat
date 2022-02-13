@@ -40,6 +40,7 @@ return [
         'options' => [
             'page-size' => 'Letter',
             'orientation' => 'portrait',
+            'enable-local-file-access' => true,
         ],
         'env'     => [],
     ],
@@ -48,7 +49,9 @@ return [
         'enabled' => true,
         'binary'  => env('WKHTML_IMG_BINARY', '/usr/local/bin/wkhtmltoimage'),
         'timeout' => false,
-        'options' => [],
+        'options' => [
+            'enable-local-file-access' => true,
+        ],
         'env'     => [],
     ],
 
