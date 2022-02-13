@@ -12,7 +12,7 @@
     "devDependencies": {
         "@alexbinary/glob": "^1.0.1",
         "@fortawesome/fontawesome-free": "^5.15.1",
-        "axios": "^0.21",
+        "axios": "^0.25",
         "bootstrap": "^4.4.1",
         "copy-webpack-plugin": "^9",
         "flatpickr": "^4.6.3",
