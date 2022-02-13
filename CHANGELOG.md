@@ -315,7 +315,7 @@
 ## [v5.4.21 (2017-04-28)](https://github.com/laravel/laravel/compare/v5.4.19...v5.4.21)
 
 ### Added
-- Added `FILESYSTEM_DRIVER` and `FILESYSTEM_CLOUD` environment variables ([#4236](https://github.com/laravel/laravel/pull/4236))
+- Added `FILESYSTEM_DISK` and `FILESYSTEM_CLOUD` environment variables ([#4236](https://github.com/laravel/laravel/pull/4236))
 
 ### Changed
 - Use lowercase doctype ([#4241](https://github.com/laravel/laravel/pull/4241))
