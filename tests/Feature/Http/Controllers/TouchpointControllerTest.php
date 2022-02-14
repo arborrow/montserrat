@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use Tests\TestCase;
-
+use Carbon\Carbon;
 /**
  * @see \App\Http\Controllers\TouchpointController
  */
@@ -309,6 +309,8 @@ class TouchpointControllerTest extends TestCase
             'contact_id' => $staff->id,
         ]);
         $touched_at = $this->faker->dateTime('now');
+        $touched_at = Carbon::now();
+//        dd($touched_at,Carbon::now());
         $response = $this->actingAs($user)->post(route('touchpoint.store'), [
             'touched_at' => $touched_at,
             'person_id' => $person->id,
@@ -316,8 +318,10 @@ class TouchpointControllerTest extends TestCase
             'type' => array_rand(array_flip(['Email', 'Call', 'Letter', 'Face', 'Other'])),
             'notes' => $this->faker->paragraph(),
         ]);
-        $response->assertSessionHas('flash_notification');
+
         $response->assertRedirect(action([\App\Http\Controllers\TouchpointController::class, 'index']));
+        $response->assertSessionHas('flash_notification');
+
         $this->assertDatabaseHas('touchpoints', [
             'touched_at' => $touched_at,
             'person_id' => $person->id,
@@ -367,7 +371,7 @@ class TouchpointControllerTest extends TestCase
         ]);
 
         $notes = $this->faker->paragraph();
-        $touched_at = $this->faker->dateTime('now');
+        $touched_at = Carbon::now();
 
         $random_group_member = \App\Models\GroupContact::whereGroupId($group->id)->get()->random();
 
@@ -379,8 +383,8 @@ class TouchpointControllerTest extends TestCase
             'notes' => $notes,
         ]);
 
-        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action([\App\Http\Controllers\GroupController::class, 'show'], $group->id));
+        $response->assertSessionHas('flash_notification');
         $this->assertDatabaseHas('touchpoints', [
             'touched_at' => $touched_at,
             'person_id' => $random_group_member->contact_id,
@@ -436,6 +440,7 @@ class TouchpointControllerTest extends TestCase
 
         $notes = $this->faker->paragraph();
         $touched_at = $this->faker->dateTime('now');
+        $touched_at = Carbon::now();
 
         // where criteria copied from touchpoint controller store_retreat method for consistency
         $actual_participants = \App\Models\Registration::whereStatusId(config('polanco.registration_status_id.registered'))->whereEventId($retreat->id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
@@ -449,8 +454,8 @@ class TouchpointControllerTest extends TestCase
             'notes' => $notes,
         ]);
 
-        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id));
+        $response->assertSessionHas('flash_notification');
 
         $this->assertDatabaseHas('touchpoints', [
             'touched_at' => $touched_at,
@@ -506,7 +511,7 @@ class TouchpointControllerTest extends TestCase
         ]);
 
         $notes = $this->faker->paragraph();
-        $touched_at = $this->faker->dateTime('now');
+        $touched_at = Carbon::now();
 
         // where criteria copied from touchpoint controller store_retreat method for consistency
         $actual_participants = \App\Models\Registration::whereStatusId(config('polanco.registration_status_id.waitlist'))->whereEventId($retreat->id)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereNull('canceled_at')->get();
@@ -520,8 +525,8 @@ class TouchpointControllerTest extends TestCase
             'notes' => $notes,
         ]);
 
-        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id));
+        $response->assertSessionHas('flash_notification');
 
         $this->assertDatabaseHas('touchpoints', [
             'touched_at' => $touched_at,
@@ -567,16 +572,16 @@ class TouchpointControllerTest extends TestCase
         $original_person_id = $touchpoint->person_id;
         $response = $this->actingAs($user)->put(route('touchpoint.update', [$touchpoint]), [
             'id' => $touchpoint->id,
-            'touched_at' => $this->faker->dateTime('now'),
+            'touched_at' => Carbon::now(),
             'person_id' => $person->id,
             'staff_id' => $staff->id,
             'notes' => $this->faker->paragraph(),
         ]);
 
-        $touchpoint->refresh();
-
-        $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action([\App\Http\Controllers\TouchpointController::class, 'index']));
+        $response->assertSessionHas('flash_notification');
+
+        $touchpoint->refresh();
         $this->AssertEquals($person->id, $touchpoint->person_id);
         $this->AssertEquals($staff->id, $touchpoint->staff_id);
         $this->AssertNotEquals($original_staff_id, $touchpoint->staff_id);

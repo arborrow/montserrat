@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\ContactLanguage;
 use App\Models\EmergencyContact;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -804,7 +805,7 @@ class PersonControllerTest extends TestCase
             'contact_type' => config('polanco.contact_type.individual'),
             'subcontact_type' => null,
             'gender_id' => $this->faker->numberBetween(1, 2),
-            'birth_date' => $this->faker->dateTime(),
+            'birth_date' => Carbon::parse($this->faker->dateTime()),
             '$ethnicity_id' => $ethnicity->id,
             'religion_id' => $religion->id,
             'occupation_id' => $occupation->id,

@@ -3,6 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\GroupContact;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
@@ -411,7 +412,7 @@ class RegistrationControllerTest extends TestCase
             'subcontact_type' => null,
         ]);
         $response = $this->actingAs($user)->post(route('registration.store'), [
-            'register_date' => $this->faker->dateTime('now'),
+            'register_date' => Carbon::now(),
             'event_id' => $retreat->id,
             'status_id' => config('polanco.registration_status_id.registered'),
             'contact_id' => $contact->id,
@@ -459,7 +460,7 @@ class RegistrationControllerTest extends TestCase
             'event_id' => $retreat->id,
             'group_id' => $group->id,
             'status_id' => config('polanco.registration_status_id.registered'),
-            'register_date' => $this->faker->dateTime('now'),
+            'register_date' => Carbon::now(),
             'deposit' => $this->faker->randomFloat(2, 0, 100),
         ]);
 
@@ -494,9 +495,9 @@ class RegistrationControllerTest extends TestCase
         $original_deposit = $registration->deposit;
         $response = $this->actingAs($user)->put(route('registration.update', [$registration]), [
             'id' => $registration->id,
-            'register_date' => $this->faker->dateTime('now'),
-            'attendance_confirm_date' => $this->faker->dateTime('now'),
-            'registration_confirm_date' => $this->faker->dateTime('now'),
+            'register_date' => Carbon::now(),
+            'attendance_confirm_date' => Carbon::now(),
+            'registration_confirm_date' => Carbon::now(),
             'canceled_at' => null,
             'arrived_at' => null,
             'departed_at' => null,

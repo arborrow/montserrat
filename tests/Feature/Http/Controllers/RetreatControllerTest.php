@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Carbon\Carbon;
 
 /**
  * @see \App\Http\Controllers\RetreatController
@@ -103,7 +104,7 @@ class RetreatControllerTest extends TestCase
         $registrations = \App\Models\Registration::factory()->count($number_registrations)->create([
             'event_id' => $retreat->id,
             'canceled_at' => null,
-            'arrived_at' => $this->faker->dateTime('now'),
+            'arrived_at' => Carbon::now(),
             'departed_at' => null,
             'room_id' => null,
         ]);
@@ -416,8 +417,8 @@ class RetreatControllerTest extends TestCase
         $idnumber = $this->faker->numberBetween(11111111, 99999999).$this->faker->lastName();
         $response = $this->actingAs($user)->post(route('retreat.store'), [
             'idnumber' => $idnumber,
-            'start_date' => $this->faker->dateTimeBetween('+6 days', '+10 days'),
-            'end_date' => $this->faker->dateTimeBetween('+11 days', '+15 days'),
+            'start_date' => Carbon::parse($this->faker->dateTimeBetween('+6 days', '+10 days')),
+            'end_date' => Carbon::parse($this->faker->dateTimeBetween('+11 days', '+15 days')),
             'title' => $this->faker->catchPhrase(),
             'silent' => $this->faker->boolean(90),
             'is_active' => '1',
@@ -459,8 +460,8 @@ class RetreatControllerTest extends TestCase
         $response = $this->actingAs($user)->put(route('retreat.update', [$retreat]), [
             'id' => $retreat->id,
             'idnumber' => $new_idnumber,
-            'start_date' => $this->faker->dateTimeBetween('+6 days', '+10 days'),
-            'end_date' => $this->faker->dateTimeBetween('+11 days', '+15 days'),
+            'start_date' => Carbon::parse($this->faker->dateTimeBetween('+6 days', '+10 days')),
+            'end_date' => Carbon::parse($this->faker->dateTimeBetween('+11 days', '+15 days')),
             'title' => $new_title,
             'innkeeper_id' => '0',
             'assistant_id' => '0',

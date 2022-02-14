@@ -67,7 +67,7 @@ class Payment extends Model implements Auditable
         $payment_amount_operator = '=';
 
         //while not the most efficient - I want to get the comparison operators first so I can assign them to variables to use
-        foreach ($filters->request as $filter => $value) {
+        foreach ($filters->query as $filter => $value) {
             switch ($filter) {
                 case 'payment_date_operator':
                     $payment_date_operator = ! empty($value) ? $value : '=';
@@ -77,7 +77,7 @@ class Payment extends Model implements Auditable
                     break;
             }
         }
-        foreach ($filters->request as $filter => $value) {
+        foreach ($filters->query as $filter => $value) {
             if ($filter == 'payment_date' && ! empty($value)) {
                 $payment_date = Carbon::parse($value);
                 $query->where($filter, $payment_date_operator, $payment_date);

@@ -354,8 +354,7 @@ class Asset extends Model implements Auditable
 
     public function scopeFiltered($query, $filters)
     {
-        //dd($filters->request);
-        foreach ($filters->request as $filter => $value) {
+        foreach ($filters->query as $filter => $value) {
             if ($filter == 'name' && ! empty($value)) {
                 $query->where($filter, 'like', '%'.$value.'%');
             }

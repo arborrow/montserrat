@@ -1340,8 +1340,7 @@ class Contact extends Model implements Auditable
 
     public function scopeFiltered($query, $filters)
     {
-        //dd($filters->request);
-        foreach ($filters->request as $filter => $value) {
+        foreach ($filters->query as $filter => $value) {
             if ($filter == 'prefix_id' && $value > 0) {
                 $query->where($filter, $value);
             }

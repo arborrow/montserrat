@@ -169,7 +169,7 @@ class Donation extends Model implements Auditable
         $donation_install_operator = '=';
 
         //while not the most efficient - I want to get the comparison operators first so I can assign them to variables to use
-        foreach ($filters->request as $filter => $value) {
+        foreach ($filters->query as $filter => $value) {
             switch ($filter) {
                     case 'donation_date_operator':
                         $donation_date_operator = ! empty($value) ? $value : '=';
@@ -188,7 +188,7 @@ class Donation extends Model implements Auditable
                         break;
                 }
         }
-        foreach ($filters->request as $filter => $value) {
+        foreach ($filters->query as $filter => $value) {
             if ($filter == 'donation_date' && ! empty($value)) {
                 $donation_date = Carbon::parse($value);
                 $query->where($filter, $donation_date_operator, $donation_date);

@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use Tests\TestCase;
+use Carbon\Carbon;
 
 /**
  * @see \App\Http\Controllers\RelationshipTypeController
@@ -297,8 +298,8 @@ class RelationshipTypeControllerTest extends TestCase
             'contact_sub_type_b' => null,
             'is_reserved' => 0,
             'is_active' => 1,
-            'created_at' => $this->faker->dateTime('now'),
-            'updated_at' => $this->faker->dateTime('now'),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
         $response->assertRedirect(action([\App\Http\Controllers\RelationshipTypeController::class, 'index']));
         $response->assertSessionHas('flash_notification');

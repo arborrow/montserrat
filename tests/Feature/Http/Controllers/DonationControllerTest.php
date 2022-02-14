@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -300,8 +301,8 @@ class DonationControllerTest extends TestCase
         $response = $this->actingAs($user)->post(route('donation.store'), [
             'donor_id' => $donor->id,
             'event_id' => $event->id,
-            'donation_date' => $this->faker->dateTime(),
-            'payment_date' => $this->faker->dateTime(),
+            'donation_date' => Carbon::parse($this->faker->dateTime()),
+            'payment_date' => Carbon::parse($this->faker->dateTime()),
             'donation_amount' => $this->faker->randomFloat(2, 0, 100000),
             'payment_amount' => $this->faker->randomFloat(2, 0, 100000),
             'payment_idnumber' => $this->faker->randomNumber(4),
@@ -350,9 +351,7 @@ class DonationControllerTest extends TestCase
             'donation_description' => $description->id,
             'donor_id' => $new_contact->id,
             'event_id' => $event->id,
-            'donation_date' => $this->faker->dateTime(),
-            'start_date' => $start_date,
-            'end_date' => $end_date,
+            'donation_date' => $this->faker->date(),
             'donation_amount' => $this->faker->randomFloat(2, 0, 100000),
             'notes1' => $this->faker->text(),
             'notes' => $this->faker->text(),

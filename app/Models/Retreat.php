@@ -312,8 +312,7 @@ class Retreat extends Model implements Auditable
 
     public function scopeFiltered($query, $filters)
     {
-        //dd($filters->request);
-        foreach ($filters->request as $filter => $value) {
+        foreach ($filters->query as $filter => $value) {
             if ($filter == 'begin_date' && ! empty($value)) {
                 $begin_date = Carbon::parse($value);
                 $query->where('start_date', '>=', $begin_date);
