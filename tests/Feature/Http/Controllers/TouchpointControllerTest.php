@@ -308,9 +308,8 @@ class TouchpointControllerTest extends TestCase
             'group_id' => config('polanco.group_id.staff'),
             'contact_id' => $staff->id,
         ]);
-        $touched_at = $this->faker->dateTime('now');
+        // $touched_at = $this->faker->dateTime('now');
         $touched_at = Carbon::now();
-//        dd($touched_at,Carbon::now());
         $response = $this->actingAs($user)->post(route('touchpoint.store'), [
             'touched_at' => $touched_at,
             'person_id' => $person->id,
