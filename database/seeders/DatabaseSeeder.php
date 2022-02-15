@@ -14,11 +14,13 @@ use Database\Seeders\ContactTableSeeder;
 use Database\Seeders\ContactTypeTableSeeder;
 use Database\Seeders\CountryTableSeeder;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     * Seed the application's database.
      *
      * @return void
      */

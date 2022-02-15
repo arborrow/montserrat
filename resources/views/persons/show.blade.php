@@ -399,7 +399,7 @@
                         <tbody>
                             @foreach($donations->sortByDesc('donation_date') as $donation)
                             <tr>
-                                <td><a href="../donation/{{$donation->donation_id}}"> {{ $donation->donation_date_formatted}} </a></td>
+                                <td><a href="{{url('donation/'.$donation->donation_id)}}"> {{ $donation->donation_date_formatted}} </a></td>
                                 <td> {{ $donation->donation_description.': #'.optional($donation->retreat)->idnumber }}</td>
 
                                 @if ($donation->donation_amount - $donation->payments->sum('payment_amount') > 0.001)
