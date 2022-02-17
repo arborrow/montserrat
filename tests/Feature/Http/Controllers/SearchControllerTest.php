@@ -70,7 +70,6 @@ class SearchControllerTest extends TestCase
      */
     public function results_returns_an_ok_response()
     {   // create a new user and then search for that user's last name and ensure that a result appears
-        $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('show-contact');
 
         $contact = \App\Models\Contact::factory()->create();

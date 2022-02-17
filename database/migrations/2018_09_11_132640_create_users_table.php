@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('name');
             $table->string('username')->nullable();
             $table->string('email')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('avatar');
             $table->string('provider')->default('google');
             $table->string('provider_id')->unique();
