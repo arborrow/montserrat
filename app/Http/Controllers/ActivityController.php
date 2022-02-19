@@ -23,7 +23,7 @@ class ActivityController extends Controller
     public function index()
     {
         $this->authorize('show-activity');
-        $activities = \App\Models\Activity::orderBy('activity_date_time', 'desc')->paginate(25,['*'],'activities');
+        $activities = \App\Models\Activity::orderBy('activity_date_time', 'desc')->paginate(25, ['*'], 'activities');
 
         return view('activities.index', compact('activities'));
     }
@@ -101,7 +101,7 @@ class ActivityController extends Controller
         $activity_assignee->record_type_id = config('polanco.activity_contacts_type.assignee');
         $activity_assignee->save();
 
-        return Redirect::action('ActivityController@index');
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -193,7 +193,7 @@ class ActivityController extends Controller
         $activity_assignee->contact_id = $request->input('creator_id');
         $activity_assignee->save();
 
-        return Redirect::action('ActivityController@show', $id);
+        return Redirect::action([self::class, 'show'], $id);
     }
 
     /**
@@ -210,6 +210,6 @@ class ActivityController extends Controller
         \App\Models\ActivityContact::whereActivityId($id)->delete();
         \App\Models\Activity::destroy($id);
 
-        return Redirect::action('ActivityController@index');
+        return Redirect::action([self::class, 'index']);
     }
 }

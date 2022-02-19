@@ -23,7 +23,7 @@ class OrganizationController extends Controller
     public function index()
     {
         $this->authorize('show-contact');
-        $organizations = \App\Models\Contact::with('addresses','phone_main_phone','email_primary','websites','subcontacttype')->organizations_generic()->orderBy('organization_name', 'asc')->paginate(25,['*'],'organizations');
+        $organizations = \App\Models\Contact::with('addresses', 'phone_main_phone', 'email_primary', 'websites', 'subcontacttype')->organizations_generic()->orderBy('organization_name', 'asc')->paginate(25, ['*'], 'organizations');
         $subcontact_types = \App\Models\ContactType::generic()->whereIsActive(1)->orderBy('label')->pluck('id', 'label');
         //dd($subcontact_types);
         return view('organizations.index', compact('organizations', 'subcontact_types'));   //
@@ -36,7 +36,7 @@ class OrganizationController extends Controller
         $subcontact_type = \App\Models\ContactType::findOrFail($subcontact_type_id);
         $defaults = [];
         $defaults['type'] = $subcontact_type->label;
-        $organizations = \App\Models\Contact::with('addresses','phone_main_phone','email_primary','websites','subcontacttype')->organizations_generic()->whereSubcontactType($subcontact_type_id)->orderBy('organization_name', 'asc')->paginate(25,['*'],'organizations');
+        $organizations = \App\Models\Contact::with('addresses', 'phone_main_phone', 'email_primary', 'websites', 'subcontacttype')->organizations_generic()->whereSubcontactType($subcontact_type_id)->orderBy('organization_name', 'asc')->paginate(25, ['*'], 'organizations');
 
         return view('organizations.index', compact('organizations', 'subcontact_types', 'defaults'));
     }
@@ -172,7 +172,7 @@ class OrganizationController extends Controller
 
         flash('Organization: <a href="'.url('/organization/'.$organization->id).'">'.$organization->organization_name.'</a> added')->success();
 
-        return Redirect::action('OrganizationController@index');
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -185,16 +185,16 @@ class OrganizationController extends Controller
     {
         $this->authorize('show-contact');
         $organization = \App\Models\Contact::with('addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'phone_main_phone.location', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations')->findOrFail($id);
-        $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date','DESC')->paginate(25,['*'],'donations');
-        $touchpoints = \App\Models\Touchpoint::wherePersonId($id)->orderBy('touched_at','DESC')->paginate(25,['*'],'touchpoints');
-        $registrations = \App\Models\Registration::whereContactId($id)->orderBy('created_at','DESC')->paginate(25,['*'],'registrations');
+        $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date', 'DESC')->paginate(25, ['*'], 'donations');
+        $touchpoints = \App\Models\Touchpoint::wherePersonId($id)->orderBy('touched_at', 'DESC')->paginate(25, ['*'], 'touchpoints');
+        $registrations = \App\Models\Registration::whereContactId($id)->orderBy('created_at', 'DESC')->paginate(25, ['*'], 'registrations');
 
         $files = \App\Models\Attachment::whereEntity('contact')->whereEntityId($organization->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
         $relationship_types = [];
         $relationship_types['Employer'] = 'Employer';
         $relationship_types['Primary Contact'] = 'Primary Contact';
 
-        return view('organizations.show', compact('organization', 'files', 'relationship_types','donations','registrations','touchpoints')); //
+        return view('organizations.show', compact('organization', 'files', 'relationship_types', 'donations', 'registrations', 'touchpoints')); //
     }
 
     /**
@@ -379,7 +379,7 @@ class OrganizationController extends Controller
 
         flash('Organization: <a href="'.url('/organization/'.$organization->id).'">'.$organization->organization_name.'</a> updated')->success();
 
-        return Redirect::action('OrganizationController@show', $organization->id);
+        return Redirect::action([self::class, 'show'], $organization->id);
     }
 
     /**
@@ -414,6 +414,6 @@ class OrganizationController extends Controller
 
         flash('Organization: '.$organization->organization_name.' deleted')->warning()->important();
 
-        return Redirect::action('OrganizationController@index');
+        return Redirect::action([self::class, 'index']);
     }
 }

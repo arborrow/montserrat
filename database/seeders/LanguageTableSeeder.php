@@ -396,7 +396,7 @@ class LanguageTableSeeder extends Seeder
             ],
             29 => [
                 'id' => 30,
-            'label' => 'Chinese (China)',
+                'label' => 'Chinese (China)',
                 'value' => 'zh',
                 'name' => 'zh_CN',
                 'is_active' => 1,
@@ -409,7 +409,7 @@ class LanguageTableSeeder extends Seeder
             ],
             30 => [
                 'id' => 31,
-            'label' => 'Chinese (Taiwan)',
+                'label' => 'Chinese (Taiwan)',
                 'value' => 'zh',
                 'name' => 'zh_TW',
                 'is_active' => 0,
@@ -552,7 +552,7 @@ class LanguageTableSeeder extends Seeder
             ],
             41 => [
                 'id' => 42,
-            'label' => 'English (Australia)',
+                'label' => 'English (Australia)',
                 'value' => 'en',
                 'name' => 'en_AU',
                 'is_active' => 0,
@@ -565,7 +565,7 @@ class LanguageTableSeeder extends Seeder
             ],
             42 => [
                 'id' => 43,
-            'label' => 'English (Canada)',
+                'label' => 'English (Canada)',
                 'value' => 'en',
                 'name' => 'en_CA',
                 'is_active' => 0,
@@ -578,7 +578,7 @@ class LanguageTableSeeder extends Seeder
             ],
             43 => [
                 'id' => 44,
-            'label' => 'English (United Kingdom)',
+                'label' => 'English (United Kingdom)',
                 'value' => 'en',
                 'name' => 'en_GB',
                 'is_active' => 0,
@@ -591,7 +591,7 @@ class LanguageTableSeeder extends Seeder
             ],
             44 => [
                 'id' => 45,
-            'label' => 'English (United States)',
+                'label' => 'English (United States)',
                 'value' => 'en',
                 'name' => 'en_US',
                 'is_active' => 1,
@@ -682,7 +682,7 @@ class LanguageTableSeeder extends Seeder
             ],
             51 => [
                 'id' => 52,
-            'label' => 'French (Canada)',
+                'label' => 'French (Canada)',
                 'value' => 'fr',
                 'name' => 'fr_CA',
                 'is_active' => 0,
@@ -695,7 +695,7 @@ class LanguageTableSeeder extends Seeder
             ],
             52 => [
                 'id' => 53,
-            'label' => 'French (France)',
+                'label' => 'French (France)',
                 'value' => 'fr',
                 'name' => 'fr_FR',
                 'is_active' => 1,
@@ -760,7 +760,7 @@ class LanguageTableSeeder extends Seeder
             ],
             57 => [
                 'id' => 58,
-            'label' => 'German (Swiss)',
+                'label' => 'German (Swiss)',
                 'value' => 'de',
                 'name' => 'de_CH',
                 'is_active' => 0,
@@ -838,7 +838,7 @@ class LanguageTableSeeder extends Seeder
             ],
             63 => [
                 'id' => 64,
-            'label' => 'Hebrew (modern)',
+                'label' => 'Hebrew (modern)',
                 'value' => 'he',
                 'name' => 'he_IL',
                 'is_active' => 0,
@@ -1618,7 +1618,7 @@ class LanguageTableSeeder extends Seeder
             ],
             123 => [
                 'id' => 124,
-            'label' => 'Occitan (after 1500)',
+                'label' => 'Occitan (after 1500)',
                 'value' => 'oc',
                 'name' => 'oc_FR',
                 'is_active' => 0,
@@ -1722,7 +1722,7 @@ class LanguageTableSeeder extends Seeder
             ],
             131 => [
                 'id' => 132,
-            'label' => 'Persian (Iran)',
+                'label' => 'Persian (Iran)',
                 'value' => 'fa',
                 'name' => 'fa_IR',
                 'is_active' => 0,
@@ -1761,7 +1761,7 @@ class LanguageTableSeeder extends Seeder
             ],
             134 => [
                 'id' => 135,
-            'label' => 'Portuguese (Brazil)',
+                'label' => 'Portuguese (Brazil)',
                 'value' => 'pt',
                 'name' => 'pt_BR',
                 'is_active' => 0,
@@ -1774,7 +1774,7 @@ class LanguageTableSeeder extends Seeder
             ],
             135 => [
                 'id' => 136,
-            'label' => 'Portuguese (Portugal)',
+                'label' => 'Portuguese (Portugal)',
                 'value' => 'pt',
                 'name' => 'pt_PT',
                 'is_active' => 1,
@@ -2034,7 +2034,7 @@ class LanguageTableSeeder extends Seeder
             ],
             155 => [
                 'id' => 156,
-            'label' => 'Spanish; Castilian (Spain)',
+                'label' => 'Spanish; Castilian (Spain)',
                 'value' => 'es',
                 'name' => 'es_ES',
                 'is_active' => 1,
@@ -2047,7 +2047,7 @@ class LanguageTableSeeder extends Seeder
             ],
             156 => [
                 'id' => 157,
-            'label' => 'Spanish; Castilian (Mexico)',
+                'label' => 'Spanish; Castilian (Mexico)',
                 'value' => 'es',
                 'name' => 'es_MX',
                 'is_active' => 0,
@@ -2060,7 +2060,7 @@ class LanguageTableSeeder extends Seeder
             ],
             157 => [
                 'id' => 158,
-            'label' => 'Spanish; Castilian (Puerto Rico)',
+                'label' => 'Spanish; Castilian (Puerto Rico)',
                 'value' => 'es',
                 'name' => 'es_PR',
                 'is_active' => 0,
@@ -2242,7 +2242,7 @@ class LanguageTableSeeder extends Seeder
             ],
             171 => [
                 'id' => 172,
-            'label' => 'Tonga (Tonga Islands)',
+                'label' => 'Tonga (Tonga Islands)',
                 'value' => 'to',
                 'name' => 'to_TO',
                 'is_active' => 0,

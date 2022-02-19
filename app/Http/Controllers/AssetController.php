@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AssetSearchRequest;
 use App\Http\Requests\StoreAssetRequest;
 use App\Http\Requests\UpdateAssetRequest;
-use App\Http\Requests\AssetSearchRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -22,7 +22,7 @@ class AssetController extends Controller
         $asset_types = \App\Models\AssetType::active()->orderBy('label')->pluck('label', 'id');
         $locations = \App\Models\Location::orderBy('name')->pluck('name', 'id');
 
-        $assets = \App\Models\Asset::orderBy('name')->with('asset_type','location')->get();
+        $assets = \App\Models\Asset::orderBy('name')->with('asset_type', 'location')->get();
 
         return view('assets.index', compact('assets', 'asset_types', 'locations'));
     }
@@ -95,10 +95,10 @@ class AssetController extends Controller
     {
         $this->authorize('show-asset');
         if (! empty($request)) {
-            $assets = \App\Models\Asset::filtered($request)->orderBy('name')->paginate(25,['*'],'assets');
+            $assets = \App\Models\Asset::filtered($request)->orderBy('name')->paginate(25, ['*'], 'assets');
             $assets->appends($request->except('page'));
         } else {
-            $assets = \App\Models\Asset::orderBy('name')->paginate(25,['*'],'assets');
+            $assets = \App\Models\Asset::orderBy('name')->paginate(25, ['*'], 'assets');
         }
 
         return view('assets.results', compact('assets'));
@@ -229,7 +229,7 @@ class AssetController extends Controller
 
         flash('Asset: <a href="'.url('/asset/'.$asset->id).'">'.$asset->name.'</a> added')->success();
 
-        return Redirect::action('AssetController@index');
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -244,6 +244,7 @@ class AssetController extends Controller
 
         $asset = \App\Models\Asset::with('tasks.jobs')->findOrFail($id);
         $files = \App\Models\Attachment::whereEntity('asset')->whereEntityId($asset->id)->whereFileTypeId(config('polanco.file_type.asset_attachment'))->get();
+
         return view('assets.show', compact('asset', 'files'));
     }
 
@@ -383,7 +384,7 @@ class AssetController extends Controller
 
         flash('Asset: <a href="'.url('/asset/'.$asset->id).'">'.$asset->name.'</a> updated')->success();
 
-        return Redirect::action('AssetController@show', $asset->id);
+        return Redirect::action([self::class, 'show'], $asset->id);
     }
 
     /**
@@ -400,6 +401,6 @@ class AssetController extends Controller
         \App\Models\Asset::destroy($id);
         flash('Asset: '.$asset->name.' deleted')->warning()->important();
 
-        return Redirect::action('AssetController@index');
+        return Redirect::action([self::class, 'index']);
     }
 }

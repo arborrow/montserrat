@@ -11,13 +11,6 @@ use Illuminate\Support\Str;
 class OrganizationFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = \App\Models\Organization::class;
-
-    /**
      * Define the model's default state.
      *
      * @return array
@@ -25,7 +18,7 @@ class OrganizationFactory extends Factory
     public function definition()
     {
         $subcontact_type = $this->faker->numberBetween(9, 11);
-        $organizaton_name = $this->faker->company;
+        $organizaton_name = $this->faker->company();
 
         return [
             'contact_type' => config('polanco.contact_type.organization'),

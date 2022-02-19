@@ -3,8 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreatePaymentProcessorTable extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -47,4 +46,4 @@ class CreatePaymentProcessorTable extends Migration
     {
         Schema::dropIfExists('payment_processor');
     }
-}
+};

@@ -8,7 +8,7 @@
                 <span>
                     <h2>
                         Offering Dedup Details for {{$combo}} <br />
-                         {!! Html::link(action('SystemController@offeringdedup_index'),'Offering Dedup Index',array('class' => 'btn btn-outline-dark'))!!}
+                         {!! Html::link(action([\App\Http\Controllers\SystemController::class, 'offeringdedup_index']),'Offering Dedup Index',array('class' => 'btn btn-outline-dark'))!!}
                    
                     </h2> 
                     <br />

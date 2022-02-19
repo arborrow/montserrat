@@ -28,7 +28,7 @@ class AddressController extends Controller
     public function index()
     {
         $this->authorize('show-address');
-        $addresses = \App\Models\Address::orderBy('postal_code', 'asc')->with('addressee')->paginate(25,['*'],'addresses');
+        $addresses = \App\Models\Address::orderBy('postal_code', 'asc')->with('addressee')->paginate(25, ['*'], 'addresses');
 
         return view('addresses.index', compact('addresses'));
     }
@@ -74,7 +74,7 @@ class AddressController extends Controller
 
         flash('Address ID#: <a href="'.url('/address/'.$address->id).'">'.$address->id.'</a> added')->success();
 
-        return Redirect::action('AddressController@index');
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -136,7 +136,7 @@ class AddressController extends Controller
 
         flash('Address ID#: <a href="'.url('/address/'.$address->id).'">'.$address->id.'</a> updated')->success();
 
-        return Redirect::action('AddressController@show', $address->id);
+        return Redirect::action([self::class, 'show'], $address->id);
     }
 
     /**
@@ -154,6 +154,6 @@ class AddressController extends Controller
 
         flash('Address ID#: '.$address->id.' deleted')->warning()->important();
 
-        return Redirect::action('PersonController@show', $contact_id);
+        return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $contact_id);
     }
 }

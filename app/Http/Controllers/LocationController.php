@@ -87,7 +87,7 @@ class LocationController extends Controller
 
         flash('Location: <a href="'.url('/admin/location/'.$location->id).'">'.$location->name.'</a> added')->success();
 
-        return Redirect::action('LocationController@index');
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -158,7 +158,7 @@ class LocationController extends Controller
 
         flash('Location: <a href="'.url('/admin/location/'.$location->id).'">'.$location->name.'</a> updated')->success();
 
-        return Redirect::action('LocationController@show', $location->id);
+        return Redirect::action([self::class, 'show'], $location->id);
     }
 
     /**
@@ -176,6 +176,6 @@ class LocationController extends Controller
 
         flash('Location: '.$location->name.' deleted')->warning()->important();
 
-        return Redirect::action('LocationController@index');
+        return Redirect::action([self::class, 'index']);
     }
 }

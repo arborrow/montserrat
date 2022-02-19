@@ -10,13 +10,6 @@ use Illuminate\Support\Str;
 class AuditFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = \App\Models\Audit::class;
-
-    /**
      * Define the model's default state.
      *
      * @return array
@@ -24,7 +17,7 @@ class AuditFactory extends Factory
     public function definition()
     {
         return [
-            'user_type' => 'App\Models\User',
+            'user_type' => \App\Models\User::class,
             'user_id' => function () {
                 return \App\Models\User::factory()->create()->id;
             },
@@ -33,12 +26,12 @@ class AuditFactory extends Factory
             'auditable_id' => function () {
                 return \App\Models\Contact::factory()->create()->id;
             },
-            'old_values' => NULL,
-            'new_values' => NULL,
+            'old_values' => null,
+            'new_values' => null,
             'url' => $this->faker->url(),
             'ip_address' => $this->faker->ipv4(),
             'user_agent' => $this->faker->userAgent(),
-            'tags' => NULL,
+            'tags' => null,
             'created_at' => $this->faker->dateTimeThisMonth(),
             'updated_at' => $this->faker->dateTimeThisMonth(),
         ];

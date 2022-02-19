@@ -7,13 +7,13 @@
             Snippets
             @can('create-snippet')
             <span class="options">
-                <a href={{ action('SnippetController@create') }}>
+                <a href={{ action([\App\Http\Controllers\SnippetController::class, 'create']) }}>
                     <img src="{{ URL::asset('images/create.png') }}" alt="Add" class="btn btn-light" title="Add">
                 </a>
             </span>
             @endCan
             <span class="options">
-                <a href={{ action('SnippetController@test') }} class="btn btn-light">
+                <a href={{ action([\App\Http\Controllers\SnippetController::class, 'test']) }} class="btn btn-light">
                     Test snippets
                 </a>
             </span>

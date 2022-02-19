@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -39,7 +38,7 @@ class UserControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('user.destroy', [$user]));
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('UserController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\UserController::class, 'index']));
         // $this->assertSoftDeleted($user);
     }
 
@@ -102,17 +101,17 @@ class UserControllerTest extends TestCase
     {   // keep in mind that this does not actually store a user record in the database
         $user = $this->createUserWithPermission('create-user');
 
-        $new_name = $this->faker->jobTitle;
-        $new_description = $this->faker->sentence;
+        $new_name = $this->faker->jobTitle();
+        $new_description = $this->faker->sentence();
 
         $response = $this->actingAs($user)->post(route('user.store'), [
-          'name' => $new_name,
-          'display_name' => $new_name,
-          'description' => $new_description,
+            'name' => $new_name,
+            'display_name' => $new_name,
+            'description' => $new_description,
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('UserController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\UserController::class, 'index']));
 
         // normally one would expect the data to be stored; however, in this case authentication and not the controller stores the user
         /*
@@ -133,8 +132,8 @@ class UserControllerTest extends TestCase
         $user = \App\Models\User::factory()->create();
 
         $original_description = $user->description;
-        $new_name = $this->faker->jobTitle;
-        $new_description = $this->faker->sentence;
+        $new_name = $this->faker->jobTitle();
+        $new_description = $this->faker->sentence();
 
         $response = $this->actingAs($user)->put(route('user.update', [$user]), [
             'id'  => $user->id,
@@ -146,7 +145,7 @@ class UserControllerTest extends TestCase
         $updated = \App\Models\User::findOrFail($user->id);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('UserController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\UserController::class, 'index']));
 //        $this->assertEquals($updated->description, $new_description);
 //        $this->assertNotEquals($updated->description, $original_description);
     }

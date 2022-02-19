@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -39,7 +38,7 @@ class PermissionControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('permission.destroy', [$permission]));
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('PermissionController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\PermissionController::class, 'index']));
         $this->assertSoftDeleted($permission);
     }
 
@@ -114,11 +113,11 @@ class PermissionControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('PermissionController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\PermissionController::class, 'index']));
         $this->assertDatabaseHas('permissions', [
-          'name' => $permission_name,
-          'display_name' => $permission_display_name,
-          'description' => $permission_description,
+            'name' => $permission_name,
+            'display_name' => $permission_display_name,
+            'description' => $permission_description,
         ]);
     }
 
@@ -133,14 +132,14 @@ class PermissionControllerTest extends TestCase
         $new_permission_name = 'New '.$this->faker->words(3, true);
 
         $response = $this->actingAs($user)->put(route('permission.update', [$permission]), [
-          'id' => $permission->id,
-          'name' => $new_permission_name,
-          'display_name' => $this->faker->words(4, true),
-          'description' => $this->faker->sentence(7, true),
+            'id' => $permission->id,
+            'name' => $new_permission_name,
+            'display_name' => $this->faker->words(4, true),
+            'description' => $this->faker->sentence(7, true),
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('PermissionController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\PermissionController::class, 'index']));
         $updated = \App\Models\Permission::findOrFail($permission->id);
         $this->assertEquals($updated->name, $new_permission_name);
         $this->assertNotEquals($updated->name, $original_permission_name);
@@ -162,7 +161,7 @@ class PermissionControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('PermissionController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\PermissionController::class, 'index']));
     }
 
     // test cases...

@@ -7,7 +7,7 @@
             <div class="panel-heading">
                 <h1>
                     <span class="grey">{{$payments->total()}} result(s) found</span>
-                    <span class="search"><a href={{ action('PaymentController@search') }}>{!! Html::image('images/search.png', 'New search',array('title'=>"New search",'class' => 'btn btn-link')) !!}</a></span>
+                    <span class="search"><a href={{ action([\App\Http\Controllers\PaymentController::class, 'search']) }}>{!! Html::image('images/search.png', 'New search',array('title'=>"New search",'class' => 'btn btn-link')) !!}</a></span>
                 </h1>
                 <p class="lead">Total payments: ${{number_format($all_payments->sum('payment_amount'),2)}}</p>    
             </div>

@@ -15,7 +15,11 @@ class AssetTask extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'asset_task';
-    protected $dates = ['start_date', 'scheduled_until_date'];
+
+    protected $casts = [
+        'start_date' => 'datetime',
+        'scheduled_until_date' => 'datetime',
+    ];
 
     // relations
     public function asset()
@@ -72,6 +76,4 @@ class AssetTask extends Model implements Auditable
             return $this->start_date->month;
         }
     }
-
-
 }

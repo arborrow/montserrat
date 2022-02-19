@@ -15,7 +15,16 @@ class Asset extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'asset';
-    protected $dates = ['start_date', 'end_date', 'purchase_date', 'warranty_start_date', 'warranty_end_date', 'depreciation_start_date', 'depreciation_end_date'];
+
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+        'purchase_date' => 'datetime',
+        'warranty_start_date' => 'datetime',
+        'warranty_end_date' => 'datetime',
+        'depreciation_start_date' => 'datetime',
+        'depreciation_end_date' => 'datetime',
+    ];
 
     // relations
 
@@ -26,7 +35,7 @@ class Asset extends Model implements Auditable
 
     public function jobs()
     {
-        return $this->hasManyThrough(AssetJob::class, AssetTask::class, 'asset_id','asset_task_id','id','id');
+        return $this->hasManyThrough(AssetJob::class, AssetTask::class, 'asset_id', 'asset_task_id', 'id', 'id');
     }
 
     public function asset_type()
@@ -345,8 +354,7 @@ class Asset extends Model implements Auditable
 
     public function scopeFiltered($query, $filters)
     {
-        //dd($filters->request);
-        foreach ($filters->request as $filter => $value) {
+        foreach ($filters->query as $filter => $value) {
             if ($filter == 'name' && ! empty($value)) {
                 $query->where($filter, 'like', '%'.$value.'%');
             }

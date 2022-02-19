@@ -4,7 +4,6 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Organization;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -44,7 +43,7 @@ class OrganizationControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('organization.destroy', ['organization' => $organization]));
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('OrganizationController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\OrganizationController::class, 'index']));
         $this->assertSoftDeleted($organization);
     }
 
@@ -91,32 +90,32 @@ class OrganizationControllerTest extends TestCase
         $url_main = \App\Models\Website::factory()->create([
             'contact_id' => $organization->id,
             'website_type' => 'Main',
-            'url' => $this->faker->url,
+            'url' => $this->faker->url(),
         ]);
         $url_work = \App\Models\Website::factory()->create([
             'contact_id' => $organization->id,
             'website_type' => 'Work',
-            'url' => $this->faker->url,
+            'url' => $this->faker->url(),
         ]);
         $url_facebook = \App\Models\Website::factory()->create([
             'contact_id' => $organization->id,
             'website_type' => 'Facebook',
-            'url' => 'https://facebook.com/'.$this->faker->slug,
+            'url' => 'https://facebook.com/'.$this->faker->slug(),
         ]);
         $url_instagram = \App\Models\Website::factory()->create([
             'contact_id' => $organization->id,
             'website_type' => 'Instagram',
-            'url' => 'https://instagram.com/'.$this->faker->slug,
+            'url' => 'https://instagram.com/'.$this->faker->slug(),
         ]);
         $url_linkedin = \App\Models\Website::factory()->create([
             'contact_id' => $organization->id,
             'website_type' => 'LinkedIn',
-            'url' => 'https://linkedin.com/'.$this->faker->slug,
+            'url' => 'https://linkedin.com/'.$this->faker->slug(),
         ]);
         $url_twitter = \App\Models\Website::factory()->create([
             'contact_id' => $organization->id,
             'website_type' => 'Twitter',
-            'url' => 'https://twitter.com/'.$this->faker->slug,
+            'url' => 'https://twitter.com/'.$this->faker->slug(),
         ]);
 
         $response = $this->actingAs($user)->get(route('organization.edit', ['organization' => $organization]));
@@ -209,22 +208,22 @@ class OrganizationControllerTest extends TestCase
     public function store_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('create-contact');
-        $organization_name = $this->faker->company;
+        $organization_name = $this->faker->company();
 
         $response = $this->actingAs($user)->post(route('organization.store'), [
-          'organization_name' => $organization_name,
-          'display_name' => $organization_name,
-          'sort_name' => $organization_name,
-          'contact_type' => config('polanco.contact_type.organization'),
-          'subcontact_type' => $this->faker->numberBetween(9, 11),
+            'organization_name' => $organization_name,
+            'display_name' => $organization_name,
+            'sort_name' => $organization_name,
+            'contact_type' => config('polanco.contact_type.organization'),
+            'subcontact_type' => $this->faker->numberBetween(9, 11),
 
         ]);
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('OrganizationController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\OrganizationController::class, 'index']));
         $this->assertDatabaseHas('contact', [
-          'contact_type' => config('polanco.contact_type.organization'),
-          'sort_name' => $organization_name,
-          'display_name' => $organization_name,
+            'contact_type' => config('polanco.contact_type.organization'),
+            'sort_name' => $organization_name,
+            'display_name' => $organization_name,
         ]);
     }
 
@@ -250,17 +249,17 @@ class OrganizationControllerTest extends TestCase
         $organization = \App\Models\Contact::factory()->create();
         $original_name = $organization->organization_name;
         //create updated data
-        $organization_name = $this->faker->company;
+        $organization_name = $this->faker->company();
         $response = $this->actingAs($user)->put(route('organization.update', ['organization' => $organization]), [
-          'organization_name' => $organization_name,
-          'display_name' => $organization_name,
-          'sort_name' => $organization_name,
+            'organization_name' => $organization_name,
+            'display_name' => $organization_name,
+            'sort_name' => $organization_name,
         ]);
 
         $updated = \App\Models\Contact::find($organization->id);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('OrganizationController@show', $organization->id));
+        $response->assertRedirect(action([\App\Http\Controllers\OrganizationController::class, 'show'], $organization->id));
         $this->assertEquals($updated->sort_name, $organization_name);
         $this->assertNotEquals($updated->organization_name, $original_name);
     }

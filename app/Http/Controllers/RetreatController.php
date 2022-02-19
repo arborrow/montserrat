@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EventSearchRequest;
 use App\Http\Requests\RoomUpdateRetreatRequest;
 use App\Http\Requests\StoreRetreatRequest;
 use App\Http\Requests\UpdateRetreatRequest;
-use App\Http\Requests\EventSearchRequest;
 use App\Models\Registration;
 use Auth;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use Spatie\GoogleCalendar\Event;
 use Storage;
-use Exception;
-
 
 class RetreatController extends Controller
 {
@@ -41,8 +40,8 @@ class RetreatController extends Controller
         $defaults['type'] = 'Retreat';
         $event_types = \App\Models\EventType::whereIsActive(1)->orderBy('name')->pluck('id', 'name');
 
-        $retreats = \App\Models\Retreat::whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->withCount('retreatants')->paginate(25,['*'],'retreats');
-        $oldretreats = \App\Models\Retreat::whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date', 'desc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->withCount('retreatants')->paginate(25,['*'],'oldretreats');
+        $retreats = \App\Models\Retreat::whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->withCount('retreatants')->paginate(25, ['*'], 'retreats');
+        $oldretreats = \App\Models\Retreat::whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date', 'desc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->withCount('retreatants')->paginate(25, ['*'], 'oldretreats');
 
         return view('retreats.index', compact('retreats', 'oldretreats', 'defaults', 'event_types', 'results'));   //
     }
@@ -59,8 +58,8 @@ class RetreatController extends Controller
         $defaults = [];
         $defaults['type'] = $event_type->label;
 
-        $retreats = \App\Models\Retreat::whereEventTypeId($event_type_id)->whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->withCount('retreatants')->paginate(25,['*'],'retreats');
-        $oldretreats = \App\Models\Retreat::whereEventTypeId($event_type_id)->whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date', 'desc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->withCount('retreatants')->paginate(25,['*'],'oldretreats');
+        $retreats = \App\Models\Retreat::whereEventTypeId($event_type_id)->whereDate('end_date', '>=', date('Y-m-d'))->orderBy('start_date', 'asc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->withCount('retreatants')->paginate(25, ['*'], 'retreats');
+        $oldretreats = \App\Models\Retreat::whereEventTypeId($event_type_id)->whereDate('end_date', '<', date('Y-m-d'))->orderBy('start_date', 'desc')->with('retreatmasters.contact', 'innkeepers.contact', 'assistants.contact')->withCount('retreatants')->paginate(25, ['*'], 'oldretreats');
 
         return view('retreats.index', compact('retreats', 'oldretreats', 'defaults', 'event_types', 'results'));   //
     }
@@ -117,7 +116,7 @@ class RetreatController extends Controller
             $c = [0=>'N/A'] + $c;
         }
 
-        return view('retreats.create', compact('d', 'i', 'a', 'c', 'event_types','is_active'));
+        return view('retreats.create', compact('d', 'i', 'a', 'c', 'event_types', 'is_active'));
     }
 
     /**
@@ -147,7 +146,6 @@ class RetreatController extends Controller
         // attending should be calculated based on retreat participants
         //$retreat->attending = $request->input('attending');
         //$retreat->year = $request->input('year');
-
 
         $directors = $request->input('directors');
         $innkeepers = $request->input('innkeepers');
@@ -194,7 +192,7 @@ class RetreatController extends Controller
             $calendar_event->summary = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
             $calendar_event->startDateTime = $retreat->start_date;
             $calendar_event->endDateTime = $retreat->end_date;
-            $calendar_event->status="confirmed";
+            $calendar_event->status = 'confirmed';
             $retreat_url = url('retreat/'.$retreat->id);
             $calendar_event->description = "<a href='".$retreat_url."'>".$retreat->idnumber.' - '.$retreat->title.'</a> : '.$retreat->description;
             $retreat->calendar_id = $calendar_event->id;
@@ -204,15 +202,14 @@ class RetreatController extends Controller
             } catch (\Exception $e) {
                 $retreat->calendar_id = null;
                 $retreat->save();
-                flash('Retreat: <a href="'.url('/retreat/'.$retreat->id).'">'.$retreat->title.'</a> added; however, the Google Calendar Event (' .$calendar_event->id.') was not Created')->error();
-                abort(500,"Google Calendar Error");
+                flash('Retreat: <a href="'.url('/retreat/'.$retreat->id).'">'.$retreat->title.'</a> added; however, the Google Calendar Event ('.$calendar_event->id.') was not Created')->error();
+                abort(500, 'Google Calendar Error');
             }
-
         }
 
         flash('Retreat: <a href="'.url('/retreat/'.$retreat->id).'">'.$retreat->title.'</a> added')->success();
 
-        return Redirect::action('RetreatController@index'); //
+        return Redirect::action([self::class, 'index']); //
     }
 
     /**
@@ -226,10 +223,10 @@ class RetreatController extends Controller
     {
         if ($contact_id > 0 && $event_id > 0) { //avoid inserting bad data
             $participant = \App\Models\Registration::updateOrCreate([
-              'contact_id' => $contact_id,
-              'event_id' => $event_id,
-              'status_id' => config('polanco.registration_status_id.registered'),
-              'role_id' => $participant_role_id,
+                'contact_id' => $contact_id,
+                'event_id' => $event_id,
+                'status_id' => config('polanco.registration_status_id.registered'),
+                'role_id' => $participant_role_id,
             ]);
             if (! isset($participant->register_date)) {
                 $participant->register_date = now();
@@ -345,9 +342,8 @@ class RetreatController extends Controller
                 try { // if successful the calendar_event will be the existing Google calendar event
                     $calendar_event = Event::find($retreat->calendar_id);
                     $retreat->google_calendar_html = $calendar_event->htmlLink;
-                }
-                catch (\Exception $e) { // if successful the calendar_event will be a new Google calendar event
-                    flash('Google Calendar Event (' .$retreat->calendar_id.') was not found.')->error();
+                } catch (\Exception $e) { // if successful the calendar_event will be a new Google calendar event
+                    flash('Google Calendar Event ('.$retreat->calendar_id.') was not found.')->error();
                 }
             }
         }
@@ -579,16 +575,14 @@ class RetreatController extends Controller
             if (! empty($retreat->calendar_id)) { //there is already a calendar_id so try to find the existing Google calendar event
                 try { // if successful the calendar_event will be the existing Google calendar event
                     $calendar_event = Event::find($retreat->calendar_id);
-                }
-                catch (\Exception $e) { // if successful the calendar_event will be a new Google calendar event
-                    flash('Google Calendar Event (' .$retreat->calendar_id.') was not found. Polanco will try to create a new Google Calendar Event.')->error();
+                } catch (\Exception $e) { // if successful the calendar_event will be a new Google calendar event
+                    flash('Google Calendar Event ('.$retreat->calendar_id.') was not found. Polanco will try to create a new Google Calendar Event.')->error();
                     try {
                         $calendar_event = new Event;
                         $calendar_event->id = uniqid();
-                    }
-                    catch (\Exception $e) { // creating a new Google Calendar event really should not be failing and is probably unnecessary
+                    } catch (\Exception $e) { // creating a new Google Calendar event really should not be failing and is probably unnecessary
                         flash('Polanco failed to create a new Google Calendar Event')->error();
-                        abort(500,"Google Calendar Error");
+                        abort(500, 'Google Calendar Error');
                     }
                 }
 
@@ -597,7 +591,7 @@ class RetreatController extends Controller
                 $calendar_event->summary = $retreat->idnumber.'-'.$retreat->title.'-'.$retreat->retreat_team;
                 $calendar_event->startDateTime = $retreat->start_date;
                 $calendar_event->endDateTime = $retreat->end_date;
-                $calendar_event->status="confirmed";
+                $calendar_event->status = 'confirmed';
                 $retreat_url = url('retreat/'.$retreat->id);
                 $calendar_event->description = "<a href='".$retreat_url."'>".$retreat->idnumber.' - '.$retreat->title.'</a> : '.$retreat->description;
                 try { // try to save/update the Google Calendar event
@@ -611,7 +605,7 @@ class RetreatController extends Controller
                 } // if there is an error updating inform user of failure and clear calendar_id
                 catch (\Exception $e) {
                     flash('Retreat: <a href="'.url('/retreat/'.$retreat->id).'">'.$retreat->title.'</a> updated; however, the Google Calendar Event was not saved.')->error();
-                    abort(500,"Google Calendar Error");
+                    abort(500, 'Google Calendar Error');
                 }
             } else { // there is not existing calendar_id so we will attempt to create a new Google Calendar Event
                 try {
@@ -627,19 +621,18 @@ class RetreatController extends Controller
 
                     $calendar_event->description = "<a href='".$retreat_url."'>".$retreat->idnumber.' - '.$retreat->title.'</a> : '.$retreat->description;
                     $calendar_event->save('insertEvent');
-                }
-                catch (\Exception $e) {
+                } catch (\Exception $e) {
                     $retreat->calendar_id = null;
                     $retreat->save(); // there was not a calendar_id and we failed to save it so do not save the calendar_event id
                     flash('Retreat: <a href="'.url('/retreat/'.$retreat->id).'">'.$retreat->title.'</a> updated; however, the Google Calendar Event was not created.')->error();
-                    abort(500,"Google Calendar Error");
+                    abort(500, 'Google Calendar Error');
                 }
             }
         }
 
         flash('Retreat: <a href="'.url('/retreat/'.$retreat->id).'">'.$retreat->title.'</a> updated')->success();
 
-        return Redirect::action('RetreatController@show', $id);
+        return Redirect::action([self::class, 'show'], $id);
     }
 
     /**
@@ -657,7 +650,7 @@ class RetreatController extends Controller
             try {
                 $calendar_event = Event::find($retreat->calendar_id);
                 $calendar_event->name = '[CANCELED] '.$retreat->title.' ('.$retreat->idnumber.')';
-                $calendar_event->status="cancelled";
+                $calendar_event->status = 'cancelled';
                 $calendar_event->save();
             } catch (\Exception $e) {
                 flash('Polanco was unable to delete the Google Calendar Event ('.$retreat->calendar_id.').')->error();
@@ -668,7 +661,7 @@ class RetreatController extends Controller
 
         flash('Retreat: '.$retreat->title.' deleted')->warning()->important();
 
-        return Redirect::action('RetreatController@index');
+        return Redirect::action([self::class, 'index']);
     }
 
     public function assign_rooms($id)
@@ -719,7 +712,7 @@ class RetreatController extends Controller
 
         flash('Retreatants for '.$retreat->title.' successfully checked out')->success();
 
-        return Redirect::action('RetreatController@show', $retreat->id);
+        return Redirect::action([self::class, 'show'], $retreat->id);
     }
 
     public function checkin($id)
@@ -735,7 +728,7 @@ class RetreatController extends Controller
 
         flash('Retreatants for '.$retreat->title.' successfully checked in')->success();
 
-        return Redirect::action('RetreatController@show', $retreat->id);
+        return Redirect::action([self::class, 'show'], $retreat->id);
     }
 
     public function room_update(RoomUpdateRetreatRequest $request)
@@ -766,9 +759,9 @@ class RetreatController extends Controller
             $retreat = \App\Models\Retreat::findOrFail($event_id);
             flash('Room assignments for '.$retreat->title.' successfully assigned')->success();
 
-            return Redirect::action('RetreatController@show', $event_id);
+            return Redirect::action([self::class, 'show'], $event_id);
         } else { // this should never really happen as it means an event registration did not have an event_id; unit test will assume returning to retreat.show blade
-            return Redirect::action('RetreatController@index');
+            return Redirect::action([self::class, 'index']);
         }
     }
 
@@ -930,22 +923,23 @@ class RetreatController extends Controller
         $this->authorize('show-retreat');
 
         if (! empty($request)) {
-            $events = \App\Models\Retreat::filtered($request)->orderBy('idnumber')->paginate(25,['*'],'events');
+            $events = \App\Models\Retreat::filtered($request)->orderBy('idnumber')->paginate(25, ['*'], 'events');
             $events->appends($request->except('page'));
         } else {
-            $events = \App\Models\Retreat::orderBy('idnumber')->paginate(25,['*'],'events');
+            $events = \App\Models\Retreat::orderBy('idnumber')->paginate(25, ['*'], 'events');
         }
 
         return view('retreats.results', compact('events'));
     }
 
-    public function is_google_calendar_enabled() {
-      $file = "google-calendar/service-account-credentials.json";
-      //dd(config('settings.google_calendar_id'));
-      if (null !== config('settings.google_calendar_id') && Storage::exists($file)) {
-          return TRUE;
-      } else {
-        return FALSE;
-      }
+    public function is_google_calendar_enabled()
+    {
+        $file = 'google-calendar/service-account-credentials.json';
+        //dd(config('settings.google_calendar_id'));
+        if (null !== config('settings.google_calendar_id') && Storage::exists($file)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

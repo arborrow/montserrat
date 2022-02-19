@@ -127,7 +127,7 @@
             <div class='row'>
                 @can('update-retreat')
                     <div class='col-md-1'>
-                        <a href="{{ action('RetreatController@edit', $retreat->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                        <a href="{{ action([\App\Http\Controllers\RetreatController::class, 'edit'], $retreat->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                     </div>
                 @endCan
                 @can('delete-retreat')
@@ -146,7 +146,7 @@
                 {!! Html::link($retreat->email_waitlist_retreatants,'Email retreatants on waitlist',array('class' => 'btn btn-outline-dark'))!!}
             @endCan
             @can('create-touchpoint')
-                {!! Html::link(action('TouchpointController@add_retreat_waitlist',$retreat->id),'Waitlist touchpoint',array('class' => 'btn btn-outline-dark'))!!}
+                {!! Html::link(action([\App\Http\Controllers\TouchpointController::class, 'add_retreat_waitlist'],$retreat->id),'Waitlist touchpoint',array('class' => 'btn btn-outline-dark'))!!}
             @endCan
         </div>
             @if ($registrations->isEmpty())
@@ -170,14 +170,14 @@
                 @can('show-registration')
                     @foreach($registrations->sortBy('register_date') as $registration)
                         <tr>
-                            <td id='registration-{{$registration->id}}'><a href="{{action('RegistrationController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }}</a></td>
+                            <td id='registration-{{$registration->id}}'><a href="{{action([\App\Http\Controllers\RegistrationController::class, 'show'], $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }}</a></td>
                             <td> {!!$registration->retreatant->avatar_small_link!!} </td>
                             <td>{!!$registration->retreatant->contact_link_full_name!!} ({{$registration->retreatant->participant_count}})</td>
                             <td>
                                 @if (empty($registration->room->name))
                                     N/A
                                 @else
-                                <a href="{{action('RoomController@show', $registration->room->id)}}">{{ $registration->room->name}}</a>
+                                <a href="{{action([\App\Http\Controllers\RoomController::class, 'show'], $registration->room->id)}}">{{ $registration->room->name}}</a>
                                 @endif
                             </td>
                             <td>

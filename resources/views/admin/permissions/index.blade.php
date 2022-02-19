@@ -7,7 +7,7 @@
             Permissions
             @can('create-permission')
                 <span class="options">
-                    <a href={{ action('PermissionController@create') }}>
+                    <a href={{ action([\App\Http\Controllers\PermissionController::class, 'create']) }}>
                         {!! Html::image('images/create.png', 'Add Permission',array('title'=>"Add Permission",'class' => 'btn btn-light')) !!}
                     </a>
                 </span>

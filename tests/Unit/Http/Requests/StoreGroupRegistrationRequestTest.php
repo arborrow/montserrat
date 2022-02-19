@@ -39,16 +39,16 @@ class StoreGroupRegistrationRequestTest extends TestCase
         $actual = $this->subject->rules();
 
         $this->assertEquals([
-          'register_date' => 'required|date',
-          'attendance_confirm_date' => 'date|nullable',
-          'registration_confirm_date' => 'date|nullable',
-          'status_id' => 'required|integer|min:1',
-          'canceled_at' => 'date|nullable',
-          'arrived_at' => 'date|nullable',
-          'departed_at' => 'date|nullable',
-          'event_id' => 'required|integer|min:0',
-          'group_id' => 'required|integer|min:0',
-          'deposit' => 'required|numeric|min:0|max:10000',
+            'register_date' => 'required|date',
+            'attendance_confirm_date' => 'date|nullable',
+            'registration_confirm_date' => 'date|nullable',
+            'status_id' => 'required|integer|min:1',
+            'canceled_at' => 'date|nullable',
+            'arrived_at' => 'date|nullable',
+            'departed_at' => 'date|nullable',
+            'event_id' => 'required|integer|min:0',
+            'group_id' => 'required|integer|min:0',
+            'deposit' => 'required|numeric|min:0|max:10000',
         ], $actual);
     }
 

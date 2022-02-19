@@ -416,7 +416,7 @@ class AttachmentController extends Controller
             $attachment->delete();
         }
 
-        return Redirect::action('RetreatController@show', $entity_id);
+        return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $entity_id);
     }
 
     public function show_contact_attachment($user_id, $file_name)
@@ -438,7 +438,7 @@ class AttachmentController extends Controller
         $this->authorize('delete-attachment');
         $this->delete_attachment($attachment, 'contact', $user_id, 'attachment');
         // TODO: get contact type and redirect to person, parish, organization, vendor as appropriate
-        return Redirect::action('PersonController@show', $user_id);
+        return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $user_id);
     }
 
     public function delete_event_attachment($event_id, $attachment)
@@ -446,7 +446,7 @@ class AttachmentController extends Controller
         $this->authorize('delete-attachment'); // TODO: for testing simplicity I am not implementing the use of delete-event-attachment
         $this->delete_attachment($attachment, 'event', $event_id, 'event-attachment');
         // TODO: get contact type and redirect to person, parish, organization, vendor as appropriate
-        return Redirect::action('RetreatController@show', $event_id);
+        return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
     }
 
     public function get_avatar($user_id)
@@ -468,7 +468,7 @@ class AttachmentController extends Controller
         $this->authorize('delete-attachment');
         $this->delete_attachment('avatar.png', 'contact', $user_id, 'avatar');
 
-        return Redirect::action('PersonController@show', $user_id);
+        return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $user_id);
     }
 
     public function get_event_contract($event_id)
@@ -497,7 +497,7 @@ class AttachmentController extends Controller
         $this->authorize('delete-attachment');
         $this->delete_attachment('evaluations.pdf', 'event', $event_id, 'evaluations');
 
-        return Redirect::action('RetreatController@show', $event_id);
+        return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
     }
 
     public function delete_event_schedule($event_id)
@@ -505,7 +505,7 @@ class AttachmentController extends Controller
         $this->authorize('delete-attachment');
         $this->delete_attachment('schedule.pdf', 'event', $event_id, 'schedule');
 
-        return Redirect::action('RetreatController@show', $event_id);
+        return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
     }
 
     public function delete_event_contract($event_id)
@@ -513,7 +513,7 @@ class AttachmentController extends Controller
         $this->authorize('delete-attachment');
         $this->delete_attachment('contract.pdf', 'event', $event_id, 'contract');
 
-        return Redirect::action('RetreatController@show', $event_id);
+        return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
     }
 
     public function delete_event_group_photo($event_id)
@@ -521,7 +521,7 @@ class AttachmentController extends Controller
         $this->authorize('delete-attachment');
         $this->delete_attachment('group_photo.jpg', 'event', $event_id, 'group_photo');
 
-        return Redirect::action('RetreatController@show', $event_id);
+        return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
     }
 
     public function get_event_group_photo($event_id)
@@ -536,7 +536,7 @@ class AttachmentController extends Controller
         $this->authorize('delete-attachment');
         $this->delete_attachment('asset_photo.jpg', 'asset', $asset_id, 'asset_photo');
 
-        return Redirect::action('AssetController@show', $asset_id);
+        return Redirect::action([\App\Http\Controllers\AssetController::class, 'show'], $asset_id);
     }
 
     public function get_asset_photo($asset_id)
@@ -559,7 +559,7 @@ class AttachmentController extends Controller
 
         $this->delete_attachment($file_name, 'asset', $asset_id, 'attachment');
 
-        return Redirect::action('AssetController@show', $asset_id);
+        return Redirect::action([\App\Http\Controllers\AssetController::class, 'show'], $asset_id);
     }
 
     /**
@@ -576,7 +576,6 @@ class AttachmentController extends Controller
 
         return view('attachments.show', compact('attachment')); //
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -610,9 +609,8 @@ class AttachmentController extends Controller
 
         flash('Attachment: <a href="'.url('/attachment/'.$attachment->id).'">'.$attachment->uri.'</a> updated')->success();
 
-        return Redirect::action('AttachmentController@show', $id);
+        return Redirect::action([self::class, 'show'], $id);
     }
-
 
     /**
      * Display a listing of the resource.
@@ -622,7 +620,7 @@ class AttachmentController extends Controller
     public function index()
     {
         $this->authorize('show-attachment');
-        $attachments = \App\Models\Attachment::orderByDesc('upload_date')->paginate(25,['*'],'attachments');
+        $attachments = \App\Models\Attachment::orderByDesc('upload_date')->paginate(25, ['*'], 'attachments');
 
         return view('attachments.index', compact('attachments'));
     }
@@ -670,9 +668,4 @@ class AttachmentController extends Controller
 
         return Redirect::back();
     }
-
-
-
-
-
 }

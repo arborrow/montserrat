@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -41,7 +40,7 @@ class SnippetControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('snippet.destroy', [$snippet]));
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('SnippetController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\SnippetController::class, 'index']));
         $this->assertSoftDeleted($snippet);
     }
 
@@ -132,8 +131,8 @@ class SnippetControllerTest extends TestCase
     {   // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-snippet');
 
-        $title = $this->faker->word;
-        $label = $this->faker->word;
+        $title = $this->faker->word();
+        $label = $this->faker->word();
         $snippet = $this->faker->sentence(7, true);
 
         $response = $this->actingAs($user)->post(route('snippet.store'), [
@@ -144,12 +143,12 @@ class SnippetControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('SnippetController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\SnippetController::class, 'index']));
 
         $this->assertDatabaseHas('snippets', [
-          'title' => $title,
-          'snippet' => $snippet,
-          'label' => $label,
+            'title' => $title,
+            'snippet' => $snippet,
+            'label' => $label,
         ]);
     }
 
@@ -163,12 +162,12 @@ class SnippetControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-snippet');
 
         $response = $this->actingAs($user)->post(route('snippet.snippet_test'), [
-            'title' => $this->faker->lastName,
-            'language' => $this->faker->locale,
-            'email' => $this->faker->safeEmail,
+            'title' => $this->faker->lastName(),
+            'language' => $this->faker->locale(),
+            'email' => $this->faker->safeEmail(),
         ]);
 
-        $response->assertRedirect(action('SnippetController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\SnippetController::class, 'index']));
         $response->assertSessionHas('flash_notification');
     }
 
@@ -228,15 +227,15 @@ class SnippetControllerTest extends TestCase
         $new_title = 'New '.$this->faker->words(2, true);
 
         $response = $this->actingAs($user)->put(route('snippet.update', [$snippet]), [
-          'id' => $snippet->id,
-          'title' => $new_title,
-          'snippet' => $this->faker->sentence(7, true),
-          'label' => $snippet->label,
-          'locale' => $snippet->locale,
+            'id' => $snippet->id,
+            'title' => $new_title,
+            'snippet' => $this->faker->sentence(7, true),
+            'label' => $snippet->label,
+            'locale' => $snippet->locale,
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('SnippetController@show', $snippet->id));
+        $response->assertRedirect(action([\App\Http\Controllers\SnippetController::class, 'show'], $snippet->id));
 
         $updated = \App\Models\Snippet::findOrFail($snippet->id);
 

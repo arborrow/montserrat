@@ -3,8 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class AddForeignKeysToDomainTable extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -28,4 +27,4 @@ class AddForeignKeysToDomainTable extends Migration
             $table->dropForeign('domain_contact_id_foreign');
         });
     }
-}
+};

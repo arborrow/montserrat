@@ -39,10 +39,10 @@ class StoreRetreatTouchpointRequestTest extends TestCase
         $actual = $this->subject->rules();
 
         $this->assertEquals([
-          'event_id' => 'required|integer|min:0',
-          'touched_at' => 'required|date',
-          'staff_id' => 'required|integer|min:0',
-          'type' => 'in:Email,Call,Letter,Face,Other',
+            'event_id' => 'required|integer|min:0',
+            'touched_at' => 'required|date',
+            'staff_id' => 'required|integer|min:0',
+            'type' => 'in:Email,Call,Letter,Face,Other',
         ], $actual);
     }
 

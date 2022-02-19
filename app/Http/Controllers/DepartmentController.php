@@ -62,7 +62,7 @@ class DepartmentController extends Controller
 
         flash('Department: <a href="'.url('/admin/department/'.$department->id).'">'.$department->name.'</a> added')->success();
 
-        return Redirect::action('DepartmentController@index');
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -122,7 +122,7 @@ class DepartmentController extends Controller
         flash('Department: <a href="'.url('/admin/department/'.$department->id).'">'.$department->name.'</a> updated')->success();
         $department->save();
 
-        return Redirect::action('DepartmentController@show', $department->id);
+        return Redirect::action([self::class, 'show'], $department->id);
     }
 
     /**
@@ -139,6 +139,6 @@ class DepartmentController extends Controller
         \App\Models\Department::destroy($id);
         flash('Department: '.$department->name.' deleted')->warning()->important();
 
-        return Redirect::action('DepartmentController@index');
+        return Redirect::action([self::class, 'index']);
     }
 }

@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -45,7 +44,7 @@ class ParishControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('parish.destroy', [$parish->id]));
         $response->assertSessionHas('flash_notification');
 
-        $response->assertRedirect(action('ParishController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\ParishController::class, 'index']));
         $this->assertSoftDeleted($parish);
     }
 
@@ -85,37 +84,37 @@ class ParishControllerTest extends TestCase
         $url_main = \App\Models\Website::factory()->create([
             'contact_id' => $parish->id,
             'website_type' => 'Main',
-            'url' => $this->faker->url,
+            'url' => $this->faker->url(),
         ]);
         $url_work = \App\Models\Website::factory()->create([
             'contact_id' => $parish->id,
             'website_type' => 'Work',
-            'url' => $this->faker->url,
+            'url' => $this->faker->url(),
         ]);
         $url_facebook = \App\Models\Website::factory()->create([
             'contact_id' => $parish->id,
             'website_type' => 'Facebook',
-            'url' => 'https://facebook.com/'.$this->faker->slug,
+            'url' => 'https://facebook.com/'.$this->faker->slug(),
         ]);
         $url_google = \App\Models\Website::factory()->create([
             'contact_id' => $parish->id,
             'website_type' => 'Google',
-            'url' => 'https://google.com/'.$this->faker->slug,
+            'url' => 'https://google.com/'.$this->faker->slug(),
         ]);
         $url_instagram = \App\Models\Website::factory()->create([
             'contact_id' => $parish->id,
             'website_type' => 'Instagram',
-            'url' => 'https://instagram.com/'.$this->faker->slug,
+            'url' => 'https://instagram.com/'.$this->faker->slug(),
         ]);
         $url_linkedin = \App\Models\Website::factory()->create([
             'contact_id' => $parish->id,
             'website_type' => 'LinkedIn',
-            'url' => 'https://linkedin.com/'.$this->faker->slug,
+            'url' => 'https://linkedin.com/'.$this->faker->slug(),
         ]);
         $url_twitter = \App\Models\Website::factory()->create([
             'contact_id' => $parish->id,
             'website_type' => 'Twitter',
-            'url' => 'https://twitter.com/'.$this->faker->slug,
+            'url' => 'https://twitter.com/'.$this->faker->slug(),
         ]);
 
         $response = $this->actingAs($user)->get(route('parish.edit', [$parish]));
@@ -226,23 +225,23 @@ class ParishControllerTest extends TestCase
     public function store_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('create-contact');
-        $parish_name = 'St. '.$this->faker->firstName.' Parish';
+        $parish_name = 'St. '.$this->faker->firstName().' Parish';
 
         $response = $this->actingAs($user)->post(route('parish.store'), [
-          'organization_name' => $parish_name,
-          'display_name' => $parish_name,
-          'sort_name' => $parish_name,
+            'organization_name' => $parish_name,
+            'display_name' => $parish_name,
+            'sort_name' => $parish_name,
         ]);
 
-        $response->assertRedirect(action('ParishController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\ParishController::class, 'index']));
         $response->assertSessionHas('flash_notification');
 
         $this->assertDatabaseHas('contact', [
-          'contact_type' => config('polanco.contact_type.organization'),
-          'subcontact_type' => config('polanco.contact_type.parish'),
-          'sort_name' => $parish_name,
-          'display_name' => $parish_name,
-          'organization_name' => $parish_name,
+            'contact_type' => config('polanco.contact_type.organization'),
+            'subcontact_type' => config('polanco.contact_type.parish'),
+            'sort_name' => $parish_name,
+            'display_name' => $parish_name,
+            'organization_name' => $parish_name,
         ]);
     }
 
@@ -267,18 +266,18 @@ class ParishControllerTest extends TestCase
         $parish = \App\Models\Parish::factory()->create();
 
         $original_sort_name = $parish->sort_name;
-        $new_parish_name = 'St. '.$this->faker->firstName.' Parish of the Renewal';
+        $new_parish_name = 'St. '.$this->faker->firstName().' Parish of the Renewal';
 
         $response = $this->actingAs($user)->put(route('parish.update', [$parish]), [
-          'sort_name' => $new_parish_name,
-          'display_name' => $new_parish_name,
-          'organization_name' => $new_parish_name,
-          'id' => $parish->id,
+            'sort_name' => $new_parish_name,
+            'display_name' => $new_parish_name,
+            'organization_name' => $new_parish_name,
+            'id' => $parish->id,
         ]);
 
         $updated = \App\Models\Contact::findOrFail($parish->id);
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('ParishController@show', $parish->id));
+        $response->assertRedirect(action([\App\Http\Controllers\ParishController::class, 'show'], $parish->id));
         $this->assertEquals($updated->sort_name, $new_parish_name);
         $this->assertNotEquals($updated->sort_name, $original_sort_name);
     }

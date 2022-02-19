@@ -9,13 +9,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class Ppd_occupationFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = \App\Models\Ppd_occupation::class;
-
-    /**
      * Define the model's default state.
      *
      * @return array

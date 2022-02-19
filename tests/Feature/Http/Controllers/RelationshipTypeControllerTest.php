@@ -3,11 +3,11 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\RelationshipType;
-use Illuminate\Support\Arr;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Arr;
 use Tests\TestCase;
+use Carbon\Carbon;
 
 /**
  * @see \App\Http\Controllers\RelationshipTypeController
@@ -36,11 +36,13 @@ class RelationshipTypeControllerTest extends TestCase
 
         $response->assertSeeText($relationship_type->description);
     }
+
     /**
      * @test
      */
     public function add_with_a_and_b_returns_an_ok_response()
-    {   $this->withoutExceptionHandling();
+    {
+        $this->withoutExceptionHandling();
 
         $user = $this->createUserWithPermission('create-relationship');
         $user->assignRole('test-role:relationship_type_add');
@@ -64,10 +66,10 @@ class RelationshipTypeControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('relationships.types.add');
         $response->assertViewHas('relationship_type');
-        $response->assertViewHas('contact_a_list', function($a_contacts) use ($contact_a) {
+        $response->assertViewHas('contact_a_list', function ($a_contacts) use ($contact_a) {
             return Arr::exists($a_contacts, $contact_a->id);
         });
-        $response->assertViewHas('contact_b_list', function($b_contacts) use ($contact_b) {
+        $response->assertViewHas('contact_b_list', function ($b_contacts) use ($contact_b) {
             return Arr::exists($b_contacts, $contact_b->id);
         });
         $response->assertSeeText($relationship_type->description);
@@ -87,14 +89,14 @@ class RelationshipTypeControllerTest extends TestCase
         $user = $this->createUserWithPermission('create-relationship');
 
         $contact = \App\Models\Contact::factory()->create([
-          'contact_type' => config('polanco.contact_type.individual'),
-          'subcontact_type' => null,
+            'contact_type' => config('polanco.contact_type.individual'),
+            'subcontact_type' => null,
         ]);
         $relationship_type = array_rand(array_flip(['Child', 'Employee', 'Husband', 'Parent', 'Parishioner', 'Sibling', 'Wife']));
         $response = $this->actingAs($user)->post(route('relationship_type.addme'), [
             'relationship_type' => $relationship_type,
             'contact_id' => $contact->id,
-          ]);
+        ]);
 
         switch ($relationship_type) {
             case 'Child':
@@ -155,7 +157,7 @@ class RelationshipTypeControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('relationship_type.destroy', [$relationship_type]));
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RelationshipTypeController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\RelationshipTypeController::class, 'index']));
         $this->assertSoftDeleted($relationship_type);
     }
 
@@ -238,9 +240,9 @@ class RelationshipTypeControllerTest extends TestCase
 
         $response->assertRedirect('person/'.$contact_b->id);
         $this->assertDatabaseHas('relationship', [
-          'contact_id_a' => $contact_a->id,
-          'contact_id_b' => $contact_b->id,
-          'relationship_type_id' => $relationship_type_id,
+            'contact_id_a' => $contact_a->id,
+            'contact_id_b' => $contact_b->id,
+            'relationship_type_id' => $relationship_type_id,
         ]);
     }
 
@@ -280,31 +282,31 @@ class RelationshipTypeControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('create-relationshiptype');
 
-        $name_a_b = $this->faker->company;
-        $name_b_a = $this->faker->jobTitle;
-        $description = $this->faker->catchPhrase;
+        $name_a_b = $this->faker->company();
+        $name_b_a = $this->faker->jobTitle();
+        $description = $this->faker->catchPhrase();
 
         $response = $this->actingAs($user)->post(route('relationship_type.store'), [
-          'name_a_b' => $name_a_b,
-          'name_b_a' => $name_b_a,
-          'label_a_b' => 'has a '.$this->faker->word.' of ',
-          'label_b_a' => $this->faker->word.' for ',
-          'description' => $description,
-          'contact_type_a' => array_rand(array_flip(['Individual', 'Organization', 'Household'])),
-          'contact_type_b' => array_rand(array_flip(['Individual', 'Organization', 'Household'])),
-          'contact_sub_type_a' => null,
-          'contact_sub_type_b' => null,
-          'is_reserved' => 0,
-          'is_active' => 1,
-          'created_at' => $this->faker->dateTime('now'),
-          'updated_at' => $this->faker->dateTime('now'),
+            'name_a_b' => $name_a_b,
+            'name_b_a' => $name_b_a,
+            'label_a_b' => 'has a '.$this->faker->word().' of ',
+            'label_b_a' => $this->faker->word().' for ',
+            'description' => $description,
+            'contact_type_a' => array_rand(array_flip(['Individual', 'Organization', 'Household'])),
+            'contact_type_b' => array_rand(array_flip(['Individual', 'Organization', 'Household'])),
+            'contact_sub_type_a' => null,
+            'contact_sub_type_b' => null,
+            'is_reserved' => 0,
+            'is_active' => 1,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
-        $response->assertRedirect(action('RelationshipTypeController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\RelationshipTypeController::class, 'index']));
         $response->assertSessionHas('flash_notification');
         $this->assertDatabaseHas('relationship_type', [
-          'name_a_b' => $name_a_b,
-          'name_b_a' => $name_b_a,
-          'description' => $description,
+            'name_a_b' => $name_a_b,
+            'name_b_a' => $name_b_a,
+            'description' => $description,
         ]);
     }
 
@@ -329,24 +331,24 @@ class RelationshipTypeControllerTest extends TestCase
 
         $relationship_type = \App\Models\RelationshipType::factory()->create();
         $original_description = $relationship_type->description;
-        $new_name_a_b = $this->faker->company;
-        $new_name_b_a = $this->faker->jobTitle;
-        $new_description = $this->faker->catchPhrase;
+        $new_name_a_b = $this->faker->company();
+        $new_name_b_a = $this->faker->jobTitle();
+        $new_description = $this->faker->catchPhrase();
 
         $response = $this->actingAs($user)->put(route('relationship_type.update', [$relationship_type]), [
-          'id' => $relationship_type->id,
-          'name_a_b' => $new_name_a_b,
-          'name_b_a' => $new_name_b_a,
-          'label_a_b' => 'has a '.$this->faker->word.' of ',
-          'label_b_a' => $this->faker->word.' for ',
-          'description' => $new_description,
+            'id' => $relationship_type->id,
+            'name_a_b' => $new_name_a_b,
+            'name_b_a' => $new_name_b_a,
+            'label_a_b' => 'has a '.$this->faker->word().' of ',
+            'label_b_a' => $this->faker->word().' for ',
+            'description' => $new_description,
 
         ]);
         // dd($response,$relationship_type->id);
         $updated = \App\Models\RelationshipType::findOrFail($relationship_type->id);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RelationshipTypeController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\RelationshipTypeController::class, 'index']));
         $this->assertEquals($updated->description, $new_description);
         $this->assertNotEquals($updated->description, $original_description);
     }

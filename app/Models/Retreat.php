@@ -18,8 +18,11 @@ class Retreat extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'event';
-    protected $dates = [
-        'start_date', 'end_date', 'disabled_at',
+
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+        'disabled_at' => 'datetime',
     ];  //
 
     public function setStartDateAttribute($date)
@@ -51,7 +54,6 @@ class Retreat extends Model implements Auditable
     public function getPaymentsPaidSumAttribute()
     {
         return $this->donations->sum('payments_sum_payment_amount');
-
     }
 
     public function getPercentPaidAttribute()
@@ -70,7 +72,6 @@ class Retreat extends Model implements Auditable
         } else {
             return 0;
         }
-
     }
 
     public function getNightsAttribute()
@@ -81,7 +82,8 @@ class Retreat extends Model implements Auditable
         return $start->diffInDays($end);
     }
 
-    public function getPeopleNightsAttribute() {
+    public function getPeopleNightsAttribute()
+    {
         return $this->nights * $this->participant_count;
     }
 
@@ -129,13 +131,14 @@ class Retreat extends Model implements Auditable
         return $this->hasOne(EventType::class, 'id', 'event_type_id');
     }
 
-    public function donations() {
-        return $this->hasMany(Donation::class, 'event_id', 'id')->withSum('payments','payment_amount');
+    public function donations()
+    {
+        return $this->hasMany(Donation::class, 'event_id', 'id')->withSum('payments', 'payment_amount');
     }
 
     public function participants()
     {
-        return $this->registrations()->whereCanceledAt(null)->whereIn('role_id',[config('polanco.participant_role_id.retreatant'),config('polanco.participant_role_id.ambassador')])->whereStatusId(config('polanco.registration_status_id.registered'));
+        return $this->registrations()->whereCanceledAt(null)->whereIn('role_id', [config('polanco.participant_role_id.retreatant'), config('polanco.participant_role_id.ambassador')])->whereStatusId(config('polanco.registration_status_id.registered'));
     }
 
     public function retreatmasters()
@@ -153,7 +156,6 @@ class Retreat extends Model implements Auditable
     {
         return $this->registrations()->whereCanceledAt(null)->whereRoleId(config('polanco.participant_role_id.retreatant'))->whereStatusId(config('polanco.registration_status_id.registered'));
     }
-
 
     public function retreatants_waitlist()
     {
@@ -310,8 +312,7 @@ class Retreat extends Model implements Auditable
 
     public function scopeFiltered($query, $filters)
     {
-        //dd($filters->request);
-        foreach ($filters->request as $filter => $value) {
+        foreach ($filters->query as $filter => $value) {
             if ($filter == 'begin_date' && ! empty($value)) {
                 $begin_date = Carbon::parse($value);
                 $query->where('start_date', '>=', $begin_date);

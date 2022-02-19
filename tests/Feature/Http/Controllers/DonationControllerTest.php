@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -59,7 +59,6 @@ class DonationControllerTest extends TestCase
         $response->assertViewHas('defaults');
     }
 
-
     /**
      * @test
      */
@@ -73,7 +72,7 @@ class DonationControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('donations.create');
         $response->assertViewHas('retreats');
-        $response->assertViewHas('donors', function($donors) use ($contact) {
+        $response->assertViewHas('donors', function ($donors) use ($contact) {
             return $donors->contains($contact->sort_name);
         });
         $response->assertViewHas('descriptions');
@@ -95,18 +94,17 @@ class DonationControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('donations.create');
 
-        $response->assertViewHas('retreats', function($events) use ($event) {
+        $response->assertViewHas('retreats', function ($events) use ($event) {
             return $events->has($event->id);
         });
 
-        $response->assertViewHas('donors', function($donors) use ($contact) {
+        $response->assertViewHas('donors', function ($donors) use ($contact) {
             return $donors->has($contact->id);
         });
         $response->assertViewHas('descriptions');
         $response->assertViewHas('payment_methods');
         $response->assertViewHas('defaults');
     }
-
 
     /**
      * @test
@@ -125,11 +123,11 @@ class DonationControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('donations.create');
 
-        $response->assertViewHas('retreats', function($events) use ($event) {
+        $response->assertViewHas('retreats', function ($events) use ($event) {
             return $events->has($event->id);
         });
 
-        $response->assertViewHas('donors', function($donors) use ($contact) {
+        $response->assertViewHas('donors', function ($donors) use ($contact) {
             return $donors->has($contact->id);
         });
         $response->assertViewHas('descriptions');
@@ -260,7 +258,7 @@ class DonationControllerTest extends TestCase
             $donations[$participant->id]['paid'] = $this->faker->numberBetween(100, 200);
             $donations[$participant->id]['method'] = 'Credit Card';
             $donations[$participant->id]['idnumber'] = $this->faker->randomNumber(6);
-            $donations[$participant->id]['terms'] = $this->faker->sentence;
+            $donations[$participant->id]['terms'] = $this->faker->sentence();
         }
         $random_participant = $participants->random();
 
@@ -268,10 +266,10 @@ class DonationControllerTest extends TestCase
             'event_id' => $retreat->id,
             'donations' => $donations,
         ]);
-        $response->assertRedirect(action('RetreatController@show', $retreat->id));
+        $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id));
         $this->assertDatabaseHas('Donations', [
-          'event_id' => $retreat->id,
-          'contact_id' => $random_participant->contact_id,
+            'event_id' => $retreat->id,
+            'contact_id' => $random_participant->contact_id,
         ]);
     }
 
@@ -303,8 +301,8 @@ class DonationControllerTest extends TestCase
         $response = $this->actingAs($user)->post(route('donation.store'), [
             'donor_id' => $donor->id,
             'event_id' => $event->id,
-            'donation_date' => $this->faker->dateTime(),
-            'payment_date' => $this->faker->dateTime(),
+            'donation_date' => Carbon::parse($this->faker->dateTime()),
+            'payment_date' => Carbon::parse($this->faker->dateTime()),
             'donation_amount' => $this->faker->randomFloat(2, 0, 100000),
             'payment_amount' => $this->faker->randomFloat(2, 0, 100000),
             'payment_idnumber' => $this->faker->randomNumber(4),
@@ -317,8 +315,8 @@ class DonationControllerTest extends TestCase
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect($donor->contact_url.'#donations');
         $this->assertDatabaseHas('Donations', [
-          'contact_id' => $donor->id,
-          'event_id' => $event->id,
+            'contact_id' => $donor->id,
+            'event_id' => $event->id,
         ]);
     }
 
@@ -339,7 +337,7 @@ class DonationControllerTest extends TestCase
      */
     public function update_returns_an_ok_response()
     {
-         $this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('update-donation');
         $event = \App\Models\Retreat::factory()->create();
         $donation = \App\Models\Donation::factory()->create();
@@ -353,19 +351,17 @@ class DonationControllerTest extends TestCase
             'donation_description' => $description->id,
             'donor_id' => $new_contact->id,
             'event_id' => $event->id,
-            'donation_date' => $this->faker->dateTime,
-            'start_date' => $start_date,
-            'end_date' => $end_date,
+            'donation_date' => $this->faker->date(),
             'donation_amount' => $this->faker->randomFloat(2, 0, 100000),
-            'notes1' => $this->faker->text,
-            'notes' => $this->faker->text,
-            'terms' => $this->faker->text,
+            'notes1' => $this->faker->text(),
+            'notes' => $this->faker->text(),
+            'terms' => $this->faker->text(),
             'donation_install' => $this->faker->randomFloat(2, 0, 100000),
         ]);
 
         // TODO: remove space on Thank You field in Donation table then add to unit test
 
-        $response->assertRedirect(action('DonationController@show', $donation->donation_id));
+        $response->assertRedirect(action([\App\Http\Controllers\DonationController::class, 'show'], $donation->donation_id));
         $response->assertSessionHas('flash_notification');
 
         $updated_donation = \App\Models\Donation::find($donation->donation_id);
@@ -384,7 +380,6 @@ class DonationControllerTest extends TestCase
             \App\Http\Requests\UpdateDonationRequest::class
         );
     }
-
 
     /**
      * @test
@@ -419,7 +414,6 @@ class DonationControllerTest extends TestCase
         $response->assertViewHas('retreats');
         $response->assertSeeText('Search Donations');
     }
-
 
     // test cases...
 }

@@ -4,7 +4,6 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\StateProvince;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -44,7 +43,7 @@ class AddressControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('address.destroy', [$address]));
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('PersonController@show', $contact_id));
+        $response->assertRedirect(action([\App\Http\Controllers\PersonController::class, 'show'], $contact_id));
         $this->assertSoftDeleted($address);
     }
 
@@ -122,25 +121,25 @@ class AddressControllerTest extends TestCase
         $contact = \App\Models\Contact::factory()->create();
         $random_location_type = \App\Models\LocationType::get()->random();
         $random_state = \App\Models\StateProvince::whereCountryId(config('polanco.country_id_usa'))->get()->random();
-        $random_street_address = $this->faker->streetAddress;
+        $random_street_address = $this->faker->streetAddress();
 
         $response = $this->actingAs($user)->post(route('address.store'), [
             'contact_id' => $contact->id,
             'location_type_id' => $random_location_type->id,
-            'is_primary' => $this->faker->boolean,
+            'is_primary' => $this->faker->boolean(),
             'street_address' => $random_street_address,
-            'supplemental_address_1' => $this->faker->streetAddress,
-            'city' => $this->faker->city,
+            'supplemental_address_1' => $this->faker->streetAddress(),
+            'city' => $this->faker->city(),
             'state_province_id' => $random_state->id,
-            'postal_code' => $this->faker->postcode,
+            'postal_code' => $this->faker->postcode(),
             'country_id' => config('polanco.country_id_usa'),
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('AddressController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AddressController::class, 'index']));
         $this->assertDatabaseHas('address', [
-          'contact_id' => $contact->id,
-          'street_address' => $random_street_address,
+            'contact_id' => $contact->id,
+            'street_address' => $random_street_address,
         ]);
     }
 
@@ -169,12 +168,12 @@ class AddressControllerTest extends TestCase
         $response = $this->actingAs($user)->put(route('address.update', [$address]), [
             'contact_id' => $address->contact_id,
             'location_type_id' => $address->location_type_id,
-            'street_address' => $this->faker->streetAddress,
+            'street_address' => $this->faker->streetAddress(),
         ]);
 
         $updated_address = \App\Models\Address::find($address->id);
 
-        $response->assertRedirect(action('AddressController@show', $address->id));
+        $response->assertRedirect(action([\App\Http\Controllers\AddressController::class, 'show'], $address->id));
         $response->assertSessionHas('flash_notification');
         $this->assertEquals($updated_address->contact_id, $contact_id);
         $this->assertNotEquals($updated_address->street_address, $original_street_address);

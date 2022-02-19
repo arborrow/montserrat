@@ -9,7 +9,9 @@ use Laravel\Socialite\Contracts\Factory as Socialite;
 class AuthenticateUser
 {
     private $socialite;
+
     private $auth;
+
     private $users;
 
     public function __construct(Socialite $socialite, Guard $auth, UserRepository $users)

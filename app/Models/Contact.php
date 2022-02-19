@@ -17,20 +17,23 @@ class Contact extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'contact';
-    protected $dates = [
-        'birth_date', 'deceased_date', 'created_date', 'modified_date',
-    ];
+
     protected $casts = [
+        'birth_date' => 'datetime',
+        'deceased_date' => 'datetime',
+        'created_date' => 'datetime',
+        'modified_date' => 'datetime',
         'contact_type' => 'integer',
         'subcontact_type' => 'integer',
     ];
+
     protected $appends = ['full_name_with_city', 'agc_household_name'];
 
     public function generateTags(): array
     {
         return [
-                $this->sort_name,
-            ];
+            $this->sort_name,
+        ];
     }
 
     // TODO: refactor to lookup based on relationship
@@ -59,7 +62,8 @@ class Contact extends Model implements Auditable
         return $this->hasOne(Address::class, 'contact_id', 'id')->whereIsPrimary(1);
     }
 
-    public function getPrimaryEmailLocationNameAttribute() {
+    public function getPrimaryEmailLocationNameAttribute()
+    {
         if (isset($this->email_primary)) {
             return $this->email_primary->location_type_name;
         } else {
@@ -67,7 +71,8 @@ class Contact extends Model implements Auditable
         }
     }
 
-    public function getPrimaryEmailLocationTypeIdAttribute() {
+    public function getPrimaryEmailLocationTypeIdAttribute()
+    {
         if (isset($this->email_primary)) {
             return $this->email_primary->location_type_id;
         } else {
@@ -75,7 +80,8 @@ class Contact extends Model implements Auditable
         }
     }
 
-    public function getPrimaryAddressLocationNameAttribute() {
+    public function getPrimaryAddressLocationNameAttribute()
+    {
         if (isset($this->address_primary)) {
             return $this->address_primary->location_type_name;
         } else {
@@ -83,7 +89,8 @@ class Contact extends Model implements Auditable
         }
     }
 
-    public function getPrimaryAddressLocationTypeIdAttribute() {
+    public function getPrimaryAddressLocationTypeIdAttribute()
+    {
         if (isset($this->address_primary)) {
             return $this->address_primary->location_type_id;
         } else {
@@ -91,24 +98,27 @@ class Contact extends Model implements Auditable
         }
     }
 
-    public function getPrimaryPhoneLocationNameAttribute() {
-        if (isset($this->phone_primary) && !empty($this->phone_primary->phone)) {
+    public function getPrimaryPhoneLocationNameAttribute()
+    {
+        if (isset($this->phone_primary) && ! empty($this->phone_primary->phone)) {
             return $this->phone_primary->location_type_name;
         } else {
             return 'N/A';
         }
     }
 
-    public function getPrimaryPhoneLocationTypeIdAttribute() {
-        if (isset($this->phone_primary) && !empty($this->phone_primary->phone)) {
+    public function getPrimaryPhoneLocationTypeIdAttribute()
+    {
+        if (isset($this->phone_primary) && ! empty($this->phone_primary->phone)) {
             return $this->phone_primary->location_type_id;
         } else {
             return 0;
         }
     }
 
-    public function getPrimaryPhoneTypeAttribute() {
-        if (isset($this->phone_primary) && !empty($this->phone_primary->phone)) {
+    public function getPrimaryPhoneTypeAttribute()
+    {
+        if (isset($this->phone_primary) && ! empty($this->phone_primary->phone)) {
             return $this->phone_primary->phone_type;
         } else {
             return;
@@ -1320,7 +1330,7 @@ class Contact extends Model implements Auditable
         return $query->where([
             ['contact_type', '>=', config('polanco.contact_type.organization')],
             ['subcontact_type', '>=', config('polanco.contact_type.province')],
-            ]);
+        ]);
     }
 
     public function scopeVendors($query)
@@ -1330,8 +1340,7 @@ class Contact extends Model implements Auditable
 
     public function scopeFiltered($query, $filters)
     {
-        //dd($filters->request);
-        foreach ($filters->request as $filter => $value) {
+        foreach ($filters->query as $filter => $value) {
             if ($filter == 'prefix_id' && $value > 0) {
                 $query->where($filter, $value);
             }

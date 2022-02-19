@@ -8,7 +8,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <span><h2>Retreat #<a href="{{url('retreat/'.$retreat->id)}}">{{ $retreat->idnumber }} - {{ $retreat->title }}</a></span>
-                <span class="back"><a href={{ action('RetreatController@index') }}>{!! Html::image('images/retreat.png', 'Retreat Index',array('title'=>"Retreat Index",'class' => 'btn btn-outline-dark')) !!}</a></span></h1>
+                <span class="back"><a href={{ action([\App\Http\Controllers\RetreatController::class, 'index']) }}>{!! Html::image('images/retreat.png', 'Retreat Index',array('title'=>"Retreat Index",'class' => 'btn btn-outline-dark')) !!}</a></span></h1>
                 <div class='row'>
                     <div class='col-md-3'><strong>Starts: </strong>{{date('F j, Y g:i A', strtotime($retreat->start_date))}}</div>
                     <div class='col-md-3'><strong>Ends: </strong>{{date('F j, Y g:i A', strtotime($retreat->end_date))}}</div>
@@ -95,7 +95,7 @@
                 @foreach($registrations->sortBy('retreatant.sort_name') as $registration)
                     <tr>
                         <td class='col-md-3'>{!!$registration->retreatant->contact_link!!}</td>
-                        <td class='col-md-2'><a href="{{action('RegistrationController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }}</a></td>
+                        <td class='col-md-2'><a href="{{action([\App\Http\Controllers\RegistrationController::class, 'show'], $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }}</a></td>
                         <td class='col-md-2'>{{$registration->retreatant->note_room_preference_text}}</td>
                         <td class='col-md-2'>
                             @if($registration->canceled_at === NULL)

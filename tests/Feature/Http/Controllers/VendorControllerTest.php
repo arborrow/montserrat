@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -43,7 +42,7 @@ class VendorControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('vendor.destroy', ['vendor' => $vendor]));
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('VendorController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\VendorController::class, 'index']));
         $this->assertSoftDeleted($vendor);
     }
 
@@ -89,32 +88,32 @@ class VendorControllerTest extends TestCase
         $url_main = \App\Models\Website::factory()->create([
             'contact_id' => $vendor->id,
             'website_type' => 'Main',
-            'url' => $this->faker->url,
+            'url' => $this->faker->url(),
         ]);
         $url_work = \App\Models\Website::factory()->create([
             'contact_id' => $vendor->id,
             'website_type' => 'Work',
-            'url' => $this->faker->url,
+            'url' => $this->faker->url(),
         ]);
         $url_facebook = \App\Models\Website::factory()->create([
             'contact_id' => $vendor->id,
             'website_type' => 'Facebook',
-            'url' => 'https://facebook.com/'.$this->faker->slug,
+            'url' => 'https://facebook.com/'.$this->faker->slug(),
         ]);
         $url_instagram = \App\Models\Website::factory()->create([
             'contact_id' => $vendor->id,
             'website_type' => 'Instagram',
-            'url' => 'https://instagram.com/'.$this->faker->slug,
+            'url' => 'https://instagram.com/'.$this->faker->slug(),
         ]);
         $url_linkedin = \App\Models\Website::factory()->create([
             'contact_id' => $vendor->id,
             'website_type' => 'LinkedIn',
-            'url' => 'https://linkedin.com/'.$this->faker->slug,
+            'url' => 'https://linkedin.com/'.$this->faker->slug(),
         ]);
         $url_twitter = \App\Models\Website::factory()->create([
             'contact_id' => $vendor->id,
             'website_type' => 'Twitter',
-            'url' => 'https://twitter.com/'.$this->faker->slug,
+            'url' => 'https://twitter.com/'.$this->faker->slug(),
         ]);
 
         $response = $this->actingAs($user)->get(route('vendor.edit', $vendor->id));
@@ -191,25 +190,25 @@ class VendorControllerTest extends TestCase
     public function store_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('create-contact');
-        $vendor_name = $this->faker->company;
+        $vendor_name = $this->faker->company();
 
         $response = $this->actingAs($user)->post(route('vendor.store'), [
-          'organization_name' => $vendor_name,
-          'display_name' => $vendor_name,
-          'sort_name' => $vendor_name,
-          'contact_type' => config('polanco.contact_type.organization'),
-          'subcontact_type' => config('polanco.contact_type.vendor'),
+            'organization_name' => $vendor_name,
+            'display_name' => $vendor_name,
+            'sort_name' => $vendor_name,
+            'contact_type' => config('polanco.contact_type.organization'),
+            'subcontact_type' => config('polanco.contact_type.vendor'),
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('VendorController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\VendorController::class, 'index']));
 
         $this->assertDatabaseHas('contact', [
-          'contact_type' => config('polanco.contact_type.organization'),
-          'subcontact_type' => config('polanco.contact_type.vendor'),
-          'sort_name' => $vendor_name,
-          'display_name' => $vendor_name,
-          'organization_name' => $vendor_name,
+            'contact_type' => config('polanco.contact_type.organization'),
+            'subcontact_type' => config('polanco.contact_type.vendor'),
+            'sort_name' => $vendor_name,
+            'display_name' => $vendor_name,
+            'organization_name' => $vendor_name,
         ]);
     }
 
@@ -233,21 +232,21 @@ class VendorControllerTest extends TestCase
         $user = $this->createUserWithPermission('update-contact');
         $vendor = \App\Models\Vendor::factory()->create();
         $original_sort_name = $vendor->sort_name;
-        $vendor_name = $this->faker->company;
+        $vendor_name = $this->faker->company();
 
         $response = $this->actingAs($user)->put(route('vendor.update', $vendor), [
-          'sort_name' => $vendor_name,
-          'display_name' => $vendor_name,
-          'organization_name' => $vendor_name,
-          'id' => $vendor->id,
+            'sort_name' => $vendor_name,
+            'display_name' => $vendor_name,
+            'organization_name' => $vendor_name,
+            'id' => $vendor->id,
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('VendorController@show', $vendor->id));
+        $response->assertRedirect(action([\App\Http\Controllers\VendorController::class, 'show'], $vendor->id));
 
         $updated = \App\Models\Contact::find($vendor->id);
 
-        $response->assertRedirect(action('VendorController@show', $vendor->id));
+        $response->assertRedirect(action([\App\Http\Controllers\VendorController::class, 'show'], $vendor->id));
         $this->assertEquals($updated->sort_name, $vendor_name);
         $this->assertNotEquals($updated->sort_name, $original_sort_name);
     }

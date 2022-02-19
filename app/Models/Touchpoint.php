@@ -11,13 +11,15 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Touchpoint extends Model implements Auditable
 {
     use HasFactory;
+
     //
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
-    protected $dates = [
-        'touched_at',
+    protected $casts = [
+        'touched_at' => 'datetime',
     ];
+
     protected $fillable = ['person_id', 'staff_id', 'notes', 'type'];
 
     public function setTouchedAtAttribute($date)

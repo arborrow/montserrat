@@ -10,7 +10,7 @@
             @else
                 Relationship #{{ $relationship->id }}
             @endCan
-            <span class="back"><a href={{ action('RelationshipController@index') }}>{!! Html::image('images/relationship.png', 'relationship Index',array('title'=>"relationship Index",'class' => 'btn btn-light')) !!}</a>
+            <span class="back"><a href={{ action([\App\Http\Controllers\RelationshipController::class, 'index']) }}>{!! Html::image('images/relationship.png', 'relationship Index',array('title'=>"relationship Index",'class' => 'btn btn-light')) !!}</a>
         </h1>
     </div>
     <div class="col-lg-12">
@@ -45,7 +45,7 @@
         <div class="row mt-3">
             <div class="col-lg-6 text-right">
                 @can('update-relationship')
-                    <a href="{{ action('RelationshipController@edit', $relationship->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                    <a href="{{ action([\App\Http\Controllers\RelationshipController::class, 'edit'], $relationship->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                 @endCan
             </div>
             <div class="col-lg-6 text-left">

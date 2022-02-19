@@ -7461,7 +7461,7 @@ class StateProvinceTableSeeder extends Seeder
             ],
             244 => [
                 'id' => 2139,
-            'name' => 'Neia Mongol (mn)',
+                'name' => 'Neia Mongol (mn)',
                 'abbreviation' => '15',
                 'country_id' => 1045,
                 'deleted_at' => null,
@@ -8841,7 +8841,7 @@ class StateProvinceTableSeeder extends Seeder
             ],
             382 => [
                 'id' => 2277,
-            'name' => 'Distrito Nacional (Santo Domingo)',
+                'name' => 'Distrito Nacional (Santo Domingo)',
                 'abbreviation' => '01',
                 'country_id' => 1062,
                 'deleted_at' => null,
@@ -20457,7 +20457,7 @@ class StateProvinceTableSeeder extends Seeder
             ],
             43 => [
                 'id' => 3621,
-            'name' => 'Laâyoune (EH)',
+                'name' => 'Laâyoune (EH)',
                 'abbreviation' => 'LAA',
                 'country_id' => 1146,
                 'deleted_at' => null,
@@ -20517,7 +20517,7 @@ class StateProvinceTableSeeder extends Seeder
             ],
             49 => [
                 'id' => 3627,
-            'name' => 'Oued ed Dahab (EH)',
+                'name' => 'Oued ed Dahab (EH)',
                 'abbreviation' => 'OUD',
                 'country_id' => 1146,
                 'deleted_at' => null,
@@ -24477,7 +24477,7 @@ class StateProvinceTableSeeder extends Seeder
             ],
             445 => [
                 'id' => 4023,
-            'name' => 'National Capital District (Port Moresby)',
+                'name' => 'National Capital District (Port Moresby)',
                 'abbreviation' => 'NCD',
                 'country_id' => 1167,
                 'deleted_at' => null,
@@ -27459,7 +27459,7 @@ class StateProvinceTableSeeder extends Seeder
             ],
             243 => [
                 'id' => 4327,
-            'name' => 'Capital Territory (Honiara)',
+                'name' => 'Capital Territory (Honiara)',
                 'abbreviation' => 'CT',
                 'country_id' => 1194,
                 'deleted_at' => null,
@@ -29619,7 +29619,7 @@ class StateProvinceTableSeeder extends Seeder
             ],
             459 => [
                 'id' => 4543,
-            'name' => 'Western Area (Freetown)',
+                'name' => 'Western Area (Freetown)',
                 'abbreviation' => 'W',
                 'country_id' => 1190,
                 'deleted_at' => null,
@@ -30461,7 +30461,7 @@ class StateProvinceTableSeeder extends Seeder
             ],
             43 => [
                 'id' => 4627,
-            'name' => 'Maritime (Region)',
+                'name' => 'Maritime (Region)',
                 'abbreviation' => 'M',
                 'country_id' => 1214,
                 'deleted_at' => null,
@@ -34171,7 +34171,7 @@ class StateProvinceTableSeeder extends Seeder
             ],
             414 => [
                 'id' => 4998,
-            'name' => 'Toshkent (city)',
+                'name' => 'Toshkent (city)',
                 'abbreviation' => 'TK',
                 'country_id' => 1230,
                 'deleted_at' => null,
@@ -36153,7 +36153,7 @@ class StateProvinceTableSeeder extends Seeder
             ],
             112 => [
                 'id' => 5196,
-            'name' => 'Al Manāmah (Al ‘Āşimah)',
+                'name' => 'Al Manāmah (Al ‘Āşimah)',
                 'abbreviation' => '13',
                 'country_id' => 1016,
                 'deleted_at' => null,

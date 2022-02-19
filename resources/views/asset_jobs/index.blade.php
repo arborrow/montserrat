@@ -7,7 +7,7 @@
             Asset jobs
             @can('create-asset-job')
             <span class="options">
-                <a href={{ action('AssetJobController@create') }}>
+                <a href={{ action([\App\Http\Controllers\AssetJobController::class, 'create']) }}>
                     <img src="{{ URL::asset('images/create.png') }}" alt="Add" class="btn btn-light" title="Add">
                 </a>
             </span>

@@ -3,7 +3,7 @@
     "scripts": {
         "dev": "npm run development",
         "development": "mix",
-        "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "mix watch",
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
         "prod": "npm run production",
@@ -12,13 +12,14 @@
     "devDependencies": {
         "@alexbinary/glob": "^1.0.1",
         "@fortawesome/fontawesome-free": "^5.15.1",
-        "axios": "^0.21",
+        "autoprefixer": "10.1.0",
+        "axios": "^0.25",
         "bootstrap": "^4.4.1",
         "copy-webpack-plugin": "^9",
         "flatpickr": "^4.6.3",
         "jquery": "~>3.5.0",
         "jquery-ui-bundle": "^1.12.1-migrate",
-        "laravel-mix": "^6.0.12",
+        "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
         "popper.js": "^1.16.1",
         "postcss": "^8.3.1",
@@ -32,7 +33,6 @@
         "webpack-cli": "^4.3.1"
     },
     "dependencies": {
-        "autoprefixer": "10.1.0",
         "font-awesome": "^4.7.0"
     }
 }

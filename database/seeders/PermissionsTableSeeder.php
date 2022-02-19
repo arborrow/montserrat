@@ -236,7 +236,7 @@ class PermissionsTableSeeder extends Seeder
                 'id' => 25,
                 'name' => 'superuser',
                 'display_name' => 'Super user',
-            'description' => 'Super user permission can do everything (not yet implemented)',
+                'description' => 'Super user permission can do everything (not yet implemented)',
                 'created_at' => '2016-12-26 09:51:24',
                 'updated_at' => '2016-12-26 09:51:24',
                 'deleted_at' => null,

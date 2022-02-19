@@ -15,12 +15,15 @@ class Payment extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'Donations_payment';
+
     protected $fillable = ['donation_id', 'payment_id', 'payment_amount', 'payment_description', 'cknumber', 'ccnumber', 'authorization_number', 'note', 'ty_letter_sent'];
-    protected $dates = [
-        'payment_date', 'expire_date',
-    ];
+
     protected $primaryKey = 'payment_id';
-    protected $casts = ['payment_amount'=>'decimal:2'];
+
+    protected $casts = [
+        'payment_date' => 'datetime',
+        'expire_date' => 'datetime', 'payment_amount'=>'decimal:2',
+    ];
 
     public function donation()
     {
@@ -60,23 +63,21 @@ class Payment extends Model implements Auditable
 
     public function scopeFiltered($query, $filters)
     {   //initialize comparison operators to equals
-        $payment_date_operator = "=";
-        $payment_amount_operator = "=";
+        $payment_date_operator = '=';
+        $payment_amount_operator = '=';
 
         //while not the most efficient - I want to get the comparison operators first so I can assign them to variables to use
-        foreach ($filters->request as $filter => $value) {
-
-            switch($filter) {
-                case 'payment_date_operator' :
+        foreach ($filters->query as $filter => $value) {
+            switch ($filter) {
+                case 'payment_date_operator':
                     $payment_date_operator = ! empty($value) ? $value : '=';
                     break;
-                case 'payment_amount_operator' :
+                case 'payment_amount_operator':
                     $payment_amount_operator = ! empty($value) ? $value : '=';
                     break;
             }
         }
-        foreach ($filters->request as $filter => $value) {
-
+        foreach ($filters->query as $filter => $value) {
             if ($filter == 'payment_date' && ! empty($value)) {
                 $payment_date = Carbon::parse($value);
                 $query->where($filter, $payment_date_operator, $payment_date);
@@ -85,11 +86,11 @@ class Payment extends Model implements Auditable
                 $query->where($filter, $payment_amount_operator, $value);
             }
             if ($filter == 'payment_description' && ! empty($value)) {
-                $query->where($filter, "=", $value);
+                $query->where($filter, '=', $value);
             }
             if ($filter == 'donation_description' && ! empty($value)) {
                 $query->whereHas('Donation', function ($q) use ($value) {
-                  $q->where('donation_description', '=', $value);
+                    $q->where('donation_description', '=', $value);
                 });
             }
             if ($filter == 'note' && ! empty($value)) {
@@ -105,5 +106,4 @@ class Payment extends Model implements Auditable
 
         return $query;
     }
-
 }

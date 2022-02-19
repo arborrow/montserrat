@@ -10,13 +10,6 @@ use Illuminate\Support\Str;
 class ActivityStatusFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = \App\Models\ActivityStatus::class;
-
-    /**
      * Define the model's default state.
      *
      * @return array
@@ -26,7 +19,7 @@ class ActivityStatusFactory extends Factory
         return [
             'label' => $this->faker->word(),
             'value' => $this->faker->word(),
-            'name' => $this->faker->name,
+            'name' => $this->faker->name(),
             'is_active' => $this->faker->boolean(),
             'is_default' => $this->faker->boolean(),
             'weight' => $this->faker->randomNumber(),

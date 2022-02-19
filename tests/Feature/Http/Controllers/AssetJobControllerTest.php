@@ -2,11 +2,10 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use Carbon\Carbon;
 
 /**
  * @see \App\Http\Controllers\AssetJobController
@@ -53,7 +52,6 @@ class AssetJobControllerTest extends TestCase
         $response->assertSeeText($asset_task->title);
     }
 
-
     /**
      * @test
      */
@@ -64,7 +62,7 @@ class AssetJobControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('asset_job.destroy', [$asset_job]));
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('AssetJobController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AssetJobController::class, 'index']));
         $this->assertSoftDeleted($asset_job);
     }
 
@@ -73,8 +71,8 @@ class AssetJobControllerTest extends TestCase
      */
     public function edit_returns_an_ok_response()
     {
-      // $this->withoutExceptionHandling();
-      $user = $this->createUserWithPermission('update-asset-job');
+        // $this->withoutExceptionHandling();
+        $user = $this->createUserWithPermission('update-asset-job');
         $asset_job = \App\Models\AssetJob::factory()->create();
 
         $response = $this->actingAs($user)->get(route('asset_job.edit', [$asset_job]));
@@ -100,7 +98,6 @@ class AssetJobControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('actual_material_cost', $asset_job->actual_material_cost, 'number', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('note', $asset_job->note, 'textarea', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('tag', $asset_job->tag, 'text', $response->getContent()));
-
     }
 
     /**
@@ -108,8 +105,8 @@ class AssetJobControllerTest extends TestCase
      */
     public function index_returns_an_ok_response()
     {
-      // $this->withoutExceptionHandling();
-      $user = $this->createUserWithPermission('show-asset-job');
+        // $this->withoutExceptionHandling();
+        $user = $this->createUserWithPermission('show-asset-job');
 
         $response = $this->actingAs($user)->get(route('asset_job.index'));
 
@@ -154,7 +151,6 @@ class AssetJobControllerTest extends TestCase
         // 'scheduled_date' => 'date|required',
         // 'status' => 'in:'.implode(',', config('polanco.asset_job_status')).'|required',
 
-
         $asset_task_id = $asset_task->id;
         $assigned_to_id = $staff->id;
         $scheduled_date = Carbon::createFromTimestamp($this->faker->dateTimeBetween($startDate = '+6 days', $endDate = '+30 days')->getTimeStamp());
@@ -167,22 +163,22 @@ class AssetJobControllerTest extends TestCase
             'assigned_to_id' => $assigned_to_id,
             'scheduled_date' => $scheduled_date,
             'status' => $status,
-            'actual_labor' => $this->faker->numberBetween(15,60),
-            'actual_labor_cost' => $this->faker->numberBetween(20,80),
-            'additional_materials' => $this->faker->sentence,
-            'actual_material_cost' => $this->faker->numberBetween(10,20),
-            'note' => $this->faker->sentence,
-            'tag' => $this->faker->word,
+            'actual_labor' => $this->faker->numberBetween(15, 60),
+            'actual_labor_cost' => $this->faker->numberBetween(20, 80),
+            'additional_materials' => $this->faker->sentence(),
+            'actual_material_cost' => $this->faker->numberBetween(10, 20),
+            'note' => $this->faker->sentence(),
+            'tag' => $this->faker->word(),
         ]);
 
-        $response->assertRedirect(action('AssetJobController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AssetJobController::class, 'index']));
         $response->assertSessionHas('flash_notification');
 
         $this->assertDatabaseHas('asset_job', [
-          'asset_task_id' => $asset_task_id,
-          'assigned_to_id' => $assigned_to_id,
-          'scheduled_date' => $scheduled_date,
-          'status' => $status,
+            'asset_task_id' => $asset_task_id,
+            'assigned_to_id' => $assigned_to_id,
+            'scheduled_date' => $scheduled_date,
+            'status' => $status,
         ]);
     }
 
@@ -197,19 +193,18 @@ class AssetJobControllerTest extends TestCase
         $asset_job = \App\Models\AssetJob::factory()->create();
 
         $original_note = $asset_job->note;
-        $updated_note = 'Updated ' . $original_note;
+        $updated_note = 'Updated '.$original_note;
 
         $response = $this->actingAs($user)->put(route('asset_job.update', [$asset_job]), [
-          'id' => $asset_job->id,
-          'asset_task_id' => $asset_job->asset_task_id,
-          'assigned_to_id' => $asset_job->assigned_to_id,
-          'scheduled_date' => $asset_job->scheduled_date,
-          'status' => $asset_job->status,
-          'note' => $updated_note,
+            'id' => $asset_job->id,
+            'asset_task_id' => $asset_job->asset_task_id,
+            'assigned_to_id' => $asset_job->assigned_to_id,
+            'scheduled_date' => $asset_job->scheduled_date,
+            'status' => $asset_job->status,
+            'note' => $updated_note,
         ]);
 
-
-        $response->assertRedirect(action('AssetJobController@show', $asset_job->id));
+        $response->assertRedirect(action([\App\Http\Controllers\AssetJobController::class, 'show'], $asset_job->id));
         $response->assertSessionHas('flash_notification');
 
         $updated = \App\Models\AssetJob::findOrFail($asset_job->id);

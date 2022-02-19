@@ -16,7 +16,7 @@ class UserController extends Controller
     public function index()
     {
         $this->authorize('show-role');
-        $users = \App\Models\User::orderBy('name')->with('roles.permissions')->paginate(25,['*'],'users');
+        $users = \App\Models\User::orderBy('name')->with('roles.permissions')->paginate(25, ['*'], 'users');
 
         return view('admin.users.index', compact('users'));
     }
@@ -31,7 +31,7 @@ class UserController extends Controller
         $this->authorize('create-role');
         flash('Users cannot be created directly by the controller. Users are only created after successful authentication')->error();
 
-        return Redirect::action('UserController@index');
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -45,7 +45,7 @@ class UserController extends Controller
         $this->authorize('create-role');
         flash('Users cannot be stored directly by the controller. Users are only created after successful authentication.')->error();
 
-        return Redirect::action('UserController@index');
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -74,7 +74,7 @@ class UserController extends Controller
         $this->authorize('update-role');
         flash('Users cannot be edited directly by the controller. Users are managed by Google authentication.')->error();
 
-        return Redirect::action('UserController@show', $id);
+        return Redirect::action([self::class, 'show'], $id);
     }
 
     /**
@@ -89,7 +89,7 @@ class UserController extends Controller
         $this->authorize('update-role');
         flash('Users cannot be updated directly by the controller. User profiles are managed by Google authentication.')->error();
 
-        return Redirect::action('UserController@show', $id);
+        return Redirect::action([self::class, 'show'], $id);
     }
 
     /**
@@ -103,6 +103,6 @@ class UserController extends Controller
         $this->authorize('delete-role');
         flash('Users cannot be deleted directly by the controller. Users are managed by Google authentication.')->error();
 
-        return Redirect::action('UserController@show', $id);
+        return Redirect::action([self::class, 'show'], $id);
     }
 }

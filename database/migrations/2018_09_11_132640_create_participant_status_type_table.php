@@ -3,8 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateParticipantStatusTypeTable extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -38,4 +37,4 @@ class CreateParticipantStatusTypeTable extends Migration
     {
         Schema::dropIfExists('participant_status_type');
     }
-}
+};

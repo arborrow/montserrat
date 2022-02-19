@@ -2,11 +2,10 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use Carbon\Carbon;
 
 /**
  * @see \App\Http\Controllers\AssetTaskController
@@ -64,7 +63,7 @@ class AssetTaskControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('asset_task.destroy', [$asset_task]));
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('AssetTaskController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AssetTaskController::class, 'index']));
         $this->assertSoftDeleted($asset_task);
     }
 
@@ -107,7 +106,6 @@ class AssetTaskControllerTest extends TestCase
         $this->assertTrue($this->findFieldValueInResponseContent('vendor_id', $asset_task->vendor_id, 'select', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('category', $asset_task->category, 'text', $response->getContent()));
         $this->assertTrue($this->findFieldValueInResponseContent('tag', $asset_task->tag, 'text', $response->getContent()));
-
     }
 
     /**
@@ -146,12 +144,11 @@ class AssetTaskControllerTest extends TestCase
      */
     public function store_returns_an_ok_response()
     {
-
         $user = $this->createUserWithPermission('create-asset-task');
 
         $asset = \App\Models\Asset::factory()->create();
 
-        $title = $this->faker->word;
+        $title = $this->faker->word();
         $description = $this->faker->sentence(7, true);
 
         // required by StoreAssetTaskRequest
@@ -169,15 +166,15 @@ class AssetTaskControllerTest extends TestCase
             'description' => $description,
             'priority_id' => $priority_id,
             'frequency' => $frequency,
-            'frequency_interval' => $this->faker->numberBetween(1,10),
+            'frequency_interval' => $this->faker->numberBetween(1, 10),
         ]);
 
-        $response->assertRedirect(action('AssetTaskController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AssetTaskController::class, 'index']));
         $response->assertSessionHas('flash_notification');
 
         $this->assertDatabaseHas('asset_task', [
-          'title' => $title,
-          'description' => $description,
+            'title' => $title,
+            'description' => $description,
         ]);
     }
 
@@ -191,22 +188,22 @@ class AssetTaskControllerTest extends TestCase
 
         $asset_task = \App\Models\AssetTask::factory()->create();
 
-        $title = $this->faker->word;
+        $title = $this->faker->word();
         $original_title = $asset_task->title;
-        $updated_title = 'Updated ' . $title;
+        $updated_title = 'Updated '.$title;
 
         $response = $this->actingAs($user)->put(route('asset_task.update', [$asset_task]), [
-          'id' => $asset_task->id,
-          'asset_id' => $asset_task->asset_id,
-          'title' => $updated_title,
-          'start_date' => $asset_task->start_date,
-          'scheduled_until_date' => $asset_task->scheduled_until_date,
-          'frequency' => $asset_task->frequency,
-          'frequency_interval' => $this->faker->numberBetween(1,10),
-          'priority_id' => $asset_task->priority_id,
+            'id' => $asset_task->id,
+            'asset_id' => $asset_task->asset_id,
+            'title' => $updated_title,
+            'start_date' => $asset_task->start_date,
+            'scheduled_until_date' => $asset_task->scheduled_until_date,
+            'frequency' => $asset_task->frequency,
+            'frequency_interval' => $this->faker->numberBetween(1, 10),
+            'priority_id' => $asset_task->priority_id,
         ]);
 
-        $response->assertRedirect(action('AssetTaskController@show', $asset_task->id));
+        $response->assertRedirect(action([\App\Http\Controllers\AssetTaskController::class, 'show'], $asset_task->id));
         $response->assertSessionHas('flash_notification');
 
         $updated = \App\Models\AssetTask::findOrFail($asset_task->id);
@@ -224,9 +221,8 @@ class AssetTaskControllerTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('asset_tasks.schedule_jobs', [$asset_task]));
 
-        $response->assertRedirect(action('AssetTaskController@show', $asset_task->id));
+        $response->assertRedirect(action([\App\Http\Controllers\AssetTaskController::class, 'show'], $asset_task->id));
         $response->assertSessionHas('flash_notification');
-
     }
 
     // test cases...

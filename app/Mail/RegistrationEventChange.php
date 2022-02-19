@@ -11,7 +11,9 @@ class RegistrationEventChange extends Mailable
     use Queueable, SerializesModels;
 
     public $registration;
+
     public $retreat;
+
     public $original_event;
 
     /**

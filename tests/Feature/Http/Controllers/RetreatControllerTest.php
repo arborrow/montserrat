@@ -3,9 +3,9 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Carbon\Carbon;
 
 /**
  * @see \App\Http\Controllers\RetreatController
@@ -25,11 +25,11 @@ class RetreatControllerTest extends TestCase
         $retreat = \App\Models\Retreat::factory()->create();
         $number_registrations = $this->faker->numberBetween(2, 10);
         $registration = \App\Models\Registration::factory()->count($number_registrations)->create([
-          'event_id' => $retreat->id,
-          'canceled_at' => null,
-          'arrived_at' => null,
-          'departed_at' => null,
-          'room_id' => null,
+            'event_id' => $retreat->id,
+            'canceled_at' => null,
+            'arrived_at' => null,
+            'departed_at' => null,
+            'room_id' => null,
         ]);
 
         // create a single room for the test just in case none have been created
@@ -71,18 +71,18 @@ class RetreatControllerTest extends TestCase
         $retreat = \App\Models\Retreat::factory()->create();
         $number_registrations = $this->faker->numberBetween(2, 10);
         $registrations = \App\Models\Registration::factory()->count($number_registrations)->create([
-          'event_id' => $retreat->id,
-          'canceled_at' => null,
-          'arrived_at' => null,
-          'departed_at' => null,
-          'room_id' => null,
+            'event_id' => $retreat->id,
+            'canceled_at' => null,
+            'arrived_at' => null,
+            'departed_at' => null,
+            'room_id' => null,
         ]);
 
         $response = $this->from('retreat.show', $retreat->id)->actingAs($user)->get(route('retreat.checkin', ['id' => $retreat->id]));
         $registration = $registrations->random();
         $registration->refresh();
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RetreatController@show', $retreat->id));
+        $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id));
         $this->assertNotEquals(null, $registration->arrived_at);
     }
 
@@ -96,17 +96,17 @@ class RetreatControllerTest extends TestCase
         // create a retreat, then create a number of registrations for the retreat
         $retreat = \App\Models\Retreat::factory()->create(
             [
-            'start_date' => $this->faker->dateTimeBetween('-5 days', '-2 days'),
-            'end_date' => $this->faker->dateTimeBetween('-1 day', '1 day'),
-          ]
+                'start_date' => $this->faker->dateTimeBetween('-5 days', '-2 days'),
+                'end_date' => $this->faker->dateTimeBetween('-1 day', '1 day'),
+            ]
         );
         $number_registrations = $this->faker->numberBetween(2, 10);
         $registrations = \App\Models\Registration::factory()->count($number_registrations)->create([
-          'event_id' => $retreat->id,
-          'canceled_at' => null,
-          'arrived_at' => $this->faker->dateTime('now'),
-          'departed_at' => null,
-          'room_id' => null,
+            'event_id' => $retreat->id,
+            'canceled_at' => null,
+            'arrived_at' => Carbon::now(),
+            'departed_at' => null,
+            'room_id' => null,
         ]);
 
         $response = $this->actingAs($user)->get(route('retreat.checkout', ['id' => $retreat->id]));
@@ -115,7 +115,7 @@ class RetreatControllerTest extends TestCase
         $registration->refresh();
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RetreatController@show', $retreat->id));
+        $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id));
         $this->assertNotEquals(null, $registration->departed_at);
     }
 
@@ -149,7 +149,7 @@ class RetreatControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('retreat.destroy', [$retreat]));
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RetreatController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'index']));
         $this->assertSoftDeleted($retreat);
     }
 
@@ -209,8 +209,8 @@ class RetreatControllerTest extends TestCase
         $user = $this->createUserWithPermission('update-payment');
         $retreat = \App\Models\Retreat::factory()->create();
         $registration = \App\Models\Registration::factory()->create([
-          'canceled_at' => null,
-          'event_id' => $retreat->id,
+            'canceled_at' => null,
+            'event_id' => $retreat->id,
         ]);
 
         $response = $this->actingAs($user)->get(route('retreat.payments.edit', ['id' => $retreat->id]));
@@ -296,17 +296,17 @@ class RetreatControllerTest extends TestCase
         $user = $this->createUserWithPermission('update-registration');
         $retreat = \App\Models\Retreat::factory()->create();
         $registration = \App\Models\Registration::factory()->create([
-          'room_id' => null,
-          'event_id' => $retreat->id,
-          'notes' => null,
-          'source' => 'room_update',
-          'canceled_at' => null,
+            'room_id' => null,
+            'event_id' => $retreat->id,
+            'notes' => null,
+            'source' => 'room_update',
+            'canceled_at' => null,
         ]);
         $room = \App\Models\Room::factory()->create();
         $registrations = [];
         $notes = [];
         $registrations[$registration->id] = $room->id;
-        $notes[$registration->id] = $this->faker->sentence;
+        $notes[$registration->id] = $this->faker->sentence();
 
         $response = $this->actingAs($user)->post(route('retreat.room_update'), [
             'registrations' => $registrations,
@@ -315,7 +315,7 @@ class RetreatControllerTest extends TestCase
 
         $updated_registration = \App\Models\Registration::findOrFail($registration->id);
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RetreatController@show', $retreat->id));
+        $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id));
         $this->assertNotEquals(null, $updated_registration->room_id);
         $this->assertEquals($room->id, $updated_registration->room_id);
         $this->assertNotEquals(null, $updated_registration->notes);
@@ -351,24 +351,23 @@ class RetreatControllerTest extends TestCase
         $response->assertSeeText($retreat->title);
     }
 
+    /**
+     * @test
+     */
+    public function show_with_status_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-retreat');
+        $retreat = \App\Models\Retreat::factory()->create();
+        $status = $this->faker->randomElement(config('polanco.registration_filters'));
+        $response = $this->actingAs($user)->get(route('retreat.status', ['id' => $retreat->id, 'status' => $status]));
 
-        /**
-         * @test
-         */
-        public function show_with_status_returns_an_ok_response()
-        {
-            $user = $this->createUserWithPermission('show-retreat');
-            $retreat = \App\Models\Retreat::factory()->create();
-            $status = $this->faker->randomElement(config('polanco.registration_filters'));
-            $response = $this->actingAs($user)->get(route('retreat.status', ['id' => $retreat->id, 'status' => $status]));
-
-            $response->assertOk();
-            $response->assertViewIs('retreats.show');
-            $response->assertViewHas('retreat');
-            $response->assertViewHas('registrations');
-            $response->assertViewHas('status');
-            $response->assertSeeText($retreat->title);
-        }
+        $response->assertOk();
+        $response->assertViewIs('retreats.show');
+        $response->assertViewHas('retreat');
+        $response->assertViewHas('registrations');
+        $response->assertViewHas('status');
+        $response->assertSeeText($retreat->title);
+    }
 
     /**
      * @test
@@ -415,15 +414,15 @@ class RetreatControllerTest extends TestCase
     public function store_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('create-retreat');
-        $idnumber = $this->faker->numberBetween(11111111, 99999999).$this->faker->lastName;
+        $idnumber = $this->faker->numberBetween(11111111, 99999999).$this->faker->lastName();
         $response = $this->actingAs($user)->post(route('retreat.store'), [
             'idnumber' => $idnumber,
-            'start_date' => $this->faker->dateTimeBetween('+6 days', '+10 days'),
-            'end_date' => $this->faker->dateTimeBetween('+11 days', '+15 days'),
-            'title' => $this->faker->catchPhrase,
+            'start_date' => Carbon::parse($this->faker->dateTimeBetween('+6 days', '+10 days')),
+            'end_date' => Carbon::parse($this->faker->dateTimeBetween('+11 days', '+15 days')),
+            'title' => $this->faker->catchPhrase(),
             'silent' => $this->faker->boolean(90),
             'is_active' => '1',
-            'description' => $this->faker->paragraph,
+            'description' => $this->faker->paragraph(),
             'event_type_id' => $this->faker->numberBetween(1, 14),
             'innkeeper_id' => 0,
             'assistant_id' => 0,
@@ -431,7 +430,7 @@ class RetreatControllerTest extends TestCase
         // TODO: assumes that Google calendar integration is not set but eventually we will want to test that this too is working and saving the calendar event
         $retreat = \App\Models\Retreat::whereIdnumber($idnumber)->first();
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RetreatController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'index']));
         $this->assertEquals($retreat->idnumber, $idnumber);
     }
 
@@ -456,24 +455,24 @@ class RetreatControllerTest extends TestCase
         $retreat = \App\Models\Retreat::factory()->create();
         $original_idnumber = $retreat->idnumber;
         $original_title = $retreat->title;
-        $new_idnumber = $this->faker->numberBetween(11111111, 99999999).$this->faker->lastName;
-        $new_title = $this->faker->catchPhrase;
+        $new_idnumber = $this->faker->numberBetween(11111111, 99999999).$this->faker->lastName();
+        $new_title = $this->faker->catchPhrase();
         $response = $this->actingAs($user)->put(route('retreat.update', [$retreat]), [
             'id' => $retreat->id,
             'idnumber' => $new_idnumber,
-            'start_date' => $this->faker->dateTimeBetween('+6 days', '+10 days'),
-            'end_date' => $this->faker->dateTimeBetween('+11 days', '+15 days'),
+            'start_date' => Carbon::parse($this->faker->dateTimeBetween('+6 days', '+10 days')),
+            'end_date' => Carbon::parse($this->faker->dateTimeBetween('+11 days', '+15 days')),
             'title' => $new_title,
             'innkeeper_id' => '0',
             'assistant_id' => '0',
             'silent' => $this->faker->boolean(90),
             'is_active' => '1',
-            'description' => $this->faker->paragraph,
+            'description' => $this->faker->paragraph(),
             'event_type_id' => $this->faker->numberBetween(1, 14),
         ]);
         $retreat->refresh();
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RetreatController@show', $retreat->id));
+        $response->assertRedirect(action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id));
         $this->assertEquals($retreat->title, $new_title);
         $this->assertEquals($retreat->idnumber, $new_idnumber);
         $this->assertNotEquals($retreat->title, $original_title);
@@ -529,15 +528,15 @@ class RetreatControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-registration');
         $retreat = \App\Models\Retreat::factory()->create();
         $retreatant = \App\Models\Contact::factory()->create([
-                'contact_type' => config('polanco.contact_type.individual'),
-            ]);
+            'contact_type' => config('polanco.contact_type.individual'),
+        ]);
         $room = \App\Models\Room::factory()->create();
         $registration = \App\Models\Registration::factory()->create([
-                'event_id' => $retreat->id,
-                'contact_id' => $retreatant->id,
-                'room_id' => $room->id,
-                'canceled_at' => null,
-            ]);
+            'event_id' => $retreat->id,
+            'contact_id' => $retreatant->id,
+            'room_id' => $room->id,
+            'canceled_at' => null,
+        ]);
         $response = $this->actingAs($user)->get('retreat/'.$registration->event_id.'/namebadges');
         $response->assertOk();
         $response->assertViewIs('retreats.namebadges');
@@ -546,38 +545,37 @@ class RetreatControllerTest extends TestCase
         $response->assertSeeText($retreatant->first_name.' '.$retreatant->last_name);
     }
 
+    /**
+     * @test
+     */
+    public function event_namebadges_with_role_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-registration');
+        $retreat = \App\Models\Retreat::factory()->create();
+        $retreatant = \App\Models\Contact::factory()->create([
+            'contact_type' => config('polanco.contact_type.individual'),
+        ]);
+        $room = \App\Models\Room::factory()->create();
+        $role = $this->faker->randomElement(array_flip(config('polanco.participant_role_id')));
 
-        /**
-         * @test
-         */
-        public function event_namebadges_with_role_returns_an_ok_response()
-        {
-            $user = $this->createUserWithPermission('show-registration');
-            $retreat = \App\Models\Retreat::factory()->create();
-            $retreatant = \App\Models\Contact::factory()->create([
-                    'contact_type' => config('polanco.contact_type.individual'),
-                ]);
-            $room = \App\Models\Room::factory()->create();
-            $role = $this->faker->randomElement(array_flip(config('polanco.participant_role_id')));
+        // TODO: perhaps ideally this would be refactored so that the case select would work for all pariticipant role types
+        // $role = \App\Models\ParticipantRoleType::whereIsActive(1)->get()->random();
+        $registration = \App\Models\Registration::factory()->create([
+            'event_id' => $retreat->id,
+            'contact_id' => $retreatant->id,
+            'room_id' => $room->id,
+            'canceled_at' => null,
+            'role_id' => config('polanco.participant_role_id.'.$role),
+        ]);
 
-            // TODO: perhaps ideally this would be refactored so that the case select would work for all pariticipant role types
-            // $role = \App\Models\ParticipantRoleType::whereIsActive(1)->get()->random();
-            $registration = \App\Models\Registration::factory()->create([
-                    'event_id' => $retreat->id,
-                    'contact_id' => $retreatant->id,
-                    'room_id' => $room->id,
-                    'canceled_at' => null,
-                    'role_id' => config('polanco.participant_role_id.'.$role),
-                ]);
+        $response = $this->actingAs($user)->get('retreat/'.$registration->event_id.'/namebadges/'.$role);
 
-            $response = $this->actingAs($user)->get('retreat/'.$registration->event_id.'/namebadges/'.$role);
-
-            $response->assertOk();
-            $response->assertViewIs('retreats.namebadges');
-            $response->assertViewHas('event');
-            $response->assertViewHas('cresults');
-            $response->assertSeeText($retreatant->first_name.' '.$retreatant->last_name);
-        }
+        $response->assertOk();
+        $response->assertViewIs('retreats.namebadges');
+        $response->assertViewHas('event');
+        $response->assertViewHas('cresults');
+        $response->assertSeeText($retreatant->first_name.' '.$retreatant->last_name);
+    }
 
     /**
      * @test
@@ -587,14 +585,14 @@ class RetreatControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-registration');
         $retreat = \App\Models\Retreat::factory()->create();
         $retreatant = \App\Models\Contact::factory()->create([
-                'contact_type' => config('polanco.contact_type.individual'),
-            ]);
+            'contact_type' => config('polanco.contact_type.individual'),
+        ]);
         $registration = \App\Models\Registration::factory()->create([
-                'event_id' => $retreat->id,
-                'contact_id' => $retreatant->id,
-                'canceled_at' => null,
-                'role_id' => config('polanco.participant_role_id.retreatant'),
-            ]);
+            'event_id' => $retreat->id,
+            'contact_id' => $retreatant->id,
+            'canceled_at' => null,
+            'role_id' => config('polanco.participant_role_id.retreatant'),
+        ]);
         $response = $this->actingAs($user)->get('retreat/'.$registration->event_id.'/tableplacards');
         $response->assertOk();
         $response->assertViewIs('retreats.tableplacards');

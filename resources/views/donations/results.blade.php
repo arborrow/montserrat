@@ -7,7 +7,7 @@
             <div class="panel-heading">
                 <h1>
                     <span class="grey">{{$donations->total()}} result(s) found</span>
-                    <span class="search"><a href={{ action('DonationController@search') }}>{!! Html::image('images/search.png', 'New search',array('title'=>"New search",'class' => 'btn btn-link')) !!}</a></span>
+                    <span class="search"><a href={{ action([\App\Http\Controllers\DonationController::class, 'search']) }}>{!! Html::image('images/search.png', 'New search',array('title'=>"New search",'class' => 'btn btn-link')) !!}</a></span>
                 </h1>
                 <p class="lead">${{number_format($all_donations->sum('payments_paid'),2)}} paid of ${{number_format($all_donations->sum('donation_amount'),2) }} pledged
                   @if ($all_donations->sum('donation_amount') > 0)

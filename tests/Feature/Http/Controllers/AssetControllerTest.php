@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -50,7 +49,7 @@ class AssetControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('asset.destroy', [$asset]));
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('AssetController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AssetController::class, 'index']));
         $this->assertSoftDeleted($asset);
     }
 
@@ -235,7 +234,7 @@ class AssetControllerTest extends TestCase
 
         $user = $this->createUserWithPermission('create-asset');
 
-        $name = $this->faker->word;
+        $name = $this->faker->word();
         $description = $this->faker->sentence(7, true);
         $asset_type_id = $this->faker->numberBetween(1, 10);
 
@@ -246,13 +245,13 @@ class AssetControllerTest extends TestCase
             'is_active' => 1,
         ]);
 
-        $response->assertRedirect(action('AssetController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AssetController::class, 'index']));
         $response->assertSessionHas('flash_notification');
 
         $this->assertDatabaseHas('asset', [
-          'name' => $name,
-          'description' => $description,
-          'asset_type_id' => $asset_type_id,
+            'name' => $name,
+            'description' => $description,
+            'asset_type_id' => $asset_type_id,
         ]);
     }
 
@@ -269,12 +268,12 @@ class AssetControllerTest extends TestCase
         $original_asset_manufacuturer = $asset->manufacturer;
         $new_manufacturer = 'New '.$this->faker->words(2, true);
         $response = $this->actingAs($user)->put(route('asset.update', [$asset]), [
-          'id' => $asset->id,
-          'name' => $asset->name,
-          'asset_type_id' => $asset->asset_type_id,
-          'manufacturer' => $new_manufacturer,
+            'id' => $asset->id,
+            'name' => $asset->name,
+            'asset_type_id' => $asset->asset_type_id,
+            'manufacturer' => $new_manufacturer,
         ]);
-        $response->assertRedirect(action('AssetController@show', $asset->id));
+        $response->assertRedirect(action([\App\Http\Controllers\AssetController::class, 'show'], $asset->id));
         $response->assertSessionHas('flash_notification');
 
         $updated = \App\Models\Asset::findOrFail($asset->id);

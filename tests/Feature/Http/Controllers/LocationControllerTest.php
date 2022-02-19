@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -43,7 +42,7 @@ class LocationControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('location.destroy', [$location]));
         $response->assertSessionHas('flash_notification');
 
-        $response->assertRedirect(action('LocationController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\LocationController::class, 'index']));
         $this->assertSoftDeleted($location);
     }
 
@@ -143,7 +142,7 @@ class LocationControllerTest extends TestCase
     {   // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-location');
 
-        $location_name = $this->faker->word;
+        $location_name = $this->faker->word();
         $location_description = $this->faker->sentence(7, true);
         $location_type = $this->faker->randomElement(config('polanco.locations_type'));
 
@@ -157,13 +156,13 @@ class LocationControllerTest extends TestCase
             'occupancy' => $this->faker->numberBetween(0, 100),
         ]);
 
-        $response->assertRedirect(action('LocationController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\LocationController::class, 'index']));
         $response->assertSessionHas('flash_notification');
 
         $this->assertDatabaseHas('locations', [
-          'name' => $location_name,
-          'description' => $location_description,
-          'type' => $location_type,
+            'name' => $location_name,
+            'description' => $location_description,
+            'type' => $location_type,
         ]);
     }
 
@@ -176,7 +175,7 @@ class LocationControllerTest extends TestCase
 
         $location = \App\Models\Location::factory()->create();
 
-        $location_name = $this->faker->word;
+        $location_name = $this->faker->word();
         $location_description = $this->faker->sentence(7, true);
         $location_type = $this->faker->randomElement(config('polanco.locations_type'));
 
@@ -184,13 +183,13 @@ class LocationControllerTest extends TestCase
         $new_location_name = 'New '.$this->faker->words(2, true);
 
         $response = $this->actingAs($user)->put(route('location.update', [$location]), [
-          'id' => $location->id,
-          'name' => $new_location_name,
-          'description' => $this->faker->sentence(7, true),
-          'type' => $location_type,
+            'id' => $location->id,
+            'name' => $new_location_name,
+            'description' => $this->faker->sentence(7, true),
+            'type' => $location_type,
         ]);
 
-        $response->assertRedirect(action('LocationController@show', $location->id));
+        $response->assertRedirect(action([\App\Http\Controllers\LocationController::class, 'show'], $location->id));
         $response->assertSessionHas('flash_notification');
 
         $updated = \App\Models\Location::findOrFail($location->id);

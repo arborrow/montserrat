@@ -6,18 +6,17 @@ use App\Http\Requests\StoreGroupRegistrationRequest;
 use App\Http\Requests\StoreRegistrationRequest;
 use App\Http\Requests\UpdateGroupRegistrationRequest;
 use App\Http\Requests\UpdateRegistrationRequest;
-use App\Mail\RegistrationEventChange;
 use App\Mail\RegistrationCanceledChange;
+use App\Mail\RegistrationEventChange;
 use App\Mail\RetreatRegistration;
 use App\Models\Registration;
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
-use Auth;
-
 
 class RegistrationController extends Controller
 {
@@ -243,7 +242,7 @@ class RegistrationController extends Controller
 
         flash('Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a> added')->success();
 
-        return Redirect::action('RegistrationController@index');
+        return Redirect::action([self::class, 'index']);
     }
 
     public function store_group(StoreGroupRegistrationRequest $request)
@@ -280,7 +279,7 @@ class RegistrationController extends Controller
         }
         flash('Registration(s) added to '.$retreat->title.'for members of group: <a href="'.url('/group/'.$group->id).'">'.$group->name.'</a>')->success();
 
-        return Redirect::action('RetreatController@show', $retreat->id);
+        return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $retreat->id);
     }
 
     /**
@@ -381,7 +380,7 @@ class RegistrationController extends Controller
             $finance_email = config('polanco.finance_email');
             $original_event = \App\Models\Retreat::findOrFail($registration->getOriginal('event_id'));
 
-            if  ($registration->isDirty('event_id')) {
+            if ($registration->isDirty('event_id')) {
                 // dd($registration,$registration->event_id,$registration->getOriginal('event_id'));
                 // return view('emails.registration-event-change', compact('registration', 'retreat', 'original_event'));
                 try {
@@ -390,7 +389,6 @@ class RegistrationController extends Controller
                     dd($e);
                 }
                 flash('Email notification sent to finance regarding event change to Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a>')->success();
-
             }
 
             if (($registration->deposit > 0) && ($registration->status_id == config('polanco.registration_status_id.canceled')) && $registration->isDirty('status_id')) {
@@ -401,7 +399,6 @@ class RegistrationController extends Controller
                 }
                 flash('Email notification sent to finance regarding cancelation (with deposit) of Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a>')->success();
             }
-
         }
 
         if ($registration->event_id == config('polanco.event.open_deposit')) {
@@ -412,7 +409,7 @@ class RegistrationController extends Controller
 
         flash('Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a> updated')->success();
 
-        return Redirect::action('PersonController@show', $registration->contact_id);
+        return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $registration->contact_id);
     }
 
     /**
@@ -435,7 +432,7 @@ class RegistrationController extends Controller
 
         flash('Registration #: '.$registration->id.' deleted')->warning()->important();
 
-        return Redirect::action('RegistrationController@index');
+        return Redirect::action([self::class, 'index']);
     }
 
     public function confirm($id)
@@ -552,7 +549,7 @@ class RegistrationController extends Controller
         $success_message = 'Confirmation email has been sent for retreat #'.$registration->event_idnumber;
         $error_message = 'Confirmation email failed to send for retreat #'.$registration->event_idnumber.': ';
 
-        if (! empty($primary_email) && $registration->contact->do_not_email==0) { // the retreatant does not have a primary email address to send to
+        if (! empty($primary_email) && $registration->contact->do_not_email == 0) { // the retreatant does not have a primary email address to send to
             if (! isset($registration->registration_confirm_date)) { // ensure that the retreatant has not already confirmed
                 // For registration emails, remember_token must be set for the retreat participant.
                 if ($registration->remember_token == null) {
@@ -572,7 +569,6 @@ class RegistrationController extends Controller
                     $touchpoint->notes = $success_message;
                     $touchpoint->save();
                     flash('Confirmation email sent to '.$registration->contact_sort_name.' for Retreat #'.$registration->event_idnumber)->success();
-
                 } catch (\Exception $e) {
                     $touchpoint->notes = $error_message.$e->getMessage();
                     $touchpoint->save();
@@ -584,6 +580,7 @@ class RegistrationController extends Controller
         } else {
             flash('Confirmation email not sent because the retreatant ('.$registration->contact_sort_name.') does not appear to have a primary email address or has requested NOT to receive emails.')->warning();
         }
+
         return redirect('registration/'.$registration->id);
     }
 

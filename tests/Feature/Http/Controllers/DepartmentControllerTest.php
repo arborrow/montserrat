@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -41,7 +40,7 @@ class DepartmentControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('department.destroy', [$department]));
         $response->assertSessionHas('flash_notification');
 
-        $response->assertRedirect(action('DepartmentController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\DepartmentController::class, 'index']));
         $this->assertSoftDeleted($department);
     }
 
@@ -108,7 +107,7 @@ class DepartmentControllerTest extends TestCase
     {   // $this->withoutExceptionHandling();
         $user = $this->createUserWithPermission('create-department');
 
-        $department_name = $this->faker->word;
+        $department_name = $this->faker->word();
         $department_description = $this->faker->sentence(7, true);
 
         $response = $this->actingAs($user)->post(route('department.store'), [
@@ -117,12 +116,12 @@ class DepartmentControllerTest extends TestCase
             'description' => $department_description,
         ]);
 
-        $response->assertRedirect(action('DepartmentController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\DepartmentController::class, 'index']));
         $response->assertSessionHas('flash_notification');
 
         $this->assertDatabaseHas('departments', [
-          'name' => $department_name,
-          'description' => $department_description,
+            'name' => $department_name,
+            'description' => $department_description,
         ]);
     }
 
@@ -135,19 +134,19 @@ class DepartmentControllerTest extends TestCase
 
         $department = \App\Models\Department::factory()->create();
 
-        $department_name = $this->faker->word;
+        $department_name = $this->faker->word();
         $department_description = $this->faker->sentence(7, true);
 
         $original_department_name = $department->name;
         $new_department_name = 'New '.$this->faker->words(2, true);
 
         $response = $this->actingAs($user)->put(route('department.update', [$department]), [
-          'id' => $department->id,
-          'name' => $new_department_name,
-          'description' => $this->faker->sentence(7, true),
+            'id' => $department->id,
+            'name' => $new_department_name,
+            'description' => $this->faker->sentence(7, true),
         ]);
 
-        $response->assertRedirect(action('DepartmentController@show', $department->id));
+        $response->assertRedirect(action([\App\Http\Controllers\DepartmentController::class, 'show'], $department->id));
         $response->assertSessionHas('flash_notification');
 
         $updated = \App\Models\Department::findOrFail($department->id);

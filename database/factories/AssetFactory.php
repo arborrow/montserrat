@@ -10,13 +10,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class AssetFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = \App\Models\Asset::class;
-
-    /**
      * Define the model's default state.
      *
      * @return array
@@ -24,7 +17,7 @@ class AssetFactory extends Factory
     public function definition()
     {
         $start_date = Carbon::createFromTimestamp($this->faker->dateTimeBetween($startDate = '-60 days', $endDate = '-10 days')->getTimeStamp());
-        $asset = $this->faker->word;
+        $asset = $this->faker->word();
         $power_uom = \App\Models\Uom::factory()->create([
             'type' => 'Electric current',
         ]);
@@ -45,10 +38,10 @@ class AssetFactory extends Factory
             },
             'description' => $this->faker->sentence(),
 
-            'manufacturer' => $this->faker->company,
-            'model' => $this->faker->md5,
-            'serial_number' => $this->faker->isbn10,
-            'year' => $this->faker->year,
+            'manufacturer' => $this->faker->company(),
+            'model' => $this->faker->md5(),
+            'serial_number' => $this->faker->isbn10(),
+            'year' => $this->faker->year(),
             'location_id' => function () {
                 return \App\Models\Location::factory()->create()->id;
             },
@@ -59,14 +52,14 @@ class AssetFactory extends Factory
             'is_active' => $this->faker->boolean(),
             'manufacturer_id' => function () {
                 return \App\Models\Contact::factory()->create([
-                    'organization_name' => $this->faker->company,
+                    'organization_name' => $this->faker->company(),
                     'contact_type' => config('polanco.contact_type.organization'),
                     'subcontact_type' => config('polanco.contact_type.vendor'),
                 ])->id;
             },
             'vendor_id' => function () {
                 return \App\Models\Contact::factory()->create([
-                    'organization_name' => $this->faker->company,
+                    'organization_name' => $this->faker->company(),
                     'contact_type' => config('polanco.contact_type.organization'),
                     'subcontact_type' => config('polanco.contact_type.vendor'),
                 ])->id;
@@ -88,7 +81,7 @@ class AssetFactory extends Factory
             'weight_uom_id' => $weight_uom->id,
             'capacity' => $this->faker->numberBetween(500, 1000),
             'capacity_uom_id' => $weight_uom->id,
-            'purchase_date' => $this->faker->date,
+            'purchase_date' => $this->faker->date(),
             'purchase_price' => $this->faker->randomFloat(2, 100, 1000),
             'life_expectancy' => $this->faker->numberBetween(1, 10),
             'life_expectancy_uom_id' => $time_uom->id,

@@ -14,7 +14,7 @@
     <div class="col-lg-12">
         {!! Html::link('#registrations','Registrations',array('class' => 'btn btn-outline-dark')) !!}
         @can('create-touchpoint')
-            {!! Html::link(action('TouchpointController@add_retreat',$retreat->id),'Retreat touchpoint',array('class' => 'btn btn-outline-dark'))!!}
+            {!! Html::link(action([\App\Http\Controllers\TouchpointController::class, 'add_retreat'],$retreat->id),'Retreat touchpoint',array('class' => 'btn btn-outline-dark'))!!}
         @endCan
         @can('show-registration')
             <select class="custom-select col-3" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
@@ -173,7 +173,7 @@
         <div class="row">
             <div class="col-6 text-right">
                 @can('update-retreat')
-                <a href="{{ action('RetreatController@edit', $retreat->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                <a href="{{ action([\App\Http\Controllers\RetreatController::class, 'edit'], $retreat->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                 @endCan
             </div>
             <div class="col-6 text-left">
@@ -198,19 +198,19 @@
                     @endCan
                 </h2>
                 @can('create-registration')
-                    {!! Html::link(action('RegistrationController@register',$retreat->id),'Register a retreatant',array('class' => 'btn btn-outline-dark'))!!}
+                    {!! Html::link(action([\App\Http\Controllers\RegistrationController::class, 'register'],$retreat->id),'Register a retreatant',array('class' => 'btn btn-outline-dark'))!!}
                 @endCan
                 @can('show-contact')
                     {!! Html::link($retreat->email_registered_retreatants,'Email registered retreatants',array('class' => 'btn btn-outline-dark'))!!}
                 @endCan
                 @can('update-registration')
-                    {!! Html::link(action('RetreatController@assign_rooms',$retreat->id),'Assign rooms',array('class' => 'btn btn-outline-dark'))!!}
+                    {!! Html::link(action([\App\Http\Controllers\RetreatController::class, 'assign_rooms'],$retreat->id),'Assign rooms',array('class' => 'btn btn-outline-dark'))!!}
                     @if (($retreat->start_date <= now()) && ($retreat->end_date >= now()))
-                        {!! Html::link(action('RetreatController@checkin',$retreat->id),'Checkin',array('class' => 'btn btn-outline-dark'))!!}
+                        {!! Html::link(action([\App\Http\Controllers\RetreatController::class, 'checkin'],$retreat->id),'Checkin',array('class' => 'btn btn-outline-dark'))!!}
                     @endIf
 
                     @if ($retreat->end_date < now())
-                        {!! Html::link(action('RetreatController@checkout',$retreat->id),'Checkout',array('class' => 'btn btn-outline-dark'))!!}
+                        {!! Html::link(action([\App\Http\Controllers\RetreatController::class, 'checkout'],$retreat->id),'Checkout',array('class' => 'btn btn-outline-dark'))!!}
                     @endIf
                 @endCan
                 <select class="custom-select col-3" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
@@ -255,7 +255,7 @@
                                         @else
                                             <tr>
                                         @endif
-                                        <td id='registration-{{$registration->id}}'><a href="{{action('RegistrationController@show', $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }} </a>
+                                        <td id='registration-{{$registration->id}}'><a href="{{action([\App\Http\Controllers\RegistrationController::class, 'show'], $registration->id)}}">{{ date('F d, Y', strtotime($registration->register_date)) }} </a>
                                             {{$registration->participant_role_name}} [{{ $loop->index +1 }}]
                                         </td>
                                         <td> {!!$registration->retreatant->avatar_small_link!!} </td>
@@ -271,7 +271,7 @@
                                             @if (empty($registration->room->name))
                                                 N/A
                                             @else
-                                                <a href="{{action('RoomController@show', $registration->room->id)}}">{{ $registration->room->name}}</a>
+                                                <a href="{{action([\App\Http\Controllers\RoomController::class, 'show'], $registration->room->id)}}">{{ $registration->room->name}}</a>
                                             @endif
                                         </td>
                                         <td><a href="mailto:{{ $registration->retreatant->email_primary_text }}?subject={{ rawurlencode($retreat->title . ": Followup") }}">{{ $registration->retreatant->email_primary_text }}</a></td>

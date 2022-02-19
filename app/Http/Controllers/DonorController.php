@@ -22,7 +22,7 @@ class DonorController extends Controller
     {
         $this->authorize('show-donor');
         //only show donors that do not have a contact_id
-        $donors = \App\Models\Donor::whereContactId(null)->orderBy('sort_name')->paginate(25,['*'],'donors');
+        $donors = \App\Models\Donor::whereContactId(null)->orderBy('sort_name')->paginate(25, ['*'], 'donors');
 
         return view('donors.index', compact('donors'));   //
     }
@@ -115,7 +115,7 @@ class DonorController extends Controller
             $donor->save();
         }
 
-        return redirect()->action('DonorController@index');
+        return redirect()->action([self::class, 'index']);
     }
 
     public function add($donor_id)
@@ -199,6 +199,6 @@ class DonorController extends Controller
             $donor->save();
         }
 
-        return redirect()->action('DonorController@index');
+        return redirect()->action([self::class, 'index']);
     }
 }

@@ -52,7 +52,7 @@ class RoleController extends Controller
 
         flash('Role: <a href="'.url('/admin/role/'.$role->id).'">'.$role->name.'</a> added')->success();
 
-        return Redirect::action('RoleController@index');
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -106,7 +106,7 @@ class RoleController extends Controller
 
         flash('Role: <a href="'.url('/admin/role/'.$role->id).'">'.$role->name.'</a> updated')->success();
 
-        return Redirect::action('RoleController@index');
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -124,7 +124,7 @@ class RoleController extends Controller
 
         flash('Role: '.$role->name.' deleted')->warning()->important();
 
-        return Redirect::action('RoleController@index');
+        return Redirect::action([self::class, 'index']);
     }
 
     public function update_permissions(Request $request)
@@ -136,7 +136,7 @@ class RoleController extends Controller
 
         flash('Permissions successfully updated for role: <a href="'.url('/admin/role/'.$role->id).'">'.$role->name.'</a>')->success();
 
-        return Redirect::action('RoleController@index');
+        return Redirect::action([self::class, 'index']);
     }
 
     public function update_users(Request $request)
@@ -148,6 +148,6 @@ class RoleController extends Controller
 
         flash('Users successfully updated for role: <a href="'.url('/admin/role/'.$role->id).'">'.$role->name.'</a>')->success();
 
-        return Redirect::action('RoleController@index');
+        return Redirect::action([self::class, 'index']);
     }
 }

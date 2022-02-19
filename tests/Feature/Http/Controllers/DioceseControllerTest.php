@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -44,7 +43,7 @@ class DioceseControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('diocese.destroy', [$diocese]));
         $response->assertSessionHas('flash_notification');
 
-        $response->assertRedirect(action('DioceseController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\DioceseController::class, 'index']));
         $this->assertSoftDeleted($diocese);
     }
 
@@ -84,37 +83,37 @@ class DioceseControllerTest extends TestCase
         $url_main = \App\Models\Website::factory()->create([
             'contact_id' => $diocese->id,
             'website_type' => 'Main',
-            'url' => $this->faker->url,
+            'url' => $this->faker->url(),
         ]);
         $url_work = \App\Models\Website::factory()->create([
             'contact_id' => $diocese->id,
             'website_type' => 'Work',
-            'url' => $this->faker->url,
+            'url' => $this->faker->url(),
         ]);
         $url_facebook = \App\Models\Website::factory()->create([
             'contact_id' => $diocese->id,
             'website_type' => 'Facebook',
-            'url' => 'https://facebook.com/'.$this->faker->slug,
+            'url' => 'https://facebook.com/'.$this->faker->slug(),
         ]);
         $url_google = \App\Models\Website::factory()->create([
             'contact_id' => $diocese->id,
             'website_type' => 'Google',
-            'url' => 'https://google.com/'.$this->faker->slug,
+            'url' => 'https://google.com/'.$this->faker->slug(),
         ]);
         $url_instagram = \App\Models\Website::factory()->create([
             'contact_id' => $diocese->id,
             'website_type' => 'Instagram',
-            'url' => 'https://instagram.com/'.$this->faker->slug,
+            'url' => 'https://instagram.com/'.$this->faker->slug(),
         ]);
         $url_linkedin = \App\Models\Website::factory()->create([
             'contact_id' => $diocese->id,
             'website_type' => 'LinkedIn',
-            'url' => 'https://linkedin.com/'.$this->faker->slug,
+            'url' => 'https://linkedin.com/'.$this->faker->slug(),
         ]);
         $url_twitter = \App\Models\Website::factory()->create([
             'contact_id' => $diocese->id,
             'website_type' => 'Twitter',
-            'url' => 'https://twitter.com/'.$this->faker->slug,
+            'url' => 'https://twitter.com/'.$this->faker->slug(),
         ]);
 
         $response = $this->actingAs($user)->get(route('diocese.edit', [$diocese]));
@@ -195,7 +194,7 @@ class DioceseControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('create-contact');
 
-        $city_name = $this->faker->city;
+        $city_name = $this->faker->city();
         $org_name = 'New Diocese of '.$city_name;
 
         $response = $this->actingAs($user)->post(route('diocese.store'), [
@@ -206,17 +205,17 @@ class DioceseControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('DioceseController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\DioceseController::class, 'index']));
         $this->assertDatabaseHas('contact', [
-          'contact_type' => config('polanco.contact_type.organization'),
-          'subcontact_type' => config('polanco.contact_type.diocese'),
-          'sort_name' => $city_name,
-          'display_name' => $org_name,
+            'contact_type' => config('polanco.contact_type.organization'),
+            'subcontact_type' => config('polanco.contact_type.diocese'),
+            'sort_name' => $city_name,
+            'display_name' => $org_name,
         ]);
         $this->assertDatabaseHas('note', [
-          'entity_table' => 'contact',
-          'note' => $city_name.' Diocesan note',
-          'subject' => 'Diocese Note',
+            'entity_table' => 'contact',
+            'note' => $city_name.' Diocesan note',
+            'subject' => 'Diocese Note',
         ]);
     }
 
@@ -240,20 +239,20 @@ class DioceseControllerTest extends TestCase
         $user = $this->createUserWithPermission('update-contact');
         $diocese = \App\Models\Diocese::factory()->create();
         $sort_name = $diocese->sort_name;
-        $city_name = $this->faker->city;
+        $city_name = $this->faker->city();
         $org_name = 'Renewed Diocese of '.$city_name;
         $diocese_note = $city_name.' Diocesan note updated';
 
         $response = $this->actingAs($user)->put(route('diocese.update', [$diocese]), [
-          'sort_name' => $city_name,
-          'display_name' => $org_name,
-          'organization_name' => $org_name,
-          'diocese_note' => $diocese_note,
+            'sort_name' => $city_name,
+            'display_name' => $org_name,
+            'organization_name' => $org_name,
+            'diocese_note' => $diocese_note,
         ]);
         // TODO: test for updating of other fields on the diocese.edit blade like email, phone, address, etc.
 
         $diocese->refresh();
-        $response->assertRedirect(action('DioceseController@show', $diocese->id));
+        $response->assertRedirect(action([\App\Http\Controllers\DioceseController::class, 'show'], $diocese->id));
         $response->assertSessionHas('flash_notification');
         $this->assertEquals($diocese->sort_name, $city_name);
         $this->assertNotEquals($diocese->sort_name, $sort_name);

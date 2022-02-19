@@ -21,7 +21,7 @@ class VendorController extends Controller
     public function index()
     {
         $this->authorize('show-contact');
-        $vendors = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.vendor'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites')->paginate(25,['*'],'vendors');
+        $vendors = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.vendor'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites')->paginate(25, ['*'], 'vendors');
 
         return view('vendors.index', compact('vendors'));   //
     }
@@ -151,7 +151,7 @@ class VendorController extends Controller
 
         flash('Vendor: <a href="'.url('/vendor/'.$vendor->id).'">'.$vendor->organization_name.'</a> added')->success();
 
-        return Redirect::action('VendorController@index');
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -164,15 +164,15 @@ class VendorController extends Controller
     {
         $this->authorize('show-contact');
         $vendor = \App\Models\Contact::with('addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes')->findOrFail($id);
-        $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date','DESC')->paginate(25,['*'],'donations');
-        $touchpoints = \App\Models\Touchpoint::wherePersonId($id)->orderBy('touched_at','DESC')->paginate(25,['*'],'touchpoints');
-        $registrations = \App\Models\Registration::whereContactId($id)->orderBy('created_at','DESC')->paginate(25,['*'],'registrations');
+        $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date', 'DESC')->paginate(25, ['*'], 'donations');
+        $touchpoints = \App\Models\Touchpoint::wherePersonId($id)->orderBy('touched_at', 'DESC')->paginate(25, ['*'], 'touchpoints');
+        $registrations = \App\Models\Registration::whereContactId($id)->orderBy('created_at', 'DESC')->paginate(25, ['*'], 'registrations');
 
         $files = \App\Models\Attachment::whereEntity('contact')->whereEntityId($vendor->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
         $relationship_types = [];
         $relationship_types['Primary contact'] = 'Primary contact';
 
-        return view('vendors.show', compact('vendor', 'relationship_types', 'files','donations','touchpoints','registrations')); //
+        return view('vendors.show', compact('vendor', 'relationship_types', 'files', 'donations', 'touchpoints', 'registrations')); //
     }
 
     /**
@@ -342,7 +342,7 @@ class VendorController extends Controller
 
         flash('Vendor: <a href="'.url('/vendor/'.$vendor->id).'">'.$vendor->organization_name.'</a> updated')->success();
 
-        return Redirect::action('VendorController@show', $vendor->id);
+        return Redirect::action([self::class, 'show'], $vendor->id);
     }
 
     /**
@@ -376,6 +376,6 @@ class VendorController extends Controller
 
         flash('Vendor: '.$vendor->organization_name.' deleted')->warning()->important();
 
-        return Redirect::action('VendorController@index');
+        return Redirect::action([self::class, 'index']);
     }
 }

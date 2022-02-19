@@ -14,6 +14,7 @@ class Email extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'email';
+
     protected $fillable = ['contact_id', 'location_type_id', 'is_primary', 'email'];
 
     public function owner()
@@ -34,5 +35,4 @@ class Email extends Model implements Auditable
             return;
         }
     }
-
 }

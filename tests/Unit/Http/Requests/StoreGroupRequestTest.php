@@ -39,11 +39,11 @@ class StoreGroupRequestTest extends TestCase
         $actual = $this->subject->rules();
 
         $this->assertEquals([
-          'name' => 'required|unique:group',
-          'title' => 'required',
-          'is_active' => 'integer|min:0|max:1',
-          'is_hidden' => 'integer|min:0|max:1',
-          'is_reserved' => 'integer|min:0|max:1',
+            'name' => 'required|unique:group',
+            'title' => 'required',
+            'is_active' => 'integer|min:0|max:1',
+            'is_hidden' => 'integer|min:0|max:1',
+            'is_reserved' => 'integer|min:0|max:1',
         ], $actual);
     }
 

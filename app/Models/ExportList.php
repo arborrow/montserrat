@@ -15,10 +15,10 @@ class ExportList extends Model implements Auditable
 
     protected $table = 'export_list';
 
-    protected $dates = [
-        'start_date',
-        'end_date',
-        'last_run_date',
-        'next_scheduled_date',
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+        'last_run_date' => 'datetime',
+        'next_scheduled_date' => 'datetime',
     ];
 }

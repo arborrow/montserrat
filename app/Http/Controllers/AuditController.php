@@ -21,7 +21,7 @@ class AuditController extends Controller
     {
         $this->authorize('show-audit');
         $users = \App\Models\User::with('user')->orderBy('name')->pluck('name', 'id');
-        $audits = \App\Models\Audit::with('user')->orderBy('created_at', 'DESC')->paginate(25,['*'],'audits');
+        $audits = \App\Models\Audit::with('user')->orderBy('created_at', 'DESC')->paginate(25, ['*'], 'audits');
 
         return view('admin.audits.index', compact('audits', 'users'));
     }
@@ -30,7 +30,7 @@ class AuditController extends Controller
     {
         $this->authorize('show-audit');
         $users = \App\Models\User::with('user')->orderBy('name')->pluck('name', 'id');
-        $audits = \App\Models\Audit::with('user')->whereUserId($user_id)->orderBy('created_at', 'DESC')->paginate(25,['*'],'audits');
+        $audits = \App\Models\Audit::with('user')->whereUserId($user_id)->orderBy('created_at', 'DESC')->paginate(25, ['*'], 'audits');
 
         return view('admin.audits.index', compact('audits', 'users'));
     }
@@ -46,7 +46,7 @@ class AuditController extends Controller
         $this->authorize('create-audit');
         flash('Manually creating an audit record is not allowed')->warning();
 
-        return Redirect::action('AuditController@index');
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -61,7 +61,7 @@ class AuditController extends Controller
         $this->authorize('create-audit');
         flash('Manually storing an audit record is not allowed')->warning();
 
-        return Redirect::action('AuditController@index');
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -93,7 +93,7 @@ class AuditController extends Controller
         $this->authorize('update-audit');
         flash('Manually editing an audit record is not allowed')->warning();
 
-        return Redirect::action('AuditController@index');
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -109,7 +109,7 @@ class AuditController extends Controller
         $this->authorize('update-audit');
         flash('Manually updating an audit record is not allowed')->warning();
 
-        return Redirect::action('AuditController@index');
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -124,6 +124,6 @@ class AuditController extends Controller
         $this->authorize('delete-audit');
         flash('Manually destroying an audit record is not allowed')->warning();
 
-        return Redirect::action('AuditController@index');
+        return Redirect::action([self::class, 'index']);
     }
 }

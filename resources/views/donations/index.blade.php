@@ -11,7 +11,7 @@
                         {!! Html::image('images/create.png', 'Add Donation',array('title'=>"Add Donation",'class' => 'btn btn-light')) !!}</a>
                 </span>
             @endCan
-            <a href={{ action('DonationController@search') }}>
+            <a href={{ action([\App\Http\Controllers\DonationController::class, 'search']) }}>
                 {!! Html::image('images/search.png', 'Search donations',array('title'=>"Search donations",'class' => 'btn btn-link')) !!}
             </a>
 

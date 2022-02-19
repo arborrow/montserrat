@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -39,7 +38,7 @@ class AssetTypeControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('asset_type.destroy', [$asset_type]));
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('AssetTypeController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AssetTypeController::class, 'index']));
         $this->assertSoftDeleted($asset_type);
     }
 
@@ -106,7 +105,7 @@ class AssetTypeControllerTest extends TestCase
         $user = $this->createUserWithPermission('create-asset-type');
         $parent_asset_type = \App\Models\AssetType::factory()->create();
 
-        $asset_type_name = 'New '.$this->faker->word;
+        $asset_type_name = 'New '.$this->faker->word();
         $asset_type_label = $this->faker->words(2, true);
         $asset_type_description = $this->faker->sentence(7, true);
         $asset_type_is_active = $this->faker->boolean();
@@ -119,15 +118,15 @@ class AssetTypeControllerTest extends TestCase
             'parent_asset_type_id' => $parent_asset_type->id,
         ]);
 
-        $response->assertRedirect(action('AssetTypeController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AssetTypeController::class, 'index']));
         $response->assertSessionHas('flash_notification');
 
         $this->assertDatabaseHas('asset_type', [
-          'name' => $asset_type_name,
-          'label' => $asset_type_label,
-          'description' => $asset_type_description,
-          'is_active' => $asset_type_is_active,
-          'parent_asset_type_id' => $parent_asset_type->id,
+            'name' => $asset_type_name,
+            'label' => $asset_type_label,
+            'description' => $asset_type_description,
+            'is_active' => $asset_type_is_active,
+            'parent_asset_type_id' => $parent_asset_type->id,
         ]);
     }
 
@@ -143,15 +142,15 @@ class AssetTypeControllerTest extends TestCase
         $new_asset_type_name = 'New '.$this->faker->words(3, true);
 
         $response = $this->actingAs($user)->put(route('asset_type.update', [$asset_type]), [
-          'id' => $asset_type->id,
-          'name' => $new_asset_type_name,
-          'label' => $this->faker->words(4, true),
-          'description' => $this->faker->sentence(7, true),
-          'is_active' => $this->faker->boolean(),
-          'parent_asset_type_id' => $parent_asset_type->id,
+            'id' => $asset_type->id,
+            'name' => $new_asset_type_name,
+            'label' => $this->faker->words(4, true),
+            'description' => $this->faker->sentence(7, true),
+            'is_active' => $this->faker->boolean(),
+            'parent_asset_type_id' => $parent_asset_type->id,
         ]);
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('AssetTypeController@show', $asset_type->id));
+        $response->assertRedirect(action([\App\Http\Controllers\AssetTypeController::class, 'show'], $asset_type->id));
         // var_dump($asset_type);
         $updated = \App\Models\AssetType::findOrFail($asset_type->id);
         $this->assertEquals($updated->name, $new_asset_type_name);

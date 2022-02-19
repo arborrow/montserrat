@@ -32,7 +32,7 @@
         <div class='row'>
             @can('update-attachment')
                 <div class='col-md-1'>
-                    <a href="{{ action('AttachmentController@edit', $attachment->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                    <a href="{{ action([\App\Http\Controllers\AttachmentController::class, 'edit'], $attachment->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                 </div>
             @endCan
             <div class="clearfix"> </div>

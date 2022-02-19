@@ -2,14 +2,14 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use Tests\TestCase;
-use Carbon\Carbon;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 
 //TODO: Create unit tests for new admin.config pages (index, mail, google_calendar, etc.)
 
@@ -20,6 +20,7 @@ class PageControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;
+
     /**
      * @test
      */
@@ -46,7 +47,6 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('pages.bookstore');
     }
 
-
     /**
      * @test
      */
@@ -71,7 +71,6 @@ class PageControllerTest extends TestCase
         $response->assertForbidden();
     }
 
-
     /**
      * @test
      */
@@ -95,7 +94,6 @@ class PageControllerTest extends TestCase
         $response = $this->actingAs($user)->get(route('admin.config.application'));
         $response->assertForbidden();
     }
-
 
     /**
      * @test
@@ -307,7 +305,7 @@ class PageControllerTest extends TestCase
 
         $payment = \App\Models\Payment::factory()->create();
         $donation = \App\Models\Donation::findOrFail($payment->donation_id);
-        $donation->donation_description = "AGC - General";
+        $donation->donation_description = 'AGC - General';
         $donation->save();
         $contact = \App\Models\Contact::findOrFail($donation->contact_id);
 
@@ -319,7 +317,6 @@ class PageControllerTest extends TestCase
         $response->assertSeeText($contact->agc_household_name);
     }
 
-
     /**
      * @test
      *
@@ -327,14 +324,14 @@ class PageControllerTest extends TestCase
      * the user is redirected back to the page they came from and a flash error message tells them to create a contact associated with their email address
      */
     public function finance_agc_acknowledge_no_email_returns_a_flash_response()
-    {   $user = $this->createUserWithPermission('show-donation');
+    {
+        $user = $this->createUserWithPermission('show-donation');
         $payment = \App\Models\Payment::factory()->create();
 
         $response = $this->actingAs($user)->from(URL('donation/'.$payment->donation_id))->get('donation/'.$payment->donation_id.'/agc_acknowledge');
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(route('donation.show',$payment->donation_id));
-
+        $response->assertRedirect(route('donation.show', $payment->donation_id));
     }
 
     public function eoy_acknowledgment_returns_an_ok_response()
@@ -350,11 +347,10 @@ class PageControllerTest extends TestCase
                 ['donation_id' => $donation->donation_id]
             );
         // dd($donation,$payments);
-        $response = $this->actingAs($user)->get('person/' . $donation->contact_id . '/eoy_acknowledgment');
+        $response = $this->actingAs($user)->get('person/'.$donation->contact_id.'/eoy_acknowledgment');
 
         $response->assertOk();
         // TODO: assert that the pdf file is created, consider making a seperate view for display and testing number of entries depending on start and end dates
-
     }
 
     /**
@@ -419,11 +415,9 @@ class PageControllerTest extends TestCase
         $response->assertViewHas('report_date');
         $response->assertViewHas('grouped_payments');
         $response->assertViewHas('grand_total');
-        $response->assertSeeText("Cash/Check Bank Deposit Report for");
-        $response->assertSeeText(number_format($payment->donation->donation_amount,2));
-
+        $response->assertSeeText('Cash/Check Bank Deposit Report for');
+        $response->assertSeeText(number_format($payment->donation->donation_amount, 2));
     }
-
 
     /**
      * @test
@@ -440,7 +434,7 @@ class PageControllerTest extends TestCase
         ]);
 
         // remove hyphens
-        $yesterday = str_replace("-","",$yesterday);
+        $yesterday = str_replace('-', '', $yesterday);
 
         // test without hyphens
         $response = $this->actingAs($user)->get('report/finance/cash_deposit/'.$yesterday);
@@ -449,9 +443,8 @@ class PageControllerTest extends TestCase
         $response->assertViewHas('report_date');
         $response->assertViewHas('grouped_payments');
         $response->assertViewHas('grand_total');
-        $response->assertSeeText("Cash/Check Bank Deposit Report for");
-        $response->assertSeeText(number_format($payment->donation->donation_amount,2));
-
+        $response->assertSeeText('Cash/Check Bank Deposit Report for');
+        $response->assertSeeText(number_format($payment->donation->donation_amount, 2));
     }
 
     /**
@@ -470,7 +463,6 @@ class PageControllerTest extends TestCase
         $response->assertViewHas('grand_total');
     }
 
-
     /**
      * @test
      */
@@ -486,22 +478,19 @@ class PageControllerTest extends TestCase
             'payment_description' => $description,
         ]);
 
-
-        $response = $this->actingAs($user)->get(route('report.finance.cc_deposit',['day' => $yesterday]));
+        $response = $this->actingAs($user)->get(route('report.finance.cc_deposit', ['day' => $yesterday]));
         $response->assertOk();
         $response->assertViewIs('reports.finance.cc_deposit');
-        $response->assertViewHas('report_date', function($date) use ($yesterday) {
-            return ($date->toDateString() === $yesterday);
+        $response->assertViewHas('report_date', function ($date) use ($yesterday) {
+            return $date->toDateString() === $yesterday;
         });
 
         $response->assertViewHas('grouped_payments');
         $response->assertViewHas('grand_total');
-        $response->assertSeeText("Credit Card (Internet) Bank Deposit Report");
+        $response->assertSeeText('Credit Card (Internet) Bank Deposit Report');
         $response->assertSeeText($description);
-        $response->assertSeeText(number_format($payment->donation->donation_amount,2));
-
+        $response->assertSeeText(number_format($payment->donation->donation_amount, 2));
     }
-
 
     /**
      * @test
@@ -512,7 +501,7 @@ class PageControllerTest extends TestCase
         $yesterday = Carbon::now()->subDay()->toDateString();
 
         // remove hyphens
-        $yesterday_unhyphenated = str_replace("-","",$yesterday);
+        $yesterday_unhyphenated = str_replace('-', '', $yesterday);
 
         $description = 'Credit card';
 
@@ -521,20 +510,18 @@ class PageControllerTest extends TestCase
             'payment_description' => $description,
         ]);
 
-
-        $response = $this->actingAs($user)->get(route('report.finance.cc_deposit',['day' => $yesterday_unhyphenated]));
+        $response = $this->actingAs($user)->get(route('report.finance.cc_deposit', ['day' => $yesterday_unhyphenated]));
         $response->assertOk();
         $response->assertViewIs('reports.finance.cc_deposit');
-        $response->assertViewHas('report_date', function($date) use ($yesterday) {
-            return ($date->toDateString() === $yesterday);
+        $response->assertViewHas('report_date', function ($date) use ($yesterday) {
+            return $date->toDateString() === $yesterday;
         });
 
         $response->assertViewHas('grouped_payments');
         $response->assertViewHas('grand_total');
-        $response->assertSeeText("Credit Card (Internet) Bank Deposit Report");
+        $response->assertSeeText('Credit Card (Internet) Bank Deposit Report');
         $response->assertSeeText($description);
-        $response->assertSeeText(number_format($payment->donation->donation_amount,2));
-
+        $response->assertSeeText(number_format($payment->donation->donation_amount, 2));
     }
 
     /**
@@ -598,10 +585,9 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('reports.finance.reconcile_deposits');
         $response->assertViewHas('diffpg');
         $response->assertViewHas('diffrg');
-        $response->assertSeeText("Open Deposit Reconciliation Report");
-        $response->assertSeeText(number_format($registration->deposit,2));
+        $response->assertSeeText('Open Deposit Reconciliation Report');
+        $response->assertSeeText(number_format($registration->deposit, 2));
     }
-
 
     /**
      * @test
@@ -620,8 +606,8 @@ class PageControllerTest extends TestCase
         $response->assertViewIs('reports.finance.reconcile_deposits');
         $response->assertViewHas('diffpg');
         $response->assertViewHas('diffrg');
-        $response->assertSeeText("Open Deposit Reconciliation Report");
-        $response->assertSeeText(number_format($registration->deposit,2));
+        $response->assertSeeText('Open Deposit Reconciliation Report');
+        $response->assertSeeText(number_format($registration->deposit, 2));
     }
 
     /**
@@ -632,7 +618,7 @@ class PageControllerTest extends TestCase
         $user = $this->createUserWithPermission('show-donation');
         $retreat = \App\Models\Retreat::factory()->create();
         $donation = \App\Models\Donation::factory()->create([
-          'event_id' => $retreat->id,
+            'event_id' => $retreat->id,
         ]);
 
         $response = $this->actingAs($user)->get('report/finance/retreatdonations/'.$retreat->idnumber);
@@ -640,14 +626,14 @@ class PageControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('reports.finance.retreatdonations');
 
-        $response->assertViewHas('retreat', function($r) use ($retreat) {
+        $response->assertViewHas('retreat', function ($r) use ($retreat) {
             return $r->idnumber == $retreat->idnumber;
         });
 
         $response->assertViewHas('grouped_donations');
         $response->assertViewHas('donations');
-        $response->assertViewHas('donations', function($donations) use ($donation) {
-            return $donations->contains('donation_description',$donation->donation_description);
+        $response->assertViewHas('donations', function ($donations) use ($donation) {
+            return $donations->contains('donation_description', $donation->donation_description);
         });
         $response->assertSeeText('Donations for '.$retreat->title);
         $response->assertSeeText($retreat->idnumber);

@@ -3,8 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class AddForeignKeysToPaymentProcessorTable extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -28,4 +27,4 @@ class AddForeignKeysToPaymentProcessorTable extends Migration
             $table->dropForeign('payment_processor_payment_processor_type_id_foreign');
         });
     }
-}
+};

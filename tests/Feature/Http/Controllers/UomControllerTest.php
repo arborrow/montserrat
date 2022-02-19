@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -40,7 +39,7 @@ class UomControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('uom.destroy', [$uom]));
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('UomController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\UomController::class, 'index']));
         $this->assertSoftDeleted($uom);
     }
 
@@ -106,7 +105,7 @@ class UomControllerTest extends TestCase
 
         $user = $this->createUserWithPermission('create-uom');
 
-        $uom_unit_name = $this->faker->word;
+        $uom_unit_name = $this->faker->word();
         $uom_description = $this->faker->sentence(7, true);
         $uom_is_active = $this->faker->boolean();
         $uom_type = $this->faker->randomElement(config('polanco.uom_types'));
@@ -120,13 +119,13 @@ class UomControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('UomController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\UomController::class, 'index']));
 
         $this->assertDatabaseHas('uom', [
-          'unit_name' => $uom_unit_name,
-          'description' => $uom_description,
-          'is_active' => $uom_is_active,
-          'type' => $uom_type,
+            'unit_name' => $uom_unit_name,
+            'description' => $uom_description,
+            'is_active' => $uom_is_active,
+            'type' => $uom_type,
         ]);
     }
 
@@ -144,16 +143,16 @@ class UomControllerTest extends TestCase
         $new_uom_unit_name = 'New '.$this->faker->words(2, true);
 
         $response = $this->actingAs($user)->put(route('uom.update', [$uom]), [
-          'id' => $uom->id,
-          'unit_name' => $new_uom_unit_name,
-          'unit_symbol' => $new_uom_unit_name,
-          'description' => $this->faker->sentence(7, true),
-          'is_active' => $this->faker->boolean(),
-          'type' => $uom_type,
+            'id' => $uom->id,
+            'unit_name' => $new_uom_unit_name,
+            'unit_symbol' => $new_uom_unit_name,
+            'description' => $this->faker->sentence(7, true),
+            'is_active' => $this->faker->boolean(),
+            'type' => $uom_type,
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('UomController@show', $uom->id));
+        $response->assertRedirect(action([\App\Http\Controllers\UomController::class, 'show'], $uom->id));
 
         $updated = \App\Models\Uom::findOrFail($uom->id);
         $this->assertEquals($updated->unit_name, $new_uom_unit_name);

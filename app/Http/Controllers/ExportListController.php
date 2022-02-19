@@ -63,7 +63,7 @@ class ExportListController extends Controller
 
         flash('Export list: <a href="'.url('/admin/export_list/'.$export_list->id).'">'.$export_list->label.'</a> added')->success();
 
-        return Redirect::action('ExportListController@index');
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -124,7 +124,7 @@ class ExportListController extends Controller
 
         flash('Export list: <a href="'.url('/admin/export_list/'.$export_list->id).'">'.$export_list->label.'</a> updated')->success();
 
-        return Redirect::action('ExportListController@show', $export_list->id);
+        return Redirect::action([self::class, 'show'], $export_list->id);
     }
 
     /**
@@ -142,7 +142,7 @@ class ExportListController extends Controller
 
         flash('Export list: '.$export_list->label.' deleted')->warning()->important();
 
-        return Redirect::action('ExportListController@index');
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -228,6 +228,6 @@ class ExportListController extends Controller
         ->orderBy('contact.sort_name')->get();
         dd($participants->get());
 
-        return Redirect::action('ExportListController@index');
+        return Redirect::action([self::class, 'index']);
     }
 }

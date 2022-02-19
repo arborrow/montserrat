@@ -7,7 +7,7 @@
             Donation types
             @can('create-donation-type')
                 <span class="options">
-                    <a href={{ action('DonationTypeController@create') }}>
+                    <a href={{ action([\App\Http\Controllers\DonationTypeController::class, 'create']) }}>
                         <img src="{{ URL::asset('images/create.png') }}" alt="Add" class="btn btn-light" title="Add">
                     </a>
                 </span>

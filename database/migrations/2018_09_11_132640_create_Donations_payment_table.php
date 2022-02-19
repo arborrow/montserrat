@@ -3,8 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateDonationsPaymentTable extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -39,4 +38,4 @@ class CreateDonationsPaymentTable extends Migration
     {
         Schema::dropIfExists('Donations_payment');
     }
-}
+};

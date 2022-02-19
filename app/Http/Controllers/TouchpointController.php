@@ -30,7 +30,7 @@ class TouchpointController extends Controller
         $this->authorize('show-touchpoint');
 
         $staff = \App\Models\Touchpoint::groupBy('staff_id')->select('staff_id')->with('staff')->get()->sortBy('staff.sort_name')->pluck('staff.sort_name', 'staff_id');
-        $touchpoints = \App\Models\Touchpoint::orderBy('touched_at', 'desc')->with('person.prefix', 'person.suffix', 'staff.prefix', 'staff.suffix')->paginate(25,['*'],'touchpoints');
+        $touchpoints = \App\Models\Touchpoint::orderBy('touched_at', 'desc')->with('person.prefix', 'person.suffix', 'staff.prefix', 'staff.suffix')->paginate(25, ['*'], 'touchpoints');
 
         return view('touchpoints.index', compact('touchpoints', 'staff'));
     }
@@ -47,7 +47,7 @@ class TouchpointController extends Controller
         $this->authorize('show-touchpoint');
 
         $staff = \App\Models\Touchpoint::groupBy('staff_id')->select('staff_id')->with('staff')->get()->sortBy('staff.sort_name')->pluck('staff.sort_name', 'staff_id');
-        $touchpoints = \App\Models\Touchpoint::whereStaffId($staff_id)->orderBy('touched_at', 'desc')->with('person.prefix', 'person.suffix', 'staff.prefix', 'staff.suffix')->paginate(25,['*'],'touchpoints');
+        $touchpoints = \App\Models\Touchpoint::whereStaffId($staff_id)->orderBy('touched_at', 'desc')->with('person.prefix', 'person.suffix', 'staff.prefix', 'staff.suffix')->paginate(25, ['*'], 'touchpoints');
 
         return view('touchpoints.index', compact('touchpoints', 'staff'));   //
     }
@@ -88,7 +88,7 @@ class TouchpointController extends Controller
         $groups = \App\Models\Group::orderBy('title')->pluck('title', 'id');
         $defaults['group_id'] = $group_id;
         // if a group_id is provided ensure that the group actually exists otherwise fail with 404
-        if ($group_id>0) {
+        if ($group_id > 0) {
             $group = \App\Models\Group::findOrFail($group_id);
         }
         $current_user = $request->user();
@@ -100,6 +100,7 @@ class TouchpointController extends Controller
                 $staff->prepend($current_user->contact_email->owner->sort_name, $current_user->contact_id);
             }
         }
+
         return view('touchpoints.add_group', compact('staff', 'groups', 'defaults'));
     }
 
@@ -211,7 +212,7 @@ class TouchpointController extends Controller
 
         flash('Touchpoint ID#: <a href="'.url('/touchpoint/'.$touchpoint->id).'">'.$touchpoint->id.'</a> added')->success();
 
-        return Redirect::action('TouchpointController@index');
+        return Redirect::action([self::class, 'index']);
     }
 
     public function store_group(StoreGroupTouchpointRequest $request)
@@ -232,7 +233,7 @@ class TouchpointController extends Controller
 
         flash('Touchpoint added for members of group: <a href="'.url('/group/'.$group_id).'">'.$group->name.'</a>')->success();
 
-        return Redirect::action('GroupController@show', $group_id);
+        return Redirect::action([\App\Http\Controllers\GroupController::class, 'show'], $group_id);
     }
 
     public function store_retreat(StoreRetreatTouchpointRequest $request)
@@ -253,7 +254,7 @@ class TouchpointController extends Controller
 
         flash('Touchpoint added for registered event participants: <a href="'.url('/retreat/'.$event_id).'">'.$event->title.'</a>')->success();
 
-        return Redirect::action('RetreatController@show', $event_id);
+        return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
     }
 
     public function store_retreat_waitlist(StoreRetreatWaitlistTouchpointRequest $request)
@@ -274,7 +275,7 @@ class TouchpointController extends Controller
 
         flash('Touchpoint added for waitlisted event participants: <a href="'.url('/retreat/'.$event_id).'">'.$event->title.'</a>')->success();
 
-        return Redirect::action('RetreatController@show', $event_id);
+        return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
     }
 
     /**
@@ -346,7 +347,7 @@ class TouchpointController extends Controller
 
         flash('Touchpoint ID#: <a href="'.url('/touchpoint/'.$touchpoint->id).'">'.$touchpoint->id.'</a> updated')->success();
 
-        return Redirect::action('TouchpointController@index');
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -363,6 +364,6 @@ class TouchpointController extends Controller
 
         flash('Touchpoint ID#: '.$id.' deleted')->warning()->important();
 
-        return Redirect::action('TouchpointController@index');
+        return Redirect::action([self::class, 'index']);
     }
 }

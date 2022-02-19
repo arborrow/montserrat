@@ -10,20 +10,13 @@ use Illuminate\Support\Str;
 class GroupFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = \App\Models\Group::class;
-
-    /**
      * Define the model's default state.
      *
      * @return array
      */
     public function definition()
     {
-        $group_name = ucfirst(implode(' ', $this->faker->words));
+        $group_name = ucfirst(implode(' ', $this->faker->words()));
 
         return [
             'name' => $group_name,

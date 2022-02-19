@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -15,7 +14,6 @@ class RelationshipControllerTest extends TestCase
     // use DatabaseTransactions;
     use withFaker;
 
-
     /**
      * @test
      */
@@ -25,7 +23,7 @@ class RelationshipControllerTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('relationship.create'));
 
-        $response->assertRedirect(action('RelationshipController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\RelationshipController::class, 'index']));
     }
 
     /**
@@ -54,7 +52,7 @@ class RelationshipControllerTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('relationship.edit', [$relationship]));
 
-        $response->assertRedirect(action('RelationshipController@show', $relationship->id));
+        $response->assertRedirect(action([\App\Http\Controllers\RelationshipController::class, 'show'], $relationship->id));
     }
 
     /**
@@ -102,7 +100,7 @@ class RelationshipControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RelationshipController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\RelationshipController::class, 'index']));
     }
 
     /**
@@ -114,48 +112,47 @@ class RelationshipControllerTest extends TestCase
         $relationship = \App\Models\Relationship::factory()->create();
 
         $response = $this->actingAs($user)->put(route('relationship.update', [$relationship]), [
-          'contact_id_a' => $relationship->contact_id_a,
-          'contact_id_b' => $relationship->contact_id_b,
+            'contact_id_a' => $relationship->contact_id_a,
+            'contact_id_b' => $relationship->contact_id_b,
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('RelationshipController@show', $relationship->id));
+        $response->assertRedirect(action([\App\Http\Controllers\RelationshipController::class, 'show'], $relationship->id));
     }
 
-        /**
-         * @test
-         */
-        public function disjoined_returns_an_ok_response()
-        {
-            $user = $this->createUserWithPermission('update-contact');
+    /**
+     * @test
+     */
+    public function disjoined_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('update-contact');
 
-            $response = $this->actingAs($user)->get(route('relationship.disjoined'));
+        $response = $this->actingAs($user)->get(route('relationship.disjoined'));
 
-            $response->assertOk();
-            $response->assertViewIs('relationships.disjoined');
-            $response->assertViewHas('couples');
-            $response->assertSeeText('Disjoined Couples Index');
-        }
+        $response->assertOk();
+        $response->assertViewIs('relationships.disjoined');
+        $response->assertViewHas('couples');
+        $response->assertSeeText('Disjoined Couples Index');
+    }
 
-        /**
-         * @test
-         */
-        public function rejoin_returns_an_ok_response()
-        {
-            $user = $this->createUserWithPermission('update-contact');
-            $relationship = \App\Models\Relationship::factory()->create(['relationship_type_id'=>config('polanco.relationship_type.husband_wife')]);
-            $husband_address = \App\Models\Address::factory()->create(['contact_id'=>$relationship->contact_id_a, 'is_primary'=>1]);
-            $wife_address = \App\Models\Address::factory()->create(['contact_id'=>$relationship->contact_id_b, 'is_primary'=>1]);
+    /**
+     * @test
+     */
+    public function rejoin_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('update-contact');
+        $relationship = \App\Models\Relationship::factory()->create(['relationship_type_id'=>config('polanco.relationship_type.husband_wife')]);
+        $husband_address = \App\Models\Address::factory()->create(['contact_id'=>$relationship->contact_id_a, 'is_primary'=>1]);
+        $wife_address = \App\Models\Address::factory()->create(['contact_id'=>$relationship->contact_id_b, 'is_primary'=>1]);
 
-            $response = $this->actingAs($user)->from(URL('registration/disjoined'))->get(route('relationship.rejoin',[
-                'id'=>$relationship->id,
-                'dominant'=>$relationship->contact_id_a,
-            ]));
+        $response = $this->actingAs($user)->from(URL('registration/disjoined'))->get(route('relationship.rejoin', [
+            'id'=>$relationship->id,
+            'dominant'=>$relationship->contact_id_a,
+        ]));
 
-            $response->assertRedirect('registration/disjoined');
-            $this->assertEquals($relationship->contact_a_address,$relationship->contact_b_address);
-
-        }
+        $response->assertRedirect('registration/disjoined');
+        $this->assertEquals($relationship->contact_a_address, $relationship->contact_b_address);
+    }
 
     // test cases...
 }

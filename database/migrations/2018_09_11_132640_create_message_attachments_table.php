@@ -3,8 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateMessageAttachmentsTable extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -34,4 +33,4 @@ class CreateMessageAttachmentsTable extends Migration
     {
         Schema::dropIfExists('message_attachments');
     }
-}
+};

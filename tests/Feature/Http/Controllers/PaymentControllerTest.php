@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -42,7 +42,7 @@ class PaymentControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('payment.destroy', [$payment]));
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('DonationController@show', $payment->donation_id));
+        $response->assertRedirect(action([\App\Http\Controllers\DonationController::class, 'show'], $payment->donation_id));
         $this->assertSoftDeleted($payment);
     }
 
@@ -109,7 +109,7 @@ class PaymentControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('create-payment');
         $donation = \App\Models\Donation::factory()->create();
-        $payment_date = $this->faker->dateTime();
+        $payment_date = Carbon::parse($this->faker->dateTime());
         $payment_amount = $this->faker->randomFloat(2, 0, 100000);
         $response = $this->actingAs($user)->post(route('payment.store'), [
             'donation_id' => $donation->donation_id,
@@ -118,11 +118,11 @@ class PaymentControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('DonationController@show', $donation->donation_id));
+        $response->assertRedirect(action([\App\Http\Controllers\DonationController::class, 'show'], $donation->donation_id));
         $this->assertDatabaseHas('Donations_payment', [
-          'donation_id' => $donation->donation_id,
-          'payment_date' => $payment_date,
-          'payment_amount' => $payment_amount,
+            'donation_id' => $donation->donation_id,
+            'payment_date' => $payment_date,
+            'payment_amount' => $payment_amount,
         ]);
     }
 
@@ -151,12 +151,12 @@ class PaymentControllerTest extends TestCase
         $response = $this->actingAs($user)->put(route('payment.update', [$payment]), [
             'payment_amount' => $new_payment_amount,
             'donation_id' => $payment->donation_id,
-            'payment_date' => $this->faker->dateTime(),
+            'payment_date' => Carbon::parse($this->faker->dateTime()),
         ]);
         $updated = \App\Models\Payment::findOrFail($payment->payment_id);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('DonationController@show', $payment->donation_id));
+        $response->assertRedirect(action([\App\Http\Controllers\DonationController::class, 'show'], $payment->donation_id));
         $this->assertEquals($updated->payment_amount, $new_payment_amount);
         $this->assertNotEquals($updated->payment_amount, $original_payment_amount);
     }
@@ -174,7 +174,7 @@ class PaymentControllerTest extends TestCase
         $response = $this->actingAs($user)->put(route('payment.update', [$payment]), [
             'payment_amount' => $new_payment_amount,
             'donation_id' => $payment->donation_id,
-            'payment_date' => $this->faker->dateTime(),
+            'payment_date' => Carbon::parse($this->faker->dateTime()),
         ]);
 
         $response->assertForbidden();
@@ -191,7 +191,6 @@ class PaymentControllerTest extends TestCase
             \App\Http\Requests\UpdatePaymentRequest::class
         );
     }
-
 
     /**
      * @test
@@ -225,8 +224,6 @@ class PaymentControllerTest extends TestCase
         $response->assertViewHas('payment_methods');
         $response->assertSeeText('Search Payments');
     }
-
-
 
     // test cases...
 }

@@ -14,9 +14,12 @@ class Attachment extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'file';
-    protected $dates = [
-        'upload_date',
-    ];  //
+
+    protected $casts = [
+        'upload_date' => 'datetime',
+    ];
+
+    //
     protected $fillable = ['entity', 'entity_id', 'file_type_id'];
 
     public function file_type()
@@ -33,7 +36,8 @@ class Attachment extends Model implements Auditable
         }
     }
 
-    public function getEntityLinkAttribute() {
+    public function getEntityLinkAttribute()
+    {
         switch ($this->entity) {
             case 'asset':
                 $path = url('asset/'.$this->entity_id);
@@ -48,8 +52,7 @@ class Attachment extends Model implements Auditable
             default:
                 $path = null;
         }
+
         return "<a href='".$path."'>".ucfirst($this->entity).' '.$this->entity_id.'</a>';
     }
-
-
 }

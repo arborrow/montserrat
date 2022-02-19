@@ -144,11 +144,11 @@
 					@endCan
 				</ul>
 				@can('show-contact')
-				{{ Form::open(['action' => ['SearchController@getuser'], 'method' => 'GET', 'class' => 'form-inline my-2 my-lg-0']) }}
+				{{ Form::open(['action' => ['App\Http\Controllers\SearchController@getuser'], 'method' => 'GET', 'class' => 'form-inline my-2 my-lg-0']) }}
 				{{ Form::text('contactSearch', '', ['id' =>  'contactSearch', 'placeholder' =>  'Find contact by name','class'=>'form-control mr-sm-2'])}}
 				{{ Form::hidden('response', '', array('id' =>'response')) }}
 				{{ Form::submit('Find Person', array('class' => 'btn btn-outline-success my-2 my-sm-0','id'=>'btnSearch','style'=>'display:none')) }}
-				<a href="{{action('SearchController@search')}}">{!! Html::image('images/search.png', 'Advanced search',array('title'=>"Advanced search",'class' => 'btn btn-link')) !!}</a>
+				<a href="{{action([\App\Http\Controllers\SearchController::class, 'search'])}}">{!! Html::image('images/search.png', 'Advanced search',array('title'=>"Advanced search",'class' => 'btn btn-link')) !!}</a>
 				{{ Form::close() }}
 				@endcan
 				@auth

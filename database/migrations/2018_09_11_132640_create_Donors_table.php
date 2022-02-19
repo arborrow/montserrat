@@ -3,8 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateDonorsTable extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -93,4 +92,4 @@ class CreateDonorsTable extends Migration
     {
         Schema::dropIfExists('Donors');
     }
-}
+};

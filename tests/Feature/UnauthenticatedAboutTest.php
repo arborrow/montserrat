@@ -15,6 +15,7 @@ class UnauthenticatedAboutTest extends TestCase
      * @return void
      */
     protected $preserveGlobalState = false;
+
     protected $runTestInSeparateProcess = true;
 
     public function testAbout()

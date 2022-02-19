@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -40,7 +39,7 @@ class WebsiteControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('website.destroy', [$website]));
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('WebsiteController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\WebsiteController::class, 'index']));
         $this->assertSoftDeleted($website);
     }
 
@@ -108,7 +107,7 @@ class WebsiteControllerTest extends TestCase
         $contact = \App\Models\Contact::factory()->create();
         $asset = \App\Models\Asset::factory()->create();
 
-        $website_url = $this->faker->url;
+        $website_url = $this->faker->url();
         $website_type = $this->faker->randomElement(config('polanco.website_types'));
         $website_description = $this->faker->sentence(7, true);
 
@@ -121,7 +120,7 @@ class WebsiteControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('WebsiteController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\WebsiteController::class, 'index']));
 
         $this->assertDatabaseHas('website', [
             'asset_id' => $asset->id,
@@ -143,18 +142,18 @@ class WebsiteControllerTest extends TestCase
         $website_type = $this->faker->randomElement(config('polanco.website_types'));
 
         $original_website_description = $website->description;
-        $new_website_description = 'New '.$this->faker->sentence;
+        $new_website_description = 'New '.$this->faker->sentence();
 
         $response = $this->actingAs($user)->put(route('website.update', [$website]), [
-          'id' => $website->id,
-          'asset_id' => $website->asset_id,
-          'contact_id' => $website->contact_id,
-          'description' => $new_website_description,
-          'website_type' => $website_type,
-          'url' => $website->url,
+            'id' => $website->id,
+            'asset_id' => $website->asset_id,
+            'contact_id' => $website->contact_id,
+            'description' => $new_website_description,
+            'website_type' => $website_type,
+            'url' => $website->url,
         ]);
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action('WebsiteController@show', $website->id));
+        $response->assertRedirect(action([\App\Http\Controllers\WebsiteController::class, 'show'], $website->id));
 
         $updated = \App\Models\Website::findOrFail($website->id);
 

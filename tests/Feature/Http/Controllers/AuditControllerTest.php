@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -24,7 +23,7 @@ class AuditControllerTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('audit.create'));
 
-        $response->assertRedirect(action('AuditController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AuditController::class, 'index']));
         $response->assertSessionHas('flash_notification');
     }
 
@@ -38,7 +37,7 @@ class AuditControllerTest extends TestCase
 
         $response = $this->actingAs($user)->delete(route('audit.destroy', [$audit]));
 
-        $response->assertRedirect(action('AuditController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AuditController::class, 'index']));
         $response->assertSessionHas('flash_notification');
     }
 
@@ -52,7 +51,7 @@ class AuditControllerTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('audit.edit', [$audit]));
 
-        $response->assertRedirect(action('AuditController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AuditController::class, 'index']));
         $response->assertSessionHas('flash_notification');
     }
 
@@ -117,10 +116,10 @@ class AuditControllerTest extends TestCase
         $user = $this->createUserWithPermission('create-audit');
 
         $response = $this->actingAs($user)->post(route('audit.store'), [
-            'ip_address' => $this->faker->ipv4,
+            'ip_address' => $this->faker->ipv4(),
         ]);
 
-        $response->assertRedirect(action('AuditController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AuditController::class, 'index']));
         $response->assertSessionHas('flash_notification');
     }
 
@@ -133,10 +132,10 @@ class AuditControllerTest extends TestCase
         $audit = \App\Models\Audit::factory()->create();
 
         $response = $this->actingAs($user)->put(route('audit.update', [$audit]), [
-          'ip_address' => $this->faker->ipv4,
+            'ip_address' => $this->faker->ipv4(),
         ]);
 
-        $response->assertRedirect(action('AuditController@index'));
+        $response->assertRedirect(action([\App\Http\Controllers\AuditController::class, 'index']));
         $response->assertSessionHas('flash_notification');
     }
 
