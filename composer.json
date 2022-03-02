@@ -28,7 +28,7 @@
         "laravelcollective/html": "^6.3",
         "mailgun/mailgun-php": "^3.5",
         "nyholm/psr7": "^1.5",
-        "owen-it/laravel-auditing": "^13.0",
+        "owen-it/laravel-auditing": "^12.2",
         "php-http/curl-client": "^2.2",
         "spatie/laravel-google-calendar": "^3.5",
         "stuyam/laravel-phone-validator": "^1.0",
