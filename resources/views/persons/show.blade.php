@@ -369,15 +369,15 @@
             @endCan
             @can('show-donation')
             <div class="col-lg-12 mt-3" id="donations">
-                <h2>
-                    {{$donations->total() }} Donation(s) for {{ $person->display_name }}
-                        - ${{$donations->sum('payments_paid')}} paid of
-                    ${{$donations->sum('donation_amount') }} pledged
-                    @if ($donations->sum('donation_amount') > 0)
-                    [{{($donations->sum('payments_paid') / $donations->sum('donation_amount'))*100}}%]
-                    @endif
-                </h2>
 
+              <h2>
+                  {{$person->donations->count('donation_id') }} Donation(s) for {{ $person->display_name }}
+                      - ${{$person->donations->sum('payments_paid')}} paid of
+                  ${{$person->donations->sum('donation_amount') }} pledged
+                  @if ($person->donations->sum('donation_amount') > 0)
+                  [{{($person->donations->sum('payments_paid') / $person->donations->sum('donation_amount'))*100}}%]
+                  @endif
+              </h2>
                 @can('create-donation')
                     {!! Html::link(route('donation.add',[$person->id]),'Add donation',array('class' => 'btn btn-outline-dark'))!!}
                 @endCan
