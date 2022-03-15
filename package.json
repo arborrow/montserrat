@@ -16,7 +16,7 @@
         "axios": "^0.25",
         "bootstrap": "^4.4.1",
         "copy-webpack-plugin": "^9",
-        "flatpickr": "4.6.9",
+        "flatpickr": "^4.6.11",
         "jquery": "~>3.5.0",
         "jquery-ui-bundle": "^1.12.1-migrate",
         "laravel-mix": "^6.0.6",
