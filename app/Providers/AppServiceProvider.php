@@ -21,8 +21,13 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(Charts $charts)
     {
         \Illuminate\Pagination\Paginator::useBootstrap();
+        $charts->register([
+            \App\Charts\Agc::class,
+            \App\Charts\Board::class,
+            \App\Charts\DonationDescription::class,
+        ]);
     }
 }
