@@ -21,9 +21,8 @@ class DonationDescription extends BaseChart
     public function handler(Request $request): Chartisan
     {
 
-      $this->authorize('show-dashboard');
-      // TODO: accept donation_description as input
-      $donation_description = "Retreat Funding";
+      // $request->authorize('show-dashboard');
+      $donation_description = (isset($request->donation_description)) ? $request->donation_description : "Retreat Funding";
 
       $descriptions = \App\Models\DonationType::active()->orderBy('name')->pluck('name', 'name');
 
@@ -68,8 +67,8 @@ class DonationDescription extends BaseChart
 */
 
         return Chartisan::build()
-            ->labels(['First', 'Second', 'Third'])
-            ->dataset('Sample', [1, 2, 3])
-            ->dataset('Sample 2', [3, 2, 1]);
+            ->labels(array_keys($donors))
+            ->dataset('Average', array_column($donors, 'average_amount'))
+            ->dataset('Donations for '.$donation_description, array_column($donors, 'sum'));
     }
 }

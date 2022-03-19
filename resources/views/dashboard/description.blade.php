@@ -20,11 +20,18 @@
                         </div>
                     </div>
 
-
-                <div> {!! $donation_description_chart->container() !!} </div>
+                <div id="donation_description_chart">  </div>
             </div>
         </div>
     </section>
-    {!! $donation_description_chart->script() !!}
+    <script>
+      import { Chartisan } from '@chartisan/chartjs'
+    </script>
 
+    <script>
+          const chart = new Chartisan({
+            el: '#donation_description_chart',
+            url: "@chart('donation_description')",
+          });
+    </script>
 @stop
