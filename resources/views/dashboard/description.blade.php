@@ -20,17 +20,17 @@
                         </div>
                     </div>
 
-                <div id="donation_description_chart">  </div>
+                <div id="description_chart" style="height:300px">  </div>
             </div>
         </div>
     </section>
+    <script src="https://unpkg.com/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <!-- Chartisan -->
+    <script src="https://unpkg.com/@chartisan/chartjs@^2.1.0/dist/chartisan_chartjs.umd.js"></script>
     <script>
-      import { Chartisan } from '@chartisan/chartjs'
-    </script>
 
-    <script>
-          const chart = new Chartisan({
-            el: '#donation_description_chart',
+        const chart = new Chartisan({
+            el: '#description_chart',
             url: "@chart('donation_description')",
           });
     </script>
