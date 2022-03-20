@@ -7,6 +7,7 @@ namespace App\Charts;
 use Chartisan\PHP\Chartisan;
 use ConsoleTVs\Charts\BaseChart;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class DonationDescription extends BaseChart
 {
@@ -15,12 +16,13 @@ class DonationDescription extends BaseChart
      * It must always return an instance of Chartisan
      * and never a string or an array.
      */
+    use AuthorizesRequests;
 
     public ?array $middlewares = ['auth'];
 
     public function handler(Request $request): Chartisan
     {
-
+      $this->authorize('show-dashboard');
       // $request->authorize('show-dashboard');
       $donation_description = (isset($request->donation_description)) ? $request->donation_description : "Retreat Funding";
 

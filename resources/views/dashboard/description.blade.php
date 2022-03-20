@@ -31,7 +31,15 @@
 
         const chart = new Chartisan({
             el: '#description_chart',
-            url: "@chart('donation_description')",
+            url: "@chart('donation_description')" + "?donation_description={{ $donation_description }}",
+            hooks: new ChartisanHooks()
+              .title('{!!$donation_description!!} Donations')
+              .responsive()
+              .beginAtZero()
+              .legend({ position: 'bottom' })
+              .datasets(['line', 'line'])
+              .colors(["","rgba(22,160,133, 0.5)"])
+              .borderColors(["","rgba(22,160,133, 1.0)"])
           });
     </script>
 @stop
