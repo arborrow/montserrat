@@ -26,8 +26,11 @@ class AppServiceProvider extends ServiceProvider
     {
         \Illuminate\Pagination\Paginator::useBootstrap();
         $charts->register([
-            \App\Charts\Agc::class,
-            \App\Charts\Board::class,
+            \App\Charts\AgcDonor::class,
+            \App\Charts\AgcAmount::class,
+            \App\Charts\BoardParticipants::class,
+            \App\Charts\BoardPeoplenights::class,
+            \App\Charts\BoardRevenue::class,
             \App\Charts\DonationDescription::class,
         ]);
     }

@@ -17,105 +17,20 @@ class DashboardController extends Controller
     public function index()
     {
         $this->authorize('show-dashboard');
-
         return view('dashboard.index');
     }
 
     public function agc()
-    {   // polanco.cool_colors defines 9 different colors that can be used in generating charts, I take mod 8 to rotate through the first 8 colors and then repeat
-        // TODO: get % of returning or % of last year but unfortunately not this year  between agc years
+    {
         $this->authorize('show-dashboard');
-        $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
-        $number_of_years = 5;
-
-        $years = [];
-        for ($x = -$number_of_years; $x <= 0; $x++) {
-            $today = \Carbon\Carbon::now();
-            $today->day = 1;
-            $today->month = 1;
-            $today->year = $current_year;
-            $years[$x] = $today->addYear($x);
-        }
-
-        $donors = [];
-        foreach ($years as $year) {
-            $label = $year->year;
-            $prev_year = $year->copy()->subYear();
-            // TODO: consider stepping throuh polanco.agc_donation_descriptions with a foreach to build collections - this will make this much more dynamic in the future
-            $agc_donors['All'] = \App\Models\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
-            foreach (config('polanco.agc_donation_descriptions') as $description) {
-                $agc_donors[$description] = \App\Models\Donation::orderBy('donation_date', 'desc')->whereDonationDescription($description)->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
-            }
-
-            $agc_donations['All'] = \App\Models\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
-            foreach (config('polanco.agc_donation_descriptions') as $description) {
-                $agc_donations[$description] = \App\Models\Donation::orderBy('donation_date', 'desc')->whereDonationDescription($description)->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
-            }
-
-            //unique donors
-            $donors[$label]['count'] = $agc_donors['All']->count();
-            foreach (config('polanco.agc_donation_descriptions') as $description) {
-                $donors[$label]['count_'.$description] = $agc_donors[$description]->count();
-            }
-
-            $donors[$label]['sum'] = $agc_donations['All']->sum('donation_amount');
-            foreach (config('polanco.agc_donation_descriptions') as $description) {
-                $donors[$label]['sum_'.$description] = $agc_donations[$description]->sum('donation_amount');
-            }
-        }
-        $average_donor_count = (((array_sum(array_column($donors, 'count'))) - ($donors[$current_year]['count'])) / (count(array_column($donors, 'count')) - 1));
-        $average_agc_amount = (((array_sum(array_column($donors, 'sum'))) - ($donors[$current_year]['sum'])) / (count(array_column($donors, 'sum')) - 1));
-
-        foreach ($years as $year) {
-            $label = $year->year;
-            $prev_year = $year->copy()->subYear();
-            $donors[$label]['average_count'] = $average_donor_count;
-            $donors[$label]['average_amount'] = $average_agc_amount;
-        }
-
-        $agc_donor_chart = new RetreatOfferingChart;
-        $agc_donor_chart->labels(array_keys($donors));
-        $agc_donor_chart->options([
-            'legend' => [
-                'position' => 'bottom', // or false, depending on what you want.
-            ],
-        ]);
-
-        $agc_donor_chart->dataset('Total Average', 'line', array_column($donors, 'average_count'));
-        $agc_donor_chart->dataset('Total Donors per Year', 'line', array_column($donors, 'count'))
-            ->color('rgba(22,160,133, 1.0)')
-            ->backgroundcolor('rgba(22,160,133, 0.2');
-        foreach (config('polanco.agc_donation_descriptions') as $key=>$description) {
-            $agc_donor_chart->dataset($description, 'line', array_column($donors, 'count_'.$description))
-                ->color('rgba('.config('polanco.agc_cool_colors')[$key % 8].', 0.8)')
-                ->backgroundcolor('rgba('.config('polanco.agc_cool_colors')[$key % 8].', 0.2)');
-        }
-
-        $agc_amount = new RetreatOfferingChart;
-        $agc_amount->options([
-            'legend' => [
-                'position' => 'bottom', // or false, depending on what you want.
-            ],
-        ]);
-        $agc_amount->labels(array_keys($donors));
-        $agc_amount->dataset('Total Average', 'line', array_column($donors, 'average_amount'));
-        $agc_amount->dataset('Total Donations per Year', 'line', array_column($donors, 'sum'))
-            ->color('rgba(22,160,133, 1.0)')
-            ->backgroundcolor('rgba(22,160,133, 0.2');
-        foreach (config('polanco.agc_donation_descriptions') as $key=>$description) {
-            $agc_amount->dataset($description, 'line', array_column($donors, 'sum_'.$description))
-                ->color('rgba('.config('polanco.agc_cool_colors')[$key % 8].', 1.0)')
-                ->backgroundcolor('rgba('.config('polanco.agc_cool_colors')[$key % 8].', 0.2');
-        }
-
-        return view('dashboard.agc', compact('agc_donor_chart', 'agc_amount'));
+        return view('dashboard.agc');
     }
 
     public function donation_description_chart($donation_description = 'Retreat Funding')
     {
       $this->authorize('show-dashboard');
       $descriptions = \App\Models\DonationType::active()->orderBy('name')->pluck('name', 'name');
-      
+
       return view('dashboard.description',compact('donation_description','descriptions'));
   }
 
