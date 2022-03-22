@@ -21,17 +21,17 @@
 
 
                 <div>FY{{ $year }} Revenue by Event Type</div>
-                <div id="event_revenue" style="height:300px;"></div>
+                <div id="event_revenue" style="height:400px;"></div>
                 <div>Total Revenue: ${{ number_format($total_revenue,2) }} </div>
                 <hr />
 
                 <div>FY{{ $year }} Participants by Event Type</div>
-                <div id="event_participants" style="height:300px;"></div>
+                <div id="event_participants" style="height:400px;"></div>
                 <div>Total Participants: {{ number_format($total_participants,0) }} </div>
                 <hr />
 
                 <div>FY{{ $year }} People Nights by Event Type</div>
-                <div id="event_peoplenights" style="height:300px;"></div>
+                <div id="event_peoplenights" style="height:400px;"></div>
                 <div>Total People Nights: {{ number_format($total_peoplenights,0) }} </div>
                 <hr />
 
@@ -112,6 +112,7 @@
 
     <script src="https://unpkg.com/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script src="https://unpkg.com/@chartisan/chartjs@^2.1.0/dist/chartisan_chartjs.umd.js"></script>
+
     <script>
 
         const event_revenue_chart = new Chartisan({
@@ -122,7 +123,8 @@
               .responsive()
               .legend({ position: 'bottom' })
               .datasets('doughnut')
-              .pieColors(["rgba(22,160,133, 0.5)","rgba(51,105,232, 0.5)","rgba(255, 205, 86, 0.5)","rgba(255, 99, 132, 0.5)","rgba(244,67,54, 0.5)"])
+              .pieColors(["rgba(22,160,133, 0.3)","rgba(51,105,232, 0.3)","rgba(255, 205, 86, 0.3)","rgba(255, 99, 132, 0.3)","rgba(244,67,54, 0.3)"])
+              .pieBorderColors(["rgba(22,160,133, 0.6)","rgba(51,105,232, 0.6)","rgba(255, 205, 86, 0.6)","rgba(255, 99, 132, 0.6)","rgba(244,67,54, 0.6)"])
           });
 
           const event_participants_chart = new Chartisan({
@@ -133,7 +135,8 @@
                 .responsive()
                 .legend({ position: 'bottom' })
                 .datasets('doughnut')
-                .pieColors(["rgba(22,160,133, 0.5)","rgba(51,105,232, 0.5)","rgba(255, 205, 86, 0.5)","rgba(255, 99, 132, 0.5)","rgba(244,67,54, 0.5)"])
+                .pieColors(["rgba(22,160,133, 0.3)","rgba(51,105,232, 0.3)","rgba(255, 205, 86, 0.3)","rgba(255, 99, 132, 0.3)","rgba(244,67,54, 0.3)"])
+                .pieBorderColors(["rgba(22,160,133, 0.6)","rgba(51,105,232, 0.6)","rgba(255, 205, 86, 0.6)","rgba(255, 99, 132, 0.6)","rgba(244,67,54, 0.6)"])
             });
 
             const event_peoplenights_chart = new Chartisan({
@@ -144,7 +147,8 @@
                   .responsive()
                   .legend({ position: 'bottom' })
                   .datasets('doughnut')
-                  .pieColors(["rgba(22,160,133, 0.5)","rgba(51,105,232, 0.5)","rgba(255, 205, 86, 0.5)","rgba(255, 99, 132, 0.5)","rgba(244,67,54, 0.5)"])
+                  .pieColors(["rgba(22,160,133, 0.3)","rgba(51,105,232, 0.3)","rgba(255, 205, 86, 0.3)","rgba(255, 99, 132, 0.3)","rgba(244,67,54, 0.3)"])
+                  .pieBorderColors(["rgba(22,160,133, 0.6)","rgba(51,105,232, 0.6)","rgba(255, 205, 86, 0.6)","rgba(255, 99, 132, 0.6)","rgba(244,67,54, 0.6)"])
               });
 
     </script>

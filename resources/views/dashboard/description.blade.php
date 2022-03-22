@@ -20,7 +20,7 @@
                         </div>
                     </div>
 
-                <div id="description_chart" style="height:300px">  </div>
+                <div id="description_chart" style="height:400px">  </div>
             </div>
         </div>
     </section>
@@ -38,8 +38,8 @@
               .beginAtZero()
               .legend({ position: 'bottom' })
               .datasets(['line', 'line'])
-              .colors(["","rgba(22,160,133, 0.5)"])
-              .borderColors(["","rgba(22,160,133, 1.0)"])
+              .colors(["","rgba(22,160,133, 0.3)"])
+              .borderColors(["","rgba(22,160,133, 0.6)"])
           });
     </script>
 @stop
