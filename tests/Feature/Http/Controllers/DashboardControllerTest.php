@@ -39,8 +39,6 @@ class DashboardControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertViewIs('dashboard.agc');
-        $response->assertViewHas('agc_donor_chart');
-        $response->assertViewHas('agc_amount');
         $response->assertSee('AGC Dashboard');
     }
 
@@ -55,7 +53,6 @@ class DashboardControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertViewIs('dashboard.description');
-        $response->assertViewHas('donation_description_chart');
         $response->assertViewHas('descriptions');
         $response->assertSee('Donation Description Dashboard');
     }
@@ -75,7 +72,6 @@ class DashboardControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertViewIs('dashboard.description');
-        $response->assertViewHas('donation_description_chart');
         $response->assertViewHas('descriptions');
         $response->assertSee('Donation Description Dashboard');
         $response->assertSee($donation_type->name);
@@ -84,50 +80,42 @@ class DashboardControllerTest extends TestCase
     /**
      * @test
      */
-    public function board_returns_an_ok_response()
+    public function events_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-dashboard');
 
-        $response = $this->actingAs($user)->get(route('dashboard.board'));
+        $response = $this->actingAs($user)->get(route('dashboard.events'));
 
         $response->assertOk();
-        $response->assertViewIs('dashboard.board');
+        $response->assertViewIs('dashboard.events');
         $response->assertViewHas('years');
         $response->assertViewHas('year');
-        $response->assertViewHas('summary');
-        $response->assertViewHas('board_summary');
-        $response->assertViewHas('board_summary_revenue_chart');
-        $response->assertViewHas('board_summary_participant_chart');
-        $response->assertViewHas('board_summary_peoplenight_chart');
+        $response->assertViewHas('event_summary');
         $response->assertViewHas('total_revenue');
         $response->assertViewHas('total_participants');
         $response->assertViewHas('total_peoplenights');
-        $response->assertSee('Board Dashboard');
+        $response->assertSee('Event Dashboard');
     }
 
     /**
      * @test
      */
-    public function board_with_year_returns_an_ok_response()
+    public function events_with_year_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-dashboard');
         $last_year = Carbon::now()->subYear()->year;
 
-        $response = $this->actingAs($user)->get('/dashboard/board/'.$last_year);
+        $response = $this->actingAs($user)->get('/dashboard/events/'.$last_year);
 
         $response->assertOk();
-        $response->assertViewIs('dashboard.board');
+        $response->assertViewIs('dashboard.events');
         $response->assertViewHas('years');
         $response->assertViewHas('year');
-        $response->assertViewHas('summary');
-        $response->assertViewHas('board_summary');
-        $response->assertViewHas('board_summary_revenue_chart');
-        $response->assertViewHas('board_summary_participant_chart');
-        $response->assertViewHas('board_summary_peoplenight_chart');
+        $response->assertViewHas('event_summary');
         $response->assertViewHas('total_revenue');
         $response->assertViewHas('total_participants');
         $response->assertViewHas('total_peoplenights');
-        $response->assertSee('Board Dashboard');
+        $response->assertSee('Event Dashboard');
         $response->assertSeeText('FY'.$last_year);
     }
 
