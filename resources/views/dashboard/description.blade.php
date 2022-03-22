@@ -20,11 +20,26 @@
                         </div>
                     </div>
 
-
-                <div> {!! $donation_description_chart->container() !!} </div>
+                <div id="description_chart" style="height:400px">  </div>
             </div>
         </div>
     </section>
-    {!! $donation_description_chart->script() !!}
+    <script src="https://unpkg.com/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <!-- Chartisan -->
+    <script src="https://unpkg.com/@chartisan/chartjs@^2.1.0/dist/chartisan_chartjs.umd.js"></script>
+    <script>
 
+        const chart = new Chartisan({
+            el: '#description_chart',
+            url: "@chart('donation_description')" + "?donation_description={{ $donation_description }}",
+            hooks: new ChartisanHooks()
+              .title('{!!$donation_description!!} Donations')
+              .responsive()
+              .beginAtZero()
+              .legend({ position: 'bottom' })
+              .datasets(['line', 'line'])
+              .colors(["","rgba(22,160,133, 0.3)"])
+              .borderColors(["","rgba(22,160,133, 0.6)"])
+          });
+    </script>
 @stop

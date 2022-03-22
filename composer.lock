@@ -4,54 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8e7e8373a4bc94ef2d127936938a9ac6",
+    "content-hash": "f9fcd71510991e125863e58b1551c662",
     "packages": [
-        {
-            "name": "balping/json-raw-encoder",
-            "version": "v1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://gitlab.com/balping/json-raw-encoder.git",
-                "reference": "e2b0ab888342b0716f1f0628e2fa13b345c5f276"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/balping%2Fjson-raw-encoder/repository/archive.zip?sha=e2b0ab888342b0716f1f0628e2fa13b345c5f276",
-                "reference": "e2b0ab888342b0716f1f0628e2fa13b345c5f276",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^7.1"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Balping\\JsonRaw\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Balázs Dura-Kovács"
-                }
-            ],
-            "description": "Encode arrays to json with raw JS objects (eg. callbacks) in them",
-            "keywords": [
-                "callback",
-                "encode",
-                "json"
-            ],
-            "support": {
-                "issues": "https://gitlab.com/api/v4/projects/6731265/issues"
-            },
-            "time": "2020-06-06T16:24:31+00:00"
-        },
         {
             "name": "barryvdh/laravel-snappy",
             "version": "v1.0.0",
@@ -191,6 +145,46 @@
             "time": "2021-08-15T20:50:18+00:00"
         },
         {
+            "name": "chartisan/php",
+            "version": "1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Chartisan/PHP.git",
+                "reference": "85d2352077800e9bcb411aec1ff7e4d23eef93a1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Chartisan/PHP/zipball/85d2352077800e9bcb411aec1ff7e4d23eef93a1",
+                "reference": "85d2352077800e9bcb411aec1ff7e4d23eef93a1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Chartisan\\PHP\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Èrik Campobadal Forés",
+                    "email": "soc@erik.cat"
+                }
+            ],
+            "description": "Chartisan's PHP backend",
+            "support": {
+                "issues": "https://github.com/Chartisan/PHP/issues",
+                "source": "https://github.com/Chartisan/PHP/tree/1.2.1"
+            },
+            "time": "2020-11-05T13:13:58+00:00"
+        },
+        {
             "name": "clue/stream-filter",
             "version": "v1.6.0",
             "source": {
@@ -258,23 +252,25 @@
         },
         {
             "name": "consoletvs/charts",
-            "version": "6.5.6",
+            "version": "7.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Chartisan/Charts.git",
-                "reference": "fc73038a006ddc2d6b277b9567ee01c6272448b3"
+                "reference": "b6c47dedeebf95c690f3604355ddb002677b6ae6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Chartisan/Charts/zipball/fc73038a006ddc2d6b277b9567ee01c6272448b3",
-                "reference": "fc73038a006ddc2d6b277b9567ee01c6272448b3",
+                "url": "https://api.github.com/repos/Chartisan/Charts/zipball/b6c47dedeebf95c690f3604355ddb002677b6ae6",
+                "reference": "b6c47dedeebf95c690f3604355ddb002677b6ae6",
                 "shasum": ""
             },
             "require": {
-                "balping/json-raw-encoder": "^1.0",
-                "illuminate/console": "^5.0|^6.0|^7.0|^8.0|^9.0",
-                "illuminate/support": "^5.0|^6.0|^7.0|^8.0|^9.0",
-                "php": ">=7.0"
+                "chartisan/php": "^1.2.0",
+                "illuminate/console": "^7.14.1|^8.0|^9.0",
+                "illuminate/contracts": "^7.14.1|^8.0|^9.0",
+                "illuminate/http": "^7.14.1|^8.0|^9.0",
+                "illuminate/support": "^7.14.1|^8.0|^9.0",
+                "php": ">=7.4"
             },
             "type": "library",
             "extra": {
@@ -295,14 +291,14 @@
             ],
             "authors": [
                 {
-                    "name": "Èrik Campobadal Forés",
+                    "name": "Èrik C. Forés",
                     "email": "soc@erik.cat"
                 }
             ],
-            "description": "The laravel charting package",
+            "description": "The missing charting library on laravel, powered by Chartisan",
             "support": {
                 "issues": "https://github.com/Chartisan/Charts/issues",
-                "source": "https://github.com/Chartisan/Charts/tree/6.5.6"
+                "source": "https://github.com/Chartisan/Charts/tree/7.3.0"
             },
             "funding": [
                 {
@@ -314,7 +310,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-01-20T05:36:01+00:00"
+            "time": "2022-02-09T15:10:47+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -1897,16 +1893,16 @@
         },
         {
             "name": "jaybizzle/crawler-detect",
-            "version": "v1.2.110",
+            "version": "v1.2.111",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JayBizzle/Crawler-Detect.git",
-                "reference": "f9d63a3581428fd8a3858e161d072f0b9debc26f"
+                "reference": "d572ed4a65a70a2d2871dc5137c9c5b7e69745ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/f9d63a3581428fd8a3858e161d072f0b9debc26f",
-                "reference": "f9d63a3581428fd8a3858e161d072f0b9debc26f",
+                "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/d572ed4a65a70a2d2871dc5137c9c5b7e69745ab",
+                "reference": "d572ed4a65a70a2d2871dc5137c9c5b7e69745ab",
                 "shasum": ""
             },
             "require": {
@@ -1943,9 +1939,9 @@
             ],
             "support": {
                 "issues": "https://github.com/JayBizzle/Crawler-Detect/issues",
-                "source": "https://github.com/JayBizzle/Crawler-Detect/tree/v1.2.110"
+                "source": "https://github.com/JayBizzle/Crawler-Detect/tree/v1.2.111"
             },
-            "time": "2021-12-07T18:35:06+00:00"
+            "time": "2022-03-15T22:19:01+00:00"
         },
         {
             "name": "jaybizzle/laravel-crawler-detect",
@@ -5479,16 +5475,16 @@
         },
         {
             "name": "spatie/laravel-google-calendar",
-            "version": "3.5.0",
+            "version": "3.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-google-calendar.git",
-                "reference": "b5e9e497c1fc6be5a4a2bb18ddf53b6c711648f7"
+                "reference": "113dba30c70705790ba1ae1e726307d2dc1d12c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-google-calendar/zipball/b5e9e497c1fc6be5a4a2bb18ddf53b6c711648f7",
-                "reference": "b5e9e497c1fc6be5a4a2bb18ddf53b6c711648f7",
+                "url": "https://api.github.com/repos/spatie/laravel-google-calendar/zipball/113dba30c70705790ba1ae1e726307d2dc1d12c6",
+                "reference": "113dba30c70705790ba1ae1e726307d2dc1d12c6",
                 "shasum": ""
             },
             "require": {
@@ -5542,7 +5538,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-google-calendar/issues",
-                "source": "https://github.com/spatie/laravel-google-calendar/tree/3.5.0"
+                "source": "https://github.com/spatie/laravel-google-calendar/tree/3.5.1"
             },
             "funding": [
                 {
@@ -5550,7 +5546,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2022-01-13T09:43:27+00:00"
+            "time": "2022-03-18T07:43:44+00:00"
         },
         {
             "name": "stuyam/laravel-phone-validator",
@@ -11308,16 +11304,16 @@
         },
         {
             "name": "spatie/laravel-ignition",
-            "version": "1.0.9",
+            "version": "1.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-ignition.git",
-                "reference": "d7b223300d511145eea87fdabae1663c7c0088aa"
+                "reference": "71df77cad94aae4db904aaef1cc2f06950daed76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-ignition/zipball/d7b223300d511145eea87fdabae1663c7c0088aa",
-                "reference": "d7b223300d511145eea87fdabae1663c7c0088aa",
+                "url": "https://api.github.com/repos/spatie/laravel-ignition/zipball/71df77cad94aae4db904aaef1cc2f06950daed76",
+                "reference": "71df77cad94aae4db904aaef1cc2f06950daed76",
                 "shasum": ""
             },
             "require": {
@@ -11391,7 +11387,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-03-11T14:19:27+00:00"
+            "time": "2022-03-17T11:01:36+00:00"
         },
         {
             "name": "symfony/debug",
