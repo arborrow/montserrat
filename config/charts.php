@@ -28,7 +28,7 @@ return [
     | choice rather than applying it individually to each chart.
     |
     */
-    'global_middlewares' => ['web'],
+    'global_middlewares' => ['web','auth'],
 
     /*
     |--------------------------------------------------------------------------

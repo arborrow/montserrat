@@ -18,10 +18,8 @@ class DonationDescription extends BaseChart
      */
     use AuthorizesRequests;
 
-    public ?array $middlewares = ['auth'];
-
     public function handler(Request $request): Chartisan
-    {
+    { 
       $this->authorize('show-dashboard');
       // $request->authorize('show-dashboard');
       $donation_description = (isset($request->donation_description)) ? $request->donation_description : "Retreat Funding";

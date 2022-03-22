@@ -21,18 +21,20 @@
 
 
                 <div>FY{{ $year }} Revenue by Event Type</div>
-                <div> {!! $board_summary_revenue_chart->container() !!} </div>
-
+                <div id="board_revenue" style="height:300px;"></div>
                 <div>Total Revenue: ${{ number_format($total_revenue,2) }} </div>
                 <hr />
+
                 <div>FY{{ $year }} Participants by Event Type</div>
-                <div> {!! $board_summary_participant_chart->container() !!} </div>
+                <div id="board_participants" style="height:300px;"></div>
                 <div>Total Participants: {{ number_format($total_participants,0) }} </div>
                 <hr />
+
                 <div>FY{{ $year }} People Nights by Event Type</div>
-                <div> {!! $board_summary_peoplenight_chart->container() !!} </div>
+                <div id="board_peoplenights" style="height:300px;"></div>
                 <div>Total People Nights: {{ number_format($total_peoplenights,0) }} </div>
                 <hr />
+
                 <div>FY{{ $year }} Summary</div>
                 <div>
                     <table class="table table-bordered table-striped table-hover table-responsive-md">
@@ -107,8 +109,44 @@
             </div>
         </div>
     </section>
-    {!! $board_summary_revenue_chart->script() !!}
-    {!! $board_summary_participant_chart->script() !!}
-    {!! $board_summary_peoplenight_chart->script() !!}
+
+    <script src="https://unpkg.com/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script src="https://unpkg.com/@chartisan/chartjs@^2.1.0/dist/chartisan_chartjs.umd.js"></script>
+    <script>
+
+        const board_revenue_chart = new Chartisan({
+            el: '#board_revenue',
+            url: "@chart('board_revenue')",
+            hooks: new ChartisanHooks()
+              .title('Event Revenue')
+              .responsive()
+              .legend({ position: 'bottom' })
+              .datasets('doughnut')
+              .pieColors(["","rgba(22,160,133, 0.5)","rgba(51,105,232, 0.5)","rgba(255, 205, 86, 0.5)","rgba(255, 99, 132, 0.5)","rgba(244,67,54, 0.5)"])
+          });
+
+          const board_participants_chart = new Chartisan({
+              el: '#board_participants',
+              url: "@chart('board_participants')",
+              hooks: new ChartisanHooks()
+                .title('Event Participants')
+                .responsive()
+                .legend({ position: 'bottom' })
+                .datasets('doughnut')
+                .pieColors(["","rgba(22,160,133, 0.5)","rgba(51,105,232, 0.5)","rgba(255, 205, 86, 0.5)","rgba(255, 99, 132, 0.5)","rgba(244,67,54, 0.5)"])
+            });
+
+            const board_peoplenights_chart = new Chartisan({
+                el: '#board_peoplenights',
+                url: "@chart('board_peoplenights')",
+                hooks: new ChartisanHooks()
+                  .title('Event People Nights')
+                  .responsive()
+                  .legend({ position: 'bottom' })
+                  .datasets('doughnut')
+                  .pieColors(["","rgba(22,160,133, 0.5)","rgba(51,105,232, 0.5)","rgba(255, 205, 86, 0.5)","rgba(255, 99, 132, 0.5)","rgba(244,67,54, 0.5)"])
+              });
+
+    </script>
 
 @stop

@@ -59,32 +59,6 @@ class DashboardController extends Controller
             $years[$x] = $today->subYear($x);
         }
 
-        $borderColors = [
-            'rgba(255, 99, 132, 1.0)',
-            'rgba(22,160,133, 1.0)',
-            'rgba(255, 205, 86, 1.0)',
-            'rgba(51,105,232, 1.0)',
-            'rgba(244,67,54, 1.0)',
-            'rgba(34,198,246, 1.0)',
-            'rgba(153, 102, 255, 1.0)',
-            'rgba(255, 159, 64, 1.0)',
-            'rgba(233,30,99, 1.0)',
-            'rgba(205,220,57, 1.0)',
-        ];
-        $fillColors = [
-            'rgba(255, 99, 132, 0.5)',
-            'rgba(22,160,133, 0.5)',
-            'rgba(255, 205, 86, 0.5)',
-            'rgba(51,105,232, 0.5)',
-            'rgba(244,67,54, 0.5)',
-            'rgba(34,198,246, 0.5)',
-            'rgba(153, 102, 255, 0.5)',
-            'rgba(255, 159, 64, 0.5)',
-            'rgba(233,30,99, 0.5)',
-            'rgba(205,220,57, 0.5)',
-
-        ];
-
         // TODO: using role_id = 5 as hardcoded value - explore how to use config('polanco.participant_role_id.retreatant') instead
         $board_summary = DB::select("SELECT tmp.type, tmp.type_id, SUM(tmp.pledged) as total_pledged, SUM(tmp.paid) as total_paid, SUM(tmp.participants) as total_participants, SUM(tmp.peoplenights) as total_pn, SUM(tmp.nights) as total_nights
             FROM
@@ -105,7 +79,7 @@ class DashboardController extends Controller
         $total_revenue = array_sum(array_column($board_summary, 'total_paid'));
         $total_participants = array_sum(array_column($board_summary, 'total_participants'));
         $total_peoplenights = array_sum(array_column($board_summary, 'total_pn'));
-
+/*
         $board_summary_revenue_chart = new RetreatOfferingChart;
         $board_summary_revenue_chart->labels(array_column($board_summary, 'type'));
         $board_summary_revenue_chart->options([
@@ -145,8 +119,8 @@ class DashboardController extends Controller
             ->color($borderColors)
             ->backgroundcolor($fillColors);
         $summary = array_values($board_summary);
-
-        return view('dashboard.board', compact('years', 'year', 'summary', 'board_summary', 'board_summary_revenue_chart', 'board_summary_participant_chart', 'board_summary_peoplenight_chart', 'total_revenue', 'total_participants', 'total_peoplenights'));
+*/
+        return view('dashboard.board', compact('years', 'year', 'board_summary', 'total_revenue', 'total_participants', 'total_peoplenights'));
     }
 
     public function drilldown($event_type_id = null, $year = null)
