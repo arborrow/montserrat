@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
 
 
-class BoardPeoplenights extends BaseChart
+class EventPeoplenights extends BaseChart
 {
     use AuthorizesRequests;
 
@@ -24,6 +24,8 @@ class BoardPeoplenights extends BaseChart
     {
         // TODO: Create donut chart for average number of retreatants per event (get count of event_type_id) partipants/count(event_type_id) //useful for Ambassador goal of 40 (draw goal line)
         $this->authorize('show-dashboard');
+
+        $year = (isset($request->year)) ? $request->year : NULL;
 
         // default to current fiscal year
         if (! isset($year)) {

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 
 
-class BoardParticipants extends BaseChart
+class EventParticipants extends BaseChart
 {
 
     use AuthorizesRequests;
@@ -25,6 +25,8 @@ class BoardParticipants extends BaseChart
     {
       // TODO: Create donut chart for average number of retreatants per event (get count of event_type_id) partipants/count(event_type_id) //useful for Ambassador goal of 40 (draw goal line)
       $this->authorize('show-dashboard');
+
+      $year = (isset($request->year)) ? $request->year : NULL;
 
       // default to current fiscal year
       if (! isset($year)) {
@@ -48,7 +50,7 @@ class BoardParticipants extends BaseChart
 
 
       // TODO: using role_id = 5 as hardcoded value - explore how to use config('polanco.participant_role_id.retreatant') instead
-      $board_summary = DB::select("SELECT tmp.type, tmp.type_id, SUM(tmp.pledged) as total_pledged, SUM(tmp.paid) as total_paid, SUM(tmp.participants) as total_participants, SUM(tmp.peoplenights) as total_pn, SUM(tmp.nights) as total_nights
+      $event_summary = DB::select("SELECT tmp.type, tmp.type_id, SUM(tmp.pledged) as total_pledged, SUM(tmp.paid) as total_paid, SUM(tmp.participants) as total_participants, SUM(tmp.peoplenights) as total_pn, SUM(tmp.nights) as total_nights
           FROM
           (SELECT e.id as event_id, e.title as event, et.name as type, et.id as type_id, e.idnumber, e.start_date, e.end_date, DATEDIFF(e.end_date,e.start_date) as nights,
             (SELECT SUM(d.donation_amount) FROM Donations as d WHERE d.event_id=e.id AND d.deleted_at IS NULL) as pledged,
@@ -64,12 +66,12 @@ class BoardParticipants extends BaseChart
           'end_date' => $end_date,
       ]);
 
-      $total_revenue = array_sum(array_column($board_summary, 'total_paid'));
-      $total_participants = array_sum(array_column($board_summary, 'total_participants'));
-      $total_peoplenights = array_sum(array_column($board_summary, 'total_pn'));
+      $total_revenue = array_sum(array_column($event_summary, 'total_paid'));
+      $total_participants = array_sum(array_column($event_summary, 'total_participants'));
+      $total_peoplenights = array_sum(array_column($event_summary, 'total_pn'));
 
         return Chartisan::build()
-            ->labels(array_column($board_summary, 'type'))
-            ->dataset('FY20 Participants by Event Type', array_column($board_summary, 'total_participants'));
+            ->labels(array_column($event_summary, 'type'))
+            ->dataset('FY20 Participants by Event Type', array_column($event_summary, 'total_participants'));
     }
 }

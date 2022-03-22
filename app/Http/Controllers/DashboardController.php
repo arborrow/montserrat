@@ -34,7 +34,7 @@ class DashboardController extends Controller
       return view('dashboard.description',compact('donation_description','descriptions'));
   }
 
-    public function board($year = null)
+    public function events($year = null)
     {
         // TODO: Create donut chart for average number of retreatants per event (get count of event_type_id) partipants/count(event_type_id) //useful for Ambassador goal of 40 (draw goal line)
         $this->authorize('show-dashboard');
@@ -60,7 +60,7 @@ class DashboardController extends Controller
         }
 
         // TODO: using role_id = 5 as hardcoded value - explore how to use config('polanco.participant_role_id.retreatant') instead
-        $board_summary = DB::select("SELECT tmp.type, tmp.type_id, SUM(tmp.pledged) as total_pledged, SUM(tmp.paid) as total_paid, SUM(tmp.participants) as total_participants, SUM(tmp.peoplenights) as total_pn, SUM(tmp.nights) as total_nights
+        $event_summary = DB::select("SELECT tmp.type, tmp.type_id, SUM(tmp.pledged) as total_pledged, SUM(tmp.paid) as total_paid, SUM(tmp.participants) as total_participants, SUM(tmp.peoplenights) as total_pn, SUM(tmp.nights) as total_nights
             FROM
             (SELECT e.id as event_id, e.title as event, et.name as type, et.id as type_id, e.idnumber, e.start_date, e.end_date, DATEDIFF(e.end_date,e.start_date) as nights,
             	(SELECT SUM(d.donation_amount) FROM Donations as d WHERE d.event_id=e.id AND d.deleted_at IS NULL) as pledged,
@@ -76,51 +76,11 @@ class DashboardController extends Controller
             'end_date' => $end_date,
         ]);
 
-        $total_revenue = array_sum(array_column($board_summary, 'total_paid'));
-        $total_participants = array_sum(array_column($board_summary, 'total_participants'));
-        $total_peoplenights = array_sum(array_column($board_summary, 'total_pn'));
-/*
-        $board_summary_revenue_chart = new RetreatOfferingChart;
-        $board_summary_revenue_chart->labels(array_column($board_summary, 'type'));
-        $board_summary_revenue_chart->options([
-            'legend' => [
-                'position' => 'bottom',
-            ],
-        ]);
+        $total_revenue = array_sum(array_column($event_summary, 'total_paid'));
+        $total_participants = array_sum(array_column($event_summary, 'total_participants'));
+        $total_peoplenights = array_sum(array_column($event_summary, 'total_pn'));
 
-        $board_summary_revenue_chart->dataset('FY20 Revenue by Event Type', 'doughnut', array_column($board_summary, 'total_paid'))
-            ->color($borderColors)
-            ->backgroundcolor($fillColors);
-        // $board_summary_revenue_chart->displayLegend(true);
-        //$board_summary_revenue_chart->minimalist(false);
-        // $board_summary_revenue_chart->plugins([
-        //    'plugins' => '{datalabels: {color: \'red\'}}',
-        // ]);
-
-        $board_summary_participant_chart = new RetreatOfferingChart;
-        $board_summary_participant_chart->labels(array_column($board_summary, 'type'));
-        $board_summary_participant_chart->options([
-            'legend' => [
-                'position' => 'bottom', // or false, depending on what you want.
-            ],
-        ]);
-        $board_summary_participant_chart->dataset('FY20 Participants by Event Type', 'doughnut', array_column($board_summary, 'total_participants'))
-            ->color($borderColors)
-            ->backgroundcolor($fillColors);
-
-        $board_summary_peoplenight_chart = new RetreatOfferingChart;
-        $board_summary_peoplenight_chart->labels(array_column($board_summary, 'type'));
-        $board_summary_peoplenight_chart->options([
-            'legend' => [
-                'position' => 'bottom', // or false, depending on what you want.
-            ],
-        ]);
-        $board_summary_peoplenight_chart->dataset('FY20 People Nights by Event Type', 'doughnut', array_column($board_summary, 'total_pn'))
-            ->color($borderColors)
-            ->backgroundcolor($fillColors);
-        $summary = array_values($board_summary);
-*/
-        return view('dashboard.board', compact('years', 'year', 'board_summary', 'total_revenue', 'total_participants', 'total_peoplenights'));
+        return view('dashboard.events', compact('years', 'year', 'event_summary', 'total_revenue', 'total_participants', 'total_peoplenights'));
     }
 
     public function drilldown($event_type_id = null, $year = null)

@@ -28,9 +28,9 @@ class AppServiceProvider extends ServiceProvider
         $charts->register([
             \App\Charts\AgcDonor::class,
             \App\Charts\AgcAmount::class,
-            \App\Charts\BoardParticipants::class,
-            \App\Charts\BoardPeoplenights::class,
-            \App\Charts\BoardRevenue::class,
+            \App\Charts\EventParticipants::class,
+            \App\Charts\EventPeoplenights::class,
+            \App\Charts\EventRevenue::class,
             \App\Charts\DonationDescription::class,
         ]);
     }

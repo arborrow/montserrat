@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
 
 
-class BoardRevenue extends BaseChart
+class EventRevenue extends BaseChart
 {
 
     use AuthorizesRequests;
@@ -24,6 +24,8 @@ class BoardRevenue extends BaseChart
     public function handler(Request $request): Chartisan
     {
         $this->authorize('show-dashboard');
+
+        $year = (isset($request->year)) ? $request->year : NULL;
 
         // default to current fiscal year
         if (! isset($year)) {

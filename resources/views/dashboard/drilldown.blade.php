@@ -6,7 +6,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                        <span class="grey">Board Dashboard Drilldown: {{ $event_type->name }} FY{{ $year }}</span>
+                        <span class="grey">Event Dashboard Drilldown: {{ $event_type->name }} FY{{ $year }}</span>
                     </h1>
                 </div>
 

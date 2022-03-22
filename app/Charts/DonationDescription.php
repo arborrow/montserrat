@@ -19,9 +19,9 @@ class DonationDescription extends BaseChart
     use AuthorizesRequests;
 
     public function handler(Request $request): Chartisan
-    { 
+    {
       $this->authorize('show-dashboard');
-      // $request->authorize('show-dashboard');
+
       $donation_description = (isset($request->donation_description)) ? $request->donation_description : "Retreat Funding";
 
       $descriptions = \App\Models\DonationType::active()->orderBy('name')->pluck('name', 'name');
