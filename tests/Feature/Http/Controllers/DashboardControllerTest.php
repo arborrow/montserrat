@@ -68,7 +68,7 @@ class DashboardControllerTest extends TestCase
             'donation_description' => $donation_type->name,
         ]);
 
-        $response = $this->actingAs($user)->get('/dashboard/description/'.$donation_type->name);
+        $response = $this->actingAs($user)->get('/dashboard/description/'.$donation_type->id);
 
         $response->assertOk();
         $response->assertViewIs('dashboard.description');

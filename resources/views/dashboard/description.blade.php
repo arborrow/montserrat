@@ -13,8 +13,8 @@
                         <div class="col-lg-3 col-md-4">
                             <select class="custom-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                                 <option value="">Filter by Donation Description ...</option>
-                                @foreach($descriptions as $description)
-                                    <option value="{{url('dashboard/description/'.$description)}}">{{ $description }}</option>
+                                @foreach($descriptions as $key=>$description)
+                                    <option value="{{url('dashboard/description/'.$description)}}">{{ $key }}</option>
                                 @endForeach
                             </select>
                         </div>
@@ -31,9 +31,9 @@
 
         const chart = new Chartisan({
             el: '#description_chart',
-            url: "@chart('donation_description')" + "?donation_description={{ $donation_description }}",
+            url: "@chart('donation_description')" + "?category_id={{ $donation_type->id }}",
             hooks: new ChartisanHooks()
-              .title('{!!$donation_description!!} Donations')
+              .title('{{ $donation_type->name }} Donations')
               .responsive()
               .beginAtZero()
               .legend({ position: 'bottom' })
