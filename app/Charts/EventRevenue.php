@@ -21,6 +21,8 @@ class EventRevenue extends BaseChart
      * It must always return an instance of Chartisan
      * and never a string or an array.
      */
+
+    // TODO: create custom request to validate year
     public function handler(Request $request): Chartisan
     {
         $this->authorize('show-dashboard');

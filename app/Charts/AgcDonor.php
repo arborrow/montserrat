@@ -19,12 +19,14 @@ class AgcDonor extends BaseChart
      * It must always return an instance of Chartisan
      * and never a string or an array.
      */
+     
+    // TODO: create custom request to validate number_of_years
     public function handler(Request $request): Chartisan
     {
       $colors=[];
       $this->authorize('show-dashboard');
       $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
-      $number_of_years = 5;
+      $number_of_years = (isset($request->number_of_years)) ? $request->number_of_years : 5;
 
       $years = [];
       for ($x = -$number_of_years; $x <= 0; $x++) {

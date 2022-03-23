@@ -17,7 +17,8 @@ class DonationDescription extends BaseChart
      * and never a string or an array.
      */
     use AuthorizesRequests;
-
+    
+    // TODO: create custom request to validate donation_description
     public function handler(Request $request): Chartisan
     {
       $this->authorize('show-dashboard');

@@ -21,14 +21,16 @@ class AgcAmount extends BaseChart
      * and never a string or an array.
      */
 
+// TODO: create custom request to validate number_of_years
     public function handler(Request $request): Chartisan
     {
+
+      $number_of_years = (isset($request->number_of_years)) ? $request->number_of_years : 5;
 
       // polanco.cool_colors defines 9 different colors that can be used in generating charts, I take mod 8 to rotate through the first 8 colors and then repeat
      // TODO: get % of returning or % of last year but unfortunately not this year  between agc years
      $this->authorize('show-dashboard');
      $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
-     $number_of_years = 5;
 
      $years = [];
      for ($x = -$number_of_years; $x <= 0; $x++) {
@@ -44,7 +46,11 @@ class AgcAmount extends BaseChart
          $label = $year->year;
          $prev_year = $year->copy()->subYear();
          // TODO: consider stepping throuh polanco.agc_donation_descriptions with a foreach to build collections - this will make this much more dynamic in the future
-         $agc_donors['All'] = \App\Models\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
+         $agc_donors['All'] = \App\Models\Donation::orderBy('donation_date', 'desc')
+             ->whereIn('donation_description', config('polanco.agc_donation_descriptions'))
+             ->where('donation_date', '>=', $prev_year->year.'-07-01')
+             ->where('donation_date', '<', $year->year.'-07-01')
+             ->groupBy('contact_id')->get();
          foreach (config('polanco.agc_donation_descriptions') as $description) {
              $agc_donors[$description] = \App\Models\Donation::orderBy('donation_date', 'desc')->whereDonationDescription($description)->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
          }

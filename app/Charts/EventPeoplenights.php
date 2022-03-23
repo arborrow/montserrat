@@ -20,6 +20,8 @@ class EventPeoplenights extends BaseChart
      * It must always return an instance of Chartisan
      * and never a string or an array.
      */
+
+    // TODO: create custom request to validate year
     public function handler(Request $request): Chartisan
     {
         // TODO: Create donut chart for average number of retreatants per event (get count of event_type_id) partipants/count(event_type_id) //useful for Ambassador goal of 40 (draw goal line)

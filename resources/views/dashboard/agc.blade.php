@@ -9,8 +9,24 @@
                         <span class="grey">AGC Dashboard</span>
                     </h1>
                 </div>
+
+                <div class="col-lg-3 col-md-4">
+                  <!-- hardcoded options in drop down box but can manually adjust in URL -->
+                    <select class="custom-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                        <option value="">How many years back ...</option>
+                        <option value="{{url('dashboard/agc/5')}}">5</option>
+                        <option value="{{url('dashboard/agc/10')}}">10</option>
+                        <option value="{{url('dashboard/agc/15')}}">15</option>
+                        <option value="{{url('dashboard/agc/20')}}">20</option>
+                        <option value="{{url('dashboard/agc/25')}}">25</option>
+                    </select>
+                </div>
+
+
                 <div id="agc_donor" style="height:400px"> </div>
+
                 <hr />
+
                 <div id="agc_amount" style="height:400px"> </div>
             </div>
         </div>
@@ -21,7 +37,7 @@
 
         const chart = new Chartisan({
             el: '#agc_donor',
-            url: "@chart('agc_donor')",
+            url: "@chart('agc_donor')" + "?number_of_years={{ $number_of_years }}",
             hooks: new ChartisanHooks()
               .title('AGC Donors per Fiscal Year')
               .responsive()
@@ -34,7 +50,7 @@
 
           const amount_chart = new Chartisan({
               el: '#agc_amount',
-              url: "@chart('agc_amount')",
+              url: "@chart('agc_amount')" + "?number_of_years={{ $number_of_years }}",
               hooks: new ChartisanHooks()
                 .title('AGC Donations per Fiscal Year')
                 .responsive()

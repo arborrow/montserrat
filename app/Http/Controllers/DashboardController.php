@@ -20,10 +20,10 @@ class DashboardController extends Controller
         return view('dashboard.index');
     }
 
-    public function agc()
+    public function agc($number_of_years = 5)
     {
         $this->authorize('show-dashboard');
-        return view('dashboard.agc');
+        return view('dashboard.agc',compact('number_of_years'));
     }
 
     public function donation_description_chart($donation_description = 'Retreat Funding')
