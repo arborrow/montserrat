@@ -33,7 +33,7 @@
             el: '#description_chart',
             url: "@chart('donation_description')" + "?category_id={{ $donation_type->id }}",
             hooks: new ChartisanHooks()
-              .title('{{ $donation_type->name }} Donations')
+              .title('{!! $donation_type->name !!} Donations')
               .responsive()
               .beginAtZero()
               .legend({ position: 'bottom' })
