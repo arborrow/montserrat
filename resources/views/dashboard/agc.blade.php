@@ -45,9 +45,9 @@
                             <td style='text-align: left'>{{ $year }}</td>
                             <td>{{ $results['count'] }}</td>
                             @foreach($agc_descriptions as $description)
-                                <td>{{ ($results['sum_'.$description] > 0) ? '$'.$results['sum_'.$description] : '$0.00'}}</td>
+                                <td>{{ ($results['sum_'.$description] > 0) ? '$'.number_format($results['sum_'.$description],2) : '$0.00'}}</td>
                             @endforeach
-                            <td>{{ ($results['sum'] > 0) ? '$'.$results['sum'] : '$0.00' }}</td>
+                            <td>{{ ($results['sum'] > 0) ? '$'.number_format($results['sum'],2) : '$0.00' }}</td>
 
                         @endforeach
                     </table>
