@@ -26,8 +26,34 @@
                 <div id="agc_donor" style="height:400px"> </div>
 
                 <hr />
-
                 <div id="agc_amount" style="height:400px"> </div>
+                <hr />
+
+                <div>
+                    <table class="table table-bordered table-striped table-hover table-responsive-md">
+                      <caption>AGC Summary</caption>
+                        <thead style='text-align:center'>
+                            <th>FY</th>
+                            <th>Donors</th>
+                            @foreach($agc_descriptions as $description)
+                                <th>{{ $description }}</th>
+                            @endforeach
+                            <th>Total</th>
+                        </thead>
+                        @foreach($donors as $year=>$results)
+                        <tr style='text-align: right'>
+                            <td style='text-align: left'>{{ $year }}</td>
+                            <td>{{ $results['count'] }}</td>
+                            @foreach($agc_descriptions as $description)
+                                <td>{{ ($results['sum_'.$description] > 0) ? '$'.$results['sum_'.$description] : '$0.00'}}</td>
+                            @endforeach
+                            <td>{{ ($results['sum'] > 0) ? '$'.$results['sum'] : '$0.00' }}</td>
+
+                        @endforeach
+                    </table>
+                </div>
+
+
             </div>
         </div>
     </section>

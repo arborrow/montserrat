@@ -23,7 +23,67 @@ class DashboardController extends Controller
     public function agc($number_of_years = 5)
     {
         $this->authorize('show-dashboard');
-        return view('dashboard.agc',compact('number_of_years'));
+
+
+        $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
+
+         $years = [];
+         $agc_descriptions = [];
+
+         for ($x = -$number_of_years; $x <= 0; $x++) {
+             $today = \Carbon\Carbon::now();
+             $today->day = 1;
+             $today->month = 1;
+             $today->year = $current_year;
+             $years[$x] = $today->addYear($x);
+         }
+
+         $donors = [];
+
+         foreach (config('polanco.agc_donation_descriptions') as $description) {
+             array_push($agc_descriptions, $description);
+         }
+
+         foreach ($years as $year) {
+             $label = $year->year;
+             $prev_year = $year->copy()->subYear();
+             // TODO: consider stepping throuh polanco.agc_donation_descriptions with a foreach to build collections - this will make this much more dynamic in the future
+             $agc_donors['All'] = \App\Models\Donation::orderBy('donation_date', 'desc')
+                 ->whereIn('donation_description', config('polanco.agc_donation_descriptions'))
+                 ->where('donation_date', '>=', $prev_year->year.'-07-01')
+                 ->where('donation_date', '<', $year->year.'-07-01')
+                 ->groupBy('contact_id')->get();
+             foreach (config('polanco.agc_donation_descriptions') as $description) {
+                 $agc_donors[$description] = \App\Models\Donation::orderBy('donation_date', 'desc')->whereDonationDescription($description)->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->groupBy('contact_id')->get();
+             }
+
+             $agc_donations['All'] = \App\Models\Donation::orderBy('donation_date', 'desc')->whereIn('donation_description', config('polanco.agc_donation_descriptions'))->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
+             foreach (config('polanco.agc_donation_descriptions') as $description) {
+                 $agc_donations[$description] = \App\Models\Donation::orderBy('donation_date', 'desc')->whereDonationDescription($description)->where('donation_date', '>=', $prev_year->year.'-07-01')->where('donation_date', '<', $year->year.'-07-01')->get();
+             }
+
+             //unique donors
+             $donors[$label]['count'] = $agc_donors['All']->count();
+             foreach (config('polanco.agc_donation_descriptions') as $description) {
+                 $donors[$label]['count_'.$description] = $agc_donors[$description]->count();
+             }
+
+             $donors[$label]['sum'] = $agc_donations['All']->sum('donation_amount');
+             foreach (config('polanco.agc_donation_descriptions') as $description) {
+                 $donors[$label]['sum_'.$description] = $agc_donations[$description]->sum('donation_amount');
+             }
+         }
+         $average_donor_count = (((array_sum(array_column($donors, 'count'))) - ($donors[$current_year]['count'])) / (count(array_column($donors, 'count')) - 1));
+         $average_agc_amount = (((array_sum(array_column($donors, 'sum'))) - ($donors[$current_year]['sum'])) / (count(array_column($donors, 'sum')) - 1));
+
+         foreach ($years as $year) {
+             $label = $year->year;
+             $prev_year = $year->copy()->subYear();
+             $donors[$label]['average_count'] = $average_donor_count;
+             $donors[$label]['average_amount'] = $average_agc_amount;
+         }
+        // dd($donors);
+        return view('dashboard.agc',compact('number_of_years','donors','agc_descriptions'));
     }
 
     public function donation_description_chart(int $category_id = NULL)
