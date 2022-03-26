@@ -43,7 +43,7 @@
                         <tr style='text-align: right'>
                             <td style='text-align: left'>{{ $year }}</td>
                             @foreach($agc_descriptions as $description)
-                                <td><a href="{{url('dashboard/agc_donations?fiscal_year='.$year.'&donation_type_id='.$description->id)}}">{{ ($results['sum_'.$description->name] > 0) ? '$'.number_format($results['sum_'.$description->name],2) : '$0.00'}}</a> ( {{($results['count_'.$description->name] > 0) ? $results['count_'.$description->name] : 0 }} )</td>
+                                <td><a href="{{url('dashboard/agc_donations?fiscal_year='.$year.'&donation_type_id='.$description->id)}}">{{ ($results['sum_'.$description->name] > 0) ? '$'.number_format($results['sum_'.$description->name],2) : '$0.00'}}</a> ({{($results['count_'.$description->name] > 0) ? $results['count_'.$description->name] : 0 }})</td>
                             @endforeach
                             <td><a href="{{ url('dashboard/agc_donations?fiscal_year='.$year.'&donation_type_id=0') }}">{{ ($results['sum'] > 0) ? '$'.number_format($results['sum'],2) : '$0.00' }}</a> ({{ $results['count'] }})</td>
 
