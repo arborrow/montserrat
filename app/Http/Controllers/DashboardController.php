@@ -87,6 +87,8 @@ class DashboardController extends Controller
 
     public function agc_donations(AgcDonationsRequest $request) {
 
+        $this->authorize('show-donation');
+
         $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
         $fiscal_year = (!isset($request->fiscal_year)) ? $current_year : $request->fiscal_year; //fiscal_year 4-digit year
 
