@@ -92,6 +92,7 @@ Route::middleware('web', 'activity')->group(function () {
     // Dashboard Routes
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('/dashboard/agc/{number_of_years?}', [DashboardController::class, 'agc'])->name('dashboard.agc');
+    Route::get('/dashboard/agc_donations', [DashboardController::class, 'agc_donations'])->name('dashboard.agc_donations');
     Route::get('/dashboard/events/{year?}', [DashboardController::class, 'events'])->name('dashboard.events')->where('year', '^\\d{4}$');
     Route::get('/dashboard/events/drilldown/{event_type_id}/{year?}', [DashboardController::class, 'drilldown'])->name('dashboard.drilldown')->where('year', '^\\d{4}$');
     Route::get('/dashboard/description/{category_id?}', [DashboardController::class, 'donation_description_chart'])->name('dashboard.description');

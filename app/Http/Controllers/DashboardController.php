@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Charts\RetreatOfferingChart;
+use App\Http\Requests\AgcDonationsRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -24,7 +25,6 @@ class DashboardController extends Controller
     {
         $this->authorize('show-dashboard');
 
-
         $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
 
          $years = [];
@@ -39,10 +39,9 @@ class DashboardController extends Controller
          }
 
          $donors = [];
-
-         foreach (config('polanco.agc_donation_descriptions') as $description) {
-             array_push($agc_descriptions, $description);
-         }
+         $agc_descriptions = \App\Models\DonationType::active()
+            ->whereIn('name',config('polanco.agc_donation_descriptions'))
+            ->get();
 
          foreach ($years as $year) {
              $label = $year->year;
@@ -84,6 +83,44 @@ class DashboardController extends Controller
          }
         // dd($donors);
         return view('dashboard.agc',compact('number_of_years','donors','agc_descriptions'));
+    }
+
+    public function agc_donations(AgcDonationsRequest $request) {
+
+        $current_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
+        $fiscal_year = (!isset($request->fiscal_year)) ? $current_year : $request->fiscal_year; //fiscal_year 4-digit year
+
+        $donation_type_id = (!isset($request->donation_type_id)) ? '0' : $request->donation_type_id;
+        switch ($donation_type_id) {
+            case 0  :
+                $all_donations = \App\Models\Donation::orderBy('donation_date', 'desc')
+                    ->whereIn('donation_description', config('polanco.agc_donation_descriptions'))
+                    ->where('donation_date', '>=', $fiscal_year-1 .'-07-01')
+                    ->where('donation_date', '<', $fiscal_year .'-07-01')
+                    ->get();
+                $donations = \App\Models\Donation::orderBy('donation_date', 'desc')
+                    ->whereIn('donation_description', config('polanco.agc_donation_descriptions'))
+                    ->where('donation_date', '>=', $fiscal_year-1 .'-07-01')
+                    ->where('donation_date', '<', $fiscal_year .'-07-01')
+                    ->paginate(25, ['*'], 'donations');
+                break;
+            default :
+                $donation_type = \App\Models\DonationType::findOrFail($donation_type_id);
+                $all_donations = \App\Models\Donation::orderBy('donation_date', 'desc')
+                    ->where('donation_description', '=', $donation_type->name)
+                    ->where('donation_date', '>=', $fiscal_year-1 .'-07-01')
+                    ->where('donation_date', '<', $fiscal_year .'-07-01')
+                    ->get();
+                $donations = \App\Models\Donation::orderBy('donation_date', 'desc')
+                    ->where('donation_description', '=', $donation_type->name)
+                    ->where('donation_date', '>=', $fiscal_year-1 .'-07-01')
+                    ->where('donation_date', '<', $fiscal_year .'-07-01')
+                    ->paginate(25, ['*'], 'donations');
+
+        }
+
+        return view('donations.results', compact('donations', 'all_donations'));
+
     }
 
     public function donation_description_chart(int $category_id = NULL)
