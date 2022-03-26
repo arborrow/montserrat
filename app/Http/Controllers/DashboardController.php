@@ -127,16 +127,16 @@ class DashboardController extends Controller
 
     public function donation_description_chart(int $category_id = NULL)
     {
-      $this->authorize('show-dashboard');
-      $descriptions = \App\Models\DonationType::active()->orderBy('name')->pluck('id', 'name');
-      if (!isset($category_id)) {
-        $donation_type = \App\Models\DonationType::whereName("Retreat Funding")->first();
-      } else {
-        $donation_type = \App\Models\DonationType::findOrFail($category_id);
-      }
+        $this->authorize('show-dashboard');
+        $descriptions = \App\Models\DonationType::active()->orderBy('name')->pluck('id', 'name');
+        if (!isset($category_id)) {
+          $donation_type = \App\Models\DonationType::whereName("Retreat Funding")->first();
+        } else {
+          $donation_type = \App\Models\DonationType::findOrFail($category_id);
+        }
 
-      return view('dashboard.description',compact('donation_type','descriptions'));
-  }
+        return view('dashboard.description',compact('donation_type','descriptions'));
+    }
 
     public function events($year = null)
     {
