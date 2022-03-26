@@ -45,6 +45,51 @@ class DashboardControllerTest extends TestCase
     /**
      * @test
      */
+    public function agc_donations_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-donation');
+        $response = $this->actingAs($user)->get(route('dashboard.agc_donations'));
+
+        $response->assertOk();
+        $response->assertViewIs('donations.results');
+        $response->assertViewHas('donations');
+        $response->assertViewHas('all_donations');
+        $response->assertSee('Donations');
+        $response->assertSee('result(s) found');
+    }
+
+    /**
+     * @test
+     */
+    public function agc_donations_returns_403_response()
+    {   // requires show-donation permission, so ensure a 403 when that permission is missing
+        $user = $this->createUserWithPermission('show-dashboard');
+        $response = $this->actingAs($user)->get(route('dashboard.agc_donations'));
+
+        $response->assertStatus(403);
+    }
+
+    /**
+     * @test
+     */
+    public function agc_with_years_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-dashboard');
+        $current_fiscal_year = (date('m') > 6) ? date('Y') + 1 : date('Y');
+        $number_of_years = $this->faker->numberBetween(5,10);
+
+        $response = $this->actingAs($user)->get(route('dashboard.agc',$number_of_years));
+
+        $response->assertOk();
+        $response->assertViewIs('dashboard.agc');
+        $response->assertSee('AGC Dashboard');
+        $response->assertSee($current_fiscal_year);
+        $response->assertSee($current_fiscal_year-$number_of_years);
+    }
+
+    /**
+     * @test
+     */
     public function donation_description_chart_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-dashboard');
