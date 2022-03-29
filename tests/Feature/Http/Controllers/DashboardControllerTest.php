@@ -54,7 +54,6 @@ class DashboardControllerTest extends TestCase
         $response->assertViewIs('donations.results');
         $response->assertViewHas('donations');
         $response->assertViewHas('all_donations');
-        $response->assertSee('Donations');
         $response->assertSee('result(s) found');
     }
 
