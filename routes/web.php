@@ -54,6 +54,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 // Auth::routes();
+Route::middleware('web')->group(function () {
+    Route::get('avatar/{user_id}', [AttachmentController::class, 'get_avatar'])->name('get_avatar');
+  });
+
 
 Route::middleware('web', 'activity')->group(function () {
     Route::get('intercept/{code}', function ($code) {
@@ -66,11 +70,6 @@ Route::middleware('web', 'activity')->group(function () {
         }
     });
 
-    Route::get('avatar/{user_id}', [AttachmentController::class, 'get_avatar'])->name('get_avatar');
-    Route::get('signature/{user_id}', [AttachmentController::class, 'get_signature'])->name('get_signature');
-
-    Route::get('avatar/{user_id}/delete', [AttachmentController::class, 'delete_avatar'])->name('delete_avatar');
-    Route::get('signature/{user_id}/delete', [AttachmentController::class, 'delete_signature'])->name('delete_signature');
 
     Route::get('/', [PageController::class, 'welcome']);
     Route::get('/welcome', [PageController::class, 'welcome'])->name('welcome');
@@ -97,7 +96,13 @@ Route::middleware('web', 'activity')->group(function () {
     Route::get('/dashboard/events/drilldown/{event_type_id}/{year?}', [DashboardController::class, 'drilldown'])->name('dashboard.drilldown')->where('year', '^\\d{4}$');
     Route::get('/dashboard/description/{category_id?}', [DashboardController::class, 'donation_description_chart'])->name('dashboard.description');
 
-    // Attachment routes
+    // Attachment routes - get_avatar route above so that it is not logged as an activity
+
+    Route::get('avatar/{user_id}/delete', [AttachmentController::class, 'delete_avatar'])->name('delete_avatar');
+
+    Route::get('signature/{user_id}', [AttachmentController::class, 'get_signature'])->name('get_signature');
+    Route::get('signature/{user_id}/delete', [AttachmentController::class, 'delete_signature'])->name('delete_signature');
+
     Route::resource('attachment', AttachmentController::class);
 
     Route::get('contact/{user_id}/attachment/{file_name}', [AttachmentController::class, 'show_contact_attachment'])->name('show_contact_attachment');
