@@ -29,6 +29,10 @@
               <li>{!! Html::link(action([\App\Http\Controllers\PageController::class, 'finance_retreatdonations'],'201601'),'Retreat donation report',array('class' => 'list-group-item'))!!}</li>
               <li>{!! Html::link(action([\App\Http\Controllers\DonationController::class, 'overpaid']),'Overpaid donations',array('class' => 'list-group-item'))!!}</li>
             </ul>
+            <li class="list-group-item"><h5>Other Reports</h5></li>
+            <ul>
+              <li>{!! Html::link(action([\App\Http\Controllers\PersonController::class, 'duplicates']),'Duplicate contacts report',array('class' => 'list-group-item'))!!}</li>
+            </ul>
           </ul>
 
         </div>
