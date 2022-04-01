@@ -9,5 +9,6 @@
         <li><a href="https://www.teenvogue.com/story/fbi-webcam-surveillance-meme-and-truth">The truth about FBI surveillance</a>
       <li><a href="https://www.fbi.gov/">The real FBI</a>
   </ol>
+<p>Forget about what the FBI is doing. Checkout the cool work being done by the <a href="https://www.kinoborderinitiative.org/">KBI</a>!</p>
 
 @stop
