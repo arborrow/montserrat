@@ -56,7 +56,8 @@ use Illuminate\Support\Facades\Route;
 // Auth::routes();
 Route::middleware('web')->group(function () {
     Route::get('avatar/{user_id}', [AttachmentController::class, 'get_avatar'])->name('get_avatar');
-  });
+    Route::get('/aprilfools', [PageController::class, 'aprilfools'])->name('aprilfools');
+});
 
 
 Route::middleware('web', 'activity')->group(function () {

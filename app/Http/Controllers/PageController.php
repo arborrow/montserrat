@@ -23,6 +23,11 @@ class PageController extends Controller
         return view('pages.about');
     }
 
+    public function aprilfools()
+    {
+        return view('pages.aprilfools');
+    }
+
     public function retreat()
     {
         return view('pages.retreat');

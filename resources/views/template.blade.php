@@ -154,9 +154,10 @@
 				@auth
 				<div class="dropdown">
 					<div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<img src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->name }}" title="{{ Auth::user()->name }}" class="rounded-circle avatar">
+						<img src="https://avatarfiles.alphacoders.com/240/240483.jpg" alt="We are watching you {{ Auth::user()->name }}" title="We are watching you {{ Auth::user()->name }}" class="rounded-circle avatar">
 					</div>
 					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+						<a class="dropdown-item" href={{ route('aprilfools') }}>Why is the FBI watching me</a>
 						<a class="dropdown-item" href={{ route('logout') }}>Logout</a>
 					</div>
 				</div>
