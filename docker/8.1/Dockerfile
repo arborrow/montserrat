@@ -1,4 +1,4 @@
-FROM ubuntu:21.04
+FROM ubuntu:20.04
 
 LABEL maintainer="Taylor Otwell"
 
@@ -19,17 +19,16 @@ RUN apt-get update \
     && echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf \
     && apt-key adv --homedir ~/.gnupg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys E5267A6C \
     && apt-key adv --homedir ~/.gnupg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C300EE8C \
-    && echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu hirsute main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
+    && echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu focal main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
     && apt-get update \
     && apt-get install -y php8.1-cli php8.1-dev \
        php8.1-pgsql php8.1-sqlite3 php8.1-gd \
-       php8.1-curl \
+       php8.1-curl php8.1-memcached \
        php8.1-imap php8.1-mysql php8.1-mbstring \
        php8.1-xml php8.1-zip php8.1-bcmath php8.1-soap \
-       php8.1-intl php8.1-readline \
-       php8.1-ldap \
-       php8.1-msgpack php8.1-igbinary php8.1-redis php8.1-swoole \
-       php8.1-memcached php8.1-pcov php8.1-xdebug \
+       php8.1-intl php8.1-readline php8.1-pcov \
+       php8.1-msgpack php8.1-igbinary php8.1-ldap \
+       php8.1-redis php8.1-swoole php8.1-xdebug \
     && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
     && curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash - \
     && apt-get install -y nodejs \
@@ -43,6 +42,14 @@ RUN apt-get update \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN update-alternatives --set php /usr/bin/php8.1
+
+RUN apt-get update \
+    && apt-get install -y xfonts-75dpi wget \
+    && wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.focal_amd64.deb \
+    && apt install -y ./wkhtmltox_0.12.6-1.focal_amd64.deb \
+    && rm ./wkhtmltox_0.12.6-1.focal_amd64.deb
 
 RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.1
 
