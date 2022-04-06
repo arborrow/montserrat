@@ -305,7 +305,7 @@ Route::middleware('web', 'activity')->group(function () {
     Route::post('retreat/payments/update', [DonationController::class, 'retreat_payments_update'])->name('retreat.payments.update');
     Route::get('retreat/{id}/checkout', [RetreatController::class, 'checkout'])->name('retreat.checkout');
     Route::get('retreat/{id}/checkin', [RetreatController::class, 'checkin'])->name('retreat.checkin');
-    Route::get('retreat/{id}/status/{status}', [RetreatController::class, 'show'])->name('retreat.status');
+    Route::get('retreat/{id}/status/{status?}', [RetreatController::class, 'show'])->name('retreat.status');
 
     Route::get('retreat/search', [RetreatController::class, 'search'])->name('retreats.search');
     Route::get('retreat/results', [RetreatController::class, 'results'])->name('retreats.results');
