@@ -9,11 +9,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use OwenIt\Auditing\Contracts\Auditable;
+use Laravel\Cashier\Billable;
 
 class Contact extends Model implements Auditable
 {
     use HasFactory;
     use SoftDeletes;
+    use Billable;
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'contact';
