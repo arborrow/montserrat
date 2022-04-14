@@ -73,6 +73,7 @@ Route::middleware('web', 'activity')->group(function () {
 
     Route::get('/', [PageController::class, 'welcome']);
     Route::get('/welcome', [PageController::class, 'welcome'])->name('welcome');
+    Route::get('/stripe', [PageController::class, 'stripe'])->name('stripe');
     Route::get('/goodbye', [HomeController::class, 'goodbye']);
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('person/{contact_id}/eoy_acknowledgment/{start_date?}/{end_date?}', [PageController::class, 'eoy_acknowledgment']);
