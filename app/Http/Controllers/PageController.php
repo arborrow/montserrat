@@ -81,22 +81,6 @@ class PageController extends Controller
         return view('pages.restricted');
     }
 
-    public function stripe()
-    {
-        $this->authorize('show-donation');
-
-        $stripeConfig = config('services.stripe.secret');
-        $stripe = new \Stripe\StripeClient($stripeConfig);
-
-        $reports = $stripe->reporting->reportTypes->all([]);
-/*        $payout_report = $stripe->reporting->reportTypes->retrieve(
-            'payout_reconciliation.itemized.5',[]
-        );
-        dd($payout_report);
-*/
-        return view('pages.stripe',compact('reports'));   //
-    }
-
     public function support()
     {
         return view('pages.support');

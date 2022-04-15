@@ -35,6 +35,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SnippetController;
+use App\Http\Controllers\StripePayoutController;
 use App\Http\Controllers\SystemController;
 use App\Http\Controllers\TouchpointController;
 use App\Http\Controllers\UomController;
@@ -73,7 +74,6 @@ Route::middleware('web', 'activity')->group(function () {
 
     Route::get('/', [PageController::class, 'welcome']);
     Route::get('/welcome', [PageController::class, 'welcome'])->name('welcome');
-    Route::get('/stripe', [PageController::class, 'stripe'])->name('stripe');
     Route::get('/goodbye', [HomeController::class, 'goodbye']);
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('person/{contact_id}/eoy_acknowledgment/{start_date?}/{end_date?}', [PageController::class, 'eoy_acknowledgment']);
@@ -317,6 +317,11 @@ Route::middleware('web', 'activity')->group(function () {
     Route::resource('room', RoomController::class);
     Route::get('rooms/{ymd?}', [RoomController::class, 'schedule'])->name('rooms');
     Route::get('support', [PageController::class, 'support'])->name('support');
+
+    Route::prefix('stripe')->group(function () {
+        Route::resource('payout', StripePayoutController::class);
+    });
+    
     Route::resource('touchpoint', TouchpointController::class);
     Route::get('touchpoint/add/{id}', [TouchpointController::class, 'add'])->name('touchpoint.add');
     Route::get('touchpoint/type/{staff_id}', [TouchpointController::class, 'index_type']);
