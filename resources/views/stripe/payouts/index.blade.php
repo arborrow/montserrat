@@ -19,10 +19,14 @@
                     </thead>
                     <tbody>
 
-                        @foreach($payouts as $payout)
+                        @foreach ($payouts as $payout)
                         <tr>
-                            <td><a href={{ URL('stripe/payout/' . $payout->id) }} ">{{ $payout->id }}</a></td>
-                            <td>{{ \Carbon\Carbon::parse($payout->date) }} </td>
+                            <td>
+                                <a href="{{ URL('stripe/payout/' . $payout->id) }} ">{{ $payout->id }}</a>
+                            </td>
+                            <td>
+                                {{ \Carbon\Carbon::parse($payout->date) }}
+                            </td>
                             <td>${{ number_format($payout->amount/100,2) }}</td>
                         </tr>
                         @endforeach

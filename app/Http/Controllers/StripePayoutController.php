@@ -13,12 +13,11 @@ class StripePayoutController extends Controller
      */
     public function index()
     {
-        $this->authorize('show-donation');
+        $this->authorize('show-stripe-payout');
 
         $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
 
         $payouts = $stripe->payouts->all(['limit' => 10]);
-
         // $reports = $stripe->reporting->reportTypes->all([]);
 
         // $payout = $stripe->payouts->retrieve('po_1KWAO8JPvjW38HM4LT0HYmDX',[]);
@@ -73,9 +72,21 @@ class StripePayoutController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($payout_id)
     {
-        //
+        $this->authorize('show-stripe-payout');
+
+        $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
+        $payout = $stripe->payouts->retrieve($payout_id,[]);
+        $transactions = $stripe->balanceTransactions->all(
+            ['payout' => $payout->id,
+            'type' => 'charge',
+            'limit' => 100,
+            ]
+        );
+
+        return view('stripe.payouts.show',compact('payout','transactions'));   //
+
     }
 
     /**
