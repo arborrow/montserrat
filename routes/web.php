@@ -321,7 +321,8 @@ Route::middleware('web', 'activity')->group(function () {
     Route::prefix('stripe')->group(function () {
         Route::resource('payout', StripePayoutController::class);
     });
-    
+    Route::stripeWebhooks('stripe/webhooks');
+
     Route::resource('touchpoint', TouchpointController::class);
     Route::get('touchpoint/add/{id}', [TouchpointController::class, 'add'])->name('touchpoint.add');
     Route::get('touchpoint/type/{staff_id}', [TouchpointController::class, 'index_type']);
