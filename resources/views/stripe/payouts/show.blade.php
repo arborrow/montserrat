@@ -38,7 +38,7 @@
                 <tbody>
                     @foreach ($transactions as $transaction)
                     <tr>
-                        <td><a href="{{ URL('stripe/transaction/' . $transaction->id) }} ">{{ $transaction->id }}</a></td>
+                        <td>{{ $transaction->id }}</td>
                         <td>${{ number_format($transaction->amount/100,2) }}</td>
                         <td>${{ number_format($transaction->fee/100,2) }}</td>
                         <td>${{ number_format($transaction->net/100,2) }}</td>
@@ -46,7 +46,7 @@
                         <td>{{ \Carbon\Carbon::parse($payout->created) }}</td>
                         <td>{{ \Carbon\Carbon::parse($payout->available) }}</td>
                         <td>{{ $transaction->type }}</td>
-                        <td>{{ $transaction->source }}</td>
+                        <td><a href="{{ URL('stripe/'.$transaction->type.'/'. $transaction->source) }}">{{ $transaction->source }}</a></td>
                     </tr>
                     @endforeach
 

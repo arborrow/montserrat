@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class StripePayoutController extends Controller
+class StripeChargeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,35 +13,13 @@ class StripePayoutController extends Controller
      */
     public function index()
     {
-        $this->authorize('show-stripe-payout');
+        $this->authorize('show-stripe-charge');
 
         $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
 
-        $payouts = $stripe->payouts->all(['limit' => 10]);
-        // $reports = $stripe->reporting->reportTypes->all([]);
+        $charges = $stripe->charges->all([]);
 
-        // $payout = $stripe->payouts->retrieve('po_1KWAO8JPvjW38HM4LT0HYmDX',[]);
-
-        // $transfers = $stripe->transfers->all(['limit' => 10]);
-
-        /* $balance_transactions = $stripe->balanceTransactions->all(
-            ['payout' => $payout->id,
-            'type' => 'charge',
-            'limit' => 100,
-            ]
-        );
-        */
-
-        // foreach ($customers->autoPagingIterator() as $customer) {}
-
-        // $payout_report = $stripe->reporting->reportTypes->retrieve(
-        //    'ending_balance_reconciliation.itemized.4',[]
-        // );
-
-        // $report = $stripe->reporting->reportRuns->retrieve('frr_1KofWcJPvjW38HM4QXghpsEK');
-
-
-        return view('stripe.payouts.index',compact('payouts'));   //
+        return view('stripe.charges.index',compact('charges'));   //
 
     }
 
@@ -72,20 +50,15 @@ class StripePayoutController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($payout_id)
+    public function show($charge_id)
     {
-        $this->authorize('show-stripe-payout');
+        $this->authorize('show-stripe-charge');
 
         $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
-        $payout = $stripe->payouts->retrieve($payout_id,[]);
-        $transactions = $stripe->balanceTransactions->all(
-            ['payout' => $payout->id,
-            'type' => 'charge',
-            'limit' => 100,
-            ]
-        );
+        $charge = $stripe->charges->retrieve($charge_id,[]);
+        $customer = !is_null($charge->customer) ? $stripe->customers->retrieve($charge->customer) : NULL;
 
-        return view('stripe.payouts.show',compact('payout','transactions'));   //
+        return view('stripe.charges.show',compact('charge','customer'));
 
     }
 
@@ -132,11 +105,11 @@ class StripePayoutController extends Controller
      */
     public function import($id)
     {
-        $this->authorize('import-stripe-payout');
+        $this->authorize('import-stripe-charge');
         $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
-        $payouts = $stripe->payouts->all([]);
-        foreach ($payouts->autoPagingIterator() as $payout) {
-            // TODO: create stripe_payout model, check if payout->id exists, if not insert/import it
+        $charges = $stripe->charges->all([]);
+        foreach ($charges->autoPagingIterator() as $charge) {
+            // TODO: create stripe_charge model, check if charge->id exists, if not insert/import it
         }
 
 

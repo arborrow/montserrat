@@ -35,6 +35,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SnippetController;
+use App\Http\Controllers\StripeChargeController;
 use App\Http\Controllers\StripePayoutController;
 use App\Http\Controllers\SystemController;
 use App\Http\Controllers\TouchpointController;
@@ -319,6 +320,7 @@ Route::middleware('web', 'activity')->group(function () {
     Route::get('support', [PageController::class, 'support'])->name('support');
 
     Route::prefix('stripe')->group(function () {
+        Route::resource('charge', StripeChargeController::class);
         Route::resource('payout', StripePayoutController::class);
     });
     Route::stripeWebhooks('stripe/webhooks');
