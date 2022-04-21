@@ -320,6 +320,7 @@ Route::middleware('web', 'activity')->group(function () {
     Route::get('support', [PageController::class, 'support'])->name('support');
 
     Route::prefix('stripe')->group(function () {
+        Route::get('payout/import', [StripePayoutController::class, 'import'])->name('stripe.payout.import');
         Route::resource('charge', StripeChargeController::class);
         Route::resource('payout', StripePayoutController::class);
     });

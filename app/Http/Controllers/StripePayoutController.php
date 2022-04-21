@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\StripePayout;
+
 
 class StripePayoutController extends Controller
 {
@@ -81,7 +83,6 @@ class StripePayoutController extends Controller
         $transactions = $stripe->balanceTransactions->all(
             ['payout' => $payout->id,
             'type' => 'charge',
-            'limit' => 100,
             ]
         );
 
@@ -125,20 +126,37 @@ class StripePayoutController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Import Stripe Payouts into stripe_payout table
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function import($id)
+    public function import()
     {
         $this->authorize('import-stripe-payout');
+        // dd('Stripe Payout Import');
         $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
         $payouts = $stripe->payouts->all([]);
         foreach ($payouts->autoPagingIterator() as $payout) {
-            // TODO: create stripe_payout model, check if payout->id exists, if not insert/import it
+
+            $stripe_payout = \App\Models\StripePayout::wherePayoutId($payout->id)->first();
+
+            if (is_null($stripe_payout)) {
+                $stripe_payout = new \App\Models\StripePayout;
+            }
+
+            $stripe_payout->payout_id = $payout->id;
+            $stripe_payout->object = $payout->object;
+            $stripe_payout->amount = $payout->amount/100;
+            $stripe_payout->arrival_date = \Carbon\Carbon::parse($payout->arrival_date);
+            $stripe_payout->date = \Carbon\Carbon::parse($payout->arrival_date);
+            $stripe_payout->status = $payout->status;
+            // TODO: import payment fees and sum together to calculate total_fee_amount for each payout
+            //$stripe_payout->total_fee_amount = 0;
+            $stripe_payout->save();
+            //dd($stripe_payout,$payout->id);
         }
 
+        return view('stripe.payouts.index',compact('payouts'));   //
 
     }
 
