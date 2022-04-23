@@ -335,6 +335,7 @@ Route::middleware('web', 'activity')->group(function () {
 
     Route::get('calendar', [RetreatController::class, 'calendar'])->name('calendar');
 
+    Route::get('mailgun', [MailgunController::class, 'index'])->name('mailgun.index');
     Route::get('mailgun/get', [MailgunController::class, 'get'])->name('mailgun.get');
     Route::get('mailgun/process', [MailgunController::class, 'process'])->name('mailgun.process');
 

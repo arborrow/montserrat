@@ -22,27 +22,25 @@
                     <thead>
                         <tr>
                             <th>Timestamp</th>
-                            <th>To</th>
                             <th>From</th>
+                            <th>To</th>
                             <th>Subject</th>
-                            <th>ID</th>
-                            <th>URL</th>
-                            
+                            <th>Recipient</th>
+                            <th>Processed</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($messages as $message)
                         <tr>
-                            <td>{{ date('F d, Y h:i A',$message->timestamp) }}</td>
-                            <td>{!! $message->contact['contact_link_full_name'] !!} <br /> {{ $message->to }} </td>
-                            <td>{!! $message->staff['contact_link_full_name'] !!} <br /> {{ $message->from }} </td>
-                            <td>{{ $message->message->headers->subject }}</td>
-                            <td>{{ $message->id }}</td>
-                            <td>{{ $message->storage->url }}</td>
-                            
+                            <td>{{ $message->mailgun_timestamp }}</td>
+                            <td>{!! optional($message->contact_from)->contact_link_full_name !!} <br /> {{ $message->from }} </td>
+                            <td>{!! optional($message->contact_to)->contact_link_full_name !!} <br /> {{ $message->to }} </td>
+                            <td>{{ $message->subject }}</td>
+                            <td>{{ $message->recipients }}</td>
+                            <td>{{ $message->is_processed ? 'Yes':'No' }}</td>
                         </tr>
                         @endforeach
-                        
+
                     </tbody>
                 </table>
                 @endif

@@ -19,4 +19,15 @@ class Message extends Model implements Auditable
     ];  //
 
     protected $fillable = ['mailgun_id', 'mailgun_timestamp', 'storage_url', 'from', 'to', 'subject', 'from_id', 'to_id', 'is_processed'];
+
+    public function contact_from()
+    {
+        return $this->belongsTo(Contact::class, 'from_id', 'id');
+    }
+
+    public function contact_to()
+    {
+        return $this->belongsTo(Contact::class, 'to_id', 'id');
+    }
+
 }

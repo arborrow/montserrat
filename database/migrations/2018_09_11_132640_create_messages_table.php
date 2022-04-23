@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('mailgun_id')->unique();
             $table->timestamp('mailgun_timestamp')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->string('storage_url')->nullable();
+            $table->string('recipients')->nullable();
             $table->string('from')->nullable();
             $table->integer('from_id')->unsigned()->nullable();
             $table->string('to')->nullable();
