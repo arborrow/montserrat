@@ -83,8 +83,51 @@ class StripePayoutController extends Controller
         $transactions = $stripe->balanceTransactions->all(
             ['payout' => $payout->id,
             'type' => 'charge',
+            'limit' => 100,
             ]
         );
+
+        return view('stripe.payouts.show',compact('payout','transactions'));   //
+
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show_date($date = null)
+    {
+        $this->authorize('show-stripe-payout');
+        $payout_date = \Carbon\Carbon::parse($date);
+        if (empty($payout_date)) {
+            return redirect()->back();
+        }
+
+        $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
+
+        $stripe_payout = \App\Models\StripePayout::where('date','=',$payout_date)->first();
+
+        $payout = $stripe->payouts->retrieve($stripe_payout->payout_id,[]);
+
+        $transactions = $stripe->balanceTransactions->all(
+            ['payout' => $stripe_payout->payout_id,
+            'type' => 'charge',
+            'limit' => 100,
+            ]
+        );
+
+        foreach ($transactions as $transaction) {
+            if (!(strpos($transaction->description, "Invoice") === false)) {
+                $charge = $stripe->charges->retrieve($transaction->source, []);
+                $customer = $stripe->customers->retrieve($charge->customer, []);
+                $transaction->customer = $customer->description;
+                dd($transaction,$charge,$customer);
+            }
+            dd((strpos($transaction->description, "Invoice") === false) );
+        }
+
 
         return view('stripe.payouts.show',compact('payout','transactions'));   //
 

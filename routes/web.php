@@ -321,6 +321,7 @@ Route::middleware('web', 'activity')->group(function () {
 
     Route::prefix('stripe')->group(function () {
         Route::get('payout/import', [StripePayoutController::class, 'import'])->name('stripe.payout.import');
+        Route::get('payout/date/{payout_date?}', [StripePayoutController::class, 'show_date'])->name('stripe.payout.showdate');
         Route::resource('charge', StripeChargeController::class);
         Route::resource('payout', StripePayoutController::class);
     });
@@ -338,6 +339,7 @@ Route::middleware('web', 'activity')->group(function () {
     Route::get('mailgun', [MailgunController::class, 'index'])->name('mailgun.index');
     Route::get('mailgun/get', [MailgunController::class, 'get'])->name('mailgun.get');
     Route::get('mailgun/process', [MailgunController::class, 'process'])->name('mailgun.process');
+    Route::get('mailgun/clean', [MailgunController::class, 'clean_body'])->name('mailgun.clean');
 
     Route::post('mailgun/callback', function () {
         return 'Mailgun callback';
