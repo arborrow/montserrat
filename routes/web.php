@@ -35,6 +35,8 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SnippetController;
+use App\Http\Controllers\SsCustomFormController;
+use App\Http\Controllers\SsInventoryController;
 use App\Http\Controllers\StripeChargeController;
 use App\Http\Controllers\StripePayoutController;
 use App\Http\Controllers\SystemController;
@@ -150,6 +152,16 @@ Route::middleware('web', 'activity')->group(function () {
         Route::resource('uom', UomController::class);
         Route::resource('user', UserController::class);
         Route::resource('website', WebsiteController::class);
+
+        Route::prefix('squarespace')->group(function () {
+            Route::resource('custom_form', SsCustomFormController::class);
+            Route::resource('inventory', SsInventoryController::class);
+            Route::get('custom_form/{id}/create', [SsCustomFormController::class, 'create_field'])->name('custom_form.field.create');
+            Route::post('custom_form/{id}/store', [SsCustomFormController::class, 'store_field'])->name('custom_form.field.store');
+            Route::get('custom_form_field/{id}/edit', [SsCustomFormController::class, 'edit_field'])->name('custom_form.field.edit');
+            Route::put('custom_form/{id}/update', [SsCustomFormController::class, 'update_field'])->name('custom_form.field.update');
+        });
+
     });
 
     /* In developement - commented out for Now
@@ -318,6 +330,7 @@ Route::middleware('web', 'activity')->group(function () {
     Route::resource('room', RoomController::class);
     Route::get('rooms/{ymd?}', [RoomController::class, 'schedule'])->name('rooms');
     Route::get('support', [PageController::class, 'support'])->name('support');
+    Route::stripeWebhooks('stripe/webhooks');
 
     Route::prefix('stripe')->group(function () {
         Route::get('payout/import', [StripePayoutController::class, 'import'])->name('stripe.payout.import');

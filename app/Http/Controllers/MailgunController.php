@@ -43,7 +43,7 @@ class MailgunController extends Controller
                         $message->mailgun_timestamp = \Carbon\Carbon::parse($event_item->getTimestamp());
                         $message->storage_url = $event_item->getStorage()['url'];
                         $message->subject = $message_email->getSubject();
-                        $message->body = str_replace("\n","\n", $message_email->getBodyPlain());
+                        $message->body = str_replace("\r\n","\n", $message_email->getBodyPlain());
 
                         if (null !== $message_email->getSender()) {
                             $message->from = self::clean_email((string) $message_email->getSender());
@@ -227,7 +227,6 @@ class MailgunController extends Controller
                     $retreat_info = $this->extract_value_between($message->body, "SUBTOTAL", "Salutacion:");
                 }
                 $retreat = explode("\n",$retreat_info);
-
                 if (strpos($retreat[0], "Retiros en Español") === false) {
                     // dd($retreat,strpos($retreat[0], "Retiros en Español") === false);
                     $order->order_number = $this->extract_value_between($message->body, "Order #",".");
@@ -249,7 +248,7 @@ class MailgunController extends Controller
                     $order->hear_ambassador = $this->extract_value($message->body, "If \"Retreat Ambassador\" please name them::");
                     $order->room_preference = $this->extract_value($message->body, "Room Preference:\n");
                     $order->dietary = $this->extract_value($message->body, "Dietary Restrictions, Food Allergies, or Other Special Needs::");
-                    dd($order,$message->body);
+                    dd($order,$message->body, $message->id);
                     $order->comments = $this->extract_value($message->body, "Comments:");
                     $order->spouse_name = $this->extract_value($message->body, "Spouse's Name:\n");
                     $order->spouse_cell_phone = $this->extract_value($message->body, "Spouse's Cell Phone:\n");
