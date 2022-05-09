@@ -707,7 +707,7 @@ class PersonController extends Controller
         $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date', 'DESC')->paginate(25, ['*'], 'donations');
         $files = \App\Models\Attachment::whereEntity('contact')->whereEntityId($person->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
 
-        $registrations = \App\Models\Registration::whereContactId($id)->paginate(25, ['*'], 'registrations');
+        $registrations = \App\Models\Registration::whereContactId($id)->orderByDesc('register_date')->paginate(25, ['*'], 'registrations');
         /*        $registrations = $registrations->sortByDesc(function ($registration) {
                     return $registration->retreat_start_date;
                 })->paginate(15);
