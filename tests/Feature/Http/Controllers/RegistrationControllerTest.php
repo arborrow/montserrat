@@ -424,7 +424,7 @@ class RegistrationControllerTest extends TestCase
             'departed_at' => null,
             'num_registrants' => '1',
         ]);
-        $response->assertRedirect(action([\App\Http\Controllers\RegistrationController::class, 'index']));
+        $response->assertRedirect('person/'.$contact->id);
         $response->assertSessionHas('flash_notification');
         $this->assertDatabaseHas('participant', [
             'event_id' => $retreat->id,

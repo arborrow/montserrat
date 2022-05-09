@@ -29,6 +29,8 @@ class Contact extends Model implements Auditable
 
     protected $appends = ['full_name_with_city', 'agc_household_name'];
 
+    protected $with = array('prefix', 'suffix');
+
     public function generateTags(): array
     {
         return [
