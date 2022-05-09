@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('sort_order')->nullable();
             $table->string('type');
+            $table->string('variable_name');
             $table->timestamps();
             $table->softDeletes();
 

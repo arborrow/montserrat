@@ -168,7 +168,8 @@ class MailgunController extends Controller
         $messages = \App\Models\Message::whereIsProcessed(0)->get();
 
         foreach ($messages as $message) {
-            // dd($message->mailgun_id, $message->body);
+
+            // #TOUCHPOINT - if this is a touchpoint
             // if we have from and to ids for contacts go ahead and create a touchpoint
             if (($message->from_id > 0) && ($message->to_id > 0) && (str_contains($message->recipients,'touchpoint'))) {
                 $touch = new \App\Models\Touchpoint();
@@ -181,9 +182,8 @@ class MailgunController extends Controller
                 $message->is_processed=1;
                 $message->save();
             }
-            //dd($message);
 
-            // if this is a donation for a registration
+            // #DONATION REGISTRATION - if this is a donation payment for a retreat
             if (str_contains($message->recipients,'registration')) {
                 $touch = new \App\Models\Touchpoint();
                 $touch->person_id = $message->to_id;
@@ -199,7 +199,6 @@ class MailgunController extends Controller
                 $type_of_offering = $this->extract_value($message->body, "Type of Offering:\n");
                 $retreat = $this->extract_value($message->body, "Retreat:\n");
                 $contribution = $this->extract_value_between($message->body, "contribution of *","*!");
-
                 dd($donor_name, $donor_email, $donor_address, $donor_phone,
                 $type_of_offering, $retreat, $contribution, $message->body, $touch);
 
@@ -211,8 +210,7 @@ class MailgunController extends Controller
                 $message->save();
             }
 
-            // if this is an order for a retreat
-
+            // #ORDER - if this is an order for a retreat
             if (str_contains($message->recipients,'order')) {
                 $touch = new \App\Models\Touchpoint();
                 $touch->person_id = $message->to_id;
@@ -222,171 +220,103 @@ class MailgunController extends Controller
 
                 $order = collect([]);
 
-                $retreat_info = $this->extract_value_between($message->body, "SUBTOTAL", "Salutation:");
-                if (is_null($retreat_info)) {
-                    $retreat_info = $this->extract_value_between($message->body, "SUBTOTAL", "Salutacion:");
+                $message_info = $this->extract_value_between($message->body, "SUBTOTAL", "Item Subtotal");
+                $retreat = explode("\n",$message_info);
+
+                $order->order_number = $this->extract_value_between($message->body, "Order #",".");
+                $order->retreat_category=$retreat[0];
+                $order->retreat_sku = $retreat[1];
+                $order->retreat_description = trim(substr($retreat[2],0, strpos($retreat[2],"(")));
+                $order->retreat_dates = substr($retreat[2], strpos($retreat[2],"(") + 1, strpos($retreat[2],")") - (strpos($retreat[2],"(") +1));
+
+                // dd($year,$retreat_number,$idnumber,$event);
+                //TODO: rather than trying to determine if the date in the message are in English or Spanish
+                // get the year, retreat number and create the idnumber, lookup the event, and get the retreat start date from the actual event
+                $year = substr($order->retreat_dates, strpos($order->retreat_dates,",") +2);
+                $retreat_number = substr($order->retreat_description,
+                    strpos($order->retreat_description, "#") + 1,
+                    (strpos($order->retreat_description, " ") - strpos($order->retreat_description, "#"))
+                );
+                $idnumber = strval($year).$retreat_number;
+                $event = \App\Models\Retreat::whereIdnumber($idnumber)->first();
+                if (is_null($event)) {
+                    $order->retreat_start_date = null;
+                } else {
+                    $order->retreat_start_date = $event->start_date;
                 }
-                $retreat = explode("\n",$retreat_info);
-                if (strpos($retreat[0], "Retiros en Español") === false) {
-                    // dd($retreat,strpos($retreat[0], "Retiros en Español") === false);
-                    $order->order_number = $this->extract_value_between($message->body, "Order #",".");
-                    $order->salutation = $this->extract_value($message->body, "Salutation:\n");
-                    $order->name = $this->extract_value($message->body, "Name:\n");
-                    $order->full_address = $this->extract_value($message->body, "Address:\n");
-                    $order->phone_number = $this->extract_value($message->body, "Phone Number:\n");
-                    $order->phone_type = $this->extract_value($message->body, "Phone Type:\n");
-                    $order->email = $this->extract_value($message->body, "Email:\n");
-                    $order->date_of_birth = $this->extract_value($message->body, "Date Of Birth:\n");
-                    $order->emergency_contact = $this->extract_value($message->body, "Emergency Contact:\n");
-                    $order->emergency_contact_relationship = $this->extract_value($message->body, "Emergency Contact Relationship:\n");
-                    $order->emergency_contact_phone_number = $this->extract_value($message->body, "Emergency Contact Phone Number:\n");
-                    $order->parish = $this->extract_value($message->body, "Parish:\n");
-                    $order->primary_language = $this->extract_value($message->body, "Primary Language:\n");
-                    $order->hear_about = $this->extract_value($message->body, "How did you hear about Montserrat?:\n");
-                    $order->hear_other = $this->extract_value($message->body, "If \"Other\" please elaborate: :");
-                    $order->hear_retreat = $this->extract_value($message->body, "How did you hear about this particular retreat?:\n");
-                    $order->hear_ambassador = $this->extract_value($message->body, "If \"Retreat Ambassador\" please name them::");
-                    $order->room_preference = $this->extract_value($message->body, "Room Preference:\n");
-                    $order->dietary = $this->extract_value($message->body, "Dietary Restrictions, Food Allergies, or Other Special Needs::");
-                    dd($order,$message->body, $message->id);
-                    $order->comments = $this->extract_value($message->body, "Comments:");
-                    $order->spouse_name = $this->extract_value($message->body, "Spouse's Name:\n");
-                    $order->spouse_cell_phone = $this->extract_value($message->body, "Spouse's Cell Phone:\n");
-                    $order->spouse_email = $this->extract_value($message->body, "Spouse's Email:\n");
-                    $order->spouse_date_of_birth = $this->extract_value($message->body, "Spouse's Date of Birth:\n");
-                    $order->spouse_emergency_contact = $this->extract_value($message->body, "Spouse's Emergency Contact:\n");
-                    $order->spouse_emergency_contact_relationship = $this->extract_value($message->body, "Spouse's Emergency Contact Relationship:\n");
-                    $order->spouse_emergency_contact_phone_number = $this->extract_value($message->body, "Spouse's Emergency Contact Phone Number:\n");
-                    $order->spouse_dietary = $this->extract_value($message->body, "Spouse's Dietary Restrictions, Food Allergies, or Other Special Needs:");
-                    $order->amount = $this->extract_value_between($message->body, "\nTOTAL", "$0.00");
 
-                    $address = explode(", ", $order->full_address);
-                    $addr = collect([]);
-                    $addr->street = trim($address[0]);
-                    $addr->city = trim($address[1]);
-                    $address_detail = explode(" ", $address[2]);
-                    $addr->state = trim($address_detail[0]);
-                    $addr->zip = trim($address_detail[1]);
-                    $addr->country = (sizeof($address_detail) == 4) ? trim($address_detail[2]) . " " . trim($address_detail[3]) : trim($address_detail[2]);
-
-                    $order->address_street = $addr->street;
-                    $order->address_city = $addr->city;
-                    $order->address_state = $addr->state;
-                    $order->address_zip = $addr->zip;
-                    $order->address_country = $addr->country;
-
-                } else { // Spanish retreat
-
-                    $order->order_number = $this->extract_value_between($message->body, "Order #",".");
-                    $order->salutation = $this->extract_value($message->body, "Salutacion:\n");
-                    $order->name = $this->extract_value($message->body, "Nombre/Apellido:\n");
-                    $order->full_address = $this->extract_value($message->body, "Direccion:\n");
-                    $order->phone_number = $this->extract_value($message->body, "Numero de Telefono de Casa:\n");
-                    $order->phone_number_cell = $this->extract_value($message->body, "Numero de Telefono Movil:\n");
-                    $order->phone_number_work = $this->extract_value_between($message->body, "Numero de Telefono de Trabajo:\n","Contacto de Emergencia:");
-                    $order->phone_type = null;
-                    $order->email = $this->extract_value($message->body, "Correo Electronico:\n");
-
-                    $order->date_of_birth = $this->extract_value($message->body, "Fecha de Nacimiento:\n");
-                    $order->emergency_contact = $this->extract_value($message->body, "Contacto de Emergencia:\n");
-                    $order->emergency_contact_relationship = $this->extract_value($message->body, "Relacion a Contacto de Emergencia:\n");
-                    $order->emergency_contact_phone_number = $this->extract_value($message->body, "Numero de Telefono de Contacto de Emergencia:\n");
-                    $order->parish = $this->extract_value($message->body, "Parroquia:\n");
-                    $order->primary_language = $this->extract_value($message->body, "Lenguage Primario:\n");
-                    $order->hear_about = $this->extract_value($message->body, "¿Cómo se enteró de montserrat?:\n");
-                    $order->hear_other = $this->extract_value($message->body, "Si otro, por favor elabora:");
-                    $order->hear_retreat = $this->extract_value($message->body, "¿Cómo se enteró de este retiro en particular?:\n");
-                    $order->hear_ambassador = $this->extract_value($message->body, "Si es Embajador del retiro, ¿nombre del Embajador?:");
-                    $order->room_preference = $this->extract_value($message->body, "Preferencia de Habitación:\n");
-                    $order->dietary = $this->extract_value($message->body, "Restricciones dietéticas, alergias a los alimentos u otras necesidades\nespeciales:\n");
-                    $order->comments = $this->extract_value($message->body, "Comentarios:");
-
-                    $order->spouse_salutation = $this->extract_value($message->body, "Salutacion del Conyuge:\n");
-                    $order->spouse_name = $this->extract_value($message->body, "Nombre del Conyuge:\n");
-                    $order->spouse_cell_phone = $this->extract_value_between($message->body, "Numero de Telefono del Conyuge:\n","Correo electronico del Conyuge");
-                    $order->spouse_email = $this->extract_value_between($message->body, "Correo electronico del Conyuge:\n","Fecha de nacimiento del Conyuge");
-                    $order->spouse_date_of_birth = $this->extract_value_between($message->body, "Fecha de nacimiento del Conyuge:\n","1\n");
-
-                    $order->spouse_emergency_contact = null;
-                    $order->spouse_emergency_contact_relationship = null;
-                    $order->spouse_emergency_contact_phone_number = null;
-                    $order->spouse_dietary = null;
-
-                    $order->amount = $this->extract_value_between($message->body, "\nTOTAL", "$0.00");
-
-                    $address = explode(", ", $order->full_address);
-                    dd($order, $address, $message->body);
-                    $addr = collect([]);
-                    $addr->street = trim($address[0]);
-                    $addr->city = trim($address[1]);
-                    $address_detail = explode(" ", $address[2]);
-                    $addr->state = trim($address_detail[0]);
-                    $addr->zip = trim($address_detail[1]);
-                    $addr->country = (sizeof($address_detail) == 4) ? trim($address_detail[2]) . " " . trim($address_detail[3]) : trim($address_detail[2]);
-
-                    $order->address_street = $addr->street;
-                    $order->address_city = $addr->city;
-                    $order->address_state = $addr->state;
-                    $order->address_zip = $addr->zip;
-                    $order->address_country = $addr->country;
-
-                }
+                $order->retreat_idnumber = $idnumber;
+                $order->amount = $this->extract_value_between($message->body, "\nTOTAL", "$0.00");
 
                 switch ($retreat[0]) {
                     case "Open Retreat (Men/Women/Couples)" :
-                        $order->retreat_category=$retreat[0];
-                        $order->retreat_sku = $retreat[1];
-                        $order->retreat_description = trim(substr($retreat[2],0, strpos($retreat[2],"(")));
-
-                        $retreat_dates = substr($retreat[2], strpos($retreat[2],"(") + 1, strpos($retreat[2],")") - (strpos($retreat[2],"(") +1));
-                        $order->retreat_start_date = \Carbon\Carbon::parse(trim(substr($retreat_dates, 0, strpos($retreat_dates,"-"))) . substr($retreat_dates, strpos($retreat_dates,",")));
-                        $order->retreat_idnumber = trim($order->retreat_start_date->year . substr($order->retreat_description, strpos($order->retreat_description, "#") + 1, (strpos($order->retreat_description, " ") - strpos($order->retreat_description, "#"))));
                         $registration_type = explode("/",$retreat[3]);
                         $order->retreat_registration_type = trim($registration_type[0]);
                         $order->retreat_couple = trim($registration_type[1]);
                         break;
                     case "Women's Retreat" :
-                        $order->retreat_category=$retreat[0];
-                        $order->retreat_sku = $retreat[1];
-                        $order->retreat_description = trim(substr($retreat[2],0, strpos($retreat[2],"(")));
-
-                        $retreat_dates = substr($retreat[2], strpos($retreat[2],"(") + 1, strpos($retreat[2],")") - (strpos($retreat[2],"(") +1));
-                        $order->retreat_start_date = \Carbon\Carbon::parse(trim(substr($retreat_dates, 0, strpos($retreat_dates,"-"))) . substr($retreat_dates, strpos($retreat_dates,",")));
-                        $order->retreat_idnumber = trim($order->retreat_start_date->year . substr($order->retreat_description, strpos($order->retreat_description, "#") + 1, (strpos($order->retreat_description, " ") - strpos($order->retreat_description, "#"))));
                         $registration_type = explode("/",$retreat[2]);
                         $order->retreat_registration_type = trim($registration_type[1]);
-
-                        // dd($order, $retreat, $message->body, $message);
+                        break;
+                    case "Men's Retreat" :
+                        $registration_type = explode("/",$retreat[2]);
+                        $order->retreat_registration_type = trim($registration_type[1]);
                         break;
                     case "Registro para Retiros en Español" :
-                        $order->retreat_category=$retreat[0];
-                        $order->retreat_sku = $retreat[1];
-                        $order->retreat_description = trim(substr($retreat[2],0, strpos($retreat[2],"(")));
-
-                        $retreat_dates = substr($retreat[2], strpos($retreat[2],"(") + 1, strpos($retreat[2],")") - (strpos($retreat[2],"(") +1));
-                        $order->retreat_start_date = \Carbon\Carbon::parse(trim(substr($retreat_dates, 0, strpos($retreat_dates,"-"))) . substr($retreat_dates, strpos($retreat_dates,",")));
-                        $order->retreat_idnumber = trim($order->retreat_start_date->year . substr($order->retreat_description, strpos($order->retreat_description, "#") + 1, (strpos($order->retreat_description, " ") - strpos($order->retreat_description, "#"))));
                         $registration_type = explode("/",$retreat[2]);
                         $order->retreat_registration_type = trim($registration_type[1]);
                         $order->retreat_couple = trim($registration_type[2]);
-
                         break;
                 }
 
-                dd($order, $retreat, $addr, $message->body, $message);
+                $inventory = \App\Models\SsInventory::whereName($order->retreat_category)->first();
+                $custom_form = \App\Models\SsCustomForm::findOrFail($inventory->custom_form_id);
+                $fields = \App\Models\SsCustomFormField::whereFormId($custom_form->id)->orderBy('sort_order')->get();
+                $names = $fields->pluck('name')->toArray();
+                foreach ($fields as $field) {
+                    $extracted_value = $this->extract_value($message->body, $field->name.":\n");
+                    $order->{$field->variable_name} = $extracted_value;
 
-                $touch->notes = 'A donation from ' . $donor_name .
-                    '(' . $donor_email. ') has been received.';
+                    // to remove empty values where the extracted value is actually the name of the next field
+                    // ideally I would think this would be done by extract_value but that would require passing $names to it each time
+                    $field->search = array_search(str_replace(":","", $extracted_value),$names);
+                    if ($field->search) {
+                        $order->{$field->variable_name} = null;
+                    }
+                    // dd($message->body, $this->extract_value($message->body, $field->name.":\n"));
+                }
 
-                $touch->save();
+
+                dd($order);
+
+                // TODO: make sure full_address variable exists otherwise set order address parts to null
+                $address = explode(", ", $order->full_address);
+                $addr = collect([]);
+                $addr->street = trim($address[0]);
+                $addr->city = trim($address[1]);
+                $address_detail = explode(" ", $address[2]);
+                $addr->state = trim($address_detail[0]);
+                $addr->zip = trim($address_detail[1]);
+                $addr->country = (sizeof($address_detail) == 4) ? trim($address_detail[2]) . " " . trim($address_detail[3]) : trim($address_detail[2]);
+
+                $order->address_street = $addr->street;
+                $order->address_city = $addr->city;
+                $order->address_state = $addr->state;
+                $order->address_zip = $addr->zip;
+                $order->address_country = $addr->country;
+
+                dd($order, $retreat, $fields, $message->body);
+
+                }
+
+                // $touch->notes = 'Order #' . $order->order_number .' for #' . $order->idnumber . ' has been received.';
+
+                // $touch->save();
                 $message->is_processed=1;
                 $message->save();
             }
 
-        }
-        dd($messages);
         $messages = \App\Models\Message::whereIsProcessed(1)->get();
-        //dd($messages);
         return view('mailgun.processed', compact('messages'));
     }
 
