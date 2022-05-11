@@ -46,10 +46,10 @@ class MailgunController extends Controller
                         $message->body = str_replace("\r\n","\n", $message_email->getBodyPlain());
 
                         if (null !== $message_email->getSender()) {
-                            $message->from = self::clean_email((string) $message_email->getSender());
+                            $message->from = self::clean_email($message_email->getSender());
                         }
                         if (null !== $message_email->getRecipients()) {
-                            $message->recipients = self::clean_email((string) $message_email->getRecipients());
+                            $message->recipients = self::clean_email($message_email->getRecipients());
                         }
 
                         $headers = $event_item->getMessage()['headers'];
@@ -58,7 +58,7 @@ class MailgunController extends Controller
                             $list_of_to_addresses = explode(',',$headers['to']);
                             // dd($headers, $headers['to'],$list_of_to_addresses);
                             // for now only take the first to address
-                            $message->to = self::clean_email((string) $list_of_to_addresses[0]);
+                            $message->to = self::clean_email($list_of_to_addresses[0]);
                         }
 
                         $contact_from = \App\Models\Contact::whereHas('groups', function ($query) {
@@ -199,15 +199,13 @@ class MailgunController extends Controller
                 $type_of_offering = $this->extract_value($message->body, "Type of Offering:\n");
                 $retreat = $this->extract_value($message->body, "Retreat:\n");
                 $contribution = $this->extract_value_between($message->body, "contribution of *","*!");
-                dd($donor_name, $donor_email, $donor_address, $donor_phone,
-                $type_of_offering, $retreat, $contribution, $message->body, $touch);
 
                 $touch->notes = 'A donation from ' . $donor_name .
                     '(' . $donor_email. ') has been received.';
 
-                $touch->save();
+                //$touch->save();
                 $message->is_processed=1;
-                $message->save();
+                // $message->save();
             }
 
             // #ORDER - if this is an order for a retreat
@@ -287,7 +285,7 @@ class MailgunController extends Controller
                 }
 
 
-                dd($order);
+                // dd($order);
 
                 // TODO: make sure full_address variable exists otherwise set order address parts to null
                 $address = explode(", ", $order->full_address);
@@ -305,7 +303,7 @@ class MailgunController extends Controller
                 $order->address_zip = $addr->zip;
                 $order->address_country = $addr->country;
 
-                dd($order, $retreat, $fields, $message->body);
+                // dd($order, $retreat, $fields, $message->body);
 
                 }
 
@@ -313,7 +311,7 @@ class MailgunController extends Controller
 
                 // $touch->save();
                 $message->is_processed=1;
-                $message->save();
+                // $message->save();
             }
 
         $messages = \App\Models\Message::whereIsProcessed(1)->get();
