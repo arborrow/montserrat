@@ -243,8 +243,8 @@ class RegistrationController extends Controller
         }
 
         flash('Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a> added')->success();
-
-        return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $registration->contact_id);
+        return redirect(url($contact->contact_url));
+        // return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $registration->contact_id);
     }
 
     public function store_group(StoreGroupRegistrationRequest $request)
@@ -357,6 +357,7 @@ class RegistrationController extends Controller
 
         $registration = \App\Models\Registration::findOrFail($request->input('id'));
         $retreat = \App\Models\Retreat::findOrFail($request->input('event_id'));
+        $contact = \App\Models\Contact::findOrFail($registration->contact_id);
 
         $registration->event_id = $request->input('event_id');
         // TODO: pull this from the retreat's start_date and end_date
@@ -410,8 +411,9 @@ class RegistrationController extends Controller
         $registration->save();
 
         flash('Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a> updated')->success();
+        return redirect(url($contact->contact_url));
 
-        return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $registration->contact_id);
+//        return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $registration->contact_id);
     }
 
     /**
