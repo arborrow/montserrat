@@ -22,11 +22,10 @@
             <table class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>Registered</th>
+                        <th>Date Registered</th>
                         <th>Retreatant</th>
                         <th>Retreat</th>
-                        <th>Retreat Dates</th>
-                        <th>Attendance Confirmed</th>
+                        <th>Notes</th>
                         <th>Room</th>
                         <th>Deposit</th>
                     </tr>
@@ -42,9 +41,9 @@
                                 N/A
                             @endif
                         </td>
-                        <td><a href="retreat/{{$registration->event_id}}">{{ $registration->retreat->title }} ({{$registration->retreat->idnumber}})</a></td>
-                        <td>{{ date('F d, Y', strtotime($registration->retreat->start_date)) }} - {{ date('F d, Y', strtotime($registration->retreat->end_date)) }}</td>
-                        <td>{{ $registration->registration_confirm_date_text }}</td>
+                        <td><a href="retreat/{{$registration->event_id}}">{{ $registration->retreat->title }} ({{$registration->retreat->idnumber}})</a>
+                        <br />{{ date('F d, Y', strtotime($registration->retreat->start_date)) }} - {{ date('F d, Y', strtotime($registration->retreat->end_date)) }}</td>
+                        <td>{{ $registration->notes }}</td>
                         <td>
                             @if (isset($registration->room->name))
                                 <a href="room/{{$registration->room_id}}">{{ $registration->room->name }}</a>
