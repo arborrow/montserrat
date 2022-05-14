@@ -89,6 +89,7 @@ class SsCustomFormController extends Controller
         $custom_form_field->form_id = $request->input('id');
         $custom_form_field->name = $request->input('name');
         $custom_form_field->type = $request->input('type');
+        $custom_form_field->variable_name = $request->input('variable_name');
         $custom_form_field->sort_order = $request->input('sort_order');
         $custom_form_field->save();
 
@@ -183,6 +184,7 @@ class SsCustomFormController extends Controller
 
         $custom_form_field->name = $request->input('name');
         $custom_form_field->type = $request->input('type');
+        $custom_form_field->variable_name = $request->input('variable_name');
         $custom_form_field->sort_order = $request->input('sort_order');
 
         flash('SquareSpace Custom Form Field: <a href="'.url('admin/squarespace/custom_form/'.$custom_form_field->form_id).'">'.$custom_form_field->name.' ('. $custom_form_field->form->name . ')</a> updated')->success();

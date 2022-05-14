@@ -22,6 +22,10 @@
                                         {!! Form::text('type', $custom_form_field->type , ['class' => 'form-control']) !!}
                                     </div>
                                     <div class="col-lg-3 col-md-4">
+                                        {!! Form::label('variable_name', 'Variable name') !!}
+                                        {!! Form::text('variable_name', $custom_form_field->variable_name , ['class' => 'form-control']) !!}
+                                    </div>
+                                    <div class="col-lg-3 col-md-4">
                                         {!! Form::label('sort_order', 'Sort order') !!}
                                         {!! Form::text('sort_order', $custom_form_field->sort_order , ['class' => 'form-control']) !!}
                                     </div>

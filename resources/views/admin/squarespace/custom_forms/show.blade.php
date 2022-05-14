@@ -18,6 +18,7 @@
     <thead><caption>Custom form fields</caption>
         <th>Field name</th>
         <th>Type</th>
+        <th>Variable name</th>
         <th>Sort order</th>
     </thead>
     <tbody>
@@ -25,6 +26,7 @@
         <tr>
             <td><a href="{{ URL("admin/squarespace/custom_form_field/".$field->id."/edit") }}">{{ $field->name }}</a></td>
             <td>{{ $field->type }}</td>
+            <td>{{ $field->variable_name }}</td>
             <td>{{ $field->sort_order }}</td>
         </tr>
     @endforeach

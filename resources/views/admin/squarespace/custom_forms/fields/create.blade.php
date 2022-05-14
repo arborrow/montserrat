@@ -20,6 +20,10 @@
                         {!! Form::text('type', NULL , ['class' => 'form-control']) !!}
                     </div>
                     <div class="col-lg-3 col-md-4">
+                        {!! Form::label('variable_name', 'Variable name') !!}
+                        {!! Form::text('variable_name', NULL , ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="col-lg-3 col-md-4">
                         {!! Form::label('sort_order', 'Sort order') !!}
                         {!! Form::text('sort_order', NULL , ['class' => 'form-control']) !!}
                     </div>
