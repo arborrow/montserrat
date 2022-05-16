@@ -13,9 +13,20 @@
             </h1>
         @endCan
     </div>
-
     <table class="table table-striped table-bordered table-hover table-responsive-md">
-    <thead><caption>Custom form fields</caption>
+    <thead>
+        <caption>
+            Custom form fields
+            <span>
+                @can('create-squarespace-custom-form')
+                        <a href={{ action([\App\Http\Controllers\SsCustomFormController::class, 'create_field'],$custom_form->id) }}>
+                            {!! Html::image('images/create.png', 'Create Form Field',array('title'=>"Create Form Field",'class' => 'btn btn-light')) !!}
+                        </a>
+                @endCan
+            </span>
+
+        </caption>
+
         <th>Field name</th>
         <th>Type</th>
         <th>Variable name</th>

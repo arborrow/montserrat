@@ -84,18 +84,19 @@ class SsCustomFormController extends Controller
     public function store_field(Request $request)
     {
         $this->authorize('create-squarespace-custom-form');
-
+        $id = $request->input('id');
+        $custom_form = \App\Models\SsCustomForm::findOrFail($id);
         $custom_form_field = new \App\Models\SsCustomFormField;
-        $custom_form_field->form_id = $request->input('id');
+        $custom_form_field->form_id = $id;
         $custom_form_field->name = $request->input('name');
         $custom_form_field->type = $request->input('type');
         $custom_form_field->variable_name = $request->input('variable_name');
         $custom_form_field->sort_order = $request->input('sort_order');
         $custom_form_field->save();
 
-        flash('SquareSpace Custom Form: <a href="'.url('admin/squarespace/custom_form/'.$custom_form_field->form_id).'">'.$custom_form->name.'</a> added')->success();
+        flash('SquareSpace Custom Form: <a href="'.url('admin/squarespace/custom_form/'.$custom_form_field->form_id).'">'.$custom_form_field->name.'</a> field added')->success();
 
-        return Redirect::action([self::class, 'index']);
+        return Redirect::action([self::class, 'show'],$id);
 
     }
 
