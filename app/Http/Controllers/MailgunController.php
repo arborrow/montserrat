@@ -216,7 +216,8 @@ class MailgunController extends Controller
                 $touch->touched_at = $message->timestamp;
                 $touch->type = 'Other';
 
-                $order = collect([]);
+                $order = new \App\Models\SsOrder();
+                $order->message_id = $message->id;
 
                 $message_info = $this->extract_value_between($message->body, "SUBTOTAL", "Item Subtotal");
                 $retreat = explode("\n",$message_info);
@@ -236,17 +237,13 @@ class MailgunController extends Controller
                     (strpos($order->retreat_description, " ") - strpos($order->retreat_description, "#"))
                 );
                 $idnumber = strval($year).$retreat_number;
-                $event = \App\Models\Retreat::whereIdnumber($idnumber)->first();
-                if (is_null($event)) {
-                    $order->retreat_start_date = null;
-                } else {
-                    $order->retreat_start_date = $event->start_date;
-                }
-
                 $order->retreat_idnumber = $idnumber;
-                $order->amount = $this->extract_value_between($message->body, "\nTOTAL", "$0.00");
+                $event = \App\Models\Retreat::whereIdnumber($idnumber)->first();
+                $order->retreat_start_date = optional($event)->start_date;
+                $order->event_id = optional($event)->id;
 
-                switch ($retreat[0]) {
+                $order->deposit_amount = $this->extract_value_between($message->body, "\nTOTAL", "$0.00");
+            switch ($retreat[0]) {
                     case "Open Retreat (Men/Women/Couples)" :
                         $registration_type = explode("/",$retreat[3]);
                         $order->retreat_registration_type = trim($registration_type[0]);
@@ -305,13 +302,32 @@ class MailgunController extends Controller
 
                 // dd($order, $retreat, $fields, $message->body);
 
+                $order->save();
+
+
                 }
 
                 // $touch->notes = 'Order #' . $order->order_number .' for #' . $order->idnumber . ' has been received.';
 
                 // $touch->save();
                 $message->is_processed=1;
-                // $message->save();
+                $message->save();
+                dd($order,$message);
+
+                /*
+                gift_certificate_number
+                purchaser_title (use title)
+                purchaser_name (use name )
+                purchaser_address (use full_address)
+                purchaser_email (use email )
+                purchaser_mobile_phone (use mobile_phone)
+                purchaser_home_phone (use home_phone)
+                purchaser_work_phone (use work_phone)
+                recipient_email (use couple_email)
+                recipient_name (use couple_name)
+                recipient_phone (use couple_mobile_phone)
+                */
+
             }
 
         $messages = \App\Models\Message::whereIsProcessed(1)->get();
