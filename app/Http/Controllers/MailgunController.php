@@ -168,7 +168,6 @@ class MailgunController extends Controller
         $messages = \App\Models\Message::whereIsProcessed(0)->get();
 
         foreach ($messages as $message) {
-
             // #TOUCHPOINT - if this is a touchpoint
             // if we have from and to ids for contacts go ahead and create a touchpoint
             if (($message->from_id > 0) && ($message->to_id > 0) && (str_contains($message->recipients,'touchpoint'))) {
@@ -236,7 +235,7 @@ class MailgunController extends Controller
                     strpos($order->retreat_description, "#") + 1,
                     (strpos($order->retreat_description, " ") - strpos($order->retreat_description, "#"))
                 );
-                $idnumber = strval($year).$retreat_number;
+                $idnumber = trim(strval($year).$retreat_number);
                 $order->retreat_idnumber = $idnumber;
                 $event = \App\Models\Retreat::whereIdnumber($idnumber)->first();
                 $order->retreat_start_date = optional($event)->start_date;
@@ -262,8 +261,19 @@ class MailgunController extends Controller
                         $order->retreat_registration_type = trim($registration_type[1]);
                         $order->retreat_couple = trim($registration_type[2]);
                         break;
-                }
+                    case "Special Event - Man In The Ditch" :
+                        $idnumber='20220618';
+                        $order->retreat_idnumber = '20220618'; // hardcoded
+                        $order->retreat_dates = 'June 18, 2022';
+                        $event = \App\Models\Retreat::whereIdnumber($idnumber)->first();
+                        $order->retreat_start_date = optional($event)->start_date;
+                        $order->event_id = optional($event)->id;
+                        $order->retreat_description=$order->retreat_category;
 
+                    break;
+
+                }
+                //dd($order,$retreat);
                 $inventory = \App\Models\SsInventory::whereName($order->retreat_category)->first();
                 $custom_form = \App\Models\SsCustomForm::findOrFail($inventory->custom_form_id);
                 $fields = \App\Models\SsCustomFormField::whereFormId($custom_form->id)->orderBy('sort_order')->get();
@@ -300,7 +310,7 @@ class MailgunController extends Controller
                 $order->address_zip = $addr->zip;
                 $order->address_country = $addr->country;
 
-                // dd($order, $retreat, $fields, $message->body);
+                dd($order, $year, $retreat_number, $retreat, $fields, $message->body);
 
                 $order->save();
 
@@ -340,6 +350,23 @@ class MailgunController extends Controller
         $messages = \App\Models\Message::orderBy('mailgun_timestamp','desc')->paginate(25, ['*'], 'messages');
         //dd($messages);
         return view('mailgun.index', compact('messages'));
+    }
+
+    public function show($id) {
+
+        $this->authorize('show-mailgun');
+
+        $message = \App\Models\Message::with('contact_from','contact_to')->findOrFail($id);
+        return view('mailgun.show', compact('message'));
+    }
+
+    public function edit($id) {
+
+        $this->authorize('update-mailgun');
+
+        // $message = \App\Models\Message::with('contact_from','contact_to')->findOrFail($id);
+        // return view('mailgun.edit', compact('message'));
+        return null;
     }
 
 }

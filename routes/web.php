@@ -349,14 +349,14 @@ Route::middleware('web', 'activity')->group(function () {
 
     Route::get('calendar', [RetreatController::class, 'calendar'])->name('calendar');
 
-    Route::get('mailgun', [MailgunController::class, 'index'])->name('mailgun.index');
     Route::get('mailgun/get', [MailgunController::class, 'get'])->name('mailgun.get');
     Route::get('mailgun/process', [MailgunController::class, 'process'])->name('mailgun.process');
     Route::get('mailgun/clean', [MailgunController::class, 'clean_body'])->name('mailgun.clean');
-
     Route::post('mailgun/callback', function () {
         return 'Mailgun callback';
     });
+    Route::resource('mailgun', MailgunController::class);
+
 
     // Gate routes
     Route::get('gate/open/{hours?}', [GateController::class, 'open'])->name('gate.open');
