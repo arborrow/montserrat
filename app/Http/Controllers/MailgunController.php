@@ -183,28 +183,26 @@ class MailgunController extends Controller
             }
 
             // #DONATION REGISTRATION - if this is a donation payment for a retreat
-            if (str_contains($message->recipients,'registration')) {
+            if (str_contains($message->recipients,'donation')) {
                 $touch = new \App\Models\Touchpoint();
                 $touch->person_id = $message->to_id;
                 $touch->staff_id = $message->from_id;
                 $touch->touched_at = $message->timestamp;
                 $touch->type = 'Other';
+                $ss_donation = collect([]);
+                $ss_donation->name = $this->extract_value($message->body, "Donor Name:\n");
+                $ss_donation->email = $this->extract_value($message->body, "Donor Email:\n");
+                $ss_donation->full_address = $this->extract_value($message->body, "Donor Address:\n");
+                //$ss_donation->full_address = preg_replace("\n/", " ", $full_address);
+                $ss_donation->phone = $this->extract_value($message->body, "Donor Phone Number:\n");
+                $ss_donation->type_of_offering = $this->extract_value($message->body, "Type of Offering:\n");
+                $ss_donation->retreat = $this->extract_value($message->body, "Retreat:\n");
+                $ss_donation->contribution = $this->extract_value_between($message->body, "contribution of *","*!");
 
-                $donor_name = $this->extract_value($message->body, "Donor Name:\n");
-                $donor_email = $this->extract_value($message->body, "Donor Email:\n");
-                $donor_address = $this->extract_value($message->body, "Donor Address:\n");
-                $donor_address = preg_replace("\n/", " ", $donor_address);
-                $donor_phone = $this->extract_value($message->body, "Donor Phone Number:\n");
-                $type_of_offering = $this->extract_value($message->body, "Type of Offering:\n");
-                $retreat = $this->extract_value($message->body, "Retreat:\n");
-                $contribution = $this->extract_value_between($message->body, "contribution of *","*!");
-
-                $touch->notes = 'A donation from ' . $donor_name .
-                    '(' . $donor_email. ') has been received.';
-
+                // $touch->notes = 'A donation from ' . $donor_name .  '(' . $donor_email. ') has been received.';
                 //$touch->save();
-                $message->is_processed=1;
-                // $message->save();
+                // dd($ss_donation, $message->body);
+
             }
 
             // #ORDER - if this is an order for a retreat
@@ -310,35 +308,34 @@ class MailgunController extends Controller
                 $order->address_zip = $addr->zip;
                 $order->address_country = $addr->country;
 
-                dd($order, $year, $retreat_number, $retreat, $fields, $message->body);
 
                 $order->save();
 
 
                 }
 
-                // $touch->notes = 'Order #' . $order->order_number .' for #' . $order->idnumber . ' has been received.';
+            // $touch->notes = 'Order #' . $order->order_number .' for #' . $order->idnumber . ' has been received.';
 
-                // $touch->save();
-                $message->is_processed=1;
-                $message->save();
-                dd($order,$message);
+            // $touch->save();
+            $message->is_processed=1;
+            $message->save();
+            dd($message->body, optional($order), optional($ss_donation));
 
-                /*
-                gift_certificate_number
-                purchaser_title (use title)
-                purchaser_name (use name )
-                purchaser_address (use full_address)
-                purchaser_email (use email )
-                purchaser_mobile_phone (use mobile_phone)
-                purchaser_home_phone (use home_phone)
-                purchaser_work_phone (use work_phone)
-                recipient_email (use couple_email)
-                recipient_name (use couple_name)
-                recipient_phone (use couple_mobile_phone)
-                */
+            /*
+            gift_certificate_number
+            purchaser_title (use title)
+            purchaser_name (use name )
+            purchaser_address (use full_address)
+            purchaser_email (use email )
+            purchaser_mobile_phone (use mobile_phone)
+            purchaser_home_phone (use home_phone)
+            purchaser_work_phone (use work_phone)
+            recipient_email (use couple_email)
+            recipient_name (use couple_name)
+            recipient_phone (use couple_mobile_phone)
+            */
 
-            }
+        }
 
         $messages = \App\Models\Message::whereIsProcessed(1)->get();
         return view('mailgun.processed', compact('messages'));
