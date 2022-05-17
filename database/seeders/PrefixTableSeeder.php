@@ -155,7 +155,7 @@ class PrefixTableSeeder extends Seeder
             17 => [
                 'id' => 18,
                 'name' => 'Rev.',
-                'deleted_at' => null,Rvdmo. Sr.
+                'deleted_at' => null,
                 'remember_token' => null,
                 'created_at' => null,
                 'updated_at' => null,
