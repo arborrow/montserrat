@@ -234,6 +234,7 @@ class MailgunController extends Controller
                 $ss_donation->idnumber = ($ss_donation->retreat_description == "Individual Private Retreat") ? null : trim($year.$retreat_number);
                 $event = \App\Models\Retreat::whereIdnumber($ss_donation->idnumber)->first();
                 $ss_donation->event_id = optional($event)->id;
+                $ss_donation->comments = ($ss_donation->comments == 1) ? null : $ss_donation->comments;
                 $ss_donation->save();
                 // $touch->notes = 'A donation from ' . $donor_name .  '(' . $donor_email. ') has been received.';
                 //$touch->save();
@@ -369,7 +370,7 @@ class MailgunController extends Controller
                 $order->address_country = (sizeof($address_detail) == 4) ? trim($address_detail[2]) . " " . trim($address_detail[3]) : trim($address_detail[2]);
 
                 // dd($message->body, $order, $address,$address_detail);
-
+                $order->comments = ($order->comments == 1) ? null : $order->comments;
                 $order->couple_date_of_birth = ($order->couple_date_of_birth == 1) ? null : $order->couple_date_of_birth;
                 $order->save();
 
@@ -388,7 +389,7 @@ class MailgunController extends Controller
                 // dd($ss_donation, $message->body,);
             }
 
-            dd($message->body, 'Hmm, neither order or donation!', $message);
+            // dd($message->body, 'Hmm, neither order or donation!', $message);
 
             /*
             gift_certificate_number
