@@ -35,6 +35,9 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SnippetController;
+use App\Http\Controllers\SquarespaceController;
+use App\Http\Controllers\SquarespaceDonationController;
+use App\Http\Controllers\SquarespaceOrderController;
 use App\Http\Controllers\SsCustomFormController;
 use App\Http\Controllers\SsInventoryController;
 use App\Http\Controllers\StripeChargeController;
@@ -247,7 +250,7 @@ Route::middleware('web', 'activity')->group(function () {
         Route::get('stewards', [PersonController::class, 'stewards'])->name('stewards');
         Route::get('volunteers', [PersonController::class, 'volunteers'])->name('volunteers');
         Route::get('lastnames/{letter}', [PersonController::class, 'lastnames'])->name('lastnames')->where('letter', '[a-z]');
-        Route::get('duplicates', [PersonController::class, 'duplicates'])->name('duplicates');
+        Route::get('duplicates', [PersonController::class, 'duplicates'])->name('person.duplicates');
         Route::get('merge/{contact_id}/{merge_id?}', [PersonController::class, 'merge'])->name('merge');
         Route::get('merge_delete/{id}/{return_id}', [PersonController::class, 'merge_destroy'])->name('merge_delete');
     });
@@ -340,6 +343,11 @@ Route::middleware('web', 'activity')->group(function () {
     });
     Route::stripeWebhooks('stripe/webhooks');
 
+    Route::prefix('squarespace')->group(function () {
+        Route::resource('/', SquarespaceController::class);
+        Route::resource('donation', SquarespaceDonationController::class);
+        Route::resource('order', SquarespaceOrderController::class);
+    });
     Route::resource('touchpoint', TouchpointController::class);
     Route::get('touchpoint/add/{id}', [TouchpointController::class, 'add'])->name('touchpoint.add');
     Route::get('touchpoint/type/{staff_id}', [TouchpointController::class, 'index_type']);

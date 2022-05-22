@@ -8,15 +8,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 
-class SsOrder extends Model implements Auditable
+class SsDonation extends Model implements Auditable
 {
     use HasFactory;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
-    protected $table = 'ss_order';
+    protected $table = 'ss_donation';
 
-    protected $fillable = ['order_number'];
+    protected $fillable = ['message_id'];
 
     public function message()
     {

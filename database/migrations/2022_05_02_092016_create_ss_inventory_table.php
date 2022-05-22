@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->index('name');
             $table->integer('custom_form_id');
+            $table->integer('variant_options')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

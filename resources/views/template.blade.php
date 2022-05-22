@@ -57,6 +57,10 @@
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item"  href={{ route('touchpoint.index') }}>Touchpoints</a>
 							@endcan
+							@can('update-contact')
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item"  href={{ route('person.duplicates') }}>Duplicates</a>
+							@endcan
 						</div>
 					</li>
 					@endCan

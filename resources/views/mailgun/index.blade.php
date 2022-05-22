@@ -13,6 +13,8 @@
                             </a>
 
                         </span>
+                        <p class="lead">{{$messages->total()}} records</p>
+
                     </h1>
                 </div>
                 @if ($messages->isEmpty())
@@ -40,7 +42,7 @@
                             <td>{{ $message->is_processed ? 'Yes':'No' }}</td>
                         </tr>
                         @endforeach
-
+                        {{ $messages->links() }}
                     </tbody>
                 </table>
                 @endif
