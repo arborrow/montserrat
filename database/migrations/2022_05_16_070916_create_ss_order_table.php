@@ -61,6 +61,7 @@ return new class extends Migration
             $table->text('additional_names_and_phone_numbers', 65535)->nullable();
             $table->integer('message_id')->index('idx_message_id');
             $table->integer('event_id')->nullable()->index('idx_event_id');
+            $table->integer('participant_id')->nullable()->index('idx_participant_id');
             $table->text('email_body', 65535)->nullable();
             $table->boolean('is_processed')->nullable()->default(0);
             $table->timestamps();
