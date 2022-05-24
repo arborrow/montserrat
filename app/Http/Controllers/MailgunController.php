@@ -262,7 +262,7 @@ class MailgunController extends Controller
 
                 $retreat = explode("\n",$message_info);
                 $order->retreat_category=$retreat[0];
-
+                //dd($order);
                 $inventory = \App\Models\SsInventory::whereName($order->retreat_category)->first();
                 $custom_form = \App\Models\SsCustomForm::findOrFail($inventory->custom_form_id);
                 $fields = \App\Models\SsCustomFormField::whereFormId($custom_form->id)->orderBy('sort_order')->get();
@@ -313,7 +313,7 @@ class MailgunController extends Controller
                         $registration_type = explode(" / ",$product_variation);
                         $order->retreat_registration_type = trim($registration_type[1]);
                         break;
-                    case "Registro para Retiros en Español" :
+                    case "Retiro en Español" :
                         $registration_type = explode(" / ", $product_variation);
                         $retreat_number = substr($order->retreat_description,
                             strpos($order->retreat_description, "#") + 1,

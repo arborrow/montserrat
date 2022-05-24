@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-
+use \App\Traits\SquareSpaceTrait;
 
 class SquarespaceDonationController extends Controller
-{
+{   use SquareSpaceTrait;
     public function __construct()
     {
         $this->middleware('auth');
@@ -61,7 +61,7 @@ class SquarespaceDonationController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show a donation to confirm the retreatant for a SquareSpace order.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -70,6 +70,21 @@ class SquarespaceDonationController extends Controller
     {
         //
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function confirm($id)
+    {   $donation = \App\Models\SsDonation::findOrFail($id);
+        $matching_contacts = $this->matched_contacts($donation);
+        $retreats = $this->upcoming_retreats();
+        return view('squarespace.donation.confirm', compact('donation','matching_contacts','retreats'));
+
+    }
+
 
     /**
      * Update the specified resource in storage.

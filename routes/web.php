@@ -344,10 +344,15 @@ Route::middleware('web', 'activity')->group(function () {
     Route::stripeWebhooks('stripe/webhooks');
 
     Route::prefix('squarespace')->group(function () {
+        Route::get('order/{id}/confirm', [SquarespaceOrderController::class, 'confirm'])->name('squarespace.order.confirm');
+        Route::get('donation/{id}/confirm', [SquarespaceDonationController::class, 'confirm'])->name('squarespace.donation.confirm');
         Route::resource('/', SquarespaceController::class);
-        Route::resource('donation', SquarespaceDonationController::class);
-        Route::resource('order', SquarespaceOrderController::class);
+        Route::resource('donation', SquarespaceDonationController::class)->names([
+            'update' => 'squarespace.donation.update']);;
+        Route::resource('order', SquarespaceOrderController::class)->names([
+            'update' => 'squarespace.order.update']);
     });
+
     Route::resource('touchpoint', TouchpointController::class);
     Route::get('touchpoint/add/{id}', [TouchpointController::class, 'add'])->name('touchpoint.add');
     Route::get('touchpoint/type/{staff_id}', [TouchpointController::class, 'index_type']);

@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-
+use \App\Traits\SquareSpaceTrait;
 
 class SquarespaceOrderController extends Controller
-{
+{   use SquareSpaceTrait;
     public function __construct()
     {
         $this->middleware('auth');
@@ -25,31 +25,6 @@ class SquarespaceOrderController extends Controller
         $processed_orders = \App\Models\SsOrder::whereIsProcessed(1)->paginate(25, ['*'], 'ss_unprocessed_orders');
 
         return view('squarespace.order.index', compact('orders','processed_orders'));
-
-
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function donation_index()
-    {
-        $this->authorize('show-squarespace');
-        return view('squarespace.donation');
-
-
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function order_index()
-    {
-        $this->authorize('show-squarespace');
-        return view('squarespace.order');
 
 
     }
@@ -83,7 +58,8 @@ class SquarespaceOrderController extends Controller
      */
     public function show($id)
     {
-        //
+        $this->authorize('show-squarespace-order');
+
     }
 
     /**
@@ -94,7 +70,33 @@ class SquarespaceOrderController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $this->authorize('show-squarespace-order');
+        $order = \App\Models\SsOrder::findOrFail($id);
+        $retreats = $this->upcoming_retreats();
+        $list = $this->matched_contacts($order);
+        // dd($order, $lastnames, $emails, $mobile_phones, $home_phones, $work_phones, $contacts, $list);
+        return view('squarespace.order.edit', compact('order','list','retreats'));
+
+    }
+
+    /**
+     * Show an order to confirm the retreatant for a SquareSpace order.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function confirm($id)
+    {
+
+        $this->authorize('show-squarespace-order');
+        $order = \App\Models\SsOrder::findOrFail($id);
+        $retreats = $this->upcoming_retreats();
+        $matching_contacts = $this->matched_contacts($order);
+
+        // dd($order, $lastnames, $emails, $mobile_phones, $home_phones, $work_phones, $contacts, $list);
+        return view('squarespace.order.confirm', compact('order','matching_contacts','retreats'));
+
     }
 
     /**
