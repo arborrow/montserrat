@@ -28,5 +28,24 @@ class SsOrder extends Model implements Auditable
         return $this->hasOne(Retreat::class, 'id', 'event_id');
     }
 
+    public function retreatant()
+    {
+        return $this->hasOne(Contact::class, 'id', 'contact_id');
+    }
+
+    public function couple()
+    {
+        return $this->hasOne(Contact::class, 'id', 'couple_contact_id');
+    }
+
+    public function registration()
+    {
+        return $this->hasOne(Registration::class, 'id', 'participant_id');
+    }
+
+    public function getIsCoupleAttribute() {
+        return ($this->retreat_couple == "Couple" || $this->retreat_couple == "Pareja");
+    }
+
 
 }

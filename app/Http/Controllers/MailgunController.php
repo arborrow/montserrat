@@ -165,6 +165,12 @@ class MailgunController extends Controller
         // TODO: ensure that we validate who the mail is coming from - create environmental variable of array of acceptable senders
         // TODO: update database seeder for prefix table
         // TODO: write unit tests for stripe and mailgun functionality
+        // TODO: when processing the full_address parts count the number of commas before exploding and ensure that there are no more than expected. Remove the first comma until we have the number expected.
+        // TODO: for the address, attempt to normalize the state data (TX to Texas - may always be two state from squarespace - double check if that is the case)
+        // TODO: for the moment, I'm going to be lazy and assume US as the country
+        // TODO: room preference of None or Ninguna Preferencia (verify in SS) should be saved to the order as NULL
+        // TODO: normalize/map language names from SS versions to Polanco language table version
+        // TODO: evaluate whether gift certificate retreat field is necessary in ss_order table or if it is better just to use the retreat field
 
         $this->authorize('admin-mailgun');
         $messages = \App\Models\Message::whereIsProcessed(0)->get();
@@ -206,7 +212,7 @@ class MailgunController extends Controller
                 // dd($donation,$address_start_row, $address_end_row);
                 if (($address_end_row - $address_start_row) == 5) {
                     $ss_donation->address_street = ucwords(strtolower($donation[$address_start_row+1]));
-                    $ss_donation->address_street_2 = ucwords(strtolower($donation[$address_start_row+2]));
+                    $ss_donation->address_supplemental = ucwords(strtolower($donation[$address_start_row+2]));
                     $address_details = explode(",",$donation[$address_start_row+3]);
                 } else {
                     $ss_donation->address_street = ucwords(strtolower($donation[$address_start_row+1]));
@@ -356,7 +362,7 @@ class MailgunController extends Controller
                 $address = explode(", ", $order->full_address);
                 if (sizeof($address) == 4) {
                     $order->address_street = trim($address[0]);
-                    $order->address_street_2 = trim($address[1]);
+                    $order->address_supplemental = trim($address[1]);
                     $order->address_city = trim($address[2]);
                     $address_detail = explode(" ", $address[3]);
 
@@ -368,10 +374,15 @@ class MailgunController extends Controller
                 $order->address_state = trim($address_detail[0]);
                 $order->address_zip = trim($address_detail[1]);
                 $order->address_country = (sizeof($address_detail) == 4) ? trim($address_detail[2]) . " " . trim($address_detail[3]) : trim($address_detail[2]);
+                //dd($order,$message->body,\Carbon\Carbon::parse($order->date_of_birth), $order->couple_date_of_birth);
 
                 // dd($message->body, $order, $address,$address_detail);
                 $order->comments = ($order->comments == 1) ? null : $order->comments;
                 $order->couple_date_of_birth = ($order->couple_date_of_birth == 1) ? null : $order->couple_date_of_birth;
+                $order->date_of_birth = \Carbon\Carbon::parse($order->date_of_birth);
+                $order->date_of_birth = (isset($order->date_of_birth)) ? \Carbon\Carbon::parse($order->date_of_birth) : null;
+                $order->couple_date_of_birth = (isset($order->couple_date_of_birth)) ? \Carbon\Carbon::parse($order->couple_date_of_birth) : null;
+                // dd($order,$message->body);
                 $order->save();
 
                 }
@@ -424,7 +435,8 @@ class MailgunController extends Controller
         $this->authorize('show-mailgun');
 
         $message = \App\Models\Message::with('contact_from','contact_to')->findOrFail($id);
-        return view('mailgun.show', compact('message'));
+        $body = explode("\n",$message->body);
+        return view('mailgun.show', compact('message','body'));
     }
 
     public function edit($id) {

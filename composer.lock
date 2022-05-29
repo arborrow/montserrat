@@ -1463,16 +1463,16 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "7.4.2",
+            "version": "7.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "ac1ec1cd9b5624694c3a40be801d94137afb12b4"
+                "reference": "74a8602c6faec9ef74b7a9391ac82c5e65b1cdab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/ac1ec1cd9b5624694c3a40be801d94137afb12b4",
-                "reference": "ac1ec1cd9b5624694c3a40be801d94137afb12b4",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/74a8602c6faec9ef74b7a9391ac82c5e65b1cdab",
+                "reference": "74a8602c6faec9ef74b7a9391ac82c5e65b1cdab",
                 "shasum": ""
             },
             "require": {
@@ -1567,7 +1567,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
-                "source": "https://github.com/guzzle/guzzle/tree/7.4.2"
+                "source": "https://github.com/guzzle/guzzle/tree/7.4.3"
             },
             "funding": [
                 {
@@ -1583,7 +1583,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-20T14:16:28+00:00"
+            "time": "2022-05-25T13:24:33+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -2438,16 +2438,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v9.14.0",
+            "version": "v9.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "5356f15d008c1b23088ccf21a5fb4aa2f87af034"
+                "reference": "2ca86f96118635a79ee3389013ccab110ae14bea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/5356f15d008c1b23088ccf21a5fb4aa2f87af034",
-                "reference": "5356f15d008c1b23088ccf21a5fb4aa2f87af034",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/2ca86f96118635a79ee3389013ccab110ae14bea",
+                "reference": "2ca86f96118635a79ee3389013ccab110ae14bea",
                 "shasum": ""
             },
             "require": {
@@ -2613,7 +2613,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-05-24T14:03:46+00:00"
+            "time": "2022-05-25T18:18:07+00:00"
         },
         {
             "name": "laravel/helpers",
@@ -3255,16 +3255,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.0.19",
+            "version": "3.0.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "670df21225d68d165a8df38587ac3f41caf608f8"
+                "reference": "42a2f47dcf39944e2aee1b660ee55ab6ef69b535"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/670df21225d68d165a8df38587ac3f41caf608f8",
-                "reference": "670df21225d68d165a8df38587ac3f41caf608f8",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/42a2f47dcf39944e2aee1b660ee55ab6ef69b535",
+                "reference": "42a2f47dcf39944e2aee1b660ee55ab6ef69b535",
                 "shasum": ""
             },
             "require": {
@@ -3325,7 +3325,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.0.19"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.0.20"
             },
             "funding": [
                 {
@@ -3341,7 +3341,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-03T21:19:02+00:00"
+            "time": "2022-05-25T19:18:39+00:00"
         },
         {
             "name": "league/mime-type-detection",
@@ -4545,16 +4545,16 @@
         },
         {
             "name": "php-http/discovery",
-            "version": "1.14.1",
+            "version": "1.14.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/discovery.git",
-                "reference": "de90ab2b41d7d61609f504e031339776bc8c7223"
+                "reference": "c8d48852fbc052454af42f6de27635ddd916b959"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/discovery/zipball/de90ab2b41d7d61609f504e031339776bc8c7223",
-                "reference": "de90ab2b41d7d61609f504e031339776bc8c7223",
+                "url": "https://api.github.com/repos/php-http/discovery/zipball/c8d48852fbc052454af42f6de27635ddd916b959",
+                "reference": "c8d48852fbc052454af42f6de27635ddd916b959",
                 "shasum": ""
             },
             "require": {
@@ -4567,8 +4567,7 @@
                 "graham-campbell/phpspec-skip-example-extension": "^5.0",
                 "php-http/httplug": "^1.0 || ^2.0",
                 "php-http/message-factory": "^1.0",
-                "phpspec/phpspec": "^5.1 || ^6.1",
-                "puli/composer-plugin": "1.0.0-beta10"
+                "phpspec/phpspec": "^5.1 || ^6.1"
             },
             "suggest": {
                 "php-http/message": "Allow to use Guzzle, Diactoros or Slim Framework factories"
@@ -4607,9 +4606,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-http/discovery/issues",
-                "source": "https://github.com/php-http/discovery/tree/1.14.1"
+                "source": "https://github.com/php-http/discovery/tree/1.14.2"
             },
-            "time": "2021-09-18T07:57:46+00:00"
+            "time": "2022-05-25T07:26:05+00:00"
         },
         {
             "name": "php-http/httplug",

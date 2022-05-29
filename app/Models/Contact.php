@@ -248,6 +248,15 @@ class Contact extends Model implements Auditable
         }
     }
 
+    public function getAddressPrimaryCountryAttribute()
+    {
+        if (isset($this->address_primary->country_name)) {
+            return $this->address_primary->country_name;
+        } else {
+            return 0;
+        }
+    }
+
     public function getAddressPrimaryCountryIdAttribute()
     {
         if (isset($this->address_primary->country_id)) {

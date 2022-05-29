@@ -27,7 +27,7 @@
                         @foreach ($orders as $order)
                         <tr>
                             <td>
-                                <a href="{{ URL('squarespace/order/' . $order->id) }} ">{{ $order->created_at }}</a>
+                                <a href="{{ URL('squarespace/order/' . $order->id .'/edit') }} ">{{ $order->created_at }}</a>
                             </td>
                             <td>{{ ucwords(strtolower($order->name)) }}</td>
                             <td>{{ strtolower($order->email) }}</td>

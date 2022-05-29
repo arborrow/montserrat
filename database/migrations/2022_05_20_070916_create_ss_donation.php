@@ -17,10 +17,11 @@ return new class extends Migration
             $table->id();
             $table->integer('message_id')->index('idx_message_id');
             $table->integer('event_id')->nullable()->index('idx_event_id');
+            $table->integer('contact_id')->nullable()->index('idx_contact_id');
             $table->string('name')->nullable();
             $table->string('email')->nullable();
             $table->string('address_street')->nullable();
-            $table->string('address_street_2')->nullable();
+            $table->string('address_supplemental')->nullable();
             $table->string('address_city')->nullable();
             $table->string('address_state')->nullable();
             $table->string('address_zip')->nullable();
