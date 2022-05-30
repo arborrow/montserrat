@@ -257,6 +257,15 @@ class Contact extends Model implements Auditable
         }
     }
 
+    public function getAddressPrimaryCountryAbbreviationAttribute()
+    {
+        if (isset($this->address_primary->country_abbreviation)) {
+            return $this->address_primary->country_abbreviation;
+        } else {
+            return 0;
+        }
+    }
+
     public function getAddressPrimaryCountryIdAttribute()
     {
         if (isset($this->address_primary->country_id)) {

@@ -8,11 +8,9 @@
         </h1>
     </div>
     <div class="col-lg-12">
-        <p>
-            <a class="btn btn-light" data-toggle="collapse" href="#collapsedInstructions" role="button" aria-expanded="false" aria-controls="collapsedInstructions">
-                Instructions
-            </a>
-        </p>
+        <a class="btn btn-light" data-toggle="collapse" href="#collapsedInstructions" role="button" aria-expanded="false" aria-controls="collapsedInstructions">
+            Instructions
+        </a>
     </div>
         <div class="collapse" id="collapsedInstructions">
             <div class="card card-body">
@@ -103,7 +101,11 @@
                 <tbody>
                     <tr>
                         <td><strong>Title</strong></td>
-                        <td>
+                        @if ($ids['title'] == optional($order->retreatant)->prefix_id )
+                            <td class='table-success'>
+                        @else
+                            <td class='table-warning'>
+                        @endIf
                             {!! Form::select('title', $prefixes, $ids['title'], ['class' => 'form-control']) !!}
                             {{ optional($order->retreatant)->prefix_name }}
                         </td>
@@ -130,7 +132,11 @@
                     </tr>
                     <tr>
                         <td><strong>First Name</strong></td>
-                        <td>
+                        @if (trim(substr($order->name,0,strpos($order->name,' '))) == optional($order->retreatant)->first_name)
+                            <td class='table-success'>
+                        @else
+                            <td class='table-warning'>
+                        @endif
                             {!! Form::text('first_name', trim(substr($order->name,0,strpos($order->name,' '))), ['class' => 'form-control']) !!}
                             {{ optional($order->retreatant)->first_name }}
                         </td>
@@ -160,7 +166,11 @@
 
                     <tr>
                         <td><strong>Last Name</strong></td>
-                        <td>
+                        @if (trim(substr($order->name,strrpos($order->name,' '))) == optional($order->retreatant)->last_name)
+                            <td class='table-success'>
+                        @else
+                            <td class='table-warning'>
+                        @endif
                             {!! Form::text('last_name', trim(substr($order->name,strrpos($order->name,' '))), ['class' => 'form-control']) !!}
                             {{ optional($order->retreatant)->last_name }}
                         </td>
@@ -190,8 +200,12 @@
 
                     <tr>
                         <td><strong>Email</strong></td>
-                        <td>
-                            {!! Form::text('email', $order->email, ['class' => 'form-control']) !!}
+                        @if (trim($order->email) == optional($order->retreatant)->email_primary_text)
+                            <td class='table-success'>
+                        @else
+                            <td class='table-warning'>
+                        @endif
+                            {!! Form::text('email', trim($order->email), ['class' => 'form-control']) !!}
                             {{ optional($order->retreatant)->email_primary_text }}
                         </td>
                         @if ($order->is_couple)
@@ -250,7 +264,11 @@
                     @if (isset($order->address_street))
                     <tr>
                         <td><strong>Address Street</strong></td>
-                        <td>
+                        @if (trim($order->address_street) == optional($order->retreatant)->address_primary_street )
+                            <td class='table-success'>
+                        @else
+                            <td class='table-warning'>
+                        @endIf
                             {!! Form::text('address_street', $order->address_street, ['class' => 'form-control']) !!}
                             {{ optional($order->retreatant)->address_primary_street }}
                         </td>
@@ -262,7 +280,11 @@
                     @if (isset($order->address_supplemental))
                     <tr>
                         <td><strong>Address Supplemental</strong></td>
-                        <td>
+                        @if (trim($order->$order->address_supplemental) == optional($order->retreatant)->address_primary_supplemental )
+                            <td class='table-success'>
+                        @else
+                            <td class='table-warning'>
+                        @endIf
                             {!! Form::text('address_supplemental', $order->address_supplemental, ['class' => 'form-control']) !!}
                             {{ optional($order->retreatant)->address_primary_supplemental }}
                             @if ($order->is_couple)
@@ -273,8 +295,12 @@
                     @if (isset($order->address_city))
                     <tr>
                         <td><strong>Address City</strong></td>
-                        <td>
-                            {!! Form::text('address_supplemental', $order->address_city, ['class' => 'form-control']) !!}
+                        @if (trim($order->address_city) == optional($order->retreatant)->address_primary_city )
+                            <td class="table-success">
+                        @else
+                            <td class="table-warning">
+                        @endif
+                            {!! Form::text('address_city', $order->address_city, ['class' => 'form-control']) !!}
                             {{ optional($order->retreatant)->address_primary_city }}
                         </td>
                         @if ($order->is_couple)
@@ -285,7 +311,11 @@
                     @if (isset($order->address_state))
                     <tr>
                         <td><strong>Address State</strong></td>
-                        <td>
+                        @if ($ids['address_state'] == optional($order->retreatant)->address_primary_state_id )
+                            <td class="table-success">
+                        @else
+                            <td class="table-warning">
+                        @endIf
                             {!! Form::select('address_state', $states, $ids['address_state'], ['class' => 'form-control']) !!}
                             {{ optional($order->retreatant)->address_primary_state }}
                         </td>
@@ -297,7 +327,11 @@
                     @if (isset($order->address_zip))
                     <tr>
                         <td><strong>Address Zip</strong></td>
-                        <td>
+                        @if (trim($order->address_zip == optional($order->retreatant)->address_primary_postal_code))
+                            <td class='table-success'>
+                        @else
+                            <td class='table-warning'>
+                        @endIf
                             {!! Form::text('address_zip', $order->address_zip, ['class' => 'form-control']) !!}
                             {{ optional($order->retreatant)->address_primary_postal_code }}
                         </td>
@@ -309,10 +343,14 @@
                     @if (isset($order->address_country))
                     <tr>
                         <td data-toggle="tooltip" data-placement="top" title="Address Country defaults to US"><strong>Address Country * </strong></td>
-                        <td>
+                        @if ($ids['address_country'] == optional($order->retreatant)->address_primary_country_id)
+                            <td class='table-success'>
+                        @else
+                            <td class='table-warning'>
+                        @endif
                             {!! Form::label('address_country', $order->address_country) !!}
                             {!! Form::select('address_country', $countries, $ids['address_country'], ['class' => 'form-control']) !!}
-                            {{ optional($order->retreatant)->address_primary_country }}
+                            {{ optional($order->retreatant)->address_primary_country_abbreviation }}
                         </td>
                         @if ($order->is_couple)
                         <td></td>

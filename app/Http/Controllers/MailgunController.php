@@ -378,6 +378,7 @@ class MailgunController extends Controller
 
                 // dd($message->body, $order, $address,$address_detail);
                 $order->comments = ($order->comments == 1) ? null : $order->comments;
+                $order->date_of_birth = ($order->date_of_birth == 1) ? null : $order->date_of_birth;
                 $order->couple_date_of_birth = ($order->couple_date_of_birth == 1) ? null : $order->couple_date_of_birth;
                 $order->date_of_birth = \Carbon\Carbon::parse($order->date_of_birth);
                 $order->date_of_birth = (isset($order->date_of_birth)) ? \Carbon\Carbon::parse($order->date_of_birth) : null;

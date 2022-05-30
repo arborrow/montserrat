@@ -164,18 +164,17 @@ class SquarespaceOrderController extends Controller
                         $couple_contact->sort_name = $request->input('last_name') . ', ' . $request->input('first_name');
                         $couple_contact->display_name = $request->input('first_name') . ' ' . $request->input('last_name');
                         $couple_contact->save();
-
                     } else {
                         $couple_contact = \App\Models\Contact::findOrFail($couple_contact_id);
                     }
 
                 }
                 //dd($order, $request, $contact, $couple_contact, $event);
-                $order->contact_id = $contact->id;
-                $order->couple_contact_id = $couple_contact->id;
+                $order->contact_id = $contact->id; //there should always be something here
+                $order->couple_contact_id = (isset($couple_contact->id)) ? $couple_contact->id : null;
                 $order->event_id = $event_id;
                 $order->save();
-                return Redirect::action([self::class, 'edit'],['id' => $id]);
+                return Redirect::action([self::class, 'edit'],['order' => $id]);
 
             }
 
@@ -202,25 +201,59 @@ class SquarespaceOrderController extends Controller
                 $contact->nick_name = $request->input('nick_name');
             }
             $contact->save();
-            return Redirect::action([self::class, 'edit'],['order' => $id]);
 
-            // update phone info
+            // because of how the phone_ext field is handled by the model, reset to null on every update to ensure it gets removed and then re-added during the update
+            $phone_home_mobile = \App\Models\Phone::firstOrNew([
+                'contact_id'=>$contact_id,
+                'location_type_id'=>config('polanco.location_type.home'),
+                'phone_type'=>'Mobile']);
+            $phone_home_mobile->phone_ext = null;
+            // if mobile_phone is primary leave it as such
+            // dd($phone_home_mobile, $contact->primary_phone_location_name, config('polanco.location_type.home'), $contact->primary_phone_type, 'Mobile');
+            $phone_home_mobile->is_primary = ($contact->primary_phone_location_name == config('polanco.location_type.home') && $contact->primary_phone_type == 'Mobile') ? 1 : 0;
+            // if there is not primary phone then make home:mobile the primary one otherwise do nothing (use existing primary)
+            $phone_home_mobile->is_primary = ($contact->primary_phone_location_name == 'N/A' && $contact->primary_phone_type == null) ? 1 : $phone_home_mobile->is_primary;
+            $phone_home_mobile->phone = ($request->filled('mobile_phone')) ? $request->input('mobile_phone') : null;
+            $phone_home_mobile->save();
+
+            $phone_home_phone = \App\Models\Phone::firstOrNew([
+                'contact_id'=>$contact_id,
+                'location_type_id'=>config('polanco.location_type.home'),
+                'phone_type'=>'Phone']);
+            $phone_home_phone->phone_ext = null;
+            $phone_home_phone->is_primary = (($contact->primary_phone_location_name == config('polanco.location_type.home') && $contact->primary_phone_type == 'Phone')) ?  1 : 0;
+            $phone_home_phone->phone = ($request->filled('home_phone')) ? $request->input('home_phone') : null;
+            $phone_home_phone->save();
+
+            $phone_work_phone = \App\Models\Phone::firstOrNew([
+                'contact_id'=>$contact_id,
+                'location_type_id'=>config('polanco.location_type.work'),
+                'phone_type'=>'Phone']);
+            $phone_work_phone->phone_ext = null;
+            $phone_work_phone->is_primary = ($contact->primary_phone_location_name  == config('polanco.location_type.work') && $contact->primary_phone_type == 'Phone') ? 1 : 0;
+            $phone_work_phone->phone = ($request->filled('work_phone')) ? $request->input('work_phone') : null;
+            $phone_work_phone->save();
+
             // update address info
             // update email info
             // update dietary notes
             // update emergency contact info
-            
+
             // create registration (record deposit, comments, ss_order_number)
 /*
-            $registration = \App\Models\Registration::create[
-                'contact_id'=>$contact_id,
-                'event_id'=>$event_id,
-                'source'=>'Squarespace',
-                'deposit'=> $request->input('deposit_amount'),
-                'notes' => $request->input('comments'),
-                'role_id' => config('polanco.participant_role_id.retreatant'),
-                'status_id' => config('polanco.registration_status_id.registered'),
+            $registration = new \App\Models\Registration;
+            $registration->contact_id=$contact_id;
+            $registration->event_id=$event_id;
+            $registration->source='Squarespace';
+            $registration->deposit= $request->input('deposit_amount');
+            $registration->notes = $request->input('comments');
+            $registration->role_id = config('polanco.participant_role_id.retreatant');
+            $registration->status_id = config('polanco.registration_status_id.registered');
+            $registration->save();
             ];
+            return Redirect::action([self::class, 'edit'],['order' => $id]);
+
+
 */
 
             // $order->participant_id = $registration->id;
@@ -230,10 +263,7 @@ class SquarespaceOrderController extends Controller
 
         }
 
-
-
-
-        dd($order, $request, $contact, $couple_contact, $event);
+        dd($order, $request, $contact, (isset($couple)) ? $couple : null, $event);
     }
 
     /**
