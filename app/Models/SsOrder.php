@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use App\Traits\PhoneTrait;
+
 
 
 class SsOrder extends Model implements Auditable
@@ -13,6 +15,7 @@ class SsOrder extends Model implements Auditable
     use HasFactory;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+    use PhoneTrait;
 
     protected $table = 'ss_order';
 
@@ -45,6 +48,28 @@ class SsOrder extends Model implements Auditable
 
     public function getIsCoupleAttribute() {
         return ($this->retreat_couple == "Couple" || $this->retreat_couple == "Pareja");
+    }
+
+    public function getMobilePhoneFormattedAttribute() {
+        $clean_phone = $this->format_phone($this->mobile_phone);
+        return $clean_phone['phone_formatted'];
+    }
+    public function getCoupleMobilePhoneFormattedAttribute() {
+        $clean_phone = $this->format_phone($this->couple_mobile_phone);
+        return $clean_phone['phone_formatted'];
+    }
+
+    public function getHomePhoneFormattedAttribute() {
+        $clean_phone = $this->format_phone($this->home_phone);
+        return $clean_phone['phone_formatted'];
+    }
+    public function getCoupleHomePhoneFormattedAttribute() {
+        $clean_phone = $this->format_phone($this->couple_home_phone);
+        return $clean_phone['phone_formatted'];
+    }
+    public function getWorkPhoneFormattedAttribute() {
+        $clean_phone = $this->format_phone($this->work_phone);
+        return $clean_phone['phone_formatted'];
     }
 
 

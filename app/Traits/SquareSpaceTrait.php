@@ -2,15 +2,20 @@
 
 namespace App\Traits;
 use DB;
+use App\Models\Retreat;
 
 trait SquareSpaceTrait
 {   /*
     *  Returns list of upcoming and active retreats with id => retreat name
     */
-    public function upcoming_retreats() {
-        $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', \Carbon\Carbon::today()->subWeek())->where('is_active', '=', 1)->orderBy('start_date')->pluck('description', 'id');
+    public function upcoming_retreats($event_id = null) {
+        $retreats = Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', \Carbon\Carbon::today()->subWeek())->where('is_active', '=', 1)->orderBy('start_date')->pluck('description', 'id');
+
+        if (isset($event_id)) {
+            $event = Retreat::findOrFail($event_id);
+            $retreats[$event->id] = $event->idnumber . '-' . $event->title . '(' . date_format($event->start_date,"m-d-Y") . ')';
+        }
         return $retreats;
-        dd($retreats);
     }
 
     /*

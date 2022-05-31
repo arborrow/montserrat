@@ -380,12 +380,12 @@ class MailgunController extends Controller
                 $order->comments = ($order->comments == 1) ? null : $order->comments;
                 $order->date_of_birth = ($order->date_of_birth == 1) ? null : $order->date_of_birth;
                 $order->couple_date_of_birth = ($order->couple_date_of_birth == 1) ? null : $order->couple_date_of_birth;
+                //dd($order->date_of_birth, \Carbon\Carbon::parse($order->date_of_birth), $message);
                 $order->date_of_birth = \Carbon\Carbon::parse($order->date_of_birth);
                 $order->date_of_birth = (isset($order->date_of_birth)) ? \Carbon\Carbon::parse($order->date_of_birth) : null;
                 $order->couple_date_of_birth = (isset($order->couple_date_of_birth)) ? \Carbon\Carbon::parse($order->couple_date_of_birth) : null;
-                // dd($order,$message->body);
                 $order->save();
-
+                
                 }
 
             // $touch->notes = 'Order #' . $order->order_number .' for #' . $order->idnumber . ' has been received.';

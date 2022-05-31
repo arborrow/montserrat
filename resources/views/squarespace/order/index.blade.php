@@ -16,6 +16,7 @@
                     <thead>
                         <tr>
                             <th>Date</th>
+                            <th>Order#</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Retreat</th>
@@ -29,6 +30,7 @@
                             <td>
                                 <a href="{{ URL('squarespace/order/' . $order->id .'/edit') }} ">{{ $order->created_at }}</a>
                             </td>
+                            <td>{{ $order->order_number }}
                             <td>{{ ucwords(strtolower($order->name)) }}</td>
                             <td>{{ strtolower($order->email) }}</td>
                             <td>{{ $order->retreat_description }}  ({{ $order->retreat_dates }})</td>
@@ -53,6 +55,7 @@
                     <thead>
                         <tr>
                             <th>Date</th>
+                            <th>Order#</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Retreat</th>
@@ -66,6 +69,7 @@
                             <td>
                                 <a href="{{ URL('squarespace/order/' . $processed_order->id) }} ">{{ $processed_order->created_at }}</a>
                             </td>
+                            <td>{{ $processed_order->order_number }}
                             <td>{{ ucwords(strtolower($processed_order->name)) }}</td>
                             <td>{{ strtolower($processed_order->email) }}</td>
                             <td>{{ $processed_order->retreat_description }}  ({{ $processed_order->retreat_dates }})</td>
