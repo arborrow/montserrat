@@ -2,7 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Mailgun\Mailgun;
+use App\Models\Contact;
+use App\Models\Message;
+use App\Models\Retreat;
+use App\Models\SsCustomForm;
+use App\Models\SsCustomFormField;
+use App\Models\SsDonation;
+use App\Models\SsInventory;
+use App\Models\SsOrder;
+use App\Models\Touchpoint;
 
 class MailgunController extends Controller
 {
@@ -14,7 +24,7 @@ class MailgunController extends Controller
             Redirect('admin/config/mailgun')->send();
         }
     }
-
+    // TODO: convert this to a scheduled job to happen automatically and email admin if there is an error
     public function get()
     {
         $this->authorize('admin-mailgun');
@@ -37,7 +47,7 @@ class MailgunController extends Controller
                     try {
                         $message_email = $mg->messages()->show($event_item->getStorage()['url']);
 
-                        $message = \App\Models\Message::firstOrCreate(['mailgun_id'=>$event_item->getId()]);
+                        $message = Message::firstOrCreate(['mailgun_id'=>$event_item->getId()]);
                         $message->mailgun_timestamp = \Carbon\Carbon::parse($event_item->getTimestamp());
                         $message->storage_url = $event_item->getStorage()['url'];
                         $message->subject = $message_email->getSubject();
@@ -59,13 +69,13 @@ class MailgunController extends Controller
                             $message->to = self::clean_email($list_of_to_addresses[0]);
                         }
 
-                        $contact_from = \App\Models\Contact::whereHas('groups', function ($query) {
+                        $contact_from = Contact::whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.staff'));
                         })->whereHas('emails', function ($query) use ($message) {
                                 $query->whereEmail($message->from);
                         })->first();
 
-                        $contact_to = \App\Models\Contact::whereHas('emails', function ($query) use ($message) {
+                        $contact_to = Contact::whereHas('emails', function ($query) use ($message) {
                             $query->whereEmail($message->to);
                         })->first();
 
@@ -83,7 +93,7 @@ class MailgunController extends Controller
             }
         }
 
-        $messages = \App\Models\Message::orderBy('mailgun_timestamp','desc')->paginate(25, ['*'], 'messages');
+        $messages = Message::orderBy('mailgun_timestamp','desc')->paginate(25, ['*'], 'messages');
 
         return view('mailgun.index', compact('messages'));
     }
@@ -158,22 +168,23 @@ class MailgunController extends Controller
 
     /*
      * Processes stored mailgun emails after get which saves them to messages in db
-     *
+     * // TODO: convert this to a scheduled job to happen automatically and email admin if there is an error
      */
     public function process()
-    {   // TODO: add various permissions for mailgun/messages to database seeder
+    {   // TODO: add various permissions for mailgun/messages, squarespace order/donation to database seeder
+        // TODO: create database factories formailgun/messages, squarespace order/donation
         // TODO: ensure that we validate who the mail is coming from - create environmental variable of array of acceptable senders
-        // TODO: update database seeder for prefix table
-        // TODO: write unit tests for stripe and mailgun functionality
+        // TODO: update database seeder for prefix table to match updated list
+        // TODO: write unit tests for stripe, mailgun, squarespace order/donation controllers
         // TODO: when processing the full_address parts count the number of commas before exploding and ensure that there are no more than expected. Remove the first comma until we have the number expected.
-        // TODO: for the address, attempt to normalize the state data (TX to Texas - may always be two state from squarespace - double check if that is the case)
         // TODO: for the moment, I'm going to be lazy and assume US as the country
         // TODO: room preference of None or Ninguna Preferencia (verify in SS) should be saved to the order as NULL
         // TODO: normalize/map language names from SS versions to Polanco language table version
         // TODO: evaluate whether gift certificate retreat field is necessary in ss_order table or if it is better just to use the retreat field
+        // TODO: for the address, attempt to normalize the state data (TX to Texas - may always be two state from squarespace - double check if that is the case)
 
         $this->authorize('admin-mailgun');
-        $messages = \App\Models\Message::whereIsProcessed(0)->get();
+        $messages = Message::whereIsProcessed(0)->get();
 
         foreach ($messages as $message) {
             // #TOUCHPOINT - if this is a touchpoint
@@ -181,7 +192,7 @@ class MailgunController extends Controller
             // TODO: validate that from is from enforced domain (if applicable)
 
             if (($message->from_id > 0) && ($message->to_id > 0) && (str_contains($message->recipients,'touchpoint'))) {
-                $touch = new \App\Models\Touchpoint();
+                $touch = new Touchpoint();
                 $touch->person_id = $message->to_id;
                 $touch->staff_id = $message->from_id;
                 $touch->touched_at = $message->timestamp;
@@ -195,13 +206,13 @@ class MailgunController extends Controller
             // #DONATION REGISTRATION - if this is a donation payment for a retreat
             if (str_contains($message->recipients,'donation')) {
                 // TODO: create touchpoint indicating that the user made a donation
-                $touch = new \App\Models\Touchpoint();
+                $touch = new Touchpoint();
                 $touch->person_id = $message->to_id;
                 $touch->staff_id = $message->from_id;
                 $touch->touched_at = $message->timestamp;
                 $touch->type = 'Other';
 
-                $ss_donation = \App\Models\SsDonation::firstOrCreate([
+                $ss_donation = SsDonation::firstOrCreate([
                     'message_id' => $message->id,
                 ]);
 
@@ -238,7 +249,7 @@ class MailgunController extends Controller
                     (strpos($ss_donation->retreat_description, " ") - strpos($ss_donation->retreat_description, "#"))
                 ));
                 $ss_donation->idnumber = ($ss_donation->retreat_description == "Individual Private Retreat") ? null : trim($year.$retreat_number);
-                $event = \App\Models\Retreat::whereIdnumber($ss_donation->idnumber)->first();
+                $event = Retreat::whereIdnumber($ss_donation->idnumber)->first();
                 $ss_donation->event_id = optional($event)->id;
                 $ss_donation->comments = ($ss_donation->comments == 1) ? null : $ss_donation->comments;
                 $ss_donation->save();
@@ -250,28 +261,23 @@ class MailgunController extends Controller
 
             // #ORDER - if this is an order for a retreat
             if (str_contains($message->recipients,'order')) {
-                // TODO: create touchpoint that user registered for a retreat via the website
-                $touch = new \App\Models\Touchpoint();
-                $touch->person_id = $message->to_id;
-                $touch->staff_id = $message->from_id;
-                $touch->touched_at = $message->timestamp;
-                $touch->type = 'Other';
 
                 $order_number = $this->extract_value_between($message->body, "Order #",".");
-
-                $order = \App\Models\SsOrder::firstOrCreate([
+                $order_date = $this->extract_value_between($message->body, "Placed on","CT. View in Stripe");
+                $order = SsOrder::firstOrCreate([
                     'order_number' => $order_number,
                 ]);
 
                 $order->message_id = $message->id;
+                $order->created_at = (isset($order_date)) ? Carbon::parse($order_date) : Carbon::now();
                 $message_info = $this->extract_value_between($message->body, "SUBTOTAL", "Item Subtotal");
 
                 $retreat = explode("\n",$message_info);
                 $order->retreat_category=$retreat[0];
                 //dd($order);
-                $inventory = \App\Models\SsInventory::whereName($order->retreat_category)->first();
-                $custom_form = \App\Models\SsCustomForm::findOrFail($inventory->custom_form_id);
-                $fields = \App\Models\SsCustomFormField::whereFormId($custom_form->id)->orderBy('sort_order')->get();
+                $inventory = SsInventory::whereName($order->retreat_category)->first();
+                $custom_form = SsCustomForm::findOrFail($inventory->custom_form_id);
+                $fields = SsCustomFormField::whereFormId($custom_form->id)->orderBy('sort_order')->get();
 
                 // TODO: for now this is limited to two line; however, some refactoring could make this more dynamic with a while loop
                 if ($inventory->variant_options > 1) { // all variant options not on one line, so concatenante with next line
@@ -300,7 +306,7 @@ class MailgunController extends Controller
 
                 $idnumber = trim(strval($year).$retreat_number);
                 $order->retreat_idnumber = $idnumber;
-                $event = \App\Models\Retreat::whereIdnumber($idnumber)->first();
+                $event = Retreat::whereIdnumber($idnumber)->first();
                 $order->retreat_start_date = optional($event)->start_date;
                 $order->event_id = optional($event)->id;
 
@@ -334,7 +340,7 @@ class MailgunController extends Controller
                         $idnumber='20220618';
                         $order->retreat_idnumber = '20220618'; // hardcoded
                         $order->retreat_dates = 'June 18, 2022';
-                        $event = \App\Models\Retreat::whereIdnumber($idnumber)->first();
+                        $event = Retreat::whereIdnumber($idnumber)->first();
                         $order->retreat_start_date = optional($event)->start_date;
                         $order->event_id = optional($event)->id;
                         $order->retreat_description=$order->retreat_category;
@@ -385,7 +391,7 @@ class MailgunController extends Controller
                 $order->date_of_birth = (isset($order->date_of_birth)) ? \Carbon\Carbon::parse($order->date_of_birth) : null;
                 $order->couple_date_of_birth = (isset($order->couple_date_of_birth)) ? \Carbon\Carbon::parse($order->couple_date_of_birth) : null;
                 $order->save();
-                
+
                 }
 
             // $touch->notes = 'Order #' . $order->order_number .' for #' . $order->idnumber . ' has been received.';
@@ -419,14 +425,14 @@ class MailgunController extends Controller
 
         }
 
-        $messages = \App\Models\Message::whereIsProcessed(1)->get();
+        $messages = Message::whereIsProcessed(1)->paginate(25, ['*'], 'messages');
         return view('mailgun.processed', compact('messages'));
     }
 
     public function index() {
-
+        // TODO: consider adding processed/unprocessed/all drowdown selector to filter results and combine processed and index blades into one
         $this->authorize('show-mailgun');
-        $messages = \App\Models\Message::orderBy('mailgun_timestamp','desc')->paginate(25, ['*'], 'messages');
+        $messages = Message::orderBy('mailgun_timestamp','desc')->paginate(25, ['*'], 'messages');
         //dd($messages);
         return view('mailgun.index', compact('messages'));
     }
@@ -435,7 +441,7 @@ class MailgunController extends Controller
 
         $this->authorize('show-mailgun');
 
-        $message = \App\Models\Message::with('contact_from','contact_to')->findOrFail($id);
+        $message = Message::with('contact_from','contact_to')->findOrFail($id);
         $body = explode("\n",$message->body);
         return view('mailgun.show', compact('message','body'));
     }
@@ -444,7 +450,7 @@ class MailgunController extends Controller
 
         $this->authorize('update-mailgun');
 
-        // $message = \App\Models\Message::with('contact_from','contact_to')->findOrFail($id);
+        // $message = Message::with('contact_from','contact_to')->findOrFail($id);
         // return view('mailgun.edit', compact('message'));
         return null;
     }

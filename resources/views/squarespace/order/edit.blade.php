@@ -105,7 +105,9 @@
                             <strong>Full Name</strong>
                         </td>
                         <td>
-                            <h3>{{ ucwords(strtolower($order->name)) }}</h3>
+                            <h3>
+                                {!! Form::text('name', ucwords(strtolower($order->name)), ['class' => 'form-control']) !!}
+                            </h3>
                             @if (isset(optional($order->retreatant)->id))
                                 {!! $order->retreatant->contact_link_full_name !!}
                             @endIf
@@ -125,7 +127,9 @@
                         </td>
                         @if ($order->is_couple)
                         <td>
-                            <h3>{{ ucwords(strtolower($order->couple_name))  }}</h3><br>
+                            <h3>
+                                {!! Form::text('name', ucwords(strtolower($order->couple_name)), ['class' => 'form-control']) !!}
+                            </h3><br>
                             {{ optional($order->couple)->full_name }}
                         </td>
                         @endIf
@@ -137,7 +141,7 @@
                         @else
                             <td class='table-warning'>
                         @endIf
-                                {!! Form::select('title', $prefixes, $ids['title'], ['class' => 'form-control']) !!}
+                                {!! Form::select('title_id', $prefixes, $ids['title'], ['class' => 'form-control']) !!}
                                 {{ optional($order->retreatant)->prefix_name }}
                             </td>
                             @if ($order->is_couple)
@@ -146,7 +150,7 @@
                                 @else
                                     <td class='table-warning'>
                                 @endIf
-                                    {!! Form::select('couple_title', $prefixes, $ids['couple_title'], ['class' => 'form-control']) !!}
+                                    {!! Form::select('couple_title_id', $prefixes, $ids['couple_title'], ['class' => 'form-control']) !!}
                                     {{ optional($order->couple)->prefix_name }}
                                 </td>
                             @endIf
@@ -306,7 +310,11 @@
                     @if (isset($order->full_address))
                     <tr class='table-secondary'>
                         <td><strong>Address (Full)</strong></td>
-                        <td><strong>{{ ucwords(strtolower($order->full_address)) }}</strong></td>
+                        <td>
+                            <strong>
+                                {{ ucwords(strtolower($order->full_address)) }}
+                            </strong>
+                        </td>
                         @if ($order->is_couple)
                             <td></td>
                         @endIf
@@ -374,7 +382,7 @@
                         @if (!isset($ids['address_state']))
                             {{ strtoupper($order->address_state)}}
                         @endIf
-                            {!! Form::select('address_state', $states, $ids['address_state'], ['class' => 'form-control']) !!}
+                            {!! Form::select('address_state_id', $states, $ids['address_state'], ['class' => 'form-control']) !!}
                             {{ optional($order->retreatant)->address_primary_state }}
                         </td>
                         @if ($order->is_couple)
@@ -408,8 +416,8 @@
                         @else
                             <td class='table-warning'>
                         @endif
-                            {!! Form::label('address_country', $order->address_country) !!}
-                            {!! Form::select('address_country', $countries, $ids['address_country'], ['class' => 'form-control']) !!}
+                            {!! Form::label('address_country_id', $order->address_country) !!}
+                            {!! Form::select('address_country_id', $countries, $ids['address_country'], ['class' => 'form-control']) !!}
                             {{ optional($order->retreatant)->address_primary_country_abbreviation }}
                         </td>
                         @if ($order->is_couple)
@@ -459,7 +467,7 @@
                             @else
                                 <td class='table-warning'>
                             @endIf
-                            {!! Form::text('date_of birth', $order->couple_date_of_birth, ['class'=>'form-control flatpickr-date', 'autocomplete'=> 'off']) !!}
+                            {!! Form::text('couple_date_of birth', $order->couple_date_of_birth, ['class'=>'form-control flatpickr-date', 'autocomplete'=> 'off']) !!}
                             {{ (isset(optional($order->couple)->birth_date)) ? date('F d, Y', strtotime(optional($order->couple)->birth_date)) : null }}
                         </td>
                         @endIf
@@ -487,8 +495,8 @@
                     <tr>
                         <td><strong>Preferred Language</strong></td>
                         <td>
-                            {!! Form::label('preferred_language', isset($order->preferred_language) ? $order->preferred_language : 'N/A' ) !!}
-                            {!! Form::select('preferred_language', $languages, $ids['preferred_language'], ['class' => 'form-control']) !!}
+                            {!! Form::label('preferred_language_id', isset($order->preferred_language) ? $order->preferred_language : 'N/A' ) !!}
+                            {!! Form::select('preferred_language_id', $languages, $ids['preferred_language'], ['class' => 'form-control']) !!}
                             {{ optional($order->retreatant)->preferred_language_label }}
                         </td>
                         @if ($order->is_couple)
