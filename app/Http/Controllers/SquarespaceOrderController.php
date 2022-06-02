@@ -150,6 +150,10 @@ class SquarespaceOrderController extends Controller
         $event_id = $request->input('event_id');
         $event = Retreat::findOrFail($event_id);
 
+        // always update any data changes in order
+
+
+
         if ($order->is_processed) { // the order has already been processed
             flash('SquareSpace Order #<a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_number.'</a> has already been processed')->error()->important();
             return Redirect::action([self::class, 'index']);
@@ -202,35 +206,39 @@ class SquarespaceOrderController extends Controller
 
             $contact = Contact::findOrFail($contact_id);
 
-            if($request->filled('title')) {
-                $contact->prefix_id = $request->input('title');
-            }
-            // dd($contact,$request);
-            if($request->filled('first_name')) {
-                $contact->first_name = $request->input('first_name');
-            }
-            if($request->filled('middle_name')) {
-                $contact->middle_name = $request->input('middle_name');
-            }
-            if($request->filled('last_name')) {
-                $contact->last_name = $request->input('last_name');
-            }
-            if($request->filled('nick_name')) {
-                $contact->nick_name = $request->input('nick_name');
-            }
-            if($request->filled('date_of_birth')) {
-                $contact->birth_date = $request->input('date_of_birth');
-            }
-
+            $contact->prefix_id = ($request->filled('title')) ? $request->input('title') : $contact->prefix_id;
+            $contact->first_name = ($request->filled('first_name')) ? $request->input('first_name') : $contact->first_name;
+            $contact->middle_name = ($request->filled('middle_name')) ? $request->input('middle_name') : $contact->middle_name;
+            $contact->last_name = ($request->filled('last_name')) ? $request->input('last_name') : $contact->last_name;
+            $contact->nick_name = ($request->filled('nick_name')) ? $request->input('nick_name') : $contact->nick_name;
+            $contact->birth_date = ($request->filled('date_of_birth')) ? $request->input('date_of_birth') : $contact->birth_date;
             $contact->save();
 
             // TODO: save room_preference
-            // TODO: save parish
+
+            $room_preference = \App\Models\Note::firstOrNew([
+                'entity_table'=>'contact',
+                'entity_id'=>$contact_id,
+                'subject'=>'Room Preference'
+            ]);
+            $room_preference->note = $request->filled('room_preference') ? $request->input('room_preference') : $room_preference->note;
+            $room_preference->save();
+
+            // save parish
+            if ($request->input('parish_id') > 0) {
+                $relationship_parishioner = \App\Models\Relationship::firstOrNew([
+                    'contact_id_b'=>$contact_id,
+                    'relationship_type_id'=>config('polanco.relationship_type.parishioner'),
+                    'is_active'=>1
+                ]);
+                $relationship_parishioner->contact_id_a = $request->input('parish_id');
+                $relationship_parishioner->save();
+            }
+            //TODO: when updating order, change parish name to the display name of the parish
 
             $email_home = Email::firstOrNew([
                 'contact_id'=>$contact_id,
                 'location_type_id'=>config('polanco.location_type.home')]);
-            //TODO: determine how to handle primary email
             // $request->input('primary_email_location_id') == config('polanco.location_type.home') ? $email_home->is_primary = 1 : $email_home->is_primary = 0;
             $email_home->email = ($request->filled('email')) ? $request->input('email') : null;
             $email_home->is_primary = ($contact->primary_email_location_type_id == config('polanco.location_type.home')) ? 1 : 0;
@@ -379,6 +387,7 @@ class SquarespaceOrderController extends Controller
             }
 
             // TODO: if couple - check if the relationship exists and if not create it
+
             // create registration (record deposit, comments, ss_order_number)
 /*
             $registration = new \App\Models\Registration;
@@ -391,16 +400,18 @@ class SquarespaceOrderController extends Controller
             $registration->status_id = config('polanco.registration_status_id.registered');
             $registration->save();
             ];
-            return Redirect::action([self::class, 'edit'],['order' => $id]);
-
-
-*/
 
             // $order->participant_id = $registration->id;
             // create touchpoint
             // $order->touchpoint_id = $touchpoint->id;
-            // update order information and save order as processed
-            // return to SS order index to continue processing incoming orders
+
+*/
+
+
+            flash('SquareSpace Order #: <a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_number.'</a> processed')->success();
+
+            return Redirect::action([self::class, 'index']);
+
 
         }
 

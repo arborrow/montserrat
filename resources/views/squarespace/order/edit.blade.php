@@ -505,7 +505,7 @@
                         <td>
                             {!! Form::label('parish', ucwords(strtolower($order->parish))) !!}
                             {!! Form::hidden('parish', ucwords(strtolower($order->parish))) !!}
-                            {!! Form::select('parish_id', $parish_list, null, ['class' => 'form-control']) !!}
+                            {!! Form::select('parish_id', $parish_list, (null !== optional($order->retreatant->parish_id)) ? optional($order->retreatant)->parish_id : null, ['class' => 'form-control']) !!}
                             {{ optional($order->retreatant)->parish_name }}
                         </td>
                         @if ($order->is_couple)
