@@ -40,10 +40,11 @@
                 <div class="col-lg-4 col-md-6">
                     <h3>{!! Form::label('contact_id', 'Retreatant: ' .$order->name) !!}</h3>
                     {!! Form::select('contact_id', $matching_contacts, (isset($order->contact_id)) ? $order->contact_id : null, ['class' => 'form-control']) !!}
+                    {{ 'Contact ID:'. $order->contact_id }}
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <h3>{!! Form::label('event_id', 'Retreat Id#: '. $order->retreat_idnumber) !!}</h3>
-                    {!! Form::select('event_id', $retreats, (isset($order->event_id)) ? $order->event_id : null, ['class' => 'form-control']) !!}
+                    {!! Form::select('event_id', $retreats, (isset($order->event_id)) ? $order->event_id : $ids['retreat_id'], ['class' => 'form-control']) !!}
                     <strong>Retreat:</strong> {{ $order->retreat_description  }}<br />
                     <strong>Dates:</strong> {{ $order->retreat_dates}}<br />
                     <strong>Type:</strong> {{ $order->retreat_registration_type }}<br />
@@ -76,16 +77,17 @@
                 </div>
             </div>
             @endIf
+
             <div class="row text-center mt-3">
                 <div class="col-lg-12">
-                    @if (isset($order->contact_id))
+                    @if ($order->contact_id > 0)
                         {!! Form::submit('Proceed with Order',['class' => 'btn btn-dark']) !!}
                     @else
                         {!! Form::submit('Retrieve Contact Info',['class' => 'btn btn-info']) !!}
                     @endif
                 </div>
-
             </div>
+
             <hr>
             <table class="table table-bordered table-hover">
                 <thead>
@@ -122,6 +124,12 @@
                                         Show Nickname
                                     </a>
                                 </div>
+                                <div class='col-3'>
+                                    <a class="btn btn-secondary" data-toggle="collapse" href="#collapsedHealth" role="button" aria-expanded="false" aria-controls="collapsedHealth">
+                                        Show Health Notes
+                                    </a>
+                                </div>
+
                             </div>
 
                         </td>
@@ -357,12 +365,12 @@
                     @if (isset($order->address_city))
                     <tr>
                         <td><strong>Address City</strong></td>
-                        @if (trim($order->address_city) == optional($order->retreatant)->address_primary_city )
+                        @if (trim(strtolower($order->address_city)) == strtolower(optional($order->retreatant)->address_primary_city))
                             <td class="table-success">
                         @else
                             <td class="table-warning">
                         @endif
-                            {!! Form::text('address_city', $order->address_city, ['class' => 'form-control']) !!}
+                            {!! Form::text('address_city', ucwords(strtolower($order->address_city)), ['class' => 'form-control']) !!}
                             {{ optional($order->retreatant)->address_primary_city }}
                         </td>
                         @if ($order->is_couple)
@@ -450,6 +458,20 @@
                     </tr>
                     @endIf
 
+                    <tr class="collapse" id="collapsedHealth">
+                        <td><strong>Health Note</strong></td>
+                        <td class='table-warning'>
+                            {!! Form::text('health', null, ['class' => 'form-control']) !!}
+                            {{ optional($order->retreatant)->note_health_text }}
+                        </td>
+                        @if ($order->is_couple)
+                            <td class='table-warning'>
+                            {!! Form::text('couple_health', null, ['class' => 'form-control']) !!}
+                            {{ optional($order->couple)->note_health_text }}
+                        </td>
+                        @endIf
+                    </tr>
+
                     @if (isset($order->date_of_birth) || isset($order->couple_date_of_birth))
                     <tr>
                         <td><strong>Date of Birth</strong></td>
@@ -474,7 +496,7 @@
                     </tr>
                     @endIf
 
-                    @if (!($order->room_preference == 'Ninguna' || $order->room_preference == 'None'))
+                    @if (!($order->room_preference == 'Ninguna' || $order->room_preference == 'None' || null == $order->room_preference))
                     <tr>
                         <td><strong>Room Preference</strong></td>
                         @if (strtolower($order->room_preference) == strtolower(optional($order->retreatant)->note_room_preference_text))
@@ -513,7 +535,7 @@
                         <td>
                             {!! Form::label('parish', ucwords(strtolower($order->parish))) !!}
                             {!! Form::hidden('parish', ucwords(strtolower($order->parish))) !!}
-                            {!! Form::select('parish_id', $parish_list, (null !== optional($order->retreatant->parish_id)) ? optional($order->retreatant)->parish_id : null, ['class' => 'form-control']) !!}
+                            {!! Form::select('parish_id', $parish_list, (null !== optional($order->retreatant)->parish_id) ? optional($order->retreatant)->parish_id : null, ['class' => 'form-control']) !!}
                             {{ optional($order->retreatant)->parish_name }}
                         </td>
                         @if ($order->is_couple)
@@ -622,7 +644,19 @@
 
                 </tbody>
             </table>
+
             <hr>
+
+            <div class="row text-center mt-3">
+                <div class="col-lg-12">
+                    @if ($order->contact_id > 0)
+                        {!! Form::submit('Proceed with Order',['class' => 'btn btn-dark']) !!}
+                    @else
+                        {!! Form::submit('Retrieve Contact Info',['class' => 'btn btn-info']) !!}
+                    @endif
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-lg-6 col-md-12">
                     <strong>Message ID:</strong> <a href="{{URL('/mailgun/'.$order->message_id)}}">{{ $order->message_id }}</a><br />

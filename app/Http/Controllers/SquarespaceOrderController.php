@@ -26,6 +26,8 @@ use App\Models\Touchpoint;
 use App\Traits\PhoneTrait;
 use App\Traits\SquareSpaceTrait;
 
+use Carbon\Carbon;
+
 class SquarespaceOrderController extends Controller
 {
     use SquareSpaceTrait;
@@ -112,12 +114,15 @@ class SquarespaceOrderController extends Controller
         $order->preferred_language = ($order->preferred_language == 'Vietnamita') ? 'Vietnamese' : $order->preferred_language;
         $language = Language::whereIsActive(1)->where('label','LIKE',$order->preferred_language.'%')->first();
 
+        $retreat = Retreat::whereIdnumber($order->retreat_idnumber)->first();
+
         $ids = [];
         $ids['title'] = ($prefix == null) ? null : $prefix->id;
         $ids['couple_title'] = ($couple_prefix == null) ? null : $couple_prefix->id;
         $ids['preferred_language'] = ($language == null) ? null : $language->id;
         $ids['address_state'] = (isset($state->id)) ? $state->id : null;
         $ids['address_country'] = config('polanco.country_id_usa'); // assume US
+        $ids['retreat_id'] = isset($retreat->id) ? $retreat->id : null;
 
         // while probably not the most efficient way of doing this it gets me the result
         foreach ($parishes as $parish) {
@@ -128,7 +133,7 @@ class SquarespaceOrderController extends Controller
 
         // ensure contact_id is part of matching_contacts but if not then add it
         $matching_contacts = $this->matched_contacts($order);
-        if (! array_key_exists($order->contact_id,$matching_contacts)) {
+        if (! array_key_exists($order->contact_id,$matching_contacts) && isset($contact_id)) {
             $matching_contacts[$order->contact_id] = $order->retreatant->full_name_with_city;
         }
 
@@ -157,10 +162,9 @@ class SquarespaceOrderController extends Controller
         $couple_contact_id = $request->input('couple_contact_id');
         $event_id = $request->input('event_id');
         $event = Retreat::findOrFail($event_id);
-
         // always update any data changes in order
-        $order->contact_id = $contact_id;
-        $order->couple_contact_id = $couple_contact_id;
+        $order->contact_id = ($contact_id > 0) ? $contact_id : $order->contact_id;
+        $order->couple_contact_id = ($couple_contact_id > 0) ? $couple_contact_id : $order->couple_contact_id;
         $order->order_number = $request->input('order_number');
         $order->title = $request->input('title');
         $order->couple_title = $request->input('couple_title');
@@ -202,9 +206,9 @@ class SquarespaceOrderController extends Controller
             flash('SquareSpace Order #<a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_number.'</a> has already been processed')->error()->important();
             return Redirect::action([self::class, 'index']);
         } else { // the order has not been processed
-            if ((!isset($order->participant_id)) && (!isset($order->contact_id))) {
+            if (!isset($order->participant_id) && ($contact_id == 0 || ($order->is_couple && isset($couple_contact_id) ))) {
                 if ($contact_id == 0) {
-                    //dd('Create a new contact');
+                    // Create a new contact
                     $contact = new Contact;
                     $contact->contact_type = config('polanco.contact_type.individual');
                     $contact->subcontact_type = 0;
@@ -215,13 +219,14 @@ class SquarespaceOrderController extends Controller
                     $contact->sort_name = $request->input('last_name') . ', ' . $request->input('first_name');
                     $contact->display_name = $request->input('first_name') . ' ' . $request->input('last_name');
                     $contact->save();
+                    $order->contact_id = $contact->id;
                 } else {
                     $contact = Contact::findOrFail($contact_id);
                 }
 
                 if ($order->is_couple) {
                     if ($couple_contact_id == 0 && !isset($order->couple_contact_id)) {
-                        // dd('Create a new couple contact');
+                        // Create a new couple contact
                         $couple_contact = new Contact;
                         $couple_contact->first_name = $request->input('first_name');
                         $couple_contact->middle_name = $request->input('middle_name');
@@ -230,6 +235,7 @@ class SquarespaceOrderController extends Controller
                         $couple_contact->sort_name = $request->input('last_name') . ', ' . $request->input('first_name');
                         $couple_contact->display_name = $request->input('first_name') . ' ' . $request->input('last_name');
                         $couple_contact->save();
+                        $order->contact_contact_id = $couple_contact->id;
                     } else {
                         $couple_contact = Contact::findOrFail($couple_contact_id);
                     }
@@ -283,7 +289,6 @@ class SquarespaceOrderController extends Controller
             // if there is no current primary email then make this one the primary one
             $email_home->is_primary = ($contact->primary_email_location_name == 'N/A' ) ? 1 : $email_home->is_primary;
             $email_home->save();
-            //dd($email_home, $request->input('email'), $contact->primary_email_location_name, $contact );
 
             // because of how the phone_ext field is handled by the model, reset to null on every update to ensure it gets removed and then re-added during the update
             $phone_home_mobile = Phone::firstOrNew([
@@ -292,15 +297,12 @@ class SquarespaceOrderController extends Controller
                 'phone_type'=>'Mobile']);
             $phone_home_mobile->phone_ext = null;
             // if mobile_phone is primary leave it as such
-            // dd($phone_home_mobile, $contact->primary_phone_location_name, config('polanco.location_type.home'), $contact->primary_phone_type, 'Mobile');
-            $primary_start = $phone_home_mobile->is_primary;
             $phone_home_mobile->is_primary = ($contact->primary_phone_location_type_id == config('polanco.location_type.home') && $contact->primary_phone_type == 'Mobile') ? 1 : 0;
             // if there is not primary phone then make home:mobile the primary one otherwise do nothing (use existing primary)
-            $primary_middle = $phone_home_mobile->is_primary;
             $phone_home_mobile->is_primary = ($contact->primary_phone_location_name == 'N/A' && $contact->primary_phone_type == null) ? 1 : $phone_home_mobile->is_primary;
             $phone_home_mobile->phone = ($request->filled('mobile_phone')) ? $request->input('mobile_phone') : null;
             $phone_home_mobile->save();
-            $primary_end = $phone_home_mobile->is_primary;
+
             $phone_home_phone = Phone::firstOrNew([
                 'contact_id'=>$contact_id,
                 'location_type_id'=>config('polanco.location_type.home'),
@@ -335,13 +337,23 @@ class SquarespaceOrderController extends Controller
             $home_address->is_primary = ($contact->primary_address_location_name == 'N/A' ) ? 1 : $home_address->is_primary;
             $home_address->save();
 
+            // create dietary note
             $person_note_dietary = Note::firstOrNew([
                 'entity_table'=>'contact',
                 'entity_id'=>$contact->id,
                 'subject'=>'Dietary Note'
             ]);
-            $person_note_dietary->note = ($request->filled('dietary')) ? $request->input('dietary') : null;
+            $person_note_dietary->note = ($request->filled('dietary')) ? $request->input('dietary') : $person_note_dietary->note;
             $person_note_dietary->save();
+
+            // create health note
+            $person_note_health = Note::firstOrNew([
+                'entity_table'=>'contact',
+                'entity_id'=>$contact_id,
+                'subject'=>'Health Note'
+            ]);
+            $person_note_health->note = ($request->filled('health')) ? $request->input('health') : $person_note_health->note;
+            $person_note_health->save();
 
             //emergency contact info
             $emergency_contact = EmergencyContact::firstOrNew([
@@ -379,7 +391,6 @@ class SquarespaceOrderController extends Controller
                     'phone_type'=>'Mobile']);
                 $couple_phone_home_mobile->phone_ext = null;
                 // if mobile_phone is primary leave it as such
-                // dd($phone_home_mobile, $contact->primary_phone_location_name, config('polanco.location_type.home'), $contact->primary_phone_type, 'Mobile');
                 $couple_phone_home_mobile->is_primary = ($couple_contact->primary_phone_location_type_id == config('polanco.location_type.home') && $couple_contact->primary_phone_type == 'Mobile') ? 1 : 0;
                 // if there is not primary phone then make home:mobile the primary one otherwise do nothing (use existing primary)
                 $couple_phone_home_mobile->is_primary = ($couple_contact->primary_phone_location_name == 'N/A' && $couple_contact->primary_phone_type == null) ? 1 : $couple_phone_home_mobile->is_primary;
@@ -419,7 +430,7 @@ class SquarespaceOrderController extends Controller
             $touchpoint->staff_id = config('polanco.self.id');
             $touchpoint->type = 'Other';
             $touchpoint->notes = 'Squarespace Order #' . $order->order_number . ' received from ' . $contact->display_name;
-            $touchpoint->touched_at = \Carbon\Carbon::now();
+            $touchpoint->touched_at = Carbon::now();
             $touchpoint->save();
 
             // create registration (record deposit, comments, ss_order_number)
@@ -440,7 +451,7 @@ class SquarespaceOrderController extends Controller
 
             $order->participant_id = $registration->id;
             $order->touchpoint_id = $touchpoint->id;
-            // $order->is_processed = 1;
+            $order->is_processed = 1;
             $order->save();
 
             flash('SquareSpace Order #: <a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_number.'</a> processed')->success();
