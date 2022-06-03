@@ -80,6 +80,9 @@ class SquarespaceOrderController extends Controller
     public function show($id)
     {
         $this->authorize('show-squarespace-order');
+        $order = SsOrder::findOrFail($id);
+        return view('squarespace.order.show', compact('order'));
+
     }
 
 

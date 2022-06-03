@@ -349,7 +349,8 @@ Route::middleware('web', 'activity')->group(function () {
         Route::resource('donation', SquarespaceDonationController::class)->names([
             'update' => 'squarespace.donation.update']);;
         Route::resource('order', SquarespaceOrderController::class)->names([
-            'update' => 'squarespace.order.update']);
+            'update' => 'squarespace.order.update',
+            'destroy' => 'squarespace.order.destroy']);
     });
 
     Route::resource('touchpoint', TouchpointController::class);
