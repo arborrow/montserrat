@@ -14,7 +14,7 @@ trait SquareSpaceTrait
 
         if (isset($event_id)) {
             $event = Retreat::findOrFail($event_id);
-            $retreats[$event->id] = $event->idnumber . '-' . $event->title . '(' . date_format($event->start_date,"m-d-Y") . ')';
+            $retreats[$event->id] = $event->idnumber . '-' . $event->title . ' (' . date_format($event->start_date,"m-d-Y") . ')';
         }
         return $retreats;
     }

@@ -171,7 +171,7 @@ class SquarespaceOrderController extends Controller
         $order->contact_id = ($contact_id > 0) ? $contact_id : $order->contact_id;
         $order->couple_contact_id = ($couple_contact_id > 0) ? $couple_contact_id : $order->couple_contact_id;
         $order->order_number = ($request->filled('order_number')) ? $request->input('order_number') : $order->order_number;
-        $order->title = $request->input('title');
+        $order->title = ($request->filled('title')) ? $request->input('title') : $order->title ;
         $order->couple_title = $request->input('couple_title');
         $order->name = ($request->filled('name')) ? $request->input('name') : $order->name;
         $order->couple_name = ($request->filled('couple_name')) ? $request->input('couple_name') : $order->couple_name;
@@ -204,6 +204,7 @@ class SquarespaceOrderController extends Controller
         $order->couple_emergency_contact_relationship = $request->input('couple_emergency_contact_relationship');
         $order->couple_emergency_contact_phone = $request->input('couple_emergency_contact_phone');
         $order->deposit_amount = $request->input('deposit_amount');
+        $order->additional_names_and_phone_numbers = $request->input('additional_names_and_phone_numbers');
         $order->event_id = $event_id;
         $order->save();
         if ($order->is_processed) { // the order has already been processed

@@ -347,7 +347,8 @@ Route::middleware('web', 'activity')->group(function () {
         Route::get('donation/{id}/confirm', [SquarespaceDonationController::class, 'confirm'])->name('squarespace.donation.confirm');
         Route::resource('/', SquarespaceController::class);
         Route::resource('donation', SquarespaceDonationController::class)->names([
-            'update' => 'squarespace.donation.update']);;
+            'update' => 'squarespace.donation.update',
+            'destroy' => 'squarespace.donation.destroy']);
         Route::resource('order', SquarespaceOrderController::class)->names([
             'update' => 'squarespace.order.update',
             'destroy' => 'squarespace.order.destroy']);

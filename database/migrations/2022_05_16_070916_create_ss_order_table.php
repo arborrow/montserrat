@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('retreat_idnumber')->nullable();
             $table->string('retreat_registration_type')->nullable();
             $table->string('retreat_couple')->nullable();
+            $table->integer('retreat_quantity')->nullable();
             $table->decimal('deposit_amount', 13, 2)->default('0.00');
             $table->string('title')->nullable();
             $table->string('name')->nullable();

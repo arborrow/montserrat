@@ -96,7 +96,7 @@ class MailgunController extends Controller
 
         $messages = Message::orderBy('mailgun_timestamp','desc')->paginate(25, ['*'], 'messages');
 
-        return view('mailgun.index', compact('messages'));
+        return Redirect::action([MailgunController::class, 'index']);
     }
 
     /*
@@ -281,7 +281,7 @@ class MailgunController extends Controller
 
                 // TODO: for now this is limited to two line; however, some refactoring could make this more dynamic with a while loop
                 if ($inventory->variant_options > 1) { // all variant options not on one line, so concatenante with next line
-                    if (substr_count($retreat[2], " / ") < $inventory->variant_options) {
+                    if (substr_count($retreat[2], " / ") < $inventory->variant_options-1) {
                         $product_variation = trim($retreat[2]) . ' ' . trim($retreat[3]);
                     } else {
                         $product_variation = trim($retreat[2]);
@@ -311,36 +311,27 @@ class MailgunController extends Controller
                 $order->event_id = optional($event)->id;
 
                 $order->deposit_amount = str_replace("$","",$this->extract_value_between($message->body, "\nTOTAL", "$0.00"));
+
+                // ugly way to get the quantity before the unit_price
+                $last_colon = strrpos($message_info, ':');
+                $first_dollar = strpos($message_info,"\n$");
+                $partial_line = substr($message_info, $last_colon, $first_dollar-$last_colon);
+                $partial_last_new_line = strrpos($partial_line,"\n");
+                $quantity = trim(substr($partial_line,$partial_last_new_line));
+                $unit_price=trim(substr($message_info, $first_dollar+2, strpos($message_info,"\n",$first_dollar+2) - $first_dollar-2));
+                $order->retreat_quantity = isset($quantity) ? $quantity : 0;
+                $order->unit_price = isset($unit_price) ? $unit_price : 0;
+                $registration_type = explode(" / ", $product_variation);
+                $order->retreat_registration_type = trim($registration_type[1]);
+
                 switch ($order->retreat_category) {
                     case "Open Retreat (Men, Women, and Couples)" :
-                        $registration_type = explode(" / ", $product_variation);
-                        $order->retreat_registration_type = trim($registration_type[1]);
                         $order->retreat_couple = trim($registration_type[2]);
                         break;
-                    case "Women's Retreat" :
-                        $registration_type = explode(" / ",$product_variation);
-                        $order->retreat_registration_type = trim($registration_type[1]);
-                        break;
-                    case "Men's Retreat" :
-                        $registration_type = explode(" / ",$product_variation);
-                        $order->retreat_registration_type = trim($registration_type[1]);
-                        break;
                     case "Retiro en Español" :
-                        $registration_type = explode(" / ", $product_variation);
-                        $retreat_number = substr($order->retreat_description,
-                            strpos($order->retreat_description, "#") + 1,
-                            (strpos($order->retreat_description, " ") - strpos($order->retreat_description, "#"))
-                        );
-                        $order->retreat_registration_type = trim($registration_type[1]);
                         $order->retreat_couple = trim($registration_type[2]);
                         break;
                     case "Couple's Retreat" :
-                        $registration_type = explode(" / ", $product_variation);
-                        $retreat_number = substr($order->retreat_description,
-                            strpos($order->retreat_description, "#") + 1,
-                            (strpos($order->retreat_description, " ") - strpos($order->retreat_description, "#"))
-                        );
-                        $order->retreat_registration_type = trim($registration_type[1]);
                         $order->retreat_couple = 'Couple';
                         break;
                     case "Special Event - Man In The Ditch" :
@@ -350,9 +341,11 @@ class MailgunController extends Controller
                         $event = Retreat::whereIdnumber($idnumber)->first();
                         $order->retreat_start_date = optional($event)->start_date;
                         $order->event_id = optional($event)->id;
+                        $order->retreat_registration_type = 'Registration and Deposit';
                         $order->retreat_description=$order->retreat_category;
-                    break;
-
+                        break;
+                    default : //  "Women's Retreat", "Men's Retreat", "Young Adult's Retreat"
+                        break;
                 }
 
                 //dd($order,$retreat);
@@ -432,16 +425,16 @@ class MailgunController extends Controller
 
         }
 
-        $messages = Message::whereIsProcessed(1)->paginate(25, ['*'], 'messages');
-        return view('mailgun.processed', compact('messages'));
+        return Redirect::action([MailgunController::class, 'index']);
     }
 
     public function index() {
         // TODO: consider adding processed/unprocessed/all drowdown selector to filter results and combine processed and index blades into one
         $this->authorize('show-mailgun');
-        $messages = Message::orderBy('mailgun_timestamp','desc')->paginate(25, ['*'], 'messages');
-        //dd($messages);
-        return view('mailgun.index', compact('messages'));
+        $messages = Message::whereIsProcessed(0)->orderBy('mailgun_timestamp','desc')->paginate(25, ['*'], 'messages');
+        $messages_processed = Message::whereIsProcessed(1)->orderBy('mailgun_timestamp','desc')->paginate(25, ['*'], 'messages_processed');
+
+        return view('mailgun.index', compact('messages','messages_processed'));
     }
 
     public function show($id) {
