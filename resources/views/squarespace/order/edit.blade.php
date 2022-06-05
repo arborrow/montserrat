@@ -40,7 +40,6 @@
                 <div class="col-lg-4 col-md-6">
                     <h3>{!! Form::label('contact_id', 'Retreatant: ' .$order->name) !!}</h3>
                     {!! Form::select('contact_id', $matching_contacts, (isset($order->contact_id)) ? $order->contact_id : null, ['class' => 'form-control']) !!}
-                    {{ 'Contact ID:'. $order->contact_id }}
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <h3>{!! Form::label('event_id', 'Retreat Id#: '. $order->retreat_idnumber) !!}</h3>
@@ -136,9 +135,11 @@
                         @if ($order->is_couple)
                         <td>
                             <h3>
-                                {!! Form::text('name', ucwords(strtolower($order->couple_name)), ['class' => 'form-control']) !!}
+                                {!! Form::text('couple_name', ucwords(strtolower($order->couple_name)), ['class' => 'form-control']) !!}
                             </h3><br>
-                            {{ optional($order->couple)->full_name }}
+                            @if (isset(optional($order->couple)->id))
+                                {!! $order->couple->contact_link_full_name !!}
+                            @endIf
                         </td>
                         @endIf
                     </tr>

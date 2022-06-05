@@ -38,7 +38,7 @@
                 <div class='row'>
                     @can('update-message')
                         <div class='col-md-1'>
-                            <a href="{{ action([\App\Http\Controllers\MailgunController::class, 'edit'], $message->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                            <a href="{{ action([\App\Http\Controllers\MailgunController::class, 'unprocess'], $message->id) }}" class="btn btn-info">{!! Html::image('images/undo.png', 'Unprocess',array('title'=>"Unprocess")) !!}</a>
                         </div>
                     @endCan
                     @can('delete-message')

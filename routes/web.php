@@ -365,6 +365,7 @@ Route::middleware('web', 'activity')->group(function () {
     Route::get('mailgun/get', [MailgunController::class, 'get'])->name('mailgun.get');
     Route::get('mailgun/process', [MailgunController::class, 'process'])->name('mailgun.process');
     Route::get('mailgun/clean', [MailgunController::class, 'clean_body'])->name('mailgun.clean');
+    Route::get('mailgun/unprocess/{id}', [MailgunController::class, 'unprocess'])->name('mailgun.unprocess');
     Route::post('mailgun/callback', function () {
         return 'Mailgun callback';
     });

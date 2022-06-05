@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use Mailgun\Mailgun;
 use App\Models\Contact;
 use App\Models\Message;
 use App\Models\Retreat;
@@ -13,6 +12,8 @@ use App\Models\SsDonation;
 use App\Models\SsInventory;
 use App\Models\SsOrder;
 use App\Models\Touchpoint;
+use Illuminate\Support\Facades\Redirect;
+use Mailgun\Mailgun;
 
 class MailgunController extends Controller
 {
@@ -156,7 +157,6 @@ class MailgunController extends Controller
         if ($start_position >= 0) {
             $end_position = strpos($body, "\n", $start_position + $start_length);
         }
-
         // TODO: consider while loop until next new line
         if (($end_position > $start_position) && !$start_position === false) {
             return trim(substr($body, $start_position + $start_length, $end_position - $start_position - $start_length));
@@ -331,10 +331,17 @@ class MailgunController extends Controller
                             strpos($order->retreat_description, "#") + 1,
                             (strpos($order->retreat_description, " ") - strpos($order->retreat_description, "#"))
                         );
-
-                        // dd($order,$retreat,$registration_type,$product_variation, $message->body);
                         $order->retreat_registration_type = trim($registration_type[1]);
                         $order->retreat_couple = trim($registration_type[2]);
+                        break;
+                    case "Couple's Retreat" :
+                        $registration_type = explode(" / ", $product_variation);
+                        $retreat_number = substr($order->retreat_description,
+                            strpos($order->retreat_description, "#") + 1,
+                            (strpos($order->retreat_description, " ") - strpos($order->retreat_description, "#"))
+                        );
+                        $order->retreat_registration_type = trim($registration_type[1]);
+                        $order->retreat_couple = 'Couple';
                         break;
                     case "Special Event - Man In The Ditch" :
                         $idnumber='20220618';
@@ -344,17 +351,17 @@ class MailgunController extends Controller
                         $order->retreat_start_date = optional($event)->start_date;
                         $order->event_id = optional($event)->id;
                         $order->retreat_description=$order->retreat_category;
-
                     break;
 
                 }
 
                 //dd($order,$retreat);
                 $names = $fields->pluck('name')->toArray();
+                //dd($order,$product_variation,$registration_type, $fields,$inventory);
                 foreach ($fields as $field) {
+
                     $extracted_value = $this->extract_value($message->body, $field->name.":\n");
                     $order->{$field->variable_name} = $extracted_value;
-
                     // to remove empty values where the extracted value is actually the name of the next field
                     // ideally I would think this would be done by extract_value but that would require passing $names to it each time
                     $field->search = array_search(str_replace(":","", $extracted_value),$names);
@@ -382,14 +389,14 @@ class MailgunController extends Controller
                 $order->address_country = (sizeof($address_detail) == 4) ? trim($address_detail[2]) . " " . trim($address_detail[3]) : trim($address_detail[2]);
                 //dd($order,$message->body,\Carbon\Carbon::parse($order->date_of_birth), $order->couple_date_of_birth);
 
-                // dd($message->body, $order, $address,$address_detail);
                 $order->comments = ($order->comments == 1) ? null : $order->comments;
                 $order->date_of_birth = ($order->date_of_birth == 1) ? null : $order->date_of_birth;
                 $order->couple_date_of_birth = ($order->couple_date_of_birth == 1) ? null : $order->couple_date_of_birth;
-                //dd($order->date_of_birth, \Carbon\Carbon::parse($order->date_of_birth), $message);
-                $order->date_of_birth = \Carbon\Carbon::parse($order->date_of_birth);
                 $order->date_of_birth = (isset($order->date_of_birth)) ? \Carbon\Carbon::parse($order->date_of_birth) : null;
                 $order->couple_date_of_birth = (isset($order->couple_date_of_birth)) ? \Carbon\Carbon::parse($order->couple_date_of_birth) : null;
+
+                // dd($order->date_of_birth,$order);
+
                 $order->save();
 
                 }
@@ -453,6 +460,19 @@ class MailgunController extends Controller
         // $message = Message::with('contact_from','contact_to')->findOrFail($id);
         // return view('mailgun.edit', compact('message'));
         return null;
+    }
+
+    public function unprocess($id) {
+
+        $this->authorize('update-mailgun');
+        $message = Message::findOrFail($id);
+        $message->is_processed = 0;
+        $message->save();
+
+        // $message = Message::with('contact_from','contact_to')->findOrFail($id);
+        // return view('mailgun.edit', compact('message'));
+        return Redirect::action([self::class, 'show'],['mailgun'=>$id]);
+
     }
 
 }

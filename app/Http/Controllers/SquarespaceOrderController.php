@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateSsOrderRequest;
 use App\Models\Address;
 use App\Models\Contact;
 use App\Models\Country;
+use App\Models\Donation;
 use App\Models\Email;
 use App\Models\EmergencyContact;
 use App\Models\Language;
@@ -139,14 +140,14 @@ class SquarespaceOrderController extends Controller
         if (! array_key_exists($order->contact_id,$matching_contacts) && isset($contact_id)) {
             $matching_contacts[$order->contact_id] = $order->retreatant->full_name_with_city;
         }
-
         $couple = collect([]);
         $couple->name = $order->couple_name;
         $couple->email = $order->couple_email;
         $couple->mobile_phone = $order->couple_mobile_phone;
         $couple->full_address = $order->full_address;
         $couple->date_of_birth = $order->couple_date_of_birth;
-        $couple_matching_contacts = (isset($order->couple_name)) ? $this->matched_contacts($couple) : null;
+        $couple_matching_contacts = (isset($order->couple_name)) ? $this->matched_contacts($couple) : [null=>'No name provided'];
+        //dd($couple_matching_contacts, $matching_contacts);
 
         return view('squarespace.order.edit', compact('order', 'matching_contacts', 'retreats', 'couple_matching_contacts', 'prefixes', 'states', 'countries', 'languages', 'parish_list','ids'));
     }
@@ -165,14 +166,15 @@ class SquarespaceOrderController extends Controller
         $couple_contact_id = $request->input('couple_contact_id');
         $event_id = $request->input('event_id');
         $event = Retreat::findOrFail($event_id);
+
         // always update any data changes in order
         $order->contact_id = ($contact_id > 0) ? $contact_id : $order->contact_id;
         $order->couple_contact_id = ($couple_contact_id > 0) ? $couple_contact_id : $order->couple_contact_id;
-        $order->order_number = $request->input('order_number');
+        $order->order_number = ($request->filled('order_number')) ? $request->input('order_number') : $order->order_number;
         $order->title = $request->input('title');
         $order->couple_title = $request->input('couple_title');
-        $order->name = $request->input('name');
-        $order->couple_name = $request->input('couple_name');
+        $order->name = ($request->filled('name')) ? $request->input('name') : $order->name;
+        $order->couple_name = ($request->filled('couple_name')) ? $request->input('couple_name') : $order->couple_name;
         $order->email = $request->input('email');
         $order->couple_email = $request->input('couple_email');
         $order->mobile_phone = $request->input('mobile_phone');
@@ -204,12 +206,11 @@ class SquarespaceOrderController extends Controller
         $order->deposit_amount = $request->input('deposit_amount');
         $order->event_id = $event_id;
         $order->save();
-
         if ($order->is_processed) { // the order has already been processed
             flash('SquareSpace Order #<a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_number.'</a> has already been processed')->error()->important();
             return Redirect::action([self::class, 'index']);
         } else { // the order has not been processed
-            if (!isset($order->participant_id) && ($contact_id == 0 || ($order->is_couple && isset($couple_contact_id) ))) {
+            if (!isset($order->participant_id) && ($contact_id == 0 || ($order->is_couple && !isset($couple_contact_id) ))) {
                 if ($contact_id == 0) {
                     // Create a new contact
                     $contact = new Contact;
@@ -231,19 +232,21 @@ class SquarespaceOrderController extends Controller
                     if ($couple_contact_id == 0 && !isset($order->couple_contact_id)) {
                         // Create a new couple contact
                         $couple_contact = new Contact;
-                        $couple_contact->first_name = $request->input('first_name');
-                        $couple_contact->middle_name = $request->input('middle_name');
-                        $couple_contact->last_name = $request->input('last_name');
-                        $couple_contact->nick_name = $request->input('nick_name');
-                        $couple_contact->sort_name = $request->input('last_name') . ', ' . $request->input('first_name');
-                        $couple_contact->display_name = $request->input('first_name') . ' ' . $request->input('last_name');
+                        $couple_contact->contact_type = config('polanco.contact_type.individual');
+                        $couple_contact->subcontact_type = 0;
+                        $couple_contact->first_name = $request->input('couple_first_name');
+                        $couple_contact->middle_name = $request->input('couple_middle_name');
+                        $couple_contact->last_name = $request->input('couple_last_name');
+                        $couple_contact->nick_name = $request->input('couple_nick_name');
+                        $couple_contact->sort_name = $request->input('couple_last_name') . ', ' . $request->input('couple_first_name');
+                        $couple_contact->display_name = $request->input('couple_first_name') . ' ' . $request->input('couple_last_name');
                         $couple_contact->save();
-                        $order->contact_contact_id = $couple_contact->id;
+                        $order->couple_contact_id = $couple_contact->id;
                     } else {
                         $couple_contact = Contact::findOrFail($couple_contact_id);
                     }
-
                 }
+                $order->save();
                 return Redirect::action([self::class, 'edit'],['order' => $id]);
 
             }
@@ -423,6 +426,30 @@ class SquarespaceOrderController extends Controller
                 $couple_emergency_contact->relationship = ($request->filled('ecouple_mergency_contact_relationship')) ? $request->input('couple_emergency_contact_relationship') : null;
                 $couple_emergency_contact->phone = ($request->filled('couple_emergency_contact_phone')) ? $request->input('couple_emergency_contact_phone') : null;
                 $couple_emergency_contact->save();
+
+                // create couple touchpoint
+                $touchpoint = new Touchpoint;
+                $touchpoint->person_id = $couple_contact_id;
+                $touchpoint->staff_id = config('polanco.self.id');
+                $touchpoint->type = 'Other';
+                $touchpoint->notes = 'Squarespace Order #' . $order->order_number . ' received from spouse, ' . $contact->display_name;
+                $touchpoint->touched_at = Carbon::now();
+                $touchpoint->save();
+
+                // create registration (record deposit, comments, ss_order_number)
+                $registration = Registration::firstOrNew([
+                    'contact_id'=>$couple_contact_id,
+                    'event_id'=>$event_id,
+                    'order_id'=>$order->id,
+                    'source'=>'Squarespace',
+                    'role_id'=>config('polanco.participant_role_id.retreatant'),
+                ]);
+                $registration->register_date = $order->created_at;
+                $registration->deposit= ($request->input('deposit_amount')/2);
+                $registration->status_id = config('polanco.registration_status_id.registered');
+                $registration->remember_token = Str::random(60);
+                $registration->save();
+
             }
 
             // TODO: if couple - check if the relationship exists and if not create it
@@ -445,17 +472,39 @@ class SquarespaceOrderController extends Controller
                 'role_id'=>config('polanco.participant_role_id.retreatant'),
             ]);
             $registration->register_date = $order->created_at;
-            $registration->deposit= $request->input('deposit_amount');
+            // if couple split the deposit between them
+            $registration->deposit = ($order->is_couple) ? ($request->input('deposit_amount')/2) : $request->input('deposit_amount');
             $registration->notes = $request->input('comments');
             $registration->status_id = config('polanco.registration_status_id.registered');
             $registration->remember_token = Str::random(60);
             $registration->save();
 
-
+            // registration and touchpoint will link to the primary retreatant (not the spouse)
             $order->participant_id = $registration->id;
             $order->touchpoint_id = $touchpoint->id;
             $order->is_processed = 1;
             $order->save();
+
+            // create donation(s) (record deposit as donation (with no payment), notes)
+            $donation = new Donation;
+            $donation->contact_id = $contact_id;
+            $donation->event_id = $event_id;
+            $donation->donation_description = 'Retreat Deposits';
+            $donation->donation_date = $order->event->start_date;
+            $donation->donation_amount = ($order->is_couple) ? ($order->deposit_amount/2) : $order->deposit_amount;
+            $donation->Notes = 'SS Order #' . $order->order_number . ' for Retreat #' . $order->event->idnumber;
+            $donation->save();
+
+            if ($order->is_couple && isset($order->couple_contact_id)) {
+                $couple_donation = new Donation;
+                $couple_donation->contact_id = $order->couple_contact_id;
+                $couple_donation->event_id = $event_id;
+                $couple_donation->donation_description = 'Retreat Deposits';
+                $couple_donation->donation_date = $order->event->start_date;
+                $couple_donation->donation_amount = ($order->is_couple) ? ($order->deposit_amount/2) : $order->deposit_amount;
+                $couple_donation->Notes = 'SS Order #' . $order->order_number . ' for Retreat #' . $order->event->idnumber;
+                $couple_donation->save();
+            }
 
             flash('SquareSpace Order #: <a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_number.'</a> processed')->success();
 

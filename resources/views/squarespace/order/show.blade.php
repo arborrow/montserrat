@@ -16,6 +16,16 @@
                     </span>
                     <span class="back"><a href={{ action([\App\Http\Controllers\SquarespaceOrderController::class, 'index']) }}>{!! Html::image('images/order.png', 'SquareSpace Order Index',array('title'=>"SquareSpace Order Index",'class' => 'btn btn-primary')) !!}</a></span></h1>
                 </div>
+                @if (isset($order->gift_certificate_number))
+                    <div class='row'>
+                        <h3>Gift Certificate Information</h3>
+                    </div>
+                    <div class='row'>
+                        <div class='col-md-3'><strong>Gift Certificate Number: </strong>{{ $order->gift_certificate_number}}</div>
+                        <div class='col-md-3'><strong>Retreat: </strong>{{ $order->gift_certificate_retreat}}</div>                    </div>
+                    <div class="clearfix"> </div>
+                    <hr />
+                @endIf
                 <div class='row'>
                     <h3>Retreat Information</h3>
                 </div>
@@ -37,6 +47,7 @@
                 </div>
                 <div class="clearfix"> </div>
                 <hr />
+
                 <div class='row'>
                     <h3>Retreatant Information</h3>
                 </div>
@@ -46,7 +57,7 @@
                 </div>
                 <hr />
                 <div class='row'>
-                    <div class='col-md-3'><strong>Full address: </strong>{{ $order->full_address}}</div>
+                    <div class='col-md-6'><strong>Full address: </strong>{{ $order->full_address}}</div>
                 </div>
                 <div class='row'>
                     <div class='col-md-3'><strong>Street: </strong>{{ $order->address_street}}</div>
@@ -59,6 +70,7 @@
                     <div class='col-md-3'><strong>Country: </strong>{{ $order->address_country}}</div>
                 </div><div class="clearfix"> </div>
                 <hr />
+
                 <div class='row'>
                     <div class='col-md-3'><strong>Email: </strong>{{ $order->email}}</div>
                     <div class='col-md-3'><strong>Mobile phone: </strong>{{ $order->mobile_phone}}</div>
@@ -66,12 +78,14 @@
                     <div class='col-md-3'><strong>Work phone: </strong>{{ $order->work_phone}}</div>
                 </div><div class="clearfix"> </div>
                 <hr />
+
                 <div class='row'>
                     <div class='col-md-3'><strong>Emergency Contact: </strong>{{ $order->emergency_contact}}</div>
                     <div class='col-md-3'><strong>Relationship: </strong>{{ $order->emergency_contact_relationship}}</div>
                     <div class='col-md-3'><strong>Phone: </strong>{{ $order->emergency_contact_phone}}</div>
                 </div><div class="clearfix"> </div>
                 <hr />
+
                 <div class='row'>
                     <div class='col-md-3'><strong>Dietary: </strong>{{ $order->dietary}}</div>
                     <div class='col-md-3'><strong>Room Preference: </strong>{{ $order->room_preference}}</div>
@@ -86,8 +100,9 @@
                     @endIf
                 </div>
                 <div class="clearfix"> </div>
+                <hr />
+
                 @if ($order->is_couple)
-                    <hr />
                     <div class='row'>
                         <h3>Spouse/Couple Information</h3>
                     </div>
@@ -98,6 +113,7 @@
                         <div class='col-md-3'><strong>Mobile phone: </strong>{{ $order->couple_mobile_phone}}</div>
                     </div>
                     <hr />
+
                     <div class='row'>
                         <div class='col-md-3'><strong>Emergency Contact: </strong>{{ $order->couple_emergency_contact}}</div>
                         <div class='col-md-3'><strong>Relationship: </strong>{{ $order->couple_emergency_contact_relationship}}</div>
@@ -105,6 +121,7 @@
                     </div>
                     <div class="clearfix"> </div>
                     <hr />
+
                     <div class='row'>
                         <div class='col-md-3'><strong>Dietary: </strong>{{ $order->couple_dietary}}</div>
                         <div class='col-md-3'><strong>Date of Birth: </strong>{{ $order->couple_date_of_birth}}</div>
@@ -112,17 +129,7 @@
                     <div class="clearfix"> </div>
                     <hr />
                 @endIf
-                @if (isset($order->gift_certificate_number))
-                    <hr />
-                    <div class='row'>
-                        <h3>Gift Certificate Information</h3>
-                    </div>
-                    <div class='row'>
-                        <div class='col-md-3'><strong>Gift Certificate Number: </strong>{{ $order->gift_certificate_number}}</div>
-                        <div class='col-md-3'><strong>Retreat: </strong>{{ $order->gift_certificate_retreat}}</div>                    </div>
-                    <div class="clearfix"> </div><hr />
-                @endIf
-                <hr />
+
                 <div class='row'>
                     @if (isset($order->contact_id))
                         <div class='col-md-3'>
@@ -160,6 +167,7 @@
                         {{ ($order->is_processed) ? 'Yes' : 'No' }}
                     </div>
                 </div>
+
                 <div class='row'>
                     @can('update-squarespace-order')
                         <div class='col-md-1'>

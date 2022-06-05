@@ -101,7 +101,7 @@
                         ($retreat->donations_pledged_sum)>0 ? '$'.number_format($retreat->donations_pledged_sum,2) : '$'.number_format(0,2))
                     !!}<br>
                 @endCan
-                <span class="font-weight-bold">Last updated: </span>{{ $retreat->updated_at->format('F j, Y g:i A')}}<br>
+                <span class="font-weight-bold">Last updated: </span>{{ optional($retreat->updated_at)->format('F j, Y g:i A')}}<br>
                 <span class="font-weight-bold">Calendar ID: </span>
                 @if (isset($retreat->google_calendar_html))
                     <a href="{{$retreat->google_calendar_html}}"> {{$retreat->calendar_id}}</a>
