@@ -168,8 +168,6 @@ class SquarespaceOrderController extends Controller
         $event = Retreat::findOrFail($event_id);
 
         // always update any data changes in order
-        $order->contact_id = ($contact_id > 0) ? $contact_id : $order->contact_id;
-        $order->couple_contact_id = ($couple_contact_id > 0) ? $couple_contact_id : $order->couple_contact_id;
         $order->order_number = ($request->filled('order_number')) ? $request->input('order_number') : $order->order_number;
         $order->title = ($request->filled('title')) ? $request->input('title') : $order->title ;
         $order->couple_title = $request->input('couple_title');
@@ -194,7 +192,7 @@ class SquarespaceOrderController extends Controller
         $order->date_of_birth = $request->input('date_of_birth');
         $order->couple_date_of_birth = $request->input('couple_date_of_birth');
         $order->room_preference = $request->input('room_preference');
-        $preferred_language = ($request->filled('preferred_language_id')) ? Language::findOrFail(($request->input('preferred_language_id'))) : null ;
+        $preferred_language = ($request->filled('preferred_language_id')) ? Language::findOrFail($request->input('preferred_language_id')) : null ;
         $order->preferred_language = (null !== optional($preferred_language)->label) ? optional($preferred_language)->label : $order->preferred_language;
         // $order->parish_id = $request->input('parish_id');
         $order->emergency_contact = $request->input('emergency_contact');
@@ -207,11 +205,14 @@ class SquarespaceOrderController extends Controller
         $order->additional_names_and_phone_numbers = $request->input('additional_names_and_phone_numbers');
         $order->event_id = $event_id;
         $order->save();
+        // dd($order, $contact_id, $order->is_couple, $couple_contact_id);
         if ($order->is_processed) { // the order has already been processed
             flash('SquareSpace Order #<a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_number.'</a> has already been processed')->error()->important();
             return Redirect::action([self::class, 'index']);
         } else { // the order has not been processed
-            if (!isset($order->participant_id) && ($contact_id == 0 || ($order->is_couple && !isset($couple_contact_id) ))) {
+            // dd($order);
+            // dd(!isset($order->participant_id), !isset($order->contact_id), (!isset($order->participant_id) && (!isset($order->contact_id) || ($order->is_couple && !isset($order->couple_contact_id)))));
+            if (!isset($order->participant_id) && (!isset($order->contact_id) || ($order->is_couple && !isset($order->couple_contact_id) ))) {
                 if ($contact_id == 0) {
                     // Create a new contact
                     $contact = new Contact;
@@ -224,9 +225,12 @@ class SquarespaceOrderController extends Controller
                     $contact->sort_name = $request->input('last_name') . ', ' . $request->input('first_name');
                     $contact->display_name = $request->input('first_name') . ' ' . $request->input('last_name');
                     $contact->save();
+                    $contact_id = $contact->id;
                     $order->contact_id = $contact->id;
                 } else {
                     $contact = Contact::findOrFail($contact_id);
+                    $order->contact_id = $contact->id;
+                    //dd(($couple_contact_id == 0 && !isset($order->couple_contact_id)),$order->is_couple, $couple_contact_id, !isset($order->couple_contact_id), $contact, $request);
                 }
 
                 if ($order->is_couple) {
@@ -242,12 +246,16 @@ class SquarespaceOrderController extends Controller
                         $couple_contact->sort_name = $request->input('couple_last_name') . ', ' . $request->input('couple_first_name');
                         $couple_contact->display_name = $request->input('couple_first_name') . ' ' . $request->input('couple_last_name');
                         $couple_contact->save();
+                        $couple_contact_id = $couple_contact->id;
                         $order->couple_contact_id = $couple_contact->id;
+
                     } else {
                         $couple_contact = Contact::findOrFail($couple_contact_id);
+                        $order->couple_contact_id = $couple_contact->id;
                     }
                 }
                 $order->save();
+
                 return Redirect::action([self::class, 'edit'],['order' => $id]);
 
             }
@@ -377,9 +385,9 @@ class SquarespaceOrderController extends Controller
                 $couple_contact->prefix_id = ($request->filled('couple_title_id')) ? $request->input('couple_title_id') : $couple_contact->prefix_id;
                 $couple_contact->first_name = ($request->filled('couple_first_name')) ? $request->input('couple_first_name') : $couple_contact->first_name;
                 $couple_contact->middle_name = ($request->filled('couple_middle_name')) ? $request->input('couple_middle_name') : $couple_contact->middle_name;
-                $couple_contact->last_name = ($request->filled('last_name')) ? $request->input('couple_last_name') : $couple_contact->last_name;
-                $couple_contact->nick_name = ($request->filled('nick_name')) ? $request->input('couple_nick_name') : $couple_contact->nick_name;
-                $contact->birth_date = ($request->filled('couple_date_of_birth')) ? $request->input('couple_date_of_birth') : $contact->birth_date;
+                $couple_contact->last_name = ($request->filled('couple_last_name')) ? $request->input('couple_last_name') : $couple_contact->last_name;
+                $couple_contact->nick_name = ($request->filled('couple_nick_name')) ? $request->input('couple_nick_name') : $couple_contact->nick_name;
+                $couple_contact->birth_date = ($request->filled('couple_date_of_birth')) ? $request->input('couple_date_of_birth') : $couple_contact->birth_date;
                 $couple_contact->save();
 
                 $couple_email_home = Email::firstOrNew([
@@ -413,7 +421,7 @@ class SquarespaceOrderController extends Controller
                 $couple_home_address->city = ($request->filled('address_city')) ? $request->input('address_city') : $couple_home_address->city;
                 $couple_home_address->state_province_id = ($request->filled('address_state_id')) ? $request->input('address_state_id') : $couple_home_address->state_province_id;
                 $couple_home_address->postal_code = ($request->filled('address_zip')) ? $request->input('address_zip') : $couple_home_address->postal_code ;
-                $couple_home_address->country_id = ($request->filled('address_country')) ? $request->input('address_country') : $couple_home_address->country_id;
+                $couple_home_address->country_id = ($request->filled('address_country_id')) ? $request->input('address_country_id') : $couple_home_address->country_id;
                 $couple_home_address->is_primary = ($couple_contact->primary_address_location_type_id == config('polanco.location_type.home')) ? 1 : 0;
                 // if there is no current primary address then make this one the primary one
                 $couple_home_address->is_primary = ($couple_contact->primary_address_location_name == 'N/A' ) ? 1 : $couple_home_address->is_primary;
@@ -424,7 +432,7 @@ class SquarespaceOrderController extends Controller
                     'contact_id'=>$couple_contact_id,
                 ]);
                 $couple_emergency_contact->name = ($request->filled('couple_emergency_contact')) ? $request->input('couple_emergency_contact') : null;
-                $couple_emergency_contact->relationship = ($request->filled('ecouple_mergency_contact_relationship')) ? $request->input('couple_emergency_contact_relationship') : null;
+                $couple_emergency_contact->relationship = ($request->filled('couple_emergency_contact_relationship')) ? $request->input('couple_emergency_contact_relationship') : null;
                 $couple_emergency_contact->phone = ($request->filled('couple_emergency_contact_phone')) ? $request->input('couple_emergency_contact_phone') : null;
                 $couple_emergency_contact->save();
 

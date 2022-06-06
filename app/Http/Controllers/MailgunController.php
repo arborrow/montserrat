@@ -220,6 +220,9 @@ class MailgunController extends Controller
                 $donation = array_values(array_filter($donation));
                 $address_start_row = array_search("Donor Address:",$donation);
                 $address_end_row = array_search("Donor Phone Number:",$donation);
+                if ($address_end_row === false) { // if the phone number is not provided
+                    $address_end_row = array_search("Additional Information:",$donation);
+                }
                 // dd($donation,$address_start_row, $address_end_row);
                 if (($address_end_row - $address_start_row) == 5) {
                     $ss_donation->address_street = ucwords(strtolower($donation[$address_start_row+1]));
@@ -252,6 +255,7 @@ class MailgunController extends Controller
                 $event = Retreat::whereIdnumber($ss_donation->idnumber)->first();
                 $ss_donation->event_id = optional($event)->id;
                 $ss_donation->comments = ($ss_donation->comments == 1) ? null : $ss_donation->comments;
+                //dd($ss_donation,$donation);
                 $ss_donation->save();
                 // $touch->notes = 'A donation from ' . $donor_name .  '(' . $donor_email. ') has been received.';
                 //$touch->save();
@@ -322,8 +326,9 @@ class MailgunController extends Controller
                 $order->retreat_quantity = isset($quantity) ? $quantity : 0;
                 $order->unit_price = isset($unit_price) ? $unit_price : 0;
                 $registration_type = explode(" / ", $product_variation);
-                $order->retreat_registration_type = trim($registration_type[1]);
-
+                if (isset($registration_type[1])) {
+                    $order->retreat_registration_type = trim($registration_type[1]);
+                }
                 switch ($order->retreat_category) {
                     case "Open Retreat (Men, Women, and Couples)" :
                         $order->retreat_couple = trim($registration_type[2]);
@@ -348,7 +353,6 @@ class MailgunController extends Controller
                         break;
                 }
 
-                //dd($order,$retreat);
                 $names = $fields->pluck('name')->toArray();
                 //dd($order,$product_variation,$registration_type, $fields,$inventory);
                 foreach ($fields as $field) {

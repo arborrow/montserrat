@@ -9,6 +9,8 @@
                         <span class="grey">Index of Mailgun Messages</span>
                             <a class="btn btn-primary" href="{{ action([\App\Http\Controllers\MailgunController::class, 'get']) }}">Get Messages</a>
                             <a class="btn btn-primary" href="{{ action([\App\Http\Controllers\MailgunController::class, 'process']) }}">Process Messages</a>
+                            <a class="btn btn-primary" href="{{ action([\App\Http\Controllers\SquarespaceOrderController::class, 'index']) }}">Squarespace Orders</a>
+                            <a class="btn btn-primary" href="{{ action([\App\Http\Controllers\SquarespaceDonationController::class, 'index']) }}">Squarespace Donations</a>
                         </span>
 
                     </h1>

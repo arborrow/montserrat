@@ -90,11 +90,15 @@
 
             <div class="row text-center mt-3">
                 <div class="col-lg-12">
-                    @if ($order->contact_id > 0)
-                    {!! Form::submit('Proceed with Order',['class' => 'btn btn-dark']) !!}
+                    @if (!$order->is_processed)
+                        @if (($order->contact_id > 0 && !$order->is_couple) || (($order->is_couple) && $order->couple_contact_id > 0 && $order->contact_id>0))
+                        {!! Form::submit('Proceed with Order',['class' => 'btn btn-dark']) !!}
+                        @else
+                        {!! Form::submit('Retrieve Contact Info',['class' => 'btn btn-info']) !!}
+                        @endif
                     @else
-                    {!! Form::submit('Retrieve Contact Info',['class' => 'btn btn-info']) !!}
-                    @endif
+                        <a class="btn btn-primary" href="{{ action([\App\Http\Controllers\SquarespaceOrderController::class, 'index']) }}">Order #{{ $order->order_number }} has already been processed</a>
+                    @endIf
                 </div>
             </div>
 
@@ -272,6 +276,8 @@
                         </td>
                         @endIf
                     </tr>
+
+                    @if (isset($order->mobile_phone))
                     <tr>
                         <td><strong>Mobile Phone</strong></td>
                         @if ($order->mobile_phone_formatted == optional($order->retreatant)->phone_home_mobile_number )
@@ -293,6 +299,8 @@
                         </td>
                         @endIf
                     </tr>
+                    @endIf
+
                     @if (isset($order->home_phone))
                     <tr>
                         <td><strong>Home Phone</strong></td>
@@ -487,16 +495,16 @@
                     @if (isset($order->date_of_birth) || isset($order->couple_date_of_birth))
                     <tr>
                         <td><strong>Date of Birth</strong></td>
-                        @if ($order->date_of_birth == optional($order->retreatant)->birth_date)
-                        <td class='table-success'>
-                            @else
-                        <td class='table-warning'>
-                            @endIf
+                        @if (\Carbon\Carbon::parse($order->date_of_birth) == \Carbon\Carbon::parse(optional($order->retreatant)->birth_date))
+                            <td class='table-success'>
+                        @else
+                            <td class='table-warning'>
+                        @endIf
                             {!! Form::text('date_of_birth', $order->date_of_birth, ['class'=>'form-control flatpickr-date', 'autocomplete'=> 'off']) !!}
                             {{ (isset(optional($order->retreatant)->birth_date)) ? date('F d, Y', strtotime(optional($order->retreatant)->birth_date)) : null }}
                         </td>
                         @if ($order->is_couple)
-                        @if ($order->couple_date_of_birth == optional($order->couple)->birth_date)
+                        @if (\Carbon\Carbon::parse($order->couple_date_of_birth) == \Carbon\Carbon::parse(optional($order->couple)->birth_date))
                         <td class='table-success'>
                             @else
                         <td class='table-warning'>
@@ -508,7 +516,7 @@
                     </tr>
                     @endIf
 
-                    @if (!($order->room_preference == 'Ninguna' || $order->room_preference == 'None' || null == $order->room_preference))
+                    @if (!($order->room_preference == 'Ninguna' || $order->room_preference == 'No preference' || null == $order->room_preference))
                     <tr>
                         <td><strong>Room Preference</strong></td>
                         @if (strtolower($order->room_preference) == strtolower(optional($order->retreatant)->note_room_preference_text))
@@ -633,12 +641,18 @@
                     @if (isset($order->deposit_amount))
                     <tr>
                         <td><strong>Deposit</strong></td>
-                        <td class='table-secondary'>
-                            {!! Form::number('deposit_amount', $order->deposit_amount, ['class' => 'form-control','step'=>'0.01']) !!}
+                        @if ($order->deposit_amount <> $order->unit_price)
+                            <td class='table-danger' data-toggle="tooltip" data-placement="top" title="Order total and Unit Price Do Not Match. Review carefully as possibly more than one item ordered.">
+                                Unit Price: {{ $order->unit_price }} *
+                        @else
+                            <td class='table-secondary'>
+                        @endIf
+                        {!! Form::number('deposit_amount', $order->deposit_amount, ['class' => 'form-control','step'=>'0.01']) !!}
                         </td>
                         @if ($order->is_couple)
-                        <td></td>
+                            <td></td>
                         @endIf
+
                     </tr>
                     @endIf
 
@@ -661,11 +675,15 @@
 
             <div class="row text-center mt-3">
                 <div class="col-lg-12">
-                    @if ($order->contact_id > 0)
-                    {!! Form::submit('Proceed with Order',['class' => 'btn btn-dark']) !!}
+                    @if (!$order->is_processed)
+                        @if ($order->contact_id > 0)
+                        {!! Form::submit('Proceed with Order',['class' => 'btn btn-dark']) !!}
+                        @else
+                        {!! Form::submit('Retrieve Contact Info',['class' => 'btn btn-info']) !!}
+                        @endif
                     @else
-                    {!! Form::submit('Retrieve Contact Info',['class' => 'btn btn-info']) !!}
-                    @endif
+                        <a class="btn btn-primary" href="{{ action([\App\Http\Controllers\SquarespaceOrderController::class, 'index']) }}">Order #{{ $order->order_number }} has already been processed</a>
+                    @endIf
                 </div>
             </div>
 

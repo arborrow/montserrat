@@ -35,7 +35,7 @@
                     <div class='col-md-6'><strong>Description: </strong>{{ $order->retreat_description}}</div>
                 </div>
                 <div class='row'>
-                    <div class='col-md-3'><strong>Registration Type: </strong>{{ $order->retreat_registrtation_type}}</div>
+                    <div class='col-md-3'><strong>Registration Type: </strong>{{ $order->retreat_registration_type}}</div>
                     <div class='col-md-3'><strong>SS SKU: </strong>{{ $order->retreat_sku}}</div>
                 </div>
                 <div class='row'>
