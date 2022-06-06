@@ -4,7 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use \App\Traits\SquareSpaceTrait;
+use Illuminate\Support\Str;
+use App\Http\Requests\UpdateSsDonationRequest;
+
+use App\Models\Address;
+use App\Models\Contact;
+use App\Models\Country;
+use App\Models\Donation;
+use App\Models\Email;
+use App\Models\Note;
+use App\Models\Phone;
+use App\Models\Retreat;
+use App\Models\SsDonation;
+use App\Models\StateProvince;
+use App\Models\Touchpoint;
+
+use App\Traits\PhoneTrait;
+use App\Traits\SquareSpaceTrait;
+
+use Carbon\Carbon;
+
 
 class SquarespaceDonationController extends Controller
 {   use SquareSpaceTrait;
@@ -57,7 +76,11 @@ class SquarespaceDonationController extends Controller
      */
     public function show($id)
     {
-        //
+        $this->authorize('show-squarespace-donation');
+        $donation = SsDonation::findOrFail($id);
+        //dd($donation);
+        return view('squarespace.donation.show', compact('donation'));
+
     }
 
     /**
