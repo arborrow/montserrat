@@ -83,6 +83,21 @@ return [
     'contact' => [
         'montserrat' => '620',
     ],
+
+    'donation_descriptions' => [
+        'N/A' => null,
+        'Annual Giving Campaign' => 'AGC - General',
+        'Building & Maintenance Fund' => 'AGC - Buildings & Maintenance',
+        'Flowers' => 'Flowers and Landscaping',
+        'Memorial Donation' => 'Memorials',
+        'Montserrat Foundation Endowment' => 'AGC - Endowment',
+        'Post-Retreat offering' => 'Retreat Funding',
+        'Pre-Retreat offering' => 'Retreat Deposits',
+        'Retreat Scholarships' => 'AGC - Scholarships',
+        'Saturday of Renewal' => 'Retreat Funding',
+        'Tips' => 'Tips',
+    ],
+
     // when creating database with the seeder, the first event created is the open deposit event
     'event' => [
         'open_deposit' => env('OPEN_DEPOSIT_EVENT_ID', 1),

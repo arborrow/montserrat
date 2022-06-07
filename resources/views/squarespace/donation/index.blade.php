@@ -8,11 +8,11 @@
                     <h1>
                         <span class="grey">SquareSpace Donations (Unprocessed)</span>
                     </h1>
-                    <span>{{ $donations->links() }}</span>
+                    <span>{{ $ss_donations->links() }}</span>
 
                 </div>
 
-                <table class="table table-bordered table-striped table-hover"><caption><h2>Donations (Unprocessed) ({{$donations->total()}})</h2></caption>
+                <table class="table table-bordered table-striped table-hover"><caption><h2>Donations (Unprocessed) ({{$ss_donations->total()}})</h2></caption>
                     <thead>
                         <tr>
                             <th>Date</th>
@@ -25,16 +25,16 @@
                     </thead>
                     <tbody>
 
-                        @foreach ($donations as $donation)
+                        @foreach ($ss_donations as $ss_donation)
                         <tr>
                             <td>
-                                <a href="{{ URL('squarespace/donation/' . $donation->id .'/edit') }} ">{{ $donation->created_at }}</a>
+                                <a href="{{ URL('squarespace/donation/' . $ss_donation->id .'/edit') }} ">{{ $ss_donation->created_at }}</a>
                             </td>
-                            <td>{{ ucwords(strtolower($donation->name)) }}</td>
-                            <td>{{ strtolower($donation->email) }}</td>
-                            <td>{{ trim($donation->fund .' '. $donation->retreat_description . ' ' . $donation->offering_type) }}</td>
-                            <td>${{ $donation->amount }}</td>
-                            <td>{{ strtolower($donation->comments) }}</td>
+                            <td>{{ ucwords(strtolower($ss_donation->name)) }}</td>
+                            <td>{{ strtolower($ss_donation->email) }}</td>
+                            <td>{{ trim($ss_donation->fund .' '. $ss_donation->retreat_description . ' ' . $ss_donation->offering_type) }}</td>
+                            <td>${{ $ss_donation->amount }}</td>
+                            <td>{{ strtolower($ss_donation->comments) }}</td>
                         </tr>
                         @endforeach
 
@@ -47,11 +47,11 @@
                     <h1>
                         <span class="grey">SquareSpace Processed Donations</span>
                     </h1>
-                    <span>{{ $processed_donations->links() }}</span>
+                    <span>{{ $processed_ss_donations->links() }}</span>
 
                 </div>
 
-                <table class="table table-bordered table-striped table-hover"><caption><h2>Processed Donations ({{$processed_donations->total()}})</h2></caption>
+                <table class="table table-bordered table-striped table-hover"><caption><h2>Processed Donations ({{$processed_ss_donations->total()}})</h2></caption>
                     <thead>
                         <tr>
                             <th>Date</th>
@@ -64,7 +64,7 @@
                     </thead>
                     <tbody>
 
-                        @foreach ($processed_donations as $processed_donation)
+                        @foreach ($processed_ss_donations as $processed_donation)
                         <tr>
                             <td>
                                 <a href="{{ URL('squarespace/donation/' . $processed_donation->id . '/edit') }} ">{{ $processed_donation->created_at }}</a>

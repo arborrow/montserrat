@@ -251,6 +251,7 @@ class MailgunController extends Controller
                     strpos($ss_donation->retreat_description, "#") + 1,
                     (strpos($ss_donation->retreat_description, " ") - strpos($ss_donation->retreat_description, "#"))
                 ));
+                //dd($ss_donation, $year, $retreat_number);
                 $ss_donation->idnumber = ($ss_donation->retreat_description == "Individual Private Retreat") ? null : trim($year.$retreat_number);
                 $event = Retreat::whereIdnumber($ss_donation->idnumber)->first();
                 $ss_donation->event_id = optional($event)->id;
@@ -284,6 +285,7 @@ class MailgunController extends Controller
                 $fields = SsCustomFormField::whereFormId($custom_form->id)->orderBy('sort_order')->get();
 
                 // TODO: for now this is limited to two line; however, some refactoring could make this more dynamic with a while loop
+                // TODO: $product_variation needs to be everything between the first field (Title) and SKU - remove new lines and explode by / 
                 if ($inventory->variant_options > 1) { // all variant options not on one line, so concatenante with next line
                     if (substr_count($retreat[2], " / ") < $inventory->variant_options-1) {
                         $product_variation = trim($retreat[2]) . ' ' . trim($retreat[3]);

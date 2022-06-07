@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use App\Traits\PhoneTrait;
 
 
 class SsDonation extends Model implements Auditable
@@ -13,6 +14,7 @@ class SsDonation extends Model implements Auditable
     use HasFactory;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+    use PhoneTrait;
 
     protected $table = 'ss_donation';
 
@@ -33,6 +35,16 @@ class SsDonation extends Model implements Auditable
         return $this->hasOne(Contact::class, 'id', 'contact_id');
     }
 
+    public function donation()
+    {
+        return $this->hasOne(Donation::class, 'donation_id', 'donation_id');
+
+    }
+
+    public function getPhoneFormattedAttribute() {
+        $clean_phone = $this->format_phone($this->phone);
+        return $clean_phone['phone_formatted'];
+    }
 
 
 

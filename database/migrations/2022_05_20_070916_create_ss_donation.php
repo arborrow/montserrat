@@ -16,8 +16,10 @@ return new class extends Migration
         Schema::create('ss_donation', function (Blueprint $table) {
             $table->id();
             $table->integer('message_id')->index('idx_message_id');
-            $table->integer('event_id')->nullable()->index('idx_event_id');
             $table->integer('contact_id')->nullable()->index('idx_contact_id');
+            $table->integer('event_id')->nullable()->index('idx_event_id');
+            $table->integer('donation_id')->nullable()->index('idx_donation_id');
+            $table->integer('touchpoint_id')->nullable()->index('idx_touchpoint_id');
             $table->string('name')->nullable();
             $table->string('email')->nullable();
             $table->string('address_street')->nullable();
