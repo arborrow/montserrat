@@ -28,5 +28,12 @@ class SsDonation extends Model implements Auditable
         return $this->hasOne(Retreat::class, 'id', 'event_id');
     }
 
+    public function donor()
+    {
+        return $this->hasOne(Contact::class, 'id', 'contact_id');
+    }
+
+
+
 
 }

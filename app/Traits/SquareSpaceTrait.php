@@ -6,18 +6,25 @@ use App\Models\Retreat;
 use Carbon\Carbon;
 
 trait SquareSpaceTrait
-{   /*
+{
+    /*
     *  Returns list of upcoming and active retreats with id => retreat name
+    *  If $event_id is provided, then it just returns the value for that retreat
+    *  If months is provided, then subtract months from today and get all retreats after the start date
     */
-    public function upcoming_retreats($event_id = null) {
-        $retreats = Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', Carbon::today()->subWeek())->where('is_active', '=', 1)->orderBy('start_date')->pluck('description', 'id');
+    public function upcoming_retreats($event_id = null, $months = 0) {
+        $start_date = ($months > 0) ? Carbon::today()->subMonths($months) : Carbon::today();
+
+        $retreats = Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', $start_date)->where('is_active', '=', 1)->orderBy('start_date')->pluck('description', 'id');
 
         if (isset($event_id)) {
             $event = Retreat::findOrFail($event_id);
             $retreats[$event->id] = $event->idnumber . '-' . $event->title . ' (' . date_format($event->start_date,"m-d-Y") . ')';
         }
+
         return $retreats;
     }
+
 
     /*
         Takes an item (either a SsOrder or SsDonation

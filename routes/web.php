@@ -344,7 +344,6 @@ Route::middleware('web', 'activity')->group(function () {
     Route::stripeWebhooks('stripe/webhooks');
 
     Route::prefix('squarespace')->group(function () {
-        Route::get('donation/{id}/confirm', [SquarespaceDonationController::class, 'confirm'])->name('squarespace.donation.confirm');
         Route::resource('/', SquarespaceController::class);
         Route::resource('donation', SquarespaceDonationController::class)->names([
             'update' => 'squarespace.donation.update',

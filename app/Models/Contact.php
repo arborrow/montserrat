@@ -964,6 +964,15 @@ class Contact extends Model implements Auditable
         }
     }
 
+    public function getPrimaryPhoneNumberAttribute()
+    {
+        if (isset($this->phone_primary->phone)) {
+            return $this->phone_primary->phone.$this->phone_primary->phone_extension;
+        } else {
+            return;
+        }
+    }
+
     public function getReligionNameAttribute()
     {
         if (isset($this->religion_id) && ($this->religion_id > 0)) {

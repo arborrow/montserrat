@@ -4,7 +4,7 @@
 <div class="row bg-cover">
     <div class="col-lg-12">
         <h1>
-            Process SquareSpace Order #{{ $order->order_number }} ({{ $order->retreat_category }})
+            Process SquareSpace Order #{{ $order->order_number }}
         </h1>
     </div>
     <div class="col-lg-12">
@@ -21,7 +21,7 @@
                 <li><strong><u>Review</u></strong> provided Order information. <strong><u>Correct</u></strong> any typos in the provided information.
                     <strong><u>Remove</u></strong> unwanted Order information to retain existing contact information.
                 <li>When finished, <strong><u>click</u></strong> on the <i>Proceed with Order</i> button.
-                <li>The order will be updated.
+                <li>The Squarespace Order will be updated.
                     If needed, a new contact will be created.
                     The provided contact information will be added/updated.
                     A touchpoint for the retreatant's registration is created.
@@ -46,6 +46,7 @@
                     {!! Form::select('event_id', $retreats, (isset($order->event_id)) ? $order->event_id : $ids['retreat_id'], ['class' => 'form-control']) !!}
                     <strong>Retreat:</strong> {{ $order->retreat_description  }}<br />
                     <strong>Dates:</strong> {{ $order->retreat_dates}}<br />
+                    <strong>Category:</strong> {{ $order->retreat_category  }}<br />
                     <strong>Type:</strong> {{ $order->retreat_registration_type }}<br />
                 </div>
                 <div class="col-lg-4 col-md-6">
@@ -648,11 +649,21 @@
                             <td class='table-secondary'>
                         @endIf
                         {!! Form::number('deposit_amount', $order->deposit_amount, ['class' => 'form-control','step'=>'0.01']) !!}
+                        @if (optional($order->registration)->deposit == ($order->is_couple) ? ($order->deposit_amount/2) : $order->deposit_amount )
+                            <div class='table-success'>
+                        @else
+                            <div class='table-danger'>
+                        @endIf
+                            {{ optional($order->registration)->deposit }}
+                            @if ($order->is_couple)
+                                (Couple - Deposit split)
+                            @endIf
+                            </div>
                         </td>
                         @if ($order->is_couple)
-                            <td></td>
+                            <td>
+                            </td>
                         @endIf
-
                     </tr>
                     @endIf
 
@@ -686,7 +697,7 @@
                     @endIf
                 </div>
             </div>
-
+            <hr />
             <div class="row">
                 <div class="col-lg-6 col-md-12">
                     <strong>Message ID:</strong> <a href="{{URL('/mailgun/'.$order->message_id)}}">{{ $order->message_id }}</a><br />

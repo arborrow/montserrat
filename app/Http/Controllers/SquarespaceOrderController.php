@@ -94,7 +94,7 @@ class SquarespaceOrderController extends Controller
      */
     public function edit($id)
     {
-        $this->authorize('show-squarespace-order');
+        $this->authorize('update-squarespace-order');
         $order = SsOrder::findOrFail($id);
         $prefixes = Prefix::orderBy('name')->pluck('name', 'id');
         $prefixes->prepend('None', null);
@@ -117,7 +117,12 @@ class SquarespaceOrderController extends Controller
         $order->preferred_language = ($order->preferred_language == 'Vietnamita') ? 'Vietnamese' : $order->preferred_language;
         $language = Language::whereIsActive(1)->where('label','LIKE',$order->preferred_language.'%')->first();
 
-        $retreat = Retreat::whereIdnumber($order->retreat_idnumber)->first();
+        // attempt to find retreat based on event_id if available or retreat_idnumber
+        if ($order->event_id > 0) {
+            $retreat = Retreat::findOrFail($order->event_id);
+        } else {
+            $retreat = Retreat::whereIdnumber($order->retreat_idnumber)->first();
+        }
 
         $ids = [];
         $ids['title'] = ($prefix == null) ? null : $prefix->id;
@@ -133,12 +138,12 @@ class SquarespaceOrderController extends Controller
         }
 
         $retreats = $this->upcoming_retreats($order->event_id);
-
         // ensure contact_id is part of matching_contacts but if not then add it
         $matching_contacts = $this->matched_contacts($order);
-        if (! array_key_exists($order->contact_id,$matching_contacts) && isset($contact_id)) {
+        if (! array_key_exists($order->contact_id,$matching_contacts) && isset($order->contact_id)) {
             $matching_contacts[$order->contact_id] = $order->retreatant->full_name_with_city;
         }
+
         $couple = collect([]);
         $couple->name = $order->couple_name;
         $couple->email = $order->couple_email;
