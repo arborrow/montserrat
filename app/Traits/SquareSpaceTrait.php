@@ -21,7 +21,7 @@ trait SquareSpaceTrait
             $event = Retreat::findOrFail($event_id);
             $retreats[$event->id] = $event->idnumber . '-' . $event->title . ' (' . date_format($event->start_date,"m-d-Y") . ')';
         }
-
+            $retreats[''] = 'N/A';
         return $retreats;
     }
 

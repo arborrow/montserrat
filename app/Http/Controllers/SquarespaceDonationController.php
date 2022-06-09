@@ -15,6 +15,7 @@ use App\Models\Donation;
 use App\Models\Email;
 use App\Models\Note;
 use App\Models\Phone;
+use App\Models\Registration;
 use App\Models\Retreat;
 use App\Models\SsDonation;
 use App\Models\StateProvince;
@@ -143,7 +144,7 @@ class SquarespaceDonationController extends Controller
     {
         $ss_donation = SsDonation::findOrFail($id);
         $contact_id = $request->input('contact_id');
-        $event_id = $request->input('event_id');
+        $event_id = ($request->filled('event_id')) ? $request->input('event_id') : null;
 
         // always update any data changes in order
         $ss_donation->name = ($request->filled('name')) ? $request->input('name') : $ss_donation->name;
@@ -159,6 +160,7 @@ class SquarespaceDonationController extends Controller
         $country = ($request->filled('address_country_id')) ? Country::findOrFail(($request->input('address_country_id'))) : null ;
         $ss_donation->address_country = (null !== optional($country)->iso_code) ? optional($country)->iso_code : $ss_donation->address_country;
 
+        $ss_donation->comments = $request->input('comments');
         $ss_donation->amount = $request->input('amount');
         $ss_donation->event_id = $event_id;
         $ss_donation->save();
@@ -197,7 +199,7 @@ class SquarespaceDonationController extends Controller
             // update contact info (prefix, parish, )
 
             $contact = Contact::findOrFail($contact_id);
-            $event = Retreat::findOrFail($event_id);
+            $event = (isset($event_id)) ? Retreat::findOrFail($event_id) : null;
 
             $contact->first_name = ($request->filled('first_name')) ? $request->input('first_name') : $contact->first_name;
             $contact->last_name = ($request->filled('last_name')) ? $request->input('last_name') : $contact->last_name;
@@ -260,9 +262,27 @@ class SquarespaceDonationController extends Controller
             $donation->donation_date = (isset($ss_donation->event->start_date)) ? $ss_donation->event->start_date : $ss_donation->created_at;
             $donation->donation_amount = $ss_donation->amount;
             // TODO: check if for retreat or fund; consider creating designated or purpose attribute (or consolidating the two fields into the fund field)
-            $donation->Notes = 'SS Contribution #' . $ss_donation->id . ' for Retreat #' . optional($ss_donation->event)->idnumber;
+            $retreat_note = (isset($event_id)) ? ' for Retreat #' . optional($ss_donation->event)->idnumber : null;
+            $donation->Notes = 'SS Contribution #' . $ss_donation->id . $retreat_note .'. '. $ss_donation->comments;
             $donation->save();
             $ss_donation->donation_id = $donation->donation_id;
+
+            // TODO: carefully consider possible impact of overwriting data, currently set to avoid overwriting most data
+            //create registration if it does not exist for a
+            if (isset($event_id) && config('polanco.donation_descriptions.'.$request->input('donation_description')) == 'Retreat Deposits') {
+                $registration = Registration::firstOrNew([
+                    'contact_id'=>$contact_id,
+                    'event_id'=>$event_id,
+                    'role_id'=>config('polanco.participant_role_id.retreatant'),
+                ]);
+                $registration->source = (isset($registration->source)) ? $registration->source : 'Squarespace';
+                $registration->notes= 'Squarespace Contribution #'.$ss_donation->id.'. '.$registration->notes;
+                $registration->register_date = (isset($registration->register_date)) ? $registration->register_date : $ss_donation->created_at;
+                $registration->deposit= (isset($registration->deposit)) ? $registration->deposit : $request->input('amount');
+                $registration->status_id = (isset($registration->status_id)) ? $registration->status_id : config('polanco.registration_status_id.registered');
+                $registration->remember_token = (isset($registration->remember_token)) ? $registration->remember_token : Str::random(60);
+                $registration->save();
+            }
 
             $ss_donation->is_processed = 1;
             $ss_donation->save();
@@ -283,4 +303,22 @@ class SquarespaceDonationController extends Controller
     {
         //
     }
+
+    /**
+     * Reset to re-select the retreatant for a SquareSpace contribution.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function reset($id)
+    {
+        $this->authorize('update-squarespace-donation');
+
+        $ss_donation = SsDonation::findOrFail($id);
+        $ss_donation->contact_id = null;
+        $ss_donation->save();
+
+        return Redirect::action([self::class, 'edit'],['donation' => $id]);
+    }
+
 }

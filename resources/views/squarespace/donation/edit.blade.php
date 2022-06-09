@@ -35,7 +35,7 @@
                     The provided contact information will be added/updated.
                     A touchpoint for the Donor's donation is created.
                     A Donation is created.
-                <li>n.b. The Donation Payment will <strong><u>not</u></strong> be until it is received via Stripe.
+                <li>n.b. The Donation Payment will <strong><u>not</u></strong> be created until it is received via Stripe.
             </ul>
         </div>
     </div>
@@ -74,9 +74,15 @@
                     </h3>
                         {!! Form::select('donation_description', config('polanco.donation_descriptions'), (isset($ss_donation->fund)) ? $ss_donation->fund : $ss_donation->offering_type, ['class' => 'form-control']) !!}
                         {{ optional($ss_donation->donation)->donation_description }}
-
-
                 </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <h3>
+                        {!! Form::label('comments', 'Comments:')  !!}
+                    </h3>
+                    {!! Form::text('comments', $ss_donation->comments, ['class' => 'form-control']) !!}
+                </div>
+
             </div>
             <div class="clearfix"> </div>
 
@@ -85,8 +91,10 @@
                     @if (!$ss_donation->is_processed)
                         @if ($ss_donation->contact_id > 0 )
                         {!! Form::submit('Proceed with Contribution',['class' => 'btn btn-dark']) !!}
-                        @else
+                        <a class="btn btn-info" href="{{ action([\App\Http\Controllers\SquarespaceDonationController::class, 'reset'],['id'=>$ss_donation->id]) }}">Reset Contact for Contribution #{{ $ss_donation->id }}</a>
+                    @else
                         {!! Form::submit('Retrieve Contact Info',['class' => 'btn btn-info']) !!}
+
                         @endif
                     @else
                         <a class="btn btn-primary" href="{{ action([\App\Http\Controllers\SquarespaceDonationController::class, 'index']) }}">Squarespace Contribution #{{ $ss_donation->id }} has already been processed</a>
@@ -290,7 +298,7 @@
                     <strong>Retreat:</strong> <a href="{{ URL('/retreat/'.$ss_donation->event_id) }}">{{ $ss_donation->event->retreat_name }}</a><br />
                 @endIf
                 @if (isset($ss_donation->donation_id))
-                    <strong>Donation ID:</strong> <a href="{{ URL('/donation/'.$ss_donation->donation_id) }}">{{ $ss_donation->participant_id }}</a><br />
+                    <strong>Donation ID:</strong> <a href="{{ URL('/donation/'.$ss_donation->donation_id) }}">{{ $ss_donation->donation_id }}</a><br />
                 @endIf
                 <strong>Message ID:</strong> <a href="{{URL('/mailgun/'.$ss_donation->message_id)}}">{{ $ss_donation->message_id }}</a><br />
                 <strong>Processed:</strong> {{ ($ss_donation->is_processed) ? 'Yes' : 'No' }} <br />

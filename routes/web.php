@@ -187,6 +187,7 @@ Route::middleware('web', 'activity')->group(function () {
     Route::resource('asset_job', AssetJobController::class);
 
     Route::get('bookstore', [PageController::class, 'bookstore'])->name('bookstore');
+    Route::get('calendar', [RetreatController::class, 'calendar'])->name('calendar');
     Route::resource('diocese', DioceseController::class);
     //Route::get('donation', ['as' => 'donation','uses' => [PageController::class, 'donation']]);
 
@@ -332,16 +333,6 @@ Route::middleware('web', 'activity')->group(function () {
     Route::get('retreats', [PageController::class, 'retreat'])->name('retreats');
     Route::resource('room', RoomController::class);
     Route::get('rooms/{ymd?}', [RoomController::class, 'schedule'])->name('rooms');
-    Route::get('support', [PageController::class, 'support'])->name('support');
-    Route::stripeWebhooks('stripe/webhooks');
-
-    Route::prefix('stripe')->group(function () {
-        Route::get('payout/import', [StripePayoutController::class, 'import'])->name('stripe.payout.import');
-        Route::get('payout/date/{payout_date?}', [StripePayoutController::class, 'show_date'])->name('stripe.payout.showdate');
-        Route::resource('charge', StripeChargeController::class);
-        Route::resource('payout', StripePayoutController::class);
-    });
-    Route::stripeWebhooks('stripe/webhooks');
 
     Route::prefix('squarespace')->group(function () {
         Route::resource('/', SquarespaceController::class);
@@ -351,7 +342,19 @@ Route::middleware('web', 'activity')->group(function () {
         Route::resource('order', SquarespaceOrderController::class)->names([
             'update' => 'squarespace.order.update',
             'destroy' => 'squarespace.order.destroy']);
+            });
+        Route::get('donation/reset/{id}}', [SquarespaceDonationController::class, 'reset'])->name('squarespace.donation.reset');
+        Route::get('order/reset/{id}}', [SquarespaceOrderController::class, 'reset'])->name('squarespace.order.reset');
+
+    Route::prefix('stripe')->group(function () {
+        Route::get('payout/import', [StripePayoutController::class, 'import'])->name('stripe.payout.import');
+        Route::get('payout/date/{payout_date?}', [StripePayoutController::class, 'show_date'])->name('stripe.payout.showdate');
+        Route::resource('charge', StripeChargeController::class);
+        Route::resource('payout', StripePayoutController::class);
     });
+    Route::stripeWebhooks('stripe/webhooks');
+
+    Route::get('support', [PageController::class, 'support'])->name('support');
 
     Route::resource('touchpoint', TouchpointController::class);
     Route::get('touchpoint/add/{id}', [TouchpointController::class, 'add'])->name('touchpoint.add');
@@ -360,7 +363,6 @@ Route::middleware('web', 'activity')->group(function () {
     Route::get('users', [PageController::class, 'user'])->name('users');
     Route::resource('vendor', VendorController::class);
 
-    Route::get('calendar', [RetreatController::class, 'calendar'])->name('calendar');
 
     Route::get('mailgun/get', [MailgunController::class, 'get'])->name('mailgun.get');
     Route::get('mailgun/process', [MailgunController::class, 'process'])->name('mailgun.process');

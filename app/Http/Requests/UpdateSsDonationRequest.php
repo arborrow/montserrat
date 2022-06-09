@@ -27,7 +27,7 @@ class UpdateSsDonationRequest extends FormRequest
         return [
             'id' => 'integer|min:1|required',
             'contact_id' => 'integer|min:0|required',
-            'event_id' => 'integer|min:1|required',
+            'event_id' => 'integer|min:1|nullable',
             'couple_contact_id' => 'integer|min:0|nullable',
             'name' => 'string|nullable',
             'first_name' => 'string|nullable',

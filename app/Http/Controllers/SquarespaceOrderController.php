@@ -539,4 +539,21 @@ class SquarespaceOrderController extends Controller
     {
         //
     }
+
+    /**
+     * Reset to re-select the retreatant for a SquareSpace order.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function reset($id)
+    {
+        $this->authorize('update-squarespace-order');
+
+        $ss_order = SsOrder::findOrFail($id);
+        $ss_order->contact_id = null;
+        $ss_order->save();
+
+        return Redirect::action([self::class, 'edit'],['order' => $id]);
+    }
 }
