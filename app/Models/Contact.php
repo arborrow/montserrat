@@ -484,6 +484,15 @@ class Contact extends Model implements Auditable
         }
     }
 
+    public function getDonationsTotalAttribute()
+    {
+        if (isset($this->donations)) {
+            return $this->donations->sum('donation_amount');
+        } else {
+            return 0;
+        }
+    }
+
     public function getEmailPrimaryTextAttribute()
     {
         if (! empty($this->email_primary->email)) {

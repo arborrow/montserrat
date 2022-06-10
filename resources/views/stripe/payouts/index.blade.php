@@ -22,7 +22,7 @@
                         @foreach ($payouts as $payout)
                         <tr>
                             <td>
-                                <a href="{{ URL('stripe/payout/' . $payout->id) }} ">{{ $payout->id }}</a>
+                                <a href="{{ URL('stripe/payout/' . $payout->payout_id) }} ">{{ $payout->payout_id }}</a>
                             </td>
                             <td>
                                 {{ \Carbon\Carbon::parse($payout->date) }}

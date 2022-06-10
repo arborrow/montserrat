@@ -14,9 +14,10 @@
 
             <div class='row'>
                 <div class='col-md-4'>
-                    <strong>Payout ID: </strong>{{$payout->id}}
-                    <br /><strong>Date: </strong>{{\Carbon\Carbon::parse($payout->date)}}
-                    <br /><strong>Amount: </strong>${{ number_format($payout->amount/100,2) }}
+                    <strong>Payout ID: </strong>{{$stripe_payout->payout_id}}
+                    <br /><strong>Date: </strong>{{$stripe_payout->date}}
+                    <br /><strong>Amount: </strong>${{ $stripe_payout->amount }}
+                    <br /><strong>Total Fees: </strong>${{ number_format($stripe_payout->total_fee_amount,2)  }}
 
                 </div>
             </div>

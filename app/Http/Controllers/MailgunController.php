@@ -243,8 +243,11 @@ class MailgunController extends Controller
                 $ss_donation->phone = $this->extract_value($message->body, "Donor Phone Number:\n");
                 $ss_donation->offering_type = $this->extract_value($message->body, "Type of Offering:\n");
                 $ss_donation->retreat_description = $this->extract_value($message->body, "Retreat:\n");
+                // it seems some of the emails had * characters and some do not so we will check for both
                 $ss_donation->amount = $this->extract_value_between($message->body, "contribution of *$","*!");
-                $ss_donation->comments = trim($this->extract_value_between($message->body, "Comments or Special Instructions:\n","View My Donations\n"));
+                if (!isset($ss_donation->amount)) {
+                    $ss_donation->amount = $this->extract_value_between($message->body, "contribution of $","!");
+                }$ss_donation->comments = trim($this->extract_value_between($message->body, "Comments or Special Instructions:\n","View My Donations\n"));
                 $ss_donation->fund = $this->extract_value($message->body, "Please Select a Fund:\n");
                 $year = substr($ss_donation->retreat_description, -5, 4);
                 $retreat_number = trim(substr($ss_donation->retreat_description,
@@ -273,34 +276,29 @@ class MailgunController extends Controller
                     'order_number' => $order_number,
                 ]);
 
+
+                $order->order_number = $order_number;
                 $order->message_id = $message->id;
                 $order->created_at = (isset($order_date)) ? Carbon::parse($order_date) : Carbon::now();
                 $message_info = $this->extract_value_between($message->body, "SUBTOTAL", "Item Subtotal");
 
-                $retreat = explode("\n",$message_info);
+                $retreat = array_values(array_filter(explode("\n",$message_info)));
                 $order->retreat_category=$retreat[0];
-                //dd($order);
+                $order->retreat_sku = $retreat[1];
+
                 $inventory = SsInventory::whereName($order->retreat_category)->first();
                 $custom_form = SsCustomForm::findOrFail($inventory->custom_form_id);
                 $fields = SsCustomFormField::whereFormId($custom_form->id)->orderBy('sort_order')->get();
 
-                // TODO: for now this is limited to two line; however, some refactoring could make this more dynamic with a while loop
-                // TODO: $product_variation needs to be everything between the first field (Title) and SKU - remove new lines and explode by / 
-                if ($inventory->variant_options > 1) { // all variant options not on one line, so concatenante with next line
-                    if (substr_count($retreat[2], " / ") < $inventory->variant_options-1) {
-                        $product_variation = trim($retreat[2]) . ' ' . trim($retreat[3]);
-                    } else {
-                        $product_variation = trim($retreat[2]);
-                    }
-                } else {
-                    $product_variation = trim($retreat[2]);
+                $first_field_position = array_search($fields[0]->name.":", $retreat);
+                $product_variation="";
+                for ($i=2; $i<=$first_field_position-1; $i++) {
+                    $product_variation = $product_variation . $retreat[$i] . ' ';
                 }
 
-                $order->retreat_sku = $retreat[1];
                 $order->retreat_description = trim(substr($product_variation,0, strpos($product_variation,"(")));
                 $order->retreat_dates = substr($product_variation, strpos($product_variation,"(") + 1, strpos($product_variation,")") - (strpos($product_variation,"(") +1));
 
-                // dd($year,$retreat_number,$idnumber,$event);
                 //TODO: rather than trying to determine if the date in the message are in English or Spanish
                 // get the year, retreat number and create the idnumber, lookup the event, and get the retreat start date from the actual event
                 $year = substr($order->retreat_dates, strpos($order->retreat_dates,", ") +2);
@@ -316,17 +314,12 @@ class MailgunController extends Controller
                 $order->retreat_start_date = optional($event)->start_date;
                 $order->event_id = optional($event)->id;
 
-                $order->deposit_amount = str_replace("$","",$this->extract_value_between($message->body, "\nTOTAL", "$0.00"));
-
-                // ugly way to get the quantity before the unit_price
-                $last_colon = strrpos($message_info, ':');
-                $first_dollar = strpos($message_info,"\n$");
-                $partial_line = substr($message_info, $last_colon, $first_dollar-$last_colon);
-                $partial_last_new_line = strrpos($partial_line,"\n");
-                $quantity = trim(substr($partial_line,$partial_last_new_line));
-                $unit_price=trim(substr($message_info, $first_dollar+2, strpos($message_info,"\n",$first_dollar+2) - $first_dollar-2));
+                $order->deposit_amount = str_replace("$","",$this->extract_value_between($message->body, "\n TOTAL", "$0.00"));
+                $quantity = $retreat[sizeof($retreat)-3];
+                $unit_price=str_replace("$", "", $retreat[sizeof($retreat)-2]);
                 $order->retreat_quantity = isset($quantity) ? $quantity : 0;
                 $order->unit_price = isset($unit_price) ? $unit_price : 0;
+
                 $registration_type = explode(" / ", $product_variation);
                 if (isset($registration_type[1])) {
                     $order->retreat_registration_type = trim($registration_type[1]);
@@ -393,8 +386,6 @@ class MailgunController extends Controller
                 $order->couple_date_of_birth = ($order->couple_date_of_birth == 1) ? null : $order->couple_date_of_birth;
                 $order->date_of_birth = (isset($order->date_of_birth)) ? \Carbon\Carbon::parse($order->date_of_birth) : null;
                 $order->couple_date_of_birth = (isset($order->couple_date_of_birth)) ? \Carbon\Carbon::parse($order->couple_date_of_birth) : null;
-
-                // dd($order->date_of_birth,$order);
 
                 $order->save();
 

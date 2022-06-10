@@ -6,6 +6,10 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use App\Models\Contact;
+use App\Models\DonationType;
+use App\Models\Donation;
+use App\Models\Retreat;
 
 // TODO: to avoid confusion with agc letters in Spanish I'm limiting testing for now to $current_user
 
@@ -39,12 +43,12 @@ class DonationFactory extends Factory
             'AGC Donation Description' => $this->faker->word(),
             'Pledge' => $this->faker->word(),
             'contact_id' => function () {
-                return \App\Models\Contact::factory()->create([
+                return Contact::factory()->create([
                     'preferred_language' => 'en_US',
                 ])->id;
             },
             'event_id' => function () {
-                return \App\Models\Retreat::factory()->create()->id;
+                return Retreat::factory()->create()->id;
             },
             'remember_token' => Str::random(10),
         ];
