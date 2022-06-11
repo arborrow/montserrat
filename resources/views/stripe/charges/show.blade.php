@@ -7,7 +7,7 @@
             <div class="panel-heading">
                 <span>
                     <h2>
-                            Charge details
+                            Charge details {{ isset($charge->metadata->orderId) ? 'for Squarespace Order #' . $charge->metadata->orderId : null }}
                     </h2>
                 </span>
             </div>
@@ -74,7 +74,6 @@
                             </tr>
 
                     </table>
-
                 </div>
             </div>
 
