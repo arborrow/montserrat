@@ -14,6 +14,8 @@ use App\Models\SsOrder;
 use App\Models\Touchpoint;
 use Illuminate\Support\Facades\Redirect;
 use Mailgun\Mailgun;
+use Illuminate\Support\Facades\Http;
+
 
 class MailgunController extends Controller
 {
@@ -314,12 +316,11 @@ class MailgunController extends Controller
                 $order->retreat_start_date = optional($event)->start_date;
                 $order->event_id = optional($event)->id;
 
-                $order->deposit_amount = str_replace("$","",$this->extract_value_between($message->body, "\n TOTAL", "$0.00"));
+                $order->deposit_amount = str_replace("$","",$this->extract_value_between($message->body, "\nTOTAL", "$0.00"));
                 $quantity = $retreat[sizeof($retreat)-3];
                 $unit_price=str_replace("$", "", $retreat[sizeof($retreat)-2]);
                 $order->retreat_quantity = isset($quantity) ? $quantity : 0;
                 $order->unit_price = isset($unit_price) ? $unit_price : 0;
-
                 $registration_type = explode(" / ", $product_variation);
                 if (isset($registration_type[1])) {
                     $order->retreat_registration_type = trim($registration_type[1]);
@@ -387,8 +388,19 @@ class MailgunController extends Controller
                 $order->date_of_birth = (isset($order->date_of_birth)) ? \Carbon\Carbon::parse($order->date_of_birth) : null;
                 $order->couple_date_of_birth = (isset($order->couple_date_of_birth)) ? \Carbon\Carbon::parse($order->couple_date_of_birth) : null;
 
+                // attempt to get Stripe charge id
+                $result=null;
+                $stripe_charge=null;
+                $stripe_url = trim($this->extract_value($message->body,"View in Stripe\n"), "<>");
+                //dd($stripe_url, isset($stripe_url), strpos($stripe_url,"http") === 0);
+                if (isset($stripe_url) && strpos($stripe_url,"http") === 0) {
+                    $result = Http::timeout(2)->get($stripe_url)->getBody()->getContents();
+                    $charge = trim($this->extract_value($result,"redirect=%2Fpayments%2F"));
+                    $stripe_charge = str_replace('">','',$charge);
+                    $order->stripe_charge_id = (isset($stripe_charge)) ? $stripe_charge : null;
+                }
+                // dd($order, $message->body, $retreat,$stripe_url, $result, $stripe_charge);
                 $order->save();
-
                 }
 
             // $touch->notes = 'Order #' . $order->order_number .' for #' . $order->idnumber . ' has been received.';
