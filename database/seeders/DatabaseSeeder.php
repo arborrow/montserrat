@@ -74,5 +74,8 @@ class DatabaseSeeder extends Seeder
         $this->call(SquarespaceContributionPermissionsSeeder::class);
         $this->call(SquarespaceOrderPermissionsSeeder::class);
 
+        $this->call(SsInventoryTableSeeder::class);
+        $this->call(SsCustomFormTableSeeder::class);
+        $this->call(SsCustomFormFieldTableSeeder::class);
     }
 }
