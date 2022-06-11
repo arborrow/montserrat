@@ -53,6 +53,10 @@
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href={{ route('organization.index') }}>Organizations</a>
 							<a class="dropdown-item" href={{ route('vendor.index') }}>Vendors</a>
+							@can('show-squarespace-order')
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item"  href={{ route('squarespace.order.index') }}>Squarespace Orders</a>
+							@endcan
 							@can('show-touchpoint')
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item"  href={{ route('touchpoint.index') }}>Touchpoints</a>

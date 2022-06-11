@@ -31,10 +31,10 @@ class SquarespaceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function donation_index()
-    {   
+    public function contribution_index()
+    {
         $this->authorize('show-squarespace');
-        return view('squarespace.donation');
+        return view('squarespace.contribution');
 
 
     }

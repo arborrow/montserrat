@@ -9,7 +9,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 use App\Traits\PhoneTrait;
 
 
-class SsDonation extends Model implements Auditable
+class SsContribution extends Model implements Auditable
 {
     use HasFactory;
     use SoftDeletes;

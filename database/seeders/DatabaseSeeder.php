@@ -69,5 +69,10 @@ class DatabaseSeeder extends Seeder
         $this->call(ExportListPermissionsSeeder::class);
         $this->call(SnippetPermissionsSeeder::class);
         $this->call(WebsitePermissionsSeeder::class);
+        $this->call(MailgunPermissionsSeeder::class);
+        $this->call(StripePermissionsSeeder::class);
+        $this->call(SquarespaceContributionPermissionsSeeder::class);
+        $this->call(SquarespaceOrderPermissionsSeeder::class);
+
     }
 }

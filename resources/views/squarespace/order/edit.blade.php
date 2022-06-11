@@ -94,7 +94,7 @@
                     @if (!$order->is_processed)
                         @if (($order->contact_id > 0 && !$order->is_couple) || (($order->is_couple) && $order->couple_contact_id > 0 && $order->contact_id>0))
                         {!! Form::submit('Proceed with Order',['class' => 'btn btn-dark']) !!}
-                        <a class="btn btn-info" href="{{ action([\App\Http\Controllers\SquarespaceOrderController::class, 'reset'],['id'=>$order->id]) }}">Reset Contact for Order #{{ $order->id }}</a>
+                        <a class="btn btn-info" href="{{ action([\App\Http\Controllers\SquarespaceOrderController::class, 'reset'],['order'=>$order->id]) }}">Reset Contact for Order #{{ $order->id }}</a>
                         @else
                         {!! Form::submit('Retrieve Contact Info',['class' => 'btn btn-info']) !!}
                         @endif

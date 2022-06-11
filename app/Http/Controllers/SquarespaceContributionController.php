@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
-use App\Http\Requests\UpdateSsDonationRequest;
+use App\Http\Requests\UpdateSsContributionRequest;
 
 use App\Models\Address;
 use App\Models\Contact;
@@ -17,7 +17,7 @@ use App\Models\Note;
 use App\Models\Phone;
 use App\Models\Registration;
 use App\Models\Retreat;
-use App\Models\SsDonation;
+use App\Models\SsContribution;
 use App\Models\StateProvince;
 use App\Models\Touchpoint;
 
@@ -27,7 +27,7 @@ use App\Traits\SquareSpaceTrait;
 use Carbon\Carbon;
 
 
-class SquarespaceDonationController extends Controller
+class SquarespaceContributionController extends Controller
 {   use SquareSpaceTrait;
     public function __construct()
     {
@@ -41,10 +41,10 @@ class SquarespaceDonationController extends Controller
      */
     public function index()
     {
-        $this->authorize('show-squarespace-donation');
-        $ss_donations = SsDonation::whereIsProcessed(0)->paginate(25, ['*'], 'ss_donations');
-        $processed_ss_donations = SsDonation::whereIsProcessed(1)->paginate(25, ['*'], 'ss_unprocessed_donations');
-        return view('squarespace.donation.index',compact('ss_donations','processed_ss_donations'));
+        $this->authorize('show-squarespace-contribution');
+        $ss_contributions = SsContribution::whereIsProcessed(0)->paginate(25, ['*'], 'ss_contributions');
+        $processed_ss_contributions = SsContribution::whereIsProcessed(1)->paginate(25, ['*'], 'ss_unprocessed_contributions');
+        return view('squarespace.contribution.index',compact('ss_contributions','processed_ss_contributions'));
 
 
     }
@@ -78,27 +78,27 @@ class SquarespaceDonationController extends Controller
      */
     public function show($id)
     {
-        $this->authorize('show-squarespace-donation');
-        $ss_donation = SsDonation::findOrFail($id);
-        return view('squarespace.donation.show', compact('ss_donation'));
+        $this->authorize('show-squarespace-contribution');
+        $ss_contribution = SsContribution::findOrFail($id);
+        return view('squarespace.contribution.show', compact('ss_contribution'));
 
     }
 
     /**
-     * Show a donation to confirm the retreatant for a SquareSpace order.
+     * Show a contribution to confirm the retreatant for a SquareSpace order.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $this->authorize('update-squarespace-donation');
+        $this->authorize('update-squarespace-contribution');
 
-        $ss_donation = SsDonation::findOrFail($id);
+        $ss_contribution = SsContribution::findOrFail($id);
         $descriptions = DonationType::active()->orderby('name')->pluck('name', 'name');
 
-        $matching_contacts = $this->matched_contacts($ss_donation);
-        $retreats = (isset($ss_donation->event_id)) ? $this->upcoming_retreats($ss_donation->event_id,6) : $this->upcoming_retreats(null,6);
+        $matching_contacts = $this->matched_contacts($ss_contribution);
+        $retreats = (isset($ss_contribution->event_id)) ? $this->upcoming_retreats($ss_contribution->event_id,6) : $this->upcoming_retreats(null,6);
 
         $states = StateProvince::orderBy('abbreviation')->whereCountryId(config('polanco.country_id_usa'))->pluck('abbreviation', 'id');
         $states->prepend('N/A', null);
@@ -106,15 +106,15 @@ class SquarespaceDonationController extends Controller
         $countries->prepend('N/A', null);
 
         // try to get the state - if two letter lookup by abbreviation, if more than two letters lookup by name
-        $state = (strlen($ss_donation->address_state) > 2) ?
-                StateProvince::whereCountryId(config('polanco.country_id_usa'))->whereName(strtoupper($ss_donation->address_state))->first() :
-                StateProvince::whereCountryId(config('polanco.country_id_usa'))->whereAbbreviation(strtoupper($ss_donation->address_state))->first() ;
+        $state = (strlen($ss_contribution->address_state) > 2) ?
+                StateProvince::whereCountryId(config('polanco.country_id_usa'))->whereName(strtoupper($ss_contribution->address_state))->first() :
+                StateProvince::whereCountryId(config('polanco.country_id_usa'))->whereAbbreviation(strtoupper($ss_contribution->address_state))->first() ;
 
         // attempt to find retreat based on event_id if available or retreat_idnumber
-        if ($ss_donation->event_id > 0) {
-            $retreat = Retreat::findOrFail($ss_donation->event_id);
+        if ($ss_contribution->event_id > 0) {
+            $retreat = Retreat::findOrFail($ss_contribution->event_id);
         } else {
-            $retreat = Retreat::whereIdnumber($ss_donation->idnumber)->first();
+            $retreat = Retreat::whereIdnumber($ss_contribution->idnumber)->first();
         }
 
         $ids = [];
@@ -123,12 +123,12 @@ class SquarespaceDonationController extends Controller
         $ids['retreat_id'] = isset($retreat->id) ? $retreat->id : null;
 
         // ensure contact_id is part of matching_contacts but if not then add it
-        $matching_contacts = $this->matched_contacts($ss_donation);
-        if (! array_key_exists($ss_donation->contact_id,$matching_contacts) && isset($ss_donation->contact_id)) {
-            $matching_contacts[$ss_donation->contact_id] = optional($ss_donation->donor)->full_name_with_city;
+        $matching_contacts = $this->matched_contacts($ss_contribution);
+        if (! array_key_exists($ss_contribution->contact_id,$matching_contacts) && isset($ss_contribution->contact_id)) {
+            $matching_contacts[$ss_contribution->contact_id] = optional($ss_contribution->donor)->full_name_with_city;
         }
 
-        return view('squarespace.donation.edit', compact('ss_donation','matching_contacts','retreats','states', 'countries','ids'));
+        return view('squarespace.contribution.edit', compact('ss_contribution','matching_contacts','retreats','states', 'countries','ids'));
 
     }
 
@@ -140,36 +140,36 @@ class SquarespaceDonationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSsDonationRequest $request, $id)
+    public function update(UpdateSsContributionRequest $request, $id)
     {
-        $ss_donation = SsDonation::findOrFail($id);
+        $ss_contribution = SsContribution::findOrFail($id);
         $contact_id = $request->input('contact_id');
         $event_id = ($request->filled('event_id')) ? $request->input('event_id') : null;
 
         // always update any data changes in order
-        $ss_donation->name = ($request->filled('name')) ? $request->input('name') : $ss_donation->name;
-        $ss_donation->email = $request->input('email');
-        $ss_donation->phone = $request->input('phone');
+        $ss_contribution->name = ($request->filled('name')) ? $request->input('name') : $ss_contribution->name;
+        $ss_contribution->email = $request->input('email');
+        $ss_contribution->phone = $request->input('phone');
 
-        $ss_donation->address_street = $request->input('address_street');
-        $ss_donation->address_supplemental = $request->input('address_supplemental');
-        $ss_donation->address_city = $request->input('address_city');
+        $ss_contribution->address_street = $request->input('address_street');
+        $ss_contribution->address_supplemental = $request->input('address_supplemental');
+        $ss_contribution->address_city = $request->input('address_city');
         $state = ($request->filled('address_state_id')) ? StateProvince::findOrFail(($request->input('address_state_id'))) : null ;
-        $ss_donation->address_state = (null !== optional($state)->abbreviation) ? optional($state)->abbreviation : $ss_donation->address_state;
-        $ss_donation->address_zip = $request->input('address_zip');
+        $ss_contribution->address_state = (null !== optional($state)->abbreviation) ? optional($state)->abbreviation : $ss_contribution->address_state;
+        $ss_contribution->address_zip = $request->input('address_zip');
         $country = ($request->filled('address_country_id')) ? Country::findOrFail(($request->input('address_country_id'))) : null ;
-        $ss_donation->address_country = (null !== optional($country)->iso_code) ? optional($country)->iso_code : $ss_donation->address_country;
+        $ss_contribution->address_country = (null !== optional($country)->iso_code) ? optional($country)->iso_code : $ss_contribution->address_country;
 
-        $ss_donation->comments = $request->input('comments');
-        $ss_donation->amount = $request->input('amount');
-        $ss_donation->event_id = $event_id;
-        $ss_donation->save();
+        $ss_contribution->comments = $request->input('comments');
+        $ss_contribution->amount = $request->input('amount');
+        $ss_contribution->event_id = $event_id;
+        $ss_contribution->save();
 
-        if ($ss_donation->is_processed) { // the order has already been processed
-            flash('SquareSpace Donation #<a href="'.url('/squarespace/order/'.$ss_donation->id).'">'.$ss_donation->order_number.'</a> has already been processed')->error()->important();
+        if ($ss_contribution->is_processed) { // the order has already been processed
+            flash('SquareSpace Contribution #<a href="'.url('/squarespace/order/'.$ss_contribution->id).'">'.$ss_contribution->order_number.'</a> has already been processed')->error()->important();
             return Redirect::action([self::class, 'index']);
         } else { // the order has not been processed
-            if (!isset($ss_donation->contact_id)) {
+            if (!isset($ss_contribution->contact_id)) {
                 if ($contact_id == 0) {
                     // Create a new contact
                     $contact = new Contact;
@@ -182,15 +182,15 @@ class SquarespaceDonationController extends Controller
                     $contact->save();
 
                     $contact_id = $contact->id;
-                    $ss_donation->contact_id = $contact->id;
+                    $ss_contribution->contact_id = $contact->id;
                 } else {
                     $contact = Contact::findOrFail($contact_id);
-                    $ss_donation->contact_id = $contact->id;
+                    $ss_contribution->contact_id = $contact->id;
                 }
 
-                $ss_donation->save();
+                $ss_contribution->save();
 
-                return Redirect::action([self::class, 'edit'],['donation' => $id]);
+                return Redirect::action([self::class, 'edit'],['contribution' => $id]);
 
             }
 
@@ -247,25 +247,23 @@ class SquarespaceDonationController extends Controller
             $touchpoint->person_id = $contact_id;
             $touchpoint->staff_id = config('polanco.self.id');
             $touchpoint->type = 'Other';
-            $touchpoint->notes = 'Squarespace Contribution #' . $ss_donation->id . ' received from ' . $contact->display_name;
+            $touchpoint->notes = 'Squarespace Contribution #' . $ss_contribution->id . ' received from ' . $contact->display_name;
             $touchpoint->touched_at = Carbon::now();
             $touchpoint->save();
-            $ss_donation->touchpoint_id = $touchpoint->id;
+            $ss_contribution->touchpoint_id = $touchpoint->id;
 
             // create donation(s) (record deposit as donation (with no payment), notes)
             $donation = new Donation;
             $donation->contact_id = $contact_id;
             $donation->event_id = ($request->filled('event_id')) ? $event_id : null;
             $donation->donation_description = ($request->filled('donation_description')) ? config('polanco.donation_descriptions.'.$request->input('donation_description')) : null;
-            // $donation->donation_description = 'Retreat Deposits';
-            // TODO: verify with Catherine that she uses the event start date for both retreat and non-retreat funding
-            $donation->donation_date = (isset($ss_donation->event->start_date)) ? $ss_donation->event->start_date : $ss_donation->created_at;
-            $donation->donation_amount = $ss_donation->amount;
+            $donation->donation_date = (isset($ss_contribution->event->start_date)) ? $ss_contribution->event->start_date : $ss_contribution->created_at;
+            $donation->donation_amount = $ss_contribution->amount;
             // TODO: check if for retreat or fund; consider creating designated or purpose attribute (or consolidating the two fields into the fund field)
-            $retreat_note = (isset($event_id)) ? ' for Retreat #' . optional($ss_donation->event)->idnumber : null;
-            $donation->Notes = 'SS Contribution #' . $ss_donation->id . $retreat_note .'. '. $ss_donation->comments;
+            $retreat_note = (isset($event_id)) ? ' for Retreat #' . optional($ss_contribution->event)->idnumber : null;
+            $donation->Notes = 'SS Contribution #' . $ss_contribution->id . $retreat_note .'. '. $ss_contribution->comments;
             $donation->save();
-            $ss_donation->donation_id = $donation->donation_id;
+            $ss_contribution->donation_id = $donation->donation_id;
 
             // TODO: carefully consider possible impact of overwriting data, currently set to avoid overwriting most data
             //create registration if it does not exist for a
@@ -276,18 +274,18 @@ class SquarespaceDonationController extends Controller
                     'role_id'=>config('polanco.participant_role_id.retreatant'),
                 ]);
                 $registration->source = (isset($registration->source)) ? $registration->source : 'Squarespace';
-                $registration->notes= 'Squarespace Contribution #'.$ss_donation->id.'. '.$registration->notes;
-                $registration->register_date = (isset($registration->register_date)) ? $registration->register_date : $ss_donation->created_at;
+                $registration->notes= 'Squarespace Contribution #'.$ss_contribution->id.'. '.$registration->notes;
+                $registration->register_date = (isset($registration->register_date)) ? $registration->register_date : $ss_contribution->created_at;
                 $registration->deposit= (isset($registration->deposit)) ? $registration->deposit : $request->input('amount');
                 $registration->status_id = (isset($registration->status_id)) ? $registration->status_id : config('polanco.registration_status_id.registered');
                 $registration->remember_token = (isset($registration->remember_token)) ? $registration->remember_token : Str::random(60);
                 $registration->save();
             }
 
-            $ss_donation->is_processed = 1;
-            $ss_donation->save();
+            $ss_contribution->is_processed = 1;
+            $ss_contribution->save();
 
-            flash('<a href="'.url('/squarespace/donation/'.$ss_donation->id).'">SquareSpace Donation #'.$ss_donation->id.'</a> processed')->success();
+            flash('<a href="'.url('/squarespace/contribution/'.$ss_contribution->id).'">SquareSpace Contribution #'.$ss_contribution->id.'</a> processed')->success();
 
             return Redirect::action([self::class, 'index']);
         }
@@ -312,13 +310,13 @@ class SquarespaceDonationController extends Controller
      */
     public function reset($id)
     {
-        $this->authorize('update-squarespace-donation');
+        $this->authorize('update-squarespace-contribution');
 
-        $ss_donation = SsDonation::findOrFail($id);
-        $ss_donation->contact_id = null;
-        $ss_donation->save();
+        $ss_contribution = SsContribution::findOrFail($id);
+        $ss_contribution->contact_id = null;
+        $ss_contribution->save();
 
-        return Redirect::action([self::class, 'edit'],['donation' => $id]);
+        return Redirect::action([self::class, 'edit'],['contribution' => $id]);
     }
 
 }

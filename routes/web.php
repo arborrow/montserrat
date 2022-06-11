@@ -36,7 +36,7 @@ use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SnippetController;
 use App\Http\Controllers\SquarespaceController;
-use App\Http\Controllers\SquarespaceDonationController;
+use App\Http\Controllers\SquarespaceContributionController;
 use App\Http\Controllers\SquarespaceOrderController;
 use App\Http\Controllers\SsCustomFormController;
 use App\Http\Controllers\SsInventoryController;
@@ -189,7 +189,6 @@ Route::middleware('web', 'activity')->group(function () {
     Route::get('bookstore', [PageController::class, 'bookstore'])->name('bookstore');
     Route::get('calendar', [RetreatController::class, 'calendar'])->name('calendar');
     Route::resource('diocese', DioceseController::class);
-    //Route::get('donation', ['as' => 'donation','uses' => [PageController::class, 'donation']]);
 
     /*
     * donor assign and add methods are no longer needed - they were used to import contacts from the Access PPD Donors table
@@ -197,7 +196,8 @@ Route::middleware('web', 'activity')->group(function () {
     * // Route::get('donor/{donor_id?}/assign/{contact_id?}', [DonorController::class, 'assign']);
     * // Route::get('donor/{donor_id?}/add', [DonorController::class, 'add']);
     */
-    Route::resource('donor', DonorController::class);
+
+    // Route::resource('donor', DonorController::class);
 
     Route::get('donation/add/{id?}/{event_id?}/{type?}', [DonationController::class, 'create'])->name('donation.add');
     Route::get('donation/{id}/agc_acknowledge', [PageController::class, 'finance_agc_acknowledge']);
@@ -334,17 +334,13 @@ Route::middleware('web', 'activity')->group(function () {
     Route::resource('room', RoomController::class);
     Route::get('rooms/{ymd?}', [RoomController::class, 'schedule'])->name('rooms');
 
-    Route::prefix('squarespace')->group(function () {
+    Route::name('squarespace.')->prefix('squarespace')->group(function () {
         Route::resource('/', SquarespaceController::class);
-        Route::resource('donation', SquarespaceDonationController::class)->names([
-            'update' => 'squarespace.donation.update',
-            'destroy' => 'squarespace.donation.destroy']);
-        Route::resource('order', SquarespaceOrderController::class)->names([
-            'update' => 'squarespace.order.update',
-            'destroy' => 'squarespace.order.destroy']);
-            });
-        Route::get('donation/reset/{id}}', [SquarespaceDonationController::class, 'reset'])->name('squarespace.donation.reset');
-        Route::get('order/reset/{id}}', [SquarespaceOrderController::class, 'reset'])->name('squarespace.order.reset');
+        Route::resource('contribution', SquarespaceContributionController::class);
+        Route::resource('order', SquarespaceOrderController::class);
+        Route::get('contribution/reset/{contribution}', [SquarespaceContributionController::class, 'reset'])->name('squarespace.contribution.reset');
+        Route::get('order/reset/{order}', [SquarespaceOrderController::class, 'reset'])->name('squarespace.order.reset');
+    });
 
     Route::prefix('stripe')->group(function () {
         Route::get('payout/import', [StripePayoutController::class, 'import'])->name('stripe.payout.import');
