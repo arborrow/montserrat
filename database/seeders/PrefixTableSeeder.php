@@ -3,212 +3,240 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class PrefixTableSeeder extends Seeder
 {
+
     /**
-     * Auto generated seed file.
+     * Auto generated seed file
      *
      * @return void
      */
     public function run()
-    {   DB::table('prefix')->delete();
+    {
+        
 
-        DB::table('prefix')->insert([
-            0 => [
+        \DB::table('prefix')->delete();
+        
+        \DB::table('prefix')->insert(array (
+            0 => 
+            array (
                 'id' => 1,
                 'name' => 'Br.',
-                'deleted_at' => null,
-                'remember_token' => null,
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-            1 => [
+                'deleted_at' => NULL,
+                'remember_token' => NULL,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+            1 => 
+            array (
                 'id' => 2,
                 'name' => 'Deacon',
-                'deleted_at' => null,
-                'remember_token' => null,
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-            2 => [
+                'deleted_at' => NULL,
+                'remember_token' => NULL,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+            2 => 
+            array (
                 'id' => 3,
                 'name' => 'Diácano',
-                'deleted_at' => null,
-                'remember_token' => null,
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-            3 => [
+                'deleted_at' => NULL,
+                'remember_token' => NULL,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+            3 => 
+            array (
                 'id' => 4,
                 'name' => 'Dr.',
-                'deleted_at' => null,
-                'remember_token' => null,
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-            4 => [
+                'deleted_at' => NULL,
+                'remember_token' => NULL,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+            4 => 
+            array (
                 'id' => 5,
                 'name' => 'Dra.',
-                'deleted_at' => null,
-                'remember_token' => null,
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-            5 => [
+                'deleted_at' => NULL,
+                'remember_token' => NULL,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+            5 => 
+            array (
                 'id' => 6,
                 'name' => 'Fr.',
-                'deleted_at' => null,
-                'remember_token' => null,
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-            6 => [
+                'deleted_at' => NULL,
+                'remember_token' => NULL,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+            6 => 
+            array (
                 'id' => 7,
                 'name' => 'His Excellency',
-                'deleted_at' => null,
-                'remember_token' => null,
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-            7 => [
+                'deleted_at' => NULL,
+                'remember_token' => NULL,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+            7 => 
+            array (
                 'id' => 8,
                 'name' => 'Hna.',
-                'deleted_at' => null,
-                'remember_token' => null,
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-            8 => [
+                'deleted_at' => NULL,
+                'remember_token' => NULL,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+            8 => 
+            array (
                 'id' => 9,
                 'name' => 'Hno.',
-                'deleted_at' => null,
-                'remember_token' => null,
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-            9 => [
+                'deleted_at' => NULL,
+                'remember_token' => NULL,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+            9 => 
+            array (
                 'id' => 10,
                 'name' => 'Miss',
-                'deleted_at' => null,
-                'remember_token' => null,
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-            10 => [
+                'deleted_at' => NULL,
+                'remember_token' => NULL,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+            10 => 
+            array (
                 'id' => 11,
                 'name' => 'Most Rev.',
-                'deleted_at' => null,
-                'remember_token' => null,
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-            11 => [
+                'deleted_at' => NULL,
+                'remember_token' => NULL,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+            11 => 
+            array (
                 'id' => 12,
                 'name' => 'Mr.',
-                'deleted_at' => null,
-                'remember_token' => null,
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-            12 => [
+                'deleted_at' => NULL,
+                'remember_token' => NULL,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+            12 => 
+            array (
                 'id' => 13,
                 'name' => 'Mrs.',
-                'deleted_at' => null,
-                'remember_token' => null,
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-            13 => [
+                'deleted_at' => NULL,
+                'remember_token' => NULL,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+            13 => 
+            array (
                 'id' => 14,
                 'name' => 'Ms.',
-                'deleted_at' => null,
-                'remember_token' => null,
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-            14 => [
+                'deleted_at' => NULL,
+                'remember_token' => NULL,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+            14 => 
+            array (
                 'id' => 15,
                 'name' => 'Msgr.',
-                'deleted_at' => null,
-                'remember_token' => null,
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-            15 => [
+                'deleted_at' => NULL,
+                'remember_token' => NULL,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+            15 => 
+            array (
                 'id' => 16,
                 'name' => 'P.',
-                'deleted_at' => null,
-                'remember_token' => null,
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-            16 => [
+                'deleted_at' => NULL,
+                'remember_token' => NULL,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+            16 => 
+            array (
                 'id' => 17,
                 'name' => 'Rdo.',
-                'deleted_at' => null,
-                'remember_token' => null,
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-            17 => [
+                'deleted_at' => NULL,
+                'remember_token' => NULL,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+            17 => 
+            array (
                 'id' => 18,
                 'name' => 'Rev.',
-                'deleted_at' => null,
-                'remember_token' => null,
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-            18 => [
+                'deleted_at' => NULL,
+                'remember_token' => NULL,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+            18 => 
+            array (
                 'id' => 19,
                 'name' => 'Rvdmo. Sr.',
-                'deleted_at' => null,
-                'remember_token' => null,
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-            19 => [
+                'deleted_at' => NULL,
+                'remember_token' => NULL,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+            19 => 
+            array (
                 'id' => 20,
                 'name' => 'Señor',
-                'deleted_at' => null,
-                'remember_token' => null,
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-            20 => [
+                'deleted_at' => NULL,
+                'remember_token' => NULL,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+            20 => 
+            array (
                 'id' => 21,
                 'name' => 'Sr.',
-                'deleted_at' => null,
-                'remember_token' => null,
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-            21 => [
+                'deleted_at' => NULL,
+                'remember_token' => NULL,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+            21 => 
+            array (
                 'id' => 22,
                 'name' => 'Sra',
-                'deleted_at' => null,
-                'remember_token' => null,
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-            22 => [
+                'deleted_at' => NULL,
+                'remember_token' => NULL,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+            22 => 
+            array (
                 'id' => 23,
                 'name' => 'Srta.',
-                'deleted_at' => null,
-                'remember_token' => null,
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-            23 => [
+                'deleted_at' => NULL,
+                'remember_token' => NULL,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+            23 => 
+            array (
                 'id' => 24,
                 'name' => 'Su Excelencia',
-                'deleted_at' => null,
-                'remember_token' => null,
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-
-        ]);
+                'deleted_at' => NULL,
+                'remember_token' => NULL,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+        ));
+        
+        
     }
 }
