@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ss_donation', function (Blueprint $table) {
+        Schema::create('ss_contribution', function (Blueprint $table) {
             $table->id();
             $table->integer('message_id')->index('idx_message_id');
             $table->integer('contact_id')->nullable()->index('idx_contact_id');

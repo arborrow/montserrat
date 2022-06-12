@@ -16,7 +16,7 @@ class SsContribution extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
     use PhoneTrait;
 
-    protected $table = 'ss_donation';
+    protected $table = 'ss_contribution';
 
     protected $fillable = ['message_id'];
 
