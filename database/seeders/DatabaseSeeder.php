@@ -55,6 +55,9 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesTableSeeder::class);
         $this->call(SalutationsTableSeeder::class);
         $this->call(SnippetsTableSeeder::class);
+        $this->call(SsInventoryTableSeeder::class);
+        $this->call(SsCustomFormTableSeeder::class);
+        $this->call(SsCustomFormFieldTableSeeder::class);
         $this->call(StateProvinceTableSeeder::class);
         $this->call(SuffixTableSeeder::class);
         $this->call(TouchcategoriesTableSeeder::class);
@@ -69,5 +72,9 @@ class DatabaseSeeder extends Seeder
         $this->call(ExportListPermissionsSeeder::class);
         $this->call(SnippetPermissionsSeeder::class);
         $this->call(WebsitePermissionsSeeder::class);
+        //$this->call(MailgunPermissionsSeeder::class);
+        $this->call(StripePermissionsSeeder::class);
+        $this->call(SquarespacePermissionsSeeder::class);
+        
     }
 }

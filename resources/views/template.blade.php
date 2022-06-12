@@ -53,9 +53,17 @@
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href={{ route('organization.index') }}>Organizations</a>
 							<a class="dropdown-item" href={{ route('vendor.index') }}>Vendors</a>
+							@can('show-squarespace-order')
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item"  href={{ route('squarespace.order.index') }}>Squarespace Orders</a>
+							@endcan
 							@can('show-touchpoint')
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item"  href={{ route('touchpoint.index') }}>Touchpoints</a>
+							@endcan
+							@can('update-contact')
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item"  href={{ route('person.duplicates') }}>Duplicates</a>
 							@endcan
 						</div>
 					</li>
@@ -135,6 +143,8 @@
 							<a class="dropdown-item" href={{ route('donation_type.index') }}>Donation types</a>
 							<a class="dropdown-item" href={{ route('export_list.index') }}>Export lists</a>
 							<a class="dropdown-item" href={{ route('snippet.index') }}>Snippets</a>
+							<a class="dropdown-item" href={{ route('inventory.index') }}>SquareSpace Inventory</a>
+							<a class="dropdown-item" href={{ route('custom_form.index') }}>SquareSpace Custom Forms</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href={{ route('activity') }}>Activity log</a>
 							<a class="dropdown-item" href={{ route('audit.index') }}>Audit log</a>

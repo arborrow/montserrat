@@ -175,7 +175,7 @@
                 <h2>Demographics</h2>
                 <p>
                     <span class="font-weight-bold">Gender: </span>{{ !empty($person->gender_name) ? $person->gender_name : 'N/A' }}
-                    <br><span class="font-weight-bold">Birth Date: </span> {{ !empty($person->birth_date) ? $person->birth_date : 'N/A' }}
+                    <br><span class="font-weight-bold">Birth Date: </span> {{ !empty($person->birth_date) ? $person->birth_date->format('F d, Y') : 'N/A' }}
                     <br><span class="font-weight-bold">Religion: </span> {{ !empty($person->religion_id) ? $person->religion_name : 'N/A' }}
                     <br><span class="font-weight-bold">Occupation: </span> {{ !empty($person->occupation_id) ? $person->occupation_name : 'N/A' }}
                     <br><span class="font-weight-bold">Ethnicity: </span> {{ !empty($person->ethnicity_id) ? $person->ethnicity_name : 'N/A' }}

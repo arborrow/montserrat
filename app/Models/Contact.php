@@ -9,11 +9,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use OwenIt\Auditing\Contracts\Auditable;
+use Laravel\Cashier\Billable;
 
 class Contact extends Model implements Auditable
 {
     use HasFactory;
     use SoftDeletes;
+    use Billable;
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'contact';
@@ -248,6 +250,24 @@ class Contact extends Model implements Auditable
         }
     }
 
+    public function getAddressPrimaryCountryAttribute()
+    {
+        if (isset($this->address_primary->country_name)) {
+            return $this->address_primary->country_name;
+        } else {
+            return 0;
+        }
+    }
+
+    public function getAddressPrimaryCountryAbbreviationAttribute()
+    {
+        if (isset($this->address_primary->country_abbreviation)) {
+            return $this->address_primary->country_abbreviation;
+        } else {
+            return null;
+        }
+    }
+
     public function getAddressPrimaryCountryIdAttribute()
     {
         if (isset($this->address_primary->country_id)) {
@@ -463,6 +483,15 @@ class Contact extends Model implements Auditable
             return $this->diocese->contact_a->organization_name;
         } else {
             return;
+        }
+    }
+
+    public function getDonationsTotalAttribute()
+    {
+        if (isset($this->donations)) {
+            return $this->donations->sum('donation_amount');
+        } else {
+            return 0;
         }
     }
 
@@ -941,6 +970,15 @@ class Contact extends Model implements Auditable
             $phone_number = $this->phone_primary->phone.$this->phone_primary->phone_extension;
 
             return '<a href="tel:'.$phone_number.'">'.$phone_number.'</a>';
+        } else {
+            return;
+        }
+    }
+
+    public function getPrimaryPhoneNumberAttribute()
+    {
+        if (isset($this->phone_primary->phone)) {
+            return $this->phone_primary->phone.$this->phone_primary->phone_extension;
         } else {
             return;
         }

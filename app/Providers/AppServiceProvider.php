@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use ConsoleTVs\Charts\Registrar as Charts;
 use Illuminate\Support\ServiceProvider;
+use App\Models\Contact;
+use Laravel\Cashier\Cashier;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,5 +35,6 @@ class AppServiceProvider extends ServiceProvider
             \App\Charts\EventRevenue::class,
             \App\Charts\DonationDescription::class,
         ]);
+        Cashier::useCustomerModel(Contact::class);
     }
 }

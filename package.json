@@ -12,7 +12,6 @@
     "devDependencies": {
         "@alexbinary/glob": "^1.0.1",
         "@fortawesome/fontawesome-free": "^5.15.1",
-        "autoprefixer": "10.1.0",
         "axios": "^0.25",
         "bootstrap": "^4.4.1",
         "copy-webpack-plugin": "^9",

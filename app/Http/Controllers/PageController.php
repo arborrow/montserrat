@@ -352,10 +352,6 @@ class PageController extends Controller
         return view('reports.retreatregistrations', compact('registrations'));   //
     }
 
-    /*
-
-     */
-
     public function eoy_acknowledgment($contact_id = null, $start_date = null, $end_date = null)
     {
         $this->authorize('show-donation');

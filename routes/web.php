@@ -35,6 +35,13 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SnippetController;
+use App\Http\Controllers\SquarespaceController;
+use App\Http\Controllers\SquarespaceContributionController;
+use App\Http\Controllers\SquarespaceOrderController;
+use App\Http\Controllers\SsCustomFormController;
+use App\Http\Controllers\SsInventoryController;
+use App\Http\Controllers\StripeChargeController;
+use App\Http\Controllers\StripePayoutController;
 use App\Http\Controllers\SystemController;
 use App\Http\Controllers\TouchpointController;
 use App\Http\Controllers\UomController;
@@ -148,6 +155,16 @@ Route::middleware('web', 'activity')->group(function () {
         Route::resource('uom', UomController::class);
         Route::resource('user', UserController::class);
         Route::resource('website', WebsiteController::class);
+
+        Route::prefix('squarespace')->group(function () {
+            Route::resource('custom_form', SsCustomFormController::class);
+            Route::resource('inventory', SsInventoryController::class);
+            Route::get('custom_form/{id}/create', [SsCustomFormController::class, 'create_field'])->name('custom_form.field.create');
+            Route::post('custom_form/{id}/store', [SsCustomFormController::class, 'store_field'])->name('custom_form.field.store');
+            Route::get('custom_form_field/{id}/edit', [SsCustomFormController::class, 'edit_field'])->name('custom_form.field.edit');
+            Route::put('custom_form/{id}/update', [SsCustomFormController::class, 'update_field'])->name('custom_form.field.update');
+        });
+
     });
 
     /* In developement - commented out for Now
@@ -170,8 +187,8 @@ Route::middleware('web', 'activity')->group(function () {
     Route::resource('asset_job', AssetJobController::class);
 
     Route::get('bookstore', [PageController::class, 'bookstore'])->name('bookstore');
+    Route::get('calendar', [RetreatController::class, 'calendar'])->name('calendar');
     Route::resource('diocese', DioceseController::class);
-    //Route::get('donation', ['as' => 'donation','uses' => [PageController::class, 'donation']]);
 
     /*
     * donor assign and add methods are no longer needed - they were used to import contacts from the Access PPD Donors table
@@ -179,6 +196,7 @@ Route::middleware('web', 'activity')->group(function () {
     * // Route::get('donor/{donor_id?}/assign/{contact_id?}', [DonorController::class, 'assign']);
     * // Route::get('donor/{donor_id?}/add', [DonorController::class, 'add']);
     */
+
     Route::resource('donor', DonorController::class);
 
     Route::get('donation/add/{id?}/{event_id?}/{type?}', [DonationController::class, 'create'])->name('donation.add');
@@ -233,7 +251,7 @@ Route::middleware('web', 'activity')->group(function () {
         Route::get('stewards', [PersonController::class, 'stewards'])->name('stewards');
         Route::get('volunteers', [PersonController::class, 'volunteers'])->name('volunteers');
         Route::get('lastnames/{letter}', [PersonController::class, 'lastnames'])->name('lastnames')->where('letter', '[a-z]');
-        Route::get('duplicates', [PersonController::class, 'duplicates'])->name('duplicates');
+        Route::get('duplicates', [PersonController::class, 'duplicates'])->name('person.duplicates');
         Route::get('merge/{contact_id}/{merge_id?}', [PersonController::class, 'merge'])->name('merge');
         Route::get('merge_delete/{id}/{return_id}', [PersonController::class, 'merge_destroy'])->name('merge_delete');
     });
@@ -315,7 +333,25 @@ Route::middleware('web', 'activity')->group(function () {
     Route::get('retreats', [PageController::class, 'retreat'])->name('retreats');
     Route::resource('room', RoomController::class);
     Route::get('rooms/{ymd?}', [RoomController::class, 'schedule'])->name('rooms');
+
+    Route::name('squarespace.')->prefix('squarespace')->group(function () {
+        Route::resource('/', SquarespaceController::class);
+        Route::resource('contribution', SquarespaceContributionController::class);
+        Route::resource('order', SquarespaceOrderController::class);
+        Route::get('contribution/reset/{contribution}', [SquarespaceContributionController::class, 'reset'])->name('squarespace.contribution.reset');
+        Route::get('order/reset/{order}', [SquarespaceOrderController::class, 'reset'])->name('squarespace.order.reset');
+    });
+
+    Route::prefix('stripe')->group(function () {
+        Route::get('payout/import', [StripePayoutController::class, 'import'])->name('stripe.payout.import');
+        Route::get('payout/date/{payout_date?}', [StripePayoutController::class, 'show_date'])->name('stripe.payout.showdate');
+        Route::resource('charge', StripeChargeController::class);
+        Route::resource('payout', StripePayoutController::class);
+    });
+    Route::stripeWebhooks('stripe/webhooks');
+
     Route::get('support', [PageController::class, 'support'])->name('support');
+
     Route::resource('touchpoint', TouchpointController::class);
     Route::get('touchpoint/add/{id}', [TouchpointController::class, 'add'])->name('touchpoint.add');
     Route::get('touchpoint/type/{staff_id}', [TouchpointController::class, 'index_type']);
@@ -323,14 +359,16 @@ Route::middleware('web', 'activity')->group(function () {
     Route::get('users', [PageController::class, 'user'])->name('users');
     Route::resource('vendor', VendorController::class);
 
-    Route::get('calendar', [RetreatController::class, 'calendar'])->name('calendar');
 
     Route::get('mailgun/get', [MailgunController::class, 'get'])->name('mailgun.get');
     Route::get('mailgun/process', [MailgunController::class, 'process'])->name('mailgun.process');
-
+    Route::get('mailgun/clean', [MailgunController::class, 'clean_body'])->name('mailgun.clean');
+    Route::get('mailgun/unprocess/{id}', [MailgunController::class, 'unprocess'])->name('mailgun.unprocess');
     Route::post('mailgun/callback', function () {
         return 'Mailgun callback';
     });
+    Route::resource('mailgun', MailgunController::class);
+
 
     // Gate routes
     Route::get('gate/open/{hours?}', [GateController::class, 'open'])->name('gate.open');

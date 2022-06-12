@@ -167,7 +167,7 @@ class PersonControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-contact');
 
-        $response = $this->actingAs($user)->get(route('duplicates'));
+        $response = $this->actingAs($user)->get(route('person.duplicates'));
 
         $response->assertOk();
         $response->assertViewIs('persons.duplicates');
