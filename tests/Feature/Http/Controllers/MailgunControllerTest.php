@@ -16,14 +16,15 @@ class MailgunControllerTest extends TestCase
      * @test
      */
     public function get_returns_an_ok_response()
-    {
+    {   $this->withoutExceptionHandling();
+        $this->followingRedirects();
         $user = $this->createUserWithPermission('admin-mailgun');
         if (null !== config('services.mailgun.domain') && null !== config('services.mailgun.secret')) {
             $response = $this->actingAs($user)->get(route('mailgun.get'));
             $response->assertOk();
             $response->assertViewIs('mailgun.index');
             $response->assertViewHas('messages');
-            $response->assertSee('Mailgun Stored Messages');
+            $response->assertSee('Index of Mailgun Messages');
         } else {
             $user = $this->createUserWithPermission('show-admin-menu');
             $response = $this->actingAs($user)->get(route('admin.config.mailgun'));
@@ -37,14 +38,15 @@ class MailgunControllerTest extends TestCase
      * @test
      */
     public function process_returns_an_ok_response()
-    {
+    {   $this->withoutExceptionHandling();
+        $this->followingRedirects();
         $user = $this->createUserWithPermission('admin-mailgun');
         if (null !== config('services.mailgun.domain') && null !== config('services.mailgun.secret')) {
             $response = $this->actingAs($user)->get(route('mailgun.process'));
             $response->assertOk();
-            $response->assertViewIs('mailgun.processed');
+            $response->assertViewIs('mailgun.index');
             $response->assertViewHas('messages');
-            $response->assertSee('Index of Mailgun Processed Messages');
+            $response->assertSee('Index of Mailgun Messages');
         } else {
             $user = $this->createUserWithPermission('show-admin-menu');
             $response = $this->actingAs($user)->get(route('admin.config.mailgun'));

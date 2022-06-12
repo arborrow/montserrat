@@ -8,7 +8,7 @@ use App\Models\Message;
 use App\Models\Retreat;
 use App\Models\SsCustomForm;
 use App\Models\SsCustomFormField;
-use App\Models\SsDonation;
+use App\Models\SsContribution;
 use App\Models\SsInventory;
 use App\Models\SsOrder;
 use App\Models\Touchpoint;
@@ -93,8 +93,6 @@ class MailgunController extends Controller
                 }
             }
         }
-
-        $messages = Message::orderBy('mailgun_timestamp','desc')->paginate(25, ['*'], 'messages');
 
         return Redirect::action([MailgunController::class, 'index']);
     }
@@ -209,7 +207,7 @@ class MailgunController extends Controller
                 $touch->touched_at = $message->timestamp;
                 $touch->type = 'Other';
 
-                $ss_donation = SsDonation::firstOrCreate([
+                $ss_donation = SsContribution::firstOrCreate([
                     'message_id' => $message->id,
                 ]);
 
@@ -436,7 +434,7 @@ class MailgunController extends Controller
 
     public function index() {
         // TODO: consider adding processed/unprocessed/all drowdown selector to filter results and combine processed and index blades into one
-        $this->authorize('show-mailgun');
+        $this->authorize('admin-mailgun');
         $messages = Message::whereIsProcessed(0)->orderBy('mailgun_timestamp','desc')->paginate(25, ['*'], 'messages');
         $messages_processed = Message::whereIsProcessed(1)->orderBy('mailgun_timestamp','desc')->paginate(25, ['*'], 'messages_processed');
 

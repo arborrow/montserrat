@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 
-class SsOrderPermissionSeeder extends Seeder
+class SsInventoryPermissionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,33 +18,33 @@ class SsOrderPermissionSeeder extends Seeder
     {
         DB::table('permissions')->insert([
             0 => [
-                'name' => 'create-squarespace-order',
-                'display_name' => 'Create Squarespace Order',
-                'description' => 'Create Squarespace Order',
+                'name' => 'create-squarespace-inventory',
+                'display_name' => 'Create Squarespace Inventory',
+                'description' => 'Create Squarespace Inventory',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'deleted_at' => null,
             ],
             1 => [
-                'name' => 'show-squarespace-order',
-                'display_name' => 'Show Squarespace Order',
-                'description' => 'Show Squarespace Order',
+                'name' => 'show-squarespace-inventory',
+                'display_name' => 'Show Squarespace Inventory',
+                'description' => 'Show Squarespace Inventory',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'deleted_at' => null,
             ],
             2 => [
-                'name' => 'update-squarespace-order',
-                'display_name' => 'Update Squarespace Order',
-                'description' => 'Update Squarespace Order',
+                'name' => 'update-squarespace-inventory',
+                'display_name' => 'Update Squarespace Inventory',
+                'description' => 'Update Squarespace Inventory',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'deleted_at' => null,
             ],
             3 => [
-                'name' => 'delete-squarespace-order',
-                'display_name' => 'Delete Squarespace Order',
-                'description' => 'Delete Squarespace Order',
+                'name' => 'delete-squarespace-inventory',
+                'display_name' => 'Delete Squarespace Inventory',
+                'description' => 'Delete Squarespace Inventory',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'deleted_at' => null,

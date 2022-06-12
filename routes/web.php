@@ -197,7 +197,7 @@ Route::middleware('web', 'activity')->group(function () {
     * // Route::get('donor/{donor_id?}/add', [DonorController::class, 'add']);
     */
 
-    // Route::resource('donor', DonorController::class);
+    Route::resource('donor', DonorController::class);
 
     Route::get('donation/add/{id?}/{event_id?}/{type?}', [DonationController::class, 'create'])->name('donation.add');
     Route::get('donation/{id}/agc_acknowledge', [PageController::class, 'finance_agc_acknowledge']);

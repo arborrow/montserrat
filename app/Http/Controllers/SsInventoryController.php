@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\StoreSsInventoryRequest;
+use App\Http\Requests\UpdateSsInventoryRequest;
 
 class SsInventoryController extends Controller
 {
@@ -48,13 +50,14 @@ class SsInventoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreSsInventoryRequest $request)
     {
         $this->authorize('create-squarespace-inventory');
 
         $inventory = new \App\Models\SsInventory;
         $inventory->name = $request->input('name');
         $inventory->custom_form_id = $request->input('custom_form_id');
+        $inventory->variant_options = $request->input('variant_options');
         $inventory->save();
 
         flash('SquareSpace Inventory: <a href="'.url('/squarespace/inventory/'.$inventory->id).'">'.$inventory->name.'</a> added')->success();
@@ -103,7 +106,7 @@ class SsInventoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateSsInventoryRequest $request, $id)
     {
         $this->authorize('update-squarespace-inventory');
 
@@ -111,6 +114,7 @@ class SsInventoryController extends Controller
 
         $inventory->name = $request->input('name');
         $inventory->custom_form_id = $request->input('custom_form_id');
+        $inventory->variant_options = $request->input('variant_options');
 
         flash('SquareSpace Inventory: <a href="'.url('admin/squarespace/custom_form/'.$inventory->id).'">'.$inventory->name.'</a> updated')->success();
         $inventory->save();

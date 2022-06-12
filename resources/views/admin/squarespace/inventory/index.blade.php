@@ -6,11 +6,11 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                        <span class="grey">SquareSpace Inventory Index</span>
+                        <span class="grey">Squarespace Inventory Index</span>
                         @can('create-group')
                             <span class="create">
                                 <a href="{{ action([\App\Http\Controllers\SsInventoryController::class, 'create']) }}">
-                                   {!! Html::image('images/create.png', 'Add SquareSpace Inventory',array('title'=>"Add SquareSpace Inventory",'class' => 'btn btn-primary')) !!}
+                                   {!! Html::image('images/create.png', 'Add Squarespace Inventory',array('title'=>"Add Squarespace Inventory",'class' => 'btn btn-primary')) !!}
                                 </a>
 
                             </span>
@@ -18,10 +18,10 @@
                     </h1>
                 </div>
                 @if ($inventory_items->isEmpty())
-                    <p>It is a brand new world, there are no SquareSpace Inventory items!</p>
+                    <p>It is a brand new world, there are no Squarespace Inventory items!</p>
                 @else
                 <table class="table table-bordered table-striped table-responsive">
-                    <caption><h2>SquareSpace Inventory</h2></caption>
+                    <caption><h2>Squarespace Inventory</h2></caption>
                     <thead>
                         <tr>
                             <th style="width:25%">Name</th>
