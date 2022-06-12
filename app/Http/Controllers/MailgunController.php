@@ -33,14 +33,11 @@ class MailgunController extends Controller
         $this->authorize('admin-mailgun');
         $message = new \Illuminate\Support\Collection;
 
-        // $mg = new Mailgun(config('services.mailgun.secret'));
         $mg = Mailgun::create(config('services.mailgun.secret'));
         $domain = config('services.mailgun.domain');
         $queryString = ['event' => 'stored'];
         $events = $mg->events()->get("$domain", $queryString);
-        // dd($events);
         $event_items = $events->getItems();
-        // dd($event_items);
         if (isset($event_items)) {
             foreach ($event_items as $event_item) {
                 $event_date = $event_item->getEventDate();
@@ -49,49 +46,50 @@ class MailgunController extends Controller
                 if ($event_date > $process_date) { // mailgun stores messages for 3 days so only check for the last two days
                     try {
                         $message_email = $mg->messages()->show($event_item->getStorage()['url']);
+                        $sender = $message_email->getSender();
+                        if (strpos($sender,config('polanco.socialite_domain_restriction')) >= 0) { // block emails from outside domains
 
-                        $message = Message::firstOrCreate(['mailgun_id'=>$event_item->getId()]);
-                        $message->mailgun_timestamp = \Carbon\Carbon::parse($event_item->getTimestamp());
-                        $message->storage_url = $event_item->getStorage()['url'];
-                        $message->subject = $message_email->getSubject();
-                        $message->body = str_replace("\r\n","\n", $message_email->getBodyPlain());
+                            $message = Message::firstOrCreate(['mailgun_id'=>$event_item->getId()]);
+                            $message->mailgun_timestamp = \Carbon\Carbon::parse($event_item->getTimestamp());
+                            $message->storage_url = $event_item->getStorage()['url'];
+                            $message->subject = $message_email->getSubject();
+                            $message->body = str_replace("\r\n","\n", $message_email->getBodyPlain());
 
-                        if (null !== $message_email->getSender()) {
-                            $message->from = self::clean_email($message_email->getSender());
+                            if (null !== $message_email->getSender()) {
+                                $message->from = self::clean_email($message_email->getSender());
+                            }
+                            if (null !== $message_email->getRecipients()) {
+                                $message->recipients = self::clean_email($message_email->getRecipients());
+                            }
+
+                            $headers = $event_item->getMessage()['headers'];
+
+                            if (null !== $headers['to']) {
+                                $list_of_to_addresses = explode(',',$headers['to']);
+                                // dd($headers, $headers['to'],$list_of_to_addresses);
+                                // for now only take the first to address
+                                $message->to = self::clean_email($list_of_to_addresses[0]);
+                            }
+
+                            $contact_from = Contact::whereHas('groups', function ($query) {
+                                $query->where('group_id', '=', config('polanco.group_id.staff'));
+                            })->whereHas('emails', function ($query) use ($message) {
+                                    $query->whereEmail($message->from);
+                            })->first();
+
+                            $contact_to = Contact::whereHas('emails', function ($query) use ($message) {
+                                $query->whereEmail($message->to);
+                            })->first();
+
+                            $message->from_id = isset($contact_from->id) ? $contact_from->id : null;
+                            $message->to_id = isset($contact_to->id) ? $contact_to->id : null;
+
+                            $message->save();
                         }
-                        if (null !== $message_email->getRecipients()) {
-                            $message->recipients = self::clean_email($message_email->getRecipients());
-                        }
-
-                        $headers = $event_item->getMessage()['headers'];
-
-                        if (null !== $headers['to']) {
-                            $list_of_to_addresses = explode(',',$headers['to']);
-                            // dd($headers, $headers['to'],$list_of_to_addresses);
-                            // for now only take the first to address
-                            $message->to = self::clean_email($list_of_to_addresses[0]);
-                        }
-
-                        $contact_from = Contact::whereHas('groups', function ($query) {
-                            $query->where('group_id', '=', config('polanco.group_id.staff'));
-                        })->whereHas('emails', function ($query) use ($message) {
-                                $query->whereEmail($message->from);
-                        })->first();
-
-                        $contact_to = Contact::whereHas('emails', function ($query) use ($message) {
-                            $query->whereEmail($message->to);
-                        })->first();
-
-                        $message->from_id = isset($contact_from->id) ? $contact_from->id : null;
-                        $message->to_id = isset($contact_to->id) ? $contact_to->id : null;
-
-                        $message->save();
 
                     } catch (\Exception $e) {
                         flash('Failed to retrieve Mailgun message: ' .$event_item->getId(). '. Error: '.$e->getMessage())->error()->important();
                     }
-
-
                 }
             }
         }
@@ -159,7 +157,6 @@ class MailgunController extends Controller
         if ($start_position >= 0) {
             $end_position = strpos($body, "\n", $start_position + $start_length);
         }
-        // TODO: consider while loop until next new line
         if (($end_position > $start_position) && !$start_position === false) {
             return trim(substr($body, $start_position + $start_length, $end_position - $start_position - $start_length));
         } else {
@@ -173,10 +170,8 @@ class MailgunController extends Controller
      * // TODO: convert this to a scheduled job to happen automatically and email admin if there is an error
      */
     public function process()
-    {   // TODO: add various permissions for mailgun/messages, squarespace order/donation to database seeder
-        // TODO: create database factories formailgun/messages, squarespace order/donation
-        // TODO: ensure that we validate who the mail is coming from - create environmental variable of array of acceptable senders
-        // TODO: update database seeder for prefix table to match updated list
+    {   // TODO: create database factories for mailgun/messages, squarespace order/donation
+        // TODO: ensure that we validate who the mail is coming from - create environmental variable of array of acceptable senders (for now using socialite_domain_restriction)
         // TODO: write unit tests for stripe, mailgun, squarespace order/donation controllers
         // TODO: when processing the full_address parts count the number of commas before exploding and ensure that there are no more than expected. Remove the first comma until we have the number expected.
         // TODO: for the moment, I'm going to be lazy and assume US as the country

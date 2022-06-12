@@ -454,9 +454,9 @@ class SquarespaceOrderController extends Controller
                     'contact_id'=>$couple_contact_id,
                     'event_id'=>$event_id,
                     'order_id'=>$order->id,
-                    'source'=>'Squarespace',
                     'role_id'=>config('polanco.participant_role_id.retreatant'),
                 ]);
+                $registration->source = 'Squarespace';
                 $registration->register_date = $order->created_at;
                 $registration->deposit= ($request->input('deposit_amount')/2);
                 $registration->status_id = config('polanco.registration_status_id.registered');
@@ -481,9 +481,9 @@ class SquarespaceOrderController extends Controller
                 'contact_id'=>$contact_id,
                 'event_id'=>$event_id,
                 'order_id'=>$order->id,
-                'source'=>'Squarespace',
                 'role_id'=>config('polanco.participant_role_id.retreatant'),
             ]);
+            $registration->source = 'Squarespace';
             $registration->register_date = $order->created_at;
             // if couple split the deposit between them
             $registration->deposit = ($order->is_couple) ? ($request->input('deposit_amount')/2) : $request->input('deposit_amount');
