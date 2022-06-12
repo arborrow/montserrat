@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\StripePayout;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Stripe\StripeClient;
 
 class StripePayoutController extends Controller
@@ -20,7 +21,7 @@ class StripePayoutController extends Controller
 
         $stripe = new StripeClient(config('services.stripe.secret'));
 
-        $payouts = StripePayout::orderByDesc('date')->paginate();
+        $payouts = StripePayout::orderByDesc('date')->paginate(25, ['*'], 'payouts');
 
         // $payouts = $stripe->payouts->all(['limit' => 10]);
 
@@ -190,15 +191,15 @@ class StripePayoutController extends Controller
     {
         $this->authorize('import-stripe-payout');
         // dd('Stripe Payout Import');
+        $dt = \Carbon\Carbon::parse('01-06-2022');
+        $latest_payout = StripePayout::orderByDesc('date')->first();
         $stripe = new StripeClient(config('services.stripe.secret'));
-        $payouts = $stripe->payouts->all([]);
+        $payouts = $stripe->payouts->all(['arrival_date'=>['gte' => $latest_payout->date->timestamp - 24*60*60]]);
         foreach ($payouts->autoPagingIterator() as $payout) {
 
-            $stripe_payout = StripePayout::wherePayoutId($payout->id)->first();
-
-            if (is_null($stripe_payout)) {
-                $stripe_payout = new StripePayout;
-            }
+            $stripe_payout = StripePayout::firstOrNew([
+                'payout_id' => $payout->id
+            ]);
 
             $stripe_payout->payout_id = $payout->id;
             $stripe_payout->object = $payout->object;
@@ -206,8 +207,6 @@ class StripePayoutController extends Controller
             $stripe_payout->arrival_date = Carbon::parse($payout->arrival_date);
             $stripe_payout->date = Carbon::parse($payout->arrival_date);
             $stripe_payout->status = $payout->status;
-            // TODO: import payment fees and sum together to calculate total_fee_amount for each payout
-
 
             $fees = 0; //initialize
             $transactions = $stripe->balanceTransactions->all(
@@ -223,10 +222,10 @@ class StripePayoutController extends Controller
 
             $stripe_payout->total_fee_amount = $fees;
             $stripe_payout->save();
-            //dd($stripe_payout,$payout->id);
         }
 
-        return view('stripe.payouts.index',compact('payouts'));   //
+        return Redirect::action([self::class, 'index']);
+        // return view('stripe.payouts.index',compact('payouts'));   //
 
     }
 
@@ -260,8 +259,8 @@ class StripePayoutController extends Controller
             $stripe_payout->save();
             //dd($stripe_payout,$payout->id);
         }
-
-        return view('stripe.payouts.index',compact('payouts'));   //
+        return Redirect::action([self::class, 'index']);
+        // return view('stripe.payouts.index',compact('payouts'));   //
 
     }
 
