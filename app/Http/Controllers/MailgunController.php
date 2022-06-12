@@ -311,7 +311,9 @@ class MailgunController extends Controller
                 $order->retreat_start_date = optional($event)->start_date;
                 $order->event_id = optional($event)->id;
 
-                $order->deposit_amount = str_replace("$","",$this->extract_value_between($message->body, "\nTOTAL", "$0.00"));
+                //$order->deposit_amount = str_replace("$","",$this->extract_value_between($message->body, "\nTOTAL", "$0.00"));
+                // a bit hacky but TOTAL was being flakey possibly because of SUBTOTAL so Tax was more unique
+                $order->deposit_amount = str_replace("$","",trim(str_replace("TOTAL","",$this->extract_value_between($message->body, "Tax\n", "$0.00"))));
                 $quantity = $retreat[sizeof($retreat)-3];
                 $unit_price=str_replace("$", "", $retreat[sizeof($retreat)-2]);
                 $order->retreat_quantity = isset($quantity) ? $quantity : 0;
@@ -343,7 +345,7 @@ class MailgunController extends Controller
                     default : //  "Women's Retreat", "Men's Retreat", "Young Adult's Retreat"
                         break;
                 }
-
+                // dd($order, $retreat, $registration_type, $message->body,str_replace("$","",trim(str_replace("TOTAL","",$this->extract_value_between($message->body, "Tax\n", "$0.00")))));
                 $names = $fields->pluck('name')->toArray();
                 //dd($order,$product_variation,$registration_type, $fields,$inventory);
                 foreach ($fields as $field) {
