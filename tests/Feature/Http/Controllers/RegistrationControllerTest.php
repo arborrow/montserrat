@@ -424,7 +424,7 @@ class RegistrationControllerTest extends TestCase
             'departed_at' => null,
             'num_registrants' => '1',
         ]);
-        $response->assertRedirect(action([\App\Http\Controllers\RegistrationController::class, 'index']));
+        $response->assertRedirect('person/'.$contact->id);
         $response->assertSessionHas('flash_notification');
         $this->assertDatabaseHas('participant', [
             'event_id' => $retreat->id,
@@ -493,6 +493,8 @@ class RegistrationControllerTest extends TestCase
         $registration = \App\Models\Registration::factory()->create();
         $new_deposit = $this->faker->numberBetween(0, 1000);
         $original_deposit = $registration->deposit;
+        $contact = \App\Models\Contact::findOrFail($registration->contact_id);
+
         $response = $this->actingAs($user)->put(route('registration.update', [$registration]), [
             'id' => $registration->id,
             'register_date' => Carbon::now(),
@@ -508,9 +510,10 @@ class RegistrationControllerTest extends TestCase
             'contact_id' => $registration->contact_id,
 
         ]);
+
         $registration->refresh();
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action([\App\Http\Controllers\PersonController::class, 'show'], $registration->contact_id));
+        $response->assertRedirect(url($contact->contact_url));
         $this->assertEquals($registration->deposit, $new_deposit);
         $this->assertNotEquals($registration->deposit, $original_deposit);
     }

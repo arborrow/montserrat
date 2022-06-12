@@ -187,7 +187,7 @@ class OrganizationController extends Controller
         $organization = \App\Models\Contact::with('addresses.state', 'addresses.location', 'phones.location', 'emails.location', 'websites', 'notes', 'phone_main_phone.location', 'a_relationships.relationship_type', 'a_relationships.contact_b', 'b_relationships.relationship_type', 'b_relationships.contact_a', 'event_registrations')->findOrFail($id);
         $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date', 'DESC')->paginate(25, ['*'], 'donations');
         $touchpoints = \App\Models\Touchpoint::wherePersonId($id)->orderBy('touched_at', 'DESC')->paginate(25, ['*'], 'touchpoints');
-        $registrations = \App\Models\Registration::whereContactId($id)->orderBy('created_at', 'DESC')->paginate(25, ['*'], 'registrations');
+        $registrations = \App\Models\Registration::whereContactId($id)->orderByDesc('register_date')->paginate(25, ['*'], 'registrations');
 
         $files = \App\Models\Attachment::whereEntity('contact')->whereEntityId($organization->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
         $relationship_types = [];

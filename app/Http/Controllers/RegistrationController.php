@@ -34,9 +34,12 @@ class RegistrationController extends Controller
     {
         $this->authorize('show-registration');
 
-        $registrations = \App\Models\Registration::whereHas('retreat', function ($query) {
-            $query->where('end_date', '>=', date('Y-m-d'));
-        })->orderBy('register_date', 'desc')->with('retreatant', 'retreat', 'room')->get();
+        $registrations = \App\Models\Registration::with('contact.suffix')->with('contact.prefix')
+            ->whereHas('retreat', function ($query) {
+                $query->where('end_date', '>=', date('Y-m-d'));
+            })->orderBy('register_date', 'desc')->with('retreatant', 'retreat', 'room')
+            ->paginate(25, ['*'], 'registrations');
+
         //dd($registrations);
         return view('registrations.index', compact('registrations'));
     }
@@ -172,7 +175,6 @@ class RegistrationController extends Controller
     public function store(StoreRegistrationRequest $request)
     {
         $this->authorize('create-registration');
-
         $rooms = $request->input('rooms');
         $num_registrants = $request->input('num_registrants');
         //TODO: Should we check and verify that the contact type is an organization to allow multiselect or just allow any registration to book multiple rooms?
@@ -241,8 +243,8 @@ class RegistrationController extends Controller
         }
 
         flash('Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a> added')->success();
-
-        return Redirect::action([self::class, 'index']);
+        return redirect(url($contact->contact_url));
+        // return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $registration->contact_id);
     }
 
     public function store_group(StoreGroupRegistrationRequest $request)
@@ -355,6 +357,7 @@ class RegistrationController extends Controller
 
         $registration = \App\Models\Registration::findOrFail($request->input('id'));
         $retreat = \App\Models\Retreat::findOrFail($request->input('event_id'));
+        $contact = \App\Models\Contact::findOrFail($registration->contact_id);
 
         $registration->event_id = $request->input('event_id');
         // TODO: pull this from the retreat's start_date and end_date
@@ -408,8 +411,9 @@ class RegistrationController extends Controller
         $registration->save();
 
         flash('Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a> updated')->success();
+        return redirect(url($contact->contact_url));
 
-        return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $registration->contact_id);
+//        return Redirect::action([\App\Http\Controllers\PersonController::class, 'show'], $registration->contact_id);
     }
 
     /**
