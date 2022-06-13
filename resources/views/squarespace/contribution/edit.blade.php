@@ -193,13 +193,13 @@
                 @if (isset($ss_contribution->address_supplemental))
                 <tr>
                     <td><strong>Address Supplemental</strong></td>
-                    @if (trim($ss_contribution->address_supplemental) == optional($ss_contribution->donor)->address_primary_supplemental )
+                    @if (trim($ss_contribution->address_supplemental) == optional($ss_contribution->donor)->address_primary_supplemental_address )
                     <td class='table-success'>
                         @else
                     <td class='table-warning'>
                         @endIf
                         {!! Form::text('address_supplemental', $ss_contribution->address_supplemental, ['class' => 'form-control']) !!}
-                        {{ optional($ss_contribution->donor)->address_primary_supplemental }}
+                        {{ optional($ss_contribution->donor)->address_primary_supplemental_address }}
                 </tr>
                 @endIf
 

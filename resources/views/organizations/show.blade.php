@@ -245,9 +245,6 @@
 
                                         [{{ $donation->percent_paid }}%]
                                     </td>
-
-                                    <td>  /  </td>
-
                                     <td> {{ $donation->terms }}</td>
                                     <td> {{ $donation->Notes }}</td>
                                 </tr>
