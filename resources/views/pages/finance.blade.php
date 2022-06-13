@@ -4,8 +4,12 @@
 @can('show-donation')
     {!! Html::link(action([\App\Http\Controllers\DonationController::class, 'index']),'Donations',array('class' => 'btn btn-outline-dark'))!!}
     {!! Html::link(action([\App\Http\Controllers\PaymentController::class, 'index']),'Payments',array('class' => 'btn btn-outline-dark'))!!}
-    {!! Html::link(action([\App\Http\Controllers\SquarespaceContributionController::class, 'index']),'Squarespace Contributions',array('class' => 'btn btn-outline-dark'))!!}
-    {!! Html::link(action([\App\Http\Controllers\StripePayoutController::class, 'index']),'Stripe Payouts',array('class' => 'btn btn-outline-dark'))!!}
+    @can('show-squarespace-contribution')
+        {!! Html::link(action([\App\Http\Controllers\SquarespaceContributionController::class, 'index']),'Squarespace Contributions',array('class' => 'btn btn-outline-dark'))!!}
+    @endcan
+    @can('show-stripe-payout')
+        {!! Html::link(action([\App\Http\Controllers\StripePayoutController::class, 'index']),'Stripe Payouts',array('class' => 'btn btn-outline-dark'))!!}
+    @endCan
     <hr />
     <div class="row bg-cover">
         <div class="col-lg-4 col-md-6">
