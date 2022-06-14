@@ -144,8 +144,8 @@
 							<a class="dropdown-item" href={{ route('export_list.index') }}>Export lists</a>
 							<a class="dropdown-item" href={{ route('mailgun.index') }}>Mailgun messages</a>
 							<a class="dropdown-item" href={{ route('snippet.index') }}>Snippets</a>
-							<a class="dropdown-item" href={{ route('inventory.index') }}>SquareSpace Inventory</a>
-							<a class="dropdown-item" href={{ route('custom_form.index') }}>SquareSpace Custom Forms</a>
+							<a class="dropdown-item" href={{ route('inventory.index') }}>Squarespace Inventory</a>
+							<a class="dropdown-item" href={{ route('custom_form.index') }}>Squarespace Custom Forms</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href={{ route('activity') }}>Activity log</a>
 							<a class="dropdown-item" href={{ route('audit.index') }}>Audit log</a>

@@ -2,7 +2,7 @@
 @section('content')
 <div class="row bg-cover">
     <div class="col-lg-12">
-        <h1>Edit SquareSpace Custom Field: {{ $custom_form_field->name .' (' . $custom_form_field->form->name .')' }}</h1>
+        <h1>Edit Squarespace Custom Field: {{ $custom_form_field->name .' (' . $custom_form_field->form->name .')' }}</h1>
     </div>
     <div class="col-lg-12">
         <div class="row">

@@ -8,15 +8,15 @@
                 <div class='row'>
                     <h2>
                         @can('update-squarespace-contribution')
-                            <a href="{{url('squarespace/contribution/'.$ss_contribution->id.'/edit')}}">SquareSpace Contribution #{{ $ss_contribution->id }} </a>
+                            <a href="{{url('squarespace/contribution/'.$ss_contribution->id.'/edit')}}">Squarespace Contribution #{{ $ss_contribution->id }} </a>
                         @else
-                            SquareSpace Contribution #{{ $ss_contribution->id }}
+                            Squarespace Contribution #{{ $ss_contribution->id }}
                         @endCan
                     </h2>
                 </div>
                 <div class='row'>
                     <a href={{ action([\App\Http\Controllers\SquarespaceContributionController::class, 'index']) }}>
-                        {!! Html::image('images/donation.png', 'SquareSpace Contribution Index',array('title'=>"SquareSpace Contribution Index",'class' => 'btn btn-primary')) !!}
+                        {!! Html::image('images/donation.png', 'Squarespace Contribution Index',array('title'=>"Squarespace Contribution Index",'class' => 'btn btn-primary')) !!}
                     </a>
                 </div>
             </div>

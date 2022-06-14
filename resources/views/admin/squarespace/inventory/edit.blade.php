@@ -7,7 +7,7 @@
     <div class="col-lg-12">
         <div class="row">
             <div class="col-lg-12">
-                <h2>SquareSpace Inventory</h2>
+                <h2>Squarespace Inventory</h2>
             </div>
             <div class="col-lg-12">
                 {!! Form::open(['method' => 'PUT', 'route' => ['inventory.update', $inventory->id]]) !!}

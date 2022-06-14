@@ -6,7 +6,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                        <span class="grey">SquareSpace Contributions and Orders</span>
+                        <span class="grey">Squarespace Contributions and Orders</span>
                     </h1>
                         <a class='btn btn-primary' href="{{ action([\App\Http\Controllers\SquarespaceContributionController::class, 'index']) }}">
                            Contributions

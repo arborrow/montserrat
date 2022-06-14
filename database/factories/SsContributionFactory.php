@@ -6,7 +6,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\SsInventory;
-use App\Models\Prefix;
+use App\Models\Retreat;
 
 class SsContributionFactory extends Factory
 {
@@ -36,12 +36,18 @@ class SsContributionFactory extends Factory
         $retreat_number = $this->faker->numberBetween(10,99);
         $is_retreat = $this->faker->boolean();
         $name = $this->faker->firstName() . " " . $this->faker->lastName(); 
-
+        $event = Retreat::whereIsActive(1)->get()->random();
+        $retreat_description = ($is_retreat) ? '#'.$retreat_number . ' ' . $inventory->name . 
+        ' (' . $this->faker->monthName() . ' ' . 
+        $this->faker->numberBetween(1,10) . '-' . 
+        $this->faker->numberBetween(11,20).', '.
+        $year .')' : null; 
         return [
 
             'message_id' => $this->faker->randomNumber(), 
             'event_id' => null, 
-            'contact_id' => null, 
+            'contact_id' => null,
+            'name' => $name, 
             'email' => $this->faker->email(), 
             'address_street' => $address_street, 
             'address_supplemental' => $address_supplemental, 
@@ -50,15 +56,11 @@ class SsContributionFactory extends Factory
             'address_zip' => $address_zip, 
             'address_country' => 'US', 
             'phone' => $this->faker->phoneNumber(), 
-            'retreat_description' => $retreat_number . ' ' . $inventory->name . 
-                ' (' . $this->faker->monthName() . ' ' . 
-                $this->faker->numberBetween(1-10) . '-' . 
-                $this->faker->numberBetween(11-20).', '.
-                $year, 
-            'offering_type' => $this->faker->randomElement(['Pre-Retreat offering','Post-Retreat offering']), 
+            'retreat_description' => $retreat_description,
+            'offering_type' => ($is_retreat) ? $this->faker->randomElement(['Pre-Retreat offering','Post-Retreat offering']) : null, 
             'amount' => $this->faker->numberBetween(50,500), 
-            'fund' => $this->faker->randomElement(config('polanco.donation_descriptions')), 
-            'idnumber' => $year . $retreat_number,
+            'fund' => ($is_retreat) ? null : $this->faker->randomElement(config('polanco.donation_descriptions')), 
+            'idnumber' => $event->idnumber,
             'comments' => $this->faker->sentence(), 
             'is_processed' => $this->faker->boolean(),
             'created_at' => now(),

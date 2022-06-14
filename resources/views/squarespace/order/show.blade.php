@@ -8,13 +8,13 @@
                     <span>
                         <h2>
                             @can('update-squarespace-order')
-                                SquareSpace Order <a href="{{url('squarespace/order/'.$order->id.'/edit')}}">#{{ $order->order_number }}</a>
+                                Squarespace Order <a href="{{url('squarespace/order/'.$order->id.'/edit')}}">#{{ $order->order_number }}</a>
                             @else
-                                SquareSpace Order #{{ $order->order_number }}
+                                Squarespace Order #{{ $order->order_number }}
                             @endCan
                         </h2>
                     </span>
-                    <span class="back"><a href={{ action([\App\Http\Controllers\SquarespaceOrderController::class, 'index']) }}>{!! Html::image('images/order.png', 'SquareSpace Order Index',array('title'=>"SquareSpace Order Index",'class' => 'btn btn-primary')) !!}</a></span></h1>
+                    <span class="back"><a href={{ action([\App\Http\Controllers\SquarespaceOrderController::class, 'index']) }}>{!! Html::image('images/order.png', 'Squarespace Order Index',array('title'=>"Squarespace Order Index",'class' => 'btn btn-primary')) !!}</a></span></h1>
                 </div>
                 @if (isset($order->gift_certificate_number))
                     <div class='row'>

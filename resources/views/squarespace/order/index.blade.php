@@ -6,7 +6,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                        <span class="grey">SquareSpace Orders (Unprocessed)</span>
+                        <span class="grey">Squarespace Orders (Unprocessed)</span>
                     </h1>
                     <span>{{ $orders->links() }}</span>
 
@@ -45,7 +45,7 @@
 
                 <div class="panel-heading">
                     <h1>
-                        <span class="grey">SquareSpace Processed Orders</span>
+                        <span class="grey">Squarespace Processed Orders</span>
                     </h1>
                     <span>{{ $processed_orders->links() }}</span>
 

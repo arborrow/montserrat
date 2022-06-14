@@ -5,11 +5,11 @@
     <div class="col-lg-12">
         @can('update-ss-custom-form')
             <h1>
-                SquareSpace Custom Form: <strong><a href="{{url('admin/squarespace/custom_form/'.$custom_form->id.'/edit')}}">{{ $custom_form->name }}</a></strong>
+                Squarespace Custom Form: <strong><a href="{{url('admin/squarespace/custom_form/'.$custom_form->id.'/edit')}}">{{ $custom_form->name }}</a></strong>
             </h1>
         @else
             <h1>
-                SquareSpace Custom Form: <strong>{{$custom_form->name}}</strong>
+                Squarespace Custom Form: <strong>{{$custom_form->name}}</strong>
             </h1>
         @endCan
     </div>

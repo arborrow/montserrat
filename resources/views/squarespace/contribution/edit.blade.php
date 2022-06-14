@@ -5,7 +5,7 @@
 
     <div class="col-lg-12">
         <h1>
-            Process SquareSpace Contribution #{{ $ss_contribution->id }}
+            Process Squarespace Contribution #{{ $ss_contribution->id }}
             @if (isset($ss_contribution->offering_type))
                 ({{ $ss_contribution->offering_type }})
             @endIf
@@ -106,7 +106,7 @@
 
         <table class="table table-bordered table-hover">
             <thead>
-                <caption>Information from SquareSpace Contribution</caption>
+                <caption>Information from Squarespace Contribution</caption>
                 <tr>
                     <th></th>
                     <th>Donor</th>

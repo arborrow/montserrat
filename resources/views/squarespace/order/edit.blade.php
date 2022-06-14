@@ -4,7 +4,7 @@
 <div class="row bg-cover">
     <div class="col-lg-12">
         <h1>
-            Process SquareSpace Order #{{ $order->order_number }}
+            Process Squarespace Order #{{ $order->order_number }}
         </h1>
     </div>
     <div class="col-lg-12">
@@ -26,7 +26,7 @@
                     The provided contact information will be added/updated.
                     A touchpoint for the retreatant's registration is created.
                     A retreat registration is created.
-                <li>Finally, remember to <strong><u>Fulfill the SquareSpace Order</u></strong>.
+                <li>Finally, remember to <strong><u>Fulfill the Squarespace Order</u></strong>.
             </ul>
         </div>
     </div>
@@ -107,7 +107,7 @@
             <hr>
             <table class="table table-bordered table-hover">
                 <thead>
-                    <caption>Information from SquareSpace Order</caption>
+                    <caption>Information from Squarespace Order</caption>
                     <tr>
                         <th></th>
                         <th>Retreatant</th>

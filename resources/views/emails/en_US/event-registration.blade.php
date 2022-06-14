@@ -1,4 +1,4 @@
-{{-- Currently unused - registration emails are sent by SquareSpace --}}
+{{-- Currently unused - registration emails are sent by Squarespace --}}
 <!DOCTYPE html>
 <html>
 <head>

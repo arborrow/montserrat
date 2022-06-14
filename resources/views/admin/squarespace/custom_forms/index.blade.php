@@ -6,7 +6,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                        <span class="grey">SquareSpace Custom Forms Index</span>
+                        <span class="grey">Squarespace Custom Forms Index</span>
                         @can('create-group')
                             <span class="create">
                                 <a href="{{ action([\App\Http\Controllers\SsCustomFormController::class, 'create']) }}">

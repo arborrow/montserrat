@@ -6,7 +6,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1>
-                        <span class="grey">SquareSpace Contributions (Unprocessed)</span>
+                        <span class="grey">Squarespace Contributions (Unprocessed)</span>
                     </h1>
                     <span>{{ $ss_contributions->links() }}</span>
 
@@ -45,7 +45,7 @@
 
                 <div class="panel-heading">
                     <h1>
-                        <span class="grey">SquareSpace Processed Contributions</span>
+                        <span class="grey">Squarespace Processed Contributions</span>
                     </h1>
                     <span>{{ $processed_ss_contributions->links() }}</span>
 

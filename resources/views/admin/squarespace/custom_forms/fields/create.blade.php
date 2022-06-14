@@ -3,7 +3,7 @@
 
 <div class="row bg-cover">
     <div class="col-lg-12">
-        <h1>Create SquareSpace Custom Form Field</h1>
+        <h1>Create Squarespace Custom Form Field</h1>
     </div>
     <div class="col-lg-12">
         {!! Form::open(['url'=>'admin/squarespace/custom_form/' . $custom_form->id . '/store', 'method'=>'post']) !!}
