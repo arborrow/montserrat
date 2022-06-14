@@ -6,12 +6,6 @@
     <div class="col-lg-12">
         <h1>
             Process Squarespace Contribution #{{ $ss_contribution->id }}
-            @if (isset($ss_contribution->offering_type))
-                ({{ $ss_contribution->offering_type }})
-            @endIf
-            @if (isset($ss_contribution->fund))
-                ({{ $ss_contribution->fund }})
-            @endIf
         </h1>
     </div>
 
@@ -49,11 +43,11 @@
 
             <div class="row">
                 <div class="col-lg-3 col-md-6">
-                    <h3>{!! Form::label('contact_id', 'Donor: ' .$ss_contribution->name) !!}</h3>
+                    <strong>{!! Form::label('contact_id', 'Donor: ' .$ss_contribution->name) !!}</strong>
                     {!! Form::select('contact_id', $matching_contacts, null, ['class' => 'form-control']) !!}
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <h3>{!! Form::label('event_id', 'Retreat ID: #'. $ss_contribution->idnumber) !!}</h3>
+                    <strong>{!! Form::label('event_id', 'Retreat ID: #'. $ss_contribution->idnumber) !!}</strong>
                         {!! Form::select('event_id', $retreats, (isset($ss_contribution->event_id)) ? $ss_contribution->event_id : $ids['retreat_id'], ['class' => 'form-control']) !!}
                     @if (isset($ss_contribution->retreat_description))
                         {{ $ss_contribution->retreat_description }} {{ $ids['retreat_id'] }}
@@ -61,25 +55,31 @@
                 </div>
 
                 <div class="col-lg-3 col-md-6">
-                    <h3>
-                        {!! Form::label('amount', 'Contribution amount:')  !!}
-                    </h3>
+                    <strong>
+                        {!! Form::label('amount', 'Amount:')  !!}
+                    </strong>
                         {!! Form::number('amount', $ss_contribution->amount, ['class' => 'form-control','step'=>'0.01']) !!}
                         {{ optional($ss_contribution->donation)->donation_amount }}
                 </div>
 
                 <div class="col-lg-3 col-md-6">
-                    <h3>
+                    <strong>
                         {!! Form::label('donation_description', 'Fund:')  !!}
-                    </h3>
-                        {!! Form::select('donation_description', config('polanco.donation_descriptions'), (isset($ss_contribution->fund)) ? $ss_contribution->fund : $ss_contribution->offering_type, ['class' => 'form-control']) !!}
-                        {{ optional($ss_contribution->donation)->donation_description }}
+                    </strong>
+                    @if (isset($ss_contribution->offering_type))
+                        {{ $ss_contribution->offering_type }}
+                    @endIf
+                    @if (isset($ss_contribution->fund))
+                        {{ $ss_contribution->fund }}
+                    @endIf
+                    {!! Form::select('donation_description', config('polanco.donation_descriptions'), (isset($ss_contribution->fund)) ? $ss_contribution->fund : $ss_contribution->offering_type, ['class' => 'form-control']) !!}
+                    {{ optional($ss_contribution->donation)->donation_description }}
                 </div>
 
                 <div class="col-lg-3 col-md-6">
-                    <h3>
+                    <strong>
                         {!! Form::label('comments', 'Comments:')  !!}
-                    </h3>
+                    </strong>
                     {!! Form::text('comments', $ss_contribution->comments, ['class' => 'form-control']) !!}
                 </div>
 
@@ -119,9 +119,9 @@
                         <strong>Full Name</strong>
                     </td>
                     <td>
-                        <h3>
+                        <strong>
                             {!! Form::text('name', ucwords(strtolower($ss_contribution->name)), ['class' => 'form-control']) !!}
-                        </h3>
+                        </strong>
                         @if (isset(optional($ss_contribution->donor)->id))
                         {!! $ss_contribution->donor->contact_link_full_name !!}
                         @endIf

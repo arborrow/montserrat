@@ -59,7 +59,7 @@ class SsContributionFactory extends Factory
             'retreat_description' => $retreat_description,
             'offering_type' => ($is_retreat) ? $this->faker->randomElement(['Pre-Retreat offering','Post-Retreat offering']) : null, 
             'amount' => $this->faker->numberBetween(50,500), 
-            'fund' => ($is_retreat) ? null : $this->faker->randomElement(config('polanco.donation_descriptions')), 
+            'fund' => ($is_retreat) ? null : $this->faker->randomElement(array_flip(config('polanco.donation_descriptions'))), 
             'idnumber' => $event->idnumber,
             'comments' => $this->faker->sentence(), 
             'is_processed' => $this->faker->boolean(),
