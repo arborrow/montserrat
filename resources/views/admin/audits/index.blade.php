@@ -7,6 +7,7 @@
             Audits
         </h2>
     </div>
+    <span>{{ $audits->links() }}</span>
     <div class="col-md-3 col-lg-6">
         <select class="type-select" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
             <option value="">Filter by user ...</option>
