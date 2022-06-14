@@ -144,7 +144,7 @@ class SquarespaceContributionController extends Controller
     {
         $ss_contribution = SsContribution::findOrFail($id);
         $contact_id = $request->input('contact_id');
-        $event_id = ($request->filled('event_id')) ? $request->input('event_id') : null;
+        $event_id = ($request->filled('event_id')) ? $request->input('event_id') : $event_id;
 
         // always update any data changes in order
         $ss_contribution->name = ($request->filled('name')) ? $request->input('name') : $ss_contribution->name;
@@ -199,7 +199,7 @@ class SquarespaceContributionController extends Controller
             // update contact info (prefix, parish, )
 
             $contact = Contact::findOrFail($contact_id);
-            $event = (isset($event_id)) ? Retreat::findOrFail($event_id) : null;
+            $event = (isset($event_id)) ? Retreat::findOrFail($event_id) : $event;
 
             $contact->first_name = ($request->filled('first_name')) ? $request->input('first_name') : $contact->first_name;
             $contact->last_name = ($request->filled('last_name')) ? $request->input('last_name') : $contact->last_name;
@@ -210,7 +210,7 @@ class SquarespaceContributionController extends Controller
                 'contact_id'=>$contact_id,
                 'location_type_id'=> ($primary_email_location_id > 0) ? $primary_email_location_id : 1,
             ]);
-            $email->email = ($request->filled('email')) ? $request->input('email') : null;
+            $email->email = ($request->filled('email')) ? $request->input('email') : $email->email;
             $email->is_primary = (isset($email->is_primary)) ? $email->is_primary : 1;
             $email->save();
 
@@ -225,7 +225,7 @@ class SquarespaceContributionController extends Controller
             $primary_phone->phone_ext = null;
             $primary_phone->is_primary = (isset($primary_phone->is_primary)) ? $primary_phone->is_primary : 1;
             // if there is not primary phone then make home:mobile the primary one otherwise do nothing (use existing primary)
-            $primary_phone->phone = ($request->filled('phone')) ? $request->input('phone') : null;
+            $primary_phone->phone = ($request->filled('phone')) ? $request->input('phone') : $primary_phone->phone;
             $primary_phone->save();
 
             $primary_address_location_type_id = ($contact->primary_address_location_type_id == 'N/A') ? 1 : $contact->primary_address_location_type_id;
@@ -255,8 +255,8 @@ class SquarespaceContributionController extends Controller
             // create donation(s) (record deposit as donation (with no payment), notes)
             $donation = new Donation;
             $donation->contact_id = $contact_id;
-            $donation->event_id = ($request->filled('event_id')) ? $event_id : null;
-            $donation->donation_description = ($request->filled('donation_description')) ? config('polanco.donation_descriptions.'.$request->input('donation_description')) : null;
+            $donation->event_id = ($request->filled('event_id')) ? $event_id : $donation->event_id;
+            $donation->donation_description = ($request->filled('donation_description')) ? config('polanco.donation_descriptions.'.$request->input('donation_description')) : $donation->donation_description;
             $donation->donation_date = (isset($ss_contribution->event->start_date)) ? $ss_contribution->event->start_date : $ss_contribution->created_at;
             $donation->donation_amount = $ss_contribution->amount;
             // TODO: check if for retreat or fund; consider creating designated or purpose attribute (or consolidating the two fields into the fund field)
