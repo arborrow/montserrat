@@ -93,7 +93,7 @@ return [
         'Montserrat Foundation Endowment' => 'AGC - Endowment',
         'Post-Retreat offering' => 'Retreat Funding',
         'Pre-Retreat offering' => 'Retreat Deposits',
-        'Retreat Scholarships' => 'AGC - Scholarships',
+        "Pay for Another Person's Retreat" => 'AGC - Scholarships',
         'Saturday of Renewal' => 'Retreat Funding',
         'Tips' => 'Tips',
     ],
