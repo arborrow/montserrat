@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use App\Models\Contact;
 use App\Models\Message;
 use App\Models\Retreat;
@@ -12,9 +11,11 @@ use App\Models\SsContribution;
 use App\Models\SsInventory;
 use App\Models\SsOrder;
 use App\Models\Touchpoint;
+use App\Traits\MailgunTrait;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
-use Mailgun\Mailgun;
 use Illuminate\Support\Facades\Http;
+use Mailgun\Mailgun;
 
 
 class MailgunController extends Controller
@@ -27,6 +28,7 @@ class MailgunController extends Controller
             Redirect('admin/config/mailgun')->send();
         }
     }
+
     // TODO: convert this to a scheduled job to happen automatically and email admin if there is an error
     public function get()
     {
@@ -42,7 +44,6 @@ class MailgunController extends Controller
             foreach ($event_items as $event_item) {
                 $event_date = $event_item->getEventDate();
                 $process_date = \Carbon\Carbon::now()->subDays(2);
-
                 if ($event_date > $process_date) { // mailgun stores messages for 3 days so only check for the last two days
                     try {
                         $message_email = $mg->messages()->show($event_item->getStorage()['url']);
@@ -96,72 +97,6 @@ class MailgunController extends Controller
 
         return Redirect::action([MailgunController::class, 'index']);
     }
-
-    /*
-     * Clean up the email address from Mailgun by removing <name>
-     * No other cleaning of the email address is performed by this function
-     * For example, Anthony Borrow<anthony.borrow@montserratretreat.org>
-     * becomes anthony.borrow@montserratretreat.org
-     * @param string|null $full_email
-     *
-     * returns string
-     */
-
-    public function clean_email($full_email = null)
-    {
-        $this->authorize('admin-mailgun');
-        if (strpos($full_email, '<') && strpos($full_email, '>')) {
-            return substr($full_email, strpos($full_email, '<') + 1, (strpos($full_email, '>') - strpos($full_email, '<')) - 1);
-        } else {
-            return $full_email;
-        }
-    }
-
-
-    /*
-     * extract value between two search strings from email body plain
-     *
-     * returns string of trimmed value
-     */
-
-    public function extract_value_between($body, $start_text = null, $end_text = null)
-    {
-        $this->authorize('admin-mailgun');
-
-        $start_position = strpos($body, $start_text);
-        $start_length = strlen($start_text);
-        $end_position = strpos($body, $end_text, $start_position);
-
-        if (($end_position > $start_position) && !$start_position === false) {
-            return trim(substr($body, $start_position + $start_length, $end_position - $start_position - $start_length));
-        } else {
-            return null;
-        }
-    }
-
-
-    /*
-     * extract value beginning at search string until next new line
-     *
-     * returns string of trimmed value
-     */
-
-    public function extract_value($body, $start_text = null)
-    {
-        $this->authorize('admin-mailgun');
-        $start_position = strpos($body, $start_text);
-        $start_length = strlen($start_text);
-
-        if ($start_position >= 0) {
-            $end_position = strpos($body, "\n", $start_position + $start_length);
-        }
-        if (($end_position > $start_position) && !$start_position === false) {
-            return trim(substr($body, $start_position + $start_length, $end_position - $start_position - $start_length));
-        } else {
-            return null;
-        }
-    }
-
 
     /*
      * Processes stored mailgun emails after get which saves them to messages in db
