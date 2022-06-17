@@ -19,7 +19,7 @@ use Mailgun\Mailgun;
 
 
 class MailgunController extends Controller
-{
+{   use MailgunTrait;
     public function __construct()
     {
         $this->middleware('auth');
