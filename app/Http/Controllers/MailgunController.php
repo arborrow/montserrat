@@ -44,11 +44,11 @@ class MailgunController extends Controller
 
         $this->authorize('admin-mailgun');
 
-        $success = Artisan::call('mailgun:get');
-        if ($success) {
-            flash('Success: Mailgun messages have been retrieved and processed.')->success()->important();
-        } else {
+        $fail = Artisan::call('mailgun:get'); //because commands return 0 when successful the logic is somewhat reversed as 1 is failure and 0 is success
+        if ($fail) {
             flash('Error: Mailgun messages were not successfully retrieved and processed. The site admin has been notified.')->error()->important();
+        } else {
+            flash('Success: Mailgun messages have been retrieved and processed.')->success()->important();
         }
 
         return Redirect::action([MailgunController::class, 'index']);

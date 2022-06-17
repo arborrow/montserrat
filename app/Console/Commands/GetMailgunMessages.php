@@ -110,7 +110,7 @@ class GetMailgunMessages extends Command
                             $m->to(config('polanco.admin_email'))
                                 ->subject('Error Retrieving Mailgun Messages');
                         });
-                        return FALSE;
+                        return 1;
                     }
                 }
             }
@@ -141,7 +141,7 @@ class GetMailgunMessages extends Command
                         $m->to(config('polanco.admin_email'))
                             ->subject('Error Retrieving Mailgun Messages');
                     });
-                    return FALSE;
+                    return 1;
 
                 }
             }
@@ -225,7 +225,7 @@ class GetMailgunMessages extends Command
                         $m->to(config('polanco.admin_email'))
                             ->subject('Error Retrieving Mailgun Messages');
                     });
-                    return FALSE;
+                    return 1;
                 }
             }
 
@@ -370,7 +370,7 @@ class GetMailgunMessages extends Command
                         $m->to(config('polanco.admin_email'))
                             ->subject('Error Retrieving Mailgun Messages');
                     });
-                    return FALSE;
+                    return 1;
                 }     
             }
 
@@ -396,6 +396,6 @@ class GetMailgunMessages extends Command
             recipient_phone (use couple_mobile_phone)
             */
         }
-        return TRUE;
+        return 0;
     }
 }
