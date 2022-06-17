@@ -110,6 +110,7 @@ class GetMailgunMessages extends Command
                             $m->to(config('polanco.admin_email'))
                                 ->subject('Error Retrieving Mailgun Messages');
                         });
+                        return FALSE;
                     }
                 }
             }
@@ -140,6 +141,7 @@ class GetMailgunMessages extends Command
                         $m->to(config('polanco.admin_email'))
                             ->subject('Error Retrieving Mailgun Messages');
                     });
+                    return FALSE;
 
                 }
             }
@@ -179,28 +181,41 @@ class GetMailgunMessages extends Command
                     $ss_donation->address_state = trim($address_details[1]);
                     $ss_donation->address_zip = trim($address_details[2]);
                     $ss_donation->address_country = ucwords($donation[$address_end_row-1]);
+                    
                     $ss_donation->message_id = $message->id;
+                    
                     $ss_donation->name = ucwords(strtolower($this->extract_value($message->body, "Donor Name:\n")));
                     $ss_donation->email = strtolower($this->extract_value($message->body, "Donor Email:\n"));
                     $ss_donation->phone = $this->extract_value($message->body, "Donor Phone Number:\n");
-                    $ss_donation->offering_type = $this->extract_value($message->body, "Type of Offering:\n");
+                    
                     $ss_donation->retreat_description = $this->extract_value($message->body, "Retreat:\n");
+                    
                     // it seems some of the emails had * characters and some do not so we will check for both
                     $ss_donation->amount = $this->extract_value_between($message->body, "contribution of *$","*!");
                     if (!isset($ss_donation->amount)) {
                         $ss_donation->amount = $this->extract_value_between($message->body, "contribution of $","!");
-                    }$ss_donation->comments = trim($this->extract_value_between($message->body, "Comments or Special Instructions:\n","View My Donations\n"));
+                    }
+
                     $ss_donation->fund = $this->extract_value($message->body, "Please Select a Fund:\n");
                     $year = substr($ss_donation->retreat_description, -5, 4);
+                    
                     $retreat_number = trim(substr($ss_donation->retreat_description,
                         strpos($ss_donation->retreat_description, "#") + 1,
                         (strpos($ss_donation->retreat_description, " ") - strpos($ss_donation->retreat_description, "#"))
                     ));
+                
                     $ss_donation->idnumber = ($ss_donation->retreat_description == "Individual Private Retreat") ? null : trim($year.$retreat_number);
+                    $ss_donation->comments = trim($this->extract_value_between($message->body, "Comments or Special Instructions:\n","View My Donations\n"));
+                    $ss_donation->comments = ($ss_donation->comments == 1) ? null : $ss_donation->comments;
+                    
                     $event = Retreat::whereIdnumber($ss_donation->idnumber)->first();
                     $ss_donation->event_id = optional($event)->id;
-                    $ss_donation->comments = ($ss_donation->comments == 1) ? null : $ss_donation->comments;
-
+                    if (isset($event)) { // if a particular event then based on end date of event if passed retreat funding, if upcoming then deposit
+                        $ss_donation->offering_type = ($event->end_date > now()) ? 'Pre-Retreat offering' : 'Post-Retreat offering';
+                    } else { // if SOR then assume it has passed, if other namely Individual Private Retreat assume deposit
+                        $ss_donation->offering_type = ($ss_donation->retreat_description == 'Saturday of Renewal') ? 'Post-Retreat offering' : 'Pre-Retreat offering';
+                    }
+                    
                     $ss_donation->save();
     
                 } catch (\Exception $exception) {
@@ -210,6 +225,7 @@ class GetMailgunMessages extends Command
                         $m->to(config('polanco.admin_email'))
                             ->subject('Error Retrieving Mailgun Messages');
                     });
+                    return FALSE;
                 }
             }
 
@@ -354,6 +370,7 @@ class GetMailgunMessages extends Command
                         $m->to(config('polanco.admin_email'))
                             ->subject('Error Retrieving Mailgun Messages');
                     });
+                    return FALSE;
                 }     
             }
 
@@ -379,5 +396,6 @@ class GetMailgunMessages extends Command
             recipient_phone (use couple_mobile_phone)
             */
         }
+        return TRUE;
     }
 }
