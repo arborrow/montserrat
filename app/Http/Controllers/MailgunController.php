@@ -2,25 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Contact;
 use App\Models\Message;
-use App\Models\Retreat;
-use App\Models\SsCustomForm;
-use App\Models\SsCustomFormField;
-use App\Models\SsContribution;
-use App\Models\SsInventory;
-use App\Models\SsOrder;
-use App\Models\Touchpoint;
 use App\Traits\MailgunTrait;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Http;
 use Mailgun\Mailgun;
 
 
 class MailgunController extends Controller
-{   use MailgunTrait;
+{
+    use MailgunTrait;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -31,7 +24,7 @@ class MailgunController extends Controller
     }
 
     /*
-     * Get and processes stored mailgun emails 
+     * Get and processes stored mailgun emails
      */
     public function get()
     {   // TODO: create database factories for mailgun/messages, squarespace order/donation
@@ -72,13 +65,21 @@ class MailgunController extends Controller
         return view('mailgun.show', compact('message','body'));
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     * Mailgun messages are retrieved and processed from mailgun server
+     * Hence, the edit method is an empty stub
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
     public function edit($id) {
-
         $this->authorize('update-mailgun');
-
         // $message = Message::with('contact_from','contact_to')->findOrFail($id);
         // return view('mailgun.edit', compact('message'));
-        return null;
+        return Redirect::action([MailgunController::class, 'index']);
+
     }
 
     public function unprocess($id) {
@@ -92,6 +93,70 @@ class MailgunController extends Controller
         // return view('mailgun.edit', compact('message'));
         return Redirect::action([self::class, 'show'],['mailgun'=>$id]);
 
+    }
+
+    /**
+     * Mailgun messages are retrieved from server and not created
+     * Hence, this method is an empty stub.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $this->authorize('create-mailgun');
+        return Redirect::action([MailgunController::class, 'index']);
+
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     * Mailgun messages are retrieved from server and not created or stored
+     * Hence, this method is an empty stub.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $this->authorize('create-mailgun');
+        return Redirect::action([MailgunController::class, 'index']);
+
+    }
+
+    /**
+     * Update the specified resource in storage.
+     * Since Mailgun messages are retrieved from server and processed, editing and updating are not needed
+     * Hence, the update method is an empty stub.
+     *
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return Redirect to mailgun.index
+     */
+    public function update(Request $request, $id)
+    {
+        $this->authorize('update-mailgun');
+        return Redirect::action([MailgunController::class, 'index']);
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $this->authorize('delete-mailgun');
+
+        $message = Message::findOrFail($id);
+
+        Message::destroy($id);
+
+        flash('Mailgun message: '.$message->id.' deleted')->warning()->important();
+
+        return Redirect::action([self::class, 'index']);
     }
 
 }

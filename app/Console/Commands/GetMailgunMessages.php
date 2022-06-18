@@ -105,7 +105,7 @@ class GetMailgunMessages extends Command
                         }
 
                     } catch (\Exception $exception) {
-                        Mail::send('emails.en_US.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject], 
+                        Mail::send('emails.en_US.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject],
                         function ($m) use ($subject, $exception) {
                             $m->to(config('polanco.admin_email'))
                                 ->subject('Error Retrieving Mailgun Messages');
@@ -133,10 +133,10 @@ class GetMailgunMessages extends Command
                     $touch->notes = $message->subject.' - '.$message->body;
                     $touch->save();
                     $message->is_processed=1;
-                    $message->save();    
+                    $message->save();
                 } catch (\Exception $exception) {
-                    $subject .= ': Creating Touchpoint for Message Id #'.$message->id; 
-                    Mail::send('emails.en_US.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject], 
+                    $subject .= ': Creating Touchpoint for Message Id #'.$message->id;
+                    Mail::send('emails.en_US.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject],
                     function ($m) use ($subject, $exception) {
                         $m->to(config('polanco.admin_email'))
                             ->subject('Error Retrieving Mailgun Messages');
@@ -155,11 +155,11 @@ class GetMailgunMessages extends Command
                     $touch->staff_id = $message->from_id;
                     $touch->touched_at = $message->timestamp;
                     $touch->type = 'Other';
-    
+
                     $ss_donation = SsContribution::firstOrCreate([
                         'message_id' => $message->id,
                     ]);
-    
+
                     $donation = explode("\n",$message->body);
                     $donation = array_values(array_filter($donation));
                     $address_start_row = array_search("Donor Address:",$donation);
@@ -176,20 +176,20 @@ class GetMailgunMessages extends Command
                         $ss_donation->address_street = ucwords(strtolower($donation[$address_start_row+1]));
                         $address_details = explode(",",$donation[$address_start_row+2]);
                     }
-    
+
                     $ss_donation->address_city = ucwords(strtolower(trim($address_details[0])));
                     $ss_donation->address_state = trim($address_details[1]);
                     $ss_donation->address_zip = trim($address_details[2]);
                     $ss_donation->address_country = ucwords($donation[$address_end_row-1]);
-                    
+
                     $ss_donation->message_id = $message->id;
-                    
+
                     $ss_donation->name = ucwords(strtolower($this->extract_value($message->body, "Donor Name:\n")));
                     $ss_donation->email = strtolower($this->extract_value($message->body, "Donor Email:\n"));
                     $ss_donation->phone = $this->extract_value($message->body, "Donor Phone Number:\n");
-                    
+
                     $ss_donation->retreat_description = $this->extract_value($message->body, "Retreat:\n");
-                    
+
                     // it seems some of the emails had * characters and some do not so we will check for both
                     $ss_donation->amount = $this->extract_value_between($message->body, "contribution of *$","*!");
                     if (!isset($ss_donation->amount)) {
@@ -198,16 +198,16 @@ class GetMailgunMessages extends Command
 
                     $ss_donation->fund = $this->extract_value($message->body, "Please Select a Fund:\n");
                     $year = substr($ss_donation->retreat_description, -5, 4);
-                    
+
                     $retreat_number = trim(substr($ss_donation->retreat_description,
                         strpos($ss_donation->retreat_description, "#") + 1,
                         (strpos($ss_donation->retreat_description, " ") - strpos($ss_donation->retreat_description, "#"))
                     ));
-                
+
                     $ss_donation->idnumber = ($ss_donation->retreat_description == "Individual Private Retreat") ? null : trim($year.$retreat_number);
                     $ss_donation->comments = trim($this->extract_value_between($message->body, "Comments or Special Instructions:\n","View My Donations\n"));
                     $ss_donation->comments = ($ss_donation->comments == 1) ? null : $ss_donation->comments;
-                    
+
                     $event = Retreat::whereIdnumber($ss_donation->idnumber)->first();
                     $ss_donation->event_id = optional($event)->id;
                     if (isset($event)) { // if a particular event then based on end date of event if passed retreat funding, if upcoming then deposit
@@ -215,12 +215,12 @@ class GetMailgunMessages extends Command
                     } else { // if SOR then assume it has passed, if other namely Individual Private Retreat assume deposit
                         $ss_donation->offering_type = ($ss_donation->retreat_description == 'Saturday of Renewal') ? 'Post-Retreat offering' : 'Pre-Retreat offering';
                     }
-                    
+
                     $ss_donation->save();
-    
+
                 } catch (\Exception $exception) {
-                    $subject .= ': Creating Squarespace Contribution for Message Id #'.$message->id; 
-                    Mail::send('emails.en_US.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject], 
+                    $subject .= ': Creating Squarespace Contribution for Message Id #'.$message->id;
+                    Mail::send('emails.en_US.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject],
                     function ($m) use ($subject, $exception) {
                         $m->to(config('polanco.admin_email'))
                             ->subject('Error Retrieving Mailgun Messages');
@@ -237,45 +237,45 @@ class GetMailgunMessages extends Command
                     $order = SsOrder::firstOrCreate([
                         'order_number' => $order_number,
                     ]);
-    
-    
+
+
                     $order->order_number = $order_number;
                     $order->message_id = $message->id;
                     $order->created_at = (isset($order_date)) ? Carbon::parse($order_date) : Carbon::now();
                     $message_info = $this->extract_value_between($message->body, "SUBTOTAL", "Item Subtotal");
-    
+
                     $retreat = array_values(array_filter(explode("\n",$message_info)));
                     $order->retreat_category=$retreat[0];
                     $order->retreat_sku = $retreat[1];
-    
+
                     $inventory = SsInventory::whereName($order->retreat_category)->first();
                     $custom_form = SsCustomForm::findOrFail($inventory->custom_form_id);
                     $fields = SsCustomFormField::whereFormId($custom_form->id)->orderBy('sort_order')->get();
-    
+
                     $first_field_position = array_search($fields[0]->name.":", $retreat);
                     $product_variation="";
                     for ($i=2; $i<=$first_field_position-1; $i++) {
                         $product_variation = $product_variation . $retreat[$i] . ' ';
                     }
-    
+
                     $order->retreat_description = trim(substr($product_variation,0, strpos($product_variation,"(")));
                     $order->retreat_dates = substr($product_variation, strpos($product_variation,"(") + 1, strpos($product_variation,")") - (strpos($product_variation,"(") +1));
-    
+
                     //TODO: rather than trying to determine if the date in the message are in English or Spanish
                     // get the year, retreat number and create the idnumber, lookup the event, and get the retreat start date from the actual event
                     $year = substr($order->retreat_dates, strpos($order->retreat_dates,", ") +2);
-    
+
                     $retreat_number = substr($order->retreat_description,
                         strpos($order->retreat_description, "#") + 1,
                         (strpos($order->retreat_description, " ") - strpos($order->retreat_description, "#"))
                     );
-    
+
                     $idnumber = trim(strval($year).$retreat_number);
                     $order->retreat_idnumber = $idnumber;
                     $event = Retreat::whereIdnumber($idnumber)->first();
                     $order->retreat_start_date = optional($event)->start_date;
                     $order->event_id = optional($event)->id;
-    
+
                     //$order->deposit_amount = str_replace("$","",$this->extract_value_between($message->body, "\nTOTAL", "$0.00"));
                     // a bit hacky but TOTAL was being flakey possibly because of SUBTOTAL so Tax was more unique
                     $order->deposit_amount = str_replace("$","",trim(str_replace("TOTAL","",$this->extract_value_between($message->body, "Tax\n", "$0.00"))));
@@ -314,7 +314,7 @@ class GetMailgunMessages extends Command
                     $names = $fields->pluck('name')->toArray();
                     //dd($order,$product_variation,$registration_type, $fields,$inventory);
                     foreach ($fields as $field) {
-    
+
                         $extracted_value = $this->extract_value($message->body, $field->name.":\n");
                         $order->{$field->variable_name} = $extracted_value;
                         // to remove empty values where the extracted value is actually the name of the next field
@@ -325,7 +325,7 @@ class GetMailgunMessages extends Command
                         }
                         // dd($message->body, $this->extract_value($message->body, $field->name.":\n"));
                     }
-    
+
                     // TODO: make sure full_address variable exists otherwise set order address parts to null
                     $address = explode(", ", $order->full_address);
                     if (sizeof($address) == 4) {
@@ -333,7 +333,7 @@ class GetMailgunMessages extends Command
                         $order->address_supplemental = trim($address[1]);
                         $order->address_city = trim($address[2]);
                         $address_detail = explode(" ", $address[3]);
-    
+
                     } else { // assumes size of 3
                         $order->address_street = trim($address[0]);
                         $order->address_city = trim($address[1]);
@@ -343,13 +343,13 @@ class GetMailgunMessages extends Command
                     $order->address_zip = trim($address_detail[1]);
                     $order->address_country = (sizeof($address_detail) == 4) ? trim($address_detail[2]) . " " . trim($address_detail[3]) : trim($address_detail[2]);
                     //dd($order,$message->body,\Carbon\Carbon::parse($order->date_of_birth), $order->couple_date_of_birth);
-    
+
                     $order->comments = ($order->comments == 1) ? null : $order->comments;
                     $order->date_of_birth = ($order->date_of_birth == 1) ? null : $order->date_of_birth;
                     $order->couple_date_of_birth = ($order->couple_date_of_birth == 1) ? null : $order->couple_date_of_birth;
                     $order->date_of_birth = (isset($order->date_of_birth)) ? \Carbon\Carbon::parse($order->date_of_birth) : null;
                     $order->couple_date_of_birth = (isset($order->couple_date_of_birth)) ? \Carbon\Carbon::parse($order->couple_date_of_birth) : null;
-    
+
                     // attempt to get Stripe charge id
                     $result=null;
                     $stripe_charge=null;
@@ -364,14 +364,14 @@ class GetMailgunMessages extends Command
                     // dd($order, $message->body, $retreat,$stripe_url, $result, $stripe_charge);
                     $order->save();
                 }  catch (\Exception $exception) {
-                    $subject .= ': Creating Squarespace Order for Message Id #'.$message->id; 
-                    Mail::send('emails.en_US.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject], 
+                    $subject .= ': Creating Squarespace Order for Message Id #'.$message->id;
+                    Mail::send('emails.en_US.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject],
                     function ($m) use ($subject, $exception) {
                         $m->to(config('polanco.admin_email'))
                             ->subject('Error Retrieving Mailgun Messages');
                     });
                     return 1;
-                }     
+                }
             }
 
             $message->is_processed=1;
@@ -396,6 +396,5 @@ class GetMailgunMessages extends Command
             recipient_phone (use couple_mobile_phone)
             */
         }
-        return 0;
     }
 }
