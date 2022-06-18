@@ -16,9 +16,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('mailgun:get')->hourly()
-            ->between('06:00','18:00')
-            ->runInBackground()
-            ->sendOutputTo('mailgun-get.log')
+            ->between('05:30','18:30')
             ->emailOutputOnFailure(config('polanco.admin_email'));
         $schedule->command('email:birthdays')->dailyAt('06:00')->emailOutputOnFailure(config('polanco.admin_email'));
         $schedule->command('email:confirmations')->dailyAt('07:00')->emailOutputOnFailure(config('polanco.admin_email'));
