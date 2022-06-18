@@ -50,14 +50,6 @@ class MessagePermissionsSeeder extends Seeder
                 'updated_at' => now(),
                 'deleted_at' => null,
             ],
-            4 => [
-                'name' => 'admin-mailgun',
-                'display_name' => 'Administer mailgun',
-                'description' => 'Administer mailgun',
-                'created_at' => now(),
-                'updated_at' => now(),
-                'deleted_at' => null,
-            ],
         ]);
     }
 }

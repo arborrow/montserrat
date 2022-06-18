@@ -7,7 +7,7 @@
             <div class="panel-heading">
                     <span>
                         <h2>
-                            Message # {{$message->id}} - {{ $message->subject }}
+                            Mailgun Message Details for #{{$message->id}} - {{ $message->subject }}
                         </h2>
                     </span>
                     <span class="back"><a href={{ action([\App\Http\Controllers\MailgunController::class, 'index']) }}>{!! Html::image('images/news29.png', 'Message Index',array('title'=>"Message Index",'class' => 'btn btn-primary')) !!}</a></span></h1>

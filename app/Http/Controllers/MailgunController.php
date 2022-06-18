@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Message;
 use App\Traits\MailgunTrait;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Redirect;
 use Mailgun\Mailgun;
@@ -58,7 +59,7 @@ class MailgunController extends Controller
 
     public function show($id) {
 
-        $this->authorize('show-mailgun');
+        $this->authorize('admin-mailgun');
 
         $message = Message::with('contact_from','contact_to')->findOrFail($id);
         $body = explode("\n",$message->body);
@@ -75,7 +76,7 @@ class MailgunController extends Controller
      */
 
     public function edit($id) {
-        $this->authorize('update-mailgun');
+        $this->authorize('admin-mailgun');
         // $message = Message::with('contact_from','contact_to')->findOrFail($id);
         // return view('mailgun.edit', compact('message'));
         return Redirect::action([MailgunController::class, 'index']);
@@ -84,7 +85,7 @@ class MailgunController extends Controller
 
     public function unprocess($id) {
 
-        $this->authorize('update-mailgun');
+        $this->authorize('admin-mailgun');
         $message = Message::findOrFail($id);
         $message->is_processed = 0;
         $message->save();
@@ -103,7 +104,7 @@ class MailgunController extends Controller
      */
     public function create()
     {
-        $this->authorize('create-mailgun');
+        $this->authorize('admin-mailgun');
         return Redirect::action([MailgunController::class, 'index']);
 
     }
@@ -118,7 +119,7 @@ class MailgunController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create-mailgun');
+        $this->authorize('admin-mailgun');
         return Redirect::action([MailgunController::class, 'index']);
 
     }
@@ -135,26 +136,28 @@ class MailgunController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->authorize('update-mailgun');
+        $this->authorize('admin-mailgun');
         return Redirect::action([MailgunController::class, 'index']);
 
     }
 
     /**
      * Remove the specified resource from storage.
+     * Since Mailgun messages are retrieved from server and processed, 
+     * deleting is not needed and soft-deleting can cause sql integrity duplicate entry error
+     * Hence, the delete method is an empty stub.
+     *
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $this->authorize('delete-mailgun');
+        $this->authorize('admin-mailgun');
 
-        $message = Message::findOrFail($id);
-
-        Message::destroy($id);
-
-        flash('Mailgun message: '.$message->id.' deleted')->warning()->important();
+        // $message = Message::findOrFail($id);
+        // Message::destroy($id);
+        // flash('Mailgun message: '.$message->id.' deleted')->warning()->important();
 
         return Redirect::action([self::class, 'index']);
     }
