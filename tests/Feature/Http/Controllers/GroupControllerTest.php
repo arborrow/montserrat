@@ -180,5 +180,4 @@ class GroupControllerTest extends TestCase
         );
     }
 
-    // test cases...
 }

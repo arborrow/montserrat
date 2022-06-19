@@ -52,24 +52,31 @@ class SquarespaceOrderController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Squarespace orders are created from parsed Mailgun messages
+     * Hence, the create method is an empty slug
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        //use permisson of target, namely squarespace.order.index
+        $this->authorize('show-squarespace-order'); 
+        return Redirect::action([self::class, 'index']);
+
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Squarespace orders are created from parsed Mailgun messages
+     * Hence, the store method is an empty slug
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        //use permisson of target, namely squarespace.order.index
+        $this->authorize('show-squarespace-order'); 
+        return Redirect::action([self::class, 'index']);
     }
 
     /**
@@ -536,7 +543,9 @@ class SquarespaceOrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //use permisson of target, namely squarespace.order.index
+        $this->authorize('show-squarespace-order'); 
+        return Redirect::action([self::class, 'index']);
     }
 
     /**

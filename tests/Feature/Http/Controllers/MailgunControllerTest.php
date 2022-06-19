@@ -68,10 +68,7 @@ class MailgunControllerTest extends TestCase
         $response = $this->actingAs($user)->delete(route('mailgun.destroy', [$message]));
 
         $response->assertOk();
-        $response->assertViewIs('mailgun.index');
-        $response->assertViewHas('messages');
-        $response->assertSee('Index of Mailgun Messages');
-        
+        $response->assertViewIs('mailgun.index');        
     }
 
     /**
@@ -128,7 +125,8 @@ class MailgunControllerTest extends TestCase
      * @test
      */
     public function store_returns_an_ok_response()
-    {   // emtpy slug redireting to mailgun.index
+    {
+        // emtpy slug redireting to mailgun.index
         $this->followingRedirects();
 
         $user = $this->createUserWithPermission('admin-mailgun');
@@ -138,8 +136,6 @@ class MailgunControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertViewIs('mailgun.index');
-        $response->assertViewHas('messages');
-        $response->assertSee('Index of Mailgun Messages');
 
     }
 
@@ -147,7 +143,8 @@ class MailgunControllerTest extends TestCase
      * @test
      */
     public function update_returns_an_ok_response()
-    {   // emtpy slug redireting to mailgun.index
+    {
+        // emtpy slug redireting to mailgun.index
         $this->followingRedirects();
 
         $user = $this->createUserWithPermission('admin-mailgun');
@@ -160,8 +157,6 @@ class MailgunControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertViewIs('mailgun.index');
-        $response->assertViewHas('messages');
-        $response->assertSee('Index of Mailgun Messages');
 
     }
 
