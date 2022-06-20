@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 
-class SsCustomFormController extends Controller
+class SquarespaceCustomFormController extends Controller
 {
 
     public function __construct()
@@ -23,7 +23,7 @@ class SsCustomFormController extends Controller
     {
         $this->authorize('show-squarespace-custom-form');
 
-        $custom_forms = \App\Models\SsCustomForm::orderBy('name')->with("fields")->get();
+        $custom_forms = \App\Models\SquarespaceCustomForm::orderBy('name')->with("fields")->get();
 
         return view('admin.squarespace.custom_forms.index', compact('custom_forms'));
 
@@ -49,7 +49,7 @@ class SsCustomFormController extends Controller
     public function create_field($id)
     {
         $this->authorize('create-squarespace-custom-form');
-        $custom_form = \App\Models\SsCustomForm::findOrFail($id);
+        $custom_form = \App\Models\SquarespaceCustomForm::findOrFail($id);
 
         return view('admin.squarespace.custom_forms.fields.create',compact(['custom_form']));
     }
@@ -64,7 +64,7 @@ class SsCustomFormController extends Controller
     {
         $this->authorize('create-squarespace-custom-form');
 
-        $custom_form = new \App\Models\SsCustomForm;
+        $custom_form = new \App\Models\SquarespaceCustomForm;
         $custom_form->name = $request->input('name');
         $custom_form->save();
 
@@ -85,8 +85,8 @@ class SsCustomFormController extends Controller
     {
         $this->authorize('create-squarespace-custom-form');
         $id = $request->input('id');
-        $custom_form = \App\Models\SsCustomForm::findOrFail($id);
-        $custom_form_field = new \App\Models\SsCustomFormField;
+        $custom_form = \App\Models\SquarespaceCustomForm::findOrFail($id);
+        $custom_form_field = new \App\Models\SquarespaceCustomFormField;
         $custom_form_field->form_id = $id;
         $custom_form_field->name = $request->input('name');
         $custom_form_field->type = $request->input('type');
@@ -110,7 +110,7 @@ class SsCustomFormController extends Controller
     {
         $this->authorize('show-squarespace-custom-form');
 
-        $custom_form = \App\Models\SsCustomForm::with('fields')->findOrFail($id);
+        $custom_form = \App\Models\SquarespaceCustomForm::with('fields')->findOrFail($id);
 
         return view('admin.squarespace.custom_forms.show', compact('custom_form'));
 
@@ -126,7 +126,7 @@ class SsCustomFormController extends Controller
     {
         $this->authorize('update-squarespace-custom-form');
 
-        $custom_form = \App\Models\SsCustomForm::with('fields')->findOrFail($id);
+        $custom_form = \App\Models\SquarespaceCustomForm::with('fields')->findOrFail($id);
 
         return view('admin.squarespace.custom_forms.edit', compact('custom_form')); //
 
@@ -142,7 +142,7 @@ class SsCustomFormController extends Controller
     {
         $this->authorize('update-squarespace-custom-form');
 
-        $custom_form_field = \App\Models\SsCustomFormField::with('form')->findOrFail($id);
+        $custom_form_field = \App\Models\SquarespaceCustomFormField::with('form')->findOrFail($id);
 
         return view('admin.squarespace.custom_forms.fields.edit', compact('custom_form_field')); //
 
@@ -159,7 +159,7 @@ class SsCustomFormController extends Controller
     {
         $this->authorize('update-squarespace-custom-form');
 
-        $custom_form = \App\Models\SsCustomForm::findOrFail($id);
+        $custom_form = \App\Models\SquarespaceCustomForm::findOrFail($id);
 
         $custom_form->name = $request->input('name');
 
@@ -181,7 +181,7 @@ class SsCustomFormController extends Controller
     {
         $this->authorize('update-squarespace-custom-form');
 
-        $custom_form_field = \App\Models\SsCustomFormField::findOrFail($request->input('id'));
+        $custom_form_field = \App\Models\SquarespaceCustomFormField::findOrFail($request->input('id'));
 
         $custom_form_field->name = $request->input('name');
         $custom_form_field->type = $request->input('type');
@@ -206,9 +206,9 @@ class SsCustomFormController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-squarespace-custom-form');
-        $custom_form = \App\Models\SsCustomForm::findOrFail($id);
+        $custom_form = \App\Models\SquarespaceCustomForm::findOrFail($id);
 
-        \App\Models\SsCustomForm::destroy($id);
+        \App\Models\SquarespaceCustomForm::destroy($id);
         flash('SquareSpace Custom Form: '.$custom_form->name.' deleted')->warning()->important();
 
         return Redirect::action([self::class, 'index']);

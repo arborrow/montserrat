@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redirect;
-use App\Http\Requests\UpdateSsOrderRequest;
+use App\Http\Requests\UpdateSquarespaceOrderRequest;
 
 use App\Models\Address;
 use App\Models\Contact;
@@ -20,7 +20,7 @@ use App\Models\Prefix;
 use App\Models\Registration;
 use App\Models\Relationship;
 use App\Models\Retreat;
-use App\Models\SsOrder;
+use App\Models\SquarespaceOrder;
 use App\Models\StateProvince;
 use App\Models\Touchpoint;
 
@@ -45,10 +45,10 @@ class SquarespaceOrderController extends Controller
     public function index()
     {
         $this->authorize('show-squarespace-order');
-        $orders = SsOrder::whereIsProcessed(0)->orderBy('order_number')->paginate(25, ['*'], 'ss_orders');
-        $processed_orders = SsOrder::whereIsProcessed(1)->orderByDesc('order_number')->paginate(25, ['*'], 'ss_unprocessed_orders');
+        $unprocessed_orders = SquarespaceOrder::whereIsProcessed(0)->orderBy('order_number')->paginate(25, ['*'], 'unprocessed_orders');
+        $processed_orders = SquarespaceOrder::whereIsProcessed(1)->orderByDesc('order_number')->paginate(25, ['*'], 'processed_orders');
 
-        return view('squarespace.order.index', compact('orders', 'processed_orders'));
+        return view('squarespace.order.index', compact('unprocessed_orders', 'processed_orders'));
     }
 
     /**
@@ -88,7 +88,7 @@ class SquarespaceOrderController extends Controller
     public function show($id)
     {
         $this->authorize('show-squarespace-order');
-        $order = SsOrder::findOrFail($id);
+        $order = SquarespaceOrder::findOrFail($id);
         return view('squarespace.order.show', compact('order'));
     }
 
@@ -102,7 +102,7 @@ class SquarespaceOrderController extends Controller
     public function edit($id)
     {
         $this->authorize('update-squarespace-order');
-        $order = SsOrder::findOrFail($id);
+        $order = SquarespaceOrder::findOrFail($id);
         $prefixes = Prefix::orderBy('name')->pluck('name', 'id');
         $prefixes->prepend('None', null);
         $states = StateProvince::orderBy('abbreviation')->whereCountryId(config('polanco.country_id_usa'))->pluck('abbreviation', 'id');
@@ -170,9 +170,9 @@ class SquarespaceOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSsOrderRequest $request, $id)
+    public function update(UpdateSquarespaceOrderRequest $request, $id)
     {
-        $order = SsOrder::findOrFail($id);
+        $order = SquarespaceOrder::findOrFail($id);
         $contact_id = $request->input('contact_id');
         $couple_contact_id = $request->input('couple_contact_id');
         $event_id = $request->input('event_id');
@@ -456,7 +456,7 @@ class SquarespaceOrderController extends Controller
                 $touchpoint->touched_at = Carbon::now();
                 $touchpoint->save();
 
-                // create registration (record deposit, comments, ss_order_number)
+                // create registration (record deposit, comments, squarespaceorder_number)
                 $registration = Registration::firstOrNew([
                     'contact_id'=>$couple_contact_id,
                     'event_id'=>$event_id,
@@ -465,7 +465,7 @@ class SquarespaceOrderController extends Controller
                 ]);
                 $registration->source = 'Squarespace';
                 $registration->register_date = $order->created_at;
-                $registration->deposit= ($request->input('deposit_amount')/2);
+                $registration->deposit= ($request->filled('deposit_amount')) ? ($request->input('deposit_amount')/2) : 0;
                 $registration->status_id = config('polanco.registration_status_id.registered');
                 $registration->remember_token = Str::random(60);
                 $registration->save();
@@ -483,7 +483,7 @@ class SquarespaceOrderController extends Controller
             $touchpoint->touched_at = Carbon::now();
             $touchpoint->save();
 
-            // create registration (record deposit, comments, ss_order_number)
+            // create registration (record deposit, comments, squarespaceorder_number)
             $registration = Registration::firstOrNew([
                 'contact_id'=>$contact_id,
                 'event_id'=>$event_id,
@@ -555,9 +555,9 @@ class SquarespaceOrderController extends Controller
     {
         $this->authorize('update-squarespace-order');
 
-        $ss_order = SsOrder::findOrFail($id);
-        $ss_order->contact_id = null;
-        $ss_order->save();
+        $order = SquarespaceOrder::findOrFail($id);
+        $order->contact_id = null;
+        $order->save();
 
         return Redirect::action([self::class, 'edit'],['order' => $id]);
     }

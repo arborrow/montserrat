@@ -7,20 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class SsInventory extends Model implements Auditable
+class SquarespaceCustomFormField extends Model implements Auditable
 {
     use HasFactory;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
-    protected $table = 'ss_inventory';
+    protected $table = 'squarespace_custom_form_field';
 
 
-    public function custom_form()
+    public function form()
     {
-        return $this->hasOne(SsCustomForm::class, 'id', 'custom_form_id');
-
+        return $this->belongsTo(SquarespaceCustomForm::class, 'form_id', 'id');
     }
+
 
 
 }

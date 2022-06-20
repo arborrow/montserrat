@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ss_contribution', function (Blueprint $table) {
+        Schema::create('squarespace_contribution', function (Blueprint $table) {
             $table->id();
             $table->integer('message_id')->index('idx_message_id');
             $table->integer('contact_id')->nullable()->index('idx_contact_id');
@@ -49,6 +49,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ss_donation');
+        Schema::dropIfExists('squarespace_contribution');
     }
 };

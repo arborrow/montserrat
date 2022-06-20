@@ -25,7 +25,7 @@
     
     <div class="col-lg-12 mt-3">
         @can('update-ss-custom-form')
-            <a href="{{ action([\App\Http\Controllers\SsCustomFormController::class, 'edit'], $inventory->id) }}"
+            <a href="{{ action([\App\Http\Controllers\SquarespaceCustomFormController::class, 'edit'], $inventory->id) }}"
                 class="btn btn-info">{!! Html::image('images/edit.png', 'Edit', ['title' => 'Edit']) !!}</a>
         @endcan
         @can('delete-ss-custom-form')

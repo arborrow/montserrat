@@ -7,9 +7,9 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /**
- * @see \App\Http\Controllers\SsInventoryController
+ * @see \App\Http\Controllers\SquarespaceInventoryController
  */
-class SsInventoryControllerTest extends TestCase
+class SquarespaceInventoryControllerTest extends TestCase
 {
     // use DatabaseTransactions;
     use withFaker;
@@ -35,12 +35,12 @@ class SsInventoryControllerTest extends TestCase
     public function destroy_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('delete-squarespace-inventory');
-        $inventory = \App\Models\SsInventory::factory()->create();
+        $inventory = \App\Models\SquarespaceInventory::factory()->create();
 
         $response = $this->actingAs($user)->delete(route('inventory.destroy', [$inventory]));
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action([\App\Http\Controllers\SsInventoryController::class, 'index']));
+        $response->assertRedirect(action([\App\Http\Controllers\SquarespaceInventoryController::class, 'index']));
         $this->assertSoftDeleted($inventory);
     }
 
@@ -50,7 +50,7 @@ class SsInventoryControllerTest extends TestCase
     public function edit_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('update-squarespace-inventory');
-        $inventory = \App\Models\SsInventory::factory()->create();
+        $inventory = \App\Models\SquarespaceInventory::factory()->create();
 
         $response = $this->actingAs($user)->get(route('inventory.edit', [$inventory]));
 
@@ -88,7 +88,7 @@ class SsInventoryControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-squarespace-inventory');
-        $inventory = \App\Models\SsInventory::factory()->create();
+        $inventory = \App\Models\SquarespaceInventory::factory()->create();
 
         $response = $this->actingAs($user)->get(route('inventory.show', [$inventory]));
 
@@ -106,7 +106,7 @@ class SsInventoryControllerTest extends TestCase
         $user = $this->createUserWithPermission('create-squarespace-inventory');
 
         $name = $this->faker->word();
-        $custom_form = \App\Models\SsCustomForm::factory()->create();
+        $custom_form = \App\Models\SquarespaceCustomForm::factory()->create();
         $variant_options = $this->faker->numberBetween(2,5);
         $response = $this->actingAs($user)->post(route('inventory.store'), [
             'name' => $name,
@@ -114,10 +114,10 @@ class SsInventoryControllerTest extends TestCase
             'variant_options' => $variant_options,
         ]);
 
-        $response->assertRedirect(action([\App\Http\Controllers\SsInventoryController::class, 'index']));
+        $response->assertRedirect(action([\App\Http\Controllers\SquarespaceInventoryController::class, 'index']));
         $response->assertSessionHas('flash_notification');
         
-        $this->assertDatabaseHas('ss_inventory', [
+        $this->assertDatabaseHas('squarespace_inventory', [
             'name' => $name,
             'custom_form_id' => $custom_form->id,
             'variant_options' => $variant_options,
@@ -130,9 +130,9 @@ class SsInventoryControllerTest extends TestCase
     public function store_validates_with_a_form_request()
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\SsInventoryController::class,
+            \App\Http\Controllers\SquarespaceInventoryController::class,
             'store',
-            \App\Http\Requests\StoreSsInventoryRequest::class
+            \App\Http\Requests\StoreSquarespaceInventoryRequest::class
         );
     }
 
@@ -144,7 +144,7 @@ class SsInventoryControllerTest extends TestCase
     {
         $user = $this->createUserWithPermission('update-squarespace-inventory');
 
-        $inventory = \App\Models\SsInventory::factory()->create();
+        $inventory = \App\Models\SquarespaceInventory::factory()->create();
 
         $original_name = $inventory->name;
         $new_name = 'New '.$this->faker->words(2, true);
@@ -157,9 +157,9 @@ class SsInventoryControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action([\App\Http\Controllers\SsInventoryController::class, 'show'], $inventory->id));
+        $response->assertRedirect(action([\App\Http\Controllers\SquarespaceInventoryController::class, 'show'], $inventory->id));
 
-        $updated = \App\Models\SsInventory::findOrFail($inventory->id);
+        $updated = \App\Models\SquarespaceInventory::findOrFail($inventory->id);
 
         $this->assertEquals($updated->name, $new_name);
         $this->assertNotEquals($updated->name, $original_name);
@@ -171,9 +171,9 @@ class SsInventoryControllerTest extends TestCase
     public function update_validates_with_a_form_request()
     {
         $this->assertActionUsesFormRequest(
-            \App\Http\Controllers\SsInventoryController::class,
+            \App\Http\Controllers\SquarespaceInventoryController::class,
             'update',
-            \App\Http\Requests\UpdateSsInventoryRequest::class
+            \App\Http\Requests\UpdateSquarespaceInventoryRequest::class
         );
     }
 

@@ -5,11 +5,11 @@ namespace App\Console\Commands;
 use App\Models\Contact;
 use App\Models\Message;
 use App\Models\Retreat;
-use App\Models\SsContribution;
-use App\Models\SsCustomForm;
-use App\Models\SsCustomFormField;
-use App\Models\SsInventory;
-use App\Models\SsOrder;
+use App\Models\SquarespaceContribution;
+use App\Models\SquarespaceCustomForm;
+use App\Models\SquarespaceCustomFormField;
+use App\Models\SquarespaceInventory;
+use App\Models\SquarespaceOrder;
 use App\Traits\MailgunTrait;
 use App\Models\Touchpoint;
 
@@ -154,7 +154,7 @@ class GetMailgunMessages extends Command
                     $touch->touched_at = $message->timestamp;
                     $touch->type = 'Other';
 
-                    $ss_donation = SsContribution::firstOrCreate([
+                    $ss_donation = SquarespaceContribution::firstOrCreate([
                         'message_id' => $message->id,
                     ]);
 
@@ -231,7 +231,7 @@ class GetMailgunMessages extends Command
                 try {
                     $order_number = $this->extract_value_between($message->body, "Order #",".");
                     $order_date = $this->extract_value_between($message->body, "Placed on","CT. View in Stripe");
-                    $order = SsOrder::firstOrCreate([
+                    $order = SquarespaceOrder::firstOrCreate([
                         'order_number' => $order_number,
                     ]);
 
@@ -245,9 +245,9 @@ class GetMailgunMessages extends Command
                     $order->retreat_category=$retreat[0];
                     $order->retreat_sku = $retreat[1];
 
-                    $inventory = SsInventory::whereName($order->retreat_category)->first();
-                    $custom_form = SsCustomForm::findOrFail($inventory->custom_form_id);
-                    $fields = SsCustomFormField::whereFormId($custom_form->id)->orderBy('sort_order')->get();
+                    $inventory = SquarespaceInventory::whereName($order->retreat_category)->first();
+                    $custom_form = SquarespaceCustomForm::findOrFail($inventory->custom_form_id);
+                    $fields = SquarespaceCustomFormField::whereFormId($custom_form->id)->orderBy('sort_order')->get();
 
                     $first_field_position = array_search($fields[0]->name.":", $retreat);
                     $product_variation="";

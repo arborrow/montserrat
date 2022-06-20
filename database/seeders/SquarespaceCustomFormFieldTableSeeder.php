@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class SsCustomFormFieldTableSeeder extends Seeder
+class SquarespaceCustomFormFieldTableSeeder extends Seeder
 {
 
     /**
@@ -16,9 +16,9 @@ class SsCustomFormFieldTableSeeder extends Seeder
     {
         
 
-        \DB::table('ss_custom_form_field')->delete();
+        \DB::table('squarespace_custom_form_field')->delete();
         
-        \DB::table('ss_custom_form_field')->insert(array (
+        \DB::table('squarespace_custom_form_field')->insert(array (
             0 => 
             array (
                 'id' => 1,

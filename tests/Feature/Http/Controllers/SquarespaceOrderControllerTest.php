@@ -39,7 +39,7 @@ class SquarespaceOrderControllerTest extends TestCase
 
         $user = $this->createUserWithPermission('show-squarespace-order');
 
-        $order = \App\Models\SsOrder::factory()->create();
+        $order = \App\Models\SquarespaceOrder::factory()->create();
 
         $response = $this->actingAs($user)->delete(route('squarespace.order.destroy', [$order]));
 
@@ -56,7 +56,7 @@ class SquarespaceOrderControllerTest extends TestCase
         $user = $this->createUserWithPermission('update-squarespace-order');
         $retreatant = \App\Models\Contact::factory()->create();
         $retreat = \App\Models\Retreat::factory()->create();
-        $order = \App\Models\SsOrder::factory()->create(['contact_id' => $retreatant->id, 'event_id' => $retreat->id]);
+        $order = \App\Models\SquarespaceOrder::factory()->create(['contact_id' => $retreatant->id, 'event_id' => $retreat->id]);
         $order->retreat_quantity = 2; //manually set because normally it is not visible on the edit form
         $order->additional_names_and_phone_numbers = $this->faker->name() . ' ' . $this->faker->phoneNumber();
         $order->gift_certificate_number = $this->faker->numberBetween(100,999);
@@ -155,7 +155,7 @@ class SquarespaceOrderControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('squarespace.order.index');
         $response->assertViewHas('processed_orders');
-        $response->assertViewHas('orders');
+        $response->assertViewHas('unprocessed_orders');
         $response->assertSeeText('Squarespace Orders');
     }
 
@@ -166,7 +166,7 @@ class SquarespaceOrderControllerTest extends TestCase
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-squarespace-order');
-        $order = \App\Models\SsOrder::factory()->create();
+        $order = \App\Models\SquarespaceOrder::factory()->create();
 
         $response = $this->actingAs($user)->get(route('squarespace.order.show', [$order]));
 
@@ -205,7 +205,11 @@ class SquarespaceOrderControllerTest extends TestCase
         $retreatant = \App\Models\Contact::factory()->create();
         $couple = \App\Models\Contact::factory()->create();
         $retreat = \App\Models\Retreat::factory()->create();
-        $order = \App\Models\SsOrder::factory()->create(['contact_id' => $retreatant->id, 'event_id' => $retreat->id, 'couple_contact_id' => $couple->id]);
+        $order = \App\Models\SquarespaceOrder::factory()->create([
+            'contact_id' => $retreatant->id, 
+            'event_id' => $retreat->id, 
+            'couple_contact_id' => $couple->id,
+            'deposit_amount' => $this->faker->numberBetween(50,400)]);
         $new_dietary = 'Bread and water fasting';
         $old_dietary = $order->dietary;
 
@@ -215,7 +219,7 @@ class SquarespaceOrderControllerTest extends TestCase
             'event_id' => $retreat->id,
             'dietary' => $new_dietary,
         ]);
-        $updated = \App\Models\SsOrder::findOrFail($order->id);
+        $updated = \App\Models\SquarespaceOrder::findOrFail($order->id);
         
         //$response->assertSessionHas('flash_notification');
         // TODO: currently assuming couple order so not testing if it properly returns to squarespace.order.edit
@@ -237,7 +241,7 @@ class SquarespaceOrderControllerTest extends TestCase
         $this->assertActionUsesFormRequest(
             \App\Http\Controllers\SquarespaceOrderController::class,
             'update',
-            \App\Http\Requests\UpdateSsOrderRequest::class
+            \App\Http\Requests\UpdateSquarespaceOrderRequest::class
         );
     }
 

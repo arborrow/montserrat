@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 
-class SsInventoryPermissionSeeder extends Seeder
+class SquarespaceInventoryPermissionSeeder extends Seeder
 {
     /**
      * Run the database seeds.

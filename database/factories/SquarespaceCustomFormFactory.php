@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class SsCustomFormFactory extends Factory
+class SquarespaceCustomFormFactory extends Factory
 {
     /**
      * Define the model's default state.

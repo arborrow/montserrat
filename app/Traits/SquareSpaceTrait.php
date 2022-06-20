@@ -27,7 +27,7 @@ trait SquareSpaceTrait
 
 
     /*
-        Takes an item (either a SsOrder or SsDonation
+        Takes an item (either a SquarespaceOrder or SquarespaceDonation
         Requires name, email, full_address
         Gets list of contacts with same last name
         Gets list of contacts with same email

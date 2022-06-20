@@ -19,7 +19,7 @@
             Custom form fields
             <span>
                 @can('create-squarespace-custom-form')
-                        <a href={{ action([\App\Http\Controllers\SsCustomFormController::class, 'create_field'],$custom_form->id) }}>
+                        <a href={{ action([\App\Http\Controllers\SquarespaceCustomFormController::class, 'create_field'],$custom_form->id) }}>
                             {!! Html::image('images/create.png', 'Create Form Field',array('title'=>"Create Form Field",'class' => 'btn btn-light')) !!}
                         </a>
                 @endCan
@@ -45,7 +45,7 @@
     </table>
     <div class="col-lg-12 mb-4">
         @can('update-ss-custom-form')
-            <a href="{{ action([\App\Http\Controllers\SsCustomFormController::class, 'edit'], $custom_form->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+            <a href="{{ action([\App\Http\Controllers\SquarespaceCustomFormController::class, 'edit'], $custom_form->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
 
         @endcan
         @can('delete-ss-custom-form')

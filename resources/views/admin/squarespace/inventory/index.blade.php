@@ -9,7 +9,7 @@
                         <span class="grey">Squarespace Inventory Index</span>
                         @can('create-group')
                             <span class="create">
-                                <a href="{{ action([\App\Http\Controllers\SsInventoryController::class, 'create']) }}">
+                                <a href="{{ action([\App\Http\Controllers\SquarespaceInventoryController::class, 'create']) }}">
                                    {!! Html::image('images/create.png', 'Add Squarespace Inventory',array('title'=>"Add Squarespace Inventory",'class' => 'btn btn-primary')) !!}
                                 </a>
 

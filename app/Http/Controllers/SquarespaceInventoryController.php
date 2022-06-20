@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use App\Http\Requests\StoreSsInventoryRequest;
-use App\Http\Requests\UpdateSsInventoryRequest;
+use App\Http\Requests\StoreSquarespaceInventoryRequest;
+use App\Http\Requests\UpdateSquarespaceInventoryRequest;
 
-class SsInventoryController extends Controller
+class SquarespaceInventoryController extends Controller
 {
 
     public function __construct()
@@ -24,7 +24,7 @@ class SsInventoryController extends Controller
     {
         $this->authorize('show-squarespace-inventory');
 
-        $inventory_items = \App\Models\SsInventory::orderBy('name')->with("custom_form")->get();
+        $inventory_items = \App\Models\SquarespaceInventory::orderBy('name')->with("custom_form")->get();
 
         return view('admin.squarespace.inventory.index', compact('inventory_items'));
 
@@ -38,7 +38,7 @@ class SsInventoryController extends Controller
     public function create()
     {
         $this->authorize('create-squarespace-inventory');
-        $custom_forms = \App\Models\SsCustomForm::orderBy('name')->pluck('name','id');
+        $custom_forms = \App\Models\SquarespaceCustomForm::orderBy('name')->pluck('name','id');
         return view('admin.squarespace.inventory.create', compact(['custom_forms']));
 
 
@@ -50,11 +50,11 @@ class SsInventoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreSsInventoryRequest $request)
+    public function store(StoreSquarespaceInventoryRequest $request)
     {
         $this->authorize('create-squarespace-inventory');
 
-        $inventory = new \App\Models\SsInventory;
+        $inventory = new \App\Models\SquarespaceInventory;
         $inventory->name = $request->input('name');
         $inventory->custom_form_id = $request->input('custom_form_id');
         $inventory->variant_options = $request->input('variant_options');
@@ -76,7 +76,7 @@ class SsInventoryController extends Controller
     {
         $this->authorize('show-squarespace-inventory');
 
-        $inventory = \App\Models\SsInventory::with('custom_form')->findOrFail($id);
+        $inventory = \App\Models\SquarespaceInventory::with('custom_form')->findOrFail($id);
 
         return view('admin.squarespace.inventory.show', compact('inventory'));
 
@@ -92,8 +92,8 @@ class SsInventoryController extends Controller
     {
         $this->authorize('update-squarespace-inventory');
 
-        $inventory = \App\Models\SsInventory::findOrFail($id);
-        $custom_forms = \App\Models\SsCustomForm::orderBy('name')->pluck('name','id');
+        $inventory = \App\Models\SquarespaceInventory::findOrFail($id);
+        $custom_forms = \App\Models\SquarespaceCustomForm::orderBy('name')->pluck('name','id');
 
         return view('admin.squarespace.inventory.edit', compact('inventory','custom_forms')); //
 
@@ -106,11 +106,11 @@ class SsInventoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSsInventoryRequest $request, $id)
+    public function update(UpdateSquarespaceInventoryRequest $request, $id)
     {
         $this->authorize('update-squarespace-inventory');
 
-        $inventory = \App\Models\SsInventory::findOrFail($id);
+        $inventory = \App\Models\SquarespaceInventory::findOrFail($id);
 
         $inventory->name = $request->input('name');
         $inventory->custom_form_id = $request->input('custom_form_id');
@@ -132,9 +132,9 @@ class SsInventoryController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete-squarespace-inventory');
-        $inventory = \App\Models\SsInventory::findOrFail($id);
+        $inventory = \App\Models\SquarespaceInventory::findOrFail($id);
 
-        \App\Models\SsInventory::destroy($id);
+        \App\Models\SquarespaceInventory::destroy($id);
         flash('SquareSpace Inventory: '.$inventory->name.' deleted')->warning()->important();
 
         return Redirect::action([self::class, 'index']);

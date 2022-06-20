@@ -10,14 +10,14 @@ use App\Traits\PhoneTrait;
 
 
 
-class SsOrder extends Model implements Auditable
+class SquarespaceOrder extends Model implements Auditable
 {
     use HasFactory;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
     use PhoneTrait;
 
-    protected $table = 'ss_order';
+    protected $table = 'squarespace_order';
 
     protected $fillable = ['order_number'];
 

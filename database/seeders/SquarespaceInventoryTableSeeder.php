@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class SsInventoryTableSeeder extends Seeder
+class SquarespaceInventoryTableSeeder extends Seeder
 {
 
     /**
@@ -16,9 +16,9 @@ class SsInventoryTableSeeder extends Seeder
     {
         
 
-        \DB::table('ss_inventory')->delete();
+        \DB::table('squarespace_inventory')->delete();
         
-        \DB::table('ss_inventory')->insert(array (
+        \DB::table('squarespace_inventory')->insert(array (
             0 => 
             array (
                 'id' => 1,

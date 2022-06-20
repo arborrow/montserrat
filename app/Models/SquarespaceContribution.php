@@ -9,14 +9,14 @@ use OwenIt\Auditing\Contracts\Auditable;
 use App\Traits\PhoneTrait;
 
 
-class SsContribution extends Model implements Auditable
+class SquarespaceContribution extends Model implements Auditable
 {
     use HasFactory;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
     use PhoneTrait;
 
-    protected $table = 'ss_contribution';
+    protected $table = 'squarespace_contribution';
 
     protected $fillable = ['message_id'];
 

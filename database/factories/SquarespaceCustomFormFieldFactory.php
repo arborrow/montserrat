@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class SsCustomFormFieldFactory extends Factory
+class SquarespaceCustomFormFieldFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +18,7 @@ class SsCustomFormFieldFactory extends Factory
         return [
             'name' => $name,
             'form_id' => function () {
-                return \App\Models\SsCustomForm::factory()->create()->id;
+                return \App\Models\SquarespaceCustomForm::factory()->create()->id;
             },
             'name' => $name,
             'sort_order' => $this->faker->numberBetween(1,20), 

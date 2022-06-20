@@ -5,11 +5,11 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\SsInventory;
+use App\Models\SquarespaceInventory;
 use App\Models\Prefix;
 // TODO:: consider creating a certain percentage of the orders with existing contacts in the database for easier testing of edit page
 
-class SsOrderFactory extends Factory
+class SquarespaceOrderFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -20,7 +20,7 @@ class SsOrderFactory extends Factory
      */
     public function definition()
     {
-        $inventory = SsInventory::where('id','<',10)->first();
+        $inventory = SquarespaceInventory::where('id','<',10)->first();
         $prefix = Prefix::get()->random();
         $couple_prefix = Prefix::get()->random();
         $address_street = $this->faker->streetAddress();

@@ -13,13 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ss_inventory', function (Blueprint $table) {
+        Schema::create('squarespace_custom_form_field', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->index('name');
-            $table->integer('custom_form_id');
-            $table->integer('variant_options')->nullable();
+            $table->integer('form_id')->index('idx_form_id');;
+            $table->string('name');
+            $table->integer('sort_order')->nullable();
+            $table->string('type');
+            $table->string('variable_name');
             $table->timestamps();
             $table->softDeletes();
+
         });
     }
 
@@ -30,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ss_inventory');
+        Schema::dropIfExists('squarespace_custom_form_field');
     }
 };

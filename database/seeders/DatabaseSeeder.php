@@ -55,9 +55,9 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesTableSeeder::class);
         $this->call(SalutationsTableSeeder::class);
         $this->call(SnippetsTableSeeder::class);
-        $this->call(SsInventoryTableSeeder::class);
-        $this->call(SsCustomFormTableSeeder::class);
-        $this->call(SsCustomFormFieldTableSeeder::class);
+        $this->call(SquarespaceInventoryTableSeeder::class);
+        $this->call(SquarespaceCustomFormTableSeeder::class);
+        $this->call(SquarespaceCustomFormFieldTableSeeder::class);
         $this->call(StateProvinceTableSeeder::class);
         $this->call(SuffixTableSeeder::class);
         $this->call(TouchcategoriesTableSeeder::class);

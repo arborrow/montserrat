@@ -8,11 +8,11 @@
                     <h1>
                         <span class="grey">Squarespace Orders (Unprocessed)</span>
                     </h1>
-                    <span>{{ $orders->links() }}</span>
+                    <span>{{ $unprocessed_orders->links() }}</span>
 
                 </div>
 
-                <table class="table table-bordered table-striped table-hover"><caption><h2>Orders (Unprocessed) ({{$orders->total()}})</h2></caption>
+                <table class="table table-bordered table-striped table-hover"><caption><h2>Orders (Unprocessed) ({{$unprocessed_orders->total()}})</h2></caption>
                     <thead>
                         <tr>
                             <th>Date</th>
@@ -25,7 +25,7 @@
                     </thead>
                     <tbody>
 
-                        @foreach ($orders as $order)
+                        @foreach ($unprocessed_orders as $order)
                         <tr>
                             <td>
                                 <a href="{{ URL('squarespace/order/' . $order->id .'/edit') }} ">{{ $order->created_at }}</a>

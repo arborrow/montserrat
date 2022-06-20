@@ -17,7 +17,7 @@ use App\Models\Note;
 use App\Models\Phone;
 use App\Models\Registration;
 use App\Models\Retreat;
-use App\Models\SsContribution;
+use App\Models\SquarespaceContribution;
 use App\Models\StateProvince;
 use App\Models\Touchpoint;
 
@@ -42,8 +42,8 @@ class SquarespaceContributionController extends Controller
     public function index()
     {
         $this->authorize('show-squarespace-contribution');
-        $ss_contributions = SsContribution::whereIsProcessed(0)->paginate(25, ['*'], 'ss_contributions');
-        $processed_ss_contributions = SsContribution::whereIsProcessed(1)->paginate(25, ['*'], 'ss_unprocessed_contributions');
+        $ss_contributions = SquarespaceContribution::whereIsProcessed(0)->paginate(25, ['*'], 'ss_contributions');
+        $processed_ss_contributions = SquarespaceContribution::whereIsProcessed(1)->paginate(25, ['*'], 'ss_unprocessed_contributions');
         return view('squarespace.contribution.index',compact('ss_contributions','processed_ss_contributions'));
     }
 
@@ -83,7 +83,7 @@ class SquarespaceContributionController extends Controller
     public function show($id)
     {
         $this->authorize('show-squarespace-contribution');
-        $ss_contribution = SsContribution::findOrFail($id);
+        $ss_contribution = SquarespaceContribution::findOrFail($id);
         return view('squarespace.contribution.show', compact('ss_contribution'));
 
     }
@@ -98,7 +98,7 @@ class SquarespaceContributionController extends Controller
     {
         $this->authorize('update-squarespace-contribution');
 
-        $ss_contribution = SsContribution::findOrFail($id);
+        $ss_contribution = SquarespaceContribution::findOrFail($id);
         $descriptions = DonationType::active()->orderby('name')->pluck('name', 'name');
 
         $matching_contacts = $this->matched_contacts($ss_contribution);
@@ -146,7 +146,7 @@ class SquarespaceContributionController extends Controller
      */
     public function update(UpdateSquarespaceContributionRequest $request, $id)
     {
-        $ss_contribution = SsContribution::findOrFail($id);
+        $ss_contribution = SquarespaceContribution::findOrFail($id);
         $contact_id = $request->input('contact_id');
         $event_id = ($request->filled('event_id')) ? $request->input('event_id') : $event_id;
 
@@ -318,7 +318,7 @@ class SquarespaceContributionController extends Controller
     {
         $this->authorize('update-squarespace-contribution');
 
-        $ss_contribution = SsContribution::findOrFail($id);
+        $ss_contribution = SquarespaceContribution::findOrFail($id);
         $ss_contribution->contact_id = null;
         $ss_contribution->save();
 

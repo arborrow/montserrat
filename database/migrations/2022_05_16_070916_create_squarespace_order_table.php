@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ss_order', function (Blueprint $table) {
+        Schema::create('squarespace_order', function (Blueprint $table) {
             $table->id();
             $table->integer('order_number')->nullable();
             $table->string('retreat_category')->nullable();
@@ -82,6 +82,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ss_order');
+        Schema::dropIfExists('squarespace_order');
     }
 };

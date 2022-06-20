@@ -5,10 +5,10 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\SsInventory;
+use App\Models\SquarespaceInventory;
 use App\Models\Retreat;
 
-class SsContributionFactory extends Factory
+class SquarespaceContributionFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -24,7 +24,7 @@ class SsContributionFactory extends Factory
      */
     public function definition()
     {
-        $inventory = SsInventory::where('id','<',10)->first();
+        $inventory = SquarespaceInventory::where('id','<',10)->first();
         $address_street = $this->faker->streetAddress();
         $address_supplemental = $this->faker->secondaryAddress();
         $address_city = $this->faker->city();

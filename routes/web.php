@@ -38,8 +38,8 @@ use App\Http\Controllers\SnippetController;
 use App\Http\Controllers\SquarespaceController;
 use App\Http\Controllers\SquarespaceContributionController;
 use App\Http\Controllers\SquarespaceOrderController;
-use App\Http\Controllers\SsCustomFormController;
-use App\Http\Controllers\SsInventoryController;
+use App\Http\Controllers\SquarespaceCustomFormController;
+use App\Http\Controllers\SquarespaceInventoryController;
 use App\Http\Controllers\StripeChargeController;
 use App\Http\Controllers\StripePayoutController;
 use App\Http\Controllers\SystemController;
@@ -157,12 +157,12 @@ Route::middleware('web', 'activity')->group(function () {
         Route::resource('website', WebsiteController::class);
 
         Route::prefix('squarespace')->group(function () {
-            Route::resource('custom_form', SsCustomFormController::class);
-            Route::resource('inventory', SsInventoryController::class);
-            Route::get('custom_form/{id}/create', [SsCustomFormController::class, 'create_field'])->name('custom_form.field.create');
-            Route::post('custom_form/{id}/store', [SsCustomFormController::class, 'store_field'])->name('custom_form.field.store');
-            Route::get('custom_form_field/{id}/edit', [SsCustomFormController::class, 'edit_field'])->name('custom_form.field.edit');
-            Route::put('custom_form/{id}/update', [SsCustomFormController::class, 'update_field'])->name('custom_form.field.update');
+            Route::resource('custom_form', SquarespaceCustomFormController::class);
+            Route::resource('inventory', SquarespaceInventoryController::class);
+            Route::get('custom_form/{id}/create', [SquarespaceCustomFormController::class, 'create_field'])->name('custom_form.field.create');
+            Route::post('custom_form/{id}/store', [SquarespaceCustomFormController::class, 'store_field'])->name('custom_form.field.store');
+            Route::get('custom_form_field/{id}/edit', [SquarespaceCustomFormController::class, 'edit_field'])->name('custom_form.field.edit');
+            Route::put('custom_form/{id}/update', [SquarespaceCustomFormController::class, 'update_field'])->name('custom_form.field.update');
         });
 
     });
