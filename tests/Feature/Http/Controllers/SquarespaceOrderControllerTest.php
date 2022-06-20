@@ -23,9 +23,7 @@ class SquarespaceOrderControllerTest extends TestCase
         $this->followingRedirects();
 
         $user = $this->createUserWithPermission('show-squarespace-order');
-        $response = $this->actingAs($user)->post(route('squarespace.order.store'), [
-            'order_number' => $this->faker->numberBetween(100,999),
-        ]);
+        $response = $this->actingAs($user)->get(route('squarespace.order.create'));
 
         $response->assertOk();
         $response->assertViewIs('squarespace.order.index');
@@ -193,8 +191,7 @@ class SquarespaceOrderControllerTest extends TestCase
         ]);
 
         $response->assertOk();
-        $response->assertViewIs('squarespace.order.index');
-        
+        $response->assertViewIs('squarespace.order.index');        
     }
 
 
@@ -206,8 +203,9 @@ class SquarespaceOrderControllerTest extends TestCase
         // not a slug
         $user = $this->createUserWithPermission('update-squarespace-order');
         $retreatant = \App\Models\Contact::factory()->create();
+        $couple = \App\Models\Contact::factory()->create();
         $retreat = \App\Models\Retreat::factory()->create();
-        $order = \App\Models\SsOrder::factory()->create(['contact_id' => $retreatant->id, 'event_id' => $retreat->id]);
+        $order = \App\Models\SsOrder::factory()->create(['contact_id' => $retreatant->id, 'event_id' => $retreat->id, 'couple_contact_id' => $couple->id]);
         $new_dietary = 'Bread and water fasting';
         $old_dietary = $order->dietary;
 
@@ -218,9 +216,15 @@ class SquarespaceOrderControllerTest extends TestCase
             'dietary' => $new_dietary,
         ]);
         $updated = \App\Models\SsOrder::findOrFail($order->id);
-
+        
         //$response->assertSessionHas('flash_notification');
-        $response->assertRedirect(action([\App\Http\Controllers\SquarespaceOrderController::class, 'index']));
+        // TODO: currently assuming couple order so not testing if it properly returns to squarespace.order.edit
+        if (!isset($order->participant_id) && (!isset($order->contact_id) || ($order->is_couple && !isset($order->couple_contact_id) ))) {
+            $response->assertRedirect(action([\App\Http\Controllers\SquarespaceOrderController::class, 'edit'],$order->id)); 
+        } else {
+            $response->assertRedirect(action([\App\Http\Controllers\SquarespaceOrderController::class, 'index']));
+        }
+
         $this->assertEquals($updated->dietary, $new_dietary);
         $this->assertNotEquals($updated->dietary, $old_dietary);
     }

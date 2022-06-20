@@ -212,7 +212,7 @@ class SquarespaceOrderController extends Controller
         $order->couple_emergency_contact = $request->input('couple_emergency_contact');
         $order->couple_emergency_contact_relationship = $request->input('couple_emergency_contact_relationship');
         $order->couple_emergency_contact_phone = $request->input('couple_emergency_contact_phone');
-        $order->deposit_amount = $request->input('deposit_amount');
+        $order->deposit_amount = ($request->filled('deposit_amount')) ? $request->input('deposit_amount') : 0;
         $order->additional_names_and_phone_numbers = $request->input('additional_names_and_phone_numbers');
         $order->event_id = $event_id;
         $order->save();
@@ -529,10 +529,7 @@ class SquarespaceOrderController extends Controller
             flash('SquareSpace Order #: <a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_number.'</a> processed')->success();
 
             return Redirect::action([self::class, 'index']);
-
-
         }
-
     }
 
     /**

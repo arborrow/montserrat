@@ -85,7 +85,7 @@ return [
     ],
 
     'donation_descriptions' => [
-        'N/A' => null,
+        'N/A' => '',
         'Annual Giving Campaign' => 'AGC - General',
         'Building & Maintenance Fund' => 'AGC - Buildings & Maintenance',
         'Flowers' => 'Flowers and Landscaping',

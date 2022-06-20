@@ -56,14 +56,6 @@
 
                 <div class="col-lg-3 col-md-6">
                     <strong>
-                        {!! Form::label('amount', 'Amount:')  !!}
-                    </strong>
-                        {!! Form::number('amount', $ss_contribution->amount, ['class' => 'form-control','step'=>'0.01']) !!}
-                        {{ optional($ss_contribution->donation)->donation_amount }}
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <strong>
                         {!! Form::label('donation_description', 'Fund:')  !!}
                     </strong>
                     @if (isset($ss_contribution->offering_type))
@@ -75,6 +67,18 @@
                     {!! Form::select('donation_description', config('polanco.donation_descriptions'), (isset($ss_contribution->fund)) ? $ss_contribution->fund : $ss_contribution->offering_type, ['class' => 'form-control']) !!}
                     {{ optional($ss_contribution->donation)->donation_description }}
                 </div>
+
+                @if (optional($ss_contribution->donation)->donation_amount == $ss_contribution->amount )
+                    <div class="col-lg-3 col-md-6 bg-success">
+                @else
+                    <div class="col-lg-3 col-md-6 bg-warning">
+                @endIf
+                    <strong>
+                        {!! Form::label('amount', 'Amount:')  !!}
+                    </strong>
+                        {!! Form::number('amount', $ss_contribution->amount, ['class' => 'form-control','step'=>'0.01']) !!}
+                        {{ optional($ss_contribution->donation)->donation_amount }}
+                    </div>
 
                 <div class="col-lg-3 col-md-6">
                     <strong>
@@ -252,18 +256,6 @@
                         {!! Form::label('address_country_id', $ss_contribution->address_country) !!}
                         {!! Form::select('address_country_id', $countries, $ids['address_country'], ['class' => 'form-control']) !!}
                         {{ optional($ss_contribution->donor)->address_primary_country_abbreviation }}
-                    </td>
-                </tr>
-
-                <tr>
-                    <td><strong>Amount</strong></td>
-                    @if (optional($ss_contribution->donation)->donation_amount == $ss_contribution->amount )
-                        <td class='table-success'>
-                    @else
-                        <td class='table-warning'>
-                    @endIf
-                        {!! Form::number('amount', $ss_contribution->amount, ['class' => 'form-control','step'=>'0.01']) !!}
-                        {{ optional($ss_contribution->donation)->donation_amount }}
                     </td>
                 </tr>
 

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
-use App\Http\Requests\UpdateSsContributionRequest;
+use App\Http\Requests\UpdateSquarespaceContributionRequest;
 
 use App\Models\Address;
 use App\Models\Contact;
@@ -45,8 +45,6 @@ class SquarespaceContributionController extends Controller
         $ss_contributions = SsContribution::whereIsProcessed(0)->paginate(25, ['*'], 'ss_contributions');
         $processed_ss_contributions = SsContribution::whereIsProcessed(1)->paginate(25, ['*'], 'ss_unprocessed_contributions');
         return view('squarespace.contribution.index',compact('ss_contributions','processed_ss_contributions'));
-
-
     }
 
     /**
@@ -56,7 +54,10 @@ class SquarespaceContributionController extends Controller
      */
     public function create()
     {
-        //
+        //use permisson of target, namely squarespace.contribution.index
+        $this->authorize('show-squarespace-contribution'); 
+        return Redirect::action([self::class, 'index']);
+        
     }
 
     /**
@@ -67,7 +68,10 @@ class SquarespaceContributionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //use permisson of target, namely squarespace.contribution.index
+        $this->authorize('show-squarespace-contribution'); 
+        return Redirect::action([self::class, 'index']);
+        
     }
 
     /**
@@ -140,7 +144,7 @@ class SquarespaceContributionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSsContributionRequest $request, $id)
+    public function update(UpdateSquarespaceContributionRequest $request, $id)
     {
         $ss_contribution = SsContribution::findOrFail($id);
         $contact_id = $request->input('contact_id');
@@ -299,7 +303,9 @@ class SquarespaceContributionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //use permisson of target, namely squarespace.contribution.index
+        $this->authorize('show-squarespace-contribution'); 
+        return Redirect::action([self::class, 'index']);        
     }
 
     /**
