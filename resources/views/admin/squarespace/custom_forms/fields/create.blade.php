@@ -8,6 +8,7 @@
     <div class="col-lg-12">
         {!! Form::open(['url'=>'admin/squarespace/custom_form/' . $custom_form->id . '/store', 'method'=>'post']) !!}
         {!! Form::hidden('id', $custom_form->id) !!}
+        {!! Form::hidden('form_id', $custom_form->id) !!}
             <div class="form-group">
                 <h2>Custom Form: {{ $custom_form->name }}</h2>
                 <div class="row">

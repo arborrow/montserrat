@@ -162,7 +162,6 @@ abstract class TestCase extends BaseTestCase
             return true;
         } else {
             dd($value_found, $line_number, $field_value, $field_name_string, $field_value_string, gettype($field_value_string), $contents_array[$line_number]);
-
             return false;
         }
     }

@@ -467,6 +467,7 @@ class SquarespaceOrderController extends Controller
                 $registration->register_date = $order->created_at;
                 $registration->deposit= ($request->filled('deposit_amount')) ? ($request->input('deposit_amount')/2) : 0;
                 $registration->status_id = config('polanco.registration_status_id.registered');
+                $registration->notes = 'Squarespace Order #'.$order->order_number.'. '. $request->input('comments');
                 $registration->remember_token = Str::random(60);
                 $registration->save();
 
@@ -494,7 +495,7 @@ class SquarespaceOrderController extends Controller
             $registration->register_date = $order->created_at;
             // if couple split the deposit between them
             $registration->deposit = ($order->is_couple) ? ($request->input('deposit_amount')/2) : $request->input('deposit_amount');
-            $registration->notes = $request->input('comments');
+            $registration->notes = 'Squarespace Order #'.$order->order_number.'. '. $request->input('comments');
             $registration->status_id = config('polanco.registration_status_id.registered');
             $registration->remember_token = Str::random(60);
             $registration->save();

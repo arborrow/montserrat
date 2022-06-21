@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\StoreSquarespaceCustomFormRequest;
+use App\Http\Requests\StoreSquarespaceCustomFormFieldRequest;
+use App\Http\Requests\UpdateSquarespaceCustomFormRequest;
+use App\Http\Requests\UpdateSquarespaceCustomFormFieldRequest;
 
 
 class SquarespaceCustomFormController extends Controller
@@ -60,7 +64,7 @@ class SquarespaceCustomFormController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreSquarespaceCustomFormRequest $request)
     {
         $this->authorize('create-squarespace-custom-form');
 
@@ -81,7 +85,7 @@ class SquarespaceCustomFormController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store_field(Request $request)
+    public function store_field(StoreSquarespaceCustomFormFieldRequest $request)
     {
         $this->authorize('create-squarespace-custom-form');
         $id = $request->input('id');
@@ -155,7 +159,7 @@ class SquarespaceCustomFormController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateSquarespaceCustomFormRequest $request, $id)
     {
         $this->authorize('update-squarespace-custom-form');
 
@@ -177,7 +181,7 @@ class SquarespaceCustomFormController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update_field(Request $request)
+    public function update_field(UpdateSquarespaceCustomFormFieldRequest $request)
     {
         $this->authorize('update-squarespace-custom-form');
 
@@ -187,9 +191,9 @@ class SquarespaceCustomFormController extends Controller
         $custom_form_field->type = $request->input('type');
         $custom_form_field->variable_name = $request->input('variable_name');
         $custom_form_field->sort_order = $request->input('sort_order');
+        $custom_form_field->save();
 
         flash('SquareSpace Custom Form Field: <a href="'.url('admin/squarespace/custom_form/'.$custom_form_field->form_id).'">'.$custom_form_field->name.' ('. $custom_form_field->form->name . ')</a> updated')->success();
-        $custom_form_field->save();
 
         return Redirect::action([self::class, 'show'], $custom_form_field->form_id);
 
