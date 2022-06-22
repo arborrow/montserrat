@@ -324,23 +324,25 @@ class GetMailgunMessages extends Command
                     }
 
                     // TODO: make sure full_address variable exists otherwise set order address parts to null
-                    $address = explode(", ", $order->full_address);
-                    if (sizeof($address) == 4) {
-                        $order->address_street = trim($address[0]);
-                        $order->address_supplemental = trim($address[1]);
-                        $order->address_city = trim($address[2]);
-                        $address_detail = explode(" ", $address[3]);
-
-                    } else { // assumes size of 3
-                        $order->address_street = trim($address[0]);
-                        $order->address_city = trim($address[1]);
-                        $address_detail = explode(" ", $address[2]);
+                    if (isset($order->full_address)) {
+                        $address = explode(", ", $order->full_address);
+                        if (sizeof($address) == 4) {
+                            $order->address_street = trim($address[0]);
+                            $order->address_supplemental = trim($address[1]);
+                            $order->address_city = trim($address[2]);
+                            $address_detail = explode(" ", $address[3]);
+    
+                        } else { // assumes size of 3
+                            $order->address_street = trim($address[0]);
+                            $order->address_city = trim($address[1]);
+                            $address_detail = explode(" ", $address[2]);
+                        }
+                        $order->address_state = trim($address_detail[0]);
+                        $order->address_zip = trim($address_detail[1]);
+                        $order->address_country = (sizeof($address_detail) == 4) ? trim($address_detail[2]) . " " . trim($address_detail[3]) : trim($address_detail[2]);    
                     }
-                    $order->address_state = trim($address_detail[0]);
-                    $order->address_zip = trim($address_detail[1]);
-                    $order->address_country = (sizeof($address_detail) == 4) ? trim($address_detail[2]) . " " . trim($address_detail[3]) : trim($address_detail[2]);
-                    //dd($order,$message->body,\Carbon\Carbon::parse($order->date_of_birth), $order->couple_date_of_birth);
 
+                    //dd($order,$message->body,\Carbon\Carbon::parse($order->date_of_birth), $order->couple_date_of_birth);
                     $order->comments = ($order->comments == 1) ? null : $order->comments;
                     $order->date_of_birth = ($order->date_of_birth == 1) ? null : $order->date_of_birth;
                     $order->couple_date_of_birth = ($order->couple_date_of_birth == 1) ? null : $order->couple_date_of_birth;
