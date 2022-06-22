@@ -208,7 +208,7 @@ class GetMailgunMessages extends Command
 
                     $event = Retreat::whereIdnumber($ss_donation->idnumber)->first();
                     $ss_donation->event_id = optional($event)->id;
-                    if (isset($event)) { // if a particular event then based on end date of event if passed retreat funding, if upcoming then deposit
+                    if (isset($ss_donation->idnumber) && isset($ss_donation->event_id)) { // if a particular event then based on end date of event if passed retreat funding, if upcoming then deposit
                         $ss_donation->offering_type = ($event->end_date > now()) ? 'Pre-Retreat offering' : 'Post-Retreat offering';
                     } else { // if SOR then assume it has passed, if other namely Individual Private Retreat assume deposit
                         $ss_donation->offering_type = ($ss_donation->retreat_description == 'Saturday of Renewal') ? 'Post-Retreat offering' : 'Pre-Retreat offering';
@@ -324,6 +324,8 @@ class GetMailgunMessages extends Command
                     }
 
                     // TODO: make sure full_address variable exists otherwise set order address parts to null
+                    // TODO: get the billing address and compare to address provided, different billing address may indicate someone else is paying for the retreat
+                    // TODO: consider comparing extract_value and extract_value_between to better deal with multiple line addresses
                     if (isset($order->full_address)) {
                         $address = explode(", ", $order->full_address);
                         if (sizeof($address) == 4) {
