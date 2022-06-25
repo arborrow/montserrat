@@ -148,7 +148,7 @@ class SquarespaceContributionController extends Controller
     {
         $ss_contribution = SquarespaceContribution::findOrFail($id);
         $contact_id = $request->input('contact_id');
-        $event_id = ($request->filled('event_id')) ? $request->input('event_id') : $event_id;
+        $event_id = ($request->filled('event_id')) ? $request->input('event_id') : null;
 
         // always update any data changes in order
         $ss_contribution->name = ($request->filled('name')) ? $request->input('name') : $ss_contribution->name;
@@ -203,7 +203,7 @@ class SquarespaceContributionController extends Controller
             // update contact info (prefix, parish, )
 
             $contact = Contact::findOrFail($contact_id);
-            $event = (isset($event_id)) ? Retreat::findOrFail($event_id) : $event;
+            $event = (isset($event_id)) ? Retreat::findOrFail($event_id) : null;
 
             $contact->first_name = ($request->filled('first_name')) ? $request->input('first_name') : $contact->first_name;
             $contact->last_name = ($request->filled('last_name')) ? $request->input('last_name') : $contact->last_name;
