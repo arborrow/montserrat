@@ -513,6 +513,7 @@ class SquarespaceOrderController extends Controller
             $donation->donation_description = 'Retreat Deposits';
             $donation->donation_date = $order->event->start_date;
             $donation->donation_amount = ($order->is_couple) ? ($order->deposit_amount/2) : $order->deposit_amount;
+            $donation->squarespace_order = $order->order_number;
             $donation->Notes = 'SS Order #' . $order->order_number . ' for Retreat #' . $order->event->idnumber;
             $donation->save();
 
@@ -523,10 +524,13 @@ class SquarespaceOrderController extends Controller
                 $couple_donation->donation_description = 'Retreat Deposits';
                 $couple_donation->donation_date = $order->event->start_date;
                 $couple_donation->donation_amount = ($order->is_couple) ? ($order->deposit_amount/2) : $order->deposit_amount;
+                $couple_donation->squarespace_order = $order->order_number;
                 $couple_donation->Notes = 'SS Order #' . $order->order_number . ' for Retreat #' . $order->event->idnumber;
                 $couple_donation->save();
             }
-
+            $order->donation_id = $donation->donation_id;
+            $order->couple_donation_id = $couple_donation->donation_id;
+            $order->save();
             flash('SquareSpace Order #: <a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_number.'</a> processed')->success();
 
             return Redirect::action([self::class, 'index']);

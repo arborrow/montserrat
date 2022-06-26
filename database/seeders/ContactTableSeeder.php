@@ -22,5 +22,14 @@ class ContactTableSeeder extends Seeder
             'legal_name' => config('polanco.self.name'),
             'organization_name' => config('polanco.self.name'),
         ]);
+        $stripe_contact = \App\Models\Contact::create([
+            'contact_type' => config('polanco.contact_type.organization'),
+            'subcontact_type' => config('polanco.contact_type.vendor'),
+            'sort_name' => 'Stripe Credit Card Fees ',
+            'display_name' => 'Stripe Credit Card Fees ',
+            'sort_name' => 'Stripe Credit Card Fees',
+            'legal_name' => 'Stripe Credit Card Fees',
+            'organization_name' => 'Stripe Credit Card Fees',
+        ]);
     }
 }

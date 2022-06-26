@@ -22,6 +22,7 @@ return new class extends Migration
             $table->dateTime('date')->nullable();
             $table->string('status')->nullable();
             $table->decimal('total_fee_amount', 13, 2)->default('0.00');
+            $table->integer('payment_id')->nullable()->index('idx_payment_id');
             $table->dateTime('reconcile_date')->nullable();
             $table->timestamps();
             $table->softDeletes();

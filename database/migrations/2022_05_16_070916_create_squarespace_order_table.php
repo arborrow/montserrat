@@ -67,6 +67,8 @@ return new class extends Migration
             $table->integer('couple_contact_id')->nullable()->index('idx_couple_contact_id');
             $table->integer('participant_id')->nullable()->index('idx_participant_id');
             $table->integer('touchpoint_id')->nullable()->index('idx_touchpoint_id');
+            $table->integer('donation_id')->nullable()->index('idx_touchpoint_id');
+            $table->integer('couple_donation_id')->nullable()->index('idx_touchpoint_id');
             $table->string('stripe_charge_id')->nullable()->index('idx_stripe_charge_id');
             $table->text('email_body', 65535)->nullable();
             $table->boolean('is_processed')->nullable()->default(0);

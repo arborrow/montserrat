@@ -159,6 +159,41 @@ class StripePayoutController extends Controller
     }
 
     /**
+     * Create Stripe Fee donation/payment for a payout.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function process_fees($id = null)
+    {
+        $this->authorize('update-stripe-payout');
+
+        $stripe_vendor_id = config('polanco.contact.stripe');
+        $payout = StripePayout::findOrFail($id);
+        $donation = new \App\Models\Donation;
+        $donation->donation_date = $payout->date;
+        $donation->donation_description = "Bank & Credit Card Fees";
+        $donation->donation_amount = -$payout->total_fee_amount;
+        $donation->contact_id = $stripe_vendor_id;
+        $donation->save();
+
+        $payment = new \App\Models\Payment;
+        $payment->donation_id = $donation->donation_id;
+        $payment->payment_amount = $donation->donation_amount;
+        $payment->payment_date = $donation->donation_date;
+        $payment->payment_description = 'Credit card';
+        $payment->save();
+
+        $payout->payment_id = $payment->payment_id;
+        $payout->save();
+        
+        return Redirect::action([self::class, 'index']);
+
+    }
+
+
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

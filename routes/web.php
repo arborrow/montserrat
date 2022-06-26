@@ -344,6 +344,7 @@ Route::middleware('web', 'activity')->group(function () {
 
     Route::prefix('stripe')->group(function () {
         Route::get('payout/import', [StripePayoutController::class, 'import'])->name('stripe.payout.import');
+        Route::get('payout/{id?}/process_fees', [StripePayoutController::class, 'process_fees'])->name('stripe.payout.process_fees');
         Route::get('payout/date/{payout_date?}', [StripePayoutController::class, 'show_date'])->name('stripe.payout.showdate');
         Route::resource('charge', StripeChargeController::class);
         Route::resource('payout', StripePayoutController::class);
