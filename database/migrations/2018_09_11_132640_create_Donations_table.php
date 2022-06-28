@@ -32,13 +32,14 @@ return new class extends Migration {
             $table->char('Thank You', 1)->nullable();
             $table->string('AGC Donation Description', 100)->nullable();
             $table->string('Pledge', 50)->nullable();
-            $table->integer('contact_id')->nullable();
-            $table->softDeletes();
-            $table->string('remember_token', 100)->nullable();
-            $table->timestamps();
+            $table->integer('contact_id')->nullable()->index('idx_contact_id');
             $table->integer('event_id')->nullable()->index('event_id');
+            $table->integer('squarespace_order')->nullable()->index('idx_squarespace_order');
             $table->integer('ppd_id')->nullable()->index('ppd_id');
             $table->index(['donor_id', 'donation_id'], 'idx_donor-donation_id');
+            $table->string('remember_token', 100)->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

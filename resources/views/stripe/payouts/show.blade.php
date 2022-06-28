@@ -21,6 +21,7 @@
 
                 </div>
             </div>
+            {!! Html::link(action([\App\Http\Controllers\StripePayoutController::class, 'import_balance_transactions'],$stripe_payout->id),'Import Stripe Balance Transactions',array('class' => 'btn btn-secondary'))!!}
 
             <table class="table table-bordered table-striped table-hover"><caption><h2>Payout transactions</h2></caption>
                 <thead>

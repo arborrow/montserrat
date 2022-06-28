@@ -82,6 +82,7 @@ return [
 
     'contact' => [
         'montserrat' => '620',
+        'stripe' => env('STRIPE_VENDOR_ID', 2)
     ],
 
     'donation_descriptions' => [
