@@ -30,7 +30,7 @@
                             <td class='text-right'>${{ number_format($payout->amount,2) }}</td>
                             <td class='text-right'>
                                 @if (isset($payout->payment_id))
-                                    <a href = "{{ URL('/payment/'.$payout->payment_id)}}">$ {{ number_format($payout->total_fee_amount,2) }} </a>
+                                    <a href = "{{ URL('/payment/'.$payout->payment_id)}}">${{ number_format($payout->total_fee_amount,2) }} </a>
                                 @else
                                     {!! Html::link(action([\App\Http\Controllers\StripePayoutController::class, 'process_fees'],$payout->id),'Create Stripe Fee Payment for $'.number_format($payout->total_fee_amount,2),array('class' => 'btn btn-warning'))!!}
                                 @endIf
