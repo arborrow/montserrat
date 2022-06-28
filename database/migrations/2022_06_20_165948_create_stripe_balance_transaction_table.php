@@ -17,20 +17,20 @@ return new class extends Migration
             $table->id();
             $table->string('payout_id')->index('payout_id');
             $table->string('balance_transaction_id')->index('balance_transaction_id');;
-            $table->string('customer_id')->index('customer_id');
+            $table->string('customer_id')->nullable()->index('customer_id');
             $table->string('charge_id')->index('charge_id');
             $table->dateTime('payout_date')->nullable()->index('payout_date');;
-            $table->string('description');
-            $table->string('note');
-            $table->string('type');
-            $table->string('name');
-            $table->string('email');
-            $table->string('phone');
-            $table->string('zip');
-            $table->string('cc_last_4');
-            $table->decimal('total_amount', 13, 2)->default('0.00');
-            $table->decimal('fee_amount', 13, 2)->default('0.00');
-            $table->decimal('net_amount', 13, 2)->default('0.00');
+            $table->string('description')->nullable();
+            $table->string('note')->nullable();
+            $table->string('type')->nullable();
+            $table->string('name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('zip')->nullable();
+            $table->string('cc_last_4')->nullable();
+            $table->decimal('total_amount', 13, 2)->nullable()->default('0.00');
+            $table->decimal('fee_amount', 13, 2)->nullable()->default('0.00');
+            $table->decimal('net_amount', 13, 2)->nullable()->default('0.00');
             $table->integer('payment_id')->nullable()->index('idx_payment_id');
             $table->dateTime('reconcile_date')->nullable();
             $table->dateTime('available_date')->nullable();
@@ -47,6 +47,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stripe_payout');
+        Schema::dropIfExists('stripe_balance_transactions');
     }
 };
