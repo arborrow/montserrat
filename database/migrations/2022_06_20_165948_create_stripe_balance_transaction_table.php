@@ -31,6 +31,7 @@ return new class extends Migration
             $table->decimal('total_amount', 13, 2)->nullable()->default('0.00');
             $table->decimal('fee_amount', 13, 2)->nullable()->default('0.00');
             $table->decimal('net_amount', 13, 2)->nullable()->default('0.00');
+            $table->integer('contact_id')->nullable()->index('idx_contact_id');
             $table->integer('payment_id')->nullable()->index('idx_payment_id');
             $table->dateTime('reconcile_date')->nullable();
             $table->dateTime('available_date')->nullable();

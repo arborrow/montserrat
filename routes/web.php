@@ -343,11 +343,11 @@ Route::middleware('web', 'activity')->group(function () {
         Route::get('order/reset/{order}', [SquarespaceOrderController::class, 'reset'])->name('squarespace.order.reset');
     });
 
-    Route::prefix('stripe')->group(function () {
-        Route::get('payout/import', [StripePayoutController::class, 'import'])->name('stripe.payout.import');
-        Route::get('payout/{id?}/process_fees', [StripePayoutController::class, 'process_fees'])->name('stripe.payout.process_fees');
-        Route::get('payout/{id?}/import_balance_transactions', [StripePayoutController::class, 'import_balance_transactions'])->name('stripe.payout.import_balance_transactions');
-        Route::get('payout/date/{payout_date?}', [StripePayoutController::class, 'show_date'])->name('stripe.payout.showdate');
+    Route::name('stripe.')->prefix('stripe')->group(function () {
+        Route::get('payout/import', [StripePayoutController::class, 'import'])->name('payout.import');
+        Route::get('payout/{id?}/process_fees', [StripePayoutController::class, 'process_fees'])->name('payout.process_fees');
+        Route::get('payout/{id?}/import_balance_transactions', [StripePayoutController::class, 'import_balance_transactions'])->name('payout.import_balance_transactions');
+        Route::get('payout/date/{payout_date?}', [StripePayoutController::class, 'show_date'])->name('payout.showdate');
         Route::resource('balance_transaction', StripeBalanceTransactionController::class);
         Route::resource('charge', StripeChargeController::class);
         Route::resource('payout', StripePayoutController::class);

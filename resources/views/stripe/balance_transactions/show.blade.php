@@ -12,7 +12,6 @@
 
             <div class='row'>
                 <div class='col-md-4'>
-
                     <strong>Payout ID: </strong>{{$balance_transaction->payout_id}}
                     <br /><strong>Customer ID: </strong>{{$balance_transaction->customer_id}}
                     <br /><strong>Charge ID: </strong>{{$balance_transaction->charge_id}}
@@ -23,7 +22,7 @@
                     <hr />
                     <strong>Payout Date: </strong>{{ (isset($balance_transaction->payout_date)) ? $balance_transaction->payout_date->format('m-d-Y') : null }}
                     <br /><strong>Available Date: </strong>{{ (isset($balance_transaction->available_date)) ? $balance_transaction->available_date->format('m-d-Y') : null }}
-                    <br /><strong>Reconciliation Date: </strong>{{ (isset($balance_transaction->reconciliation_date)) ? $balance_transaction->reconciliation_date->format('m-d-Y') : null }}
+                    <br /><strong>Reconciliation Date: </strong>{{ (isset($balance_transaction->reconcile_date)) ? $balance_transaction->reconcile_date->format('m-d-Y') : null }}
                     <hr />
                     <strong>Description: </strong>{{$balance_transaction->description}}
                     <br /><strong>Note: </strong>{{ $balance_transaction->note }}

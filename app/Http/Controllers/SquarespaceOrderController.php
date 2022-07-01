@@ -306,6 +306,15 @@ class SquarespaceOrderController extends Controller
             }
             //TODO: when updating order, change parish name to the display name of the parish
 
+            // retreatant relationship
+            $relationship_retreatant = Relationship::firstOrNew([
+                'contact_id_a'=>config('polanco.self.id'),
+                'contact_id_b'=>$contact_id,
+                'relationship_type_id'=>config('polanco.relationship_type.retreatant'),
+                'is_active'=>1
+            ]);
+            $relationship_retreatant->save();
+
             $email_home = Email::firstOrNew([
                 'contact_id'=>$contact_id,
                 'location_type_id'=>config('polanco.location_type.home')]);
@@ -400,6 +409,15 @@ class SquarespaceOrderController extends Controller
                 $couple_contact->nick_name = ($request->filled('couple_nick_name')) ? $request->input('couple_nick_name') : $couple_contact->nick_name;
                 $couple_contact->birth_date = ($request->filled('couple_date_of_birth')) ? $request->input('couple_date_of_birth') : $couple_contact->birth_date;
                 $couple_contact->save();
+ 
+                // retreatant relationship
+                $couple_relationship_retreatant = Relationship::firstOrNew([
+                    'contact_id_a'=>config('polanco.self.id'),
+                    'contact_id_b'=>$couple_contact_id,
+                    'relationship_type_id'=>config('polanco.relationship_type.retreatant'),
+                    'is_active'=>1
+                ]);
+                $couple_relationship_retreatant->save();
 
                 $couple_email_home = Email::firstOrNew([
                     'contact_id'=>$couple_contact_id,
@@ -495,6 +513,7 @@ class SquarespaceOrderController extends Controller
             $registration->register_date = $order->created_at;
             // if couple split the deposit between them
             $registration->deposit = ($order->is_couple) ? ($request->input('deposit_amount')/2) : $request->input('deposit_amount');
+            $registration->deposit = (!isset($registration->deposit)) ? 0 : $registration->deposit;
             $registration->notes = 'Squarespace Order #'.$order->order_number.'. '. $request->input('comments');
             $registration->status_id = config('polanco.registration_status_id.registered');
             $registration->remember_token = Str::random(60);

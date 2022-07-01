@@ -3,11 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\StripeBalanceTransaction;
+use App\Traits\SquareSpaceTrait;
 use Illuminate\Http\Request;
 
 class StripeBalanceTransactionController extends Controller
 
 {
+    use SquareSpaceTrait;
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -76,6 +84,19 @@ class StripeBalanceTransactionController extends Controller
     public function edit($id)
     {
         $this->authorize('update-stripe-balance-transaction');
+
+        $balance_transaction = StripeBalanceTransaction::findOrFail($id);
+        
+        
+        $matching_contacts = $this->matched_contacts($balance_transaction);
+        if (! array_key_exists($balance_transaction->contact_id,$matching_contacts) && isset($balance_transaction->contact_id)) {
+            $matching_contacts[$balance_transaction->contact_id] = $balance_transaction->retreatant->full_name_with_city;
+        }
+
+        //dd($matching_contacts, $balance_transaction);
+
+        return view('stripe.balance_transactions.edit', compact('balance_transaction', 'matching_contacts'));
+    
         
     }
 
