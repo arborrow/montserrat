@@ -144,20 +144,43 @@
                         </div>
                     @endif
                     @if (isset($order->event_id))
-                        <div class='col-md-3'>
-                            <strong>Retreat: </strong>
-                            <a href="{{ URL('/retreat/'.$order->event_id) }}">{{ $order->event->title .'('.$order->event->start_date .')'}}</a>
-                        </div>
+                        @can('show-retreat')
+                            <div class='col-md-3'>
+                                <strong>Retreat: </strong>
+                                <a href="{{ URL('/retreat/'.$order->event_id) }}">{{ $order->event->title .'('.$order->event->start_date .')'}}</a>
+                            </div>
+                        @endCan
                     @endif
+                </div>
+                <div class="clearfix"> </div>
+                <div class='row'>
                     <div class='col-md-3'>
                         <strong>Message ID: </strong>
                         <a href="{{ URL('/mailgun/'.$order->message_id) }}">{{ $order->message_id}}</a>
                     </div>
                     @if (isset($order->participant_id))
-                        <div class='col-md-3'>
-                            <strong>Registration ID: </strong>
-                            <a href="{{ URL('/registration/'.$order->participant_id) }}">{{ $order->participant_id}}</a>
-                        </div>
+                        @can('show-registration')
+                            <div class='col-md-3'>
+                                <strong>Registration ID: </strong>
+                                <a href="{{ URL('/registration/'.$order->participant_id) }}">{{ $order->participant_id}}</a>
+                            </div>
+                        @endCan
+                    @endif
+                    @if (isset($order->touchpoint_id))
+                        @can('show-touchpoint')
+                            <div class='col-md-3'>
+                                <strong>Touchpoint ID: </strong>
+                                <a href="{{ URL('/touchpoint/'.$order->touchpoint_id) }}">{{ $order->touchpoint_id}}</a>
+                            </div>
+                        @endCan
+                    @endif
+                    @if (isset($order->donation_id))
+                        @can('show-donation')
+                            <div class='col-md-3'>
+                                <strong>Donation ID: </strong>
+                                <a href="{{ URL('/donation/'.$order->donation_id) }}">{{ $order->donation_id}}</a>
+                            </div>
+                        @endCan
                     @endif
                 </div>
                 <div class="clearfix"> </div><hr />

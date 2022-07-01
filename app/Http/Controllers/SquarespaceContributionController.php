@@ -42,8 +42,8 @@ class SquarespaceContributionController extends Controller
     public function index()
     {
         $this->authorize('show-squarespace-contribution');
-        $ss_contributions = SquarespaceContribution::whereIsProcessed(0)->paginate(25, ['*'], 'ss_contributions');
-        $processed_ss_contributions = SquarespaceContribution::whereIsProcessed(1)->paginate(25, ['*'], 'ss_unprocessed_contributions');
+        $ss_contributions = SquarespaceContribution::whereIsProcessed(0)->orderBy('created_at')->paginate(25, ['*'], 'ss_contributions');
+        $processed_ss_contributions = SquarespaceContribution::whereIsProcessed(1)->orderByDesc('created_at')->paginate(25, ['*'], 'ss_unprocessed_contributions');
         return view('squarespace.contribution.index',compact('ss_contributions','processed_ss_contributions'));
     }
 

@@ -86,7 +86,7 @@ class StripePayoutController extends Controller
 
         $stripe = new StripeClient(config('services.stripe.secret'));
         $payout = $stripe->payouts->retrieve($payout_id,[]);
-        $transactions = $stripe->balanceTransactions->all(
+        $stripe_transactions = $stripe->balanceTransactions->all(
             ['payout' => $payout->id,
             'type' => 'charge',
             'limit' => 100,
@@ -94,14 +94,16 @@ class StripePayoutController extends Controller
         );
 
         $fees = 0;
-        foreach ($transactions as $transaction) {
+        foreach ($stripe_transactions as $transaction) {
             $fees += ($transaction->fee/100);
         }
         $stripe_payout = StripePayout::wherePayoutId($payout_id)->first();
         $stripe_payout->total_fee_amount = $fees;
         $stripe_payout->save();
-
-        return view('stripe.payouts.show',compact('payout','transactions','stripe_payout'));   //
+        
+        $balance_transactions = StripeBalanceTransaction::wherePayoutId($stripe_payout->id)->get();
+        
+        return view('stripe.payouts.show',compact('payout','balance_transactions','stripe_transactions','stripe_payout'));   //
 
     }
 

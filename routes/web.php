@@ -40,6 +40,7 @@ use App\Http\Controllers\SquarespaceContributionController;
 use App\Http\Controllers\SquarespaceOrderController;
 use App\Http\Controllers\SquarespaceCustomFormController;
 use App\Http\Controllers\SquarespaceInventoryController;
+use App\Http\Controllers\StripeBalanceTransactionController;
 use App\Http\Controllers\StripeChargeController;
 use App\Http\Controllers\StripePayoutController;
 use App\Http\Controllers\SystemController;
@@ -347,6 +348,7 @@ Route::middleware('web', 'activity')->group(function () {
         Route::get('payout/{id?}/process_fees', [StripePayoutController::class, 'process_fees'])->name('stripe.payout.process_fees');
         Route::get('payout/{id?}/import_balance_transactions', [StripePayoutController::class, 'import_balance_transactions'])->name('stripe.payout.import_balance_transactions');
         Route::get('payout/date/{payout_date?}', [StripePayoutController::class, 'show_date'])->name('stripe.payout.showdate');
+        Route::resource('balance_transaction', StripeBalanceTransactionController::class);
         Route::resource('charge', StripeChargeController::class);
         Route::resource('payout', StripePayoutController::class);
     });

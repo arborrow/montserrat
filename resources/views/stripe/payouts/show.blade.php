@@ -21,33 +21,33 @@
 
                 </div>
             </div>
-            {!! Html::link(action([\App\Http\Controllers\StripePayoutController::class, 'import_balance_transactions'],$stripe_payout->id),'Import Stripe Balance Transactions',array('class' => 'btn btn-secondary'))!!}
 
-            <table class="table table-bordered table-striped table-hover"><caption><h2>Payout transactions</h2></caption>
+            <table class="table table-bordered table-striped table-hover">
+                <caption>
+                    <h2>
+                        @if ($stripe_transactions->count() > $balance_transactions->count() )
+                            {!! Html::link(action([\App\Http\Controllers\StripePayoutController::class, 'import_balance_transactions'],$stripe_payout->id),'Import ' . $stripe_transactions->count() . ' Stripe Balance Transactions',array('class' => 'btn btn-secondary'))!!}
+                        @else
+                            Balance Transactions ({{ $balance_transactions->count() }})
+                        @endIf
+                    </h2>
+                </caption>
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Gross</th>
-                        <th>Fee</th>
-                        <th>Net</th>
                         <th>Description</th>
+                        <th>Amount</th>
+                        <th>Fee</th>
                         <th>Created</th>
-                        <th>Available</th>
-                        <th>Type</th>
                         <th>Source</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($transactions as $transaction)
+                    @foreach ($stripe_transactions as $transaction)
                     <tr>
-                        <td>{{ $transaction->id }}</td>
+                        <td><a href="{{URL('/stripe/balance_transaction/'.$transaction->id)}}">{{ $transaction->description }}</a></td>
                         <td>${{ number_format($transaction->amount/100,2) }}</td>
                         <td>${{ number_format($transaction->fee/100,2) }}</td>
-                        <td>${{ number_format($transaction->net/100,2) }}</td>
-                        <td>{{ $transaction->description }}</td>
                         <td>{{ \Carbon\Carbon::parse($payout->created) }}</td>
-                        <td>{{ \Carbon\Carbon::parse($payout->available) }}</td>
-                        <td>{{ $transaction->type }}</td>
                         <td><a href="{{ URL('stripe/'.$transaction->type.'/'. $transaction->source) }}">{{ $transaction->source }}</a></td>
                     </tr>
                     @endforeach
