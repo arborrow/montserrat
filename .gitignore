@@ -1,6 +1,7 @@
 /nbproject
 /node_modules
 /public/hot
+/public/build
 /public/storage
 /storage
 /storage/*.key
