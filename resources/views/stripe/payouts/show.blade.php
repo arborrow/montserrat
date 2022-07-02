@@ -26,7 +26,7 @@
                 <table class="table table-bordered table-striped table-hover">
                     <caption>
                         <h2>
-                            {!! Html::link(action([\App\Http\Controllers\StripePayoutController::class, 'import_balance_transactions'],$stripe_payout->id),'Import ' . $stripe_transactions->count() . ' Stripe Balance Transactions',array('class' => 'btn btn-secondary'))!!}
+                            {!! Html::link(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'import'],$stripe_payout->id),'Import ' . $stripe_transactions->count() . ' Stripe Balance Transactions',array('class' => 'btn btn-secondary'))!!}
                         </h2>
                     </caption>
                     <thead>
@@ -73,11 +73,16 @@
                     <tbody>
                         @foreach ($balance_transactions as $transaction)
                         <tr>
-                            <td><a href="{{URL('/stripe/balance_transaction/'.$transaction->id.'/edit')}}">{{ $transaction->description }}</a></td>
+                            <td><a href="{{URL('/stripe/balance_transaction/'.$transaction->id)}}">{{ $transaction->description }}</a></td>
                             <td>${{ number_format($transaction->total_amount/100,2) }}</td>
                             <td>${{ number_format($transaction->fee_amount/100,2) }}</td>
                             <td>{{ (isset($payout->created)) ? \Carbon\Carbon::parse($payout->created)->format('m-d-Y') : 'N/A' }}</td>
-                            <td>{{ (isset($transaction->reconcile_date)) ? \Carbon\Carbon::parse($transaction->reconcile_date)->format('m-d-Y') : 'Not yet' }}</td>
+                            <td>{{ (isset($transaction->reconcile_date)) ? 
+                                    \Carbon\Carbon::parse($transaction->reconcile_date)->format('m-d-Y') 
+                                    : Html::link(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'],$transaction->id),'Process Balanace Transaction',array('class' => 'btn btn-primary'))
+
+                                }}
+                            </td>
                             <td><a href="{{ URL('stripe/charge/'. $transaction->charge_id) }}">{{ $transaction->charge_id }}</a></td>
                         </tr>
                         @endforeach
