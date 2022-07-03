@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->string('note')->nullable();
             $table->string('type')->nullable();
+            $table->string('transaction_type')->nullable();
             $table->string('name')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();

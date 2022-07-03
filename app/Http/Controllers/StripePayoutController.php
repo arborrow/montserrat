@@ -90,25 +90,25 @@ class StripePayoutController extends Controller
         $this->authorize('show-stripe-payout');
 
         $stripe = new StripeClient(config('services.stripe.secret'));
-        $payout = $stripe->payouts->retrieve($payout_id,[]);
-        $stripe_transactions = $stripe->balanceTransactions->all(
-            ['payout' => $payout->id,
+        $stripe_payout = $stripe->payouts->retrieve($payout_id,[]);
+        $stripe_balance_transactions = $stripe->balanceTransactions->all(
+            ['payout' => $payout_id,
             'type' => 'charge',
             'limit' => 100,
             ]
         );
 
         $fees = 0;
-        foreach ($stripe_transactions as $transaction) {
+        foreach ($stripe_balance_transactions as $transaction) {
             $fees += ($transaction->fee/100);
         }
-        $stripe_payout = StripePayout::wherePayoutId($payout_id)->first();
-        $stripe_payout->total_fee_amount = $fees;
-        $stripe_payout->save();
+        $payout = StripePayout::wherePayoutId($payout_id)->first();
+        $payout->total_fee_amount = $fees;
+        $payout->save();
         
-        $balance_transactions = StripeBalanceTransaction::wherePayoutId($stripe_payout->id)->get();
+        $balance_transactions = StripeBalanceTransaction::wherePayoutId($payout_id)->get();
         
-        return view('stripe.payouts.show',compact('payout','balance_transactions','stripe_transactions','stripe_payout'));   //
+        return view('stripe.payouts.show',compact('payout','balance_transactions','stripe_balance_transactions','stripe_payout'));   //
 
     }
 

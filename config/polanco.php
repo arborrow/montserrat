@@ -99,6 +99,26 @@ return [
         'Tips' => 'Tips',
     ],
 
+    'stripe_balance_transaction_types' => [
+        'Annual Giving Fund ' => 'AGC - General',
+        'Bookstore' => 'Bookstore Revenue',
+        'Bookstore + Tips' => ['Bookstore Revenue','Tips'],
+        'Bookstore + Tips + Flowers' => ['Bookstore Revenue', 'Flowers and Landscaping', 'Tips'],
+        'Building and Maintenance Fund' => 'AGC - Buildings & Maintenance',
+        'Donacion de Retiro' => 'Retreat Funding',
+        'Donation' => 'Donations',
+        'Foundation Endowment' => 'AGC - Endowment',
+        'Propina' => 'Tips',
+        'Retreat Deposit' => 'Retreat Deposits',
+        'Retreat Offering' => 'Retreat Funding',
+        'Retreat Offering + Bookstore' => ['Bookstore Revenue', 'Retreat Funding'],
+        'Retreat Offering + Bookstore + Tips' => ['Bookstore Revenue', 'Retreat Funding', 'Tips'],
+        'Retreat Offering + Bookstore + Tips + Flowers' => ['Bookstore Revenue', 'Flowers and Landscaping', 'Retreat Funding', 'Tips'],
+        'Saturday of Reflection' => 'Retreat Funding',
+        'Tiendita' => 'Bookstore Revenue',
+        'Tips' => 'Tips',          
+    ],
+
     // when creating database with the seeder, the first event created is the open deposit event
     'event' => [
         'open_deposit' => env('OPEN_DEPOSIT_EVENT_ID', 1),
