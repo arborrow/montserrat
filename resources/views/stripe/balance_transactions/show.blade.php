@@ -7,12 +7,12 @@
             <div class="panel-heading">
                 <span>
                     @can('update-stripe-balance-transaction')
-                        <h2>Stripe Balance Transaction details for 
+                        <h2>Stripe Balance Transaction #{{$balance_transaction->id}} details for 
                             <a href="{{url('stripe/balance_transaction/'.$balance_transaction->id.'/edit')}}">{{ $balance_transaction->balance_transaction_id }}</a>
                         </h2>
                     @else
                         <h2>
-                            Stripe Balance Transaction details for {{ $balance_transaction->balance_transaction_id }}
+                            Stripe Balance Transaction #{{{{$balance_transaction->id}}}} details for {{ $balance_transaction->balance_transaction_id }}
                         </h2>
                     @endCan
                 </span>
