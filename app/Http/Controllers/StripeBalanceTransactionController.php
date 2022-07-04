@@ -123,7 +123,7 @@ class StripeBalanceTransactionController extends Controller
                     $payment->payment_description = "Credit card";
                     $payment->ccnumber = $balance_transaction->cc_last_4;                    
                     
-                    if ($squarespace->is_couple) {
+                    if ($squarespace_order->is_couple) {
                         $couple_donation = Donation::findOrFail($squarespace_order->couple_donation_id);
                         $couple_payment = new Payment;
                         $couple_payment->donation_id = $couple_donation->donation_id;
