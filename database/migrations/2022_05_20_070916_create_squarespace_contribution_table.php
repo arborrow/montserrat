@@ -36,6 +36,7 @@ return new class extends Migration
             $table->string('idnumber')->nullable();
             $table->text('comments', 65535)->nullable();
             $table->boolean('is_processed')->nullable()->default(0);
+            $table->string('stripe_charge_id')->index('idx_stripe_charge_id');
             $table->timestamps();
             $table->softDeletes();
         });
