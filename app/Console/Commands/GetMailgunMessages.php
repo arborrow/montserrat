@@ -208,12 +208,21 @@ class GetMailgunMessages extends Command
 
                     $event = Retreat::whereIdnumber($ss_donation->idnumber)->first();
                     $ss_donation->event_id = optional($event)->id;
+                    
                     if (isset($ss_donation->idnumber) && isset($ss_donation->event_id)) { // if a particular event then based on end date of event if passed retreat funding, if upcoming then deposit
                         $ss_donation->offering_type = ($event->end_date > now()) ? 'Pre-Retreat offering' : 'Post-Retreat offering';
-                    } else { // if SOR then assume it has passed, if other namely Individual Private Retreat assume deposit
-                        $ss_donation->offering_type = ($ss_donation->retreat_description == 'Saturday of Renewal') ? 'Post-Retreat offering' : 'Pre-Retreat offering';
+                    }  
+                    
+                    switch ($ss_donation->retreat_description) {
+                        case 'Saturday of Renewal' : // if SOR then assume SOR has passed so post-retreat
+                            $ss_donation->offering_type = 'Post-Retreat offering';
+                            break;
+                        case 'Individual Private Retreat' : // if Individual Private Retreat assume retreat deposit
+                            $ss_donation->offering_type = 'Pre-Retreat offering';
+                            break;
+                        default :
                     }
-
+                        
                     $ss_donation->save();
 
                 } catch (\Exception $exception) {
