@@ -12,7 +12,7 @@
                         </h2>
                     @else
                         <h2>
-                            Stripe Balance Transaction #{{{{$balance_transaction->id}}}} details for {{ $balance_transaction->balance_transaction_id }}
+                            Stripe Balance Transaction #{{$balance_transaction->id}} details for {{ $balance_transaction->balance_transaction_id }}
                         </h2>
                     @endCan
                 </span>
