@@ -29,7 +29,7 @@ class StripeBalanceTransaction extends Model implements Auditable
     }
     public function payments()
     {
-        return $this->hasMany(Payment::class, 'id', 'stripe_balance_transaction_id');
+        return $this->hasMany(Payment::class, 'stripe_balance_transaction_id', 'id');
     }
 
 }

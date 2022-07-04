@@ -6,33 +6,49 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <span>
-                    <h2>Stripe Balance Transaction details for {{ $balance_transaction->balance_transaction_id }}</h2>
+                    @can('update-stripe-balance-transaction')
+                        <h2>Stripe Balance Transaction details for 
+                            <a href="{{url('stripe/balance_transaction/'.$balance_transaction->id.'/edit')}}">{{ $balance_transaction->balance_transaction_id }}</a>
+                        </h2>
+                    @else
+                        <h2>
+                            Stripe Balance Transaction details for {{ $balance_transaction->balance_transaction_id }}
+                        </h2>
+                    @endCan
                 </span>
             </div>
 
             <div class='row'>
                 <div class='col-md-4'>
-                    <strong>Payout ID: </strong>{{$balance_transaction->payout_id}}
-                    <br /><strong>Customer ID: </strong>{{$balance_transaction->customer_id}}
-                    <br /><strong>Charge ID: </strong>{{$balance_transaction->charge_id}}
-                    <hr />
-                    <strong>Total Amount: </strong> ${{ number_format($balance_transaction->total_amount,2) }}
-                    <br /><strong>Fee: </strong> ${{ number_format($balance_transaction->fee_amount,2) }}
-                    <br /><strong>Net Amount: </strong> ${{ number_format($balance_transaction->net_amount,2) }}
-                    <hr />
-                    <strong>Payout Date: </strong>{{ (isset($balance_transaction->payout_date)) ? $balance_transaction->payout_date->format('m-d-Y') : null }}
-                    <br /><strong>Available Date: </strong>{{ (isset($balance_transaction->available_date)) ? $balance_transaction->available_date->format('m-d-Y') : null }}
-                    <br /><strong>Reconciliation Date: </strong>{{ (isset($balance_transaction->reconcile_date)) ? $balance_transaction->reconcile_date->format('m-d-Y') : null }}
-                    <hr />
-                    <strong>Description: </strong>{{$balance_transaction->description}}
-                    <br /><strong>Note: </strong>{{ $balance_transaction->note }}
-                    <br /><strong>Type: </strong>{{ $balance_transaction->type }}
-                    <hr />
                     <strong>Name: </strong>{{ $balance_transaction->name }}
                     <br /><strong>Email: </strong>{{ $balance_transaction->email }}
                     <br /><strong>Zip: </strong>{{ $balance_transaction->zip }}
-                    <br /><strong>Phone: </strong>{{ $balance_transaction->phone }}
                     <br /><strong>Credit Card Last 4: </strong>{{ $balance_transaction->cc_last_4 }}
+                    
+                    <hr />
+                    
+                    <strong>Total Amount: </strong> ${{ number_format($balance_transaction->total_amount,2) }}
+                    <br /><strong>Fee: </strong> ${{ number_format($balance_transaction->fee_amount,2) }}
+                    <br /><strong>Net Amount: </strong> ${{ number_format($balance_transaction->net_amount,2) }}
+                    <br /><strong>Description: </strong>{{$balance_transaction->description}}
+                    <br /><strong>Note: </strong>{{ $balance_transaction->note }}
+                    <br /><strong>Payment(s): </strong>
+                    <ul>
+                        @foreach ($balance_transaction->payments as $payment)
+                            <li>
+                                <a href="{{url('payment/'.$payment->payment_id)}}">{{$payment->payment_date->format('m-d-Y')}}</a> - {{$payment->donation->donation_description}} : ${{number_format($payment->payment_amount,2)}}
+                            </li>
+                        @endforeach
+                    </ul>    
+                    <hr />
+                    <strong>Payout ID: </strong><a href="{{url('stripe/payout/'.$balance_transaction->payout_id)}}">{{$balance_transaction->payout_id}}</a>
+                    <br /><strong>Charge ID: </strong><a href="{{url('stripe/charge/'.$balance_transaction->charge_id)}}">{{$balance_transaction->charge_id}}</a>
+                    <br /><strong>Customer ID: </strong>{{$balance_transaction->customer_id}}
+                    <br /><strong>Payout Date: </strong>{{ (isset($balance_transaction->payout_date)) ? $balance_transaction->payout_date->format('m-d-Y') : null }}
+                    <br /><strong>Available Date: </strong>{{ (isset($balance_transaction->available_date)) ? $balance_transaction->available_date->format('m-d-Y') : null }}
+                    <br /><strong>Reconciliation Date: </strong>{{ (isset($balance_transaction->reconcile_date)) ? $balance_transaction->reconcile_date->format('m-d-Y') : null }}
+                    <hr />
+                    
                 </div>
             </div>
 

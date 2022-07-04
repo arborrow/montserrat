@@ -256,7 +256,7 @@ class DonationControllerTest extends TestCase
             $donations[$participant->id]['id'] = $participant->id;
             $donations[$participant->id]['pledge'] = $this->faker->numberBetween(100, 200);
             $donations[$participant->id]['paid'] = $this->faker->numberBetween(100, 200);
-            $donations[$participant->id]['method'] = 'Credit Card';
+            $donations[$participant->id]['method'] = 'Credit card';
             $donations[$participant->id]['idnumber'] = $this->faker->randomNumber(6);
             $donations[$participant->id]['terms'] = $this->faker->sentence();
         }

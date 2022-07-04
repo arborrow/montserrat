@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateStripeBalanceTransactionRequest;
+use App\Models\Donation;
+use App\Models\Payment;
+use App\Models\SquarespaceOrder;
 use App\Models\StripeBalanceTransaction;
 use App\Models\StripePayout;
 use App\Traits\SquareSpaceTrait;
@@ -70,7 +73,9 @@ class StripeBalanceTransactionController extends Controller
     {
         $this->authorize('show-stripe-balance-transaction');
 
-        $balance_transaction = StripeBalanceTransaction::whereBalanceTransactionId($stripe_balance_transaction_id)->first();
+        $balance_transaction = StripeBalanceTransaction::whereBalanceTransactionId($stripe_balance_transaction_id)->with('payments')->first();
+        // dd($balance_transaction);
+        
         // $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
         // $stripe_transaction = $stripe->balanceTransaction->retrieve($balance_transaction_id,[]);
 
@@ -91,25 +96,63 @@ class StripeBalanceTransactionController extends Controller
         // TODO: determine type of transaction order, donation, manual
 
         $balance_transaction = StripeBalanceTransaction::findOrFail($id);
+        // dd($balance_transaction);
+        if (!isset($balance_transaction->reconcile_date)) { // if the balance_transaction record has already been reconciled then do not allow to edit
+            switch ($balance_transaction->transaction_type) {
+                case 'Manual' :
+                    $transaction_types = ($balance_transaction->transaction_type == 'Manual') ? explode(' + ',$balance_transaction->description) : null;
+                    foreach ($transaction_types as $type) {
+                        $type = config('polanco.stripe_balance_transaction_types.'.$type);
+                    }
+                    break;
+                case 'Donation' :
+                    $transaction_types = 'Donation';
+                    break;
+                case 'Invoice' :
+                    $transaction_types = 'Invoice';
+                    break;
+                case 'Charge' :
+                    $transaction_types = 'Retreat Funding';
+                    $squarespace_order = SquarespaceOrder::whereStripeChargeId($balance_transaction->charge_id)->first();
+                    $donation = Donation::findOrFail($squarespace_order->donation_id);
+                    $payment = new Payment; 
+                    $payment->donation_id = $donation->donation_id;
+                    $payment->stripe_balance_transaction_id = $balance_transaction->id;
+                    $payment->payment_amount = $balance_transaction->total_amount;
+                    $payment->payment_date = $balance_transaction->payout_date;
+                    $payment->payment_description = "Credit card";
+                    $payment->ccnumber = $balance_transaction->cc_last_4;                    
+                    
+                    if ($squarespace->is_couple) {
+                        $couple_donation = Donation::findOrFail($squarespace_order->couple_donation_id);
+                        $couple_payment = new Payment;
+                        $couple_payment->donation_id = $couple_donation->donation_id;
+                        $couple_payment->stripe_balance_transaction_id = $balance_transaction->id;
+                        $payment->payment_amount = $donation->donation_amount;
+                        $couple_payment->payment_amount = $couple_donation->donation_amount;
+                        $couple_payment->payment_date = $balance_transaction->payout_date;
+                        $couple_payment->payment_description = "Credit card";
+                        $couple_payment->ccnumber = $balance_transaction->cc_last_4;
+                        $couple_payment->save();
+                    }
+
+                    $payment->save();
+                    $balance_transaction->reconcile_date = now();
+                    $balance_transaction->payment_id = $payment->payment_id;
+                    $balance_transaction->contact_id = $payment->donation->contact->id;
+                    $balance_transaction->save();
+                    // dd($balance_transaction, $squarespace_order, $donation, $payment);
+                    flash('Stripe Balance Transaction #: <a href="'.url('/stripe/balance_transaction/'.$balance_transaction->balance_transaction_id).'">'.$balance_transaction->id.'</a> processed successfully.')->success();
+
+                    return Redirect::action([\App\Http\Controllers\StripePayoutController::class, 'show'],$balance_transaction->payout_id);
+                    break;
+            }
+        } else {
+            flash('Stripe Balance Transaction #: <a href="'.url('/stripe/balance_transaction/'.$balance_transaction->balance_transaction_id).'">'.$balance_transaction->id.'</a> has already been processed.')->warning();
+            return Redirect::action([\App\Http\Controllers\StripePayoutController::class, 'show'],$balance_transaction->payout_id);
+        }    
+
         
-        switch ($balance_transaction->transaction_type) {
-            case 'Manual' :
-                $transaction_types = ($balance_transaction->transaction_type == 'Manual') ? explode(' + ',$balance_transaction->description) : null;
-                foreach ($transaction_types as $type) {
-                    $type = config('polanco.stripe_balance_transaction_types.'.$type);
-                }
-                break;
-            case 'Donation' :
-                $transaction_types = 'Donation';
-                break;
-            case 'Invoice' :
-                $transaction_types = 'Invoice';
-                break;
-            case 'Charge' :
-                $transaction_types = 'Retreat Funding';
-                break;
-            
-        }
         
         $matching_contacts = $this->matched_contacts($balance_transaction);
         if (! array_key_exists($balance_transaction->contact_id,$matching_contacts) && isset($balance_transaction->contact_id)) {

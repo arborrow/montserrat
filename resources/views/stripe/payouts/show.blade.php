@@ -71,11 +71,19 @@
                             <td>${{ number_format($balance_transaction->total_amount,2) }}</td>
                             <td>${{ number_format($balance_transaction->fee_amount,2) }}</td>
                             <td>{{ (isset($payout->created)) ? \Carbon\Carbon::parse($payout->created)->format('m-d-Y') : 'N/A' }}</td>
-                            <td>{{ (isset($balance_transaction->reconcile_date)) ? 
-                                    \Carbon\Carbon::parse($balance_transaction->reconcile_date)->format('m-d-Y') 
-                                    : Html::link(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'],$balance_transaction->id),'Process Balanace Transaction',array('class' => 'btn btn-primary'))
-
-                                }}
+                            <td>
+                                @if (isset($balance_transaction->reconcile_date))
+                                    {{ \Carbon\Carbon::parse($balance_transaction->reconcile_date)->format('m-d-Y') }}
+                                @else
+                                    @switch ($balance_transaction->transaction_type)
+                                        @case('Charge')
+                                            {{ Html::link(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'],$balance_transaction->id),'Create Payment for Order',array('class' => 'btn btn-primary')) }}
+                                            @break
+                                        @default
+                                            {{ Html::link(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'],$balance_transaction->id),'Process Balanace Transaction',array('class' => 'btn btn-primary')) }}
+                                            @break
+                                    @endswitch
+                                @endif
                             </td>
                             <td><a href="{{ URL('stripe/charge/'. $balance_transaction->charge_id) }}">{{ $balance_transaction->charge_id }}</a></td>
                         </tr>
