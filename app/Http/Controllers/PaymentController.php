@@ -120,8 +120,8 @@ class PaymentController extends Controller
     public function show($id)
     {
         $this->authorize('show-payment');
-        $payment = \App\Models\Payment::with('donation.retreat', 'donation.contact')->findOrFail($id);
-        //dd($donation);
+        $payment = \App\Models\Payment::with('donation.retreat', 'donation.contact','balance_transaction')->findOrFail($id);
+        //dd($payment);
         return view('payments.show', compact('payment')); //
     }
 

@@ -30,6 +30,11 @@ class Payment extends Model implements Auditable
         return $this->belongsTo(Donation::class, 'donation_id', 'donation_id');
     }
 
+    public function balance_transaction()
+    {
+        return $this->belongsTo(StripeBalanceTransaction::class, 'stripe_balance_transaction_id', 'id');
+    }
+
     public function getPaymentNumberAttribute()
     {
         if (! is_null($this->ccnumber)) {

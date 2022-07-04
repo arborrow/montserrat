@@ -22,7 +22,12 @@
                 <span class="font-weight-bold">Amount: </span>${{ number_format($payment->payment_amount,2)}}
             </div>
             <div class="col-lg-3 col-md-4">
-                <span class="font-weight-bold">Method: </span>{{$payment->payment_description}}
+                <span class="font-weight-bold">Method: </span>
+                @if (isset($payment->balance_transaction->id))
+                    <a href="{{url('stripe/balance_transaction/'.$payment->balance_transaction->balance_transaction_id)}}">{{$payment->payment_description}}</a>
+                @else
+                    {{ $payment->payment_description }}
+                @endIf
             </div>
         </div>
         <div class="row">
