@@ -29,6 +29,7 @@ class UpdateStripeBalanceTransactionRequest extends FormRequest
             'payout_id ' => 'string|nullable',
             'contact_id' => 'integer|min:0',
             'payment_id' => 'integer|min:0',
+            'contribution_id' => 'integer|min:1',
             'balance_transaction_id' => 'string|nullable',
             'customer_id' => 'string|nullable',
             'charge_id' => 'string|nullable',
