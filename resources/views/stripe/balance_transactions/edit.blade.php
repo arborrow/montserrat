@@ -26,6 +26,7 @@
                     @break
                 @case ('Donation')
                     <li>Select the appropriate Squarespace Contribution</li>
+                    <li>Click on the <i>Process Squarespace Contribution</i> button</li>
                     @break
                 @endswitch
                 
@@ -98,11 +99,18 @@
             <div class="row text-center mt-3">
                 <div class='col-lg-12'>
                     @if (!isset($balance_transaction->reconciled))
-                        @if ($balance_transaction->contact_id > 0)
-                        {!! Form::submit('Process Balance Transaction',['class' => 'btn btn-dark']) !!}
-                        @else
-                        {!! Form::submit('Retrieve Contact Info',['class' => 'btn btn-info']) !!}
-                        @endif
+                        @switch ($balance_transaction->transaction_type)
+                            @case ('Manual')
+                                @if ($balance_transaction->contact_id > 0)
+                                    {!! Form::submit('Process Balance Transaction',['class' => 'btn btn-dark']) !!}
+                                @else
+                                    {!! Form::submit('Retrieve Contact Info',['class' => 'btn btn-info']) !!}
+                                @endif
+                                @break
+                            @case('Donation')
+                                {!! Form::submit('Process Balance Transaction: Contribution',['class' => 'btn btn-dark']) !!}
+                                @break
+                        @endswitch
                     @else
                         <a class="btn btn-primary" href="{{ action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'index']) }}">Balance Transaction #{{ $balance_transaction->id }} has already been processed</a>
                     @endIf

@@ -195,6 +195,39 @@ class StripeBalanceTransactionController extends Controller
     public function update(UpdateStripeBalanceTransactionRequest $request, $id)
     {
         $this->authorize('update-stripe-balance-transaction');
+        
+        $balance_transaction = StripeBalanceTransaction::findOrFail($id);
+        
+        switch ($balance_transaction->transaction_type) {
+            case 'Donation' :
+                $contribution_id = ($request->filled('contribution_id')) ? $request->input('contribution_id') : null;
+                $squarespace_contribution = SquarespaceContribution::findOrFail($contribution_id);
+                $donation = Donation::findOrFail($squarespace_contribution->donation_id);
+                
+                $squarespace_contribution->stripe_charge_id = $balance_transaction->charge_id;
+                $squarespace_contribution->save();
+                $payment = new Payment; 
+                    $payment->donation_id = $donation->donation_id;
+                    $payment->stripe_balance_transaction_id = $balance_transaction->id;
+                    $payment->payment_amount = $balance_transaction->total_amount;
+                    $payment->payment_date = $balance_transaction->payout_date;
+                    $payment->payment_description = "Credit card";
+                    $payment->ccnumber = $balance_transaction->cc_last_4;                    
+                $payment->save();
+                
+                $balance_transaction->payment_id = $payment->id;
+                $balance_transaction->reconcile_date = now();
+                $balance_transaction->save();
+
+                flash('Stripe Balance Transaction #: <a href="'.url('/stripe/balance_transaction/'.$balance_transaction->balance_transaction_id).'">'.$balance_transaction->id.'</a> processed successfully.')->success();
+
+                return Redirect::action([\App\Http\Controllers\StripePayoutController::class, 'show'],$balance_transaction->payout_id);
+
+                       
+            break;
+        }
+        
+        
         // TODO: figure out type of transaction (order, donation, manual, etc.)        
         // dd($request);
         return Redirect::action([\App\Http\Controllers\StripePayoutController::class, 'show'],$request->input('payout_id'));
