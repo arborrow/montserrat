@@ -46,6 +46,12 @@ class SquarespaceContribution extends Model implements Auditable
         return $clean_phone['phone_formatted'];
     }
 
+    public function getFullDescriptionAttribute() {
+        $retreat = (isset($this->idnumber)) ? ('#' . $this->idnumber . ':' . $this->retreat_description) : null;
+        $fund = (isset($this->fund)) ? $this->fund : null;
+        $description = (isset($retreat)) ? $retreat : $fund;
 
+        return $this->name . '-' . '$'.number_format($this->amount,2) . '-' . $description . '(' . $this->created_at->format('m-d-Y') . ')';
+    }
 
 }

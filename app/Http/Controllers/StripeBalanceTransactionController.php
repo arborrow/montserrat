@@ -93,7 +93,7 @@ class StripeBalanceTransactionController extends Controller
     public function edit($id)
     {
         $this->authorize('update-stripe-balance-transaction');
-
+        $unprocessed_squarespace_contributions = collect();
         // TODO: determine type of transaction order, donation, manual
 
         $balance_transaction = StripeBalanceTransaction::findOrFail($id);
@@ -108,8 +108,8 @@ class StripeBalanceTransactionController extends Controller
                     break;
                 case 'Donation' :
                     $transaction_types = 'Donation';
-                    $unprocessed_squarespace_contributions = SquarespaceContribution::whereNull('stripe_charge_id')->whereNotNull('donation_id')->get();
-                    dd($unprocessed_squarespace_contributions);
+                    $unprocessed_squarespace_contributions = SquarespaceContribution::whereNull('stripe_charge_id')->whereNotNull('donation_id')->get()->pluck('FullDescription','id');
+                    //dd($unprocessed_squarespace_contributions);
                     break;
                 case 'Invoice' :
                     $transaction_types = 'Invoice';
@@ -154,15 +154,13 @@ class StripeBalanceTransactionController extends Controller
             flash('Stripe Balance Transaction #: <a href="'.url('/stripe/balance_transaction/'.$balance_transaction->balance_transaction_id).'">'.$balance_transaction->id.'</a> has already been processed.')->warning();
             return Redirect::action([\App\Http\Controllers\StripePayoutController::class, 'show'],$balance_transaction->payout_id);
         }    
-
-        
         
         $matching_contacts = $this->matched_contacts($balance_transaction);
         if (! array_key_exists($balance_transaction->contact_id,$matching_contacts) && isset($balance_transaction->contact_id)) {
             $matching_contacts[$balance_transaction->contact_id] = $balance_transaction->retreatant->full_name_with_city;
         }
         
-        return view('stripe.balance_transactions.edit', compact('balance_transaction', 'matching_contacts','transaction_types'));
+        return view('stripe.balance_transactions.edit', compact('balance_transaction', 'matching_contacts','transaction_types','unprocessed_squarespace_contributions'));
     
         
     }
