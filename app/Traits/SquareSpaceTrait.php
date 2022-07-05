@@ -111,7 +111,7 @@ trait SquareSpaceTrait
             $contacts[$phone->contact_id]['contact_id'] = $phone->contact_id;
             $contacts[$phone->contact_id]['lastname'] = $phone->owner->last_name;
             $contacts[$phone->contact_id]['firstname'] = $phone->owner->first_name;
-            $contacts[$phone->contact_id]['phone_score'] = $phone_score;
+            $contacts[$phone->contact_id]['mobile_phone_score'] = $phone_score;
             if (isset($contacts[$phone->contact_id]['total_score'])) {
                 $contacts[$phone->contact_id]['total_score'] += $phone_score;
             } else {
@@ -125,7 +125,7 @@ trait SquareSpaceTrait
             $contacts[$phone->contact_id]['contact_id'] = $phone->contact_id;
             $contacts[$phone->contact_id]['lastname'] = $phone->owner->last_name;
             $contacts[$phone->contact_id]['firstname'] = $phone->owner->first_name;
-            $contacts[$phone->contact_id]['phone_score'] = $phone_score;
+            $contacts[$phone->contact_id]['home_phone_score'] = $phone_score;
             if (isset($contacts[$phone->contact_id]['total_score'])) {
                 $contacts[$phone->contact_id]['total_score'] += $phone_score;
             } else {
@@ -139,7 +139,7 @@ trait SquareSpaceTrait
             $contacts[$phone->contact_id]['contact_id'] = $phone->contact_id;
             $contacts[$phone->contact_id]['lastname'] = $phone->owner->last_name;
             $contacts[$phone->contact_id]['firstname'] = $phone->owner->first_name;
-            $contacts[$phone->contact_id]['phone_score'] += $phone_score;
+            $contacts[$phone->contact_id]['work_phone_score'] = $phone_score;
             if (isset($contacts[$phone->contact_id]['total_score'])) {
                 $contacts[$phone->contact_id]['total_score'] += $phone_score;
             } else {

@@ -315,6 +315,15 @@ class SquarespaceOrderController extends Controller
             ]);
             $relationship_retreatant->save();
 
+            // retreatant relationship
+            $relationship_donor = Relationship::firstOrNew([
+                'contact_id_a'=>config('polanco.self.id'),
+                'contact_id_b'=>$contact_id,
+                'relationship_type_id'=>config('polanco.relationship_type.donor'),
+                'is_active'=>1
+            ]);
+            $relationship_donor->save();
+            
             $email_home = Email::firstOrNew([
                 'contact_id'=>$contact_id,
                 'location_type_id'=>config('polanco.location_type.home')]);

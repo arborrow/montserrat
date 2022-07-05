@@ -6,6 +6,7 @@ use App\Http\Requests\UpdateStripeBalanceTransactionRequest;
 use App\Models\Donation;
 use App\Models\Payment;
 use App\Models\SquarespaceOrder;
+use App\Models\SquarespaceContribution;
 use App\Models\StripeBalanceTransaction;
 use App\Models\StripePayout;
 use App\Traits\SquareSpaceTrait;
@@ -107,6 +108,8 @@ class StripeBalanceTransactionController extends Controller
                     break;
                 case 'Donation' :
                     $transaction_types = 'Donation';
+                    $unprocessed_squarespace_contributions = SquarespaceContribution::whereNull('stripe_charge_id')->whereNotNull('donation_id')->get();
+                    dd($unprocessed_squarespace_contributions);
                     break;
                 case 'Invoice' :
                     $transaction_types = 'Invoice';
