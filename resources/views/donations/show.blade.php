@@ -73,7 +73,13 @@
                 <tr>
                     <td><a href="../payment/{{ $payment->payment_id}}">{{$payment->payment_date_formatted}}</a></td>
                     <td>${{ $payment->payment_amount }} </td>
-                    <td>{{ $payment->payment_description }}</td>
+                    <td>
+                        @if (isset($payment->balance_transaction->id))
+                            <a href="{{url('stripe/balance_transaction/'.$payment->balance_transaction->balance_transaction_id)}}">{{$payment->payment_description}}</a>
+                        @else
+                            {{ $payment->payment_description }}
+                        @endIf
+                    </td>
                     <td>{{ $payment->cknumber ?? $payment->ccnumber }}</td>
                     <td>{{ $payment->note }}
                 </tr>
