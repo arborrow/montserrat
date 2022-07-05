@@ -36,6 +36,17 @@
                         </tr>
                     </thead>
                     <tbody>
+
+                        @foreach ($refunds as $refund)
+                        <tr class="bg-warning">
+                            <td>{{ $refund->description }}</td>
+                            <td>${{ number_format($refund->amount/100,2) }}</td>
+                            <td></td>
+                            <td><a href="{{ URL('stripe/charge/'.$refund->source) }}">{{ $refund->source }}</a></td>
+                        </tr>
+                        @endforeach
+
+
                         @foreach ($stripe_balance_transactions as $stripe_balance_transaction)
                         <tr>
                             <td>{{ $stripe_balance_transaction->description }}</td>

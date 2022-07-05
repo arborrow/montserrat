@@ -97,7 +97,13 @@ class StripePayoutController extends Controller
             'limit' => 100,
             ]
         );
-
+        $refunds = $stripe->balanceTransactions->all(
+            ['payout' => $payout_id,
+            'type' => 'refund',
+            'limit' => 100,
+            ]
+        );
+        
         $fees = 0;
         foreach ($stripe_balance_transactions as $transaction) {
             $fees += ($transaction->fee/100);
@@ -108,7 +114,7 @@ class StripePayoutController extends Controller
         
         $balance_transactions = StripeBalanceTransaction::wherePayoutId($payout_id)->get();
         
-        return view('stripe.payouts.show',compact('payout','balance_transactions','stripe_balance_transactions','stripe_payout'));   //
+        return view('stripe.payouts.show',compact('payout','balance_transactions','stripe_balance_transactions','stripe_payout','refunds'));   //
 
     }
 

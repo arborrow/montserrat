@@ -208,9 +208,18 @@ class StripeBalanceTransactionController extends Controller
         $payout = StripePayout::findOrFail($payout_id);
         
         $stripe = new StripeClient(config('services.stripe.secret'));
+
         $stripe_balance_transactions = $stripe->balanceTransactions->all(
             ['payout' => $payout->payout_id,
             'type' => 'charge',
+            'limit' => 100,
+            ]
+        );
+
+        //TODO: figure out how best to import and process stripe refunds
+        $stripe_refunds = $stripe->balanceTransactions->all(
+            ['payout' => $payout->payout_id,
+            'type' => 'refund',
             'limit' => 100,
             ]
         );
