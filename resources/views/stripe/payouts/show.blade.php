@@ -91,7 +91,7 @@
                                             {{ Html::link(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'],$balance_transaction->id),'Create Payment for Donation'.optional($balance_transaction->squarespace_order)->order_number,array('class' => 'btn btn-primary')) }}
                                             @break                                    
                                         @default
-                                            {{ Html::link(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'],$balance_transaction->id),'Process Balanace Transaction',array('class' => 'btn btn-primary')) }}
+                                            {{ Html::link(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'],$balance_transaction->id),'Process Balance Transaction',array('class' => 'btn btn-primary')) }}
                                             @break
                                     @endswitch
                                 @endif
