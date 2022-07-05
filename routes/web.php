@@ -341,10 +341,12 @@ Route::middleware('web', 'activity')->group(function () {
         Route::resource('order', SquarespaceOrderController::class);
         Route::get('contribution/reset/{contribution}', [SquarespaceContributionController::class, 'reset'])->name('squarespace.contribution.reset');
         Route::get('order/reset/{order}', [SquarespaceOrderController::class, 'reset'])->name('squarespace.order.reset');
+        Route::get('order/number/{order_number}', [SquarespaceOrderController::class, 'show_order_number'])->name('squarespace.order.show_order_number');
     });
 
     Route::name('stripe.')->prefix('stripe')->group(function () {
         Route::get('balance_transaction/{payout_id}/import_balance_transactions', [StripeBalanceTransactionController::class, 'import'])->name('balance_transaction.import');
+        Route::get('balance_transaction/id/{id}', [StripeBalanceTransactionController::class, 'show_id'])->name('stripe.balance_transaction.show_id');
         Route::get('payout/import', [StripePayoutController::class, 'import'])->name('payout.import');
         Route::get('payout/{id}/process_fees', [StripePayoutController::class, 'process_fees'])->name('payout.process_fees');
         Route::get('payout/date/{payout_date?}', [StripePayoutController::class, 'show_date'])->name('payout.showdate');

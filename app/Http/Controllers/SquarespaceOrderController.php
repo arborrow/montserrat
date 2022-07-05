@@ -92,6 +92,19 @@ class SquarespaceOrderController extends Controller
         return view('squarespace.order.show', compact('order'));
     }
 
+        /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show_order_number($order_number)
+    {
+        $this->authorize('show-squarespace-order');
+        $order = SquarespaceOrder::whereOrderNumber($order_number)->first();
+        return view('squarespace.order.show', compact('order'));
+    }
+
 
     /**
      * Show an order to confirm the retreatant for a SquareSpace order.

@@ -85,6 +85,26 @@ class StripeBalanceTransactionController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show_id($id)
+    {
+        $this->authorize('show-stripe-balance-transaction');
+
+        $balance_transaction = StripeBalanceTransaction::with('payments')->findOrFail($id);
+        // dd($balance_transaction);
+        
+        // $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
+        // $stripe_transaction = $stripe->balanceTransaction->retrieve($balance_transaction_id,[]);
+
+        return view('stripe.balance_transactions.show',compact('balance_transaction'));
+
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
