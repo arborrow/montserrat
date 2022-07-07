@@ -63,7 +63,8 @@ class GetMailgunMessages extends Command
                 // dd($event_item->getStorage()['url']);
                 if ($event_date > $process_date) { // mailgun stores messages for 3 days so only check for the last two days
                     try {
-                        $message_email = $mg->messages()->show($event_item->getStorage()['url']);
+		        $mailgun_url = $event_item->getStorage()['url'];
+  		        $message_email = $mg->messages()->show($event_item->getStorage()['url']);
                         $sender = $message_email->getSender();
                         if (strpos($sender,config('polanco.socialite_domain_restriction')) >= 0) { // block emails from outside domains
 
@@ -105,7 +106,7 @@ class GetMailgunMessages extends Command
                         }
 
                     } catch (\Exception $exception) {
-                        Mail::send('emails.en_US.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject],
+                        Mail::send('emails.en_US.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject, 'mailgun_url' => $mailgun_url],
                         function ($m) use ($subject, $exception) {
                             $m->to(config('polanco.admin_email'))
                                 ->subject('Error Retrieving Mailgun Messages');
