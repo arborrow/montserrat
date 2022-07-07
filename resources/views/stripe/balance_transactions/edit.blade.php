@@ -14,7 +14,7 @@
     </div>
     <div class="collapse" id="collapsedInstructions">
         <div class="card card-body">
-            <ul>
+            <ol>
                 @switch ($balance_transaction->transaction_type)
                 @case ('Manual')
                     <li>Select the desired <strong><u>Donor</u></strong> from the Donor dropdown list.
@@ -26,11 +26,11 @@
                     @break
                 @case ('Donation')
                     <li>Select the appropriate Squarespace Contribution</li>
-                    <li>Click on the <i>Process Squarespace Contribution</i> button</li>
+                    <li>Click on the <i>Process Balance Transaction: Contribution</i> button</li>
                     @break
                 @endswitch
                 
-            </ul>
+            </ol>
         </div>
     </div>
 
