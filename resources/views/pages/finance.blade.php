@@ -29,8 +29,12 @@
     <div class="row bg-cover">
         <div class="col-lg-2 col-md-4">
             <h5>AGC Reports</h5>
+            {!! Html::link(action([\App\Http\Controllers\DonationController::class, 'agc'],2023),'AGC
+            FY23',array('class' => 'm-2 btn btn-outline-dark'))!!}
+
             {!! Html::link(action([\App\Http\Controllers\DonationController::class, 'agc'],2022),'AGC
             FY22',array('class' => 'm-2 btn btn-outline-dark'))!!}
+
         </div>
     
         <div class="col-lg-2 col-md-4">

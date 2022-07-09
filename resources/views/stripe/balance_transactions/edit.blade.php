@@ -58,7 +58,7 @@
                             {!! Form::select('event_id', $retreats, (isset($balance_transaction->event_id) ? $balance_transaction->event_id : '' ), ['class' => 'form-control']) !!}
                             
                             <hr />
-                            <br /><strong>Email: </strong>{{ $balance_transaction->email }}
+                            <br /><strong>Email: </strong><a href="mailto:{{ $balance_transaction->email }}">{{ $balance_transaction->email }}</a>
                             <br /><strong>Zip: </strong>{{ $balance_transaction->zip }}
 
                         </div>
