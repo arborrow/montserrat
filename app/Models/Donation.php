@@ -56,7 +56,7 @@ class Donation extends Model implements Auditable
         return $this->hasOne(DonationType::class, 'name', 'donation_description');
     }
 
-    public function getDonationStartDate()
+    public function getDonationStartDateAttribute()
     {
         if (isset($this->start_date)) {
             return $this->start_date->format('m/d/Y');
@@ -65,7 +65,7 @@ class Donation extends Model implements Auditable
         }
     }
 
-    public function getDonationEndDate()
+    public function getDonationEndDateAttribute()
     {
         if (isset($this->end_date)) {
             return $this->end_date->format('m/d/Y');

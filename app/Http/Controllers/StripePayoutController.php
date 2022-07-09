@@ -27,7 +27,8 @@ class StripePayoutController extends Controller
 
         $stripe = new StripeClient(config('services.stripe.secret'));
 
-        $payouts = StripePayout::orderByDesc('date')->paginate(25, ['*'], 'payouts');
+        $payouts = StripePayout::with('transactions')->orderByDesc('date')->paginate(25, ['*'], 'payouts');
+        
 
         // $payouts = $stripe->payouts->all(['limit' => 10]);
 
@@ -198,7 +199,7 @@ class StripePayoutController extends Controller
         $payment->payment_description = 'Credit card';
         $payment->save();
 
-        $payout->payment_id = $payment->payment_id;
+        $payout->fee_payment_id = $payment->payment_id;
         $payout->save();
         
         return Redirect::action([self::class, 'index']);

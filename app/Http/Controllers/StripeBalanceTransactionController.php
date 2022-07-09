@@ -170,7 +170,6 @@ class StripeBalanceTransactionController extends Controller
 
                     $payment->save();
                     $balance_transaction->reconcile_date = now();
-                    $balance_transaction->payment_id = $payment->payment_id;
                     $balance_transaction->contact_id = $payment->donation->contact->id;
                     $balance_transaction->save();
                     // dd($balance_transaction, $squarespace_order, $donation, $payment);
@@ -224,7 +223,6 @@ class StripeBalanceTransactionController extends Controller
                     $payment->ccnumber = $balance_transaction->cc_last_4;                    
                 $payment->save();
                 
-                $balance_transaction->payment_id = $payment->id;
                 $balance_transaction->reconcile_date = now();
                 $balance_transaction->save();
 
@@ -313,7 +311,6 @@ class StripeBalanceTransactionController extends Controller
 
                 }
 
-                $balance_transaction->payment_id = $payment->payment_id;
                 $balance_transaction->reconcile_date = now();
                 $balance_transaction->save();
 
