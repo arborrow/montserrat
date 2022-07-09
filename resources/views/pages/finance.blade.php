@@ -30,19 +30,19 @@
         <div class="col-lg-2 col-md-4">
             <h5>AGC Reports</h5>
             {!! Html::link(action([\App\Http\Controllers\DonationController::class, 'agc'],2022),'AGC
-            FY22',array('class' => 'm-2 btn btn-secondary'))!!}
+            FY22',array('class' => 'm-2 btn btn-outline-dark'))!!}
         </div>
     
         <div class="col-lg-2 col-md-4">
             <h5>Bank Reports</h5>
             {!! Html::link(action([\App\Http\Controllers\PageController::class,
             'finance_cash_deposit'],now()->format('Ymd')),'Cash/Check bank deposit report',array('class' =>
-            'm-2 btn btn-secondary'))!!}
+            'm-2 btn btn-outline-dark'))!!}
             
             {!! Html::link(action([\App\Http\Controllers\PageController::class,
                 'finance_cc_deposit'],now()->format('Ymd')),'Credit Card (Internet) bank deposit report',array('class'
                 =>
-                'm-2 btn btn-secondary'))!!}
+                'm-2 btn btn-outline-dark'))!!}
         </div>
     
         <div class="col-lg-2 col-md-4">       
@@ -50,10 +50,10 @@
             
                 {!! Html::link(action([\App\Http\Controllers\PageController::class, 'finance_deposits']),'Retreat
                     deposits
-                    report',array('class' => 'm-2 btn btn-secondary'))!!}
+                    report',array('class' => 'm-2 btn btn-outline-dark'))!!}
                 {!! Html::link(action([\App\Http\Controllers\PageController::class,
                     'finance_reconcile_deposit_show']),'Unreconciled open deposits',array('class' =>
-                    'm-2 btn btn-secondary'))!!}
+                    'm-2 btn btn-outline-dark'))!!}
         </div>
             
         <div class="col-lg-2 col-md-4">         
@@ -61,16 +61,16 @@
             
                 {!! Html::link(action([\App\Http\Controllers\PageController::class,
                     'finance_retreatdonations'],'201601'),'Retreat donation report',array('class' =>
-                    'm-2 btn btn-secondary'))!!}
+                    'm-2 btn btn-outline-dark'))!!}
                 {!! Html::link(action([\App\Http\Controllers\DonationController::class, 'overpaid']),'Overpaid
-                    donations',array('class' => 'm-2 btn btn-secondary'))!!}
+                    donations',array('class' => 'm-2 btn btn-outline-dark'))!!}
         </div>
             
         <div class="col-lg-2 col-md-4">         
             <h5>Other Reports</h5>
      
                 {!! Html::link(action([\App\Http\Controllers\DonationController::class, 'mergeable']),'Mergeable Donations',
-                array('class' => 'm-2 btn btn-secondary'))!!}
+                array('class' => 'm-2 btn btn-outline-dark'))!!}
 
         </div>
     </div>

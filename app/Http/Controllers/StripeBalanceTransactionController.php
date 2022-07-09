@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateStripeBalanceTransactionRequest;
+use App\Models\Contact;
 use App\Models\Donation;
 use App\Models\Payment;
-use App\Models\Person;
+use App\Models\Retreat;
 use App\Models\SquarespaceOrder;
 use App\Models\SquarespaceContribution;
 use App\Models\StripeBalanceTransaction;
@@ -127,8 +128,9 @@ class StripeBalanceTransactionController extends Controller
                     foreach ($transaction_types as $type) {
                         $type = config('polanco.stripe_balance_transaction_types.'.$type);
                     }
+
                     if (isset($balance_transaction->contact_id) && $balance_transaction->contact_id > 0) {
-                        $retreats = $this->upcoming_retreats(null, 0, $balance_transaction->contact_id);
+                        $retreats = $this->contact_retreats($balance_transaction->contact_id);
                     } else {
                         $retreats = $this->upcoming_retreats();
                     }
@@ -236,15 +238,89 @@ class StripeBalanceTransactionController extends Controller
                 $balance_transaction->save();
 
                 if ($balance_transaction->contact_id == 0) {
-                    $donor = new Person;
+                    // Create a new contact
+                    $contact = new Contact;
+                    $contact->contact_type = config('polanco.contact_type.individual');
+                    $contact->subcontact_type = 0;
+                    
+                    $names = explode(' ', $balance_transaction->name);
+                    $number_of_names= count($names);
+                    $last_name = $names[$number_of_names-1];
+                    $middle_name = ($number_of_names > 2) ? implode(' ',array_slice($names,1,$number_of_names-2)) : null;
+                    $first_name = $names[0];
+                    
+                    $contact->first_name = $first_name;
+                    $contact->middle_name = $middle_name;
+                    $contact->last_name = $last_name;
+                    $contact->sort_name = $last_name . ', ' . $first_name;
+                    $contact->display_name = $balance_transaction->name;
+                    $contact->save();
+
+                    $contact_id = $contact->id;
+                    $balance_transaction->contact_id = $contact->id;
+                    $balance_transaction->save();
+                    
+                    return Redirect::action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'],$balance_transaction->id);
+
+                } else {
+                    $contact = Contact::findOrFail($contact_id);
+                    $balance_transaction->contact_id = $contact->id;
+                    $balance_transaction->save();
+                    //dd(($couple_contact_id == 0 && !isset($order->couple_contact_id)),$order->is_couple, $couple_contact_id, !isset($order->couple_contact_id), $contact, $request);
+    
+                }
+                
+                // validation - ensure the total of the distribution amounts is equal to the total amount of the Stripe balance transaction
+                $distribution=[];
+                $transaction_types = ($balance_transaction->transaction_type == 'Manual') ? explode(' + ',$balance_transaction->description) : null;
+                foreach ($transaction_types as $type) {
+                    $camel_type = str_replace(' ','_',strtolower($type));
+                    $distribution[$camel_type] = ($request->filled($camel_type)) ? $request->input($camel_type) : 0;
+                }
+                $total_distributions = array_sum($distribution);
+
+                if ($balance_transaction->total_amount <> $total_distributions) { // total of distributions does not equal total amount - flash warning and return
+                    flash('Review and correct the distributions. The total of distributions ($'. number_format($total_distributions, 2) . ') does not equal the Total Amount ($' . number_format($balance_transaction->total_amount, 2) .') of this Stripe Balance Transaction.')->error()->important();
+
+                    return Redirect::action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'],$balance_transaction->id);
+
                 }
 
+                // check to see if this Stripe balance transaction is associate with a retreat/event
+                $event_id = ($request->filled('event_id')) ? $request->input('event_id') : null;
+                $event = ($event_id > 0) ? Retreat::findOrFail($event_id) : null;
+                
+                // create donations and payments and mark balance transaction as reconciled
+                foreach ($transaction_types as $type) {
+                    $camel_type = str_replace(' ','_',strtolower($type));
+
+                    $donation = new Donation;
+                    $donation->donation_date = (isset($event->start_date)) ? $event->start_date : $balance_transaction->payout_date;
+                    $donation->donation_description = $type;
+                    $donation->contact_id = $balance_transaction->contact_id;
+                    $donation->event_id = (isset($event->id)) ? $event->id : null;
+                    $donation->donation_amount = $distribution[$camel_type];
+                    $donation->save();
+
+                    $payment = new Payment;
+                    $payment->donation_id = $donation->donation_id;
+                    $payment->payment_amount = $distribution[$camel_type];
+                    $payment->payment_date = $balance_transaction->payout_date;
+                    $payment->payment_description = 'Credit card';
+                    $payment->ccnumber = $balance_transaction->cc_last_4;
+                    $payment->stripe_balance_transaction_id = $balance_transaction->id;
+                    $payment->save();
+
+                }
+
+                $balance_transaction->payment_id = $payment->payment_id;
+                $balance_transaction->reconcile_date = now();
+                $balance_transaction->save();
+
+                flash('Stripe Balance Transaction #' . $balance_transaction->id . ' has been successfully processed.')->success();
 
         }
         
-        
-        // TODO: figure out type of transaction (order, donation, manual, etc.)        
-        // dd($request);
         return Redirect::action([\App\Http\Controllers\StripePayoutController::class, 'show'],$request->input('payout_id'));
 
     }

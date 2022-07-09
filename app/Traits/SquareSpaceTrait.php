@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 use DB;
+use App\Models\Registration;
 use App\Models\Retreat;
 use Carbon\Carbon;
 
@@ -12,7 +13,7 @@ trait SquareSpaceTrait
     *  If $event_id is provided, then it just returns the value for that retreat
     *  If months is provided, then subtract months from today and get all retreats after the start date
     */
-    public function upcoming_retreats($event_id = null, $months = 0, $contact_id = null) {
+    public function upcoming_retreats($event_id = null, $months = 0) {
         $start_date = ($months > 0) ? Carbon::today()->subMonths($months) : Carbon::today();
 
         $retreats = Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', $start_date)->where('is_active', '=', 1)->orderBy('start_date')->pluck('description', 'id');
@@ -23,6 +24,20 @@ trait SquareSpaceTrait
         }
             $retreats[''] = 'N/A';
         return $retreats;
+    }
+
+    /*
+    *  Returns list of retreats for a particular retreatant/contact
+    *  If $event_id is provided, then it just returns the value for that retreat
+    *  If months is provided, then subtract months from today and get all retreats after the start date
+    */
+    public function contact_retreats($contact_id = null) {
+        if ($contact_id > 0 ) {
+
+            $retreats = Registration::leftjoin('event', 'participant.event_id', '=', 'event.id')->select(DB::raw('CONCAT(event.idnumber, "-", event.title, " (",DATE_FORMAT(event.start_date,"%m-%d-%Y"),")") as description'), 'event.id')->whereContactId($contact_id)->orderBy('event.start_date', 'desc')->pluck('event.description', 'event.id');
+            $retreats[''] = 'Not related to an Event/Retreat';
+            return $retreats;    
+        }
     }
 
 

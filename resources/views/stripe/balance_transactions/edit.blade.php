@@ -44,21 +44,23 @@
                     @case ('Manual')
                         <div class="col-lg-4 col-md-6">
                             <h3>
-                                {!! Form::label('contact_id', 'Donor: ' .$balance_transaction->name) !!}</h3>
-                                {!! Form::select('contact_id', $matching_contacts, (isset($balance_transaction->contact_id)) ? $balance_transaction->contact_id : 0, ['class' => 'form-control']) !!}
+                                @if (isset($balance_transaction->contact_id))
+                                    Donor: <a href="{{url('person/'.$balance_transaction->contact_id)}}">{{$balance_transaction->name}}</a>
+                                @else
+                                    {!! Form::label('contact_id', 'Donor: ' .$balance_transaction->name) !!}
+                                @endIf
                             </h3>
-                            <hr />
-                            <strong>Name: </strong>{{ $balance_transaction->name }}
-                            <br /><strong>Email: </strong>{{ $balance_transaction->email }}
-                            <br /><strong>Zip: </strong>{{ $balance_transaction->zip }}
-                            <br /><strong>Credit Card Last 4: </strong>{{ $balance_transaction->cc_last_4 }}
-
-                        </div>
-                        <div class="col-lg-4 col-md-6">
+                            {!! Form::select('contact_id', $matching_contacts, (isset($balance_transaction->contact_id)) ? $balance_transaction->contact_id : 0, ['class' => 'form-control']) !!}
+                            
                             <h3>
                                 {!! Form::label('event_id', 'Retreat:') !!}
                             </h3>
-                            {!! Form::select('event_id', $retreats, null, ['class' => 'form-control']) !!}
+                            {!! Form::select('event_id', $retreats, (isset($balance_transaction->event_id) ? $balance_transaction->event_id : '' ), ['class' => 'form-control']) !!}
+                            
+                            <hr />
+                            <br /><strong>Email: </strong>{{ $balance_transaction->email }}
+                            <br /><strong>Zip: </strong>{{ $balance_transaction->zip }}
+
                         </div>
                         <div class="col-lg-4 col-md-6">
                             <h3>
@@ -66,19 +68,22 @@
                             </h3>                    
                             @if (is_array($transaction_types))
                                 @foreach ($transaction_types as $type)
-                                    {!! Form::label($type, $type) !!}</h3>
-                                    {!! Form::number($type, null, ['class' => 'form-control']) !!}
+                                    {!! Form::label(str_replace(" ", "_",strtolower($type)), $type) !!}</h3>
+                                    @if (count($transaction_types) == 1)
+                                        {!! Form::number(str_replace(" ", "_",strtolower($type)), $balance_transaction->total_amount, ['class' => 'form-control']) !!}
+                                    @else
+                                        {!! Form::number(str_replace(" ", "_",strtolower($type)), null, ['class' => 'form-control']) !!}
+                                    @endIf
                                 @endForeach
                             @else
-                                {!! Form::label($transaction_types, $transaction_types) !!}</h3>
-                                {!! Form::number($transaction_types, $balance_transaction->total_amount, ['class' => 'form-control']) !!}
+                                {!! Form::label(str_replace(" ","_", strtolower($transaction_types)), $transaction_types) !!}</h3>
+                                {!! Form::number(str_replace(" ","_", strtolower($transaction_types)), $balance_transaction->total_amount, ['class' => 'form-control']) !!}
                             @endIf
                             <hr />
                             <strong>Total Amount: </strong> ${{ number_format($balance_transaction->total_amount,2) }}
                             <br /><strong>Fee: </strong> ${{ number_format($balance_transaction->fee_amount,2) }}
                             <br /><strong>Net Amount: </strong> ${{ number_format($balance_transaction->net_amount,2) }}
-                            <br /><strong>Note: </strong>{{ $balance_transaction->note }}
-                            <br /><strong>Type: </strong>{{ $balance_transaction->type }}
+                            <br /><strong>Credit Card Last 4: </strong>{{ $balance_transaction->cc_last_4 }}
                             
                         </div>
                         <div class='col-lg-4 col-md-6'>
