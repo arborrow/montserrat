@@ -53,6 +53,22 @@
                     </tbody>
 
                 </table>
+
+                <table class='table-bordered'>
+                    <caption>Legend</caption>
+                    <tbody>
+                        <tr class="table-primary">
+                            <td class='p-1'>Unimported Stripe Balance Transactions</td>
+                        </tr>
+                        <tr class="table-warning">
+                            <td class='p-1'>Unprocessed Stripe Balance Transactions</td>
+                        </tr>
+                        <tr class="table-success">
+                            <td class='p-1'>Stripe Balance Transactions Imported and Processed</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
             </div>
         </div>
     </section>
