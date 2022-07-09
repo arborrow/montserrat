@@ -1298,16 +1298,16 @@
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.255.0",
+            "version": "v0.256.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client-services.git",
-                "reference": "2b895ceb08eb106f65e975221e5d2e971cf7470e"
+                "reference": "122e51021eb19b53f831904918460671d1e7259d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/2b895ceb08eb106f65e975221e5d2e971cf7470e",
-                "reference": "2b895ceb08eb106f65e975221e5d2e971cf7470e",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/122e51021eb19b53f831904918460671d1e7259d",
+                "reference": "122e51021eb19b53f831904918460671d1e7259d",
                 "shasum": ""
             },
             "require": {
@@ -1336,9 +1336,9 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/google-api-php-client-services/issues",
-                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.255.0"
+                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.256.0"
             },
-            "time": "2022-06-27T01:30:11+00:00"
+            "time": "2022-07-04T01:10:37+00:00"
         },
         {
             "name": "google/auth",
@@ -2014,16 +2014,16 @@
         },
         {
             "name": "jaybizzle/laravel-crawler-detect",
-            "version": "v1.2.0",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JayBizzle/Laravel-Crawler-Detect.git",
-                "reference": "e39b536fb5e4f21a49328e83a2ab26f0b64b06f7"
+                "reference": "a0339574b6dfb6b82167b6c65d068d751a6e8c4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JayBizzle/Laravel-Crawler-Detect/zipball/e39b536fb5e4f21a49328e83a2ab26f0b64b06f7",
-                "reference": "e39b536fb5e4f21a49328e83a2ab26f0b64b06f7",
+                "url": "https://api.github.com/repos/JayBizzle/Laravel-Crawler-Detect/zipball/a0339574b6dfb6b82167b6c65d068d751a6e8c4d",
+                "reference": "a0339574b6dfb6b82167b6c65d068d751a6e8c4d",
                 "shasum": ""
             },
             "require": {
@@ -2031,8 +2031,8 @@
                 "php": ">=5.4.0"
             },
             "require-dev": {
-                "orchestra/testbench": "3.1.*",
-                "phpunit/phpunit": "4.*"
+                "orchestra/testbench": "^3.2|^3.4",
+                "phpunit/phpunit": "^4.8|^5.5|^6.5"
             },
             "type": "library",
             "extra": {
@@ -2076,9 +2076,9 @@
             ],
             "support": {
                 "issues": "https://github.com/JayBizzle/Laravel-Crawler-Detect/issues",
-                "source": "https://github.com/JayBizzle/Laravel-Crawler-Detect/tree/master"
+                "source": "https://github.com/JayBizzle/Laravel-Crawler-Detect/tree/v1.3.0"
             },
-            "time": "2017-06-01T20:29:30+00:00"
+            "time": "2022-07-06T10:42:10+00:00"
         },
         {
             "name": "jeremykenedy/laravel-logger",
@@ -3254,16 +3254,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.0.21",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "8f1fcf9d2304ff77a006aa36dd2cb5f236999b12"
+                "reference": "34a68067b7ae3b836ea5e57e1fc432478372a4f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/8f1fcf9d2304ff77a006aa36dd2cb5f236999b12",
-                "reference": "8f1fcf9d2304ff77a006aa36dd2cb5f236999b12",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/34a68067b7ae3b836ea5e57e1fc432478372a4f5",
+                "reference": "34a68067b7ae3b836ea5e57e1fc432478372a4f5",
                 "shasum": ""
             },
             "require": {
@@ -3324,7 +3324,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.0.21"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.1.0"
             },
             "funding": [
                 {
@@ -3340,7 +3340,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-06-12T17:54:28+00:00"
+            "time": "2022-06-29T17:29:54+00:00"
         },
         {
             "name": "league/mime-type-detection",
@@ -3728,16 +3728,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.58.0",
+            "version": "2.59.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "97a34af22bde8d0ac20ab34b29d7bfe360902055"
+                "reference": "a9000603ea337c8df16cc41f8b6be95a65f4d0f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/97a34af22bde8d0ac20ab34b29d7bfe360902055",
-                "reference": "97a34af22bde8d0ac20ab34b29d7bfe360902055",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/a9000603ea337c8df16cc41f8b6be95a65f4d0f5",
+                "reference": "a9000603ea337c8df16cc41f8b6be95a65f4d0f5",
                 "shasum": ""
             },
             "require": {
@@ -3752,11 +3752,12 @@
                 "doctrine/orm": "^2.7",
                 "friendsofphp/php-cs-fixer": "^3.0",
                 "kylekatarnls/multi-tester": "^2.0",
+                "ondrejmirtes/better-reflection": "*",
                 "phpmd/phpmd": "^2.9",
                 "phpstan/extension-installer": "^1.0",
-                "phpstan/phpstan": "^0.12.54 || ^1.0",
-                "phpunit/php-file-iterator": "^2.0.5",
-                "phpunit/phpunit": "^7.5.20 || ^8.5.23",
+                "phpstan/phpstan": "^0.12.99 || ^1.7.14",
+                "phpunit/php-file-iterator": "^2.0.5 || ^3.0.6",
+                "phpunit/phpunit": "^7.5.20 || ^8.5.26 || ^9.5.20",
                 "squizlabs/php_codesniffer": "^3.4"
             },
             "bin": [
@@ -3813,15 +3814,19 @@
             },
             "funding": [
                 {
-                    "url": "https://opencollective.com/Carbon",
-                    "type": "open_collective"
+                    "url": "https://github.com/sponsors/kylekatarnls",
+                    "type": "github"
                 },
                 {
-                    "url": "https://tidelift.com/funding/github/packagist/nesbot/carbon",
+                    "url": "https://opencollective.com/Carbon#sponsor",
+                    "type": "opencollective"
+                },
+                {
+                    "url": "https://tidelift.com/subscription/pkg/packagist-nesbot-carbon?utm_source=packagist-nesbot-carbon&utm_medium=referral&utm_campaign=readme",
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-25T19:31:17+00:00"
+            "time": "2022-06-29T21:43:55+00:00"
         },
         {
             "name": "nette/schema",
@@ -5513,16 +5518,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.11.5",
+            "version": "v0.11.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "c23686f9c48ca202710dbb967df8385a952a2daf"
+                "reference": "77fc7270031fbc28f9a7bea31385da5c4855cb7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/c23686f9c48ca202710dbb967df8385a952a2daf",
-                "reference": "c23686f9c48ca202710dbb967df8385a952a2daf",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/77fc7270031fbc28f9a7bea31385da5c4855cb7a",
+                "reference": "77fc7270031fbc28f9a7bea31385da5c4855cb7a",
                 "shasum": ""
             },
             "require": {
@@ -5583,9 +5588,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bobthecow/psysh/issues",
-                "source": "https://github.com/bobthecow/psysh/tree/v0.11.5"
+                "source": "https://github.com/bobthecow/psysh/tree/v0.11.7"
             },
-            "time": "2022-05-27T18:03:49+00:00"
+            "time": "2022-07-07T13:49:11+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
@@ -6129,16 +6134,16 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v8.8.0",
+            "version": "v8.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "06bfb65639cfecae7c2b57d340f740599c548753"
+                "reference": "ae44989a37e0785f325d696719afa46e3503dc7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/06bfb65639cfecae7c2b57d340f740599c548753",
-                "reference": "06bfb65639cfecae7c2b57d340f740599c548753",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/ae44989a37e0785f325d696719afa46e3503dc7d",
+                "reference": "ae44989a37e0785f325d696719afa46e3503dc7d",
                 "shasum": ""
             },
             "require": {
@@ -6183,9 +6188,9 @@
             ],
             "support": {
                 "issues": "https://github.com/stripe/stripe-php/issues",
-                "source": "https://github.com/stripe/stripe-php/tree/v8.8.0"
+                "source": "https://github.com/stripe/stripe-php/tree/v8.10.0"
             },
-            "time": "2022-06-23T16:42:38+00:00"
+            "time": "2022-07-07T17:46:57+00:00"
         },
         {
             "name": "stuyam/laravel-phone-validator",
@@ -8782,16 +8787,16 @@
         },
         {
             "name": "twilio/sdk",
-            "version": "6.37.3",
+            "version": "6.38.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:twilio/twilio-php.git",
-                "reference": "91f1d939596ba8976b4be09ea634a1bab3a4cb7f"
+                "reference": "7baefc8e1b639bba00ddf9522a723079c17454f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/91f1d939596ba8976b4be09ea634a1bab3a4cb7f",
-                "reference": "91f1d939596ba8976b4be09ea634a1bab3a4cb7f",
+                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/7baefc8e1b639bba00ddf9522a723079c17454f6",
+                "reference": "7baefc8e1b639bba00ddf9522a723079c17454f6",
                 "shasum": ""
             },
             "require": {
@@ -8827,7 +8832,7 @@
                 "sms",
                 "twilio"
             ],
-            "time": "2022-06-15T21:41:33+00:00"
+            "time": "2022-06-29T19:22:16+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -9045,16 +9050,16 @@
     "packages-dev": [
         {
             "name": "barryvdh/laravel-debugbar",
-            "version": "v3.6.7",
+            "version": "v3.6.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-debugbar.git",
-                "reference": "b96f9820aaf1ff9afe945207883149e1c7afb298"
+                "reference": "814b36a08a60f4159cdcbb1c466a6a0027440b6c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/b96f9820aaf1ff9afe945207883149e1c7afb298",
-                "reference": "b96f9820aaf1ff9afe945207883149e1c7afb298",
+                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/814b36a08a60f4159cdcbb1c466a6a0027440b6c",
+                "reference": "814b36a08a60f4159cdcbb1c466a6a0027440b6c",
                 "shasum": ""
             },
             "require": {
@@ -9114,7 +9119,7 @@
             ],
             "support": {
                 "issues": "https://github.com/barryvdh/laravel-debugbar/issues",
-                "source": "https://github.com/barryvdh/laravel-debugbar/tree/v3.6.7"
+                "source": "https://github.com/barryvdh/laravel-debugbar/tree/v3.6.8"
             },
             "funding": [
                 {
@@ -9126,7 +9131,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-02-09T07:52:32+00:00"
+            "time": "2022-06-08T15:03:05+00:00"
         },
         {
             "name": "brianium/paratest",
