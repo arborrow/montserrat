@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateStripeBalanceTransactionRequest;
 use App\Models\Donation;
 use App\Models\Payment;
+use App\Models\Person;
 use App\Models\SquarespaceOrder;
 use App\Models\SquarespaceContribution;
 use App\Models\StripeBalanceTransaction;
@@ -117,6 +118,7 @@ class StripeBalanceTransactionController extends Controller
         // TODO: determine type of transaction order, donation, manual
 
         $balance_transaction = StripeBalanceTransaction::findOrFail($id);
+        $retreats = null;
         // dd($balance_transaction);
         if (!isset($balance_transaction->reconcile_date)) { // if the balance_transaction record has already been reconciled then do not allow to edit
             switch ($balance_transaction->transaction_type) {
@@ -124,6 +126,11 @@ class StripeBalanceTransactionController extends Controller
                     $transaction_types = ($balance_transaction->transaction_type == 'Manual') ? explode(' + ',$balance_transaction->description) : null;
                     foreach ($transaction_types as $type) {
                         $type = config('polanco.stripe_balance_transaction_types.'.$type);
+                    }
+                    if (isset($balance_transaction->contact_id) && $balance_transaction->contact_id > 0) {
+                        $retreats = $this->upcoming_retreats(null, 0, $balance_transaction->contact_id);
+                    } else {
+                        $retreats = $this->upcoming_retreats();
                     }
                     break;
                 case 'Donation' :
@@ -180,7 +187,7 @@ class StripeBalanceTransactionController extends Controller
             $matching_contacts[$balance_transaction->contact_id] = $balance_transaction->retreatant->full_name_with_city;
         }
         
-        return view('stripe.balance_transactions.edit', compact('balance_transaction', 'matching_contacts','transaction_types','unprocessed_squarespace_contributions'));
+        return view('stripe.balance_transactions.edit', compact('balance_transaction', 'matching_contacts','transaction_types','unprocessed_squarespace_contributions','retreats'));
     
         
     }
@@ -220,11 +227,19 @@ class StripeBalanceTransactionController extends Controller
                 $balance_transaction->save();
 
                 flash('Stripe Balance Transaction #: <a href="'.url('/stripe/balance_transaction/'.$balance_transaction->balance_transaction_id).'">'.$balance_transaction->id.'</a> processed successfully.')->success();
+                return Redirect::action([\App\Http\Controllers\StripePayoutController::class, 'show'],$balance_transaction->payout_id);     
+                break;
 
-                return Redirect::action([\App\Http\Controllers\StripePayoutController::class, 'show'],$balance_transaction->payout_id);
+            case 'Manual' :
+                $contact_id = ($request->filled('contact_id')) ? $request->input('contact_id') : null;
+                $balance_transaction->contact_id = $contact_id;
+                $balance_transaction->save();
 
-                       
-            break;
+                if ($balance_transaction->contact_id == 0) {
+                    $donor = new Person;
+                }
+
+
         }
         
         

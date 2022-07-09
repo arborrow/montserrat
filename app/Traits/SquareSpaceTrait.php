@@ -12,7 +12,7 @@ trait SquareSpaceTrait
     *  If $event_id is provided, then it just returns the value for that retreat
     *  If months is provided, then subtract months from today and get all retreats after the start date
     */
-    public function upcoming_retreats($event_id = null, $months = 0) {
+    public function upcoming_retreats($event_id = null, $months = 0, $contact_id = null) {
         $start_date = ($months > 0) ? Carbon::today()->subMonths($months) : Carbon::today();
 
         $retreats = Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', $start_date)->where('is_active', '=', 1)->orderBy('start_date')->pluck('description', 'id');

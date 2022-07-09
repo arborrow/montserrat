@@ -17,19 +17,17 @@
             <ol>
                 @switch ($balance_transaction->transaction_type)
                 @case ('Manual')
-                    <li>Select the desired <strong><u>Donor</u></strong> from the Donor dropdown list.
-                    <li>If available, select the desired <strong><u>Donation</u></strong> from the Donation dropdown list.
-                    <li>If the donor exists, <strong><u>click</u></strong> on the <i>Retrieve Contact Info</i> button to retrieve respective information.
-                    <li><strong><u>Review</u></strong> provided Order information. <strong><u>Correct</u></strong> any typos in the provided information.
-                    <li>Verify the information is correct, <strong><u>click</u></strong> on the <i>Process Balance Transaction</i> button.
-                    <li>The appropriate donation/payment will be created.
+                    <li>Select the desired <strong><u>Donor</u></strong> from the Donor dropdown list and <u>click</u> on the <i>Retrieve Donor</i> button.
+                    <li>If applicable, select the desired <strong><u>Retreat</u></strong> from the Retreat dropdown list.</li>
+                    <li>If more than one category is associated with the balance transaction, allocate the donation appropriately.</li>
+                    <li>Review the data and then <u>click</u> on the <i>Process Balance Transaction</i> button</li>
+                    <li>The donation(s) and payment(s) associated with the Balance Transaction will be created.
                     @break
                 @case ('Donation')
                     <li>Select the appropriate Squarespace Contribution</li>
                     <li>Click on the <i>Process Balance Transaction: Contribution</i> button</li>
                     @break
                 @endswitch
-                
             </ol>
         </div>
     </div>
@@ -53,9 +51,14 @@
                             <strong>Name: </strong>{{ $balance_transaction->name }}
                             <br /><strong>Email: </strong>{{ $balance_transaction->email }}
                             <br /><strong>Zip: </strong>{{ $balance_transaction->zip }}
-                            <br /><strong>Phone: </strong>{{ $balance_transaction->phone }}
                             <br /><strong>Credit Card Last 4: </strong>{{ $balance_transaction->cc_last_4 }}
 
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <h3>
+                                {!! Form::label('event_id', 'Retreat:') !!}
+                            </h3>
+                            {!! Form::select('event_id', $retreats, null, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-lg-4 col-md-6">
                             <h3>
