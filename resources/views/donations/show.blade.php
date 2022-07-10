@@ -11,18 +11,18 @@
             @endCan
             for {!!$donation->contact->contact_link_full_name!!}
         </h1>
-        {!! Html::link(action([\App\Http\Controllers\PageController::class, 'finance_invoice'],$donation->donation_id),'Invoice',array('class' => 'btn btn-outline-dark'))!!}
+        {!! Html::link(action([\App\Http\Controllers\PageController::class, 'finance_invoice'],$donation->donation_id),'Invoice',array('class' => 'm-1 btn btn-outline-dark'))!!}
         @can('create-payment')
-            <a href={{ url('payment/create/'.$donation->donation_id) }} class="btn btn-outline-dark">Add payment</a>
+            <a href={{ url('payment/create/'.$donation->donation_id) }} class="m-1 btn btn-outline-dark">Add payment</a>
         @endCan
         @if (in_array($donation->donation_description, config('polanco.agc_donation_descriptions')) )
             @if(isset($donation['Thank You']))
-                {!! Html::link(action([\App\Http\Controllers\PageController::class, 'finance_agc_acknowledge'],$donation->donation_id),"Reprint AGC acknowledgement",array('class' => 'btn btn-outline-dark')) !!}
+                {!! Html::link(action([\App\Http\Controllers\PageController::class, 'finance_agc_acknowledge'],$donation->donation_id),"Reprint AGC acknowledgement",array('class' => 'm-1 btn btn-outline-dark')) !!}
             @else
                 @if ($donation->percent_paid >= 100)
-                    {!! Html::link(action([\App\Http\Controllers\PageController::class, 'finance_agc_acknowledge'],$donation->donation_id),"Print AGC acknowledgement",array('class' => 'btn btn-outline-dark')) !!}
+                    {!! Html::link(action([\App\Http\Controllers\PageController::class, 'finance_agc_acknowledge'],$donation->donation_id),"Print AGC acknowledgement",array('class' => 'm-1 btn btn-outline-dark')) !!}
                 @else
-                    <div class="btn btn-outline-info">AGC awaiting full payment</div>
+                    <div class="m-1 btn btn-outline-dark disabled" aria-disabled="true">AGC awaiting full payment</div>
                 @endIf
             @endIf
 
@@ -91,13 +91,13 @@
         <div class="row">
             <div class="col-lg-6 text-right">
                 @can('update-donation')
-                    <a href="{{ action([\App\Http\Controllers\DonationController::class, 'edit'], $donation->donation_id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                    <a href="{{ action([\App\Http\Controllers\DonationController::class, 'edit'], $donation->donation_id) }}" class="m-1 btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                 @endCan
             </div>
             <div class="col-lg-6 text-left">
                 @can('delete-donation')
                     {!! Form::open(['method' => 'DELETE', 'route' => ['donation.destroy', $donation->donation_id],'onsubmit'=>'return ConfirmDelete()']) !!}
-                    {!! Form::image('images/delete.png','btnDelete',['class' => 'btn btn-danger','title'=>'Delete']) !!}
+                    {!! Form::image('images/delete.png','btnDelete',['class' => 'm-1 btn btn-danger','title'=>'Delete']) !!}
                     {!! Form::close() !!}
                 @endCan
             </div>

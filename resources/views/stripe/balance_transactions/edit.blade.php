@@ -28,9 +28,9 @@
                     <li>Click on the <i>Process Balance Transaction: Contribution</i> button</li>
                     @break
                 @case ('Invoice')
-                    <li>Select the desired <strong><u>Donor</u></strong> from the Donor dropdown list and <u>click</u> on the <i>Retrieve Donor Information</i> button.
-                    <li>Select the desired <strong><u>Donation</u></strong> from the Donation dropdown list and <u>click</u> on the <i>Process Balance Transaction</i> button.</li>
-                    <li>The recurring payment associated with the Balance Transaction added to the selected Donation. 
+                    <li>Select the desired <strong><u>Donor</u></strong> from the Donor dropdown list and <u>click</u> on the <i>Retrieve Donor Information</i> button. Invoices presume an existing donor. 
+                    <li>Select the desired <strong><u>Donation</u></strong> from the Donation dropdown list and <u>click</u> on the <i>Process Balance Transaction</i> button. Invoices presume an existing donation.</li>
+                    <li>The recurring payment associated with the Stripe Balance Transaction will be added to the selected Donation. 
                     <li>Note, that if the new payment causes the amount paid to exceed the amount pledged, the amount pledged will be increased to the total amount paid.
                     @break
                 @endswitch
@@ -107,28 +107,28 @@
                 @case ('Invoice')
                     <div class="col-lg-4 col-md-6">
                         <h3>
-                            @if (isset($balance_transaction->contact_id))
+                            @if (isset($balance_transaction->contact_id) && $balance_transaction->contact_id > 0)
                                 Donor: <a href="{{url('person/'.$balance_transaction->contact_id)}}">{{$balance_transaction->name}}</a>
                             @else
                                 {!! Form::label('contact_id', 'Donor: ' .$balance_transaction->name) !!}
                             @endIf
                         </h3>
                         {!! Form::select('contact_id', $matching_contacts, (isset($balance_transaction->contact_id)) ? $balance_transaction->contact_id : 0, ['class' => 'form-control']) !!}
+                        <hr />
+                        <strong>Email: </strong><a href="mailto:{{ $balance_transaction->email }}">{{ $balance_transaction->email }}</a>
+                        <br /><strong>Zip: </strong>{{ $balance_transaction->zip }}
+
                     </div>
 
-                    <div class="col-lg-4 col-md-6">
-                        
+                    <div class="col-lg-5 col-md-6">           
                         <h3>
                             {!! Form::label('donation_id', 'Donation:') !!}
                         </h3>
                         {!! Form::select('donation_id', $donations, null, ['class' => 'form-control']) !!}
                         
-                        <hr />
-                        <strong>Email: </strong><a href="mailto:{{ $balance_transaction->email }}">{{ $balance_transaction->email }}</a>
-                        <br /><strong>Zip: </strong>{{ $balance_transaction->zip }}
                     </div>
 
-                    <div class="col-lg-4 col-md-6">
+                    <div class="col-lg-3 col-md-6">
                         <h3>
                             Total Amount: ${{ number_format($balance_transaction->total_amount,2) }}
                         </h3>                    

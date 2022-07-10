@@ -151,6 +151,17 @@ class Donation extends Model implements Auditable
         }
     }
 
+    public function getDonationSummaryAttribute()
+    {   $idnumber = (isset($this->retreat_idnumber)) ? ' - #'.$this->retreat_idnumber : null;
+        return $this->donation_date_formatted . ' - ' . 
+            $this->donation_description . ' - $' . 
+            number_format($this->payments_paid,2) . ' / $' . 
+            number_format($this->donation_amount,2) . ' ('. 
+            number_format($this->percent_paid,0) . '%)' .
+            $idnumber;
+            
+    }
+
     public function getDonationThankYouSentAttribute()
     {
         if (isset($this['Thank You'])) {
