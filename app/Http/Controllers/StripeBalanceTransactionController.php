@@ -315,7 +315,9 @@ class StripeBalanceTransactionController extends Controller
                 $balance_transaction->save();
 
                 flash('Stripe Balance Transaction #' . $balance_transaction->id . ' has been successfully processed.')->success();
-
+                break;
+            case 'Invoice' :
+                break;
         }
         
         return Redirect::action([\App\Http\Controllers\StripePayoutController::class, 'show'],$request->input('payout_id'));

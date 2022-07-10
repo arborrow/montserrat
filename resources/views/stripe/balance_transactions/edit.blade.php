@@ -27,6 +27,12 @@
                     <li>Select the appropriate Squarespace Contribution</li>
                     <li>Click on the <i>Process Balance Transaction: Contribution</i> button</li>
                     @break
+                @case ('Invoice')
+                    <li>Select the desired <strong><u>Donor</u></strong> from the Donor dropdown list and <u>click</u> on the <i>Retrieve Donor Information</i> button.
+                    <li>Select the desired <strong><u>Donation</u></strong> from the Donation dropdown list and <u>click</u> on the <i>Process Balance Transaction</i> button.</li>
+                    <li>The recurring payment associated with the Balance Transaction added to the selected Donation. 
+                    <li>Note, that if the new payment causes the amount paid to exceed the amount pledged, the amount pledged will be increased to the total amount paid.
+                    @break
                 @endswitch
             </ol>
         </div>
@@ -60,8 +66,8 @@
                             <hr />
                             <br /><strong>Email: </strong><a href="mailto:{{ $balance_transaction->email }}">{{ $balance_transaction->email }}</a>
                             <br /><strong>Zip: </strong>{{ $balance_transaction->zip }}
-
                         </div>
+
                         <div class="col-lg-4 col-md-6">
                             <h3>
                                 Total Amount: ${{ number_format($balance_transaction->total_amount,2) }}
@@ -80,18 +86,15 @@
                                 {!! Form::number(str_replace(" ","_", strtolower($transaction_types)), $balance_transaction->total_amount, ['class' => 'form-control']) !!}
                             @endIf
                             <hr />
-                            <strong>Total Amount: </strong> ${{ number_format($balance_transaction->total_amount,2) }}
-                            <br /><strong>Fee: </strong> ${{ number_format($balance_transaction->fee_amount,2) }}
+                            <strong>Fee: </strong> ${{ number_format($balance_transaction->fee_amount,2) }}
                             <br /><strong>Net Amount: </strong> ${{ number_format($balance_transaction->net_amount,2) }}
                             <br /><strong>Credit Card Last 4: </strong>{{ $balance_transaction->cc_last_4 }}
-                            
                         </div>
+
                         <div class='col-lg-4 col-md-6'>
                             <strong>Payout Date: </strong>{{ (isset($balance_transaction->payout_date)) ? $balance_transaction->payout_date->format('m-d-Y') : null }}
                             <br /><strong>Available Date: </strong>{{ (isset($balance_transaction->available_date)) ? $balance_transaction->available_date->format('m-d-Y') : null }}
-                            <br /><strong>Reconciliation Date: </strong>{{ (isset($balance_transaction->reconcile_date)) ? $balance_transaction->reconcile_date->format('m-d-Y') : null }}
                         </div>
-                    </div>
                     @break
                 @case ('Donation')
                     <div class="col-lg-4 col-md-6">
@@ -101,6 +104,44 @@
                         </h3>
                     </div>
                     @break
+                @case ('Invoice')
+                    <div class="col-lg-4 col-md-6">
+                        <h3>
+                            @if (isset($balance_transaction->contact_id))
+                                Donor: <a href="{{url('person/'.$balance_transaction->contact_id)}}">{{$balance_transaction->name}}</a>
+                            @else
+                                {!! Form::label('contact_id', 'Donor: ' .$balance_transaction->name) !!}
+                            @endIf
+                        </h3>
+                        {!! Form::select('contact_id', $matching_contacts, (isset($balance_transaction->contact_id)) ? $balance_transaction->contact_id : 0, ['class' => 'form-control']) !!}
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        
+                        <h3>
+                            {!! Form::label('donation_id', 'Donation:') !!}
+                        </h3>
+                        {!! Form::select('donation_id', $matching_contacts, (isset($balance_transaction->event_id) ? $balance_transaction->event_id : '' ), ['class' => 'form-control']) !!}
+                        
+                        <hr />
+                        <strong>Email: </strong><a href="mailto:{{ $balance_transaction->email }}">{{ $balance_transaction->email }}</a>
+                        <br /><strong>Zip: </strong>{{ $balance_transaction->zip }}
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <h3>
+                            Total Amount: ${{ number_format($balance_transaction->total_amount,2) }}
+                        </h3>                    
+                        <hr />
+                        <strong>Fee: </strong> ${{ number_format($balance_transaction->fee_amount,2) }}
+                        <br /><strong>Net Amount: </strong> ${{ number_format($balance_transaction->net_amount,2) }}
+                        <br /><strong>Credit Card Last 4: </strong>{{ $balance_transaction->cc_last_4 }}                       
+                        <hr>
+                        <strong>Payout Date: </strong>{{ (isset($balance_transaction->payout_date)) ? $balance_transaction->payout_date->format('m-d-Y') : null }}
+                        <br /><strong>Available Date: </strong>{{ (isset($balance_transaction->available_date)) ? $balance_transaction->available_date->format('m-d-Y') : null }}
+                    </div>
+                    @break
+
                 @endSwitch
             </div>  
         
@@ -118,13 +159,22 @@
                             @case('Donation')
                                 {!! Form::submit('Process Balance Transaction: Contribution',['class' => 'btn btn-dark']) !!}
                                 @break
+                            @case ('Invoice')
+                                @if ($balance_transaction->contact_id > 0)
+                                    {!! Form::submit('Process Balance Transaction',['class' => 'btn btn-dark']) !!}
+                                @else
+                                    {!! Form::submit('Retrieve Donor Information',['class' => 'btn btn-info']) !!}
+                                @endif
+                                @break
                         @endswitch
                     @else
                         <a class="btn btn-primary" href="{{ action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'index']) }}">Balance Transaction #{{ $balance_transaction->id }} has already been processed</a>
                     @endIf
                 </div>
             </div>
+            
             <hr>            
+            
             <div class="row">
                 <div class='col-lg-6 col-md-8'>
                     <strong>Payout ID: </strong><a href="{{URL('stripe/payout/'.$balance_transaction->payout_id)}}"> {{$balance_transaction->payout_id}} </a>
