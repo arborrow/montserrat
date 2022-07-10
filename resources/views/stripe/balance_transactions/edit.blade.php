@@ -121,7 +121,7 @@
                         <h3>
                             {!! Form::label('donation_id', 'Donation:') !!}
                         </h3>
-                        {!! Form::select('donation_id', $matching_contacts, (isset($balance_transaction->event_id) ? $balance_transaction->event_id : '' ), ['class' => 'form-control']) !!}
+                        {!! Form::select('donation_id', $donations, null, ['class' => 'form-control']) !!}
                         
                         <hr />
                         <strong>Email: </strong><a href="mailto:{{ $balance_transaction->email }}">{{ $balance_transaction->email }}</a>

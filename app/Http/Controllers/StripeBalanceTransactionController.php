@@ -116,6 +116,7 @@ class StripeBalanceTransactionController extends Controller
     {
         $this->authorize('update-stripe-balance-transaction');
         $unprocessed_squarespace_contributions = collect();
+        $donations = collect();
         // TODO: determine type of transaction order, donation, manual
 
         $balance_transaction = StripeBalanceTransaction::findOrFail($id);
@@ -142,6 +143,8 @@ class StripeBalanceTransactionController extends Controller
                     break;
                 case 'Invoice' :
                     $transaction_types = 'Invoice';
+                    $donations = Donation::whereContactId($balance_transaction->contact_id)->pluck('donation_date','donation_id');
+                    $donations[0] = 'Create New Donation';
                     break;
                 case 'Charge' :
                     $transaction_types = 'Retreat Funding';
@@ -188,7 +191,7 @@ class StripeBalanceTransactionController extends Controller
             $matching_contacts[$balance_transaction->contact_id] = $balance_transaction->retreatant->full_name_with_city;
         }
         
-        return view('stripe.balance_transactions.edit', compact('balance_transaction', 'matching_contacts','transaction_types','unprocessed_squarespace_contributions','retreats'));
+        return view('stripe.balance_transactions.edit', compact('balance_transaction', 'matching_contacts','transaction_types','unprocessed_squarespace_contributions','retreats','donations'));
     
         
     }
@@ -317,6 +320,42 @@ class StripeBalanceTransactionController extends Controller
                 flash('Stripe Balance Transaction #' . $balance_transaction->id . ' has been successfully processed.')->success();
                 break;
             case 'Invoice' :
+                // process contact_id
+                $contact_id = ($request->filled('contact_id')) ? $request->input('contact_id') : null;
+                $balance_transaction->contact_id = $contact_id;
+                $balance_transaction->save();
+
+                if ($balance_transaction->contact_id == 0) {
+                    // Create a new contact
+                    $contact = new Contact;
+                    $contact->contact_type = config('polanco.contact_type.individual');
+                    $contact->subcontact_type = 0;
+                    
+                    $names = explode(' ', $balance_transaction->name);
+                    $number_of_names= count($names);
+                    $last_name = $names[$number_of_names-1];
+                    $middle_name = ($number_of_names > 2) ? implode(' ',array_slice($names,1,$number_of_names-2)) : null;
+                    $first_name = $names[0];
+                    
+                    $contact->first_name = $first_name;
+                    $contact->middle_name = $middle_name;
+                    $contact->last_name = $last_name;
+                    $contact->sort_name = $last_name . ', ' . $first_name;
+                    $contact->display_name = $balance_transaction->name;
+                    $contact->save();
+
+                    $contact_id = $contact->id;
+                    $balance_transaction->contact_id = $contact->id;
+                    $balance_transaction->save();
+                    
+                    return Redirect::action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'],$balance_transaction->id);
+
+                } else {
+                    $contact = Contact::findOrFail($contact_id);
+                    $balance_transaction->contact_id = $contact->id;
+                    $balance_transaction->save();
+                }
+
                 break;
         }
         
