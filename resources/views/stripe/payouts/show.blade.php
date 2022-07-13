@@ -7,7 +7,7 @@
             <div class="panel-heading">
                 <span>
                     <h2>
-                            Stripe Payout details
+                            Stripe Payout # {{$payout->id}} details
                     </h2>
                 </span>
             </div>

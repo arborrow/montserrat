@@ -131,7 +131,7 @@ class DonationController extends Controller
         }
         
         if ($first_donation->event_id <> $second_donation->event_id) {
-            flash('Mismatched Contact IDs: Donation ID#: <a href="'.url('/donation/'.$first_donation->donation_id).'">'.$first_donation->donation_id.'</a> 
+            flash('Mismatched Event IDs: Donation ID#: <a href="'.url('/donation/'.$first_donation->donation_id).'">'.$first_donation->donation_id.'</a> 
             not mergeable with ID# <a href="'.url('/donation/'.$second_donation->donation_id).'">'.$second_donation->donation_id.'</a>')->warning()->important();           
             return Redirect::action([self::class, 'mergeable']);            
         }
