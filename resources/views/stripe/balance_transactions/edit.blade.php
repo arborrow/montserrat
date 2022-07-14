@@ -76,14 +76,14 @@
                                 @foreach ($transaction_types as $type)
                                     {!! Form::label(str_replace(" ", "_",strtolower($type)), $type) !!}</h3>
                                     @if (count($transaction_types) == 1)
-                                        {!! Form::number(str_replace(" ", "_",strtolower($type)), $balance_transaction->total_amount, ['class' => 'form-control']) !!}
+                                        {!! Form::number(str_replace(" ", "_",strtolower($type)), $balance_transaction->total_amount, ['class' => 'form-control','step'=>'0.01']) !!}
                                     @else
-                                        {!! Form::number(str_replace(" ", "_",strtolower($type)), null, ['class' => 'form-control']) !!}
+                                        {!! Form::number(str_replace(" ", "_",strtolower($type)), null, ['class' => 'form-control','step'=>'0.01']) !!}
                                     @endIf
                                 @endForeach
                             @else
                                 {!! Form::label(str_replace(" ","_", strtolower($transaction_types)), $transaction_types) !!}</h3>
-                                {!! Form::number(str_replace(" ","_", strtolower($transaction_types)), $balance_transaction->total_amount, ['class' => 'form-control']) !!}
+                                {!! Form::number(str_replace(" ","_", strtolower($transaction_types)), $balance_transaction->total_amount, ['class' => 'form-control','step'=>'0.01']) !!}
                             @endIf
                             <hr />
                             <strong>Fee: </strong> ${{ number_format($balance_transaction->fee_amount,2) }}
