@@ -300,14 +300,25 @@ class StripeBalanceTransactionController extends Controller
                 
                 // create donations and payments and mark balance transaction as reconciled
                 foreach ($transaction_types as $type) {
-                    $camel_type = str_replace(' ','_',strtolower($type));
-                    $donation = new Donation;
-                    $donation->donation_date = (isset($event->start_date)) ? $event->start_date : $balance_transaction->payout_date;
-                    $donation->donation_description = config('polanco.stripe_balance_transaction_types'.$type);
-                    $donation->contact_id = $balance_transaction->contact_id;
-                    $donation->event_id = (isset($event->id)) ? $event->id : null;
-                    $donation->donation_amount = $distribution[$camel_type];
-                    $donation->save();
+                    if ($type = "Donacion de Retiro" || $type = "Retreat Offering") {
+                        $donation = Donation::whereEventId($event_id)->whereContactId($contact_id)->whereDonationDescription("Retreat Deposits")->get();
+                        if (isset($donation) && $donation->count() == 1) {
+                            $camel_type = str_replace(' ','_',strtolower($type));
+                            $donation->donation_date = (isset($event->start_date)) ? $event->start_date : $balance_transaction->payout_date;
+                            $donation->donation_description = config('polanco.stripe_balance_transaction_types.'.$type);
+                            $donation->donation_amount += $distribution[$camel_type];
+                            $donation->save();
+                        }    
+                    } else {
+                        $camel_type = str_replace(' ','_',strtolower($type));
+                        $donation = new Donation;
+                        $donation->donation_date = (isset($event->start_date)) ? $event->start_date : $balance_transaction->payout_date;
+                        $donation->donation_description = config('polanco.stripe_balance_transaction_types.'.$type);
+                        $donation->contact_id = $balance_transaction->contact_id;
+                        $donation->event_id = (isset($event->id)) ? $event->id : null;
+                        $donation->donation_amount = $distribution[$camel_type];
+                        $donation->save();    
+                    }
 
                     $payment = new Payment;
                     $payment->donation_id = $donation->donation_id;
