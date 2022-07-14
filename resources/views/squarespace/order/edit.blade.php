@@ -494,6 +494,18 @@
                         @endIf
                     </tr>
 
+                    <tr>
+                        <td><strong>Gender</strong></td>
+                        <td class='table-warning'>
+                            {!! Form::select('gender_id', $genders, null, ['class' => 'form-control']) !!}
+                        </td>
+                        @if ($order->is_couple)
+                            <td class='table-warning'>
+                                {!! Form::select('couple_gender_id', $genders, null, ['class' => 'form-control']) !!}
+                            </td>
+                        @endIf
+                    </tr>    
+
                     @if (isset($order->date_of_birth) || isset($order->couple_date_of_birth))
                     <tr>
                         <td><strong>Date of Birth</strong></td>
@@ -517,6 +529,20 @@
                         @endIf
                     </tr>
                     @endIf
+
+                    <tr>
+                        <td><strong>Religion</strong></td>
+                        <td class='table-warning'>
+                            {!! Form::select('religion_id', $religions, null, ['class' => 'form-control']) !!}
+                        </td>
+                        @if ($order->is_couple)
+                            <td class='table-warning'>
+                                {!! Form::select('couple_religion_id', $religions, null, ['class' => 'form-control']) !!}
+                            </td>
+                        @endIf
+                    </tr>    
+
+
 
                     @if (!($order->room_preference == 'Ninguna' || $order->room_preference == 'No preference' || null == $order->room_preference))
                     <tr>

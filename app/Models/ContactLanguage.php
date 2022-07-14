@@ -12,4 +12,5 @@ class ContactLanguage extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'contact_languages';
+    protected $fillable = ['contact_id','language_id'];
 }

@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateSquarespaceOrderRequest;
 
 use App\Models\Address;
 use App\Models\Contact;
+use App\Models\ContactLanguage;
 use App\Models\Country;
 use App\Models\Donation;
 use App\Models\Email;
@@ -122,6 +123,10 @@ class SquarespaceOrderController extends Controller
         $states->prepend('N/A', null);
         $countries = Country::orderBy('iso_code')->pluck('iso_code', 'id');
         $countries->prepend('N/A', null);
+        $religions = \App\Models\Religion::orderBy('name')->whereIsActive(1)->pluck('name', 'id');
+        $religions->prepend('N/A', 0);
+        $genders = \App\Models\Gender::orderBy('name')->pluck('name', 'id');
+        $genders->prepend('N/A', 0);
         $languages = Language::orderBy('label')->whereIsActive(1)->pluck('label', 'id');
         $languages->prepend('None', null);
         $parishes = Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
@@ -173,7 +178,7 @@ class SquarespaceOrderController extends Controller
         $couple_matching_contacts = (isset($order->couple_name)) ? $this->matched_contacts($couple) : [null=>'No name provided'];
         //dd($couple_matching_contacts, $matching_contacts);
 
-        return view('squarespace.order.edit', compact('order', 'matching_contacts', 'retreats', 'couple_matching_contacts', 'prefixes', 'states', 'countries', 'languages', 'parish_list','ids'));
+        return view('squarespace.order.edit', compact('order', 'matching_contacts', 'retreats', 'couple_matching_contacts', 'prefixes', 'states', 'countries', 'languages', 'parish_list','ids','genders','religions'));
     }
 
     /**
@@ -216,8 +221,20 @@ class SquarespaceOrderController extends Controller
         $order->date_of_birth = $request->input('date_of_birth');
         $order->couple_date_of_birth = $request->input('couple_date_of_birth');
         $order->room_preference = $request->input('room_preference');
+        
         $preferred_language = ($request->filled('preferred_language_id')) ? Language::findOrFail($request->input('preferred_language_id')) : null ;
         $order->preferred_language = (null !== optional($preferred_language)->label) ? optional($preferred_language)->label : $order->preferred_language;
+        $english_language = Language::whereName('en_US')->first();
+        $spoken_language = ContactLanguage::firstOrCreate([
+            'contact_id' => $contact_id,
+            'language_id' => $preferred_language->id,
+        ]);        
+        // assumes that all users speake Engilsh
+        $spoken_language = ContactLanguage::firstOrCreate([
+            'contact_id' => $contact_id,
+            'language_id' => $english_language->id,
+        ]);
+
         // $order->parish_id = $request->input('parish_id');
         $order->emergency_contact = $request->input('emergency_contact');
         $order->emergency_contact_relationship = $request->input('emergency_contact_relationship');
@@ -296,8 +313,10 @@ class SquarespaceOrderController extends Controller
             $contact->last_name = ($request->filled('last_name')) ? $request->input('last_name') : $contact->last_name;
             $contact->nick_name = ($request->filled('nick_name')) ? $request->input('nick_name') : $contact->nick_name;
             $contact->birth_date = ($request->filled('date_of_birth')) ? $request->input('date_of_birth') : $contact->birth_date;
+            $contact->gender_id = $request->input('gender_id');
+            $contact->religion_id = $request->input('religion_id');
+            $contact->preferred_language = (isset(optional($preferred_language)->name)) ? $preferred_language->name : null;
             $contact->save();
-
             // save room_preference
             $room_preference = Note::firstOrNew([
                 'entity_table'=>'contact',
@@ -430,8 +449,15 @@ class SquarespaceOrderController extends Controller
                 $couple_contact->last_name = ($request->filled('couple_last_name')) ? $request->input('couple_last_name') : $couple_contact->last_name;
                 $couple_contact->nick_name = ($request->filled('couple_nick_name')) ? $request->input('couple_nick_name') : $couple_contact->nick_name;
                 $couple_contact->birth_date = ($request->filled('couple_date_of_birth')) ? $request->input('couple_date_of_birth') : $couple_contact->birth_date;
+                $couple_contact->gender_id = $request->input('couple_gender_id');
+                $couple_contact->religion_id = $request->input('couple_religion_id');
                 $couple_contact->save();
  
+                $spoken_language = ContactLanguage::firstOrCreate([
+                    'contact_id' => $couple_contact_id,
+                    'language_id' => $english_language->id,
+                ]);        
+        
                 // retreatant relationship
                 $couple_relationship_retreatant = Relationship::firstOrNew([
                     'contact_id_a'=>config('polanco.self.id'),
