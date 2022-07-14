@@ -301,10 +301,9 @@ class StripeBalanceTransactionController extends Controller
                 // create donations and payments and mark balance transaction as reconciled
                 foreach ($transaction_types as $type) {
                     $camel_type = str_replace(' ','_',strtolower($type));
-
                     $donation = new Donation;
                     $donation->donation_date = (isset($event->start_date)) ? $event->start_date : $balance_transaction->payout_date;
-                    $donation->donation_description = $type;
+                    $donation->donation_description = config('polanco.stripe_balance_transaction_types'.$type);
                     $donation->contact_id = $balance_transaction->contact_id;
                     $donation->event_id = (isset($event->id)) ? $event->id : null;
                     $donation->donation_amount = $distribution[$camel_type];
