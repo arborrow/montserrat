@@ -56,6 +56,7 @@ class StripeChargeController extends Controller
 
         $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
         $charge = $stripe->charges->retrieve($charge_id,[]);
+        // $invoice = $stripe->invoices->retrieve($charge->invoice,[]);
         $customer = !is_null($charge->customer) ? $stripe->customers->retrieve($charge->customer) : NULL;
 
         return view('stripe.charges.show',compact('charge','customer'));
