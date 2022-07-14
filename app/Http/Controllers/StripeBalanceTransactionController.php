@@ -237,6 +237,7 @@ class StripeBalanceTransactionController extends Controller
 
             case 'Manual' :
                 $contact_id = ($request->filled('contact_id')) ? $request->input('contact_id') : null;
+                $proceed = isset($balance_transaction->contact_id);
                 $balance_transaction->contact_id = $contact_id;
                 $balance_transaction->save();
 
@@ -269,6 +270,10 @@ class StripeBalanceTransactionController extends Controller
                     $contact = Contact::findOrFail($contact_id);
                     $balance_transaction->contact_id = $contact->id;
                     $balance_transaction->save();
+
+                    if ($proceed) {
+                        return Redirect::action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'],$balance_transaction->id);
+                    }
                     //dd(($couple_contact_id == 0 && !isset($order->couple_contact_id)),$order->is_couple, $couple_contact_id, !isset($order->couple_contact_id), $contact, $request);
     
                 }
