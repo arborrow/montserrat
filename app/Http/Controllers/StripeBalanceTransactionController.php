@@ -300,7 +300,7 @@ class StripeBalanceTransactionController extends Controller
                 
                 // create donations and payments and mark balance transaction as reconciled
                 foreach ($transaction_types as $type) {
-
+                    
                     if ($type == "Donacion de Retiro" || $type == "Retreat Offering") {
                         $deposit_donation = Donation::whereEventId($event_id)->whereContactId($contact_id)->whereDonationDescription("Retreat Deposits")->get();
                         if (isset($deposit_donation) && $deposit_donation->count() == 1) {
@@ -321,6 +321,7 @@ class StripeBalanceTransactionController extends Controller
                         $donation->contact_id = $balance_transaction->contact_id;
                         $donation->event_id = (isset($event->id)) ? $event->id : null;
                         $donation->donation_amount = $distribution[$camel_type];
+                        // dd($transaction_types, $type, $distribution, $donation);
                         $donation->save();
                     }   
                     
@@ -332,6 +333,8 @@ class StripeBalanceTransactionController extends Controller
                     $payment->ccnumber = $balance_transaction->cc_last_4;
                     $payment->stripe_balance_transaction_id = $balance_transaction->id;
                     $payment->save();
+
+                    $donation = null; // reset $donation for each iteration of foreach loop
 
                 }
 
