@@ -19,7 +19,7 @@
             </div>
 
             <div class='row'>
-                <div class='col-md-4'>
+                <div class='col-md-6'>
                     <strong>Name: </strong>
                     @if (isset($balance_transaction->contact_id))
                         {{ $balance_transaction->name }} -
