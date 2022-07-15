@@ -22,9 +22,10 @@
                 <div class='col-md-4'>
                     <strong>Name: </strong>
                     @if (isset($balance_transaction->contact_id))
+                        {{ $balance_transaction->name }} -
                         <a href="{!! $balance_transaction->contact->contact_url . '#donations' !!}">
-                            {{ $balance_transaction->name }}
-                        </a>
+                            {{ $balance_transaction->contact->full_name_with_city }}
+                        </a> 
                     @else
                         {{ $balance_transaction->name }}
                     @endif
