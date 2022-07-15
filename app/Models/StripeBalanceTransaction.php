@@ -28,11 +28,6 @@ class StripeBalanceTransaction extends Model implements Auditable
         return $this->hasOne(Contact::class, 'id', 'contact_id');
     }
 
-    public function event()
-    {
-        return $this->hasOne(Contact::class, 'id', 'event_id');
-    }
-
     public function payout()
     {
         return $this->hasOne(StripePayout::class, 'id', 'payout_id');
