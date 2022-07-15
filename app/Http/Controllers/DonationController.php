@@ -104,7 +104,7 @@ class DonationController extends Controller
     {   // contact id 5847 hardcoded for anonymous user
         $this->authorize('show-donation');
         $mergeable = DB::table('Donations as d')
-         ->select(DB::raw('CONCAT(d.contact_id,"-",d.event_id,"-",d.donation_description) as unique_value, COUNT(*) as donation_count, MAX(d.donation_date) as donation_date, MIN(d.donation_id) as min_donation_id, MAX(d.donation_id) as max_donation_id, MIN(c.sort_name) as sort_name, MIN(e.idnumber) as idnumber, MIN(e.title) as event_title, MIN(d.donation_description) as donation_description'))
+         ->select(DB::raw('CONCAT(d.contact_id,"-",d.event_id,"-",d.donation_description) as unique_value, COUNT(*) as donation_count, MAX(d.donation_date) as donation_date, MIN(d.donation_id) as min_donation_id, MAX(d.donation_id) as max_donation_id, MIN(c.sort_name) as sort_name, MIN(e.idnumber) as idnumber, MIN(e.title) as event_title, MIN(d.donation_description) as donation_description, MIN(d.contact_id) as contact_id' ))
          ->leftjoin('event as e', 'd.event_id', '=', 'e.id')
          ->leftjoin('contact as c', 'd.contact_id', '=', 'c.id')
          ->whereRaw('d.deleted_at IS NULL AND d.donation_amount>0 AND d.contact_id IS NOT NULL AND d.event_id IS NOT NULL AND d.donation_description IS NOT NULL AND d.contact_id <> 5847 AND d.donation_date>="2021-07-01"')

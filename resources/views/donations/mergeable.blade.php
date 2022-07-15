@@ -32,7 +32,7 @@
                 <tbody>
                     @foreach($mergeable as $donation)
                     <tr>
-                        <td>{{ $donation->sort_name }}</td>
+                        <td><a href={{url('person/'.$donation->contact_id."#donations")}}>{{ $donation->sort_name }}</a></td>
                         <td>{{ $donation->donation_date }}</td>
                         <td>{{ $donation->idnumber }} </td>
                         <td>{{ $donation->event_title}}</td>
