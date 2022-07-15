@@ -104,6 +104,10 @@ class SquarespaceContributionController extends Controller
         $matching_contacts = $this->matched_contacts($ss_contribution);
         $retreats = (isset($ss_contribution->event_id)) ? $this->upcoming_retreats($ss_contribution->event_id,6) : $this->upcoming_retreats(null,6);
 
+        if (isset($ss_contribution->contact_id) && $ss_contribution->contact_id > 0) {
+            $retreats = $this->contact_retreats($ss_contribution->contact_id);
+        }
+
         $states = StateProvince::orderBy('abbreviation')->whereCountryId(config('polanco.country_id_usa'))->pluck('abbreviation', 'id');
         $states->prepend('N/A', null);
         $countries = Country::orderBy('iso_code')->pluck('iso_code', 'id');
@@ -172,7 +176,7 @@ class SquarespaceContributionController extends Controller
         if ($ss_contribution->is_processed) { // the order has already been processed
             flash('SquareSpace Contribution #<a href="'.url('/squarespace/order/'.$ss_contribution->id).'">'.$ss_contribution->order_number.'</a> has already been processed')->error()->important();
             return Redirect::action([self::class, 'index']);
-        } else { // the order has not been processed
+        } else { // the contribution has not been processed
             if (!isset($ss_contribution->contact_id)) {
                 if ($contact_id == 0) {
                     // Create a new contact
@@ -199,9 +203,8 @@ class SquarespaceContributionController extends Controller
             }
 
 
-            // process order: we have contact_id and event_id but not participant_id and not processed
-            // update contact info (prefix, parish, )
-
+            // process contribution: we have contact_id and event_id but not participant_id and not processed
+            
             $contact = Contact::findOrFail($contact_id);
             $event = (isset($event_id)) ? Retreat::findOrFail($event_id) : null;
 
