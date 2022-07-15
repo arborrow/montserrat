@@ -28,6 +28,7 @@ class UpdatePaymentRequest extends FormRequest
             'payment_date' => 'required|date',
             'payment_amount' => 'required|numeric',
             'payment_idnumber' => 'nullable|numeric|min:0',
+            'stripe_balance_transaction_id' => 'nullable|integer|min:1',
         ];
     }
 

@@ -156,6 +156,7 @@ class PaymentController extends Controller
         $payment->payment_amount = $request->input('payment_amount');
         $payment->payment_date = $request->input('payment_date');
         $payment->payment_description = $request->input('payment_description');
+        $payment->stripe_balance_transaction_id = $request->input('stripe_balance_transaction_id');
         if ($request->input('payment_description') == 'Credit card') {
             $payment->ccnumber = substr($request->input('payment_idnumber'), -4);
         }

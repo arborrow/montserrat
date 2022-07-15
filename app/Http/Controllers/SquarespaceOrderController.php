@@ -225,10 +225,14 @@ class SquarespaceOrderController extends Controller
         $preferred_language = ($request->filled('preferred_language_id')) ? Language::findOrFail($request->input('preferred_language_id')) : null ;
         $order->preferred_language = (null !== optional($preferred_language)->label) ? optional($preferred_language)->label : $order->preferred_language;
         $english_language = Language::whereName('en_US')->first();
-        $spoken_language = ContactLanguage::firstOrCreate([
-            'contact_id' => $contact_id,
-            'language_id' => $preferred_language->id,
-        ]);        
+        
+        if (isset($preferred_language)) {
+            $spoken_language = ContactLanguage::firstOrCreate([
+                'contact_id' => $contact_id,
+                'language_id' => $preferred_language->id,
+            ]);        
+        }
+        
         // assumes that all users speake Engilsh
         $spoken_language = ContactLanguage::firstOrCreate([
             'contact_id' => $contact_id,

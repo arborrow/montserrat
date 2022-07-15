@@ -33,6 +33,12 @@
                         {!! Form::label('note', 'Note')  !!}
                         {!! Form::text('note', $payment->note, ['class' => 'form-control']) !!}
                     </div>
+                    @if ($payment->payment_description == "Credit card" && !isset($payment->stripe_balance_transaction_id))
+                        <div class="col-lg-3 col-md-4">
+                            {!! Form::label('stripe_balance_transaction_id', 'Balance Transaction ID')  !!}
+                            {!! Form::number('stripe_balance_transaction_id', $payment->stripe_balance_transaction_id, ['class' => 'form-control']) !!}
+                        </div>
+                    @endif
                 </div>
             </div>
             <div class="row">
