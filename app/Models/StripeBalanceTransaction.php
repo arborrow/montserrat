@@ -23,6 +23,11 @@ class StripeBalanceTransaction extends Model implements Auditable
 
     protected $fillable = ['balance_transaction_id', 'payout_id', 'customer_id', 'charge_id', 'total_amount', 'fee_amount', 'net_amount', 'payout_date', 'available_date', 'reconcile_date'];
 
+    public function contact()
+    {
+        return $this->hasOne(Contact::class, 'id', 'contact_id');
+    }
+
     public function payout()
     {
         return $this->hasOne(StripePayout::class, 'id', 'payout_id');

@@ -20,7 +20,14 @@
 
             <div class='row'>
                 <div class='col-md-4'>
-                    <strong>Name: </strong>{{ $balance_transaction->name }}
+                    <strong>Name: </strong>
+                    @if (isset($balance_transaction->contact_id))
+                        <a href="{!! $balance_transaction->contact->contact_url . '#donations' !!}">
+                            {{ $balance_transaction->name }}
+                        </a>
+                    @else
+                        {{ $balance_transaction->name }}
+                    @endif
                     <br /><strong>Email: </strong>{{ $balance_transaction->email }}
                     <br /><strong>Zip: </strong>{{ $balance_transaction->zip }}
                     <br /><strong>Credit Card Last 4: </strong>{{ $balance_transaction->cc_last_4 }}
