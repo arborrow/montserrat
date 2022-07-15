@@ -69,7 +69,6 @@
                         <tr>
                             <th>Description</th>
                             <th>Name</th>
-                            <th>Event ID Number</th>
                             <th>Amount</th>
                             <th>Reconciled</th>
                         </tr>
@@ -89,14 +88,6 @@
                         <tr>
                             <td><a href="{{URL('/stripe/balance_transaction/'.$balance_transaction->balance_transaction_id)}}">{{ $balance_transaction->description }}</a></td>
                             <td>{{ $balance_transaction->name }}</td>
-                            <td>
-                                @if (isset($balance_transaction->event_id))
-                                    <a href="{{url('retreat/'.$balance_transaction->event_id)}}">
-                                        {{ $balance_transaction->event->idnumber }}
-                                    </a>
-                                @endIf
-                            </td>
-                            
                             <td style='text-align: right'>${{ number_format($balance_transaction->total_amount,2) }}</td>
                             <td>
                                 @if (isset($balance_transaction->reconcile_date))

@@ -45,6 +45,9 @@
                         @foreach ($balance_transaction->payments as $payment)
                             <li>
                                 <a href="{{url('payment/'.$payment->payment_id)}}">{{$payment->payment_date->format('m-d-Y')}}</a> - {{$payment->donation->donation_description}} : ${{number_format($payment->payment_amount,2)}}
+                                @if (isset($payment->donation->event_id))
+                                    {!! $payment->donation->retreat_link !!}
+                                @endIf
                             </li>
                         @endforeach
                     </ul>    
