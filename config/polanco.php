@@ -100,7 +100,7 @@ return [
     ],
 
     'stripe_balance_transaction_types' => [
-        'Annual Giving Fund ' => 'AGC - General',
+        'Annual Giving Fund' => 'AGC - General',
         'Bookstore' => 'Bookstore Revenue',
         'Bookstore + Tips' => ['Bookstore Revenue','Tips'],
         'Bookstore + Tips + Flowers' => ['Bookstore Revenue', 'Flowers and Landscaping', 'Tips'],
