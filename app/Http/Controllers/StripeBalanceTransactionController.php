@@ -201,7 +201,7 @@ class StripeBalanceTransactionController extends Controller
                         $refund->donation_id = $charge_payment->donation_id;
                         $refund->payment_amount = $balance_transaction->total_amount;
                         $refund->payment_date = $balance_transaction->payout_date;
-                        $refund->payment_description = 'Refund';
+                        $refund->payment_description = 'Credit card';
                         $refund->ccnumber = $balance_transaction->cc_last_4;
                         $refund->stripe_balance_transaction_id = $balance_transaction->id;
                         $refund->save();
