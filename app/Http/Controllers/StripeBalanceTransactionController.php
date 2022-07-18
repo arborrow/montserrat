@@ -194,8 +194,8 @@ class StripeBalanceTransactionController extends Controller
                         flash('Refund for Stripe Balance Transaction #: <a href="'.url('/stripe/balance_transaction/'.$balance_transaction->balance_transaction_id).'">'.$balance_transaction->id.'</a> associated with more than one payment. Please process the refund manually.')->warning()->important();
                         
                     } else { 
+                        dd($donation, $charge_payments);
                         $donation = Donation::findOrFail($charge_payments->donation_id);
-                        dd($donation);
                         $refund = new Payment;
                         $refund->donation_id = $charge_payments->donation_id;
                         $refund->payment_amount = $charge_payments->payment_amount;
