@@ -187,7 +187,6 @@ class StripeBalanceTransactionController extends Controller
                     // get the charge balance transaction for this refund
                     // get the payments associated with the charge balance transaction
                     // refund each payment
-
                     $charge = StripeBalanceTransaction::whereChargeId($balance_transaction->charge_id)->whereType('charge')->first();
                     $charge_payments = Payment::whereStripeBalanceTransactionId($charge->charge_id);
 
@@ -576,5 +575,24 @@ class StripeBalanceTransactionController extends Controller
         }
 
     }
+
+
+    /**
+     * Reset to re-select the donor for a Stripe Balance Transaction.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function reset($id)
+    {
+        $this->authorize('update-stripe-balance-transaction');
+
+        $balance_transaction = StripeBalanceTransaction::findOrFail($id);
+        $balance_transaction->contact_id = null;
+        $balance_transaction->save();
+
+        return Redirect::action([self::class, 'edit'],['balance_transaction' => $id]);
+    }
+
 
 }

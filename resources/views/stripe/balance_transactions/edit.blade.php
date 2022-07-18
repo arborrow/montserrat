@@ -162,6 +162,7 @@
                             @case ('Invoice')
                                 @if ($balance_transaction->contact_id > 0)
                                     {!! Form::submit('Process Balance Transaction',['class' => 'btn btn-dark']) !!}
+                                    <a class="btn btn-info" href="{{ action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'reset'],['id'=>$balance_transaction->id]) }}">Reset Contact for Stripe Balance Transaction #{{ $balance_transaction->id }}</a>
                                 @else
                                     {!! Form::submit('Retrieve Donor Information',['class' => 'btn btn-info']) !!}
                                 @endif
