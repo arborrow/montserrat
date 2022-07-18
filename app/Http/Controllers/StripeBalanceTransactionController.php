@@ -188,13 +188,14 @@ class StripeBalanceTransactionController extends Controller
                     // get the payments associated with the charge balance transaction
                     // refund each payment
                     $charge = StripeBalanceTransaction::whereChargeId($balance_transaction->charge_id)->whereType('charge')->first();
-                    $charge_payments = Payment::whereStripeBalanceTransactionId($charge->charge_id);
+                    $charge_payments = Payment::whereStripeBalanceTransactionId($charge->charge_id)->get();
 
                     if ($charge_payments->count() > 1) {
                         flash('Refund for Stripe Balance Transaction #: <a href="'.url('/stripe/balance_transaction/'.$balance_transaction->balance_transaction_id).'">'.$balance_transaction->id.'</a> associated with more than one payment. Please process the refund manually.')->warning()->important();
                         
                     } else { 
                         $donation = Donation::findOrFail($charge_payments->donation_id);
+                        dd($donation);
                         $refund = new Payment;
                         $refund->donation_id = $charge_payments->donation_id;
                         $refund->payment_amount = $charge_payments->payment_amount;
