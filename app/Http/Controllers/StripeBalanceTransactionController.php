@@ -187,18 +187,19 @@ class StripeBalanceTransactionController extends Controller
                     // get the charge balance transaction for this refund
                     // get the payments associated with the charge balance transaction
                     // refund each payment
+                    
                     $charge = StripeBalanceTransaction::whereChargeId($balance_transaction->charge_id)->whereType('charge')->first();
-                    $charge_payments = Payment::whereStripeBalanceTransactionId($charge->charge_id)->get();
+                    $charge_payments = Payment::whereStripeBalanceTransactionId($charge->id)->get();
 
                     if ($charge_payments->count() > 1) {
                         flash('Refund for Stripe Balance Transaction #: <a href="'.url('/stripe/balance_transaction/'.$balance_transaction->balance_transaction_id).'">'.$balance_transaction->id.'</a> associated with more than one payment. Please process the refund manually.')->warning()->important();
-                        
-                    } else { 
-                        dd($donation, $charge_payments);
-                        $donation = Donation::findOrFail($charge_payments->donation_id);
+
+                    } else {
+                        $charge_payment = $charge_payments[0];
+                        $donation = Donation::findOrFail($charge_payment->donation_id);
                         $refund = new Payment;
-                        $refund->donation_id = $charge_payments->donation_id;
-                        $refund->payment_amount = $charge_payments->payment_amount;
+                        $refund->donation_id = $charge_payment->donation_id;
+                        $refund->payment_amount = $balance_transaction->total_amount;
                         $refund->payment_date = $balance_transaction->payout_date;
                         $refund->payment_description = 'Refund';
                         $refund->ccnumber = $balance_transaction->cc_last_4;
@@ -211,7 +212,7 @@ class StripeBalanceTransactionController extends Controller
                     $balance_transaction->reconcile_date = now();
                     $balance_transaction->contact_id = $refund->donation->contact->id;
                     $balance_transaction->save();
-
+                                                       
                     flash('Refund for Stripe Balance Transaction #: <a href="'.url('/stripe/balance_transaction/'.$balance_transaction->balance_transaction_id).'">'.$balance_transaction->id.'</a> successfully processed.')->success();
 
                     return Redirect::action([\App\Http\Controllers\StripePayoutController::class, 'show'],$balance_transaction->payout_id);
