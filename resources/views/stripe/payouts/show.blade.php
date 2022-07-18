@@ -20,7 +20,7 @@
                     <br /><strong>Total Fees: </strong>${{ number_format($payout->total_fee_amount,2)  }}
                 </div>
             </div>
-            @if ($stripe_balance_transactions->count() > $balance_transactions->count() )
+            @if ($stripe_balance_transactions->count() + $refunds->count() > $balance_transactions->count())
                 <table class="table table-bordered table-striped table-hover">
                     <caption>
                         <h2>
@@ -75,17 +75,12 @@
                     </thead>
                     <tbody>
 
-                        @foreach ($refunds as $refund)
-                        <tr class="bg-warning">
-                            <td>{{ $refund->description }}</td>
-                            <td>{{ $refund->name}}</td>
-                            <td>${{ number_format($refund->amount/100,2) }}</td>
-                            <td><a href="{{ URL('stripe/charge/'.$refund->source) }}">{{ $refund->source }}</a></td>
-                        </tr>
-                        @endforeach
-
                         @foreach ($balance_transactions as $balance_transaction)
-                        <tr>
+                        @if ($balance_transaction->transaction_type == 'Refund')
+                            <tr class="bg-warning">
+                        @else
+                            <tr>
+                        @endIf
                             <td><a href="{{URL('/stripe/balance_transaction/'.$balance_transaction->balance_transaction_id)}}">{{ $balance_transaction->description }}</a></td>
                             <td>{{ $balance_transaction->name }}</td>
                             <td style='text-align: right'>${{ number_format($balance_transaction->total_amount,2) }}</td>
@@ -99,6 +94,9 @@
                                             @break
                                         @case('Donation')
                                             {{ Html::link(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'],$balance_transaction->id),'Create Payment for Donation'.optional($balance_transaction->squarespace_order)->order_number,array('class' => 'btn btn-primary')) }}
+                                            @break                                    
+                                        @case('Refund')
+                                            {{ Html::link(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'],$balance_transaction->id),'Create Refund Credit Payment',array('class' => 'btn btn-primary')) }}
                                             @break                                    
                                         @default
                                             {{ Html::link(action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'],$balance_transaction->id),'Process Balance Transaction',array('class' => 'btn btn-primary')) }}

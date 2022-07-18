@@ -182,6 +182,41 @@ class StripeBalanceTransactionController extends Controller
 
                     return Redirect::action([\App\Http\Controllers\StripePayoutController::class, 'show'],$balance_transaction->payout_id);
                     break;
+                case 'Refund' :
+
+                    // get the charge balance transaction for this refund
+                    // get the payments associated with the charge balance transaction
+                    // refund each payment
+
+                    $charge = StripeBalanceTransaction::whereChargeId($balance_transaction->charge_id)->whereType('charge')->first();
+                    $charge_payments = Payment::whereStripeBalanceTransactionId($charge->id);
+
+                    if ($charge_payments->count() > 1) {
+                        flash('Refund for Stripe Balance Transaction #: <a href="'.url('/stripe/balance_transaction/'.$balance_transaction->balance_transaction_id).'">'.$balance_transaction->id.'</a> associated with more than one payment. Please process the refund manually.')->warning()->important();
+                        
+                    } else { 
+                        $donation = Donation::findOrFail($charge_payments->donation_id);
+                        $refund = new Payment;
+                        $refund->donation_id = $charge_payments->donation_id;
+                        $refund->payment_amount = $charge_payments->payment_amount;
+                        $refund->payment_date = $balance_transaction->payout_date;
+                        $refund->payment_description = 'Refund';
+                        $refund->ccnumber = $balance_transaction->cc_last_4;
+                        $refund->stripe_balance_transaction_id = $balance_transaction->id;
+                        $refund->save();
+                        $donation->donation_amount = $donation->donation_amount + $refund->payment_amount;
+                        $donation->save();
+                    }
+
+                    $balance_transaction->reconcile_date = now();
+                    $balance_transaction->contact_id = $refund->donation->contact->id;
+                    $balance_transaction->save();
+
+                    flash('Refund for Stripe Balance Transaction #: <a href="'.url('/stripe/balance_transaction/'.$balance_transaction->balance_transaction_id).'">'.$balance_transaction->id.'</a> successfully processed.')->success();
+
+                    return Redirect::action([\App\Http\Controllers\StripePayoutController::class, 'show'],$balance_transaction->payout_id);
+                    break;
+    
             }
         } else {
             flash('Stripe Balance Transaction #: <a href="'.url('/stripe/balance_transaction/'.$balance_transaction->balance_transaction_id).'">'.$balance_transaction->id.'</a> has already been processed.')->warning();
@@ -447,9 +482,8 @@ class StripeBalanceTransactionController extends Controller
     public function import($payout_id)
     {
         $this->authorize('import-stripe-balance_transaction');
-        // dd('Stripe Payout Import');
-        $payout = StripePayout::findOrFail($payout_id);
-        
+        $payout = StripePayout::findOrFail($payout_id);      
+
         $stripe = new StripeClient(config('services.stripe.secret'));
 
         $stripe_balance_transactions = $stripe->balanceTransactions->all(
@@ -459,7 +493,6 @@ class StripeBalanceTransactionController extends Controller
             ]
         );
 
-        //TODO: figure out how best to import and process stripe refunds
         $stripe_refunds = $stripe->balanceTransactions->all(
             ['payout' => $payout->payout_id,
             'type' => 'refund',
@@ -467,8 +500,20 @@ class StripeBalanceTransactionController extends Controller
             ]
         );
 
+        $this->store_balance_transactions($payout, $stripe_balance_transactions);
+        $this->store_balance_transactions($payout, $stripe_refunds);
+
+        return Redirect::action([\App\Http\Controllers\StripePayoutController::class, 'show'],$payout->payout_id);
+
+    }
+
+    public function store_balance_transactions($payout, $stripe_balance_transactions) {
+        $this->authorize('import-stripe-balance_transaction');
+
+        $stripe = new StripeClient(config('services.stripe.secret'));
+
         foreach ($stripe_balance_transactions->autoPagingIterator() as $stripe_balance_transaction) {
-            //dd($balance_transaction->balance_transaction_id);
+            
             $balance_transaction = StripeBalanceTransaction::firstOrNew([
                 'balance_transaction_id' => $stripe_balance_transaction->id,
             ]);
@@ -515,6 +560,9 @@ class StripeBalanceTransactionController extends Controller
                 case (strpos($balance_transaction->description,'Donation by ') === 0) :
                     $balance_transaction->transaction_type = 'Donation';
                     break;
+                case (strpos($balance_transaction->description,'REFUND') === 0) :
+                    $balance_transaction->transaction_type = 'Refund';
+                    break;
                 case (strpos($balance_transaction->description,'Charge for ') === 0) :
                     $balance_transaction->transaction_type = 'Charge';
                     break;
@@ -526,8 +574,6 @@ class StripeBalanceTransactionController extends Controller
             // dd($stripe_balance_transaction);
             $balance_transaction->save();
         }
-
-        return Redirect::action([\App\Http\Controllers\StripePayoutController::class, 'show'],$payout->payout_id);
 
     }
 
