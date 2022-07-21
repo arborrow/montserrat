@@ -55,7 +55,8 @@
       <span class="font-weight-bold">Start date: </span>{{$donation->start_date}}
       <br><span class="font-weight-bold">End date: </span>{{$donation->end_date}}
       <br><span class="font-weight-bold">Donation install: </span>{{$donation->donation_install}}
-        <br><span class="font-weight-bold">Terms: </span>{{$donation->terms}}
+      <br><span class="font-weight-bold">Terms: </span>{{$donation->terms}}
+      <br><span class="font-weight-bold">Stripe Invoice #: </span>{{$donation->stripe_invoice}}
     </div>
     <div class="col-lg-12 mt-3">
         <table class="table table-bordered table-striped table-hover table-responsive-md">

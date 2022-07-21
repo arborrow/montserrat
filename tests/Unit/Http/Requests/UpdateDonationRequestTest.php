@@ -48,6 +48,7 @@ class UpdateDonationRequestTest extends TestCase
             'end_date' => 'date|nullable|after:start_date',
             'donation_install' => 'numeric|min:0|nullable',
             'donation_thank_you' => Rule::in(['Y', 'N']),
+            'stripe_invoice' => 'string|nullable',
         ], $actual);
     }
 

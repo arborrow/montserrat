@@ -66,6 +66,10 @@
                         {!! Form::label('terms', 'Terms')  !!}
                         {!! Form::text('terms', $donation->terms, ['class' => 'form-control']) !!}
                     </div>
+                    <div class="col-lg-3 col-md-4">
+                        {!! Form::label('stripe_invoice', 'Stripe Invoice #')  !!}
+                        {!! Form::text('stripe_invoice', $donation->stripe_invoice, ['class' => 'form-control']) !!}
+                    </div>
 
                 </div>
                 <div class="row text-center mt-4">

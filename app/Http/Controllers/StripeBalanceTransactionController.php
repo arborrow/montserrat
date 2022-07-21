@@ -143,10 +143,43 @@ class StripeBalanceTransactionController extends Controller
                     break;
                 case 'Invoice' :
                     $transaction_types = 'Invoice';
-                    if ($balance_transaction->contact_id > 0) {
-                        $donations = Donation::whereContactId($balance_transaction->contact_id)->orderBy('donation_date','DESC')->get()->pluck('donation_summary','donation_id');
+                    $invoice_number = substr($balance_transaction->description, strpos($balance_transaction->description,' ')+1, (strpos($balance_transaction->description,'-') - strpos($balance_transaction->description,' ') - 1));
+                    $donation = Donation::whereStripeInvoice($invoice_number)->first();
+                    $contact_id = (isset($donation)) ? $donation->contact_id : $balance_transaction->contact_id;
+                    
+                    if (isset($donation)) {
+                        
+                        $payment = new Payment;
+                        $payment->donation_id = $donation->donation_id;
+                        $payment->payment_amount = $balance_transaction->total_amount;
+                        $payment->payment_date = $balance_transaction->payout_date;
+                        $payment->payment_description = 'Credit card';
+                        $payment->ccnumber = $balance_transaction->cc_last_4;
+                        $payment->stripe_balance_transaction_id = $balance_transaction->id;
+                        $payment->save();
+    
+                        if ($donation->donation_amount < $donation->payments_paid) { // the new payment has increased the amount of the donation
+                            flash('Overpayment? Pledged amount for Donation #: <a href="' . url('/donation/'. $donation->donation_id).'">'.$donation->donation_id . '</a> has been increased from $'
+                            . number_format($donation->donation_amount,2) .' to $'
+                            . number_format($donation->payments_paid,2) . '.')->warning()->important();
+    
+                            $donation->donation_amount = $donation->payments_paid;
+                            $donation->save();
+                        }
+    
+                        $balance_transaction->contact_id = $donation->contact_id; // delay saving contact_id to avoid flash on first retrieval of contact info
+                        $balance_transaction->reconcile_date = now();
+                        $balance_transaction->save();
+    
+                        flash('Stripe Balance Transaction #' . $balance_transaction->id . ' has been successfully processed.')->success();
+                        return Redirect::action([\App\Http\Controllers\StripePayoutController::class, 'show'],$balance_transaction->payout_id);
+    
+                    } else {
+                        if ($balance_transaction->contact_id > 0) {
+                            $donations = Donation::whereContactId($balance_transaction->contact_id)->orderBy('donation_date','DESC')->get()->pluck('donation_summary','donation_id');
+                        }
+                        $donations[0] = 'Create New Donation';    
                     }
-                    $donations[0] = 'Create New Donation';
                     break;
                 case 'Charge' :
                     $transaction_types = 'Retreat Funding';
@@ -381,8 +414,10 @@ class StripeBalanceTransactionController extends Controller
                 break;
             case 'Invoice' :
                 // process contact_id
-                $contact_id = ($request->filled('contact_id')) ? $request->input('contact_id') : null;
-                
+                // $contact_id = ($request->filled('contact_id')) ? $request->input('contact_id') : null;
+                $invoice_number = substr($balance_transaction->description, strpos($balance_transaction->description,' ')+1, (strpos($balance_transaction->description,'-') - strpos($balance_transaction->description,' ') - 1));
+                $donation = Donation::whereStripeInvoice($invoice_number)->first();
+                $contact_id = (isset($donation)) ? $donation->contact_id : $request->input('contact_id');
                 if (!isset($contact_id) || $contact_id == 0) {
                     // Create a new contact - an invoice assumes that the contact and donation already exist
 
@@ -415,7 +450,7 @@ class StripeBalanceTransactionController extends Controller
                     $contact = Contact::findOrFail($contact_id);
                 }
 
-                $donation_id = ($request->filled('donation_id')) ? $request->input('donation_id') : null;
+                $donation_id = (isset($donation)) ? $donation->donation_id : $request->input('donation_id');
                 if ($donation_id == 0 && $balance_transaction->contact_id > 0) { // normally would attempt to create a new Donation
                     flash('Select the appropriate Donation from the Donation dropdown list. If a donation does not exist, consider manually creating one.')->error()->important();
                     return Redirect::action([\App\Http\Controllers\StripeBalanceTransactionController::class, 'edit'],$balance_transaction->id);
@@ -424,6 +459,13 @@ class StripeBalanceTransactionController extends Controller
                 if ($donation_id > 0 && $balance_transaction->contact_id > 0) { // we have contact_id and donation_id
                     $donation = Donation::findOrFail($donation_id);
 
+                    // if the invoice number has not been saved to this donation go ahead and do that now
+                    if (!isset($donation->stripe_invoice)) {
+                        $donation->stripe_invoice = $invoice_number;
+                        $donation->save();
+                    }
+
+                    // add invoice payment to the donation
                     $payment = new Payment;
                     $payment->donation_id = $donation->donation_id;
                     $payment->payment_amount = $balance_transaction->total_amount;

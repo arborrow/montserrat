@@ -368,6 +368,7 @@ class DonationController extends Controller
         $donation->start_date = $request->input('start_date');
         $donation->end_date = $request->input('end_date');
         $donation->donation_install = $request->input('donation_install');
+        $donation->stripe_invoice = $request->input('stripe_invoice');
         if ($request->input('donation_thank_you') == 'Y') {
             $donation['Thank You'] = $request->input('donation_thank_you'); //field has space in database and should be changed at some point
         } else {
