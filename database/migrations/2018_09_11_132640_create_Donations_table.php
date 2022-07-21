@@ -37,6 +37,7 @@ return new class extends Migration {
             $table->integer('squarespace_order')->nullable()->index('idx_squarespace_order');
             $table->integer('ppd_id')->nullable()->index('ppd_id');
             $table->index(['donor_id', 'donation_id'], 'idx_donor-donation_id');
+            $table->string('stripe_invoice', 100)->nullable()->index('idx_stripe_invoice');
             $table->string('remember_token', 100)->nullable();
             $table->timestamps();
             $table->softDeletes();
