@@ -16,6 +16,7 @@ use App\Http\Controllers\DonationTypeController;
 use App\Http\Controllers\DonorController;
 use App\Http\Controllers\ExportListController;
 use App\Http\Controllers\GateController;
+use App\Http\Controllers\GiftCertificateController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\HealthController;
 use App\Http\Controllers\HomeController;
@@ -212,6 +213,7 @@ Route::middleware('web', 'activity')->group(function () {
     Route::resource('donation', DonationController::class);
 
     Route::get('agc/{year?}', [DonationController::class, 'agc']);
+    Route::resource('gift_certificate', GiftCertificateController::class);
     Route::get('group/{group_id}/touchpoint', [TouchpointController::class, 'add_group']);
     Route::get('group/{group_id}/registration', [RegistrationController::class, 'add_group']);
     Route::post('touchpoint/add_group', [TouchpointController::class, 'store_group']);
