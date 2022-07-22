@@ -18,7 +18,10 @@ class GiftCertificateController extends Controller
      */
     public function index()
     {
-        return view('gift_certificates.certificate');   //
+        $this->authorize('show-gift-certificate');
+        $gift_certificates = \App\Models\GiftCertificate::orderBy('issue_date')->with(['purchaser','recipient'])->get();
+        
+        return view('gift_certificates.index', compact('gift_certificates'));   //
 
     }
 
@@ -51,7 +54,11 @@ class GiftCertificateController extends Controller
      */
     public function show($id)
     {
-        //
+        $this->authorize('show-gift-certificate');
+        $gift_certificate = \App\Models\GiftCertificate::findOrFail($id);
+
+        return view('gift_certificates.certificate', compact('gift_certificate')); 
+
     }
 
     /**

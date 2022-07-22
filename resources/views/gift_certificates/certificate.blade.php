@@ -10,18 +10,18 @@
 
         <h1>A Retreat Gift Certificate for</h1>
 
-        <h2>{Recipient Name}</h2>
+        <h2>{{ $gift_certificate->recipient->display_name }}</h2>
 
         <p>You are cordially invited for a weekend retreat of your choice</p>
             
-        <h3>From: {Purchaser's Name}</h3>
+        <h3>From: {{ $gift_certificate->purchaser->display_name }}</h3>
 
         <p>Gift Certificate must be presented at your retreat.
             Kindly call to confirm your reservation.</p>
     
-        <h3>Certificate #2022-xxxxxx (Expires: 07/01/2023)</h3>
+        <h3>Certificate #{{$gift_certificate->certificate_number}} (Expires: {{$gift_certificate->expiration_date->format('m-d-Y')}})</h3>
         
-        <p>Value: $390.00</p>
+        <p>Value: ${{$gift_certificate->formatted_funded_amount}}</p>
             
         <span class='pagefooter'>
             600 N Shady Shores Drive<br />

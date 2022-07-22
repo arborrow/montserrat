@@ -23,17 +23,25 @@
         <table class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
-                    <th scope="col">Scheduled</th>
-                    <th scope="col">Assigned</th>
-                    <th scope="col">Status</th>
+                    <th scope="col">Certificate #</th>
+                    <th scope="col">Purchaser</th>
+                    <th scope="col">Recipient</th>
+                    <th scope="col">Expires</th>
+                    <th scope="col">Funded</th>
+                    <th scope="col">Comments</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($gift_certificates as $gift_certificate)
                 <tr>
-                    <td><a href="{{URL('gift_certificate/'.$gift_certificate->id)}}">{{ $gift_certificate->scheduled_date }}</a></td>
-                    <td><a href="{{$gift_certificate->assigned_contact_url}}">{{ $gift_certificate->assigned_sort_name }}</a></td>
-                    <td>{{ $gift_certificate->status }}</td>
+                    <td><a href="{{url('/gift_certificate/'.$gift_certificate->id)}}">
+                        {{ $gift_certificate->certificate_number}}
+                    </a></td>
+                    <td>{!! $gift_certificate->purchaser->contact_link !!}</td>
+                    <td>{!! $gift_certificate->recipient->contact_link !!}</td>
+                    <td>{{ $gift_certificate->expiration_date->format('m-d-Y') }}</td>
+                    <td> ${{ $gift_certificate->formatted_funded_amount }}</td>
+                    <td>{{ $gift_certificate->notes }}</td>
                 </tr>
                 @endforeach
             </tbody>
