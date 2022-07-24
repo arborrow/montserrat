@@ -214,6 +214,7 @@ Route::middleware('web', 'activity')->group(function () {
 
     Route::get('agc/{year?}', [DonationController::class, 'agc']);
     Route::resource('gift_certificate', GiftCertificateController::class);
+    Route::get('gift_certificate/show_pdf/{id}', [GiftCertificateController::class, 'show_pdf']);
     Route::get('group/{group_id}/touchpoint', [TouchpointController::class, 'add_group']);
     Route::get('group/{group_id}/registration', [RegistrationController::class, 'add_group']);
     Route::post('touchpoint/add_group', [TouchpointController::class, 'store_group']);

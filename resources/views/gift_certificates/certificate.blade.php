@@ -1,14 +1,17 @@
-@extends('certificate')
+@extends('pdf.pdf_certificate')
+
 @section('content')
 
-<div class="box" style="border: 2px solid black; padding: 4pt;">
-    <div class="box-inner" style="border: 2px solid black; padding: 4pt;">
+<div class="box">
+    <div class="box-inner">
         <br>
-        <span class="logo">
-            {!! Html::image('images/mrhlogoblack.png','Home',array('title'=>'Home','class'=>'logo','align'=>'center')) !!}
-        </span>
+        <div class ="pdf_header" style="text-align:center;">
+            <img style="display: block;  margin-left: auto;  margin-right: auto; height:64px; width:200px;" src="{{ public_path().'/images/mrhlogoblack.png' }}"> <br />
+        </div>
 
-        <h1>A Retreat Gift Certificate for</h1>
+
+        <br>
+        <h1>Retreat Gift Certificate for</h1>
 
         <h2>{{ $gift_certificate->recipient->display_name }}</h2>
 
@@ -21,7 +24,9 @@
     
         <h3>Certificate #{{$gift_certificate->certificate_number}} (Expires: {{$gift_certificate->expiration_date->format('m-d-Y')}})</h3>
         
-        <p>Value: ${{$gift_certificate->formatted_funded_amount}}</p>
+        @if ($gift_certificate->funded_amount > 0)
+            <p>Value: ${{$gift_certificate->formatted_funded_amount}}</p>
+        @endIf
             
         <span class='pagefooter'>
             600 N Shady Shores Drive<br />
@@ -29,6 +34,7 @@
             (940) 321-6020<br />
             <a href='https://montserratretreat.org/' target='_blank'>montserratretreat.org</a>
         </span>
+        <br>
     <br>
     </div>
 </div>

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->integer('sequential_number')->nullable()->index('idx_sequential_number');
             $table->string('retreat_type')->nullable();
             $table->text('notes', 65535)->nullable();
+            $table->integer('participant_id')->nullable()->index('idx_participant_id');
             $table->timestamps();
             $table->softDeletes();
         });

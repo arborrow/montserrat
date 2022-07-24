@@ -14,13 +14,11 @@ class GiftCertificate extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'gift_certificate';
-
     protected $casts = [
         'purchase_date' => 'datetime',
         'issue_date' => 'datetime',
         'expiration_date' => 'datetime',
     ];  
-
     protected $appends = ['certificate_number'];
 
     public function purchaser()
@@ -31,6 +29,11 @@ class GiftCertificate extends Model implements Auditable
     public function recipient()
     {
         return $this->belongsTo(Contact::class, 'recipient_id', 'id');
+    }
+
+    public function registration()
+    {
+        return $this->belongsTo(Registration::class, 'participant_id', 'id');
     }
 
     public function squarespace_order()

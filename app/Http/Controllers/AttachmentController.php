@@ -220,7 +220,23 @@ class AttachmentController extends Controller
                         Storage::disk('local')->put($path.$file_name, $file);
                     }
                     break;
-
+            case 'gift_certificate':
+                $this->authorize('create-attachment');
+                $now = Carbon::now();
+                $filename = $description.'.pdf';
+                $description = 'Gift Certificate #'.$description;
+                $path = $entity.'/'.$entity_id.'/attachments/';
+                $file_type_id = config('polanco.file_type.contact_attachment');
+                $file_name = $this->sanitize_filename($filename);
+                $updated_file_name = basename($file_name, '.pdf').'-updated-'.time().'.pdf';
+                $mime_type = 'application/pdf';
+                if (File::exists(storage_path().'/app/'.$path.$file_name)) {
+                    Storage::move($path.$file_name, $path.$updated_file_name);
+                    Storage::disk('local')->put($path.$file_name, $file);
+                } else {
+                    Storage::disk('local')->put($path.$file_name, $file);
+                }
+                break;
             case 'event_attachment':
                 $this->authorize('create-event-attachment');
                 $path = $entity.'/'.$entity_id.'/attachments/';

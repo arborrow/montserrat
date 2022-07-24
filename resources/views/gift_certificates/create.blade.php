@@ -3,83 +3,79 @@
 
 <div class="row bg-cover">
     <div class="col-lg-12">
-        <h1>Create asset job</h1>
+        <h1>Create Gift Certificate</h1>
     </div>
     <div class="col-lg-12">
-        {!! Form::open(['url'=>'asset_job', 'method'=>'post', 'enctype'=>'multipart/form-data']) !!}
+        {!! Form::open(['url'=>'gift_certificate', 'method'=>'post', 'enctype'=>'multipart/form-data']) !!}
         <div class="form-group">
 
-            <h3 class="text-primary">Job info</h3>
+            <h3 class="text-primary">Gift certificate info</h3>
             <div class="row">
                 <div class="col-lg-3">
-                    {!! Form::label('asset_task_id', 'Asset task') !!}
-                    {!! Form::select('asset_task_id', $asset_tasks, NULL, ['class' => 'form-control']) !!}
+                    {!! Form::label('purchaser_id', 'Purchaser ID:') !!}
+                    {!! Form::number('purchaser_id', 0, ['class' => 'form-control']) !!}
                 </div>
                 <div class="col-lg-3">
-                    {!! Form::label('assigned_to_id', 'Assigned to') !!}
-                    {!! Form::select('assigned_to_id', $staff, NULL, ['class' => 'form-control']) !!}
-                </div>
-                <div class="col-lg-3">
-                    {!! Form::label('status', 'Status') !!}
-                    {!! Form::select('status', $status, config('polanco.asset_job_status.scheduled'), ['class' => 'form-control']) !!}
+                    {!! Form::label('recipient_id', 'Recipient ID:') !!}
+                    {!! Form::number('recipient_id', 0, ['class' => 'form-control']) !!}
                 </div>
             </div>
 
-            <h3 class="text-primary">Job dates</h3>
             <div class="row">
                 <div class="col-lg-3">
-                    {!! Form::label('scheduled_date', 'Scheduled') !!}
-                    {!! Form::date('scheduled_date', null, ['class'=>'form-control flatpickr-date-time', 'autocomplete'=> 'off']) !!}
-                </div>
-
-                <div class="col-lg-3">
-                    {!! Form::label('start_date', 'Started') !!}
-                    {!! Form::date('start_date', null, ['class'=>'form-control flatpickr-date-time', 'autocomplete'=> 'off']) !!}
+                    {!! Form::label('squarespace_order_number', 'Squarespace Order #:') !!}
+                    {!! Form::number('squarespace_order_number', null, ['class' => 'form-control']) !!}
                 </div>
                 <div class="col-lg-3">
-                    {!! Form::label('end_date', 'Ended') !!}
-                    {!! Form::date('end_date', null, ['class'=>'form-control flatpickr-date-time', 'autocomplete'=> 'off']) !!}
+                    {!! Form::label('sequential_number', 'Sequential #:') !!}
+                    {!! Form::number('sequential_number', null, ['class' => 'form-control']) !!}
                 </div>
             </div>
 
-            <h3 class="text-primary">Labor & materials</h3>
             <div class="row">
                 <div class="col-lg-3">
-                    {!! Form::label('actual_labor', 'Actual labor (minutes)') !!}
-                    {!! Form::text('actual_labor', NULL , ['class' => 'form-control']) !!}
-                </div>
-                <div class="col-lg-3">
-                    {!! Form::label('actual_labor_cost', 'Actual labor cost') !!}
-                    {!! Form::number('actual_labor_cost', 0, ['class' => 'form-control','step'=>'0.01']) !!}
+                    {!! Form::label('participant_id', 'Participant ID:') !!}
+                    {!! Form::number('participant_id', null, ['class' => 'form-control']) !!}
                 </div>
             </div>
+
+            <h3 class="text-primary">Gift certificate dates</h3>
             <div class="row">
-              <div class="col-lg-3">
-                  {!! Form::label('additional_materials', 'Additional materials') !!}
-                  {!! Form::textarea('additional_materials', NULL, ['class' => 'form-control', 'rows' => 2]) !!}
-              </div>
                 <div class="col-lg-3">
-                    {!! Form::label('actual_material_cost', 'Actual material cost') !!}
-                    {!! Form::number('actual_material_cost', 0, ['class' => 'form-control','step'=>'0.01']) !!}
+                    {!! Form::label('purchase_date', 'Scheduled:') !!}
+                    {!! Form::date('purchase_date', now(), ['class'=>'form-control flatpickr-date-time', 'autocomplete'=> 'off']) !!}
+                </div>
+
+                <div class="col-lg-3">
+                    {!! Form::label('issue_date', 'Issued:') !!}
+                    {!! Form::date('issue_date', now(), ['class'=>'form-control flatpickr-date-time', 'autocomplete'=> 'off']) !!}
+                </div>
+                <div class="col-lg-3">
+                    {!! Form::label('expiration_date', 'Expiration:') !!}
+                    {!! Form::date('expiration_date', now(), ['class'=>'form-control flatpickr-date-time', 'autocomplete'=> 'off']) !!}
                 </div>
             </div>
 
             <h3 class="text-primary">Notes</h3>
             <div class="row">
                 <div class="col-lg-3">
-                    {!! Form::label('note', 'Note') !!}
-                    {!! Form::textarea('note', NULL, ['class' => 'form-control', 'rows' => 2]) !!}
+                    {!! Form::label('funded_amount', 'Funded amount:') !!}
+                    {!! Form::number('funded_amount', 0, ['class' => 'form-control','step'=>'0.01']) !!}
                 </div>
                 <div class="col-lg-3">
-                    {!! Form::label('tag', 'Tag') !!}
-                    {!! Form::text('tag', NULL , ['class' => 'form-control']) !!}
+                    {!! Form::label('retreat_type', 'Retreat type:') !!}
+                    {!! Form::text('retreat_type', NULL , ['class' => 'form-control']) !!}
+                </div>
+                <div class="col-lg-3">
+                    {!! Form::label('notes', 'Notes:') !!}
+                    {!! Form::textarea('notes', NULL, ['class' => 'form-control', 'rows' => 2]) !!}
                 </div>
             </div>
 
         </div>
         <div class="row text-center">
             <div class="col-lg-12">
-                {!! Form::submit('Add asset job', ['class'=>'btn btn-outline-dark']) !!}
+                {!! Form::submit('Add Gift Certificate', ['class'=>'btn btn-outline-dark']) !!}
             </div>
         </div>
         {!! Form::close() !!}

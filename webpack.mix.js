@@ -24,7 +24,8 @@ mix.js('resources/assets/js/app.js', 'public/dist/bundle.js')
     .sass('resources/assets/sass/print-envelope9x6.scss', 'public/dist/print-envelope9x6.css')
     .sass('resources/assets/sass/print-landscape.scss', 'public/dist/print-landscape.css')
     .sass('resources/assets/sass/print-style.scss', 'public/dist/print-style.css')
-    .sass('resources/assets/sass/pdf-style.scss', 'public/dist/pdf-style.css');
+    .sass('resources/assets/sass/pdf-style.scss', 'public/dist/pdf-style.css')
+    .sass('resources/assets/sass/pdf-certificate.scss', 'public/dist/pdf-certificate.css');
 
 // Only in production
 mix.webpackConfig({
