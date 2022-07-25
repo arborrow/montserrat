@@ -38,7 +38,7 @@
                         {{ $gift_certificate->certificate_number}}
                     </a></td>
                     <td>{!! $gift_certificate->purchaser->contact_link !!}</td>
-                    <td>{!! $gift_certificate->recipient->contact_link !!}</td>
+                    <td>{!! optional($gift_certificate->recipient)->contact_link !!}</td>
                     <td>{{ $gift_certificate->expiration_date->format('m-d-Y') }}</td>
                     <td> ${{ $gift_certificate->formatted_funded_amount }}</td>
                     <td>{{ $gift_certificate->notes }}</td>
