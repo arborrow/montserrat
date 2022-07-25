@@ -21,7 +21,7 @@
 
             <div class="col-lg-3"><strong>Certificate #:</strong> {{$gift_certificate->certificate_number}}</div>
             <div class="col-lg-2"><strong>Purchaser:</strong> {!!$gift_certificate->purchaser->contact_link!!}</div>
-            <div class="col-lg-2"><strong>Recipient:</strong> {!!$gift_certificate->recipient->contact_link!!}</div>
+            <div class="col-lg-2"><strong>Recipient:</strong> {!!optional($gift_certificate->recipient)->contact_link!!}</div>
         </div>
         
         <div class="row">
