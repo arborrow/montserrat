@@ -9,7 +9,7 @@
         {!! Form::open(['url'=>'gift_certificate', 'method'=>'post', 'enctype'=>'multipart/form-data']) !!}
         <div class="form-group">
 
-            <h3 class="text-primary">Gift certificate info</h3>
+            <h3 class="text-primary">Info</h3>
             <div class="row">
                 <div class="col-lg-3">
                     {!! Form::label('purchaser_id', 'Purchaser ID:') !!}
@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-lg-3">
                     {!! Form::label('recipient_id', 'Recipient ID:') !!}
-                    {!! Form::number('recipient_id', 0, ['class' => 'form-control']) !!}
+                    {!! Form::number('recipient_id', null, ['class' => 'form-control']) !!}
                 </div>
             </div>
 
@@ -32,14 +32,7 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-lg-3">
-                    {!! Form::label('participant_id', 'Participant ID:') !!}
-                    {!! Form::number('participant_id', null, ['class' => 'form-control']) !!}
-                </div>
-            </div>
-
-            <h3 class="text-primary">Gift certificate dates</h3>
+            <h3 class="text-primary">Dates</h3>
             <div class="row">
                 <div class="col-lg-3">
                     {!! Form::label('purchase_date', 'Scheduled:') !!}
@@ -56,20 +49,34 @@
                 </div>
             </div>
 
-            <h3 class="text-primary">Notes</h3>
+            <h3 class="text-primary">Funding</h3>
             <div class="row">
                 <div class="col-lg-3">
                     {!! Form::label('funded_amount', 'Funded amount:') !!}
                     {!! Form::number('funded_amount', 0, ['class' => 'form-control','step'=>'0.01']) !!}
                 </div>
                 <div class="col-lg-3">
-                    {!! Form::label('retreat_type', 'Retreat type:') !!}
-                    {!! Form::text('retreat_type', NULL , ['class' => 'form-control']) !!}
+                    {!! Form::label('donation_id', 'Donation ID:') !!}
+                    {!! Form::number('donation_id', null, ['class' => 'form-control']) !!}
                 </div>
+                <div class="col-lg-3">
+                    {!! Form::label('participant_id', 'Participant ID:') !!}
+                    {!! Form::number('participant_id', null, ['class' => 'form-control']) !!}
+                </div>
+            </div>
+
+
+            <h3 class="text-primary">Notes</h3>
+            <div class="row">
                 <div class="col-lg-3">
                     {!! Form::label('notes', 'Notes:') !!}
                     {!! Form::textarea('notes', NULL, ['class' => 'form-control', 'rows' => 2]) !!}
                 </div>
+                <div class="col-lg-3">
+                    {!! Form::label('retreat_type', 'Retreat type:') !!}
+                    {!! Form::text('retreat_type', NULL , ['class' => 'form-control']) !!}
+                </div>
+                
             </div>
 
         </div>

@@ -36,6 +36,11 @@ class GiftCertificate extends Model implements Auditable
         return $this->belongsTo(Registration::class, 'participant_id', 'id');
     }
 
+    public function donation()
+    {
+        return $this->belongsTo(Donation::class, 'donation_id', 'id');
+    }
+
     public function squarespace_order()
     {
         return $this->belongsTo(SquarespaceOrder::class, 'squarespace_order_number', 'order_number');

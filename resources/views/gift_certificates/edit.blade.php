@@ -10,7 +10,7 @@
 
         <div class="form-group">
 
-            <h3 class="text-primary">Gift certificate info</h3>
+            <h3 class="text-primary">Info</h3>
             <div class="row">
                 <div class="col-lg-3">
                     {!! Form::label('purchaser_id', 'Purchaser ID:') !!}
@@ -33,14 +33,7 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-lg-3">
-                    {!! Form::label('participant_id', 'Participant ID:') !!}
-                    {!! Form::number('participant_id', $gift_certificate->participant_id, ['class' => 'form-control']) !!}
-                </div>
-            </div>
-
-            <h3 class="text-primary">Gift certificate dates</h3>
+            <h3 class="text-primary">Dates</h3>
             <div class="row">
                 <div class="col-lg-3">
                     {!! Form::label('purchase_date', 'Scheduled:') !!}
@@ -57,12 +50,24 @@
                 </div>
             </div>
 
-            <h3 class="text-primary">Notes</h3>
+            <h3 class="text-primary">Funding</h3>
             <div class="row">
                 <div class="col-lg-3">
                     {!! Form::label('funded_amount', 'Funded amount:') !!}
                     {!! Form::number('funded_amount', $gift_certificate->funded_amount, ['class' => 'form-control','step'=>'0.01']) !!}
                 </div>
+                <div class="col-lg-3">
+                    {!! Form::label('donation_id', 'Donation ID:') !!}
+                    {!! Form::number('donation_id', $gift_certificate->donation_id, ['class' => 'form-control']) !!}
+                </div>
+                <div class="col-lg-3">
+                    {!! Form::label('participant_id', 'Participant ID:') !!}
+                    {!! Form::number('participant_id', $gift_certificate->participant_id, ['class' => 'form-control']) !!}
+                </div>
+            </div>
+
+            <h3 class="text-primary">Notes</h3>
+            <div class="row">
                 <div class="col-lg-3">
                     {!! Form::label('retreat_type', 'Retreat type:') !!}
                     {!! Form::text('retreat_type', $gift_certificate->retreat_type , ['class' => 'form-control']) !!}

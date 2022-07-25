@@ -60,6 +60,7 @@ class GiftCertificateController extends Controller
         $gift_certificate->purchaser_id = $request->input('purchaser_id');
         $gift_certificate->recipient_id = $request->input('recipient_id');
         $gift_certificate->participant_id = $request->input('participant_id');
+        $gift_certificate->donation_id = $request->input('donation_id');
         $gift_certificate->sequential_number = $request->input('sequential_number');
         $gift_certificate->squarespace_order_number = $request->input('squarespace_order_number');
         $gift_certificate->purchase_date = $request->input('purchase_date');
@@ -151,6 +152,7 @@ class GiftCertificateController extends Controller
         $gift_certificate->purchaser_id = $request->input('purchaser_id');
         $gift_certificate->recipient_id = $request->input('recipient_id');
         $gift_certificate->participant_id = $request->input('participant_id');
+        $gift_certificate->donation_id = $request->input('donation_id');
         $gift_certificate->sequential_number = $request->input('sequential_number');
         $gift_certificate->squarespace_order_number = $request->input('squarespace_order_number');
         $gift_certificate->purchase_date = $request->input('purchase_date');
