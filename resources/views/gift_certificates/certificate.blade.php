@@ -13,7 +13,7 @@
         <br>
         <h1>Retreat Gift Certificate for</h1>
 
-        <h2>{{ $gift_certificate->recipient->display_name }}</h2>
+        <h2>{{ optional($gift_certificate->recipient)->display_name }}</h2>
 
         <p>You are cordially invited for a weekend retreat of your choice</p>
             
