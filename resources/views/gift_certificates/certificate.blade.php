@@ -13,7 +13,11 @@
         <br>
         <h1>Retreat Gift Certificate for</h1>
 
-        <h2>{{ optional($gift_certificate->recipient)->display_name }}</h2>
+        @if (isset(optional($gift_certificate->recipient)->display_name))
+            <h2>{{ optional($gift_certificate->recipient)->display_name }}</h2>
+        @else
+            <p><hr></p>
+        @endIf
 
         <p>You are cordially invited for a weekend retreat of your choice</p>
             
