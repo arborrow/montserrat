@@ -109,16 +109,18 @@ trait SquareSpaceTrait
 
         foreach ($emails as $email) {
             $email_score = 20;
-            $contacts[$email->contact_id]['contact_id'] = $email->contact_id;
-            $contacts[$email->contact_id]['lastname'] = $email->owner->last_name;
-            $contacts[$email->contact_id]['firstname'] = $email->owner->first_name;
-            $contacts[$email->contact_id]['email_score'] = $email_score;
-            if (isset($contacts[$email->contact_id]['total_score'])) {
-                $contacts[$email->contact_id]['total_score'] += $email_score;
-            } else {
-                $contacts[$email->contact_id]['total_score'] = $email_score;
+            if (isset($email->owner)) { //ignore cases where the parent contact may have been deleted and thus the owner is null
+                $contacts[$email->contact_id]['contact_id'] = $email->contact_id;
+                $contacts[$email->contact_id]['lastname'] = $email->owner->last_name;
+                $contacts[$email->contact_id]['firstname'] = $email->owner->first_name;
+                $contacts[$email->contact_id]['email_score'] = $email_score;
+                if (isset($contacts[$email->contact_id]['total_score'])) {
+                    $contacts[$email->contact_id]['total_score'] += $email_score;
+                } else {
+                    $contacts[$email->contact_id]['total_score'] = $email_score;
+                }
+                $contacts[$email->contact_id]['full_name'] = $email->owner->full_name_with_city . ' ['. (int) $contacts[$email->contact_id]['total_score'] .']';    
             }
-            $contacts[$email->contact_id]['full_name'] = $email->owner->full_name_with_city . ' ['. (int) $contacts[$email->contact_id]['total_score'] .']';
         }
 
         foreach ($mobile_phones as $phone) {
