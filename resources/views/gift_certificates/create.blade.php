@@ -11,13 +11,38 @@
 
             <h3 class="text-primary">Info</h3>
             <div class="row">
+                @if (!isset($purchasers))
+                    <div class="col-lg-3">
+                        {!! Form::label('purchaser_name', 'Name of Purchaser:') !!}
+                        {!! Form::text('purchaser_name', NULL , ['class' => 'form-control']) !!}
+                    </div>
+                @endif
+                @if (!isset($recipients))
+                    <div class="col-lg-3">
+                        {!! Form::label('recipient_name', 'Name of Recipient:') !!}
+                        {!! Form::text('recipient_name', NULL , ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="col-lg-3">
+                        <br>
+                        {!! Form::submit('Retrieve Purchasers and Recipients', ['class'=>'btn btn-outline-dark']) !!}
+                    </div>
+                @endif
+            </div>
+            <div class="row">
+
                 <div class="col-lg-3">
-                    {!! Form::label('purchaser_id', 'Purchaser ID:') !!}
-                    {!! Form::number('purchaser_id', 0, ['class' => 'form-control']) !!}
+                    @if (isset($purchasers))
+                        {!! Form::label('purchaser_id', 'Purchaser ID:') !!}
+                        {!! Form::select('purchaser_id', $purchasers, null, ['class' => 'form-control']) !!}
+                    @endif
                 </div>
+
+
                 <div class="col-lg-3">
-                    {!! Form::label('recipient_id', 'Recipient ID:') !!}
-                    {!! Form::number('recipient_id', null, ['class' => 'form-control']) !!}
+                    @if (isset($recipients))
+                        {!! Form::label('recipient_id', 'Recipient ID:') !!}
+                        {!! Form::select('recipient_id', $recipients, null, ['class' => 'form-control']) !!}
+                    @endIf
                 </div>
             </div>
 

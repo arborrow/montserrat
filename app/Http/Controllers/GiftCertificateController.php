@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\SquareSpaceTrait;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -14,6 +15,8 @@ use PDF;
 
 class GiftCertificateController extends Controller
 {
+    use SquareSpaceTrait;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -38,11 +41,25 @@ class GiftCertificateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $this->authorize('create-gift-certificate');
+        //dd($request);
+        $purchaser = collect();
+        $purchaser->name = ($request->filled('purchaser_name')) ? $request->input('purchaser_name') : null;
+        $purchaser->full_address = null;
+        $purchaser->email = null;
 
-        return view('gift_certificates.create');
+        $recipient = collect(['name'=>null, 'full_address'=>null,'email'=>null]);
+        $recipient->name = ($request->filled('recipient_name')) ? $request->input('recipient_name') : null;
+        $recipient->full_address = null;
+        $recipient->email = null;
+        
+        //dd($purchaser, $recipient);
+        $purchasers = ($request->filled('purchaser_name')) ? $this->matched_contacts($purchaser) : null;
+        $recipients = ($request->filled('recipient_name')) ? $this->matched_contacts($recipient) : null;
+        // dd($purchasers, $recipients);
+        return view('gift_certificates.create',compact('purchasers','recipients'));
 
     }
 
@@ -56,9 +73,21 @@ class GiftCertificateController extends Controller
     {
         $this->authorize('create-gift-certificate');
 
+        $purchaser = $request->input('purchaser_name');
+        $recipient = $request->input('recipient_name');
+        // dd($request->filled('purchaser_id'), $request->input('purchaser_id'));
+        
+        if (isset($purchaser)) {
+            if (!$request->filled('purchaser_id') || $request->input('purchaser_id') == 0) {
+                flash('List of Gift Certificate Purchasers and Recipients retrieved')->success();
+                return Redirect::action([\App\Http\Controllers\GiftCertificateController::class, 'create'],['purchaser_name'=>$purchaser,'recipient_name'=>$recipient]);     
+            }    
+        }
+        // dd($request);
+
         $gift_certificate = new \App\Models\GiftCertificate;
-        $gift_certificate->purchaser_id = $request->input('purchaser_id');
-        $gift_certificate->recipient_id = $request->input('recipient_id');
+        $gift_certificate->purchaser_id = ($request->input('purchaser_id') > 0 ) ? $request->input('purchaser_id') : null;
+        $gift_certificate->recipient_id = ($request->input('recipient_id') > 0 ) ? $request->input('recipient_id') : null;
         $gift_certificate->participant_id = $request->input('participant_id');
         $gift_certificate->donation_id = $request->input('donation_id');
         $gift_certificate->sequential_number = $request->input('sequential_number');
