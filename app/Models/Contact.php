@@ -630,14 +630,16 @@ AND d.donation_amount<=50 AND d.deleted_at IS NULL AND d.donation_description="R
         if ($this->contact_type == 1) { // only individuals
             $registrations = $this->event_registrations()->whereStatusId(1)->whereRoleId(5)->whereNull('canceled_at')->get();
             foreach ($registrations as $registration) {
-                if ($registration->event->retreat_type == "Ignatian" && $registration->event->end_date < now() && $registration->event->start_date->year >= date('Y')-3) {
-                    if ($registration->event->nights == 2 && $registration->retreat_offering <= 130) {
+                if ($registration->event->retreat_type == "Ignatian"  && isset($registration->event->start_date) && isset($registration->event->end_date)) {
+                    if ($registration->event->end_date < now() && $registration->event->start_date->year >= date('Y')-3) {
+                        if ($registration->event->nights == 2 && $registration->retreat_offering <= 130) {
+                                $is_free_loader = 1;
+                        }
+                        if ($registration->event->nights == 3 && $registration->retreat_offering <= 195) {
                             $is_free_loader = 1;
+                        }                    
                     }
-                    if ($registration->event->nights == 3 && $registration->retreat_offering <= 195) {
-                        $is_free_loader = 1;
-                    }
-                
+    
                 }
             }
             
