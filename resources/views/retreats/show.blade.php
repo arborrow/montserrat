@@ -260,7 +260,7 @@
                                         </td>
                                         <td> {!!$registration->retreatant->avatar_small_link!!} </td>
                                         @if ($registration->retreatant->is_free_loader)
-                                            <td class='table-warning'  data-toggle="tooltip" data-placement="top" title="Possible Freeloader">>
+                                            <td class='table-warning'  data-toggle="tooltip" data-placement="top" title="Possible Freeloader">
                                         @else
                                             <td>
                                         @endIf
