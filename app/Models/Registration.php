@@ -293,6 +293,12 @@ class Registration extends Model implements Auditable
         return $this->hasOne(Donation::class, 'donation_id', 'donation_id');
     }
 
+    public function getRetreatOfferingAttribute()
+    {
+        $donations = Donation::whereEventId($this->event_id)->whereContactId($this->contact_id)->whereDonationDescription("Retreat Funding")->get();
+        return (isset($donations)) ? $donations->SUM('donation_amount') : 0;
+    }
+
     public function getDonationPledgeAttribute()
     {
         if (! is_null($this->donation)) {

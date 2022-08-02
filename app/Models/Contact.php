@@ -611,6 +611,43 @@ class Contact extends Model implements Auditable
         }
     }
 
+/*
+
+
+SELECT p.id, p.contact_id, p.event_id, e.title, e.idnumber, c.sort_name, d.donation_amount
+FROM participant as p
+LEFT JOIN event as e ON (p.event_id = e.id)
+LEFT JOIN Donations as d ON (d.contact_id = p.contact_id AND p.event_id = d.event_id)
+LEFT JOIN contact as c ON (p.contact_id = c.id)
+WHERE p.deleted_at IS NULL AND p.status_id=1 AND p.role_id = 5 AND p.canceled_at IS NULL
+AND e.deleted_at IS NULL AND e.event_type_id = 7 AND e.end_date < NOW() AND YEAR(e.start_date)>=2019
+AND d.donation_amount<=50 AND d.deleted_at IS NULL AND d.donation_description="Retreat Funding";  
+*/
+    public function getIsFreeLoaderAttribute()
+    {   
+        $is_free_loader = 0;
+
+        if ($this->contact_type == 1) { // only individuals
+            $registrations = $this->event_registrations()->whereStatusId(1)->whereRoleId(5)->whereNull('canceled_at')->get();
+            foreach ($registrations as $registration) {
+                if ($registration->event->retreat_type == "Ignatian" && $registration->event->end_date < now() && $registration->event->start_date->year >= date('Y')-3) {
+                    if ($registration->event->nights == 2 && $registration->retreat_offering <= 130) {
+                            $is_free_loader = 1;
+                    }
+                    if ($registration->event->nights == 3 && $registration->retreat_offering <= 195) {
+                        $is_free_loader = 1;
+                    }
+                
+                }
+            }
+            
+        } else { // if vendor, organization, etc. they cannot be a free loader. Helps to avoid JCP or Diocese of Fort Worth where there may be many registrations.
+            $is_free_loader = 0;
+        }
+       
+        return $is_free_loader;
+    }
+
     public function getIsRetreatantAttribute()
     {
         if (! empty($this->relationship_mjrh_retreatant->id)) {

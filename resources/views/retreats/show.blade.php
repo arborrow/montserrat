@@ -259,7 +259,12 @@
                                             {{$registration->participant_role_name}} [{{ $loop->index +1 }}]
                                         </td>
                                         <td> {!!$registration->retreatant->avatar_small_link!!} </td>
-                                        <td>{!!$registration->retreatant->contact_link_full_name!!} ({{$registration->retreatant_events_count}})</td>
+                                        @if ($registration->retreatant->is_free_loader)
+                                            <td class='table-warning'>
+                                        @else
+                                            <td>
+                                        @endIf
+                                            {!!$registration->retreatant->contact_link_full_name!!} ({{$registration->retreatant_events_count}})</td>
                                         <td>
                                             @can('update-registration')
                                                 {!! $registration->registration_status_buttons!!}
