@@ -9,7 +9,7 @@
             </div>
 
             @if ($person->is_free_loader) 
-                <div class="col-lg-12 bg-warning">
+                <div class="col-lg-12 bg-warning"  data-toggle="tooltip" data-placement="top" title="Possible freeloader">>
             @else
                 <div class="col-lg-12">
             @endIf
@@ -19,7 +19,7 @@
                     <h1><span class="font-weight-bold">{{ $person->full_name }}</span></h1>
                 @endCan
             </div>
-            
+
             <div class="col-lg-12">
                 {!! Html::link('#contact_info','Contact',array('class' => 'm-1 btn btn-outline-dark')) !!}
                 {!! Html::link('#demographics','Demographics',array('class' => 'm-1 btn btn-outline-dark')) !!}
