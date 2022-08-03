@@ -9,7 +9,7 @@
             </div>
 
             @if ($person->is_free_loader) 
-                <div class="col-lg-12 bg-warning"  data-toggle="tooltip" data-placement="top" title="Possible freeloader">>
+                <div class="col-lg-12 bg-warning"  data-toggle="tooltip" data-placement="top" title="Possible freeloader">
             @else
                 <div class="col-lg-12">
             @endIf
