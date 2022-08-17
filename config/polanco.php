@@ -107,6 +107,7 @@ return [
         'Building and Maintenance Fund' => 'AGC - Buildings & Maintenance',
         'Donacion de Retiro' => 'Retreat Funding',
         'Donation' => 'Donations',
+        'Flowers' => 'Flowers and Landscaping',
         'Foundation Endowment' => 'AGC - Endowment',
         'Propina' => 'Tips',
         'Retreat Deposit' => 'Retreat Deposits',
