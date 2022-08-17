@@ -44,7 +44,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-6">
                     <strong>{!! Form::label('contact_id', 'Donor: ' .$ss_contribution->name) !!}</strong>
-                    {!! Form::select('contact_id', $matching_contacts, null, ['class' => 'form-control']) !!}
+                    {!! Form::select('contact_id', $matching_contacts, $ss_contribution->contact_id, ['class' => 'form-control']) !!}
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <strong>{!! Form::label('event_id', 'Retreat ID: #'. $ss_contribution->idnumber) !!}</strong>
