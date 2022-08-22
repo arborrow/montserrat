@@ -392,7 +392,7 @@ class GetMailgunMessages extends Command
                     //dd($order, $message->body, $retreat,$stripe_url, $result, $stripe_charge);
                     $order->save();
                 }  catch (\Exception $exception) {
-                    dd($order, $message->body, $retreat);
+                    //dd($order, $message->body, $retreat);
 
                     $subject .= ': Creating Squarespace Order for Message Id #'.$message->id;
                     Mail::send('emails.en_US.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject],
