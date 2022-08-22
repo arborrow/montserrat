@@ -245,7 +245,7 @@ class GetMailgunMessages extends Command
                         'order_number' => $order_number,
                     ]);
 
-
+                    
                     $order->order_number = $order_number;
                     $order->message_id = $message->id;
                     $order->created_at = (isset($order_date)) ? Carbon::parse($order_date) : Carbon::now();
@@ -280,6 +280,7 @@ class GetMailgunMessages extends Command
                     $idnumber = trim(strval($year).$retreat_number);
                     $order->retreat_idnumber = $idnumber;
                     $event = Retreat::whereIdnumber($idnumber)->first();
+                    
                     $order->retreat_start_date = optional($event)->start_date;
                     $order->event_id = optional($event)->id;
 
@@ -321,7 +322,7 @@ class GetMailgunMessages extends Command
                     $names = $fields->pluck('name')->toArray();
                     //dd($order,$product_variation,$registration_type, $fields,$inventory);
                     foreach ($fields as $field) {
-
+                        
                         $extracted_value = $this->extract_value($message->body, $field->name.":\n");
                         $order->{$field->variable_name} = $extracted_value;
                         // to remove empty values where the extracted value is actually the name of the next field
@@ -332,35 +333,51 @@ class GetMailgunMessages extends Command
                         }
                         // dd($message->body, $this->extract_value($message->body, $field->name.":\n"));
                     }
-
+                    
                     // TODO: make sure full_address variable exists otherwise set order address parts to null
                     // TODO: get the billing address and compare to address provided, different billing address may indicate someone else is paying for the retreat
                     // TODO: consider comparing extract_value and extract_value_between to better deal with multiple line addresses
                     if (isset($order->full_address)) {
                         $address = explode(", ", $order->full_address);
+
                         if (sizeof($address) == 4) {
                             $order->address_street = trim($address[0]);
                             $order->address_supplemental = trim($address[1]);
                             $order->address_city = trim($address[2]);
                             $address_detail = explode(" ", $address[3]);
-    
-                        } else { // assumes size of 3
+                            $order->address_state = trim($address_detail[0]);
+                            $order->address_zip = trim($address_detail[1]);
+                            $order->address_country = (sizeof($address_detail) == 4) ? trim($address_detail[2]) . " " . trim($address_detail[3]) : trim($address_detail[2]);            
+                        } 
+
+                        if (sizeof($address) == 3) {
                             $order->address_street = trim($address[0]);
                             $order->address_city = trim($address[1]);
                             $address_detail = explode(" ", $address[2]);
                         }
-                        $order->address_state = trim($address_detail[0]);
-                        $order->address_zip = trim($address_detail[1]);
-                        $order->address_country = (sizeof($address_detail) == 4) ? trim($address_detail[2]) . " " . trim($address_detail[3]) : trim($address_detail[2]);    
+
+                        if (isset($address_detail)) {
+                            if (sizeof($address_detail) == 2) {
+                                $order->address_state = trim($address_detail[0]);
+                                $order->address_zip = trim($address_detail[1]);
+                            }
+                            if (sizeof($address_detail) == 3) {
+                                $order->address_country = trim($address_detail[2]);   
+                            }
+                            if (sizeof($address_detail) == 4) {
+                                $order->address_country = trim($address_detail[2]) . " " . trim($address_detail[3]);   
+                            }
+                        }
+                    } else { 
+                        // something is wrong with the address - leave it as null
                     }
 
-                    //dd($order,$message->body,\Carbon\Carbon::parse($order->date_of_birth), $order->couple_date_of_birth);
                     $order->comments = ($order->comments == 1) ? null : $order->comments;
                     $order->date_of_birth = ($order->date_of_birth == 1) ? null : $order->date_of_birth;
                     $order->couple_date_of_birth = ($order->couple_date_of_birth == 1) ? null : $order->couple_date_of_birth;
                     $order->date_of_birth = (isset($order->date_of_birth)) ? \Carbon\Carbon::parse($order->date_of_birth) : null;
                     $order->couple_date_of_birth = (isset($order->couple_date_of_birth)) ? \Carbon\Carbon::parse($order->couple_date_of_birth) : null;
-
+                    
                     // attempt to get Stripe charge id
                     $result=null;
                     $stripe_charge=null;
@@ -372,9 +389,11 @@ class GetMailgunMessages extends Command
                         $stripe_charge = str_replace('">','',$charge);
                         $order->stripe_charge_id = (isset($stripe_charge)) ? $stripe_charge : null;
                     }
-                    // dd($order, $message->body, $retreat,$stripe_url, $result, $stripe_charge);
+                    //dd($order, $message->body, $retreat,$stripe_url, $result, $stripe_charge);
                     $order->save();
                 }  catch (\Exception $exception) {
+                    dd($order, $message->body, $retreat);
+
                     $subject .= ': Creating Squarespace Order for Message Id #'.$message->id;
                     Mail::send('emails.en_US.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject],
                     function ($m) use ($subject, $exception) {
