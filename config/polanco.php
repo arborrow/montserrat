@@ -109,6 +109,7 @@ return [
         'Donation' => 'Donations',
         'Flowers' => 'Flowers and Landscaping',
         'Foundation Endowment' => 'AGC - Endowment',
+        'Gift Certificate' => 'Gift Certificates - Funded',
         'Propina' => 'Tips',
         'Retreat Deposit' => 'Retreat Deposits',
         'Retreat Offering' => 'Retreat Funding',
