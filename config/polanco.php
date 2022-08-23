@@ -89,7 +89,7 @@ return [
         'N/A' => '',
         'Annual Giving Campaign' => 'AGC - General',
         'Building & Maintenance Fund' => 'AGC - Buildings & Maintenance',
-        'Flowers' => 'Flowers and Landscaping',
+        'Flowers and Landscaping' => 'Flowers and Landscaping',
         'Memorial Donation' => 'Memorials',
         'Montserrat Foundation Endowment' => 'AGC - Endowment',
         'Post-Retreat offering' => 'Retreat Funding',
