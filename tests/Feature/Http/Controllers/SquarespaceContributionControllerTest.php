@@ -94,7 +94,7 @@ class SquarespaceContributionControllerTest extends TestCase
         */
 
         // for simplicity assigning a contact_id and event_id since the goal here is to assure that the existing data is auto-populated/selected
-        $this->assertTrue($this->findFieldValueInResponseContent('contact_id', null, 'select', $response->getContent()));
+        // $this->assertTrue($this->findFieldValueInResponseContent('contact_id', null, 'select', $response->getContent()));
         // $this->assertTrue($this->findFieldValueInResponseContent('event_id', $contribution->event_id, 'select', $response->getContent()));
         // TODO: review how best to handle ampersand in Building & Maintenance (and others)
         // $this->assertTrue($this->findFieldValueInResponseContent('donation_description', (isset($contribution->fund)) ? $contribution->fund : $contribution->offering_type, 'select', $response->getContent()));
