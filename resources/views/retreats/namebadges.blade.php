@@ -15,24 +15,24 @@
                 @foreach ($chunk as $label)
                   @if ($loop->odd)
                     <tr>
-                    <td style="text-align:center; font-size:24pt;">
+                    <td style="text-align:center; font-size:26pt;">
                       <div style="height:2.20in; overflow:hidden; vertical-align:top;">
                       <img src="{{URL('/images/mrhlogoblack.png')}}" align="center" width="200px" height="64px">
                       <br /><br />
-                      {{ $label }}
+                      <strong>{{ $label }}</strong>
                     </div>
                     </td>
                     @if ($loop->last)
-                      <td style="text-align:center; font-size:24pt;">
+                      <td style="text-align:center; font-size:26pt;">
                       </td>
                     </tr>
                     @endIf
                   @endIf
                 @if ($loop->even)
-                  <td style="text-align:center; font-size:25pt;">
+                  <td style="text-align:center; font-size:26pt;">
                       <div style="height:2.20in; overflow:hidden; vertical-align:top;">
                       <img src="{{URL('/images/mrhlogoblack.png')}}" align="center" width="200px" height="64px">
-                      <br /><br />{{ $label }}
+                      <br /><br /><strong>{{ $label }}</strong>
                     </div>
                   </td>
                   </tr>

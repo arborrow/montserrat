@@ -857,7 +857,8 @@ class RetreatController extends Controller
         foreach ($registrations as $registration) {
             // if the registered retreatant is not an individual person - for example a contract group organization then use the registration note for the name of the retreatant
             if ($registration->retreatant->contact_type == config('polanco.contact_type.individual')) {
-                $results[$registration->id] = $registration->retreatant->first_name.' '.$registration->retreatant->last_name;
+                $name = isset($registration->retreatant->nick_name) ? $registration->retreatant->nick_name : $registration->retreatant->first_name;
+                $results[$registration->id] = $name . ' ' . $registration->retreatant->last_name;
                 $registration->badgename = $registration->retreatant->sort_name;
             } else {
                 // if there is no note; default back to the sort_name of the contact
