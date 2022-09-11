@@ -542,7 +542,9 @@ class RetreatControllerTest extends TestCase
         $response->assertViewIs('retreats.namebadges');
         $response->assertViewHas('event');
         $response->assertViewHas('cresults');
-        $response->assertSeeText($retreatant->first_name.' '.$retreatant->last_name);
+        // TODO:: consider creating badgename attribute in model and using that in controller and test to remove repeating logic here in the test
+        $name = isset($retreatant->nick_name) ? $retreatant->nick_name : $retreatant->first_name;
+        $response->assertSeeText($name.' '.$retreatant->last_name);
     }
 
     /**
@@ -574,7 +576,9 @@ class RetreatControllerTest extends TestCase
         $response->assertViewIs('retreats.namebadges');
         $response->assertViewHas('event');
         $response->assertViewHas('cresults');
-        $response->assertSeeText($retreatant->first_name.' '.$retreatant->last_name);
+        // TODO:: consider creating badgename attribute in model and using that in controller and test to remove repeating logic here in the test
+        $name = isset($retreatant->nick_name) ? $retreatant->nick_name : $retreatant->first_name;
+        $response->assertSeeText($name.' '.$retreatant->last_name);
     }
 
     /**

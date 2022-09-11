@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SquarespaceContribution;
 use App\Models\StripeBalanceTransaction;
 use App\Models\StripePayout;
 use Carbon\Carbon;
@@ -114,7 +115,14 @@ class StripePayoutController extends Controller
         $payout->save();
         
         $balance_transactions = StripeBalanceTransaction::wherePayoutId($payout_id)->get();
-        
+        $unprocessed_donations = StripeBalanceTransaction::wherePayoutId($payout_id)->whereNull('reconcile_date')->whereTransactionType('Donation')->count();
+        $unprocessed_squarespace_contributions = SquarespaceContribution::whereIsProcessed(0)->count();
+
+        // if there are unprocessed balance transactions, and there are 
+        if ($unprocessed_donations > 0 && $unprocessed_squarespace_contributions > 0 && $payout->unreconciled_count > 0) {
+            flash('Consider processing the <a href="' . url('/squarespace/contribution').'">' . $unprocessed_squarespace_contributions . ' unprocessed Squarespace Contributions</a> before processing the Stripe Balance Transactions.')->warning()->important();
+        }        
+
         return view('stripe.payouts.show',compact('payout','balance_transactions','stripe_balance_transactions','stripe_payout','refunds'));   //
 
     }
