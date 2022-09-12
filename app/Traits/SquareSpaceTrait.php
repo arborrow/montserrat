@@ -36,7 +36,7 @@ trait SquareSpaceTrait
 
             $retreats = Registration::leftjoin('event', 'participant.event_id', '=', 'event.id')->select(DB::raw('CONCAT(event.idnumber, "-", event.title, " (",DATE_FORMAT(event.start_date,"%m-%d-%Y"),")") as description'), 'event.id')->whereContactId($contact_id)->orderBy('event.start_date', 'desc')->pluck('event.description', 'event.id');
             $retreats[''] = 'Not related to an Event/Retreat';
-            return $retreats;    
+            return $retreats;
         }
     }
 
@@ -119,50 +119,56 @@ trait SquareSpaceTrait
                 } else {
                     $contacts[$email->contact_id]['total_score'] = $email_score;
                 }
-                $contacts[$email->contact_id]['full_name'] = $email->owner->full_name_with_city . ' ['. (int) $contacts[$email->contact_id]['total_score'] .']';    
+                $contacts[$email->contact_id]['full_name'] = $email->owner->full_name_with_city . ' ['. (int) $contacts[$email->contact_id]['total_score'] .']';
             }
         }
 
         foreach ($mobile_phones as $phone) {
             $phone_score = 20;
-            $contacts[$phone->contact_id]['contact_id'] = $phone->contact_id;
-            $contacts[$phone->contact_id]['lastname'] = $phone->owner->last_name;
-            $contacts[$phone->contact_id]['firstname'] = $phone->owner->first_name;
-            $contacts[$phone->contact_id]['mobile_phone_score'] = $phone_score;
-            if (isset($contacts[$phone->contact_id]['total_score'])) {
-                $contacts[$phone->contact_id]['total_score'] += $phone_score;
-            } else {
-                $contacts[$phone->contact_id]['total_score'] = $phone_score;
+            if (isset($phone->owner)) {
+                $contacts[$phone->contact_id]['contact_id'] = $phone->contact_id;
+                $contacts[$phone->contact_id]['lastname'] = $phone->owner->last_name;
+                $contacts[$phone->contact_id]['firstname'] = $phone->owner->first_name;
+                $contacts[$phone->contact_id]['mobile_phone_score'] = $phone_score;
+                if (isset($contacts[$phone->contact_id]['total_score'])) {
+                    $contacts[$phone->contact_id]['total_score'] += $phone_score;
+                } else {
+                    $contacts[$phone->contact_id]['total_score'] = $phone_score;
+                }
+                $contacts[$phone->contact_id]['full_name'] = $phone->owner->full_name_with_city . ' ['. (int) $contacts[$phone->contact_id]['total_score'] .']';
             }
-            $contacts[$phone->contact_id]['full_name'] = $phone->owner->full_name_with_city . ' ['. (int) $contacts[$phone->contact_id]['total_score'] .']';
         }
 
         foreach ($home_phones as $phone) {
             $phone_score = 10;
-            $contacts[$phone->contact_id]['contact_id'] = $phone->contact_id;
-            $contacts[$phone->contact_id]['lastname'] = $phone->owner->last_name;
-            $contacts[$phone->contact_id]['firstname'] = $phone->owner->first_name;
-            $contacts[$phone->contact_id]['home_phone_score'] = $phone_score;
-            if (isset($contacts[$phone->contact_id]['total_score'])) {
-                $contacts[$phone->contact_id]['total_score'] += $phone_score;
-            } else {
-                $contacts[$phone->contact_id]['total_score'] = $phone_score;
+            if (isset($phone->owner)) {
+                $contacts[$phone->contact_id]['contact_id'] = $phone->contact_id;
+                $contacts[$phone->contact_id]['lastname'] = $phone->owner->last_name;
+                $contacts[$phone->contact_id]['firstname'] = $phone->owner->first_name;
+                $contacts[$phone->contact_id]['home_phone_score'] = $phone_score;
+                if (isset($contacts[$phone->contact_id]['total_score'])) {
+                    $contacts[$phone->contact_id]['total_score'] += $phone_score;
+                } else {
+                    $contacts[$phone->contact_id]['total_score'] = $phone_score;
+                }
+                $contacts[$phone->contact_id]['full_name'] = $phone->owner->full_name_with_city . ' ['. (int) $contacts[$phone->contact_id]['total_score'] .']';
             }
-            $contacts[$phone->contact_id]['full_name'] = $phone->owner->full_name_with_city . ' ['. (int) $contacts[$phone->contact_id]['total_score'] .']';
         }
 
         foreach ($work_phones as $phone) {
             $phone_score = 10;
-            $contacts[$phone->contact_id]['contact_id'] = $phone->contact_id;
-            $contacts[$phone->contact_id]['lastname'] = $phone->owner->last_name;
-            $contacts[$phone->contact_id]['firstname'] = $phone->owner->first_name;
-            $contacts[$phone->contact_id]['work_phone_score'] = $phone_score;
-            if (isset($contacts[$phone->contact_id]['total_score'])) {
-                $contacts[$phone->contact_id]['total_score'] += $phone_score;
-            } else {
-                $contacts[$phone->contact_id]['total_score'] = $phone_score;
+            if (isset($phone->owner)) {
+                $contacts[$phone->contact_id]['contact_id'] = $phone->contact_id;
+                $contacts[$phone->contact_id]['lastname'] = $phone->owner->last_name;
+                $contacts[$phone->contact_id]['firstname'] = $phone->owner->first_name;
+                $contacts[$phone->contact_id]['work_phone_score'] = $phone_score;
+                if (isset($contacts[$phone->contact_id]['total_score'])) {
+                    $contacts[$phone->contact_id]['total_score'] += $phone_score;
+                } else {
+                    $contacts[$phone->contact_id]['total_score'] = $phone_score;
+                }
+                $contacts[$phone->contact_id]['full_name'] = $phone->owner->full_name_with_city . ' ['. (int) $contacts[$phone->contact_id]['total_score'] .']';
             }
-            $contacts[$phone->contact_id]['full_name'] = $phone->owner->full_name_with_city . ' ['. (int) $contacts[$phone->contact_id]['total_score'] .']';
         }
 
         $ts = array_column($contacts, 'total_score');
