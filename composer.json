@@ -10,7 +10,7 @@
     "require": {
         "php": "^8.0.2",
         "barryvdh/laravel-snappy": "^1.0",
-        "consoletvs/charts": "^7.3",
+        "consoletvs/charts": "@dev",
         "doctrine/dbal": "^3.3",
         "guzzlehttp/guzzle": "^7.2",
         "h4cc/wkhtmltoimage-amd64": "0.12.x",
@@ -64,6 +64,16 @@
             "Tests\\": "tests/"
         }
     },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "./packages/consoletvs/charts"
+        },
+        {
+            "type": "path",
+            "url": "./packages/chartisan/php"
+        }
+    ],
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
