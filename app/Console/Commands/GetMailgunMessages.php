@@ -22,6 +22,7 @@ use Mailgun\Mailgun;
 
 class GetMailgunMessages extends Command
 {
+
     use MailgunTrait;
     /**
      * The name and signature of the console command.
@@ -55,7 +56,7 @@ class GetMailgunMessages extends Command
         $queryString = ['event' => 'stored'];
         $events = $mg->events()->get("$domain", $queryString);
         $event_items = $events->getItems();
-
+        
         if (isset($event_items)) {
             foreach ($event_items as $event_item) {
                 $event_date = $event_item->getEventDate();
@@ -72,7 +73,8 @@ class GetMailgunMessages extends Command
                             $message->mailgun_timestamp = Carbon::parse($event_item->getTimestamp());
                             $message->storage_url = $event_item->getStorage()['url'];
                             $message->subject = $message_email->getSubject();
-                            $message->body = str_replace("\r\n","\n", $message_email->getBodyPlain());
+                            // $message->body = str_replace("\r\n","\n", html_entity_decode(strip_tags($message_email->getBodyHtml())));
+                            $message->body = $message_email->getBodyHtml();
 
                             if (null !== $message_email->getSender()) {
                                 $message->from = $this->clean_email($message_email->getSender());
@@ -101,8 +103,8 @@ class GetMailgunMessages extends Command
 
                             $message->from_id = isset($contact_from->id) ? $contact_from->id : null;
                             $message->to_id = isset($contact_to->id) ? $contact_to->id : null;
-                            // dd($message);
                             $message->save();
+                            //dd($message);
                         }
 
                     } catch (\Exception $exception) {
@@ -118,11 +120,11 @@ class GetMailgunMessages extends Command
         }
 
         $messages = Message::whereIsProcessed(0)->get();
-
         foreach ($messages as $message) {
             // #TOUCHPOINT - if this is a touchpoint
             // if we have from and to ids for contacts go ahead and create a touchpoint
             // TODO: validate that from is from enforced domain (if applicable)
+            $clean_message = str_replace("\r\n","\n", html_entity_decode(strip_tags($message->body)));
 
             if (($message->from_id > 0) && ($message->to_id > 0) && (str_contains($message->recipients,'touchpoint'))) {
                 try {
@@ -131,7 +133,7 @@ class GetMailgunMessages extends Command
                     $touch->staff_id = $message->from_id;
                     $touch->touched_at = $message->timestamp;
                     $touch->type = 'Email';
-                    $touch->notes = $message->subject.' - '.$message->body;
+                    $touch->notes = $message->subject.' - '.$clean_message;
                     $touch->save();
                     $message->is_processed=1;
                     $message->save();
@@ -159,7 +161,7 @@ class GetMailgunMessages extends Command
                         'message_id' => $message->id,
                     ]);
 
-                    $donation = explode("\n",$message->body);
+                    $donation = explode("\n",$clean_message);
                     $donation = array_values(array_filter($donation));
                     $address_start_row = array_search("Donor Address:",$donation);
                     $address_end_row = array_search("Donor Phone Number:",$donation);
@@ -183,19 +185,19 @@ class GetMailgunMessages extends Command
 
                     $ss_donation->message_id = $message->id;
 
-                    $ss_donation->name = ucwords(strtolower($this->extract_value($message->body, "Donor Name:\n")));
-                    $ss_donation->email = strtolower($this->extract_value($message->body, "Donor Email:\n"));
-                    $ss_donation->phone = $this->extract_value($message->body, "Donor Phone Number:\n");
+                    $ss_donation->name = ucwords(strtolower($this->extract_value($clean_message, "Donor Name:\n")));
+                    $ss_donation->email = strtolower($this->extract_value($clean_message, "Donor Email:\n"));
+                    $ss_donation->phone = $this->extract_value($clean_message, "Donor Phone Number:\n");
 
-                    $ss_donation->retreat_description = $this->extract_value($message->body, "Retreat:\n");
+                    $ss_donation->retreat_description = $this->extract_value($clean_message, "Retreat:\n");
 
                     // it seems some of the emails had * characters and some do not so we will check for both
-                    $ss_donation->amount = $this->extract_value_between($message->body, "contribution of *$","*!");
+                    $ss_donation->amount = $this->extract_value_between($clean_message, "contribution of *$","*!");
                     if (!isset($ss_donation->amount)) {
-                        $ss_donation->amount = $this->extract_value_between($message->body, "contribution of $","!");
+                        $ss_donation->amount = $this->extract_value_between($clean_message, "contribution of $","!");
                     }
 
-                    $ss_donation->fund = $this->extract_value($message->body, "Please Select a Fund:\n");
+                    $ss_donation->fund = $this->extract_value($clean_message, "Please Select a Fund:\n");
                     $year = substr($ss_donation->retreat_description, -5, 4);
 
                     $retreat_number = trim(substr($ss_donation->retreat_description,
@@ -204,7 +206,7 @@ class GetMailgunMessages extends Command
                     ));
 
                     $ss_donation->idnumber = ($ss_donation->retreat_description == "Individual Private Retreat") ? null : trim($year.$retreat_number);
-                    $ss_donation->comments = trim($this->extract_value_between($message->body, "Comments or Special Instructions:\n","View My Donations\n"));
+                    $ss_donation->comments = trim($this->extract_value_between($clean_message, "Comments or Special Instructions:\n","View My Donations\n"));
                     $ss_donation->comments = ($ss_donation->comments == 1) ? null : $ss_donation->comments;
 
                     $event = Retreat::whereIdnumber($ss_donation->idnumber)->first();
@@ -239,26 +241,36 @@ class GetMailgunMessages extends Command
             // #ORDER - if this is an order for a retreat
             if (str_contains($message->recipients,'order')) {
                 try {
-                    $order_number = $this->extract_value_between($message->body, "Order #",".");
-                    $order_date = $this->extract_value_between($message->body, "Placed on","CT. View in Stripe");
+                    $order_number = $this->extract_value_between($clean_message, "Order #",".");
+                    $order_date = $this->extract_value_between($clean_message, "Placed on","CT. View in Stripe");
                     $order = SquarespaceOrder::firstOrCreate([
                         'order_number' => $order_number,
                     ]);
 
-                    
                     $order->order_number = $order_number;
                     $order->message_id = $message->id;
                     $order->created_at = (isset($order_date)) ? Carbon::parse($order_date) : Carbon::now();
-                    $message_info = $this->extract_value_between($message->body, "SUBTOTAL", "Item Subtotal");
-
+                    
+                    $message_info = $this->extract_value_between($clean_message, "SUBTOTAL", "Item Subtotal");
+                    
                     $retreat = array_values(array_filter(explode("\n",$message_info)));
+                    $retreat = array_map('trim',$retreat);
+                    // remove blank lines
+                    $retreat = array_filter($retreat);
+                    // remove line with only a space in it that was not removed from the trim above, grrr
+                    $retreat = array_filter($retreat, function($value) { return $value !== "\xC2\xA0"; });
+                    // rekey the array
+                    $retreat = array_values($retreat);
+                    
                     $order->retreat_category=$retreat[0];
                     $order->retreat_sku = $retreat[1];
-
+                    
+                    
                     $inventory = SquarespaceInventory::whereName($order->retreat_category)->first();
                     $custom_form = SquarespaceCustomForm::findOrFail($inventory->custom_form_id);
                     $fields = SquarespaceCustomFormField::whereFormId($custom_form->id)->orderBy('sort_order')->get();
-
+                    
+                    
                     $first_field_position = array_search($fields[0]->name.":", $retreat);
                     $product_variation="";
                     for ($i=2; $i<=$first_field_position-1; $i++) {
@@ -286,7 +298,19 @@ class GetMailgunMessages extends Command
 
                     //$order->deposit_amount = str_replace("$","",$this->extract_value_between($message->body, "\nTOTAL", "$0.00"));
                     // a bit hacky but TOTAL was being flakey possibly because of SUBTOTAL so Tax was more unique
-                    $order->deposit_amount = str_replace("$","",trim(str_replace("TOTAL","",$this->extract_value_between($message->body, "Tax\n", "$0.00"))));
+                    $deposit_amount = str_replace("$","",trim(str_replace("TOTAL","",$this->extract_value_between($clean_message, "Tax\n", "$0.00"))));
+                    $deposit_amount = array_values(array_filter(explode("\n",$deposit_amount)));
+                    $deposit_amount = array_map('trim',$deposit_amount);
+                    // remove blank lines
+                    $deposit_amount = array_filter($deposit_amount);
+                    // remove line with only a space in it that was not removed from the trim above, grrr
+                    $deposit_amount = array_filter($deposit_amount, function($value) { return $value !== "\xC2\xA0"; });
+                    // rekey the array
+                    $deposit_amount = array_values($deposit_amount);
+                    
+
+                    $order->deposit_amount = $deposit_amount[0];
+                    
                     $quantity = $retreat[sizeof($retreat)-3];
                     $unit_price=str_replace("$", "", $retreat[sizeof($retreat)-2]);
                     $order->retreat_quantity = isset($quantity) ? $quantity : 0;
@@ -295,6 +319,7 @@ class GetMailgunMessages extends Command
                     if (isset($registration_type[1])) {
                         $order->retreat_registration_type = trim($registration_type[1]);
                     }
+                            
                     switch ($order->retreat_category) {
                         case "Open Retreat (Men, Women, and Couples)" :
                             $order->retreat_couple = trim($registration_type[2]);
@@ -303,8 +328,8 @@ class GetMailgunMessages extends Command
                             $order->retreat_couple = trim($registration_type[2]);
                             break;
                         case "Couple's Retreat" :
-                            $order->retreat_couple = 'Couple';
-                            break;
+                                $order->retreat_couple = 'Couple';
+                                break;
                         case "Special Event - Man In The Ditch" :
                             $idnumber='20220618';
                             $order->retreat_idnumber = '20220618'; // hardcoded
@@ -318,12 +343,13 @@ class GetMailgunMessages extends Command
                         default : //  "Women's Retreat", "Men's Retreat", "Young Adult's Retreat"
                             break;
                     }
+    
+                    
                     // dd($order, $retreat, $registration_type, $message->body,str_replace("$","",trim(str_replace("TOTAL","",$this->extract_value_between($message->body, "Tax\n", "$0.00")))));
                     $names = $fields->pluck('name')->toArray();
-                    //dd($order,$product_variation,$registration_type, $fields,$inventory);
-                    foreach ($fields as $field) {
-                        
-                        $extracted_value = $this->extract_value($message->body, $field->name.":\n");
+                    //dd($order,$product_variation,$registration_type, $fields,$inventory);    
+                    foreach ($fields as $field) {          
+                        $extracted_value = $this->extract_data($retreat, $field->name.":");
                         $order->{$field->variable_name} = $extracted_value;
                         // to remove empty values where the extracted value is actually the name of the next field
                         // ideally I would think this would be done by extract_value but that would require passing $names to it each time
@@ -381,18 +407,19 @@ class GetMailgunMessages extends Command
                     // attempt to get Stripe charge id
                     $result=null;
                     $stripe_charge=null;
-                    $stripe_url = trim($this->extract_value($message->body,"View in Stripe\n"), "<>");
-                    //dd($stripe_url, isset($stripe_url), strpos($stripe_url,"http") === 0);
+                    //   $stripe_url = trim($this->extract_value(str_replace("\r\n","\n", $message->body),"View in Stripe\n"), "<>");
+                    $stripe_url = $this->extract_stripe_url($message->body);
                     if (isset($stripe_url) && strpos($stripe_url,"http") === 0) {
                         $result = Http::timeout(2)->get($stripe_url)->getBody()->getContents();
                         $charge = trim($this->extract_value($result,"redirect=%2Fpayments%2F"));
                         $stripe_charge = str_replace('">','',$charge);
                         $order->stripe_charge_id = (isset($stripe_charge)) ? $stripe_charge : null;
                     }
-                    //dd($order, $message->body, $retreat,$stripe_url, $result, $stripe_charge);
+                    // dd($order, $message->body, $retreat, $stripe_url, $result, $stripe_charge);
                     $order->save();
                 }  catch (\Exception $exception) {
-                    //dd($order, $message->body, $retreat);
+                    // TODO: while debugging - could check for production or developement and turn on or off accordingly to only attempt to send email when in production
+                    // dd($exception, $order, $clean_message, $message->body, $retreat);
 
                     $subject .= ': Creating Squarespace Order for Message Id #'.$message->id;
                     Mail::send('emails.en_US.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject],

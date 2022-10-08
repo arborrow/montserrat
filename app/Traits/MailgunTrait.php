@@ -62,4 +62,44 @@ trait MailgunTrait
         }
     }
 
+
+    /*
+     * extract value beginning at search string until next new line
+     *
+     * returns string of trimmed value
+     */
+
+    public function extract_data($body, $start_text = null)
+    {
+
+        $field_position = array_search($start_text, $body);
+        if (array_key_exists($field_position+1, $body)) {
+            $data = $body[$field_position+1];
+        }
+        // dd($body, $start_text, $field_position, $data);
+        return trim($data);
+    }
+
+
+    /*
+     * extract stripe_url
+     *
+     * returns 
+     */
+
+    public function extract_stripe_url($message_body)
+    {
+        $clean_body = trim(str_replace("\r\n","\n", $message_body));
+        $body_array = array_filter(explode("\n",$clean_body));
+        $body_array = array_map('trim',$body_array);
+        $body_array = array_filter($body_array);
+        $result = array_filter($body_array, function($value) {
+            return strpos($value, 'View in Stripe') !== false;
+        });
+        $result = array_values($result);
+        $url = explode("\"", $result[0]);
+        return (array_key_exists(1, $url)) ? $url[1] : null;
+    }
+
+
 }
