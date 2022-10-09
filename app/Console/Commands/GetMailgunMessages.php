@@ -56,7 +56,7 @@ class GetMailgunMessages extends Command
         $queryString = ['event' => 'stored'];
         $events = $mg->events()->get("$domain", $queryString);
         $event_items = $events->getItems();
-        /*
+        
         if (isset($event_items)) {
             foreach ($event_items as $event_item) {
                 $event_date = $event_item->getEventDate();
@@ -118,7 +118,7 @@ class GetMailgunMessages extends Command
                 }
             }
         }
-        */
+        
 
         
         $messages = Message::whereIsProcessed(0)->get();
