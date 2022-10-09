@@ -73,11 +73,11 @@ trait MailgunTrait
     {
 
         $field_position = array_search($start_text, $body);
-        if (array_key_exists($field_position+1, $body)) {
+        if ((!$field_position === false) && array_key_exists($field_position+1, $body)) {
             $data = $body[$field_position+1];
         }
         // dd($body, $start_text, $field_position, $data);
-        return trim($data);
+        return (isset($data)) ? trim($data) : null;
     }
 
 

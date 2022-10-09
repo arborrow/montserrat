@@ -56,7 +56,7 @@ class GetMailgunMessages extends Command
         $queryString = ['event' => 'stored'];
         $events = $mg->events()->get("$domain", $queryString);
         $event_items = $events->getItems();
-        
+        /*
         if (isset($event_items)) {
             foreach ($event_items as $event_item) {
                 $event_date = $event_item->getEventDate();
@@ -118,8 +118,12 @@ class GetMailgunMessages extends Command
                 }
             }
         }
+        */
 
+        
         $messages = Message::whereIsProcessed(0)->get();
+
+        // dd($messages);
         foreach ($messages as $message) {
             // #TOUCHPOINT - if this is a touchpoint
             // if we have from and to ids for contacts go ahead and create a touchpoint
@@ -162,6 +166,7 @@ class GetMailgunMessages extends Command
                     ]);
 
                     $donation = explode("\n",$clean_message);
+                    $donation = array_map('trim',$donation);
                     $donation = array_values(array_filter($donation));
                     $address_start_row = array_search("Donor Address:",$donation);
                     $address_end_row = array_search("Donor Phone Number:",$donation);
@@ -177,44 +182,50 @@ class GetMailgunMessages extends Command
                         $ss_donation->address_street = ucwords(strtolower($donation[$address_start_row+1]));
                         $address_details = explode(",",$donation[$address_start_row+2]);
                     }
-
+                    
                     $ss_donation->address_city = ucwords(strtolower(trim($address_details[0])));
                     $ss_donation->address_state = trim($address_details[1]);
                     $ss_donation->address_zip = trim($address_details[2]);
                     $ss_donation->address_country = ucwords($donation[$address_end_row-1]);
-
+                    
                     $ss_donation->message_id = $message->id;
-
-                    $ss_donation->name = ucwords(strtolower($this->extract_value($clean_message, "Donor Name:\n")));
-                    $ss_donation->email = strtolower($this->extract_value($clean_message, "Donor Email:\n"));
-                    $ss_donation->phone = $this->extract_value($clean_message, "Donor Phone Number:\n");
-
-                    $ss_donation->retreat_description = $this->extract_value($clean_message, "Retreat:\n");
-
+                    
+                    
+                    $ss_donation->name = ucwords(strtolower($this->extract_data($donation, "Donor Name:")));
+                    $ss_donation->email = strtolower($this->extract_data($donation, "Donor Email:"));
+                    $ss_donation->phone = $this->extract_data($donation, "Donor Phone Number:");
+                    $ss_donation->retreat_description = $this->extract_data($donation, "Retreat:");
+                    
+                    
                     // it seems some of the emails had * characters and some do not so we will check for both
-                    $ss_donation->amount = $this->extract_value_between($clean_message, "contribution of *$","*!");
-                    if (!isset($ss_donation->amount)) {
-                        $ss_donation->amount = $this->extract_value_between($clean_message, "contribution of $","!");
-                    }
-
-                    $ss_donation->fund = $this->extract_value($clean_message, "Please Select a Fund:\n");
+                    $donation_amount = $this->extract_data($donation,'Donation Received');
+                    $amount = substr($donation_amount, strpos($donation_amount,'$'),strpos($donation_amount,'!')-strpos($donation_amount,'$'));
+                    $amount = str_replace('$','', $amount);
+                    $amount = str_replace('!','', $amount);
+                    $amount = str_replace('*','', $amount);
+                    $ss_donation->amount = $amount;
+                    
+                    
+                    $ss_donation->fund = $this->extract_data($donation, "Please Select a Fund:");
                     $year = substr($ss_donation->retreat_description, -5, 4);
-
+                    
                     $retreat_number = trim(substr($ss_donation->retreat_description,
                         strpos($ss_donation->retreat_description, "#") + 1,
                         (strpos($ss_donation->retreat_description, " ") - strpos($ss_donation->retreat_description, "#"))
                     ));
-
+                
+                    
                     $ss_donation->idnumber = ($ss_donation->retreat_description == "Individual Private Retreat") ? null : trim($year.$retreat_number);
-                    $ss_donation->comments = trim($this->extract_value_between($clean_message, "Comments or Special Instructions:\n","View My Donations\n"));
-                    $ss_donation->comments = ($ss_donation->comments == 1) ? null : $ss_donation->comments;
-
+                    $ss_donation->comments = trim($this->extract_data($donation, "Comments or Special Instructions:"));
+                    $ss_donation->comments = str_replace('View My Donations','',$ss_donation->comments);
+                    
                     $event = Retreat::whereIdnumber($ss_donation->idnumber)->first();
                     $ss_donation->event_id = optional($event)->id;
                     
                     if (isset($ss_donation->idnumber) && isset($ss_donation->event_id)) { // if a particular event then based on end date of event if passed retreat funding, if upcoming then deposit
                         $ss_donation->offering_type = ($event->end_date > now()) ? 'Pre-Retreat offering' : 'Post-Retreat offering';
                     }  
+                    
                     
                     switch ($ss_donation->retreat_description) {
                         case 'Saturday of Renewal' : // if SOR then assume SOR has passed so post-retreat
@@ -225,11 +236,12 @@ class GetMailgunMessages extends Command
                             break;
                         default :
                     }
-                        
+                    // dd($donation, $ss_donation);    
                     $ss_donation->save();
 
                 } catch (\Exception $exception) {
                     $subject .= ': Creating Squarespace Contribution for Message Id #'.$message->id;
+                    dd($exception, $subject);
                     Mail::send('emails.en_US.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject],
                     function ($m) use ($subject, $exception) {
                         $m->to(config('polanco.admin_email'))
@@ -419,7 +431,7 @@ class GetMailgunMessages extends Command
                     $order->save();
                 }  catch (\Exception $exception) {
                     // TODO: while debugging - could check for production or developement and turn on or off accordingly to only attempt to send email when in production
-                    // dd($exception, $order, $clean_message, $message->body, $retreat);
+                    dd($exception, $order, $clean_message, $message->body, $retreat);
 
                     $subject .= ': Creating Squarespace Order for Message Id #'.$message->id;
                     Mail::send('emails.en_US.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject],
