@@ -12,6 +12,7 @@ use App\Models\DonationType;
 use App\Models\Payment;
 use App\Models\Registration;
 use App\Models\Retreat;
+use App\Models\SquarespaceContribution;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -154,6 +155,13 @@ class DonationController extends Controller
         $first_donation->squarespace_order = (isset($first_donation->squarespace_order)) ? $first_donation->squarespace_order : $second_donation->squarespace_order;
         $first_donation->save();
 
+        // if there is an existing squarespace contribution for $second_donation, change it to $first_donation to avoid orphaned squarespace contributions which can mess up processing related stripe balance transaction
+        $squarespace_contribution = SquarespaceContribution::whereDonationId($second_donation->donation_id)->first();
+        if (isset($squarespace_contribution)) {
+            $squarespace_contribution->donation_id = $first_donation->donation_id;
+            $squarespace_contribution->save();
+        }
+        
         // delete the second donation
         $second_donation->delete();
         

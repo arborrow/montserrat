@@ -173,20 +173,21 @@ class GetMailgunMessages extends Command
                     if ($address_end_row === false) { // if the phone number is not provided
                         $address_end_row = array_search("Additional Information:",$donation);
                     }
-                    // dd($donation,$address_start_row, $address_end_row);
-                    if (($address_end_row - $address_start_row) == 5) {
-                        $ss_donation->address_street = ucwords(strtolower($donation[$address_start_row+1]));
-                        $ss_donation->address_supplemental = ucwords(strtolower($donation[$address_start_row+2]));
-                        $address_details = explode(",",$donation[$address_start_row+3]);
-                    } else {
-                        $ss_donation->address_street = ucwords(strtolower($donation[$address_start_row+1]));
-                        $address_details = explode(",",$donation[$address_start_row+2]);
+                    if ($address_start_row > 0) { // if there is no address_start_row skip attempt to process address
+                        // dd($donation,$address_start_row, $address_end_row);
+                        if (($address_end_row - $address_start_row) == 5) {
+                            $ss_donation->address_street = ucwords(strtolower($donation[$address_start_row+1]));
+                            $ss_donation->address_supplemental = ucwords(strtolower($donation[$address_start_row+2]));
+                            $address_details = explode(",",$donation[$address_start_row+3]);
+                        } else {
+                            $ss_donation->address_street = ucwords(strtolower($donation[$address_start_row+1]));
+                            $address_details = explode(",",$donation[$address_start_row+2]);
+                        }
+                        $ss_donation->address_city = ucwords(strtolower(trim($address_details[0])));
+                        $ss_donation->address_state = trim($address_details[1]);
+                        $ss_donation->address_zip = trim($address_details[2]);
+                        $ss_donation->address_country = ucwords($donation[$address_end_row-1]);    
                     }
-                    
-                    $ss_donation->address_city = ucwords(strtolower(trim($address_details[0])));
-                    $ss_donation->address_state = trim($address_details[1]);
-                    $ss_donation->address_zip = trim($address_details[2]);
-                    $ss_donation->address_country = ucwords($donation[$address_end_row-1]);
                     
                     $ss_donation->message_id = $message->id;
                     
@@ -274,10 +275,10 @@ class GetMailgunMessages extends Command
                     // rekey the array
                     $retreat = array_values($retreat);
                     
-                    $order->retreat_category=$retreat[0];
-                    $order->retreat_sku = $retreat[1];
+                    $order->retreat_category= (array_key_exists(0,$retreat)) ? $retreat[0] : null;
+                    $order->retreat_sku = (array_key_exists(1,$retreat)) ? $retreat[1] : null;
                     
-                    
+                    // TODO:: in order for test to pass, we need to have better/more functional seed and factory generated data
                     $inventory = SquarespaceInventory::whereName($order->retreat_category)->first();
                     $custom_form = SquarespaceCustomForm::findOrFail($inventory->custom_form_id);
                     $fields = SquarespaceCustomFormField::whereFormId($custom_form->id)->orderBy('sort_order')->get();
