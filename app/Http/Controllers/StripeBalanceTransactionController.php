@@ -230,6 +230,7 @@ class StripeBalanceTransactionController extends Controller
                     } else {
                         $charge_payment = $charge_payments[0];
                         $donation = Donation::findOrFail($charge_payment->donation_id);
+
                         $refund = new Payment;
                         $refund->donation_id = $charge_payment->donation_id;
                         $refund->payment_amount = $balance_transaction->total_amount;
@@ -238,15 +239,16 @@ class StripeBalanceTransactionController extends Controller
                         $refund->ccnumber = $balance_transaction->cc_last_4;
                         $refund->stripe_balance_transaction_id = $balance_transaction->id;
                         $refund->save();
+                        
                         $donation->donation_amount = $donation->donation_amount + $refund->payment_amount;
                         $donation->save();
-                    }
 
-                    $balance_transaction->reconcile_date = now();
-                    $balance_transaction->contact_id = $refund->donation->contact->id;
-                    $balance_transaction->save();
-                                                       
-                    flash('Refund for Stripe Balance Transaction #: <a href="'.url('/stripe/balance_transaction/'.$balance_transaction->balance_transaction_id).'">'.$balance_transaction->id.'</a> successfully processed.')->success();
+                        $balance_transaction->reconcile_date = now();
+                        $balance_transaction->contact_id = $refund->donation->contact->id;
+                        $balance_transaction->save();
+    
+                        flash('Refund for Stripe Balance Transaction #: <a href="'.url('/stripe/balance_transaction/'.$balance_transaction->balance_transaction_id).'">'.$balance_transaction->id.'</a> successfully processed.')->success();
+                    }                               
 
                     return Redirect::action([\App\Http\Controllers\StripePayoutController::class, 'show'],$balance_transaction->payout_id);
                     break;

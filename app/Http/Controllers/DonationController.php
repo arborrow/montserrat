@@ -119,8 +119,8 @@ class DonationController extends Controller
     public function merge($first_donation_id = 0, $second_donation_id = 0)
     {
         $this->authorize('update-donation');
-        $first_donation = Donation::findOrFail($first_donation_id);
-        $second_donation = Donation::findOrFail($second_donation_id);
+        $first_donation = Donation::findOrFail($first_donation_id); // target or destination donation
+        $second_donation = Donation::findOrFail($second_donation_id); // source or donation being merged
         $second_donation_payments = Payment::whereDonationId($second_donation_id)->get();
         
         // verify mergability
