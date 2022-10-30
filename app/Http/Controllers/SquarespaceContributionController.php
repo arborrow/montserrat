@@ -263,7 +263,7 @@ class SquarespaceContributionController extends Controller
             $donation = new Donation;
             $donation->contact_id = $contact_id;
             $donation->event_id = ($request->filled('event_id')) ? $event_id : $donation->event_id;
-            $donation->donation_description = ($request->filled('donation_description')) ? config('polanco.donation_descriptions.'.$request->input('donation_description')) : $donation->donation_description;
+            $donation->donation_description = ($request->filled('donation_description')) ? $request->input('donation_description') : $donation->donation_description;
             $donation->donation_date = (isset($ss_contribution->event->start_date)) ? $ss_contribution->event->start_date : $ss_contribution->created_at;
             $donation->donation_amount = $ss_contribution->amount;
             // TODO: check if for retreat or fund; consider creating designated or purpose attribute (or consolidating the two fields into the fund field)

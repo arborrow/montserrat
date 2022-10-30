@@ -64,7 +64,7 @@
                     @if (isset($ss_contribution->fund))
                         {{ $ss_contribution->fund }}
                     @endIf
-                    {!! Form::select('donation_description', config('polanco.donation_descriptions'), (isset($ss_contribution->fund)) ? $ss_contribution->fund : $ss_contribution->offering_type, ['class' => 'form-control']) !!}
+                    {!! Form::select('donation_description', array_flip(config('polanco.donation_descriptions')), (isset($ss_contribution->fund)) ? config('polanco.donation_descriptions.'.$ss_contribution->fund) : config('polanco.donation_descriptions.'.$ss_contribution->offering_type), ['class' => 'form-control']) !!}
                     {{ optional($ss_contribution->donation)->donation_description }}
                 </div>
 
