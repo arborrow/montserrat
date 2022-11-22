@@ -31,6 +31,7 @@ class HealthController extends Controller
         $results->put('duplicate_relationships', $this->check_duplicate_relationships());
         $results->put('address_with_no_country', $this->check_address_with_no_country());
         $results->put('polygamy', $this->check_polygamy());
+        $results->put('anonymous_balance_transactions', $this->check_anonymous_balance_transactions());
 
         return view('health.index', compact('results'));   //
     }
@@ -234,6 +235,26 @@ class HealthController extends Controller
 
         return $polygamy;
     }
+
+    /**
+     * Check for primary addresses with no country
+     * // SELECT * FROM address WHERE country_id = 0 AND deleted_at IS NULL AND street_address IS NOT NULL AND is_primary = 1;
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function check_anonymous_balance_transactions()
+    {
+        $this->authorize('show-admin-menu');
+        $results = collect([]);
+
+        $anonymous_balance_transactions = DB::table('stripe_balance_transaction')
+        ->whereNull('deleted_at')
+        ->whereNull('name')
+        ->select('id', 'payout_date', 'charge_id', 'description', 'email', 'total_amount')
+        ->get();
+
+        return $anonymous_balance_transactions;
+    }
+
 
     // SELECT contact_id_b FROM relationship WHERE deleted_at IS NULL AND relationship_type_id=2 GROUP BY contact_id_b HAVING COUNT(contact_id_b)>1;
 }
