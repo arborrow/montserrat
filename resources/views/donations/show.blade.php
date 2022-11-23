@@ -76,7 +76,11 @@
                     <td>${{ $payment->payment_amount }} </td>
                     <td>
                         @if (isset($payment->balance_transaction->id))
-                            <a href="{{url('stripe/balance_transaction/'.$payment->balance_transaction->balance_transaction_id)}}">{{$payment->payment_description}}</a>
+                            @can('show-stripe-balance-transaction')
+                                <a href="{{url('stripe/balance_transaction/'.$payment->balance_transaction->balance_transaction_id)}}">{{$payment->payment_description}}</a>
+                            @else 
+                                {{ $payment->payment_description }}
+                            @endCan
                         @else
                             {{ $payment->payment_description }}
                         @endIf
