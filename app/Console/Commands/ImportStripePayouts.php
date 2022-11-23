@@ -112,11 +112,15 @@ class ImportStripePayouts extends Command
                 $balance_transaction->payout_date  = $stripe_payout->arrival_date;
                 $balance_transaction->description  = $stripe_balance_transaction->description;
                 $balance_transaction->name  = $stripe_charge->billing_details->name;
+
                 if (!isset($balance_transaction->name)) {
-                    //dd($stripe_balance_transaction, $stripe_charge, $stripe_customer, $balance_transaction->name);
-                
-                    $balance_transaction->name  = $stripe_customer->name;
+                    if (isset($stripe_customer->name)) {
+                        $balance_transaction->name  = $stripe_customer->name;
+                    } else {
+                        // unable to find a name but do not throw error; instead catch with database health check for anonymous stripe balance transactions
+                    }
                 }
+
                 $balance_transaction->email  = (isset($description_email)) ? $description_email : $receipt_email;
                 $balance_transaction->zip  = $stripe_charge->billing_details->address->postal_code;
                 $balance_transaction->cc_last_4  = $stripe_charge->payment_method_details->card->last4;

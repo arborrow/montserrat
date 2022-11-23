@@ -396,13 +396,14 @@ class GetMailgunMessages extends Command
                         }
 
                         if (isset($address_detail)) {
-                            if (sizeof($address_detail) == 2) {
-                                $order->address_state = trim($address_detail[0]);
-                                $order->address_zip = trim($address_detail[1]);
-                            }
+
+                            $order->address_state = trim($address_detail[0]);
+                            $order->address_zip = trim($address_detail[1]);
+
                             if (sizeof($address_detail) == 3) {
                                 $order->address_country = trim($address_detail[2]);   
                             }
+                            
                             if (sizeof($address_detail) == 4) {
                                 $order->address_country = trim($address_detail[2]) . " " . trim($address_detail[3]);   
                             }
