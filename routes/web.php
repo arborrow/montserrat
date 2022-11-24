@@ -207,6 +207,7 @@ Route::middleware('web', 'activity')->group(function () {
     Route::get('donation/overpaid', [DonationController::class, 'overpaid'])->name('donations.overpaid');
     Route::get('donation/mergeable', [DonationController::class, 'mergeable'])->name('donations.mergeable');
     Route::get('donation/merge/{first_donation_id}/{second_donation_id}', [DonationController::class, 'merge'])->name('donations.merge');
+    Route::get('donation/process_deposits/{event_id}', [DonationController::class, 'process_deposits'])->name('donations.process_deposits');
     Route::get('donation/search', [DonationController::class, 'search'])->name('donations.search');
     Route::get('donation/results', [DonationController::class, 'results'])->name('donations.results');
     Route::get('donation/type/{donation_id?}', [DonationController::class, 'index_type']);

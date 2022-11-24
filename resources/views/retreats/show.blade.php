@@ -99,7 +99,13 @@
                     <span class="font-weight-bold">Donations: </span>
                     {!! Html::link('report/finance/retreatdonations/'.$retreat->idnumber,
                         ($retreat->donations_pledged_sum)>0 ? '$'.number_format($retreat->donations_pledged_sum,2) : '$'.number_format(0,2))
-                    !!}<br>
+                    !!}
+                    @can('update-donation')
+                        @if ($retreat->hasDeposits && $retreat->end_date < now())
+                            ({!! Html::link('donation/process_deposits/'.$retreat->id, "Process Retreat Deposits") !!})
+                        @endIf
+                    @endCan
+                    <br>
                 @endCan
                 <span class="font-weight-bold">Last updated: </span>{{ optional($retreat->updated_at)->format('F j, Y g:i A')}}<br>
                 <span class="font-weight-bold">Calendar ID: </span>
