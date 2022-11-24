@@ -484,9 +484,10 @@ class DonationController extends Controller
         return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $request->input('event_id'));
     }
 
+    // TODO:: add unit test for this method
     public function process_deposits($event_id)
     {
-        $this->authorize('show-donation');
+        $this->authorize('update-donation');
         $event = Retreat::findOrFail($event_id);
         $event_deposits = Donation::whereEventId($event_id)->whereDonationDescription("Retreat Deposits")->get();
         foreach($event_deposits as $event_deposit) {
