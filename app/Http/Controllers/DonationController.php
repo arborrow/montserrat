@@ -506,4 +506,30 @@ class DonationController extends Controller
         return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
     }
 
+        // TODO:: add unit test for this method; creating method as proof of concept - need to come back and test
+        public function unprocess_deposits($event_id)
+        {
+            $this->authorize('update-donation');
+            $event = Retreat::findOrFail($event_id);
+            $event_deposits = Donation::whereEventId($event_id)->whereDonationDescription("Retreat Funding")->get();
+            foreach($event_deposits as $event_deposit) {
+                try {
+                    if (strpos($event_deposit->Notes,"Automated deposit to funding transfer processed.") === 0) {
+                        // string not found; skip
+                    } else {
+                        $event_deposit->donation_description = "Retreat Deposit";
+                        $event_deposit->Notes = "Automated deposit to funding transfer processed. " . $event_deposit->Notes;
+//                        $event_deposit->save();
+                    }
+                } catch (\Exception $e) {
+                    dd($e);
+                }
+                
+            }
+            
+            flash('Retreat Donations Unprocessed for ID#: <a href="'.url('/retreat/'.$event_id).'">'.$event->idnumber.' - '.$event->title . '</a>')->success();
+    
+            return Redirect::action([\App\Http\Controllers\RetreatController::class, 'show'], $event_id);
+        }
+    
 }
