@@ -351,7 +351,7 @@
                     </tr>
                     @endif
 
-                    @if (isset($order->address_street))
+                    @if (isset($order->full_address))
                     <tr>
                         <td><strong>Address Street</strong></td>
                         @if (ucwords(strtolower(trim($order->address_street))) == ucwords(strtolower(optional($order->retreatant)->address_primary_street)))
@@ -368,7 +368,7 @@
                     </tr>
                     @endIf
 
-                    @if (isset($order->address_supplemental))
+                    @if (isset($order->full_address))
                     <tr>
                         <td><strong>Address Supplemental</strong></td>
                         @if (trim($order->address_supplemental) == optional($order->retreatant)->address_primary_supplemental )
@@ -384,7 +384,7 @@
                     </tr>
                     @endIf
 
-                    @if (isset($order->address_city))
+                    @if (isset($order->full_address))
                     <tr>
                         <td><strong>Address City</strong></td>
                         @if (trim(strtolower($order->address_city)) == strtolower(optional($order->retreatant)->address_primary_city))
@@ -401,7 +401,7 @@
                     </tr>
                     @endIf
 
-                    @if (isset($order->address_state))
+                    @if (isset($order->full_address))
                     <tr>
                         <td><strong>Address State</strong></td>
                         @if ($ids['address_state'] == optional($order->retreatant)->address_primary_state_id && isset($ids['address_state']))
@@ -421,7 +421,7 @@
                     </tr>
                     @endIf
 
-                    @if (isset($order->address_zip))
+                    @if (isset($order->full_address))
                     <tr>
                         <td><strong>Address Zip</strong></td>
                         @if (trim($order->address_zip == optional($order->retreatant)->address_primary_postal_code))
@@ -438,7 +438,7 @@
                     </tr>
                     @endIf
 
-                    @if (isset($order->address_country))
+                    @if (isset($order->full_address))
                     <tr>
                         <td data-toggle="tooltip" data-placement="top" title="Address Country defaults to US"><strong>Address Country * </strong></td>
                         @if ($ids['address_country'] == optional($order->retreatant)->address_primary_country_id)
