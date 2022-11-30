@@ -39,6 +39,52 @@ class GetMailgunMessages extends Command
     protected $description = 'Retrieve stored events (messages) from Mailgun';
 
     /**
+     * Receive a full_address string from Squarespace and attempt to parse it.
+     * Should return an address array with keys for street, supplemental, city, state, zip, and country
+     * If there is trouble parsing the address it should return null
+     * // TODO: Refactoring address processing to ensure it is done consistently, may move to a trait later
+     */
+    public function parse_address($full_address = NULL) {
+        if (isset($full_address)) {
+            $address = []; // init array
+            $address_partials = explode(", ", $full_address); //split up string by commas 
+
+            if (sizeof($address_partials) == 3) {
+                $address['street'] = trim($address_partials[0]);
+                $address['supplemental'] = NULL;
+                $address['city'] = trim($address_partials[1]);
+                $address_details = explode(" ", $address_partials[2]); // split string by spaces
+            }
+
+            if (sizeof($address_partials) == 4) { // if there are 4 lines, then it appears that a supplemental address line has been provided
+                $address['street'] = trim($address_partials[0]);
+                $address['supplemental'] = trim($address_partials[1]);
+                $address['city'] = trim($address_partials[2]);
+                $address_details = explode(" ", $address_partials[3]); // split string by spaces
+            } 
+
+            if (isset($address_details)) {
+
+                $address['state'] = trim($address_details[0]);
+                $address['zip'] = trim($address_details[1]);
+
+                if (sizeof($address_details) == 3) {
+                    $address['country'] = trim($address_details[2]);   
+                }
+                
+                // if the country is split onto 2 lines (US vs United States)
+                if (sizeof($address_details) == 4) {
+                    $address['country'] = trim($address_details[2]) . " " . trim($address_details[3]);   
+                }
+            }
+        } else { 
+            return NULL;
+        }
+        return $address;
+
+    }
+
+    /**
      * Execute the console command.
      *
      * @return int
@@ -173,7 +219,17 @@ class GetMailgunMessages extends Command
                     if ($address_end_row === false) { // if the phone number is not provided
                         $address_end_row = array_search("Additional Information:",$donation);
                     }
-                    if ($address_start_row > 0) { // if there is no address_start_row skip attempt to process address
+                    if ($address_end_row === false) { // if neither the phone number nor additional information is not provided
+                        $address_end_row = array_search("View My Donations",$donation);
+                    }
+
+                    $full_address = NULL;
+                    for ($line = $address_start_row + 1; $line < $address_end_row; $line++) {
+                        $full_address .= $donation[$line] . ' ';
+                    }
+                    $full_address = trim($full_address);
+                    
+                    if ($address_start_row > 0 && $address_end_row > 0) { // if there is no address_start_row and address_end_row then skip attempt to process address
                         // dd($donation,$address_start_row, $address_end_row);
                         if (($address_end_row - $address_start_row) == 5) {
                             $ss_donation->address_street = ucwords(strtolower($donation[$address_start_row+1]));
@@ -191,12 +247,10 @@ class GetMailgunMessages extends Command
                     
                     $ss_donation->message_id = $message->id;
                     
-                    
                     $ss_donation->name = ucwords(strtolower($this->extract_data($donation, "Donor Name:")));
                     $ss_donation->email = strtolower($this->extract_data($donation, "Donor Email:"));
                     $ss_donation->phone = $this->extract_data($donation, "Donor Phone Number:");
                     $ss_donation->retreat_description = $this->extract_data($donation, "Retreat:");
-                    
                     
                     // it seems some of the emails had * characters and some do not so we will check for both
                     $donation_amount = $this->extract_data($donation,'Donation Received');
@@ -206,7 +260,6 @@ class GetMailgunMessages extends Command
                     $amount = str_replace('*','', $amount);
                     $ss_donation->amount = $amount;
                     
-                    
                     $ss_donation->fund = $this->extract_data($donation, "Please Select a Fund:");
                     $year = substr($ss_donation->retreat_description, -5, 4);
                     
@@ -215,7 +268,6 @@ class GetMailgunMessages extends Command
                         (strpos($ss_donation->retreat_description, " ") - strpos($ss_donation->retreat_description, "#"))
                     ));
                 
-                    
                     $ss_donation->idnumber = ($ss_donation->retreat_description == "Individual Private Retreat") ? null : trim($year.$retreat_number);
                     $ss_donation->comments = trim($this->extract_data($donation, "Comments or Special Instructions:"));
                     $ss_donation->comments = str_replace('View My Donations','',$ss_donation->comments);
@@ -226,8 +278,7 @@ class GetMailgunMessages extends Command
                     if (isset($ss_donation->idnumber) && isset($ss_donation->event_id)) { // if a particular event then based on end date of event if passed retreat funding, if upcoming then deposit
                         $ss_donation->offering_type = ($event->end_date > now()) ? 'Pre-Retreat offering' : 'Post-Retreat offering';
                     }  
-                    
-                    
+                        
                     switch ($ss_donation->retreat_description) {
                         case 'Saturday of Renewal' : // if SOR then assume SOR has passed so post-retreat
                             $ss_donation->offering_type = 'Post-Retreat offering';
@@ -242,7 +293,7 @@ class GetMailgunMessages extends Command
 
                 } catch (\Exception $exception) {
                     $subject .= ': Creating Squarespace Contribution for Message Id #'.$message->id;
-                    dd($exception, $subject);
+                    // dd($exception, $subject);
                     Mail::send('emails.en_US.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject],
                     function ($m) use ($subject, $exception) {
                         $m->to(config('polanco.admin_email'))
