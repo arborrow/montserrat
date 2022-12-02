@@ -105,6 +105,8 @@ class DashboardController extends Controller
                     ->where('donation_date', '>=', $fiscal_year-1 .'-07-01')
                     ->where('donation_date', '<', $fiscal_year .'-07-01')
                     ->paginate(25, ['*'], 'donations');
+                $donations->withPath('/dashboard/agc_donations?fiscal_year='.$fiscal_year.'&donation_type_id='.$donation_type_id);
+
                 break;
             default :
                 $donation_type = \App\Models\DonationType::findOrFail($donation_type_id);
@@ -118,7 +120,7 @@ class DashboardController extends Controller
                     ->where('donation_date', '>=', $fiscal_year-1 .'-07-01')
                     ->where('donation_date', '<', $fiscal_year .'-07-01')
                     ->paginate(25, ['*'], 'donations');
-
+                $donations->withPath('/dashboard/agc_donations?fiscal_year='.$fiscal_year.'&donation_type_id='.$donation_type_id);
         }
 
         return view('donations.results', compact('donations', 'all_donations'));
