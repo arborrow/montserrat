@@ -72,6 +72,10 @@
                             {!! Form::label('end_date', 'End date')  !!}
                             {!! Form::date('end_date', NULL, ['class' => 'form-control flatpickr-date']) !!}
                         </div>
+                        <div class="col-lg-3">
+                            {!! Form::label('stripe_invoice', 'Stripe Invoice #')  !!}
+                            {!! Form::text('stripe_invoice', NULL, ['class' => 'form-control']) !!}
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-1">

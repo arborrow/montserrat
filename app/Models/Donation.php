@@ -236,6 +236,9 @@ class Donation extends Model implements Auditable
             if ($filter == 'terms' && ! empty($value)) {
                 $query->where($filter, 'LIKE', '%'.$value.'%');
             }
+            if ($filter == 'stripe_invoice' && ! empty($value)) {
+                $query->where($filter, 'LIKE', '%'.$value.'%');
+            }
             if ($filter == 'donation_thank_you' && ! empty($value)) {
                 if ($value == 'Y') {
                     $query->where('Thank You', '=', $value);

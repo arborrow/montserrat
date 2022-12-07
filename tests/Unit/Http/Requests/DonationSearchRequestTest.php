@@ -52,6 +52,7 @@ class DonationSearchRequestTest extends TestCase
             'event_id' => 'integer|nullable',
             'donation_amount' => 'numeric|nullable',
             'donation_install' => 'numeric|nullable',
+            'stripe_invoice' => 'string|nullable',
             'notes' => 'string|nullable',
             'terms' => 'string|nullable',
             'donation_thank_you' => 'string|nullable',
