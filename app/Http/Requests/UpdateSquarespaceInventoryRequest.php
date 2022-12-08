@@ -31,7 +31,7 @@ class UpdateSquarespaceInventoryRequest extends FormRequest
             'id' => 'integer|min:1|required',
             'name' => 'string|nullable',
             'custom_form_id' => 'integer|min:0|required',
-            'variant_options' => 'integer|min:1|required',
+            'variant_options' => 'integer|min:0|required',
         ];
     }
 

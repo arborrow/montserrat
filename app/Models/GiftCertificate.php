@@ -6,13 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use PDF;
+use App\Models\AttachmentController;
 
 class GiftCertificate extends Model implements Auditable
 {
     use HasFactory;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
-
+    
     protected $table = 'gift_certificate';
     protected $casts = [
         'purchase_date' => 'datetime',
@@ -56,5 +58,14 @@ class GiftCertificate extends Model implements Auditable
         return (isset($this->squarespace_order_number)) ? $this->issue_date->year . '-' . $this->squarespace_order_number : $this->issue_date->year . '-' . $this->sequential_number;        
     }
 
+    public function update_pdf() {
+        $gift_certificate = $this;
+        $pdf = PDF::loadView('gift_certificates.certificate', compact('gift_certificate'));
+        $pdf->setOptions([]);
+        
+        $attachment = new \App\Http\Controllers\AttachmentController;
+        $attachment->update_attachment($pdf->inline($gift_certificate->certificate_number.'.pdf'), 'contact', $gift_certificate->purchaser_id, 'gift_certificate', $gift_certificate->certificate_number);
 
+
+    }
 }

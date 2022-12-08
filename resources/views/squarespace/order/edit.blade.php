@@ -15,18 +15,33 @@
     <div class="collapse" id="collapsedInstructions">
         <div class="card card-body">
             <ul>
-                <li>Select the desired <strong><u>Retreatant(s)</u></strong> from the Retreatant/Couple dropdown list(s).
-                <li>Select the desired <strong><u>Retreat</u></strong> from the Retreat dropdown list.
-                <li>If the retreatant(s) is/are existing contact(s), <strong><u>click</u></strong> on the <i>Retrieve Contact Info</i> button to retrieve respective contact information.
-                <li><strong><u>Review</u></strong> provided Order information. <strong><u>Correct</u></strong> any typos in the provided information.
-                    <strong><u>Remove</u></strong> unwanted Order information to retain existing contact information.
-                <li>When finished, <strong><u>click</u></strong> on the <i>Proceed with Order</i> button.
-                <li>The Squarespace Order will be updated.
-                    If needed, a new contact will be created.
-                    The provided contact information will be added/updated.
-                    A touchpoint for the retreatant's registration is created.
-                    A retreat registration is created.
-                <li>Finally, remember to <strong><u>Fulfill the Squarespace Order</u></strong>.
+                @if ($order->is_gift_certificate)
+                    <li>Select the desired <strong><u>Purchaser</u></strong> from the Purchaser dropdown list (if the purchaser is found on the dropdown list, otherwise the purchaser will be added as a new contact).
+                    <li>Select the desired <strong><u>Recipient</u></strong> from the Recipient dropdown list (if the recipient is found on the dropdown list, otherwise the recipient will be added as a new contact).
+                    <li><strong><u>Click</u></strong> on the <i>Retrieve Contact Info</i> button to retrieve respective contact information or to create the new contacts. 
+                    <li><strong><u>Review</u></strong> provided Order information. <strong><u>Correct</u></strong> any typos in the provided information.
+                        <strong><u>Remove</u></strong> unwanted Order information to retain existing contact information.
+                    <li>When finished, <strong><u>click</u></strong> on the <i>Proceed with Order</i> button.
+                    <li>The Squarespace Order will be updated.
+                        The provided contact information will be added/updated.
+                        A gift certificate will be automatically generated and saved as an attachment in the <u>purchaser's</u> profile.
+                        A touchpoint for the gift certificate purchase is created.
+                        The donation for the gift certificate purchase is also created. 
+                    <li>Finally, remember to <strong><u>Fulfill the Squarespace Order</u></strong>.
+                @else
+                    <li>Select the desired <strong><u>Retreatant(s)</u></strong> from the Retreatant/Couple dropdown list(s).
+                    <li>Select the desired <strong><u>Retreat</u></strong> from the Retreat dropdown list.
+                    <li>If the retreatant(s) is/are existing contact(s), <strong><u>click</u></strong> on the <i>Retrieve Contact Info</i> button to retrieve respective contact information.
+                    <li><strong><u>Review</u></strong> provided Order information. <strong><u>Correct</u></strong> any typos in the provided information.
+                        <strong><u>Remove</u></strong> unwanted Order information to retain existing contact information.
+                    <li>When finished, <strong><u>click</u></strong> on the <i>Proceed with Order</i> button.
+                    <li>The Squarespace Order will be updated.
+                        If needed, a new contact will be created.
+                        The provided contact information will be added/updated.
+                        A touchpoint for the retreatant's registration is created.
+                        A retreat registration is created.
+                    <li>Finally, remember to <strong><u>Fulfill the Squarespace Order</u></strong>.
+                @endif
             </ul>
         </div>
     </div>
@@ -38,26 +53,30 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-lg-4 col-md-6">
-                    <h3>{!! Form::label('contact_id', 'Retreatant: ' .$order->name) !!}</h3>
+                    <h3>{!! Form::label('contact_id', ($order->is_gift_certificate ? 'Purchaser: ' : 'Retreatant: ') .$order->name) !!}</h3>
                     {!! Form::select('contact_id', $matching_contacts, (isset($order->contact_id)) ? $order->contact_id : 0, ['class' => 'form-control']) !!}
                 </div>
                 <div class="col-lg-4 col-md-6">
-                    <h3>{!! Form::label('event_id', 'Retreat Id#: '. $order->retreat_idnumber) !!}</h3>
-                    {!! Form::select('event_id', $retreats, (isset($order->event_id)) ? $order->event_id : $ids['retreat_id'], ['class' => 'form-control']) !!}
-                    <strong>Retreat:</strong> {{ $order->retreat_description  }}<br />
-                    <strong>Dates:</strong> {{ $order->retreat_dates}}<br />
-                    <strong>Category:</strong> {{ $order->retreat_category  }}<br />
-                    <strong>Type:</strong> {{ $order->retreat_registration_type }}<br />
+                    @if ($order->is_gift_certificate)
+                        <h3><strong>Category:</strong> {{ $order->retreat_category  }}</h3>
+                    @else
+                        <h3>{!! Form::label('event_id', 'Retreat Id#: '. $order->retreat_idnumber) !!}</h3>
+                        {!! Form::select('event_id', $retreats, (isset($order->event_id)) ? $order->event_id : $ids['retreat_id'], ['class' => 'form-control']) !!}
+                        <strong>Retreat:</strong> {{ $order->retreat_description  }}<br />
+                        <strong>Dates:</strong> {{ $order->retreat_dates}}<br />
+                        <strong>Category:</strong> {{ $order->retreat_category  }}<br />
+                        <strong>Type:</strong> {{ $order->retreat_registration_type }}<br />
+                    @endIf
                 </div>
                 <div class="col-lg-4 col-md-6">
                     @if (isset($order->gift_certificate_number))
-                    <h3>{!! Form::label('gift_certificate_number', 'Gift Certificate #:') !!}</h3>
-                    {!! Form::text('gift_certificate_number', $order->gift_certificate_number, ['class' => 'form-control']) !!}
+                        <h3>{!! Form::label('gift_certificate_number', 'Gift Certificate #:') !!}</h3>
+                        {!! Form::text('gift_certificate_number', $order->gift_certificate_number, ['class' => 'form-control']) !!}
                     @endif
                     @if (isset($order->gift_certificate_retreat))
-                    {!! Form::label('gift_certificate_retreat', 'Retreat: '.$order->gift_certificate_retreat) !!}
-                    {!! Form::select('gift_certificate_retreat', $retreats, null, ['class' => 'form-control']) !!}
-                    <hr>
+                        {!! Form::label('gift_certificate_retreat', 'Retreat: '.$order->gift_certificate_retreat) !!}
+                        {!! Form::select('gift_certificate_retreat', $retreats, null, ['class' => 'form-control']) !!}
+                        <hr>
                     @endif
                     @if (isset($order->comments))
                     <h3>
@@ -83,7 +102,7 @@
             @if ($order->is_couple)
             <div class="row">
                 <div class="col-lg-4 col-md-6">
-                    <h3>{!! Form::label('couple_contact_id', 'Couple: ' .$order->couple_name) !!}</h3>
+                    <h3>{!! Form::label('couple_contact_id', ($order->is_gift_certificate ? 'Recipient: ' : 'Couple: ') .$order->couple_name) !!}</h3>
                     {!! Form::select('couple_contact_id', $couple_matching_contacts, (isset($order->couple_contact_id)) ? $order->couple_contact_id : 0, ['class' => 'form-control']) !!}
                 </div>
             </div>
@@ -110,9 +129,17 @@
                     <caption>Information from Squarespace Order</caption>
                     <tr>
                         <th></th>
-                        <th>Retreatant</th>
+                        <th>
+                            @if ($order->is_gift_certificate)Purchaser
+                                @else Retreatant
+                            @endIf
+                        </th>
                         @if ($order->is_couple)
-                        <th>Couple</th>
+                            <th>
+                                @if ($order->is_gift_certificate)Recipient
+                                @else Couple
+                                @endIf
+                            </th>
                         @endIf
                     </tr>
                 </thead>
@@ -666,7 +693,7 @@
                     </tr>
                     @endIf
 
-                    @if (isset($order->deposit_amount))
+                    @if (isset($order->deposit_amount) && $order->deposit_amount > 0)
                     <tr>
                         <td><strong>Deposit</strong></td>
                         @if ($order->deposit_amount <> $order->unit_price)
@@ -691,6 +718,14 @@
                             <td>
                             </td>
                         @endIf
+                    </tr>
+                    @endIf
+
+                    @if (isset($order->unit_price))
+                    <tr>
+                        <td><strong>Unit Price</strong></td>
+                            <td class='table-secondary'>${{$order->unit_price}}</td>
+                        </td>
                     </tr>
                     @endIf
 
