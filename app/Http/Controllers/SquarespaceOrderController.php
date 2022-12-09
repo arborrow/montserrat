@@ -521,7 +521,6 @@ class SquarespaceOrderController extends Controller
                 $gift_certificate = new \App\Models\GiftCertificate;
                 $gift_certificate->purchaser_id = $order->contact_id;
                 $gift_certificate->recipient_id = $order->couple_contact_id;
-                // $gift_certificate->donation_id = $request->input('donation_id'); //TODO: check to see if I added this field
                 $gift_certificate->squarespace_order_number = $order->order_number;
                 $gift_certificate->purchase_date = $order->created_at;
                 $gift_certificate->issue_date = $order->created_at;
@@ -615,6 +614,10 @@ class SquarespaceOrderController extends Controller
                 $donation->Notes = 'SS Order #' . $order->order_number . ' for Gift Certificate #' . $order->gift_certificate_number . ' gifted to ' . $couple_contact->display_name ;
                 $donation->save();
                 $order->donation_id = $donation->donation_id;
+                if (isset($gift_certificate)) {
+                    $gift_certificate->donation_id = $donation->donation_id;
+                    $gift_certificate->save();
+                }
 
             } else {
                 $donation->event_id = $event_id;
