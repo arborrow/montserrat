@@ -538,7 +538,7 @@ class SquarespaceOrderController extends Controller
                 $touchpoint->staff_id = config('polanco.self.id');
                 $touchpoint->type = 'Other';
                 $touchpoint->notes = ($order->is_gift_certificate) ?
-                    'Squarespace Order #' . $order->order_number . ' gift certificate received from: ' . $contact->display_name :
+                    'Squarespace Order #' . $order->order_number . ' - Gift certificate #' . $order->gift_certificate_number . ' received from ' . $contact->display_name :
                     'Squarespace Order #' . $order->order_number . ' received from spouse, ' . $contact->display_name;
                 $touchpoint->touched_at = Carbon::now();
                 $touchpoint->save();
