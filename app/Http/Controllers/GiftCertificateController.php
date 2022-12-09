@@ -107,8 +107,9 @@ class GiftCertificateController extends Controller
 
     }
 
-        /**
-     * Display the gift certificate pdy.
+    // TODO: consider if generating the pdf and saving it as an attachment might be better as an update_pdf method in the model
+    /**
+     * Display the gift certificate pdf.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

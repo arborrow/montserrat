@@ -50,6 +50,10 @@ class SquarespaceOrder extends Model implements Auditable
         return ($this->retreat_couple == "Couple" || $this->retreat_couple == "Pareja");
     }
 
+    public function getIsGiftCertificateAttribute() {
+        return ($this->retreat_category == "Retreat Gift Certificate");
+    }
+
     public function getMobilePhoneFormattedAttribute() {
         $clean_phone = $this->format_phone($this->mobile_phone);
         return $clean_phone['phone_formatted'];

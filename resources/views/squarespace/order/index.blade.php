@@ -33,7 +33,13 @@
                             <td>{{ $order->order_number }}
                             <td>{{ ucwords(strtolower($order->name)) }}</td>
                             <td>{{ strtolower($order->email) }}</td>
-                            <td>{{ $order->retreat_description }}  ({{ $order->retreat_dates }})</td>
+                            <td>
+                                @if ($order->is_gift_certificate)
+                                    {{ $order->retreat_category }}
+                                @else
+                                    {{ $order->retreat_description }}  ({{ $order->retreat_dates }})
+                                @endIf
+                            </td>
                             <td>{{ $order->comments }}</td>
                         </tr>
                         @endforeach
@@ -71,8 +77,14 @@
                             </td>
                             <td>{{ $processed_order->order_number }}
                             <td>{{ ucwords(strtolower($processed_order->name)) }}</td>
-                            <td>{{ strtolower($processed_order->email) }}</td>
-                            <td>{{ $processed_order->retreat_description }}  ({{ $processed_order->retreat_dates }})</td>
+                            <td>{{ strtolower($processed_order->email) }}</td>                            
+                            <td>
+                                @if ($processed_order->is_gift_certificate)
+                                    {{ $processed_order->retreat_category }}
+                                @else
+                                    {{ $processed_order->retreat_description }}  ({{ $processed_order->retreat_dates }})
+                                @endIf
+                            </td>
                             <td>{{ $processed_order->comments }}</td>
                         </tr>
                         @endforeach

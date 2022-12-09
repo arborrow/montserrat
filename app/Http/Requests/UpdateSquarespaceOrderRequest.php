@@ -27,7 +27,7 @@ class UpdateSquarespaceOrderRequest extends FormRequest
         return [
             'id' => 'integer|min:1|required',
             'contact_id' => 'integer|min:0|required',
-            'event_id' => 'integer|min:1|required',
+            'event_id' => 'integer|min:1',
             'couple_contact_id' => 'integer|min:0|nullable',
 
             'title' => 'integer|min:0|nullable',

@@ -26,7 +26,7 @@ class StoreSquarespaceInventoryRequest extends FormRequest
         return [
             'name' => 'string|nullable',
             'custom_form_id' => 'integer|min:0|required',
-            'variant_options' => 'integer|min:1|required',
+            'variant_options' => 'integer|min:0|required',
         ];
     }
 
