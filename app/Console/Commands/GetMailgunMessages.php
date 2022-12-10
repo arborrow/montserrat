@@ -428,13 +428,16 @@ class GetMailgunMessages extends Command
                             default : //  "Women's Retreat", "Men's Retreat", "Young Adult's Retreat"
                                 break;
                         }
-
+                        $order->save();
                         // tidy up some of the data
                         $order->comments = ($order->comments == 1) ? null : $order->comments;
+                        // presumes the field following the couple date of date of birth is the retreat quantity because it is the last field
                         $order->date_of_birth = ($order->date_of_birth == 1) ? null : $order->date_of_birth;
-                        $order->couple_date_of_birth = ($order->couple_date_of_birth == 1) ? null : $order->couple_date_of_birth;
                         $order->date_of_birth = (isset($order->date_of_birth)) ? \Carbon\Carbon::parse($order->date_of_birth) : null;
-                        $order->couple_date_of_birth = (isset($order->couple_date_of_birth)) ? \Carbon\Carbon::parse($order->couple_date_of_birth) : null;
+                        if ($order->is_couple) {
+                            $order->couple_date_of_birth = ($order->couple_date_of_birth == $order->retreat_quantity) ? null : $order->couple_date_of_birth;
+                            $order->couple_date_of_birth = (isset($order->couple_date_of_birth)) ? \Carbon\Carbon::parse($order->couple_date_of_birth) : null;    
+                        }
 
                         // attempt to get Stripe charge id
                         $result=null;
@@ -494,7 +497,7 @@ class GetMailgunMessages extends Command
                     $order->save();
                 }  catch (\Exception $exception) {
                     // TODO: while debugging - could check for production or developement and turn on or off accordingly to only attempt to send email when in production
-                    dd($exception, $order, $clean_message, $message->body, $retreat);
+                    // dd($exception, $order, $clean_message, $message->body, $retreat);
 
                     $subject .= ': Creating Squarespace Order for Message Id #'.$message->id;
                     Mail::send('emails.en_US.error', ['error' => $exception, 'url' => $fullurl, 'user' => $username, 'ip' => $ip_address, 'subject' => $subject],
