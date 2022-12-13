@@ -193,7 +193,8 @@ class StripeBalanceTransactionController extends Controller
                     $payment->payment_description = "Credit card";
                     $payment->ccnumber = $balance_transaction->cc_last_4;                    
                     
-                    if ($squarespace_order->is_couple) {
+                    // make sure the couple_donation_id is set - otherwise it is likely a gift certificate
+                    if ($squarespace_order->is_couple && isset($squarespace_order->couple_donation_id)) {
                         $couple_donation = Donation::findOrFail($squarespace_order->couple_donation_id);
                         $couple_payment = new Payment;
                         $couple_payment->donation_id = $couple_donation->donation_id;
