@@ -57,6 +57,9 @@
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item"  href={{ route('squarespace.order.index') }}>Squarespace Orders</a>
 							@endcan
+							@can('show-gift-certificate')
+								<a class="dropdown-item"  href={{ route('gift_certificate.index') }}>Gift Certificates</a>
+							@endcan
 							@can('show-touchpoint')
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item"  href={{ route('touchpoint.index') }}>Touchpoints</a>

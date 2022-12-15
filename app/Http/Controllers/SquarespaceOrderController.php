@@ -518,19 +518,21 @@ class SquarespaceOrderController extends Controller
                 $couple_emergency_contact->save();
 
                 // if this is for a gift certificate - let's create the gift cerfificate so we have the number available moving forward
-                $gift_certificate = new \App\Models\GiftCertificate;
-                $gift_certificate->purchaser_id = $order->contact_id;
-                $gift_certificate->recipient_id = $order->couple_contact_id;
-                $gift_certificate->squarespace_order_number = $order->order_number;
-                $gift_certificate->purchase_date = $order->created_at;
-                $gift_certificate->issue_date = $order->created_at;
-                $expiration_date = $order->created_at->addYear()->addDay();
-                $gift_certificate->expiration_date = $expiration_date;
-                $gift_certificate->funded_amount = $order->unit_price;
-        
-                $gift_certificate->save();
-                $gift_certificate->update_pdf();
-                $order->gift_certificate_number = $gift_certificate->certificate_number;
+                if ($order->is_gift_certificate) {
+                    $gift_certificate = new \App\Models\GiftCertificate;
+                    $gift_certificate->purchaser_id = $order->contact_id;
+                    $gift_certificate->recipient_id = $order->couple_contact_id;
+                    $gift_certificate->squarespace_order_number = $order->order_number;
+                    $gift_certificate->purchase_date = $order->created_at;
+                    $gift_certificate->issue_date = $order->created_at;
+                    $expiration_date = $order->created_at->addYear()->addDay();
+                    $gift_certificate->expiration_date = $expiration_date;
+                    $gift_certificate->funded_amount = $order->unit_price;
+            
+                    $gift_certificate->save();
+                    $gift_certificate->update_pdf();
+                    $order->gift_certificate_number = $gift_certificate->certificate_number;
+                }
 
                 // create couple touchpoint
                 $touchpoint = new Touchpoint;

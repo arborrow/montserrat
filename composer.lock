@@ -9094,16 +9094,16 @@
         },
         {
             "name": "twilio/sdk",
-            "version": "6.43.4",
+            "version": "6.44.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:twilio/twilio-php.git",
-                "reference": "805dd4890602542c98351921f50a664d89f782a0"
+                "reference": "d0f8b4c642209a08066990eaea55ee6f292e4f8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/805dd4890602542c98351921f50a664d89f782a0",
-                "reference": "805dd4890602542c98351921f50a664d89f782a0",
+                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/d0f8b4c642209a08066990eaea55ee6f292e4f8d",
+                "reference": "d0f8b4c642209a08066990eaea55ee6f292e4f8d",
                 "shasum": ""
             },
             "require": {
@@ -9139,7 +9139,7 @@
                 "sms",
                 "twilio"
             ],
-            "time": "2022-11-30T20:02:35+00:00"
+            "time": "2022-12-14T22:22:57+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -10540,16 +10540,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "9.2.20",
+            "version": "9.2.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "af7463c955007de36db0c5e26d03e2f933c2e980"
+                "reference": "3f893e19712bb0c8bc86665d1562e9fd509c4ef0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/af7463c955007de36db0c5e26d03e2f933c2e980",
-                "reference": "af7463c955007de36db0c5e26d03e2f933c2e980",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/3f893e19712bb0c8bc86665d1562e9fd509c4ef0",
+                "reference": "3f893e19712bb0c8bc86665d1562e9fd509c4ef0",
                 "shasum": ""
             },
             "require": {
@@ -10605,7 +10605,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.20"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.21"
             },
             "funding": [
                 {
@@ -10613,7 +10613,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-12-13T07:49:28+00:00"
+            "time": "2022-12-14T13:26:54+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
