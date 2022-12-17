@@ -258,6 +258,7 @@ class GetMailgunMessages extends Command
                     $amount = str_replace('$','', $amount);
                     $amount = str_replace('!','', $amount);
                     $amount = str_replace('*','', $amount);
+                    $amount = str_replace(',','', $amount);
                     $ss_donation->amount = $amount;
                     
                     $ss_donation->fund = $this->extract_data($donation, "Please Select a Fund:");
