@@ -493,20 +493,22 @@ class SquarespaceOrderController extends Controller
                 $couple_phone_home_mobile->phone = ($request->filled('couple_mobile_phone')) ? $request->input('couple_mobile_phone') : $couple_phone_home_mobile->phone;
                 $couple_phone_home_mobile->save();
 
-                $couple_home_address = Address::firstOrNew([
-                    'contact_id'=>$couple_contact_id,
-                    'location_type_id'=>config('polanco.location_type.home')
-                ]);
-                $couple_home_address->street_address = ($request->filled('address_street')) ? $request->input('address_street') : $couple_home_address->street_address;
-                $couple_home_address->supplemental_address_1 = ($request->filled('address_supplemental')) ? $request->input('address_supplemental') : $couple_home_address->supplemental_address_1;
-                $couple_home_address->city = ($request->filled('address_city')) ? $request->input('address_city') : $couple_home_address->city;
-                $couple_home_address->state_province_id = ($request->filled('address_state_id')) ? $request->input('address_state_id') : $couple_home_address->state_province_id;
-                $couple_home_address->postal_code = ($request->filled('address_zip')) ? $request->input('address_zip') : $couple_home_address->postal_code ;
-                $couple_home_address->country_id = ($request->filled('address_country_id')) ? $request->input('address_country_id') : $couple_home_address->country_id;
-                $couple_home_address->is_primary = ($couple_contact->primary_address_location_type_id == config('polanco.location_type.home')) ? 1 : 0;
-                // if there is no current primary address then make this one the primary one
-                $couple_home_address->is_primary = ($couple_contact->primary_address_location_name == 'N/A' ) ? 1 : $couple_home_address->is_primary;
-                $couple_home_address->save();
+                if (!$order->is_gift_certificate) { // skip if this is a gift certificate
+                    $couple_home_address = Address::firstOrNew([
+                        'contact_id'=>$couple_contact_id,
+                        'location_type_id'=>config('polanco.location_type.home')
+                    ]);
+                    $couple_home_address->street_address = ($request->filled('address_street')) ? $request->input('address_street') : $couple_home_address->street_address;
+                    $couple_home_address->supplemental_address_1 = ($request->filled('address_supplemental')) ? $request->input('address_supplemental') : $couple_home_address->supplemental_address_1;
+                    $couple_home_address->city = ($request->filled('address_city')) ? $request->input('address_city') : $couple_home_address->city;
+                    $couple_home_address->state_province_id = ($request->filled('address_state_id')) ? $request->input('address_state_id') : $couple_home_address->state_province_id;
+                    $couple_home_address->postal_code = ($request->filled('address_zip')) ? $request->input('address_zip') : $couple_home_address->postal_code ;
+                    $couple_home_address->country_id = ($request->filled('address_country_id')) ? $request->input('address_country_id') : $couple_home_address->country_id;
+                    $couple_home_address->is_primary = ($couple_contact->primary_address_location_type_id == config('polanco.location_type.home')) ? 1 : 0;
+                    // if there is no current primary address then make this one the primary one
+                    $couple_home_address->is_primary = ($couple_contact->primary_address_location_name == 'N/A' ) ? 1 : $couple_home_address->is_primary;
+                    $couple_home_address->save();    
+                }
 
                 // couple emergency contact info
                 $couple_emergency_contact = EmergencyContact::firstOrNew([
