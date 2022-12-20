@@ -440,60 +440,59 @@ class GetMailgunMessages extends Command
                             $order->couple_date_of_birth = (isset($order->couple_date_of_birth)) ? \Carbon\Carbon::parse($order->couple_date_of_birth) : null;    
                         }
 
-                        // attempt to get Stripe charge id
-                        $result=null;
-                        $stripe_charge=null;
-                        //   $stripe_url = trim($this->extract_value(str_replace("\r\n","\n", $message->body),"View in Stripe\n"), "<>");
-                        $stripe_url = $this->extract_stripe_url($message->body);
-                        if (isset($stripe_url) && strpos($stripe_url,"http") === 0) {
-                            $result = Http::timeout(2)->get($stripe_url)->getBody()->getContents();
-                            $charge = trim($this->extract_value($result,"redirect=%2Fpayments%2F"));
-                            $stripe_charge = str_replace('">','',$charge);
-                            $order->stripe_charge_id = (isset($stripe_charge)) ? $stripe_charge : null;
+                    } // Retreat Registration Order
+
+                    // attempt to get Stripe charge id for both gift certificates and regular orders
+                    $result=null;
+                    $stripe_charge=null;
+                    //   $stripe_url = trim($this->extract_value(str_replace("\r\n","\n", $message->body),"View in Stripe\n"), "<>");
+                    $stripe_url = $this->extract_stripe_url($message->body);
+                    if (isset($stripe_url) && strpos($stripe_url,"http") === 0) {
+                        $result = Http::timeout(2)->get($stripe_url)->getBody()->getContents();
+                        $charge = trim($this->extract_value($result,"redirect=%2Fpayments%2F"));
+                        $stripe_charge = str_replace('">','',$charge);
+                        $order->stripe_charge_id = (isset($stripe_charge)) ? $stripe_charge : null;
+                    }
+
+                    // process order address
+                    // TODO: make sure full_address variable exists otherwise set order address parts to null
+                    // TODO: get the billing address and compare to address provided, different billing address may indicate someone else is paying for the retreat
+                    // TODO: consider comparing extract_value and extract_value_between to better deal with multiple line addresses
+                    if (isset($order->full_address)) {
+                        $address = explode(", ", $order->full_address);
+
+                        if (sizeof($address) == 4) {
+                            $order->address_street = trim($address[0]);
+                            $order->address_supplemental = trim($address[1]);
+                            $order->address_city = trim($address[2]);
+                            $address_detail = explode(" ", $address[3]);
+                            $order->address_state = trim($address_detail[0]);
+                            $order->address_zip = trim($address_detail[1]);
+                            $order->address_country = (sizeof($address_detail) == 4) ? trim($address_detail[2]) . " " . trim($address_detail[3]) : trim($address_detail[2]);            
+                        } 
+
+                        if (sizeof($address) == 3) {
+                            $order->address_street = trim($address[0]);
+                            $order->address_city = trim($address[1]);
+                            $address_detail = explode(" ", $address[2]);
                         }
 
-                    } // Retreat Registration Order
-                    // dd($order, $message, $retreat);
+                        if (isset($address_detail)) {
 
-                                            // process order address
-                        // TODO: make sure full_address variable exists otherwise set order address parts to null
-                        // TODO: get the billing address and compare to address provided, different billing address may indicate someone else is paying for the retreat
-                        // TODO: consider comparing extract_value and extract_value_between to better deal with multiple line addresses
-                        if (isset($order->full_address)) {
-                            $address = explode(", ", $order->full_address);
+                            $order->address_state = trim($address_detail[0]);
+                            $order->address_zip = trim($address_detail[1]);
 
-                            if (sizeof($address) == 4) {
-                                $order->address_street = trim($address[0]);
-                                $order->address_supplemental = trim($address[1]);
-                                $order->address_city = trim($address[2]);
-                                $address_detail = explode(" ", $address[3]);
-                                $order->address_state = trim($address_detail[0]);
-                                $order->address_zip = trim($address_detail[1]);
-                                $order->address_country = (sizeof($address_detail) == 4) ? trim($address_detail[2]) . " " . trim($address_detail[3]) : trim($address_detail[2]);            
-                            } 
-
-                            if (sizeof($address) == 3) {
-                                $order->address_street = trim($address[0]);
-                                $order->address_city = trim($address[1]);
-                                $address_detail = explode(" ", $address[2]);
+                            if (sizeof($address_detail) == 3) {
+                                $order->address_country = trim($address_detail[2]);   
                             }
-
-                            if (isset($address_detail)) {
-
-                                $order->address_state = trim($address_detail[0]);
-                                $order->address_zip = trim($address_detail[1]);
-
-                                if (sizeof($address_detail) == 3) {
-                                    $order->address_country = trim($address_detail[2]);   
-                                }
-                                
-                                if (sizeof($address_detail) == 4) {
-                                    $order->address_country = trim($address_detail[2]) . " " . trim($address_detail[3]);   
-                                }
+                            
+                            if (sizeof($address_detail) == 4) {
+                                $order->address_country = trim($address_detail[2]) . " " . trim($address_detail[3]);   
                             }
-                        } else { 
-                            // something is wrong with the address - leave it as null
-                        }    
+                        }
+                    } else { 
+                        // something is wrong with the address - leave it as null
+                    }    
 
                     $order->save();
                 }  catch (\Exception $exception) {
