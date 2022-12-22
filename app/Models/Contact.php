@@ -572,6 +572,9 @@ class Contact extends Model implements Auditable
             if (isset($this->suffix->name)) {
                 $full_name .= ', '.$this->suffix->name;
             }
+            if (trim($full_name) == "") {
+                $full_name = (isset($this->display_name)) ? $this->display_name : "N/A";
+            }
         }
         if ($this->contact_type == config('polanco.contact_type.organization')) {
             $full_name = $this->display_name;
