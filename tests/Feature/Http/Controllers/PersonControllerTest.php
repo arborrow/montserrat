@@ -2,10 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Models\ContactLanguage;
-use App\Models\EmergencyContact;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
@@ -820,7 +817,8 @@ class PersonControllerTest extends TestCase
             'primary_phone_location_id' => config('polanco.location_type.other').':Phone',
 
         ]);
-        $person = \App\Models\Contact::whereSortName($last_name.', '.$first_name)->first();
+        // this test may fail if there are duplicate sort_name and it retrieves the wrong one
+        $person = \App\Models\Contact::whereSortName($last_name.', '.$first_name)->whereOccupationId($occupation->id)->first();
         $response->assertSessionHas('flash_notification');
         $response->assertRedirect(action([\App\Http\Controllers\PersonController::class, 'show'], $person->id));
     }
