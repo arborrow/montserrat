@@ -14,6 +14,7 @@
                 <select class="custom-select col-3" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                     <option value="">Select configuration report ...</option>
                     <option value="{{url('admin/config/application')}}">App settings</option>
+                    <option value="{{url('admin/health')}}">Database health</option>
                     <option value="{{url('admin/config/gate')}}">Gate settings</option>
                     <option value="{{url('admin/config/google_calendar')}}">Google calendar</option>
                     <option value="{{url('admin/config/google_client')}}">Google client</option>

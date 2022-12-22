@@ -19,7 +19,7 @@
         "jeremykenedy/laravel-logger": "^6.0",
         "kriswallsmith/buzz": "^1.2",
         "laracasts/flash": "^3.2",
-        "laravel/cashier": "^13.8",
+        "laravel/cashier": "^13.13",
         "laravel/framework": "^9.45",
         "laravel/helpers": "^1.5",
         "laravel/sanctum": "^3.0",
