@@ -128,12 +128,12 @@ class PersonController extends Controller
 
         // the sort and display names are not available on creation so that we create a default and then it can be customized or tweaked individually
         if (empty($request->input('display_name'))) {
-            $person->display_name = $person->first_name.' '.$person->last_name;
+            $person->display_name = trim($person->first_name.' '.$person->last_name);
         } else {
             $person->display_name = $request->input('display_name');
         }
         if (empty($request->input('sort_name'))) {
-            $person->sort_name = $person->last_name.', '.$person->first_name;
+            $person->sort_name = trim($person->last_name.', '.$person->first_name);
         } else {
             $person->sort_name = $request->input('sort_name');
         }
@@ -1775,7 +1775,7 @@ class PersonController extends Controller
         $this->authorize('update-contact');
         $this->authorize('update-relationship');
 
-        if ($request->input($field) > 0) {
+        if ($field > 0) {
             $relationship = new \App\Models\Relationship;
             $relationship->contact_id_a = $contact_id_a;
             $relationship->contact_id_b = $contact_id_b;
