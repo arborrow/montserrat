@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AuditSearchRequest;
+use App\Models\Audit;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -126,4 +129,32 @@ class AuditController extends Controller
 
         return Redirect::action([self::class, 'index']);
     }
+
+    public function search()
+    {
+        $this->authorize('show-audit');
+        
+        $users = User::whereProvider('google')->pluck('name', 'id');
+        $users->prepend('N/A', '');
+
+        $models = Audit::where('auditable_type','LIKE','%Models%')->groupBy('auditable_type')->orderBy('auditable_type')->get()->pluck('model_name', 'auditable_type');
+        $models->prepend('N/A', '');
+        //dd($models);
+        $actions = array (null => "N/A", 'created' => 'created', 'deleted'=>'deleted', 'updated' => 'updated');
+
+        return view('admin.audits.search', compact('users', 'models','actions'));
+    }
+
+    public function results(AuditSearchRequest $request)
+    {
+        $this->authorize('show-audit');
+        if (! empty($request)) {
+            $audits = Audit::filtered($request)->orderByDesc('created_at')->paginate(25, ['*'], 'audits');
+            $audits->appends($request->except('page'));
+        } else {
+            $audits = Audit::orderByDesc('created_at')->paginate(25, ['*'], 'audits');
+        }
+        return view('admin.audits.results', compact('audits'));
+    }
+
 }

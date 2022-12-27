@@ -143,6 +143,8 @@ Route::middleware('web', 'activity')->group(function () {
         Route::get('snippet/title/{title?}', [SnippetController::class, 'index_type']);
         Route::resource('asset_type', AssetTypeController::class);
         Route::get('audit/user/{user_id?}', [AuditController::class, 'index_type']);
+        Route::get('audit/search', [AuditController::class, 'search'])->name('audits.search');
+        Route::get('audit/results', [AuditController::class, 'results'])->name('audits.results');    
         Route::resource('audit', AuditController::class);
         Route::resource('department', DepartmentController::class);
         Route::resource('donation_type', DonationTypeController::class);
@@ -284,7 +286,7 @@ Route::middleware('web', 'activity')->group(function () {
     Route::resource('relationship', RelationshipController::class);
 
     Route::post('relationship_type/addme', [RelationshipTypeController::class, 'addme'])->name('relationship_type.addme');
-    Route::get('relationship_type/{id}/add/{a?}/{b?}', [RelationshipTypeController::class, 'add'])->name('relationship_type.add');
+    Route::get('relationship_ty pe/{id}/add/{a?}/{b?}', [RelationshipTypeController::class, 'add'])->name('relationship_type.add');
     Route::resource('relationship_type', RelationshipTypeController::class);
 
     Route::prefix('report')->group(function () {

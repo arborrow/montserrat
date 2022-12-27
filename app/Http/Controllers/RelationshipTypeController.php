@@ -319,43 +319,35 @@ class RelationshipTypeController extends Controller
                         break;
                     case 'Diocese':
                         $dioceses = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
-
                         return $dioceses;
                         break;
                     case 'Province':
                         $provinces = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.province'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
-
                         return $provinces;
                         break;
                     case 'Community':
                         $communities = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.community'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
-
                         return $communities;
                         break;
                     case 'Retreat House':
                         $retreat_houses = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.retreat_house'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
-
                         return $retreat_houses;
                         break;
                     case 'Vendor':
                         $vendors = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.vendor'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
-
                         return $vendors;
                         break;
                     case 'Religious-Catholic':
                         $religious_catholic = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.religious_catholic'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
-
                         return $religious_catholic;
                         break;
                     case 'Religious-Non-Catholic':
                         $religious_non_catholic = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.religious_noncatholic'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
-
                         return $religious_non_catholic;
                         break;
                     case 'Foundation':
                         $foundations = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.foundation'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
-
-                        return $religious_non_catholic;
+                        return $foundations;
                         break;
                     //default NULL (generic organization)
 
@@ -469,8 +461,9 @@ class RelationshipTypeController extends Controller
                         return $volunteers;
                         break;
 
-                    //default null
+                    // for default - limit to matched contact by default or consider getting input for name search (use full name to search)
                     default:
+                        
                         $individuals = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->pluck('sort_name', 'id');
 
                         return $individuals;
