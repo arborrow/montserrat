@@ -143,6 +143,8 @@ Route::middleware('web', 'activity')->group(function () {
         Route::get('snippet/title/{title?}', [SnippetController::class, 'index_type']);
         Route::resource('asset_type', AssetTypeController::class);
         Route::get('audit/user/{user_id?}', [AuditController::class, 'index_type']);
+        Route::get('audit/search', [AuditController::class, 'search'])->name('audits.search');
+        Route::get('audit/results', [AuditController::class, 'results'])->name('audits.results');    
         Route::resource('audit', AuditController::class);
         Route::resource('department', DepartmentController::class);
         Route::resource('donation_type', DonationTypeController::class);

@@ -5,7 +5,11 @@
     <div class="col-lg-12">
         <h2>
             Audits
+            <a href={{ action([\App\Http\Controllers\AuditController::class, 'search']) }}>
+                {!! Html::image('images/search.png', 'Search audits',array('title'=>"Search audits",'class' => 'btn btn-link')) !!}
+            </a>
         </h2>
+
     </div>
     <span>{{ $audits->links() }}</span>
     <div class="col-md-3 col-lg-6">

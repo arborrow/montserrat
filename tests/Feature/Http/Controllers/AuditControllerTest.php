@@ -94,6 +94,41 @@ class AuditControllerTest extends TestCase
     /**
      * @test
      */
+    public function results_returns_an_ok_response()
+    {
+        // $this->withoutExceptionHandling();
+        $user = $this->createUserWithPermission('show-audit');
+
+        $audit = \App\Models\Audit::factory()->create();
+        $response = $this->actingAs($user)->get('admin/audit/results?url='.$audit->url);
+        
+        $response->assertOk();
+        $response->assertViewIs('admin.audits.results');
+        $response->assertViewHas('audits');
+        $response->assertSeeText('result(s) found');
+        $response->assertSeeText($audit->url);
+    }
+
+    /**
+     * @test
+     */
+    public function search_returns_an_ok_response()
+    {
+        $user = $this->createUserWithPermission('show-audit');
+
+        $response = $this->actingAs($user)->get('admin/audit/search');
+
+        $response->assertOk();
+        $response->assertViewIs('admin.audits.search');
+        $response->assertViewHas('users');
+        $response->assertViewHas('models');
+        $response->assertViewHas('actions');
+        $response->assertSeeText('Search Audit Logs');
+    }
+
+    /**
+     * @test
+     */
     public function show_returns_an_ok_response()
     {
         $user = $this->createUserWithPermission('show-audit');
