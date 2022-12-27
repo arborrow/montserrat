@@ -36,7 +36,7 @@
                         <td>{{ $audit->auditable_type . ":" . $audit->auditable_id }} </td>
                         <td>{{ $audit->event }}</td>
                         <td>
-                            <div class = "col-lg-3">
+                            <div>
                                 <span class="font-weight-bold">Old values: </span><br>
                                 @if (isset($audit->old_values))
                                 @foreach ($audit->old_values as $field=>$value)
@@ -44,7 +44,7 @@
                                     @endforeach
                                 @endIf
                             </div>
-                            <div class = "col-lg-3 bg-success">
+                            <div class = "bg-success">
                                 <span class="font-weight-bold">New values: </span><br>
                                     @if (isset($audit->new_values))
                                         @foreach ($audit->new_values as $field=>$value)
