@@ -26,6 +26,7 @@ class AddmeRelationshipTypeRequest extends FormRequest
         return [
             'contact_id' => 'integer|min:1|required',
             'relationship_type' => 'required|in:Child,Parent,Husband,Wife,Sibling,Employee,Volunteer,Parishioner,Primary contact,Employer',
+            'filter_by' => 'in:lastname, all, matched',
         ];
     }
 

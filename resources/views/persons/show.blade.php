@@ -261,6 +261,7 @@
                             <div class="col-lg-6">
                                 {!! Form::select('relationship_type', $relationship_types, NULL, ['class' => 'form-control']) !!}
                                 {!! Form::hidden('contact_id',$person->id)!!}
+                                {!! Form::hidden('filter_by','lastname')!!}
                             </div>
                             <div class="col-lg-6">
                                 {!! Form::submit('Create relationship', ['class' => 'm-1 btn btn-primary']) !!}
