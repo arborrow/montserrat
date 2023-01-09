@@ -205,7 +205,7 @@ class RelationshipTypeController extends Controller
             $contact_b_list[$contactb->id] = $contactb->sort_name;
         }
 
-        return view('relationships.types.add', compact('relationship_type', 'contact_a_list', 'contact_b_list')); //
+        return view('relationships.types.add', compact('relationship_type', 'contact_a_list', 'contact_b_list', 'a', 'b', 'filter_by')); //
     }
 
     public function addme(AddmeRelationshipTypeRequest $request)
@@ -226,7 +226,7 @@ class RelationshipTypeController extends Controller
                 break;
             case 'Husband':
                 $relationship_type_id = config('polanco.relationship_type.husband_wife');
-                return Redirect::route('relationship_type.add', ['id' => $relationship_type_id, 'a' => $contact_id, 'filter_by' => $filter_by]);
+                return Redirect::route('relationship_type.add', ['id' => $relationship_type_id, 'a' => $contact_id, 'b' => 0, 'filter_by' => $filter_by]);
                 break;
             case 'Wife':
                 $relationship_type_id = config('polanco.relationship_type.husband_wife');
