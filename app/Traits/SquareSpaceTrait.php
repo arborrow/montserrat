@@ -62,12 +62,11 @@ trait SquareSpaceTrait
         $contacts = [];
         $contacts[0] = ['contact_id'=>0, 'lastname'=>$lastname, 'firstname'=>$firstname, 'full_name'=>$item->name . ' (Add New Person)', 'name_score'=>0,'email_score'=>0,'phone_score'=>0,'address_score'=>0,'total_score'=>0];
 
-        $lastnames = \App\Models\Contact::whereLastName($lastname)->get();
+        $lastnames = \App\Models\Contact::whereLastName($lastname)->with('address_primary')->get();
         $emails = (isset($item->email)) ? \App\Models\Email::whereEmail(strtolower($item->email))->select('id', 'contact_id','email')->with('owner')->get() : [];
-        $mobile_phones = (isset($item->mobile_phone)) ? \App\Models\Phone::wherePhoneNumeric(preg_replace('~\D~', '', $item->mobile_phone))->with('owner')->get() : [];
-        $home_phones = (isset($item->home_phone)) ? \App\Models\Phone::wherePhoneNumeric(preg_replace('~\D~', '', $item->home_phone))->with('owner')->get() : [];
-        $work_phones = (isset($item->work_phone)) ? \App\Models\Phone::wherePhoneNumeric(preg_replace('~\D~', '', $item->work_phone))->with('owner')->get() : [];
-
+        $mobile_phones = (!empty($item->mobile_phone)) ? \App\Models\Phone::wherePhoneNumeric(preg_replace('~\D~', '', $item->mobile_phone))->with('owner')->get() : [];
+        $home_phones = (!empty($item->home_phone)) ? \App\Models\Phone::wherePhoneNumeric(preg_replace('~\D~', '', $item->home_phone))->with('owner')->get() : [];
+        $work_phones = (!empty($item->work_phone)) ? \App\Models\Phone::wherePhoneNumeric(preg_replace('~\D~', '', $item->work_phone))->with('owner')->get() : [];
         // TODO: consider using full address
         foreach ($lastnames as $ln) {
             $name_parts = explode(" ",$item->name);

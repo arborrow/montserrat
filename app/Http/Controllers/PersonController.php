@@ -669,6 +669,9 @@ class PersonController extends Controller
         $relationship_types['Sibling'] = 'Sibling';
         $relationship_types['Wife'] = 'Wife';
 
+        $relationship_filter_types['lastname'] = 'Lastname';
+        $relationship_filter_types['matched'] = 'Related details';
+
         //dd($files);
         //not at all elegant but this prepares notes for easy display and use in the edit blade
         $person->note_health = '';
@@ -715,7 +718,7 @@ class PersonController extends Controller
         $touchpoints = \App\Models\Touchpoint::wherePersonId($id)->with('staff')->orderBy('touched_at', 'DESC')->paginate(15, ['*'], 'touchpoints');
 
         //dd($registrations);
-        return view('persons.show', compact('person', 'donations', 'files', 'relationship_types', 'touchpoints', 'registrations')); //
+        return view('persons.show', compact('person', 'donations', 'files', 'relationship_types', 'relationship_filter_types', 'touchpoints', 'registrations')); //
     }
 
     /**

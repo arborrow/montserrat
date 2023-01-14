@@ -251,25 +251,6 @@
             @can('show-relationship')
             <div class="col-lg-6 " id="relationships">
                 <h2>Relationships ({{ $person->a_relationships->count() + $person->b_relationships->count() }})</h2>
-                @can('create-relationship')
-                {!! Form::open(['method' => 'POST', 'route' => ['relationship_type.addme']]) !!}
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                {!! Form::label('relationship_type', 'Add Relationship: ')  !!}
-                            </div>
-                            <div class="col-lg-6">
-                                {!! Form::select('relationship_type', $relationship_types, NULL, ['class' => 'form-control']) !!}
-                                {!! Form::hidden('contact_id',$person->id)!!}
-                                {!! Form::hidden('filter_by','lastname')!!}
-                            </div>
-                            <div class="col-lg-6">
-                                {!! Form::submit('Create relationship', ['class' => 'm-1 btn btn-primary']) !!}
-                            </div>
-                        </div>
-                    </div>
-                {!! Form::close() !!}
-                @endCan
                 <ul>
                     @foreach($person->a_relationships as $a_relationship)
                     <li>
@@ -297,6 +278,36 @@
                     </li>
                     @endforeach
                 </ul>
+                @can('create-relationship')
+                <div class = "border card border-secondary form-group">
+                {!! Form::open(['method' => 'POST', 'route' => ['relationship_type.addme']]) !!}
+                    <div class = "card-title p-2 m-1 h4">
+                        Create a New Relationship
+                    </div>
+                    <div class="card-body p-2 m-1">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                {!! Form::label('relationship_type_name', 'Relationship: ', ['class' => 'font-weight-bold'])  !!}
+                                {!! Form::select('relationship_type_name', $relationship_types, NULL, ['class' => 'form-control']) !!}
+                                {!! Form::hidden('contact_id',$person->id)!!}
+                            </div>
+                            <div class="col-lg-3">
+                                {!! Form::label('relationship_filter_type', 'Find relatives by: ', ['class' => 'font-weight-bold'])  !!}
+                                {!! Form::select('relationship_filter_type', $relationship_filter_types, 'matched', ['class' => 'form-control']) !!}
+                            </div>
+                            <div class="col-lg-3">
+                                {!! Form::label('relationship_filter_alternate_name', 'Alternate name: ', ['class' => 'font-weight-bold'])  !!}
+                                {!! Form::text('relationship_filter_alternate_name', null, ['class' => 'form-control']) !!}
+                            </div>
+                            <div class="col-lg-2">
+                            {!! Form::submit('Create', ['class' => 'm-1 btn btn-primary']) !!}
+                            {!! Form::close() !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endCan
+
             </div>
             @endCan
             @can('show-registration')

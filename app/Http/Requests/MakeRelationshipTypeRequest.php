@@ -27,6 +27,7 @@ class MakeRelationshipTypeRequest extends FormRequest
             'contact_a_id' => 'integer|min:0|required',
             'contact_b_id' => 'integer|min:0|required',
             'relationship_type_id' => 'integer|min:0|required',
+            'direction' => 'in:a,b|required',
         ];
     }
 
