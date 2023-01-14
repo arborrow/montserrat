@@ -41,7 +41,6 @@ class AddmeRelationshipTypeRequestTest extends TestCase
         $this->assertEquals([
             'relationship_type_name' => 'required|in:Child,Parent,Husband,Wife,Sibling,Employee,Volunteer,Parishioner,Primary contact,Employer',
             'contact_id' => 'integer|min:1|required',
-            'relationship_filter_type' => 'in:lastname,matched',
             'relationship_filter_alternate_name' => 'string|nullable'
         ], $actual);
     }

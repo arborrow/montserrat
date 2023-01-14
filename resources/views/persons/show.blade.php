@@ -286,20 +286,16 @@
                     </div>
                     <div class="card-body p-2 m-1">
                         <div class="row">
-                            <div class="col-lg-3">
+                            <div class="col-lg-4">
                                 {!! Form::label('relationship_type_name', 'Relationship: ', ['class' => 'font-weight-bold'])  !!}
                                 {!! Form::select('relationship_type_name', $relationship_types, NULL, ['class' => 'form-control']) !!}
                                 {!! Form::hidden('contact_id',$person->id)!!}
                             </div>
-                            <div class="col-lg-3">
-                                {!! Form::label('relationship_filter_type', 'Find relatives by: ', ['class' => 'font-weight-bold'])  !!}
-                                {!! Form::select('relationship_filter_type', $relationship_filter_types, 'matched', ['class' => 'form-control']) !!}
-                            </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-4">
                                 {!! Form::label('relationship_filter_alternate_name', 'Alternate name: ', ['class' => 'font-weight-bold'])  !!}
                                 {!! Form::text('relationship_filter_alternate_name', null, ['class' => 'form-control']) !!}
                             </div>
-                            <div class="col-lg-2">
+                            <div class="col-lg-4">
                             {!! Form::submit('Create', ['class' => 'm-1 btn btn-primary']) !!}
                             {!! Form::close() !!}
                             </div>
