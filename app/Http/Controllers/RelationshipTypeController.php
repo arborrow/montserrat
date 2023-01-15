@@ -289,10 +289,21 @@ class RelationshipTypeController extends Controller
                 return $households;
                 break;
             case 'Organization':
+                // dd($contact_subtype);
                 switch ($contact_subtype) {
                     case 'Parish':
                         $parish_list = [];
-                        $parishes = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
+                        if (isset($relationship_filter_alternate_name)) {
+                            $parishes = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.parish'))
+                                ->where('organization_name','LIKE',"%{$relationship_filter_alternate_name}%")
+                                ->orderBy('organization_name', 'asc')
+                                ->with('address_primary.state', 'diocese.contact_a')->get();
+                        } else {
+                            $parishes = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.parish'))
+                                ->orderBy('organization_name', 'asc')
+                                ->with('address_primary.state', 'diocese.contact_a')
+                                ->get();
+                        }
                         $parish_list = Arr::pluck($parishes->toArray(), 'full_name_with_city', 'id');
                         /* foreach($parishes as $parish) {
                             $parish_list[$parish->id] = $parish->organization_name.' ('.$parish->address_primary_city.') - '.$parish->diocese_name;
@@ -334,7 +345,19 @@ class RelationshipTypeController extends Controller
                     //default NULL (generic organization)
 
                     default:
-                        $organizations = \App\Models\Contact::whereContactType(config('polanco.contact_type.organization'))->orderBy('organization_name', 'asc')->get();
+                        if (isset($relationship_filter_alternate_name)) {
+                            $organizations = \App\Models\Contact::whereContactType(config('polanco.contact_type.organization'))
+                                ->where('organization_name','LIKE',"%{$relationship_filter_alternate_name}%")
+                                ->orderBy('organization_name', 'asc')
+                                ->with('address_primary')
+                                ->get();
+                        } else {
+                            $organizations = \App\Models\Contact::whereContactType(config('polanco.contact_type.organization'))
+                                ->orderBy('organization_name', 'asc')
+                                ->with('address_primary')
+                                ->get();
+                        }
+                        
                         $organization_list = Arr::pluck($organizations->toArray(), 'full_name_with_city', 'id');
                         return $organization_list;
                         break;
@@ -342,6 +365,7 @@ class RelationshipTypeController extends Controller
                 break;
             
             default: // default Individual
+                dd($contact_subtype);
                 switch ($contact_subtype) {
                     case 'Bishop':
                         $bishops = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
