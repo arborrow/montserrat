@@ -303,7 +303,6 @@
                     </div>
                 </div>
                 @endCan
-
             </div>
             @endCan
             @can('show-registration')

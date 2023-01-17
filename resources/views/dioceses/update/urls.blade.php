@@ -62,14 +62,6 @@
                 </div>
             </div>
         </div>
-        <div id="url_google" class="tab-pane fade" role="tabpanel">
-            <div class="row">
-                <div class="col-lg-4">
-                    {!! Form::label('url_google', 'Google+:')  !!}
-                    {!! Form::text('url_google', $defaults['Google']['url'], ['class' => 'form-control']) !!}
-                </div>
-            </div>
-        </div>
         <div id="url_instagram" class="tab-pane fade" role="tabpanel">
             <div class="row">
                 <div class="col-lg-4">
