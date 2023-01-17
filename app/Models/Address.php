@@ -67,11 +67,7 @@ class Address extends Model implements Auditable
 
     public function getCountryAbbreviationAttribute()
     {
-        if (isset($this->country_id)) {
-            return $this->country->iso_code;
-        } else {
-            return;
-        }
+        return (empty($this->country_id)) ? null : $this->country->iso_code;
     }
 
     public function getGoogleMapAttribute()
