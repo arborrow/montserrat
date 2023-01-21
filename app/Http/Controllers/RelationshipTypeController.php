@@ -185,6 +185,10 @@ class RelationshipTypeController extends Controller
                 $relationship_type_id = config('polanco.relationship_type.deacon');
                 $a = $contact_id;
                 break;
+            case 'Priest':
+                $relationship_type_id = config('polanco.relationship_type.priest');
+                $a = $contact_id;
+                break;
             case 'Employee':
                 $relationship_type_id = config('polanco.relationship_type.staff');
                 $b = $contact_id;
@@ -298,12 +302,12 @@ class RelationshipTypeController extends Controller
                         $parish_list = [];
                         if (isset($relationship_filter_alternate_name)) {
                             $parishes = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.parish'))
-                                ->where('organization_name','LIKE',"%{$relationship_filter_alternate_name}%")
-                                ->orderBy('organization_name', 'asc')
+                                ->where('display_name','LIKE',"%{$relationship_filter_alternate_name}%")
+                                ->orderBy('display_name', 'asc')
                                 ->with('address_primary.state', 'diocese.contact_a')->get();
                         } else {
                             $parishes = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.parish'))
-                                ->orderBy('organization_name', 'asc')
+                                ->orderBy('display_name', 'asc')
                                 ->with('address_primary.state', 'diocese.contact_a')
                                 ->get();
                         }
@@ -443,6 +447,7 @@ class RelationshipTypeController extends Controller
 
                         return $superiors;
                         break;
+                    /* 
                     case 'Board member':
                         $board_members = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.board'));
@@ -450,6 +455,10 @@ class RelationshipTypeController extends Controller
 
                         return $board_members;
                         break;
+                    */
+
+                    /* commenting out as we want all employees and volunteers -  not just those for Montserrat
+
                     case 'Employee':
                         $staff = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.staff'));
@@ -457,6 +466,8 @@ class RelationshipTypeController extends Controller
 
                         return $staff;
                         break;
+
+                    
                     case 'Volunteer':
                         $volunteers = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.volunteer'));
@@ -464,31 +475,36 @@ class RelationshipTypeController extends Controller
 
                         return $volunteers;
                         break;
-
+                    */
+                    
                     // for default - limit to matched contact by default or consider getting input for name search (use full name to search)
                     default:
                         
-                        $contact = \App\Models\Contact::findOrFail($contact_id);
-
-                        $item = collect([]);
-                        $item->name = $contact->first_name . ' ' . $contact->last_name;
-                        $item->email = $contact->email_primary_text;
-                        $item->full_address = $contact->address_primary_street . ' ' . $contact->address_primary_supplemental_address . ' ' . $contact->address_primary_city . ' ' . $contact->address_primary_state_abbreviation . ' ' . $contact->address_primary_postal_code;
-                        $item->mobile_phone = $contact->primary_phone_number;
-                        $item->work_phone = $contact->primary_phone_number;
-                        $item->home_phone = $contact->primary_phone_number;
-
-                        $individuals = $this->matched_contacts($item);
-                        $individuals = collect($individuals)->forget(0);
-                        $individuals = $individuals->toArray();
                         if (isset($relationship_filter_alternate_name)) {
                             $alternate_names = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->whereLastName($relationship_filter_alternate_name)->orderBy('sort_name', 'asc')->pluck('display_name', 'id');
-                            $alternate_names = $alternate_names->toArray();
-                            $individuals = $individuals + $alternate_names;
+                            return $alternate_names;
+                            break;
+                            // $alternate_names = $alternate_names->toArray();
+                            // $individuals = $individuals + $alternate_names;
+                        } else {
+                            $contact = \App\Models\Contact::findOrFail($contact_id);
+
+                            $item = collect([]);
+                            $item->name = $contact->first_name . ' ' . $contact->last_name;
+                            $item->email = $contact->email_primary_text;
+                            $item->full_address = $contact->address_primary_street . ' ' . $contact->address_primary_supplemental_address . ' ' . $contact->address_primary_city . ' ' . $contact->address_primary_state_abbreviation . ' ' . $contact->address_primary_postal_code;
+                            $item->mobile_phone = $contact->primary_phone_number;
+                            $item->work_phone = $contact->primary_phone_number;
+                            $item->home_phone = $contact->primary_phone_number;
+    
+                            $individuals = $this->matched_contacts($item);
+                            $individuals = collect($individuals)->forget(0);
+                            $individuals = $individuals->toArray();
+                            
+                            return $individuals;
+                            break;
+    
                         }                        
- 
-                        return $individuals;
-                        break;
                 }
         }
     }

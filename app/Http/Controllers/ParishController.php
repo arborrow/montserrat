@@ -193,10 +193,11 @@ class ParishController extends Controller
         $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date', 'DESC')->paginate(25, ['*'], 'donations');
 
         $files = \App\Models\Attachment::whereEntity('contact')->whereEntityId($parish->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
-        $relationship_types = [];
-        $relationship_types['Primary Contact'] = 'Primary Contact';
-
-        return view('parishes.show', compact('parish', 'files', 'relationship_types', 'donations', 'touchpoints', 'registrations')); //
+        $relationship_filter_types = [];
+        $relationship_filter_types['Parishioner'] = 'Parishioner';
+        $relationship_filter_types['Primary contact'] = 'Primary contact';
+    
+        return view('parishes.show', compact('parish', 'files', 'relationship_filter_types', 'donations', 'touchpoints', 'registrations')); //
     }
 
     /**

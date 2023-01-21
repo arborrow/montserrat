@@ -190,11 +190,15 @@ class OrganizationController extends Controller
         $registrations = \App\Models\Registration::whereContactId($id)->orderByDesc('register_date')->paginate(25, ['*'], 'registrations');
 
         $files = \App\Models\Attachment::whereEntity('contact')->whereEntityId($organization->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
-        $relationship_types = [];
-        $relationship_types['Employer'] = 'Employer';
-        $relationship_types['Primary Contact'] = 'Primary Contact';
+        $relationship_filter_types = [];
+        // TODO: come back to figure how to handle
+        // $relationship_filter_types['Board member'] = 'Board member';
+        $relationship_filter_types['Employee'] = 'Employee';
+        $relationship_filter_types['Primary contact'] = 'Primary contact';
+        // TODO: come back to figure how to handle
+        // $relationship_filter_types['Volunteer'] = 'Volunteer';
 
-        return view('organizations.show', compact('organization', 'files', 'relationship_types', 'donations', 'registrations', 'touchpoints')); //
+        return view('organizations.show', compact('organization', 'files', 'relationship_filter_types', 'donations', 'registrations', 'touchpoints')); //
     }
 
     /**

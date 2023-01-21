@@ -25,7 +25,7 @@
         <br />
         <div class="col-md-1">
             <div class="form-group">
-                {!! Form::submit('Add Relationship '.$relationship_type->description, ['class'=>'btn btn-primary']) !!}
+                {!! Form::submit('Add '.$relationship_type->description.' Relationship', ['class'=>'btn btn-primary']) !!}
             </div>
             {!! Form::close() !!}
         </div>

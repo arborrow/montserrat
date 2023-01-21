@@ -187,8 +187,9 @@ class DioceseController extends Controller
         $relationship_filter_types['Deacon'] = 'Deacon';
         $relationship_filter_types['Employee'] = 'Employee';
         $relationship_filter_types['Priest'] = 'Priest';
-        $relationship_filter_types['Primary Contact'] = 'Primary Contact';
-        $relationship_filter_types['Volunteer'] = 'Volunteer';
+        $relationship_filter_types['Primary contact'] = 'Primary contact';
+        // TODO:: come back and figure out how to make volunteer for any organization or diocese atm restricted to retreat houses by definition in the database
+        // $relationship_filter_types['Volunteer'] = 'Volunteer'; 
 
         return view('dioceses.show', compact('diocese', 'relationship_filter_types', 'files', 'donations', 'registrations', 'touchpoints'));
     }
