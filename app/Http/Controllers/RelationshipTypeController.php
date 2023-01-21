@@ -252,23 +252,16 @@ class RelationshipTypeController extends Controller
         }
 
         $direction = ($a == $contact_id) ? 'a' : 'b' ;
-        
-        if (! isset($a) or $a == 0) {
-            $contact_a_list = $this->get_contact_type_list($relationship_type->contact_type_a, $subtype_a_name, $b, $request->input('relationship_filter_alternate_name'));
+
+        if ($direction == 'b') {
+            $contact_list = $this->get_contact_type_list($relationship_type->contact_type_a, $subtype_a_name, $b, $request->input('relationship_filter_alternate_name'));
+            $primary_contact = \App\Models\Contact::findOrFail($b);
         } else {
-            $contacta = \App\Models\Contact::findOrFail($a);
-            $contact_a_list[$contacta->id] = $contacta->sort_name;
-        }
-        if (! isset($b) or $b == 0) {
-            $contact_b_list = $this->get_contact_type_list($relationship_type->contact_type_b, $subtype_b_name, $a, $request->input('relationship_filter_alternate_name'));
-        } else {
-            $contactb = \App\Models\Contact::findOrFail($b);
-            $contact_b_list[$contactb->id] = $contactb->sort_name;
+            $contact_list = $this->get_contact_type_list($relationship_type->contact_type_b, $subtype_b_name, $a, $request->input('relationship_filter_alternate_name'));
+            $primary_contact = \App\Models\Contact::findOrFail($a);
         }
 
-        // dd($a, $b, $subtype_a_name, $subtype_b_name, $relationship_type, $contact_a_list, $contact_b_list, $direction);
-
-        return view('relationships.types.add', compact('relationship_type', 'contact_a_list', 'contact_b_list', 'direction')); 
+        return view('relationships.types.add', compact('relationship_type', 'primary_contact', 'contact_list', 'direction')); 
     }
 
     public function make(MakeRelationshipTypeRequest $request)
@@ -278,7 +271,7 @@ class RelationshipTypeController extends Controller
         // this allows the ability to redirect back to that user
         $contact_id = ($request->input('direction') == 'a') ? $request->input('contact_a_id') : $request->input('contact_b_id');        
         $contact = \App\Models\Contact::findOrFail($contact_id);
-
+        
         $relationship = new \App\Models\Relationship;
         $relationship->contact_id_a = $request->input('contact_a_id');
         $relationship->contact_id_b = $request->input('contact_b_id');
