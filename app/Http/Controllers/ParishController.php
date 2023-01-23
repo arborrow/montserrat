@@ -471,9 +471,12 @@ class ParishController extends Controller
         $diocese = \App\Models\Contact::findOrFail($diocese_id);
         // dd($diocese);
         $dioceses = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.diocese'))->orderBy('sort_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'bishops', 'primary_bishop')->get();
-        $parishes = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('addresses.state', 'phones', 'emails', 'websites', 'pastor.contact_b', 'diocese.contact_a')->whereHas('diocese.contact_a', function ($query) use ($diocese_id) {
-            $query->where('contact_id_a', '=', $diocese_id);
-        })->get();
+        $parishes = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.parish'))
+            ->orderBy('organization_name', 'asc')
+            ->with('addresses.state', 'phones', 'emails', 'websites', 'pastor.contact_b', 'diocese.contact_a')
+            ->whereHas('diocese.contact_a', function ($query) use ($diocese_id) {
+                $query->where('contact_id_a', '=', $diocese_id);
+            })->get();
 
         return view('parishes.index', compact('parishes', 'dioceses', 'diocese'));
     }

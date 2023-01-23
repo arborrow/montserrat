@@ -156,7 +156,7 @@ class Contact extends Model implements Auditable
 
     public function diocese()
     {
-        return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.diocese'));
+        return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.parish'));
     }
 
     public function donations()

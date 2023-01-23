@@ -179,7 +179,7 @@ class VendorControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('vendors.show');
         $response->assertViewHas('vendor');
-        $response->assertViewHas('relationship_types');
+        $response->assertViewHas('relationship_filter_types');
         $response->assertViewHas('files');
         $response->assertSeeText($vendor->display_name);
     }

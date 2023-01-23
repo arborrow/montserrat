@@ -182,7 +182,7 @@ class DioceseControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('dioceses.show');
         $response->assertViewHas('diocese');
-        $response->assertViewHas('relationship_types');
+        $response->assertViewHas('relationship_filter_types');
         $response->assertViewHas('files');
         $response->assertSeeText($diocese->display_name);
     }
