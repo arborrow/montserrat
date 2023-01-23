@@ -190,7 +190,7 @@ class ParishControllerTest extends TestCase
             'contact_id_b' => $parish->id,
             'relationship_type_id' => config('polanco.relationship_type.parish'),
         ]);
-        dd($diocese, $parish, $relationship_diocese);
+        
         $response = $this->actingAs($user)->get('parishes/diocese/'.$diocese->id);
         $parishes = $response->viewData('parishes');
 
