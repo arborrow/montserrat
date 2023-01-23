@@ -169,10 +169,13 @@ class VendorController extends Controller
         $registrations = \App\Models\Registration::whereContactId($id)->orderBy('created_at', 'DESC')->paginate(25, ['*'], 'registrations');
 
         $files = \App\Models\Attachment::whereEntity('contact')->whereEntityId($vendor->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
-        $relationship_types = [];
-        $relationship_types['Primary contact'] = 'Primary contact';
-
-        return view('vendors.show', compact('vendor', 'relationship_types', 'files', 'donations', 'touchpoints', 'registrations')); //
+        $relationship_filter_types = [];
+        // TODO: come back to figure how to handle
+        // $relationship_filter_types['Board member'] = 'Board member';
+        $relationship_filter_types['Employee'] = 'Employee';
+        $relationship_filter_types['Primary contact'] = 'Primary contact';
+        
+        return view('vendors.show', compact('vendor', 'relationship_filter_types', 'files', 'donations', 'touchpoints', 'registrations')); //
     }
 
     /**
