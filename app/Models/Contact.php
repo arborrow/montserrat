@@ -156,7 +156,7 @@ class Contact extends Model implements Auditable
 
     public function diocese()
     {
-        return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.diocese'));
+        return $this->hasOne(Relationship::class, 'contact_id_b', 'id')->whereRelationshipTypeId(config('polanco.relationship_type.parish'));
     }
 
     public function donations()
@@ -880,13 +880,13 @@ AND d.donation_amount<=50 AND d.deleted_at IS NULL AND d.donation_description="R
 
     public function getAgcHouseholdNameAttribute()
     {
-        if (isset($this->agc2019->household_name)) {
-            return $this->agc2019->household_name;
+        if ($this->contact_type == 1) {
+            return (isset($this->agc2019->household_name)) ? $this->agc2019->household_name : $this->full_name;    
         } else {
             return $this->full_name;
         }
     }
-
+    
     public function getNoteRoomPreferenceTextAttribute()
     {
         if (isset($this->note_room_preference->note)) {

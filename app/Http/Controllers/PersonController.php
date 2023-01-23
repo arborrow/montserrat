@@ -662,10 +662,11 @@ class PersonController extends Controller
 
         $relationship_types = [];
         $relationship_types['Child'] = 'Child';
-        $relationship_types['Employee'] = 'Employee';
+        $relationship_types['Employer'] = 'Employer';
         $relationship_types['Husband'] = 'Husband';
         $relationship_types['Parent'] = 'Parent';
         $relationship_types['Parishioner'] = 'Parishioner';
+        // $relationship_types['Primary contact'] = 'Primary contact'; // I prefer to define this only from the organization 
         $relationship_types['Sibling'] = 'Sibling';
         $relationship_types['Wife'] = 'Wife';
 

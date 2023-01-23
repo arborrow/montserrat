@@ -198,7 +198,7 @@ class OrganizationControllerTest extends TestCase
         $response->assertViewIs('organizations.show');
         $response->assertViewHas('organization');
         $response->assertViewHas('files');
-        $response->assertViewHas('relationship_types');
+        $response->assertViewHas('relationship_filter_types');
         $response->assertSeeText($organization->organization_name);
     }
 

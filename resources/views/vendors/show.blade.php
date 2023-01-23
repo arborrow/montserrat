@@ -82,23 +82,7 @@
             </div>
             <div class="col-lg-12 col-lg-6" id="relationships">
                 <h2>Relationships for {{ $vendor->display_name }} ({{ $vendor->a_relationships->count() + $vendor->b_relationships->count() }})</h2>
-                {!! Form::open(['method' => 'POST', 'route' => ['relationship_type.addme']]) !!}
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            {!! Form::label('relationship_type', 'Add Relationship: ')  !!}
-                        </div>
-                        <div class="col-lg-6">
-                            {!! Form::select('relationship_type', $relationship_types, NULL, ['class' => 'form-control']) !!}
-                            {!! Form::hidden('contact_id',$vendor->id)!!}
-                        </div>
-                        <div class="col-lg-6">
-                            {!! Form::submit('Create relationship', ['class' => 'btn btn-primary']) !!}
-                        </div>
-                    </div>
-                </div>
-                {!! Form::close() !!}
-
+                
                 @foreach($vendor->a_relationships as $a_relationship)
                     <li>
                         @can('delete-relationship')
@@ -125,6 +109,34 @@
                     </li>
                 @endforeach
             </div>
+
+            @can('create-relationship')
+            <div class = "border card border-secondary form-group">
+            {!! Form::open(['method' => 'POST', 'route' => ['relationship_type.addme']]) !!}
+                <div class = "card-title p-2 m-1 h4">
+                    Create a New Relationship
+                </div>
+                <div class="card-body p-2 m-1">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            {!! Form::label('relationship_type_name', 'Relationship: ', ['class' => 'font-weight-bold'])  !!}
+                            {!! Form::select('relationship_type_name', $relationship_filter_types, NULL, ['class' => 'form-control']) !!}
+                            {!! Form::hidden('contact_id',$vendor->id)!!}
+                        </div>
+                        <div class="col-lg-4">
+                            {!! Form::label('relationship_filter_alternate_name', 'Alternate name: ', ['class' => 'font-weight-bold'])  !!}
+                            {!! Form::text('relationship_filter_alternate_name', null, ['class' => 'form-control','required']) !!}
+                        </div>
+                        <div class="col-lg-4">
+                        {!! Form::submit('Create', ['class' => 'm-1 btn btn-primary']) !!}
+                        {!! Form::close() !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endCan
+
+
             <div class="col-lg-12" id="registrations">
                 <div class="col-lg-12">
                     <h2>Retreat Participation for {{ $vendor->display_name }} ({{ $registrations->total() }})</h2>

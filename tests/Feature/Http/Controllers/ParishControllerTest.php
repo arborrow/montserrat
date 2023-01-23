@@ -184,12 +184,13 @@ class ParishControllerTest extends TestCase
             'subcontact_type' => config('polanco.contact_type.diocese'),
         ]);
         $parish = \App\Models\Parish::factory()->create();
+
         $relationship_diocese = \App\Models\Relationship::factory()->create([
             'contact_id_a' => $diocese->id,
             'contact_id_b' => $parish->id,
-            'relationship_type_id' => config('polanco.relationship_type.diocese'),
+            'relationship_type_id' => config('polanco.relationship_type.parish'),
         ]);
-
+        
         $response = $this->actingAs($user)->get('parishes/diocese/'.$diocese->id);
         $parishes = $response->viewData('parishes');
 
@@ -215,7 +216,7 @@ class ParishControllerTest extends TestCase
         $response->assertViewIs('parishes.show');
         $response->assertViewHas('parish');
         $response->assertViewHas('files');
-        $response->assertViewHas('relationship_types');
+        $response->assertViewHas('relationship_filter_types');
         $response->assertSeeText($parish->display_name);
     }
 

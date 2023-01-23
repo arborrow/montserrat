@@ -286,7 +286,6 @@ Route::middleware('web', 'activity')->group(function () {
     Route::resource('relationship', RelationshipController::class);
 
     Route::post('relationship_type/addme', [RelationshipTypeController::class, 'addme'])->name('relationship_type.addme');
-    Route::get('relationship_type/{id}/add/{a?}/{b?}', [RelationshipTypeController::class, 'add'])->name('relationship_type.add');
     Route::resource('relationship_type', RelationshipTypeController::class);
 
     Route::prefix('report')->group(function () {

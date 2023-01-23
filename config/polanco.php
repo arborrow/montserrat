@@ -298,7 +298,7 @@ return [
         'volunteer' => '6',
         'parishioner' => '11',
         'bishop' => '12',
-        'diocese' => '13',
+        'parish' => '13',
         'pastor' => '14',
         'superior' => '15',
         'provincial' => '16',

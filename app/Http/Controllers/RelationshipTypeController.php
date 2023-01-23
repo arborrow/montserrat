@@ -9,9 +9,12 @@ use App\Http\Requests\UpdateRelationshipTypeRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
+use App\Traits\SquareSpaceTrait;
 
 class RelationshipTypeController extends Controller
 {
+    use SquareSpaceTrait;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -116,7 +119,6 @@ class RelationshipTypeController extends Controller
     {
         $this->authorize('update-relationshiptype');
         $relationship_type = \App\Models\RelationshipType::findOrFail($id);
-        //dd($relationship_type);
         return view('relationships.types.edit', compact('relationship_type'));
     }
 
@@ -165,10 +167,75 @@ class RelationshipTypeController extends Controller
         return Redirect::action([self::class, 'index']);
     }
 
-    public function add($id, $a = null, $b = null)
+    public function addme(AddmeRelationshipTypeRequest $request)
     {
         $this->authorize('create-relationship');
-        $relationship_type = \App\Models\RelationshipType::findOrFail($id);
+        $relationship_type_name = $request->input('relationship_type_name');
+        $relationship_filter_alternate_name = ($request->input('relationship_filter_alternate_name') == null) ? null : $request->input('relationship_filter_alternate_name');
+        $contact_id = $request->input('contact_id');
+        $a = null; //initialize
+        $b = null; //initialize
+
+        switch ($relationship_type_name) {
+            case 'Child':
+                $relationship_type_id = config('polanco.relationship_type.child_parent');
+                $b = $contact_id;
+                break;
+            case 'Deacon':
+                $relationship_type_id = config('polanco.relationship_type.deacon');
+                $a = $contact_id;
+                break;
+            case 'Priest':
+                $relationship_type_id = config('polanco.relationship_type.priest');
+                $a = $contact_id;
+                break;
+            case 'Employee':
+                $relationship_type_id = config('polanco.relationship_type.staff');
+                $b = $contact_id;
+                break;
+            case 'Employer':
+                $relationship_type_id = config('polanco.relationship_type.staff');
+                $a = $contact_id;
+                break;
+            case 'Parent':
+                $relationship_type_id = config('polanco.relationship_type.child_parent');
+                $a = $contact_id;
+                break;
+            case 'Husband':
+                $relationship_type_id = config('polanco.relationship_type.husband_wife');
+                $b = $contact_id;
+                break;
+            case 'Wife':
+                $relationship_type_id = config('polanco.relationship_type.husband_wife');
+                $a = $contact_id;
+                break;
+            case 'Sibling':
+                $relationship_type_id = config('polanco.relationship_type.sibling');
+                $a = $contact_id;                
+                break;
+            case 'Volunteer':
+                $relationship_type_id = config('polanco.relationship_type.volunteer');
+                $b = $contact_id;
+                break;
+            case 'Parishioner':
+                $relationship_type_id = config('polanco.relationship_type.parishioner');
+                $b = $contact_id;
+                break;
+            // TODO: Primary contact logic may be backwards contact_id may be a - does not seem to be functioning in vendor (possilbly elsewhere if at all)
+            case 'Primary contact':
+                $relationship_type_id = config('polanco.relationship_type.primary_contact');
+                $b = $contact_id;
+                break;
+            case 'Parish':
+                $relationship_type_id = config('polanco.relationship_type.parish');
+                $a = $contact_id; //Diocese
+                break;
+            
+            default:
+                abort(404); //unknown relationship type
+        }
+
+        $relationship_type = \App\Models\RelationshipType::findOrFail($relationship_type_id);
         $ignored_subtype = [];
         $ignored_subtype['Child'] = config('polanco.relationship_type.child_parent');
         $ignored_subtype['Parent'] = config('polanco.relationship_type.child_parent');
@@ -188,105 +255,27 @@ class RelationshipTypeController extends Controller
             $subtype_b_name = $relationship_type->name_b_a;
         }
 
-        if (! isset($a) or $a == 0) {
-            $contact_a_list = $this->get_contact_type_list($relationship_type->contact_type_a, $subtype_a_name);
+        $direction = ($a == $contact_id) ? 'a' : 'b' ;
+
+        if ($direction == 'b') {
+            $contact_list = $this->get_contact_type_list($relationship_type->contact_type_a, $subtype_a_name, $b, $request->input('relationship_filter_alternate_name'));
+            $primary_contact = \App\Models\Contact::findOrFail($b);
         } else {
-            $contacta = \App\Models\Contact::findOrFail($a);
-            $contact_a_list[$contacta->id] = $contacta->sort_name;
-        }
-        if (! isset($b) or $b == 0) {
-            $contact_b_list = $this->get_contact_type_list($relationship_type->contact_type_b, $subtype_b_name);
-        } else {
-            $contactb = \App\Models\Contact::findOrFail($b);
-            $contact_b_list[$contactb->id] = $contactb->sort_name;
+            $contact_list = $this->get_contact_type_list($relationship_type->contact_type_b, $subtype_b_name, $a, $request->input('relationship_filter_alternate_name'));
+            $primary_contact = \App\Models\Contact::findOrFail($a);
         }
 
-        return view('relationships.types.add', compact('relationship_type', 'contact_a_list', 'contact_b_list')); //
-    }
-
-    public function addme(AddmeRelationshipTypeRequest $request)
-    {
-        $this->authorize('create-relationship');
-        $relationship_type = $request->input('relationship_type');
-        $contact_id = $request->input('contact_id');
-        switch ($relationship_type) {
-            case 'Child':
-                $relationship_type_id = config('polanco.relationship_type.child_parent');
-
-                return Redirect::route('relationship_type.add', ['id' => $relationship_type_id, 'a' => $contact_id]);
-                break;
-            case 'Parent':
-                $relationship_type_id = config('polanco.relationship_type.child_parent');
-
-                return Redirect::route('relationship_type.add', ['id' => $relationship_type_id, 'a' => 0, 'b' => $contact_id]);
-                break;
-            case 'Husband':
-                $relationship_type_id = config('polanco.relationship_type.husband_wife');
-
-                return Redirect::route('relationship_type.add', ['id' => $relationship_type_id, 'a' => $contact_id]);
-                break;
-            case 'Wife':
-                $relationship_type_id = config('polanco.relationship_type.husband_wife');
-
-                return Redirect::route('relationship_type.add', ['id' => $relationship_type_id, 'a' => 0, 'b' => $contact_id]);
-                break;
-            case 'Sibling':
-                $relationship_type_id = config('polanco.relationship_type.sibling');
-
-                return Redirect::route('relationship_type.add', ['id' => $relationship_type_id, 'a' => $contact_id]);
-                break;
-            case 'Employee':
-                $relationship_type_id = config('polanco.relationship_type.staff');
-
-                return Redirect::route('relationship_type.add', ['id' => $relationship_type_id, 'a' => $contact_id]);
-                break;
-            case 'Employer':
-                $relationship_type_id = config('polanco.relationship_type.staff');
-
-                return Redirect::route('relationship_type.add', ['id' => $relationship_type_id, 'a' => 0, 'b' => $contact_id]);
-                break;
-            case 'Volunteer':
-                $relationship_type_id = config('polanco.relationship_type.volunteer');
-
-                return Redirect::route('relationship_type.add', ['id' => $relationship_type_id, 'a' => 0, 'b' => $contact_id]);
-                break;
-            case 'Parishioner':
-                $relationship_type_id = config('polanco.relationship_type.parishioner');
-
-                return Redirect::route('relationship_type.add', ['id' => $relationship_type_id, 'a' => 0, 'b' => $contact_id]);
-                break;
-            // TODO: Primary contact logic may be backwards contact_id may be a - does not seem to be functioning in vendor (possilbly elsewhere if at all)
-            case 'Primary contact':
-                $relationship_type_id = config('polanco.relationship_type.primary_contact');
-
-                return Redirect::route('relationship_type.add', ['id' => $relationship_type_id, 'a' => 0, 'b' => $contact_id]);
-                break;
-            default:
-                abort(404);
-        }
+        return view('relationships.types.add', compact('relationship_type', 'primary_contact', 'contact_list', 'direction')); 
     }
 
     public function make(MakeRelationshipTypeRequest $request)
-    {   // dd($request);
+    {   
         $this->authorize('create-relationship');
         // a very hacky way to get the contact_id of the user that we are creating a relationship for
         // this allows the ability to redirect back to that user
-        $url_previous = URL::previous();
-        $url_param = strpos($url_previous, 'add') + 4;
-        $url_right = substr($url_previous, $url_param);
-
-        if (strpos($url_right, '/') > 0) {
-            $url_a_param = substr($url_right, 0, strpos($url_right, '/'));
-            $url_b_param = substr($url_right, strpos($url_right, '/') + 1);
-            $contact_id = $url_b_param;
-        } else {
-            $url_a_param = $url_right;
-            $url_b_param = 0;
-            $contact_id = $url_a_param;
-        }
-        //dd($url_right,$url_a_param, $url_b_param);
+        $contact_id = ($request->input('direction') == 'a') ? $request->input('contact_a_id') : $request->input('contact_b_id');        
         $contact = \App\Models\Contact::findOrFail($contact_id);
-        //dd(url($contact->ContactLink));
+        
         $relationship = new \App\Models\Relationship;
         $relationship->contact_id_a = $request->input('contact_a_id');
         $relationship->contact_id_b = $request->input('contact_b_id');
@@ -297,9 +286,10 @@ class RelationshipTypeController extends Controller
         return redirect()->to($contact->contact_url);
     }
 
-    public function get_contact_type_list($contact_type = 'Individual', $contact_subtype = null)
+    public function get_contact_type_list($contact_type = 'Individual', $contact_subtype = null, $contact_id=null, $relationship_filter_alternate_name=null)    
     {
         $this->authorize('show-contact');
+        // dd($contact_type, $contact_subtype);
         switch ($contact_type) {
             case 'Household':
                 $households = \App\Models\Contact::whereContactType(config('polanco.contact_type.household'))->orderBy('organization_name', 'asc')->pluck('organization_name', 'id');
@@ -310,11 +300,18 @@ class RelationshipTypeController extends Controller
                 switch ($contact_subtype) {
                     case 'Parish':
                         $parish_list = [];
-                        $parishes = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.parish'))->orderBy('organization_name', 'asc')->with('address_primary.state', 'diocese.contact_a')->get();
+                        if (isset($relationship_filter_alternate_name)) {
+                            $parishes = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.parish'))
+                                ->where('display_name','LIKE',"%{$relationship_filter_alternate_name}%")
+                                ->orderBy('display_name', 'asc')
+                                ->with('address_primary.state', 'diocese.contact_a')->get();
+                        } else {
+                            $parishes = \App\Models\Contact::whereSubcontactType(config('polanco.contact_type.parish'))
+                                ->orderBy('display_name', 'asc')
+                                ->with('address_primary.state', 'diocese.contact_a')
+                                ->get();
+                        }
                         $parish_list = Arr::pluck($parishes->toArray(), 'full_name_with_city', 'id');
-                        /* foreach($parishes as $parish) {
-                            $parish_list[$parish->id] = $parish->organization_name.' ('.$parish->address_primary_city.') - '.$parish->diocese_name;
-                        } */
                         return $parish_list;
                         break;
                     case 'Diocese':
@@ -352,15 +349,26 @@ class RelationshipTypeController extends Controller
                     //default NULL (generic organization)
 
                     default:
-                        $organizations = \App\Models\Contact::whereContactType(config('polanco.contact_type.organization'))->orderBy('organization_name', 'asc')->get();
+                        if (isset($relationship_filter_alternate_name)) {
+                            $organizations = \App\Models\Contact::whereContactType(config('polanco.contact_type.organization'))
+                                ->where('organization_name','LIKE',"%{$relationship_filter_alternate_name}%")
+                                ->orderBy('organization_name', 'asc')
+                                ->with('address_primary')
+                                ->get();
+                        } else {
+                            $organizations = \App\Models\Contact::whereContactType(config('polanco.contact_type.organization'))
+                                ->orderBy('organization_name', 'asc')
+                                ->with('address_primary')
+                                ->get();
+                        }
+                        
                         $organization_list = Arr::pluck($organizations->toArray(), 'full_name_with_city', 'id');
-                        //dd($temp);
                         return $organization_list;
                         break;
                 }
                 break;
-            // default Individual
-            default:
+            
+            default: // default Individual
                 switch ($contact_subtype) {
                     case 'Bishop':
                         $bishops = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
@@ -439,6 +447,7 @@ class RelationshipTypeController extends Controller
 
                         return $superiors;
                         break;
+                    /* 
                     case 'Board member':
                         $board_members = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.board'));
@@ -446,6 +455,10 @@ class RelationshipTypeController extends Controller
 
                         return $board_members;
                         break;
+                    */
+
+                    /* commenting out as we want all employees and volunteers -  not just those for Montserrat
+
                     case 'Employee':
                         $staff = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.staff'));
@@ -453,6 +466,8 @@ class RelationshipTypeController extends Controller
 
                         return $staff;
                         break;
+
+                    
                     case 'Volunteer':
                         $volunteers = \App\Models\Contact::with('groups.group')->orderby('sort_name')->whereHas('groups', function ($query) {
                             $query->where('group_id', '=', config('polanco.group_id.volunteer'));
@@ -460,14 +475,36 @@ class RelationshipTypeController extends Controller
 
                         return $volunteers;
                         break;
-
+                    */
+                    
                     // for default - limit to matched contact by default or consider getting input for name search (use full name to search)
                     default:
                         
-                        $individuals = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name', 'asc')->pluck('sort_name', 'id');
+                        if (isset($relationship_filter_alternate_name)) {
+                            $alternate_names = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->whereLastName($relationship_filter_alternate_name)->orderBy('sort_name', 'asc')->pluck('display_name', 'id');
+                            return $alternate_names;
+                            break;
+                            // $alternate_names = $alternate_names->toArray();
+                            // $individuals = $individuals + $alternate_names;
+                        } else {
+                            $contact = \App\Models\Contact::findOrFail($contact_id);
 
-                        return $individuals;
-                        break;
+                            $item = collect([]);
+                            $item->name = $contact->first_name . ' ' . $contact->last_name;
+                            $item->email = $contact->email_primary_text;
+                            $item->full_address = $contact->address_primary_street . ' ' . $contact->address_primary_supplemental_address . ' ' . $contact->address_primary_city . ' ' . $contact->address_primary_state_abbreviation . ' ' . $contact->address_primary_postal_code;
+                            $item->mobile_phone = $contact->primary_phone_number;
+                            $item->work_phone = $contact->primary_phone_number;
+                            $item->home_phone = $contact->primary_phone_number;
+    
+                            $individuals = $this->matched_contacts($item);
+                            $individuals = collect($individuals)->forget(0);
+                            $individuals = $individuals->toArray();
+                            
+                            return $individuals;
+                            break;
+    
+                        }                        
                 }
         }
     }

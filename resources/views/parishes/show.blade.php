@@ -198,29 +198,11 @@
                 @endif
             </div>
         </div>
+
+
         <div class="row">
             <div class="col-lg-12" id="relationships">
                 <h2>Relationships for {{ $parish->display_name }} ({{$parish->a_relationships->count()+$parish->b_relationships->count()}})</h2>
-            </div>
-            <div class="col-lg-12 col-lg-6">
-                @can('create-relationship')
-                    {!! Form::open(['method' => 'POST', 'route' => ['relationship_type.addme']]) !!}
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    {!! Form::label('relationship_type', 'Add Relationship: ') !!}
-                                </div>
-                                <div class="col-lg-6">
-                                    {!! Form::select('relationship_type', $relationship_types, NULL, ['class' => 'form-control']) !!}
-                                </div>
-                                <div class="col-lg-6">
-                                    {!! Form::hidden('contact_id',$parish->id)!!}
-                                    {!! Form::submit('Create relationship', ['class' => 'btn btn-primary']) !!}
-                                </div>
-                            </div>
-                        </div>
-                    {!! Form::close() !!}
-                @endcan
             </div>
             <div class="col-lg-12">
                 <ul>
@@ -252,6 +234,34 @@
                 </ul>
             </div>
         </div>
+
+        @can('create-relationship')
+            <div class = "border card border-secondary form-group">
+            {!! Form::open(['method' => 'POST', 'route' => ['relationship_type.addme']]) !!}
+                <div class = "card-title p-2 m-1 h4">
+                    Create a New Relationship
+                </div>
+                <div class="card-body p-2 m-1">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            {!! Form::label('relationship_type_name', 'Relationship: ', ['class' => 'font-weight-bold'])  !!}
+                            {!! Form::select('relationship_type_name', $relationship_filter_types, NULL, ['class' => 'form-control']) !!}
+                            {!! Form::hidden('contact_id',$parish->id)!!}
+                        </div>
+                        <div class="col-lg-4">
+                            {!! Form::label('relationship_filter_alternate_name', 'Alternate name: ', ['class' => 'font-weight-bold'])  !!}
+                            {!! Form::text('relationship_filter_alternate_name', null, ['class' => 'form-control','required']) !!}
+                        </div>
+                        <div class="col-lg-4">
+                        {!! Form::submit('Create', ['class' => 'm-1 btn btn-primary']) !!}
+                        {!! Form::close() !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endCan
+
+
         <div class="row">
             <div class="col-lg-12" id="registrations">
                 <h2>Registrations for {{ $parish->display_name }} ({{ $registrations->total() }})</h2>

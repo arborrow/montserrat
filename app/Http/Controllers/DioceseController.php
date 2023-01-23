@@ -183,10 +183,15 @@ class DioceseController extends Controller
         $donations = \App\Models\Donation::whereContactId($id)->with('payments')->orderBy('donation_date', 'DESC')->paginate(25, ['*'], 'donations');
 
         $files = \App\Models\Attachment::whereEntity('contact')->whereEntityId($diocese->id)->whereFileTypeId(config('polanco.file_type.contact_attachment'))->get();
-        $relationship_types = [];
-        $relationship_types['Primary Contact'] = 'Primary Contact';
+        $relationship_filter_types = [];
+        $relationship_filter_types['Deacon'] = 'Deacon';
+        $relationship_filter_types['Employee'] = 'Employee';
+        $relationship_filter_types['Priest'] = 'Priest';
+        $relationship_filter_types['Primary contact'] = 'Primary contact';
+        // TODO:: come back and figure out how to make volunteer for any organization or diocese atm restricted to retreat houses by definition in the database
+        // $relationship_filter_types['Volunteer'] = 'Volunteer'; 
 
-        return view('dioceses.show', compact('diocese', 'relationship_types', 'files', 'donations', 'registrations', 'touchpoints'));
+        return view('dioceses.show', compact('diocese', 'relationship_filter_types', 'files', 'donations', 'registrations', 'touchpoints'));
     }
 
     /**
