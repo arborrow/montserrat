@@ -306,195 +306,274 @@ class GetMailgunMessages extends Command
             // #ORDER - if this is an order for a retreat
             if (str_contains($message->recipients,'order')) {
                 try {
-                    $order_number = $this->extract_value_between($clean_message, "Order #",".");
-                    $order_date = $this->extract_value_between($clean_message, "Placed on","CT. View in Stripe");
-                    $order = SquarespaceOrder::firstOrCreate([
-                        'order_number' => $order_number,
-                    ]);
+                    if (strpos($clean_message,"Form Submission - Gift Certificate Registration") > 0) {
+                        // gift certificate registration
 
-                    $order->order_number = $order_number;
-                    $order->message_id = $message->id;
-                    $order->created_at = (isset($order_date)) ? Carbon::parse($order_date) : Carbon::now();
-                    
-                    $message_info = $this->extract_value_between($clean_message, "SUBTOTAL", "Item Subtotal");
-                    
-                    $retreat = array_values(array_filter(explode("\n",$message_info)));
-                    $retreat = array_map('trim',$retreat);
-                    // remove blank lines
-                    $retreat = array_filter($retreat);
-                    // remove line with only a space in it that was not removed from the trim above, grrr
-                    $retreat = array_filter($retreat, function($value) { return $value !== "\xC2\xA0"; });
-                    // rekey the array
-                    $retreat = array_values($retreat);
-                    
-                    $order->retreat_category= (array_key_exists(0,$retreat)) ? $retreat[0] : null;
-                 
-                    // TODO:: in order for test to pass, we need to have better/more functional seed and factory generated data
-                    $inventory = SquarespaceInventory::whereName($order->retreat_category)->first();
-                    $custom_form = SquarespaceCustomForm::findOrFail($inventory->custom_form_id);
-                    $fields = SquarespaceCustomFormField::whereFormId($custom_form->id)->orderBy('sort_order')->get();
-    
-                    // parse Squarespace Custom Fields and add data to $order
-                    $names = $fields->pluck('name')->toArray();
-                    foreach ($fields as $field) {          
-                        $extracted_value = $this->extract_data($retreat, $field->name.":");
-                        $order->{$field->variable_name} = $extracted_value;
-                        // to remove empty values where the extracted value is actually the name of the next field
-                        // ideally I would think this would be done by extract_value but that would require passing $names to it each time
-                        $field->search = array_search(str_replace(":","", $extracted_value),$names);
-                        if ($field->search) {
-                            $order->{$field->variable_name} = null;
-                        }
-                    }
-
-                    if ($order->retreat_category == "Retreat Gift Certificate") { // Gift Certificates are Orders
-                        // to use existing order couple_fields for the gift certificate recipient data mark the order as that of a couple
-                        $order->retreat_couple='Couple';
-                        $order->retreat_quantity = $retreat[count($retreat)-3];
-                        $order->unit_price = str_replace('$','',end($retreat));
-                        $order->save();
-
-                        // TODO: create gift certificate on processing order (not here but in edit after selecting or creating contacts)
-
-                    } else { // Retreat Registration Order
-                        $order->retreat_sku = (array_key_exists(1,$retreat)) ? $retreat[1] : null;
-
-                        $first_field_position = array_search($fields[0]->name.":", $retreat);
-                        $product_variation="";
-                        for ($i=2; $i<=$first_field_position-1; $i++) {
-                            $product_variation = $product_variation . $retreat[$i] . ' ';
-                        }
-
-                        $order->retreat_description = trim(substr($product_variation,0, strpos($product_variation,"(")));
-                        $order->retreat_dates = substr($product_variation, strpos($product_variation,"(") + 1, strpos($product_variation,")") - (strpos($product_variation,"(") +1));
-
-                        //TODO: rather than trying to determine if the date in the message are in English or Spanish
-                        // get the year, retreat number and create the idnumber, lookup the event, and get the retreat start date from the actual event
-                        $year = substr($order->retreat_dates, strpos($order->retreat_dates,", ") +2);
-
-                        $retreat_number = substr($order->retreat_description,
-                            strpos($order->retreat_description, "#") + 1,
-                            (strpos($order->retreat_description, " ") - strpos($order->retreat_description, "#"))
-                        );
-
-                        $idnumber = trim(strval($year).$retreat_number);
-                        $order->retreat_idnumber = $idnumber;
-                        $event = Retreat::whereIdnumber($idnumber)->first();
+                        $message_info = $this->extract_value_between($clean_message, "Subject:", "Does this submission look like spam?");
                         
-                        $order->retreat_start_date = optional($event)->start_date;
-                        $order->event_id = optional($event)->id;
-
-                        //$order->deposit_amount = str_replace("$","",$this->extract_value_between($message->body, "\nTOTAL", "$0.00"));
-                        // a bit hacky but TOTAL was being flakey possibly because of SUBTOTAL so Tax was more unique
-                        $deposit_amount = str_replace("$","",trim(str_replace("TOTAL","",$this->extract_value_between($clean_message, "Tax\n", "$0.00"))));
-                        $deposit_amount = array_values(array_filter(explode("\n",$deposit_amount)));
-                        $deposit_amount = array_map('trim',$deposit_amount);
+                        $retreat = array_values(array_filter(explode("\n",$message_info)));
+                        $retreat = array_map('trim',$retreat);
                         // remove blank lines
-                        $deposit_amount = array_filter($deposit_amount);
+                        $retreat = array_filter($retreat);
                         // remove line with only a space in it that was not removed from the trim above, grrr
-                        $deposit_amount = array_filter($deposit_amount, function($value) { return $value !== "\xC2\xA0"; });
+                        $retreat = array_filter($retreat, function($value) { return $value !== "\xC2\xA0"; });
                         // rekey the array
-                        $deposit_amount = array_values($deposit_amount);
-                        $order->deposit_amount = $deposit_amount[0];
-                        $quantity = $retreat[sizeof($retreat)-3];
-                        $unit_price=str_replace("$", "", $retreat[sizeof($retreat)-2]);
-                        $order->retreat_quantity = isset($quantity) ? $quantity : 0;
-                        $order->unit_price = isset($unit_price) ? $unit_price : 0;
+                        $retreat = array_values($retreat);
+                        
+                        $custom_form = SquarespaceCustomForm::whereName("Gift Certificate Registration")->firstOrFail();
+                        $fields = SquarespaceCustomFormField::whereFormId($custom_form->id)->orderBy('sort_order')->get();
+                        $order = new SquarespaceOrder();
+    
+                        // dd($clean_message, $retreat, $custom_form, $fields);
 
-                        $registration_type = explode(" / ", $product_variation);
-                        if (isset($registration_type[1])) {
-                            $order->retreat_registration_type = trim($registration_type[1]);
+                        // parse Squarespace Custom Fields and add data to $order
+                        $names = $fields->pluck('name')->toArray();
+                        foreach ($fields as $field) {          
+                            $extracted_value = $this->extract_data($retreat, $field->name.":");
+                            $order->{$field->variable_name} = $extracted_value;
+                            // to remove empty values where the extracted value is actually the name of the next field
+                            // ideally I would think this would be done by extract_value but that would require passing $names to it each time
+                            $field->search = array_search(str_replace(":","", $extracted_value),$names);
+                            if ($field->search) {
+                                $order->{$field->variable_name} = null;
+                            }
                         }
-                                
-                        switch ($order->retreat_category) {
-                            case "Open Retreat (Men, Women, and Couples)" :
-                                $order->retreat_couple = trim($registration_type[2]);
-                                break;
-                            case "Retiro en Español" :
-                                $order->retreat_couple = trim($registration_type[2]);
-                                break;
-                            case "Couple's Retreat" :
-                                    $order->retreat_couple = 'Couple';
-                                    break;
-                            case "Special Event - Man In The Ditch" :
-                                $idnumber='20220618';
-                                $order->retreat_idnumber = '20220618'; // hardcoded
-                                $order->retreat_dates = 'June 18, 2022';
-                                $event = Retreat::whereIdnumber($idnumber)->first();
-                                $order->retreat_start_date = optional($event)->start_date;
-                                $order->event_id = optional($event)->id;
-                                $order->retreat_registration_type = 'Registration and Deposit';
-                                $order->retreat_description=$order->retreat_category;
-                                break;
-                            default : //  "Women's Retreat", "Men's Retreat", "Young Adult's Retreat"
-                                break;
-                        }
-                        $order->save();
-                        // tidy up some of the data
-                        $order->comments = ($order->comments == 1) ? null : $order->comments;
-                        // presumes the field following the couple date of date of birth is the retreat quantity because it is the last field
+    
                         $order->date_of_birth = ($order->date_of_birth == 1) ? null : $order->date_of_birth;
                         $order->date_of_birth = (isset($order->date_of_birth)) ? \Carbon\Carbon::parse($order->date_of_birth) : null;
-                        if ($order->is_couple) {
-                            $order->couple_date_of_birth = ($order->couple_date_of_birth == $order->retreat_quantity) ? null : $order->couple_date_of_birth;
-                            $order->couple_date_of_birth = (isset($order->couple_date_of_birth)) ? \Carbon\Carbon::parse($order->couple_date_of_birth) : null;    
+    
+                        // TODO: DRY - refactor into a process_order_full_address method
+                        if (isset($order->full_address)) {
+                            $address = explode(", ", $order->full_address);
+    
+                            if (sizeof($address) == 4) {
+                                $order->address_street = trim($address[0]);
+                                $order->address_supplemental = trim($address[1]);
+                                $order->address_city = trim($address[2]);
+                                $address_detail = explode(" ", $address[3]);
+                                $order->address_state = trim($address_detail[0]);
+                                $order->address_zip = trim($address_detail[1]);
+                                $order->address_country = (sizeof($address_detail) == 4) ? trim($address_detail[2]) . " " . trim($address_detail[3]) : trim($address_detail[2]);            
+                            } 
+    
+                            if (sizeof($address) == 3) {
+                                $order->address_street = trim($address[0]);
+                                $order->address_city = trim($address[1]);
+                                $address_detail = explode(" ", $address[2]);
+                            }
+    
+                            if (isset($address_detail)) {
+    
+                                $order->address_state = trim($address_detail[0]);
+                                $order->address_zip = trim($address_detail[1]);
+    
+                                if (sizeof($address_detail) == 3) {
+                                    $order->address_country = trim($address_detail[2]);   
+                                }
+                                
+                                if (sizeof($address_detail) == 4) {
+                                    $order->address_country = trim($address_detail[2]) . " " . trim($address_detail[3]);   
+                                }
+                            }
+                        } else { 
+                            // something is wrong with the address - leave it as null
+                        }    
+                                
+                        $order->save();
+                        
+                        
+                    } else {
+                        $order_number = $this->extract_value_between($clean_message, "Order #",".");
+                        $order_date = $this->extract_value_between($clean_message, "Placed on","CT. View in Stripe");
+                        $order = SquarespaceOrder::firstOrCreate([
+                            'order_number' => $order_number,
+                        ]);
+    
+                        $order->order_number = $order_number;
+                        $order->message_id = $message->id;
+                        $order->created_at = (isset($order_date)) ? Carbon::parse($order_date) : Carbon::now();
+                        
+                        $message_info = $this->extract_value_between($clean_message, "SUBTOTAL", "Item Subtotal");
+                        
+                        $retreat = array_values(array_filter(explode("\n",$message_info)));
+                        $retreat = array_map('trim',$retreat);
+                        // remove blank lines
+                        $retreat = array_filter($retreat);
+                        // remove line with only a space in it that was not removed from the trim above, grrr
+                        $retreat = array_filter($retreat, function($value) { return $value !== "\xC2\xA0"; });
+                        // rekey the array
+                        $retreat = array_values($retreat);
+                        
+                        $order->retreat_category= (array_key_exists(0,$retreat)) ? $retreat[0] : null;
+                     
+                        // TODO:: in order for test to pass, we need to have better/more functional seed and factory generated data
+                        $inventory = SquarespaceInventory::whereName($order->retreat_category)->first();
+                        $custom_form = SquarespaceCustomForm::findOrFail($inventory->custom_form_id);
+                        $fields = SquarespaceCustomFormField::whereFormId($custom_form->id)->orderBy('sort_order')->get();
+        
+                        // parse Squarespace Custom Fields and add data to $order
+                        $names = $fields->pluck('name')->toArray();
+                        foreach ($fields as $field) {          
+                            $extracted_value = $this->extract_data($retreat, $field->name.":");
+                            $order->{$field->variable_name} = $extracted_value;
+                            // to remove empty values where the extracted value is actually the name of the next field
+                            // ideally I would think this would be done by extract_value but that would require passing $names to it each time
+                            $field->search = array_search(str_replace(":","", $extracted_value),$names);
+                            if ($field->search) {
+                                $order->{$field->variable_name} = null;
+                            }
                         }
-
-                    } // Retreat Registration Order
-
-                    // attempt to get Stripe charge id for both gift certificates and regular orders
-                    $result=null;
-                    $stripe_charge=null;
-                    //   $stripe_url = trim($this->extract_value(str_replace("\r\n","\n", $message->body),"View in Stripe\n"), "<>");
-                    $stripe_url = $this->extract_stripe_url($message->body);
-                    if (isset($stripe_url) && strpos($stripe_url,"http") === 0) {
-                        $result = Http::timeout(2)->get($stripe_url)->getBody()->getContents();
-                        $charge = trim($this->extract_value($result,"redirect=%2Fpayments%2F"));
-                        $stripe_charge = str_replace('">','',$charge);
-                        $order->stripe_charge_id = (isset($stripe_charge)) ? $stripe_charge : null;
+    
+                        if ($order->retreat_category == "Retreat Gift Certificate") { // Gift Certificates are Orders
+                            // to use existing order couple_fields for the gift certificate recipient data mark the order as that of a couple
+                            $order->retreat_couple='Couple';
+                            $order->retreat_quantity = $retreat[count($retreat)-3];
+                            $order->unit_price = str_replace('$','',end($retreat));
+                            $order->save();
+    
+                            // TODO: create gift certificate on processing order (not here but in edit after selecting or creating contacts)
+    
+                        } else { // Retreat Registration Order
+                            $order->retreat_sku = (array_key_exists(1,$retreat)) ? $retreat[1] : null;
+    
+                            $first_field_position = array_search($fields[0]->name.":", $retreat);
+                            $product_variation="";
+                            for ($i=2; $i<=$first_field_position-1; $i++) {
+                                $product_variation = $product_variation . $retreat[$i] . ' ';
+                            }
+    
+                            $order->retreat_description = trim(substr($product_variation,0, strpos($product_variation,"(")));
+                            $order->retreat_dates = substr($product_variation, strpos($product_variation,"(") + 1, strpos($product_variation,")") - (strpos($product_variation,"(") +1));
+    
+                            //TODO: rather than trying to determine if the date in the message are in English or Spanish
+                            // get the year, retreat number and create the idnumber, lookup the event, and get the retreat start date from the actual event
+                            $year = substr($order->retreat_dates, strpos($order->retreat_dates,", ") +2);
+    
+                            $retreat_number = substr($order->retreat_description,
+                                strpos($order->retreat_description, "#") + 1,
+                                (strpos($order->retreat_description, " ") - strpos($order->retreat_description, "#"))
+                            );
+    
+                            $idnumber = trim(strval($year).$retreat_number);
+                            $order->retreat_idnumber = $idnumber;
+                            $event = Retreat::whereIdnumber($idnumber)->first();
+                            
+                            $order->retreat_start_date = optional($event)->start_date;
+                            $order->event_id = optional($event)->id;
+    
+                            //$order->deposit_amount = str_replace("$","",$this->extract_value_between($message->body, "\nTOTAL", "$0.00"));
+                            // a bit hacky but TOTAL was being flakey possibly because of SUBTOTAL so Tax was more unique
+                            $deposit_amount = str_replace("$","",trim(str_replace("TOTAL","",$this->extract_value_between($clean_message, "Tax\n", "$0.00"))));
+                            $deposit_amount = array_values(array_filter(explode("\n",$deposit_amount)));
+                            $deposit_amount = array_map('trim',$deposit_amount);
+                            // remove blank lines
+                            $deposit_amount = array_filter($deposit_amount);
+                            // remove line with only a space in it that was not removed from the trim above, grrr
+                            $deposit_amount = array_filter($deposit_amount, function($value) { return $value !== "\xC2\xA0"; });
+                            // rekey the array
+                            $deposit_amount = array_values($deposit_amount);
+                            $order->deposit_amount = $deposit_amount[0];
+                            $quantity = $retreat[sizeof($retreat)-3];
+                            $unit_price=str_replace("$", "", $retreat[sizeof($retreat)-2]);
+                            $order->retreat_quantity = isset($quantity) ? $quantity : 0;
+                            $order->unit_price = isset($unit_price) ? $unit_price : 0;
+    
+                            $registration_type = explode(" / ", $product_variation);
+                            if (isset($registration_type[1])) {
+                                $order->retreat_registration_type = trim($registration_type[1]);
+                            }
+                                    
+                            switch ($order->retreat_category) {
+                                case "Open Retreat (Men, Women, and Couples)" :
+                                    $order->retreat_couple = trim($registration_type[2]);
+                                    break;
+                                case "Retiro en Español" :
+                                    $order->retreat_couple = trim($registration_type[2]);
+                                    break;
+                                case "Couple's Retreat" :
+                                        $order->retreat_couple = 'Couple';
+                                        break;
+                                case "Special Event - Man In The Ditch" :
+                                    $idnumber='20220618';
+                                    $order->retreat_idnumber = '20220618'; // hardcoded
+                                    $order->retreat_dates = 'June 18, 2022';
+                                    $event = Retreat::whereIdnumber($idnumber)->first();
+                                    $order->retreat_start_date = optional($event)->start_date;
+                                    $order->event_id = optional($event)->id;
+                                    $order->retreat_registration_type = 'Registration and Deposit';
+                                    $order->retreat_description=$order->retreat_category;
+                                    break;
+                                default : //  "Women's Retreat", "Men's Retreat", "Young Adult's Retreat"
+                                    break;
+                            }
+                            $order->save();
+                            // tidy up some of the data
+                            $order->comments = ($order->comments == 1) ? null : $order->comments;
+                            // presumes the field following the couple date of date of birth is the retreat quantity because it is the last field
+                            $order->date_of_birth = ($order->date_of_birth == 1) ? null : $order->date_of_birth;
+                            $order->date_of_birth = (isset($order->date_of_birth)) ? \Carbon\Carbon::parse($order->date_of_birth) : null;
+                            if ($order->is_couple) {
+                                $order->couple_date_of_birth = ($order->couple_date_of_birth == $order->retreat_quantity) ? null : $order->couple_date_of_birth;
+                                $order->couple_date_of_birth = (isset($order->couple_date_of_birth)) ? \Carbon\Carbon::parse($order->couple_date_of_birth) : null;    
+                            }
+    
+                        } // Retreat Registration Order
+    
+                        // attempt to get Stripe charge id for both gift certificates and regular orders
+                        $result=null;
+                        $stripe_charge=null;
+                        //   $stripe_url = trim($this->extract_value(str_replace("\r\n","\n", $message->body),"View in Stripe\n"), "<>");
+                        $stripe_url = $this->extract_stripe_url($message->body);
+                        if (isset($stripe_url) && strpos($stripe_url,"http") === 0) {
+                            $result = Http::timeout(2)->get($stripe_url)->getBody()->getContents();
+                            $charge = trim($this->extract_value($result,"redirect=%2Fpayments%2F"));
+                            $stripe_charge = str_replace('">','',$charge);
+                            $order->stripe_charge_id = (isset($stripe_charge)) ? $stripe_charge : null;
+                        }
+    
+                        // process order address
+                        // TODO: make sure full_address variable exists otherwise set order address parts to null
+                        // TODO: get the billing address and compare to address provided, different billing address may indicate someone else is paying for the retreat
+                        // TODO: consider comparing extract_value and extract_value_between to better deal with multiple line addresses
+                        if (isset($order->full_address)) {
+                            $address = explode(", ", $order->full_address);
+    
+                            if (sizeof($address) == 4) {
+                                $order->address_street = trim($address[0]);
+                                $order->address_supplemental = trim($address[1]);
+                                $order->address_city = trim($address[2]);
+                                $address_detail = explode(" ", $address[3]);
+                                $order->address_state = trim($address_detail[0]);
+                                $order->address_zip = trim($address_detail[1]);
+                                $order->address_country = (sizeof($address_detail) == 4) ? trim($address_detail[2]) . " " . trim($address_detail[3]) : trim($address_detail[2]);            
+                            } 
+    
+                            if (sizeof($address) == 3) {
+                                $order->address_street = trim($address[0]);
+                                $order->address_city = trim($address[1]);
+                                $address_detail = explode(" ", $address[2]);
+                            }
+    
+                            if (isset($address_detail)) {
+    
+                                $order->address_state = trim($address_detail[0]);
+                                $order->address_zip = trim($address_detail[1]);
+    
+                                if (sizeof($address_detail) == 3) {
+                                    $order->address_country = trim($address_detail[2]);   
+                                }
+                                
+                                if (sizeof($address_detail) == 4) {
+                                    $order->address_country = trim($address_detail[2]) . " " . trim($address_detail[3]);   
+                                }
+                            }
+                        } else { 
+                            // something is wrong with the address - leave it as null
+                        }    
+    
+                        $order->save();
                     }
 
-                    // process order address
-                    // TODO: make sure full_address variable exists otherwise set order address parts to null
-                    // TODO: get the billing address and compare to address provided, different billing address may indicate someone else is paying for the retreat
-                    // TODO: consider comparing extract_value and extract_value_between to better deal with multiple line addresses
-                    if (isset($order->full_address)) {
-                        $address = explode(", ", $order->full_address);
-
-                        if (sizeof($address) == 4) {
-                            $order->address_street = trim($address[0]);
-                            $order->address_supplemental = trim($address[1]);
-                            $order->address_city = trim($address[2]);
-                            $address_detail = explode(" ", $address[3]);
-                            $order->address_state = trim($address_detail[0]);
-                            $order->address_zip = trim($address_detail[1]);
-                            $order->address_country = (sizeof($address_detail) == 4) ? trim($address_detail[2]) . " " . trim($address_detail[3]) : trim($address_detail[2]);            
-                        } 
-
-                        if (sizeof($address) == 3) {
-                            $order->address_street = trim($address[0]);
-                            $order->address_city = trim($address[1]);
-                            $address_detail = explode(" ", $address[2]);
-                        }
-
-                        if (isset($address_detail)) {
-
-                            $order->address_state = trim($address_detail[0]);
-                            $order->address_zip = trim($address_detail[1]);
-
-                            if (sizeof($address_detail) == 3) {
-                                $order->address_country = trim($address_detail[2]);   
-                            }
-                            
-                            if (sizeof($address_detail) == 4) {
-                                $order->address_country = trim($address_detail[2]) . " " . trim($address_detail[3]);   
-                            }
-                        }
-                    } else { 
-                        // something is wrong with the address - leave it as null
-                    }    
-
-                    $order->save();
                 }  catch (\Exception $exception) {
                     // TODO: while debugging - could check for production or developement and turn on or off accordingly to only attempt to send email when in production
                     // dd($exception, $order, $clean_message, $message->body, $retreat);
