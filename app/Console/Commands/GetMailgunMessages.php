@@ -341,6 +341,7 @@ class GetMailgunMessages extends Command
     
                         $order->date_of_birth = ($order->date_of_birth == 1) ? null : $order->date_of_birth;
                         $order->date_of_birth = (isset($order->date_of_birth)) ? \Carbon\Carbon::parse($order->date_of_birth) : null;
+                        $order->comments = (str_contains($order->comments,"Sent via form submission")) ? null : $order->comments;
     
                         // TODO: DRY - refactor into a process_order_full_address method
                         if (isset($order->full_address)) {
