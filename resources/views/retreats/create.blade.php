@@ -35,7 +35,10 @@
                         {!! Form::label('is_active', 'Canceled?:')  !!}
                         {!! Form::select('is_active', $is_active, 1, ['class' => 'form-control']) !!}
                     </div>
-
+                    <div class="col-lg-3">
+                            {!! Form::label('max_participants', 'Maximum participants')  !!}
+                            {!! Form::text('max_participants', 60, ['class' => 'form-control']) !!}
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-9">

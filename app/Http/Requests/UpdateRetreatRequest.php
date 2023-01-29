@@ -42,6 +42,7 @@ class UpdateRetreatRequest extends FormRequest
             'group_photo' => 'image|max:10000|nullable',
             'event_attachment' => 'file|mimes:pdf,doc,docx,zip|max:10000|nullable',
             'event_attachment_description' => 'string|max:200|nullable',
+            'max_participants' => 'integer|min:0|max:150',
 
         ];
     }

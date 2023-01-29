@@ -4,7 +4,11 @@
 <div class="row bg-cover">
     <div class="col-lg-12">
         <h1>
-            Process Squarespace Order #{{ $order->order_number }}
+            @if ($order->is_gift_certificate_registration)
+                Process Gift Certificate Registration
+            @else
+                Process Squarespace Order #{{ $order->order_number }}
+            @endIf
         </h1>
     </div>
     <div class="col-lg-12">
@@ -40,7 +44,7 @@
                         The provided contact information will be added/updated.
                         A touchpoint for the retreatant's registration is created.
                         A retreat registration is created.
-                    <li>Finally, remember to <strong><u>Fulfill the Squarespace Order</u></strong>.
+                    <li>Finally, remember to <a href="https://montserrat-retreat.squarespace.com/config/commerce/orders">Fulfill the Squarespace Order</a>.
                 @endif
             </ul>
         </div>
@@ -72,11 +76,6 @@
                     @if (isset($order->gift_certificate_number))
                         <h3>{!! Form::label('gift_certificate_number', 'Gift Certificate #:') !!}</h3>
                         {!! Form::text('gift_certificate_number', $order->gift_certificate_number, ['class' => 'form-control']) !!}
-                    @endif
-                    @if (isset($order->gift_certificate_retreat))
-                        {!! Form::label('gift_certificate_retreat', 'Retreat: '.$order->gift_certificate_retreat) !!}
-                        {!! Form::select('gift_certificate_retreat', $retreats, null, ['class' => 'form-control']) !!}
-                        <hr>
                     @endif
                     @if (isset($order->comments))
                     <h3>
