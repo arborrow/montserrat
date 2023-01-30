@@ -107,6 +107,27 @@ class Retreat extends Model implements Auditable
         return $this->retreatants->count();
     }
 
+    public function getDaysUntilStartAttribute()
+    {
+        
+        if ($this->start_date < now()) {
+            $today = \Carbon\Carbon::now();    
+            return $this->start_date->diffInDays($today);
+        } else {
+            return 0;
+        }
+            
+    }
+
+    public function getCapacityPercentageAttribute()
+    {
+        if ($this->max_participants > 0) {
+            return number_format(($this->retreatants->count() / $this->max_participants) * 100, 0);
+        } else {
+            return 'N/A';
+        }
+    }
+
     public function getRetreatantWaitlistCountAttribute()
     {
         // keep in mind that if/when innkeeper and other not retreatant roles are added will not to use where clause to keep the count accurate and exclude non-participating participants

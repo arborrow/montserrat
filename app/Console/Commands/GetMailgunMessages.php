@@ -510,6 +510,7 @@ class GetMailgunMessages extends Command
                             $order->save();
                             // tidy up some of the data
                             $order->comments = ($order->comments == 1) ? null : $order->comments;
+                            $order->couple_mobile_phone = ($order->couple_mobile_phone == 1) ? null : $order->couple_mobile_phone;
                             // presumes the field following the couple date of date of birth is the retreat quantity because it is the last field
                             $order->date_of_birth = ($order->date_of_birth == 1) ? null : $order->date_of_birth;
                             $order->date_of_birth = (isset($order->date_of_birth)) ? \Carbon\Carbon::parse($order->date_of_birth) : null;

@@ -389,7 +389,7 @@ class RegistrationController extends Controller
                 try {
                     Mail::to($finance_email)->send(new RegistrationEventChange($registration, $retreat, $original_event));
                 } catch (\Exception $e) { //failed to send finance notification of event_id change on registration
-                    dd($e);
+                    flash('Email notification NOT sent to finance regarding event change to Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a>')->warning();
                 }
                 flash('Email notification sent to finance regarding event change to Registration #: <a href="'.url('/registration/'.$registration->id).'">'.$registration->id.'</a>')->success();
             }

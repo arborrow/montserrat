@@ -749,25 +749,52 @@
                 <div class="col-lg-12">
                     @if (!$order->is_processed)
                         @if ($order->contact_id > 0)
-                        {!! Form::submit('Proceed with Order',['class' => 'btn btn-dark']) !!}
+                            {!! Form::submit('Proceed with Order',['class' => 'btn btn-dark']) !!}
                         @else
-                        {!! Form::submit('Retrieve Contact Info',['class' => 'btn btn-info']) !!}
+                            {!! Form::submit('Retrieve Contact Info',['class' => 'btn btn-info']) !!}
                         @endif
+                        {!! Form::checkbox('send_fulfillment', 1, $send_fulfillment, ['class' => 'p-2 m-2']) !!}
+                        {!! Form::label('send_fulfillment', 'Send fulfillment email', ['class' => 'p-2 m-2']) !!}
+
                     @else
                         <a class="btn btn-primary" href="{{ action([\App\Http\Controllers\SquarespaceOrderController::class, 'index']) }}">Order #{{ $order->order_number }} has already been processed</a>
                     @endIf
                 </div>
             </div>
+
+            <div class="row text-center mt-3">
+
+                @if ($order->event->days_until_start > 8)
+                    <div class='col-lg-3 bg-suceess mx-auto p-2' >
+                @else
+                    <div class='col-lg-3 bg-warning mx-auto p-2' >
+                @endif
+                Days until retreat: 
+                {{$order->event->days_until_start}} 
+                </div>
+            </div>
+
+            <div class="row text-center mt-3">
+
+                @if ($order->event->capacity_percentage < 90)
+                    <div class='col-lg-3 bg-success mx-auto p-2' >
+                @else 
+                    <div class='col-lg-3 bg-warning mx-auto p-2' > 
+                @endIf
+                Capacity: {{$order->event->capacity_percentage}}% </div>
+                </div>
+            </div>
+            
             <hr />
             <div class="row">
                 <div class="col-lg-6 col-md-12">
                     <strong>Message ID:</strong> <a href="{{URL('/mailgun/'.$order->message_id)}}">{{ $order->message_id }}</a><br />
                     <strong>Processed:</strong> {{ ($order->is_processed) ? 'Yes' : 'No' }} <br />
                     @if (isset($order->event_id))
-                    <strong>Event ID:</strong> <a href="{{ URL('/retreat/'.$order->event_id) }}">{{ $order->event->retreat_name }}</a><br />
+                        <strong>Event ID:</strong> <a href="{{ URL('/retreat/'.$order->event_id) }}">{{ $order->event->retreat_name }}</a><br />
                     @endIf
                     @if (isset($order->participant_id))
-                    <strong>Registration ID:</strong> <a href="{{ URL('/registration/'.$order->participant_id) }}">{{ $order->participant_id }}</a><br />
+                        <strong>Registration ID:</strong> <a href="{{ URL('/registration/'.$order->participant_id) }}">{{ $order->participant_id }}</a><br />
                     @endIf
                 </div>
             </div>

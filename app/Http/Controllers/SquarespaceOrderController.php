@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\UpdateSquarespaceOrderRequest;
 
 use App\Models\Address;
@@ -29,6 +26,11 @@ use App\Traits\PhoneTrait;
 use App\Traits\SquareSpaceTrait;
 
 use Carbon\Carbon;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
 
 class SquarespaceOrderController extends Controller
 {
@@ -149,6 +151,10 @@ class SquarespaceOrderController extends Controller
             $retreat = Retreat::whereIdnumber($order->retreat_idnumber)->first();
         }
 
+        if ($retreat->id > 0) {
+            $send_fulfillment = (($retreat->capacity_percentage < 90) && ($retreat->days_until_start > 8)) ? 1 : 0;
+        }
+
         $ids = [];
         $ids['title'] = ($prefix == null) ? null : $prefix->id;
         $ids['couple_title'] = ($couple_prefix == null) ? null : $couple_prefix->id;
@@ -178,7 +184,7 @@ class SquarespaceOrderController extends Controller
         $couple_matching_contacts = (isset($order->couple_name)) ? $this->matched_contacts($couple) : [null=>'No name provided'];
         //dd($couple_matching_contacts, $matching_contacts);
 
-        return view('squarespace.order.edit', compact('order', 'matching_contacts', 'retreats', 'couple_matching_contacts', 'prefixes', 'states', 'countries', 'languages', 'parish_list','ids','genders','religions'));
+        return view('squarespace.order.edit', compact('order', 'matching_contacts', 'retreats', 'couple_matching_contacts', 'prefixes', 'states', 'countries', 'languages', 'parish_list','ids','genders','religions','send_fulfillment'));
     }
 
     /**
@@ -236,7 +242,7 @@ class SquarespaceOrderController extends Controller
             ]);        
         }
         
-        // assumes that all users speake Engilsh
+        // assumes that all users speak Engilsh
         $spoken_language = ContactLanguage::firstOrCreate([
             'contact_id' => $contact_id,
             'language_id' => $english_language->id,
@@ -563,6 +569,20 @@ class SquarespaceOrderController extends Controller
                     $registration->remember_token = Str::random(60);
                     $registration->save();
     
+                }
+
+                if ($request->input('$send_fulfillment') {
+                    // generate email
+
+                    // create touchpoint
+                    $touchpoint = new Touchpoint;
+                    $touchpoint->person_id = $contact_id;
+                    $touchpoint->staff_id = config('polanco.self.id');
+                    $touchpoint->type = 'Email';
+                    $touchpoint->notes = 'Fulfillment email for Squarespace Order #' . $order->order_number;
+                    $touchpoint->touched_at = Carbon::now();
+                    $touchpoint->save();
+
                 }
 
             }
