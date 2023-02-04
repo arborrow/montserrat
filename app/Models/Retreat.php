@@ -110,7 +110,7 @@ class Retreat extends Model implements Auditable
     public function getDaysUntilStartAttribute()
     {
         
-        if ($this->start_date < now()) {
+        if ($this->start_date > now()) {
             $today = \Carbon\Carbon::now();    
             return $this->start_date->diffInDays($today);
         } else {

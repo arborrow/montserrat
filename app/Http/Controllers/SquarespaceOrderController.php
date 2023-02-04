@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateSquarespaceOrderRequest;
 
+use App\Mail\SquarespaceOrderFulfillment;
+
 use App\Models\Address;
 use App\Models\Contact;
 use App\Models\ContactLanguage;
@@ -571,20 +573,6 @@ class SquarespaceOrderController extends Controller
     
                 }
 
-                if ($request->input('$send_fulfillment') {
-                    // generate email
-
-                    // create touchpoint
-                    $touchpoint = new Touchpoint;
-                    $touchpoint->person_id = $contact_id;
-                    $touchpoint->staff_id = config('polanco.self.id');
-                    $touchpoint->type = 'Email';
-                    $touchpoint->notes = 'Fulfillment email for Squarespace Order #' . $order->order_number;
-                    $touchpoint->touched_at = Carbon::now();
-                    $touchpoint->save();
-
-                }
-
             }
 
             // TODO: if couple - check if the relationship exists and if not create it (remember, gift certificates may or may not be from a spouse)
@@ -621,6 +609,28 @@ class SquarespaceOrderController extends Controller
                 // registration and touchpoint will link to the primary retreatant (not the spouse)
                 $order->participant_id = $registration->id;
                 $order->touchpoint_id = $touchpoint->id;
+
+//                dd($request->input('send_fulfillment'), $request->filled('email'), $tmp );
+                if ($request->input('send_fulfillment') && $request->filled('email') ) {
+                    // generate email
+                    try {
+                        Mail::to($request->input('email'))->send(new SquarespaceOrderFulfillment($order));
+                    } catch (\Exception $e) { //failed to send finance notification of event_id change on registration
+                        flash('Error sending Squarespace Order Fulfillment Email for Squarespace Order #: <a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_number.'</a>')->warning();
+
+                    }
+                    flash('Fulfillment Email sent for  Squarespace Order #: <a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_number.'</a>')->success();
+                    // create touchpoint
+                    $touchpoint = new Touchpoint;
+                    $touchpoint->person_id = $contact_id;
+                    $touchpoint->staff_id = config('polanco.self.id');
+                    $touchpoint->type = 'Email';
+                    $touchpoint->notes = 'Fulfillment email for Squarespace Order #' . $order->order_number;
+                    $touchpoint->touched_at = Carbon::now();
+                    $touchpoint->save();
+
+                }
+
             }
 
             $order->is_processed = 1;

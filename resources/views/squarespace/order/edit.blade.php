@@ -765,7 +765,7 @@
             <div class="row text-center mt-3">
 
                 @if ($order->event->days_until_start > 8)
-                    <div class='col-lg-3 bg-suceess mx-auto p-2' >
+                    <div class='col-lg-3 bg-success mx-auto p-2' >
                 @else
                     <div class='col-lg-3 bg-warning mx-auto p-2' >
                 @endif

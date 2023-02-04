@@ -46,6 +46,11 @@ class SquarespaceOrder extends Model implements Auditable
         return $this->hasOne(Registration::class, 'id', 'participant_id');
     }
 
+    public function getEventStartDateAttribute() {
+        return (!empty($this->event->start_date)) ? $this->event->start_date : null;
+    }
+
+
     public function getIsCoupleAttribute() {
         return ($this->retreat_couple == "Couple" || $this->retreat_couple == "Pareja");
     }
