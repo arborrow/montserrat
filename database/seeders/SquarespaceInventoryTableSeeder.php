@@ -72,11 +72,11 @@ class SquarespaceInventoryTableSeeder extends Seeder
             5 => 
             array (
                 'id' => 6,
-                'name' => 'Retreat Gift Certificates',
+                'name' => 'Retreat Gift Certificate',
                 'custom_form_id' => 7,
-                'variant_options' => 0,
+                'variant_options' => 1,
                 'created_at' => '2022-05-02 16:20:21',
-                'updated_at' => '2022-05-02 16:20:21',
+                'updated_at' => '2022-11-16 06:41:03',
                 'deleted_at' => NULL,
             ),
             6 => 
