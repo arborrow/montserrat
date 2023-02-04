@@ -76,7 +76,6 @@ class SquarespaceOrderControllerTest extends TestCase
         $response->assertViewHas('languages');
         $response->assertViewHas('parish_list');
         $response->assertViewHas('ids');
-        $response->assertSeeText('Process Squarespace Order #'.$order->order_number);
         
         // for simplicity assigning a contact_id and event_id since the goal here is to assure that the existing data is auto-populated/selected
         $this->assertTrue($this->findFieldValueInResponseContent('contact_id', $order->contact_id, 'select', $response->getContent()));

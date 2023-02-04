@@ -174,7 +174,7 @@ class DashboardController extends Controller
             	(SELECT COUNT(*) FROM participant as reg WHERE reg.event_id = e.id AND reg.deleted_at IS NULL AND reg.canceled_at IS NULL AND reg.role_id IN (5,11) AND reg.status_id IN (1)) as participants,
             	(SELECT(participants*nights)) as peoplenights
             FROM event as e LEFT JOIN event_type as et ON (et.id = e.event_type_id)
-            WHERE e.start_date > :begin_date AND e.start_date < :end_date AND e.is_active=1 AND e.deleted_at IS NULL AND e.title NOT LIKE '%Deposit%'
+            WHERE e.start_date > :begin_date AND e.start_date < :end_date AND e.is_active=1 AND e.deleted_at IS NULL AND e.title NOT LIKE '%Deposit%' AND e.end_date < NOW()
             GROUP BY e.id) as tmp
             GROUP BY tmp.type
             ORDER BY `tmp`.`type` ASC", [
