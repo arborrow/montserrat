@@ -138,6 +138,7 @@ class GiftCertificateController extends Controller
             $gift_certificate->retreat_type = $request->input('retreat_type');
             $gift_certificate->notes = $request->input('notes');    
             $gift_certificate->save();
+            $gift_certificate->update_pdf();
     
             flash('Gift Certificate: <a href="'.url('/gift_certificate/'.$gift_certificate->id).'">'.$gift_certificate->certificate_number.'</a> added')->success();
             return Redirect::action([self::class, 'index']); //
