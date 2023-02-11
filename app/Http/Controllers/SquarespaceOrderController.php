@@ -153,7 +153,8 @@ class SquarespaceOrderController extends Controller
             $retreat = Retreat::whereIdnumber($order->retreat_idnumber)->first();
         }
 
-        if ($retreat->id > 0) {
+        $send_fulfillment = 0; //initialize to false 
+        if (!empty($retreat->id)) {
             $send_fulfillment = (($retreat->capacity_percentage < 90) && ($retreat->days_until_start > 8)) ? 1 : 0;
         }
 

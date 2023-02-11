@@ -59,6 +59,15 @@ class SquarespaceOrder extends Model implements Auditable
         return ($this->retreat_category == "Retreat Gift Certificate");
     }
 
+    public function getGiftCertificateFullNumberAttribute() {
+        if ( !empty($this->gift_certificate_year_issued) && !empty($this->gift_certificate_number) ) {
+            return $this->gift_certificate_year_issued . '-' . $this->gift_certificate_number;
+        }
+        else {
+            return 'N/A';
+        }
+    }
+
     public function getIsGiftCertificateRegistrationAttribute() {
         return (isset($this->gift_certificate_number));
     }

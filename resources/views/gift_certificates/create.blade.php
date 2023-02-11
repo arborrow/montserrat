@@ -11,17 +11,26 @@
 
             <h3 class="text-primary">Info</h3>
             <div class="row">
+
                 @if (!isset($purchasers))
                     <div class="col-lg-3">
                         {!! Form::label('purchaser_name', 'Name of Purchaser:') !!}
                         {!! Form::text('purchaser_name', NULL , ['class' => 'form-control']) !!}
                     </div>
+                @else
+                    <div class="col-lg-3"> </div>
                 @endif
+
                 @if (!isset($recipients))
                     <div class="col-lg-3">
                         {!! Form::label('recipient_name', 'Name of Recipient:') !!}
                         {!! Form::text('recipient_name', NULL , ['class' => 'form-control']) !!}
                     </div>
+                @else
+                    <div class="col-lg-3"> </div>
+                @endif
+                
+                @if (!isset($purchasers) || !isset($recipients))
                     <div class="col-lg-3">
                         <br>
                         {!! Form::submit('Retrieve Purchasers and Recipients', ['class'=>'btn btn-outline-dark']) !!}
@@ -34,6 +43,7 @@
                     @if (isset($purchasers))
                         {!! Form::label('purchaser_id', 'Purchaser ID:') !!}
                         {!! Form::select('purchaser_id', $purchasers, null, ['class' => 'form-control']) !!}
+                        {!! Form::hidden('purchaser_name', str_replace(" (Add New Person)","", $purchasers[0])) !!}
                     @endif
                 </div>
 
@@ -42,6 +52,7 @@
                     @if (isset($recipients))
                         {!! Form::label('recipient_id', 'Recipient ID:') !!}
                         {!! Form::select('recipient_id', $recipients, null, ['class' => 'form-control']) !!}
+                        {!! Form::hidden('recipient_name', str_replace(" (Add New Person)","", $recipients[0])) !!}
                     @endIf
                 </div>
             </div>
@@ -70,7 +81,7 @@
                 </div>
                 <div class="col-lg-3">
                     {!! Form::label('expiration_date', 'Expiration:') !!}
-                    {!! Form::date('expiration_date', now(), ['class'=>'form-control flatpickr-date-time', 'autocomplete'=> 'off']) !!}
+                    {!! Form::date('expiration_date', \Carbon\Carbon::now()->addYear()->addDay(), ['class'=>'form-control flatpickr-date-time', 'autocomplete'=> 'off']) !!}
                 </div>
             </div>
 

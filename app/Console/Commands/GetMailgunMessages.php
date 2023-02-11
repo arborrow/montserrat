@@ -322,8 +322,8 @@ class GetMailgunMessages extends Command
                         
                         $custom_form = SquarespaceCustomForm::whereName("Gift Certificate Registration")->firstOrFail();
                         $fields = SquarespaceCustomFormField::whereFormId($custom_form->id)->orderBy('sort_order')->get();
-                        $order = new SquarespaceOrder();
-    
+
+                        $order = SquarespaceOrder::whereMessageId($message->id)->firstOrNew(['message_id'=> $message->id]);    
                         // dd($clean_message, $retreat, $custom_form, $fields);
 
                         // parse Squarespace Custom Fields and add data to $order
@@ -379,7 +379,21 @@ class GetMailgunMessages extends Command
                         } else { 
                             // something is wrong with the address - leave it as null
                         }    
-                                
+                        $retreat_number = substr($order->retreat_description,
+                                strpos($order->retreat_description, "#") + 1,
+                                (strpos($order->retreat_description, " ") - strpos($order->retreat_description, "#"))
+                            );
+                        $retreat_year = substr($order->retreat_description, strpos($order->retreat_description, ")")-4,4);
+                        $retreat_idnumber = trim(strval($retreat_year).$retreat_number);
+                        $order->retreat_idnumber = $retreat_idnumber;
+                        $event = Retreat::whereIdnumber($retreat_idnumber)->first();
+    
+                        $order->retreat_dates = substr($order->retreat_description, strpos($order->retreat_description,"(") + 1, strpos($order->retreat_description,")") - (strpos($order->retreat_description,"(") +1));
+                        $order->message_id = $message->id;
+                        $order->retreat_start_date = optional($event)->start_date;
+                        $order->retreat_registration_type = "Gift Certificate Registration";
+                        $order->event_id = optional($event)->id;
+
                         $order->save();
                         
                         

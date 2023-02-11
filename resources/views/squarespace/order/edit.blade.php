@@ -5,7 +5,7 @@
     <div class="col-lg-12">
         <h1>
             @if ($order->is_gift_certificate_registration)
-                Process Gift Certificate Registration
+                Process Gift Certificate Registration for #{{$order->gift_certificate_full_number}}
             @else
                 Process Squarespace Order #{{ $order->order_number }}
             @endIf
@@ -68,14 +68,16 @@
                         {!! Form::select('event_id', $retreats, (isset($order->event_id)) ? $order->event_id : $ids['retreat_id'], ['class' => 'form-control']) !!}
                         <strong>Retreat:</strong> {{ $order->retreat_description  }}<br />
                         <strong>Dates:</strong> {{ $order->retreat_dates}}<br />
-                        <strong>Category:</strong> {{ $order->retreat_category  }}<br />
+                        <strong>Category:</strong> {{ !empty($order->retreat_category) ? $order->retreat_category : optional($order->event)->retreat_type  }}<br />
                         <strong>Type:</strong> {{ $order->retreat_registration_type }}<br />
                     @endIf
                 </div>
                 <div class="col-lg-4 col-md-6">
                     @if (isset($order->gift_certificate_number))
-                        <h3>{!! Form::label('gift_certificate_number', 'Gift Certificate #:') !!}</h3>
-                        {!! Form::text('gift_certificate_number', $order->gift_certificate_number, ['class' => 'form-control']) !!}
+                        {!! Form::label('gift_certificate_year_issued', 'Gift Certificate Year Issued:') !!}
+                        {!! Form::number('gift_certificate_year_issued', $order->gift_certificate_year_issued, ['class' => 'form-control']) !!}
+                        {!! Form::label('gift_certificate_number', 'Gift Certificate #:') !!}</h3>
+                        {!! Form::number('gift_certificate_number', $order->gift_certificate_number, ['class' => 'form-control']) !!}
                     @endif
                     @if (isset($order->comments))
                     <h3>
@@ -761,29 +763,31 @@
                     @endIf
                 </div>
             </div>
+            @if (isset($order->event))
+                <div class="row text-center mt-3">
 
-            <div class="row text-center mt-3">
-
-                @if ($order->event->days_until_start > 8)
-                    <div class='col-lg-3 bg-success mx-auto p-2' >
-                @else
-                    <div class='col-lg-3 bg-warning mx-auto p-2' >
-                @endif
-                Days until retreat: 
-                {{$order->event->days_until_start}} 
+                    @if ($order->event->days_until_start > 8)
+                        <div class='col-lg-3 bg-success mx-auto p-2' >
+                    @else
+                        <div class='col-lg-3 bg-warning mx-auto p-2' >
+                    @endif
+                    Days until retreat: 
+                    {{$order->event->days_until_start}} 
+                    </div>
                 </div>
-            </div>
+            @endIf
 
-            <div class="row text-center mt-3">
-
-                @if ($order->event->capacity_percentage < 90)
-                    <div class='col-lg-3 bg-success mx-auto p-2' >
-                @else 
-                    <div class='col-lg-3 bg-warning mx-auto p-2' > 
-                @endIf
-                Capacity: {{$order->event->capacity_percentage}}% </div>
+            @if (isset($order->event))
+                <div class="row text-center mt-3">
+                    @if ($order->event->capacity_percentage < 90)
+                        <div class='col-lg-3 bg-success mx-auto p-2' >
+                    @else 
+                        <div class='col-lg-3 bg-warning mx-auto p-2' > 
+                    @endIf
+                    Capacity: {{$order->event->capacity_percentage}}% </div>
+                    </div>
                 </div>
-            </div>
+            @endif
             
             <hr />
             <div class="row">
