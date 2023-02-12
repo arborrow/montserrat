@@ -31,9 +31,11 @@ class GiftCertificateController extends Controller
     public function index()
     {
         $this->authorize('show-gift-certificate');
-        $gift_certificates = \App\Models\GiftCertificate::orderBy('issue_date')->with(['purchaser','recipient'])->get();
+        $gift_certificates = \App\Models\GiftCertificate::active()->orderBy('issue_date')->with(['purchaser','recipient'])->get();
+        $applied_gift_certificates = \App\Models\GiftCertificate::applied()->orderBy('issue_date')->with(['purchaser','recipient'])->get();
+        $expired_gift_certificates = \App\Models\GiftCertificate::expired()->orderBy('expiration_date')->with(['purchaser','recipient'])->get();
         
-        return view('gift_certificates.index', compact('gift_certificates'));   //
+        return view('gift_certificates.index', compact('gift_certificates','applied_gift_certificates','expired_gift_certificates'));   //
 
     }
 
