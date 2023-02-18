@@ -10,6 +10,7 @@ use App\Mail\RegistrationCanceledChange;
 use App\Mail\RegistrationEventChange;
 use App\Mail\RetreatRegistration;
 use App\Models\Registration;
+use App\Traits\SquareSpaceTrait;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 
 class RegistrationController extends Controller
-{
+{   use SquareSpaceTrait;
     public function __construct()
     {
         $this->middleware('auth')->except('confirmAttendance');
@@ -76,12 +77,11 @@ class RegistrationController extends Controller
         $retreats = \App\Models\Retreat::select(DB::raw('CONCAT(idnumber, "-", title, " (",DATE_FORMAT(start_date,"%m-%d-%Y"),")") as description'), 'id')->where('end_date', '>', Carbon::today()->subWeek())->where('is_active', '=', 1)->orderBy('start_date')->pluck('description', 'id');
         $retreats->prepend('Unassigned', 0);
         $retreatant = \App\Models\Contact::findOrFail($id);
+        
         $retreatants = collect();
         if ($retreatant->contact_type == config('polanco.contact_type.individual')) {
-            $retreatants = \App\Models\Contact::whereContactType(config('polanco.contact_type.individual'))->orderBy('sort_name')->pluck('sort_name', 'id');
+            $retreatants = $retreatant->pluck('sort_name', 'id');
         }
-            $retreatants = \App\Models\Contact::whereContactType(config('polanco.contact_type.organization'))->whereSubcontactType($retreatant->subcontact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
-            $retreatants = \App\Models\Contact::whereContactType(config('polanco.contact_type.organization'))->whereSubcontactType($retreatant->subcontact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
         if ($retreatant->contact_type == config('polanco.contact_type.organization')) {
             $retreatants = \App\Models\Contact::whereContactType(config('polanco.contact_type.organization'))->whereSubcontactType($retreatant->subcontact_type)->orderBy('sort_name')->pluck('sort_name', 'id');
         }

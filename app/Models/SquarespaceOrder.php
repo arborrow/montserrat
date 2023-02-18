@@ -64,12 +64,20 @@ class SquarespaceOrder extends Model implements Auditable
             return $this->gift_certificate_year_issued . '-' . $this->gift_certificate_number;
         }
         else {
-            return 'N/A';
+            return null;
         }
     }
 
     public function getIsGiftCertificateRegistrationAttribute() {
         return (isset($this->gift_certificate_number));
+    }
+
+    public function getOrderDescriptionAttribute() {
+        if ( empty($this->gift_certificate_full_number)) {
+            return 'Squarespace Order #' . $this->order_number;
+        } else {
+            return 'Gift Certificate #' . $this->gift_certificate_full_number;
+        }
     }
 
     public function getMobilePhoneFormattedAttribute() {

@@ -264,7 +264,7 @@ class SquarespaceOrderController extends Controller
         $order->save();
         // dd($order, $contact_id, $order->is_couple, $couple_contact_id);
         if ($order->is_processed) { // the order has already been processed
-            flash('SquareSpace Order #<a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_number.'</a> has already been processed')->error()->important();
+            flash('<a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_description.'</a> has already been processed')->error()->important();
             return Redirect::action([self::class, 'index']);
         } else { // the order has not been processed
             if (!isset($order->participant_id) && (!isset($order->contact_id) || ($order->is_couple && !isset($order->couple_contact_id) ))) {
@@ -360,7 +360,7 @@ class SquarespaceOrderController extends Controller
             ]);
             $relationship_retreatant->save();
 
-            // retreatant relationship
+            // donor relationship
             $relationship_donor = Relationship::firstOrNew([
                 'contact_id_a'=>config('polanco.self.id'),
                 'contact_id_b'=>$contact_id,
@@ -568,7 +568,7 @@ class SquarespaceOrderController extends Controller
                     $registration->register_date = $order->created_at;
                     $registration->deposit= ($request->filled('deposit_amount')) ? ($request->input('deposit_amount')/2) : 0;
                     $registration->status_id = config('polanco.registration_status_id.registered');
-                    $registration->notes = 'Squarespace Order #'.$order->order_number.'. '. $request->input('comments');
+                    $registration->notes = $order->order_description . '. ' . $request->input('comments');
                     $registration->remember_token = Str::random(60);
                     $registration->save();
     
@@ -578,15 +578,15 @@ class SquarespaceOrderController extends Controller
 
             // TODO: if couple - check if the relationship exists and if not create it (remember, gift certificates may or may not be from a spouse)
 
-            // create touchpoint
+            // create touchpoint for traditional order otherwise we are dealing with a gift certificate being used
             $touchpoint = new Touchpoint;
             $touchpoint->person_id = $contact_id;
             $touchpoint->staff_id = config('polanco.self.id');
             $touchpoint->type = 'Other';
-            $touchpoint->notes = 'Squarespace Order #' . $order->order_number . ' received from ' . $contact->display_name;
+            $touchpoint->notes = $order->order_description . ' received from ' . $contact->display_name;
             $touchpoint->touched_at = Carbon::now();
             $touchpoint->save();
-
+            
 
             // create registration (record deposit, comments, squarespaceorder_number)
             if (isset($event_id) && !$order->is_gift_certificate) {
@@ -599,12 +599,16 @@ class SquarespaceOrderController extends Controller
                 ]);
                 $registration->source = 'Squarespace';
                 $registration->register_date = $order->created_at;
-                // if couple split the deposit between them
-                $registration->deposit = ($order->is_couple) ? ($request->input('deposit_amount')/2) : $request->input('deposit_amount');
-                $registration->deposit = (!isset($registration->deposit)) ? 0 : $registration->deposit;
-                $registration->notes = 'Squarespace Order #'.$order->order_number.'. '. $request->input('comments');
                 $registration->status_id = config('polanco.registration_status_id.registered');
                 $registration->remember_token = Str::random(60);
+                $registration->notes = $order->order_description;
+                if (!isset($order->gift_certificate_full_number)) { 
+                    // if couple split the deposit between them
+                    $registration->deposit = ($order->is_couple) ? ($request->input('deposit_amount')/2) : $request->input('deposit_amount');
+                    $registration->deposit = (!isset($registration->deposit)) ? 0 : $registration->deposit;
+                } else { // gift certificate redemption - no deposit
+                    $registration->deposit = 0;
+                }
                 $registration->save();
 
                 // registration and touchpoint will link to the primary retreatant (not the spouse)
@@ -617,16 +621,16 @@ class SquarespaceOrderController extends Controller
                     try {
                         Mail::to($request->input('email'))->send(new SquarespaceOrderFulfillment($order));
                     } catch (\Exception $e) { //failed to send finance notification of event_id change on registration
-                        flash('Error sending Squarespace Order Fulfillment Email for Squarespace Order #: <a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_number.'</a>')->warning();
+                        flash('Error sending Squarespace Order Fulfillment Email for ' . $order->order_description . ': <a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_description.'</a>')->warning();
 
                     }
-                    flash('Fulfillment Email sent for  Squarespace Order #: <a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_number.'</a>')->success();
+                    flash('Fulfillment Email sent for: <a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_description.'</a>')->success();
                     // create touchpoint
                     $touchpoint = new Touchpoint;
                     $touchpoint->person_id = $contact_id;
                     $touchpoint->staff_id = config('polanco.self.id');
                     $touchpoint->type = 'Email';
-                    $touchpoint->notes = 'Fulfillment email for Squarespace Order #' . $order->order_number;
+                    $touchpoint->notes = 'Fulfillment email for' . $order->order_description;
                     $touchpoint->touched_at = Carbon::now();
                     $touchpoint->save();
 
@@ -660,7 +664,7 @@ class SquarespaceOrderController extends Controller
                 $donation->donation_date = $order->event->start_date;
                 $donation->donation_amount = ($order->is_couple) ? ($order->deposit_amount/2) : $order->deposit_amount;
                 $donation->squarespace_order = $order->order_number;
-                $donation->Notes = 'SS Order #' . $order->order_number . ' for Retreat #' . $order->event->idnumber;
+                $donation->Notes = $order->order_description . ' for Retreat #' . $order->event->idnumber;
                 $donation->save();                
                 $order->donation_id = $donation->donation_id;
 
@@ -672,14 +676,14 @@ class SquarespaceOrderController extends Controller
                     $couple_donation->donation_date = $order->event->start_date;
                     $couple_donation->donation_amount = ($order->is_couple) ? ($order->deposit_amount/2) : $order->deposit_amount;
                     $couple_donation->squarespace_order = $order->order_number;
-                    $couple_donation->Notes = 'SS Order #' . $order->order_number . ' for Retreat #' . $order->event->idnumber;
+                    $couple_donation->Notes = $order->order_description . ' for Retreat #' . $order->event->idnumber;
                     $couple_donation->save();
                     $order->couple_donation_id = $couple_donation->donation_id;
                 }
             }
             
             $order->save();
-            flash('SquareSpace Order #: <a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_number.'</a> processed')->success();
+            flash('<a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_description.'</a> processed')->success();
 
             return Redirect::action([self::class, 'index']);
         }

@@ -78,7 +78,7 @@ class SquarespaceOrderFactory extends Factory
             'couple_name' => ($is_couple) ? $this->faker->firstname() .' '. $this->faker->lastname() : null, 
             'couple_mobile_phone' => ($is_couple) ? $this->faker->phoneNumber() : null, 
             'gift_certificate_number' => $this->faker->numberBetween(22000,22999), 
-            'gift_certificate_retreat' => $this->faker->year() . $this->faker->numberBetween(10,99) , 
+            'gift_certificate_year_issued' => $this->faker->year(), 
             'additional_names_and_phone_numbers' => null, 
             'message_id' => $this->faker->randomNumber(), 
             'event_id' => null, 

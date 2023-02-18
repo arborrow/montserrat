@@ -172,7 +172,7 @@ class SquarespaceOrderControllerTest extends TestCase
         $response->assertOk();
         $response->assertViewIs('squarespace.order.show');
         $response->assertViewHas('order');
-        $response->assertSeeText('Squarespace Order #'.$order->order_number);
+        $response->assertSeeText($order->order_description);
     }
 
     /**
