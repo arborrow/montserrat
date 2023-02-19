@@ -144,15 +144,18 @@
 							<a class="dropdown-item" href={{ route('user.index') }}>Users</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href={{ route('donation_type.index') }}>Donation types</a>
-							<a class="dropdown-item" href={{ route('export_list.index') }}>Export lists</a>
-							<a class="dropdown-item" href={{ route('mailgun.index') }}>Mailgun messages</a>
+							@can('admin-mailgun')
+								<a class="dropdown-item" href={{ route('mailgun.index') }}>Mailgun messages</a>
+							@endcan
 							<a class="dropdown-item" href={{ route('snippet.index') }}>Snippets</a>
-							<a class="dropdown-item" href={{ route('inventory.index') }}>Squarespace Inventory</a>
 							<a class="dropdown-item" href={{ route('custom_form.index') }}>Squarespace Custom Forms</a>
+							<a class="dropdown-item" href={{ route('inventory.index') }}>Squarespace Inventory</a>
 							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href={{ route('activity') }}>Activity log</a>
-							<a class="dropdown-item" href={{ route('audit.index') }}>Audit log</a>
-							<a class="dropdown-item" href={{ route('admin.config.index') }}>Configuration</a>
+							@can('superuser')
+								<a class="dropdown-item" href={{ route('activity') }}>Activity log</a>
+								<a class="dropdown-item" href={{ route('audit.index') }}>Audit log</a>
+								<a class="dropdown-item" href={{ route('admin.config.index') }}>Configuration</a>
+							@endcan
 						</div>
 					</li>
 					@endCan

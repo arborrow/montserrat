@@ -8,9 +8,9 @@
                     <span>
                         <h2>
                             @can('update-squarespace-order')
-                                Squarespace Order <a href="{{url('squarespace/order/'.$order->id.'/edit')}}">#{{ $order->order_number }}</a>
+                                <a href="{{url('squarespace/order/'.$order->id.'/edit')}}">{{ $order->order_description }}</a>
                             @else
-                                Squarespace Order #{{ $order->order_number }}
+                                {{ $order->order_description }}
                             @endCan
                         </h2>
                     </span>
@@ -22,7 +22,7 @@
                     </div>
                     <div class='row'>
                         <div class='col-md-3'><strong>Gift Certificate Number: </strong>{{ $order->gift_certificate_number}}</div>
-                        <div class='col-md-3'><strong>Retreat: </strong>{{ $order->gift_certificate_retreat}}</div>                    </div>
+                        <div class='col-md-3'><strong>Retreat: </strong>{{ $order->retreat_description}}</div>                    </div>
                     <div class="clearfix"> </div>
                     <hr />
                 @endIf

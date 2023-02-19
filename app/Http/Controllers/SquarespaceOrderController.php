@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\UpdateSquarespaceOrderRequest;
+
+use App\Mail\SquarespaceOrderFulfillment;
 
 use App\Models\Address;
 use App\Models\Contact;
 use App\Models\ContactLanguage;
 use App\Models\Country;
 use App\Models\Donation;
+use App\Models\Payment;
 use App\Models\Email;
 use App\Models\EmergencyContact;
+use App\Models\GiftCertificate;
 use App\Models\Language;
 use App\Models\Note;
 use App\Models\Phone;
@@ -29,6 +30,11 @@ use App\Traits\PhoneTrait;
 use App\Traits\SquareSpaceTrait;
 
 use Carbon\Carbon;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
 
 class SquarespaceOrderController extends Controller
 {
@@ -117,6 +123,7 @@ class SquarespaceOrderController extends Controller
     {
         $this->authorize('update-squarespace-order');
         $order = SquarespaceOrder::findOrFail($id);
+        $gift_certificate = (empty($order->gift_certificate_id)) ? null : GiftCertificate::findOrFail($order->gift_certificate_id);
         $prefixes = Prefix::orderBy('name')->pluck('name', 'id');
         $prefixes->prepend('None', null);
         $states = StateProvince::orderBy('abbreviation')->whereCountryId(config('polanco.country_id_usa'))->pluck('abbreviation', 'id');
@@ -149,6 +156,11 @@ class SquarespaceOrderController extends Controller
             $retreat = Retreat::whereIdnumber($order->retreat_idnumber)->first();
         }
 
+        $send_fulfillment = 0; //initialize to false 
+        if (!empty($retreat->id)) {
+            $send_fulfillment = (($retreat->capacity_percentage < 90) && ($retreat->days_until_start > 8)) ? 1 : 0;
+        }
+
         $ids = [];
         $ids['title'] = ($prefix == null) ? null : $prefix->id;
         $ids['couple_title'] = ($couple_prefix == null) ? null : $couple_prefix->id;
@@ -178,7 +190,7 @@ class SquarespaceOrderController extends Controller
         $couple_matching_contacts = (isset($order->couple_name)) ? $this->matched_contacts($couple) : [null=>'No name provided'];
         //dd($couple_matching_contacts, $matching_contacts);
 
-        return view('squarespace.order.edit', compact('order', 'matching_contacts', 'retreats', 'couple_matching_contacts', 'prefixes', 'states', 'countries', 'languages', 'parish_list','ids','genders','religions'));
+        return view('squarespace.order.edit', compact('order', 'matching_contacts', 'retreats', 'couple_matching_contacts', 'prefixes', 'states', 'countries', 'languages', 'parish_list','ids','genders','religions','send_fulfillment','gift_certificate'));
     }
 
     /**
@@ -191,6 +203,11 @@ class SquarespaceOrderController extends Controller
     public function update(UpdateSquarespaceOrderRequest $request, $id)
     {
         $order = SquarespaceOrder::findOrFail($id);
+        $gift_certificate = (empty($order->gift_certificate_full_number)) ? null : GiftCertificate::findOrFail($order->gift_certificate_id);
+        if (!empty($gift_certificate) && empty($gift_certificate->squarespace_order_redeem_id)) {
+            $gift_certificate->squarespace_order_redeem_id = $id;
+            $gift_certificate->save();
+        }
         $contact_id = $request->input('contact_id');
         $couple_contact_id = $request->input('couple_contact_id');
 
@@ -236,7 +253,7 @@ class SquarespaceOrderController extends Controller
             ]);        
         }
         
-        // assumes that all users speake Engilsh
+        // assumes that all users speak Engilsh
         $spoken_language = ContactLanguage::firstOrCreate([
             'contact_id' => $contact_id,
             'language_id' => $english_language->id,
@@ -255,7 +272,7 @@ class SquarespaceOrderController extends Controller
         $order->save();
         // dd($order, $contact_id, $order->is_couple, $couple_contact_id);
         if ($order->is_processed) { // the order has already been processed
-            flash('SquareSpace Order #<a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_number.'</a> has already been processed')->error()->important();
+            flash('<a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_description.'</a> has already been processed')->error()->important();
             return Redirect::action([self::class, 'index']);
         } else { // the order has not been processed
             if (!isset($order->participant_id) && (!isset($order->contact_id) || ($order->is_couple && !isset($order->couple_contact_id) ))) {
@@ -351,7 +368,7 @@ class SquarespaceOrderController extends Controller
             ]);
             $relationship_retreatant->save();
 
-            // retreatant relationship
+            // donor relationship
             $relationship_donor = Relationship::firstOrNew([
                 'contact_id_a'=>config('polanco.self.id'),
                 'contact_id_b'=>$contact_id,
@@ -559,7 +576,7 @@ class SquarespaceOrderController extends Controller
                     $registration->register_date = $order->created_at;
                     $registration->deposit= ($request->filled('deposit_amount')) ? ($request->input('deposit_amount')/2) : 0;
                     $registration->status_id = config('polanco.registration_status_id.registered');
-                    $registration->notes = 'Squarespace Order #'.$order->order_number.'. '. $request->input('comments');
+                    $registration->notes = $order->order_description . '. ' . $request->input('comments');
                     $registration->remember_token = Str::random(60);
                     $registration->save();
     
@@ -569,15 +586,15 @@ class SquarespaceOrderController extends Controller
 
             // TODO: if couple - check if the relationship exists and if not create it (remember, gift certificates may or may not be from a spouse)
 
-            // create touchpoint
+            // create touchpoint for traditional order otherwise we are dealing with a gift certificate being used
             $touchpoint = new Touchpoint;
             $touchpoint->person_id = $contact_id;
             $touchpoint->staff_id = config('polanco.self.id');
             $touchpoint->type = 'Other';
-            $touchpoint->notes = 'Squarespace Order #' . $order->order_number . ' received from ' . $contact->display_name;
+            $touchpoint->notes = $order->order_description . ' received from ' . $contact->display_name;
             $touchpoint->touched_at = Carbon::now();
             $touchpoint->save();
-
+            
 
             // create registration (record deposit, comments, squarespaceorder_number)
             if (isset($event_id) && !$order->is_gift_certificate) {
@@ -590,17 +607,51 @@ class SquarespaceOrderController extends Controller
                 ]);
                 $registration->source = 'Squarespace';
                 $registration->register_date = $order->created_at;
-                // if couple split the deposit between them
-                $registration->deposit = ($order->is_couple) ? ($request->input('deposit_amount')/2) : $request->input('deposit_amount');
-                $registration->deposit = (!isset($registration->deposit)) ? 0 : $registration->deposit;
-                $registration->notes = 'Squarespace Order #'.$order->order_number.'. '. $request->input('comments');
                 $registration->status_id = config('polanco.registration_status_id.registered');
                 $registration->remember_token = Str::random(60);
+                $registration->notes = $order->order_description;
+                if (!isset($order->gift_certificate_full_number)) { 
+                    // if couple split the deposit between them
+                    $registration->deposit = ($order->is_couple) ? ($request->input('deposit_amount')/2) : $request->input('deposit_amount');
+                    $registration->deposit = (!isset($registration->deposit)) ? 0 : $registration->deposit;
+                } else { // gift certificate redemption - no deposit
+                    $registration->deposit = 0;
+                }
                 $registration->save();
 
                 // registration and touchpoint will link to the primary retreatant (not the spouse)
                 $order->participant_id = $registration->id;
                 $order->touchpoint_id = $touchpoint->id;
+
+                // gift certificate redemption
+                if (!empty($order->gift_certificate_id)) {
+                    $gift_certificate = GiftCertificate::find($order->gift_certificate_id);
+                    $gift_certificate->participant_id = $registration->id;
+                    $gift_certificate->save();
+                } 
+
+
+//                dd($request->input('send_fulfillment'), $request->filled('email'), $tmp );
+                if ($request->input('send_fulfillment') && $request->filled('email') ) {
+                    // generate email
+                    try {
+                        Mail::to($request->input('email'))->send(new SquarespaceOrderFulfillment($order));
+                    } catch (\Exception $e) { //failed to send finance notification of event_id change on registration
+                        flash('Error sending Squarespace Order Fulfillment Email for ' . $order->order_description . ': <a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_description.'</a>')->warning();
+
+                    }
+                    flash('Fulfillment Email sent for: <a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_description.'</a>')->success();
+                    // create touchpoint
+                    $touchpoint = new Touchpoint;
+                    $touchpoint->person_id = $contact_id;
+                    $touchpoint->staff_id = config('polanco.self.id');
+                    $touchpoint->type = 'Email';
+                    $touchpoint->notes = 'Fulfillment email for' . $order->order_description;
+                    $touchpoint->touched_at = Carbon::now();
+                    $touchpoint->save();
+
+                }
+
             }
 
             $order->is_processed = 1;
@@ -624,31 +675,66 @@ class SquarespaceOrderController extends Controller
                 }
 
             } else {
-                $donation->event_id = $event_id;
-                $donation->donation_description = 'Retreat Deposits';
-                $donation->donation_date = $order->event->start_date;
-                $donation->donation_amount = ($order->is_couple) ? ($order->deposit_amount/2) : $order->deposit_amount;
-                $donation->squarespace_order = $order->order_number;
-                $donation->Notes = 'SS Order #' . $order->order_number . ' for Retreat #' . $order->event->idnumber;
-                $donation->save();                
-                $order->donation_id = $donation->donation_id;
-
-                if ($order->is_couple && isset($order->couple_contact_id)) {
-                    $couple_donation = new Donation;
-                    $couple_donation->contact_id = $order->couple_contact_id;
-                    $couple_donation->event_id = $event_id;
-                    $couple_donation->donation_description = 'Retreat Deposits';
-                    $couple_donation->donation_date = $order->event->start_date;
-                    $couple_donation->donation_amount = ($order->is_couple) ? ($order->deposit_amount/2) : $order->deposit_amount;
-                    $couple_donation->squarespace_order = $order->order_number;
-                    $couple_donation->Notes = 'SS Order #' . $order->order_number . ' for Retreat #' . $order->event->idnumber;
-                    $couple_donation->save();
-                    $order->couple_donation_id = $couple_donation->donation_id;
+                if (!empty($order->gift_certificate_id)) { //gift certificate redemption
+                    $gift_certificate = GiftCertificate::find($order->gift_certificate_id);
+                    if (!empty (optional($gift_certificate)->donation_id)) {
+                        $gift_certificate_donation =  Donation::find($gift_certificate->donation_id);
+                        $amount_reallocated = $gift_certificate_donation->donation_amount;
+                        // create reallocation payments and adjust purchaser donation_amount to zero
+                        $negative_reallocation_payment = new Payment;
+                        $negative_reallocation_payment->donation_id = $gift_certificate_donation->donation_id;
+                        $negative_reallocation_payment->payment_amount = -($gift_certificate_donation->donation_amount);
+                        $negative_reallocation_payment->payment_description = 'Reallocation';
+                        $negative_reallocation_payment->note = 'Gift certificate #' . $gift_certificate->certificate_number . 'redeemed by ' . optional($gift_certificate->recipient)->display_name . 'for Retreat #' . $gift_certificate->registration->event_id_number;
+                        $negative_reallocation_payment->payment_date = now();
+                        $negative_reallocation_payment->save();
+                        $gift_certificate_donation->donation_amount = $gift_certificate_donation->donation_amount + $negative_reallocation_payment->payment_amount;
+                        $gift_certificate_donation->Notes = 'Donation amount updated for Gift Certificate: '.$gift_certificate->certificate_number.' redemption. '.$gift_certificate_donation->Notes;
+                        $gift_certificate_donation->save();
+                        // create retreat deposit donation for recipient
+                        $donation->event_id = $event_id;
+                        $donation->donation_description = 'Retreat Deposits';
+                        $donation->donation_date = $order->event->start_date;
+                        $donation->donation_amount = $amount_reallocated;
+                        $donation->squarespace_order = $gift_certificate->certificate_number;
+                        $donation->Notes = $order->order_description . ' for Retreat #' . $order->event->idnumber;
+                        $donation->save(); 
+                        $reallocation_payment = new Payment;
+                        $reallocation_payment->donation_id = $donation->donation_id;
+                        $reallocation_payment->payment_amount = $donation->donation_amount;
+                        $reallocation_payment->payment_description = 'Reallocation';               
+                        $reallocation_payment->note = 'Gift certificate #' . $gift_certificate->certificate_number . 'purchased by ' . optional($gift_certificate->purchaser)->display_name . 'for Retreat #' . $gift_certificate->registration->event_id_number;
+                        $reallocation_payment->payment_date = $negative_reallocation_payment->payment_date;
+                        $reallocation_payment->save();
+                        flash('Donation/Payment Reallocations processed for Gift Certificate #<a href="'.url('/gift_certificate/'.$gift_certificate->id).'">'.$gift_certificate->certificate_number.'</a>')->success();
+                    }
+                } else { // add regular retreat registration deposit
+                    $donation->event_id = $event_id;
+                    $donation->donation_description = 'Retreat Deposits';
+                    $donation->donation_date = $order->event->start_date;
+                    $donation->donation_amount = ($order->is_couple) ? ($order->deposit_amount/2) : $order->deposit_amount;
+                    $donation->squarespace_order = $order->order_number;
+                    $donation->Notes = $order->order_description . ' for Retreat #' . $order->event->idnumber;
+                    $donation->save();                
+                    $order->donation_id = $donation->donation_id;
+    
+                    if ($order->is_couple && isset($order->couple_contact_id)) {
+                        $couple_donation = new Donation;
+                        $couple_donation->contact_id = $order->couple_contact_id;
+                        $couple_donation->event_id = $event_id;
+                        $couple_donation->donation_description = 'Retreat Deposits';
+                        $couple_donation->donation_date = $order->event->start_date;
+                        $couple_donation->donation_amount = ($order->is_couple) ? ($order->deposit_amount/2) : $order->deposit_amount;
+                        $couple_donation->squarespace_order = $order->order_number;
+                        $couple_donation->Notes = $order->order_description . ' for Retreat #' . $order->event->idnumber;
+                        $couple_donation->save();
+                        $order->couple_donation_id = $couple_donation->donation_id;
+                    }    
                 }
             }
             
             $order->save();
-            flash('SquareSpace Order #: <a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_number.'</a> processed')->success();
+            flash('<a href="'.url('/squarespace/order/'.$order->id).'">'.$order->order_description.'</a> processed')->success();
 
             return Redirect::action([self::class, 'index']);
         }

@@ -7,6 +7,7 @@ use App\Http\Requests\StoreSnippetRequest;
 use App\Http\Requests\UpdateSnippetRequest;
 use App\Mail\RetreatantBirthday;
 use App\Mail\RetreatConfirmation;
+use App\Mail\SquarespaceOrderFulfillment;
 use Auth;
 use Carbon\Carbon;
 use Faker;
@@ -239,6 +240,47 @@ class SnippetController extends Controller
                     }
                 }
                 break;
+                case 'squarespace_order_fulfillment':
+                    $snippets = \App\Models\Snippet::whereTitle($title)->get();
+                        foreach ($snippets as $snippet) {
+                            $decoded = html_entity_decode($snippet->snippet, ENT_QUOTES | ENT_XML1);
+                            Storage::put('views/snippets/'.$snippet->title.'/'.$snippet->locale.'/'.$snippet->label.'.blade.php', $decoded);
+                        }
+                                        
+                        // TODO:: actually select an order for a Spanish speaker
+                    switch ($language) {
+                        case 'es_ES':
+                            $order = \App\Models\SquarespaceOrder::whereIsProcessed(1)
+                                ->whereNotNull('event_id')
+                                ->whereNotNull('contact_id')
+                                ->with('retreatant','event')->first();
+                            $order = \App\Models\SquarespaceOrder::whereIsProcessed(1)
+                                ->whereNotNull('event_id')
+                                ->whereNotNull('contact_id')
+                                ->whereHas('retreatant', function ($q) {
+                                    $q->wherePreferredLanguage('es_ES');
+                                })
+                                ->with('retreatant','event')
+                                ->first();
+                            break;
+                        default: // en_US              
+                            $order = \App\Models\SquarespaceOrder::whereIsProcessed(1)
+                                ->whereNotNull('event_id')
+                                ->whereNotNull('contact_id')
+                                ->with('retreatant','event')->first();
+
+                    }
+                    // dd($order->event_start_date->locale('es_ES')->translatedFormat("l d \de F \de\l Y"));
+                    if (! empty($email)) {
+                        try {
+                            Mail::to($email)->queue(new SquarespaceOrderFulfillment($order));
+                            flash('Retreat confirmation test email successfully sent to: '.$email)->success();
+                        } catch (\Exception $e) {
+                            // dd($e, $order);
+                            flash('Sending of retreat confirmation test email to: '.$email.' failed')->error();
+                        }
+                    }
+                    break;    
             default:
                 flash('Unknown snippet test: '.$title)->error();
                 break;

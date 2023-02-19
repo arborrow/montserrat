@@ -44,10 +44,13 @@
                             {!! Form::select('is_active', $is_active, $retreat->is_active, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-lg-3">
+                            {!! Form::label('max_participants', 'Maximum participants')  !!}
+                            {!! Form::text('max_participants', $retreat->max_participants, ['class' => 'form-control']) !!}
+                        </div>
+                        <div class="col-lg-3">
                             {!! Form::label('calendar_id', 'Google Calendar ID:')  !!}
                             {!! Form::text('calendar_id', $retreat->calendar_id, ['class' => 'form-control','readonly']) !!}
                         </div>
-
                     </div>
                     <div class="row">
                     </div>

@@ -10,15 +10,17 @@
  <table width="100%">
      <tr>
         <th class="row-1 row-name" style='width: 20%'>Full name</th>
+        <th class="row-2 row-name" style='width: 15%'>Email</th>
         <th align='center' class="row-3 row-room" style='width: 15%'><strong>Assigned Room</strong></th>
-        <th class="row-4 row-room_preference" style='width: 20%'>Room Preference</th>
-        <th class="row-2 row-note" style='width: 25%'>Health Notes</th>
+        <th class="row-4 row-room_preference" style='width: 15%'>Room Preference</th>
+        <th class="row-2 row-note" style='width: 15%'>Health Notes</th>
         <th class="row-5 row-dietary" style='width: 20%'>Dietary Preference</th>
      <tr>
     @foreach($registrations as $registration)
 
     <tr>
         <td>{{$registration->retreatant->full_name}}</td>
+        <td>{{$registration->retreatant->email_primary_text}}</td>
         <td align='center'>{{ $registration->room_name}}</td>
         <td>{{$registration->retreatant->note_room_preference_text}}</td>
         <td>{{$registration->retreatant->note_health_text}}</td>

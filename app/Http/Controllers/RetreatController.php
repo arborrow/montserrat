@@ -138,6 +138,7 @@ class RetreatController extends Controller
         $retreat->description = $request->input('description');
         $retreat->event_type_id = $request->input('event_type');
         $retreat->is_active = $request->input('is_active');
+        $retreat->max_participants = $request->input('max_participants');
 
         // TODO: find a way to tag silent retreats, perhaps with event_type_id - for now disabled
         //$retreat->silent = $request->input('silent');
@@ -484,6 +485,7 @@ class RetreatController extends Controller
         $retreat->description = $request->input('description');
         $retreat->event_type_id = $request->input('event_type');
         $retreat->is_active = $request->input('is_active');
+        $retreat->max_participants = $request->input('max_participants');
         $retreat->save();
 
         if (null !== $request->file('contract')) {

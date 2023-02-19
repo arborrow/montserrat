@@ -50,6 +50,7 @@ class StoreRetreatRequestTest extends TestCase
             'attending' => 'integer|min:0|max:150',
             'silent' => 'boolean',
             'is_active' => 'boolean',
+            'max_participants' => 'integer|min:0|max:150',
         ], $actual);
     }
 

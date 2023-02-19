@@ -4,7 +4,11 @@
 <div class="row bg-cover">
     <div class="col-lg-12">
         <h1>
-            Process Squarespace Order #{{ $order->order_number }}
+            @if ($order->is_gift_certificate_registration)
+                Process Gift Certificate Registration for #{{$order->gift_certificate_full_number}}
+            @else
+                Process Squarespace Order #{{ $order->order_number }}
+            @endIf
         </h1>
     </div>
     <div class="col-lg-12">
@@ -40,7 +44,7 @@
                         The provided contact information will be added/updated.
                         A touchpoint for the retreatant's registration is created.
                         A retreat registration is created.
-                    <li>Finally, remember to <strong><u>Fulfill the Squarespace Order</u></strong>.
+                    <li>Finally, remember to <a href="https://montserrat-retreat.squarespace.com/config/commerce/orders">Fulfill the Squarespace Order</a>.
                 @endif
             </ul>
         </div>
@@ -64,19 +68,32 @@
                         {!! Form::select('event_id', $retreats, (isset($order->event_id)) ? $order->event_id : $ids['retreat_id'], ['class' => 'form-control']) !!}
                         <strong>Retreat:</strong> {{ $order->retreat_description  }}<br />
                         <strong>Dates:</strong> {{ $order->retreat_dates}}<br />
-                        <strong>Category:</strong> {{ $order->retreat_category  }}<br />
+                        <strong>Category:</strong> {{ !empty($order->retreat_category) ? $order->retreat_category : optional($order->event)->retreat_type  }}<br />
                         <strong>Type:</strong> {{ $order->retreat_registration_type }}<br />
                     @endIf
                 </div>
                 <div class="col-lg-4 col-md-6">
-                    @if (isset($order->gift_certificate_number))
-                        <h3>{!! Form::label('gift_certificate_number', 'Gift Certificate #:') !!}</h3>
-                        {!! Form::text('gift_certificate_number', $order->gift_certificate_number, ['class' => 'form-control']) !!}
+                    @if (isset($order->gift_certificate_id))
+                    <h3>Gift Certificate #: 
+                        <a href="{{url('gift_certificate/'. $order->gift_certificate_id)}}">
+                            {{$order->gift_certificate_full_number}}
+                        </a>
+                    </h3>
+                    @if (!empty($gift_certificate))
+                        <strong>Purchased by</strong>: {!!optional($gift_certificate->purchaser)->contact_link!!}<br />
+                        <strong>Recipient</strong>: {!!optional($gift_certificate->recipient)->contact_link!!}<br />
+                        @if ($gift_certificate->expiration_date < now())
+                            <div class="bg-danger">
+                                <strong>Expiration date</strong>: {{$gift_certificate->expiration_date->format('m-d-Y')}}<br />
+                            </div>
+                        @else
+                            <strong>Expiration date</strong>: {{$gift_certificate->expiration_date->format('m-d-Y')}}<br />
+                        @endIf
                     @endif
-                    @if (isset($order->gift_certificate_retreat))
-                        {!! Form::label('gift_certificate_retreat', 'Retreat: '.$order->gift_certificate_retreat) !!}
-                        {!! Form::select('gift_certificate_retreat', $retreats, null, ['class' => 'form-control']) !!}
-                        <hr>
+                        {!! Form::label('gift_certificate_year_issued', 'Gift Certificate Year Issued:', ['class' => 'font-weight-bold']) !!}
+                        {!! Form::number('gift_certificate_year_issued', $order->gift_certificate_year_issued, ['class' => 'form-control']) !!}
+                        {!! Form::label('gift_certificate_number', 'Gift Certificate #:', ['class' => 'font-weight-bold']) !!}</h3>
+                        {!! Form::number('gift_certificate_number', $order->gift_certificate_number, ['class' => 'form-control']) !!}
                     @endif
                     @if (isset($order->comments))
                     <h3>
@@ -112,7 +129,6 @@
                 <div class="col-lg-12">
                     @if (!$order->is_processed)
                         @if (($order->contact_id > 0 && !$order->is_couple) || (($order->is_couple) && $order->couple_contact_id > 0 && $order->contact_id>0))
-                        {!! Form::submit('Proceed with Order',['class' => 'btn btn-dark']) !!}
                         <a class="btn btn-info" href="{{ action([\App\Http\Controllers\SquarespaceOrderController::class, 'reset'],['order'=>$order->id]) }}">Reset Contact for Order #{{ $order->id }}</a>
                         @else
                         {!! Form::submit('Retrieve Contact Info',['class' => 'btn btn-info']) !!}
@@ -750,25 +766,54 @@
                 <div class="col-lg-12">
                     @if (!$order->is_processed)
                         @if ($order->contact_id > 0)
-                        {!! Form::submit('Proceed with Order',['class' => 'btn btn-dark']) !!}
+                            {!! Form::submit('Proceed with Order',['class' => 'btn btn-dark']) !!}
                         @else
-                        {!! Form::submit('Retrieve Contact Info',['class' => 'btn btn-info']) !!}
+                            {!! Form::submit('Retrieve Contact Info',['class' => 'btn btn-info']) !!}
                         @endif
+                        {!! Form::checkbox('send_fulfillment', 1, $send_fulfillment, ['class' => 'p-2 m-2']) !!}
+                        {!! Form::label('send_fulfillment', 'Send fulfillment email', ['class' => 'p-2 m-2']) !!}
+
                     @else
                         <a class="btn btn-primary" href="{{ action([\App\Http\Controllers\SquarespaceOrderController::class, 'index']) }}">Order #{{ $order->order_number }} has already been processed</a>
                     @endIf
                 </div>
             </div>
+            @if (isset($order->event))
+                <div class="row text-center mt-3">
+
+                    @if ($order->event->days_until_start > 8)
+                        <div class='col-lg-3 bg-success mx-auto p-2' >
+                    @else
+                        <div class='col-lg-3 bg-warning mx-auto p-2' >
+                    @endif
+                    Days until retreat: 
+                    {{$order->event->days_until_start}} 
+                    </div>
+                </div>
+            @endIf
+
+            @if (isset($order->event))
+                <div class="row text-center mt-3">
+                    @if ($order->event->capacity_percentage < 90)
+                        <div class='col-lg-3 bg-success mx-auto p-2' >
+                    @else 
+                        <div class='col-lg-3 bg-warning mx-auto p-2' > 
+                    @endIf
+                    Capacity: {{$order->event->capacity_percentage}}% </div>
+                    </div>
+                </div>
+            @endif
+            
             <hr />
             <div class="row">
                 <div class="col-lg-6 col-md-12">
                     <strong>Message ID:</strong> <a href="{{URL('/mailgun/'.$order->message_id)}}">{{ $order->message_id }}</a><br />
                     <strong>Processed:</strong> {{ ($order->is_processed) ? 'Yes' : 'No' }} <br />
                     @if (isset($order->event_id))
-                    <strong>Event ID:</strong> <a href="{{ URL('/retreat/'.$order->event_id) }}">{{ $order->event->retreat_name }}</a><br />
+                        <strong>Event ID:</strong> <a href="{{ URL('/retreat/'.$order->event_id) }}">{{ $order->event->retreat_name }}</a><br />
                     @endIf
                     @if (isset($order->participant_id))
-                    <strong>Registration ID:</strong> <a href="{{ URL('/registration/'.$order->participant_id) }}">{{ $order->participant_id }}</a><br />
+                        <strong>Registration ID:</strong> <a href="{{ URL('/registration/'.$order->participant_id) }}">{{ $order->participant_id }}</a><br />
                     @endIf
                 </div>
             </div>

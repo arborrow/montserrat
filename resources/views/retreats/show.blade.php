@@ -41,7 +41,11 @@
                 <span class="font-weight-bold">Starts: </span>{{ date('F j, Y g:i A', strtotime($retreat->start_date)) }} <br>
                 <span class="font-weight-bold">Ends: </span>{{ date('F j, Y g:i A', strtotime($retreat->end_date)) }} <br>
                 <span class="font-weight-bold">Title: </span>{{ $retreat->title}} <br>
-                <span class="font-weight-bold">Participants: </span>{{ $retreat->participant_count}} <br>
+                <span class="font-weight-bold">Participants: </span>{{ $retreat->participant_count}} out of {{$retreat->max_participants}} 
+                @if ($retreat->max_participants > 0)
+                    ({{number_format((($retreat->participant_count / $retreat->max_participants)*100),0).'% Capacity'}})
+                @endIf
+                <br>
                 @if ($retreat->retreatant_waitlist_count > 0)
                 ({!!Html::link(url('retreat/'.$retreat->id.'/waitlist'), $retreat->retreatant_waitlist_count) !!}) <br>
                 @endif

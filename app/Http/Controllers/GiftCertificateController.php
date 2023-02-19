@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use App\Traits\SquareSpaceTrait;
 use Carbon\Carbon;
 use Exception;
@@ -30,9 +31,11 @@ class GiftCertificateController extends Controller
     public function index()
     {
         $this->authorize('show-gift-certificate');
-        $gift_certificates = \App\Models\GiftCertificate::orderBy('issue_date')->with(['purchaser','recipient'])->get();
+        $gift_certificates = \App\Models\GiftCertificate::active()->orderBy('issue_date')->with(['purchaser','recipient'])->get();
+        $applied_gift_certificates = \App\Models\GiftCertificate::applied()->orderBy('issue_date')->with(['purchaser','recipient'])->get();
+        $expired_gift_certificates = \App\Models\GiftCertificate::expired()->orderBy('expiration_date')->with(['purchaser','recipient'])->get();
         
-        return view('gift_certificates.index', compact('gift_certificates'));   //
+        return view('gift_certificates.index', compact('gift_certificates','applied_gift_certificates','expired_gift_certificates'));   //
 
     }
 
@@ -75,36 +78,78 @@ class GiftCertificateController extends Controller
 
         $purchaser = $request->input('purchaser_name');
         $recipient = $request->input('recipient_name');
-        // dd($request->filled('purchaser_id'), $request->input('purchaser_id'));
         
-        if (isset($purchaser)) {
-            if (!$request->filled('purchaser_id') || $request->input('purchaser_id') == 0) {
-                flash('List of Gift Certificate Purchasers and Recipients retrieved')->success();
-                return Redirect::action([\App\Http\Controllers\GiftCertificateController::class, 'create'],['purchaser_name'=>$purchaser,'recipient_name'=>$recipient]);     
+        // dd($purchaser, null !== $request->input('purchaser_id'), $recipient, $request->recipient_id) ;
+        if (isset($purchaser) && (null !== $request->input('purchaser_id')) ) {
+            if ($request->input('purchaser_id') == 0) {
+                // dd('purchaser', $purchaser, $request->input('purchaser_id'), $recipient, $request->input('recipient_id'));
+                $new_purchaser = new Contact();
+                $names = ($request->filled('purchaser_name')) ? explode(" ", $request->purchaser_name) : null;
+                if (sizeof($names) > 1) {
+                    $new_purchaser->contact_type = config('polanco.contact_type.individual');
+                    $new_purchaser->subcontact_type = null;
+            
+                    $new_purchaser->first_name = array_shift($names);
+                    $new_purchaser->last_name = implode(" ",$names);
+                    $new_purchaser->display_name = $purchaser;
+                    $new_purchaser->sort_name = $new_purchaser->last_name . ', ' . $new_purchaser->first_name;
+                    $new_purchaser->save();
+                }
+                $request->purchaser_id=$new_purchaser->id;
+                flash('Gift certificate purchaser added')->success();
+            } else {
+                $new_purchaser = \App\Models\Contact::findOrFail($request->input('purchaser_id'));
+            } 
+        }
+        // dd($purchaser, $request->purchaser_id, $recipient, $request->recipient_id, $new_purchaser->id) ;
+        if (isset($recipient) && (null !== $request->input('recipient_id')) ) {
+            if ($request->input('recipient_id') == 0) {
+                // dd('recipient', $purchaser, $request->input('purchaser_id'), $recipient, $request->input('recipient_id'));
+                $new_recipient = new Contact();
+                $names = ($request->filled('recipient_name')) ? explode(" ", $request->recipient_name) : null;
+                if (sizeof($names) > 1) {
+                    $new_recipient->contact_type = config('polanco.contact_type.individual');
+                    $new_recipient->subcontact_type = null;
+                    $new_recipient->first_name = array_shift($names);
+                    $new_recipient->last_name = implode(" ",$names);
+                    $new_recipient->display_name = $recipient;
+                    $new_recipient->sort_name = $new_recipient->last_name . ', ' . $new_recipient->first_name;
+                    $new_recipient->save();
+                }
+                $request->recipient_id=$new_recipient->id;
+                flash('Gift certificate recipient added')->success();
+            } else {
+                $new_recipient = \App\Models\Contact::findOrFail($request->input('recipient_id'));
             }    
         }
-        // dd($request);
 
-        $gift_certificate = new \App\Models\GiftCertificate;
-        $gift_certificate->purchaser_id = ($request->input('purchaser_id') > 0 ) ? $request->input('purchaser_id') : null;
-        $gift_certificate->recipient_id = ($request->input('recipient_id') > 0 ) ? $request->input('recipient_id') : null;
-        $gift_certificate->participant_id = $request->input('participant_id');
-        $gift_certificate->donation_id = $request->input('donation_id');
-        $gift_certificate->sequential_number = $request->input('sequential_number');
-        $gift_certificate->squarespace_order_number = $request->input('squarespace_order_number');
-        $gift_certificate->purchase_date = $request->input('purchase_date');
-        $gift_certificate->issue_date = $request->input('issue_date');
-        $gift_certificate->expiration_date = $request->input('expiration_date');
-        $gift_certificate->funded_amount = $request->input('funded_amount');
-        $gift_certificate->retreat_type = $request->input('retreat_type');
-        $gift_certificate->notes = $request->input('notes');
+        // dd($request, $request->purchaser_id, $request->recipient_id);
+        if ($request->purchaser_id > 0 && $request->recipient_id > 0) {
+            // dd('gc', $purchaser, $request->input('purchaser_id'), $recipient, $request->input('recipient_id'));
+            $gift_certificate = new \App\Models\GiftCertificate;
+            $gift_certificate->purchaser_id = (isset(optional($new_purchaser)->id )) ? $new_purchaser->id : $request->input('purchaser_id');
+            $gift_certificate->recipient_id = (isset(optional($new_recipient)->id )) ? $new_recipient->id : $request->input('recipient_id');
+            $gift_certificate->participant_id = $request->input('participant_id');
+            $gift_certificate->donation_id = $request->input('donation_id');
+            $gift_certificate->sequential_number = $request->input('sequential_number');
+            $gift_certificate->squarespace_order_number = $request->input('squarespace_order_number');
+            $gift_certificate->purchase_date = $request->input('purchase_date');
+            $gift_certificate->issue_date = $request->input('issue_date');
+            $gift_certificate->expiration_date = $request->input('expiration_date');
+            $gift_certificate->funded_amount = $request->input('funded_amount');
+            $gift_certificate->retreat_type = $request->input('retreat_type');
+            $gift_certificate->notes = $request->input('notes');    
+            $gift_certificate->save();
+            $gift_certificate->update_pdf();
+    
+            flash('Gift Certificate: <a href="'.url('/gift_certificate/'.$gift_certificate->id).'">'.$gift_certificate->certificate_number.'</a> added')->success();
+            return Redirect::action([self::class, 'index']); //
+   
+        } else {
+            return Redirect::action([\App\Http\Controllers\GiftCertificateController::class, 'create'],['purchaser_name'=>$purchaser,'recipient_name'=>$recipient]);     
+        }
 
-        $gift_certificate->save();
-
-        flash('Gift Certificate: <a href="'.url('/gift_certificate/'.$gift_certificate->id).'">'.$gift_certificate->certificate_number.'</a> added')->success();
-
-        return Redirect::action([self::class, 'index']); //
-
+ 
     }
 
     // TODO: consider if generating the pdf and saving it as an attachment might be better as an update_pdf method in the model
