@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\GiftCertificate;
+use App\Traits\PhoneTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
-use App\Traits\PhoneTrait;
-
-
 
 class SquarespaceOrder extends Model implements Auditable
 {
@@ -44,6 +43,19 @@ class SquarespaceOrder extends Model implements Auditable
     public function registration()
     {
         return $this->hasOne(Registration::class, 'id', 'participant_id');
+    }
+
+    public function getGiftCertificateIdAttribute()
+    {
+        if (!empty($this->gift_certificate_year_issued) && !empty($this->gift_certificate_number)) {
+                $gift_certificate = GiftCertificate::whereYear('purchase_date',$this->gift_certificate_year_issued)
+                ->where(function ($query) {
+                    $query->where('sequential_number', '=', $this->gift_certificate_number)
+                          ->orWhere('squarespace_order_number', '=', $this->gift_certificate_number);
+                })
+                ->first();
+            return isset($gift_certificate->id) ? $gift_certificate->id : null;
+        } 
     }
 
     public function getEventStartDateAttribute() {

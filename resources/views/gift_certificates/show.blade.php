@@ -38,14 +38,14 @@
             <div class="row">
                 <div class="col-lg-2"><strong>Funded amount:</strong> ${{$gift_certificate->formatted_funded_amount}}</div>
                 <div class="col-lg-3"><strong>Donation ID:</strong> <a href={{url('/donation/'.$gift_certificate->donation_id)}}>{{$gift_certificate->donation_id}}</a></div>
-                <div class="col-lg-3"><strong>Applied to:</strong> {{$gift_certificate->participant_id}}</div>
+                <div class="col-lg-3"><strong>Applied to:</strong> <a href={{url('/registration/'.$gift_certificate->participant_id)}}>{{optional($gift_certificate->registration)->event_name}}</a></div>
             </div>
         </div>
         <div class="border  border-secondary m-2 p-2">
             <h3 class="text-secondary">Notes</h3>
             <div class="row">
                 <div class="col-lg-3"><strong>Notes:</strong> {{$gift_certificate->notes}}</div>
-                <div class="col-lg-3"><strong>Retreat type:</strong> {{$gift_certificate->retreat_type}}</div>
+                <div class="col-lg-3"><strong>Retreat type:</strong> {{optional($gift_certificate->registration->retreat)->retreat_type}}</div>
             </div>
         </div>
     </div>

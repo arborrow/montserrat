@@ -73,10 +73,26 @@
                     @endIf
                 </div>
                 <div class="col-lg-4 col-md-6">
-                    @if (isset($order->gift_certificate_number))
-                        {!! Form::label('gift_certificate_year_issued', 'Gift Certificate Year Issued:') !!}
+                    @if (isset($order->gift_certificate_id))
+                    <h3>Gift Certificate #: 
+                        <a href="{{url('gift_certificate/'. $order->gift_certificate_id)}}">
+                            {{$order->gift_certificate_full_number}}
+                        </a>
+                    </h3>
+                    @if (!empty($gift_certificate))
+                        <strong>Purchased by</strong>: {!!optional($gift_certificate->purchaser)->contact_link!!}<br />
+                        <strong>Recipient</strong>: {!!optional($gift_certificate->recipient)->contact_link!!}<br />
+                        @if ($gift_certificate->expiration_date < now())
+                            <div class="bg-danger">
+                                <strong>Expiration date</strong>: {{$gift_certificate->expiration_date->format('m-d-Y')}}<br />
+                            </div>
+                        @else
+                            <strong>Expiration date</strong>: {{$gift_certificate->expiration_date->format('m-d-Y')}}<br />
+                        @endIf
+                    @endif
+                        {!! Form::label('gift_certificate_year_issued', 'Gift Certificate Year Issued:', ['class' => 'font-weight-bold']) !!}
                         {!! Form::number('gift_certificate_year_issued', $order->gift_certificate_year_issued, ['class' => 'form-control']) !!}
-                        {!! Form::label('gift_certificate_number', 'Gift Certificate #:') !!}</h3>
+                        {!! Form::label('gift_certificate_number', 'Gift Certificate #:', ['class' => 'font-weight-bold']) !!}</h3>
                         {!! Form::number('gift_certificate_number', $order->gift_certificate_number, ['class' => 'form-control']) !!}
                     @endif
                     @if (isset($order->comments))
@@ -113,7 +129,6 @@
                 <div class="col-lg-12">
                     @if (!$order->is_processed)
                         @if (($order->contact_id > 0 && !$order->is_couple) || (($order->is_couple) && $order->couple_contact_id > 0 && $order->contact_id>0))
-                        {!! Form::submit('Proceed with Order',['class' => 'btn btn-dark']) !!}
                         <a class="btn btn-info" href="{{ action([\App\Http\Controllers\SquarespaceOrderController::class, 'reset'],['order'=>$order->id]) }}">Reset Contact for Order #{{ $order->id }}</a>
                         @else
                         {!! Form::submit('Retrieve Contact Info',['class' => 'btn btn-info']) !!}

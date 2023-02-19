@@ -11,8 +11,10 @@ use App\Models\Contact;
 use App\Models\ContactLanguage;
 use App\Models\Country;
 use App\Models\Donation;
+use App\Models\Payment;
 use App\Models\Email;
 use App\Models\EmergencyContact;
+use App\Models\GiftCertificate;
 use App\Models\Language;
 use App\Models\Note;
 use App\Models\Phone;
@@ -121,6 +123,7 @@ class SquarespaceOrderController extends Controller
     {
         $this->authorize('update-squarespace-order');
         $order = SquarespaceOrder::findOrFail($id);
+        $gift_certificate = (empty($order->gift_certificate_id)) ? null : GiftCertificate::findOrFail($order->gift_certificate_id);
         $prefixes = Prefix::orderBy('name')->pluck('name', 'id');
         $prefixes->prepend('None', null);
         $states = StateProvince::orderBy('abbreviation')->whereCountryId(config('polanco.country_id_usa'))->pluck('abbreviation', 'id');
@@ -187,7 +190,7 @@ class SquarespaceOrderController extends Controller
         $couple_matching_contacts = (isset($order->couple_name)) ? $this->matched_contacts($couple) : [null=>'No name provided'];
         //dd($couple_matching_contacts, $matching_contacts);
 
-        return view('squarespace.order.edit', compact('order', 'matching_contacts', 'retreats', 'couple_matching_contacts', 'prefixes', 'states', 'countries', 'languages', 'parish_list','ids','genders','religions','send_fulfillment'));
+        return view('squarespace.order.edit', compact('order', 'matching_contacts', 'retreats', 'couple_matching_contacts', 'prefixes', 'states', 'countries', 'languages', 'parish_list','ids','genders','religions','send_fulfillment','gift_certificate'));
     }
 
     /**
@@ -200,6 +203,11 @@ class SquarespaceOrderController extends Controller
     public function update(UpdateSquarespaceOrderRequest $request, $id)
     {
         $order = SquarespaceOrder::findOrFail($id);
+        $gift_certificate = (empty($order->gift_certificate_full_number)) ? null : GiftCertificate::findOrFail($order->gift_certificate_id);
+        if (!empty($gift_certificate) && empty($gift_certificate->squarespace_order_redeem_id)) {
+            $gift_certificate->squarespace_order_redeem_id = $id;
+            $gift_certificate->save();
+        }
         $contact_id = $request->input('contact_id');
         $couple_contact_id = $request->input('couple_contact_id');
 
@@ -615,6 +623,14 @@ class SquarespaceOrderController extends Controller
                 $order->participant_id = $registration->id;
                 $order->touchpoint_id = $touchpoint->id;
 
+                // gift certificate redemption
+                if (!empty($order->gift_certificate_id)) {
+                    $gift_certificate = GiftCertificate::find($order->gift_certificate_id);
+                    $gift_certificate->participant_id = $registration->id;
+                    $gift_certificate->save();
+                } 
+
+
 //                dd($request->input('send_fulfillment'), $request->filled('email'), $tmp );
                 if ($request->input('send_fulfillment') && $request->filled('email') ) {
                     // generate email
@@ -659,26 +675,61 @@ class SquarespaceOrderController extends Controller
                 }
 
             } else {
-                $donation->event_id = $event_id;
-                $donation->donation_description = 'Retreat Deposits';
-                $donation->donation_date = $order->event->start_date;
-                $donation->donation_amount = ($order->is_couple) ? ($order->deposit_amount/2) : $order->deposit_amount;
-                $donation->squarespace_order = $order->order_number;
-                $donation->Notes = $order->order_description . ' for Retreat #' . $order->event->idnumber;
-                $donation->save();                
-                $order->donation_id = $donation->donation_id;
-
-                if ($order->is_couple && isset($order->couple_contact_id)) {
-                    $couple_donation = new Donation;
-                    $couple_donation->contact_id = $order->couple_contact_id;
-                    $couple_donation->event_id = $event_id;
-                    $couple_donation->donation_description = 'Retreat Deposits';
-                    $couple_donation->donation_date = $order->event->start_date;
-                    $couple_donation->donation_amount = ($order->is_couple) ? ($order->deposit_amount/2) : $order->deposit_amount;
-                    $couple_donation->squarespace_order = $order->order_number;
-                    $couple_donation->Notes = $order->order_description . ' for Retreat #' . $order->event->idnumber;
-                    $couple_donation->save();
-                    $order->couple_donation_id = $couple_donation->donation_id;
+                if (!empty($order->gift_certificate_id)) { //gift certificate redemption
+                    $gift_certificate = GiftCertificate::find($order->gift_certificate_id);
+                    if (!empty (optional($gift_certificate)->donation_id)) {
+                        $gift_certificate_donation =  Donation::find($gift_certificate->donation_id);
+                        $amount_reallocated = $gift_certificate_donation->donation_amount;
+                        // create reallocation payments and adjust purchaser donation_amount to zero
+                        $negative_reallocation_payment = new Payment;
+                        $negative_reallocation_payment->donation_id = $gift_certificate_donation->donation_id;
+                        $negative_reallocation_payment->payment_amount = -($gift_certificate_donation->donation_amount);
+                        $negative_reallocation_payment->payment_description = 'Reallocation';
+                        $negative_reallocation_payment->note = 'Gift certificate #' . $gift_certificate->certificate_number . 'redeemed by ' . optional($gift_certificate->recipient)->display_name . 'for Retreat #' . $gift_certificate->registration->event_id_number;
+                        $negative_reallocation_payment->payment_date = now();
+                        $negative_reallocation_payment->save();
+                        $gift_certificate_donation->donation_amount = $gift_certificate_donation->donation_amount + $negative_reallocation_payment->payment_amount;
+                        $gift_certificate_donation->Notes = 'Donation amount updated for Gift Certificate: '.$gift_certificate->certificate_number.' redemption. '.$gift_certificate_donation->Notes;
+                        $gift_certificate_donation->save();
+                        // create retreat deposit donation for recipient
+                        $donation->event_id = $event_id;
+                        $donation->donation_description = 'Retreat Deposits';
+                        $donation->donation_date = $order->event->start_date;
+                        $donation->donation_amount = $amount_reallocated;
+                        $donation->squarespace_order = $gift_certificate->certificate_number;
+                        $donation->Notes = $order->order_description . ' for Retreat #' . $order->event->idnumber;
+                        $donation->save(); 
+                        $reallocation_payment = new Payment;
+                        $reallocation_payment->donation_id = $donation->donation_id;
+                        $reallocation_payment->payment_amount = $donation->donation_amount;
+                        $reallocation_payment->payment_description = 'Reallocation';               
+                        $reallocation_payment->note = 'Gift certificate #' . $gift_certificate->certificate_number . 'purchased by ' . optional($gift_certificate->purchaser)->display_name . 'for Retreat #' . $gift_certificate->registration->event_id_number;
+                        $reallocation_payment->payment_date = $negative_reallocation_payment->payment_date;
+                        $reallocation_payment->save();
+                        flash('Donation/Payment Reallocations processed for Gift Certificate #<a href="'.url('/gift_certificate/'.$gift_certificate->id).'">'.$gift_certificate->certificate_number.'</a>')->success();
+                    }
+                } else { // add regular retreat registration deposit
+                    $donation->event_id = $event_id;
+                    $donation->donation_description = 'Retreat Deposits';
+                    $donation->donation_date = $order->event->start_date;
+                    $donation->donation_amount = ($order->is_couple) ? ($order->deposit_amount/2) : $order->deposit_amount;
+                    $donation->squarespace_order = $order->order_number;
+                    $donation->Notes = $order->order_description . ' for Retreat #' . $order->event->idnumber;
+                    $donation->save();                
+                    $order->donation_id = $donation->donation_id;
+    
+                    if ($order->is_couple && isset($order->couple_contact_id)) {
+                        $couple_donation = new Donation;
+                        $couple_donation->contact_id = $order->couple_contact_id;
+                        $couple_donation->event_id = $event_id;
+                        $couple_donation->donation_description = 'Retreat Deposits';
+                        $couple_donation->donation_date = $order->event->start_date;
+                        $couple_donation->donation_amount = ($order->is_couple) ? ($order->deposit_amount/2) : $order->deposit_amount;
+                        $couple_donation->squarespace_order = $order->order_number;
+                        $couple_donation->Notes = $order->order_description . ' for Retreat #' . $order->event->idnumber;
+                        $couple_donation->save();
+                        $order->couple_donation_id = $couple_donation->donation_id;
+                    }    
                 }
             }
             

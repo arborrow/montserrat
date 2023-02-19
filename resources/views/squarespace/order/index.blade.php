@@ -30,7 +30,7 @@
                             <td>
                                 <a href="{{ URL('squarespace/order/' . $order->id .'/edit') }} ">{{ $order->created_at }}</a>
                             </td>
-                            <td>{{ $order->order_number }}
+                            <td>{{ (isset($order->order_number)) ? $order->order_number : $order->gift_certificate_full_number }}
                             <td>{{ ucwords(strtolower($order->name)) }}</td>
                             <td>{{ strtolower($order->email) }}</td>
                             <td>
