@@ -45,7 +45,9 @@
             <h3 class="text-secondary">Notes</h3>
             <div class="row">
                 <div class="col-lg-3"><strong>Notes:</strong> {{$gift_certificate->notes}}</div>
-                <div class="col-lg-3"><strong>Retreat type:</strong> {{optional($gift_certificate->registration->retreat)->retreat_type}}</div>
+                @if (!empty($gift_certificate->participant_id))
+                    <div class="col-lg-3"><strong>Retreat type:</strong> {{$gift_certificate->registration->retreat->retreat_type}}</div>
+                @endif
             </div>
         </div>
     </div>
