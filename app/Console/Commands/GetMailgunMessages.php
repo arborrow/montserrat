@@ -309,7 +309,7 @@ class GetMailgunMessages extends Command
                     if (strpos($clean_message,"Form Submission - Gift Certificate Registration") > 0) {
                         // gift certificate registration
 
-                        $message_info = $this->extract_value_between($clean_message, "Subject:", "Does this submission look like spam?");
+                        $message_info = $this->extract_value_between($clean_message, "Form Submission - Gift Certificate Registration", "Does this submission look like spam?");
                         
                         $retreat = array_values(array_filter(explode("\n",$message_info)));
                         $retreat = array_map('trim',$retreat);

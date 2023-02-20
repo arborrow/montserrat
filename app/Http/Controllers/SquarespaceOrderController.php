@@ -204,10 +204,6 @@ class SquarespaceOrderController extends Controller
     {
         $order = SquarespaceOrder::findOrFail($id);
         $gift_certificate = (empty($order->gift_certificate_full_number)) ? null : GiftCertificate::findOrFail($order->gift_certificate_id);
-        if (!empty($gift_certificate) && empty($gift_certificate->squarespace_order_redeem_id)) {
-            $gift_certificate->squarespace_order_redeem_id = $id;
-            $gift_certificate->save();
-        }
         $contact_id = $request->input('contact_id');
         $couple_contact_id = $request->input('couple_contact_id');
 
@@ -685,7 +681,7 @@ class SquarespaceOrderController extends Controller
                         $negative_reallocation_payment->donation_id = $gift_certificate_donation->donation_id;
                         $negative_reallocation_payment->payment_amount = -($gift_certificate_donation->donation_amount);
                         $negative_reallocation_payment->payment_description = 'Reallocation';
-                        $negative_reallocation_payment->note = 'Gift certificate #' . $gift_certificate->certificate_number . 'redeemed by ' . optional($gift_certificate->recipient)->display_name . 'for Retreat #' . $gift_certificate->registration->event_id_number;
+                        $negative_reallocation_payment->note = 'Gift certificate #' . $gift_certificate->certificate_number . ' redeemed by ' . optional($gift_certificate->recipient)->display_name . ' for Retreat #' . $gift_certificate->registration->event_id_number;
                         $negative_reallocation_payment->payment_date = now();
                         $negative_reallocation_payment->save();
                         $gift_certificate_donation->donation_amount = $gift_certificate_donation->donation_amount + $negative_reallocation_payment->payment_amount;
