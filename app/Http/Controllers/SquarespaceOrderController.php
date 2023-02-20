@@ -699,7 +699,7 @@ class SquarespaceOrderController extends Controller
                         $reallocation_payment->donation_id = $donation->donation_id;
                         $reallocation_payment->payment_amount = $donation->donation_amount;
                         $reallocation_payment->payment_description = 'Reallocation';               
-                        $reallocation_payment->note = 'Gift certificate #' . $gift_certificate->certificate_number . 'purchased by ' . optional($gift_certificate->purchaser)->display_name . 'for Retreat #' . $gift_certificate->registration->event_id_number;
+                        $reallocation_payment->note = 'Gift certificate #' . $gift_certificate->certificate_number . ' purchased by ' . optional($gift_certificate->purchaser)->display_name . ' for Retreat #' . $gift_certificate->registration->event_id_number;
                         $reallocation_payment->payment_date = $negative_reallocation_payment->payment_date;
                         $reallocation_payment->save();
                         flash('Donation/Payment Reallocations processed for Gift Certificate #<a href="'.url('/gift_certificate/'.$gift_certificate->id).'">'.$gift_certificate->certificate_number.'</a>')->success();
