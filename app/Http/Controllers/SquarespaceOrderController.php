@@ -642,7 +642,7 @@ class SquarespaceOrderController extends Controller
                     $touchpoint->person_id = $contact_id;
                     $touchpoint->staff_id = config('polanco.self.id');
                     $touchpoint->type = 'Email';
-                    $touchpoint->notes = 'Fulfillment email for' . $order->order_description;
+                    $touchpoint->notes = 'Fulfillment email for ' . $order->order_description;
                     $touchpoint->touched_at = Carbon::now();
                     $touchpoint->save();
 
