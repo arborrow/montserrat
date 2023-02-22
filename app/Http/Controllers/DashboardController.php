@@ -170,16 +170,21 @@ class DashboardController extends Controller
             FROM
             (SELECT e.id as event_id, e.title as event, et.name as type, et.id as type_id, e.idnumber, e.start_date, e.end_date, DATEDIFF(e.end_date,e.start_date) as nights,
             	(SELECT SUM(d.donation_amount) FROM Donations as d WHERE d.event_id=e.id AND d.deleted_at IS NULL) as pledged,
-            	(SELECT SUM(p.payment_amount) FROM Donations as d LEFT JOIN Donations_payment as p ON (p.donation_id = d.donation_id) WHERE d.event_id=e.id AND d.deleted_at IS NULL AND p.deleted_at IS NULL) as paid,
-            	(SELECT COUNT(*) FROM participant as reg WHERE reg.event_id = e.id AND reg.deleted_at IS NULL AND reg.canceled_at IS NULL AND reg.role_id IN (5,11) AND reg.status_id IN (1)) as participants,
-            	(SELECT(participants*nights)) as peoplenights
-            FROM event as e LEFT JOIN event_type as et ON (et.id = e.event_type_id)
-            WHERE e.start_date > :begin_date AND e.start_date < :end_date AND e.is_active=1 AND e.deleted_at IS NULL AND e.title NOT LIKE '%Deposit%' AND e.end_date < NOW()
-            GROUP BY e.id) as tmp
-            GROUP BY tmp.type
-            ORDER BY `tmp`.`type` ASC", [
-            'begin_date' => $begin_date,
-            'end_date' => $end_date,
+                (SELECT SUM(p.payment_amount) FROM Donations as d LEFT JOIN Donations_payment as p ON (p.donation_id = d.donation_id) WHERE d.event_id=e.id AND d.deleted_at IS NULL AND p.deleted_at IS NULL) as paid,
+                (SELECT COUNT(*) FROM participant as reg WHERE reg.event_id = e.id AND reg.deleted_at IS NULL AND reg.canceled_at IS NULL AND reg.role_id IN (5,11) AND reg.status_id IN (1)) as participants,
+                (SELECT(participants*nights)) as peoplenights
+                    FROM event as e LEFT JOIN event_type as et ON (et.id = e.event_type_id)
+                    WHERE e.start_date > :begin_date 
+                        AND e.start_date < :end_date 
+                        AND e.is_active=1 
+                        AND e.deleted_at IS NULL 
+                        AND e.title NOT LIKE '%Deposit%' 
+                        AND e.end_date < NOW()
+                GROUP BY e.id) as tmp
+                GROUP BY tmp.type
+                ORDER BY `tmp`.`type` ASC", [
+                'begin_date' => $begin_date,
+                'end_date' => $end_date,
         ]);
 
         $total_revenue = array_sum(array_column($event_summary, 'total_paid'));
@@ -202,7 +207,12 @@ class DashboardController extends Controller
         $begin_date = $prev_year.'-07-01';
         $end_date = $year.'-07-01';
         $event_type = \App\Models\EventType::findOrFail($event_type_id);
-        $retreats = \App\Models\Retreat::whereIsActive(1)->whereEventTypeId($event_type_id)->where('start_date', '>=', $begin_date)->where('start_date', '<', $end_date)->orderBy('start_date')->get();
+        $retreats = \App\Models\Retreat::whereIsActive(1)
+            ->whereEventTypeId($event_type_id)
+            ->where('start_date', '>=', $begin_date)
+            ->where('start_date', '<', $end_date)
+            ->where('end_date','<',now())
+            ->orderBy('start_date')->get();
 
         return view('dashboard.drilldown', compact('event_type', 'year', 'retreats'));
     }
