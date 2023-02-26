@@ -147,7 +147,7 @@
                         @can('show-retreat')
                             <div class='col-md-3'>
                                 <strong>Retreat: </strong>
-                                <a href="{{ URL('/retreat/'.$order->event_id) }}">{{ $order->event->title .'('.$order->event->start_date .')'}}</a>
+                                <a href="{{ URL('/retreat/'.$order->event_id) }}">{{ $order->event->title}}</a> ({{$order->event->start_date->format('m-d-Y')}})
                             </div>
                         @endCan
                     @endif

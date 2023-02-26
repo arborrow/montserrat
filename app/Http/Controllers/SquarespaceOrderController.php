@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateSquarespaceOrderRequest;
 
 use App\Mail\SquarespaceOrderFulfillment;
+use App\Mail\GiftCertificateRedemption;
 
 use App\Models\Address;
 use App\Models\Contact;
@@ -681,7 +682,7 @@ class SquarespaceOrderController extends Controller
                         $negative_reallocation_payment->donation_id = $gift_certificate_donation->donation_id;
                         $negative_reallocation_payment->payment_amount = -($gift_certificate_donation->donation_amount);
                         $negative_reallocation_payment->payment_description = 'Reallocation';
-                        $negative_reallocation_payment->note = 'Gift certificate #' . $gift_certificate->certificate_number . ' redeemed by ' . optional($gift_certificate->recipient)->display_name . ' for Retreat #' . $gift_certificate->registration->event_id_number;
+                        $negative_reallocation_payment->note = 'Gift certificate #' . $gift_certificate->certificate_number . ' redeemed by ' . optional($gift_certificate->recipient)->display_name . ' applied to Retreat #' . $gift_certificate->registration->event_id_number;
                         $negative_reallocation_payment->payment_date = now();
                         $negative_reallocation_payment->save();
                         $gift_certificate_donation->donation_amount = $gift_certificate_donation->donation_amount + $negative_reallocation_payment->payment_amount;
@@ -693,16 +694,32 @@ class SquarespaceOrderController extends Controller
                         $donation->donation_date = $order->event->start_date;
                         $donation->donation_amount = $amount_reallocated;
                         $donation->squarespace_order = $gift_certificate->certificate_number;
-                        $donation->Notes = $order->order_description . ' for Retreat #' . $order->event->idnumber;
+                        $donation->Notes = $order->order_description . ' applied to Retreat #' . $order->event->idnumber;
                         $donation->save(); 
                         $reallocation_payment = new Payment;
                         $reallocation_payment->donation_id = $donation->donation_id;
                         $reallocation_payment->payment_amount = $donation->donation_amount;
                         $reallocation_payment->payment_description = 'Reallocation';               
-                        $reallocation_payment->note = 'Gift certificate #' . $gift_certificate->certificate_number . ' purchased by ' . optional($gift_certificate->purchaser)->display_name . ' for Retreat #' . $gift_certificate->registration->event_id_number;
+                        $reallocation_payment->note = 'Gift certificate #' . $gift_certificate->certificate_number . ' purchased by ' . optional($gift_certificate->purchaser)->display_name . ' applied to Retreat #' . $gift_certificate->registration->event_id_number;
                         $reallocation_payment->payment_date = $negative_reallocation_payment->payment_date;
                         $reallocation_payment->save();
                         flash('Donation/Payment Reallocations processed for Gift Certificate #<a href="'.url('/gift_certificate/'.$gift_certificate->id).'">'.$gift_certificate->certificate_number.'</a>')->success();
+
+                        // if finance notification is enabled
+                        // and if it is a funded gift certificate
+                        if (config('polanco.notify_registration_event_change') && $gift_certificate->funded_amount>0) { 
+                            $finance_email = config('polanco.finance_email');
+                            try {
+                                Mail::to($finance_email)->send(new GiftCertificateRedemption($gift_certificate, $order, $negative_reallocation_payment, $reallocation_payment));
+                            } catch (\Exception $e) { //failed to send finance notification of gift certificate redemption
+                                // dd($e);
+                                flash('Email notification NOT sent to finance regarding Gift Certificate Redepmtion for #: <a href="'.url('/gift_certificate/'.$gift_certificate->id).'">'.$gift_certificate->certificate_number.'</a>')->warning();
+                            }
+                            if (empty($e)) {
+                                flash('Email notification sent to finance regarding Gift Certificate Redemption #: <a href="'.url('/gift_certificate/'.$gift_certificate->id).'">'.$gift_certificate->certificate_number.'</a>')->success();          
+                            }
+                        }
+
                     }
                 } else { // add regular retreat registration deposit
                     $donation->event_id = $event_id;
