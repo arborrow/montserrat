@@ -56,7 +56,7 @@
         <div class="row">
             <div class="col-lg-6 text-right">
                 @can('update-asset')
-                <a href="{{ action([\App\Http\Controllers\AssetJobController::class, 'edit'], $gift_certificate->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
+                <a href="{{ action([\App\Http\Controllers\GiftCertificateController::class, 'edit'], $gift_certificate->id) }}" class="btn btn-info">{!! Html::image('images/edit.png', 'Edit',array('title'=>"Edit")) !!}</a>
                 @endCan
             </div>
             <div class="col-lg-6 text-left">
