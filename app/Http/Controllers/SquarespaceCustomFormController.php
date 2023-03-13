@@ -19,8 +19,6 @@ class SquarespaceCustomFormController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index(): View
     {
@@ -33,8 +31,6 @@ class SquarespaceCustomFormController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create(): View
     {
@@ -45,8 +41,6 @@ class SquarespaceCustomFormController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create_field($id): View
     {
@@ -58,9 +52,6 @@ class SquarespaceCustomFormController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(StoreSquarespaceCustomFormRequest $request): RedirectResponse
     {
@@ -77,9 +68,6 @@ class SquarespaceCustomFormController extends Controller
 
     /**
      * Store a newly created custom form field in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store_field(StoreSquarespaceCustomFormFieldRequest $request): RedirectResponse
     {
@@ -101,9 +89,6 @@ class SquarespaceCustomFormController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show(int $id): View
     {
@@ -116,9 +101,6 @@ class SquarespaceCustomFormController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit(int $id): View
     {
@@ -131,9 +113,6 @@ class SquarespaceCustomFormController extends Controller
 
     /**
      * Show the form for editing custom form field.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit_field(int $id): View
     {
@@ -146,10 +125,6 @@ class SquarespaceCustomFormController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(UpdateSquarespaceCustomFormRequest $request, int $id): RedirectResponse
     {
@@ -168,9 +143,7 @@ class SquarespaceCustomFormController extends Controller
     /**
      * Update the SquareSpace custom form field in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update_field(UpdateSquarespaceCustomFormFieldRequest $request): RedirectResponse
     {
@@ -191,9 +164,6 @@ class SquarespaceCustomFormController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy(int $id): RedirectResponse
     {

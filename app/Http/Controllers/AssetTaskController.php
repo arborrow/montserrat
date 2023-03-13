@@ -26,8 +26,6 @@ class AssetTaskController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create($asset_id = 0): View
     {
@@ -53,9 +51,6 @@ class AssetTaskController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(StoreAssetTaskRequest $request): RedirectResponse
     {
@@ -91,9 +86,6 @@ class AssetTaskController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show(int $id): View
     {
@@ -108,9 +100,6 @@ class AssetTaskController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit(int $id): View
     {
@@ -132,10 +121,6 @@ class AssetTaskController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(UpdateAssetTaskRequest $request, int $id): RedirectResponse
     {
@@ -171,9 +156,6 @@ class AssetTaskController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy(int $id): RedirectResponse
     {
@@ -196,9 +178,6 @@ class AssetTaskController extends Controller
      * Finally, create the job if it is in the future and increment jobs_created variable
      * This approach ensures job history is maintained by not deleting previously scheduled jobs
      * It also allows for Nonscheduled - not automated PM - to remain as only future, scheduled jobs are deleted
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function schedule_jobs(int $id): RedirectResponse
     {

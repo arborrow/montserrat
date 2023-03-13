@@ -37,8 +37,6 @@ class SendBirthdays extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
     public function handle(): void
     {   // get list of contacts whose birthday is today - they are the birthday email recipients or receivers

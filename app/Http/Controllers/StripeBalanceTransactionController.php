@@ -30,8 +30,6 @@ class StripeBalanceTransactionController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index(): View
     {
@@ -57,7 +55,6 @@ class StripeBalanceTransactionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -69,9 +66,6 @@ class StripeBalanceTransactionController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show($stripe_balance_transaction_id): View
     {
@@ -88,9 +82,6 @@ class StripeBalanceTransactionController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show_id(int $id): View
     {
@@ -108,7 +99,6 @@ class StripeBalanceTransactionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit(int $id)
@@ -271,8 +261,6 @@ class StripeBalanceTransactionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateStripeBalanceTransactionRequest $request, int $id)
@@ -504,7 +492,6 @@ class StripeBalanceTransactionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(int $id)
@@ -514,8 +501,6 @@ class StripeBalanceTransactionController extends Controller
 
     /**
      * Import Stripe Balance Transactions for a given Stripe Payouts into stripe_balance_transaction table
-     *
-     * @return \Illuminate\Http\Response
      */
     public function import($payout_id): RedirectResponse
     {
@@ -619,9 +604,6 @@ class StripeBalanceTransactionController extends Controller
 
     /**
      * Reset to re-select the donor for a Stripe Balance Transaction.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function reset(int $id): RedirectResponse
     {

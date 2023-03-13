@@ -480,7 +480,6 @@ class PageController extends Controller
      * If already hyphenated and valid format of yyyy-mm-dd returns hyphanated string
      * Helps address issue #448
      *
-     * @param  int  $unhyphenated_date
      * @return string $hyphenated_date
      */
     public function hyphenate_date(int $unhyphenated_date)

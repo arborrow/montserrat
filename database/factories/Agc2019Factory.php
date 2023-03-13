@@ -10,8 +10,6 @@ class Agc2019Factory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {

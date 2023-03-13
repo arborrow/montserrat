@@ -28,8 +28,6 @@ class DonationController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index(): View
     {
@@ -218,8 +216,6 @@ class DonationController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create($id = null, $event_id = null, $type = null): View
     {
@@ -259,7 +255,6 @@ class DonationController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      *
      * authorize (permission check)
@@ -307,9 +302,6 @@ class DonationController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show(int $id): View
     {
@@ -321,9 +313,6 @@ class DonationController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit(int $id): View
     {
@@ -356,10 +345,6 @@ class DonationController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(UpdateDonationRequest $request, int $id): RedirectResponse
     {
@@ -394,9 +379,6 @@ class DonationController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy(int $id): RedirectResponse
     {
@@ -424,7 +406,6 @@ class DonationController extends Controller
      * $request contains a $donations array with fields for id, pledge, paid, method and terms
      * this method will only be used for retreat offerings - other types of donations should be handled elsewhere
      * primary use is for creating retreat offering donations but will have ability to edit existing retreat offerings
-     * @return \Illuminate\Http\Response
      */
     public function retreat_payments_update(Request $request): RedirectResponse
     {   // I removed the permission check for update-payment as it seemed redundant to update-donation and it makes testing a little easier

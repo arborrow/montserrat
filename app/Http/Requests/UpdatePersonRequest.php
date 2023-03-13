@@ -8,8 +8,6 @@ class UpdatePersonRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -20,8 +18,6 @@ class UpdatePersonRequest extends FormRequest
      * Get the validation rules that apply to the request.
      *
      * TODO: languages and referrals
-     *
-     * @return array
      */
     public function rules(): array
     {   // if Twilio is enabled then validate phone numbers otherwise allow strings
@@ -222,8 +218,6 @@ class UpdatePersonRequest extends FormRequest
 
     /**
      * Get the error messages for the defined validation rules.
-     *
-     * @return array
      */
     public function messages(): array
     {

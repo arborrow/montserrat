@@ -15,8 +15,6 @@ class MessageFactory extends Factory
      * Define the model's default state.
      *
      * id , mailgun_id , mailgun_timestamp , storage_url , recipients , from , from_id , to , to_id , subject , body , is_processed , deleted_at , remember_token , created_at , updated_at ,
-     *
-     * @return array
      */
     public function definition(): array
     {
